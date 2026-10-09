@@ -1,0 +1,34 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 13971
+n_pages: 13971
+verdict: "A pre-translation gate (strip shape, CJK/Devanagari density and fragment share, structure) refuses 0.21% of pages; by eye only 0.03% of pages refused are legible."
+status: adopted
+decision: "Gate ON in the translation worker and both Batch lanes, switch TRANSLATE_PRE_GATE=0 (scripts/lib/pre-translation-gate.mjs, #5915)"
+superseded_by: null
+issue: 5915
+---
+## 2026-10-06 · Can a page the pipeline could not read be refused before translation, from the page document alone, without refusing legible pages? (#5915)
+<!-- PRIOR ART: 2026-10-02-illegible-gate-5305.md (a gate on what the OCR says about itself; it found no text-only feature that separates fluent misreadings, lexicon AUC 0.61–0.74); 2026-10-02-quality-by-date-chars-resolution-5615.md (resolution above 1,500 px does not move judged quality; it did not look at pixels per letter or at image shape). Neither measures image size against transcribed length, token shape, or page structure on a corpus draw. -->
+
+**Question.** The worst errors in the 2026-10-06 spot check were fluent English over pages nobody could read. Three rules were proposed for a gate before the model call: the image is too small for its text, the transcription fails a readability check for its script, the page is a structural reject. Where do the thresholds sit, and how many legible pages do they refuse?
+
+**Design.** Read-only, $0, no model calls. `scripts/eval/pre-translation-gate-5915.mjs --draw` shuffles all 71,365 books with OCR (seed 20261006) and takes the first 14,000; in each it picks one page that the translation worker's own door would accept, with a seeded generator (never `$sample` on pages). 13,971 pages came back. `--calibrate` runs `scripts/lib/pre-translation-gate.mjs` over them. Refusals were checked by eye: every refused page image was opened, with its transcription beside it. A first pass of 39 images (the lowest pixels-per-letter pages in each script) set the thresholds; the final pass covered all 31 refusals outside the page-number rule.
+
+**Result.**
+- **Pixel area per letter does not separate the cases on its own.** A legible three-column magazine page sits at 87 px² a letter and dense Latin print at 166; an unreadable strip of six book openings sits at 448. What separates the strips is shape: every one in the draw is 2000 px by 218–220 px (aspect 9.1–9.2), the case in the issue is 2000×121, and the narrowest legible pages are Tibetan pecha leaves (short edge ≥ 286 px, aspect ≤ 6.8). Rule: short edge under 260 px and aspect ≥ 8, on a page with ≥ 200 letters. Five strips in the draw, all unreadable, all in visible books, all already translated. A sixth page with aspect ≥ 8 is a tall scroll at 2000×16111 px; its short edge is 2,000 px and it is not refused.
+- **Density floors are a backstop.** CJK 500 px² a character (the scroll strip is 333; the lowest CJK pages whose stored size is true are 930–1,179, and the one opened, 1,179, is legible). Latin, Greek, Arabic, Hebrew, Cyrillic, Syriac, Devanagari, Tibetan: 50, below every page of the draw (minimum 87). A first floor of 100 refused the magazine page and was lowered. Script families with fewer than 30 sized pages in the draw have no row and are not judged.
+- **Stored image sizes go stale.** One page stored as 1000×667 is a 5616×3744 file. A too-small verdict is therefore confirmed against the file's own header (a ranged GET of the first 128 KB) before it stands; a duplicate-image verdict is confirmed against the host's ETag.
+- **Readability: one script has a usable signal.** In Devanagari, the share of tokens that are one akshara long and not a word (particles, postpositions and seed syllables are a closed list) has a median of 0.045 over 165 pages; 18 pages are at or above 0.30. By eye, 17 of the 18 are unread: 16 Śāradā-script manuscripts transcribed as Devanagari syllables and one handwritten ledger. One is a printed primer of conjuncts ("न् + त = न्त"), correctly read. In Latin, Greek and Cyrillic the same shape picks out letter-spaced titles, figure labels and papyrus fragments, all correctly read, so those scripts have no row. Tibetan and CJK are not written in spaced words.
+- **Structure.** 113 drawn pages (0.81%) have a page number ≤ 0; the worker already skips them, and all 113 carry a translation written before it did. Four pages carry the previous page's image (byte-identical files; repeated covers, slips and half-titles). Three share a page number with another page: all three are clear printed pages, halves of split spreads whose numbering collided.
+- **Refusal rate.** Outside the page-number rule the gate refuses 30 of 13,971 pages (0.21%). By eye 26 are unreadable or a repeat of the previous page and 4 are legible (the primer and the three duplicate-number pages): 0.03% of pages, against a target under 1%.
+- **Book rule (added for the fourth case).** A book of 20 pages or more with under half its translatable pages transcribed: 5,598 of 13,971 drawn books (40.1%), which is the preview pass (25 pages read at import). 488 of those (3.5% of the draw) have translated pages; 350 are visible. Corpus-wide from the cached counters: 2,455 such books carry translated pages, 1,669 of them visible. None is at `ocr_complete` or `translate_submitted`, so the rule refuses nothing in today's queue.
+- **The four cases.** Dry run, nothing written: Da jiao wang jing p. 1 refused as a strip (2000×121, confirmed from the file header); Strijataka pp. 7, 10, 12, 13, 14 refused as fragments; Shiva Svarodaya's 33 non-positive pages refused; Samarāṅgaṇa Sūtradhāra II refused whole (21 of 352 translatable pages transcribed).
+
+**What this does not cover.** Strijataka p. 11, named in the issue, passes: its fragment share is 0.20, and 14 Devanagari pages in the draw sit between 0.15 and 0.30 unchecked. Fluent misreadings in any script are invisible to all three rules. 8% of drawn pages have no stored size and 31% no stored byte length; those pages are not judged by the size rule or the duplicate-image rule. Recall was not measured: there is no labelled set of unreadable pages to count misses against. The by-eye reader is one model reading Śāradā and Devanagari without a second reader.
+
+*Grade.* Refusal rate on legible pages: decision-grade (n = 13,971, every refusal opened). Thresholds: directional; the strip rule rests on 5 strips from one source cohort plus the case in the issue, the Devanagari ceiling on 18 refusals. *Decision.* Ship the gate ON in the translation worker and both Batch lanes, with `TRANSLATE_PRE_GATE=0` as the switch. *Replicated?* No. *Cost* $0. *Artifacts:* `scripts/lib/pre-translation-gate.mjs`, `scripts/eval/pre-translation-gate-5915.mjs`, `tests/unit/pre-translation-gate.test.ts`.

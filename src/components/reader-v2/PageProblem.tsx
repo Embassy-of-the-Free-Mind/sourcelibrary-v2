@@ -15,6 +15,9 @@
  *    in view); choosing a class is optional; sending needs no typing. It posts
  *    to /api/feedback with a structured `page_report`, which files a triage
  *    item and changes nothing on the page — reader reports are untrusted input.
+ *    Choosing "The English is wrong here" (`translation_error`, #6120) adds three
+ *    fields — the passage as it reads, the correction, the original words — and
+ *    fills the first from the reader's text selection when there is one.
  *
  * Both are client-only and fetch nothing during render: the reader is an ISR
  * route, and the only network call here happens on the reader's click.
@@ -25,15 +28,16 @@ import { Loader2, Check } from 'lucide-react';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { pageReadCaution, transcriptionReliability } from '@/lib/transcription-reliability';
-import { PAGE_REPORT_KINDS, type PageReportKind } from '@/lib/page-report';
+import { PAGE_REPORT_KINDS, MAX_CORRECTION_FIELD, type PageReportKind } from '@/lib/page-report';
 import { MAX_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import type { Book, Page } from '@/lib/types';
 
 export function ReadCautionNote({ page, book }: { page: Page; book: Book }) {
   const t = getReaderStrings(useLocale()).readCaution;
-  // A book-level "we cannot read this script" notice already covers every page
-  // of such a book; a second, page-level line under it reads as boilerplate.
-  if (transcriptionReliability(book)) return null;
+  // A "we cannot read this script" notice already covers the page; a second,
+  // page-level line under it reads as boilerplate. A specialist-engine
+  // `caution` is about the engine in general, so this page's own signal still shows.
+  if (transcriptionReliability(book, page)?.level === 'unreliable') return null;
   if (!page.translation?.data || page.gated) return null;
   const caution = pageReadCaution(page);
   if (!caution) return null;
@@ -56,9 +60,21 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<PageReportKind | null>(null);
   const [comment, setComment] = useState('');
+  const [passage, setPassage] = useState('');
+  const [correction, setCorrection] = useState('');
+  const [sourceText, setSourceText] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'failed'>('idle');
 
   if (page.gated) return null;
+
+  // What the reader had selected, if anything: usually the passage they mean.
+  const selected = () =>
+    typeof window === 'undefined' ? '' : (window.getSelection()?.toString() || '').trim().slice(0, MAX_CORRECTION_FIELD);
+
+  function choose(k: PageReportKind | null) {
+    setKind(k);
+    if (k === 'translation_error' && !passage) setPassage(selected());
+  }
 
   async function send() {
     if (state === 'sending') return;
@@ -68,13 +84,16 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: comment.trim().slice(0, MAX_FEEDBACK_MESSAGE - 200),
+          message: comment.trim().slice(0, MAX_FEEDBACK_MESSAGE - 200 - 3 * MAX_CORRECTION_FIELD),
           page: typeof window !== 'undefined' ? window.location.href : undefined,
           page_report: {
             book_id: book.id,
             page_id: page.id,
             page_number: page.page_number,
             kind,
+            ...(kind === 'translation_error'
+              ? { correction: { passage, correction, source_text: sourceText } }
+              : {}),
           },
         }),
       });
@@ -105,7 +124,7 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
       <div className={wrap} style={wrapStyle}>
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => { setPassage(selected()); setOpen(true); }}
           className="text-[12px] underline underline-offset-2 decoration-dotted hover:opacity-80"
           style={{ color: 'var(--text-muted)' }}
         >
@@ -127,7 +146,7 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
                 key={k}
                 type="button"
                 aria-pressed={on}
-                onClick={() => setKind(on ? null : k)}
+                onClick={() => choose(on ? null : k)}
                 className={CHIP}
                 style={on
                   ? { background: 'var(--text-primary)', color: 'var(--bg-cream)', borderColor: 'var(--text-primary)' }
@@ -139,6 +158,27 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
           })}
         </div>
       </fieldset>
+      {kind === 'translation_error' && (
+        <div className="mt-2.5 space-y-2">
+          {([
+            [t.passageLabel, passage, setPassage, 3],
+            [t.correctionLabel, correction, setCorrection, 3],
+            [t.sourceLabel, sourceText, setSourceText, 2],
+          ] as const).map(([label, value, set, rows]) => (
+            <label key={label} className="block">
+              <span className="block text-[12px] pb-1" style={{ color: 'var(--text-secondary)' }}>{label}</span>
+              <textarea
+                value={value}
+                onChange={e => set(e.target.value)}
+                rows={rows}
+                maxLength={MAX_CORRECTION_FIELD}
+                className="w-full border px-2.5 py-1.5 text-[16px] lg:text-[13px] leading-snug outline-none focus:border-[var(--text-muted)] resize-y"
+                style={{ borderColor: 'var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
+              />
+            </label>
+          ))}
+        </div>
+      )}
       <label className="block mt-2.5">
         <span className="sr-only">{t.commentPlaceholder}</span>
         <input
@@ -164,7 +204,10 @@ export function PageProblemReport({ page, book }: { page: Page; book: Book }) {
         </button>
         <button
           type="button"
-          onClick={() => { setOpen(false); setKind(null); setComment(''); setState('idle'); }}
+          onClick={() => {
+            setOpen(false); setKind(null); setComment(''); setState('idle');
+            setPassage(''); setCorrection(''); setSourceText('');
+          }}
           className="text-[12.5px] hover:opacity-80"
           style={{ color: 'var(--text-muted)' }}
         >

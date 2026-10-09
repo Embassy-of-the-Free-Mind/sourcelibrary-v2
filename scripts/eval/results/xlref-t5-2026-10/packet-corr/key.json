@@ -1,0 +1,846 @@
+{
+ "seed": 56951,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/work/records-corr.jsonl",
+ "input_sha": "5d1d347cff791c9a",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "69e7490d85f786e884a4d40e_00180": {
+    "donor": "69e7267ca409200ea79ef51d_00353",
+    "donor_arm": "lite",
+    "text": "|| Hitopadesha ||\n\n->|| 140 ||<-\n\nIf war has indeed arrived, O King, why did you not prepare for it earlier? For, who is that servant or minister who, without careful consideration, advises a king to prepare for battle and abandon his own post at the very start? Furthermore, one should always endeavor to conquer enemies through means other than war, as the outcome of a struggle between two combatants is never certain. Moreover, one should attempt to subdue the enemy by using diplomacy, bribery, sowing dissension, or all three combined, but never by war alone. Additionally, everyone considers themselves brave when they have not yet encountered the conflict, for who would not be proud when they have not yet seen the power of the enemy? Furthermore, one does not stir up such terrible strife among creatures, as success is rarely achieved through minor means and the fruits of war are never great. Therefore, seeing that war has arrived, let it be disregarded. For:\n\nThe <term>Chakravaka</term> <gloss>the ruddy sheldrake, acting as a counselor in this fable</gloss> says, \"O King, war is not to be pursued. For what kind of servant or minister is it who advises a king to prepare for battle and abandon his own station without first deliberating? Furthermore, one should endeavor to conquer an opponent by means of conciliation and other strategies, but never by armed conflict, since it is impossible to know for certain which of the two combatants will emerge victorious. Moreover, one should attempt to resolve matters with an enemy by using conciliation, bribery, or sowing dissension, either individually or together, but never by fighting. Besides, every person is a hero as long as they have not yet faced a battle, for who would not be arrogant without having seen the strength of another?\"\n\n<summary>This page contains a debate on political strategy, arguing against immediate war in favor of diplomatic measures like conciliation and bribery.</summary>\n<keywords>Hitopadesha, diplomacy, war, statecraft, Chakravaka, conflict resolution</keywords>"
+   }
+  },
+  "planted": {
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "base_arm": "flash-corr",
+    "text": "# Mozi, Volume 12\n\n<meta>The text continues the debate regarding the consequences of human actions and the validity of traditional rituals.</meta>\n\nThey cannot bring about misfortune or blessing, and they hold that there are no such things as auspicious or inauspicious omens. Because of this, the administration falls into disorder and the state is endangered. Therefore, the books of the former kings also contain this principle, stating: \"His <note>The character formerly written as 'also' is corrected here to mean 'his'</note> arrogance originates from himself and is inauspicious.\" This means that those who do evil will be punished, and those who do good will be rewarded.\n\nMaster Mozi spoke to Gongmengzi, saying: According to the rites of mourning, when a ruler, a parent, a wife, or the eldest son <insert>meaning the heir</insert> dies, one must observe three years of mourning. For paternal uncles, brothers, and cousins, the period is one year. For distant relatives, it is five months. For paternal aunts, elder sisters, maternal uncles, and sisters' sons, there are all designated months for mourning. Some people, during the intervals when they are actively mourning, recite three hundred poems, play three hundred poems on stringed instruments, sing three hundred poems, and perform three hundred dances. If your words were followed, when would the gentleman find the time to attend to the administration of the state? When would the common people find the time to follow their occupations?\n\nGongmengzi replied: When the state is in disorder, one should govern it. When it is well-ordered, one should perform the rites and music. When the state is well-ordered, one follows one's occupation. When the state is wealthy, one performs the rites and music.\n\nMaster Mozi said: The order of a state <insert>Lu Wenchao suggests that five characters meaning 'is maintained through governing, therefore it is ordered' are missing here</insert>. If governing is abandoned, then the order of the state is also abandoned. The state's \n\n<summary>Mozi debates Gongmengzi regarding the impracticality of lengthy Confucian mourning rituals and the proper timing for rites and music in statecraft. Mozi argues that excessive ritual interferes with the essential duties of governing and productivity.</summary>\n<keywords>Mozi, Gongmengzi, mourning rites, rituals and music, governance, state order, reward and punishment</keywords>",
+    "op": "drop-negation",
+    "from": "are not",
+    "to": "are",
+    "at": 1161,
+    "before_context": "all designated months for mourning. Some people, during the intervals when they are not actively mourning, recite three hundred poems, play three hundred poems on stri",
+    "after_context": "all designated months for mourning. Some people, during the intervals when they are actively mourning, recite three hundred poems, play three hundred poems on stri"
+   }
+  },
+  "duplicate": {
+   "69bd014bf403a9ca2380f091_00054": {
+    "arm": "flash"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "flash-corr",
+    "T4": "lite-corr",
+    "T5": "served"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "lite-corr",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "served",
+    "T5": "flash-corr"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "lite",
+    "T2": "lite-corr",
+    "T3": "served",
+    "T4": "flash",
+    "T5": "flash-corr"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "served",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "flash-corr",
+    "T5": "lite"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "flash",
+    "T2": "flash-corr",
+    "T3": "lite-corr",
+    "T4": "served",
+    "T5": "lite"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "lite-corr",
+    "T2": "flash#dup",
+    "T3": "served",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "flash-corr"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "flash-corr",
+    "T2": "flash",
+    "T3": "lite-corr",
+    "T4": "served",
+    "T5": "lite"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "lite",
+    "T2": "flash-corr",
+    "T3": "lite-corr",
+    "T4": "flash",
+    "T5": "served"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "lite-corr",
+    "T2": "lite",
+    "T3": "flash",
+    "T4": "flash-corr",
+    "T5": "served"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "flash-corr",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "served"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "lite-corr",
+    "T2": "served",
+    "T3": "lite",
+    "T4": "flash-corr",
+    "T5": "flash"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "flash-corr",
+    "T4": "served",
+    "T5": "lite-corr"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "served",
+    "T2": "lite",
+    "T3": "flash-corr",
+    "T4": "lite-corr",
+    "T5": "flash",
+    "T6": "control:wrong_page"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "served",
+    "T2": "lite",
+    "T3": "lite-corr",
+    "T4": "flash",
+    "T5": "flash-corr"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served",
+    "T4": "lite-corr",
+    "T5": "flash-corr"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "served",
+    "T4": "lite-corr",
+    "T5": "flash-corr"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "lite-corr",
+    "T2": "served",
+    "T3": "flash",
+    "T4": "flash-corr",
+    "T5": "lite"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "flash",
+    "T2": "served",
+    "T3": "lite-corr",
+    "T4": "flash-corr",
+    "T5": "lite"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "lite-corr",
+    "T2": "flash",
+    "T3": "served",
+    "T4": "flash-corr",
+    "T5": "lite"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "flash-corr",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "served",
+    "T5": "lite-corr"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "lite",
+    "T2": "served",
+    "T3": "flash",
+    "T4": "lite-corr",
+    "T5": "flash-corr"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "lite",
+    "T2": "lite-corr",
+    "T3": "flash-corr",
+    "T4": "flash",
+    "T5": "control:planted",
+    "T6": "served"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served",
+    "T4": "flash-corr",
+    "T5": "lite-corr"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "flash-corr",
+    "T4": "lite-corr",
+    "T5": "lite"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "flash",
+    "T2": "lite-corr",
+    "T3": "lite",
+    "T4": "served",
+    "T5": "flash-corr"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "flash-corr",
+    "T4": "lite",
+    "T5": "lite-corr"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "lite-corr",
+    "T4": "flash-corr",
+    "T5": "served"
+   }
+  },
+  "j2": {
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "flash-corr",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "served",
+    "T5": "lite"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "served",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "flash-corr"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "served",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "flash-corr",
+    "T5": "lite"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "served",
+    "T2": "lite-corr",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "flash-corr"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "lite-corr",
+    "T2": "flash",
+    "T3": "served",
+    "T4": "lite",
+    "T5": "flash-corr"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "flash#dup",
+    "T4": "lite-corr",
+    "T5": "flash-corr",
+    "T6": "served"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "lite",
+    "T2": "flash-corr",
+    "T3": "lite-corr",
+    "T4": "served",
+    "T5": "flash"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "served",
+    "T2": "flash-corr",
+    "T3": "lite",
+    "T4": "lite-corr",
+    "T5": "flash"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "lite-corr",
+    "T2": "served",
+    "T3": "lite",
+    "T4": "flash",
+    "T5": "flash-corr"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "lite-corr",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "served",
+    "T5": "flash-corr"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "lite-corr",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "flash-corr",
+    "T5": "served"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "flash",
+    "T2": "flash-corr",
+    "T3": "served",
+    "T4": "lite",
+    "T5": "lite-corr"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "flash-corr",
+    "T4": "served",
+    "T5": "lite-corr",
+    "T6": "control:wrong_page"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "flash-corr",
+    "T2": "lite-corr",
+    "T3": "served",
+    "T4": "flash",
+    "T5": "lite"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "lite",
+    "T2": "served",
+    "T3": "lite-corr",
+    "T4": "flash-corr",
+    "T5": "flash"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "flash",
+    "T2": "served",
+    "T3": "lite",
+    "T4": "flash-corr",
+    "T5": "lite-corr"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "flash",
+    "T2": "flash-corr",
+    "T3": "served",
+    "T4": "lite-corr",
+    "T5": "lite"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "lite-corr",
+    "T4": "lite",
+    "T5": "flash-corr"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "lite-corr",
+    "T2": "flash-corr",
+    "T3": "flash",
+    "T4": "served",
+    "T5": "lite"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "flash-corr",
+    "T2": "flash",
+    "T3": "lite-corr",
+    "T4": "served",
+    "T5": "lite"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "flash-corr",
+    "T4": "served",
+    "T5": "lite-corr"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "flash-corr",
+    "T2": "control:planted",
+    "T3": "lite-corr",
+    "T4": "flash",
+    "T5": "lite",
+    "T6": "served"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "lite-corr",
+    "T2": "flash-corr",
+    "T3": "flash",
+    "T4": "lite",
+    "T5": "served"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "lite-corr",
+    "T2": "lite",
+    "T3": "flash-corr",
+    "T4": "flash",
+    "T5": "served"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "flash-corr",
+    "T2": "flash",
+    "T3": "served",
+    "T4": "lite-corr",
+    "T5": "lite"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "flash",
+    "T2": "flash-corr",
+    "T3": "lite",
+    "T4": "served",
+    "T5": "lite-corr"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "flash",
+    "T2": "lite-corr",
+    "T3": "lite",
+    "T4": "flash-corr",
+    "T5": "served"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "b1485d04fd90521b",
+    "T2": "7b73b7beea457e6e",
+    "T3": "c8eec953a842454d",
+    "T4": "6830e779fa26cb34",
+    "T5": "8ff6f07509d3f377"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "a3d32ae2ae0c28bd",
+    "T2": "ac3994a08edb8845",
+    "T3": "f9ec51eae4d5b540",
+    "T4": "2856a8c1ab13b1f3",
+    "T5": "b3a537dfd5a42ec6"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "eade59a37e036b84",
+    "T2": "e9969d076df11d5b",
+    "T3": "78f165ab51c5d34a",
+    "T4": "7500607bb808615d",
+    "T5": "9c34895d8f67df09"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "a99d17dc32434569",
+    "T2": "1a52785ff51cf5c9",
+    "T3": "1322f9ce4975316a",
+    "T4": "d30be7e57729adfa",
+    "T5": "531422df287dfb14"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "d9c61d7ea4604162",
+    "T2": "743a19359f786a97",
+    "T3": "4f305f2229512a3f",
+    "T4": "0674cf499a797522",
+    "T5": "9fc38774d06fe340"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "28ba8d19c1c276a6",
+    "T2": "08511a76e27c3d0e",
+    "T3": "a818d94e14a37385",
+    "T4": "08511a76e27c3d0e",
+    "T5": "d87dc6d8694d5a41",
+    "T6": "3e83592caee7c792"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "b5535f4f7f4ba0e8",
+    "T2": "422a90a683841526",
+    "T3": "5ec355e247418270",
+    "T4": "7a37fd4eb3730310",
+    "T5": "93f210cd7b9790f1"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "e51432b7a7594ccf",
+    "T2": "9a7f8a812eb48377",
+    "T3": "74af640c18306e4d",
+    "T4": "0de9a24a4d596d70",
+    "T5": "816a25b4d4c1f086"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "5ba77a0c4959d6ad",
+    "T2": "7f3d99cdb0bde020",
+    "T3": "1970b38598438428",
+    "T4": "4823381cc6185f0e",
+    "T5": "31b8c4f76298b897"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "9bfdf76519db8200",
+    "T2": "794ce3f8abd9315f",
+    "T3": "fc366aad869e2a85",
+    "T4": "8bf4447859ba84f5",
+    "T5": "bbde335d75dbbd54"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "4ca8b97fcba0b7ac",
+    "T2": "a433eac8c005c653",
+    "T3": "2b4d68ab94c514c5",
+    "T4": "aab7bb07e999049a",
+    "T5": "1e393cf676d3be93"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "7307d0bff5b82d43",
+    "T2": "61a928a22b21d2c6",
+    "T3": "1e1d5fbf7d26835f",
+    "T4": "8ece1a2db4f686f6",
+    "T5": "14c5aca9f149f709"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "fa7eef0c620b0d23",
+    "T2": "65a2ec75175aa7b0",
+    "T3": "69267cc580b5f913",
+    "T4": "b236e4fcc0b5189b",
+    "T5": "da7df4a8fa082210",
+    "T6": "6a26376bdeb78649"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "a106fd783dd04a1b",
+    "T2": "495ac90b17302ce7",
+    "T3": "108eed9433c54bc0",
+    "T4": "acca0e42e7fcb54b",
+    "T5": "82e9e9d76fb8dc52"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "0178ce8bb549289d",
+    "T2": "b058915eddbac430",
+    "T3": "1858427c916b9c93",
+    "T4": "29a9a53133665b67",
+    "T5": "68b9d6c14d8b8866"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "c30f0c5a971014fe",
+    "T2": "5289faa4adf23c8f",
+    "T3": "173e8b9540acf6ff",
+    "T4": "8516e8a18ba5a894",
+    "T5": "c19ac946a33b9e39"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "abaf5dd867dd495c",
+    "T2": "754dd990ba4117b2",
+    "T3": "2284b26d61d023a3",
+    "T4": "ca5a31f3ba4c0443",
+    "T5": "71f4054b916c3292"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "f246e9b41d1d4c95",
+    "T2": "a2b8b74920408e84",
+    "T3": "53b658ae6dbb2501",
+    "T4": "257bb025007488e8",
+    "T5": "36d5c458e2b7f042"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "4dd959ee0905bca4",
+    "T2": "54cf7eda68bdb2b3",
+    "T3": "df24a90b4606848a",
+    "T4": "0a04d1fa76888676",
+    "T5": "0c21330fd64e519b"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "13a13be0cea234bd",
+    "T2": "2b0503c7aecf7840",
+    "T3": "e0ac33ee61c0aa18",
+    "T4": "eafff1cfc3f42e50",
+    "T5": "bbeda27ac72b9eb8"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "26eda1e891ad5ee9",
+    "T2": "4b1ec6d44e84e8b3",
+    "T3": "d4d24c3cb7c9cdfd",
+    "T4": "d9ea0b92fd1037ea",
+    "T5": "fcc27791769ec947"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "4b9d7924dd852ca7",
+    "T2": "2370e62859b7b2d7",
+    "T3": "d7b3cbed2c2563a5",
+    "T4": "be1de991b4960bcc",
+    "T5": "e6a8f51b8274e6a9",
+    "T6": "c6d654f2887f9022"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "4c791a05a8cd738f",
+    "T2": "51edfb362a5ce32b",
+    "T3": "f5d676046388081f",
+    "T4": "11e2ed3c523c0910",
+    "T5": "17ad6344b54fead6"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "9c24c5a74c0285cf",
+    "T2": "a7ad40295a6ead24",
+    "T3": "7d63a3d178955cab",
+    "T4": "54802e6175044075",
+    "T5": "7ab7e7f71c8ba7e1"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "8cd1c76bac6b29ee",
+    "T2": "930870bb686d5b2f",
+    "T3": "37de3f1eaa5aca0a",
+    "T4": "5dfe9d0b2f8c7cd6",
+    "T5": "32c541a1c2c0f611"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "5a6a7350f7d432d8",
+    "T2": "ee082339378f5de5",
+    "T3": "39871f2626f58711",
+    "T4": "6a26376bdeb78649",
+    "T5": "31eab2e60e63cd9f"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "7585e4eccbf55dbd",
+    "T2": "e04da7daa56ac85e",
+    "T3": "be0bd1abcf785798",
+    "T4": "381b5bd2dad5723c",
+    "T5": "8da639187d603b98"
+   }
+  },
+  "j2": {
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "c8eec953a842454d",
+    "T2": "6830e779fa26cb34",
+    "T3": "b1485d04fd90521b",
+    "T4": "8ff6f07509d3f377",
+    "T5": "7b73b7beea457e6e"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "2856a8c1ab13b1f3",
+    "T2": "a3d32ae2ae0c28bd",
+    "T3": "f9ec51eae4d5b540",
+    "T4": "ac3994a08edb8845",
+    "T5": "b3a537dfd5a42ec6"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "78f165ab51c5d34a",
+    "T2": "e9969d076df11d5b",
+    "T3": "7500607bb808615d",
+    "T4": "9c34895d8f67df09",
+    "T5": "eade59a37e036b84"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "a99d17dc32434569",
+    "T2": "1a52785ff51cf5c9",
+    "T3": "1322f9ce4975316a",
+    "T4": "531422df287dfb14",
+    "T5": "d30be7e57729adfa"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "4f305f2229512a3f",
+    "T2": "d9c61d7ea4604162",
+    "T3": "0674cf499a797522",
+    "T4": "9fc38774d06fe340",
+    "T5": "743a19359f786a97"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "d87dc6d8694d5a41",
+    "T2": "08511a76e27c3d0e",
+    "T3": "08511a76e27c3d0e",
+    "T4": "28ba8d19c1c276a6",
+    "T5": "3e83592caee7c792",
+    "T6": "a818d94e14a37385"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "93f210cd7b9790f1",
+    "T2": "b5535f4f7f4ba0e8",
+    "T3": "5ec355e247418270",
+    "T4": "7a37fd4eb3730310",
+    "T5": "422a90a683841526"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "816a25b4d4c1f086",
+    "T2": "9a7f8a812eb48377",
+    "T3": "e51432b7a7594ccf",
+    "T4": "74af640c18306e4d",
+    "T5": "0de9a24a4d596d70"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "5ba77a0c4959d6ad",
+    "T2": "31b8c4f76298b897",
+    "T3": "7f3d99cdb0bde020",
+    "T4": "1970b38598438428",
+    "T5": "4823381cc6185f0e"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "794ce3f8abd9315f",
+    "T2": "fc366aad869e2a85",
+    "T3": "8bf4447859ba84f5",
+    "T4": "bbde335d75dbbd54",
+    "T5": "9bfdf76519db8200"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "4ca8b97fcba0b7ac",
+    "T2": "1e393cf676d3be93",
+    "T3": "2b4d68ab94c514c5",
+    "T4": "aab7bb07e999049a",
+    "T5": "a433eac8c005c653"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "61a928a22b21d2c6",
+    "T2": "1e1d5fbf7d26835f",
+    "T3": "8ece1a2db4f686f6",
+    "T4": "7307d0bff5b82d43",
+    "T5": "14c5aca9f149f709"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "da7df4a8fa082210",
+    "T2": "65a2ec75175aa7b0",
+    "T3": "69267cc580b5f913",
+    "T4": "fa7eef0c620b0d23",
+    "T5": "b236e4fcc0b5189b",
+    "T6": "6a26376bdeb78649"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "82e9e9d76fb8dc52",
+    "T2": "108eed9433c54bc0",
+    "T3": "a106fd783dd04a1b",
+    "T4": "acca0e42e7fcb54b",
+    "T5": "495ac90b17302ce7"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "b058915eddbac430",
+    "T2": "1858427c916b9c93",
+    "T3": "29a9a53133665b67",
+    "T4": "68b9d6c14d8b8866",
+    "T5": "0178ce8bb549289d"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "5289faa4adf23c8f",
+    "T2": "173e8b9540acf6ff",
+    "T3": "c30f0c5a971014fe",
+    "T4": "c19ac946a33b9e39",
+    "T5": "8516e8a18ba5a894"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "2284b26d61d023a3",
+    "T2": "ca5a31f3ba4c0443",
+    "T3": "754dd990ba4117b2",
+    "T4": "abaf5dd867dd495c",
+    "T5": "71f4054b916c3292"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "a2b8b74920408e84",
+    "T2": "f246e9b41d1d4c95",
+    "T3": "53b658ae6dbb2501",
+    "T4": "36d5c458e2b7f042",
+    "T5": "257bb025007488e8"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "4dd959ee0905bca4",
+    "T2": "0a04d1fa76888676",
+    "T3": "54cf7eda68bdb2b3",
+    "T4": "df24a90b4606848a",
+    "T5": "0c21330fd64e519b"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "13a13be0cea234bd",
+    "T2": "2b0503c7aecf7840",
+    "T3": "bbeda27ac72b9eb8",
+    "T4": "eafff1cfc3f42e50",
+    "T5": "e0ac33ee61c0aa18"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "26eda1e891ad5ee9",
+    "T2": "d4d24c3cb7c9cdfd",
+    "T3": "fcc27791769ec947",
+    "T4": "4b1ec6d44e84e8b3",
+    "T5": "d9ea0b92fd1037ea"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "d7b3cbed2c2563a5",
+    "T2": "e6a8f51b8274e6a9",
+    "T3": "2370e62859b7b2d7",
+    "T4": "be1de991b4960bcc",
+    "T5": "4b9d7924dd852ca7",
+    "T6": "c6d654f2887f9022"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "17ad6344b54fead6",
+    "T2": "11e2ed3c523c0910",
+    "T3": "4c791a05a8cd738f",
+    "T4": "51edfb362a5ce32b",
+    "T5": "f5d676046388081f"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "54802e6175044075",
+    "T2": "7ab7e7f71c8ba7e1",
+    "T3": "7d63a3d178955cab",
+    "T4": "a7ad40295a6ead24",
+    "T5": "9c24c5a74c0285cf"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "32c541a1c2c0f611",
+    "T2": "8cd1c76bac6b29ee",
+    "T3": "5dfe9d0b2f8c7cd6",
+    "T4": "930870bb686d5b2f",
+    "T5": "37de3f1eaa5aca0a"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "ee082339378f5de5",
+    "T2": "39871f2626f58711",
+    "T3": "6a26376bdeb78649",
+    "T4": "5a6a7350f7d432d8",
+    "T5": "31eab2e60e63cd9f"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "7585e4eccbf55dbd",
+    "T2": "be0bd1abcf785798",
+    "T3": "e04da7daa56ac85e",
+    "T4": "381b5bd2dad5723c",
+    "T5": "8da639187d603b98"
+   }
+  }
+ },
+ "gate_items": [
+  "69e7490d85f786e884a4d40e_00180",
+  "69e8b2642ff2a8dc09e778a1_00439",
+  "69bd014bf403a9ca2380f091_00054"
+ ],
+ "main_items": [
+  "69b99e681f30176bf4d3798a_00155",
+  "69b99e856ed9e0490990a0b5_00301",
+  "69b99e8b6ed9e0490990a274_00179",
+  "6a31c8b74400787ae5a9d7a7_00042",
+  "69bc7a3f8888fef520b73c1e_00217",
+  "699258c28812793469fdd6be_00160",
+  "69935b4d8e28d8f4c5d3cfaa_00177",
+  "69b99f256ed9e0490990aa8a_00185",
+  "69d91e423a50087f7bd9afc5_00214",
+  "69e3ff61b142e5dd9d6b0095_00128",
+  "69e7490585f786e884a4d1aa_00097",
+  "69e7491a85f786e884a4d6f9_00789",
+  "69e7491f85f786e884a4dc2f_00182",
+  "69e8b27f2ff2a8dc09e77ed7_00048",
+  "69ea3e63300d991d0f1d3186_00160",
+  "69935b692c63944063133f67_00112",
+  "69e72c60a409200ea79f46f6_00141",
+  "69e72c6ba409200ea79f484e_00102",
+  "69e72c75a409200ea79f4976_00100",
+  "69e72698a409200ea79ef8c3_00129",
+  "69e792f880b52390feb17389_00344",
+  "69906a861cf6ed5fbc8f5d21_00078",
+  "69e7267ca409200ea79ef51d_00353",
+  "69e80662fdad300064d9ed7c_00171"
+ ]
+}

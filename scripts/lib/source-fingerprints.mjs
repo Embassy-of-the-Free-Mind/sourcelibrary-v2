@@ -48,6 +48,14 @@ export function deriveSourceIdentifiers(url) {
       if (!unusable(id)) out.push(`ia:${id}`);
     }
   }
+  if (host === 'e-rara.ch' || host.endsWith('.e-rara.ch')) {
+    // `/i3f/v20/<id>/manifest` and `/i3f/v21/<id>/manifest` are ONE object — the
+    // `vNN` is e-rara's API version. Keyed only on the manifest shape, never on a
+    // bare numeric path segment (see the exclusion note on sourceFingerprints).
+    // Same `e-rara:<id>` form the provider/identifier pair produces. #5811
+    const m = url.match(/\/i3f\/v\d+\/(\d{3,})\/manifest/);
+    if (m) out.push(`e-rara:${m[1]}`);
+  }
   const bsb = url.match(/\b(bsb[0-9]{6,})\b/i);
   if (bsb) out.push(`mdz:${bsb[1].toLowerCase()}`);
   const ark = url.match(/ark:\/(\d{4,6})\/([A-Za-z0-9._-]{5,})/);
@@ -117,7 +125,7 @@ export function sourceFingerprints(book) {
 /**
  * The legacy SCALAR fingerprint — one identifier chosen by priority.
  * Unchanged from `src/lib/dedup.ts`; still written on every import because
- * indexes, the warehouse and several audits read it. `sourceFingerprints()`
+ * indexes and several audits read it. `sourceFingerprints()`
  * above is what tier 1 now matches on.
  */
 export function sourceFingerprint(book) {

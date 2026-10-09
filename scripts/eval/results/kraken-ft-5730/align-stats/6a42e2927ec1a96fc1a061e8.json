@@ -1,0 +1,157 @@
+{
+ "book_id": "6a42e2927ec1a96fc1a061e8",
+ "tcp": "A68837",
+ "pages": 20,
+ "pages_kept": 15,
+ "page_drop": {
+  "too-little-text": 5
+ },
+ "lines": 307,
+ "lines_kept": 227,
+ "line_drop": {
+  "unaligned": 23,
+  "short": 29,
+  "page-dropped": 26,
+  "cer>0.3": 1,
+  "length": 1
+ },
+ "per_page": [
+  {
+   "page": "100",
+   "match": 0.971,
+   "sides": [
+    106
+   ],
+   "kept": 13,
+   "lines": 17
+  },
+  {
+   "page": "130",
+   "match": 0.958,
+   "sides": [
+    136
+   ],
+   "kept": 15,
+   "lines": 18
+  },
+  {
+   "page": "132",
+   "match": 0.964,
+   "sides": [
+    138
+   ],
+   "kept": 14,
+   "lines": 19
+  },
+  {
+   "page": "134",
+   "match": 0.951,
+   "sides": [
+    140
+   ],
+   "kept": 13,
+   "lines": 19
+  },
+  {
+   "page": "168",
+   "match": 0.967,
+   "sides": [
+    174
+   ],
+   "kept": 15,
+   "lines": 18
+  },
+  {
+   "page": "234",
+   "match": 0.948,
+   "sides": [
+    240
+   ],
+   "kept": 15,
+   "lines": 18
+  },
+  {
+   "page": "242",
+   "match": 0.937,
+   "sides": [
+    248
+   ],
+   "kept": 17,
+   "lines": 23
+  },
+  {
+   "page": "34",
+   "match": 0.942,
+   "sides": [
+    40
+   ],
+   "kept": 17,
+   "lines": 21
+  },
+  {
+   "page": "4",
+   "match": 0.912,
+   "sides": [
+    5
+   ],
+   "kept": 16,
+   "lines": 17
+  },
+  {
+   "page": "46",
+   "match": 0.953,
+   "sides": [
+    52
+   ],
+   "kept": 15,
+   "lines": 18
+  },
+  {
+   "page": "52",
+   "match": 0.942,
+   "sides": [
+    58
+   ],
+   "kept": 15,
+   "lines": 19
+  },
+  {
+   "page": "54",
+   "match": 0.957,
+   "sides": [
+    60
+   ],
+   "kept": 15,
+   "lines": 18
+  },
+  {
+   "page": "68",
+   "match": 0.92,
+   "sides": [
+    74
+   ],
+   "kept": 15,
+   "lines": 19
+  },
+  {
+   "page": "74",
+   "match": 0.93,
+   "sides": [
+    80
+   ],
+   "kept": 15,
+   "lines": 19
+  },
+  {
+   "page": "9",
+   "match": 0.968,
+   "sides": [
+    10
+   ],
+   "kept": 17,
+   "lines": 18
+  }
+ ],
+ "kept_read_cer_median": 0.0,
+ "kept_read_cer_mean": 0.0208
+}

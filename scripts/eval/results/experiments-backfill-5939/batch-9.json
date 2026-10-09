@@ -1,0 +1,493 @@
+{
+ "2026-10-04-mongol-kanjur-ocr-probe-5664.md": {
+  "header": {
+   "issue": 5664,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "mn"
+   ],
+   "scripts": [
+    "Mong"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": null,
+   "n_pages": 10,
+   "verdict": "Answer: no. Neither engine reads the script.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-04-ocr-tags-only-pass-5830.md": {
+  "header": {
+   "issue": 5830,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 1000,
+   "verdict": "T recovers everything but marginalia at $0.43 per 1,000 pages, 47% of a full lite OCR ($0.91 measured).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-04-reocr-hires-distressed-3186.md": {
+  "header": {
+   "issue": 3186,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "pi"
+   ],
+   "scripts": [],
+   "canons": [
+    "pali"
+   ],
+   "n_books": 18,
+   "n_pages": 48,
+   "verdict": "Blanket re-OCR of upgraded palm-leaf Pali on Flash is not justified; Arabic codices gain.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-reocr-lift-5700.md": {
+  "header": {
+   "issue": 5700,
+   "stage": "ocr",
+   "measure": "judged_vs_reference",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 4754,
+   "n_pages": 99,
+   "verdict": "Re-read only pages whose served OCR was made by Flash-Lite.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-routing-eval-tool-replay-5828.md": {
+  "header": {
+   "issue": [
+    5828,
+    5795
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "fa"
+   ],
+   "scripts": [
+    "Arab"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "As registered: the stored verdicts, exactly, for all five families.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "languages/canons are word matches",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-04-seam-markers-confirm-5678.md": {
+  "header": {
+   "issue": 5678,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "| | A Lite | A2 Lite again | B Lite + markers | C Flash + markers | D Flash |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 3, pipeline 3, ocr 0, image 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-tengyur-characterize-random-sample-5829.md": {
+  "header": {
+   "issue": 5829,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 47,
+   "verdict": "- Usability. Per review: three pages in four are light, one in four needs work, about 1 in 100 needs a specialist.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-04-tengyur-stored-draft-vs-84000-5797.md": {
+  "header": {
+   "issue": 5797,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 100,
+   "verdict": "- Controls passed 30/30: wrong page ≤ 2 on 10/10, planted reversal caught on 8/8 (flagged on 7/8, ranked below on 8/8), duplicates tied with the same grade on 12/12.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-tibetan-lite-vs-yigdzin-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": 527,
+   "n_pages": 10630,
+   "verdict": "- The engines rarely agree (n = 494 books, one page each).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-04-translation-prompt-v17-typed-notes-5698.md": {
+  "header": {
+   "issue": 5698,
+   "stage": "translation",
+   "measure": "agreement",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 40,
+   "n_pages": 40,
+   "verdict": "v17 is not established as written.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-10-04-translation-student-latin-lora-5793.md": {
+  "header": {
+   "issue": 5793,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 4540,
+   "n_pages": 71,
+   "verdict": "Verdict: FAIL. The student scores 0.83 lower than flash-lite [95% CI −1.06, −0.59] on 71 Latin pages judged against published human translations.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-04-translation-vs-reference-synthesis-5695.md": {
+  "header": {
+   "issue": 5695,
+   "stage": "translation",
+   "measure": "judged_vs_reference",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 321,
+   "verdict": "For Derek, as the numbered digest in the synthesis comment on #5695.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-05-decision-cards-audit-5873.md": {
+  "header": {
+   "issue": 5873,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 30,
+   "n_pages": 14,
+   "verdict": "Every \"keep what we have\" decision stands.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected, undecided)"
+  ]
+ },
+ "2026-10-05-engine-contest-5870.md": {
+  "header": {
+   "issue": 5870,
+   "stage": "ocr",
+   "measure": "judged_vs_reference",
+   "languages": [
+    "grc",
+    "en",
+    "sa",
+    "pi",
+    "ar",
+    "fa"
+   ],
+   "scripts": [
+    "Grek",
+    "Latn",
+    "Arab"
+   ],
+   "canons": [
+    "pali",
+    "sufi"
+   ],
+   "n_books": null,
+   "n_pages": 123511,
+   "verdict": "No script moves off Flash.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected, undecided)"
+  ]
+ },
+ "2026-10-06-greek-manuscripts-full-kraken-fit-5619.md": {
+  "header": {
+   "issue": 5619,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "grc"
+   ],
+   "scripts": [
+    "Grek"
+   ],
+   "canons": [],
+   "n_books": 5,
+   "n_pages": null,
+   "verdict": "| book (images) | edition | reading | located in order | chance | edges within 1 line (median gap, letters) | neighbour span verified, 4-gram / 6-gram | drift ½-page, k = 1 / 5 / 20 |",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-10-06-random-book-spot-check-canon-shelves-5914.md": {
+  "header": {
+   "issue": 5914,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": 30,
+   "n_pages": 100,
+   "verdict": "| measure | value |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 1, image 1, ocr 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-reference-topup-flash-translation-5873.md": {
+  "header": {
+   "issue": [
+    5873,
+    5740
+   ],
+   "stage": "translation",
+   "measure": "judged_vs_reference",
+   "languages": [
+    "lzh",
+    "sa",
+    "pi",
+    "he",
+    "ar",
+    "fa"
+   ],
+   "scripts": [
+    "Hani",
+    "Hebr",
+    "Arab"
+   ],
+   "canons": [
+    "pali"
+   ],
+   "n_books": 30,
+   "n_pages": 64,
+   "verdict": "Verdict per language | verdict | when |",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-translation-notes-free-5919.md": {
+  "header": {
+   "issue": 5919,
+   "stage": "translation",
+   "measure": "judged_vs_reference",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 40,
+   "n_pages": 40,
+   "verdict": "P1 and P2 pass. Removing the notes instructions did not lower fidelity on these 40 pages.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ }
+}

@@ -55,7 +55,7 @@ const argv = process.argv.slice(2);
 const CMD = argv[0];
 const arg = (n, d) => { const i = argv.indexOf(n); return i >= 0 && argv[i + 1] != null ? argv[i + 1] : d; };
 const flag = (n) => argv.includes(n);
-const DIR = arg('--dir', '/root/paddle-zh-5600');
+const DIR = arg('--dir', process.env.LANE_DIR || '/root/paddle-zh-5600');
 const COHORT = arg('--cohort', '/root/preview-stubs-4719/ids-chinese-held-5481.txt');
 const APPLY = flag('--apply');
 const BOOK = arg('--book', null);
@@ -332,7 +332,11 @@ async function apply() {
       let modified = 0;
       const unset = Object.fromEntries([...STALE_OCR_FIELDS, 'translation.health_blocked', 'translation.health_blocked_at'].map((k) => [k, '']));
       for (const w of writes) {
-        const set = { ...ocrSetFields(w.text, { run, now, imageUrl: w.r.src, box, stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) };
+        // a retried page (the fleet's wave 3) can be read on another box than its book: assign.json keys it `bid/pn`
+        const pageBox = assign[`${bid}/${w.r.pn}`];
+        const set = pageBox && pageBox !== boxName
+          ? { ...ocrSetFields(w.text, { run: `${LANE}/${pageBox}`, now, imageUrl: w.r.src, box: boxInfo(pageBox), stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) }
+          : { ...ocrSetFields(w.text, { run, now, imageUrl: w.r.src, box, stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) };
         // pipeline update: `ocr` can be null on never-read pages; every value $literal (a transcription is arbitrary text)
         const literal = Object.fromEntries(Object.entries(set).map(([k, v]) => [k, { $literal: v }]));
         const res = await P.updateOne({ id: w.p.id, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' } }, [

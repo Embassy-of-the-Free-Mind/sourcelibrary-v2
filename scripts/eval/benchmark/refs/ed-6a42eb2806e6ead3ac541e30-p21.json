@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/thesaurus/Koenig_bibliotheca_1.xml",
+  "edition": "Bibliotheca Vetus Et Nova : in qua Hebraeorum, Chaldaeorum, Syrorum, Arabum, Persarum, Aegyptiorum, Graecorum & Latinoru — Altdorf: Wolffgang Mauritius; Johann Andreas Endter Erben; Heinrich Meyer, 1678.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "6/12",
+    "pb_aligned_pages": "6/6"
+  },
+  "origin": "library",
+  "book_id": "6a42eb2806e6ead3ac541e30",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 20605,
+    "to_char": 24633,
+    "overlap": 0.764,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Two-column dictionary page 5 (header AC AC): starts 'Fragmenta Accii collegit Rob. Stephanus.'; ends 'Etymologici Magni (qui Nicas esse putatur)' catchword 'tur)'; Greek forms (Ἀκέσανδρος, Μυθολογήματα, Ἀκεστόδωρος) dropped in ref; ref padded with 'Priscianus: Atreum iterum Agellius.' and 'in , eum de'; foxed, Google watermark.",
+    "leaf_language": "mixed (Latin with Greek words)",
+    "page_type": "dictionary",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:25.421Z",
+  "text_location": "repo",
+  "text_sha256": "44bbfd29e9cd3321e6add5e480ca1cf95eb716b96f96c34c449df96efbab9982",
+  "unit": {
+    "chars": 4028
+  },
+  "stratum": "latin-period-5126"
+}

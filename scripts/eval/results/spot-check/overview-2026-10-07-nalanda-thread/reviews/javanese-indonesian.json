@@ -1,0 +1,478 @@
+[
+  {
+    "book_id": "6a20326418654bf8e1902bec",
+    "slot": 9,
+    "title": "[Collective volume with mostly Sufi texts in Malay, Arabic (and some Sundanese, inside the bindings) Qur’an, surat al-Fatiha ; and other texts] Or. 1332",
+    "tradition": "javanese-indonesian",
+    "shelf_fit": "fits",
+    "shelf_note": "Malay (Jawi) Sufi texts of Shams al-Din al-Sumatrani, Pasai 1629-30: Sumatran Malay, part of the archipelago Islamic tradition the shelf covers.",
+    "rights_flag": null,
+    "structure_note": "Every record is an unsplit two-page opening (I3), so each 'page' carries two manuscript pages; the OCR reads right page then left, which works on plain text openings and fails on the diagram openings. Page 1 is the closed binding (spine labels '160', 'Or. 1332') and is 'translated'. The pencil folios on the images (12 on rec 12, 21 on rec 25) show record numbers and folio numbers diverge; the 1 backstep / 2 repeats are most likely misread pencil numerals on openings. Record 12's image is served from the Leiden IIIF URL, not the archived copy, unlike the other records.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<language>Latin</language> ... <page-type>text</page-type>",
+            "image": "a closed leather binding with two shelfmark labels, no text",
+            "problem": "self-reported tags wrong (Latin, text) for a binding photo",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "A photograph of the binding is 'translated': the English pane repeats the image description, the raw <insert> labels and the model's <meta> comment ('\"Or.\" likely stands for \"Orientalis\"').",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "تمت الکتاب نرم الدقايق",
+            "image": "تمت الكتاب نور الدقائق",
+            "problem": "the work's title in the colophon misread: Nur al-Daqa'iq becomes 'nrm al-daqayiq'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "باقو يانبو مکان مريڠ سوره سبت ياهو ياهو يڠ مراس ملسين نتا",
+            "image": "ياهو ياهو مكانن برهمسر دسبت ياهو ياهو كبيغ ... برلسين نتا",
+            "problem": "line 4 of the right page garbled into non-words",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "اشامرة",
+            "image": "اشارة",
+            "problem": "the recurring key term 'isyarat' (indication) consistently misread throughout",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "تمت الکتاب نرم الدقايق مولان شيخ شمس الدين",
+            "english": "This marks the completion of the book \"The Pearl of Realities\" <note>Arabic: Durrat al-Daqaiq</note> by the master Sheikh Shamsuddin",
+            "problem": "the colophon names the work Nur al-Daqa'iq; the translation invents a different title, 'Durrat al-Daqa'iq', found neither in the OCR nor on the leaf. A reader citing the work would cite the wrong title.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "باقو يانبو مکان مريڠ سوره سبت ياهو ياهو يڠ مراس ملسين نتا",
+            "english": "The place where one is commanded to say \"Ya Hu, Ya Hu\" is where one feels the manifestation.",
+            "problem": "fluent sentence built over a garbled OCR line, with no sign of uncertainty",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "(right page) شريعة ايت ... معرفة اين فقهونكو ... ادفون وجود اين انعام عدم",
+            "image": "right page carries two dense blocks of vertical/rotated Jawi text (top right and bottom) plus the upper block's eight vertical columns",
+            "problem": "most of the right page's rotated text is not transcribed at all; only the horizontal headings and a few lines are",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "برمول حقيقة قدرت ايت كفد توبه كيت ... كارن صفة ايت اقام متهار دغن جهات ايتود عبار صفة معنوية (repeated for حياة, علم, قدرة, سمع, بصر, كلام)",
+            "image": "the left page's diagram has diagonal blocks labelled احدية, حيات, وحدة, ارادة, نفس, علم; I cannot find قدرة, سمع, بصر, كلام labels",
+            "problem": "a templated formula repeated across seven attributes, at least partly not on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "لذِي لَمْ يَكُنْ السَّمَوَاتُ وَالْأَرْضُ مَرَّةً",
+            "image": "لذي بيده ملكوت السموات والارض مرة لم يكن له مرتين",
+            "problem": "opening line misread, 'malakut' dropped",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "برمول حقيقة قدرت ايت كفد توبه كيت قدرت الله ايت ... اقام متهار",
+            "english": "The reality of Power in our body is the Power of God; it is close to the Power of God, for that attribute is like the sun with its rays",
+            "problem": "the templated, partly confabulated OCR entries are translated as doctrine; 'like the sun with its rays' is built on 'اقام متهار', which is not readable Malay",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "A Sufi diagram opening (cosmological schema of the martabat) is rendered as a linear list; the diagrammatic structure is lost and the reader is not told so.",
+            "severity": "moderate",
+            "class": "O14"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 43,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "-> اعلم <- اد ماس الله يغ منجادي سكل يغ منجادي ... (the same 7-line block given twice, the second under -> ماس الله اعلم <-)",
+            "image": "no repeated block; the right page's blocks are بقاء, مخالفة للحوادث, قيامه بنفسه, وحدانية and two unlabelled blocks at the top",
+            "problem": "an identical block emitted twice, with nonsense heading",
+            "severity": "moderate",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "اد ماس الله يغ منجادي سكل يغ منجادي",
+            "english": "There is the time of Allah, who creates all that is created.",
+            "problem": "a 'time of Allah' sentence translated from a garbled duplicated block; not what the leaf says",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Broken markup in the reader text: each attribute is wrapped as '<margin></margin> ... </margin>', an empty margin followed by a stray closing tag.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      }
+    ],
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "A seventeenth-century Malay (Jawi) collection of Shams al-Din al-Sumatrani's Sufi treatises on the martabat and divine attributes. Plain prose openings are transcribed roughly and translated readably, but the colophon's title is misread and the English replaces it with an invented one, and the diagram openings are only partly transcribed, with repeated and templated blocks translated as doctrine. The English cannot be trusted for citation.",
+    "book_verdict": "An important early Malay Sufi manuscript, but the AI layer fails on its most distinctive pages (diagrams) and misnames the work in the colophon; not fit to show a scholar."
+  },
+  {
+    "book_id": "6a2032bf18654bf8e19036c9",
+    "slot": 10,
+    "title": "[Juzʾ (part) of Qurʾān; from Java] Or. 7092",
+    "tradition": "javanese-indonesian",
+    "shelf_fit": "fits",
+    "shelf_note": "A Javanese Qur'an manuscript on dluwang-like paper; belongs on a Javanese/Indonesian shelf.",
+    "rights_flag": null,
+    "structure_note": "Every record is an unsplit opening (I3) with both pages transcribed in reading order. The pencil numbers on the images equal the record numbers (14, 19, 68); the OCR tag read '68' as '48' on record 68, so the 5 printed backsteps are likely misread pencil numerals. 76 of 78 records have OCR and 74 are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "حَيَاةٌ ... (full modern vocalisation throughout)",
+            "image": "حيوة, sparsely vocalised",
+            "problem": "manuscript orthography (حيوة) and sparse pointing normalised to the modern printed text, though the OCR's own warning says it follows the manuscript",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "مِنْ مُوصٍ جَنَفًا",
+            "english": "from the testator aslanting",
+            "problem": "typo / odd word ('aslanting')",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "التَّوْرَاةَ",
+            "image": "التورية",
+            "problem": "manuscript spelling normalised to the standard printed orthography",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(no source)",
+            "english": "<meta>continues from previous page: judge between them or turn away from them.</meta>",
+            "problem": "continuity note quotes Q 5:42, not the verse (5:67) that precedes this page",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 68,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "وهو بكل شيء عليم ذلكم الله ربكم",
+            "image": "فاعبدوه وهو على كل شيء عليم ذلكم الله ربكم",
+            "problem": "a scribal variant on the leaf (anticipation of the next verse) silently replaced by the standard Qur'an text",
+            "severity": "moderate",
+            "class": "O3"
+          },
+          {
+            "ocr": "<page-num>48</page-num>",
+            "image": "pencil folio 68",
+            "problem": "folio numeral misread",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "(nothing; the page begins at حولها, Q 6:92)",
+            "english": "<meta>continues from previous page: then do not remain after the reminder with the wrongdoing people. ... that you may warn the Mother of Cities and those</meta>",
+            "problem": "about 25 verses (Q 6:68-92) recited from memory and stored in the translation as a 'continuation' note; none of this text is on the leaf and it is longer than the page's real translation",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      19,
+      14
+    ],
+    "reader_summary": "A provincial Javanese Qur'an manuscript (parts of al-Baqara, al-Ma'ida, al-An'am). The transcription follows the leaves line by line but normalises the scribe's spelling to the printed Cairo text and once replaces a scribal variant with the standard reading; the English is a sound standard Qur'an translation. One page carries 25 verses recited from memory in a continuation note.",
+    "book_verdict": "Accurate on the verses that are on the page, but the OCR erases exactly what a manuscript scholar would look for (orthography, variants) and one translation pane carries a long block of memorised text that is not on the leaf; show with a caveat about normalisation."
+  },
+  {
+    "book_id": "6a2032e518654bf8e1903b96",
+    "slot": 11,
+    "title": "[Wird. A collection of Awrād for the seven days of 7 days of the week. With Malay titles] Or. 7191",
+    "tradition": "javanese-indonesian",
+    "shelf_fit": "fits",
+    "shelf_note": "Arabic litanies with Malay rubrics ('اين ورد دبچا فد هاري جمعة', this wird is read on Friday), dated 1879: an archipelago devotional manuscript.",
+    "rights_flag": null,
+    "structure_note": "Unsplit openings (I3), both pages transcribed in order, with catchwords correctly identified. Counts are consistent (35/35/35). Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "این ورد دیجا فد هاری جمعه",
+            "image": "اين ورد دبچا فد هاري جمعة",
+            "problem": "Malay rubric 'dibaca' misread as 'dija'; the OCR warning calls the heading Persian when it is Malay",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "فقطع دابر القوم الذين ظلموا والحمد",
+            "english": "<note>Quran 6:1</note> So the people that committed wrong were eliminated.",
+            "problem": "the verse note is placed after 6:1 and the jump to 6:45 is not marked",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      15,
+      8,
+      30,
+      20
+    ],
+    "reader_summary": "A small illuminated 1879 collection of daily litanies (awrad) made of Qur'anic verses, with Malay rubrics telling the reader which day each is recited. The transcription matches the leaves word for word, including the marginal correction and catchwords, and the English is a correct Qur'an translation with verse references. The Malay rubric is slightly misread on one page.",
+    "book_verdict": "Clean and faithful on every sampled page; a good book to open in front of a scholar."
+  },
+  {
+    "book_id": "6a20331d18654bf8e19042cb",
+    "slot": 12,
+    "title": "Muqaddimah fi ʿilm al-ʿArabiyah (mutammimah) li masāʾil al-ajrrūmiyah Or. 8471",
+    "tradition": "javanese-indonesian",
+    "shelf_fit": "fits",
+    "shelf_note": "Al-Hattab's Mutammimat al-Ajurrumiyya, a standard pesantren grammar; the archipelago link rests on provenance (Snouck Hurgronje bequest, 1936) rather than on anything visible on these leaves.",
+    "rights_flag": null,
+    "structure_note": "Unsplit openings (I3). Record 31, the last, is a pastedown with the Leiden stamp and the 'Legaat Snouck Hurgronje 1936' label plus a blank flyleaf; the OCR tags it Dutch / frontispiece and it is translated. The pencil folios (6, 7, 17) are offset 3 from record numbers; fine.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "نحو ابوك واخوك وان لا يضافا لبنات الاخ",
+            "image": "نحو وله اخ وان له ابا وبنات الاخ",
+            "problem": "the opening examples ('wa lahu akhun', 'inna lahu aban') replaced by a different phrase that states a rule ('provided they are not added to the daughters of the brother') not on the leaf",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "كل فعل مضارع اتصل به ضمير تثنية نحو يفعلان وتفعلان او ضمير جمع نحو يفعلون وتفعلون او ضمير المخاطبة",
+            "image": "كل فعل مضارع اتصل به ضمير تثنية نحو يفعلان وتفعلان / المؤنثة او ضمير المخاطبة",
+            "problem": "the clause 'or a plural pronoun, like yaf'aluna and taf'aluna' is supplied from the standard text and is not on the leaf; 'al-mu'annatha' is dropped",
+            "severity": "moderate",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "وان لا يضافا لبنات الاخ",
+            "english": "provided they are not added to the daughters of the brother",
+            "problem": "faithful to the OCR, but the OCR is invented here, so the English states a grammatical condition the author did not write",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ادمونها اهلاء وبالمد",
+            "image": "او مونثا اولاء وبالمد",
+            "problem": "the demonstrative 'ula'i' misread as non-words",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "نحو هذا وهذا ابن دها نانو هاتين",
+            "image": "نحو هذا وهذان وهاتان و هاتين",
+            "problem": "list of demonstratives garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ادمونها اهلاء",
+            "english": "or feminine, it is \"Ula'i\"",
+            "problem": "the translator silently repairs a garbled OCR line; correct in sense here, but the reader cannot tell the transcription is broken",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<language>Dutch</language> <page-type>frontispiece</page-type>",
+            "image": "a pastedown with a library stamp and bequest label, blank flyleaf",
+            "problem": "self-reported tags wrong",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Broken markup in the English pane: '<insert></insert>' followed later by a stray '</insert>'.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      10
+    ],
+    "reader_summary": "A nineteenth-century copy of al-Hattab's Mutammimat al-Ajurrumiyya, the advanced Ajurrumiyya grammar used in Southeast Asian Islamic schools. Most lines are transcribed correctly and the English is a clear grammatical translation, but on two of four pages the OCR garbles or replaces a phrase, once inventing a rule the author did not write and once supplying a clause from the standard text that this copy lacks.",
+    "book_verdict": "Usable as a reading aid with a warning that the transcription sometimes substitutes the standard text or garbles examples; one clean showcase page."
+  }
+]

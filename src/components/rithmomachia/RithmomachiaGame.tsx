@@ -119,7 +119,7 @@ export default function RithmomachiaGame() {
       <div className="text-center mb-6">
         <h1 className="font-serif text-3xl md:text-4xl text-primary mb-2">Rithmomachia</h1>
         <p className="text-muted text-sm">
-          The Battle of Numbers &mdash; a mathematical board game played across Europe for six centuries
+          The Battle of Numbers: a mathematical board game played across Europe for six centuries
         </p>
         <div className="flex items-center justify-center gap-4 mt-2">
           <Link href="/rithmomachia/guide" className="text-sm text-accent-rust hover:underline">
@@ -243,10 +243,10 @@ export default function RithmomachiaGame() {
                 <div>
                   <div className="font-medium text-secondary text-xs uppercase tracking-wide mb-1">Movement</div>
                   <div className="text-muted leading-snug space-y-0.5">
-                    <div><span className="font-medium">Circles</span> &mdash; 1 space, diagonally</div>
-                    <div><span className="font-medium">Triangles</span> &mdash; 2 spaces, straight line</div>
-                    <div><span className="font-medium">Squares</span> &mdash; 3 spaces, straight line</div>
-                    <div><span className="font-medium">Pyramid</span> &mdash; moves as all three</div>
+                    <div><span className="font-medium">Circles</span>: 1 space, diagonally</div>
+                    <div><span className="font-medium">Triangles</span>: 2 spaces, straight line</div>
+                    <div><span className="font-medium">Squares</span>: 3 spaces, straight line</div>
+                    <div><span className="font-medium">Pyramid</span>: moves as all three</div>
                   </div>
                 </div>
 
@@ -258,12 +258,12 @@ export default function RithmomachiaGame() {
                     capture an adjacent enemy by matching its value:
                   </p>
                   <div className="text-muted leading-snug space-y-0.5 text-xs">
-                    <div><span className="font-medium">Equality</span> &mdash; your piece = enemy&apos;s value</div>
-                    <div><span className="font-medium">Addition</span> &mdash; two of your pieces sum to enemy&apos;s value</div>
-                    <div><span className="font-medium">Subtraction</span> &mdash; difference of two of your pieces = enemy</div>
-                    <div><span className="font-medium">Multiplication</span> &mdash; your piece &times; distance = enemy</div>
-                    <div><span className="font-medium">Division</span> &mdash; your piece &divide; distance = enemy</div>
-                    <div><span className="font-medium">Siege</span> &mdash; enemy surrounded on all sides</div>
+                    <div><span className="font-medium">Equality</span>: your piece = enemy&apos;s value</div>
+                    <div><span className="font-medium">Addition</span>: two of your pieces sum to enemy&apos;s value</div>
+                    <div><span className="font-medium">Subtraction</span>: difference of two of your pieces = enemy</div>
+                    <div><span className="font-medium">Multiplication</span>: your piece &times; distance = enemy</div>
+                    <div><span className="font-medium">Division</span>: your piece &divide; distance = enemy</div>
+                    <div><span className="font-medium">Siege</span>: enemy surrounded on all sides</div>
                   </div>
                 </div>
 

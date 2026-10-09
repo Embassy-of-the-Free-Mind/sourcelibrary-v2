@@ -1,0 +1,1918 @@
+{
+ "run_id": "ai-exposure-r2-6038",
+ "prereg": "scripts/eval/PREREGISTRATION-ai-exposure-r2-6038.md",
+ "measure": "accuracy against the catalogue author (fact test) + agreement",
+ "models": [
+  "gemini-3.1-pro-preview",
+  "claude-opus",
+  "openai/gpt-5.6-sol",
+  "claude-haiku"
+ ],
+ "spend_usd": {
+  "total": 8.34,
+  "by": {
+   "verify/controls/gemini-3.1-pro-preview": 0.375,
+   "verify/sub500/gemini-3.1-pro-preview": 1.807,
+   "verify/controls/openai/gpt-5.6-sol": 0.125,
+   "verify/sub500/openai/gpt-5.6-sol": 0.624,
+   "neutral/sub500/gemini-3.1-pro-preview": 1.238,
+   "neutral/controls/gemini-3.1-pro-preview": 0.248,
+   "verify/nalanda/gemini-3.1-pro-preview": 0.188,
+   "verify/sub500/gemini-3.1-pro-preview/rep2": 1.757,
+   "verify/nalanda/openai/gpt-5.6-sol": 0.063,
+   "verify/single100/gemini-3.1-pro-preview": 1.913
+  }
+ },
+ "gates": {
+  "gemini-3.1-pro-preview": {
+   "canonical_scorable_V2": {
+    "k": 18,
+    "n": 21,
+    "pct": 85.7,
+    "ci95": [
+     65.4,
+     95
+    ]
+   },
+   "known_tier_V2": {
+    "k": 21,
+    "n": 22,
+    "pct": 95.5,
+    "ci95": [
+     78.2,
+     99.2
+    ]
+   },
+   "obscure_tier_V2": {
+    "k": 22,
+    "n": 25,
+    "pct": 88,
+    "ci95": [
+     70,
+     95.8
+    ]
+   },
+   "obscure_tier_known_yes": {
+    "k": 22,
+    "n": 25,
+    "pct": 88,
+    "ci95": [
+     70,
+     95.8
+    ]
+   },
+   "decoy_known_yes": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "decoy_named_author_not_guess": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "decoy_known_yes_in_sample_packets": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "shuffled_null_match": {
+    "k": 0,
+    "n": 219,
+    "pct": 0,
+    "ci95": [
+     0,
+     1.7
+    ]
+   },
+   "sample_missing": {
+    "k": 0,
+    "n": 500,
+    "pct": 0,
+    "ci95": [
+     0,
+     0.8
+    ]
+   },
+   "pass": {
+    "g1_canonical_ge85": true,
+    "g2_decoy_le10": true,
+    "g3_null_le2": true,
+    "g4_missing_le10": true
+   },
+   "passed": true
+  },
+  "claude-opus": {
+   "canonical_scorable_V2": {
+    "k": 19,
+    "n": 21,
+    "pct": 90.5,
+    "ci95": [
+     71.1,
+     97.3
+    ]
+   },
+   "known_tier_V2": {
+    "k": 21,
+    "n": 22,
+    "pct": 95.5,
+    "ci95": [
+     78.2,
+     99.2
+    ]
+   },
+   "obscure_tier_V2": {
+    "k": 21,
+    "n": 25,
+    "pct": 84,
+    "ci95": [
+     65.3,
+     93.6
+    ]
+   },
+   "obscure_tier_known_yes": {
+    "k": 22,
+    "n": 25,
+    "pct": 88,
+    "ci95": [
+     70,
+     95.8
+    ]
+   },
+   "decoy_known_yes": {
+    "k": 0,
+    "n": 40,
+    "pct": 0,
+    "ci95": [
+     0,
+     8.8
+    ]
+   },
+   "decoy_named_author_not_guess": {
+    "k": 0,
+    "n": 40,
+    "pct": 0,
+    "ci95": [
+     0,
+     8.8
+    ]
+   },
+   "decoy_known_yes_in_sample_packets": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "shuffled_null_match": {
+    "k": 0,
+    "n": 254,
+    "pct": 0,
+    "ci95": [
+     0,
+     1.5
+    ]
+   },
+   "sample_missing": {
+    "k": 0,
+    "n": 500,
+    "pct": 0,
+    "ci95": [
+     0,
+     0.8
+    ]
+   },
+   "pass": {
+    "g1_canonical_ge85": true,
+    "g2_decoy_le10": true,
+    "g3_null_le2": true,
+    "g4_missing_le10": true
+   },
+   "passed": true
+  },
+  "openai/gpt-5.6-sol": {
+   "canonical_scorable_V2": {
+    "k": 18,
+    "n": 21,
+    "pct": 85.7,
+    "ci95": [
+     65.4,
+     95
+    ]
+   },
+   "known_tier_V2": {
+    "k": 20,
+    "n": 22,
+    "pct": 90.9,
+    "ci95": [
+     72.2,
+     97.5
+    ]
+   },
+   "obscure_tier_V2": {
+    "k": 20,
+    "n": 25,
+    "pct": 80,
+    "ci95": [
+     60.9,
+     91.1
+    ]
+   },
+   "obscure_tier_known_yes": {
+    "k": 20,
+    "n": 25,
+    "pct": 80,
+    "ci95": [
+     60.9,
+     91.1
+    ]
+   },
+   "decoy_known_yes": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "decoy_named_author_not_guess": {
+    "k": 2,
+    "n": 40,
+    "pct": 5,
+    "ci95": [
+     1.4,
+     16.5
+    ]
+   },
+   "decoy_known_yes_in_sample_packets": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "shuffled_null_match": {
+    "k": 1,
+    "n": 232,
+    "pct": 0.4,
+    "ci95": [
+     0.1,
+     2.4
+    ]
+   },
+   "sample_missing": {
+    "k": 0,
+    "n": 500,
+    "pct": 0,
+    "ci95": [
+     0,
+     0.8
+    ]
+   },
+   "pass": {
+    "g1_canonical_ge85": true,
+    "g2_decoy_le10": true,
+    "g3_null_le2": true,
+    "g4_missing_le10": true
+   },
+   "passed": true
+  },
+  "claude-haiku": {
+   "canonical_scorable_V2": {
+    "k": 14,
+    "n": 21,
+    "pct": 66.7,
+    "ci95": [
+     45.4,
+     82.8
+    ]
+   },
+   "known_tier_V2": {
+    "k": 15,
+    "n": 22,
+    "pct": 68.2,
+    "ci95": [
+     47.3,
+     83.6
+    ]
+   },
+   "obscure_tier_V2": {
+    "k": 7,
+    "n": 25,
+    "pct": 28,
+    "ci95": [
+     14.3,
+     47.6
+    ]
+   },
+   "obscure_tier_known_yes": {
+    "k": 12,
+    "n": 25,
+    "pct": 48,
+    "ci95": [
+     30,
+     66.5
+    ]
+   },
+   "decoy_known_yes": {
+    "k": 2,
+    "n": 40,
+    "pct": 5,
+    "ci95": [
+     1.4,
+     16.5
+    ]
+   },
+   "decoy_named_author_not_guess": {
+    "k": 1,
+    "n": 40,
+    "pct": 2.5,
+    "ci95": [
+     0.4,
+     12.9
+    ]
+   },
+   "decoy_known_yes_in_sample_packets": {
+    "k": 4,
+    "n": 40,
+    "pct": 10,
+    "ci95": [
+     4,
+     23.1
+    ]
+   },
+   "shuffled_null_match": {
+    "k": 0,
+    "n": 86,
+    "pct": 0,
+    "ci95": [
+     0,
+     4.3
+    ]
+   },
+   "sample_missing": {
+    "k": 0,
+    "n": 500,
+    "pct": 0,
+    "ci95": [
+     0,
+     0.8
+    ]
+   },
+   "pass": {
+    "g1_canonical_ge85": false,
+    "g2_decoy_le10": true,
+    "g3_null_le2": true,
+    "g4_missing_le10": true
+   },
+   "passed": false
+  }
+ },
+ "union_models": [
+  "gemini-3.1-pro-preview",
+  "claude-opus",
+  "openai/gpt-5.6-sol"
+ ],
+ "primary": {
+  "definition": "share of W (identifiable title, scorable catalogue author; random 500) with no author match by any union model",
+  "W": 416,
+  "union": [
+   "gemini-3.1-pro-preview",
+   "claude-opus",
+   "openai/gpt-5.6-sol"
+  ],
+  "P": {
+   "k": 217,
+   "n": 416,
+   "pct": 52.2,
+   "ci95": [
+    47.4,
+    56.9
+   ]
+  },
+  "numerator_with_unjudgeable_answer": 0,
+  "P_excluding_unjudgeable": {
+   "k": 217,
+   "n": 416,
+   "pct": 52.2,
+   "ci95": [
+    47.4,
+    56.9
+   ]
+  },
+  "verdict": "RETRACTED",
+  "V1_known_yes_and_match": {
+   "k": 244,
+   "n": 416,
+   "pct": 58.7,
+   "ci95": [
+    53.9,
+    63.3
+   ]
+  },
+  "V2_excluding_guesses": {
+   "k": 250,
+   "n": 416,
+   "pct": 60.1,
+   "ci95": [
+    55.3,
+    64.7
+   ]
+  },
+  "per_model": {
+   "gemini-3.1-pro-preview": {
+    "k": 260,
+    "n": 416,
+    "pct": 62.5,
+    "ci95": [
+     57.8,
+     67
+    ]
+   },
+   "claude-opus": {
+    "k": 236,
+    "n": 416,
+    "pct": 56.7,
+    "ci95": [
+     51.9,
+     61.4
+    ]
+   },
+   "openai/gpt-5.6-sol": {
+    "k": 266,
+    "n": 416,
+    "pct": 63.9,
+    "ci95": [
+     59.2,
+     68.4
+    ]
+   },
+   "claude-haiku": {
+    "k": 377,
+    "n": 416,
+    "pct": 90.6,
+    "ci95": [
+     87.4,
+     93.1
+    ]
+   }
+  },
+  "union_pro_opus_gpt": {
+   "k": 217,
+   "n": 416,
+   "pct": 52.2,
+   "ci95": [
+    47.4,
+    56.9
+   ]
+  },
+  "union_all_four": {
+   "k": 216,
+   "n": 416,
+   "pct": 51.9,
+   "ci95": [
+    47.1,
+    56.7
+   ]
+  },
+  "pro_rep2_alone": {
+   "k": 262,
+   "n": 416,
+   "pct": 63,
+   "ci95": [
+    58.2,
+    67.5
+   ]
+  },
+  "union_with_pro_rep2": {
+   "k": 216,
+   "n": 416,
+   "pct": 51.9,
+   "ci95": [
+    47.1,
+    56.7
+   ]
+  },
+  "visible": {
+   "k": 114,
+   "n": 236,
+   "pct": 48.3,
+   "ci95": [
+    42,
+    54.7
+   ]
+  },
+  "hidden": {
+   "k": 103,
+   "n": 180,
+   "pct": 57.2,
+   "ci95": [
+    49.9,
+    64.2
+   ]
+  },
+  "author_in_title_masked": {
+   "k": 70,
+   "n": 123,
+   "pct": 56.9,
+   "ci95": [
+    48.1,
+    65.3
+   ]
+  },
+  "author_not_in_title": {
+   "k": 147,
+   "n": 293,
+   "pct": 50.2,
+   "ci95": [
+    44.5,
+    55.9
+   ]
+  },
+  "P_adjusted_for_defensible_bluffs": {
+   "pct": 48.7,
+   "moved": 14.4,
+   "note": "secondary; by-eye labels in eye-bluffs.jsonl"
+  },
+  "post_hoc_name_variant_bound": {
+   "note": "POST HOC. P_lower_bound: every mismatched author in the numerator counted as right. P_corrected: by-eye labels for every non-\"yes\" mismatch plus the bluff adjustment above.",
+   "numerator_works_with_a_mismatch": 67,
+   "P_lower_bound": 36.1,
+   "non_yes_mismatch_works_read": 42,
+   "non_yes_mismatch_defensible": 4,
+   "P_corrected": {
+    "pct": 47.7,
+    "ci95": [
+     43.1,
+     52.6
+    ],
+    "k": 198.6,
+    "n": 416
+   }
+  }
+ },
+ "unrestricted": {
+  "all500_upper_bound": {
+   "k": 301,
+   "n": 500,
+   "pct": 60.2,
+   "ci95": [
+    55.8,
+    64.4
+   ]
+  },
+  "scorable_any_title": {
+   "k": 217,
+   "n": 416,
+   "pct": 52.2,
+   "ci95": [
+    47.4,
+    56.9
+   ]
+  },
+  "identifiable_any_author_upper_bound": {
+   "k": 291,
+   "n": 490,
+   "pct": 59.4,
+   "ci95": [
+    55,
+    63.6
+   ]
+  },
+  "not_scorable_by_reason": {
+   "institution, not a person": 11,
+   "no catalogue author": 65,
+   "editor/translator only": 8
+  },
+  "not_scorable_known_yes_any_model": {
+   "k": 43,
+   "n": 84,
+   "pct": 51.2,
+   "ci95": [
+    40.7,
+    61.6
+   ]
+  }
+ },
+ "sensitivity_strict_identifiability": {
+  "note": "written after the eye check (disclosed in the prereg); drops Latin-script titles of <= 4 words of >= 3 letters",
+  "k": 187,
+  "n": 341,
+  "pct": 54.8,
+  "ci95": [
+   49.5,
+   60
+  ]
+ },
+ "hidden_and_bluff": {
+  "gemini-3.1-pro-preview": {
+   "known_dist": {
+    "yes": 159,
+    "no": 200,
+    "unsure": 57,
+    "invalid": 0
+   },
+   "hidden_knowledge": {
+    "k": 22,
+    "n": 257,
+    "pct": 8.6,
+    "ci95": [
+     5.7,
+     12.6
+    ]
+   },
+   "hidden_knowledge_said_no": {
+    "k": 7,
+    "n": 200,
+    "pct": 3.5,
+    "ci95": [
+     1.7,
+     7
+    ]
+   },
+   "bluff": {
+    "k": 20,
+    "n": 154,
+    "pct": 13,
+    "ci95": [
+     8.6,
+     19.2
+    ]
+   },
+   "known_yes_but_author_unknown": {
+    "k": 5,
+    "n": 159,
+    "pct": 3.1,
+    "ci95": [
+     1.4,
+     7.1
+    ]
+   },
+   "known_yes_unjudgeable": 0,
+   "guess_flag_among_matches": {
+    "k": 54,
+    "n": 156,
+    "pct": 34.6,
+    "ci95": [
+     27.6,
+     42.4
+    ]
+   }
+  },
+  "claude-opus": {
+   "known_dist": {
+    "yes": 161,
+    "no": 186,
+    "unsure": 69,
+    "invalid": 0
+   },
+   "hidden_knowledge": {
+    "k": 34,
+    "n": 255,
+    "pct": 13.3,
+    "ci95": [
+     9.7,
+     18.1
+    ]
+   },
+   "hidden_knowledge_said_no": {
+    "k": 0,
+    "n": 186,
+    "pct": 0,
+    "ci95": [
+     0,
+     2
+    ]
+   },
+   "bluff": {
+    "k": 15,
+    "n": 161,
+    "pct": 9.3,
+    "ci95": [
+     5.7,
+     14.8
+    ]
+   },
+   "known_yes_but_author_unknown": {
+    "k": 0,
+    "n": 161,
+    "pct": 0,
+    "ci95": [
+     0,
+     2.3
+    ]
+   },
+   "known_yes_unjudgeable": 0,
+   "guess_flag_among_matches": {
+    "k": 27,
+    "n": 180,
+    "pct": 15,
+    "ci95": [
+     10.5,
+     20.9
+    ]
+   }
+  },
+  "openai/gpt-5.6-sol": {
+   "known_dist": {
+    "yes": 161,
+    "no": 179,
+    "unsure": 76,
+    "invalid": 0
+   },
+   "hidden_knowledge": {
+    "k": 20,
+    "n": 255,
+    "pct": 7.8,
+    "ci95": [
+     5.1,
+     11.8
+    ]
+   },
+   "hidden_knowledge_said_no": {
+    "k": 0,
+    "n": 179,
+    "pct": 0,
+    "ci95": [
+     0,
+     2.1
+    ]
+   },
+   "bluff": {
+    "k": 30,
+    "n": 160,
+    "pct": 18.8,
+    "ci95": [
+     13.5,
+     25.5
+    ]
+   },
+   "known_yes_but_author_unknown": {
+    "k": 1,
+    "n": 161,
+    "pct": 0.6,
+    "ci95": [
+     0.1,
+     3.4
+    ]
+   },
+   "known_yes_unjudgeable": 0,
+   "guess_flag_among_matches": {
+    "k": 18,
+    "n": 150,
+    "pct": 12,
+    "ci95": [
+     7.7,
+     18.2
+    ]
+   }
+  },
+  "claude-haiku": {
+   "known_dist": {
+    "yes": 73,
+    "no": 90,
+    "unsure": 253,
+    "invalid": 0
+   },
+   "hidden_knowledge": {
+    "k": 2,
+    "n": 343,
+    "pct": 0.6,
+    "ci95": [
+     0.2,
+     2.1
+    ]
+   },
+   "hidden_knowledge_said_no": {
+    "k": 0,
+    "n": 90,
+    "pct": 0,
+    "ci95": [
+     0,
+     4.1
+    ]
+   },
+   "bluff": {
+    "k": 13,
+    "n": 50,
+    "pct": 26,
+    "ci95": [
+     15.9,
+     39.6
+    ]
+   },
+   "known_yes_but_author_unknown": {
+    "k": 23,
+    "n": 73,
+    "pct": 31.5,
+    "ci95": [
+     22,
+     42.9
+    ]
+   },
+   "known_yes_unjudgeable": 0,
+   "guess_flag_among_matches": {
+    "k": 8,
+    "n": 39,
+    "pct": 20.5,
+    "ci95": [
+     10.8,
+     35.5
+    ]
+   }
+  }
+ },
+ "bluff_eye": {
+  "gemini-3.1-pro-preview": {
+   "k": 9,
+   "n": 20,
+   "pct": 45,
+   "ci95": [
+    25.8,
+    65.8
+   ]
+  },
+  "claude-opus": {
+   "k": 12,
+   "n": 15,
+   "pct": 80,
+   "ci95": [
+    54.8,
+    93
+   ]
+  }
+ },
+ "neutral_vs_run1": {
+  "threshold": 0.5,
+  "note": "not recognised = knows_of != yes AND self_familiar != yes AND no verified opening (run 1 definition); \"strict\" = knows_of = no",
+  "gemini-3.1-pro-preview": {
+   "n": 500,
+   "knows_of_run1": {
+    "yes": 275,
+    "no": 223,
+    "unsure": 2,
+    "invalid": 0
+   },
+   "knows_of_neutral": {
+    "yes": 287,
+    "no": 211,
+    "unsure": 2,
+    "invalid": 0
+   },
+   "self_familiar_run1": {
+    "yes": 51,
+    "no": 442,
+    "unsure": 7,
+    "invalid": 0
+   },
+   "self_familiar_neutral": {
+    "yes": 65,
+    "no": 430,
+    "unsure": 5,
+    "invalid": 0
+   },
+   "not_recognised_run1": {
+    "k": 225,
+    "n": 500,
+    "pct": 45,
+    "ci95": [
+     40.7,
+     49.4
+    ]
+   },
+   "not_recognised_neutral": {
+    "k": 213,
+    "n": 500,
+    "pct": 42.6,
+    "ci95": [
+     38.3,
+     47
+    ]
+   },
+   "strict_no_run1": {
+    "k": 223,
+    "n": 500,
+    "pct": 44.6,
+    "ci95": [
+     40.3,
+     49
+    ]
+   },
+   "strict_no_neutral": {
+    "k": 211,
+    "n": 500,
+    "pct": 42.2,
+    "ci95": [
+     37.9,
+     46.6
+    ]
+   },
+   "diff_neutral_minus_run1": {
+    "diff_pts": -2.4,
+    "ci95": [
+     -4,
+     -1
+    ],
+    "a_only": 14,
+    "b_only": 2,
+    "n": 500
+   },
+   "openings_verified_neutral": 4,
+   "controls": {
+    "canonical_knows_of_yes": {
+     "k": 24,
+     "n": 24,
+     "pct": 100,
+     "ci95": [
+      86.2,
+      100
+     ]
+    },
+    "known_knows_of_yes": {
+     "k": 22,
+     "n": 22,
+     "pct": 100,
+     "ci95": [
+      85.1,
+      100
+     ]
+    },
+    "decoy_knows_of_yes": {
+     "k": 1,
+     "n": 40,
+     "pct": 2.5,
+     "ci95": [
+      0.4,
+      12.9
+     ]
+    },
+    "decoy_knows_of_unsure": {
+     "k": 0,
+     "n": 40,
+     "pct": 0,
+     "ci95": [
+      0,
+      8.8
+     ]
+    }
+   }
+  },
+  "claude-haiku": {
+   "n": 500,
+   "knows_of_run1": {
+    "yes": 149,
+    "no": 275,
+    "unsure": 76,
+    "invalid": 0
+   },
+   "knows_of_neutral": {
+    "yes": 129,
+    "no": 327,
+    "unsure": 44,
+    "invalid": 0
+   },
+   "self_familiar_run1": {
+    "yes": 36,
+    "no": 368,
+    "unsure": 96,
+    "invalid": 0
+   },
+   "self_familiar_neutral": {
+    "yes": 31,
+    "no": 388,
+    "unsure": 81,
+    "invalid": 0
+   },
+   "not_recognised_run1": {
+    "k": 351,
+    "n": 500,
+    "pct": 70.2,
+    "ci95": [
+     66,
+     74
+    ]
+   },
+   "not_recognised_neutral": {
+    "k": 371,
+    "n": 500,
+    "pct": 74.2,
+    "ci95": [
+     70.2,
+     77.8
+    ]
+   },
+   "strict_no_run1": {
+    "k": 275,
+    "n": 500,
+    "pct": 55,
+    "ci95": [
+     50.6,
+     59.3
+    ]
+   },
+   "strict_no_neutral": {
+    "k": 327,
+    "n": 500,
+    "pct": 65.4,
+    "ci95": [
+     61.1,
+     69.4
+    ]
+   },
+   "diff_neutral_minus_run1": {
+    "diff_pts": 4,
+    "ci95": [
+     0.2,
+     7.8
+    ],
+    "a_only": 38,
+    "b_only": 58,
+    "n": 500
+   },
+   "openings_verified_neutral": 0,
+   "controls": {
+    "canonical_knows_of_yes": {
+     "k": 24,
+     "n": 24,
+     "pct": 100,
+     "ci95": [
+      86.2,
+      100
+     ]
+    },
+    "known_knows_of_yes": {
+     "k": 19,
+     "n": 22,
+     "pct": 86.4,
+     "ci95": [
+      66.7,
+      95.3
+     ]
+    },
+    "decoy_knows_of_yes": {
+     "k": 1,
+     "n": 40,
+     "pct": 2.5,
+     "ci95": [
+      0.4,
+      12.9
+     ]
+    },
+    "decoy_knows_of_unsure": {
+     "k": 0,
+     "n": 40,
+     "pct": 0,
+     "ci95": [
+      0,
+      8.8
+     ]
+    }
+   }
+  }
+ },
+ "selfreport_vs_fact_pro": {
+  "n": 416,
+  "says_knows_neutral": {
+   "k": 246,
+   "n": 416,
+   "pct": 59.1,
+   "ci95": [
+    54.3,
+    63.8
+   ]
+  },
+  "names_author_verify": {
+   "k": 156,
+   "n": 416,
+   "pct": 37.5,
+   "ci95": [
+    33,
+    42.2
+   ]
+  },
+  "says_knows_but_no_match": 104,
+  "says_not_but_match": 14
+ },
+ "identifiability": {
+  "by_class": {
+   "identifiable": 490,
+   "volume or collection label": 5,
+   "shelfmark": 4,
+   "generic": 1
+  },
+  "eye_n": 40,
+  "eye_agreement": {
+   "k": 35,
+   "n": 40,
+   "pct": 87.5,
+   "ci95": [
+    73.9,
+    94.5
+   ]
+  },
+  "eye_kappa": {
+   "n": 40,
+   "agree": 0.875,
+   "kappa": 0.254
+  },
+  "eye_disagreements": [
+   {
+    "title": "Commentaria ad decretales",
+    "rule": true,
+    "eye": false,
+    "note": "generic: one of many commentaries on the Decretals"
+   },
+   {
+    "title": "Fabulae",
+    "rule": true,
+    "eye": false,
+    "note": "generic: \"Fables\""
+   },
+   {
+    "title": "Opuscules posthumes. : 2 parts",
+    "rule": true,
+    "eye": false,
+    "note": "generic: \"posthumous minor works\""
+   },
+   {
+    "title": "Themata juris controversi subsequentia",
+    "rule": true,
+    "eye": false,
+    "note": "generic: \"theses of disputed law\""
+   },
+   {
+    "title": "Garten Ordnung",
+    "rule": true,
+    "eye": false,
+    "note": "generic: \"garden ordinance\""
+   }
+  ]
+ },
+ "nalanda": {
+  "by a Nālandā master": {
+   "n": 17,
+   "gemini-3.1-pro-preview": {
+    "n": 17,
+    "known_yes": {
+     "k": 16,
+     "n": 17,
+     "pct": 94.1,
+     "ci95": [
+      73,
+      99
+     ]
+    },
+    "V2": {
+     "k": 16,
+     "n": 17,
+     "pct": 94.1,
+     "ci95": [
+      73,
+      99
+     ]
+    }
+   },
+   "claude-opus": {
+    "n": 17,
+    "known_yes": {
+     "k": 17,
+     "n": 17,
+     "pct": 100,
+     "ci95": [
+      81.6,
+      100
+     ]
+    },
+    "V2": {
+     "k": 16,
+     "n": 17,
+     "pct": 94.1,
+     "ci95": [
+      73,
+      99
+     ]
+    }
+   },
+   "openai/gpt-5.6-sol": {
+    "n": 17,
+    "known_yes": {
+     "k": 17,
+     "n": 17,
+     "pct": 100,
+     "ci95": [
+      81.6,
+      100
+     ]
+    },
+    "V2": {
+     "k": 15,
+     "n": 17,
+     "pct": 88.2,
+     "ci95": [
+      65.7,
+      96.7
+     ]
+    }
+   },
+   "claude-haiku": {
+    "n": 17,
+    "known_yes": {
+     "k": 17,
+     "n": 17,
+     "pct": 100,
+     "ci95": [
+      81.6,
+      100
+     ]
+    },
+    "V2": {
+     "k": 12,
+     "n": 17,
+     "pct": 70.6,
+     "ci95": [
+      46.9,
+      86.7
+     ]
+    }
+   },
+   "no_V2_any_union_model": {
+    "k": 1,
+    "n": 17,
+    "pct": 5.9,
+    "ci95": [
+     1,
+     27
+    ]
+   },
+   "not_known_by_any_union_model": {
+    "k": 0,
+    "n": 17,
+    "pct": 0,
+    "ci95": [
+     0,
+     18.4
+    ]
+   },
+   "items": [
+    {
+     "id": "6955831757e3b773024f76ae",
+     "title": "Abhidharmakosa with Bhashya",
+     "master": "Vasubandhu",
+     "gemini-3.1-pro-preview": "yes/match/Vasubandhu",
+     "claude-opus": "yes/match/Vasubandhu",
+     "openai/gpt-5.6-sol": "yes/match/Vasubandhu",
+     "claude-haiku": "yes/match/Vasubandhu"
+    },
+    {
+     "id": "69e8b28a2ff2a8dc09e77ff4",
+     "title": "मूलमध्यमककारिका (Mūlamadhyamakakārikā)",
+     "master": "Nāgārjuna",
+     "gemini-3.1-pro-preview": "yes/match/Nāgārjuna",
+     "claude-opus": "yes/match/Nagarjuna",
+     "openai/gpt-5.6-sol": "yes/match/Nagarjuna",
+     "claude-haiku": "yes/match/Nāgārjuna"
+    },
+    {
+     "id": "69b99f4376b9bab2de21a891",
+     "title": "Bodhicāryāvatāra (Sanskrit Text)",
+     "master": "Śāntideva",
+     "gemini-3.1-pro-preview": "yes/match/Śāntideva",
+     "claude-opus": "yes/match/Shantideva",
+     "openai/gpt-5.6-sol": "yes/match/Shantideva",
+     "claude-haiku": "yes/match/Śāntideva"
+    },
+    {
+     "id": "6a3067c2c4fd77fb5b9f8044",
+     "title": "Yogācārabhūmi-śāstra, Part I (Sanskrit)",
+     "master": "Asaṅga",
+     "gemini-3.1-pro-preview": "yes/match/Asanga",
+     "claude-opus": "yes/match/Asanga (traditionally attributed to Maitreya)",
+     "openai/gpt-5.6-sol": "yes/none/unknown",
+     "claude-haiku": "yes/mismatch/Yogācāra school"
+    },
+    {
+     "id": "6a3067c9c4fd77fb5b9f8143",
+     "title": "Mahāyānasūtrālaṃkāra (Sanskrit, ed. Sylvain Lévi)",
+     "master": "Maitreyanātha; Asaṅga",
+     "gemini-3.1-pro-preview": "yes/mismatch/Asanga / Maitreya-natha",
+     "claude-opus": "yes/mismatch/Asanga (verses traditionally attributed to Maitreya), with commentary attributed to Vasubandhu",
+     "openai/gpt-5.6-sol": "yes/mismatch/Asanga (traditionally attributed to Maitreya)",
+     "claude-haiku": "yes/mismatch/Asanga"
+    },
+    {
+     "id": "6a3067d0c4fd77fb5b9f8378",
+     "title": "Prasannapadā — with Nāgārjuna's Mūlamadhyamakakārikā (Sanskrit, ed. La",
+     "master": "Candrakīrti",
+     "gemini-3.1-pro-preview": "yes/match/Candrakīrti",
+     "claude-opus": "yes/match/Chandrakirti (commentary) on Nagarjuna's verses",
+     "openai/gpt-5.6-sol": "yes/match/Candrakirti",
+     "claude-haiku": "yes/match/Candrakīrti"
+    },
+    {
+     "id": "6a3067dcc4fd77fb5b9f8627",
+     "title": "Madhyamakāvatāra (Tibetan, ed. La Vallée Poussin)",
+     "master": "Candrakīrti",
+     "gemini-3.1-pro-preview": "yes/match/Chandrakirti",
+     "claude-opus": "yes/match/Chandrakirti",
+     "openai/gpt-5.6-sol": "yes/match/Chandrakirti",
+     "claude-haiku": "yes/match/Candrakīrti"
+    },
+    {
+     "id": "6a3067e0c4fd77fb5b9f87ea",
+     "title": "Vigrahavyāvartanī (Sanskrit, ed. Johnston & Kunst)",
+     "master": "Nāgārjuna",
+     "gemini-3.1-pro-preview": "yes/match/Nagarjuna",
+     "claude-opus": "yes/match/Nagarjuna",
+     "openai/gpt-5.6-sol": "yes/match/Nagarjuna",
+     "claude-haiku": "yes/match/Nāgārjuna"
+    },
+    {
+     "id": "6a3067e4c4fd77fb5b9f882d",
+     "title": "Ratnāvalī (Sanskrit, ed. Mishra & Goswami)",
+     "master": "Nāgārjuna",
+     "gemini-3.1-pro-preview": "unsure/match/Nāgārjuna",
+     "claude-opus": "yes/match/Nagarjuna",
+     "openai/gpt-5.6-sol": "yes/match/Nagarjuna",
+     "claude-haiku": "yes/match/Nāgārjuna"
+    },
+    {
+     "id": "6a306861c4fd77fb5b9f8885",
+     "title": "Vijñaptimātratāsiddhi — Viṃśatikā & Triṃśikā (Sanskrit, ed. Sylvain Lé",
+     "master": "Vasubandhu",
+     "gemini-3.1-pro-preview": "yes/match/Vasubandhu",
+     "claude-opus": "yes/match/Vasubandhu, with Sthiramati's commentary on the Trimshika",
+     "openai/gpt-5.6-sol": "yes/match/Vasubandhu",
+     "claude-haiku": "yes/match/Vasubandhu"
+    },
+    {
+     "id": "6a30778d0b77787bed79a607",
+     "title": "Suhṛllekha — Sanskrit/Tibetan/Chinese critical edition (Dngos grub tsh",
+     "master": "Nāgārjuna",
+     "gemini-3.1-pro-preview": "yes/match/Nagarjuna",
+     "claude-opus": "yes/match/Nagarjuna",
+     "openai/gpt-5.6-sol": "yes/match/Nagarjuna",
+     "claude-haiku": "yes/match/Nāgārjuna"
+    },
+    {
+     "id": "6a308257675ed2bdbe36eddd",
+     "title": "Tattvasaṃgraha, Vol. I — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
+     "master": "Śāntarakṣita",
+     "gemini-3.1-pro-preview": "yes/match/Shantarakshita",
+     "claude-opus": "yes/match/Shantarakshita, with commentary (Panjika) by Kamalashila",
+     "openai/gpt-5.6-sol": "yes/match/Shantarakshita; commentary by Kamalashila",
+     "claude-haiku": "yes/mismatch/Bhavya"
+    },
+    {
+     "id": "6a308263675ed2bdbe36f2e5",
+     "title": "Nyāyabindu — with Dharmottara’s Ṭīkā (Sanskrit, Bibliotheca Buddhica V",
+     "master": "Dharmakīrti",
+     "gemini-3.1-pro-preview": "yes/match/Dharmakirti",
+     "claude-opus": "yes/match/Dharmakirti, with commentary by Dharmottara",
+     "openai/gpt-5.6-sol": "yes/match/Dharmakirti, with commentary by Dharmottara",
+     "claude-haiku": "yes/match/Dharmakīrti"
+    },
+    {
+     "id": "6a308278558372a29b370f39",
+     "title": "Catuḥśataka (Sanskrit fragments + Tibetan, ed. V. Bhattacharya)",
+     "master": "Āryadeva",
+     "gemini-3.1-pro-preview": "yes/match/Āryadeva",
+     "claude-opus": "yes/match/Aryadeva",
+     "openai/gpt-5.6-sol": "yes/match/Aryadeva",
+     "claude-haiku": "yes/match/Aryadeva"
+    },
+    {
+     "id": "6a30881fbd425508b0edad49",
+     "title": "Śikṣāsamuccaya (Sanskrit, Bibliotheca Buddhica I, ed. Bendall)",
+     "master": "Śāntideva",
+     "gemini-3.1-pro-preview": "yes/match/Shantideva",
+     "claude-opus": "yes/match/Shantideva",
+     "openai/gpt-5.6-sol": "yes/match/Shantideva",
+     "claude-haiku": "yes/match/Śāntideva"
+    },
+    {
+     "id": "6a30909cbec66f86487f2e8d",
+     "title": "Pramāṇavārttika — with Manorathanandin’s Vṛtti (Sanskrit)",
+     "master": "Dharmakīrti",
+     "gemini-3.1-pro-preview": "yes/match/Dharmakīrti",
+     "claude-opus": "yes/match/Dharmakirti, with commentary by Manorathanandin",
+     "openai/gpt-5.6-sol": "yes/match/Dharmakirti",
+     "claude-haiku": "yes/mismatch/Dignāga"
+    },
+    {
+     "id": "6a37d7e3d07939943b24cb9e",
+     "title": "Buddhapālita-mūlamadhyamaka-vṛtti",
+     "master": "Buddhapālita",
+     "gemini-3.1-pro-preview": "yes/match/Buddhapalita",
+     "claude-opus": "yes/match/Buddhapalita",
+     "openai/gpt-5.6-sol": "yes/match/Buddhapalita",
+     "claude-haiku": "yes/mismatch/Nāgārjuna"
+    }
+   ]
+  },
+  "Tibetan commentary on a Nālandā work": {
+   "n": 7,
+   "gemini-3.1-pro-preview": {
+    "n": 7,
+    "known_yes": {
+     "k": 1,
+     "n": 7,
+     "pct": 14.3,
+     "ci95": [
+      2.6,
+      51.3
+     ]
+    }
+   },
+   "claude-opus": {
+    "n": 7,
+    "known_yes": {
+     "k": 0,
+     "n": 7,
+     "pct": 0,
+     "ci95": [
+      0,
+      35.4
+     ]
+    }
+   },
+   "openai/gpt-5.6-sol": {
+    "n": 7,
+    "known_yes": {
+     "k": 2,
+     "n": 7,
+     "pct": 28.6,
+     "ci95": [
+      8.2,
+      64.1
+     ]
+    }
+   },
+   "claude-haiku": {
+    "n": 7,
+    "known_yes": {
+     "k": 7,
+     "n": 7,
+     "pct": 100,
+     "ci95": [
+      64.6,
+      100
+     ]
+    }
+   },
+   "not_known_by_any_union_model": {
+    "k": 5,
+    "n": 7,
+    "pct": 71.4,
+    "ci95": [
+     35.9,
+     91.8
+    ]
+   },
+   "items": [
+    {
+     "id": "6a37c24763d3f620b49f6947",
+     "title": "a word to word commentary on the abhisamayalankara",
+     "master": null,
+     "gemini-3.1-pro-preview": "unsure/-/unknown",
+     "claude-opus": "unsure/-/unknown",
+     "openai/gpt-5.6-sol": "no/-/unknown",
+     "claude-haiku": "yes/-/Jñānagarbha"
+    },
+    {
+     "id": "6a37d9acd07939943b251938",
+     "title": "a rare and previously unpublished commentary on aryadeva's monumental ",
+     "master": null,
+     "gemini-3.1-pro-preview": "no/-/unknown",
+     "claude-opus": "unsure/-/unknown",
+     "openai/gpt-5.6-sol": "unsure/-/Candrakirti",
+     "claude-haiku": "yes/-/Aryadeva"
+    },
+    {
+     "id": "6a37da11d07939943b261286",
+     "title": "a fourteenth century sa-skya-pa commentary on santideva's bodhisattvac",
+     "master": null,
+     "gemini-3.1-pro-preview": "unsure/-/unknown",
+     "claude-opus": "unsure/-/Ngulchu Thogme Zangpo",
+     "openai/gpt-5.6-sol": "unsure/-/unknown",
+     "claude-haiku": "yes/-/Padmavajra"
+    },
+    {
+     "id": "6a37da46d07939943b266292",
+     "title": "theg pa chen po mdo sde'i rgyan gyi 'grel pa rin po che'i phren ba : a",
+     "master": null,
+     "gemini-3.1-pro-preview": "unsure/-/unknown",
+     "claude-opus": "unsure/-/unknown",
+     "openai/gpt-5.6-sol": "unsure/-/Ju Mipham Gyatso",
+     "claude-haiku": "yes/-/Mipham Jamgon Kongtrul"
+    },
+    {
+     "id": "6a37da4bd07939943b26688a",
+     "title": "dbu ma rtsa ba ses rab kyi 'grel pa 'thad pa'i rgyan : a 12th century ",
+     "master": null,
+     "gemini-3.1-pro-preview": "yes/-/Mabja Jangchub Tsondru",
+     "claude-opus": "unsure/-/Zhang Thang sag pa 'Byung gnas ye shes",
+     "openai/gpt-5.6-sol": "yes/-/Mabja Jangchub Tsondru",
+     "claude-haiku": "yes/-/Nāgārjuna"
+    },
+    {
+     "id": "69dfee89ce6bb8619e07f958",
+     "title": "Madhyamaka Commentary (Entering the Middle Way)",
+     "master": null,
+     "gemini-3.1-pro-preview": "unsure/-/Candrakīrti",
+     "claude-opus": "unsure/-/Tsongkhapa Lobsang Drakpa",
+     "openai/gpt-5.6-sol": "yes/-/Candrakirti",
+     "claude-haiku": "yes/-/Śāntideva"
+    },
+    {
+     "id": "69dfee88ce6bb8619e07f8f5",
+     "title": "Commentary on Nāgārjuna's Suhṛllekha (Letter to a Friend)",
+     "master": null,
+     "gemini-3.1-pro-preview": "unsure/-/unknown",
+     "claude-opus": "unsure/-/Mahamati",
+     "openai/gpt-5.6-sol": "unsure/-/unknown",
+     "claude-haiku": "yes/-/Nāgārjuna"
+    }
+   ]
+  }
+ },
+ "model_pairs": {
+  "gemini-3.1-pro-preview vs claude-opus": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.88,
+    "kappa": 0.751
+   },
+   "only_first_matches": 13,
+   "only_second_matches": 37
+  },
+  "gemini-3.1-pro-preview vs openai/gpt-5.6-sol": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.875,
+    "kappa": 0.731
+   },
+   "only_first_matches": 29,
+   "only_second_matches": 23
+  },
+  "gemini-3.1-pro-preview vs claude-haiku": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.709,
+    "kappa": 0.27
+   },
+   "only_first_matches": 119,
+   "only_second_matches": 2
+  },
+  "claude-opus vs openai/gpt-5.6-sol": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.889,
+    "kappa": 0.77
+   },
+   "only_first_matches": 38,
+   "only_second_matches": 8
+  },
+  "claude-opus vs claude-haiku": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.656,
+    "kappa": 0.228
+   },
+   "only_first_matches": 142,
+   "only_second_matches": 1
+  },
+  "openai/gpt-5.6-sol vs claude-haiku": {
+   "n": 416,
+   "kappa_V2": {
+    "n": 416,
+    "agree": 0.728,
+    "kappa": 0.298
+   },
+   "only_first_matches": 112,
+   "only_second_matches": 1
+  }
+ },
+ "only_this_model_matches": {
+  "gemini-3.1-pro-preview": 11,
+  "claude-opus": 20,
+  "openai/gpt-5.6-sol": 6,
+  "claude-haiku": 1
+ },
+ "list_vs_single": {
+  "n": 100,
+  "scorable": 86,
+  "list_V2": {
+   "k": 35,
+   "n": 86,
+   "pct": 40.7,
+   "ci95": [
+    30.9,
+    51.3
+   ]
+  },
+  "single_V2": {
+   "k": 38,
+   "n": 86,
+   "pct": 44.2,
+   "ci95": [
+    34.2,
+    54.7
+   ]
+  },
+  "diff_single_minus_list": {
+   "diff_pts": 3.5,
+   "ci95": [
+    -3.5,
+    10.5
+   ],
+   "a_only": 3,
+   "b_only": 6,
+   "n": 86
+  },
+  "kappa_V2": {
+   "n": 86,
+   "agree": 0.895,
+   "kappa": 0.786
+  },
+  "kappa_known": {
+   "n": 100,
+   "agree": 0.76,
+   "kappa": 0.6
+  },
+  "known_yes_list": {
+   "k": 42,
+   "n": 100,
+   "pct": 42,
+   "ci95": [
+    32.8,
+    51.8
+   ]
+  },
+  "known_yes_single": {
+   "k": 49,
+   "n": 100,
+   "pct": 49,
+   "ci95": [
+    39.4,
+    58.7
+   ]
+  }
+ },
+ "test_retest_pro": {
+  "n": 500,
+  "known_agree": {
+   "k": 458,
+   "n": 500,
+   "pct": 91.6,
+   "ci95": [
+    88.8,
+    93.7
+   ]
+  },
+  "known_kappa": {
+   "n": 500,
+   "agree": 0.916,
+   "kappa": 0.86
+  },
+  "V2_agree": {
+   "k": 406,
+   "n": 416,
+   "pct": 97.6,
+   "ci95": [
+    95.6,
+    98.7
+   ]
+  },
+  "V2_kappa": {
+   "n": 416,
+   "agree": 0.976,
+   "kappa": 0.949
+  },
+  "P_pro_run1": {
+   "k": 260,
+   "n": 416,
+   "pct": 62.5,
+   "ci95": [
+    57.8,
+    67
+   ]
+  },
+  "P_pro_run2": {
+   "k": 262,
+   "n": 416,
+   "pct": 63,
+   "ci95": [
+    58.2,
+    67.5
+   ]
+  }
+ },
+ "units": {
+  "note": "volumes = books in the work with pages; pages = sum of pages_count over them; tokens ≈ pages × chars per OCR page of the sampled edition's first ≤15 OCR'd pages ÷ 4 (median 933 chars/page where missing)",
+  "works": {
+   "pct": 52.2,
+   "ci95": [
+    47.4,
+    56.9
+   ]
+  },
+  "volumes": {
+   "pct": 38.6,
+   "ci95": [
+    30.2,
+    48.2
+   ]
+  },
+  "pages": {
+   "pct": 35.3,
+   "ci95": [
+    27.4,
+    43.9
+   ]
+  },
+  "tokens": {
+   "pct": 47.4,
+   "ci95": [
+    33.8,
+    60.5
+   ]
+  },
+  "totals_in_W": {
+   "volumes": 625,
+   "pages": 168858,
+   "tokens": 44579915
+  }
+ },
+ "by_century": {
+  "15th c.": {
+   "k": 3,
+   "n": 9,
+   "pct": 33.3,
+   "ci95": [
+    12.1,
+    64.6
+   ]
+  },
+  "16th c.": {
+   "k": 13,
+   "n": 35,
+   "pct": 37.1,
+   "ci95": [
+    23.2,
+    53.7
+   ]
+  },
+  "17th c.": {
+   "k": 27,
+   "n": 52,
+   "pct": 51.9,
+   "ci95": [
+    38.7,
+    64.9
+   ]
+  },
+  "18th c.": {
+   "k": 24,
+   "n": 44,
+   "pct": 54.5,
+   "ci95": [
+    40.1,
+    68.3
+   ]
+  },
+  "1900+": {
+   "k": 4,
+   "n": 23,
+   "pct": 17.4,
+   "ci95": [
+    7,
+    37.1
+   ]
+  },
+  "19th c.": {
+   "k": 5,
+   "n": 21,
+   "pct": 23.8,
+   "ci95": [
+    10.6,
+    45.1
+   ]
+  },
+  "before 1400": {
+   "k": 1,
+   "n": 3,
+   "pct": 33.3,
+   "ci95": [
+    6.1,
+    79.2
+   ]
+  },
+  "unknown": {
+   "k": 140,
+   "n": 229,
+   "pct": 61.1,
+   "ci95": [
+    54.7,
+    67.2
+   ]
+  }
+ },
+ "by_genre": {
+  "other": {
+   "k": 141,
+   "n": 304,
+   "pct": 46.4,
+   "ci95": [
+    40.9,
+    52
+   ]
+  },
+  "disputatio/oratio/dissertatio": {
+   "k": 60,
+   "n": 79,
+   "pct": 75.9,
+   "ci95": [
+    65.5,
+    84
+   ]
+  },
+  "scripture/commentary": {
+   "k": 16,
+   "n": 33,
+   "pct": 48.5,
+   "ci95": [
+    32.5,
+    64.8
+   ]
+  }
+ },
+ "by_language": {
+  "Latin": {
+   "k": 169,
+   "n": 270,
+   "pct": 62.6,
+   "ci95": [
+    56.7,
+    68.1
+   ]
+  },
+  "German": {
+   "k": 22,
+   "n": 39,
+   "pct": 56.4,
+   "ci95": [
+    41,
+    70.7
+   ]
+  },
+  "French": {
+   "k": 2,
+   "n": 10,
+   "pct": 20,
+   "ci95": [
+    5.7,
+    51
+   ]
+  },
+  "English": {
+   "k": 4,
+   "n": 34,
+   "pct": 11.8,
+   "ci95": [
+    4.7,
+    26.6
+   ]
+  },
+  "Chinese": {
+   "k": 0,
+   "n": 15,
+   "pct": 0,
+   "ci95": [
+    0,
+    20.4
+   ]
+  }
+ }
+}

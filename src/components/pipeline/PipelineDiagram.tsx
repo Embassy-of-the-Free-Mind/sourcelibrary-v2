@@ -216,7 +216,7 @@ export default function PipelineDiagram({ stages }: { stages: StageData[] }) {
           ))}
         </div>
         <p className="text-sm text-muted mt-2">
-          AI workers never write directly to MongoDB — prevents connection storms during large batch jobs
+          AI workers never write directly to MongoDB. This prevents connection storms during large batch jobs
         </p>
       </div>
     </div>

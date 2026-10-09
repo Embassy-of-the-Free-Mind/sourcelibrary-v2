@@ -301,7 +301,7 @@ function DensityHistogram({
       })}
 
       <text x={4} y={12} fontSize={10} fill="var(--text-muted)" fontFamily="var(--font-sans)">
-        figures per century — click to zoom
+        figures per century (click to zoom)
       </text>
     </g>
   );
@@ -1109,7 +1109,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
             <g transform={`translate(0, ${dividerY})`}>
               <line x1={0} x2={svgWidth} y1={0} y2={0} stroke="var(--border-light)" strokeWidth={1} />
               <text x={4} y={14} fontSize={10} fill="var(--text-muted)" fontFamily="var(--font-sans)">
-                {context.length.toLocaleString('en-US')} more figures in this range — zoom in or raise Min books to name them
+                {context.length.toLocaleString('en-US')} more figures in this range. Zoom in or raise Min books to name them
                 {contextPack.hidden > 0 && ` (${contextPack.hidden.toLocaleString('en-US')} beyond lane limit)`}
               </text>
             </g>

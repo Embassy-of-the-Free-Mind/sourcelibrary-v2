@@ -31,7 +31,7 @@ const ERAS: Era[] = [
     from: -800,
     to: 500,
     color: 'var(--accent-sage)',
-    description: 'The classical foundations — Hermes Trismegistus, Plato, the Neoplatonists, and the Corpus Hermeticum.',
+    description: 'The classical foundations: Hermes Trismegistus, Plato, the Neoplatonists, and the Corpus Hermeticum.',
   },
   {
     name: 'medieval',
@@ -39,7 +39,7 @@ const ERAS: Era[] = [
     from: 500,
     to: 1400,
     color: 'var(--accent-gold)',
-    description: 'Transmission and transformation — Arab scholars preserve Greek wisdom, the Kabbalah emerges, alchemy enters the Latin West.',
+    description: 'Transmission and transformation. Arab scholars preserve Greek wisdom, the Kabbalah emerges, alchemy enters the Latin West.',
   },
   {
     name: 'renaissance',
@@ -47,7 +47,7 @@ const ERAS: Era[] = [
     from: 1400,
     to: 1550,
     color: 'var(--accent-rust)',
-    description: 'The great recovery — Ficino translates the Hermetica, Pico writes the Oration, the prisca theologia becomes philosophy.',
+    description: 'The great recovery. Ficino translates the Hermetica, Pico writes the Oration, the prisca theologia becomes philosophy.',
   },
   {
     name: 'reformation',
@@ -55,7 +55,7 @@ const ERAS: Era[] = [
     from: 1550,
     to: 1650,
     color: 'var(--accent-violet)',
-    description: 'Rosicrucian manifestos, Paracelsian medicine, Dee and Fludd — esoteric thought flourishes amid religious upheaval.',
+    description: 'Rosicrucian manifestos, Paracelsian medicine, Dee and Fludd: esoteric thought flourishes amid religious upheaval.',
   },
   {
     name: 'enlightenment',
@@ -63,7 +63,7 @@ const ERAS: Era[] = [
     from: 1650,
     to: 1800,
     color: '#6b8a9e',
-    description: 'Freemasonry, Swedenborg, and the occult underground — hidden knowledge adapts to the age of reason.',
+    description: 'Freemasonry, Swedenborg, and the occult underground. Hidden knowledge adapts to the age of reason.',
   },
   {
     name: 'modern',
@@ -71,7 +71,7 @@ const ERAS: Era[] = [
     from: 1800,
     to: 1930,
     color: '#8a8480',
-    description: 'Revival and scholarship — the Golden Dawn, Theosophy, and the academic study of Western esotericism.',
+    description: 'Revival and scholarship: the Golden Dawn, Theosophy, and the academic study of Western esotericism.',
   },
 ];
 

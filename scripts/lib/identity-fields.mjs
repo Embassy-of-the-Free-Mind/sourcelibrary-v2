@@ -52,8 +52,10 @@ export function extractVolume(title) {
   return null;
 }
 
+// A negative year is BCE and is kept, as on the TS side: scraping `published`
+// instead turned "c. 2100–1600 BCE" into the year 2100.
 export function editionYear(book) {
-  if (typeof book.year === 'number' && book.year > 0) return book.year;
+  if (typeof book.year === 'number' && Number.isFinite(book.year) && book.year !== 0) return book.year;
   if (book.published) {
     const m = String(book.published).match(/\b(\d{3,4})\b/);
     if (m) return parseInt(m[1], 10);
@@ -84,16 +86,31 @@ export function normalizeEditionTitle(title) {
     .trim();
 }
 
+// Role designations a catalogue appends to a name ("(ed.)", "(trans.)",
+// "[Hrsg.]") — never the surname. See the TS side for the measurement.
+const ROLE_WORDS =
+  'edd?|eds|editors?|edited|hrsg|hg|herausgeber|bearb|mitarb|' +
+  'trans|transl|tr|translators?|translated|translation|ubers|ubersetzer|trad|' +
+  'comm|commentary|commentators?|attr|attrib|attributed|pseudo|pseudonym|' +
+  'comp|compilers?|compiled|collector|ill|illus|illustrator|engraver|printer|publ?|publisher|' +
+  'intro|pref|vorr|rev|authors?|adr|verf|verfasserin';
+const ROLE_GROUP_TAIL = new RegExp(`(?:\\s*[(\\[][^()\\[\\]]*\\b(?:${ROLE_WORDS})[.\\-]*\\s*[)\\]])+\\s*$`);
+const ROLE_WORD = new RegExp(`^(?:${ROLE_WORDS})$`);
+
 export function editionSurname(author) {
   const cleaned = String(author || '')
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
     .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '')
+    .replace(ROLE_GROUP_TAIL, '')
     .replace(/[^\w\s,]/g, '')
     .trim();
   if (!cleaned) return '';
-  return cleaned.includes(',') ? cleaned.split(',')[0].trim() : cleaned.split(/\s+/).pop() || '';
+  if (cleaned.includes(',')) return cleaned.split(',')[0].trim();
+  const words = cleaned.split(/\s+/);
+  while (words.length && ROLE_WORD.test(words[words.length - 1])) words.pop();
+  return words.pop() || '';
 }
 
 export function buildEditionKey(book) {

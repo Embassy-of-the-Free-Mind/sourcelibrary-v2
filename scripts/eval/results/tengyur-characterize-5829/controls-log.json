@@ -1,0 +1,634 @@
+{
+ "seed": 5829,
+ "plants": [
+  {
+   "page_id": "6abeb711896ea18127c85a6e",
+   "vol": 118,
+   "page_number": 351,
+   "kind": "reversal",
+   "old": "Undoubtedly, the nature of reality is exactly like that.",
+   "new": "Undoubtedly, the nature of reality is not exactly like that.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abe932d6a920ffd924d73f5",
+   "vol": 33,
+   "page_number": 67,
+   "kind": "reversal",
+   "old": "The \"meditative absorption of single-minded recollection\" is the defining characteristic of the meditative absorption of yoga, which is the first branch of application.",
+   "new": "The \"meditative absorption of single-minded recollection\" is not the defining characteristic of the meditative absorption of yoga, which is the first branch of application.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abe92d16a920ffd924d718c",
+   "vol": 32,
+   "page_number": 36,
+   "kind": "reversal",
+   "old": "Once the sign of stability is found, one should emanate and reabsorb the deities of the Jewel family.",
+   "new": "Once the sign of stability is not found, one should emanate and reabsorb the deities of the Jewel family.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abecd20896ea18127c8b855",
+   "vol": 162,
+   "page_number": 373,
+   "kind": "reversal",
+   "old": "This is because both truth and falsehood are connected to perception, rather than being connected to the objective reality of the matter.",
+   "new": "This is not because both truth and falsehood are connected to perception, rather than being connected to the objective reality of the matter.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abe97506a920ffd924d7fad",
+   "vol": 39,
+   "page_number": 469,
+   "kind": "reversal",
+   "old": "Here too, the ritual procedure is like that of the calming ritual.",
+   "new": "Here too, the ritual procedure is not like that of the calming ritual.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abeb785896ea18127c85faf",
+   "vol": 120,
+   "page_number": 566,
+   "kind": "reversal",
+   "old": "The section from, Then, monks, until, it will certainly emerge, contains the petitions made by the gods.",
+   "new": "The section from, Then, monks, until, it will not certainly emerge, contains the petitions made by the gods.",
+   "how": "\\bwill\\b → will not"
+  },
+  {
+   "page_id": "6abebf76896ea18127c88aab",
+   "vol": 142,
+   "page_number": 35,
+   "kind": "reversal",
+   "old": "First, regarding essence, it is expressed as being \"possessed of the very basis upon which that basis is obtained,\" which refers to its essential nature.",
+   "new": "First, regarding essence, it is not expressed as being \"possessed of the very basis upon which that basis is obtained,\" which refers to its essential nature.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "skipped": "6abeb824896ea18127c862e0",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abedefea43718d234bf0e0f",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed1b1896ea18127c8cae5",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb6dd896ea18127c85901",
+   "vol": 117,
+   "page_number": 526,
+   "kind": "agent",
+   "old": "I declare that a sentient being who possesses faith and interest in all phenomena as being pure from the very beginning will not go to the lower realms.",
+   "new": "You declare that a sentient being who possesses faith and interest in all phenomena as being pure from the very beginning will not go to the lower realms.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "skipped": "6abeb629896ea18127c854a6",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeba79896ea18127c87570",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abea3686a920ffd924db939",
+   "vol": 65,
+   "page_number": 345,
+   "kind": "agent",
+   "old": "At the site of the master, join the two feet and the two palms of the hands.",
+   "new": "At the site of the student, join the two feet and the two palms of the hands.",
+   "how": "\\bthe master\\b → the student"
+  },
+  {
+   "skipped": "6abeb2b4896ea18127c83522",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abe94eb6a920ffd924d79f3",
+   "vol": 36,
+   "page_number": 177,
+   "kind": "agent",
+   "old": "Om, you are the nature of all the Tathagatas; you are the holder of all vajras; you are that nature!",
+   "new": "Om, I am the nature of all the Tathagatas; you are the holder of all vajras; you are that nature!",
+   "how": "\\b[Yy]ou are\\b → I am"
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65be4",
+   "vol": 102,
+   "page_number": 616,
+   "kind": "agent",
+   "old": "At this point, some respond by saying: \"Does the cause produce the effect by meeting it, or without meeting it?\" Since you have said this, the same challenge and investigation applies to you as well.",
+   "new": "At this point, some respond by saying: \"Does the cause produce the effect by meeting it, or without meeting it?\" Since I have said this, the same challenge and investigation applies to you as well.",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  },
+  {
+   "skipped": "6abe902b6a920ffd924d63d8",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abebeff896ea18127c88819",
+   "vol": 140,
+   "page_number": 429,
+   "kind": "agent",
+   "old": "If you ask: should we also discuss other specific karmic actions, such as being born from heat and moisture, becoming a woman, or those that lead to a certain eighth existence?",
+   "new": "If I ask: should we also discuss other specific karmic actions, such as being born from heat and moisture, becoming a woman, or those that lead to a certain eighth existence?",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  },
+  {
+   "skipped": "6abedc7b896ea18127c911e8",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abedf79a43718d234bf1282",
+   "vol": 124,
+   "page_number": 206,
+   "kind": "agent",
+   "old": "I have established a meaning that was difficult to understand,\" and thus they do not become arrogant.",
+   "new": "You have established a meaning that was difficult to understand,\" and thus they do not become arrogant.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "page_id": "6abe92d16a920ffd924d738d",
+   "vol": 32,
+   "page_number": 549,
+   "kind": "agent",
+   "old": "It is said: I am indeed all the Buddhas, and I am all the Bodhisattvas themselves.",
+   "new": "It is said: You are indeed all the Buddhas, and I am all the Bodhisattvas themselves.",
+   "how": "\\bI am\\b → you are"
+  },
+  {
+   "page_id": "6abecf0f896ea18127c8bd62",
+   "vol": 164,
+   "page_number": 106,
+   "kind": "term",
+   "old": "If that monk dies in the interval between being counted and actually carrying the gains away, or even while the items are being arranged for distribution, the portion intended for the deceased monk must be returned to the original source from which the gains came.",
+   "new": "If that novice dies in the interval between being counted and actually carrying the gains away, or even while the items are being arranged for distribution, the portion intended for the deceased monk must be returned to the original source from which the gains came.",
+   "how": "monk → novice"
+  },
+  {
+   "skipped": "6abeb442896ea18127c846fb",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb58b896ea18127c84fd4",
+   "vol": 113,
+   "page_number": 355,
+   "kind": "term",
+   "old": "How one remembers is through the distinct causes of conventional designations, such as: \"In such and such a place, my name was this.\" ",
+   "new": "How one remembers is through the distinct causes of ultimate designations, such as: \"In such and such a place, my name was this.\" ",
+   "how": "conventional → ultimate"
+  },
+  {
+   "page_id": "6abea1596a920ffd924daf9b",
+   "vol": 61,
+   "page_number": 491,
+   "kind": "term",
+   "old": "Because it is the complete transformation into primordial wisdom as it has been described, it is wisdom.",
+   "new": "Because it is the complete transformation into primordial faith as it has been described, it is wisdom.",
+   "how": "wisdom → faith"
+  },
+  {
+   "page_id": "6abeb58b896ea18127c84ee4",
+   "vol": 113,
+   "page_number": 115,
+   "kind": "term",
+   "old": "what his body is, what he relies upon, what his activity is, what his method is, where he dwells and acts for the sake of others without attachment, what things he is attached to, what his abandonment is, what his wisdom is, and in which bodies",
+   "new": "what his body is, what he relies upon, what his activity is, what his method is, where he dwells and acts for the sake of others without attachment, what things he is attached to, what his abandonment is, what his faith is, and in which bodies",
+   "how": "wisdom → faith"
+  },
+  {
+   "page_id": "6abe8cd86a920ffd924d581f",
+   "vol": 21,
+   "page_number": 325,
+   "kind": "term",
+   "old": "Holding precious flasks filled with the water of wisdom, they bestow the initiation upon oneself and the mandala...",
+   "new": "Holding precious flasks filled with the water of faith, they bestow the initiation upon oneself and the mandala...",
+   "how": "wisdom → faith"
+  },
+  {
+   "page_id": "6abe89356a920ffd924d49a7",
+   "vol": 14,
+   "page_number": 165,
+   "kind": "term",
+   "old": "Those sentient beings are transformed into the deities of the mandala, possessing three faces, six arms, and so forth.",
+   "new": "Those sentient beings are transformed into the deities of the stupa, possessing three faces, six arms, and so forth.",
+   "how": "mandala → stupa"
+  }
+ ],
+ "human": [
+  {
+   "page_id": "6abeafd9896ea18127c82226",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "76a",
+   "page_number": 150
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82354",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "227a",
+   "page_number": 452
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823c3",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "282b",
+   "page_number": 563
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822f4",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "179a",
+   "page_number": 356
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821ce",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "32a",
+   "page_number": 62
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821b8",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "21a",
+   "page_number": 40
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8223d",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "87b",
+   "page_number": 173
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82197",
+   "toh": "toh3808",
+   "vol": 93,
+   "folio": "4b",
+   "page_number": 7
+  },
+  {
+   "page_id": "6abe83c2433559215a9980c0",
+   "toh": "toh1189",
+   "vol": 4,
+   "folio": "226b",
+   "page_number": 451
+  },
+  {
+   "page_id": "6abe83c2433559215a9980b6",
+   "toh": "toh1189",
+   "vol": 4,
+   "folio": "221b",
+   "page_number": 441
+  },
+  {
+   "page_id": "6abe83c2433559215a998147",
+   "toh": "toh1189",
+   "vol": 4,
+   "folio": "294a",
+   "page_number": 586
+  },
+  {
+   "page_id": "6abe83c2433559215a9980cf",
+   "toh": "toh1189",
+   "vol": 4,
+   "folio": "234a",
+   "page_number": 466
+  },
+  {
+   "page_id": "6abe8368433559215a997d0b",
+   "toh": "toh1183",
+   "vol": 3,
+   "folio": "47a",
+   "page_number": 92
+  },
+  {
+   "page_id": "6abe8368433559215a997cb1",
+   "toh": "toh1183",
+   "vol": 3,
+   "folio": "2a",
+   "page_number": 2
+  },
+  {
+   "page_id": "6abe8368433559215a997cba",
+   "toh": "toh1183",
+   "vol": 3,
+   "folio": "6b",
+   "page_number": 11
+  },
+  {
+   "page_id": "6abe8368433559215a997cb2",
+   "toh": "toh1183",
+   "vol": 3,
+   "folio": "2b",
+   "page_number": 3
+  },
+  {
+   "page_id": "6abee362a43718d234bf2210",
+   "toh": "toh4377",
+   "vol": 207,
+   "folio": "302a",
+   "page_number": 601
+  },
+  {
+   "page_id": "6abe9be46a920ffd924d915c",
+   "toh": "toh1996",
+   "vol": 47,
+   "folio": "193a",
+   "page_number": 382
+  },
+  {
+   "page_id": "6abee362a43718d234bf2259",
+   "toh": "toh4400a",
+   "vol": 207,
+   "folio": "338b",
+   "page_number": 674
+  },
+  {
+   "page_id": "6abee362a43718d234bf2211",
+   "toh": "toh4377",
+   "vol": 207,
+   "folio": "302b",
+   "page_number": 602
+  }
+ ],
+ "j5797": [
+  {
+   "page_id": "6abeafd9896ea18127c8230b",
+   "q": "Q313",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 379,
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82256",
+   "q": "Q070",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 198,
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82375",
+   "q": "Q333",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 485,
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abe83c2433559215a9980d9",
+   "q": "Q178",
+   "toh": "toh1189",
+   "vol": 4,
+   "page_number": 476,
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abe83c2433559215a9980c6",
+   "q": "Q171",
+   "toh": "toh1189",
+   "vol": 4,
+   "page_number": 457,
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    3
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82397",
+   "q": "Q340",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 519,
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822af",
+   "q": "Q075",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 287,
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ]
+  },
+  {
+   "page_id": "6abe8368433559215a997cb3",
+   "q": "Q001",
+   "toh": "toh1183",
+   "vol": 3,
+   "page_number": 4,
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ]
+  },
+  {
+   "page_id": "6abe83c2433559215a9980bc",
+   "q": "Q167",
+   "toh": "toh1189",
+   "vol": 4,
+   "page_number": 447,
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822fc",
+   "q": "Q308",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 364,
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82383",
+   "q": "Q091",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 499,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823a1",
+   "q": "Q342",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 529,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    4
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821c7",
+   "q": "Q054",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 55,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "page_id": "6abe8368433559215a997cfc",
+   "q": "Q014",
+   "toh": "toh1183",
+   "vol": 3,
+   "page_number": 77,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abe8368433559215a997d1f",
+   "q": "Q161",
+   "toh": "toh1183",
+   "vol": 3,
+   "page_number": 112,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abe8368433559215a997cb6",
+   "q": "Q108",
+   "toh": "toh1183",
+   "vol": 3,
+   "page_number": 7,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "page_id": "6abe8368433559215a997ce8",
+   "q": "Q010",
+   "toh": "toh1183",
+   "vol": 3,
+   "page_number": 57,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822ba",
+   "q": "Q293",
+   "toh": "toh3808",
+   "vol": 93,
+   "page_number": 298,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ]
+  },
+  {
+   "page_id": "6abe83c2433559215a99811f",
+   "q": "Q043",
+   "toh": "toh1189",
+   "vol": 4,
+   "page_number": 546,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ]
+  },
+  {
+   "page_id": "6abe83c2433559215a99813a",
+   "q": "Q218",
+   "toh": "toh1189",
+   "vol": 4,
+   "page_number": 573,
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ]
+  }
+ ]
+}

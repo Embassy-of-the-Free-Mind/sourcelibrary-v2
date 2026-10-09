@@ -3,17 +3,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
+import languageCardImages from '@/data/language-card-images.json';
+
+// Card images chosen by eye from each language's gallery illustrations
+// (gallery_quality >= 0.85, one per book). Languages not listed fall back to
+// the first catalog thumbnail, which is often a plain binding or title page.
+const CARD_IMAGES: Record<string, { image: string; bookTitle: string }> = languageCardImages;
 
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Languages | Source Library',
-  description: 'Browse Source Library by language — Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
+  description: 'Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
   alternates: { canonical: '/languages' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Languages | Source Library',
-    description: 'Browse Source Library by language — Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
+    description: 'Browse Source Library by language: Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.',
     type: 'website',
   },
 };
@@ -24,6 +30,7 @@ interface LanguageStats {
   bookCount: number;
   yearRange?: string;
   heroImage?: string;
+  heroAlt?: string;
 }
 
 function languageSlug(name: string): string {
@@ -74,7 +81,8 @@ async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; total
       slug: languageSlug(name),
       bookCount: stats.count,
       yearRange,
-      heroImage: stats.heroImage,
+      heroImage: CARD_IMAGES[name]?.image ?? stats.heroImage,
+      heroAlt: CARD_IMAGES[name] ? `From ${CARD_IMAGES[name].bookTitle}` : undefined,
     });
   }
 
@@ -111,7 +119,7 @@ export default async function LanguagesPage() {
             {lang.heroImage ? (
               <Image
                 src={lang.heroImage}
-                alt={`Illustration from ${lang.name} text`}
+                alt={lang.heroAlt ?? `Illustration from ${lang.name} text`}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

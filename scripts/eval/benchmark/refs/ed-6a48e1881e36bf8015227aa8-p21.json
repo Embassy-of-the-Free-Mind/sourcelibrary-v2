@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/bald6",
+  "edition": "Urania Victrix — München: Wagner, 1663",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "9/11",
+    "pb_aligned_pages": "9/9"
+  },
+  "origin": "library",
+  "book_id": "6a48e1881e36bf8015227aa8",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 7819,
+    "to_char": 8552,
+    "overlap": 0.747,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Candido Lectori. AD MELIOREM NOticiam hujus Scripti ISAGOGE.' after ornamental band (p.1, sig A2); ends 'exoticorum / con-'; ref pads 'Uraniae sacra spectacula.' and 'conceptuum aestuosis torrentibus'; ref splits italic words onto separate lines.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:14.593Z",
+  "text_location": "repo",
+  "text_sha256": "f3853c053d41250d00262fcb163da0925a643cc2495cee1e8a7d1b101836c2d7",
+  "unit": {
+    "chars": 733
+  },
+  "stratum": "latin-period-5126"
+}

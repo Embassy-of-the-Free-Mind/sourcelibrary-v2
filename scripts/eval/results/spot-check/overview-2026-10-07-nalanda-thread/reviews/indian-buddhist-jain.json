@@ -1,0 +1,528 @@
+[
+  {
+    "book_id": "6992590b8812793469fe0503",
+    "slot": 13,
+    "title": "The Conception of Buddhist Nirvana",
+    "tradition": "indian-buddhist-jain",
+    "shelf_fit": "fits",
+    "shelf_note": "Stcherbatsky's study of Madhyamaka nirvana with a translation of Candrakirti on MMK ch. 1 and 25; the scan also carries a Devanagari text of the Prasannapada (p. 481). Core Indian Buddhist philosophy.",
+    "rights_flag": true,
+    "structure_note": "676 page records against pages_count 543 and pages_translated 536, so the catalogue fields are stale. The 212 printed_repeats and 18 backsteps fit two separate paginations: the English study in '( 36 )' style and a Devanagari text numbered again from १ (p. 481 = '४४'). The volume looks like a reprint with the Sanskrit appended, which is a structural splice rather than misread numerals. The catalogue title does not mention the Sanskrit text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "XLIII | The Existence of Separate Energies Denied",
+            "image": "XIII The Existence of Separate Energies Denied",
+            "problem": "printed misnumbering silently normalised to XLIII",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "IX | Conclusion <note>Likely a typo in original for XI</note>",
+            "image": "IX Conclusion",
+            "problem": "model editorial note inside the transcription",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "The Cause Materialis Denied",
+            "english": "The <term>Causa Materialis</term> <gloss>material cause</gloss> Denied",
+            "problem": "author's wording silently corrected",
+            "severity": "minor",
+            "class": "T12"
+          },
+          {
+            "source": "IX | Conclusion",
+            "english": "XI | Conclusion <note>Corrected from original typo</note>",
+            "problem": "the printed numeral is changed in the English, with a note",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "English table of contents 'translated' into English with added glosses and a <summary> block",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 143,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "³ Vasubandhu (db Kośa. V 22) reports ... e g, all questions regarding",
+            "english": "... e.g., all questions regarding the nature of the Absolute.",
+            "problem": "the footnote breaks off at the page foot; the English completes it with words not on this page",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 383,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "modification<gloss>1</gloss>",
+            "image": "modification¹",
+            "problem": "footnote reference numerals encoded as <gloss> tags",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "² apratyaya-svabhāvāḥ.",
+            "english": "<term>apratyaya-svabhāvāḥ</term> <gloss>lacking the nature of conditions</gloss>",
+            "problem": "model-added glosses inside the author's footnotes, not marked as added",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "nested <gloss> inside <gloss> in the footnote block; it risks rendering as raw or broken markup",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 481,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "(none on page)",
+            "english": "# Chapter XXV: Examination of Nirvana",
+            "problem": "invented heading; the page is mid-commentary on MMK 25.8-9",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "खरविषाणादीनामनित्यतानुपलम्भात्",
+            "english": "for we do not observe the impermanence of a rabbit's horns",
+            "problem": "khara-viṣāṇa is a donkey's horn, not a rabbit's (śaśa-śṛṅga, which appears later on the page)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "प्रदीपप्रभावद्",
+            "english": "like the effect of a lamp",
+            "problem": "should be 'like the light of a lamp'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is clean and the Sanskrit commentary is rendered competently. Faults: invented headings, model glosses and markup in the English, a footnote completed past the page edge, and a probable modern Sanskrit edition spliced into the scan.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      143
+    ],
+    "reader_summary": "This is Stcherbatsky's 1927 study of the Madhyamaka absolute, with a Devanagari Prasannapada text bound after it. The transcription is of the right pages and is accurate. The English pane is mostly Stcherbatsky's own words with added glosses and occasional invented headings. Its translation of the Sanskrit is usable but has slips such as 'rabbit's horn' for a donkey's horn."
+  },
+  {
+    "book_id": "6953c9c777f38f6761bdefa4",
+    "slot": 14,
+    "title": "The Creed of Half Japan - Japanese Buddhism",
+    "tradition": "indian-buddhist-jain",
+    "shelf_fit": "doubtful",
+    "shelf_note": "Arthur Lloyd's 1911 history of Japanese Buddhism (Shingon, Jodo, the Catholic mission period). It touches Asvaghosha and Nagarjuna, but its subject is Japan, not the Indian/Buddhist/Jain tradition as a reading room on Indian thought would present it.",
+    "rights_flag": null,
+    "structure_note": "Counts are coherent: 420 records, 416 with OCR, 4 backsteps and 4 repeats (the usual front matter). Page 8 is the verso of the title page, with show-through and a 'UNIV. OF CALIFORNIA' perforation, and is correctly treated as blank.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "OCR stores a long <meta>/<image-desc> description of a blank verso; the translation pane correctly says blank",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "the pretended revelations of the Kegon Scrip-",
+            "english": "the alleged revelations of the Kegon Scrip-",
+            "problem": "English prose modernised word by word (also 'advent'->'arrival', 'confute'->'refute')",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation opens with a <meta> continuity summary in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 268,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "it was a terrible prostitution of the truth ... an ingenious and not over-scrupulous miracle-monger",
+            "english": "it was a terrible distortion of the truth ... a clever and not overly scrupulous miracle-worker",
+            "problem": "the author's polemical judgement is softened; a reader of the English pane does not get Lloyd's actual verdict on Kobo",
+            "severity": "moderate",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 371,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "brought him into dealings with the Buddhist monks",
+            "english": "brought him into conflict with Buddhist monks",
+            "problem": "the author's neutral word is sharpened into a different claim",
+            "severity": "moderate",
+            "class": "T12"
+          },
+          {
+            "source": "rejoiced the heart of the Emperor by the pacification",
+            "english": "pleased the Emperor by restoring peace",
+            "problem": "paraphrase in place of the author's words",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcriptions are excellent. The 'translation' pane rewrites Lloyd's 1911 English and softens or shifts his judgements. The book sits awkwardly on an Indian/Buddhist/Jain shelf.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      111,
+      268,
+      371
+    ],
+    "reader_summary": "Arthur Lloyd's 1911 account of Japanese Buddhism, transcribed accurately from the University of California copy. The English pane is not a translation but a modernised paraphrase that sometimes changes the author's wording and tone, so a scholar should read the transcription. It belongs more naturally with Japanese than with Indian material."
+  },
+  {
+    "book_id": "699246bebc722ec0ee812869",
+    "slot": 15,
+    "title": "Vedanta Sutras, Part 2: Commentary of Shankaracharya (SBE Vol. 38)",
+    "tradition": "indian-buddhist-jain",
+    "shelf_fit": "fits",
+    "shelf_note": "Thibaut's translation of Sankara's commentary on the Brahmasutras, the standard SBE volume. It belongs on an Indian-traditions shelf, though it is Vedanta, not Buddhist or Jain.",
+    "rights_flag": null,
+    "structure_note": "533 records, 3 backsteps and 11 repeats, which is ordinary for front matter and the index. The catalogue gives 'published: 1879', but SBE 38 appeared in 1896; this is a metadata error (I7, minor).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "retractation",
+            "english": "retraction",
+            "problem": "Thibaut's technical term silently changed throughout",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 179,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "discussion; and (the text) enounces something more than that.",
+            "english": "(omitted)",
+            "problem": "the opening sentence of the page is dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "the plurality of cosmic forms on the other hand falls within the sphere of perception and the other means of right",
+            "english": "whereas the cosmic forms fall within the sphere of perception and cannot be negated. In this second view, the repetition of \"not\" is merely for emphasis.",
+            "problem": "the sentence breaks off at the page foot; the English completes it and adds a whole sentence attributed to Sankara's opponent that is not on this page",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "Here we have to enquire ... (the whole page)",
+            "english": "condensed paraphrase",
+            "problem": "Thibaut's translation is abridged and reworded, not copied",
+            "severity": "moderate",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 382,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "who knows!—Not so, the pûrvapakshin replies. In the same way as sleep and the like ... it therefore belongs to him only who does not know.",
+            "english": "(omitted)",
+            "problem": "the entire first paragraph, the opponent's argument that the reply answers, is missing from the English pane; it starts at 'To this we make the following reply'",
+            "severity": "serious",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 464,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "c.",
+            "english": "creation / cognitions / conjunction",
+            "problem": "index abbreviations expanded; harmless but not the printed index",
+            "severity": "minor",
+            "class": "T12"
+          },
+          {
+            "source": "Colebrooke, i, p. cxvi.",
+            "english": "Colebrooke <note>Henry Thomas Colebrooke (1765–1837), a pioneer of Indology</note>",
+            "problem": "model notes inserted into an index",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<term> tags wrapped around parenthetical glosses, e.g. 'Sâkhâ <term> (school or recension of a Veda) </term>', which is misused markup",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of Thibaut is near-perfect. The English pane drops whole paragraphs (p. 382) and invents an argument at a page edge (p. 179), so it must not be read as the text.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      37,
+      464
+    ],
+    "reader_summary": "Thibaut's 1896 English translation of Sankara's Brahmasutra commentary (SBE 38). The transcription is of the right pages and accurate. The second English pane is an AI rewrite of Thibaut that sometimes drops the opponent's paragraph or adds sentences, so a scholar should read the transcription and ignore the 'translation'."
+  },
+  {
+    "book_id": "699259218812793469fe2a44",
+    "slot": 16,
+    "title": "Narada Bhakti Sutra (Sacred Books of the Hindus, Vol. 7)",
+    "tradition": "indian-buddhist-jain",
+    "shelf_fit": "fits",
+    "shelf_note": "Sacred Books of the Hindus vol. 7 (bhakti sutras and an anthology of Bhagavata verses with commentary). Indian devotional philosophy; it belongs on an Indian shelf, not a Buddhist or Jain one.",
+    "rights_flag": null,
+    "structure_note": "The title names only the Narada Bhakti Sutra, but every sampled page is from other parts of the volume. Page 8 is the introduction to Sandilya's doctrine, page 114 is the 'SÂNDILYA-SÛTRAM' with Svapnesvara's commentary, and pages 215 and 307 are the 'First String' and 'Seventh String' of a Bhagavata anthology (the Bhakti Ratnavali). The volume is a compound one, and the catalogue identity is incomplete (I7). Separate paginations explain the 116 printed_repeats and 15 backsteps. 370 records against pages_count 335 means the catalogue counts are stale.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Śâṇḍilya replie sthat",
+            "image": "Sândilya replie sthat",
+            "problem": "printed word-space error kept, which is faithful",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Prakṛiti, Mâyâ, (Plato's Matter)",
+            "english": "<term>Prakṛiti</term> <gloss>nature/primal matter</gloss>, <term>Mâyâ</term> <gloss>illusion/creative power</gloss> (Plato's Matter)",
+            "problem": "glosses added into the author's English",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>Continuity: ...</meta> line at the top of the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 114,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Krishna names normalised to Kṛṣṇa, Vṛṣṇis",
+            "image": "Krisna, Vrisnis (worn type)",
+            "problem": "transliteration normalised to modern IAST, not as printed",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Among the Rudras I am Śaṅkara",
+            "english": "Among the <term>Rudras</term> <gloss>forms of Shiva</gloss> I am <term>Śaṅkara</term>",
+            "problem": "glosses added to the English",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 215,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "सम्भवात् ॥ ८६ ॥",
+            "image": "सम्भवात् ॥ ८९ ॥",
+            "problem": "verse number misread (header says 89-91)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "भगवानपि स्वभक्तिमहिमाश्चर्येण सशोधयति",
+            "image": "... सबोधयति (addresses)",
+            "problem": "the verb for 'addresses [Uddhava]' is read as 'purifies'; the error is carried into the English as 'the Lord purifies even the greatness of His own devotion'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "समस्तपापानीति । भगवानपि स्वभक्तिमहिमाश्चर्येण सशोधयति ।",
+            "english": "\"All sins\" refers to the fact that the Lord purifies even the greatness of His own devotion.",
+            "problem": "nonsense sentence over an OCR misread; Sridhara's gloss says the Lord, amazed at the greatness of devotion, addresses Uddhava",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "भक्त्याहमेकया ग्राह्यः ... ॥ ८६ ॥",
+            "english": "<note>original: \"...\"</note>",
+            "problem": "the Sanskrit verse is parked untranslated in a <note>",
+            "severity": "minor",
+            "class": "T3"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 307,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(११ । २ । ३ शुकः ।)",
+            "image": "(११ । २ । २ शुकः ।)",
+            "problem": "Bhagavata reference misread (the printed English also says XI 2 2)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "ननु आत्मधधनात् ...",
+            "image": "dense small Devanagari commentary",
+            "problem": "the commentary block has scattered misreads (e.g. 'आत्मधधनात्' for 'आत्मधनत्वात्'), unverifiable in detail at this resolution",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "(the page begins with Sridhara's commentary 'ननु आत्मधनत्वात् ...'; the verse X.83.41-42 is not printed on this page)",
+            "english": "na vayaṃ sādhiṣa sāmrajyaṃ svarājyaṃ bhojyamapyuta | vairājyaṃ pārameṣṭhyaṃ vā ānantyaṃ vā hareḥ padam || 22 || ...",
+            "problem": "the English pane supplies, from memory, a romanised verse that is not on the page, and presents it as the page's source text",
+            "severity": "serious",
+            "class": "other:canonical-verse-inserted-in-translation"
+          },
+          {
+            "source": "Sanskrit commentaries on 22-23, 24 and 25",
+            "english": "(not translated; replaced by a model <note> paraphrase or omitted)",
+            "problem": "three commentary paragraphs dropped from the English",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The English pages are transcribed well, the Sanskrit verse-and-commentary pages less well. The volume is mis-titled as Narada alone. The English pane parks or drops Sanskrit commentary and on p. 307 inserts a verse that is not on the page.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      8,
+      114
+    ],
+    "reader_summary": "Sacred Books of the Hindus vol. 7: Narada's and Sandilya's bhakti sutras with Svapnesvara's commentary, and a Bhagavata verse anthology with Sridhara's glosses. The transcription is of the right pages. Its English is reliable, but its Devanagari has verse-number and word misreads. The English pane is trustworthy where it copies the printed English. Where it handles the Sanskrit commentary, it leaves parts untranslated, garbles them, or adds a verse not on the page."
+  }
+]

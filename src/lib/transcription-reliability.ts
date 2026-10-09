@@ -49,8 +49,10 @@
 import { stripMarkupTags } from './strip-markup-tags';
 
 export type TranscriptionReliability = {
-  /** Machine-readable so a caller can decide how loudly to render it. */
-  level: 'unreliable';
+  /** Machine-readable so a caller can decide how loudly to render it.
+   *  `unreliable` — our OCR cannot read this script; do not trust the text.
+   *  `caution` — a specialist engine read it; good, but unchecked by a person. */
+  level: 'unreliable' | 'caution';
   /** One sentence, addressed to a reader rather than to us. */
   message: string;
   /** Where the claim comes from, for anyone who wants to check it. */
@@ -61,21 +63,65 @@ export type TranscriptionReliability = {
 const UNREADABLE_LANGUAGES = new Set(['tibetan']);
 
 /**
+ * The specialist Tibetan reader (#4722). The 09-01 numbers above describe the
+ * Gemini reads it replaced. On the pages it read, the "cannot read" notice is
+ * false, and its own evidence line names this engine as the good one (#5746).
+ */
+const YIGDZIN_MODEL = 'bdrc-yigdzin-v1';
+
+/**
+ * Kangyur volumes are the only Tibetan manuscripts we can measure: the Derge
+ * Kangyur e-text is a reference for them, and nothing comparable exists for
+ * the Nyingma tantras and the rest. Matched on the title because that is how
+ * the measured sample was drawn (Kangyur-titled BL books).
+ */
+const KANGYUR_TITLE = /\bka[nṅ]g?[jy]ur\b|bka['’]?\s?['’]?gyur/i;
+
+/**
  * `language` is the EDITION's language, not the source work's — see
  * `.claude/docs/invariants/language-fields.md`. That is the right field here:
  * what matters is the script actually photographed on the folio, which is what
  * the OCR had to read.
+ *
+ * The page decides WHICH notice, because what we can say depends on the engine
+ * that read it. Without a page (a book-level surface) the strong notice stands:
+ * a book can still hold Gemini-read pages (#4523's remainder).
  */
 export function transcriptionReliability(
-  book: { language?: string | null } | null | undefined,
+  book: { language?: string | null; title?: string | null } | null | undefined,
+  page?: { ocr?: { model?: string | null } | null } | null,
 ): TranscriptionReliability | null {
   const lang = (book?.language ?? '').trim().toLowerCase();
   if (!UNREADABLE_LANGUAGES.has(lang)) return null;
+  if (page?.ocr?.model === YIGDZIN_MODEL) {
+    // Measured 2026-09-30 and replicated 2026-10-01 (n = 100, no shared pages):
+    // median syllable identity 0.947 against the Derge Kangyur e-text, chance
+    // 0.25; about 5% of two-leaf pages drop the lower leaf's first line.
+    // scripts/eval/experiments/2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md
+    const measured = KANGYUR_TITLE.test(book?.title ?? '');
+    const made =
+      'This transcription was made by machine, by BDRC’s Yigdzin, an OCR ' +
+      'model built for Tibetan manuscripts. ';
+    const tail = 'The English is an AI translation made from it. Check the scan before quoting either.';
+    return {
+      level: 'caution',
+      message: measured
+        ? made + 'It reads well but has not been checked by a person: on about ' +
+          'one page in twenty a line is dropped where two leaves meet. ' + tail
+        : made + 'We hold no typed edition of this text to measure it against, ' +
+          'so its accuracy here is unknown. ' + tail,
+      evidence: measured
+        ? 'Measured on 100 sampled Kangyur folios against the Derge edition: a ' +
+          'median 95% of syllables agree, where chance is 25%.'
+        : 'Where we can measure it, on Kangyur folios, a median 95% of syllables ' +
+          'agree with the Derge edition.',
+    };
+  }
   return {
     level: 'unreliable',
     message:
       'This transcription is machine-made and unreliable. Our OCR cannot read ' +
-      'cursive Tibetan, and where it fails it does not stop — it invents ' +
+      'cursive Tibetan, and where it fails it does not stop: it invents ' +
       'plausible text, sometimes in another script entirely. Read the scan as ' +
       'the source, and please do not quote the transcription or the English ' +
       'without checking the folio.',

@@ -1,0 +1,34 @@
+---
+stage: metadata
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 41555
+n_pages: 41555
+verdict: "One page per visible book: 7.6% of 41,555 books handwritten plus 2.6% mixed, 86% printed; typeface known on only 17% (blackletter 17.1% there, non-random subset)."
+status: informational
+decision: "Derek approved the typeface pass for every book the same day (#5643)"
+superseded_by: null
+issue: 5643
+---
+## 2026-10-02 · What does the collection look like, page by page: printed or handwritten, which typeface, which page type? (#5643)
+<!-- PRIOR ART: scripts/eval/quality-covariates.mjs (#5623: the inline-tag + descriptor rule, run there on audit and benchmark pages only; this extends it with --corpus-profile rather than a new script); scripts/eval/lib/page-descriptor.mjs (the descriptor, unchanged); scripts/maintenance/backfill-script-type-4195.mjs (#5629, the pages.script_type values this reads). -->
+
+- **Question.** A descriptive profile of the whole visible collection: printed vs handwritten, typeface, page type and columns, including books read by non-Gemini OCR. It serves as a covariate table for the quality evidence, and it answers "how many manuscripts? how much blackletter?".
+- **Design.** One page per visible book (`visible: true`, `pages_count > 4`; **41,555 books**). The page is the middle one, `ceil(pages_count / 2)`; if that page has no OCR, the next page after it that has OCR, else the nearest one before it. Inline values first, at $0: `pages.script_type` / `page_type` / `columns`, then the OCR text's own tags. The image-only descriptor (`lib/page-descriptor.mjs`, gemini-3.1-flash-lite, thinking off) runs only where an OCR'd book's page lacks a page type, or lacks a script tag on a non-CJK page: **7,162 books**. Following the by-eye check on #5623, the descriptor's `script` is not used on CJK or Tibetan pages, which stay `unknown` without an inline tag (343 books). Read-only Mongo, nothing written.
+- **Spend.** 7,160 calls, **$3.67** at realtime list price (estimate $3.68, ceiling $10). 2 books failed (Gemini 403).
+- **Result** (Wilson 95%).
+  - **Manuscripts.** 3,152 books handwritten = 7.6% (7.3–7.8), plus 1,065 mixed = 2.6% (2.4–2.7). Printed 86.0%; unknown 3.8%. Outside CJK and Tibetan: handwritten 7.3% (7.0–7.7), mixed 3.5% (3.3–3.8).
+  - **Where the hands are.** pre-1500: 39.3% handwritten (37.4–41.3). Greek 29%, Sanskrit 31%, Arabic 63%, Hebrew 50%, Korean 59%. Latin 4.2%, German 3.2%, Chinese 2.1%.
+  - **Blackletter: answerable only on the described subset.** The descriptor ran on 17% of books, so typeface is unknown on 83%. Among the 5,814 non-CJK described pages that have a typeface: roman 67.3% (66.1–68.5), blackletter 17.1% (16.2–18.1), non-Latin 14.4%, italic 1.2%. German is 83% blackletter (565/679), Dutch about half. That subset is NOT random: it is the books whose pages predate the `<script>` tag (older Gemini prompt versions, Archive OCR).
+  - **Page type.** 94.7% `text`. The middle page rarely lands on plates (illustration 1.2%, blank 0.8%).
+  - **Columns** are known on 28%. The OCR prompt writes `<columns>` mostly when there is more than one column, so "unknown" usually means one column.
+- **Caveats.**
+  1. **Tibetan "handwritten" 53% is suspect.** All 732 come from inline tags (Gemini, and the bdrc lane's stamp), and they produce the 1700s bump (723 of 906 handwritten 1700s books are Tibetan). The #5623 by-eye check found a Tibetan pecha that was a xylograph tagged handwritten. A by-eye sample is needed before quoting a Tibetan manuscript share.
+  2. **15,271 books (37%) are profiled from page 25.** Only their first 25 pages carry OCR, so the "nearest page with OCR" rule lands at the end of that span, close to front matter.
+  3. **Period is unknown for 46%** (19,054 books, mostly Chinese, where `books.published` does not pin a century).
+  4. The inline script tag is itself a model's reading (#5623: OCR right 6 of 11 on CJK disagreements). The descriptor agreed 39/40 on Latin-script pages.
+- **Next decision (taken the same day).** Derek approved typeface for the whole collection. See `2026-10-02-corpus-typeface-every-book-5643.md`: 31,258 more calls ($16.03), typeface known for 92% of books, blackletter 10.0% overall and German 83%.
+- *Replicated?* No. The walk is deterministic and re-runs at $0; the descriptor answers are cached in the output.
+- **Artifact.** `scripts/eval/output/corpus-page-profile-2026-10-02.jsonl.gz` (one row per book: value + source of each value, plus the raw descriptor answer) and `corpus-page-profile-2026-10-02.summary.json` (counts with Wilson intervals by language and period). Command: `node --env-file=… scripts/eval/quality-covariates.mjs --corpus-profile --date=2026-10-02 [--describe]`.

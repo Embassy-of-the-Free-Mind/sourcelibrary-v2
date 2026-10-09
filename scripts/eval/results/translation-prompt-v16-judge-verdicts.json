@@ -1,0 +1,221 @@
+{
+ "n": 30,
+ "v13_worse": 6,
+ "v16_worse": 7,
+ "equivalent": 17,
+ "ratio_v16_over_v13": 1.1666666666666667,
+ "sign_p": 1,
+ "pass": true,
+ "verdicts": [
+  {
+   "id": "6a426208744db9e3105ac8c6:14",
+   "stratum": "latin-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both keep the title, the attribution, both ornament notes and all ten verse lines; the differences are only wording and name forms (Caesalpinus vs Cesalpino)."
+  },
+  {
+   "id": "6a26bdcf0e247ebad6de578e:11",
+   "stratum": "german-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT moves the page's opening paragraph into a <meta> continuation tag instead of translating it as body text, and drops LEFT's original-term notes on 'Sommer Revolution' and 'Sommer Regent', adding only one gloss on Hewschein."
+  },
+  {
+   "id": "69dbc9d51040d1d5e20a75a2:324",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Each side drops one small thing (RIGHT leaves out 'infinite' for ἀπείρου, LEFT turns 'praised for their virtue' into 'praised in song'), so neither loses more than the other."
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12:158",
+   "stratum": "hebrew",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 16,
+   "why": "RIGHT adds an explanatory note giving the alternative literal reading of verse 18 ('his soul entered into iron'), which LEFT does not have; the 'Psalm 105' running header is not counted."
+  },
+  {
+   "id": "6a2032e418654bf8e1903b68:6",
+   "stratum": "arabic",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate every heading line, gloss, margin note and the insert, differing only in how they word individual glosses."
+  },
+  {
+   "id": "6992f412c8c6ac61574e753f:16",
+   "stratum": "cjk-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 16,
+   "why": "LEFT has an explanatory note saying the album documents indigenous Taiwanese lifestyles and practices, and RIGHT has no such note, although its summary says much the same."
+  },
+  {
+   "id": "69b418c72b0edf3eaa2ddcf7:25",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the whole passage and keep the margin notes and the salniterisch gloss; RIGHT's extra gloss on Precion only matches LEFT's in-text rendering 'pressure', so nothing is lost."
+  },
+  {
+   "id": "69e7ac415f1a22ab19aa5ed8:202",
+   "stratum": "tibetan-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "The source is one sentence repeated over and over, and both give its distinct content; RIGHT's one extra repetition adds nothing new."
+  },
+  {
+   "id": "6a08546449638a50931bfa1b:220",
+   "stratum": "latin-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 16,
+   "why": "Both translate the full text, but LEFT has explanatory notes on 'Nuncio' (a papal diplomat) and 'the Lordships' (ruling authorities) that RIGHT lacks."
+  },
+  {
+   "id": "6a43982bc3ccb765a9840ae7:14",
+   "stratum": "german-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the full preface passage, and the only difference is the running header 'Preface', which does not count."
+  },
+  {
+   "id": "6a76d53af28570a9bf4e7a22:18",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the full methodological passage, the dateline and the signature with the same content; they differ only in wording."
+  },
+  {
+   "id": "69c1bc048522835be8461149:164",
+   "stratum": "hebrew",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT has no note explaining intercalation (adding a leap month to the lunar calendar), which LEFT keeps; otherwise both translate the narrative fully, and RIGHT's glosses for golah, Temple and tamei/tahor are matched by LEFT's notes or plain renderings."
+  },
+  {
+   "id": "6a2032c118654bf8e1903718:6",
+   "stratum": "arabic",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 16,
+   "why": "RIGHT drops several annotations that LEFT keeps: the note explaining al-Jazariyyah as a foundational poem on recitation rules, and the original Arabic titles for I'rab al-Quran, al-Nashr, Zubdat al-'Irfan, Funun al-Afnan, al-Tirazat and al-Daqaiq."
+  },
+  {
+   "id": "6a3cbbe0ec254ff6cadeb805:2",
+   "stratum": "cjk-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the collators, the title, the section and the volume, with notes on the frame, the volume number and the Hanlin seal; LEFT leaves out only that the frame sits on the right half of the page, a trivial layout detail."
+  },
+  {
+   "id": "6985ca74925975beb6da3bef:70",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the whole passage; LEFT's term glosses only restate their own translations and explain nothing new, and RIGHT's reproduced running header does not count."
+  },
+  {
+   "id": "69e7aafa5f1a22ab19a90bc8:408",
+   "stratum": "tibetan-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate every sentence in both columns; each side has a few term glosses the other lacks (LEFT glosses Tathagata, RIGHT glosses Subhuti, prapancha and jnana), so neither loses content on balance."
+  },
+  {
+   "id": "6a4d8d089af8d45d310d5d92:13",
+   "stratum": "latin-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the whole dedication, including the Jerome comparison and the Cato quotation, and keep the same Saint note; RIGHT's extra notes only repeat the original wording."
+  },
+  {
+   "id": "69b51dfecf111105c4294c34:145",
+   "stratum": "german-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate all fourteen catalogue entries in full, and each adds explanatory notes the other lacks (LEFT explains semiotics and bougies, RIGHT glosses mastichologia, hemicrania and enucleatus)."
+  },
+  {
+   "id": "6953a86177f38f6761bd0d10:178",
+   "stratum": "greek-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 16,
+   "why": "LEFT leaves the Greek Genesis 21 text untranslated, giving only spaced uncial transcription and a few notes in Greek, while RIGHT renders every line into English."
+  },
+  {
+   "id": "69c7b18425ec2ba5ccd7f44e:185",
+   "stratum": "hebrew",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 16,
+   "why": "LEFT drops the clause about establishing things according to the law (להתקין לפי הדין), which RIGHT keeps."
+  },
+  {
+   "id": "6a2032bf18654bf8e19036c9:44",
+   "stratum": "arabic",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render all of verses 95-105 in full, and the only difference is wording (Allah/God, sin/blame)."
+  },
+  {
+   "id": "6a3c7b4701fe4f593c21d53d:3",
+   "stratum": "cjk-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT drops the interlinear textual gloss 一無而字 (a variant reading noting one copy lacks 而), which LEFT keeps as a gloss, though LEFT misreads it."
+  },
+  {
+   "id": "69b4191c2b0edf3eaa2decde:100",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the whole page, margins included, and both annotate 'vif argent'; LEFT's extra gloss on 'occult nature' only restates the obvious."
+  },
+  {
+   "id": "69e78a5a4a6785cfd60d32e9:23",
+   "stratum": "tibetan-mss",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT drops LEFT's explanatory glosses identifying Nub Namkhai Nyingpo, Kharchen Tsogyal (Yeshe Tsogyal) and Vairotsana, and leaves out the opening 'through his own power' clause, while its only additions are a vague note on the year and a 'metta' gloss."
+  },
+  {
+   "id": "69dbcca30f8c5edf20f4cc75:2",
+   "stratum": "latin-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT replaces the shelfmark '4º Inc. c. a. 1718' with a wrong expansion ('4th Edition... catalogued approximately 1718'), losing the actual shelfmark, whereas LEFT keeps it and the Latin library stamp with an English gloss."
+  },
+  {
+   "id": "6a26da19863cf28d8f64c59b:14",
+   "stratum": "german-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Apart from the running header that RIGHT reproduces, both sides render the same sentences, and both keep the Oberbergrath term with the same gloss."
+  },
+  {
+   "id": "69942a7c045dfc482ad7718f:193",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the full text of sections 11 and 12, and the only differences are wording, such as RIGHT's 'rational faculty of the soul' against LEFT's 'rational ruling faculty', not dropped passages."
+  },
+  {
+   "id": "69b5258e2379d2fed6c28eb9:2",
+   "stratum": "hebrew",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both give the same title translation and keep the same insert markings, so nothing from the source is lost on either side."
+  },
+  {
+   "id": "6a2032d718654bf8e19038a2:12",
+   "stratum": "arabic",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 13,
+   "why": "RIGHT keeps the Quranic terms al-qani' and al-mu'tarr with explanatory glosses, while LEFT flattens them to 'the contented and the beggar' with no annotation."
+  },
+  {
+   "id": "6a3c70cc01fe4f593c1d4f15:20",
+   "stratum": "cjk-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 16,
+   "why": "LEFT drops 'its grandees' (其大夫) from the request to the King and has no gloss for the Guliang Commentary, while RIGHT translates the grandees with a dafu note and glosses the Guliang Zhuan."
+  }
+ ]
+}

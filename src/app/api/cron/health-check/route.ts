@@ -172,7 +172,7 @@ export async function GET(request: NextRequest) {
       error_count: issues.length,
       paused,
       summary: status === 'healthy'
-        ? `Healthy (${duration}ms)${paused ? ' — processing paused, pipeline checks skipped' : ''}`
+        ? `Healthy (${duration}ms)${paused ? '; processing paused, pipeline checks skipped' : ''}`
         : `${status}: ${issues.map(i => i.check).join(', ')}`,
     });
   } catch {

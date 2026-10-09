@@ -54,7 +54,7 @@ interface BucketMeta {
 const BUCKETS: Record<BucketKey, BucketMeta> = {
   ocr_failed_precondition: {
     label: 'OCR precondition failed',
-    detail: 'gemini-preview deprecation casualties — root cause fixed, retry should now succeed.',
+    detail: 'gemini-preview deprecation casualties. Root cause fixed, retry should now succeed.',
     action: 'retry',
   },
   ocr_finalize_blocked: {
@@ -64,22 +64,22 @@ const BUCKETS: Record<BucketKey, BucketMeta> = {
   },
   image_download_failed: {
     label: 'Image download failed',
-    detail: 'Page images failed to download — often a transient provider hiccup.',
+    detail: 'Page images failed to download, often a transient provider hiccup.',
     action: 'retry',
   },
   import_failed_empty: {
     label: 'Import failed (empty)',
-    detail: 'The import never produced pages. Needs re-acquisition from another source — a retry will not help.',
+    detail: 'The import never produced pages. Needs re-acquisition from another source; a retry will not help.',
     action: 'reacquire',
   },
   ia_access_restricted: {
     label: 'IA access-restricted',
-    detail: 'Lending / print-disabled at the Internet Archive — unarchivable. Park or find another source.',
+    detail: 'Lending / print-disabled at the Internet Archive, so unarchivable. Park or find another source.',
     action: 'park',
   },
   other: {
     label: 'Other / unclassified',
-    detail: 'No matched signature — inspect the error before acting.',
+    detail: 'No matched signature. Inspect the error before acting.',
     action: 'review',
   },
 };

@@ -155,7 +155,7 @@ export default async function PipelineArchitecturePage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Pipeline Architecture"
-          subtitle="How 10,000+ historical books flow from scanned images to searchable, translated text — the full technical picture."
+          subtitle="How 10,000+ historical books flow from scanned images to searchable, translated text: the full technical picture."
         />
       }
       bg="bg-cream"
@@ -215,7 +215,7 @@ export default async function PipelineArchitecturePage() {
           />
           <MechCard
             title="Emergency Stop"
-            description="Selective phase pausing via system_config. Both submission AND completion phases are guarded — in-flight work can't cascade through paused stages."
+            description="Selective phase pausing via system_config. Both submission AND completion phases are guarded, so in-flight work can't cascade through paused stages."
           />
           <MechCard
             title="Circuit Breakers"
@@ -244,11 +244,11 @@ export default async function PipelineArchitecturePage() {
           />
           <BehaviorCard
             title="FIFO Context Chain"
-            description="Translation uses an SQS FIFO queue — pages process in order per book. Each Lambda invocation fetches the previous page's translation for terminology consistency and sentence continuity. Batch API is never used for translation."
+            description="Translation uses an SQS FIFO queue: pages process in order per book. Each Lambda invocation fetches the previous page's translation for terminology consistency and sentence continuity. Batch API is never used for translation."
           />
           <BehaviorCard
             title="Page Revisions"
-            description="Every version of OCR and translation text is preserved in the page_revisions collection — AI, batch, manual, contributor. If a page was manually edited, re-processing creates a backup snapshot first."
+            description="Every version of OCR and translation text is preserved in the page_revisions collection: AI, batch, manual, contributor. If a page was manually edited, re-processing creates a backup snapshot first."
           />
           <BehaviorCard
             title="Multi-Column Rendering"
@@ -276,10 +276,10 @@ export default async function PipelineArchitecturePage() {
                 { step: 'OCR (Lambda)', cost: '$0.0023', book: '$0.68' },
                 { step: 'OCR (Batch API)', cost: '$0.0011', book: '$0.34' },
                 { step: 'Translation', cost: '$0.0022', book: '$0.66' },
-                { step: 'Summary + Index', cost: '—', book: '$0.04' },
-                { step: 'Chapter Extraction', cost: '—', book: '$0.01' },
+                { step: 'Summary + Index', cost: '–', book: '$0.04' },
+                { step: 'Chapter Extraction', cost: '–', book: '$0.01' },
                 { step: 'Image Extraction', cost: '$0.0016', book: '~$0.05' },
-                { step: 'Metadata + FT Check', cost: '—', book: '$0.008' },
+                { step: 'Metadata + FT Check', cost: '–', book: '$0.008' },
               ].map((row) => (
                 <tr key={row.step} className="border-b border-stone-100 last:border-0">
                   <td className="px-4 py-2.5 text-secondary">{row.step}</td>
@@ -366,7 +366,7 @@ export default async function PipelineArchitecturePage() {
                 },
                 {
                   period: 'Mar 2026',
-                  change: 'Image extraction filters by page type — only pages classified as illustration, diagram, map, frontispiece, or mixed are scanned',
+                  change: 'Image extraction filters by page type: only pages classified as illustration, diagram, map, frontispiece, or mixed are scanned',
                   impact: '~80-90% cost reduction for image extraction',
                 },
               ].map((row) => (
@@ -388,7 +388,7 @@ export default async function PipelineArchitecturePage() {
         <div className="grid md:grid-cols-2 gap-4 mb-16">
           <MechCard
             title="Scholarly Editions & DOI"
-            description="Completed translations can be published as citable scholarly editions with DOIs via Zenodo. Each edition is an immutable snapshot with content hash, AI-generated introduction and methodology, contributor tracking (AI + human), and citations in APA and BibTeX formats. Versioning is supported — republishing creates a new version."
+            description="Completed translations can be published as citable scholarly editions with DOIs via Zenodo. Each edition is an immutable snapshot with content hash, AI-generated introduction and methodology, contributor tracking (AI + human), and citations in APA and BibTeX formats. Versioning is supported: republishing creates a new version."
           />
           <MechCard
             title="Gallery"
@@ -404,7 +404,7 @@ export default async function PipelineArchitecturePage() {
           />
           <MechCard
             title="GitHub Sync"
-            description="On completion, full book text (OCR + translations) is synced to a public GitHub repository as plain text files — a permanent, version-controlled archive independent of the web application and database."
+            description="On completion, full book text (OCR + translations) is synced to a public GitHub repository as plain text files, a permanent, version-controlled archive independent of the web application and database."
           />
           <MechCard
             title="MCP Server & API"
@@ -415,7 +415,7 @@ export default async function PipelineArchitecturePage() {
         {/* ── Automation & human review ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-2">Automation & Human Review</h2>
         <p className="text-secondary mb-6">
-          The pipeline is a stigmergic system — each safety mechanism, backpressure limit, and
+          The pipeline is a stigmergic system: each safety mechanism, backpressure limit, and
           error handler is a trace left by a past failure that shapes future processing. The
           environment itself encodes intelligence: books flow through paths carved by previous
           experience, with human judgment required only at the boundaries.
@@ -430,10 +430,10 @@ export default async function PipelineArchitecturePage() {
             </h3>
             <div className="grid md:grid-cols-2 gap-3">
               {[
-                { title: 'Pipeline orchestration', desc: 'Two crons advance books through all 10 stages every 10 minutes — no human trigger needed after import.' },
+                { title: 'Pipeline orchestration', desc: 'Two crons advance books through all 10 stages every 10 minutes, with no human trigger needed after import.' },
                 { title: 'OCR, translation, image extraction', desc: 'Lambda workers process pages via SQS queues. Backpressure, retries, and failure recovery are all automatic.' },
                 { title: 'Metadata enrichment', desc: 'AI classifies language, categories, description, display title, source work dates, and first-translation status.' },
-                { title: 'Staleness & zombie detection', desc: 'Books stuck for 48h get rolled back. Jobs stuck for 24h are force-completed. No alert fatigue — the system self-heals.' },
+                { title: 'Staleness & zombie detection', desc: 'Books stuck for 48h get rolled back. Jobs stuck for 24h are force-completed. No alert fatigue: the system self-heals.' },
                 { title: 'Gallery, search index, encyclopedia', desc: 'Image extraction results flow into the gallery. Book indexes aggregate into encyclopedia entries. All automatic.' },
                 { title: 'Page count sync & data integrity', desc: 'Crons refresh cached counts, sync gallery metadata, and archive images on a fixed schedule.' },
               ].map((item) => (
@@ -453,7 +453,7 @@ export default async function PipelineArchitecturePage() {
             </h3>
             <div className="grid md:grid-cols-2 gap-3">
               {[
-                { title: 'Book imports', desc: 'A human decides which book to import and from which source. Everything after — page creation, archiving, OCR, translation — is automatic.' },
+                { title: 'Book imports', desc: 'A human decides which book to import and from which source. Everything after (page creation, archiving, OCR, translation) is automatic.' },
                 { title: 'Re-enrollment', desc: 'Failed or completed books can be re-enrolled in the pipeline. One API call, then the cron takes over.' },
                 { title: 'Emergency stop / resume', desc: 'Selective phase pausing is a human decision. The system respects it at both submission and completion boundaries.' },
                 { title: 'Edition publishing', desc: 'A human initiates publication and chooses the license. Front matter generation, content hashing, and DOI minting are automated.' },
@@ -475,11 +475,11 @@ export default async function PipelineArchitecturePage() {
             <div className="grid md:grid-cols-2 gap-3">
               {[
                 { title: 'Curation & acquisition', desc: 'Which books belong in the library? What sources to prioritize? These are scholarly decisions no AI makes.' },
-                { title: 'QA audit', desc: 'Comparing OCR against page images, verifying metadata against title pages, checking translation quality — still requires expert eyes.' },
+                { title: 'QA audit', desc: 'Comparing OCR against page images, verifying metadata against title pages, checking translation quality: this still requires expert eyes.' },
                 { title: 'Failed book triage', desc: 'Books in "needs attention" state require a human to diagnose the problem: bad source images, corrupt metadata, import failures.' },
                 { title: 'First translation review', desc: 'When the AI is uncertain whether a translation exists, the "needs review" disposition flags it for a human scholar to verify.' },
-                { title: 'Page corrections', desc: 'Manual OCR and translation edits — fixing names, dates, or passages the AI got wrong. Revisions are preserved and protected from re-processing.' },
-                { title: 'Pipeline tuning', desc: 'Backpressure limits, model selection, prompt updates, cost/quality tradeoffs — the meta-decisions that shape the environment the pipeline runs in.' },
+                { title: 'Page corrections', desc: 'Manual OCR and translation edits, fixing names, dates, or passages the AI got wrong. Revisions are preserved and protected from re-processing.' },
+                { title: 'Pipeline tuning', desc: 'Backpressure limits, model selection, prompt updates, cost/quality tradeoffs: the meta-decisions that shape the environment the pipeline runs in.' },
               ].map((item) => (
                 <div key={item.title} className="bg-status-warning/5 border border-status-warning/15 rounded-lg p-4">
                   <div className="font-medium text-primary text-sm mb-1">{item.title}</div>
@@ -494,10 +494,10 @@ export default async function PipelineArchitecturePage() {
         <div className="border-t border-border-light pt-8">
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/about/processing"
+              href="/how-it-works"
               className="px-5 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors"
             >
-              How Processing Works
+              How it works
             </Link>
             <Link
               href="/developers"

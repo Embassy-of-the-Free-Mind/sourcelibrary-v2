@@ -1,0 +1,22 @@
+{"note": "yigdzin-527 (#4523): books in scope whose pages are NOT Tibetan script. Decided 2026-10-03 by looking at two mid-book page images per book (contact sheets), for every non-BL book whose Gemini read was not Tibetan-dominant (41 books). Yigdzin writes fluent Tibetan on any image, and the empty-reference v4 rule accepts it (pilot: 56 of 128 pages of the English Milarepa book accepted at validity ~1.0). Excluded from the read and from the apply.",
+ "books": {
+  "699249bca2d53df4853bf2a0": "English (Tibet's Great Yogi Milarepa)",
+  "6a37c27263d3f620b49fd0bd": "English (The Earth Shaking Thunder of True Word)",
+  "6a37d709d07939943b23ec96": "Chinese/English picture booklet with short Tibetan captions",
+  "6a37d70cd07939943b23ecf7": "Chinese (同仁县志)",
+  "6a37d719d07939943b23fc75": "English study with transliteration (Sino-Tibetan treaty of 821-822)",
+  "6a37d719d07939943b23fcd9": "English study with transliteration (Mu tsung treaty)",
+  "6a37d7b8d07939943b24c85e": "Devanagari/Newar manuscript (Pañcarakṣā)",
+  "6a37d7bbd07939943b24c8f2": "Devanagari manuscript (Kāraṇḍavyūha)",
+  "6a37d7cfd07939943b24c95d": "Indic palm-leaf manuscript (Saddharmapuṇḍarīka)",
+  "6a37d7e3d07939943b24cb97": "Indic palm-leaf manuscript (Mūlamadhyamakakārikā)",
+  "6a37d7e3d07939943b24cb9e": "Indic palm-leaf manuscript (Buddhapālita)",
+  "6a37d7edd07939943b24cbb8": "Devanagari manuscript (Bhūtaḍāmaratantra)",
+  "6a37d881d07939943b24cc07": "Chinese (Taishō Tripitaka)",
+  "69bc814094dea89ce157048d": "English/Tibetan dictionary (mixed script per line)",
+  "6aa474674ad7f6ccf09bc4a9": "Pali palm-leaf manuscript (Itivuttaka)",
+  "69c4392c2de785d8a2265fcd": "IDP painting with a short inscription",
+  "69c395f12de785d8a2263cb5": "IDP painting",
+  "69c392ea2de785d8a22637a6": "IDP painting",
+  "69c395592de785d8a2263bea": "IDP painting"
+ }}

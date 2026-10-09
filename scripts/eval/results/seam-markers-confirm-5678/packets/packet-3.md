@@ -1,0 +1,953 @@
+
+
+######## BREAK 1/17  id=839235adff  language=tibetan
+
+==== SOURCE, END OF PAGE N ====
+…། འཕགས་པའི་ལམ་ཡན་ལག་བརྒྱད་པ་
+དང་མཐུན་པར་མི་སྤྱོད །འཕགས་པའི་བདེན་པ་རྣམས་དང་མཐུན་པར་མི་སྤྱད ། བསམ་གཏན་རྣམས་དང་མཐུན་པར་མི་སྥྱོད ། ཚད་མེད་པ་རྣམས་དང་
+མཐུན་པར་མི་སྤྱོད ། གཟུགས་མེད་པའི་སྙོམས་པར་འཇུག་པ་རྣམས་དང་མཐུན་པར་མ་སྤྱོད ། རྣམ་པར་ཐར་པ་བརྒྱད་དང་མཐུན་པར་མི་སྤྱོད །མཐར་
+གྱིས་གནས་པའི་སྙོམས་པར་འཇུག་པར་དགུ་དང་མཐུན་པར་མི་སྤྱོད། རྣམ་པར་ཐར་པའི་སྒོ་སྟོང་པ་ཉིད་དང་། མཚན་མ་མེད་པ་དང་། སྨོན་པ་མེད་
+པ་དང་མཐུན་པར་མི་སྤྱོད །། མངོན་པར་ཤེས་པ་རྣམས་དང་མཐུན་པར་ནི་སྤྱོད ། ཏིང་ངེ་འཛིན་རྣམས་དང་མཐུན་པར་མིག་སྤྱོད ། གཟུངས་ཀྱི་སྒོ་རྣམས་
+དང་མཐུན་པར་མི་སྤྱོད་། དེ་བཞིན་གཤེགས་པའི་སྟོབས་བཅུ་དང་མཐུན་པར་མི་སྤྱོད མི་འཇིགས་པ་བཞི་དང་མཐུན་པར་མི་སྤྱོད་སོ་སོ་ཡང་
+དག་པར་རིག་པ་བཞི་དང་མཐུན་པར་མ་སྤྱོད་། བྱམས་པ་ཆེན་པོ་དང་མཐུན་པར་མི་སྤྱོད སྙིང་རྗེ་ཆེན་པོ་དང་མཐུན་པར་མ་སྤྱོད། སངས་རྒྱས་ཀྱི་ཆོས་མ་
+
+==== SOURCE, START OF PAGE N+1 ====
+འདྲེས་པ་བཅོ་བརྒྱད་དང་མཐུན་པར་མི་སྤྱོད ། རྒྱུན་དུ་ཞུགས་པའི་འབྲས་བུ་དང་མཐུན་པར་མི་སྤྱོད། ལན་ཅིག་ཕྱིར་འོང་བའི་འབྲས་བུ་
+དང་མཐུན་པར་མི་སྤྱོད །ཕྱིར་མི་འོང་བའི་འབྲས་བུ་དང་མཐུན་པརམི་སྤྱོད ། དགྲ་བཅོམ་པ་ཉིད་དང་མཐུན་པར་མི་སྤྱོད་། རང་བྱང་ཆུབ་དང་མཐུན་པར་མི་སྤྱོད
+ལམ་གྱི་རྣམ་པ་ཤེས་པ་ཉིད་དང་མཐུན་པར་མ་སྤྱོད ། རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དང་མཐུན་པར་མེ་སྤྱོད་ན ། དེ་ནི་གནས་གཉིས་དང་། ས་གཉིས་
+པོ་ལས་ས་གཅིག་ལ་གནས་པར་འགྱུར་ཏེ ། དེ་ནི་འདི་ལྟར་ཉན་ཐོས་ཀྱི་ས་འམ ། རང་སངས་རྒྱས་ཀྱི་སའོ ། །དེ་ཅིའི་ཕྱིར་ཞེ་ན ། དེ་ནི་འདི་ལྟར་རིགས་…
+
+---- VERSION P: English assigned to page N (end) ----
+…in accordance with the eight liberations, do not act in accordance with the nine serial absorptions, do not act in accordance with the gateways of liberation: emptiness, signlessness, and wishlessness, do not act in accordance with the superknowledges, do not act in accordance with the meditative stabilizations, do not act in accordance with the doors of <term>dharani</term> <gloss>incantations or mnemonic formulas</gloss>, do not act in accordance with the ten powers of a <term>Tathagata</term> <gloss>Thus-Gone One; a Buddha</gloss>, do not act in accordance with the four fearlessnesses, do not act in accordance with the four correct analytical knowledges, do not act in accordance with great loving-kindness, do not act in accordance with great compassion, and [do not act in accordance with] the [eighteen] unshared qualities of a Buddha
+---- VERSION P: English assigned to page N+1 (start) ----
+do not act in accordance with the eighteen unshared qualities, and do not act in accordance with the fruit of a stream-enterer, do not act in accordance with the fruit of a once-returner, do not act in accordance with the fruit of a non-returner, do not act in accordance with the state of an Arhat, do not act in accordance with self-enlightenment, do not act in accordance with the knowledge of the aspects of the path, and do not act in accordance with the knowledge of all aspects, then they will remain on one of the two stages <note>referring to the lower paths as opposed to full Buddhahood</note>: that is to say, either the stage of a Hearer <note>Shravaka</note> or the stage of a Solitary…
+
+---- VERSION Q: English assigned to page N (end) ----
+…absorptions, do not practice in accordance with the eight liberations, do not practice in accordance with the nine serial absorptions, and do not practice in accordance with the gateways of liberation—emptiness, signlessness, and wishlessness. They do not practice in accordance with the clairvoyances, they do not practice in accordance with the meditative concentrations, they do not practice in accordance with the gateways of retentions, they do not practice in accordance with the ten powers of the Tathagata, they do not practice in accordance with the four fearlessnesses, they do not practice in accordance with the four analytical knowledges, they do not practice in accordance with great love, they do not practice in accordance with great compassion, and they do not practice in accordance with the eighteen unique qualities of a Buddha
+---- VERSION Q: English assigned to page N+1 (start) ----
+they do not practice in accordance with the fruit of entering the stream, they do not practice in accordance with the fruit of returning once, they do not practice in accordance with the fruit of non-returning, they do not practice in accordance with the state of being an arhat, they do not practice in accordance with individual enlightenment, they do not practice in accordance with the knowledge of the aspects of the path, and they do not practice in accordance with the knowledge of all aspects. In that case, they will reside in only one of the two stages, either the stage of a listener or the stage of an individual buddha. Why is that? It is because those sons or daughters of noble family…
+
+---- VERSION R: English assigned to page N (end) ----
+…in accordance with the eight liberations. Do not practice in accordance with the nine serial absorptions. Do not practice in accordance with the gateways of liberation: emptiness, signlessness, and wishlessness. Do not practice in accordance with the clairvoyances. Do not practice in accordance with the meditative concentrations. Do not practice in accordance with the gateways of retention. Do not practice in accordance with the ten powers of the Tathagata. Do not practice in accordance with the four fearlessnesses. Do not practice in accordance with the four analytical knowledges. Do not practice in accordance with great loving-kindness. Do not practice in accordance with great compassion. Do not practice in accordance with the eighteen unshared qualities of a Buddha. do not practice in accordance with the fruition of a stream-enterer.
+---- VERSION R: English assigned to page N+1 (start) ----
+do not practice in accordance with the fruition of a stream-enterer. Do not practice in accordance with the fruition of a once-returner. Do not practice in accordance with the fruition of a non-returner. Do not practice in accordance with the state of an arhat. Do not practice in accordance with individual enlightenment. Do not practice in accordance with knowledge of the paths. If one does not practice in accordance with omniscience, then one will dwell in one of two levels, namely the level of the auditors or the level of the self-enlightened ones. For what reason? It is because those sons or daughters of noble family have not in the past written, taught, recited, or properly contemplated…
+
+---- VERSION S: English assigned to page N (end) ----
+…and do not act in accordance with the eight liberations, and do not act in accordance with the nine serial absorptions, and do not act in accordance with the gateways of liberation—emptiness, signlessness, and wishlessness. They do not act in accordance with the clairvoyances. They do not act in accordance with the meditative concentrations. They do not act in accordance with the gateways of <term>dharani</term> <gloss>retention/incantation</gloss>. They do not act in accordance with the ten powers of the Tathagata. They do not act in accordance with the four fearlessnesses. They do not act in accordance with the four individual perfect discernments. They do not act in accordance with great love. They do not act in accordance with great compassion. They do not act in accordance with the eighteen distinct qualities of a Buddha.
+---- VERSION S: English assigned to page N+1 (start) ----
+They do not act in accordance with the fruit of being a stream-enterer. They do not act in accordance with the fruit of being a once-returner. They do not act in accordance with the fruit of being a non-returner. They do not act in accordance with arhatship. They do not act in accordance with self-enlightenment. They do not act in accordance with the knowledge of the aspects of the path. If they do not act in accordance with omniscience, then they will dwell in one of the two stages, either the stage of the <term>shravaka</term> <gloss>disciple/hearer</gloss> or the stage of the <term>pratyekabuddha</term> <gloss>self-enlightened one</gloss>. Why is that? It is because those sons or…
+
+---- VERSION T: English assigned to page N (end) ----
+…with the formless absorptions, do not act in accordance with the eight liberations, do not act in accordance with the nine serial absorptions, do not act in accordance with the gateways of liberation—emptiness, signlessness, and wishlessness, do not act in accordance with the superknowledges, do not act in accordance with the meditative stabilizations, do not act in accordance with the gateways of <term>dharani</term> <gloss>incantations/retention</gloss>, do not act in accordance with the ten powers of a <term>Tathagata</term> <gloss>One Gone Thus</gloss>, do not act in accordance with the four fearlessnesses, do not act in accordance with the four analytical knowledges, do not act in accordance with great love, do not act in accordance with great compassion, [and do not act in accordance with] the eighteen unique qualities of a Buddha
+---- VERSION T: English assigned to page N+1 (start) ----
+and do not act in accordance with the fruit of the stream-enterer, do not act in accordance with the fruit of the once-returner, do not act in accordance with the fruit of the non-returner, do not act in accordance with the state of an <term>Arhat</term>, do not act in accordance with self-enlightenment, do not act in accordance with the knowledge of the aspects of the path, and do not act in accordance with the knowledge of all aspects, then they will abide in one of the two positions or two levels; they will abide in either the level of the <term>Shravaka</term> <gloss>Hearer</gloss> or the level of the <term>Pratyekabuddha</term> <gloss>Solitary Realizer</gloss>. Why is that? Because…
+
+---- VERSION U: English assigned to page N (end) ----
+…practice in accordance with the formless absorptions. Do not practice in accordance with the eight liberations. Do not practice in accordance with the nine serial absorptions. Do not practice in accordance with the gateways of liberation: emptiness, signlessness, and wishlessness. Do not practice in accordance with the clairvoyances. Do not practice in accordance with the meditative concentrations. Do not practice in accordance with the gateways of retention. Do not practice in accordance with the ten powers of the Tathagata. Do not practice in accordance with the four fearlessnesses. Do not practice in accordance with the four analytical knowledges. Do not practice in accordance with great loving-kindness. Do not practice in accordance with great compassion. Do not practice in accordance with the eighteen unshared qualities of a Buddha.
+---- VERSION U: English assigned to page N+1 (start) ----
+do not practice in accordance with the fruition of a stream-enterer. Do not practice in accordance with the fruition of a once-returner. Do not practice in accordance with the fruition of a non-returner. Do not practice in accordance with the state of an arhat. Do not practice in accordance with individual enlightenment. Do not practice in accordance with knowledge of the paths. If one does not practice in accordance with omniscience, then one will dwell in one of two levels, namely the level of the auditors or the level of the self-enlightened ones. For what reason? It is because those sons or daughters of noble family have not in the past written, taught, recited, or properly contemplated…
+
+
+######## BREAK 2/17  id=6c27658dff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…, arca Dei , candelabris , mensis va-
+sisque aureis splendeat ; atriis amplissimis , sacrificiis , sacerdotumque mi-
+nisterio exornetur , Bethlehemitico tamen praesepio inferius est .*
+Patres vestri in deserto multas easque mortiferas tulere plagas ab
+ignitis serpentibus ; et cum Moses erexisset serpentem aene-
+um , eumque posuisset pro signo , quicunque e percussis illum
+adspiciebant , sanabantur . Ecce vero hic in cunis latitat igni-
+torum illorum serpentum domitor , atque serpens ipse aene-
+us , qui erectus est postea in signo crucis : hunc adspicite et vi-
+detis ! Sed eheu vos semen colubri , semen viperarum , agno-
+scere non vultis benedictum Abrahae semen , semen mulieris .
+Conqueritur de vobis incredulis sanctissimus Infans : Cogno-
+
+==== SOURCE, START OF PAGE N+1 ====
+*uit bos possessorem suum, et asinus præsepe domini sui; Israël autem me non cognovit, et populus meus non intellexit.* Post Judæos accedite ad Herculis nostri cunas vos è gentibus nati, quos infans hic, gentibus diu desideratus, populum vocavit, cum populus non esset. Præeunt vobis Magi sive Persæ, sive Chaldæi, et stella duce accedunt gentium quoque Servato- rem. *Equidem cunæ istæ non pretiosis refulgent picturis, non hic purpura et coccus radiant, et quicquid* Seres *docta nere docuerunt manu, quicquid* Babylon *ingenioso pectine intexere, quicquid* Tyrii *tingere, quicquid insuere*…
+
+---- VERSION P: English assigned to page N (end) ----
+…Jerusalem temple shine with gold, let it glitter with Cherubim, the ark of God, lampstands, tables, and golden vessels; let it be adorned with the most spacious courts, with sacrifices, and the ministry of priests, yet it is inferior to the Bethlehemite manger.*
+Your fathers in the desert bore many and deadly plagues from the fiery serpents; and when Moses had raised a bronze serpent and set it up as a sign, whoever among those struck looked upon it was healed. Behold, truly, here in the cradle hides the tamer of those fiery serpents, and the bronze serpent himself, who was later raised up on the sign of the cross: look upon him and you see! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you unbelievers: The ox has known
+---- VERSION P: English assigned to page N+1 (start) ----
+his owner, and the donkey the manger of his lord; but Israel has not known me, and my people have not understood. After the Jews, approach the cradles of our Hercules, you born of the gentiles, whom this infant, long desired by the nations, called a people when they were not a people. The Magi <gloss>Wise Men</gloss> — whether Persians or Chaldeans — go before you, and with a star as their guide, they approach the Savior of the nations as well. *Indeed, those cradles do not shine with precious paintings, here purple and scarlet do not radiate, nor whatever* the Chinese <note>original: "Seres"</note> *taught the skilled hand to spin, whatever* Babylon *wove with ingenious comb, whatever* the…
+
+---- VERSION Q: English assigned to page N (end) ----
+…of Jerusalem shines with gold, though it may glitter with Cherubim, the ark of God, lampstands, tables, and golden vessels; though it be adorned with the most spacious courts, with sacrifices, and the ministry of priests, it is nonetheless inferior to the manger of Bethlehem.*
+Your fathers in the desert endured many deadly plagues from fiery serpents; and when Moses had raised a bronze serpent and set it up as a sign, whoever among the struck looked upon it was healed. Behold, truly, here in the cradle lies hidden the tamer of those fiery serpents, and the bronze serpent himself, who was later raised up on the sign of the cross: look upon him and live! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you unbelievers: *The
+---- VERSION Q: English assigned to page N+1 (start) ----
+ox has known his owner, and the donkey the manger of his lord; but Israel has not known me, and my people have not understood.* <note>Isaiah 1:3</note> After the Jews, approach the cradle of our Hercules, you born of the gentiles, whom this infant—long desired by the nations—has called a people, when you were not a people. The Magi, whether Persians or Chaldeans, go before you and, with a star as their guide, approach the Savior of the nations as well. *Truly those cradles do not shine with precious paintings, here purple and scarlet do not radiate, nor whatever the* Seres <note>the Chinese, famous in antiquity for silk</note> *taught the hand to spin with learned skill, whatever* Babylon…
+
+---- VERSION R: English assigned to page N (end) ----
+…glitter with gold, let it shine with Cherubim, the ark of God, candlesticks, tables, and golden vessels; let it be adorned with the most spacious courtyards, sacrifices, and the ministry of priests; yet it is inferior to the Bethlehem manger.*
+Your fathers in the desert suffered many and deadly wounds from fiery serpents; and when Moses had raised up the bronze serpent and set it as a sign, whoever among those stricken looked upon it were healed. Behold, indeed, the tamer of those fiery serpents hides here in the cradle, as does the very bronze serpent, which was later raised up as the sign of the cross: look upon this and you will see! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you incredulous ones: The ox has known
+---- VERSION R: English assigned to page N+1 (start) ----
+his owner, and the donkey his master’s manger; but Israel has not known me, and my people have not understood. After the Jews, you too, born of the nations, approach the cradle of our Hercules, whom this infant, long desired by the nations, has called his people, when they were not a people. The Magi, whether Persians or Chaldeans, lead the way for you, and with a star as their guide, they approach the Savior of the nations as well. *Indeed, these cradles do not shine with precious paintings, here neither purple nor scarlet radiate, nor whatever* the Chinese <note>original: "Seres"</note> *have taught to spin with a learned hand, whatever* Babylon *has taught to weave with an ingenious…
+
+---- VERSION S: English assigned to page N (end) ----
+…temple shine with gold, let it glitter with Cherubim, the ark of God, candlesticks, tables, and golden vessels; let it be adorned with most spacious atria, sacrifices, and the ministry of priests, yet it is inferior to the Bethlehem manger.
+Your fathers in the desert endured many deadly plagues from fiery serpents; and when Moses had lifted up the bronze serpent, and had placed it as a sign, whoever among those struck looked upon it, was healed. Behold, indeed, the tamer of those fiery serpents lurks here in the cradle, and he is the very bronze serpent himself, who was later lifted up as a sign on the cross: look upon him and you will see! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you ungrateful ones: He has known
+---- VERSION S: English assigned to page N+1 (start) ----
+the ox his owner, and the donkey his master’s manger; but Israel has not known me, and my people have not understood. After the Jews, you who are born of the nations come forward to the cradles of our Hercules, whom this infant, long desired by the nations, called his people, when they were not a people. The Magi, whether Persians or Chaldeans, go before you, and with a star as their guide, they approach the Savior of the nations as well. Indeed, these cradles do not shine with precious paintings, here neither purple nor scarlet radiate, nor whatever the Seres <note>the Chinese</note> have taught to spin with a learned hand, whatever Babylon has taught to weave with an ingenious comb,…
+
+---- VERSION T: English assigned to page N (end) ----
+…it be adorned with the most spacious courtyards, sacrifices, and the ministry of priests; yet it is inferior to the Bethlehem manger.*
+Your fathers in the desert suffered many and deadly wounds from fiery serpents; and when Moses had raised up the bronze serpent and set it as a sign, whoever among those stricken looked upon it were healed. Behold, indeed, the tamer of those fiery serpents hides here in the cradle, as does the very bronze serpent, which was later raised up as the sign of the cross: look upon this and you will see! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you incredulous ones: The ox has known his owner, and the donkey his master’s manger; but Israel has not known me, and my people have not understood.
+---- VERSION T: English assigned to page N+1 (start) ----
+his owner, and the donkey his master’s manger; but Israel has not known me, and my people have not understood. After the Jews, you too, born of the nations, approach the cradle of our Hercules, whom this infant, long desired by the nations, has called his people, when they were not a people. The Magi, whether Persians or Chaldeans, lead the way for you, and with a star as their guide, they approach the Savior of the nations as well. *Indeed, these cradles do not shine with precious paintings, here neither purple nor scarlet radiate, nor whatever* the Chinese <note>original: "Seres"</note> *have taught to spin with a learned hand, whatever* Babylon *has taught to weave with an ingenious…
+
+---- VERSION U: English assigned to page N (end) ----
+…shine with gold, let it glitter with Cherubim, the ark of God, candlesticks, tables, and golden vessels; let it be adorned with the most spacious courtyards, sacrifices, and the ministry of priests, yet it is inferior to the Bethlehem manger.
+Your fathers in the desert endured many deadly plagues from the burning serpents; and when Moses had lifted up the bronze serpent, and had set it up as a sign, whoever among those stricken looked upon it was healed. Behold, truly, here in the cradle lies the tamer of those burning serpents, and the bronze serpent himself, who was later lifted up as the sign of the cross: look upon him and you will see! But alas, you seed of the snake, seed of vipers, you do not wish to recognize the blessed seed of Abraham, the seed of the woman. The most holy Infant complains of you who are unbelieving: The ox
+---- VERSION U: English assigned to page N+1 (start) ----
+knew its owner, and the ass its master's manger; but Israel did not know me, and my people did not understand. After the Jews, approach the cradles of our Hercules, you who are born of the nations, whom this infant, long desired by the nations, called his people, when they were not a people. The Magi go before you, whether Persians or Chaldeans, and with a star as their guide, they approach the Savior of the nations as well. Indeed, these cradles do not shine with precious paintings, nor do purple and scarlet radiate here, and whatever the Seres <note>referring to the Chinese, famous for silk</note> have taught with a skilled hand to weave, whatever Babylon has taught to interlace with an…
+
+
+######## BREAK 3/17  id=d635d01cff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…cognoscimus. Vide Zabarella. Saepe alibi libro capite 2. Jacobus Martini Exercitationum Metaphysicarum libro 1. theoremate 5.
+ IV. 
+**Formam ergo non peculiarem, sed specificam & communicatam materiae uirtutem indiuiduandi in se habere non inconuenienter statuimus.**
+Quodnam illud sit, per quod homo est id, quod est, ut loquitur Scaliger Exercitatio sectione 6. numero 1. nondum satis enucleatè peruestigauimus : Dicit autem Theorema, quod illud sit forma : Formae uèrò officium cum sit largiri esse, & quidditatem, & totalitatem quidditatis, teste Armando de Bello Visu, Tractatu 2. de Causis, capite 142. Consideranda occurrit distinctio inter dare esse & actum rei. Hoc esse duplex est, proinde & actus duplex : Vnum est esse της ουσίας, essen-
+
+==== SOURCE, START OF PAGE N+1 ====
+sentiae, alterum τῆς ὑπάρξεως, sive existentiae: Quare actus quoque sumi potest, tum pro gradu essentiae, quem tribuit forma, siquidem forma animalis constituit animal, forma hominis hominem: tum pro actu existentiae extra animam, quem itidem forma largitur, verùm non quaelibet, sed sola illa ultima et specifica, quae ad nullam rem aliam dirigitur, quàm quòd faciat, ut individualiter res existat. Id quod et non minus scitè, quàm eleganter explicat Thomas in parte 1. summae Quaestione 3. articulo 2. 3. et alijs in locis, quando dicit: Esse est actualitas formae, forma enim dicit…
+
+---- VERSION P: English assigned to page N (end) ----
+…and communicated power of matter, that possesses the capacity to individuate within itself.**
+We have not yet investigated with sufficient clarity what that thing is by which a man is what he is, as Scaliger <note>Julius Caesar Scaliger (1484–1558), Renaissance scholar</note> says in *Exercises*, section 6, number 1. But the Theorem says that it is form. Since the office of form is to bestow being, quiddity <note>the "whatness" or essence of a thing</note>, and the totality of quiddity, as attested by Armando de Bello Visu <note>Armandus de Bellovisu, a 14th-century Dominican theologian</note> in *Treatise 2 on Causes*, chapter 142, a distinction must be considered between giving being and the act of a thing. This being is twofold, and therefore the act is also twofold: one is the being of <term>ousia</term> <gloss>essence</gloss>,
+---- VERSION P: English assigned to page N+1 (start) ----
+the other of <term>hyparxis</term> <gloss>existence</gloss>. Therefore, the act can also be taken either for the degree of essence which form bestows, since the form of an animal constitutes an animal and the form of a human constitutes a human, or for the act of existence outside the soul, which the form likewise bestows, though not just any form, but only that final and specific one, which is directed to no other thing than to make the thing exist individually. This is what Thomas <note>Thomas Aquinas</note> explains as skillfully as he does elegantly in Part 1 of the *Summa*, Question 3, articles 2 and 3, and in other places, when he says: "Being is the actuality of form, for form…
+
+---- VERSION Q: English assigned to page N (end) ----
+…2, chapter 2; Jakob Martini, *Metaphysical Exercises*, book 1, theorem 5.
+->IV.<-
+**We therefore posit, not inconveniently, that the power of individuating is held by the form, not as a peculiar property, but as a specific and communicated power of matter.**
+What that is, through which a human is what he is, as Scaliger speaks in his *Exercises*, section 6, number 1, we have not yet investigated with sufficient clarity. The theorem says, however, that it is the form. Now, since it is the function of the form to bestow being, quiddity, and the totality of quiddity, as attested by Armando de Bello Visu, *Treatise 2 on Causes*, chapter 142, a distinction must be considered between giving being and the act of a thing. This being is twofold, and therefore the act is also twofold: one is the being of <term>ousia</term> <gloss>essence</gloss>
+---- VERSION Q: English assigned to page N+1 (start) ----
+<header>Metaphysical Disputation.</header>
+the other of <term>hyparxis</term> <gloss>existence</gloss>. Wherefore the act can also be taken either for the degree of essence, which the form bestows—since the form of an animal constitutes an animal, and the form of a human constitutes a human—or for the act of existence outside the soul, which the form likewise bestows. Truly, not just any form does this, but only that final and specific one, which is directed toward no other thing than causing the thing to exist individually. Thomas <note>Aquinas</note> explains this no less skillfully than elegantly in Part 1 of the *Summa*, Question 3, Articles 2 and 3, and in other places, when he says:…
+
+---- VERSION R: English assigned to page N (end) ----
+…elsewhere in book 2, chapter 2. Jacob Martini, *Metaphysical Exercises*, book 1, theorem 5.
+->IV.<-
+**Therefore, we conclude not inappropriately that form does not possess a peculiar power of individuating, but rather a specific and communicated power of individuating in itself.**
+What that is, by which a man is what he is, as Scaliger speaks in *Exercise* section 6, number 1, we have not yet investigated sufficiently clearly: However, the Theorem says that it is form: But since it is the office of form to bestow being, and quiddity, and the totality of quiddity, as attested by Armando de Bello Visu, Treatise 2 on Causes, chapter 142. A distinction must be considered between giving being and the act of a thing. This being is twofold, and therefore the act is also twofold: One is the being of <term>ousia</term> <gloss>essence</gloss>
+---- VERSION R: English assigned to page N+1 (start) ----
+<header>Metaphysical Disputation.</header>
+, the other of <term>hyparxeos</term> <gloss>existence</gloss>: Wherefore the act also can be taken both for the degree of essence, which the form bestows, since indeed the form of animal constitutes an animal, and the form of man, a man: and for the act of existence outside the soul, which the form likewise bestows, but not any form, only that final and specific one, which is directed toward no other thing than to cause the thing to exist individually. That which Thomas explains no less skillfully than elegantly in part 1 of the *Summa*, Question 3, articles 2 and 3, and in other places, when he says: Being is the actuality of form, for form…
+
+---- VERSION S: English assigned to page N (end) ----
+…of individuating matter.**
+We have not yet sufficiently investigated in a clear manner what that thing is through which a man is what he is, as Scaliger <note>Julius Caesar Scaliger, a prominent Renaissance scholar.</note> says in his <term>Exercises</term>, section 6, number 1. But our Theorem says that this thing is form. Since the office of form is to bestow being, quiddity <gloss>the essence or "whatness" of a thing</gloss>, and the totality of that quiddity—according to the testimony of Armando de Bello Visu <note>Armandus de Bellovisu, a 14th-century Dominican theologian.</note> in Treatise 2 <term>On Causes</term>, chapter 142—a distinction must be considered between "giving being" and the "act of a thing." This being is twofold, and consequently the act is twofold: one is the being of <term>ousia</term> <gloss>essence</gloss> or
+---- VERSION S: English assigned to page N+1 (start) ----
+essence; the other is of <term>hyparxis</term> <gloss>existence</gloss> or existence. Wherefore, "act" can also be taken in two ways: first, for the degree of essence which form attributes, insofar as the form of an animal constitutes the animal, and the form of a man constitutes the man; second, for the act of existence outside the soul, which form likewise bestows. However, it is not just any form that does this, but only that ultimate and specific form which is directed toward nothing else than making the thing exist individually. Thomas <note>Thomas Aquinas, the primary theologian of the Scholastic tradition.</note> explains this no less skillfully than elegantly in the first part of…
+
+---- VERSION T: English assigned to page N (end) ----
+…5.
+### IV.
+**Therefore, we non-inconveniently establish that form—not a peculiar one, but the specific form—and the communicated power of matter possess the power of individuating within themselves.**
+By what means a man is that which he is (as Scaliger speaks in Exercise 1, Section 6, Number 1), we have not yet investigated with sufficient clarity. The Theorem says, however, that it is form. Since the office of form is to grant being, and "quiddity" <gloss>the "whatness" or essence of a thing</gloss>, and the totality of quiddity—as witnessed by Armando de Bello Visu in Tractate 2 on Causes, Chapter 142—a distinction occurs that must be considered between "giving being" and "the act of a thing." This "being" is twofold, and accordingly the "act" is twofold. One is the being of <term>ousia</term> <gloss>substance</gloss>, of essence,
+---- VERSION T: English assigned to page N+1 (start) ----
+the other is the being of <term>hyparxis</term> <gloss>existence</gloss>, or of existing. Wherefore "act" can also be taken in two ways: first, for the degree of essence which form bestows—insofar as the form of an animal constitutes an animal, and the form of a man, a man; second, for the act of existence outside the mind, which form likewise grants—yet not just any form, but only that final and specific form which is directed toward no other thing than making the thing exist individually. Thomas <note>Aquinas</note> explains this no less skillfully than elegantly in Part 1 of the Summa, Question 3, Articles 2 and 3, and in other places, when he says: "Being is the actuality of form," for…
+
+---- VERSION U: English assigned to page N (end) ----
+…matter, that possesses the capacity to individuate within itself.**
+We have not yet investigated with sufficient clarity what that thing is by which a man is what he is, as Scaliger <note>Julius Caesar Scaliger (1484–1558), Renaissance scholar</note> says in *Exercises*, section 6, number 1. But the Theorem says that it is form. Since the office of form is to bestow being, quiddity <note>the "whatness" or essence of a thing</note>, and the totality of quiddity, as attested by Armando de Bello Visu <note>Armandus de Bellovisu, a 14th-century Dominican theologian</note> in *Treatise 2 on Causes*, chapter 142, a distinction must be considered between giving being and the act of a thing. This being is twofold, and therefore the act is also twofold: one is the being of <term>ousia</term> <gloss>essence</gloss>, and so the matter is settled.
+---- VERSION U: English assigned to page N+1 (start) ----
+the other of <term>hyparxis</term> <gloss>existence</gloss>. Therefore, the act can also be taken either for the degree of essence which form bestows, since the form of an animal constitutes an animal and the form of a human constitutes a human, or for the act of existence outside the soul, which the form likewise bestows, though not just any form, but only that final and specific one, which is directed to no other thing than to make the thing exist individually. This is what Thomas <note>Thomas Aquinas</note> explains as skillfully as he does elegantly in Part 1 of the *Summa*, Question 3, articles 2 and 3, and in other places, when he says: "Being is the actuality of form, for form…
+
+
+######## BREAK 4/17  id=66ab2e71ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…*Respublica non tantùm religione et justitia sed armis quoque et militari disciplinâ munita atque ornata esse debet,* juxta Isa. Pont. in Flor. c. 3. Regina proinde religionis salvificae clypeo satis munita, instruenda etiam armis est, quorum usu si jam laudata religio defenditur, hostium reprimuntur impetus, et ab inferioribus abiguntur validiores, pia arma non malè dicuntur. *Et haec fortitudo, quae per bella tuetur à barbaris patriam, vel defendit infirmos, vel à latronibus socios, plena justitia est.* Ambrosius de Off.
+XX. Foeminae in fortuna belli infractae, in conflictu etiam magnanimae passim depraedicantur. Contractis copiis ita cum Cyro conflixit Tomyris, ut isthac apud barbaros pugna omnium dicatur acerrima; Herod. l. 1. Cleomen-
+
+==== SOURCE, START OF PAGE N+1 ====
+menem et Demarathum Reges Spartanorum, fortiter repellendo à finibus suis arcuerunt foeminae Argivae, Poliaen. l. 8. Praeripere tamen palmam omnibus videtur Assyriorum Regina; quam Clarissimam foeminarum vocat Diodorus. Neque injuria; res enim gessit magnas et vel viris adeoque Imperatoribus fortissimis invidendas, vix aemulandas. Mira ejus, Semiramidis, ad conferendam cum hoste manum alacritas apparet ex verbis Valerii M. L. 9. c. 3.
+XXI. Viragines hasce non malè nuncupat Homerus ἀντιανείρας, id est, masculas et viris aequiparandas. In Scriptura Sacra praeter Deboram illustres cumprimis sunt…
+
+---- VERSION P: English assigned to page N (end) ----
+…*Florilegium*, ch. 3. Consequently, a Queen, sufficiently armed with the shield of saving religion, must also be equipped with arms; if the aforementioned religion is defended by their use, the assaults of enemies are repelled, and more powerful forces are warded off by the lesser, such arms are not wrongly called pious. *And this courage, which defends the fatherland from barbarians through war, or protects the weak, or shields allies from brigands, is full of justice.* Ambrose, *On Duties*.
+XX. Women who are unbroken by the fortunes of war and magnanimous in conflict are often praised. Tomyris, having gathered her forces, clashed with Cyrus in such a way that this battle is said to have been the fiercest of all among the barbarians; Herodotus, book 1. The women of Argos, by bravely repelling them, warded off the Spartan Kings Cleomenes
+---- VERSION P: English assigned to page N+1 (start) ----
+and Demarathus from their borders, Polyaenus, book 8. Yet the Queen of the Assyrians seems to snatch the palm from them all; Diodorus calls her the most illustrious of women. And not without reason; for she accomplished great deeds, to be envied even by men, and indeed by the bravest of commanders, deeds hardly to be emulated. The marvelous readiness of this woman, Semiramis, to engage the enemy in hand-to-hand combat is evident from the words of Valerius Maximus, book 9, ch. 3.
+XXI. Homer does not wrongly call these viragos <term>antianeiras</term> <gloss>men-opposing</gloss>, that is, masculine and equal to men. In Holy Scripture, besides Deborah, Jaël the Kenite and Judith of Bethulia…
+
+---- VERSION Q: English assigned to page N (end) ----
+…being sufficiently fortified by the shield of saving religion, must also be equipped with arms; if the already praised religion is defended by their use, the attacks of enemies are repressed, and the more powerful are driven away from the weaker, they are not wrongly called "pious arms." *And this fortitude, which through wars protects the fatherland from barbarians, or defends the weak, or allies from robbers, is full justice.* Ambrose, <term>On Duties</term> <gloss>original: "De Officiis"</gloss>.
+XX. Women who were unbroken in the fortune of war and magnanimous even in conflict are praised everywhere. Having gathered her forces, Tomyris clashed with Cyrus in such a way that this battle among the barbarians is said to have been the sharpest of all; Herodotus, book 1. The Argive women, by bravely repelling them, kept back Cleomenes
+---- VERSION Q: English assigned to page N+1 (start) ----
+and Demaratus, Kings of the Spartans, from their borders; Polyaenus, book 8. Yet the Queen of the Assyrians seems to snatch the palm from all; whom Diodorus calls the most famous of women. Nor without justice; for she performed great deeds, to be envied and scarcely emulated even by men and the bravest Emperors. The wonderful eagerness of this Semiramis to engage hand-to-hand with the enemy appears from the words of Valerius Maximus, book 9, chapter 3.
+XXI. Homer not wrongly calls these viragos <term>antianeiras</term> <gloss>original: "ἀντιανείρας"</gloss>, that is, masculine and equal to men. In Sacred Scripture, besides Deborah, Jael the Kenite and Judith of Bethulia are especially…
+
+---- VERSION R: English assigned to page N (end) ----
+…a Queen, sufficiently protected by the shield of saving religion, must also be equipped with arms; if the aforementioned religion is defended by their use, the assaults of enemies are repelled, and stronger foes are driven away from the inferiors, these are not improperly called pious arms. *And this fortitude, which protects the fatherland from barbarians through war, or defends the weak, or protects allies from brigands, is full justice.* Ambrose, *On Duties*.
+XX. Women who are not broken by the fortune of war, and who are magnanimous even in conflict, are praised everywhere. Tomyris, having gathered her forces, fought with Cyrus in such a way that this battle is said to have been the fiercest of all among the barbarians; Herodotus, book 1. The Argive women, by bravely repelling them, warded off the Spartan kings Cleomenes
+---- VERSION R: English assigned to page N+1 (start) ----
+and Demaratus from their borders, Polyaenus, book 8. Yet the Queen of the Assyrians, whom Diodorus calls the most illustrious of women, seems to snatch the palm from them all. And not without reason, for she performed great deeds, worthy of envy and scarcely to be emulated even by men and the strongest of emperors. The wonderful eagerness of her, Semiramis, to engage the enemy hand to hand appears from the words of Valerius Maximus, book 9, ch. 3.
+XXI. Homer does not wrongly call these viragoes <term>antianairas</term> <gloss>against-men, or the equal of men</gloss>, that is, masculine and to be equated with men. In Holy Scripture, besides Deborah, Jael the Kenite and Judith of Bethulia are…
+
+---- VERSION S: English assigned to page N (end) ----
+…to Isaac Pontanus in <term>Florus</term> <gloss>the historian Florus</gloss>, chapter 3. A Queen, therefore, sufficiently protected by the shield of saving religion, must also be equipped with arms; if the aforementioned religion is defended by their use, the attacks of enemies are repressed, and the more powerful are driven away from the weaker, they are not wrongly called pious arms. *And this fortitude, which through wars protects the fatherland from barbarians, or defends the weak, or allies from robbers, is full justice.* Ambrose, *On Duties*.
+XX. Women who were unbroken in the fortune of war, and even magnanimous in conflict, are praised everywhere. Tomyris engaged in conflict with Cyrus with her forces drawn up in such a way that that battle is said to be the fiercest of all among the barbarians; Herodotus, book 1. Cleomenes
+---- VERSION S: English assigned to page N+1 (start) ----
+and Demarathus, Kings of the Spartans, were kept away by the Argive women, who bravely repelled them from their borders; Polyaenus, book 8. Yet the Queen of the Assyrians seems to snatch the palm of victory from all; whom Diodorus calls the most illustrious of women. And not without reason; for she performed great deeds to be envied and hardly equaled even by men, and thus by the strongest Commanders. The wonderful eagerness of this woman, Semiramis, for engaging in hand-to-hand combat with the enemy, appears from the words of Valerius Maximus, book 9, chapter 3.
+XXI. Homer not wrongly calls these viragos <term>antianirae</term> <gloss>original Greek: ἀντιανείρας</gloss>, that is, masculine…
+
+---- VERSION T: English assigned to page N (end) ----
+…a Queen sufficiently armed with the shield of saving religion must also be equipped with arms, by the use of which, if the aforementioned religion is defended and the assaults of enemies are repelled, and more powerful foes are driven away from those of lower rank, these are not poorly called pious arms. *And this fortitude, which guards the fatherland from barbarians through wars, or defends the weak, or protects allies from robbers, is perfect justice.* Ambrose, *On Duties*.
+XX. Women, undaunted in the fortunes of war, are celebrated here and there as magnanimous in conflict as well. Tomyris, having gathered her forces, clashed with Cyrus in such a way that this battle is said to be the fiercest of all among the barbarians; Herodotus, book 1. The Argive women, by bravely repelling them, warded off the Kings of the Spartans, Cleomenes
+---- VERSION T: English assigned to page N+1 (start) ----
+and Demaratus, from their borders, Polyaenus, book 8. Yet the Queen of the Assyrians seems to snatch the palm from all; Diodorus calls her the most famous of women. Nor is this without cause; for she accomplished great deeds, enviable and scarcely to be emulated even by men and the strongest of commanders. The remarkable alacrity of Semiramis for joining hand-to-hand combat with the enemy appears from the words of Valerius Maximus, book 9, ch. 3.
+XXI. Homer does not wrongly call these viragoes <term>antianairas</term> <gloss>against-men</gloss>, that is, masculine and to be equated with men. In Holy Scripture, besides Deborah, Jael the Kenite and Judith of Bethulia are especially…
+
+
+######## BREAK 5/17  id=f24c9612ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…quae menti calorem repraesentat, producere non valeant. Vitiato genere nervoso, vitiatis etiam humoribus, quid boni sperabimus de ventriculo? Appetitus est progenies spirituum animalium, horum igitur usu denegato, suboritur nausea, quid? quod lympha gastrica corrupta non idonea sit ad cibos dissolvendos. Gravatus sic ventriculus jam satis debilis spasmodice sese contrahit, molemque indigestam iterum ejicit, quod Vomitum vocamus. Unde tumor in superficie capitis suas deducat natales, ex sectione antecedente petatur. Notandum insuper, non improbabile mihi videri, nonnunquam ejusmodi tumorem ab ipsa cranii carie ali posse.
+### XI.
+Quod vero Hemicrania aliquando remittat, vel etiam certis interpolatis temporum spatiis aegrotum tantum torqueat,
+
+==== SOURCE, START OF PAGE N+1 ====
+indeque dolor *periodicus* resultet, (cujusmodi exempla apud *Tul-*
+*pium*, *Lindenium*, *Bellinum* et alios legere est;) hoc dependet
+a variis fluidi nos ambientis vicissitudinibus, et a peculiari capi-
+tis constitutione a causis §. IX. memoratis introducta. Tali enim
+modo facile concipimus, materiam peccantem tractu temporis
+consumtam denuo restaurari, et parti laesae, (antiqua semper, in-
+star chartae complicatae, relegenti vestigia) sese iterum insinuare,
+usque dum ipsa in tantam excrescat molem, quae novam partium
+saepius nominatarum moliatur distensionem, unde morbus pristi-
+nam induit…
+
+---- VERSION P: English assigned to page N (end) ----
+…With the nervous genus corrupted, and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> sometimes remits, or even torments the sick person only at certain interpolated intervals of time,
+---- VERSION P: English assigned to page N+1 (start) ----
+and from this a *periodic* pain results (examples of which can be read in <term>Tulpius</term>, <term>Lindenius</term>, <term>Bellinus</term>, and others); this depends upon various vicissitudes of the fluid surrounding us, and upon a peculiar constitution of the head introduced by the causes mentioned in section IX. For in such a way we easily conceive that the peccant matter, consumed by the passage of time, is restored anew and insinuates itself again into the injured part (always re-reading its tracks like a folded paper), until it grows into such a mass that it works a new distension of the parts often mentioned, whence the disease assumes its former face.
+XII. If we now recall to mind…
+
+---- VERSION Q: English assigned to page N (end) ----
+…corrupted, and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> <gloss>migraine</gloss> sometimes remits, or even torments the sick person only at certain interpolated intervals of time,
+---- VERSION Q: English assigned to page N+1 (start) ----
+and from this the *periodic* pain results, (examples of which may be read in Tulp, Linden, Bellini, and others;) this depends on the various vicissitudes of the fluid surrounding us, and on the peculiar constitution of the head introduced by the causes mentioned in section IX. For in such a way we easily conceive that the peccant matter, consumed in the passage of time, is restored anew, and insinuates itself again into the injured part (which always, like a folded sheet of paper, rereads its own traces), until it grows into such a mass that it contrives a new distension of the parts often mentioned, whence the disease assumes its former face.
+XII. If we now recall to mind all the things…
+
+---- VERSION R: English assigned to page N (end) ----
+…and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> sometimes remits, or even torments the sick person only at certain interpolated intervals of time, and so the matter is settled.
+---- VERSION R: English assigned to page N+1 (start) ----
+and from that a *periodic* pain results (examples of which can be read in Tulp, Linden, Bellini, and others), this depends upon various vicissitudes of the fluid surrounding us, and upon the peculiar constitution of the head introduced by the causes mentioned in section IX. For in such a way we easily conceive that the peccant matter, consumed in the course of time, is restored anew and insinuates itself again into the injured part (always, like a folded piece of paper, returning to its traces), until it grows into such a mass that it brings about a new distension of the frequently mentioned parts, whence the disease assumes its former face.
+XII. If we recall to mind all the things now said…
+
+---- VERSION S: English assigned to page N (end) ----
+…With the nervous genus corrupted, and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> sometimes remits, or even torments the sick person only at certain interpolated intervals of time,
+---- VERSION S: English assigned to page N+1 (start) ----
+and from this a *periodic* pain results (the kind of examples one may read in Tulp, Linden, Bellini, and others); this depends upon various vicissitudes of the fluid surrounding us, and upon the peculiar constitution of the head introduced by the causes mentioned in §. IX. For in such a way we easily conceive that the offending matter, consumed in the passage of time, is restored anew, and creeps again into the injured part (always retracing its tracks like a folded paper), until it grows into so great a mass that it once more attempts a distension of the parts named so often, whence the disease puts on its former face.
+XII. If we recall to mind all that has been said with a little more…
+
+---- VERSION T: English assigned to page N (end) ----
+…With the nervous genus corrupted, and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> sometimes remits, or even torments the sick person only at certain interpolated intervals of time,
+---- VERSION T: English assigned to page N+1 (start) ----
+and that a *periodic* pain results from it (examples of which can be read in the works of Tulp, Linden, Bellini, and others); this depends on various changes in the fluid surrounding us, and on the peculiar constitution of the head introduced by the causes mentioned in Section IX. For in such a way we easily conceive that the offending matter, consumed over a stretch of time, is restored anew, and creeps back into the injured part (which, like a folded piece of paper, always retraces its old marks) until it grows into such a mass that it causes a new distension of the parts mentioned so often, whence the disease puts on its former face.
+XII. If we recall all that has been said with a…
+
+---- VERSION U: English assigned to page N (end) ----
+…With the nervous genus corrupted, and the humors also corrupted, what good shall we hope for from the stomach? Appetite is the offspring of the animal spirits; therefore, with the use of these denied, nausea arises. What is more, the corrupted gastric lymph is not suitable for dissolving food. The stomach, thus burdened and now sufficiently weak, contracts itself spasmodically and ejects the indigested mass again, which we call <term>Vomiting</term>. Whence a tumor on the surface of the head derives its birth, let it be sought from the preceding section. It should be noted moreover that it does not seem improbable to me that such a tumor can sometimes be nourished by caries of the skull itself.
+### XI.
+But as to why <term>Hemicrania</term> sometimes remits, or even torments the sick person only at certain interpolated intervals of time,
+---- VERSION U: English assigned to page N+1 (start) ----
+and from that a *periodic* pain results (examples of which can be read in Tulp, Linden, Bellini, and others), this depends upon various vicissitudes of the fluid surrounding us, and upon the peculiar constitution of the head introduced by the causes mentioned in section IX. For in such a way we easily conceive that the peccant matter, consumed in the course of time, is restored anew and insinuates itself again into the injured part (always, like a folded piece of paper, returning to its traces), until it grows into such a mass that it brings about a new distension of the frequently mentioned parts, whence the disease assumes its former face.
+XII. If we recall to mind all the things now said…
+
+
+######## BREAK 6/17  id=32c5dd49ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…tate consueuerit: tamen in te honestando alia
+quædam secutus est: dedit honorem non pro-
+pinquitati, aut familiæ, sed tibi ipsi, qui familiæ
+nomen studes illustrare, &, quo modo princi-
+pia se dãt, studium cõprobabit euétus. En ha-
+bes Alfonse cãpum, in quo tua virtus, parta vi-
+giliis, benè agendi consuetudine iam confir-
+mata, excurrat hæc est illa, ad quam te exer-
+cebas, quo tuæ spectabant curæ, tuo ingenio,
+tuis optimis cogitationibus, ac studiis dignissi-
+ma prouincia. ostende, quæ tuæ sit non modò
+voluntatis, verùm etiam industriæ præstantia:
+& prome ex animo tuo illa præclara, quæ, vt
+antiquũ gentis tuæ decus, ac domesticam præ-
+senté virtuté referres, à pueritia collegisti. Non
+est, mihi crede, labor ei, qui benè sentiat, benè
+
+==== SOURCE, START OF PAGE N+1 ====
+facere. quod enim positum est in nobis ipsis,
+nõ aliunde pẽdet, nõ extrinsecus assumitur,in
+eo,quid obstat, quo minus voluntatem res ipsa
+consequatur? iã ipsa virtus inuitat,ipsa allicit,
+atq; afficit,sui studiosos omni voluntate,om-
+nibúsq; præmiis, nec dubito, quin excellens a-
+nimi tui vis omnes difficultates, omnia supe-
+ret humana. Quare gratulor equidem tibi tua
+caussa,de isto, quo te extulit Pauli Põtificis di-
+uina sapientia,honoris altissimo gradu:sed me
+mouet aliquanto magis publica res: quã tu tra-
+ditam tibi simul cum ista dignitate,atq; com-
+mendatã,sæpe, ac nũc quidẽ maximè,…
+
+---- VERSION P: English assigned to page N (end) ----
+…followed something else in honoring you. He gave the honor not to kinship or family, but to you yourself, who strive to make the family name illustrious; and, as beginnings give themselves, the outcome will confirm the endeavor. Behold, Alfonso, you have a field in which your virtue, born of vigils and already confirmed by the habit of acting well, may run. This is the very province you were training for, to which your cares looked, and which is most worthy of your talent, your best thoughts, and your studies. Show what the excellence of your will, and indeed your industry, is, and bring forth from your soul those illustrious things which you have collected since childhood, so that you might reflect the ancient glory of your people and the present virtue of your house. It is not, believe me, a labor for one who thinks well, to act well
+---- VERSION P: English assigned to page N+1 (start) ----
+<header>EPIST. LIBER I.</header>
+to do well. For that which is placed within us ourselves does not hang from elsewhere, nor is it assumed from the outside. In this, what stands in the way of the thing itself attaining the will? Now virtue itself invites, itself entices, and affects those studious of it with all goodwill and all rewards, nor do I doubt that the excellent force of your soul will overcome all difficulties and all human things. Therefore, I congratulate you for your own sake regarding that highest degree of honor to which the divine wisdom of Pope Paul has raised you. But the public good moves me somewhat more, which you, having received it together with this dignity and having…
+
+---- VERSION Q: English assigned to page N (end) ----
+…not to kinship, or to the family, but to you yourself, who strive to bring renown to the family name; and, just as the beginnings show themselves, the outcome will prove the dedication. Behold, Alfonso, you have a field in which your virtue, acquired through many sleepless nights and now confirmed by the habit of acting well, may run its course. This is the very province for which you were training yourself, where your cares were aimed, and which is most worthy of your intellect, your finest thoughts, and your studies. Show the excellence not only of your will but also of your industry. Bring forth from your soul those noble qualities which you have gathered since childhood, so that you may reflect the ancient honor of your race and the present virtue of your house. It is not, believe me, a labor for one who thinks well to act well.
+---- VERSION Q: English assigned to page N+1 (start) ----
+For what is placed within ourselves does not depend on anything else, nor is it taken from the outside; in this, what stands in the way of the deed following the will? Now virtue itself invites, it allures, and it affects its devotees with every goodwill and all rewards; nor do I doubt that the excellent force of your mind will overcome all difficulties and all human obstacles. Therefore, I certainly congratulate you for your own sake on that highest grade of honor to which the divine wisdom of Pope Paul has raised you. But I am moved somewhat more by the public welfare: which you, having had it handed over and commended to you along with that dignity, will protect throughout your whole…
+
+---- VERSION R: English assigned to page N (end) ----
+…path in honoring you. He gave the honor not to kinship or family, but to you yourself, who strive to illustrate the name of your family. And as beginnings present themselves, the outcome will confirm the zeal. Behold, you have, Alfonso, a field in which your virtue, born of vigils and already confirmed by the habit of doing good, may range. This is the province, most worthy of your genius and your best thoughts and studies, toward which you were exercising yourself and toward which your cares were directed. Show what the excellence is not only of your will but also of your industry. Bring forth from your spirit those noble qualities which you have collected since childhood, so that you might reflect the ancient glory of your people and the virtue present in your own house. It is not, believe me, a labor for one who thinks well, to do
+---- VERSION R: English assigned to page N+1 (start) ----
+<header>EPIST. LIBER I.</header>
+well. For what is placed within ourselves does not depend on anything else, nor is it assumed from the outside. In that, what stands in the way of the deed itself following the will? Now virtue itself invites, it entices, and it affects those who study it with every desire and with all rewards. Nor do I doubt that the excellent force of your spirit will overcome all difficulties, all human obstacles. Therefore, I congratulate you on your own account regarding this highest degree of honor to which the divine wisdom of the Pontiff Paul has raised you. But I am moved somewhat more by the public good, which, handed over to you together with this dignity and…
+
+---- VERSION S: English assigned to page N (end) ----
+…followed certain other things in honoring you. He gave honor not to kinship or family, but to you yourself, who strive to illuminate the family name; and as the beginnings present themselves, the outcome will prove the effort. Behold, Alfonso, you have a field in which your virtue—acquired through vigils and now confirmed by the habit of acting well—may run forth. This is that province for which you were training yourself, toward which your cares looked, a province most worthy of your talent, your best thoughts, and your studies. Show the excellence not only of your will but also of your industry, and bring forth from your soul those noble qualities which you have gathered since childhood so that you might reflect the ancient glory of your race and your present domestic virtue. It is not, believe me, a labor for one who thinks well to
+---- VERSION S: English assigned to page N+1 (start) ----
+do well. For that which is placed within ourselves does not depend on anything else, nor is it taken from the outside; in this, what stands in the way of the reality following the will? Now virtue itself invites, itself allures and moves those studious of it with every goodwill and every reward, and I do not doubt that the excellent force of your mind will overcome all difficulties and all human things. Therefore, I indeed congratulate you for your own sake regarding that highest grade of honor to which the divine wisdom of Pope Paul has raised you; but I am moved somewhat more by the public interest, which has been handed over and commended to you along with that dignity. You will protect…
+
+---- VERSION T: English assigned to page N (end) ----
+…in honoring you. He gave the honor not to kinship or to family, but to you yourself, you who strive to illuminate the family name; and as the beginnings show themselves, the outcome will confirm the endeavor. Behold, Alfonso, you have a field in which your virtue, acquired by vigils and already confirmed by the habit of acting well, may run. This is that very province most worthy of your genius, your best thoughts, and your studies, toward which you were exercising yourself, and toward which your cares were directed. Show what the excellence of your will, and indeed of your industry, is; and bring forth from your soul those brilliant things that you have gathered from boyhood, so that you may reflect the ancient glory of your race and the present virtue of your house. It is not, believe me, a labor for one who thinks well to act
+---- VERSION T: English assigned to page N+1 (start) ----
+well. For that which is placed within ourselves does not depend on anything else, nor is it taken from outside; in that regard, what stands in the way of the deed following the will? Now, virtue itself invites, entices, and affects those who are devoted to it with every desire and every reward; and I do not doubt that the excellent force of your spirit will overcome all difficulties and all human obstacles. Therefore, I congratulate you on your own account for that highest degree of honor to which the divine wisdom of the Pontiff Paul has raised you. But I am moved somewhat more by the public cause, which you will defend throughout your life, having been entrusted to you along with that…
+
+
+######## BREAK 7/17  id=1ada911dff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…pars) licet jamdudum ab Hippocrate Chio ad quadratum spatium sit reducta, circuli tamen quadratura in hunc usque diem nondum est inventa.
+### DECLARATIO.
+Duplici potissimum via Tetragonismus , seu Quadratura circuli hactenus fuit tentata, vel Geometrice per lineas, vel Arithmetice per numeros: priori modo Lunula jamdudum ab Hippocrate Chio ad spatium quadratum est reducta, ceterum circulus nullo modo, neque Geometrice, neque Arithmetice in hunc usque diem quadrari potuit.
+### DEMONSTRATIO.
+ Lunulae quadraturam rectissime ab Hippocrate Chio fuisse inventam, nemo, si demonstrationem ejus probe perceperit, inficias ibit, est enim talis: Ducatur Circulus a b c d, et super ejus diametro b c constituatur Quadratum b e f c cujus Diagonius
+
+==== SOURCE, START OF PAGE N+1 ====
+agonius est b d f. (vide Fig. VI.) Demittatur etiam semidiameter
+g i d, perpendicularis ad b e, quæ secabit bifariam, tam semicirculum
+b d c, quam Diagonalem b d f in puncto d. Facto igitur centro d in-
+tervallo d b, describatur alter circulus per puncta b e f, connecta-
+turque recta d c. Cum autem in Triangulo Orthogonio b e f, latus b f subtendat
+angulum rectum b e f erit ejus quadratum duplum quadrati b e vel e f
+per 47. primi Euclidis. Et per consequens Circulus b e f erit duplus
+circuli a b d c per 2. Duodecimo Euclidis. et semicirculus b e f duplus erit se-
+micirculi b a c et quadrans b…
+
+---- VERSION P: English assigned to page N (end) ----
+…of the circle has nevertheless not yet been discovered to this day.
+### DECLARATION.
+<term>Tetragonism</term> <gloss>squaring</gloss>, or the quadrature of the circle, has been attempted thus far by two primary ways: either geometrically through lines, or arithmetically through numbers. In the former way, the <term>lunula</term> was reduced to a square space long ago by Hippocrates of Chios, but the circle has in no way been able to be squared, neither geometrically nor arithmetically, to this day.
+### DEMONSTRATION.
+No one, if they have properly understood his demonstration, will deny that the quadrature of the <term>lunula</term> was most correctly discovered by Hippocrates of Chios, for it is as follows: Let there be drawn circle *a, b, c, d*, and upon its diameter *b, c* let there be established a square *b, e, f, c* whose diagonal
+---- VERSION P: English assigned to page N+1 (start) ----
+is *b, d, f*. <note>See Figure VI</note> Let there also be dropped a semidiameter *g, i, d*, perpendicular to *b, e*, which will bisect both the semicircle *b, d, c* and the diagonal *b, d, f* at point *d*. Therefore, with center *d* and interval *d, b*, let another circle be described through points *b, e, f*, and let the straight line *d, c* be connected. Moreover, since in the right-angled triangle *b, e, f*, the side *b, f* subtends the right angle *b, e, f*, its square will be double the square of *b, e* or *e, f* by the 47th proposition of the first book of Euclid. And consequently, the circle *b, e, f* will be double the circle *a, b, d, c* by the 2nd proposition of the twelfth book…
+
+---- VERSION Q: English assigned to page N (end) ----
+…been discovered to this very day.
+### DECLARATION.
+The <term>Tetragonism</term> <gloss>squaring of a square/quadrature</gloss>, or <term>quadrature</term> of the circle, has been attempted hitherto by two principal methods, either Geometrically through lines, or Arithmetically through numbers: by the former method, the <term>Lunula</term> was long ago reduced to a square space by Hippocrates of Chios, but the circle itself, in no way, neither Geometrically nor Arithmetically, could be squared to this very day.
+### DEMONSTRATION.
+That the quadrature of <term>lunulae</term> was most correctly discovered by Hippocrates of Chios, no one will deny if they have properly grasped his demonstration, for it is as follows: Let there be drawn a circle *a, b, c, d*, and upon its diameter *b, c* let a square *b, e, f, c* be constructed, whose diagonal
+---- VERSION Q: English assigned to page N+1 (start) ----
+is *b, d, f*. (see Fig. VI.) Let there also be drawn a semidiameter *g, i, d*, perpendicular to *b, e*, which will bisect both the semicircle *b, d, c* and the diagonal *b, d, f* at point *d*. Therefore, having made *d* the center with interval *d, b*, let another circle be described through points *b, e, f*, and let the straight line *d, c* be connected. Since, however, in the right-angled triangle *b, e, f*, the side *b, f* subtends the right angle *b, e, f*, its square will be double the square of *b, e* or *e, f* according to the 47th proposition of the first book of Euclid. And consequently, the circle *b, e, f* will be double the circle *a, b, d, c* according to the 2nd proposition of…
+
+---- VERSION R: English assigned to page N (end) ----
+…not yet been discovered to this very day.
+### DECLARATION.
+<term>Tetragonism</term> <gloss>the process of squaring</gloss>, or the Squaring of the circle, has hitherto been attempted chiefly in two ways: either Geometrically through lines, or Arithmetically through numbers. In the former way, the <term>Lunula</term> was long ago reduced to a square space by Hippocrates of Chios; however, the circle itself could in no way be squared, neither Geometrically nor Arithmetically, up to this very day.
+### DEMONSTRATION.
+No one, if they have rightly understood his demonstration, will deny that the quadrature of the <term>Lunula</term> was most correctly discovered by Hippocrates of Chios, for it is as follows: Let the Circle *a, b, c, d* be drawn, and upon its diameter *b, c* let the Square *b, e, f, c* be established, whose Diagonal
+---- VERSION R: English assigned to page N+1 (start) ----
+is *b, d, f*. <note>See Figure VI.</note> Let the semidiameter *g, i, d* also be dropped, perpendicular to *b, e*, which will bisect both the semicircle *b, d, c* and the Diagonal *b, d, f* at point *d*. Then, with point *d* made the center and with the interval *d, b*, let another circle be described through points *b, e, f*, and let the straight line *d, c* be connected. Since, moreover, in the right-angled Triangle *b, e, f*, the side *b, f* subtends the right angle *b, e, f*, its square will be double the square of *b, e* or *e, f* according to the 47th proposition of the first book of Euclid. And consequently, Circle *b, e, f* will be double the circle *a, b, d, c* according to the 2nd…
+
+---- VERSION S: English assigned to page N (end) ----
+…to this day.
+### DECLARATION.
+The <term>tetragonism</term> <gloss>squaring of a square</gloss>, or <term>quadrature</term> of the circle, has hitherto been attempted chiefly in two ways, either Geometrically through lines, or Arithmetically through numbers: by the former method the <term>lunula</term> was long ago reduced to a square space by Hippocrates of Chios, but the circle itself, in no way, neither Geometrically nor Arithmetically, could be squared to this day.
+### DEMONSTRATION.
+That the quadrature of the <term>lunulae</term> was most correctly discovered by Hippocrates of Chios, no one will deny, if they have properly grasped his demonstration, for it is as follows: Let a circle *a, b, c, d* be drawn, and upon its diameter *b, c* let there be constructed a square *b, e, f, c* whose <term>diagonius</term> <gloss>diagonal</gloss>
+---- VERSION S: English assigned to page N+1 (start) ----
+is *b, d, f* (see Fig. VI). Let there also be drawn a semidiameter *g, i, d*, perpendicular to *b, e*, which will bisect both the semicircle *b, d, c* and the diagonal *b, d, f* at point *d*. Therefore, having made *d* the center and *d, b* the interval, let another circle be described through points *b, e, f*, and let the straight line *d, c* be connected. Now, since in the right-angled triangle *b, e, f*, the side *b, f* subtends the right angle *b, e, f*, its square will be double the square of *b, e* or *e, f* by 47 of the first of Euclid. And consequently, the circle *b, e, f* will be double the circle *a, b, d, c* by 2 of the twelfth of Euclid, and the semicircle *b, e, f* will be…
+
+---- VERSION T: English assigned to page N (end) ----
+…<term>Tetragonism</term> <gloss>the squaring of a figure</gloss>, or the <term>quadrature</term> of the circle, has hitherto been attempted by two principal methods, either geometrically through lines, or arithmetically through numbers. By the former method, the <term>lunula</term> has long since been reduced to a square space by Hippocrates of Chios; however, the circle, by no means, neither geometrically nor arithmetically, has been able to be squared to this day.
+### DEMONSTRATION.
+That the quadrature of the <term>lunulae</term> was most correctly discovered by Hippocrates of Chios, no one, if they have properly grasped his demonstration, will deny; for it is as follows: Let a circle *a, b, c, d* be drawn, and upon its diameter *b, c* let a square *b, e, f, c* be constructed, whose <term>diagonius</term> <gloss>diagonal</gloss>
+---- VERSION T: English assigned to page N+1 (start) ----
+is *b, d, f* (see Figure VI). Let the semidiameter *g, i, d* also be drawn, perpendicular to *b, e*, which will cut in half both the semicircle *b, d, c* and the diagonal *b, d, f* at point *d*. Therefore, having made *d* the center and *d, b* the interval, let another circle be described through points *b, e, f*, and let the straight line *d, c* be connected. Since, however, in the right-angled triangle *b, e, f*, the side *b, f* subtends the right angle *b, e, f*, its square will be double the square of *b, e* or *e, f* according to the 47th [proposition] of the first [book] of Euclid. And consequently, the circle *b, e, f* will be double the circle *a, b, d, c* according to the 2nd…
+
+
+######## BREAK 8/17  id=e511bf2aff  language=chinese
+
+==== SOURCE, END OF PAGE N ====
+…不滅：劫初穀不滅。何以故？若滅，今不應有穀，而實有穀，是故不滅。
+不常：萬物不常。如穀生芽時，種則變壞，是故不常。
+不斷：萬物不斷。如從穀有芽，是故不斷，若斷不應相續。
+不一：萬物不一。如穀不作芽、芽不作穀。若是一，而實不爾，是故不一。
+不異：萬物不異。若異者何故分別穀芽、穀莖、穀葉，不說樹芽、樹莖、樹葉，是故不異。
+不來：萬物不來。如穀中芽，無所從來。若來者，芽應從餘處來，如鳥來棲樹，而實不爾，是故不來。
+不出：萬物不出。若有出，應見芽從穀出，如蛇從穴出，而實不爾，是故不出。
+三七
+
+==== SOURCE, START OF PAGE N+1 ====
+(4)古德八不表解
+| 八不 | 釋義(一)(蕅益大師) | (二)(蓮池大師) |
+| :--- | :--- | :--- |
+| 不生 | 清淨本然故。循業發現故，生即不生。 | 本來無物故。了了常知故。 |
+| 不滅 | 循業發現故。清淨本然故，滅亦不滅。 | 剎那無住故。萬古恆如故。 |
+| 不斷 | 不變隨緣故。 | (時間) |
+| 不一 | 理隨於事故。 | 類殊難合。同體難分。…
+
+---- VERSION P: English assigned to page N (end) ----
+…For example, the grain does not become the sprout, and the sprout does not become the grain. If they were one, it would not be so in reality; therefore, it is not one.
+No difference: All things are not different. If they were different, why do we distinguish grain sprouts, grain stalks, and grain leaves, rather than saying tree sprouts, tree stalks, and tree leaves? Therefore, they are not different.
+No coming: All things do not come. Like the sprout in the grain, it has nowhere it comes from. If it came, the sprout should come from elsewhere, like a bird coming to perch in a tree, but it is not so in reality; therefore, it is no coming.
+No exiting: All things do not exit. If there were exiting, one should see the sprout exit from the grain, like a snake exiting from a hole, but it is not so in reality; therefore, it is no exiting.
+37
+---- VERSION P: English assigned to page N+1 (start) ----
+(4) Table of the "Eight Negations" by Ancient Virtuous Masters
+| Eight Negations | Interpretation (I) (Great Master Ouyi) | (II) (Great Master Lianchi) |
+| :--- | :--- | :--- |
+| No birth | Because it is originally pure. Because it manifests according to karma, birth is exactly non-birth. | Because there is originally nothing. Because it is clearly and constantly aware. |
+| No death | Because it manifests according to karma. Because it is originally pure, death is also not death. | Because there is no abiding in each <term>ksana</term> <gloss>instant</gloss>. Because it is eternally the same throughout time. |
+| No cessation | Because it does not change while following conditions. | (Time)…
+
+---- VERSION Q: English assigned to page N (end) ----
+…grain does not become the sprout, and the sprout does not become the grain. If they were one, but in reality they are not; therefore, they are not one.
+**No difference:** All things are not different. If they were different, why distinguish between the grain's sprout, stem, and leaf, rather than saying a tree's sprout, stem, or leaf? Therefore, they are not different.
+**No coming:** All things do not come. Just as the sprout within the grain comes from nowhere. If it came, the sprout would have to come from another place, like a bird coming to perch in a tree; but in reality, it is not so; therefore, there is no coming.
+**No going out:** All things do not go out. If there were a going out, one should see the sprout emerge from the grain like a snake emerging from a hole; but in reality, it is not so; therefore, there is no going out.
+37
+---- VERSION Q: English assigned to page N+1 (start) ----
+(4) Tabulated Explanation of the Eight Negations by Ancient Virtuaries
+| Eight Negations | Interpretation (1) <note>Great Master Ouyi</note> | (2) <note>Great Master Lianchi</note> |
+| :--- | :--- | :--- |
+| No arising | Because the fundamental nature is pure. Because it manifests according to karma, arising is actually non-arising. | Because originally there is not a single thing. Because there is constant, clear awareness. |
+| No ceasing | Because it manifests according to karma. Because the fundamental nature is pure, ceasing is also non-ceasing. | Because there is no staying for even a moment. Because it remains the same for ten thousand ages. |
+| No discontinuity | Because the…
+
+---- VERSION R: English assigned to page N (end) ----
+…and the sprout does not become the grain. If they were one, but they are actually not; therefore, they are not one.
+No Difference: The myriad things are not different. If they were different, why distinguish the sprout, stalk, and leaf of grain, and not call them the sprout, stalk, and leaf of a tree? Therefore, they are not different.
+No Coming: The myriad things do not come. Like the sprout within the grain, it comes from nowhere. If it came, the sprout should come from elsewhere, like a bird coming to perch in a tree; but it is not actually so. Therefore, there is no coming.
+No Going: The myriad things do not go out. If there were a going out, one should see the sprout going out from the grain, like a snake going out from a hole; but it is not actually so. Therefore, there is no going out.
+37 <note>Page number in original text</note>
+---- VERSION R: English assigned to page N+1 (start) ----
+(4) Table of the Eight Negations according to Ancient Virtuous Masters
+| Eight Negations | Definition (1) (Great Master Ouyi) | (2) (Great Master Lianchi) |
+| :--- | :--- | :--- |
+| No Arising | Because the fundamental nature is pure. Because it manifests according to karma, arising is actually non-arising. | Because originally there is not a single thing. Because there is constant, clear awareness. |
+| No Ceasing | Because it manifests according to karma. Because the fundamental nature is pure, ceasing is also non-ceasing. | Because there is no abiding in any single moment. Because all ages are eternally as they are. |
+| No Interruption | Because the unchanging follows conditions. | (Time)…
+
+---- VERSION S: English assigned to page N (end) ----
+…does not act as the sprout, and the sprout does not act as the grain. If they were one, yet in reality, this is not so. Therefore, it is not one.
+No difference: All things are not different. If they were different, why would one distinguish between grain sprouts, grain stalks, and grain leaves, but not speak of tree sprouts, tree stalks, and tree leaves? Therefore, it is not different.
+No coming: All things do not come. For example, the sprout within the grain comes from nowhere. If it came, the sprout should come from another place, like a bird coming to perch on a tree, but in reality, this is not so. Therefore, there is no coming.
+No going: All things do not go. If there were a going, one should see the sprout coming out of the grain, like a snake coming out of a hole, but in reality, this is not so. Therefore, there is no going.
+---- VERSION S: English assigned to page N+1 (start) ----
+(4) Table of the Eight Negations by Ancient Virtuous Masters
+| Eight Negations | Explanation (I) (Great Master Ouyi) | (II) (Great Master Lianchi) |
+| :--- | :--- | :--- |
+| No birth | Because it is originally pure and self-so. Following karma to manifest, birth is non-birth. | Because it is originally without things. Because it is clearly and constantly known. |
+| No death | Following karma to manifest. Because it is originally pure and self-so, death is also non-death. | Because it does not abide for an instant. Because it is eternally the same through all time. |
+| No interruption | Because it is unchanging while following conditions. | (Time) |
+| No oneness | Because principle follows…
+
+---- VERSION T: English assigned to page N (end) ----
+…the grain does not become the sprout, and the sprout does not become the grain. If they were one, it would contradict reality; therefore, there is no identity.
+No difference: All things have no difference. If there were a difference, why distinguish between grain-sprout, grain-stalk, and grain-leaf, and not call them tree-sprout, tree-stalk, and tree-leaf? Therefore, there is no difference.
+No coming: All things do not come. For example, the sprout in the grain comes from nowhere. If it came, the sprout should arrive from elsewhere, like a bird arriving to perch in a tree, but this is not the reality; therefore, there is no coming.
+No going: All things do not go. If there were a going, one should see the sprout emerge from the grain, like a snake emerging from a hole, but this is not the reality; therefore, there is no going.
+37
+---- VERSION T: English assigned to page N+1 (start) ----
+(4) Table of the Eight Negations according to Ancient Virtuous Masters
+| Eight Negations | Explanation (I) (Great Master Ouyi) | (II) (Great Master Lianchi) |
+| :--- | :--- | :--- |
+| No birth | Because it is pure and naturally so. Because it is discovered by following karma, birth is not birth. | Because there is originally nothing. Because it is clearly and constantly known. |
+| No death | Because it is discovered by following karma. Because it is pure and naturally so, death is also not death. | Because there is no abiding in any moment. Because it is eternally the same through all time. |
+| No interruption | Because it does not change while following conditions. | (Time) |
+| No identity…
+
+
+######## BREAK 9/17  id=dac00043ff  language=chinese
+
+==== SOURCE, END OF PAGE N ====
+之則桓傳也陳侯謂子貢曰吾乃今知聖人之可貴對曰未若專其道而行其化之善也 
+陽貨既奔齊自齊奔晉適趙氏孔子聞之謂子路曰趙氏其世有亂子路曰權本不在焉豈能為亂孔子曰非女所知也夫陽貨親審而不親仁有寵於季孫又將殺之不克而奔於齊齊人囚之乃亡歸晉是齊魯二國已去其疾矣趙簡子好利而多殺必禍其說而從其謀禍敗所終非一世可知也
+李康子問於孔子曰今周十二月夏之十月而猶有螽何也孔子對曰丘聞之火伏而後蟄者畢今火猶西流
+
+==== SOURCE, START OF PAGE N+1 ====
+司曆過也李康子曰所失者幾月孔子曰於夏十月火
+既沒矣今以見再失閏也 
+吳王夫差將以哀公見晉侯子服景伯對使者曰王合
+諸侯則伯帥侯牧以見於王伯合諸侯則侯帥子男以
+見於伯今諸侯會而君將以寡君見晉君則晉成爲伯
+矣且執事以伯召諸侯而以侯爲之何利之有焉吳人
+乃止既而悔之遂囚景伯景伯謂太宰嚭曰魯將以十
+月上辛有事於上帝先王季辛而畢何世有職焉自魯
+以來未之改也若不會祝宗將曰吳實無禮言於夫差…
+
+---- VERSION P: English assigned to page N (end) ----
+…favor with the Jisun clan and even plotted to kill them. Having failed, he fled to Qi. The people of Qi imprisoned him, so he escaped to Jin. Thus, the two states of Qi and Lu have rid themselves of their scourge. Zhao Jianzi loves profit and kills many; he will surely be misled by his speech and follow his schemes. That the disasters and failures will last for more than one generation is something that can be known."
+Jisun Kangzi asked Confucius, "At present, the twelfth month of the Zhou calendar is the tenth month of the Xia calendar, yet there are still locusts. Why is this?" Confucius replied, "I have heard that only after the fire star <note>Antares, a star used to track seasons</note> descends do the hibernating insects finish their work. Now the fire star is still moving toward the west." <margin>Zhengqitang edition</margin>
+---- VERSION P: English assigned to page N+1 (start) ----
+The failure of the calendar official is the cause." Jisun Kangzi asked, "By how many months is it off?" Confucius said, "In the tenth month of the Xia calendar, the fire star should have already set. Seeing it now means the intercalary month was also missed." <margin>See Zuo Zhuan, 12th year of Duke Ai</margin>
+King Fuchai of Wu intended to use Duke Ai to meet with the Marquis of Jin. Zifu Jingbo replied to the envoy, "When the King convenes the feudal lords, the hegemon leads the marquises and pastors to have an audience with the King. When the hegemon convenes the feudal lords, the marquises and viscounts lead the sons and barons to have an audience with the hegemon. Now, if the feudal…
+
+---- VERSION Q: English assigned to page N (end) ----
+…Jisun and even attempted to kill him. Failing that, he fled to Qi, and when the people of Qi imprisoned him, he escaped to Jin. Thus, both the states of Qi and Lu have rid themselves of a malady. Zhao Jianzi is greedy for profit and fond of killing. He will surely favor [Yang Huo's] theories and follow his plots. The disasters and failures that follow will not be limited to a single generation; this is predictable."
+Ji Kangzi asked Confucius, "In the current twelfth month of the Zhou calendar, which corresponds to the tenth month of the Xia calendar, there are still locusts. Why is this?" Confucius replied, "I have heard that creatures hibernate only after the fire star <note>referring to Antares, which marks the season</note> has descended. Now, the fire star is still moving toward the west." <margin>The Zhengqi Hall edition</margin>
+---- VERSION Q: English assigned to page N+1 (start) ----
+It is a mistake of the calendar official. Ji Kangzi asked, "How many months have been lost?" Confucius replied, "In the tenth month of the Xia calendar, the fire star should have already set. Seeing it now means the intercalary month has been missed again." <margin>See the Zuo Zhuan, 12th year of Duke Ai.</margin>
+King Fuchai of Wu intended to use Duke Ai to meet with the Marquis of Jin. Zifu Jingbo said to the envoy, "When the King gathers the feudal lords, the Hegemon leads the lords and keepers of the land to meet with the King. When the Hegemon gathers the feudal lords, the lords lead the viscounts and barons to meet with the Hegemon. Now, the feudal lords are meeting, and the King…
+
+---- VERSION R: English assigned to page N (end) ----
+…the favor of the Jisun family, and later attempted to kill them but failed, fleeing to Qi. The people of Qi imprisoned him, yet he escaped and returned to Jin. Thus, the two states of Qi and Lu have already removed their ailment. Zhao Jianzi loves profit and kills many; he will inevitably favor Yang Huo’s rhetoric and follow his stratagems. That the disasters and failures will last for more than one generation is predictable."
+Ji Kangzi asked Confucius, "In the current twelfth month of the Zhou calendar, which is the tenth month of the Xia calendar, there are still locusts. Why is this?" Confucius replied, "I have heard that once the fire star <note>Antares, which signals the transition of seasons</note> descends, hibernating creatures should all be hidden. Now, the fire star is still moving toward the west. <margin>Zhengqi Hall</margin>
+---- VERSION R: English assigned to page N+1 (start) ----
+It is a failure of the calendar official." Ji Kangzi asked, "By how many months is it off?" Confucius said, "In the tenth month of the Xia calendar, the fire star should have already set. Now that it is still visible, it means the intercalation is missed by two months." <margin>See the Zuo Zhuan, 12th year of Duke Ai</margin>
+The King of Wu, Fuchai, was planning to present Duke Ai to the Marquis of Jin. Zifu Jingbo replied to the envoy, "When the King convenes the feudal lords, the hegemon leads the lords and pastors to appear before the King. When the hegemon convenes the feudal lords, the lords lead the viscounts and barons to appear before the hegemon. Now that the feudal lords are…
+
+---- VERSION S: English assigned to page N (end) ----
+…of Qi and Lu have already rid themselves of their disease. Zhao Jianzi <note>the leader of the Zhao clan in Jin</note> is fond of profit and commits many killings; he will surely find Yang Huo’s talk pleasing and follow his schemes. The resulting disasters and defeats will not be limited to a single generation."
+Ji Kangzi questioned Confucius, saying, "Today is the twelfth month of the Zhou calendar, which is the tenth month of the Xia calendar. Why are there still locusts <note>specifically, the migratory locust or katydid</note>?" Confucius replied, "I have heard that only after the Fire Star <note>Antares</note> has set do the hibernating insects fully hide. Currently, the Fire Star is still flowing toward the west <note>it has not yet descended below the horizon at sunset</note>." <margin>Note on the Zhengqi Hall edition</margin>
+---- VERSION S: English assigned to page N+1 (start) ----
+The calendar official has made an error." Ji Kangzi asked, "By how many months is it off?" Confucius said, "By the tenth month of the Xia calendar, the Fire Star should have already disappeared. Since it is still visible, the leap month has been missed twice." <margin>See the Zuo Zhuan, 12th year of Duke Ai</margin>
+King Fuchai of Wu intended to take Duke Ai <note>of Lu</note> to meet with the Marquis of Jin. Zifu Jingbo replied to the messenger, saying, "When a King assembles the feudal lords, the Earls <note>the Hegemons</note> lead the Marquises and Shepherds to appear before the King. When an Earl assembles the feudal lords, the Marquises lead the Viscounts and Barons to appear before…
+
+---- VERSION T: English assigned to page N (end) ----
+…The people of Qi imprisoned him, so he escaped and returned to Jin. This means the two states of Qi and Lu have already cast off their illness. Zhao Jianzi loves profit and kills many; he will surely be charmed by Yang Huo's talk and follow his schemes. The end result of such calamity and defeat is not something that can be known in a single generation."
+Ji Kangzi asked Confucius, "Now, in the twelfth month of the Zhou calendar, which is the tenth month of the Xia calendar, why are there still locusts <note>term: 螽; gloss: a type of migratory locust or grasshopper</note>?" Confucius replied, "I have heard that after the Fire Star <note>term: 火; gloss: Antares in the constellation Scorpio</note> sets, the hibernating creatures all go into hiding. Now, the Fire Star is still flowing toward the west. <margin>Zhengqi Hall edition</margin>
+---- VERSION T: English assigned to page N+1 (start) ----
+The official in charge of the calendar has made an error." Ji Kangzi asked, "By how many months is it off?" Confucius said, "By the tenth month of the Xia calendar, the Fire Star should have already disappeared. Since it is still visible, the leap month has been missed twice." <margin>See the Zuo Zhuan, 12th year of Duke Ai</margin>
+King Fuchai of Wu intended to take Duke Ai of Lu to meet the Marquis of Jin. Zifu Jingbo replied to the envoy, saying, "When a King assembles the feudal lords, then a Hegemon leads the Marquises and Pastors to appear before the King. When a Hegemon assembles the feudal lords, then the Marquises lead the Viscounts and Barons to appear before the Hegemon. Now,…
+
+
+######## BREAK 10/17  id=7f270b70ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…illam de S. S. scripturae perfectione & sufficientia senten-
+tiam abducere paulatim ad abnegationem totius scripturae sacrae, & effi-
+cere Turcicos & Epicureos. Argumentum ejus tale est: Qui nihil cre-
+dunt, nisi quod in scriptura sacra habetur, illi ad abnegationem totius
+scripturae paulatim abducuntur, & evadunt Turcici & Epicurei. Lu-
+therani nihil credunt, nisi quod in scriptura sacra habetur. Ergò Luthe-
+rani ad abnegationem totius scripturae paulatim abducuntur, & eva-
+dunt Turcici & Epicurei. Quis non odio omnium dignissimum judicet
+tam impudentem Apostatam? Annón enim credere & abnegare sunt
+contraria? Quomodo itaque conveniunt in unis Lutheranis? Nam qui-
+cunque credit unicae scripturae, profecto eam non abnegat. Et qui abnegat,
+
+==== SOURCE, START OF PAGE N+1 ====
+non credit. De Papistis conclusio verissima est: id quod suo loco clarissime demonstrabitur.
+30. Argumentum 2. Nihil est credendum, nisi quod in verbo Dei scriptum extat. Atqui nuspiam reperitur in scriptura illud, nihil esse credendum, nisi quod in scriptura aperte (bekandtlich) extet. Ergo neque hoc ipsum credi oportet, p. 16.
+31. Respondeo. Sunt 4. termini. Propositio loquitur generatim de eo, quod quoque modo extat in verbo Dei, sive expresse, id est, disertis verbis, sive implicite, hoc est, per certam, firmam & necessariam consequentiam. Et hactenus vera est. Assumptio loquitur tantum…
+
+---- VERSION P: English assigned to page N (end) ----
+…entire sacred scripture and makes men into Turks <note>Muslims</note> and Epicureans <note>materialistic atheists</note>. His argument is as follows: Those who believe nothing except what is contained in sacred scripture are gradually led away to the denial of the entire scripture and turn out as Turks and Epicureans. The Lutherans believe nothing except what is contained in sacred scripture. Therefore, the Lutherans are gradually led away to the denial of the entire scripture and turn out as Turks and Epicureans. Who would not judge such an impudent <term>Apostate</term> <gloss>one who has abandoned his faith</gloss> most worthy of everyone's hatred? For are not believing and denying contraries? How, then, do they meet in the Lutherans alone? For whoever believes in the unique scripture certainly does not deny it. And he who denies it,
+---- VERSION P: English assigned to page N+1 (start) ----
+does not believe. Concerning the Papists, the conclusion is most true: a point which will be most clearly demonstrated in its proper place.
+30. Argument 2. Nothing is to be believed except what stands written in the word of God. But it is found nowhere in scripture that nothing is to be believed unless it stands openly <note>original: "bekandtlich"</note> in scripture. Therefore, neither ought this itself to be believed, page 16.
+31. I respond. There are four terms <note>a logical fallacy where a syllogism has four terms instead of three</note>. The proposition speaks generally of that which exists in any way in the word of God, whether expressly, that is, in distinct words, or implicitly,…
+
+---- VERSION Q: English assigned to page N (end) ----
+…explicitly: "Our opinion concerning the perfection and sufficiency of Holy Scripture leads little by little to the denial of all holy scripture, and makes [people] Turks and Epicureans." His argument is as follows: Those who believe nothing except what is contained in Holy Scripture are led little by little to the denial of all scripture, and they become Turks and Epicureans. Lutherans believe nothing except what is contained in Holy Scripture. Therefore, Lutherans are led little by little to the denial of all scripture, and they become Turks and Epicureans. Who would not judge such an impudent apostate as worthy of the hatred of all? For are not believing and denying contraries? How, therefore, do they come together in the Lutherans alone? For whoever believes the unique scripture, he certainly does not deny it. And he who denies,
+---- VERSION Q: English assigned to page N+1 (start) ----
+does not believe. Regarding the Papists, the conclusion is most true: a fact that will be most clearly demonstrated in its proper place.
+30. Argument 2. Nothing is to be believed unless it exists written in the word of God. But nowhere is it found in scripture that nothing is to be believed unless it exists openly (<term>bekandtlich</term> <gloss>openly/knowably</gloss>) in scripture. Therefore, not even this itself ought to be believed, p. 16.
+31. I respond. There are 4 terms <note>a logical error where the syllogism uses more than three categories</note>. The proposition speaks generally about that which exists in the word of God in any way, whether explicitly—that is, in plain words—or…
+
+---- VERSION R: English assigned to page N (end) ----
+…to the denial of the whole of sacred scripture, and makes men Turks <note>A common early modern term for Muslims.</note> and Epicureans <note>Here meaning atheists or those living only for pleasure.</note>. His argument is such: Those who believe nothing except what is held in sacred scripture are led away by degrees to the denial of the whole scripture, and turn out Turks and Epicureans. The Lutherans believe nothing except what is held in sacred scripture. Therefore, the Lutherans are led away by degrees to the denial of the whole scripture, and turn out Turks and Epicureans. Who would not judge such an impudent Apostate most worthy of the hatred of all? For are not to believe and to deny contraries? How then do they meet in the Lutherans alone? For whoever believes the unique scripture certainly does not deny it. And he who denies it,
+---- VERSION R: English assigned to page N+1 (start) ----
+does not believe. Concerning the Papists, the conclusion is most true: a thing which shall be most clearly demonstrated in its own place.
+30. Argument 2. Nothing is to be believed except what stands written in the word of God. But nowhere is it found in scripture that nothing is to be believed except what stands openly <note>original: "bekandtlich"</note> in scripture. Therefore, not even this itself ought to be believed, page 16.
+31. I respond. There are 4 terms <note>A logical fallacy where a syllogism has four terms instead of the required three.</note>. The proposition speaks generally of that which stands in any way in the word of God, whether expressly, that is, in distinct words, or…
+
+---- VERSION S: English assigned to page N (end) ----
+…writes explicitly: That our opinion concerning the perfection and sufficiency of Holy Scripture leads little by little to the denial of all sacred scripture, and makes men Turks and Epicureans. His argument is as follows: Those who believe nothing except what is contained in sacred scripture are led little by little to the denial of all scripture, and turn out as Turks and Epicureans. Lutherans believe nothing except what is contained in sacred scripture. Therefore, Lutherans are led little by little to the denial of all scripture, and turn out as Turks and Epicureans. Who would not judge such an impudent apostate to be worthy of the hatred of all? For are not believing and denying contraries? How, therefore, do they coincide in the Lutherans alone? For whoever believes in the unique scripture surely does not deny it. And he who denies,
+---- VERSION S: English assigned to page N+1 (start) ----
+does not believe. Concerning the Papists, the conclusion is most true: which will be most clearly demonstrated in its proper place.
+30. Argument 2. Nothing is to be believed except what exists written in the word of God. But nowhere is it found in scripture that nothing is to be believed except what exists openly <term>bekandtlich</term> <gloss>manifestly/openly</gloss> in scripture. Therefore, this very thing ought not to be believed either, page 16.
+31. I respond. There are four terms. The proposition speaks generally of that which exists in the word of God in any way, whether explicitly, that is, in plain words, or implicitly, that is, through a certain, firm, and necessary consequence.…
+
+---- VERSION T: English assigned to page N (end) ----
+…Pistorius, who writes expressly: "Our position concerning the perfection and sufficiency of Holy Scripture leads gradually to the abnegation of all sacred scripture, and makes one a Turk or an Epicurean." His argument is as follows: Whoever believes nothing except what is held in sacred scripture is led gradually to the abnegation of all scripture, and turns into a Turk or an Epicurean. Lutherans believe nothing except what is held in sacred scripture. Therefore, Lutherans are led gradually to the abnegation of all scripture and turn into Turks and Epicureans. Who would not judge such an impudent apostate worthy of universal hatred? For are not "to believe" and "to abnegate" contraries? How, therefore, do they coincide in the singular Lutherans? For whoever believes in the sole scripture, surely does not abnegate it. And he who abnegates
+---- VERSION T: English assigned to page N+1 (start) ----
+does not believe. Regarding the Papists, the conclusion is most true: a fact that will be demonstrated most clearly in its proper place.
+30. Argument 2. Nothing is to be believed unless it exists in writing in the word of God. But that which is not explicitly <term>bekandtlich</term> <gloss>known/evident</gloss> in scripture is nowhere found. Therefore, not even this itself ought to be believed, p. 16.
+31. I respond. These are 4 terms. The proposition speaks generally of that which in any way exists in the word of God, whether expressly, that is, in distinct words, or implicitly, that is, through a certain, firm, and necessary consequence. And thus far it is true. The assumption speaks only…
+
+
+######## BREAK 11/17  id=c8bddc0fff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…26. lib. 1. F. c. §. in quibus, tit. 33. lib. 2. F. d. §. 2. et 3. tit. 4. et §. 1. 2. et 3. d. tit. 26. lib. 1. F. §. Item placet, tit. 15. lib. 2. F. not. Borch. c. 7. n. 48. e. §. Sacramentum, et §. fin. d. tit. 33. lib. 2. F. not. Cuiac. lib. 1. F. tit. 1. §. similiter, in fin. et lib. 4. tit. 36.
+ XCIV. 
+Haec Iuratoria defensio, siue iuramentum hoc defensionis ergo iniunctum aut permissum, vel est simplex, cum quis solus iurat, sicut Dominus contra Vasallum, a. et Vasallus contra dominum, si uidelicet motâ inuestiturae controuersiâ probare possit, se per annum sciente et non contradicente Domino feudum possedisse: b. vel est propter inopiam probationum cum XII. Sacramentalibus, h, e, coniuratoribus, qui ex cognatis vel aliis assumti,
+
+==== SOURCE, START OF PAGE N+1 ====
+assumti, idem quod principalis, c. qui et ipse inter XII. computatur, d. iurant, seseque id verum credere adfirmant, tactis sacrosanctis Evangelijs, vel armis sacratis. e.
+a. paragraphus si verò feudum, titulus 4. liber 1. F. et ibi Cuiacius liber 1. titulus 1. paragraphus similiter. b. paragraphus si autem aliquis, finem Titulus 26. liber 1. F. Cuiacius d. paragraphus similiter, et tituli 28. c. paragraphus cum autem quis, dicto titulus 4. liber 1. F. caput unicum titulus 10. dicto liber 1. F. paragraphus Vbi nihil, titulus 33. liber 2. F. notat Borcholt caput 2. numero 18. dicta lex 5. et…
+
+---- VERSION P: English assigned to page N (end) ----
+…2, and 3, of the said title 26, book 1, Feudal Law; § "Item, it pleases," title 15, book 2, Feudal Law; note Borch. chapter 7, no. 48. e. § "Oath," and § "fin." <gloss>final</gloss>, of the said title 33, book 2, Feudal Law; note Cuiac. book 1, Feudal Law, title 1, § "similarly," in the end, and book 4, title 36.
+->XCIV.<-
+This defensive oath, or this oath enjoined or permitted for the sake of defense, is either simple, when one swears alone, just as a Lord against a Vassal, a. and a Vassal against a Lord, if indeed, once a controversy over an investiture has been raised, he can prove that he possessed the fief for a year with the Lord knowing and not contradicting it: b. or it is, on account of a lack of proofs, with twelve <term>sacramentales</term> <gloss>oath-helpers</gloss>, that is, conspirators, who, from his relatives or others,
+---- VERSION P: English assigned to page N+1 (start) ----
+assumed, the same as the principal, c. who is also counted among the twelve, d. they swear, and affirm that they believe it to be true, by touching the most holy Gospels, or sacred weapons. e.
+a. Paragraph "if indeed the fief," title 4, book 1, Feudal Law; and see Cuiacius, book 1, title 1, paragraph "similarly." b. Paragraph "if however anyone," at the end of Title 26, book 1, Feudal Law; Cuiacius, the said paragraph "similarly," and title 28. c. Paragraph "when however anyone," in the said title 4, book 1, Feudal Law; chapter "un." title 10, in the said book 1, Feudal Law; paragraph "Where nothing," title 33, book 2, Feudal Law; note Borcholt, chapter 2, number 18; the said law 5 and law…
+
+---- VERSION Q: English assigned to page N (end) ----
+…title 26, book 1, Feudal Law; section "Likewise it is pleasing," title 15, book 2, Feudal Law; noted by Borcholt chapter 7, no. 48. e. section "Oath," and the final section of said title 33, book 2, Feudal Law; noted by Cujas book 1, Feudal Law title 1, section "similarly," at the end, and book 4, title 36.</note>
+->XCIV.<-
+This defense by oath—or this oath enjoined or permitted for the sake of defense—is either simple, when one swears alone, just as a Lord against a Vassal, <note>a.</note> and a Vassal against a lord (if, namely, when a dispute over investiture has been raised, he can prove that he has possessed the fief for a year with the Lord's knowledge and without his contradiction); <note>b.</note> or it is due to a lack of evidence with twelve <term>Sacramentalibus</term> <gloss>oath-helpers</gloss>, that is, co-swearers, who
+---- VERSION Q: English assigned to page N+1 (start) ----
+are taken from among kinsmen or others. <note>c.</note> He himself is also counted among the twelve, <note>d.</note> and they swear and affirm that they believe it to be true, having touched the most holy Gospels or consecrated weapons. <note>e.</note>
+<note>a. section "if indeed a fief," title 4, book 1, Feudal Law; and there Cujas book 1, title 1, section "similarly." b. section "if however someone," at the end, Title 26, book 1, Feudal Law; Cujas in said section "similarly," and title 28. c. section "when however someone," in said title 4, book 1, Feudal Law; single chapter title 10, in said book 1, Feudal Law; section "Where nothing," title 33, book 2, Feudal Law; Borcholt notes chapter…
+
+---- VERSION R: English assigned to page N (end) ----
+…"similarly," at the end, and book 4, title 36.</note>
+### XCIV.
+This sworn defense, or this oath enjoined or permitted for the sake of defense, is either simple, when one person swears alone, such as the Lord against the Vassal, <note>section "if indeed a feud," title 4, book 1, Feudal Law; and there Cujas book 1, title 1, section "similarly."</note> and the Vassal against the lord, if for instance when a controversy of investiture is moved he can prove that he possessed the feud for a year with the Lord's knowledge and without his contradiction: <note>section "if however anyone," end of Title 26, book 1, Feudal Law; Cujas in said section "similarly," and title 28.</note> or it is due to a lack of proofs with twelve <term>Sacramentalibus</term> <gloss>oath-helpers/compurgators</gloss>, that is, co-swearers, who from kinsmen or others
+---- VERSION R: English assigned to page N+1 (start) ----
+chosen, say the same as the principal, <note>section "when however someone," in said title 4, book 1, Feudal Law; single chapter title 10, said book 1, Feudal Law; section "Where nothing," title 33, book 2, Feudal Law; Borcholt notes chapter 2, number 18.</note> who is himself counted among the twelve, <note>said law 5 and law 12, how one ought to defend oneself in the Lombard law; Cujas book 1, title 24.</note> they swear, and they affirm that they believe it to be true, having touched the most holy Gospels, or consecrated weapons. <note>said title 33; Cujas section "Likewise if a controversy," book 2, title 1, title 24, and title 28; chapter 2, at the end of title 2, book 2, Feudal…
+
+---- VERSION S: English assigned to page N (end) ----
+…48. d. § 2 and 3, tit. 4, and § 1, 2, and 3, of the said tit. 26, lib. 1, F.; § "It also pleases," tit. 15, lib. 2, F.; note Borch. ch. 7, n. 48. e. § "Oath," and § "final," of the said tit. 33, lib. 2, F.; note Cuiac. lib. 1, F., tit. 1, § "likewise," at the end, and lib. 4, tit. 36.
+->XCIV.<-
+This defensive oath, or this oath enjoined or permitted for the sake of defense, is either simple, when one swears alone, just as a Lord against a Vassal, a. and a Vassal against a Lord, if indeed, once a controversy over the investiture has been raised, he can prove that he possessed the fief for a year with the knowledge of the Lord, and without the Lord contradicting it: b. or it is, on account of a lack of proofs, with twelve <term>sacramentales</term> <gloss>oath-helpers</gloss>, that is, fellow-swearers, who are taken from kinsmen or others,
+---- VERSION S: English assigned to page N+1 (start) ----
+taken, the same as the principal, c. who is also counted among the twelve, d. they swear, and affirm that they believe it to be true, by touching the most holy Gospels, or consecrated weapons. e.
+a. paragraph "if indeed the fief," title 4, book 1, F., and there Cuiacius book 1, title 1, paragraph "likewise." b. paragraph "if however anyone," at the end of Title 26, book 1, F.; Cuiacius in the said paragraph "likewise," and title 28. c. paragraph "when however anyone," in the said title 4, book 1, F.; chapter "un." title 10, in the said book 1, F.; paragraph "Where nothing," title 33, book 2, F.; notes Borcholt chapter 2, number 18; the said law 5 and law 12, "how one ought to defend…
+
+---- VERSION T: English assigned to page N (end) ----
+…aforementioned title 26, book 1, Feudal Law; § "Also it pleases," title 15, book 2, Feudal Law; notes Borch. chapter 7, no. 48. e. § "Oath," and § "final," in the aforementioned title 33, book 2, Feudal Law; notes Cuiac. book 1, Feudal Law, title 1, § "similarly," at the end, and book 4, title 36.</note>
+->XCIV.<-
+This defensive Oath, or this oath enjoined or permitted for the sake of defense, is either simple, when one swears alone, just as a Lord against a Vassal, a. and a Vassal against a Lord, if indeed, when a controversy of investiture is raised, he can prove that he possessed the fief for a year with the Lord knowing and not contradicting: b. or it is on account of the lack of proof, with twelve <term>sacramentales</term> <gloss>oath-helpers or co-jurors</gloss>, that is to say, co-swearers, who are taken from relatives or others,
+---- VERSION T: English assigned to page N+1 (start) ----
+taken as such, [swearing] the same as the principal party, c. who is also counted among the twelve, d. they swear, and affirm that they believe this to be true, by touching the most holy Gospels or consecrated arms. e.
+<note>a. paragraph "if indeed the fief," title 4, book 1, Feudal Law, and there Cuiacius book 1, title 1, paragraph "similarly." b. paragraph "if however anyone," at the end, Title 26, book 1, Feudal Law, Cuiacius in the aforementioned "similarly," and titles 28. c. paragraph "when however anyone," in the said title 4, book 1, Feudal Law; chapter "un." title 10, in the said book 1, Feudal Law; paragraph "Where nothing," title 33, book 2, Feudal Law; notes Borcholt chapter 2,…
+
+
+######## BREAK 12/17  id=81889895ff  language=sanskrit
+
+==== SOURCE, END OF PAGE N ====
+…पश्यति ध्रुवम् ॥ दृष्टिमাত্রेण पापौघं दहत्येव स साधकः ॥ १९० ॥
+टीका—वह शिरःस्थित कपालविवरमें सोलह कलासंयुक्त अमृतकिरणसे युक्त हंससंज्ञक निरंजनका चिन्तन करे निरन्तर तीन दिन यह अभ्यास करनेसे निरंजनका साक्षात् साधकको अवश्य प्रकाश होगा सो साधकदृष्टिमात्रसे सर्व पातकोंको दहन करडालेगा ॥ १८९ ॥ १९० ॥
+मूलम्--अनागतञ्च स्फुरति चित्तशुद्धिर्भवेत्खलु ॥ सद्यः कृत्वापि दहति महापातकपञ्चकम् ॥ १९१ ॥
+टीका—यह ध्यान करनेसे अनागतविषयकी स्फूर्ति होगी अर्थात् जो विषय कभी उत्पन्न नहीं भया है उसकी स्फूर्ति होगी और चित्तकी शुद्धि होगी और साधक ध्यानमात्रसे उसी क्षण पंचमहापातक दहन करडालेगा ॥ १९१ ॥
+मूलम्--आनुकूल्यं ग्रहा यान्ति सर्वे नश्यन्त्युपद्रवाः ॥ उपसर्गाः शमं यान्ति युद्धे जयमवाप्नुयात् ॥ १९२ ॥ खेचरीभूचरीसिद्धिर्भवेत्क्षीरेन्दुदशनात् ॥ ध्यानादेव
+
+==== SOURCE, START OF PAGE N+1 ====
+भवेत्सर्वं नात्र कार्या विचारणा ॥ १९३ ॥
+सन्तताभ्यासयोगेन सिद्धो भवति मानवः॥ सत्यं सत्यं पुनः सत्यं मम तुल्यो भवेद्ध्रुवम् ॥ योगशास्त्रं च परमं योगिनां सिद्धिदायकम् ॥ १९४ ॥
+टीका—शिरःस्थचन्द्रमाका ध्यान करनेसे सर्व ग्रह अनुकूल होजाते हैं और समस्त उपद्रवका नाश होजाता है और उपसर्ग प्रशमित होते हैं और युद्धमें जय लाभ होता है और खेचरी भूचरीकी सिद्धि प्राप्त होती है इसमें सन्देह नहीं है और निरन्तर यह योगाभ्यास करनेसे अवश्य साधक सिद्ध होजाता है हे पार्वती! हम सत्य सत्य वारंवार कहते हैं कि हमारे तुल्य होजायगा इसमें सन्देह नहीं है यह परमयोग योगीलोगोंके सिद्धिका दाता है ॥ १९२ ॥ १९३ ॥ १९४ ॥
+अथ…
+
+---- VERSION P: English assigned to page N (end) ----
+…manifests, and purity of mind truly occurs. Even if performed for a moment, it burns away the five great sins. || 191 ||
+Commentary—By performing this meditation, an intuition of the future <note>original: "anagata-vishaya", things not yet come to pass</note> will arise; that is, matters that have not yet occurred will be revealed. The mind will become pure, and through this meditation, the practitioner will instantly burn away the <term>pancha-mahataka</term> <gloss>five great sins</gloss>. || 191 ||
+Root Text—The planets become favorable, and all calamities perish. Obstacles are pacified, and one attains victory in battle. || 192 || Through the vision of the moon of milk, the <term>Khechari</term> <gloss>moving in the sky</gloss> and <term>Bhuchari</term> <gloss>moving on the earth</gloss> powers are attained. Through meditation alone
+---- VERSION P: English assigned to page N+1 (start) ----
+everything is achieved; there is no need for further deliberation here. || 193 ||
+Through the yoga of constant practice, a human becomes a perfected being. Truly, truly, and again truly, he certainly becomes equal to me. This supreme science of yoga grants success to yogis. || 194 ||
+Commentary—By meditating on the moon situated in the head, all planets become favorable, all calamities are destroyed, obstacles are calmed, and victory is gained in battle. The <term>siddhis</term> <gloss>supernatural powers</gloss> of <term>Khechari</term> and <term>Bhuchari</term> are attained; there is no doubt in this. By continuously performing this yoga practice, the practitioner certainly becomes a…
+
+---- VERSION Q: English assigned to page N (end) ----
+…|| 190 ||
+Root Text—The future reveals itself and the purification of the mind truly occurs. Even if performed for a moment, it burns away the five great sins. || 191 ||
+Commentary—By performing this meditation, the inspiration of future matters will occur; that is, matters that have not yet arisen will be revealed, and the purification of the mind will take place. Through mere meditation, the practitioner burns away the five great sins at that very moment. || 191 ||
+Root Text—The planets become favorable and all calamities perish. Obstacles are pacified and one obtains victory in battle. || 192 || The <term>siddhis</term> <gloss>supernatural powers</gloss> of <term>Khechari</term> <gloss>moving in the sky</gloss> and <term>Bhuchari</term> <gloss>moving on the earth</gloss> occur from seeing the milk-white Moon. Through meditation alone
+---- VERSION Q: English assigned to page N+1 (start) ----
+everything occurs, there should be no doubt here. || 193 || Through the yoga of continuous practice, a human becomes a <term>siddha</term> <gloss>perfected being</gloss>. Truly, truly, and again truly, he certainly becomes equal to me. This supreme Yoga Scripture is the giver of perfection to yogis. || 194 ||
+Commentary—By meditating on the Moon located in the head, all planets become favorable, all calamities are destroyed, obstacles are calmed, and victory is gained in war. The perfection of <term>Khechari</term> and <term>Bhuchari</term> is obtained, there is no doubt in this. By performing this yoga practice constantly, the practitioner certainly becomes a perfected being. O Parvati! I…
+
+---- VERSION R: English assigned to page N (end) ----
+…the practitioner will burn away all accumulated sins. || 189 || 190 ||
+Root Text—The future becomes manifest, and purity of mind surely arises. Even by performing it for an instant, one burns away the five great sins. || 191 ||
+Commentary—By performing this meditation, the future will manifest, meaning that things which have not yet occurred will be revealed. Purity of mind will be achieved, and by merely meditating, the practitioner will instantly burn away the five great sins <note>original: "panchamahapataka"</note>. || 191 ||
+Root Text—All the planets become favorable, and all disturbances perish. Obstacles find peace, and one attains victory in battle. The <term>khechari</term> <gloss>moving in the void</gloss> and <term>bhuchari</term> <gloss>moving on the earth</gloss> <note>These refer to specific advanced yogic powers.</note>
+---- VERSION R: English assigned to page N+1 (start) ----
+siddhis are attained through the nectar-rayed Moon. Through meditation alone, everything is attained; there is no need for doubt in this matter. || 192 || 193 ||
+Through constant practice of yoga, a human becomes a <term>siddha</term> <gloss>perfected being</gloss>. I declare it true, true, and true again: he will certainly become equal to me. This supreme yoga science is the bestower of success to yogis. || 194 ||
+Now, the description of <term>Raja Yoga</term> <gloss>the royal yoga</gloss>.
+Root Text—Above this exists the divine-formed thousand-petaled lotus. It resides outside the body, which is called the <term>brahmanda</term> <gloss>the microcosm or cosmic egg</gloss>, and it grants…
+
+---- VERSION S: English assigned to page N (end) ----
+…sins. || 189 || 190 ||
+Root Text—Future events become manifest, and the mind certainly becomes pure. Even if he has committed them, he burns away the five great sins instantly. || 191 ||
+Commentary—By performing this meditation, there will be an intuition of the future, meaning that events which have not yet occurred will become manifest. The mind will be purified, and by meditation alone, the practitioner will instantly burn away the five great sins. || 191 ||
+Root Text—All the planets become favorable, and all disturbances perish. Obstacles find peace, and one achieves victory in battle. The <term>khechari</term> <gloss>movement in the void</gloss> and <term>bhuchari</term> <gloss>movement on earth</gloss> <term>siddhis</term> <gloss>supernatural attainments</gloss> are attained by meditating on the milk-white Moon. By meditation alone
+---- VERSION S: English assigned to page N+1 (start) ----
+everything happens; there is no need to deliberate on this. || 193 ||
+By the practice of constant union, a human becomes a <term>siddha</term> <gloss>perfected being</gloss>. This is true, true, and true again; he will surely become equal to me. This supreme science of yoga is the giver of attainment to yogis. || 194 ||
+Commentary—By meditating on the Moon situated in the head, all the planets become favorable, all disturbances are destroyed, and obstacles are pacified. One achieves victory in battle, and the <term>khechari</term> and <term>bhuchari</term> <term>siddhis</term> are attained. There is no doubt in this. By practicing this yoga constantly, the practitioner certainly becomes a…
+
+---- VERSION T: English assigned to page N (end) ----
+…killing a brahmin, drinking alcohol, stealing gold, etc.</note> at that very moment. || 191 ||
+Commentary—By performing this meditation, there is a manifestation of future matters, meaning subjects that have not yet occurred become apparent. The mind is purified, and the practitioner, by meditation alone, burns away the five great sins at that very instant. || 191 ||
+Root Text—All the planets become favorable, and all disturbances perish. Obstacles find peace, and one obtains victory in battle. The <term>Khechari</term> <gloss>movement in the sky</gloss> and <term>Bhuchari</term> <gloss>movement on earth</gloss> <note>These represent two specific higher siddhis or supernatural powers associated with the movement of the consciousness.</note> attainments occur from the realization of the nectar-oozing Moon. Through meditation alone...
+---- VERSION T: English assigned to page N+1 (start) ----
+Shiva Samhita with Hindi Commentary
+everything comes to pass; there is no need for hesitation in this. || 193 ||
+Through the yoga of constant practice, a human becomes a <term>siddha</term> <gloss>perfected being</gloss>. This is the truth, the truth, again the truth; he will surely become equal to me. This supreme science of yoga is the giver of attainment to yogis. || 194 ||
+Commentary—By meditating on the Moon situated in the head, all planets become favorable, all disturbances are destroyed, obstacles are pacified, victory in battle is gained, and the attainments of <term>Khechari</term> and <term>Bhuchari</term> are realized; there is no doubt in this. By continuously practicing this…
+
+
+######## BREAK 13/17  id=64bdd9e5ff  language=chinese
+
+==== SOURCE, END OF PAGE N ====
+自匪醫可救則當療之以此力能致者致之力不能致不妨給之以術家貧不能致財者或向富人稱貸偽稱親友飢遺安置床頭予以此可喜也救貧病之第一着也未得官者或急為納粟或謬稱薦舉已得官者或真謀銓補或假報童移至老人欲得之選年則出在星相巫醫之口予于予百何足吝哉是皆即以其人之道反治其人之身也雖然療諸病易療貧難世人憂貧而致疾疾而不可救藥者幾與恆河沙比數焉能假太倉之粟貸郭況之金是人皆予芥子園
+
+==== SOURCE, START OF PAGE N+1 ====
+以可喜而使之霍然盡愈哉
+一 心鍾愛之藥
+三日一心鍾愛之人可以當藥人心私愛必有所鍾常有君不得之于臣父不得之于子而極疎極遠極不足愛之人反為精神所注性命以之者即是鍾情之物也或是嬌妻美妾或為狎客孌童或係至親密友思之弗得得而弗親皆可以致疾即使致疾之人由非關于此一到疾痛無聊之際勢必念及私愛之人忽使相親如魚得水未有不耳清目明精神陡健
+
+---- VERSION P: English assigned to page N (end) ----
+…a substantive appointment or falsely report a promotion <note>original: "tongyi," a change in official posting or promotion</note>. As for the longevity desired by the elderly, such words come from the mouths of astrologers, shamans, and physicians. Why should I be stingy with such words of praise? These are all cases of using a person’s own path to treat their own person. Nevertheless, while it is easy to treat various illnesses, it is difficult to treat poverty. The number of people in this world who worry about poverty until they fall ill, and whose illness becomes incurable, is nearly as many as the grains of sand in the Ganges River. How can I possibly borrow the grain of the Imperial Granary or the gold of Guo Kuang <note>a famously wealthy figure of the Han Dynasty</note>? If I could give all these people my Mustard Seed Garden,
+---- VERSION P: English assigned to page N+1 (start) ----
+would such a joyful thing make them suddenly and completely recover?
+Medicines that the heart deeply loves
+The third category: a person whom the heart deeply loves can serve as medicine. When the human heart has a private love, it must be concentrated on something. It often happens that a ruler cannot obtain this from a minister, nor a father from a son; instead, a person who is extremely distant, remote, or seemingly unworthy of love becomes the focus of one's spirit and the very essence of one's life. This is the object of one's concentrated affection. It might be a charming wife or a beautiful concubine, or perhaps a close companion or a young favorite, or even a most intimate friend. To…
+
+---- VERSION Q: English assigned to page N (end) ----
+…appointment or falsely report their transfer. Regarding the longevity that the elderly desire, such news often comes from the mouths of astrologers, fortune tellers, or spirit healers; why should I be stingy with such words? These are all instances of using a person’s own ways to treat their own body. Nevertheless, while it is easy to treat various illnesses, it is difficult to treat poverty. The number of people in the world who worry about poverty until they fall ill, and whose illness becomes incurable, is as numerous as the sands of the Ganges. How can one possibly provide the grain from the Great Granary or the gold of Guo Kuang <note>Guo Kuang was a famously wealthy figure from the Eastern Han Dynasty</note> to everyone? People would all look to me at Mustard Seed Garden <note>the name of Li Yu's estate and publishing house</note>
+---- VERSION Q: English assigned to page N+1 (start) ----
+### Volume Six
+<sig>4</sig>
+to provide something joyful and make them suddenly and completely recover.
+The Medicine of a Deeply Loved Person
+The third category: a person whom the heart deeply loves <term>zhong'ai</term> <gloss>to cherish or concentrate affection upon</gloss> can serve as medicine. The private affections of the human heart must have a focus. It often happens that what a ruler cannot get from a minister, or a father from a son, is instead found in someone very distant or unworthy of love, upon whom the person’s spirit is focused and their very life depends. This is the object of their deep affection. It might be a charming wife or a beautiful concubine; it might be a close…
+
+---- VERSION R: English assigned to page N (end) ----
+…an official transfer. For the elderly who wish to attain a certain age, one can use the words of astrologers, shamans, or physicians to provide them. If I can give them this, what is there to begrudge? This is simply a matter of "using the person's own way to govern their own body." However, while it is easy to treat most illnesses, it is difficult to treat poverty. The people of this world who suffer from poverty to the point of illness, and whose illness becomes incurable, are almost as numerous as the sands of the Ganges. How can one borrow the grain from the great granaries or the gold from the wealthy Guo Kuang <note>a historical figure noted for immense wealth</note> for every person? If I could do so, everyone would be able to feel joy, and all would be cured, as if in the <term>Jieziyuan</term> <gloss>Mustard Seed Garden</gloss>
+---- VERSION R: English assigned to page N+1 (start) ----
+<header>Collected Works, Volume 6</header> <sig>4</sig>
+where one is made happy and thus suddenly and completely healed.
+The third category: those one is deeply attached to can serve as medicine. A person's heart and private affections must have a focus. There are often rulers who cannot obtain this from their ministers, or fathers who cannot obtain it from their sons, yet they may focus their spirit and life force entirely upon someone who is extremely distant, remote, and unworthy of such love; this is what is meant by "fixing one's passion." It might be a beautiful wife or concubine, a close companion, a handsome youth, or a most intimate friend. To long for them and not obtain them, or…
+
+---- VERSION S: English assigned to page N (end) ----
+…to a post or falsely report a promotion. For elderly people who desire to increase their longevity, one may produce words from the mouths of astrologers or shaman-physicians to comfort them. Why should I be stingy with such words? This is the method of "using the person's own ways to treat the person himself." However, although treating other illnesses is easy, treating poverty is difficult. In this world, those who worry about poverty and fall ill, whose illnesses are beyond saving, are as numerous as the sands of the Ganges. If one could borrow the grain of the Great Granary <note>referring to state-owned grain reserves</note> or loan the gold of Guo Kuang <note>a historical figure known for his extreme wealth</note>, everyone would be a Jiezi Garden <note>the name of Li Yu's residence, implying a place of generosity</note>.
+---- VERSION S: English assigned to page N+1 (start) ----
+<header>Collected Works, Volume 6</header>
+<sig>4</sig>
+can use joy to make them recover completely and suddenly?
+### The Third Category: Medicine of Deep Affection
+The third category is that a person to whom one is deeply attached can serve as medicine. In human hearts, private affection is always focused on someone. Often, a ruler cannot obtain it from a minister, or a father cannot obtain it from a son; yet, a very distant and unlovable person may become the focus of one’s spirit and the very thing upon which one’s life depends. This is an object of deep emotional attachment. It may be a charming wife or beautiful concubine, a close companion or a youthful page, or a very dear and…
+
+---- VERSION T: English assigned to page N (end) ----
+…to purchase a rank for them or falsely claim a recommendation; for those who already hold office, one might provide genuine assistance in their appointments or feign reports of promotion. For the elderly who wish to gain a few years of life, one might produce positive words from the mouths of astrologers, shamans, or healers. If I have these things, why should I be stingy with them? This is simply a matter of treating a person by their own standards. However, while treating various illnesses is easy, treating poverty is difficult. In this world, those who worry about poverty to the point of illness, and whose illness becomes incurable, are as numerous as the sands of the Ganges. If everyone could distribute the grain of the Great Granary and loan out the gold of Guo Kuang, then everyone would be able to dwell in the Mustard Seed Garden.
+---- VERSION T: English assigned to page N+1 (start) ----
+<header>Collected Works, Volume 6</header>
+<sig>4</sig>
+<page-num>6</page-num>
+How can one be made to recover instantly through the occurrence of something joyful?
+### The Third Category: Medicine for the Object of One’s Heart’s Affection
+The third category is that the person one’s heart is deeply attached to can serve as medicine. A person’s private affection must have a target. There are often cases where a ruler cannot obtain it from a minister, or a father cannot obtain it from a son, yet someone extremely distant and unworthy of love becomes the object of their spirit and life force. This is precisely an object of deep attachment. It might be a pampered wife or beautiful concubine, an…
+
+
+######## BREAK 14/17  id=6974d844ff  language=tibetan
+
+==== SOURCE, END OF PAGE N ====
+…།རྟག་ཏུ་ལྷ་ཁང་སྟོང་པ་དང་། །དེ་བཞིན་
+ཉིད་དུ་དགོན་པ་ཆེ། །གང་ཡང་སྒྲུབ་པའི་ཕྱོགས་རྣམས་ནི། །གང་ཟག་མཆོག་གིས་གསུངས་པ་དང་། །སྦྱིན་སྲེག་ལས་ནི་ཐམས་ཅད་ལ། །དེ་རྣམས་གནས་སུ་གསུངས་པ་ཡིན། །ཁྲུ་གང་ཚད་དུ་གནས་པ་ཡི། །ཀུ་
+ཤའི་ཁྲེས་ལ་ཉེར་འདུག་ནས། །དེར་ནི་སྔགས་ཤེས་ཁྱད་པར་དུ། །སྦྱིན་སྲེག་གི་ནི་ལས་བྱའོ། །གནས་དེ་ཉིད་དུ་རབ་གནས་པས། །མྱུར་དུ་དངོས་གྲུབ་ཐེ་ཚོམ་མེད། །ཤར་དང་བྱང་དུ་ཁ་ཕྱོགས་པས། །ཞི་བ་ཅན་དང་
+རྒྱས་པ་བྱ། །ལྷོ་རུ་དྲག་པོའི་ལས་རྣམས་ཏེ། །དེ་ནི་སྔགས་པས་སྤང་བར་བྱ། །ཤར་བལྟས་ཞི་བའི་དངོས་གྲུབ་སྟེ། །རྒྱས་པ་ཅན་ཡང་བྱང་དུ་ཕྱོགས། །དེ་ཡིས་སྔགས་ནི་དུས་རྟག་ཏུ། །རིག་པའི་བཟླས་པ་བརྩམ་པར་
+བྱ། །བིལ་བ་ཨརྒ་སླ་ཌ་དང་། །ནྱ་གྲོ་དྷ་ཡིས་རྒྱས་ལས་བྱ། །མངོན་སྤྱོད་ཤིང་ནི་སྐམ་པོ་དང་། །ཚ་བསྐྱུར་དང་རྣོན་པོ་རྣམས། །དེ་དག་ཐམས་ཅད་སྤང་བྱ་སྟེ། །ཐུབ་པ་རྣམས་ཀྱིས་རྟག་ཏུ་བཀག །ཞི་བ་ཅན་དང་
+
+==== SOURCE, START OF PAGE N+1 ====
+རྒྱས་པ་ཅན། །རློན་པའི་ཤིང་གིས་རབ་ཏུ་ཤིས། །དེ་བཞིན་དྲག་ལས་ལ་ཤིང་སྐམ། །ཚ་བ་སྐྱུར་དང་རྣོན་པོ་རྣམས། །ཡམ་ཤིང་དེ་རྣམས་མེད་ན་ནི། །ཤིང་ལ་དེ་རྣམས་སུ་རྟག་བྱ། །རྩེ་མོ་
+གཉིས་སུ་བརྟག་པ་བྱ། །སྔོ་དང་སྣུམ་དང་འདྲ་བ་དང་། །རྨ་བྱའི་མགྲིན་པ་དང་མཚུངས་པའི། །རྣམ་པ་དེ་ལྟའི་ཀུ་ཤ་ཡིས། །ཁོ་ར་ཡུག་ཏུ་ཀུ་ཤ་ནི། །རྟག་ཏུ་དགྲམ་པར་བྱ་བ་ནི། །ཞི་བ་ཅན་དང་རྒྱས་པ་ཅན། །མར་
+གད་དང་ནི་མཚུངས་པས་སོ། །དེ་བཞིན་རྟག་ཏུ་སྐམ་པོའི་རྩིས། །སྡིག་པའི་ལས་ནི་བྱ་བ་སྟེ། །འདིར་ནི་རྒྱལ་བ་མཆོག་གིས་བཀག །དྲི་མེད་ཆུ་ནི་དག་པ་ལ། །རྟག་ཏུ་སྲིན་བུས་སྤངས་པ་ཡི། །དེ་ནས་ཀུན་ནས་
+བསང་གཏོར་བྱ། །གཡས་ཕྱོགས་སུ་ནི་བསྐོར་བྱས་ཏེ། །བརྩོན་པས་མེ་ནི་འབར་བར་བྱ།…
+
+---- VERSION P: English assigned to page N (end) ----
+…places are mentioned. Sitting upon a bundle of <term>kusha</term> grass the size of a cubit, the knower of mantras should specifically perform the fire offering ritual there. By staying in that very place, there is no doubt of swift success. By facing East or North, perform the peaceful and increasing rituals. The wrathful rituals are in the South; the mantra practitioner should avoid that <note>this likely refers to the direction to be avoided for peaceful works</note>. Facing East is the success of peace, and facing North is for increasing. By that, always begin the recitation of the knowledge-mantra. Use Bilva, Arka, Slada, and Nyagrodha wood for the increasing rituals. For wrathful magic, dry wood, and those that are acrid, sour, or sharp. All those should be avoided; they were always forbidden by the Sages. For the peaceful and
+---- VERSION P: English assigned to page N+1 (start) ----
+increasing rituals, moist wood is very auspicious. Likewise, for wrathful rituals, use dry wood. If those acrid, sour, and sharp ritual sticks <term>samidh</term> are not available, one should always examine the wood. Examine if it has two tips. With <term>kusha</term> grass that is green, oily, and similar in appearance to the neck of a peacock, always spread the <term>kusha</term> grass in a circle. For peaceful and increasing rituals, it is like emerald. Likewise, sinful <note>wrathful/destructive</note> actions are always done with dry substances, but here the Supreme Conqueror has forbidden them. With pure, stainless water, always avoiding worms, perform the sprinkling for purification…
+
+---- VERSION Q: English assigned to page N (end) ----
+…Sitting nearby on a mat of <term>kusha</term> grass measuring one cubit, the mantra expert should perform the actions of the burnt offering there. By residing well in that very place, there is no doubt of swift accomplishment. By facing East or North, perform the peaceful and increasing rites. In the South are the wrathful actions; those the mantra practitioner should avoid. Facing East is the accomplishment of peace; the increasing rite should face North. Through that, the mantra practitioner should always initiate the recitation of knowledge. For increasing actions, use <term>bilva</term> <gloss>wood apple</gloss>, <term>arga</term>, or <term>nyagrodha</term> <gloss>banyan</gloss> wood. For wrathful actions, use wood that is dry, bitter, sour, or sharp. All those are to be avoided; the sages have always forbidden them. Peaceful and
+---- VERSION Q: English assigned to page N+1 (start) ----
+increasing rites are most auspicious with fresh green wood. Likewise, for wrathful actions, use dry wood. If those types of fuel wood <term>samidh</term> for the bitter, sour, and sharp [actions] are absent, then one must distinguish the wood. Two points should be examined. Wood that is green, oily, similar to the color of a peacock's neck—with that type of <term>kusha</term> grass, one should always spread <term>kusha</term> all around. For peaceful and increasing rites, it is because it is similar to emerald. Likewise, always consider that dry wood is for evil actions; this is forbidden by the supreme Victorious One. On pure, stainless water, which is always devoid of insects, then…
+
+---- VERSION R: English assigned to page N (end) ----
+…measure, there the mantra-practitioner shall perform the work of burnt offering especially. By remaining well in that place, one will quickly gain attainment without doubt. By facing east and north, perform the peaceful and the increasing. In the south are the wrathful works; that should be avoided by the mantra-practitioner. Facing east is the attainment of peace, and the increasing one also faces north. By that, the mantra-practitioner shall always begin the recitation of the knowledge. For the increasing work, use <term>bilva</term> <gloss>wood apple</gloss>, <term>arka</term> <gloss>milkweed</gloss>, <term>slada</term> <gloss>type of wood</gloss>, and <term>nyagrodha</term> <gloss>banyan</gloss>. For wrathful acts, dry wood, and those that are bitter, sour, and sharp—all these should be avoided; the sages have always forbidden them.
+---- VERSION R: English assigned to page N+1 (start) ----
+For the peaceful and the increasing ones, moist wood is very auspicious. Likewise, for wrathful works, use dry wood. Those that are bitter, sour, and sharp—if those fuel woods are not available, always regard those woods as such. Regard them as having two points. With <term>kusha</term> grass that is green, oily-looking, and resembles a peacock's neck—with that type of <term>kusha</term>, the circle of <term>kusha</term> should always be spread out; for the peaceful and the increasing ones, it is like emerald. Likewise, always by the counting of dry wood, sinful work is done; here, the supreme Victor has forbidden it. On pure, stainless water, which is always avoided by insects, then…
+
+---- VERSION S: English assigned to page N (end) ----
+…upon a bundle of <term>kusha</term> grass measuring one cubit, there the mantra-knower should especially perform the fire-offering rites. By staying in that very place, there is no doubt of swift accomplishment. By facing East or North, perform the peaceful and increasing rites. The wrathful rites are in the South; the mantra practitioner should avoid those <note>for general practice</note>. Facing East brings the accomplishment of peace, and facing North brings the increasing rite. By those means, the mantra-knower should always begin the recitation of the knowledge-mantra. Use <term>bilva</term>, <term>arka</term>, <term>aslatta</term>, and <term>nyagrodha</term> wood for the increasing rites. For wrathful rites, use dry wood, and those that are spicy, sour, or sharp. All of those should be avoided; the Sages always forbade them.
+---- VERSION S: English assigned to page N+1 (start) ----
+For peaceful and increasing rites, moist wood is most auspicious. Likewise, for wrathful rites, dry wood, spicy, sour, and sharp types are used. If those specific types of fuel wood <term>samidhs</term> are not available, one should always examine the wood available. Examine them for two tips <note>split ends</note>. Use <term>kusha</term> grass that is green, oily, and resembles the neck of a peacock. Always spread such <term>kusha</term> grass in a circle. For peaceful and increasing rites, it should be like emerald. Likewise, the Supreme Victors have forbidden the performance of sinful <note>wrathful</note> actions with dry grass here. With stainless, pure water, always free of insects,…
+
+---- VERSION T: English assigned to page N (end) ----
+…perform the action of <term>homa</term>. By residing in that very place, there is no doubt of swift accomplishment. By facing east and north, perform <term>shantika</term> and <term>paushtika</term>. The <term>raudra</term> <gloss>wrathful</gloss> actions are in the south; the mantra-practitioner should avoid that. Facing east is the <term>siddhi</term> of pacifying; the increasing one is also faced to the north. By that, the mantra-practitioner should always begin the recitation of the awareness [mantra]. For <term>paushtika</term> actions, use <term>bilva</term>, <term>arga</term>, <term>shala</term>, and <term>nyagrodha</term> <gloss>banyan</gloss>. For <term>abhichara</term>, the wood [should be] dry, hot, acidic, and sharp. All of those should be abandoned; the sages have always forbidden them. For <term>shantika</term> and
+---- VERSION T: English assigned to page N+1 (start) ----
+<term>paushtika</term>, [use] moist wood, which is auspicious. Likewise for wrathful actions, [use] dry wood. Those [which are] hot, acidic, and sharp—if those sacrificial woods are not available, always make those [others] into the wood. The points should be checked to be two. [With] those looking like green and oily, and those resembling a peacock's neck—with that kind of <term>kusha</term> grass, always spread the <term>kusha</term> grass in a circle; [this is for] <term>shantika</term> and <term>paushtika</term>, as they resemble emerald. Likewise, always consider [the use of] dry [wood] for performing sinful actions; here the supreme Victorious One has forbidden it. In pure, stainless…
+
+
+######## BREAK 15/17  id=1889b343ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…Sassia laetanti iam animo, et spe optima confirmata: nec mirum, quae se non nuptialibus donis, sed filiorum funeribus delinita uideret. itaque, quod caeteri propter liberos pecuniae cupidiores solent esse, ille propter pecuniam liberos amittere iucundum esse duxit. Sentio iudices, uos pro uestra humanitate his tantis sceleribus breuiter a me demonstratis uehementer esse commotos. quo tandem igitur animo fuisse illos arbitramini, quibus his de rebus non modo audiendum fuit, uerum etiam iudicandum? uos auditis de eo, in quem iudices non estis; de eo, quem non uidetis; de eo, quem odisse iam non potestis; de eo, qui et naturae, et legibus satisfecit, quem leges exilio, natura morte mulctauit: auditis non ab inimico, auditis sine testibus,
+
+==== SOURCE, START OF PAGE N+1 ====
+auditis, cum ea, quae copiosissime dici possunt, breuiter a me strictimque dicuntur. illi audiebant de eo, de quo iurati sententias ferre debebant; de eo, cuius praesentis nefarium et consceleratum uultum intuebantur; de eo, quem oderant propter audaciam; de eo, quem omni supplicio dignum esse ducebant: audiebant ab accusatoribus: audiebant uerba multorum testium: audiebant, cum unaquaque de re a P. Canutio, homine eloquentissimo, grauiter, et diu diceretur. et est quisquam, qui, cum haec cognouerit, suspicari possit Oppianicum iudicio oppressum, et circumuentum esse innocentem? Aceruatim iam…
+
+---- VERSION P: English assigned to page N (end) ----
+…in the highest hope. Nor is it a wonder, seeing that she was won over not by wedding gifts, but by the funerals of sons. Thus, while others are usually more desirous of money for the sake of their children, he judged it a pleasant thing to lose his children for the sake of money. I sense, judges, that because of your humanity you are violently moved by these great crimes as they are briefly demonstrated by me. With what spirit then do you think those men were possessed, who not only had to hear about these matters, but even to judge them? You are hearing about a man in whose case you are not the judges; about a man you do not see; about a man you can no longer hate; about one who has satisfied both nature and the laws, whom the laws punished with exile and nature with death. You hear this not from an enemy, you hear it without witnesses,
+---- VERSION P: English assigned to page N+1 (start) ----
+you hear it when those things which could be said most copiously are spoken by me briefly and in passing. They heard about a man concerning whom they were required to give their verdicts under oath; about a man whose nefarious and wicked face they gazed upon in person; about a man they hated because of his audacity; about one whom they considered worthy of every punishment. They heard from the accusers; they heard the words of many witnesses; they heard while every single matter was spoken of weightily and at length by Publius Canutius, a most eloquent man. And is there anyone who, having learned these things, could suspect that Oppianicus was overwhelmed by a trial and that an innocent man…
+
+---- VERSION Q: English assigned to page N (end) ----
+…of hopes; nor is it a wonder, for she saw herself appeased not by wedding gifts, but by the funerals of her sons. And so, because others are accustomed to be more eager for money on account of their children, he considered it agreeable to lose his children for the sake of money. I sense, judges, that because of your innate humanity, you have been vehemently moved by these great crimes which I have briefly demonstrated. With what heart, therefore, do you think those men were, who not only had to listen to these things but also to judge them? You hear about a man against whom you are not the judges; about a man whom you do not see; about a man whom you can no longer hate; about a man who has satisfied both nature and the laws—whom the laws punished with exile and nature with death. You hear not from an enemy; you hear without witnesses,
+---- VERSION Q: English assigned to page N+1 (start) ----
+<header>ORATIO</header>
+you hear while those things, which could be told with great copiousness, are stated by me briefly and in summary. They heard about a man concerning whom they were obligated to deliver their verdicts under oath; about a man whose nefarious and wicked face they gazed upon as he was present; about a man they hated because of his audacity; about a man they considered worthy of every punishment. They heard from accusers; they heard the words of many witnesses; they heard while each point was discussed gravely and at length by P. Canutius, a most eloquent man. And is there anyone who, having learned these things, could suspect that Oppianicus was crushed by a trial and…
+
+---- VERSION R: English assigned to page N (end) ----
+…by the best hope; and no wonder, for she saw herself softened not by wedding gifts, but by the funerals of sons. Thus, whereas others are usually more desirous of money on account of their children, he thought it a pleasant thing to lose his children for the sake of money. I perceive, judges, that you, in your humanity, are vehemently moved by these great crimes which I have briefly set forth. With what state of mind, therefore, do you think those men were affected, who not only had to listen to these matters, but also to render a verdict upon them? You hear of a man regarding whom you are not the judges; of a man whom you do not see; of a man whom you can no longer hate; of a man who has satisfied both nature and the laws, whom the laws punished with exile and nature with death. You hear not from an enemy, you hear without witnesses,
+---- VERSION R: English assigned to page N+1 (start) ----
+you hear while those things which could be said most copiously are being stated by me briefly and in summary. They heard about a man regarding whom they were bound by oath to deliver their verdicts; about a man whose wicked and criminal face they were looking upon as he was present; about a man they hated because of his audacity; about a man whom they deemed worthy of every punishment. They heard from accusers; they heard the words of many witnesses; they heard, while P. Canutius, a man most eloquent, spoke at length and with gravity regarding every single point. And is there anyone who, having learned these things, can suspect that Oppianicus was crushed by a verdict and that an innocent…
+
+---- VERSION S: English assigned to page N (end) ----
+…by the best of hopes: and no wonder, since she saw herself won over not by wedding gifts, but by the funerals of sons. Thus, while others are usually more desirous of money for the sake of their children, he judged it pleasant to lose his children for the sake of money. I sense, judges, that you, in accordance with your humanity, are violently moved by these great crimes which I have briefly demonstrated. With what spirit, then, do you think those men were possessed, who had not only to hear about these matters, but also to judge them? You are hearing about a man in whose case you are not judges; about one whom you do not see; about one whom you can no longer hate; about one who has satisfied both nature and the laws, whom the laws punished with exile and nature with death. You hear this not from an enemy; you hear it without witnesses;
+---- VERSION S: English assigned to page N+1 (start) ----
+# ORATION
+you hear it while those things which could be said most copiously are being said by me briefly and in passing. They <note>the original jurors</note> were hearing about a man concerning whom they were required to give their votes under oath; about one whose wicked and criminal face they gazed upon in person; about one whom they hated because of his audacity; about one whom they deemed worthy of every punishment. They were hearing it from the accusers; they were hearing the words of many witnesses; they were hearing it while each individual matter was being discussed gravely and at length by Publius Canutius, a most eloquent man. And is there anyone who, once he has learned these…
+
+---- VERSION T: English assigned to page N (end) ----
+…by the best hope; and no wonder, for she saw herself appeased not by nuptial gifts, but by the funerals of her sons. Thus, whereas others are accustomed to be more covetous of money because of their children, he thought it pleasant to lose his children for the sake of money. I sense, judges, that because of your humanity, you are vehemently moved by these great crimes which I have briefly demonstrated. With what heart, then, do you think those men were, who not only had to hear about these matters but also to judge them? You are hearing about a man concerning whom you are not the judges; about one whom you do not see; about one whom you can no longer hate; about one who has satisfied both nature and the laws, whom the laws have punished with exile and nature with death. You hear not from an enemy, and you hear without witnesses.
+---- VERSION T: English assigned to page N+1 (start) ----
+<header>ORATIO</header>
+You hear, while those things which can be said most copiously are being stated by me briefly and in outline. They were listening to a case about which they were bound by oath to deliver their verdict; about a man whose wicked and depraved countenance they were beholding in his presence; about one whom they hated for his audacity; about one whom they considered worthy of every punishment. They were hearing from the accusers; they were hearing the words of many witnesses; they were hearing while P. Canutius, a most eloquent man, was speaking about every point gravely and at length. And is there anyone who, upon learning these facts, could suspect that Oppianicus was…
+
+
+######## BREAK 16/17  id=52b5ba4aff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…suis de seipso praedixerit, futurum, ut Filium hominis Sacerdotum Principes ac Scribae tradant gentibus ad illudendum et εἰς μαστιγῶσαι ad flagellandum. Confer, MARC. & LUC. Videbis utrobique de gentibus, sive (quod in hisce aliisve plurimis locis idem) gentilibus, minime vero Judaeis, enunciari: μαστιγώσουσιν & μαστιγώσαντες αὐτόν. Unde ut impleretur simul veracissima haec VERITATIS praedictio, gentiles soli JESUM flagellare debebant.
+XXIX. Sed & si ipsam Judaeorum inspiciamus mentem, non difficulter constat, cur ipsi JESUM flagris afficere noluerint. Etenim, cum juxta divinam legem non esset permissum Judaeis, plagas ultra quadraginta, vel, ut ipsi male interpretabantur, triginta novem, flagellis infligere; hinc procul dubio ex accerrim
+
+==== SOURCE, START OF PAGE N+1 ====
+adversus CHRISTUM odio nimium *lenis* haec videbatur poena, si ea à suis JESU huic, ut blasphemabant, *seductori* irrogaretur. Maluerunt igitur ad hanc infligendam poenam eligere gentiles, quippe qui nulli certo numero adstricti verberare reos *supra modum*, interdum & *ad interitum* usque solebant. Neque verò intenderunt per se flagellationem, sed *solùm* postulabant crucifixionem. Unde haud contenti illâ à Pilato illatâ poenâ, puniendum etiam cruce Christum clamârunt, nec clamare priùs defierunt, donec id, quod tantopere petebant, ipso facto impetrârunt. *Vitam* nempe nolebant, volebant…
+
+---- VERSION P: English assigned to page N (end) ----
+…stated in both places concerning the gentiles, or (which is the same in these and many other places) the heathens, but by no means the Jews: <term>μαστιγώσουσιν</term> <gloss>they shall scourge</gloss> and <term>μαστιγώσαντες αὐτόν</term> <gloss>having scourged him</gloss>. Whence, so that this most truthful prediction of TRUTH might be fulfilled at the same time, the heathens alone were to scourge JESUS.
+<margin>
+Matth. XX. v. 18. 19. c. XV. 39. 40. c. XVIII. v. 32. & 33.
+</margin>
+XXIX. But even if we examine the mind of the Jews themselves, it is not difficult to understand why they themselves did not wish to afflict JESUS with lashes. For, since according to the divine law it was not permitted to the Jews to inflict lashes beyond forty, or, as they themselves interpreted it poorly, thirty-nine; hence, without a doubt, from the fierce
+---- VERSION P: English assigned to page N+1 (start) ----
+<margin>
+Joh. XIIX. v. 31.
+v. 18.
+</margin>
+hatred against CHRIST, this punishment seemed too *lenient*, if it were inflicted by his own people upon this JESUS, a *seducer* as they blasphemed. They preferred, therefore, to choose heathens to inflict this punishment, as those who, restricted by no fixed number, were accustomed to scourge the guilty *beyond measure*, sometimes even *unto death*. Nor did they intend the scourging for its own sake, but *only* demanded the crucifixion. Wherefore, not content with that punishment inflicted by Pilate, they shouted that Christ also be punished with the cross, nor did they cease to shout until they obtained that which they so greatly sought by the…
+
+---- VERSION Q: English assigned to page N (end) ----
+…is predicated of the nations, or (which is the same in these and many other places) the gentiles, and by no means of the Jews: <term>mastigōsousin</term> <gloss>they will scourge</gloss> and <term>mastigōsantes auton</term> <gloss>having scourged him</gloss>. Whence, so that this most true prediction of the TRUTH might be fulfilled at the same time, the gentiles alone had to scourge JESUS.
+<margin>
+Matthew 20 verses 18-19, chapter 15 [verses] 39-40, chapter 18 verses 32 and 33.
+</margin>
+XXIX. But even if we inspect the mind of the Jews themselves, it is easily established why they themselves did not wish to afflict JESUS with lashes. For since according to the divine law it was not permitted for Jews to inflict more than forty blows, or, as they themselves wrongly interpreted it, thirty-nine; hence, undoubtedly out of their most bitter
+---- VERSION Q: English assigned to page N+1 (start) ----
+hatred against CHRIST, this punishment seemed too *lenient* if it were to be imposed by their own people upon this JESUS, whom they blasphemed as a *seducer*. They preferred, therefore, to choose gentiles to inflict this punishment, since they were restricted by no certain number and were accustomed to beat the accused *beyond measure*, and sometimes even *unto death*. Indeed, they did not intend the scourging for its own sake, but *only* demanded the crucifixion. Whence, not content with that punishment inflicted by Pilate, they also cried out for Christ to be punished by the cross, nor did they cease crying out until they obtained by the very deed that which they so greatly sought. They…
+
+---- VERSION R: English assigned to page N (end) ----
+…both places it is declared of the Gentiles, or (which is the same in these and many other places) the heathens, but by no means the Jews: <term>μαστιγώσουσιν</term> <gloss>they shall flagellate</gloss> and <term>μαστιγώσαντες αὐτόν</term> <gloss>having flagellated him</gloss>. Whence, so that this most truthful prediction of TRUTH might be fulfilled at the same time, the Gentiles alone had to flagellate JESUS.
+<margin>Matth. XX. v. 18. 19. c. XV. 39. 40. c. XVIII. v. 32. & 33.</margin>
+XXIX. But even if we look at the very mind of the Jews, it is not difficult to understand why they themselves did not want to inflict lashes upon JESUS. For since, according to the divine law, it was not permitted to the Jews to inflict lashes beyond forty, or, as they wrongly interpreted it, thirty-nine, with lashes; hence, without a doubt, from an eager
+---- VERSION R: English assigned to page N+1 (start) ----
+<margin>Joh. XIIX. v. 31.</margin>
+v. 18.
+hatred against CHRIST, this punishment seemed too *lenient* if it were to be inflicted by them upon this JESUS, their *seducer*, as they blasphemed. They preferred, therefore, to choose the Gentiles to inflict this punishment, for they were not bound to any fixed number and were accustomed to beat the guilty *beyond measure*, sometimes even *unto death*. Indeed, they did not intend the flagellation for its own sake, but *only* demanded the crucifixion. Hence, not content with that punishment inflicted by Pilate, they shouted that Christ must also be punished with the cross, nor did they cease shouting until they obtained what they so greatly sought…
+
+---- VERSION S: English assigned to page N (end) ----
+…see that in both cases it is stated of the Gentiles, or (which is the same in these and many other places) the heathens, but by no means the Jews: <term>μαστιγώσουσιν</term> <gloss>they will scourge</gloss> and <term>μαστιγώσαντες αὐτόν</term> <gloss>having scourged him</gloss>. Hence, in order that this most truthful prediction of TRUTH might be fulfilled, the Gentiles alone had to scourge JESUS.
+<margin>Matthew XX, v. 18, 19; ch. XV, 39, 40; ch. XVIII, v. 32 & 33.</margin>
+XXIX. But even if we look at the very mind of the Jews, it is not difficult to understand why they did not wish to afflict JESUS with lashes. For, since according to the divine law it was not permitted for the Jews to inflict more than forty blows, or, as they themselves wrongly interpreted, thirty-nine, with scourges; hence, without a doubt, because of their sharp
+---- VERSION S: English assigned to page N+1 (start) ----
+<margin>John XVIII, v. 31; v. 18.</margin>
+hatred against CHRIST, this punishment seemed too *lenient* if it were inflicted by his own people upon this JESUS, their *seducer*, as they blasphemed. They preferred, therefore, to choose the Gentiles to inflict this punishment, as they were not restricted to any certain number and were accustomed to beating criminals *beyond measure*, sometimes even *to the point of death*. Nor did they intend the flagellation for its own sake, but *only* demanded the crucifixion. Hence, not content with that punishment inflicted by *Pilate*, they shouted that Christ must also be punished by the cross, nor did they stop shouting until they obtained by the very…
+
+---- VERSION T: English assigned to page N (end) ----
+(NO ENGLISH FOR THIS PAGE)
+---- VERSION T: English assigned to page N+1 (start) ----
+(NO ENGLISH FOR THIS PAGE)
+
+
+######## BREAK 17/17  id=7a7daf07ff  language=russian
+
+==== SOURCE, END OF PAGE N ====
+…есть еще одно средство — война. Война національная противъ нѣмцевъ, въ союзѣ съ Италіей и съ Франціей, пожалуй хоть за свободу славянъ, лишь бы только русскому народу не дать свободы. Да, въ самомъ дѣлѣ, идти войною на нѣмцевъ хорошее, а главное, необходимое славянское дѣло, во всякомъ случаѣ лучше, чѣмъ поляковъ душить нѣмцамъ въ угоду. Подняться на освобожденіе славянъ изъ подъ ига турецкаго и нѣмецкаго, будетъ потребностью, необходимостью и святою обязанностью освобожденнаго русскаго народа. Но вы, враги русской и польской свободы, какую дадите вы свободу славянамъ? Или вы хотите повторить въ сотый разъ старый, постыдный обманъ? Не удовлетворивъ никого и не разрѣшивъ ничего у себя дома, на что вы будете опираться? Даже войско придется
+
+==== SOURCE, START OF PAGE N+1 ====
+— 414 —
+вамъ содержать на мѣлокъ чужими субсидіями. И будете вы только служить средствомъ для цѣлей чужихъ, сами ничего не пріобрѣтете, Россію же въ конецъ раззорите. Да можетъ быть, вы и расчитываете на ея истощеніе? Можетъ, думаете усмирить ее голодомъ? Смотрите, не ошибтесь въ расчетѣ: война не помѣшала у насъ ни пугачевщинѣ, ни новгородскому бунту.
+Но напрасны всѣ наши старанія. Ни война, ни уловки мнимо либеральнаго (?) министерства, ни явная реакція вамъ не помогутъ. Народъ проснулся и ждетъ своего часа, вы сами способствовали его пробужденію. Кокетничая передъ нимъ и возбуждая его…
+
+---- VERSION P: English assigned to page N (end) ----
+…by the people.
+You have one more remedy—war. A national war against the Germans, in alliance with Italy and France, perhaps even for the freedom of the Slavs, if only to avoid giving freedom to the Russian people. Yes, indeed, to go to war against the Germans is a good, and most importantly, a necessary Slavic cause; in any case, it is better than strangling Poles to please the Germans. To rise for the liberation of the Slavs from under the Turkish and German yoke will be a requirement, a necessity, and a sacred duty of a liberated Russian people. But you, enemies of Russian and Polish freedom, what kind of freedom will you give the Slavs? Or do you want to repeat the old, shameful deception for the hundredth time? Without satisfying anyone or resolving anything at home, what will you lean on? Even the army you will have to
+---- VERSION P: English assigned to page N+1 (start) ----
+maintain on credit through foreign subsidies. And you will only serve as a means for foreign goals; you yourselves will gain nothing, while you will ruin Russia completely. Or perhaps you are counting on her exhaustion? Do you think you can pacify her with hunger? Be careful not to miscalculate: war did not prevent the <term>Pugachevshchina</term> <gloss>Pugachev's rebellion</gloss> or the Novgorod riot in our history.
+But all our efforts are in vain. Neither war, nor the tricks of the supposedly liberal (?) ministry, nor open reaction will help you. The people have awakened and are waiting for their hour; you yourselves contributed to this awakening. By flirting with them and inciting them…
+
+---- VERSION Q: English assigned to page N (end) ----
+…misunderstanding.
+You have one more remedy: war. A national war against the Germans, in alliance with Italy and France, perhaps even for the freedom of the Slavs, if only to avoid giving freedom to the Russian people. Yes, indeed, to go to war against the Germans is a good and, most importantly, a necessary Slavic cause; in any case, it is better than strangling the Poles to please the Germans. To rise up for the liberation of the Slavs from under the Turkish and German yoke will be a need, a necessity, and a sacred duty of the liberated Russian people. But you, the enemies of Russian and Polish freedom, what kind of freedom will you give the Slavs? Or do you want to repeat the old, shameful deception for the hundredth time? Having satisfied no one and resolved nothing at home, upon what will you lean? Even the army you will have to
+---- VERSION Q: English assigned to page N+1 (start) ----
+maintain on credit through foreign subsidies. And you will only serve as a means for the goals of others; you yourselves will gain nothing, while you will ruin Russia completely. Or perhaps you are counting on her exhaustion? Do you think, perhaps, to pacify her with hunger? Look out, do not be mistaken in your calculation: war did not hinder the Pugachev rebellion nor the Novgorod riot here.
+But all our efforts are in vain. Neither war, nor the tricks of a mock-liberal (?) ministry, nor overt reaction will help you. The people have awakened and are waiting for their hour; you yourselves contributed to their awakening. By flirting with them and inciting them against the young educated…
+
+---- VERSION R: English assigned to page N (end) ----
+…misunderstanding.
+You have one more method: war. A national war against the Germans, in alliance with Italy and France, perhaps even for the freedom of the Slavs, if only to deny freedom to the Russian people. Yes, in fact, going to war against the Germans is a good, and above all, a necessary Slavic cause; in any case, it is better than strangling the Poles to please the Germans. To rise up for the liberation of the Slavs from under the Turkish and German yoke will be a need, a necessity, and a holy duty of the liberated Russian people. But you, enemies of Russian and Polish freedom, what kind of freedom will you give to the Slavs? Or do you want to repeat the old, shameful deception for the hundredth time? Without satisfying anyone and having resolved nothing at home, what will you rely upon? You will even have to maintain the army
+---- VERSION R: English assigned to page N+1 (start) ----
+— 414 —
+with foreign subsidies. And you will only serve as a tool for the goals of others, you will acquire nothing yourselves, and you will ruin Russia completely. But perhaps you are counting on its exhaustion? Perhaps you think you can pacify it with hunger? Watch out, do not be mistaken in your calculation: war did not prevent the Pugachev rebellion or the Novgorod riot in our country.
+But all our efforts are in vain. Neither war, nor the ruses of a supposedly liberal (?) ministry, nor open reaction will help you. The people have awakened and are waiting for their hour; you yourselves have contributed to their awakening. By flirting with them and inciting them against the young,…
+
+---- VERSION S: English assigned to page N (end) ----
+…misunderstanding.
+You have one more means at your disposal: war. A national war against the Germans, in alliance with Italy and France, perhaps even for the freedom of the Slavs, if only to deny freedom to the Russian people. Yes, indeed, going to war against the Germans is a good, and above all, necessary Slavic cause; in any case, it is better than strangling Poles to please the Germans. Rising for the liberation of the Slavs from the Turkish and German yoke will be a need, a necessity, and a holy duty for a liberated Russian people. But you, who are enemies of Russian and Polish freedom, what kind of freedom will you give to the Slavs? Or do you wish to repeat the old, shameful deception for the hundredth time? Having satisfied no one and resolved nothing at home, upon what will you rely? You will even have to maintain the army
+---- VERSION S: English assigned to page N+1 (start) ----
+— 414 —
+with meager foreign subsidies. You will only serve as a tool for the goals of others, you will acquire nothing yourself, and you will bankrupt Russia in the end. And perhaps you are counting on its exhaustion? Perhaps you think you can pacify it with hunger? Watch out, do not be mistaken in your calculation: war did not prevent the Pugachev uprising, nor the Novgorod riot, in our history.
+But all our efforts are in vain. Neither war, nor the tricks of a supposedly liberal (?) ministry, nor open reaction will help you. The people have awakened and are awaiting their hour; you yourselves contributed to their awakening. By flirting with them and inciting them against the young,…
+
+---- VERSION T: English assigned to page N (end) ----
+…as a victim of a fatal misunderstanding by the people.
+You have one more tool: war. A national war against the Germans, in alliance with Italy and France, perhaps even for the freedom of the Slavs, if only not to grant freedom to the Russian people. Yes, in fact, going to war against the Germans is a good, and above all, a necessary Slavic cause, in any case better than strangling the Poles to please the Germans. Rising for the liberation of the Slavs from under the Turkish and German yoke will be a need, a necessity, and a holy duty of the liberated Russian people. But you, the enemies of Russian and Polish freedom, what freedom will you give the Slavs? Or do you wish to repeat the old, shameful deception for the hundredth time? Having satisfied no one and resolved nothing at home, upon what will you lean? Even the army you will have
+---- VERSION T: English assigned to page N+1 (start) ----
+to maintain on a pittance with foreign subsidies. And you will only serve as a means for the goals of others, you yourselves will acquire nothing, and Russia you will ruin completely. Perhaps you are even counting on her exhaustion? Perhaps you think to pacify her with hunger? Take care not to be mistaken in your calculation: war did not prevent the Pugachev rebellion or the Novgorod riot in our history.
+But all our efforts are in vain. Neither war, nor the ruses of a supposedly liberal (?) ministry, nor open reaction will help you. The people have awakened and are awaiting their hour; you yourselves contributed to their awakening. By flirting with them and inciting them against the young,…

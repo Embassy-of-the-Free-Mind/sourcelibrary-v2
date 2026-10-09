@@ -61,6 +61,8 @@
  * TS twin: src/lib/write-provenance.ts. tests/unit/write-provenance.test.ts asserts they agree.
  */
 import { createHash } from 'crypto';
+import { readFileSync, realpathSync } from 'fs';
+import { relative, sep } from 'path';
 import os from 'os';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
@@ -103,7 +105,32 @@ export async function codeVersion() {
     _codeVersion = stdout.trim() || null;
   } catch { _codeVersion = null; }
   if (!_codeVersion) _codeVersion = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 9) || NOT_RECORDED;
+  _entryScript = await entryScriptState();
   return _codeVersion;
+}
+
+/**
+ * A commit sha names the code only if the script that is running is the one in that commit. A writer run from
+ * a scratch copy, an unmerged branch file or an edited checkout stamps HEAD's sha all the same: on 2026-10-08
+ * 167 translations recorded a commit that did not contain the script that wrote them (#6307). So when the entry
+ * script (process.argv[1]) is modified, untracked or outside the checkout, runBlock() adds
+ * `run.entry_script = { path, sha256, state }` beside code_version. A clean, tracked script adds nothing.
+ * It checks the entry script only, not the modules it imports. Primed by codeVersion(), which every writer awaits.
+ */
+let _entryScript = null;
+export async function entryScriptState(script = process.argv[1], cwd = process.cwd()) {
+  if (!script) return null;
+  try {
+    const { stdout: top } = await execFileAsync('git', ['rev-parse', '--show-toplevel'], { cwd });
+    const root = realpathSync(top.trim()), file = realpathSync(script);
+    const sha256 = createHash('sha256').update(readFileSync(file)).digest('hex');
+    if (!file.startsWith(root + sep)) return { path: file, sha256, state: 'outside-checkout' };
+    const path = relative(root, file);
+    const { stdout } = await execFileAsync('git', ['status', '--porcelain', '--ignored', '--', path], { cwd: root });
+    if (!stdout.trim()) return null;
+    const code = stdout.slice(0, 2);
+    return { path, sha256, state: code === '??' || code === '!!' ? 'untracked' : 'modified' };
+  } catch { return null; }   // no git here (Vercel, a Lambda): code_version already says what is known
 }
 
 export const host = () => os.hostname();
@@ -210,14 +237,20 @@ function runBlock(run) {
   if (!out.code_version) throw new Error('write-provenance: run.code_version is required (await codeVersion())');
   if (!out.host) throw new Error('write-provenance: run.host is required (host())');
   if (!out.at) out.at = new Date();
+  if (_entryScript && !out.entry_script) out.entry_script = _entryScript;
   return out;
 }
 
 /**
  * Build the engine block for a Gemini call that produced text.
+ * `api: 'cli'` is a read through a vendor's subscription CLI (Derek's Gemini rule, 2026-10-08: every
+ * Gemini model but flash-lite runs through the CLI, not the paid API). It must carry `cli: { name,
+ * version }`. The CLI does not expose temperature, token caps or thinking, so `generation` is the
+ * explicit `notRecorded(...)` marker; the writer passes it, this builder does not invent values.
  * @param {object} a
  * @param {string} a.call_site  repo-relative path of the writer, e.g. 'scripts/batch/realtime-ocr.mjs'
- * @param {'realtime'|'batch'} a.api
+ * @param {'realtime'|'batch'|'cli'} a.api
+ * @param {object} [a.cli]      { name, version } of the subscription CLI; required when api is 'cli'
  * @param {string} a.model      the model id requested
  * @param {object} a.prompt     { id, name, version, hash, text } — text is the EXACT string sent
  * @param {object} a.generationConfig  the object sent ({} if none)
@@ -225,9 +258,11 @@ function runBlock(run) {
  * @param {object} a.input      imageInput(...) | translationInput(...) | notRecorded(reason)
  * @param {object} [a.response] the raw API response (for `modelVersion`) when available
  */
-export function geminiEngine({ call_site, api, model, prompt, generationConfig, run, input, response } = {}) {
+export function geminiEngine({ call_site, api, cli, model, prompt, generationConfig, run, input, response } = {}) {
   if (!call_site || typeof call_site !== 'string') throw new Error('write-provenance: call_site is required — name the writer');
-  if (api !== 'realtime' && api !== 'batch') throw new Error(`write-provenance: api must be 'realtime' or 'batch' (got ${api})`);
+  if (api !== 'realtime' && api !== 'batch' && api !== 'cli') throw new Error(`write-provenance: api must be 'realtime', 'batch' or 'cli' (got ${api})`);
+  if (api === 'cli' && !(cli && cli.name && cli.version)) throw new Error('write-provenance: api \'cli\' needs cli: { name, version }');
+  if (api === 'cli' && !isNotRecorded(generationConfig)) throw new Error('write-provenance: a CLI read cannot know its generation settings — pass notRecorded(reason)');
   if (!model || typeof model !== 'string') throw new Error('write-provenance: model is required');
   if (!input || typeof input !== 'object') throw new Error('write-provenance: input is required (imageInput / translationInput / notRecorded)');
   return {
@@ -236,6 +271,7 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
     model,
     ...modelVersion(model, response),
     api,
+    ...(api === 'cli' ? { cli: { name: String(cli.name), version: String(cli.version) } } : {}),
     call_site,
     prompt: promptBlock(prompt),
     // A writer completing a job submitted before the settings were kept passes the marker.
@@ -359,7 +395,8 @@ export function missingProvenance(field, sub) {
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
     if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);
-    if (e.api !== 'realtime' && e.api !== 'batch') missing.push(`${field}.engine.api`);
+    if (e.api !== 'realtime' && e.api !== 'batch' && e.api !== 'cli') missing.push(`${field}.engine.api`);
+    if (e.api === 'cli' && !(e.cli && e.cli.name && e.cli.version)) missing.push(`${field}.engine.cli`);
     if (!e.call_site || e.call_site === NOT_RECORDED) missing.push(`${field}.engine.call_site`);
     else mark(`${field}.engine.call_site`, e.call_site);
     if (!e.prompt || typeof e.prompt !== 'object') missing.push(`${field}.engine.prompt`);
@@ -422,7 +459,6 @@ export function missingProvenance(field, sub) {
 //
 // A row the table cannot place (writer ambiguous, or before any dated constant) comes back
 // `not_recorded` with the reason. Never write the returned value onto a page as `engine`.
-import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 

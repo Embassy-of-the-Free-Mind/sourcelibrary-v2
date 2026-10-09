@@ -324,13 +324,13 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     if (isCreate && !needsUbn && !values['shelf_mark']?.trim()) {
       setError(
         recordType === 'manuscript'
-          ? 'Give the manuscript its number (e.g. “M 341” or “216”) in the Shelf mark field — it is how the object is found.'
-          : 'Give the record its shelf mark (e.g. “Fot 118”) — it is how the object is found.',
+          ? 'Give the manuscript its number (e.g. “M 341” or “216”) in the Shelf mark field. It is how the object is found.'
+          : 'Give the record its shelf mark (e.g. “Fot 118”). It is how the object is found.',
       );
       return;
     }
     if (changedFields.length === 0 && !contributorsChanged && !recordTypeChanged) {
-      setError(isCreate ? 'Add at least a title before saving.' : 'No fields have changed — nothing to save.');
+      setError(isCreate ? 'Add at least a title before saving.' : 'No fields have changed, so there is nothing to save.');
       return;
     }
     if (!source.trim()) {
@@ -442,7 +442,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
       <div className="p-6 rounded-lg border border-accent-gold/50 bg-accent-gold/10">
         <h2 className="text-lg font-medium text-primary mb-2">Submitted for review</h2>
         <p className="text-sm text-secondary mb-4">
-          An editor will look at your proposed change and either apply it or leave a note explaining why not. The change isn&rsquo;t live yet — the catalogue entry is unchanged until the editor approves.
+          An editor will look at your proposed change and either apply it or leave a note explaining why not. The change isn&rsquo;t live yet: the catalogue entry is unchanged until the editor approves.
         </p>
         <p className="text-xs text-muted mb-4 font-mono">Submission ID: {submittedPendingId}</p>
         <div className="flex flex-wrap gap-2">
@@ -537,8 +537,8 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
           <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">No UBN</h2>
           <p className="text-sm text-secondary">
             {recordType === 'manuscript'
-              ? 'Manuscripts have no UBN. Give this one its manuscript number in the Shelf mark field below — “M 341”, or a bare number like “216”.'
-              : 'Photographs have no UBN. Give this one its shelf mark in the field below — e.g. “Fot 118”.'}
+              ? 'Manuscripts have no UBN. Give this one its manuscript number in the Shelf mark field below: “M 341”, or a bare number like “216”.'
+              : 'Photographs have no UBN. Give this one its shelf mark in the field below, e.g. “Fot 118”.'}
           </p>
         </div>
       )}
@@ -569,7 +569,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
               placeholder="e.g. title page · USTC 2024571 · author's autograph note"
             />
           </FormField>
-          <FormField label="Evidence URL (optional)" hint="A link supporting the source — IIIF manifest, scan, USTC page.">
+          <FormField label="Evidence URL (optional)" hint="A link supporting the source: IIIF manifest, scan, USTC page.">
             <input
               type="text"
               value={evidence}

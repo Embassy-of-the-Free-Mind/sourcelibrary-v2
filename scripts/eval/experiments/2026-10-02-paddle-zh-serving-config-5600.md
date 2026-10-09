@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: null
+n_pages: 190
+verdict: "PaddleOCR-VL-1.6 with no layout stage reads the SKQS manuscripts no worse than with it (fresh 95 pages: median dCER -0.007, 0 catastrophic): PASS by the pre-registered rule."
+status: informational
+decision: null
+superseded_by: null
+issue: [5600]
+---
 ## 2026-10-02 · Which PaddleOCR-VL-1.6 serving configuration reads the held Siku Quanshu cohort cheapest without reading it worse? (#5600)
 
 **Question.** #5600 reads ≈ 1.054M pages (7,006 non-redundant books of the 7,894 held Wenyuange SKQS manuscripts) with PaddleOCR-VL-1.6. The #5547 pilot recipe (native pipeline, 2 runners per L4) costs ≈ €0.0007–0.0009/page, ≈ €940 for the cohort, at the €1,000 cap. Can a serving backend, more concurrency or another GPU cut that without losing accuracy?

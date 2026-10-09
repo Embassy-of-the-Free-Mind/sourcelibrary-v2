@@ -246,7 +246,7 @@ function buildSessionRateLimitBody(retryAfter?: number) {
   return {
     error:
       `Rate limit exceeded for your session. Wait ${retryAfter ?? '?'}s, or use ` +
-      `an API key (no per-session cap) — generate one at ${KEYS_URL}.`,
+      `an API key (no per-session cap). Generate one at ${KEYS_URL}.`,
     next_steps: { get_api_key: KEYS_URL },
     retry_after_seconds: retryAfter,
   };
@@ -257,7 +257,7 @@ function buildKeyRateLimitBody(retryAfter?: number) {
   return {
     error:
       `Your API key's requests-per-minute limit was reached. Wait ${retryAfter ?? '?'}s and slow ` +
-      `your request rate — daily page budgets are unaffected. Higher rates come with paid tiers: ` +
+      `your request rate; daily page budgets are unaffected. Higher rates come with paid tiers: ` +
       `https://sourcelibrary.org/licensing.`,
     next_steps: { upgrade: 'https://sourcelibrary.org/licensing' },
     retry_after_seconds: retryAfter,

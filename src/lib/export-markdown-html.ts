@@ -1,6 +1,8 @@
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 import { applyNotesOff } from '@/lib/notes-off';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
+import { repairLeakedMarkup } from '../../scripts/lib/leaked-markup.mjs';
 
 /**
  * Convert a page's markdown-like text to the basic HTML the EPUB/HTML exports embed.
@@ -19,7 +21,9 @@ import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
  */
 export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
   // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
+  // Leaked markup first (#5700), before any tag below is paired or placeholdered:
+  // the same repair the reader applies, so a download reads as the page does.
+  let html = repairLeakedMarkup(text).replace(/!\[.*?\]\(.*?\)/g, '');
 
   // Remove any standalone URLs
   html = html.replace(/https?:\/\/[^\s\)]+/g, '');
@@ -33,6 +37,11 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   if (opts?.stripNotes) {
     html = applyNotesOff(html);
     html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
+  } else {
+    // The model's definitions inside <term> chips are notes (#5895). Notes on only:
+    // applyNotesOff splits the chips itself, and relabelling a headword's <gloss>
+    // as a <note> would get the whole line deleted with notes off (#5942).
+    html = separateTermDefinitions(html);
   }
 
   // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML

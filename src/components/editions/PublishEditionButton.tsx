@@ -193,7 +193,7 @@ export default function PublishEditionButton({
                 >
                   {LICENSES.map((lic) => (
                     <option key={lic.id} value={lic.id}>
-                      {lic.name} — {lic.description}
+                      {lic.name}: {lic.description}
                     </option>
                   ))}
                 </select>

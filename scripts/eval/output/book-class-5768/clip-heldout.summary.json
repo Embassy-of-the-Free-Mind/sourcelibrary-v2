@@ -1,0 +1,234 @@
+{
+ "k": 15,
+ "vote_floor": 0.8,
+ "n_train": 6289,
+ "n_test": 2121,
+ "label_rule": "page tag handwritten → handwritten; printed and mixed → printed",
+ "overall": {
+  "n": 2121,
+  "acc": 0.857
+ },
+ "confident": {
+  "n": 1515,
+  "acc": 0.952,
+  "coverage": 0.714
+ },
+ "by_truth": {
+  "printed": {
+   "recall": {
+    "n": 1106,
+    "acc": 0.816
+   },
+   "precision": {
+    "n": 1002,
+    "acc": 0.9
+   }
+  },
+  "handwritten": {
+   "recall": {
+    "n": 1015,
+    "acc": 0.901
+   },
+   "precision": {
+    "n": 1119,
+    "acc": 0.818
+   }
+  }
+ },
+ "by_tag": {
+  "printed": {
+   "n": 860,
+   "acc": 0.831
+  },
+  "handwritten": {
+   "n": 1015,
+   "acc": 0.901
+  },
+  "mixed": {
+   "n": 246,
+   "acc": 0.76
+  }
+ },
+ "by_family": {
+  "arabic": {
+   "all": {
+    "n": 183,
+    "acc": 0.896
+   },
+   "confident": {
+    "n": 170,
+    "acc": 0.912
+   }
+  },
+  "armenian": {
+   "all": {
+    "n": 18,
+    "acc": 0.889
+   },
+   "confident": {
+    "n": 12,
+    "acc": 0.917
+   }
+  },
+  "cjk": {
+   "all": {
+    "n": 379,
+    "acc": 0.57
+   },
+   "confident": {
+    "n": 50,
+    "acc": 0.74
+   }
+  },
+  "coptic": {
+   "all": {
+    "n": 2,
+    "acc": 1
+   },
+   "confident": {
+    "n": 2,
+    "acc": 1
+   }
+  },
+  "cyrillic": {
+   "all": {
+    "n": 71,
+    "acc": 1
+   },
+   "confident": {
+    "n": 69,
+    "acc": 1
+   }
+  },
+  "greek": {
+   "all": {
+    "n": 238,
+    "acc": 0.945
+   },
+   "confident": {
+    "n": 197,
+    "acc": 0.985
+   }
+  },
+  "hebrew": {
+   "all": {
+    "n": 14,
+    "acc": 1
+   },
+   "confident": {
+    "n": 13,
+    "acc": 1
+   }
+  },
+  "indic": {
+   "all": {
+    "n": 285,
+    "acc": 0.951
+   },
+   "confident": {
+    "n": 266,
+    "acc": 0.981
+   }
+  },
+  "latin": {
+   "all": {
+    "n": 562,
+    "acc": 0.884
+   },
+   "confident": {
+    "n": 409,
+    "acc": 0.954
+   }
+  },
+  "syriac": {
+   "all": {
+    "n": 138,
+    "acc": 0.978
+   },
+   "confident": {
+    "n": 133,
+    "acc": 0.977
+   }
+  },
+  "tibetan": {
+   "all": {
+    "n": 231,
+    "acc": 0.892
+   },
+   "confident": {
+    "n": 194,
+    "acc": 0.928
+   }
+  }
+ },
+ "family_vote": {
+  "n": 2121,
+  "acc": 0.83,
+  "by": {
+   "arabic": {
+    "n": 187,
+    "recall": 0.93
+   },
+   "armenian": {
+    "n": 28,
+    "recall": 0.321
+   },
+   "cjk": {
+    "n": 370,
+    "recall": 0.995
+   },
+   "coptic": {
+    "n": 20,
+    "recall": 0
+   },
+   "cyrillic": {
+    "n": 76,
+    "recall": 0.816
+   },
+   "egyptian": {
+    "n": 5,
+    "recall": 0
+   },
+   "ethiopic": {
+    "n": 8,
+    "recall": 0
+   },
+   "georgian": {
+    "n": 4,
+    "recall": 0
+   },
+   "greek": {
+    "n": 239,
+    "recall": 0.623
+   },
+   "hebrew": {
+    "n": 34,
+    "recall": 0.382
+   },
+   "indic": {
+    "n": 293,
+    "recall": 0.898
+   },
+   "latin": {
+    "n": 527,
+    "recall": 0.839
+   },
+   "other": {
+    "n": 6,
+    "recall": 0
+   },
+   "southeast-asian": {
+    "n": 2,
+    "recall": 0
+   },
+   "syriac": {
+    "n": 118,
+    "recall": 0.695
+   },
+   "tibetan": {
+    "n": 204,
+    "recall": 0.971
+   }
+  }
+ }
+}

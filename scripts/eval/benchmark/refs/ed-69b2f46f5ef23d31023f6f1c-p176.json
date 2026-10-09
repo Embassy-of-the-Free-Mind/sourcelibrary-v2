@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/estienne1",
+  "edition": "Orationes duae: I. Adversus lib. Uberti Folietae De magnitudine et perpetua in bellis felicitate Imperii Turcici. II. Ad — Frankfurt am Main: Wechel, 1594.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "12/13",
+    "pb_aligned_pages": "12/12"
+  },
+  "origin": "library",
+  "book_id": "69b2f46f5ef23d31023f6f1c",
+  "page_number": 176,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 156741,
+    "to_char": 157720,
+    "overlap": 0.791,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'barbarae magis sunt gentes q̃ Turcica'; ends 'quibus ad praecipitiū'; printed p.170 header 'Henr. Steph. Oratio'; ref pads 'Verum (vt nostis) quae multo etiam' and 'aliae multae'; abbreviated m/n tildes expanded, q̃ left as 'q'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:40.067Z",
+  "text_location": "repo",
+  "text_sha256": "7e811ef14d42c63a808766aba20a707cb13251226f462b0b7520f0e66a5ef5b2",
+  "unit": {
+    "chars": 979
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,17 @@
+{
+ "issue": 5914,
+ "date": "2026-10-07",
+ "seed": 2026100701,
+ "frame": "canon",
+ "frame_size": 1297,
+ "n_books": 10,
+ "n_page_records": 30,
+ "rejected_no_run": [],
+ "images": {
+  "checked": true,
+  "ok": 30,
+  "missing_url": 0
+ },
+ "rng": "mulberry32 (paired-stats makeRng); books seed, runs seed ^ 0x9e3779b9",
+ "code_sha": "421379459a20dcffeb8cbddda158338efb5e5dda"
+}

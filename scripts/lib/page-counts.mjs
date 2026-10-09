@@ -355,6 +355,36 @@ export function initialPageCounters(n) {
 }
 
 /**
+ * Stored counters vs a recount, for one book. `book` is the stored document (or any
+ * object carrying the six fields), `stats` an aggregation row or null for a book with
+ * no visible pages. A MISSING counter is a mismatch, not a zero: that is how the
+ * reconciler fills `pages_translatable` on the books created without it (#5326).
+ */
+export function diffPageCounters(book, stats) {
+  const after = pageCountersFromStats(stats);
+  const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book?.[c] ?? null]));
+  const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
+  return { before, after, changed };
+}
+
+/**
+ * The `$set` body for a recount: all six counters together, plus `page_counts_at`.
+ * Shared by recountBook() and the reconciler (sync-worker.mjs), so neither can write
+ * a subset. Literal keys, so the field audits see every counter written here.
+ */
+export function recountSet(after, now) {
+  return {
+    pages_count: after.pages_count,
+    pages_ocr: after.pages_ocr,
+    pages_translated: after.pages_translated,
+    pages_translatable: after.pages_translatable,
+    pages_blank: after.pages_blank,
+    pages_archived: after.pages_archived,
+    page_counts_at: now,
+  };
+}
+
+/**
  * THE writer of a book's page counters (#5325, `.claude/docs/page-counts.md`).
  *
  * Recounts the book's visible pages with buildVisiblePageCountPipeline() and
@@ -386,12 +416,10 @@ export async function recountBook(db, bookId, { reason, now = new Date() } = {})
   const projection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-  const after = pageCountersFromStats(row);
+  const { before, after, changed } = diffPageCounters(book, row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
-  const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null]));
-  const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
-  const $set = { ...after, page_counts_at: now };
+  const $set = recountSet(after, now);
   if (changed.length) $set.updated_at = now;
   await books.updateOne({ id: bookId }, { $set });
   return { matched: true, reason, before, after, changed };
@@ -632,4 +660,22 @@ export async function translationStateStampCoverage(books, filter, { min = 0.99 
   ]);
   const share = total ? stamped / total : 1;
   return { total, stamped, share, ok: share >= min };
+}
+
+/**
+ * The two values the Supabase `books_catalog` mirror carries (#5288). The stored
+ * stamp wins when it is at the current rule version; otherwise the SAME function
+ * sync-worker uses is applied to the book's stored counters. That fallback is a
+ * mirror of the rule, not a second writer: nothing goes back to Mongo, and
+ * whenever the stored counters are current (sync-worker bumps `updated_at` when
+ * they are not, which re-syncs the row) it yields the rung sync-worker stamps.
+ * The projection must carry the counters, `pages_translatable`, `language`,
+ * `content_type` and `translation_state`.
+ */
+export function catalogTranslationColumns(book) {
+  const stored = book?.translation_state;
+  const state = stored && stored.version === TRANSLATION_STATE_VERSION && typeof stored.rung === 'string'
+    ? stored
+    : computeTranslationState(book, { language: book?.language, content_type: book?.content_type });
+  return { translation_rung: state.rung, english_original: state.english_original === true };
 }

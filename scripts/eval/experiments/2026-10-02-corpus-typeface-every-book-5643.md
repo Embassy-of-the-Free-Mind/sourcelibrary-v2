@@ -1,0 +1,39 @@
+---
+stage: metadata
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 41555
+n_pages: 41555
+verdict: "Typeface now known for 92% of books: blackletter 10.0% of all 41,555 books, German 83.1%, Dutch 42.6%, Latin 9.7%; most BSB books undescribed after IIIF 429s."
+status: informational
+decision: null
+superseded_by: null
+issue: 5643
+---
+## 2026-10-02 · How much of the collection is blackletter? Typeface for every book, from one page each (#5643, extension)
+<!-- PRIOR ART: 2026-10-02-corpus-page-profile-5643.md (the first pass: same picked page per book, descriptor on 17% of books only); scripts/eval/quality-covariates.mjs --corpus-profile (extended with --typeface rather than a new script); scripts/eval/lib/page-descriptor.mjs (unchanged). -->
+
+- **Question.** The first pass of #5643 could only answer "how much blackletter?" on the 17% of books it described, because no OCR prompt ever wrote a typeface, and that subset was not random. Derek approved running the same descriptor on every other book's picked page (ceiling $25).
+- **Design.** Same 41,555 books, same picked page per book as the first pass: the middle page, else the next page with OCR, else the nearest one before it. The descriptor (`lib/page-descriptor.mjs`, gemini-3.1-flash-lite, thinking off, concurrency 8) ran on every picked page that has OCR and an image and had no answer yet. Books with no OCR stay counted and skipped. The descriptor's typeface, page type and its three flags (illustration, table, marginalia) are now used wherever it answered. Script keeps its old rule: the inline tag wins, and the descriptor's script is never used on CJK or Tibetan pages. Columns are unchanged. The descriptor's page type was also checked against the stored `pages.page_type` on every book that has both. Read-only Mongo; nothing written.
+- **Spend.** 31,258 calls, **$16.03** at realtime list price ($0.000513 a call, metered on the first 200 calls: projected $17.42, under the $25 ceiling). Both passes together: $19.70.
+- **Coverage.** Typeface is now known for **92% of books** (38,260), up from 17%. The 3,295 unknowns: **2,753 BSB books** (see caveat 1), 291 e-text imports with no page image (the 282 Sumerian ETCSL texts, and others), 96 books with no OCR, and 155 pages where the call failed or returned no valid typeface.
+- **Result** (Wilson 95%, all 41,555 books).
+  - **Blackletter: 10.0% of books (9.7–10.2)**, 4,137 books. Roman 36.3%, non-Latin script 38.4% (almost all of it Chinese), handwritten or no typeface ("n/a") 5.8%, italic 1.6%.
+  - **By language.** German 83.1% blackletter (81.7–84.5). Dutch 42.6% (38.2–47.2). Latin 9.7% of all Latin books (9.2–10.1), but 11.8% (11.2–12.3) of the Latin books with a known typeface. English 1.7%, French 1.0%, Italian 1.2%. Italian is the italic language: 22.4% (19.2–26.0).
+  - **By period.** Before 1500: 39.2% blackletter (37.3–41.1), and 34.8% "n/a", which is the manuscripts. 1500s: 15.9%. 1600s: 16.7%. **1700s: 20.4%** (19.2–21.6), which is higher than either century before it. 1800s: 5.3%. 1900 and later: 0.8%.
+  - **Without the 18,163 "previous page with OCR" picks** (23,392 books left). Within a language, the picture hardly moves: German 81.3% blackletter, Dutch 43.4%, English 1.3%, 1700s 21.3%. Overall shares move a lot, but only because the fallback picks are 65% Chinese (11,739 of them). Without those picks, blackletter is 13.9% (13.5–14.4), roman 49.8% and non-Latin 17.5%. Handwritten rises from 7.6% to 12.2%, for the same reason. So the fallback changes the language mix of the sample, not what any one language looks like.
+  - **Page type: does the descriptor agree with the stored `pages.page_type`?** By script family:
+    - Latin-script and other non-CJK pages: 96.4% (96.2–96.7), n = 21,673.
+    - CJK: 92.6% (92.1–93.0), n = 12,892.
+    - Tibetan: 99.3% (98.7–99.6), n = 1,274.
+    - The main CJK disagreement is stored `text` that the descriptor calls `table` (647 books). These are ruled column grids. Elsewhere the disagreements are front matter (index or preface read as text) and 75 pages read as `musical-score`. The few of those checked (Gradus ad Parnassum, the Irish and Teton Sioux music books) look like real scores, so the stored value may be the wrong one there.
+  - **Flags** (descriptor wherever it answered). Has an illustration: 7.2%. Has a table: 5.8%, falling to 2.8% without the fallback picks (the CJK grids again). Has marginalia: 32.5%.
+- **Caveats.**
+  1. **The BSB is mostly missing.** The Bavarian State Library's IIIF server answered 429 to most requests, first at concurrency 8 and then even at 1, while an archiver on the same box was also fetching. Rather than compete with archiving for hours, the run described a random 432 of its 3,185 books (96% Latin, nearly all with an unknown period). The German BSB books are blackletter, as expected (93 of the 97 described). The Latin BSB books are not: 15 of 335 described, or 4.5% (2.7–7.3), against 11.8% for the other Latin books. If the 2,718 undescribed Latin BSB books look like that sample, Latin's true blackletter share is about 10.5%, a little *below* the 11.8% measured. The by-period table is barely affected, because these books have no period. A re-run resumes them: `--corpus-profile --typeface --describe` (BSB last, one request at a time).
+  2. **Page type now comes from the descriptor.** Where it disagrees with a stored tag, the profile uses the descriptor. This inflates `table` on CJK pages (2.2% overall, 1.1% without the fallback picks).
+  3. **Tibetan "n/a" is 31%.** That share is the descriptor reading pecha as handwriting. The first pass already flagged the Tibetan manuscript share as suspect, and the same by-eye check applies here.
+  4. Every value here is one model's reading of one page per book, at 1,536 px. The descriptor agreed with by-eye calls on 39 of 40 Latin-script pages in #5623, but that check did not test typeface on its own.
+- *Replicated?* No. The answers are cached per book in the artifact, and a re-run makes no calls for them.
+- **Artifact.** `scripts/eval/output/corpus-page-profile-2026-10-02-typeface.jsonl.gz` has one row per book: each value, its source, and the raw descriptor answer. `corpus-page-profile-2026-10-02-typeface.summary.json` has counts with Wilson intervals by language and period, the same tables without the fallback picks (`without_previous_page_picks`), and `page_type_agreement`. Command: `node --env-file=… scripts/eval/quality-covariates.mjs --corpus-profile --date=2026-10-02 --typeface [--describe] [--skip-gentle]`.

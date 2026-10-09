@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 292
+verdict: "Jev with the judge-rubric question screens body-instruction pages at AUC 0.94 vs Sonnet labels (0.99 on confident pages), kappa 0.75, for $0.019"
+status: informational
+decision: null
+superseded_by: null
+issue: 5006
+---
 ## 2026-09-24 — Can Jev (TypeSafe's typed-decision model) screen pages for "this tells a body what to do"? — RESULT
 
 **Headline: yes, as a first-pass filter.** One Noul question worded from the instruction-page judge rubric

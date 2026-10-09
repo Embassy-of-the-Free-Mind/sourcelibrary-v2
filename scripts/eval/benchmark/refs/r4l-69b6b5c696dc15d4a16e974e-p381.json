@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A51379",
+  "edition": "Plantarum historiæ universalis Oxoniensis. Pars secunda seu herbarum distributio nova, per tabulas congnationis & affinitatis ex libro naturæ observata & detecta / authore Roberto Morison ... — Wing M2771; ESTC R32963 (1680)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A51379",
+  "origin": "library",
+  "book_id": "69b6b5c696dc15d4a16e974e",
+  "page_number": 381,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1532802,
+    "to_char": 1537957,
+    "overlap": 0.431,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-2)",
+    "at": "2026-10-06T10:13:04+00:00",
+    "note": "p.366; ref opens with one line of the previous page, then matches to 'Hispalensi' plus a word of overhang.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      380,
+      381,
+      382
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.782Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "baed338de4b260bb2d258f28bd2d647e0a33d7fad9df86a3cd4f04a9d45028ef",
+  "unit": {
+    "chars": 5155
+  }
+}

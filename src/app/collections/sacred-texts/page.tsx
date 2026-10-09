@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     'The foundational scriptures of the world\'s spiritual traditions, from the Vedas and Upanishads to the Bible and Quran, from Sumerian hymns to Buddhist sutras and Zoroastrian texts.',
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Sacred Texts - Source Library',
     description:
       'The foundational scriptures of the world\'s spiritual traditions, from Sumerian hymns to the Vedas, Bible, Quran, and beyond.',
@@ -205,6 +205,13 @@ export default async function SacredTextsPortal() {
           </p>
         </div>
       </div>
+
+      {/* Crawl path to every member: the full A–Z list (#2266). */}
+      <p className="max-w-4xl mx-auto px-6 md:px-12 my-8 text-sm text-center">
+        <Link href="/collections/sacred-texts/catalog" className="underline hover:opacity-70">
+          All books in this collection, as a list
+        </Link>
+      </p>
 
       <SignUpCTA />
     </div>

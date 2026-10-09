@@ -1,0 +1,65 @@
+{
+ "seed": 5695,
+ "n": 150,
+ "positives_reversal_either_judge": 47,
+ "negatives_sampled": 103,
+ "universe": {
+  "T1": {
+   "pages": 71,
+   "reversal_any": 8,
+   "by_lang": {
+    "Latin": 71
+   }
+  },
+  "T2": {
+   "pages": 75,
+   "reversal_any": 12,
+   "by_lang": {
+    "Ancient Greek": 69,
+    "Byzantine Greek": 6
+   }
+  },
+  "T3": {
+   "pages": 59,
+   "reversal_any": 1,
+   "by_lang": {
+    "Italian": 10,
+    "German": 22,
+    "French": 14,
+    "Dutch": 7,
+    "Spanish": 6
+   }
+  },
+  "T4": {
+   "pages": 52,
+   "reversal_any": 10,
+   "by_lang": {
+    "Arabic": 20,
+    "Persian": 12,
+    "Hebrew": 15,
+    "Aramaic": 5
+   }
+  },
+  "T5": {
+   "pages": 64,
+   "reversal_any": 9,
+   "by_lang": {
+    "Chinese": 22,
+    "Pali": 15,
+    "Sanskrit": 27
+   }
+  },
+  "Tengyur": {
+   "pages": 113,
+   "reversal_any": 7,
+   "by_lang": {
+    "Tibetan": 113
+   }
+  }
+ },
+ "inputs": {
+  "T1": "/tmp/xlbt/scripts/eval/results/xlref-t1-2026-10",
+  "T4": "/tmp/xlbt/scripts/eval/results/xlref-t4-2026-10",
+  "note": "T1 and T4 results were read from their PR branches (#5721, #5735) when not yet on main"
+ }
+}

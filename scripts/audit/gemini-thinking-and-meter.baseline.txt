@@ -53,7 +53,6 @@ scripts/maintenance/reconcile-authors-grounded.mjs:thinking
 scripts/maintenance/reextract-zombie-pages.mjs:meter
 scripts/maintenance/reextract-zombie-pages.mjs:thinking
 scripts/maintenance/reground-captions.mjs:thinking
-scripts/maintenance/retranslate-pages.mjs:thinking
 scripts/maintenance/split-audit-visual.mjs:thinking
 scripts/reextract-broken-chapters.mjs:thinking
 scripts/semantic-consistency/probe.mjs:thinking

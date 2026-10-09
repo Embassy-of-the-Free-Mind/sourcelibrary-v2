@@ -1,0 +1,323 @@
+{
+  "issue": 6056,
+  "dir": "scripts/eval/results/spot-check/overview-2026-10-07-eternity2",
+  "weighted_serious_page_rate": 0.47853343465045595,
+  "weight_basis": "frame_size (books in stratum frame)",
+  "strata": [
+    {
+      "name": "hindu-sanskrit",
+      "desc": "Hindu, Vedanta and Bhakti works in Sanskrit/Hindi (title/author keyword frame, Buddhist titles excluded)",
+      "frame_size": 65,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.4375,
+      "serious_ci": [
+        0.125,
+        0.8125
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.44,
+      "mean_tr": 3.31,
+      "on_sight_books": 4,
+      "fit_to_show": {
+        "show_with_caveat": 3,
+        "do_not_show": 1
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69d7e10be9e5e67989c373f9?page=45",
+        "https://sourcelibrary.org/book/6953e2ff77f38f6761beb2fa?page=182",
+        "https://sourcelibrary.org/book/6953e2ff77f38f6761beb2fa?page=211",
+        "https://sourcelibrary.org/book/699209a9bed8f4b5ff5b1fd0?page=691",
+        "https://sourcelibrary.org/book/699209a9bed8f4b5ff5b1fd0?page=375"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69d7e10be9e5e67989c373f9",
+          "title": "Sharada Tilaka Tantra (Laxmanacharya)",
+          "fit": "show_with_caveat",
+          "summary": "This is a printed Devanagari text of the Śāradātilaka, Lakṣmaṇadeśika's Tantric ritual manual, and the transcription is of that text, leaf by leaf. The English follows the verses in order and is usable for ritual sequence. Where the OCR misreads a word it does not flag it: mantra encodings and the effects of rites are sometimes wrong (on p.135 'brings him under control' becomes 'makes the invisible visible'), so check any technical verse against the Devanagari."
+        },
+        {
+          "book_id": "6953e2ff77f38f6761beb2fa",
+          "title": "Tantraloka Vol. 1 with Jayaratha Commentary",
+          "fit": "show_with_caveat",
+          "summary": "This is the 1918 Kashmir Series edition of Tantrāloka Āhnika 1 with Jayaratha's commentary, transcribed accurately, footnoted variant readings included. The English is a faithful, readable rendering of verse and commentary and can be trusted for the argument. It is wrapped in model-written preface and summary boxes, which are not part of the text. The last ~40 leaves restart the printed pagination and should not be cited until that section is identified."
+        },
+        {
+          "book_id": "6991d8a08c1030b12444c14c",
+          "title": "Paramesvaratantra",
+          "fit": "do_not_show",
+          "summary": "The images are the Cambridge palm-leaf manuscript of the Parameśvaratantra, an early Śaiva tantra in an early Nepalese hand. The transcription is not a reliable reading of it: a few words match the leaf, and much of the rest is invented or repeated. The English should not be trusted at all; it turns misread letters into mantras, stories and notes."
+        },
+        {
+          "book_id": "699209a9bed8f4b5ff5b1fd0",
+          "title": "Rig-Veda-Sanhita: Sacred Hymns of the Brahmans (Vol. 3)",
+          "fit": "show_with_caveat",
+          "summary": "This is Max Müller's printed Ṛgveda with Sāyaṇa's commentary (Vol. III). The transcription is the right text and accurate to the line, with accents converted to Unicode marks. The English translates hymn, word-by-word analysis and commentary, and is generally faithful. It occasionally inverts or substitutes a gloss, so check the hymn line against the Sanskrit before quoting it."
+        }
+      ]
+    },
+    {
+      "name": "greek-latin-classics",
+      "desc": "Greek and Latin classical authors (\"Alexandria\"): Greek/Latin books whose author or title names a classical author",
+      "frame_size": 1078,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.375,
+      "serious_ci": [
+        0.125,
+        0.625
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.38,
+      "mean_tr": 3.13,
+      "on_sight_books": 3,
+      "fit_to_show": {
+        "do_not_show": 2,
+        "show_with_caveat": 1,
+        "show": 1
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69a5e60885fa13e734e42186?page=47",
+        "https://sourcelibrary.org/book/69a9768ee12635ded71c4e2f?page=98",
+        "https://sourcelibrary.org/book/69a9768ee12635ded71c4e2f?page=232",
+        "https://sourcelibrary.org/book/69a9768ee12635ded71c4e2f?page=358"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6993899a0f04c37dcfa61b3c",
+          "title": "Sophocles, Hesiod, Euripides (18 tragedies), and Aeschylus",
+          "fit": "do_not_show",
+          "summary": "A Byzantine-era manuscript of Sophocles and Euripides (Electra, Bacchae, Medea seen). The transcription is largely not the manuscript's text: lines are reconstructed or garbled, and on page 40 the play is misidentified as Euripides' Orestes. The English cannot be trusted as a translation of these leaves. Only the images are useful."
+        },
+        {
+          "book_id": "69a5e60885fa13e734e42186",
+          "title": "Procli In Platonis Alcibiadem Commentarius (Barocci 140)",
+          "fit": "show_with_caveat",
+          "summary": "Proclus' commentary on Plato's Alcibiades I in a Renaissance Greek hand. The transcription follows the manuscript line by line and gets most words, but it misexpands abbreviations and sometimes drops or inverts the sense. The English is a usable guide to the argument and should be checked against the Greek (or Westerink's edition) before anyone quotes it."
+        },
+        {
+          "book_id": "69a9768ee12635ded71c4e2f",
+          "title": "Quaestiones de Primis Principiis",
+          "fit": "show",
+          "summary": "Damascius' late Neoplatonic treatise on first principles, in Kopp's 1826 Greek edition with Latin notes. The Greek transcription is accurate. The English is a sound working translation of the main text, with a few mis-parsed sentences, and it leaves out the textual notes."
+        },
+        {
+          "book_id": "69b52c953dd6d94230281474",
+          "title": "Vitruvii de architectura libri X",
+          "fit": "do_not_show",
+          "summary": "A medieval Latin copy of Vitruvius, De architectura. The transcription is a partly abbreviated, partly invented reading: some passages are close, others (e.g. Book II on larch and the Apennines) are not the manuscript's text. The English cannot be trusted. A reader should use a printed Vitruvius alongside the images."
+        }
+      ]
+    },
+    {
+      "name": "chan-zen",
+      "desc": "Chinese Chan and Japanese Zen masters: Chinese/Japanese books whose title or author carries a Chan/Zen term (禪, 語錄, 傳燈, 臨濟 …)",
+      "frame_size": 6,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.1875,
+      "serious_ci": [
+        0.0625,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.06,
+      "mean_tr": 4,
+      "on_sight_books": 4,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69bd0afdb01b17638a098546?page=76",
+        "https://sourcelibrary.org/book/69bd0afdb01b17638a098546?page=389",
+        "https://sourcelibrary.org/book/6a3c798c01fe4f593c2107fe?page=69",
+        "https://sourcelibrary.org/book/6a3c798c01fe4f593c2107fe?page=94",
+        "https://sourcelibrary.org/book/69e009f82dfba6e52bfaa2f4?page=55",
+        "https://sourcelibrary.org/book/69aebb9a6059efb05d4fdcc0?page=7",
+        "https://sourcelibrary.org/book/69aebb9a6059efb05d4fdcc0?page=22",
+        "https://sourcelibrary.org/book/69aebb9a6059efb05d4fdcc0?page=29"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69bd0afdb01b17638a098546",
+          "title": "禪宗頌古聯珠通集 (Anthology of Chan Verse Commentaries on Koans, 40 juan)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Song–Yuan anthology of verse comments on Chan gongan, scanned at the Library of Congress from a Wanli-era printing, with two half-leaves per image. The transcription follows the right text closely line by line, but it misses editorial markers and a whole colophon, and it sometimes slips a character that changes the sense. The English reads well and follows the verse. Names and a few lines need checking against the image."
+        },
+        {
+          "book_id": "6a3c798c01fe4f593c2107fe",
+          "title": "石門文字禪·卷二十九~卷三十 (vol 11)",
+          "fit": "show_with_caveat",
+          "summary": "This is part of Huihong's 'Chan of Words and Letters' in the clean Siku Quanshu manuscript copy, with letters, a stupa record of Zhenjing Kewen, and memorial texts. On a clean page the transcription is close to exact. One page skips a whole column, and the English then gives Guishan's words to the narrator. Where the column count is intact the English is accurate and readable."
+        },
+        {
+          "book_id": "69e009f82dfba6e52bfaa2f4",
+          "title": "Jikji (직지심체요절, Anthology of Great Buddhist Priests' Zen Teachings)",
+          "fit": "show_with_caveat",
+          "summary": "This is the BnF copy of the Jikji, volume two, printed with metal type in 1377: a Korean Seon selection of patriarchs' sayings. The transcription is of the right text but slips on the uneven metal type, including a dropped line in Dongshan's best-known verse and a misread personal name. The English follows the dialogues fluently, but where the OCR slipped it either carries the error or quietly restores the line from memory."
+        },
+        {
+          "book_id": "69aebb9a6059efb05d4fdcc0",
+          "title": "六祖大師法寶壇經 (Platform Sutra of the Sixth Patriarch)",
+          "fit": "show_with_caveat",
+          "summary": "This is the standard Zongbao text of the Platform Sutra. The images are a modern typeset e-text, not a historical print, so the transcription is almost exact. The English is careful and trustworthy, apart from one invented note. A scholar will ask what edition this is and where the typescript came from, and the page does not say."
+        }
+      ]
+    },
+    {
+      "name": "latin-kabbalah",
+      "desc": "Christian/Latin Kabbalah: Latin books naming cabala, Reuchlin, Pico, Knorr von Rosenroth, Postel, Ricius, Zohar, Yetzirah",
+      "frame_size": 114,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.4375,
+      "serious_ci": [
+        0,
+        0.875
+      ],
+      "wrong_leaf_rate": 0.25,
+      "mean_ocr": 2.94,
+      "mean_tr": 3.5,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "do_not_show": 2,
+        "show_with_caveat": 1,
+        "show": 1
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6952b01e77f38f6761bc1e33?page=18",
+        "https://sourcelibrary.org/book/69b51e37cf111105c429875b?page=6",
+        "https://sourcelibrary.org/book/69b51e37cf111105c429875b?page=14",
+        "https://sourcelibrary.org/book/69b51e37cf111105c429875b?page=25",
+        "https://sourcelibrary.org/book/69751588a88d83c830d99e18?page=183",
+        "https://sourcelibrary.org/book/69751588a88d83c830d99e18?page=492",
+        "https://sourcelibrary.org/book/69751588a88d83c830d99e18?page=813",
+        "https://sourcelibrary.org/book/69751588a88d83c830d99e18?page=1116"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6952b01e77f38f6761bc1e33",
+          "title": "Opuscula cum Vita",
+          "fit": "do_not_show",
+          "summary": "This is Pico della Mirandola's 1498 Opera (Opuscula) with Gianfrancesco Pico's Life. The Life page is well transcribed and faithfully translated, but in the Apologia and the Oration the transcription is broken or missing, and the English shown there is either a free summary or a passage from elsewhere in the Oration. A reader cannot trust that the English on any page matches the page."
+        },
+        {
+          "book_id": "69b51e37cf111105c429875b",
+          "title": "Doctissimi Viri Ioannis Pici Mirandulae, Concordiae comitis: Exactissima expositio in orationem dominicam",
+          "fit": "show_with_caveat",
+          "summary": "A short devotional commentary by Pico on the Lord's Prayer, in a small 1537 octavo. The transcription is of the right text and the English is a close, reliable translation on three of four pages; the fourth (p.29) has misexpanded abbreviations and an English last sentence that runs past the page. It is a Pico text, not a kabbalistic one."
+        },
+        {
+          "book_id": "69751588a88d83c830d99e18",
+          "title": "Artis cabalisticae. Tomus I",
+          "fit": "show",
+          "summary": "Volume I of Pistorius's Artis cabalisticae (Basel 1587), the standard Renaissance collection of Christian-Kabbalah texts: on these pages Ricius's De coelesti agricultura IV, Leone Ebreo's Dialogue II, and Reuchlin's De arte cabalistica and De verbo mirifico. The transcriptions are of the right leaves and nearly complete, and the English is close and careful. Watch for an occasional dropped sentence and headings the translator supplied."
+        },
+        {
+          "book_id": "69b6316a1c1c21a3738071fa",
+          "title": "[Vocabularius breviloquus]",
+          "fit": "do_not_show",
+          "summary": "This is the incunable Latin dictionary Vocabularius breviloquus, not a kabbalistic work. On every sampled page the transcription is of the previous leaf, so the image and text never match, and the transcription itself garbles headwords (Carto for Carbo, Nilns, Numbus). The English inherits those errors and adds glosses that are not in the source."
+        }
+      ]
+    },
+    {
+      "name": "korean",
+      "desc": "All visible Korean-language books with ≥ 8 translated pages",
+      "frame_size": 246,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.75,
+      "serious_ci": [
+        0.5,
+        1
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 2.5,
+      "mean_tr": 2.33,
+      "on_sight_books": 4,
+      "fit_to_show": {
+        "do_not_show": 1,
+        "show_with_caveat": 3
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69f327ea52a77bb28fdb8163?page=133",
+        "https://sourcelibrary.org/book/69f33f58876dd827cbc618c2?page=98",
+        "https://sourcelibrary.org/book/69f33bc1876dd827cbc593cd?page=83"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69f325ae52a77bb28fdb58e9",
+          "title": "Yŏja sanghaeng pʻyŏn",
+          "fit": "do_not_show",
+          "summary": "This is an 18th-century(?) Korean vernacular manuscript of conduct instruction for women, written in cursive Hangul. The transcription is not of this text: on most sampled pages it is a repeated word or an invented passage. The English cannot be trusted at all, because it translates the loops and adds notes about the manuscript that are false."
+        },
+        {
+          "book_id": "69f327ea52a77bb28fdb8163",
+          "title": "Hanʾgwa",
+          "fit": "show_with_caveat",
+          "summary": "A Korean manuscript of model compositions and topic lists for formal memorials of thanks and congratulation, drawing on Zhou, Han, Tang and Ming precedents. The transcription is of the right text but misreads characters in names and allusions, and one sampled page collapses into fragments. The English gives the general sense of the title lists, but its names and its longer prose passages need checking against the image."
+        },
+        {
+          "book_id": "69f33f58876dd827cbc618c2",
+          "title": "Tʻonggam chu, Sŏhan chi odae",
+          "fit": "show_with_caveat",
+          "summary": "A Korean manuscript glossary of hard words in the Zizhi tongjian, from Western Han to the Five Dynasties, with headwords and small glosses. The transcription is of the right text and fair on clean pages, but it flattens the headword/gloss layout and misreads one character in a dozen. The English is a list of glosses that is right in outline, but its proper names and allusions are often invented and must be checked against the image."
+        },
+        {
+          "book_id": "69f33bc1876dd827cbc593cd",
+          "title": "Sinpʻyŏn Sanhak kyemong",
+          "fit": "show_with_caveat",
+          "summary": "This is Zhu Shijie's Suanxue qimeng, the Yuan arithmetic primer the Joseon exam system used, in a Korean copy. The transcription is of the right text, and the prose of the problems and methods is mostly right. The numbers, answers and counting-rod arrays are often wrong, so no answer or worked figure should be trusted without checking the image."
+        }
+      ]
+    },
+    {
+      "name": "japanese",
+      "desc": "All visible Japanese-language books with ≥ 8 translated pages, minus the chan-zen stratum",
+      "frame_size": 136,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.875,
+      "serious_ci": [
+        0.625,
+        1
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.38,
+      "mean_tr": 1.75,
+      "on_sight_books": 4,
+      "fit_to_show": {
+        "do_not_show": 4
+      },
+      "showcase": [],
+      "verdicts": [
+        {
+          "book_id": "69e75cf2cc48e59ad74eb2b4",
+          "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11a",
+          "fit": "do_not_show",
+          "summary": "A Kanze school chant book in cursive print with chant notation, holding several plays (Tsunemasa, Kochō, Torioibune). The Japanese transcription is broadly the right text, but chant marks are read as numbers, and in one place as a date. The English cannot be trusted: on every sampled page it drops content or invents it."
+        },
+        {
+          "book_id": "69e75ab9095c302d3fddefcf",
+          "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3",
+          "fit": "do_not_show",
+          "summary": "A Kanze school chant book holding Yorimasa, Hachi no ki and Hagoromo. The Japanese transcription is the right text, with small misreads and spurious date headings. The English is not usable as a translation: on every sampled page key lines are dropped or invented."
+        },
+        {
+          "book_id": "69e753d3095c302d3fddc43d",
+          "title": "観世流改訂謡本 (Kanze-ryū Noh Texts)",
+          "fit": "do_not_show",
+          "summary": "This is the Noh play Tamura in a 1912 Kanze edition, not a general collection of Noh texts. On some pages the transcription is roughly the right text, but it invents whole lines in the dance section and fills the text with notation tags. The English follows those errors, so passages read fluently but do not say what the page says."
+        },
+        {
+          "book_id": "69dfede38d34461cbe7f4db6",
+          "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+          "fit": "do_not_show",
+          "summary": "A later painted copy of the illustrated Tale of Genji scroll, held by the National Diet Library, with text sections from the Uji chapters (Yadorigi, Azumaya). On the text-heavy pages the kana transcription is close to the scroll. The English is not a translation: it invents content on every sampled page and leaves out the waka."
+        }
+      ]
+    }
+  ]
+}

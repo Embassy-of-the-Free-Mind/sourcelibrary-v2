@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold18",
+  "edition": "Dissertationum Nomicopoliticarum Libri III. Ubi De Successione Quae Regni Fit Iure, et Electione Regia potissimum disput — Tubingae, Typis Theodorici Werlini. Impensis Johannis Berneri, Francof., 1617.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "11/14",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a90675ceb8fb726ee3b7f5a",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 9631,
+    "to_char": 11566,
+    "overlap": 0.628,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Sed enim non minor aliquandò suboritur difficultas' (running head 'Prærogativæ certamen.' p.3); ends 'omnes Suc- / dorum' (catchword); ref pads 'avius à verâ longè ratione recedit.' and 'Suedorum potentes in'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:10.281Z",
+  "text_location": "repo",
+  "text_sha256": "0eda46e7006429034f3884b9a556a2ee2a05bef4ac8935f43778347db756f102",
+  "unit": {
+    "chars": 1935
+  },
+  "stratum": "latin-period-5126"
+}

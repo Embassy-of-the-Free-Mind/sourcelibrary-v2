@@ -1,0 +1,82 @@
+{
+ "seed": 4195,
+ "pn": {
+  "books_scanned": 210,
+  "picked": {
+   "online": 30,
+   "misread": 20
+  }
+ },
+ "lg": {
+  "greek": {
+   "pool": 1089,
+   "picked": 4
+  },
+  "arabic": {
+   "pool": 244,
+   "picked": 3
+  },
+  "persian": {
+   "pool": 59,
+   "picked": 3
+  },
+  "hebrew": {
+   "pool": 246,
+   "picked": 3
+  },
+  "chinese": {
+   "pool": 12865,
+   "picked": 3
+  },
+  "japanese": {
+   "pool": 132,
+   "picked": 3
+  },
+  "sanskrit": {
+   "pool": 360,
+   "picked": 3
+  },
+  "punjabi": {
+   "pool": 2,
+   "picked": 2
+  },
+  "ottoman": {
+   "pool": 11,
+   "picked": 2
+  },
+  "armenian": {
+   "pool": 67,
+   "picked": 2
+  },
+  "slavonic": {
+   "pool": 245,
+   "picked": 2
+  },
+  "mixed": {
+   "pool": 31,
+   "picked": 5
+  },
+  "latin": {
+   "pool": 13806,
+   "picked": 2
+  },
+  "german": {
+   "pool": 2606,
+   "picked": 2
+  },
+  "french": {
+   "pool": 866,
+   "picked": 1
+  }
+ },
+ "skipped": {},
+ "counts": {
+  "W": 31,
+  "T": 38,
+  "S3": 88,
+  "S5": 38,
+  "PN": 50,
+  "LG": 40
+ },
+ "skipped_counts": {}
+}

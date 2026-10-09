@@ -116,7 +116,7 @@ function toImagePart(image) {
  * @param {string} [opts.triggeredBy='manual']
  * @param {string} [opts.apiKey] - override key rotation
  * @param {object[]} [opts.safetySettings] - passed through verbatim (the translation lanes need BLOCK_NONE, translate-worker SAFETY_SETTINGS)
- * @returns {Promise<{text:string, model:string, inputTokens:number, outputTokens:number, thinkingTokens:number, finishReason:string, raw:object}>}
+ * @returns {Promise<{text:string, model:string, inputTokens:number, outputTokens:number, thinkingTokens:number, finishReason:string, generationConfig:object, raw:object}>}
  */
 export async function callGemini(opts = {}) {
   const {
@@ -212,6 +212,9 @@ export async function callGemini(opts = {}) {
     outputTokens,
     thinkingTokens,
     finishReason: data?.candidates?.[0]?.finishReason || 'unknown',
+    // The config as SENT, so a writer can record what produced the text (#4613)
+    // without re-deriving the thinking default this function applied.
+    generationConfig,
     raw: data,
   };
 }

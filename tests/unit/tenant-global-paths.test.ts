@@ -139,10 +139,19 @@ describe('proxy behavior', () => {
     '/vision',
     '/census',
     '/research',
+    '/ideas',
+    '/ideas/prima-materia',
     '/blog',
     '/contribute',
     '/support',
     '/sponsors',
+    // the Librarian and everything behind it (#4330)
+    '/librarian',
+    '/librarian/thread/abc',
+    '/librarian/voice',
+    '/api/embassy/chat',
+    '/api/embassy/voice-search',
+    '/api/embassy/threads/abc',
   ])('404s %s on a tenant subdomain', async (p) => {
     const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
     expect(res?.status).toBe(404);
@@ -168,7 +177,7 @@ describe('proxy behavior', () => {
     }
   );
 
-  it.each(['/encyclopedia', '/encyclopedia/Matthiolus', '/explore/map', '/ngrams', '/libraries'])(
+  it.each(['/encyclopedia', '/encyclopedia/Matthiolus', '/explore/map', '/ngrams', '/libraries', '/librarian', '/api/embassy/threads'])(
     'leaves %s untouched on the global host',
     async (p) => {
       const res = await proxy(req(`https://sourcelibrary.org${p}`, 'sourcelibrary.org'));
@@ -220,6 +229,17 @@ describe('wiring', () => {
     expect(src, 'children must be run through the predicate too').toMatch(
       /children.*?\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\([^)]*child\.href/s
     );
+  });
+
+  it('no component links to the Librarian on a partner host without a host gate', () => {
+    // The proxy 404s /librarian on tenant hosts (#4330). The header and footer
+    // drop the link through isGlobalOnlyNavHref; these two write it by hand and
+    // render on partner hosts, so each must gate it on the host.
+    for (const f of ['src/app/search/page.tsx', 'src/components/search/UnifiedSearch.tsx']) {
+      const src = read(f);
+      expect(src, `${f} links to /librarian`).toContain('/librarian');
+      expect(src, `${f} must gate that link on the host`).toMatch(/!isTenantSurface && \(/);
+    }
   });
 
   it('every blocked page path is a real route in the app tree', () => {

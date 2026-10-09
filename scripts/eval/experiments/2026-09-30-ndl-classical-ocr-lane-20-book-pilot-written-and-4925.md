@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [judged, agreement]
+languages: [ja]
+scripts: [Jpan]
+canons: []
+n_books: 20
+n_pages: 1087
+verdict: "On 20 cursive Japanese books NDL and stored Gemini readings barely agree (median Dice 0.067); by eye NDL gives the page's text on 9/10 pages, Gemini was invented or looping on 3 of 4."
+status: adopted
+decision: "NDL classical-OCR lane shipped (PR #5412); 985 pilot pages written, 356 translations marked stale"
+superseded_by: null
+issue: [4925, 4745]
+---
 ## 2026-09-30 · NDL classical-OCR lane — 20-book pilot, written and read by eye (#4925, #4745)
 
 - **Question.** Run end to end on whole books, does the NDL lane give readers the page where the stored Gemini reading does not?

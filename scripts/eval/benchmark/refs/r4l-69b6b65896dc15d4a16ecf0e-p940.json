@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/masen6",
+  "edition": "Speculum imaginum veritatis occultae, exhibens symbola, emblemata; hieroglyphica, aenigmata, omnitam materiae, quam formae varietate; exemplis simul; ac praeceptis illustratum. Editio tertia, prioribus correctior. — Köln: Kinckius Witwe, 1681.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6b65896dc15d4a16ecf0e",
+  "page_number": 940,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1729043,
+    "to_char": 1731451,
+    "overlap": 0.463,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.868: ref matches 'tradit. Matthes tamen' to 'ore' + pad; marginal notes interleaved",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      938,
+      939,
+      940
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.711Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "cc8aa2d18b3841c73f506b03f563ed01e4a47a769e781334e4efb5975707b957",
+  "unit": {
+    "chars": 2408
+  }
+}

@@ -1,0 +1,212 @@
+[
+ {
+  "id": "QF1FG",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེ་ཡི་བཀའ་ཡིས་དགེ་སློང་ནི། །ཤཱ་རིའི་བུ་དང་ལྷན་ཅིག་ཏུ། །དེ་ནི་མཉན་ཡོད་",
+    "english": "the monk [note: Sudatta/Anathapindada] went to the city of Shravasti together with Shariputra",
+    "why": "The monk is Śāriputra (cf. the Sanskrit śāriputreṇa bhikṣuṇā); Anāthapiṇḍada, a layman, went to Śrāvastī together with the monk Śāriputra.",
+    "fix": {
+     "find": "the monk [note: Sudatta/Anathapindada] went to the city of Shravasti together with Shariputra",
+     "replace": "he [note: Sudatta/Anathapindada] went to the city of Shravasti together with the monk Shariputra"
+    }
+   }
+  ],
+  "note": "Faithful rendering of the Tibetan verses (the interleaved Sanskrit duplicates them), except that it makes Anāthapiṇḍada the monk instead of Śāriputra."
+ },
+ {
+  "id": "QAIHO",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the verses and commentary on nirvāṇa as neither entity nor non-entity; root verses and commentary are kept distinct."
+ },
+ {
+  "id": "Q6UAQ",
+  "score": 3,
+  "verdict": "work",
+  "span": "extra",
+  "span_why": "The opening two sentences (no contradiction with conceptual thought whose object is only blue etc.; 'Therefore, the measure is fully...') translate the previous side's last line.",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "འདོད་པ་ནི་ཤེས་པ་སྟེ་ངེས་པ་ཞེས་བྱ་བའི་དོན་ཏོ",
+    "english": "Desire [note: original: \"འདོད་པ་\"] means cognition, which has the meaning of certainty",
+    "why": "འདོད་པ here is the lemma 'accepted/held (iṣṭa)', glossed as 'known, i.e. ascertained', not 'desire'.",
+    "fix": {
+     "find": "Desire [note: original: \"འདོད་པ་\"] means cognition, which has the meaning of certainty",
+     "replace": "\"Accepted\" [note: original: \"འདོད་པ་\"] means known, that is, ascertained"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཡོད་པ་ཡང་ཁོ་ན་འབྲས་བུ་ཡིན་ཞེས་གཞན་གྱིས་བསལ་བའོ",
+    "english": "the view of others that only the existent is the result is also refuted",
+    "why": "The Tibetan says the other party (the satkārya opponent) rejects it, saying only the existent is the effect; the English turns the opponent's rebuttal into a view that is refuted."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ལྟར་ན་ཡང་མ་ཡིན་ཏེ། དེའི་ཕྱིར་རྒྱུ་ལས་འབྲས་བུ་ཡོད་པ་ཡིན་ནོ་ཞེ་ན་བཤད་པ",
+    "english": "However, that is not the case. Therefore, if one claims that the result exists within the cause, it is explained",
+    "why": "The whole sequence from 'if the non-existent arises, all non-existents would arise' to 'therefore the effect exists in the cause' is one objection introduced by ཞེ་ན; the English splits it so that part reads as the author's own denial."
+   }
+  ],
+  "note": "A difficult Pramāṇa commentary rendered with the drift of the asatkārya argument intact, but with some confusion over who argues what and one mistaken lemma gloss; it also starts with material from the previous side."
+ },
+ {
+  "id": "QYQKX",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Sound rendering of the commentary on the Buddha's compassion, his knowledge through habituation and his status as pramāṇa; the lemma structure is followed throughout."
+ },
+ {
+  "id": "QV4O5",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ན་ཉིད་དུ་འཆད་པར་བྱེད་པ་ཡིན་ལ་གཞན་ནི་མ་ཡིན་ནོ",
+    "english": "those words of the Vedic tradition explain reality alone and nothing else",
+    "why": "ཁོ་ན་ཉིད་དུ here means 'exactly thus' (the Vedic words explain just that meaning and not another), not 'reality' (tattva)."
+   }
+  ],
+  "note": "Good rendering of the argument against the Veda's having a fixed meaning without a knowing author, with Jaimini correctly identified; one likely misreading of ཁོ་ན་ཉིད་དུ."
+ },
+ {
+  "id": "QVT5B",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ཁ་ནི་ཁ་ཆུས་གང་བ་ཆང་བཅས་སྣོད་ལྟར་འཐུང་བར་བྱེད་པ་དང་",
+    "english": "Their mouths, filled with saliva, drink from them as if from a vessel containing wine",
+    "why": "The deluded drink (kiss) the beloved's saliva-filled mouth as if it were a cup of wine; the mouth is what is drunk from, not what drinks from the breasts.",
+    "fix": {
+     "find": "Their mouths, filled with saliva, drink from them as if from a vessel containing wine",
+     "replace": "They drink from a mouth filled with saliva as if from a vessel containing wine"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "སྣ་མེད་ཡིན་ཞེས་ཀྱང་ནི་ཅི་ཡི་ཕྱིར་མི་སྨྲ",
+    "english": "why should I not say that the people of this world have no noses?",
+    "why": "The addressee ('you', ཁྱེད་ལ) is the one to be called a noseless being, continuing the preceding 'you have no ears and no heart'.",
+    "fix": {
+     "find": "why should I not say that the people of this world have no noses?",
+     "replace": "why should you not also be called noseless beings?"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ནི་རྒྱུ་ལས་བྱུང་ཞིང་གནས་པའང་རང་གི་རྐྱེན་གྱི་",
+    "english": "The body arises from causes",
+    "why": "དེ refers to the wife (and the others just named), whose birth, ageing and death one does not control, leading to 'how is one not ashamed to say my wife', not to one's own body."
+   }
+  ],
+  "note": "The verse on the body's foulness and on 'I' and 'mine' is mostly followed, but several lines swap who does what or whom the rebuke addresses."
+ },
+ {
+  "id": "QZF18",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the sūtra passage (Śikhin, King Kusumaviraja as the nāga king Sāgara) and the verses on saṃghika property, with the verses kept as verse."
+ },
+ {
+  "id": "QKTD9",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "རིམས་སེལ་བའི་མཐའ་ཡས་ཀྱི་རིན་པོ་ཆེ་",
+    "english": "an infinite jewel that cures fever",
+    "why": "མཐའ་ཡས is the proper name of the nāga Ananta: the stock example is the fever-curing jewel of the serpent king (unattainable), not an 'infinite jewel'.",
+    "fix": {
+     "find": "an infinite jewel that cures fever",
+     "replace": "the fever-curing jewel of the nāga Ananta"
+    }
+   }
+  ],
+  "note": "The argument about stating the purpose and subject matter at the opening of a treatise is followed well, but one stock example's proper name is rendered as a description."
+ },
+ {
+  "id": "QHIDX",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the end of chapter 23 and the opening objection verses of chapter 24, with the verses kept as verse; the inserted chapter-24 heading is harmless."
+ },
+ {
+  "id": "Q6AEY",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "ཡིད་ཀྱི་རང་བཞིན་ནི་སྤྲུལ་པ་དང་འདྲ་བར་ལྟའི་སྤྲུལ་པ་ནི་མ་ཡིན་ནོ",
+    "english": "it is like an emanation, yet it is not an emanation of the gods",
+    "why": "ལྟའི is 'is to be regarded (as like an emanation), but'; there are no gods (ལྷའི) in the sentence: the mind-made body is to be viewed as like an emanation but is not an emanation.",
+    "fix": {
+     "find": "it is like an emanation, yet it is not an emanation of the gods",
+     "replace": "it is to be regarded as like an emanation, yet it is not an emanation"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཅི་དེའི་བདག་གི་དངོས་པོ་འཇིག་རྟེན་འདིར་རམ",
+    "english": "does their self-nature exist",
+    "why": "བདག་གི་དངོས་པོ renders ātmabhāva, 'embodiment, bodily existence' (the mind-made body under discussion), not 'self-nature'; the same mistake recurs as 'self-entity'.",
+    "fix": {
+     "find": "does their self-nature exist",
+     "replace": "does their embodiment (ātmabhāva) exist"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "བཅོམ་ལྡན་འདས་མར་ཡང་གསུངས་པ།",
+    "english": "The Blessed One also stated:",
+    "why": "བཅོམ་ལྡན་འདས་མ is the Bhagavatī, i.e. the Prajñāpāramitā sūtra, cited as a source, not the Blessed One speaking.",
+    "fix": {
+     "find": "The Blessed One also stated:",
+     "replace": "It is also said in the Bhagavatī [Prajñāpāramitā]:"
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "འབྲས་བུ་ཁམས་གསུམ་པའི་སྐྱེ་བ་ལྡོག་སྟེ་ཟག་པ་མེད་པའི་དབྱིངས་སུ་སྐྱེ་",
+    "english": "birth as a result within the three realms is reversed; yet this is not a birth within the untainted realm",
+    "why": "The Tibetan says that what is stopped is birth in the three realms, not birth in the untainted realm, which continues; the English says the opposite about the untainted realm."
+   }
+  ],
+  "note": "The thread on mind-made bodies and inconceivable transformation is mostly followed, but a misread syllable invents 'gods', ātmabhāva is mistranslated, and a scriptural source is turned into the Buddha speaking."
+ }
+]

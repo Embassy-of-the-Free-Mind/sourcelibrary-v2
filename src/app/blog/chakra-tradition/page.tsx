@@ -4,10 +4,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Recovering the Chakra Tradition - Research Notes - Source Library',
-  description: 'How Source Library is digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
+  description: 'How Source Library is digitizing and translating the primary tantric sources on chakras, nadis, and kundalini, many for the first time in any Western language.',
   openGraph: {
     title: 'Recovering the Chakra Tradition',
-    description: 'Digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
+    description: 'Digitizing and translating the primary tantric sources on chakras, nadis, and kundalini, many for the first time in any Western language.',
     images: [{ url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -48,7 +48,7 @@ export default function ChakraTraditionPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          The word &ldquo;chakra&rdquo; has become so common in modern wellness culture that it is easy to forget it has a textual history stretching back over a thousand years. The system of subtle energy centres running along the spine &mdash; with its lotuses, seed syllables, presiding deities, and ascending kundalini &mdash; was never a single, fixed doctrine. It was a living tradition debated and refined across dozens of Sanskrit tantric texts, most of which have never been translated into English.
+          The word &ldquo;chakra&rdquo; has become so common in modern wellness culture that it is easy to forget it has a textual history stretching back over a thousand years. The system of subtle energy centres running along the spine, with its lotuses, seed syllables, presiding deities, and ascending kundalini, was never a single, fixed doctrine. It was a living tradition debated and refined across dozens of Sanskrit tantric texts, most of which have never been translated into English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -64,7 +64,7 @@ export default function ChakraTraditionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The standardization into a six-chakra system (plus the transcendent <em>sahasrara</em> at the crown) came relatively late, crystallizing in the 16th century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> of Purnananda Yati. It was this text, translated by Arthur Avalon (Sir John Woodroffe) in 1919 as part of <em>The Serpent Power</em>, that became the basis for nearly everything the West knows about chakras. But Avalon&apos;s translation &mdash; brilliant and pioneering as it was &mdash; drew from a single lineage. The broader tradition is far richer, more varied, and in many cases more sophisticated than that one text can convey.
+          The standardization into a six-chakra system (plus the transcendent <em>sahasrara</em> at the crown) came relatively late, crystallizing in the 16th century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> of Purnananda Yati. It was this text, translated by Arthur Avalon (Sir John Woodroffe) in 1919 as part of <em>The Serpent Power</em>, that became the basis for nearly everything the West knows about chakras. But Avalon&apos;s translation, brilliant and pioneering as it was, drew from a single lineage. The broader tradition is far richer, more varied, and in many cases more sophisticated than that one text can convey.
         </p>
 
         <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
@@ -72,7 +72,7 @@ export default function ChakraTraditionPage() {
             &ldquo;The notion that there is one &lsquo;correct&rsquo; chakra system is a modern invention. The original texts present a rich diversity of models, each embedded in its own ritual and philosophical context.&rdquo;
           </p>
           <p className="text-muted text-sm">
-            &mdash; Christopher Wallis, <em>Tantra Illuminated</em>
+            Christopher Wallis, <em>Tantra Illuminated</em>
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default function ChakraTraditionPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text &mdash; 3,931 pages &mdash; which would represent the first time the complete <em>Tantraloka</em> has been available in English.
+          The <Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text (3,931 pages), which would represent the first time the complete <em>Tantraloka</em> has been available in English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -97,11 +97,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/sri-svacchanda-tantra-i-ed" className="hover:text-accent-gold-dark transition-colors">The Svacchanda Tantra</Link>
+          The Svacchanda Tantra
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline"><em>Svacchanda Tantra</em></Link> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">first volume of the Sanskrit edition</Link> with commentary (440 pages), fully translated.
+          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <em>Svacchanda Tantra</em> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the first volume of the Sanskrit edition with commentary (440 pages), fully translated.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -125,7 +125,7 @@ export default function ChakraTraditionPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Purnananda Yati&apos;s 16th-century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> (&ldquo;Description of the Six Centres&rdquo;) is the most influential single text on the chakra system. It provides the detailed descriptions of each chakra &mdash; number of petals, colour, seed syllable, presiding deity, element &mdash; that are now widely reproduced. Source Library holds the <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline">Sanskrit original (107 pages)</Link>, allowing readers to compare the source text against Avalon&apos;s influential translation. The Wellcome Collection also holds a separate <Link href="/book/6991d8938c1030b12444bfdb" className="text-accent-rust hover:text-accent-rust underline">manuscript edition</Link> and a remarkable <Link href="/book/6991d8978c1030b12444c035" className="text-accent-rust hover:text-accent-rust underline">illustrated version</Link> with hand-painted chakra diagrams.
+          Purnananda Yati&apos;s 16th-century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> (&ldquo;Description of the Six Centres&rdquo;) is the most influential single text on the chakra system. It provides the detailed descriptions of each chakra (number of petals, colour, seed syllable, presiding deity, element) that are now widely reproduced. Source Library holds the <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline">Sanskrit original (107 pages)</Link>, allowing readers to compare the source text against Avalon&apos;s influential translation. The Wellcome Collection also holds a separate <Link href="/book/6991d8938c1030b12444bfdb" className="text-accent-rust hover:text-accent-rust underline">manuscript edition</Link> and a remarkable <Link href="/book/6991d8978c1030b12444c035" className="text-accent-rust hover:text-accent-rust underline">illustrated version</Link> with hand-painted chakra diagrams.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -133,7 +133,7 @@ export default function ChakraTraditionPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Svatmarama&apos;s 15th-century manual is the most widely known hatha yoga text, and its treatment of <em>pranayama</em>, <em>bandhas</em>, <em>mudras</em>, and kundalini awakening represents the practical application of the subtle body theory developed in the tantric texts. Source Library holds multiple editions, including a <Link href="/book/6991d89a8c1030b12444c076" className="text-accent-rust hover:text-accent-rust underline">version from the Wellcome Collection</Link> with both the <em>Jyotsna</em> and <em>Manobhilasini</em> commentaries (200 pages) &mdash; offering layers of interpretation rarely available in translation.
+          Svatmarama&apos;s 15th-century manual is the most widely known hatha yoga text, and its treatment of <em>pranayama</em>, <em>bandhas</em>, <em>mudras</em>, and kundalini awakening represents the practical application of the subtle body theory developed in the tantric texts. Source Library holds multiple editions, including a <Link href="/book/6991d89a8c1030b12444c076" className="text-accent-rust hover:text-accent-rust underline">version from the Wellcome Collection</Link> with both the <em>Jyotsna</em> and <em>Manobhilasini</em> commentaries (200 pages), offering layers of interpretation rarely available in translation.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -148,37 +148,37 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <strong>Kaulajnana Nirnaya</strong> (attributed to Matsyendranath) &mdash; Perhaps the oldest surviving Kaula text, this work describes a chakra system embedded in transgressive ritual and goddess worship that predates the &ldquo;cleaned up&rdquo; versions found in later yoga manuals.
+              <strong>Kaulajnana Nirnaya</strong> (attributed to Matsyendranath): Perhaps the oldest surviving Kaula text, this work describes a chakra system embedded in transgressive ritual and goddess worship that predates the &ldquo;cleaned up&rdquo; versions found in later yoga manuals.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <strong>Siddha Siddhanta Paddhati</strong> (attributed to Gorakhnath) &mdash; This text maps nine chakras (not six or seven) and describes the body as a microcosm containing the entire universe &mdash; mountains, rivers, sacred sites, and celestial realms all located within the practitioner&apos;s own subtle anatomy.
+              <strong>Siddha Siddhanta Paddhati</strong> (attributed to Gorakhnath): This text maps nine chakras (not six or seven) and describes the body as a microcosm containing the entire universe: mountains, rivers, sacred sites, and celestial realms all located within the practitioner&apos;s own subtle anatomy.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d46721124c9ad6944195" className="text-accent-rust hover:text-accent-rust underline"><strong>Tantraraja Tantra</strong></Link> &mdash; A major Shakta text focused on the goddess Tripurasundari, containing detailed practices involving chakra visualization and mantra that operate within a framework quite different from the Shaiva texts. 396 pages.
+              <Link href="/book/6991d46721124c9ad6944195" className="text-accent-rust hover:text-accent-rust underline"><strong>Tantraraja Tantra</strong></Link>: A major Shakta text focused on the goddess Tripurasundari, containing detailed practices involving chakra visualization and mantra that operate within a framework quite different from the Shaiva texts. 396 pages.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d8a08c1030b12444c14c" className="text-accent-rust hover:text-accent-rust underline"><strong>Paramesvaratantra</strong></Link> (828 CE) &mdash; A unique early witness from the Cambridge Digital Library, this palm-leaf manuscript is one of the oldest dateable tantric texts in existence. 124 pages from the original manuscript.
+              <Link href="/book/6991d8a08c1030b12444c14c" className="text-accent-rust hover:text-accent-rust underline"><strong>Paramesvaratantra</strong></Link> (828 CE): A unique early witness from the Cambridge Digital Library, this palm-leaf manuscript is one of the oldest dateable tantric texts in existence. 124 pages from the original manuscript.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d89d8c1030b12444c140" className="text-accent-rust hover:text-accent-rust underline"><strong>Chakra and Nadi in the Shaiva Tradition</strong></Link> &mdash; An illustrated manuscript from the Wellcome Collection showing the subtle body maps as living visual art, not just textual description.
+              <strong>Chakra and Nadi in the Shaiva Tradition</strong>: An illustrated manuscript from the Wellcome Collection showing the subtle body maps as living visual art, not just textual description.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6953e30277f38f6761beb46f" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link> &mdash; One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action. Source Library also holds <Link href="/book/6953e30577f38f6761beb59f" className="text-accent-rust hover:text-accent-rust underline">Arthur Avalon&apos;s English translation</Link> for comparison.
+              <Link href="/book/6953e30277f38f6761beb46f" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link>: One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action. Source Library also holds <Link href="/book/6953e30577f38f6761beb59f" className="text-accent-rust hover:text-accent-rust underline">Arthur Avalon&apos;s English translation</Link> for comparison.
             </span>
           </li>
         </ul>
@@ -192,11 +192,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Making the primary sources available in English &mdash; in their full complexity, with their internal disagreements intact &mdash; is not an academic exercise. It restores the tradition to its actual depth. Readers can discover that the chakra system was not a fixed anatomical model but a sophisticated technology of consciousness, intimately connected to specific deities, mantras, cosmological principles, and ritual practices.
+          Making the primary sources available in English, in their full complexity, with their internal disagreements intact, is not an academic exercise. It restores the tradition to its actual depth. Readers can discover that the chakra system was not a fixed anatomical model but a sophisticated technology of consciousness, intimately connected to specific deities, mantras, cosmological principles, and ritual practices.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          These translations are produced using AI (Google&apos;s Gemini models), with the original Sanskrit always preserved alongside the English for verification. They are working translations &mdash; first drafts that make previously inaccessible texts readable for the first time. We hope they will serve as a foundation for future scholarly editions and deeper study.
+          These translations are produced using AI (Google&apos;s Gemini models), with the original Sanskrit always preserved alongside the English for verification. They are working translations: first drafts that make previously inaccessible texts readable for the first time. We hope they will serve as a foundation for future scholarly editions and deeper study.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -225,7 +225,7 @@ export default function ChakraTraditionPage() {
                 <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">Svacchanda Tantra (Vol. I)</Link></td>
+                <td className="py-3 pr-4">Svacchanda Tantra (Vol. I)</td>
                 <td className="py-3 pr-4">440</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Translated</td>
@@ -285,7 +285,7 @@ export default function ChakraTraditionPage() {
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d89d8c1030b12444c140" className="text-accent-rust hover:text-accent-rust underline">Chakra and Nadi in the Shaiva Tradition</Link></td>
+                <td className="py-3 pr-4">Chakra and Nadi in the Shaiva Tradition</td>
                 <td className="py-3 pr-4">10</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
                 <td className="py-3">Digitized</td>
@@ -295,7 +295,7 @@ export default function ChakraTraditionPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          All texts are freely readable &mdash; the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection &mdash; as we process, translate, and verify these texts, their status will update on the site.
+          All texts are freely readable: the Sanskrit originals are public domain, and our translations are <Link href="/licensing" className="text-accent-rust hover:text-accent-rust underline">CC BY-SA 4.0</Link>. The originals are preserved alongside any translations, and every page links back to its source institution. This is a growing collection; as we process, translate, and verify these texts, their status will update on the site.
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">

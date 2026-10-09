@@ -1,0 +1,120 @@
+{
+ "notes_in_frame": 45437,
+ "pages": 30665,
+ "candidates": 359,
+ "books": 197,
+ "unique_notes": 358,
+ "notes_by_worst_verdict": {
+  "no-claim": 85,
+  "correct": 190,
+  "unverifiable": 66,
+  "wrong": 11,
+  "partly-wrong": 7
+ },
+ "claims": {
+  "no-claim": 88,
+  "correct": 207,
+  "unverifiable": 69,
+  "wrong": 11,
+  "partly-wrong": 7
+ },
+ "n_claims": 382,
+ "wrong_or_partly_notes": 18,
+ "wrong_notes": 11,
+ "partly_wrong_notes": 7,
+ "by_kind_wrong_or_partly": {
+  "person-identification": 5,
+  "other": 4,
+  "ocr-driven": 2,
+  "sanskrit-equivalent": 5,
+  "relation-guess": 2
+ },
+ "by_kind_strictly_wrong": {
+  "person-identification": 3,
+  "other": 2,
+  "ocr-driven": 1,
+  "sanskrit-equivalent": 4,
+  "relation-guess": 1
+ },
+ "claims_without_url_nonnoclaim": 0,
+ "seeds": {
+  "S01": [
+   "unverifiable",
+   "wrong"
+  ],
+  "S02": [
+   "wrong"
+  ],
+  "S03": [
+   "partly-wrong"
+  ],
+  "S04": [
+   "wrong"
+  ],
+  "S05": [
+   "wrong"
+  ],
+  "S06": [
+   "wrong"
+  ],
+  "S07": [
+   "wrong"
+  ],
+  "S08": [
+   "wrong"
+  ],
+  "S09": [
+   "wrong"
+  ],
+  "S10": [
+   "wrong"
+  ],
+  "S11": [
+   "wrong"
+  ],
+  "S12": [
+   "wrong"
+  ],
+  "S13": [
+   "wrong"
+  ],
+  "S14": [
+   "wrong"
+  ],
+  "S15": [
+   "wrong"
+  ],
+  "S16": [
+   "wrong"
+  ]
+ },
+ "seeds_caught": 16,
+ "seeds_total": 16,
+ "author_overrides": [
+  {
+   "cid": "N042",
+   "verifier": "partly-wrong",
+   "final": "correct"
+  },
+  {
+   "cid": "N043",
+   "verifier": "partly-wrong",
+   "final": "correct"
+  },
+  {
+   "cid": "N221",
+   "verifier": "unverifiable",
+   "final": "wrong"
+  },
+  {
+   "cid": "N222",
+   "verifier": "partly-wrong",
+   "final": "wrong"
+  },
+  {
+   "cid": "N356",
+   "verifier": "partly-wrong",
+   "final": "unverifiable"
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "packet": 3,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+  "69e8b2562ff2a8dc09e774b0",
+  "6955943d7bd6d2cd1d61d196",
+  "6990540438e1fdee57b364df",
+  "6952e4bc77f38f6761bc7db1",
+  "decoy-37",
+  "decoy-24",
+  "decoy-18",
+  "decoy-35",
+  "decoy-38",
+  "69e72c60a409200ea79f46f6",
+  "69bd9b0246b01553e33bd3e7",
+  "decoy-21",
+  "decoy-20",
+  "decoy-08",
+  "decoy-23",
+  "dfb9c1de-d300-4e1b-a9c1-941cdb809764",
+  "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+  "694f3d6cbe37f451a5324e10"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Philosophiae Naturalis Principia Mathematica | Year of this edition: 1687 | Language: Latin\n2. Title: 孟子 ([…]) — Chinese Classics Vol. 2 | Year of this edition: 1861 | Language: Chinese\n3. Title: […] Consolation of Philosophy (English 1609) | Year of this edition: 1671 | Language: English\n4. Title: Vorlesungen über Gastheorie, Bd. 1 | Year of this edition: 1895 | Language: German\n5. Title: Biblia Hebraica | Year of this edition: 1720 | Language: Hebrew\n6. Title: Exercitationes de spiritu mundi | Year of this edition: 1647 | Language: Latin\n7. Title: 醫門鈎玄 | Year of this edition: 1663 | Language: Chinese\n8. Title: Tratado de la quinta essencia de los minerales | Year of this edition: 1602 | Language: Spanish\n9. Title: Tractatus de harmonia mundi interiori | Year of this edition: 1661 | Language: Latin\n10. Title: Gründliche Erklärung der Smaragdinen Tafel | Year of this edition: 1698 | Language: German\n11. Title: 莊子旁注 ([…] with Commentary), Vol. 1 | Year of this edition: 1699 | Language: Chinese\n12. Title: Die Frau in Europa | Year of this edition: 1929 | Language: German\n13. Title: 養生玄珠集 | Year of this edition: 1592 | Language: Chinese\n14. Title: Λόγος περὶ τῆς τῶν ἀστέρων φύσεως | Year of this edition: 1520 | Language: Greek\n15. Title: Theatrum chymicum minus | Year of this edition: 1652 | Language: Latin\n16. Title: 易理通微 | Year of this edition: 1705 | Language: Chinese\n17. Title: Ars Magna Generalis | Year of this edition: 1517 | Language: Latin\n18. Title: De Occulta Philosophia Libri Tres (1533) | Year of this edition: 1533 | Language: Latin\n19. Title: Mercurii […] Pimander (Ficino translation) | Year of this edition: 1481 | Language: Latin\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

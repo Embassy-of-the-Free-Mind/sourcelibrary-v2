@@ -100,7 +100,7 @@ export function remainingWork(report: PipelineNextReport): { rows: WorkRow[]; he
       'overstated until the image collectors stamp images_done_at (#5477)'),
     row('archive', 'Archive', live('archive').books, live('archive')[field('archive')], 'pages to fetch', 'archive'),
     row('ocr', 'OCR (not Chinese)', ocrOther.books, ocrOther[field('ocr')], 'pages to OCR', 'ocr'),
-    row('ocr_zh', 'OCR — Chinese', zh.books, zh.ocr_pages, 'pages to OCR', 'ocr_zh_paddle',
+    row('ocr_zh', 'OCR (Chinese)', zh.books, zh.ocr_pages, 'pages to OCR', 'ocr_zh_paddle',
       'every live Chinese book at OCR; the cohort held out of the #4719 sweep for the #5547 engine decision is part of it. Priced at the PaddleOCR-VL pilot rate'),
     row('ocr_then_translate', 'Translate after OCR', ocr.books, ocr.translate_pages, 'pages to translate', 'translate',
       'the translation the OCR row makes necessary (non-English books)'),

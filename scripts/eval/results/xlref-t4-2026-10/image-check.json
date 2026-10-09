@@ -1,0 +1,2845 @@
+[
+ {
+  "id": "69e7933d80b52390feb1841a_00027",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "ocr_misread",
+   "reading_order"
+  ],
+  "evidence": [
+   {
+    "place": "para 4 (Nahidiyya), flour and kid descriptions",
+    "image_reads": "في دَرْمَكٍ كَأَنَّهَا قِطَعُ السَّبَائِكِ تُجَرْثَمُ عَلَى سُفْرَةٍ حَرْتِيَّةٍ …",
+    "ocr_has": "فِي دَرْمَكٍ كَأَنَّهَا قِطَعُ السَّبَائِكِ تُجْرَتُمْ عَلَى سُفْرَةٍ … (present, garbled)",
+    "served_english": "in fine flour like pieces of bullion...? <note>The narrative continues…",
+    "effect": "three long descriptions present in the transcription were replaced by notes"
+   },
+   {
+    "place": "para 2, shoe clause",
+    "image_reads": "بِخُفٍّ قَدْ كُنْتُ لَبِسْتُهُ رَطْباً فَلَمْ يَحْصُلْ طِرَازُهُ عَلى كُمِّهِ",
+    "ocr_has": "بِخُفِّ قَدْ كُنْتُ لِسَانُهُ رَطْبًا فَلَمْ يَحْصُلْ طَرَائِرُهُ",
+    "served_english": "But God worked for me with a shoe... <note>The text here becomes nonsensical",
+    "effect": "garbled clause abandoned; boy/mother and evening-prayer clauses dropped with it"
+   },
+   {
+    "place": "para 2",
+    "image_reads": "مِنْ قُمَّ … إِلاَّ بِمَدِّ النِّيلِ",
+    "ocr_has": "مِنْ فَمٍ … إِلَّا بِمَدِّ اللَّيْلِ",
+    "served_english": "From Famm … until the night stretched out",
+    "effect": "Qum became 'mouth', Nile flood became night"
+   },
+   {
+    "place": "para 1 end / para 2 start",
+    "image_reads": "لَمْ نَرَ هَذَا التَّيْسَ … وَلَبِسْتُ الثِّيَابَ وَجِلاً",
+    "ocr_has": "لَمْ تَرَ هَذَا اللَّيْسَ … وَلَيْسَتِ الثِّيَابُ وَجَلًا",
+    "served_english": "I did not see this \"not.\" … my clothes in disarray",
+    "effect": "he-goat lost; 'put on my clothes in fear' lost"
+   },
+   {
+    "place": "para 2",
+    "image_reads": "المُبَرِّدَ فِي النَّحْوِ … لَكُنْتُ قَدْ حَلَقْتُ رَأْسَكَ",
+    "ocr_has": "الْمِبْرَدَ فِي النَّحْوِ … لَكُنْتَ قَدْ حَلَقْتَ رَأْسَكَ",
+    "served_english": "the file in grammar … you would have shaved your head",
+    "effect": "al-Mubarrad read as 'file'; first person turned to second"
+   },
+   {
+    "place": "para 4 opening",
+    "image_reads": "رَجُلٌ حُزُقَةٌ … عَدُوفاً، قَالَ: فَتَنَحْنَحَ، ثُمَّ قَالَ: فَمَا رَأْيُكُمْ",
+    "ocr_has": "رَجُلٌ حُرْقَةٌ … عَدُوًّا، قَالَ: فَتَنَحَّوْا، ثُمَّ قَالَ:",
+    "served_english": "burning with intensity … He said: Move aside",
+    "effect": "short stout man and 'he coughed' lost; 'what do you say' dropped"
+   },
+   {
+    "place": "para 4",
+    "image_reads": "مُكَلَّلَةٍ بِعَجْوَةِ خَيْبَرَ … الوَاحِدَةُ مِنْهَا تَمْلأُ الفَمَ",
+    "ocr_has": "مُكَلَّلَةٍ بِبَعْوَةٍ خَبِيرٍ … الْوَاحِدَةِ مِلْؤُهَا ثَمَلُ الْفَمِ",
+    "served_english": "crowned with a drop of clarified butter … pleasure of the mouth",
+    "effect": "Khaybar dates lost"
+   },
+   {
+    "place": "couplet",
+    "image_reads": "row 1: أنا أعطي الله عهدا | محكما في النذر عقدا",
+    "ocr_has": "lines ordered right column first, then left column",
+    "served_english": "I will not shave my head … / Having made a firm vow",
+    "effect": "hemistichs 2 and 3 swapped"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "three food descriptions replaced by notes",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "shoe / boy-and-mother / evening prayer clauses dropped",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'file in grammar' for al-Mubarrad",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'ignoring the Nahida'; 'drop of clarified butter' for dates",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'my clothes in disarray'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Move aside' for he coughed; 'burning with intensity'",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 17,
+  "ocr_passage_checked": "first ~60 words of the Nahidiyya paragraph (ملت مع نفر … خمص عطش خمس); paras 1-3 run about 4 per 100",
+  "rtl_or_vocalisation_notes": "Fully vocalised modern typeset page; OCR re-vocalised freely and guessed rare words, dropped three words and doubled one phrase; two-column couplet read column-wise. The print itself has typos kept as printed (فَلَمّضا, حَتّضى, فَقُمْتَ).",
+  "fixed": "written",
+  "n_corrections": 51,
+  "image_legibility": "good",
+  "confidence": 0.6,
+  "summary": "The two major losses are the translator replacing long passages with notes, mostly where the transcription was present, on top of a heavily misread transcription of the rare-word food section (about 50 corrections) and a column-wise couplet."
+ },
+ {
+  "id": "69afd049ae982b9d51d6dd32_00292",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "ocr_misread"
+  ],
+  "evidence": [
+   {
+    "place": "beyt 9, second hemistich",
+    "image_reads": "كه گُريزد بدو فرسنگ وَی از بوی پليدی",
+    "ocr_has": "كه كُريزد بدو فرسنگ وَی از بوی پليدی",
+    "served_english": "From the scent of which the foul-smelling flees for two leagues",
+    "effect": "transcription right apart from kaf for gaf; English reversed who flees from what"
+   },
+   {
+    "place": "beyt 9, first hemistich, line end",
+    "image_reads": "تو كُنی صورت شخـ (ص clipped at the scan edge)",
+    "ocr_has": "تو كُنی صورتِ شخـ",
+    "served_english": "You fashion a form",
+    "effect": "'of a person' dropped; truncation is in the scan and OCR kept it faithfully"
+   },
+   {
+    "place": "beyt 10, first word",
+    "image_reads": "…يَش طعمهٔ خاكی (start of word lost in print; fatha on ya)",
+    "ocr_has": "پيشِ طعمه خاكی",
+    "served_english": "Before the earthy food",
+    "effect": "'you make him a morsel of dust' became 'before'"
+   },
+   {
+    "place": "beyt 7",
+    "image_reads": "در گُل چه رَوی تو سوی هر گُل (kaf with three dots = gaf)",
+    "ocr_has": "در كُل چه رَوی تو سوی هر كُل",
+    "served_english": "no loyalty in any whole, why do you go toward every whole",
+    "effect": "rose read as 'whole'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'From the scent of which the foul-smelling flees' reversal",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'You fashion a form' drops شخص",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'with your heart and intellect' for FROM heart and reason",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'whole' for gul (rose)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Before the earthy food'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops نَفَری (a few); 'grazed enough'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'greed' for طمع",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 5,
+  "ocr_passage_checked": "whole page, beyts 7-13 (about 95 words)",
+  "rtl_or_vocalisation_notes": "Nicholson's type marks gaf as kaf with three dots; OCR kept it in some words (اگر, بچراگاه, بگويد) and flattened it to kaf in گُل and گُريزد. Marginal verse numbers ٨-١٢ were not transcribed; apparatus is right.",
+  "fixed": "written",
+  "n_corrections": 5,
+  "image_legibility": "fair",
+  "confidence": 0.75,
+  "summary": "The reversal in beyt 9 is a translation error on a correct transcription; gaf-as-kaf and a damaged first word in beyt 10 caused the minor 'whole' and 'Before' errors."
+ },
+ {
+  "id": "69e8b2ac2ff2a8dc09e7883c_00025",
+  "primary_cause": "served_stale",
+  "secondary_causes": [],
+  "evidence": [
+   {
+    "place": "whole page",
+    "image_reads": "ولذلك قال عليه السلام اذا اجتهد الحاكم فاصاب فله اجران",
+    "ocr_has": "ولذلك قال عليه السلام اذا اجتهد الحاكم فاصاب فله اجران",
+    "served_english": "no person is without, since belief in what one has been tasked with knowing",
+    "effect": "served English renders the following page (printed p. 15); nothing of this page is translated"
+   },
+   {
+    "place": "last line",
+    "image_reads": "يؤدّى اليها اصناف الدلايل الثلاثة التى",
+    "ocr_has": "يؤدّى اليها اصناف الدلايل الثلاثة التى",
+    "served_english": "(begins with the continuation of this sentence)",
+    "effect": "served text starts exactly where this page ends: one-page block shift"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "translates the NEXT page; nothing of this page rendered",
+    "cause": "served_stale"
+   }
+  ],
+  "ocr_word_errors_per_100": 0,
+  "ocr_passage_checked": "lines 1-7 (ولذلك قال … لم يكن معذوراً) and lines 13-18",
+  "rtl_or_vocalisation_notes": "Müller's 1859 type, sparse shadda and hamza; OCR follows the print's spelling (العلما, الدلايل, الشريعه) and line breaks.",
+  "fixed": "not_needed",
+  "n_corrections": 0,
+  "image_legibility": "good",
+  "confidence": 0.95,
+  "summary": "The transcription matches the image; the served English is a translation of the next page, so the fault is a one-page shift in what is served."
+ },
+ {
+  "id": "69e8b0fd839ca3f47ec56c17_00048",
+  "primary_cause": "translation",
+  "secondary_causes": [],
+  "evidence": [
+   {
+    "place": "para 2, line 8-9 of para (equation step)",
+    "image_reads": "يعدل ثلثة اثمان مال وثلث وصايا وخمسة اثمان وصية",
+    "ocr_has": "يعدل ثلثة اثمان مال وثلث وصايا وخمسة اثمان وصية",
+    "served_english": "three-eighths of a mal plus one-third of a legacy and five-eighths of a legacy",
+    "effect": "OCR exact; print spells 'three' as ثلث before plural وصايا, translator took it as the fraction one-third; number wrong (3 5/8 legacies), next line (ثلثة وصايا) rendered correctly"
+   },
+   {
+    "place": "para 2, line 4",
+    "image_reads": "يبقي من المال بعد الوصية فهذا مال الا وصية فانت تعلم",
+    "ocr_has": "same",
+    "served_english": "after the legacy. You know that",
+    "effect": "clause 'this is a capital less a legacy' present in image and OCR, dropped in English"
+   },
+   {
+    "place": "para 2, line 1",
+    "image_reads": "فان ترك اختين وامرأة",
+    "ocr_has": "فان تركت اختين وامرأة",
+    "served_english": "If you leave two sisters and a wife",
+    "effect": "OCR added a ت; person of verb shifts (he leaves -> you leave), no effect on the sums"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'plus one-third of a legacy and five-eighths' for three legacies and five-eighths",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'فهذا مال الا وصية' absent after 'after the legacy'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'at twelve shares for each sister, a third of what remains' fuses two statements",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 1,
+  "ocr_passage_checked": "whole page read; counted on para 1 + first 4 lines of para 2 (~70 words)",
+  "rtl_or_vocalisation_notes": "Unvocalised 1831 London Arabic type; print uses ماية/ثلثماية/اربعماية and undotted final ي; OCR modernised ماية to مائة three times (spelling only). ثلث for ثلاث is the trap.",
+  "fixed": "written",
+  "n_corrections": 5,
+  "image_legibility": "good",
+  "confidence": 0.9,
+  "summary": "Transcription is essentially exact; the one major number error (one-third for three legacies) and the dropped clause are translation faults on a correctly read line."
+ },
+ {
+  "id": "69d5ac5f4dc55b8478ddd6b6_00299",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "main text line 8 (end)",
+    "image_reads": "وقوته عمد الى خرقة",
+    "ocr_has": "وقوته عمد الى خزنه",
+    "served_english": "he intended to go to her treasury and made a bag from it",
+    "effect": "'a rag / piece of cloth' became 'her treasury'"
+   },
+   {
+    "place": "main text line 9",
+    "image_reads": "فعمل منها كيسا وملاه رجاجا (undotted ز = زجاجا)",
+    "ocr_has": "فعل منها كيسًا ملاه رجاجًا",
+    "served_english": "made a bag from it, which he filled with pebbles",
+    "effect": "MS leaves the zay undotted; OCR kept رجاجا, translator guessed 'pebbles' instead of glass"
+   },
+   {
+    "place": "main text line 2",
+    "image_reads": "ومشى قليلا من السرداب وهو خايف",
+    "ocr_has": "ومشى قليلا من الترحاب وهو خائف",
+    "served_english": "walked a little in greeting, and he was afraid",
+    "effect": "'out of the vault (cellar)' turned into 'in greeting'"
+   },
+   {
+    "place": "main text line 3",
+    "image_reads": "وخرج الى برا ومشى في الظلام حتى اختفى في الدهليز",
+    "ocr_has": "وخرج الى برانتي في الظلام حتى اجتمع في الدهليز",
+    "served_english": "went out to the street in the darkness until he gathered in the hallway",
+    "effect": "'walked ... hid himself' lost; 'gathered' is nonsense"
+   },
+   {
+    "place": "main text line 4-5",
+    "image_reads": "تلك العجوز الملعونة في طلب صيدا اخر مثله ... فاتى الى منزلي فلم يزل",
+    "ocr_has": "تلك العور الملعونة في طلب صيدها احذ مثله ... فاذي هي مترق فازل",
+    "served_english": "that cursed woman went out in search of her prey, someone like him",
+    "effect": "'old woman' lost; 'he came to my house' dropped entirely from the English"
+   },
+   {
+    "place": "main text line 6",
+    "image_reads": "وهو مع ذلك يتعاهد العجوز وينظر اليها",
+    "ocr_has": "وهو مع ذلك يعاهدها للخروج وينظر اليها",
+    "served_english": "he was still promising to go out and looking at her",
+    "effect": "'kept watch on the old woman' became 'promising to go out'"
+   },
+   {
+    "place": "night formula, 3 lines at foot (black + red)",
+    "image_reads": "فقالت دينارزاد يا اختاه ما اطيب حديثك واغربه ... الليلة الماية والخمسة وخمسون",
+    "ocr_has": "سار زاد يا اخاه، اصبح تداعية ... الليلة الماية والحمسين",
+    "served_english": "Shahrazad said: O my brother, the morning called out ... The one hundred and fiftieth night",
+    "effect": "speaker (Dinarzad) and her line garbled; night number 155 read as 150"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'which he filled with pebbles' vs glass",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'he intended to go to her treasury and made a bag from it'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'he was still promising to go out' for kept watching the old woman",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'walked a little in greeting' from OCR garble من الترحاب",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "invention: 'And for Egypt, this story-telling door...' / 'May health return...' (pen trials)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "gloss '[tell us] what happened to him on the next night'",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 20,
+  "ocr_passage_checked": "all 9 lines of the main text block (~95 words), ~19 wrong/missing words",
+  "rtl_or_vocalisation_notes": "Sparsely dotted Mamluk-era naskh: زجاجا written without the dot on ز, خرقة/خزنه and اختفى/اجتمع differ only by dots and one tooth; hamza written as ي (خايف). Middle of the page is later owners' pen trials in several hands and directions; OCR turned them into pseudo-sentences that were then translated as if text.",
+  "fixed": "partial",
+  "n_corrections": 24,
+  "image_legibility": "fair",
+  "confidence": 0.8,
+  "summary": "Handwritten page misread in about one word in five (vault, hid, old woman, rag, glass, night 155), and the English follows the wrong transcription; main text and night formula corrected, pen-trial scribbles in the middle left as the OCR had them because they cannot be read honestly."
+ },
+ {
+  "id": "69d5ac5f4dc55b8478ddd6b5_00335",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "WHOLE PAGE / image_url",
+    "image_reads": "0335.jpg is Sukkah 13b: אלא אימא עד שתהא תחלתו כשיריו אחד",
+    "ocr_has": "Sukkah 14a: יורדין לידי טומאה במחשבה ... (page-num 14, sig ד)",
+    "served_english": "They lead to tumah through intent ...",
+    "effect": "the item's image_url is one leaf off: the transcription, English and reference are all 14a, which is on 0334.jpg (headed יד, signature 'דלית 4'). All readings below are from 0334.jpg"
+   },
+   {
+    "place": "Gemara lines 1-2 (0334.jpg)",
+    "image_reads": "ואין עולין מטומאתן אלא בשינוי מעשה",
+    "ocr_has": "ואין עוללין כל יום מחלוקת לטומאה במחשבה. מטומאהן אלא בשניי מעשה",
+    "served_english": "but they do not lead every day [to] a disagreement regarding tumah through intent",
+    "effect": "five invented words; the rule 'ascend from impurity only by a change of action' lost"
+   },
+   {
+    "place": "Gemara lines 2-5",
+    "image_reads": "מעשה מוציא מיד מעשה ומיד מחשבה מחשבה אינה מוציאה לא מיד מעשה",
+    "ocr_has": "מעשה מוציאה לא מיד מעשה ומיד מחשבה מחשבה אינה מוציאה לא מיד מעשה",
+    "served_english": "the act removes, not immediately from an act and immediately from intent",
+    "effect": "a 'לא' pulled up from the next clause negates the first half of the rule"
+   },
+   {
+    "place": "Gemara lines 5-6",
+    "image_reads": "וכי תימא הני מילי כלים דחשיבי אבל ידות דלצורך אכילה נינהו",
+    "ocr_has": "ואי נימא דלצורך אכילה נינהו",
+    "served_english": "And if you say that they are for the purpose of eating",
+    "effect": "seven words dropped: the vessels / handles contrast is gone"
+   },
+   {
+    "place": "Gemara, every occurrence (9x)",
+    "image_reads": "שבססן בגורן ... בססן ממש",
+    "ocr_has": "שבסמן בגורן ... בסמן ממש",
+    "served_english": "that are in the stack at the threshing floor ... In the stack itself",
+    "effect": "ס read as מ throughout; 'trampled them' became an invented 'in the stack'"
+   },
+   {
+    "place": "Gemara, 'התיר אגדן' (3x)",
+    "image_reads": "ר' (*אליעזר) אומר התיר אגדן",
+    "ocr_has": "ר' (אליעזר) אומר התיר אגרן",
+    "served_english": "The clearance of the heap",
+    "effect": "ד read as ר; 'untied their binding' lost"
+   },
+   {
+    "place": "Gemara, after 'בעתר'",
+    "image_reads": "אלא הכא למאי חזיא חזיא לכי סתר למנקט להו בגילייהו",
+    "ocr_has": "אלא הכא למאי חזיא הכי למימר למקלט להו בגילייהו",
+    "served_english": "Is this what is meant, to keep them with their bodies?",
+    "effect": "'suited, when he takes it apart, to hold them by their stalks' garbled"
+   },
+   {
+    "place": "Mishnah",
+    "image_reads": "מתני' מסככין בנסרים דברי רבי יהודה ורבי מאיר אוסר נתן עליה נסר",
+    "ocr_has": "גמ' אמר רב מתני' במסכין בנסרים דבי יהודה ורבי מאיר אית ליה ארבעה",
+    "served_english": "The house of Judah and Rabbi Meir hold that there are four [handbreadths]",
+    "effect": "Mishnah's two opinions (R. Yehuda permits, R. Meir forbids) invented into one joint view"
+   },
+   {
+    "place": "Gemara, Rav's statement",
+    "image_reads": "דרבי מאיר אית ליה גזרת תקרה ורבי יהודה לית ליה גזרת תקרה אבל בנסרין שאין",
+    "ocr_has": "(absent; replaced by a repeated 'דברי הכל שהא רחב ארבעה')",
+    "served_english": "all agree that if it is wide by four handbreadths, it is valid",
+    "effect": "Rav's reasoning and the whole of Shmuel's first statement dropped; a duplicated line stands in"
+   },
+   {
+    "place": "Gemara, Rav Papa",
+    "image_reads": "פחות משלשה דברי הכל כשרה ... כיון דנפקי להו מתורת לבוד גזרינן",
+    "ocr_has": "פחות מישלה הרי הכל כשרה ... כיון דמהוות לבור גזרינן",
+    "served_english": "[if it is] less than [four handbreadths], it is valid ... since they serve as a partition",
+    "effect": "'three' unreadable so translator supplied four; 'left the category of lavud' invented as 'partition'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'in the stack at the threshing floor' / 'In the stack itself' for besasan",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'The clearance of the heap' for untied their binding",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'less than [four handbreadths], it is valid' where source = less than three",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'they do not lead every day [to] a disagreement regarding tumah through intent'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'attribute of judgment' for מדת אכזריות",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'the act removes, not immediately from an act and immediately from intent'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'The house of Judah and Rabbi Meir hold' for words of R. Yehuda; R. Meir prohibits",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'to keep them with their bodies' for hold them by their stalks",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "invention: 'since they serve as a partition, we do issue a decree'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "invention: '[S] To the material, everything that is connected...' (margin block)",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 30,
+  "ocr_passage_checked": "Gemara column of 14a on 0334.jpg, opening ~60 words (≈20 wrong/missing/invented); whole Gemara column then read for the fix",
+  "rtl_or_vocalisation_notes": "Unpointed Vilna square type, clear at 2x. Errors are look-alike letters (ס/מ, ד/ר, נ/ל) plus dropped and duplicated lines, typical of reciting rather than reading. The OCR's 'Rashi' and 'Masoret ha-Shas' blocks are not on the leaf at all: they are pseudo-text built from Gemara words, not a reading of the Rashi-script columns. Parenthesised (*אליעזר) is the printed marginal-correction marker (ציל אלעזר).",
+  "fixed": "partial",
+  "n_corrections": 60,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "The Gemara was badly misread (בסמן for בססן, invented and dropped lines, a fabricated Rashi/margin block) and the English follows it; note the item's image_url (0335.jpg) shows 13b while the transcription is of 14a on 0334.jpg, so the fixed file gives the 14a Gemara column read from 0334.jpg with the invented commentary blocks removed and the real ones not transcribed."
+ },
+ {
+  "id": "6990633def12272ffdc907b0_00211",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "reading_order",
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "main text line 16-17 (R. Eleazar)",
+    "image_reads": "ולא לימא איניש אכול ואשבע וארוי בקדמיתא ומה דישתאר אתן למסכני אלא",
+    "ocr_has": "ולא לוחא אינוס חכחא והשבע וארוי קדמיתא ומה דישתאר לתן למסכני אף",
+    "served_english": "should first satisfy himself and then give what remains to the poor",
+    "effect": "'let a man not say I will eat first' lost (לימא איניש, אלא רישא unread), so the prohibition became an instruction: reversal"
+   },
+   {
+    "place": "lines 12-15 (David / Nabal)",
+    "image_reads": "ואשלים דינוי דכתיב ויהי כעשרת הימים ויגוף יי' את נבל וימת",
+    "ocr_has": "והלכות דיכוי דכתיב ויהי כעפרת הימים וינוף יי' את ככל ומתי",
+    "served_english": "King David spoke of the laws of oppression... David was the \"shield\" for the poor",
+    "effect": "Nabal verse (1 Sam 25:38) unrecognisable; translator invented a filler"
+   },
+   {
+    "place": "line 14",
+    "image_reads": "ובאינון עשרה יומין דדוד מלכא דאין עלמא אתדן עליה",
+    "ocr_has": "וכחינון עטרה וימין דדוד מלכא דחין עלמא להלן עלוה",
+    "served_english": "King David is the \"Crown\" and the \"Right Hand\" that sustains the world",
+    "effect": "'ten days / judges the world' misread as crown / right hand"
+   },
+   {
+    "place": "line 9",
+    "image_reads": "ולא יהבין לון חולקהו' אברה' קאים מפתורא וקרי סורו נא",
+    "ocr_has": "ולא יהבין לון חולקהון ההוא קשיא מכולא ואקרי",
+    "served_english": "it is the most difficult thing of all, and it is called",
+    "effect": "'Abraham rises from the table and calls' replaced by an invented clause"
+   },
+   {
+    "place": "right column under ולקחתם",
+    "image_reads": "ר\"ש פתח כל הנקרא בשמי לכבודי בראתיו יצרתיו אף עשיתיו",
+    "ocr_has": "הבקרח סמאי לככולי ברחמיו ובדתיו אף עשותיו",
+    "served_english": "...The Holy One, blessed be He, called him \"Image\"",
+    "effect": "Isa 43:7 lemma and 'R. Shimon opened' unreadable, dropped with '...'; בשמי read as סמאי"
+   },
+   {
+    "place": "left inset column (Ra'aya Mehemna)",
+    "image_reads": "ליטול לולב בההוא יומא באינון זינין דיליה והאי רזא אוקימנא",
+    "ocr_has": "ליטול לולב כדקא יאות ביומין אלין ויהי נמיכין וזיין ליה",
+    "served_english": "to take the Lulav as is proper during these days...",
+    "effect": "inset column largely invented/garbled; English thinned with ellipses"
+   },
+   {
+    "place": "last full line",
+    "image_reads": "בספרא דשלמה מלכא אשכחנא דבשעתא דזווגא",
+    "ocr_has": "כפכח דסליק מלכא אשכחנא דבשעתא דזווגא השתכח",
+    "served_english": "we find that at the time of the union, the King is present",
+    "effect": "'In the Book of King Solomon we found' lost"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "reversal: should first satisfy himself and then give what remains",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "lulav precept cut to '...'; Isa 43:7 lemma and אלהים לא תקלל dropped",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'[the poor] invite him' gloss",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "David 'Crown and Right Hand that sustains the world'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "unreadable_fill: David was the shield for the poor",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "unreadable_fill: at the time of the union, the King is present",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 35,
+  "ocr_passage_checked": "main text lines 12-18 (דוד מלכא אמר ... קב\"ה חדי עמיה), ~90 words read fully",
+  "rtl_or_vocalisation_notes": "Unvocalised Rashi type; OCR confuses א/ח, ש/ס/ט, נ/כ, ב/כ, צ/ל (בצלא→בכלא, בשמי→סמאי, נבל→ככל). Print spells the divine name אלדים/יי'. OCR also added blockquote/verse-reference markup not on the page; kept as layout.",
+  "fixed": "written",
+  "n_corrections": 95,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Clear Rashi-type page badly misread by OCR (about a third of words wrong, inset column partly invented, columns interleaved), and the served reversal follows the garbled ולא לימא איניש clause."
+ },
+ {
+  "id": "69c79fed92b884e4f817374f_00107",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [],
+  "evidence": [
+   {
+    "place": "line 5",
+    "image_reads": "שאין לפחד יצחק כח וממשלה בשעה שהכתר העליון מאיר פניו למט'",
+    "ocr_has": "להין לפחד יצחק כח וממלה כטעם סתכתר כעליון מחיר פניו למט'",
+    "served_english": "He is crowned in the Supreme, hiding His face below",
+    "effect": "'has no power when the Supernal Crown shines its face' became crowned/hiding: reversal"
+   },
+   {
+    "place": "line 2",
+    "image_reads": "כלומר גם עליו גם על מדתו מדבר",
+    "ocr_has": "כלומר נס עליו נס על מדתו מדבר",
+    "served_english": "This means a miracle occurred regarding his attribute",
+    "effect": "גם read as נס (miracle)"
+   },
+   {
+    "place": "lines 3-4",
+    "image_reads": "ואומר למעני למעני אעשה כי איך יחל. וזהו שאמרו ז\"ל אין בן דוד בא אלא בדור שכלו חייב",
+    "ocr_has": "וחוזר למעכי למעכי לעסקה כי חיך יתל' וזהו כסעת הדין הקטס דוד כל חלה כדור קוים כל",
+    "served_english": "returns to His deeds for the sake of the depths",
+    "effect": "Isa 48:11 and the son-of-David saying lost; a repeated phrase invented"
+   },
+   {
+    "place": "lines 6-7",
+    "image_reads": "מכהה מאור עיניו של פחד יצחק וזהו סוד יאר ה' פניו אליך ויחונך. מהו ויחונך",
+    "ocr_has": "מכסה חי לתק רחמיס כטעם סחיר פניו העליוני",
+    "served_english": "covering the attribute of Mercy",
+    "effect": "OCR skipped about a line (eye-skip between the two שיאיר פניו); 'dims the eyes of Pachad Yitzchak' lost"
+   },
+   {
+    "place": "lines 9-11",
+    "image_reads": "כי יש שלש מאות ועשרה פנים של זעם ... ומוציאה דגל של רחמים",
+    "ocr_has": "כי יוס סלס מלות ועטרה פניס של יעם",
+    "served_english": "The day of three attributes and the crown of the face",
+    "effect": "310 faces of wrath became 'day of three attributes and crown'; the banner-of-mercy line 11 dropped entirely"
+   },
+   {
+    "place": "lines 16-18",
+    "image_reads": "יוצר המאורות. ובורא מאורי האש",
+    "ocr_has": "סוכר המחילות. וסורח מחורי הלחט",
+    "served_english": "\"the Rememberer of forgotten things\" ... \"Back of the Throne\"",
+    "effect": "two blessings unrecognisable; invented terms"
+   },
+   {
+    "place": "line 23",
+    "image_reads": "והיאך מנהיג את עולמו",
+    "ocr_has": "וסיחך מכסוג לת שלמו",
+    "served_english": "It connects and encompasses its perfection",
+    "effect": "'how He conducts His world' lost"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "reversal: crowned in the Supreme, hiding His face below",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'a miracle occurred regarding his attribute'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "loses 'has no power or dominion'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Rememberer of forgotten things' / 'Back of the Throne'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'day of three attributes' for 310 faces of wrath",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops למעני למעני אעשה and the son-of-David sentence",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'connects and encompasses its perfection' for conducts His world",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 60,
+  "ocr_passage_checked": "lines 1-7 (צבאות במשפט ... יתן לך מתנת), ~95 words read fully",
+  "rtl_or_vocalisation_notes": "Unvocalised semi-cursive (Rashi) type read as if square: ש→ס, א→ל/ח, ב→כ, נ→כ, צ→ל throughout. Print writes the divine names as ידו\"ד, אדי\"ד, אלדים, א\"ל. Item image_url (pages/.../0107.jpg) is 404; this is a split page and the image is at cropped/69c79fed92b884e4f817374f/69f67269bafa02cd379922e6.jpg (verified same text, catchword מפני).",
+  "fixed": "written",
+  "n_corrections": 300,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Legible Rashi-type page whose OCR is wrong in most words and skips roughly three lines, so the English is a fluent guess over garbage; every listed defect traces to the transcription."
+ },
+ {
+  "id": "69b4cd44d5b6c3815e1a52de_00215",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "ocr_misread"
+  ],
+  "evidence": [
+   {
+    "place": "Mikvaot 10:8, right leaf",
+    "image_reads": "שתה מים טמאים טבל והקיאם טהורים",
+    "ocr_has": "שתה מים טמאים טבל והקיא: טהורים",
+    "served_english": "If he drank pure liquids, he immersed and vomited, they are pure",
+    "effect": "transcription has טמאים correctly; English reversed it"
+   },
+   {
+    "place": "Parah 1:1, right leaf",
+    "image_reads": "לא שמעתי אל שלשית",
+    "ocr_has": "לא שמעתי אל שלשית",
+    "served_english": "I have not heard [the tradition regarding] \"third.\"",
+    "effect": "print itself has אל (for אלא); OCR faithful, English misses 'only'"
+   },
+   {
+    "place": "Parah 1:4, left leaf",
+    "image_reads": "ואשם נזיר ואשם מצורע",
+    "ocr_has": "ואשם נזיר ואשם מצורע",
+    "served_english": "the sin offering of the Nazirite, and the sin offering of the leper",
+    "effect": "guilt-offering rendered sin offering; transcription right"
+   },
+   {
+    "place": "Mikvaot 10:8 end",
+    "image_reads": "וטמאתו חץ שהוא תחוב באדם בזמן שהו' נראה חוצץ",
+    "ocr_has": "ומשאתה חוץ שהוא חתוך כאדם בזמן שהו נראה חוצין",
+    "served_english": "[a ring or object] that is cut off as a human [would be]",
+    "effect": "arrow stuck in a man lost; invented gloss follows OCR"
+   },
+   {
+    "place": "Mikvaot 10:7",
+    "image_reads": "משקין טמאים מבמקוה שעשה בו",
+    "ocr_has": "משקין טמאים מבאוכל שעטה בו",
+    "served_english": "compared to one who eats [defiled food], that he considers",
+    "effect": "'than in the mikveh' became 'than one who eats'"
+   },
+   {
+    "place": "Mikvaot 10:4",
+    "image_reads": "ובגדים שהטבילן מכובסין עד שיבעבעו הטבילן נגובין",
+    "ocr_has": "וכנפים שהטבילו מכוסים עד שיטבעו והשבילו ננוכין",
+    "served_english": "the wings [of a garment]—they immerse them folded until they are submerged",
+    "effect": "washed/dry clothes contrast lost"
+   },
+   {
+    "place": "Parah 1:2",
+    "image_reads": "רבי יוסי הגלילי אומר פרים בני שתים",
+    "ocr_has": "ימי יום הגלילי אומר פרים בני שתים",
+    "served_english": "Rabbi Jose the Galilean says: heifers [are used] at two years old",
+    "effect": "name recovered by translator; פרים read correctly but rendered heifers"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "reversal: 'drank pure liquids' for שתה מים טמאים",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'I have not heard third' for לא שמעתי אל שלשית",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "sin offering for אשם נזיר ואשם מצורע",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "heifers / heifer of the herd for פרים, ופר שני",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'tied [with a knot]' for תפר",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "Bet Hillel מטבילין merged with next ruling",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "drops יגוד (they are chopped off)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'crossed' for חוצה; 'stayed' for ושנה",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "gloss: [a ring or object] that is cut off as a human",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 13,
+  "ocr_passage_checked": "Mikvaot 10:8 (אכל אוכלים ... ואוכל בתרומתו), ~70 words read fully; rest of page about 3 per 100",
+  "rtl_or_vocalisation_notes": "Unvocalised square type with unpunctuated run-on mishnayot (hence the Bet Hillel merge); spread of two leaves read right leaf then left, order correct. OCR omitted the small Rashi-type marginal glosses beside Parah 1-2 (restored in <margin>; 'בארוגה' and main-text יגוד/יגור doubtful, יגוד taken from the gloss lemma). Print has the censor-style addition 'מן הגוים עכו\"ם'.",
+  "fixed": "written",
+  "n_corrections": 36,
+  "image_legibility": "good",
+  "confidence": 0.8,
+  "summary": "The major defects (impure→pure, guilt→sin offering, 'only heard') are translator slips over a correct transcription; OCR errors cluster in Mikvaot 10:4, 10:7 and 10:8 and cause the invented arrow/ring gloss."
+ },
+ {
+  "id": "69e7933580b52390feb18277_00263",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 5",
+    "image_reads": "وَلَمْ أَزَلْ أَتَأَوَّهُ لِخُسْرِ صَفْقَتِي وَالِافْتِضَاحِ بَيْنَ رُفْقَتِي",
+    "ocr_has": "ثُمَّ لَمْ أَزَلْ أَتَأَوَّهُ خَيْرَ صَفْقَتِي وَالْأَقْصَاحُ بَيْنَ رِفْقَتِي",
+    "served_english": "sigh over the best of my deal and the eloquence among my companions",
+    "effect": "loss/disgrace turned into best/eloquence (polarity reversal)"
+   },
+   {
+    "place": "line 9",
+    "image_reads": "لِتَقِيَ الذِّكْرَى دَرَاهِمَكَ",
+    "ocr_has": "لِتَنْفِيَ لِلذِّكْرَى دَرَاهِمَكَ",
+    "served_english": "so that you may forever banish your dirhams for the sake of memory",
+    "effect": "'guard your dirhams' became 'banish your dirhams'"
+   },
+   {
+    "place": "line 1",
+    "image_reads": "أَخْزَاهُ اللهُ",
+    "ocr_has": "أُخْرَاهُ اللهُ",
+    "served_english": "May God protect his end",
+    "effect": "curse became blessing"
+   },
+   {
+    "place": "lines 3-5",
+    "image_reads": "أَنَّ لِثَامَهُ كَانَ شَرَكَ مَكِيدَتِهِ … مُتَلَثِّمًا",
+    "ocr_has": "أَنَّ لِكُلِّهِ كَانَ شَرُّهُ مَكِيدَةٌ … مِثْلَهُمَا",
+    "served_english": "for all of it, his evil was a trick … the likes of them",
+    "effect": "the face-veil (litham) and 'veiled one' lost entirely"
+   },
+   {
+    "place": "lines 6-7",
+    "image_reads": "حِينَ رَأَى امْتِعَاضِي وَتَبَيَّنَ حَرَّ ارْتِمَاضِي",
+    "ocr_has": "حِينَ رَأَى مَا تَعَاطَى فَتَبَيَّنَ حُرٌّ تَمَاضَى",
+    "served_english": "saw what had been transacted and it became clear that a free man had passed by",
+    "effect": "'my distress / heat of my grief' turned to nonsense"
+   },
+   {
+    "place": "line 8",
+    "image_reads": "بِمَا نَابَكَ وَكَاتِمْ أَصْحَابَكَ مَا أَصَابَكَ",
+    "ocr_has": "بِمَا أَتَاكَ وَكَانَ أَصْحَابُكَ مَا أَصَابَكَ",
+    "served_english": "Let your companions remember what befell you",
+    "effect": "'conceal from your friends' reversed to 'let them remember'"
+   },
+   {
+    "place": "lines 2-3",
+    "image_reads": "وَإِخْبَارٌ فَتَحَرَّقْتُ حِينَئِذٍ وَحَوْلَقْتُ",
+    "ocr_has": "وَأَخْبَارٌ حِينَئِذٍ وَحَلَقْتُ",
+    "served_english": "At that moment, I shaved my head",
+    "effect": "فتحرقت dropped; hawqala ('no power but in God') became 'shaved'"
+   },
+   {
+    "place": "lines 10-11",
+    "image_reads": "لَابِسًا ثَوْبَ الْخَجَلِ وَالْحَزَنِ سَاحِبًا ذَيْلَ … بِالْهَجْرِ وَمُصَارَمَتَهُ",
+    "ocr_has": "لَا يَسْأَلُوبُ الْخَجَلُ وَالْحُزْنُ سَكِيًّا ذَيْلُ … بِالْخَبَرِ مُصَارَحَةً",
+    "served_english": "not asking out of shame and sadness … confront Abu Zayd with the news directly",
+    "effect": "'wearing the garment of shame, trailing the skirt' lost; 'shun him' became 'tell him the news'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'best of my deal and the eloquence among my companions'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'forever banish your dirhams for the sake of memory'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'May God protect his end'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'what had been transacted … a free man had passed by'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Let your companions remember what befell you'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "وتخلق بخلق dropped",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'not asking out of shame … tail of loss followed'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "margin: commentator 'small price' claim invented",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'the house of a poem' for بيت قصيدته",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 22,
+  "ocr_passage_checked": "whole main text, 11 lines (~105 words), read against image",
+  "rtl_or_vocalisation_notes": "Heavily vocalised lithographed naskh with Persian interlinear glosses under every line; OCR let harakat/gloss strokes distort letter skeletons (ز/ر, ث/ك, م/ه) and guessed real-looking words. Persian interlinear and marginal glosses not transcribed (left as OCR's summary note).",
+  "fixed": "written",
+  "n_corrections": 24,
+  "image_legibility": "fair",
+  "confidence": 0.88,
+  "summary": "About one word in five of the vocalised Arabic was misread into other real words, and the English faithfully translated the wrong transcription; the translation itself is mostly not at fault."
+ },
+ {
+  "id": "69ea3e91300d991d0f1d37ee_00092",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation",
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "line 5",
+    "image_reads": "وعلى جبال بقربه لاطية",
+    "ocr_has": "وعلى جبال بقربه لاضية",
+    "served_english": "On the mountains near it are lamps.",
+    "effect": "'low-lying hills' (where people stand) became an invented sentence about lamps"
+   },
+   {
+    "place": "line 4",
+    "image_reads": "سقايات وحياض وقناة تخرّ وعلم قد بنى يقف خلفه الامام",
+    "ocr_has": "سقايات وقناة تخره وعلم قد بنى خلفه الامام",
+    "served_english": "a sign the Imam built behind him for prayer",
+    "effect": "'reservoirs' lost; 'a marker built, behind which the Imam stands' became 'the Imam built'"
+   },
+   {
+    "place": "line 3",
+    "image_reads": "والموقف منها على صيحة عند جبل متلاط",
+    "ocr_has": "والموقف منها على صبيحة عند جبل متلاط",
+    "served_english": "The standing place is on its plain near a mountain",
+    "effect": "'a shout's distance' lost; 'plain' guessed"
+   },
+   {
+    "place": "line 1, first word",
+    "image_reads": "ببير وكانت العرب",
+    "ocr_has": "وببر وكانت العرب",
+    "served_english": "...and wells.",
+    "effect": "tail of the name Thabir (from previous page) read as 'and wells'"
+   },
+   {
+    "place": "line 15",
+    "image_reads": "والجحفة مدينة عامرة يسكنها بنو جعفر",
+    "ocr_has": "والجحفة مدينة يسكنها بنو جعفر",
+    "served_english": "Al-Juhfa is a city inhabited by the Banu Ja'far",
+    "effect": "'flourishing' dropped"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'On the mountains near it are lamps' invented",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "على الخلاف dropped",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'Thabir has brightened' for imperative",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'...and wells' for opening word (Thabir)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'and it is plentiful' for وهي كثيرة running to next page",
+    "cause": "page_seam"
+   },
+   {
+    "judge_defect": "'on its plain near a mountain' drops متلاط",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 6,
+  "ocr_passage_checked": "main text lines 1-6 (~70 words) read fully; rest of main text and apparatus compared",
+  "rtl_or_vocalisation_notes": "Main text clean; OCR read superscript note letters as Arabic letters (جمعاه = جمعا + note b) and dropped two words next to note anchors. The Latin/Arabic apparatus was badly scrambled by bidi (Arabic lemmata detached from their sigla, Eastern-Arabic page numerals turned into wrong Western ones); rewritten in logical order, with the order of Arabic across line breaks in notes n/o resolved by sense. First word printed ببير is the end of a phrase begun on the previous page (ثبير).",
+  "fixed": "written",
+  "n_corrections": 14,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "One misread letter (لاضية for لاطية) plus two dropped words by note anchors gave the translator garble that it filled with invention; the remaining defects are minor translation and page-edge slips."
+ },
+ {
+  "id": "6a06cdd7c749b698e5b2c9a4_00104",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation",
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "فاخذ ايري في القيام عند ذلك الى صار كالعمود",
+    "ocr_has": "فاخذ يد الغلام عند ذلك الى صار كالعمود",
+    "served_english": "she took the boy's hand and led it to that which had become like a pillar",
+    "effect": "'my member began to rise' became an invented boy's hand"
+   },
+   {
+    "place": "line 3",
+    "image_reads": "تجره … الى بين فخذيها … ادخلي الى البيت",
+    "ocr_has": "تخرجه من اليمين وتخرجه من اليسار … ادخليه الى",
+    "served_english": "began moving it from the right and from the left",
+    "effect": "OCR invented a clause; 'drew it between her thighs' lost"
+   },
+   {
+    "place": "lines 5-6",
+    "image_reads": "فاضرب به هذا الكس السمين … واسيادك لم يصلوا اليه",
+    "ocr_has": "ما ضرب به هذا الكس السمين … والسياه كم يجلو البير",
+    "served_english": "Never had this stout vulva been struck by such a thing … polishing of a well",
+    "effect": "her imperative became a negative statement; 'your masters never reached it' became nonsense"
+   },
+   {
+    "place": "lines 10-11",
+    "image_reads": "ثم رقدت على ظهرها وعرت فرجها … الى فرجها ينحل وينغلق كالفرس الحايل",
+    "ocr_has": "ثم رفعت على ظهرها وعرت عن وجهها … الى وجهها ينجلي وينفلق كالبرق الخاطف",
+    "served_english": "uncovered her face … her face, which shone and broke out like a flash of lightning",
+    "effect": "vulva read as face, mare simile read as lightning; stallion clause left dangling"
+   },
+   {
+    "place": "line 12",
+    "image_reads": "وايري في يدها",
+    "ocr_has": "وارى في يدها",
+    "served_english": "I saw it in her hand",
+    "effect": "'my member in her hand' became 'I saw'"
+   },
+   {
+    "place": "lines 14-16",
+    "image_reads": "فلما رايتها على تلك الحالة اغثتها فلما وصل الراس … اتتها الشهوة سريعا فسمعت شخيرا ونخيرا",
+    "ocr_has": "تغرب في قـ لما كان على رايتها تلك الحالة غشتها غشيا وصل الراس … انتهاء الشهوة حريقا فسمعت ضجيجا ونحيبا",
+    "served_english": "A faintness overcame her … The peak of desire was like a burning fire",
+    "effect": "'when I saw her so I helped her' became a fainting fit; climax clause garbled"
+   },
+   {
+    "place": "line 17",
+    "image_reads": "ووسطه احمر غليظ كالقبة",
+    "ocr_has": "ووسطه احمر غاية كالفستقة",
+    "served_english": "extremely red, like a pistachio nut",
+    "effect": "'thick, like a dome' became 'pistachio'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'She spoke of its hardening and tension' — speech turned into narration",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'took the boy's hand and led it to … a pillar'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'When the stallion drew near her, I still refused'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "meta 'and I acted slowly' carries previous-page text",
+    "cause": "page_seam"
+   },
+   {
+    "judge_defect": "source script/warning tags echoed at head",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'I saw it in her hand' follows وارى for وايري",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 17,
+  "ocr_passage_checked": "whole page, 17 lines (~190 words); lines 1-6 and 10-17 read letter by letter",
+  "rtl_or_vocalisation_notes": "Maghribi pointing: fa has its dot below, qaf a single dot above, and final ha is a short stroke like ra. OCR applied eastern values, giving وجهها for فرجها, رفعت for رقدت, تغرب for تقرب, البير for اليه. Unvocalised. Marginal pencil رايتها replaces a struck-out كانت in line 14; interlinear فقالت above line 4; catchword المنصوب.",
+  "fixed": "written",
+  "n_corrections": 31,
+  "image_legibility": "fair",
+  "confidence": 0.72,
+  "summary": "The OCR misread the Maghribi fa/qaf pointing and substituted plausible words throughout (boy's hand, face, lightning, pistachio), so the English narrates things the page does not say; the one major judge defect is additionally a translation slip."
+ },
+ {
+  "id": "69d5abf3d0bd3547a5654427_00104",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "reading_order",
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "3rd line from bottom",
+    "image_reads": "ومن تعرض للاسهال والقي وبدنه نقي لم يكن له بد من دوار ومغص",
+    "ocr_has": "ومن تعرض للاسهال ويدنه نق به بد من دوا رو مغص",
+    "served_english": "their body is not cleansed of it, it must be from a drug or colic",
+    "effect": "OCR dropped 'والقي' and 'لم يكن له', split دوار (vertigo) into دوا (drug); clean body became uncleansed"
+   },
+   {
+    "place": "ch.4 body, ~line 27-29 of block",
+    "image_reads": "والدوا المقي قد يعود مسهلا ... والمسهل يصير مقييا لضعف المعدة",
+    "ocr_has": "والدوا الملقي قد يعود مسهلا ... والمسهل يصبر مقيبا",
+    "served_english": "A purgative medicine may act as a laxative / The purgative may remain",
+    "effect": "emetic→purgative and purgative→emetic lost"
+   },
+   {
+    "place": "ch.4 line 7",
+    "image_reads": "واستفراغا بمثل الخربق وبالادويه القويه فيجب ان يبدا بالفصد",
+    "ocr_has": "او استفراغا بمثل الخريف وبالادن به القي به ابعد بالفصد",
+    "served_english": "such as in autumn, and if it is not possible to use vomiting",
+    "effect": "hellebore/strong drugs → autumn/vomiting; 'begin with bleeding' lost"
+   },
+   {
+    "place": "6th line from bottom",
+    "image_reads": "ما له حال وحال كالبلغم والمحموم اسهاله اصوب",
+    "ocr_has": "ماله حال كالحلبلب والنجوم اسهاله اصوب",
+    "served_english": "Some have a condition like milk and stars",
+    "effect": "phlegm / the fevered became nonsense that the translator filled"
+   },
+   {
+    "place": "line 4 and ch.4 line 12",
+    "image_reads": "يحدث حمي في الاكثر / اوفق له ... اوقع ... في حمي",
+    "ocr_has": "يحدث جي في الاكثر / اوقف له ... وقع ... في جي",
+    "served_english": "often causes harm / it will stop it",
+    "effect": "fever lost; 'more suitable' became 'stops'"
+   },
+   {
+    "place": "mid-page heading",
+    "image_reads": "heading stands after 'قليل الحاجة الي الاستفراغ'; ends 'المسهل والمقي'",
+    "ocr_has": "heading moved to top of page; 'المسهل والقي'",
+    "served_english": "Chapter Four ... placed before the end of chapter 3",
+    "effect": "end of ch.3 presented as ch.4 text"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'body is not cleansed ... from a drug or colic' vs وبدنه نقي",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'purgative may act as a laxative' vs emetic turns purgative",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'purgative may remain' vs purgative becomes emetic",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'milk and stars' for garbled كالحلبلب والنجوم",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'if not possible to use vomiting' vs begin with blood-letting",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'harm' for fever (جي)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'drinks the medicine, it will stop it'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops 'فان غلب بعد ذلك استفرغ'",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 14,
+  "ocr_passage_checked": "first 6 printed lines (معها غيرها … تخور القوة), then spot-read every line of the page",
+  "rtl_or_vocalisation_notes": "Unvocalised Medicean Arabic type with sparse/ambiguous dots, tight ligatures, final ي undotted as ى; dot-dependent pairs (حمي/جي, اوفق/اوقف, يصير/يصبر, الخربق/الخريف) are where OCR failed. One spot (ان يستسهل او يتقيا ان يفرق) the او/ان order is hard to see; set by sense.",
+  "fixed": "written",
+  "n_corrections": 95,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Legible page whose OCR misreads or drops words in most lines (incl. two skipped lines' worth and a dittography) and moves the mid-page chapter heading to the top; every major judged defect traces to a wrong transcription."
+ },
+ {
+  "id": "69e7299ba409200ea79f0b56_00211",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation",
+   "reading_order",
+   "wrong_language_label"
+  ],
+  "evidence": [
+   {
+    "place": "lower block row 5, Persian",
+    "image_reads": "مر مروت را نهاده زیر پا | کشته زندان دوزخی زان نان ربا",
+    "ocr_has": "مرمت را نهاده در زنی زان ربا | کشته زندان دوزخی زان ربا",
+    "served_english": "He has placed his hope in that profit, He has made a prison of hell",
+    "effect": "'trodden virtue underfoot / bread-robber' lost; ربا read as profit"
+   },
+   {
+    "place": "lower block row 11, Persian",
+    "image_reads": "ور خیالاتش نماید ناخوشی | میکدازد همچو موم از آتشی",
+    "ocr_has": "در خیالش نماید ناخوشی | میکده از بهچوموم از آتشی",
+    "served_english": "The candle from fire, the moth from fire",
+    "effect": "'melts like wax' became an invented line"
+   },
+   {
+    "place": "top block row 1 and row 3",
+    "image_reads": "هر کرا باشد طمع الکن شود / کرچه بدهی کنجها او حر بود",
+    "ocr_has": "هر کر اباسط طمع اکن شود / گرچه بد هی کنجها او سر بود",
+    "served_english": "becomes a sower of greed / he is the master of the treasure",
+    "effect": "'stammerer' and 'free' lost"
+   },
+   {
+    "place": "lower block rows 6-7, Persian",
+    "image_reads": "کر کریزی بر امید راحتی / هیچ کنجی بی دد و بی دام نیست",
+    "ocr_has": "کر کرینی بر امید راحتی / هیچ گنجی بی دوبی دام نیست",
+    "served_english": "If you do something for the hope of comfort / no treasure … without a snare",
+    "effect": "'flee' and 'no corner without beasts' lost"
+   },
+   {
+    "place": "heading",
+    "image_reads": "تعریف کردن منادیان قاضی مفلسی را کرد شهر",
+    "ocr_has": "تعریف کردن منادیان قاضی مفلسی را در شهر",
+    "served_english": "Proclamation … to the bankrupt man in the city",
+    "effect": "'round the town' became 'in the city'"
+   },
+   {
+    "place": "Turkish columns, rows 16-20 of lower block",
+    "image_reads": "صبر اولور ایمان ایچون زیب کله | حیث لا صبر فلا ایمان له",
+    "ocr_has": "صبر اولور کل ایمان تام | کیمکه صبر و شکیب اولمز تمام",
+    "served_english": "(mostly dropped; 'sometimes it is the moon' comes from the Turkish line)",
+    "effect": "Turkish cells shifted up one row and one line duplicated"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "Ottoman Turkish hemistichs of nearly every row absent",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'placed his hope in that profit … prison of hell'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'The candle from fire, the moth from fire'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'he is the master of the treasure' vs he is free",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'sometimes it is the moon' for ماهی (fish)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'sower of greed'; 'If you do something'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "heading 'to the bankrupt man in the city'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Because in the eyes, imagination is disbelief'",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 17,
+  "ocr_passage_checked": "Persian columns, lower block rows 1-8 (بود شخصی … دق الحصیر), ~65 words; Turkish columns also read in full",
+  "rtl_or_vocalisation_notes": "Bulaq nasta'liq type, unvocalised, کاف used for both k and g; stacked nasta'liq ligatures (زیر پا, میکدازد, فربهی) are what the OCR broke. Four columns read right-to-left: Persian couplet in the two right columns, Turkish couplet in the two left. Language tag says Ottoman Turkish though the main text is Persian.",
+  "fixed": "written",
+  "n_corrections": 48,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Clear printed page; the wrong English lines follow Persian hemistichs the OCR misread (about one word in six), the Turkish column was mis-rowed near the end, and the translator separately dropped most of the Turkish verse."
+ },
+ {
+  "id": "69e729a1a409200ea79f0ca5_00257",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "reading_order",
+   "ocr_misread",
+   "wrong_language_label"
+  ],
+  "evidence": [
+   {
+    "place": "prose heading, line 3",
+    "image_reads": "فمن غلب عقله شهوته فهو اعلی من الملائکة",
+    "ocr_has": "فمن غلب عقله شهوته فهو اعلی من",
+    "served_english": "whoever overcomes his intellect with his desire, he is higher than the angels",
+    "effect": "transcription correct; English reversed subject and object"
+   },
+   {
+    "place": "body row 2, Persian",
+    "image_reads": "آن فرشته ست او نداند جز سجود",
+    "ocr_has": "آن فرشته است او نداند سجود",
+    "served_english": "That is the angel, he does not know prostration",
+    "effect": "OCR dropped جز: 'knows nothing but prostration' reversed, then glossed with an invented note"
+   },
+   {
+    "place": "body row 5, Persian",
+    "image_reads": "از شقاوت غافلست او از شرف",
+    "ocr_has": "از شقاوت عاقل است و از شرف",
+    "served_english": "From misery he is intelligent, and from nobility",
+    "effect": "heedless → intelligent"
+   },
+   {
+    "place": "body rows 6-8",
+    "image_reads": "این سوم هست آدمی زاد و بشر | از فرشته نیم او نیمیش خر",
+    "ocr_has": "این سوم هست آدمی زاد و بشر | نیم دیگر مائل علوی بود",
+    "served_english": "This third one is the offspring of Adam … The other half was inclined toward the celestial",
+    "effect": "hemistich 'half angel, half ass' dropped; every later Persian hemistich paired with the wrong partner"
+   },
+   {
+    "place": "body rows 15-23 and Turkish column",
+    "image_reads": "خر شود چون جان او بی آن شود / این سخن حقست صوفی کفته است",
+    "ocr_has": "(absent; first hemistichs repeated in column 2, Turkish 2nd hemistichs in a 23-line tail)",
+    "served_english": "table rows pairing unrelated half-lines",
+    "effect": "four Persian hemistichs missing, nine duplicated, Turkish couplets split"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'whoever overcomes his intellect with his desire, he is higher than the angels'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "first heading column skips 'و رکب فیهم العقل و خلق البهائم'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'he does not know prostration'; 'From misery he is intelligent'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Through spiritual discipline, escaped from asceticism'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "hemistich 'کو بیا از آدمی و خود نژاد' has no counterpart",
+    "cause": "reading_order"
+   },
+   {
+    "judge_defect": "'That he was a pillar, which he had to remain'",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 20,
+  "ocr_passage_checked": "Persian columns, body rows 1-9 (در حدیث آمد … سه امت شدند), ~70 words; whole page then read",
+  "rtl_or_vocalisation_notes": "Printed Bulaq nasta'liq, not handwritten as the OCR tags claim; four columns right-to-left (Persian couplet | Turkish couplet), prose heading split into a Persian half (right) and a Turkish-captioned Arabic half (left). OCR collapsed this into 3 columns and slipped hemistichs by one from row 6. Language tag Ottoman Turkish is wrong for the main text.",
+  "fixed": "written",
+  "n_corrections": 70,
+  "image_legibility": "good",
+  "confidence": 0.8,
+  "summary": "The one judged major (the hadith reversal) is a translation error on a correct transcription, but the page's transcription is itself badly column-scrambled with dropped and duplicated hemistichs and several misread words; rebuilt as a 4-column table from the image."
+ },
+ {
+  "id": "69e729a7a409200ea79f0e08_00279",
+  "primary_cause": "served_stale",
+  "secondary_causes": [
+   "reading_order",
+   "ocr_misread",
+   "wrong_language_label"
+  ],
+  "evidence": [
+   {
+    "place": "whole page",
+    "image_reads": "فجفجی در جملهٔ دیوان فتاد / شورشی در وهم آن سلطان فتاد",
+    "ocr_has": "فجفجی در جمله دیوان فاد … شورش در و هم آن سلطان فاد",
+    "served_english": "The proclamation of the Sayyid of the Malak of Tirmidh, that whoever goes to Samarkand",
+    "effect": "served English renders the heading and 6 couplets of the PREVIOUS page (twice: Persian then Turkish); none of this page's 30 couplets appears"
+   },
+   {
+    "place": "layout, 4 columns",
+    "image_reads": "col1+col2 = one Persian couplet per row; col3+col4 = Turkish couplet",
+    "ocr_has": "30 first hemistichs, then 30 second hemistichs, per language",
+    "served_english": "(not rendered)",
+    "effect": "couplets split into two detached blocks; a translation of this OCR would not pair hemistichs"
+   },
+   {
+    "place": "Persian couplet 7a",
+    "image_reads": "آن یکی دو دست بر زانو زنان",
+    "ocr_has": "آن یکی دو دست بر افروزنان",
+    "served_english": "(not rendered)",
+    "effect": "'beating hands on knee' lost"
+   },
+   {
+    "place": "Persian couplet 27b",
+    "image_reads": "تا سمرقند و دهم او را کنوز",
+    "ocr_has": "تا سمرقند و دو هم و اگر هنوز",
+    "served_english": "(not rendered)",
+    "effect": "'and I will give him treasures' turned to nonsense"
+   },
+   {
+    "place": "Persian couplet 3b",
+    "image_reads": "یا بلای مهلکی از غیب خاست",
+    "ocr_has": "یا بلای ملکی از غیب خاست",
+    "served_english": "(not rendered)",
+    "effect": "'deadly calamity' becomes 'royal calamity'"
+   },
+   {
+    "place": "Persian couplet 30a",
+    "image_reads": "اینچنین چستی نیاید از چو من",
+    "ocr_has": "اینچنین پستی نیاید از چومن",
+    "served_english": "(not rendered)",
+    "effect": "'agility' becomes 'baseness'"
+   },
+   {
+    "place": "Turkish col3 row 25",
+    "image_reads": "دیدی تعجیل اوزره سویله پس نه حال",
+    "ocr_has": "(line missing; col3 has 29 lines against 30)",
+    "served_english": "(not rendered)",
+    "effect": "one Turkish hemistich dropped, shifting the Turkish pairing from row 25 on"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "translates the previous page's heading and couplets (T4)",
+    "cause": "served_stale"
+   },
+   {
+    "judge_defect": "none of this page's 30 couplets is rendered (T9)",
+    "cause": "served_stale"
+   },
+   {
+    "judge_defect": "boundary invention 'The Sayyid of Tirmidh, who was the king there'",
+    "cause": "served_stale"
+   }
+  ],
+  "ocr_word_errors_per_100": 13,
+  "ocr_passage_checked": "Persian couplets 1-10 (both hemistich columns, ~120 words, ~16 errors); Turkish columns are worse (~25/100 plus one dropped line)",
+  "rtl_or_vocalisation_notes": "Unvocalised printed nasta'liq, Bulaq 1851. Right pair of columns is the Persian Masnavi, left pair the Ottoman verse translation; reading goes right to left across each row. OCR splits joined words (تر مد, و هم, دو شد) and writes فاد for فتاد throughout; page tagged Ottoman Turkish only.",
+  "fixed": "written",
+  "n_corrections": 92,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "The served English is the previous page's text (heading plus six couplets, given twice), not this page; independently the OCR splits every couplet into detached hemistich blocks, drops one Turkish line and misreads about one word in eight."
+ },
+ {
+  "id": "6a21994b4b61907ea5ffb7e5_00027",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 5",
+    "image_reads": "چون ظهور و شهود مجمل در مفصل",
+    "ocr_has": "چون ظهور و مجمل مفصل",
+    "served_english": "like the appearance of the detailed within the concise",
+    "effect": "OCR dropped شهود and در, leaving the relation undetermined; the English then guessed it the wrong way round"
+   },
+   {
+    "place": "line 7",
+    "image_reads": "و این ظهوریست علمی غیبی چون ظهور مفصل در مجمل",
+    "ocr_has": "و این ظهور است علمی چون ظهور مفصل مجمل",
+    "served_english": "like the appearance of the concise within the detailed",
+    "effect": "در and غیبی dropped; English reverses the simile and loses 'hidden'"
+   },
+   {
+    "place": "line 8",
+    "image_reads": "و غنای مطلق لازم کمال ذاتیست و معنی غنای مطلق آنست که",
+    "ocr_has": "و نمای مطلق لازم کمال آنیت و مغنی غنای مطلق است که",
+    "served_english": "The Absolute Manifestation is a necessary consequence of the perfection of His I-ness",
+    "effect": "'absolute self-sufficiency … essential perfection; its meaning is that' became 'manifestation … I-ness', and the sentence frame was lost"
+   },
+   {
+    "place": "line 10",
+    "image_reads": "علی وجه کلی جملی که در جمله مراتب حقایق الهی و کونی",
+    "ocr_has": "علی وجه کلی سبحانه که در جمله مراتب حقایق آلی و کونی",
+    "served_english": "Glory be to Him, who manifests Himself through all the levels of instruments",
+    "effect": "invented سبحانه made God the subject; الهی read as آلی gave 'instruments' for 'divine'"
+   },
+   {
+    "place": "line 4",
+    "image_reads": "شهود او مر … بحسب همین اعتبارات و این ظهور و شهودیست",
+    "ocr_has": "شود او را بحسب عین اعتبارات و این ظهور و شهود",
+    "served_english": "His perception of Himself through these very considerations",
+    "effect": "English recovered the sense despite the misreading"
+   },
+   {
+    "place": "line 6",
+    "image_reads": "ذاتست مر نفس خود را از برای نفس خود بی اعتبار غیر",
+    "ocr_has": "ذات است بنفس خود و از برای نفس خود بی اعتباری",
+    "served_english": "manifestation of the Essence to itself and for itself",
+    "effect": "little effect"
+   },
+   {
+    "place": "line 1",
+    "image_reads": "چه در دنیی و چه در آخرت و مقصود باین همه",
+    "ocr_has": "چه در دینی و چه در آخرت و مقصود با آن به",
+    "served_english": "whether in religion or in the hereafter",
+    "effect": "'this world' became 'religion' (letter dots ambiguous in the hand; sense and edition settle دنیی)"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "both analogies swapped (T8), detailed/concise reversed",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Absolute Manifestation … perfection of His I-ness' (T7)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'instruments and cosmic realities' for Divine and mundane",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'in religion or in the hereafter'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Glory be to Him, who manifests Himself' makes God subject; loses 'the meaning … is that'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "invented gloss 'ilmi",
+    "cause": "not_a_defect"
+   }
+  ],
+  "ocr_word_errors_per_100": 20,
+  "ocr_passage_checked": "whole page, 12 lines (~125 words, ~25 wrong, missing or invented)",
+  "rtl_or_vocalisation_notes": "Unvocalised nasta'liq manuscript facsimile, high-contrast bitonal scan. Scribe stacks word-ends above the line (شهودیست, جملی, غیر) and marks a transposition in line 3 (کمال یعنی استجلا to be read کمال استجلا یعنی); the OCR missed most stacked pieces and both small در. A blank with an omission mark follows مر in line 4 (edition has خود را); left as [...] since the page does not carry it.",
+  "fixed": "written",
+  "n_corrections": 27,
+  "image_legibility": "fair",
+  "confidence": 0.75,
+  "summary": "Every major defect traces to the transcription: two dropped در undid the mujmal/mufassal similes, غنای/ذاتیست/معنی were misread as نمای/آنیت/مغنی, and جملی and الهی became an invented سبحانه and آلی."
+ },
+ {
+  "id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "couplet 8b (centred lines)",
+    "image_reads": "بخت جوانت از فلک پیر ژنده پوش",
+    "ocr_has": "بخت جوانت از فلک پیر زند بپوش",
+    "served_english": "May your young fortune live from the ancient heaven",
+    "effect": "'tattered-robed old sky' lost; زند read as 'live', and the couplet's syntax (fortune accepts the blue khirqa from the sky) collapsed"
+   },
+   {
+    "place": "couplet 5a",
+    "image_reads": "عشقست و مفلسی و جوانی و نو بهار",
+    "ocr_has": "عشقت مفلسی و جوانی و نوبهار",
+    "served_english": "Your love is poverty, youth, and the new spring",
+    "effect": "a list of four excuses became 'your love is poverty'"
+   },
+   {
+    "place": "couplet 2b",
+    "image_reads": "کردم سؤال صبحدم از پیر می فروش",
+    "ocr_has": "کردم سؤال صبحدم از پیری فروش",
+    "served_english": "I asked the wine-seller at dawn",
+    "effect": "the Pir dropped"
+   },
+   {
+    "place": "couplet 9b",
+    "image_reads": "کز شما پنهان نشاید داشت راز می فروش",
+    "ocr_has": "کز شما پنهان نشاید داشت از می فروش",
+    "served_english": "That one should not hide anything from the wine-seller",
+    "effect": "'the wine-seller's secret' lost, direction of hiding reversed; کز شما also dropped by the translator"
+   },
+   {
+    "place": "couplet 11",
+    "image_reads": "وانگهم در داد جامی … بربط زنان میگفت نوش",
+    "ocr_has": "وانگه در داد جامی … بربط زنان بگرفت گوش",
+    "served_english": "the harpist to perk up her ears",
+    "effect": "'the lute-player kept saying Drink!' replaced; rhyme word invented by OCR"
+   },
+   {
+    "place": "couplet 1b",
+    "image_reads": "تا دید محتسب که سبو می کشد بدوش",
+    "ocr_has": "تا دید محتسب که سبویی کشد بدوش",
+    "served_english": "Until he saw the muhtasib carrying a jug",
+    "effect": "negligible; 'until' for تا is the translator's"
+   },
+   {
+    "place": "couplet 2a",
+    "image_reads": "شرب الیهودشان",
+    "ocr_has": "شرب الیهودان",
+    "served_english": "the drinking of the Jews",
+    "effect": "'their secret (Jew-style) drinking' became 'drinking of the Jews'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'Stay as long as the blue robe accepts it, May your young fortune live…'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Until he saw' / 'in the corner' for تا دید / ز کنج",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'O silent lover' loses the imperative",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'Your love is poverty, youth, and the new spring'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'the wine-seller' drops پیر",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'should not hide anything from the wine-seller' drops کز شما",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 7,
+  "ocr_passage_checked": "whole page, 13 couplets (~150 words, 11 wrong or missing); couplets 1-5 read letter by letter",
+  "rtl_or_vocalisation_notes": "Unvocalised printed-calligraphy nasta'liq in two hemistich columns read right then left; couplet 8 is set centred on two lines; rhyme words are stacked upward at line ends (تیزهوش, نوش, خروش), which is where the OCR invented بگرفت گوش. Two judge defects not listed as OCR-caused also exist only in the image: راز and میگفت نوش.",
+  "fixed": "written",
+  "n_corrections": 10,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "The one major defect and most minor ones come from OCR misreadings (ژنده پوش as زند بپوش, عشقست و as عشقت, پیر می فروش as پیری فروش, plus an invented rhyme بگرفت گوش); the translator added a few small slips of its own."
+ },
+ {
+  "id": "6992cf0970ab3737555456ae_00100",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "row 2, col 1 (rightmost)",
+    "image_reads": "بسے گفت و بشنید و زد داستان",
+    "ocr_has": "بسے گفت و بشنید و رودابه نان",
+    "served_english": "Rudaba became part of this unfolding story",
+    "effect": "OCR invented the name Rudaba; Sam's consenting ('he at last agreed') became Rudaba joining the story"
+   },
+   {
+    "place": "row 9, col 1-2",
+    "image_reads": "زمان تا زمان پیش من بگذری / بحجره در آئی بمن ننگری",
+    "ocr_has": "زبان بازمان پیش من کز کجای / به حجره در آئی بهمن منگری",
+    "served_english": "Hold your tongue before me! From where",
+    "effect": "'you pass before me time after time' turned into a command to be silent"
+   },
+   {
+    "place": "row 14, col 2-4",
+    "image_reads": "بها تا نیابم تو از من مجوی / همی کژ بدانست گفتار اوی",
+    "ocr_has": "بهانا نیایم نواز من مجوی / همی کز بد بخت گفتار وی",
+    "served_english": "Do not seek favor from me now... From the woman's ill-fated words",
+    "effect": "'ask no price till I am paid' and 'she knew her words were crooked' lost"
+   },
+   {
+    "place": "row 15, col 1",
+    "image_reads": "بیامد بجستش بر و آستی",
+    "ocr_has": "نیاید بختش به در استنی",
+    "served_english": "Her luck did not hold out against the Queen",
+    "effect": "Sindukht searching the woman's bosom and sleeve replaced by a guessed line"
+   },
+   {
+    "place": "row 22, col 3",
+    "image_reads": "سخن بر چه سانست این مرد کیست",
+    "ocr_has": "سخن هر چه ساختند این مرد و زن",
+    "served_english": "Whatever words this man and woman have crafted",
+    "effect": "question 'who is this man?' lost"
+   },
+   {
+    "place": "row 27, col 1-2",
+    "image_reads": "نخواهم بدن زنده بے روی اوی / جهانم نیرزد بیک موی اوی",
+    "ocr_has": "نخواهم بدن زنده روی او / حیاتم نیز در بیکه بوی اوی",
+    "served_english": "My very life is contained in his scent",
+    "effect": "'the world is not worth one hair of his' became 'life in his scent'"
+   },
+   {
+    "place": "row 18, col 2",
+    "image_reads": "همی کوفت پای و همی زد بدست",
+    "ocr_has": "همی کوفت پای و همی زد بدست",
+    "served_english": "The woman struck out with her feet and hands in pain",
+    "effect": "OCR correct; translator switched the subject from Sindukht to the woman"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'Rudaba became part of this unfolding story...' (Sam consented, Zal gave letter)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'The woman struck out with her feet and hands in pain' (reversal)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'Hold your tongue before me! From where'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Her luck did not hold out against the Queen' unreadable fill",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "running head left in Persian before its translation",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "added Zahhak / Mobeds-blessing glosses",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 9,
+  "ocr_passage_checked": "rows 7-15 read in full (c. 200 words); whole page compared line by line",
+  "rtl_or_vocalisation_notes": "Nastaliq lithograph, 4 hemistich columns read right to left; OCR cell order is correct but header declared 3 columns for a 4-cell table. Stacked nastaliq ligatures and undotted/misplaced dots (ب/پ/ن/ی, ک/گ, ز/ژ) drive most misreads; yā-ye majhūl ے used.",
+  "fixed": "written",
+  "n_corrections": 46,
+  "image_legibility": "fair",
+  "confidence": 0.72,
+  "summary": "OCR of the nastaliq lithograph misreads roughly one word in ten (including an invented 'Rudaba' and several whole hemistichs), and the English follows it; the feet-and-hands reversal is a pure translation error on a correctly read line."
+ },
+ {
+  "id": "69e74ef95cf1eaf3ad80e04c_00131",
+  "primary_cause": "reading_order",
+  "secondary_causes": [
+   "ocr_misread",
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "whole verse block",
+    "image_reads": "ملکرا بوقت عنان تافتن ‖ بدزدی نشاید ظفر یافتن (paired couplets)",
+    "ocr_has": "14 first hemistichs, <column-break/>, then 14 second hemistichs",
+    "served_english": "\"To the kingdom, at the time of tightening the rein,\" The researcher began again,",
+    "effect": "every couplet split; first halves never meet their second halves, so no sentence completes"
+   },
+   {
+    "place": "couplet 2, second hemistich",
+    "image_reads": "که دارا نه چندان سپه ساز کرد",
+    "ocr_has": "که دارانه چندان پیه ساز کرد",
+    "served_english": "That Dara made so much fat",
+    "effect": "army (سپه) read as fat (پیه)"
+   },
+   {
+    "place": "couplet 7, second hemistich",
+    "image_reads": "بتندر (بتندی) بر آرد همی برق تیغ",
+    "ocr_has": "بندرت (بندی) بر آردهمی برق تیغ",
+    "served_english": "Suddenly, he brought the lightning of the sword",
+    "effect": "'thunder-like' became 'rarely/suddenly'"
+   },
+   {
+    "place": "couplet 12, second hemistich",
+    "image_reads": "یکی انجمن ساخت بیرود و جام",
+    "ocr_has": "یکی انجمن ساخت بیرون و جام",
+    "served_english": "They made an assembly outside and in the cup",
+    "effect": "'without music and cup' became 'outside and cup'"
+   },
+   {
+    "place": "couplet 9 / 14, first hemistichs",
+    "image_reads": "ز مصر و ز افرنجه ... / شه از کار دارا و پیکار او",
+    "ocr_has": "ز مصر و ز افریقیه ... / شه از کار دارا و بکار او",
+    "served_english": "From Egypt, Africa, Rome, and Russia",
+    "effect": "Frankland became Africa; 'his strife' became 'his own work'"
+   },
+   {
+    "place": "footnote 3, last line; footnote 4",
+    "image_reads": "کمر بست بر جستن کار زار - بجای مصراع دوم - نسخه / موم سخت نقش پذیر",
+    "ocr_has": "(line absent) / موم سخت پذیر",
+    "served_english": "Wax softens faster than hard wax",
+    "effect": "a variant line dropped by OCR; the translator additionally cut the variants the OCR did carry"
+   },
+   {
+    "place": "page header / image file",
+    "image_reads": "(۱۶۴) on 0132.jpg",
+    "ocr_has": "<page-num>161</page-num>",
+    "served_english": "(161)",
+    "effect": "page number misread; the item's image_url 0131.jpg shows printed p.165, this text is on 0132.jpg (the two files of the opening are swapped)"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "hemistichs left unpaired by column, each in its own quotes",
+    "cause": "reading_order"
+   },
+   {
+    "judge_defect": "'To the kingdom, at the time of tightening the rein' / 'The researcher began again'",
+    "cause": "reading_order"
+   },
+   {
+    "judge_defect": "footnotes abridged: variants in notes 1 and 3 lost",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'That Dara made so much fat'; 'Suddenly, he brought the lightning'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'seal of the kingdom' / 'To the kingdom' for ملک (king)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'They made an assembly outside and in the cup'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Wax softens faster than hard wax'",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 5,
+  "ocr_passage_checked": "all 14 couplets (c. 150 words) and the four footnotes, read on 0132.jpg",
+  "rtl_or_vocalisation_notes": "Two-column bayt layout: right column = first hemistich, left = second; OCR read each column as a block. Footnote digits ۱-۴ stand in the gutter before the second hemistich; marginal line counters ۵ and ۱۰. Old orthography (ملکرا, گاورا joined; لشگر).",
+  "fixed": "written",
+  "n_corrections": 13,
+  "image_legibility": "good",
+  "confidence": 0.88,
+  "summary": "The OCR emitted the two hemistich columns as separate blocks so the English never pairs the couplets, with a handful of word misreads (سپه→پیه, بتندر→بندرت, بیرود→بیرون) and translator-cut footnote variants on top; the text is on image 0132.jpg, not the 0131.jpg the item points to."
+ },
+ {
+  "id": "69e748da49abba5e98281b25_00103",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "ocr_misread"
+  ],
+  "evidence": [
+   {
+    "place": "couplet 36 (10th line)",
+    "image_reads": "شصت پایه چنان برذ یك دست / که نسازذ بهیچ پایه نشست",
+    "ocr_has": "شصت پایه چنان برد یک دست / که نسازد بهیچ پایه نشست",
+    "served_english": "She carries the sixty-step one by one hand ... no base is left for sitting",
+    "effect": "OCR correct; idiom 'at one go, resting on no step' rendered word for word"
+   },
+   {
+    "place": "couplet 31b / 38b",
+    "image_reads": "چون توانی بزیر پای نوشت / از زمین بر گرایذش نفسی",
+    "ocr_has": "چون توانی بزیر پای نوشت / از زمین بر گرایدش نفسی",
+    "served_english": "How are you able to walk beneath your feet? ... catch a breath from the earth",
+    "effect": "OCR correct; both hemistichs mistranslated"
+   },
+   {
+    "place": "couplet 34b",
+    "image_reads": "نرم و نازك چو خزّ و قاقم شاه",
+    "ocr_has": "نرم و نازک چو خز و فاقم شاه",
+    "served_english": "like sable and faqam (fine silk), O King",
+    "effect": "قاقم (ermine) misread, leaving a non-word the translator glossed by guess"
+   },
+   {
+    "place": "couplet 35",
+    "image_reads": "نره گاوی چو کوه بر گردن / آرذ اینجا گه علف خوردن",
+    "ocr_has": "زره گاوی چو کوه بر گردن / آرد آنجا که علف خوردن",
+    "served_english": "She brings a cow like a mountain on her neck | To the place where it eats grass",
+    "effect": "bull (نره گاو) lost; 'here at feeding time' became 'to the place where'"
+   },
+   {
+    "place": "couplet 28b",
+    "image_reads": "از گلِ جبهتش بر آمذ خوی",
+    "ocr_has": "از گلم جهتش بر آمد خوی",
+    "served_english": "Sweat appeared on his face from the warmth",
+    "effect": "'rose of his brow' lost; translator paraphrased around it"
+   },
+   {
+    "place": "foot of page",
+    "image_reads": "four lines of critical apparatus (27b روان : طلب Pe Le | ...)",
+    "ocr_has": "--- (apparatus omitted)",
+    "served_english": "Critical apparatus: Notes on variations in lines 35-37 regarding the cow",
+    "effect": "apparatus exists on the page but was not transcribed; the served note is a made-up description of it"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'She carries the sixty-step one by one hand ... no base is left for sitting'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'How are you able to walk beneath your feet?'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'Were to catch a breath from the earth'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'like sable and faqam (fine silk), O King'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'How could I remain from such a base?'",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "note 'Critical apparatus...' — judges say page carries no apparatus",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 3,
+  "ocr_passage_checked": "all 18 couplets (c. 170 words); apparatus (c. 60 tokens) wholly missing from OCR and not counted",
+  "rtl_or_vocalisation_notes": "Ritter-Rypka critical edition: archaic ذ for postvocalic د (آمذ, برذ, باذ) which the OCR normalises inconsistently; izafat kasras printed; apparatus mixes Latin sigla and Persian lemmata, restored with moderate confidence on sigla order.",
+  "fixed": "written",
+  "n_corrections": 6,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Transcription of the verses is nearly right (four word misreads, apparatus omitted); the major defect and most minor ones are literal mistranslations of correctly read idioms."
+ },
+ {
+  "id": "6990630be7b7642c081de08b_00353",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "א\"ר אלעזר ש\"מ דיעקב מגו דינא קשיא נפק דהא יצחק",
+    "ocr_has": "רבי אלעזר סח ליצחק מנו דיכא קטיא כפף דקה יצחק",
+    "served_english": "Rabbi Eleazar spoke to Isaac: Who is the \"crushed one\"? Isaac bowed his head",
+    "effect": "Jacob issuing from severe Judgment became a nonsense dialogue about a 'crushed one'"
+   },
+   {
+    "place": "line 2",
+    "image_reads": "א\"ל ר\"ש ודא הוא בלחודוי והא יצחק מגו חסד נפקא",
+    "ocr_has": "ח\"ו רגז ולא הוה כחולקיה והא יצחק מנו חסד כפחא",
+    "served_english": "Heaven forbid he should be angry, for his portion was not like the others",
+    "effect": "R. Shimon's reply lost; speaker and argument invented"
+   },
+   {
+    "place": "line 3",
+    "image_reads": "אברה' ירית אחסנא דחסד",
+    "ocr_has": "חכרה ירית לחסדא",
+    "served_english": "Wisdom inherits Kindness",
+    "effect": "Abraham replaced by 'Wisdom'"
+   },
+   {
+    "place": "line 10",
+    "image_reads": "כלהון בוצינין נהירין מחד ומחד תליין ובוציני אינהו חד",
+    "ocr_has": "כלהון כוסיפין נהירין מהד ומהד תליין וכונניו היכהו חד",
+    "served_english": "All the shining cups are illuminated by one another",
+    "effect": "lamps/lights became 'cups'"
+   },
+   {
+    "place": "line 12",
+    "image_reads": "היינו דכתיב ועשית שנים כרובים זהב",
+    "ocr_has": "היינו דכתיב ועזים פנים כרובים ודא",
+    "served_english": "what is written regarding the \"brazen-faced\" Cherubim",
+    "effect": "Exodus 25:18 citation turned into 'brazen-faced'"
+   },
+   {
+    "place": "line 17",
+    "image_reads": "הא תנינן ערות אביך וערות אמך לא תגלה",
+    "ocr_has": "קל תנינן ערוה לבין ונערות חמך לא תגלה",
+    "served_english": "Do not uncover the nakedness of a daughter-in-law or a youth",
+    "effect": "father/mother (Lev 18:7) lost"
+   },
+   {
+    "place": "lines 20-22",
+    "image_reads": "אימא לי מלה חדא וטול מנה כסף … ואשתדל באוריתא ולית מאן דישגח",
+    "ocr_has": "חומא לי מנא חדא וטול מנה כסף … ואחמתלא בחוריתא ולית מין דיטעם",
+    "served_english": "Show me one vessel and take money for it … there is no one to taste",
+    "effect": "'tell me a word of Torah / study Torah' lost"
+   },
+   {
+    "place": "lines 24-26 (new section, large initial ווי)",
+    "image_reads": "ווי העמודים וחשוקיהם כסף … מאן ווים שתא בגו שתא ומתאחדן ומתשקיין מחוטא דשדרה",
+    "ocr_has": "ווי דיתמליס ומתקיימא כסף … חלונותא פתח בנו פתח ומתחלדן ומתתקנין מקוטרא לסדרא",
+    "served_english": "Woe that the money is filled and sustained … A window is opened … from the smoke",
+    "effect": "'hooks of the pillars', 'six within six', 'the spinal cord' became woe/window/smoke"
+   },
+   {
+    "place": "lines 27-29",
+    "image_reads": "ובספרא דצניעותא … מאן צניעותא דספרא אר\"ש חמשה פרקין",
+    "ocr_has": "וכספרא דכביעותא … מאן דביעותא דספרא אמר רבי חזקיה פרקין",
+    "served_english": "What is the \"fright\" of the Book? Rabbi Hezekiah said: These chapters",
+    "effect": "R. Shimon became R. Hezekiah, 'five' dropped, 'concealment' became 'fright'"
+   },
+   {
+    "place": "line 33",
+    "image_reads": "אמר וממה אתעביד דא · אמרו מחטין",
+    "ocr_has": "אמר רבי מרוממא דא עביד דא. אמרו חטין",
+    "served_english": "The Rabbi said: \"From what is this made?\"",
+    "effect": "the countryman's question attributed to an invented Rabbi"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'Who is the crushed one? Isaac bowed his head' (opening garbled)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Woe that the money is filled … window … smoke' for hooks of the pillars",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'All the shining cups' for heavenly lights",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'if you only read from our side … the whole is not known'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Show me one vessel'; 'fright of the Book'; 'The Rabbi said'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Isaac represents Severity, yet here associated with Kindness' paraphrase",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'nakedness of a daughter-in-law or a youth' vs father/mother",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Wisdom inherits Kindness' for Abraham inherited",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "added glosses in notes (Sephirot, premature secrets, parable moral)",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 45,
+  "ocr_passage_checked": "lines 1-5 (דזעיר כלא אוקימנא … בריך שמיה) and lines 24-29 (ווי העמודים … דעאל ונפק), read in full",
+  "rtl_or_vocalisation_notes": "Unvocalised semi-cursive (Rashi-type) Cremona type; OCR systematically confuses א/ח, נ/כ, ש/ס/ט, ג/נ, ב/כ, expands abbreviations wrongly (א\"ר, ר\"ש, ש\"מ, א\"ל, דקב\"ה) and misnames speakers; OCR also added a heading, a rule, blockquotes and verse-reference notes not on the page.",
+  "fixed": "written",
+  "n_corrections": 160,
+  "image_legibility": "good",
+  "confidence": 0.9,
+  "summary": "Clearly printed Rashi-type page was transcribed with roughly every second word wrong (letters confused, abbreviations and speaker names invented), and the English faithfully translated the garbage, adding its own glosses."
+ },
+ {
+  "id": "69b2f3b821208ea9dc278c50_00277",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "reading_order"
+  ],
+  "evidence": [
+   {
+    "place": "top line of commentary",
+    "image_reads": "ראיתי המראות שהם רמז לד' מלכיות · אם כן מה אלה לאיזה ענין ראיתי בהם",
+    "ocr_has": "ראיתי המלכיות שהם רמז לז' מלכיות. וס' כן מה אלה לחיות ענין לחיותי בהם",
+    "served_english": "seen the kingdoms, which are a hint to the kingdoms … what are \"these\" to live?",
+    "effect": "'visions … four monarchies … for what purpose did I see them' lost; the numeral four dropped"
+   },
+   {
+    "place": "commentary lines 1-2 with margin refs",
+    "image_reads": "בן שאול כמו לבן שאול · והדומים לו · ר\"ל אלה הד' מרכבות",
+    "ocr_has": "ד\"א לז' בן שחור כמו לבן שחור. והדומיו לו. לז' חלק הד' מרכבות",
+    "served_english": "Another explanation: to the [one] son of black, like \"to the white, black\"",
+    "effect": "marginal ref ד\"ה ב' א' read as 'another explanation', Saul became 'black'; margin שמואל ב' ד' run into the line"
+   },
+   {
+    "place": "commentary line 4",
+    "image_reads": "בכל העולם שהוא ד' פאות",
+    "ocr_has": "בכל העולם שהוז' ל' עזות",
+    "served_english": "the entire world, which is mentioned [as] strength",
+    "effect": "'which has four corners' lost"
+   },
+   {
+    "place": "commentary line 6",
+    "image_reads": "ולא זכר האדומים כי כבר עברה מלכות בבל",
+    "ocr_has": "ולז' זכר השחורים כי כבר עבר עתק מלכות בבל",
+    "served_english": "And he mentioned the black ones because the time of the kingdom of Babylon",
+    "effect": "reversal: 'did not mention the red' became 'mentioned the black'"
+   },
+   {
+    "place": "commentary lines 8-9",
+    "image_reads": "שמלכות' גברה · שהרי אלכסנדרוס",
+    "ocr_has": "שהמלכות נברק . שהיו אלכסנדרוס",
+    "served_english": "for that kingdom [was] clear",
+    "effect": "'their kingdom grew strong' lost"
+   },
+   {
+    "place": "commentary line 11",
+    "image_reads": "שהיא ארץ הדרום בעבור כי רומי היא צפונית ויוליאוס קיסר",
+    "ocr_has": "שהיו חלק קדוס כעבור כי רומי היא שנונית ויוכיחום קיסר",
+    "served_english": "a part that was holy [in] their passing, for Rome is distinct, and Julius Caesar … will prove it",
+    "effect": "'the south land, because Rome is northern' became nonsense; name read as a verb"
+   },
+   {
+    "place": "commentary lines 15-16",
+    "image_reads": "שהתאמצו מעצמם לבקש מלוכה לאיזה מקום שיהיה לפיכך לא תאר להם רוח",
+    "ocr_has": "שהתחמט מעצמם לבקש מלוכה לחיות מקום שיהיה לשיכך לז' קתר להם רוח",
+    "served_english": "to live [in] a place, for that [is] why he gave them a spirit",
+    "effect": "reversal: 'therefore he did not specify a wind for them' became 'gave them a spirit'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'a hint to the kingdoms' drops the number four",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'a part that was holy … Rome is distinct' vs south country, Rome north",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'that is why he gave them a spirit' vs does not define any wind",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'Julius Caesar … will prove it' renders garbled name twice",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'he mentioned the black ones' vs does not mention the red",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'that kingdom was clear'; 'which is mentioned as strength' (four corners)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'to the son of black, like to the white, black' unreadable fill",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 22,
+  "ocr_passage_checked": "commentary lines 6-12 (אשר בה · השחורים … יצא אל ארץ מצרים), read in full; pointed verse block spot-checked and sound",
+  "rtl_or_vocalisation_notes": "Verse in pointed square type is transcribed well; the unpointed Rashi-type commentary is where the errors sit: ד' (four) and לא/ר\"ל/כלו' abbreviations all collapsed into לז'/כלז', א read as ח or ז, ש/ח and פ/ע/צ confusions. Three marginal references (ד\"ה ב' א', שמואל ב' ד', איוב ב'); the first two were absorbed into the running text.",
+  "fixed": "written",
+  "n_corrections": 55,
+  "image_legibility": "good",
+  "confidence": 0.9,
+  "summary": "Kimhi's Rashi-type commentary was misread at the numerals, negations and several key words (לא→לז', האדומים→השחורים, לא תאר→קתר, יוליאוס→יוכיחום), producing two reversals and several nonsense clauses that the English followed."
+ },
+ {
+  "id": "69c1bbc68522835be8460774_00281",
+  "primary_cause": "none",
+  "secondary_causes": [
+   "translation",
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "line 17",
+    "image_reads": "20 ונקהלו עליו תלמידי' וקם ונכנס למדינא",
+    "ocr_has": "20 ונתקהלו עליו תלמידי' וקם ונכנס למדינה",
+    "served_english": "19 And the disciples gathered around him, and he rose and entered the city",
+    "effect": "no change of meaning; OCR normalised spelling, English renumbered the verse"
+   },
+   {
+    "place": "line 4",
+    "image_reads": "כיון ששמע קרעו בגדיהם",
+    "ocr_has": "כיון ששמעו קרעו בגדיהם",
+    "served_english": "When Barnabas and Paul heard this, they tore their clothes",
+    "effect": "none (scribe's singular silently made plural)"
+   },
+   {
+    "place": "line 10 end (line-filler)",
+    "image_reads": "אפילו שלא זהר' / הזהרו בו",
+    "ocr_has": "אפילו שלא יהא / הזהרו בו",
+    "served_english": "He did not leave Himself without a witness",
+    "effect": "none; filler letters anticipating the next line read as a word (my reading of the three filler letters is uncertain)"
+   },
+   {
+    "place": "lines 15-16",
+    "image_reads": "ורגמוהו : 19 לפוליפוס והשליכוהו מחוץ לעיר",
+    "ocr_has": "ורגמוהו : 19 לפוליפוס והשליכוהו מחוץ לעיר",
+    "served_english": "and they stoned Paul and threw him outside the city",
+    "effect": "OCR right; the scribe wrote לפוליפוס and the English silently corrected to Paul and dropped the number 19"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "verse numbers from '19 And the disciples' run one behind the page",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'a bull and wreaths' for singular שור ועטרה",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'they were encouraging them in their belief' for broken ומאמינים הם בעצמם",
+    "cause": "page_seam"
+   },
+   {
+    "judge_defect": "gloss 'Iconium' added",
+    "cause": "not_a_defect"
+   }
+  ],
+  "ocr_word_errors_per_100": 4,
+  "ocr_passage_checked": "whole page (21 lines) read against the image",
+  "rtl_or_vocalisation_notes": "Unvocalised square manuscript hand except one pointed word (וַעֲטָרָה, line 2), which the OCR left bare. Scribe repeats the first letters of the next line as end-of-line fillers (אש', ו', ה', בח', בלב', ק'); OCR keeps them, correctly. Aramaic-style spellings למדינא/המדינא were normalised to ה by the OCR. Verse numbers are Arabic numerals in the manuscript.",
+  "fixed": "written",
+  "n_corrections": 8,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Transcription is essentially right (a handful of spelling normalisations, one filler misread) and the English is sound; the only blemishes are the translator's shifted verse numbers, a plural for a singular, and a guessed sentence at the page break."
+ },
+ {
+  "id": "69e9614d2beefe2f6f72addf_00295",
+  "primary_cause": "none",
+  "secondary_causes": [
+   "translation",
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "الحقّ لأنّ قلوب العامّة إلى الخرافات أميل",
+    "ocr_has": "الحق لأن قلوب العامة إلى الخرافات أميل",
+    "served_english": "The truth is lost because the hearts of the common people",
+    "effect": "OCR right; الحق ends the previous page's phrase, translator supplied 'is lost' to make a sentence"
+   },
+   {
+    "place": "lines 4",
+    "image_reads": "من جهة التعديل و التجوير",
+    "ocr_has": "من جهة التعديل و التجويز",
+    "served_english": "through the concepts of modification and possibility",
+    "effect": "print shows ر without dot (التجوير, 'imputing injustice'), OCR gives التجويز as Sachau read; either way the English terms are a loose rendering, not an OCR effect"
+   },
+   {
+    "place": "lines 6-7",
+    "image_reads": "بما يبيّن عن تمويهاته ، و انتشر ذلك فى الألسنة",
+    "ocr_has": "بما يبين عن تمويهاته ، و انتشر ذلك في الألسنة",
+    "served_english": "with deceptions that became widespread in speech",
+    "effect": "OCR right incl. the comma; English fused two clauses"
+   },
+   {
+    "place": "lines 13-14",
+    "image_reads": "من يقصده و يقصد الحقّ فيه",
+    "ocr_has": "من يقصده و يقصد الحق فيه",
+    "served_english": "the one who intends Him and intends the truth",
+    "effect": "OCR right; فيه dropped in English"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'The truth is lost' — 'is lost' supplied for page-initial الحق",
+    "cause": "page_seam"
+   },
+   {
+    "judge_defect": "'modification and possibility' for التعديل و التجويز",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'deceptions that became widespread in speech' fuses two clauses",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "drops فيه and تطاول",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'leading the vast majority ... toward astrological calculations' misconstrues مضطرون ... إلى",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 0,
+  "ocr_passage_checked": "whole page read; closely lines 1-8 (الحق لأن … سبحان الله عن مثله) and lines 12-16",
+  "rtl_or_vocalisation_notes": "Partly vocalised print; OCR keeps the Qur'an quotation vocalisation and some editor's harakat, drops most shaddas (harmless). Catchword بما at foot not transcribed (correctly, it belongs to next page). Footnote and signature (٥٥) right. One possible letter difference: print has التجوير (no dot visible on final letter) where OCR has التجويز.",
+  "fixed": "not_needed",
+  "n_corrections": 0,
+  "image_legibility": "good",
+  "confidence": 0.9,
+  "summary": "Transcription matches the image essentially word for word; the judges' minor defects are translation looseness plus one page-initial fragment padded into a sentence."
+ },
+ {
+  "id": "6a08f8b89c1b82475e157ff4_00016",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "lines 1-2 (top of page)",
+    "image_reads": "والشهوة الباطلة ، وحب التكايس ، على أن يصر على تحسين الظن بهم في العلوم كلها.",
+    "ocr_has": "والشهوة الباطلة ، وحب التكايس ، على أن يصر على تحسين الظن بهم في العلوم كلها.",
+    "served_english": "(absent) — opens 'This is a great danger'",
+    "effect": "line is on the page and in the OCR; translator dropped the sentence tail carried over from the previous page"
+   },
+   {
+    "place": "line 3",
+    "image_reads": "لأجلها يجب زجر كل من يخوض",
+    "ocr_has": "لأجلها يجب زجر كل من يخوض",
+    "served_english": "anyone who dives into these sciences must be warned",
+    "effect": "OCR right; زجر (restrain) weakened to 'warned'"
+   },
+   {
+    "place": "hadith, centred line",
+    "image_reads": "فافزعوا إلى ذكر الله تعالى",
+    "ocr_has": "فأفزعوا إلى ذكر الله تعالى",
+    "served_english": "then turn in haste to the remembrance of God",
+    "effect": "hamza added by OCR; no effect on meaning"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "opening line 'والشهوة الباطلة … تحسين الظن بهم' absent from the English",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'must be warned' for يجب زجر",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 0,
+  "ocr_passage_checked": "whole page read; closely lines 1-9 (والشهوة الباطلة … على خلاف الشرع) and footnotes 70-72",
+  "rtl_or_vocalisation_notes": "Born-digital PDF, sparse tanwin only. OCR silently normalises two spellings of the print: برهأنه → برهانه (edition typo) and فافزعوا → فأفزعوا; doubled footnote call numbers (70[70]) rendered once. No directional problems; footnotes correctly placed after the rule.",
+  "fixed": "not_needed",
+  "n_corrections": 0,
+  "image_legibility": "good",
+  "confidence": 0.93,
+  "summary": "OCR is correct; the only real loss is that the translator skipped the page-initial sentence tail that the transcription does carry."
+ },
+ {
+  "id": "69e96123390d3ed634590b97_00226",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "وكانت قبله لشقيقه موسى (lam broken, prints as اشقيقه)",
+    "ocr_has": "وكانت قبله اشقية موسى",
+    "served_english": "it belonged to the Ispahsalār (military commander) Musa",
+    "effect": "'his full brother' lost; translator invented a title to fill the garbled word"
+   },
+   {
+    "place": "line 5",
+    "image_reads": "الوارد عن دابته نزلوا له وأعجبهم فعله",
+    "ocr_has": "الوارد عن دابته أعجبهم فعله",
+    "served_english": "when a visitor dismounts for them, they are pleased by this action",
+    "effect": "'they dismount to him' dropped"
+   },
+   {
+    "place": "line 7",
+    "image_reads": "مع بعضهم وسأذكره ولما سلمت عليه وركب وركبت",
+    "ocr_has": "مع بعضهم وسألت كره ولما سلمت عليه وركبت",
+    "served_english": "and I asked about it. When I greeted him and remounted",
+    "effect": "'I shall relate it' became 'I asked about it'; 'he mounted' dropped"
+   },
+   {
+    "place": "line 8",
+    "image_reads": "فأمر بانزالي أحسن نزل",
+    "ocr_has": "فأمر بأنزل لي أحسن نزل",
+    "served_english": "he ordered the best accommodation to be prepared for me",
+    "effect": "none on sense"
+   },
+   {
+    "place": "line 16",
+    "image_reads": "أرتنا وأرتنا هو النائب عن ملك العراق",
+    "ocr_has": "أرتا وأرتا هو النائب عن ملك العراق",
+    "served_english": "the Emir Arta. Arta is the deputy",
+    "effect": "name Artana (Eretna) truncated"
+   },
+   {
+    "place": "line 17",
+    "image_reads": "وأكرمنا كرامة متناهية وفعل أفعال",
+    "ocr_has": "وأكرمنا كرامة تامة وفعل أفعال",
+    "served_english": "He honored us completely",
+    "effect": "near-synonym, negligible"
+   },
+   {
+    "place": "line 19",
+    "image_reads": "مدينة كبيرة كثيرة العمارة",
+    "ocr_has": "مدينة كثيرة العمارة",
+    "served_english": "It is a very populous city",
+    "effect": "'large' dropped"
+   },
+   {
+    "place": "line 21",
+    "image_reads": "وثنتان بخارجها وعليه النواعير بالداخل والخارج منها تسقى",
+    "ocr_has": "وثنتان بخارجها النواعي بالداخل والخارج منها تسقى",
+    "served_english": "The water from the inside and outside of it is used to irrigate",
+    "effect": "norias lost; 'on it are' dropped, sentence reinterpreted"
+   },
+   {
+    "place": "line 23",
+    "image_reads": "ثلاثا وسرنا منها بعد ذلك الى مدينة قيسارية وهي من بلاد صاحب العراق",
+    "ocr_has": "ثلاثا ثم رحلنا بعد ذلك إلى مدينة قيسارية وهي من بلاد حب العراق",
+    "served_english": "then we departed after that to the city of Kayseri, … lands of the King of Iraq",
+    "effect": "OCR substituted a verb phrase and lost صا; English guessed correctly"
+   },
+   {
+    "place": "lines 15, 22",
+    "image_reads": "ونزلنا منها بزاوية",
+    "ocr_has": "ونزلت منها بزاوية",
+    "served_english": "I stayed there at the lodge",
+    "effect": "plural 'we lodged' turned singular, twice"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'the Ispahsalār (military commander) Musa' for garbled اشقية موسى",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'and I asked about it' for وسألت كره (= وسأذكره)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops النواعي (norias) in the irrigation sentence",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "vocalisation parentheses left in Arabic inside notes",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "invention: gloss 'noble/descendant of the Prophet', 'referring to Anatolia'",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 5,
+  "ocr_passage_checked": "whole page read from crops (about 340 words, 18 wrong/missing/substituted); densest in lines 1-2, 5-9 and 19-23",
+  "rtl_or_vocalisation_notes": "Unvocalised cramped Bulaq-style print with broken sorts and words run together without spaces; no directional problem. City name in line 10 is damaged in the print (أقـ..ـرا); restored as أقصرا because the page's own spelling note says فتح الصاد, where OCR had أقسرا. OCR modernises hamza/ya spellings (الى→إلى, حالى→حالي), left as is.",
+  "fixed": "written",
+  "n_corrections": 18,
+  "image_legibility": "fair",
+  "confidence": 0.85,
+  "summary": "OCR on this cramped print garbles or drops about 5 words per 100 (لشقيقه, وسأذكره, نزلوا له, وعليه النواعير, صاحب), and each judged defect of substance follows from those misreadings; the translator then papered over the garbles with invention."
+ },
+ {
+  "id": "69e7934280b52390feb18445_00049",
+  "primary_cause": "none",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 10",
+    "image_reads": "في البحر الذي قد عبرناه اولاحتي يفضي بك",
+    "ocr_has": "في البحر الذي عبرناه اولاحتي يفضي بك",
+    "served_english": "make you swim in the sea we crossed first",
+    "effect": "dropped particle قد; no change of meaning"
+   },
+   {
+    "place": "line 4",
+    "image_reads": "ان نحكم مباديها معك لم يفدك",
+    "ocr_has": "ان نحكم مباديا معك لم يغدك",
+    "served_english": "before establishing the principles for you, it would not benefit you",
+    "effect": "none; translator read through the misdotted letters ('its principles' lost its pronoun)"
+   },
+   {
+    "place": "line 11",
+    "image_reads": "الي ما افضينا نحن اليه",
+    "ocr_has": "الي ما اقضينا نحن اليه",
+    "served_english": "until it leads you to what we have reached",
+    "effect": "none; English correct"
+   },
+   {
+    "place": "line 15",
+    "image_reads": "وصحت نيتك للتشمير في هذا المطلب",
+    "ocr_has": "وصحت نيتك للتشمر في هذا المطلب",
+    "served_english": "your intention is sound to prepare yourself for this goal",
+    "effect": "none"
+   },
+   {
+    "place": "head of served English (not on page)",
+    "image_reads": "(nothing: page opens وحينين راينا انفسنا)",
+    "ocr_has": "(nothing)",
+    "served_english": "<meta>… mirroring the content translated in page 46 …</meta>",
+    "effect": "translator-invented meta note about the Latin facing page; no source on the page"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "invention: 'mirroring the content translated in page 46…' meta note",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 4,
+  "ocr_passage_checked": "whole page read (19 lines, ~190 words): 7 word errors, mostly single-letter/dot",
+  "rtl_or_vocalisation_notes": "Unvocalised 1671 Oxford Arabic type; medial fa and ghayn are nearly identical in this fount (صفايك, يفدك settled by sense/edition); hamza not printed (وحينين, شيا) and OCR mostly keeps print spelling. Catchword التشويق at foot is run into the text by the OCR (left as is).",
+  "fixed": "written",
+  "n_corrections": 7,
+  "image_legibility": "good",
+  "confidence": 0.8,
+  "summary": "Page is sound: OCR has seven small letter-level slips (one dropped قد) that did not affect the English; the only fault is a translator-invented <meta> note at the head."
+ },
+ {
+  "id": "69906606ef12272ffdc94dd0_00106",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "line 14",
+    "image_reads": "על ארבעה ראשי נהר דנור כלפי כסא הכבוד",
+    "ocr_has": "על ארבעה ראשי נהר נור כפי כסא הכבוד",
+    "served_english": "four headwaters of the River of Fire beneath the Throne of Glory",
+    "effect": "כלפי 'over against' lost; translator guessed 'beneath' from כפי"
+   },
+   {
+    "place": "line 16",
+    "image_reads": "מפני שחותמות ארבעה ראשי נהר דנור מסורות בידו",
+    "ocr_has": "מעט שחומות ארבעה ראשי נהר נור מסורות בידו",
+    "served_english": "forasmuch as the walls of the four headwaters … are entrusted",
+    "effect": "'seals' became 'walls'"
+   },
+   {
+    "place": "lines 17-18",
+    "image_reads": "והוא סותר אשי של נהר דנור",
+    "ocr_has": "והוא כותר אשי של נהר נור",
+    "served_english": "he is the crown of fire of the River of Fire",
+    "effect": "samekh read as kaf: 'stirs/sotér the fires' became 'crown'; name etymology lost"
+   },
+   {
+    "place": "line 18 end",
+    "image_reads": "ונכנס לפני השכינה לפרש בכתובי׳",
+    "ocr_has": "ונכנס לפני השכינה לפרש זכותם",
+    "served_english": "to declare the merit of all who come into the world",
+    "effect": "'expound what is written' became 'declare the merit'"
+   },
+   {
+    "place": "lines 11,13,20",
+    "image_reads": "סותר אשיאל יי׳ השר",
+    "ocr_has": "כותרתשיאל יי' השר",
+    "served_english": "Kotertashiel Y. the great, awesome, and honored Prince",
+    "effect": "angel name wrong (two words fused, samekh as kaf)"
+   },
+   {
+    "place": "lines 1-2,4",
+    "image_reads": "וגליצור יי׳ השר כשהוא רואה את זכזכיאל",
+    "ocr_has": "ועל צור יי' השר כשהוא רואה את זכופאל",
+    "served_english": "And Tsur Y. the Prince, when he sees Zekhophiel",
+    "effect": "two angel names wrong (Gallisur, Zakzakiel)"
+   },
+   {
+    "place": "last line",
+    "image_reads": "מפני שהוא זועף בו בנהר",
+    "ocr_has": "מפני שהוא נושף בו בטה'",
+    "served_english": "Because he breathes with it in pur[ity]...",
+    "effect": "'is wrathful at the river' became 'breathes … in purity' (bracket fill)"
+   },
+   {
+    "place": "line 25",
+    "image_reads": "והנורא הנכבד הנהדר הנערץ בכל פמליא",
+    "ocr_has": "והנורא והנכבד וההדר הנערץ ככל פמליא",
+    "served_english": "honored, and majestic Prince, who is revered by all the heavenly host",
+    "effect": "negligible"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'guards the entrances of the palaces' for שומר מפתחי היכלי (keys)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'beneath the Throne of Glory' for כפי כסא הכבוד",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'he is the crown of fire of the River of Fire' for כותר אשי",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'every prince from whom a voice goes out' for וכל שר ושר שקול יוצא",
+    "cause": "not_a_defect"
+   },
+   {
+    "judge_defect": "unreadable_fill: 'Because he breathes with it in pur[ity]...'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "unreadable_fill: 'appointed in authority over the four headwaters'",
+    "cause": "not_a_defect"
+   }
+  ],
+  "ocr_word_errors_per_100": 9,
+  "ocr_passage_checked": "whole page read (27 lines, ~300 words); densest errors lines 11-18 and all angel names",
+  "rtl_or_vocalisation_notes": "Unvocalised Sephardic semi-cursive; samekh/kaf, final mem/bet and dalet-nun ligature (דנור) confused; overlined angel names split or fused by OCR; line-end filler letters (ש, מ, ו) kept as letters. 'שקול' at end of line 14 and 'בפטס' line 13 are as the scribe wrote (not changed); last-line 'זועף' and 'זכיותן' are my best reading, moderately sure. מפתחי is unpointed, 'keys' vs 'entrances' is a translator choice. <vocab> names corrected to match.",
+  "fixed": "written",
+  "n_corrections": 29,
+  "image_legibility": "fair",
+  "confidence": 0.75,
+  "summary": "The English follows a transcription with ~25 letter-level misreads, chiefly angel names (Gallisur, Zakzakiel, Sother Ashiel, Shoqed Hozi), כלפי→כפי, חותמות→חומות, סותר→כותר and the last line; only 'entrances' for keys is the translator's."
+ },
+ {
+  "id": "6a2198371994d1df1e5e0235_00118",
+  "primary_cause": "translation",
+  "secondary_causes": [
+   "ocr_misread"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "لأن التعديل للميلاد به أسهل من العمل بالآفاق",
+    "ocr_has": "لأن التعديل للميلاد به أسهل من العمل بالآفاق",
+    "served_english": "because adjusting for birth times al-milad with it is easier",
+    "effect": "OCR right; translator took ميلاد literally instead of the molad (conjunction)"
+   },
+   {
+    "place": "line 5",
+    "image_reads": "بالحساب الذي أورده اليهود او بالجدول الذي",
+    "ocr_has": "بالحساب الذي أورده اليهود في الجدول الذي",
+    "served_english": "the calculation provided by the Jews in the table we analyzed",
+    "effect": "two alternative methods (Jews' reckoning OR our table) collapsed into one"
+   },
+   {
+    "place": "line 7",
+    "image_reads": "المعرفة بها اهي بسيطة ام عبور",
+    "ocr_has": "المعرفة بما هي بسيطة أم كبيسة",
+    "served_english": "whether the year is common basitah or leap kabisah",
+    "effect": "sense kept, but al-Biruni's Hebrew loan ʿibbur replaced by كبيسة; false term gloss"
+   },
+   {
+    "place": "lines 9, 12",
+    "image_reads": "في جانب العبور ان كانت عبورا",
+    "ocr_has": "في جانب الكبوس إن كانت كبوساً",
+    "served_english": "We look on the \"leap\" side if it is a leap year",
+    "effect": "none on sense; term normalised away"
+   },
+   {
+    "place": "line 10",
+    "image_reads": "الفينا بحذائه اول السنة من الاسبوع وكيفيتها",
+    "ocr_has": "ألفينا بحذائه أول السنة من الأسبوع وكيفيتها",
+    "served_english": "we find alongside it the first day of the week for that year",
+    "effect": "OCR right; English blurs 'weekday on which the year begins'"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'adjusting for birth times' for التعديل للميلاد (the moled)",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'the first day of the week for that year' for أول السنة من الأسبوع",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "invention: note 'the first month of the Jewish civil year' and gloss on seasonal hours",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 5,
+  "ocr_passage_checked": "whole body text read (12 lines, ~170 words): 8 wrong words in 5 places",
+  "rtl_or_vocalisation_notes": "Fully vocalised naskh with display-script rubrics; OCR drops the vowels and normalises hamza (kept). OCR silently replaced the manuscript's عبور (ʿibbur) by كبيسة/كبوس three times — a recitation-style substitution; <vocab> still lists كبيسة. Image has أربع عشرة ساعة where the reference edition gives 13 (edition difference, English right). 'حللناه' kept as read; reference implies عملناه.",
+  "fixed": "written",
+  "n_corrections": 5,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "The two judged slips (molad as 'birth times', weekday of year-start) are translator errors on a correct transcription; separately the OCR swapped عبور for كبيسة/كبوس and أو بالجدول for في الجدول, which the judges did not catch."
+ },
+ {
+  "id": "69e53454d48480a386965c84_00230",
+  "primary_cause": "none",
+  "secondary_causes": [
+   "translation",
+   "ocr_misread"
+  ],
+  "evidence": [
+   {
+    "place": "last-but-one line",
+    "image_reads": "فاني أعلمُ بنفسي منكم وعلمي بنفسي يقين",
+    "ocr_has": "فاني اعلم بنفسي وعلمي بنفسي يقين",
+    "served_english": "I know my own self, and my knowledge of myself is a certainty",
+    "effect": "comparative 'I know myself better than you' lost (OCR dropped منكم)"
+   },
+   {
+    "place": "line 2 and line 13 (edition's text reading before the bracketed emendation)",
+    "image_reads": "في مغاديره (معاذيره) / وافتعال المغادير (المعاذير)",
+    "ocr_has": "في معاذيره (معاذيره) / وافتعال المقادير (المعاذير)",
+    "served_english": "in his defenses / fabricate excuses",
+    "effect": "none: English follows the editor's bracketed correction, which the OCR kept"
+   },
+   {
+    "place": "line 12",
+    "image_reads": "فتخرج لعتقك من تبعة الآخرة",
+    "ocr_has": "فتخرج لعنقك من تبعة الآخرة",
+    "served_english": "thus you may relieve your neck of the burden of the afterlife",
+    "effect": "'your neck' for 'to free yourself'; sense barely changed"
+   },
+   {
+    "place": "line 9",
+    "image_reads": "فاخرجهُ وشاور عليهِ العلماء فلم يقولوا فيهِ شيئاً",
+    "ocr_has": "فاخرجه وشاور عليه العلماء فلم يقولوا فيه شيئاً",
+    "served_english": "and the scholars consulted on his case, but they did not say anything",
+    "effect": "OCR right; translator made the scholars the subject instead of the judge"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "drops the hedge ان كنتم كذلك",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'the scholars consulted on his case' — judge consulted the scholars",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 2,
+  "ocr_passage_checked": "whole page (~230 words) read in three enlarged crops",
+  "rtl_or_vocalisation_notes": "Printed naskh, sparse vocalisation; OCR normalised the edition's two deliberately odd text readings (مغاديره, المغادير) to the bracketed/other words; inline (124) and footnote marker after الكتاب are on the page.",
+  "fixed": "written",
+  "n_corrections": 4,
+  "image_legibility": "good",
+  "confidence": 0.9,
+  "summary": "Clean page: OCR has four small slips (one dropped word منكم), and the two minor judge defects are translator choices over a correct transcription."
+ },
+ {
+  "id": "699249c5a2d53df4853bfdaf_00012",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "page_seam"
+  ],
+  "evidence": [
+   {
+    "place": "line 1",
+    "image_reads": "این اسرار ذکر بعضی از عبارات انبیا را ببدایع نغمات حجازی در الواح مسطوره",
+    "ocr_has": "این مستور نماند که بعضی از عبارات نسبت بارباب لسان مجاز می نماید در الواح معظمه",
+    "served_english": "some expressions, in the eyes of the masters of language, appear metaphorical",
+    "effect": "invented sentence; 'sayings of the Prophets in melodies of Hijaz' lost"
+   },
+   {
+    "place": "lines 2-3",
+    "image_reads": "و حال هم بتغنیات خوش عراقی نظر بخواهش آنجناب",
+    "ocr_has": "و حال هم بمقتضای خوش غیرتی نظر بخواهش آنجناب",
+    "served_english": "out of a noble sense of honor and in view of your request",
+    "effect": "'sweet Iraqi melodies' became 'noble sense of honor'"
+   },
+   {
+    "place": "lines 4-5",
+    "image_reads": "ببحر قرب … بخیام قرب و وصال",
+    "ocr_has": "بجسر قرب … بنجام قرب و وصال",
+    "served_english": "to the bridge of nearness … to the chalice of proximity and union",
+    "effect": "sea→bridge, tents→chalice"
+   },
+   {
+    "place": "line 8",
+    "image_reads": "و یسمعن اطوار ورقات الفردوس … فی رضوان الاحدیة",
+    "ocr_has": "و یستنشقوا اطیب ورقات الفردوس … فی رضوان الالهیة",
+    "served_english": "inhale the sweetest fragrances of the leaves of Paradise … Garden of Divinity",
+    "effect": "hear the modes of the doves → inhale fragrances; Oneness → Divinity"
+   },
+   {
+    "place": "line 10",
+    "image_reads": "حجبات حدود یهود را سوخت",
+    "ocr_has": "حجاب حد و رسم را سوخت",
+    "served_english": "consumed the veils of limitation and form",
+    "effect": "'Jewish limitations' lost"
+   },
+   {
+    "place": "lines 14-15",
+    "image_reads": "فی الحقیقة یکیست لو انتم فی مظاهر التوحید بعین الله تشهدون",
+    "ocr_has": "فی الحقیقة کیفیت لوائح فی مظاهر التوحید سمیع میباشند و منقاد",
+    "served_english": "the essence of the signs regarding the Manifestations of Unity, which are heard and obeyed",
+    "effect": "'the two sayings are one, if you look with God's eye' replaced by invented clause"
+   },
+   {
+    "place": "line 15 end",
+    "image_reads": "فی الحقیقة در عهد خاتم",
+    "ocr_has": "فی الحقیقة وعده خاتم",
+    "served_english": "they are in truth the promise of the Seal",
+    "effect": "'in the time of the Seal' became 'promise of the Seal'"
+   },
+   {
+    "place": "line 13",
+    "image_reads": "و در مقام دیگر فرمودند",
+    "ocr_has": "روز هفتم دیگر فرمودند",
+    "served_english": "On another day, He said",
+    "effect": "'in another place' → 'another day' (OCR had 'seventh day')"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'essence of the signs … heard and obeyed' over garbled source",
+    "cause": "ocr_misread"
+   }
+  ],
+  "ocr_word_errors_per_100": 25,
+  "ocr_passage_checked": "whole page, 15 lines (~190 words), each line read in 3x crops",
+  "rtl_or_vocalisation_notes": "Lithographed nasta'liq with stacked line-end words (مسطوره, بتغنیات, شود, غفلتهم) and heavy gutter noise on the right; OCR substituted fluent plausible Persian for what it could not read and inserted a <gloss> tag that is not on the page. The catchword بیان from the previous page is not legible at the start of line 1 (gutter noise), so the fixed text begins 'این اسرار'. Arabic lines 7-9 are continuous with the Persian, not a block quote.",
+  "fixed": "written",
+  "n_corrections": 45,
+  "image_legibility": "fair",
+  "confidence": 0.8,
+  "summary": "The OCR is a fluent paraphrase-like misreading of the nasta'liq (about one word in four wrong, first line invented), and the English faithfully translates that wrong transcription; judges scored it high only because they compared against the same OCR."
+ },
+ {
+  "id": "699ef9fd15618a982bb1ebd9_00790",
+  "primary_cause": "ocr_misread",
+  "secondary_causes": [
+   "translation"
+  ],
+  "evidence": [
+   {
+    "place": "ולפעמים para, line 4",
+    "image_reads": "וסוד זה רמזו רז\"ל גוים שבח\"ל לאו עובדי ע\"ז הם",
+    "ocr_has": "וסודו רמז לי' גוים שכח' לאו עובדי ע\"ז הם",
+    "served_english": "The secret of this hints that the ten nations were not merely idolaters",
+    "effect": "'Gentiles outside the Land are not idolaters' became 'the ten nations'"
+   },
+   {
+    "place": "ולפעמים para, lines 7-8",
+    "image_reads": "ע\"כ אין מהפכין בזכותו של מסית … שלא לאהוב אותו ולשנוא אותו",
+    "ocr_has": "ע\"כ אין מתפכחין כוחותי' של סמית … ולא לשמוע אותו",
+    "served_english": "we do not provide any relief to the forces of the \"Sama-el\"",
+    "effect": "'no merit is argued for the enticer' turned into Samael; 'hate him' into 'not listen'"
+   },
+   {
+    "place": "תורה אור para, line 10",
+    "image_reads": "היכל שם ידו\"ד כמ\"ש וידו\"ד בהיכל קדשו ה\"ס וגו' שם אדנ\"י שהוא השכינ'",
+    "ocr_has": "היכל שם יוד ו\"ו כמ\"ש ויורד ברה\"ל קדשו ח\"ס וכמ\"ש אל תיר' שהיא תשכני",
+    "served_english": "as it is said, \"Do not fear, for she dwells within me,\"",
+    "effect": "verse Hab 2:20 and the Name Adonai lost; invented quotation"
+   },
+   {
+    "place": "תורה אור para, line 11",
+    "image_reads": "יתייחד הכבוד בתפארת עוזו וזהו לשום את שמו שם",
+    "ocr_has": "יתייחד הכבוד בתפארת עמו וזהו לשמו את שמו שם",
+    "served_english": "the Glory is unified with His people",
+    "effect": "'splendour of His might' became 'His people'"
+   },
+   {
+    "place": "ולפעמים para, lines 10, 14",
+    "image_reads": "ומשם יקחנו הכהנים שהם קדושים לאלהיהם … כי און יחשוב על משכבו",
+    "ocr_has": "ומשם יקחו חכמתם שהם קדושים לאלוהים … כו' אין הנחש של מעכבו",
+    "served_english": "from there they take their wisdom … the serpent cannot hinder it",
+    "effect": "priests → wisdom; Ps 36:5 → serpent"
+   },
+   {
+    "place": "וסוד para, lines 1-4",
+    "image_reads": "בכור תם … והם תם עדה השלימה … כנפל בהם מומין ונפדו … ודרז\"ל עונות תם",
+    "ocr_has": "בכור הם … והם חס עליהם ושמרתם … כנגד בהם מומין ונסדי … ודרו\"ל עונותם הם",
+    "served_english": "He has pity on them and guards them … corresponds to...",
+    "effect": "the תם (unblemished) word-play lost throughout; ellipses where OCR was nonsense"
+   },
+   {
+    "place": "נחזור / והאוכל / וענין paras",
+    "image_reads": "כי מזדמן שנקרב אפילו למטה … מבשר אחיו … אסור להסתכל באדם רשע",
+    "ocr_has": "כי מורמן שנקב אפי' למטה … מבשר איהו … אסור לחסור באולם רשע",
+    "served_english": "it is forbidden for a wicked person to enter the hall",
+    "effect": "'forbidden to look at a wicked man' reversed in sense; two blanks"
+   },
+   {
+    "place": "running head",
+    "image_reads": "פרשת ראה שכיר יום . שער",
+    "ocr_has": "פרשת ראה תורה אור שער",
+    "served_english": "# Portion of Re'eh - Torah Or - Gate",
+    "effect": "header recited from the section name, not read"
+   }
+  ],
+  "per_defect": [
+   {
+    "judge_defect": "'the ten nations were not merely idolaters'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'we do not provide any relief to the forces of the Sama-el'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops ודרז\"ל עונות תם; leaves 'מבשר איהו' blank",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "elides 'מורמן שנקב' (man sometimes sacrificed below)",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'forbidden for a wicked person to enter the hall'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "'from there they take their wisdom'",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "drops כמ\"ש במקום אחר; drops בהם מומין",
+    "cause": "translation"
+   },
+   {
+    "judge_defect": "'palace for the Name...' drops יוד ו\"ו and the garbled verse",
+    "cause": "ocr_misread"
+   },
+   {
+    "judge_defect": "invented headings '# Portion of Re'eh … ## Page 94b' and meta summary",
+    "cause": "translation"
+   }
+  ],
+  "ocr_word_errors_per_100": 13,
+  "ocr_passage_checked": "עבודה section through מסית (image lines 13-25, ~190 words); whole page then read line by line",
+  "rtl_or_vocalisation_notes": "Unpointed square type, single block, order fine. Errors are letter confusions of the face (ד/ר, ב/כ, ה/ח, ז/ו) and above all mis-expanded abbreviations (רז\"ל, שבח\"ל, ידו\"ד, אדנ\"י, ה\"ס); where a word failed the OCR wrote a different real word. 'כדגן' (line 27) and 'במאוד' (כלל para) are my best reading of ב/כ-ambiguous letters.",
+  "fixed": "written",
+  "n_corrections": 95,
+  "image_legibility": "good",
+  "confidence": 0.85,
+  "summary": "Every major and most minor judge defects trace to OCR misreadings of a clearly legible page (abbreviations and look-alike letters), which the translator then smoothed, guessed at or elided."
+ }
+]

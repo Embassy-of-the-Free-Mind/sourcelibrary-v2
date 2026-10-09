@@ -295,7 +295,7 @@ export const STALE_OCR_FIELDS = [
  * The `$set` half of a page write. `text` is the ENVELOPED reading. `run` labels the
  * pass (a date + host) so two runs of the lane are distinguishable on the page.
  */
-export function ocrSetFields(text, engineKey, route, { run, now = new Date(), secs = null, imageUrl = null } = {}) {
+export function ocrSetFields(text, engineKey, route, { run, now = new Date(), secs = null, imageUrl = null, preprocess = null } = {}) {
   const e = ENGINES[engineKey];
   if (!e) throw new Error(`unknown engine ${engineKey}`);
   return {
@@ -314,9 +314,34 @@ export function ocrSetFields(text, engineKey, route, { run, now = new Date(), se
       segmenter: KRAKEN.segmenter, direction: KRAKEN.direction, base_dir: KRAKEN.base_dir,
       run: run || LANE, issue: LANE_ISSUE, secs,
       input: imageUrl ? { image_url: imageUrl } : { status: 'not_recorded', reason: 'caller passed no image url' },
+      // which image transform (if any) Kraken read (#5277); `none` is the unchanged capture
+      preprocess: preprocess || { mode: 'none', arm: 'none' },
     },
     updated_at: now,
   };
+}
+
+/**
+ * Per-stratum image preprocessing (#5277), OFF by default. `none` reads the capture as fetched (the lane's behaviour
+ * since 2026-09-18). `auto` asks scripts/workers/syriac-kraken-preprocess.py for the capture class and applies the
+ * #5250-measured arm for it (dark spread -> sauvola, clean leaf -> flatten, unsure -> none); `sauvola`/`flatten` force
+ * one arm. The arms were measured ONLY with Sophro Mhiro on manuscript captures, so only the manuscript route ever
+ * gets one. Turning this on for the live lane is a lane-policy change and Derek's call (spend-controls: a lane change
+ * is policy) — and the #5277 transfer check on library pages did NOT support `auto` (see the PR / issue).
+ */
+export const PREPROCESS_MODES = ['none', 'auto', 'sauvola', 'flatten'];
+export const PREPROCESS_ROUTES = new Set(['manuscript']);
+
+/** The mode to run, from the CLI value or the SYRIAC_KRAKEN_PREPROCESS env; anything unknown throws. */
+export function preprocessMode(cliValue, env = process.env) {
+  const v = String(cliValue ?? env.SYRIAC_KRAKEN_PREPROCESS ?? 'none').trim().toLowerCase() || 'none';
+  if (!PREPROCESS_MODES.includes(v)) throw new Error(`--preprocess ${v}: expected one of ${PREPROCESS_MODES.join('|')}`);
+  return v;
+}
+
+/** Does a page on this route get the preprocessing step at all under `mode`? */
+export function preprocessApplies(mode, route) {
+  return mode !== 'none' && PREPROCESS_ROUTES.has(route);
 }
 
 /**

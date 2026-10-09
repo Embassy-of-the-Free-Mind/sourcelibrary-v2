@@ -91,6 +91,7 @@
  */
 
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from './illegible-source-gate.mjs';
 import { stripOcrMetadata } from './language-content-classify.mjs';
 
 /** Is this page's transcription a degeneration loop? The #4850 gate's own verdict. */
@@ -220,6 +221,15 @@ export const WITHHOLD_REASONS = {
   OCR_UNREADABLE: 'ocr_unreadable',
   SOURCE_LOOP: 'source_loop',
   UNVERIFIED_SCRIPT_OCR: 'unverified_script_ocr',
+  ILLEGIBLE_SOURCE: ILLEGIBLE_SOURCE_REASON,
+  /**
+   * A person opened the page image and the English is not what is on the leaf (#6048). The one
+   * reason that is NOT a predicate: nothing in the page document says a fluent translation was
+   * invented, so the caller names the pages (`withhold-stale-translations.mjs --by-eye-pages`),
+   * and the book must already carry a pipeline hold — gap-fill reads a withheld page as an
+   * untranslated one and would pay to translate the same bad transcription again.
+   */
+  INVENTED_BY_EYE: 'invented_by_eye',
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */
@@ -306,6 +316,11 @@ export const LOOP_CANDIDATE_FILTER = {
 export const UNVERIFIED_SCRIPTS = Object.freeze({
   tibetan: /[\u0F00-\u0FFF]/u,
   syriac: /[\u0700-\u074F]/u,
+  // #5645: Gemini cannot read Samaritan. On Petermann's Pentateuchus Samaritanus
+  // it named the script Gothic, Ethiopic, Avestan, Glagolitic\u2026 and recited
+  // Masoretic Genesis over Deuteronomy. It never writes the Samaritan block
+  // itself, so in practice this key is used in cohort mode only.
+  samaritan: /[\u0800-\u083F]/u,
 });
 
 /**
@@ -333,7 +348,7 @@ export const UNVERIFIED_SCRIPT_MIN_SHARE = 0.3;
  * Pure; returns `{ script: null, share: 0 }` for text with no letters.
  *
  * @param {string} ocrText
- * @returns {{ script: 'tibetan'|'syriac'|null, share: number, letters: number }}
+ * @returns {{ script: 'tibetan'|'syriac'|'samaritan'|null, share: number, letters: number }}
  */
 export function unverifiedScriptShare(ocrText) {
   const letters = stripOcrMetadata(ocrText || '').match(/\p{L}/gu) || [];
@@ -400,10 +415,13 @@ export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
  * `unverifiedScriptArm`.
  *
  * @param {object} page
- * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|null }} [opts]
- * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|null}
+ * Arm 5 (`illegibleArm`, #5305) is opt-in for the same reason: the English was made from a page
+ * whose OCR read nothing, or says it could not read the page (illegible-source-gate.mjs).
+ *
+ * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|'samaritan'|null, illegibleArm?: boolean }} [opts]
+ * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|'illegible_source'|null}
  */
-export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null } = {}) {
+export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null, illegibleArm = false } = {}) {
   if (cohortScript && !Object.hasOwn(UNVERIFIED_SCRIPTS, cohortScript)) {
     throw new Error(`cohortScript must be one of ${Object.keys(UNVERIFIED_SCRIPTS).join(', ')}; got ${cohortScript}`);
   }
@@ -431,6 +449,13 @@ export function staleTranslationReason(page, { unverifiedScriptArm = false, coho
   if (unverifiedScriptArm && isUnverifiedScriptOcr(page?.ocr, { cohortScript })) {
     return WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR;
   }
+
+  // Arm 5 (#5305): the source is illegible by the translation gate's own verdict — no legible body
+  // once lacunae and <unclear> are removed, or an OCR warning that the page could not be read. The
+  // same predicate that refuses a NEW translation before the call; self-healing on a better read.
+  if (illegibleArm && illegibleSourceVerdict(page?.ocr?.data, { pageType: page?.page_type }).illegible) {
+    return WITHHOLD_REASONS.ILLEGIBLE_SOURCE;
+  }
   return null;
 }
 
@@ -457,6 +482,18 @@ export function withholdUpdate(page, reason, now = new Date()) {
     // The stale marker (#4927) describes a translation that is no longer here.
     $unset: { translation: '', [STALE_FIELD]: '' },
   };
+}
+
+/**
+ * The filter clause that pins a withhold to the translation that was judged: if
+ * another writer retranslated the page since it was read, the filter misses and
+ * the page is left alone. Pin on whichever shape the page has — on a legacy
+ * bare-string translation `'translation.data': undefined` matches nothing and
+ * the write would silently skip.
+ */
+export function withholdPin(page) {
+  const tr = page?.translation;
+  return typeof tr === 'string' ? { translation: tr } : { 'translation.data': tr?.data };
 }
 
 /**

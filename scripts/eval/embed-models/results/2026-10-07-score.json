@@ -1,0 +1,2518 @@
+{
+ "k": 10,
+ "sets": {
+  "A-sub (3,000)": {
+   "candidates": 3000,
+   "arms": {
+    "gemini-full": {
+     "n": 40,
+     "hits": 37,
+     "recall": 0.925,
+     "ci": [
+      0.8013576634835684,
+      0.9741639744267374
+     ],
+     "mrr": 0.7618872549019607,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     }
+    },
+    "qwen3-0.6b-int8": {
+     "n": 40,
+     "hits": 27,
+     "recall": 0.675,
+     "ci": [
+      0.5201774606620777,
+      0.7991549784774601
+     ],
+     "mrr": 0.510261606312328,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 5
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 7
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 7
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 12
+     }
+    },
+    "qwen3-0.6b-int8@768": {
+     "n": 40,
+     "hits": 28,
+     "recall": 0.7,
+     "ci": [
+      0.5456998105658182,
+      0.8192515484507963
+     ],
+     "mrr": 0.5092502416975293,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 6
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 7
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 7
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 11
+     }
+    },
+    "qwen3-0.6b": {
+     "n": 40,
+     "hits": 36,
+     "recall": 0.9,
+     "ci": [
+      0.7694822464406407,
+      0.9604204715925885
+     ],
+     "mrr": 0.7906749308348308,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 9
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 7
+      }
+     },
+     "vsRef": {
+      "win": 3,
+      "loss": 4
+     }
+    },
+    "qwen3-0.6b@768": {
+     "n": 40,
+     "hits": 38,
+     "recall": 0.95,
+     "ci": [
+      0.8349612250489412,
+      0.9861793327384413
+     ],
+     "mrr": 0.7904304304304304,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 9
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 3,
+      "loss": 2
+     }
+    },
+    "qwen3-4b": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.9017857142857142,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "qwen3-4b@768": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.8856060606060605,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "qwen3-8b": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.9156060606060606,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "qwen3-8b@768": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.8985897435897435,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    }
+   },
+   "perQuery": {
+    "gemini-full": {
+     "q01": 2,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 2,
+     "q07": 1,
+     "q08": 5,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 2,
+     "q17": 1,
+     "q18": 6,
+     "q19": 2,
+     "q20": 2,
+     "q21": 3,
+     "q22": 1,
+     "q23": 1,
+     "q24": 17,
+     "q25": 12,
+     "q26": 2,
+     "q27": 1,
+     "q28": 3,
+     "q29": 4,
+     "q30": 1,
+     "q31": 1,
+     "q32": 20,
+     "q33": 1,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-0.6b-int8": {
+     "q01": 71,
+     "q02": 27,
+     "q03": 9,
+     "q04": 2,
+     "q05": 36,
+     "q06": 11,
+     "q07": 1,
+     "q08": 41,
+     "q09": 2,
+     "q10": 1,
+     "q11": 107,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 13,
+     "q17": 7,
+     "q18": 1,
+     "q19": 11,
+     "q20": 1,
+     "q21": 1,
+     "q22": 41,
+     "q23": 2,
+     "q24": 56,
+     "q25": 3,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 2,
+     "q31": 1,
+     "q32": 7,
+     "q33": 1,
+     "q34": 20,
+     "q35": 1,
+     "q36": 1,
+     "q37": 2,
+     "q38": 5,
+     "q39": 259,
+     "q40": 78
+    },
+    "qwen3-0.6b-int8@768": {
+     "q01": 71,
+     "q02": 84,
+     "q03": 7,
+     "q04": 2,
+     "q05": 25,
+     "q06": 7,
+     "q07": 1,
+     "q08": 24,
+     "q09": 3,
+     "q10": 1,
+     "q11": 95,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 12,
+     "q17": 5,
+     "q18": 1,
+     "q19": 13,
+     "q20": 1,
+     "q21": 1,
+     "q22": 65,
+     "q23": 3,
+     "q24": 150,
+     "q25": 4,
+     "q26": 1,
+     "q27": 1,
+     "q28": 1,
+     "q29": 1,
+     "q30": 2,
+     "q31": 1,
+     "q32": 4,
+     "q33": 1,
+     "q34": 38,
+     "q35": 1,
+     "q36": 1,
+     "q37": 4,
+     "q38": 8,
+     "q39": 433,
+     "q40": 74
+    },
+    "qwen3-0.6b": {
+     "q01": 3,
+     "q02": 2,
+     "q03": 1,
+     "q04": 2,
+     "q05": 3,
+     "q06": 3,
+     "q07": 1,
+     "q08": 29,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 1,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 4,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 6,
+     "q33": 13,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 31,
+     "q40": 15
+    },
+    "qwen3-0.6b@768": {
+     "q01": 1,
+     "q02": 2,
+     "q03": 1,
+     "q04": 2,
+     "q05": 3,
+     "q06": 4,
+     "q07": 1,
+     "q08": 27,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 3,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 1,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 4,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 5,
+     "q33": 10,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 74,
+     "q40": 10
+    },
+    "qwen3-4b": {
+     "q01": 1,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 2,
+     "q07": 1,
+     "q08": 6,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 2,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 3,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 14,
+     "q33": 1,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-4b@768": {
+     "q01": 1,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 3,
+     "q07": 1,
+     "q08": 6,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 2,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 11,
+     "q33": 3,
+     "q34": 2,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-8b": {
+     "q01": 1,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 3,
+     "q07": 1,
+     "q08": 5,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 1,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 11,
+     "q33": 1,
+     "q34": 2,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-8b@768": {
+     "q01": 1,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 3,
+     "q07": 1,
+     "q08": 5,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 1,
+     "q22": 3,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 13,
+     "q33": 2,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    }
+   }
+  },
+  "A-full (8,576)": {
+   "candidates": 8576,
+   "arms": {
+    "gemini-full": {
+     "n": 40,
+     "hits": 37,
+     "recall": 0.925,
+     "ci": [
+      0.8013576634835684,
+      0.9741639744267374
+     ],
+     "mrr": 0.6750310337810338,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     }
+    },
+    "qwen3-0.6b": {
+     "n": 40,
+     "hits": 33,
+     "recall": 0.825,
+     "ci": [
+      0.6805000953869541,
+      0.9125458630150444
+     ],
+     "mrr": 0.6402597575014856,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 9
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 6
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 6
+     }
+    },
+    "qwen3-0.6b@768": {
+     "n": 40,
+     "hits": 34,
+     "recall": 0.85,
+     "ci": [
+      0.7092767550401498,
+      0.9293881232389256
+     ],
+     "mrr": 0.6513091663194122,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 8
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 6
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 5
+     }
+    },
+    "qwen3-4b": {
+     "n": 40,
+     "hits": 38,
+     "recall": 0.95,
+     "ci": [
+      0.8349612250489412,
+      0.9861793327384413
+     ],
+     "mrr": 0.7887301587301587,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 9
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 1
+     }
+    },
+    "qwen3-4b@768": {
+     "n": 40,
+     "hits": 38,
+     "recall": 0.95,
+     "ci": [
+      0.8349612250489412,
+      0.9861793327384413
+     ],
+     "mrr": 0.7815310846560847,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 9
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 1
+     }
+    },
+    "qwen3-8b": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.8244175627240142,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "qwen3-8b@768": {
+     "n": 40,
+     "hits": 39,
+     "recall": 0.975,
+     "ci": [
+      0.8711863091181636,
+      0.9955731685462955
+     ],
+     "mrr": 0.7888645552560647,
+     "groups": {
+      "La": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ge": {
+       "n": 10,
+       "hits": 10
+      },
+      "Fr": {
+       "n": 10,
+       "hits": 10
+      },
+      "Ch": {
+       "n": 10,
+       "hits": 9
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    }
+   },
+   "perQuery": {
+    "gemini-full": {
+     "q01": 5,
+     "q02": 1,
+     "q03": 3,
+     "q04": 1,
+     "q05": 1,
+     "q06": 3,
+     "q07": 1,
+     "q08": 7,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 2,
+     "q14": 1,
+     "q15": 1,
+     "q16": 2,
+     "q17": 1,
+     "q18": 9,
+     "q19": 5,
+     "q20": 2,
+     "q21": 10,
+     "q22": 1,
+     "q23": 1,
+     "q24": 52,
+     "q25": 40,
+     "q26": 7,
+     "q27": 1,
+     "q28": 4,
+     "q29": 8,
+     "q30": 1,
+     "q31": 1,
+     "q32": 54,
+     "q33": 2,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-0.6b": {
+     "q01": 12,
+     "q02": 2,
+     "q03": 1,
+     "q04": 2,
+     "q05": 10,
+     "q06": 9,
+     "q07": 1,
+     "q08": 75,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 4,
+     "q17": 2,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 3,
+     "q23": 2,
+     "q24": 1,
+     "q25": 2,
+     "q26": 2,
+     "q27": 1,
+     "q28": 11,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 18,
+     "q33": 34,
+     "q34": 2,
+     "q35": 2,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 64,
+     "q40": 36
+    },
+    "qwen3-0.6b@768": {
+     "q01": 7,
+     "q02": 2,
+     "q03": 1,
+     "q04": 2,
+     "q05": 8,
+     "q06": 11,
+     "q07": 1,
+     "q08": 65,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 10,
+     "q17": 2,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 3,
+     "q23": 2,
+     "q24": 1,
+     "q25": 2,
+     "q26": 2,
+     "q27": 1,
+     "q28": 10,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 15,
+     "q33": 27,
+     "q34": 1,
+     "q35": 2,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 183,
+     "q40": 28
+    },
+    "qwen3-4b": {
+     "q01": 4,
+     "q02": 1,
+     "q03": 2,
+     "q04": 1,
+     "q05": 1,
+     "q06": 4,
+     "q07": 2,
+     "q08": 14,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 2,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 9,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 3,
+     "q29": 1,
+     "q30": 2,
+     "q31": 1,
+     "q32": 30,
+     "q33": 2,
+     "q34": 1,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 2,
+     "q40": 1
+    },
+    "qwen3-4b@768": {
+     "q01": 3,
+     "q02": 1,
+     "q03": 2,
+     "q04": 1,
+     "q05": 1,
+     "q06": 9,
+     "q07": 2,
+     "q08": 14,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 4,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 1,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 2,
+     "q31": 1,
+     "q32": 27,
+     "q33": 8,
+     "q34": 3,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 2,
+     "q40": 1
+    },
+    "qwen3-8b": {
+     "q01": 2,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 9,
+     "q07": 3,
+     "q08": 6,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 1,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 2,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 2,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 31,
+     "q33": 2,
+     "q34": 3,
+     "q35": 1,
+     "q36": 1,
+     "q37": 1,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    },
+    "qwen3-8b@768": {
+     "q01": 2,
+     "q02": 1,
+     "q03": 1,
+     "q04": 1,
+     "q05": 1,
+     "q06": 7,
+     "q07": 3,
+     "q08": 6,
+     "q09": 1,
+     "q10": 1,
+     "q11": 1,
+     "q12": 1,
+     "q13": 1,
+     "q14": 1,
+     "q15": 1,
+     "q16": 2,
+     "q17": 1,
+     "q18": 1,
+     "q19": 1,
+     "q20": 1,
+     "q21": 2,
+     "q22": 7,
+     "q23": 1,
+     "q24": 1,
+     "q25": 1,
+     "q26": 2,
+     "q27": 1,
+     "q28": 2,
+     "q29": 1,
+     "q30": 1,
+     "q31": 1,
+     "q32": 53,
+     "q33": 4,
+     "q34": 2,
+     "q35": 1,
+     "q36": 1,
+     "q37": 2,
+     "q38": 1,
+     "q39": 1,
+     "q40": 1
+    }
+   }
+  },
+  "B (librarian golden set, pool T)": {
+   "candidates": 10888,
+   "arms": {
+    "gemini-trans": {
+     "n": 31,
+     "hits": 29,
+     "recall": 0.9354838709677419,
+     "ci": [
+      0.7928136311278255,
+      0.9821252166393801
+     ],
+     "mrr": 0.7111839773130094,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 4
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     }
+    },
+    "gemini-orig": {
+     "n": 31,
+     "hits": 28,
+     "recall": 0.9032258064516129,
+     "ci": [
+      0.7510006140569959,
+      0.9665353560978241
+     ],
+     "mrr": 0.7707847707847708,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 3
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 4
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 3
+     }
+    },
+    "gemini-fuse": {
+     "n": 31,
+     "hits": 29,
+     "recall": 0.9354838709677419,
+     "ci": [
+      0.7928136311278255,
+      0.9821252166393801
+     ],
+     "mrr": 0.7568829020441923,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 4
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 0,
+      "loss": 0
+     }
+    },
+    "gemini-fresh": {
+     "n": 31,
+     "hits": 31,
+     "recall": 1,
+     "ci": [
+      0.889744602991977,
+      1
+     ],
+     "mrr": 0.7532642089093702,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 5
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "gemini-fresh+orig": {
+     "n": 31,
+     "hits": 31,
+     "recall": 1,
+     "ci": [
+      0.889744602991977,
+      1
+     ],
+     "mrr": 0.7344470046082948,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 5
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 0
+     }
+    },
+    "qwen3-0.6b": {
+     "n": 31,
+     "hits": 29,
+     "recall": 0.9354838709677419,
+     "ci": [
+      0.7928136311278255,
+      0.9821252166393801
+     ],
+     "mrr": 0.7512049613280513,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 4
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 2
+     }
+    },
+    "qwen3-0.6b@768": {
+     "n": 31,
+     "hits": 29,
+     "recall": 0.9354838709677419,
+     "ci": [
+      0.7928136311278255,
+      0.9821252166393801
+     ],
+     "mrr": 0.7900370239079916,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 4
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 2
+     }
+    },
+    "qwen3-4b": {
+     "n": 31,
+     "hits": 28,
+     "recall": 0.9032258064516129,
+     "ci": [
+      0.7510006140569959,
+      0.9665353560978241
+     ],
+     "mrr": 0.7780536667633441,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 6
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 4
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 3
+     }
+    },
+    "qwen3-4b@768": {
+     "n": 31,
+     "hits": 27,
+     "recall": 0.8709677419354839,
+     "ci": [
+      0.7114759359315365,
+      0.948657156610898
+     ],
+     "mrr": 0.7163604896052714,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 6
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 4
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 4
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 4
+     }
+    },
+    "qwen3-8b": {
+     "n": 31,
+     "hits": 29,
+     "recall": 0.9354838709677419,
+     "ci": [
+      0.7928136311278255,
+      0.9821252166393801
+     ],
+     "mrr": 0.7596641261963842,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 6
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 2
+     }
+    },
+    "qwen3-8b@768": {
+     "n": 31,
+     "hits": 30,
+     "recall": 0.967741935483871,
+     "ci": [
+      0.838058946841718,
+      0.9942827785378737
+     ],
+     "mrr": 0.736848635235732,
+     "groups": {
+      "well-known-concept": {
+       "n": 7,
+       "hits": 7
+      },
+      "niche-passage": {
+       "n": 4,
+       "hits": 4
+      },
+      "verbatim-quote": {
+       "n": 5,
+       "hits": 5
+      },
+      "cross-lingual": {
+       "n": 5,
+       "hits": 4
+      },
+      "broad-theme": {
+       "n": 5,
+       "hits": 5
+      },
+      "bibliographic": {
+       "n": 5,
+       "hits": 5
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 1
+     }
+    }
+   },
+   "perQuery": {
+    "gemini-trans": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 2,
+     "paracelsus-archidoxes": 1,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 1,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 2,
+     "sympathetic-magic-renaissance": 7,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 3,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 13,
+     "suhrawardi-illumination": 3,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 3,
+     "rosicrucian-reformation": 13,
+     "neoplatonic-ascent": 1,
+     "alchemical-emblem-books": 10,
+     "corpus-hermeticum-editions": 5,
+     "paracelsus-medicine": 5,
+     "ripley-green-lion": 4
+    },
+    "gemini-orig": {
+     "agrippa-natural-magic": 2,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 2,
+     "paracelsus-archidoxes": 4,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 1,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 11,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 2,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 1,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 1,
+     "suhrawardi-illumination": 36,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 39,
+     "rosicrucian-reformation": 2,
+     "neoplatonic-ascent": 2,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 2,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 2
+    },
+    "gemini-fuse": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 2,
+     "paracelsus-archidoxes": 2,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 1,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 2,
+     "sympathetic-magic-renaissance": 7,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 2,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 13,
+     "suhrawardi-illumination": 3,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 3,
+     "rosicrucian-reformation": 13,
+     "neoplatonic-ascent": 1,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 2,
+     "paracelsus-medicine": 2,
+     "ripley-green-lion": 2
+    },
+    "gemini-fresh": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 2,
+     "paracelsus-archidoxes": 1,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 2,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 4,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 2,
+     "sympathetic-magic-renaissance": 2,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 2,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 2,
+     "suhrawardi-illumination": 8,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 4,
+     "rosicrucian-reformation": 7,
+     "neoplatonic-ascent": 1,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 3,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 4
+    },
+    "gemini-fresh+orig": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 3,
+     "paracelsus-archidoxes": 2,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 2,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 4,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 2,
+     "sympathetic-magic-renaissance": 2,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 2,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 2,
+     "suhrawardi-illumination": 8,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 4,
+     "rosicrucian-reformation": 7,
+     "neoplatonic-ascent": 1,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 3,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 3
+    },
+    "qwen3-0.6b": {
+     "agrippa-natural-magic": 2,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 1,
+     "paracelsus-archidoxes": 3,
+     "porta-natural-magic": 3,
+     "kircher-magnetism": 2,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 1,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 3,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 2,
+     "suhrawardi-illumination": 80,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 9,
+     "rosicrucian-reformation": 2,
+     "neoplatonic-ascent": 9,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 19,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    },
+    "qwen3-0.6b@768": {
+     "agrippa-natural-magic": 2,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 1,
+     "paracelsus-archidoxes": 2,
+     "porta-natural-magic": 3,
+     "kircher-magnetism": 1,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 1,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 4,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 2,
+     "suhrawardi-illumination": 91,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 9,
+     "rosicrucian-reformation": 1,
+     "neoplatonic-ascent": 4,
+     "alchemical-emblem-books": 1,
+     "corpus-hermeticum-editions": 28,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    },
+    "qwen3-4b": {
+     "agrippa-natural-magic": 2,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 12,
+     "paracelsus-archidoxes": 4,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 2,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 1,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 7,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 1,
+     "suhrawardi-illumination": 52,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 11,
+     "rosicrucian-reformation": 1,
+     "neoplatonic-ascent": 1,
+     "alchemical-emblem-books": 3,
+     "corpus-hermeticum-editions": 5,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    },
+    "qwen3-4b@768": {
+     "agrippa-natural-magic": 2,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 13,
+     "paracelsus-archidoxes": 6,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 3,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 2,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 1,
+     "books-on-geomancy": 1,
+     "christian-cabala": 3,
+     "zohar-sefirot": 3,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 1,
+     "suhrawardi-illumination": 63,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 17,
+     "rosicrucian-reformation": 1,
+     "neoplatonic-ascent": 2,
+     "alchemical-emblem-books": 3,
+     "corpus-hermeticum-editions": 18,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    },
+    "qwen3-8b": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 16,
+     "paracelsus-archidoxes": 3,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 5,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 2,
+     "books-on-geomancy": 1,
+     "christian-cabala": 1,
+     "zohar-sefirot": 6,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 1,
+     "suhrawardi-illumination": 52,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 8,
+     "rosicrucian-reformation": 1,
+     "neoplatonic-ascent": 2,
+     "alchemical-emblem-books": 2,
+     "corpus-hermeticum-editions": 7,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    },
+    "qwen3-8b@768": {
+     "agrippa-natural-magic": 1,
+     "bruno-art-of-memory": 1,
+     "ficino-spiritus-talismans": 1,
+     "kepler-harmony-spheres": 1,
+     "fludd-macrocosm-microcosm": 5,
+     "paracelsus-archidoxes": 2,
+     "porta-natural-magic": 1,
+     "kircher-magnetism": 5,
+     "vesalius-anatomy-skull": 1,
+     "boehme-aurora": 1,
+     "emerald-tablet": 1,
+     "rosicrucian-manifestos": 1,
+     "indian-rasa-alchemy": 1,
+     "artemidorus-dreams": 1,
+     "sympathetic-magic-renaissance": 2,
+     "books-on-geomancy": 1,
+     "christian-cabala": 4,
+     "zohar-sefirot": 6,
+     "sefer-yetzirah-creation": 1,
+     "ibn-arabi-unity": 1,
+     "suhrawardi-illumination": 39,
+     "rosicrucian-fama": 1,
+     "chymical-wedding": 1,
+     "maier-atalanta-motto": 1,
+     "coniunctio-opposites": 6,
+     "rosicrucian-reformation": 2,
+     "neoplatonic-ascent": 2,
+     "alchemical-emblem-books": 2,
+     "corpus-hermeticum-editions": 3,
+     "paracelsus-medicine": 1,
+     "ripley-green-lion": 1
+    }
+   }
+  },
+  "C (20 queries, translated pages, pool T)": {
+   "candidates": 10888,
+   "arms": {
+    "gemini-trans": {
+     "n": 20,
+     "hits": 16,
+     "recall": 0.8,
+     "ci": [
+      0.583982565906683,
+      0.9193423379822393
+     ],
+     "mrr": 0.7750355245001854,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 7
+      }
+     }
+    },
+    "gemini-orig": {
+     "n": 20,
+     "hits": 17,
+     "recall": 0.85,
+     "ci": [
+      0.6395811333571357,
+      0.9476312545132735
+     ],
+     "mrr": 0.5931707798728055,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 8
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 1
+     }
+    },
+    "gemini-fuse": {
+     "n": 20,
+     "hits": 17,
+     "recall": 0.85,
+     "ci": [
+      0.6395811333571357,
+      0.9476312545132735
+     ],
+     "mrr": 0.7224644876021024,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 8
+      }
+     },
+     "vsRef": {
+      "win": 1,
+      "loss": 0
+     }
+    },
+    "gemini-fresh": {
+     "n": 20,
+     "hits": 16,
+     "recall": 0.8,
+     "ci": [
+      0.583982565906683,
+      0.9193423379822393
+     ],
+     "mrr": 0.743232436972744,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 7
+      }
+     },
+     "vsRef": {
+      "win": 1,
+      "loss": 1
+     }
+    },
+    "gemini-fresh+orig": {
+     "n": 20,
+     "hits": 17,
+     "recall": 0.85,
+     "ci": [
+      0.6395811333571357,
+      0.9476312545132735
+     ],
+     "mrr": 0.6940020539558399,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 8
+      }
+     },
+     "vsRef": {
+      "win": 2,
+      "loss": 1
+     }
+    },
+    "qwen3-0.6b": {
+     "n": 20,
+     "hits": 19,
+     "recall": 0.95,
+     "ci": [
+      0.7638688045357189,
+      0.9911185512976646
+     ],
+     "mrr": 0.8654411764705883,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 3,
+      "loss": 0
+     }
+    },
+    "qwen3-0.6b@768": {
+     "n": 20,
+     "hits": 19,
+     "recall": 0.95,
+     "ci": [
+      0.7638688045357189,
+      0.9911185512976646
+     ],
+     "mrr": 0.8708333333333332,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 9
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 3,
+      "loss": 0
+     }
+    },
+    "qwen3-4b": {
+     "n": 20,
+     "hits": 20,
+     "recall": 1,
+     "ci": [
+      0.8388748398148705,
+      1
+     ],
+     "mrr": 0.975,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 10
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 4,
+      "loss": 0
+     }
+    },
+    "qwen3-4b@768": {
+     "n": 20,
+     "hits": 20,
+     "recall": 1,
+     "ci": [
+      0.8388748398148705,
+      1
+     ],
+     "mrr": 0.95,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 10
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 4,
+      "loss": 0
+     }
+    },
+    "qwen3-8b": {
+     "n": 20,
+     "hits": 20,
+     "recall": 1,
+     "ci": [
+      0.8388748398148705,
+      1
+     ],
+     "mrr": 0.925,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 10
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 4,
+      "loss": 0
+     }
+    },
+    "qwen3-8b@768": {
+     "n": 20,
+     "hits": 20,
+     "recall": 1,
+     "ci": [
+      0.8388748398148705,
+      1
+     ],
+     "mrr": 0.9166666666666666,
+     "groups": {
+      "orig": {
+       "n": 10,
+       "hits": 10
+      },
+      "en": {
+       "n": 10,
+       "hits": 10
+      }
+     },
+     "vsRef": {
+      "win": 4,
+      "loss": 0
+     }
+    }
+   },
+   "perQuery": {
+    "gemini-trans": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 15,
+     "c09": 3,
+     "c10": 1,
+     "c11": 103,
+     "c12": 1,
+     "c13": 10792,
+     "c14": 11,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    },
+    "gemini-orig": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 9,
+     "c04": 578,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 2,
+     "c09": 2,
+     "c10": 6,
+     "c11": 1741,
+     "c12": 1,
+     "c13": 2,
+     "c14": 12,
+     "c15": 1,
+     "c16": 2,
+     "c17": 2,
+     "c18": 1,
+     "c19": 2,
+     "c20": 2
+    },
+    "gemini-fuse": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 2,
+     "c04": 1,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 14,
+     "c09": 2,
+     "c10": 6,
+     "c11": 109,
+     "c12": 1,
+     "c13": 9,
+     "c14": 11,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    },
+    "gemini-fresh": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 65,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 4,
+     "c10": 1,
+     "c11": 89,
+     "c12": 1,
+     "c13": 213,
+     "c14": 12,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 2
+    },
+    "gemini-fresh+orig": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 2,
+     "c04": 97,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 2,
+     "c10": 6,
+     "c11": 116,
+     "c12": 1,
+     "c13": 9,
+     "c14": 12,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 2
+    },
+    "qwen3-0.6b": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 4,
+     "c06": 1,
+     "c07": 1,
+     "c08": 17,
+     "c09": 2,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 2
+    },
+    "qwen3-0.6b@768": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 3,
+     "c06": 1,
+     "c07": 1,
+     "c08": 12,
+     "c09": 2,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 2
+    },
+    "qwen3-4b": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 1,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 2,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    },
+    "qwen3-4b@768": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 2,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 2,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 1,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    },
+    "qwen3-8b": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 2,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 2,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 2,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    },
+    "qwen3-8b@768": {
+     "c01": 1,
+     "c02": 1,
+     "c03": 1,
+     "c04": 1,
+     "c05": 2,
+     "c06": 1,
+     "c07": 1,
+     "c08": 1,
+     "c09": 3,
+     "c10": 1,
+     "c11": 1,
+     "c12": 1,
+     "c13": 1,
+     "c14": 1,
+     "c15": 1,
+     "c16": 1,
+     "c17": 2,
+     "c18": 1,
+     "c19": 1,
+     "c20": 1
+    }
+   }
+  }
+ },
+ "storedVsFresh": {
+  "n": 10888,
+  "p01": -0.0071668319885542005,
+  "median": 0.9868251230424006,
+  "below099": 5824,
+  "below09": 1771,
+  "below05": 224
+ }
+}

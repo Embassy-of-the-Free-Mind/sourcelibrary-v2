@@ -1,0 +1,201 @@
+[
+ {
+  "id": "Q7T0U",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བསྐལ་པ་གསུམ་གྱི་བསྐལ་པ་",
+    "english": "the obstruction of the three kinds of obstruction",
+    "why": "bskal ba is viprakṛṣṭa, 'remoteness/inaccessibility' (of place, time and nature), not 'obstruction'; the same misrendering recurs throughout the side ('unobstructed' for ma bskal ba).",
+    "fix": {
+     "find": "the obstruction of the three kinds of obstruction",
+     "replace": "the remoteness of the three kinds of remoteness"
+    }
+   }
+  ],
+  "note": "Sound overall, but the key Pramāṇa term bskal ba (remote, viprakṛṣṭa) is consistently rendered 'obstructed'."
+ },
+ {
+  "id": "QVK75",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "ཡོད་པ་ནི་བདག་ཉིད་ཐམས་ཅད་ཀྱིས་གྲུབ་པས་རང་བཞིན་གཞན་",
+    "english": "its other nature one line of text follows",
+    "why": "The words 'one line of text follows' are a stray editorial artefact; the Tibetan says what exists, being established in its whole self, cannot be made into another nature (continued on next side).",
+    "fix": {
+     "find": "its other nature one line of text follows",
+     "replace": "it cannot be made into another nature"
+    }
+   }
+  ],
+  "note": "Faithful rendering of the destruction and contradiction argument, marred by a stray artefact at the end."
+ },
+ {
+  "id": "Q1OFV",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དབེན་པར་བདག་ནི་ལག་པས་སྐེ་རགས་ལྷོད་པར་བྱེད་པ་ཀུན་ནས་འགེགས་པ་ནི།",
+    "english": "In solitude, I would loosen my girdle with my hands, yet she would completely restrain me.",
+    "why": "The lover loosens HER girdle and she resists; 'my girdle' makes the speaker undress himself."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "རྒོད་པའི་ཟླ་ཉི་ཡོངས་སུ་འདྲིས་པས་ཡིད་འོང་གདོང་གི་རི་བོང་ཅན།",
+    "english": "With the sun and moon of the wild (raga) attachment/passion fully familiar",
+    "why": "rgod pa is not rāga; the inserted '(raga) attachment/passion' gloss is wrong and the opening line is garbled."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དེ་ལྟར་གཞན་གྱི་བུད་མེད་ལ་ཆགས་པ། །སྐྱོན་མང་བར་ཤེས་",
+    "english": "Thus, knowing that attachment to the women of others has many faults",
+    "why": "The whole side is verse (long-metre stanzas and a closing śloka) but is rendered as continuous prose paragraphs, obscuring stanza boundaries."
+   }
+  ],
+  "note": "A loose prose paraphrase of difficult kāvya verse; gist is there but several lines are garbled or misattributed."
+ },
+ {
+  "id": "QGE1U",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "བདག་གིས་དེ་མ་ཤེས་པར་འདི་ལྟ་བུ་མི་བརྟན་པར་བྱས་སོ",
+    "english": "yet without understanding that, I acted so unsteadily!",
+    "why": "The king reflects that he wrongly treated such a man as inconstant (mi brtan par byas), i.e. judged the brahmin unreliable, not that he himself acted unsteadily."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "སྤོང་བར་གྱུར་པས་དེ་ལ་གཏམ་ངན་འབྱུང་།",
+    "english": "If one is free of that heart-tormenting anger\nwhich is like a blazing, scorching fire,\nyet abandons it, ill repute will befall him,",
+    "why": "The stanza contrasts with the next one: ill repute befalls one who does NOT abandon the heart-tormenting anger; the English makes abandoning anger bring ill repute."
+   }
+  ],
+  "note": "Good verse rendering of the Bodhisattva's discourse on anger, with one stanza made illogical and the king's reflection slightly misread."
+ },
+ {
+  "id": "QVHN5",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the Sāṃkhya pradhāna argument; odd paragraph breaks only."
+ },
+ {
+  "id": "QP5CU",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate, terminologically sound rendering of the commentary on asiddha hetvābhāsa."
+ },
+ {
+  "id": "QOERI",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ལུས་མཚུངས་པ་དང་མི་མཚུངས་པ་དག་ལ་རྗེས་སུ་མཐུན་པ་གོམས་པའི་བག་ཆགས་ནི་རྒྱུ་མཚན་ཡིན་",
+    "english": "The cause is the habituated tendencies (vasana) karmic imprints or latencies that correspond to the equality or inequality of bodies.",
+    "why": "The Tibetan says the cause, in bodies equal and unequal alike, is the latent impression of corresponding habituation; the English makes the vāsanās depend on the bodies' equality, undercutting the argument."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཇི་ལྟར་སྲིད་པའི་རྒྱུ་ལ་དེའི་ཁྱད་པར་ཡིན་ན",
+    "english": "just as a distinction in the cause of existence",
+    "why": "ji ltar srid pa here is 'as far as possible / accordingly' (yathāsambhavam), not 'existence' (bhava)."
+   }
+  ],
+  "note": "Generally faithful on the body-consciousness transformation argument; two clauses misconstrued."
+ },
+ {
+  "id": "Q6J89",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "སུ་ཞིག་ཀྱང་ནི་རབ་ཏུ་གསལ་བ་རུ། །བདེ་བར་འགྲོ་བ་སྐྱེས་བུ་རིན་ཆེན་སྐྱེས།",
+    "english": "Yet far more wonderful is the birth of that jewel among men",
+    "why": "No comparative 'far more wonderful' in the Tibetan or Sanskrit; it says a certain jewel among men, revealing the Sugata, is born."
+   }
+  ],
+  "note": "Handles the bilingual colophon and opening verses reasonably, with some redundancy and a small embellishment."
+ },
+ {
+  "id": "QYS16",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཁྱེའུ་ཁ་འཐོན་པར་རུང་བར་མ་བྱས་པ་མ་ཉམས་པ་ཉིད་དུ",
+    "english": "are viable [note: literally: \"fit for a youth to eat\"] and undamaged",
+    "why": "The Vinaya condition is that the seeds are capable of sprouting and have NOT been made allowable (rung bar ma byas pa, akalpikṛta); the English drops 'not made allowable' and the note's 'fit for a youth to eat' is wrong.",
+    "fix": {
+     "find": "are viable [note: literally: \"fit for a youth to eat\"] and undamaged",
+     "replace": "are capable of sprouting, have not been made allowable, and are undamaged"
+    }
+   }
+  ],
+  "note": "Reliable rendering of the bhūtagrāma pātayantika definitions, but the key 'not made allowable' condition is lost."
+ },
+ {
+  "id": "QACZ7",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དགེ་འདུན་ལྷག་མ་",
+    "english": "sanghadisesa",
+    "why": "This is the Mūlasarvāstivāda Vinaya; the Sanskrit term is saṃghāvaśeṣa, not the Pali saṅghādisesa.",
+    "fix": {
+     "find": "sanghadisesa",
+     "replace": "saṃghāvaśeṣa"
+    }
+   },
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "གལ་ཏེ་གནས་བརྟན་བཤང་བའམ། གཅི་བ་ཞིག་ཏུ་",
+    "english": ", the text cuts off mid-sentence",
+    "why": "Editorial remark not in the Tibetan; the sentence simply continues on the next side.",
+    "fix": {
+     "find": ", the text cuts off mid-sentence",
+     "replace": ""
+    }
+   }
+  ],
+  "note": "Faithful rendering of the five modes of Prātimokṣa recitation and the reciter's and elder's duties."
+ }
+]

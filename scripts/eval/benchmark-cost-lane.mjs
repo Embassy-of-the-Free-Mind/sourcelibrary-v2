@@ -81,9 +81,15 @@ for (const st of STRATA) {
 // class (#4925 step 2: the Greek decision is per PERIOD of print; the by-eye leaf filter --leaf=grc
 // still applies). The period is the edition's catalogue year — read with #4884 in mind.
 const BY = argOf('by', 'script_class');
+// --cells=<cells.json> (PREREGISTRATION-open-engine-print-5660.md): group by a preregistered slug → cell map instead,
+// and gate the decision on LIBRARY books only — an external (Wikisource-hosted, book_id null) page is scored and shown
+// but never counts toward n (eval-design §3.5). Reference-tier rows (ref-ws: the passage aligner, no has_ref field)
+// enter as referenced when the map names them.
+const CELLS = argOf('cells') ? new Map(JSON.parse(fs.readFileSync(argOf('cells'), 'utf8')).pages.filter(r => r.cell).map(r => [r.slug, r])) : null;
+if (CELLS) for (const p of pages) { const r = CELLS.get(p.slug); p._origin = r?.origin || null; if (r && p.tier) p.has_ref = true; }
 const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
 const PERIOD_GROUPS = { '1450–1699': ['before 1500', '1500–1599', '1600–1699'], '1700–1799': ['1700–1799'], '1800–1899': ['1800–1899'] };
-const groupOf = p => BY === 'period' ? (Object.entries(PERIOD_GROUPS).find(([, ps]) => ps.includes(periodOf(p.year)))?.[0] || null) : p.script_class;
+const groupOf = p => CELLS ? (CELLS.get(p.slug)?.cell || null) : BY === 'period' ? (Object.entries(PERIOD_GROUPS).find(([, ps]) => ps.includes(periodOf(p.year)))?.[0] || null) : p.script_class;
 for (const p of pages) p._group = groupOf(p);
 const classes = CLASSES || [...new Set(pages.map(p => p._group).filter(Boolean))].sort();
 const result = { engine: ENGINE, ref: REF, repeat: REPEAT, min_n: MIN_N, rule: { margin: MARGIN, ci_max: CI_MAX, noise: NOISE }, sources, classes: {} };
@@ -94,6 +100,7 @@ for (const c of classes) {
   const referenced = inClass.filter(p => p.has_ref && !p.ref_mismatch);
   const paired = referenced.filter(p => cerOf(p, ENGINE) != null && cerOf(p, REF) != null);
   const deltas = paired.map(p => cerOf(p, ENGINE) - cerOf(p, REF));
+  const nGate = CELLS ? paired.filter(p => p._origin !== 'external').length : paired.length;   // library books when --cells
   const withRepeat = paired.filter(p => cerOf(p, REPEAT) != null);
   const deltas0 = withRepeat.map(p => cerOf(p, REPEAT) - cerOf(p, REF));
   const wins = deltas.filter(d => d < -1e-9).length, losses = deltas.filter(d => d > 1e-9).length, ties = deltas.length - wins - losses;
@@ -112,9 +119,9 @@ for (const c of classes) {
     invention_le_ref: inv(ENGINE) != null && inv(REF) != null && inv(ENGINE) <= inv(REF),
     loops_le_ref: loops(ENGINE) <= loops(REF),
   };
-  const better = untied >= MIN_N && p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6;
+  const better = untied >= MIN_N && nGate >= MIN_N && p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6;
   let verdict;
-  if (paired.length < MIN_N) verdict = `directional (n=${paired.length} < ${MIN_N}) — no lane decision`;
+  if (nGate < MIN_N) verdict = `directional (n=${nGate}${CELLS ? ' library' : ''} < ${MIN_N}) — no lane decision`;
   else if (!checks.noise_floor_below_margin) verdict = 'engine noise exceeds the margin — no lane decision';
   else if (Object.values(checks).every(Boolean)) verdict = better ? 'cost lane ADOPTED; also the better reader' : 'cost lane ADOPTED';
   else verdict = 'REJECTED';
@@ -125,7 +132,7 @@ for (const c of classes) {
   const invOf = (e, f) => median(paired.map(p => p.engines?.[e]?.[f]).filter(x => typeof x === 'number'));
   const invention3 = Object.fromEntries(['invention', 'invention_indep', 'invention_ref'].map(f => [f, { [ENGINE]: r3(invOf(ENGINE, f)), [REF]: r3(invOf(REF, f)) }]));
   const refMed = median(paired.map(p => cerOf(p, REF))), cataShare = paired.length ? cata(REF) / paired.length : null;
-  const decidable = paired.length >= MIN_N;
+  const decidable = nGate >= MIN_N;
   const leq = f => invOf(ENGINE, f) != null && invOf(REF, f) != null && invOf(ENGINE, f) <= invOf(REF, f);
   const bCore = p_sign != null && p_sign < 0.05 && wins > losses && medD <= -0.01 && ci && ci[1] < 0 && cata(ENGINE) <= cata(REF);
   const cCore = p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6 && cata(ENGINE) <= cata(REF);
@@ -138,7 +145,7 @@ for (const c of classes) {
   };
   result.classes[c] = {
     prereg, invention_three_ways: invention3,
-    n_pages: inClass.length, n_referenced: referenced.length, n_paired: paired.length, n_by_stratum: Object.fromEntries(STRATA.map(s => [s, paired.filter(p => p.stratum === s).length])),
+    n_pages: inClass.length, n_referenced: referenced.length, n_paired: paired.length, n_gate: nGate, n_by_stratum: Object.fromEntries(STRATA.map(s => [s, paired.filter(p => p.stratum === s).length])),
     median_cer: { [ENGINE]: r3(median(paired.map(p => cerOf(p, ENGINE)))), [REF]: r3(median(paired.map(p => cerOf(p, REF)))), [REPEAT]: r3(median(withRepeat.map(p => cerOf(p, REPEAT)))) },
     // the reference engine's own median with its interval — the Greek prereg's rule (a), "is lite good enough", reads this
     ref_median_cer_ci95: bootstrapMedianCI(paired.map(p => cerOf(p, REF))),

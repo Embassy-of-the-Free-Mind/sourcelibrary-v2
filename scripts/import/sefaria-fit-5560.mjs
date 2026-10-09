@@ -420,7 +420,10 @@ async function score() {
     const elo = r.span.a - 3000, ehi = r.span.b + 3000;
     r.edges = reads.map((t) => {
       const ls = edgeLines(t);
-      return { start: fitEdge(ls.slice(0, 2).join(''), 'start', elo, ehi), end: fitEdge(ls.slice(-2).join(''), 'end', elo, ehi) };
+      // The first / last EDGE_LETTERS letters, not whole lines: on a dense two-column page Kraken
+      // joins line 1 of both columns into one line (Pardes), so only its first half is the page start.
+      const all = ls.join('');
+      return { start: fitEdge(all.slice(0, FIT_RULES.edgeLetters), 'start', elo, ehi), end: fitEdge(all.slice(-FIT_RULES.edgeLetters), 'end', elo, ehi) };
     });
     const bad = new Set();
     const nc = cuts.length;
@@ -435,6 +438,12 @@ async function score() {
       cuts[k][1] = b; cuts[k + 1][0] = b;
     }
     r.inner_unverified = [...bad].map((k) => r.pages[k]);
+    // Outer edges must ALSO be confirmed by the page's own read (measured on Pardes p143: a start anchor
+    // from the next page's garbled OCR landed a line early and the page lost its last line, while F1
+    // against the controls still passed). Unconfirmed → refused, whatever the anchor said.
+    r.edge_unconfirmed = [];
+    if (!r.edges[0].start) r.edge_unconfirmed.push(r.pages[0]);
+    if (!r.edges[nc - 1].end) r.edge_unconfirmed.push(r.pages[nc - 1]);
     if (r.weak?.prev && !r.edges[0].start) r.inner_unverified.push(r.pages[0]);
     if (r.weak?.next && !r.edges[nc - 1].end) r.inner_unverified.push(r.pages[nc - 1]);
     r.cuts = cuts;
@@ -444,12 +453,13 @@ async function score() {
       const sc = scoreFit(reads[k], stream, x, y, far);
       p.score = sc;
       p.span = { a: x, b: y };
-      const cls = (r.inner_unverified || []).includes(p.page_number) ? 'inner' : y - x < FIT_RULES.minReadLetters ? 'edges' : fitClass(sc);
+      const cls = (r.inner_unverified || []).includes(p.page_number) ? 'inner' : (r.edge_unconfirmed || []).includes(p.page_number) ? 'unconfirmed' : y - x < FIT_RULES.minReadLetters ? 'edges' : fitClass(sc);
       p.verdict = cls === 'verified' ? (p.human ? 'refused' : 'verified') : 'refused';
       p.reason = cls === 'verified' ? (p.human ? 'human-edited page' : null)
         : cls === 'uninformative' ? `read uninformative (${sc.read_letters} letters; precision ${sc.precision})`
         : cls === 'misaligned' ? `read fits shift ${sc.best_shift} better than the fitted span`
         : cls === 'edges' ? `the page's own first/last lines fit ${y - x} letters apart — edges inconsistent, not written`
+        : cls === 'unconfirmed' ? 'an outer edge rests on a neighbour anchor alone — the page\'s own first/last letters do not fit there, so a line may be lost; not written'
         : cls === 'inner' ? (r.weak?.prev && k === 0 && !r.edges[0].start ? `${r.weak.prev}, and the page's own first lines do not fit either` : r.weak?.next && k === r.pages.length - 1 && !r.edges[r.pages.length - 1].end ? `${r.weak.next}, and the page's own last lines do not fit either` : 'boundary inside a run of refused pages could not be fitted from the reads — not split by guess')
         : cls === 'coverage' ? `read ${sc.read_letters} letters vs span ${sc.span_letters}: the page carries text the Sefaria version does not (or the span is wrong) — a partial page is not written`
         : `F1 ${sc.f1} vs wrong-page control ${sc.control}: below margin ${FIT_RULES.minMargin} / ratio ${FIT_RULES.minRatio}`;

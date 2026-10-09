@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 154
+n_pages: 3602
+verdict: "154 books at once in shared Batch jobs: $0.00061 per written page, 5.4% of rounds cancelled (vs 16-18% one job per book), about 4,700 pages/hour at full concurrency."
+status: adopted
+decision: "Shared jobs (#5375), one fallback round (#5381) and auto-enrol (#5385) run in the chained cron; tick faults fixed in #5391, #5392"
+superseded_by: null
+issue: [4681, 5375, 5381, 5385]
+---
 ## 2026-09-30 — Chained Batch lane at scale (#4681): 154 books at once in shared jobs — $0.00061/page, ~4,700 pages/hour at full concurrency, 5.4% of rounds cancelled
 
 **Question.** Does the chained lane (2026-09-29 entry below) hold its price and guard rates when

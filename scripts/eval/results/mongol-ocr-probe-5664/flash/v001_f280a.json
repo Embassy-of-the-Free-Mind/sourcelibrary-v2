@@ -1,0 +1,42 @@
+{
+ "key": "v001_f280a",
+ "page": {
+  "key": "v001_f280a",
+  "vol": 1,
+  "book_id": "6ac0295271182233c6fc40ab",
+  "page_number": 559,
+  "page_label": "f. 280a",
+  "bdrc_canvas": "I1PD1102690562.jpg",
+  "ligeti": "Mng1.9",
+  "mng_span": "Ka Dandr a 273b–311b",
+  "toh": "D417",
+  "skt": "Hevajratantrarāja-nāma",
+  "derge_vol": 80,
+  "derge_file": "080_རྒྱུད་འབུམ།_ང.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Manchu</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<warning>Handwritten Manchu script. The text is oriented vertically, reading from left to right across the page in the image (which is rotated 90 degrees clockwise from its natural reading orientation).</warning>\n\n<unclear>25 lines of Manchu script, not transcribed</unclear>\n\n<margin>\n<unclear>Vertical annotation in Manchu script</unclear>\n</margin>\n\n<vocab>Manchu script, Qing dynasty, vertical writing</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4279,
+  "outputTokens": 157,
+  "cost_usd": 0.0026105
+ },
+ "translation": {
+  "text": "<warning>The OCR input contains no transcribed text. The provided source consists entirely of unclear markers and metadata about the script's orientation.</warning>\n\n<unclear>25 lines of Manchu script, not transcribed</unclear>\n\n<margin>\n<unclear>Vertical annotation in Manchu script</unclear>\n</margin>\n\n<summary>This page contains twenty-five lines of handwritten Manchu script and a marginal annotation that have not been transcribed from the original manuscript.</summary>\n<keywords>Manchu script, Qing dynasty, untranscribed manuscript, vertical writing</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 1887,
+  "outputTokens": 125,
+  "cost_usd": 0.0013185
+ }
+}

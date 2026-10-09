@@ -63,6 +63,13 @@ const GPU = path.join(HERE, 'paddle-zh-gpu.sh');
 const POD = path.join(HERE, 'paddle-zh-runpod.sh');
 const isPod = (box) => S.boxes[box]?.provider === 'runpod';
 const LANE = path.join(REPO, 'scripts/workers/paddle-zh-lane.mjs');
+// a later run of the same lane (#5660 job gpu-backlog-5660) names its own issue, hold, box prefix and waves:
+const ISSUE = E('PADDLE_ZH_ISSUE', '5600'), HOLD = E('PADDLE_ZH_HOLD', 'paddle-zh-5600-ocr-only'), BOX_PREFIX = E('BOX_PREFIX', 'f');
+// WAVES: which of the three waves run (default all; "1,3" = never-read pages + their one retry, previews keep lite).
+// GATE_PAGES: stop cutting new chunks once this many rows are cut (a quality gate is read before it is raised);
+// a box with nothing queued and nothing left to cut is then deleted, not left idle on the meter.
+const WAVES = new Set(E('WAVES', '1,2,3').split(',').map(Number)), GATE_PAGES = +E('GATE_PAGES', 0), GATE_IDLE_MAX_MIN = +E('GATE_IDLE_MAX_MIN', 0);
+const cutRows = () => Object.values(S.chunks).reduce((s, c) => s + (c.rows_cut ?? c.rows ?? 0), 0);
 
 const log = (m) => { const l = `${new Date().toISOString()} [fleet] ${m}`; console.log(l); fs.appendFileSync(F.log, l + '\n'); };
 const readText = (f) => { try { return fs.readFileSync(f, 'utf8').trim(); } catch { return ''; } };
@@ -75,7 +82,7 @@ function gpu(box, cmd, args = [], { env = {}, timeout = 900 } = {}) {
 }
 function comment(key, body) {
   if (S.comments[key] || DRY) return;
-  try { execFileSync('gh', ['issue', 'comment', '5600', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', body], { stdio: 'ignore', timeout: 60000 }); S.comments[key] = new Date().toISOString(); save(); log(`commented on #5600: ${key}`); }
+  try { execFileSync('gh', ['issue', 'comment', ISSUE, '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', body], { stdio: 'ignore', timeout: 60000 }); S.comments[key] = new Date().toISOString(); save(); log(`commented on #${ISSUE}: ${key}`); }
   catch (e) { log(`comment ${key} FAILED: ${String(e.message).slice(0, 120)}`); }
 }
 
@@ -111,8 +118,9 @@ const doneTxt = (bid, pn) => fs.existsSync(path.join(F.out, bid, `${pn}.txt`)) |
 function cutChunk() {
   const ids = keepIds();
   const rows = [];
+  if (GATE_PAGES && cutRows() >= GATE_PAGES) return null;
   while (rows.length < CHUNK_PAGES && S.wave <= 3) {
-    if (S.cursor >= ids.length) { S.wave++; S.cursor = 0; continue; }
+    if (!WAVES.has(S.wave) || S.cursor >= ids.length) { S.wave++; S.cursor = 0; continue; }
     const batch = ids.slice(S.cursor, S.cursor + 25);
     // plan (and HOLD) the batch's books that have no plan yet — the hold comes before any page of theirs is read
     const unplanned = batch.filter(b => !fs.existsSync(path.join(F.plan, `${b}.json`)));
@@ -138,7 +146,7 @@ function cutChunk() {
   const name = `c${String(Object.keys(S.chunks).length + 1).padStart(4, '0')}-w${Math.min(S.wave, 3)}`;
   fs.mkdirSync(F.chunks, { recursive: true });
   fs.writeFileSync(path.join(F.chunks, `${name}.tsv`), rows.join('\n') + '\n');
-  S.chunks[name] = { rows: rows.length, box: null, status: 'unassigned', cut_at: new Date().toISOString() };
+  S.chunks[name] = { rows: rows.length, rows_cut: rows.length, box: null, status: 'unassigned', cut_at: new Date().toISOString() };
   save();
   return name;
 }
@@ -186,7 +194,8 @@ function feed(box) {
     // the lane's apply names the box a page was read on (ocr.engine.run/host/gpu, from boxes/<box>/box.json)
     // by assign.json — without it every page says `unknown-box` (caught on the pilot, 2026-10-02)
     const af = path.join(DIR, 'assign.json'), assign = readJson(af, {});
-    for (const [bid] of chunkRows(n)) assign[bid] = box;
+    // a retry chunk names the box per page: its book was read on another box
+    for (const [bid, pn] of chunkRows(n)) { if (/-w3$/.test(n)) assign[`${bid}/${pn}`] = box; else assign[bid] = box; }
     fs.writeFileSync(af + '.tmp', JSON.stringify(assign)); fs.renameSync(af + '.tmp', af);
     log(`${box}: queued ${n} (${S.chunks[n].rows} rows)`); save();
   }
@@ -209,6 +218,17 @@ function tend(box) {
   b.ssh_fail = 0;
   if (!DRY && !isPod(box)) gpu(box, 'lease', [String(LEASE_H)], { timeout: 120 });
   if (!DRY) gpu(box, isPod(box) ? 'pullout' : 'pull', isPod(box) ? [F.out, path.join(F.boxes, box)] : [F.out], { timeout: 1800 });
+  // a box.json without the weights hash (written before the server fetched them) would put `revision: not_recorded`
+  // on every page applied from this box: re-collect on the box, with its serving env, before this cycle's apply
+  const bj = readJson(path.join(F.boxes, box, 'box.json'), {});
+  if (!DRY && bj.host && !bj.weights_sha256) {
+    // the env the box was STARTED with (its loop keeps it), never today's BOX_ENV: a box started before a BOX_ENV
+    // change (LAYOUT=0, #5600 job nolayout-5600e) would otherwise name a serving config it never ran. Boxes started
+    // before box_env was recorded all ran BACKEND=server CLIENTS=8.
+    gpu(box, 'ssh', [`cd /root/pz && ${b.box_env || 'BACKEND=server CLIENTS=8'} PV_WORK=/root/pz bash code/paddle-zh-box.sh collect > /dev/null 2>&1 || true`], { timeout: 900 });
+    gpu(box, isPod(box) ? 'pullout' : 'pull', isPod(box) ? [F.out, path.join(F.boxes, box)] : [F.out], { timeout: 1800 });
+    log(`${box}: box.json had no weights hash — re-collected (${readJson(path.join(F.boxes, box, 'box.json'), {}).weights_sha256 ? 'now recorded' : 'STILL MISSING'})`);
+  }
   const n = +(gpu(box, 'ssh', ['find /root/pz/out -name "*.txt" -o -name "*.err" | wc -l'], { timeout: 120 }).out.split('\n').pop() || 0);
   const job = gpu(box, 'ssh', ['cat /root/pz/job.exit 2>/dev/null; ls /root/pz/queue 2>/dev/null | grep -c "\\.tsv$"'], { timeout: 60 }).out;
   const hasWork = Object.values(S.chunks).some(c => c.box === box && c.status === 'assigned');
@@ -217,6 +237,18 @@ function tend(box) {
   save();
   if ((b.stall || 0) >= STALL_CYCLES) return deleteBox(box, `no new output for ${b.stall} cycles`);
   feed(box);
+  if (!Object.values(S.chunks).some(c => c.box === box && c.status === 'assigned') && !Object.values(S.chunks).some(c => c.status === 'unassigned')) {
+    // a gate pause keeps the box for GATE_IDLE_MAX_MIN (GPU stock can be gone when the gate is raised: 2026-10-06 every
+    // Scaleway L4/L40S zone said `shortage`); past that it is deleted like a finished box
+    if (GATE_PAGES && cutRows() >= GATE_PAGES) {
+      b.gate_idle_since ??= Date.now(); save();
+      const idleMin = (Date.now() - b.gate_idle_since) / 60000;
+      if (idleMin < GATE_IDLE_MAX_MIN) return log(`${box}: gate pause at ${GATE_PAGES} rows — kept idle ${idleMin.toFixed(0)}/${GATE_IDLE_MAX_MIN} min`);
+      return deleteBox(box, `gate pause at ${GATE_PAGES} rows, idle ${idleMin.toFixed(0)} min`);
+    }
+    return deleteBox(box, 'nothing left to read');
+  }
+  delete b.gate_idle_since;
   log(`${box}: ${n} pages out, stall ${b.stall || 0}`);
 }
 function zoneShort(zone) {
@@ -224,6 +256,7 @@ function zoneShort(zone) {
   const r = spawnSync('bash', ['-c', `set -a; . /root/.scaleway.env; set +a; curl -s -H "X-Auth-Token: $SCALEWAY_SECRET_KEY" "https://api.scaleway.com/instance/v1/zones/${zone}/products/servers/availability?per_page=100"`], { encoding: 'utf8', timeout: 60000 });
   try { const a = JSON.parse(r.stdout).servers?.[TYPE]?.availability; return !a || a === 'shortage'; } catch { return false; }
 }
+const envStr = (env) => Object.entries(env).map(([k, v]) => `${k}=${v}`).join(' ');
 function startBox(box, env) {
   const tmp = path.join(DIR, 'empty.tsv'); fs.writeFileSync(tmp, '');
   const p = isPod(box) ? gpu(box, 'lane-push', [], { timeout: 900 }) : gpu(box, 'push', [tmp], { timeout: 600 });
@@ -235,14 +268,14 @@ function grow() {
   if (live.length >= MAX_BOXES) { S.scw_short_since = null; return save(); }
   if (!Object.values(S.chunks).some(c => c.status === 'unassigned') && !nextChunk()) return;
   const env = Object.fromEntries(BOX_ENV.split(/\s+/).filter(Boolean).map(kv => kv.split('=')));
-  const box = `f${String(S.next_box).padStart(2, '0')}`;
+  const box = `${BOX_PREFIX}${String(S.next_box).padStart(2, '0')}`;
   if (DRY) return log(`would try to create ${box} (${TYPE}) in ${ZONES.join('/')}`);
   for (const zone of ZONES) {
     if (zoneShort(zone)) continue;
     S.next_box++; save();
     const c = gpu(box, 'create', [], { env: { TYPE, ZONE: zone, LEASE_H: String(LEASE_H) }, timeout: 1500 });
     if (!c.ok) { log(`${box}: create in ${zone} failed: ${c.out.split('\n').slice(-2).join(' | ').slice(0, 300)}`); if (fs.existsSync(path.join(F.boxes, box, 'server-id'))) deleteBox(box, 'create half-failed'); continue; }
-    S.boxes[box] = { status: 'live', provider: 'scaleway', zone, type: TYPE, started: Math.floor(Date.now() / 1000) }; S.scw_short_since = null; save();
+    S.boxes[box] = { status: 'live', provider: 'scaleway', zone, type: TYPE, started: Math.floor(Date.now() / 1000), box_env: envStr(env) }; S.scw_short_since = null; save();
     log(`${box}: created in ${zone}; ${startBox(box, env)} (${BOX_ENV})`);
     feed(box);
     return;
@@ -254,13 +287,13 @@ function grow() {
   if (shortMin < RUNPOD_AFTER_MIN || pods >= MAX_PODS || !process.env.RUNPOD_API_KEY) return log(`no Scaleway ${TYPE} in ${ZONES.join('/')} (short ${shortMin.toFixed(0)} min; RunPod overflow after ${RUNPOD_AFTER_MIN} min, ${pods}/${MAX_PODS} pods${process.env.RUNPOD_API_KEY ? '' : ', RUNPOD_API_KEY not set'})`);
   for (const [g, cloud] of POD_GPUS) {
     // one name (and ledger dir) per attempt: a pod that billed and then failed ssh keeps its own created-at
-    const pod = `p${String(S.next_box).padStart(2, '0')}`;
+    const pod = `${BOX_PREFIX}p${String(S.next_box).padStart(2, '0')}`;
     S.next_box++;
     S.boxes[pod] = { status: 'creating', provider: 'runpod' }; save();
     const c = gpu(pod, 'create', [], { env: { GPU: g, CLOUD: cloud, MINUTES: String(POD_MINUTES) }, timeout: 1200 });
     if (!c.ok) { log(`${pod}: RunPod ${g} ${cloud}: ${c.out.split('\n').pop().slice(0, 200)}`); if (fs.existsSync(path.join(DIR, 'runpod-pods', pod, 'pod-id'))) gpu(pod, 'terminate', [], { timeout: 300 }); S.boxes[pod].status = 'deleted'; save(); continue; }
     const t0 = +readText(path.join(DIR, 'runpod-pods', pod, 'created-at'));
-    S.boxes[pod] = { status: 'live', provider: 'runpod', type: `${g} ${cloud}`, started: t0, deadline: (t0 + POD_MINUTES * 60) * 1000 }; save();
+    S.boxes[pod] = { status: 'live', provider: 'runpod', type: `${g} ${cloud}`, started: t0, deadline: (t0 + POD_MINUTES * 60) * 1000, box_env: envStr({ ...env, CLIENTS: '8' }) }; save();
     log(`${pod}: RunPod ${g} ${cloud} (Scaleway short ${shortMin.toFixed(0)} min); ${startBox(pod, { ...env, CLIENTS: '8' })}`);
     feed(pod);
     return;
@@ -279,7 +312,7 @@ if (fs.existsSync(F.stop) || sp.eur + sp.live * 0.5 * ((EUR[TYPE] || 0.79)) >= S
   const ap = DRY ? null : spawnSync('node', [LANE, 'apply', '--apply', '--dir', DIR], { encoding: 'utf8', timeout: 3 * 3600 * 1000 });
   if (ap) log(`apply: ${(ap.stdout || '').trim().split('\n').pop()}`);
   sp = spend();
-  if (!fs.existsSync(F.stop)) comment('budget-stop', `**#5600 Paddle fleet stopped itself: ${why}.** Spend €${sp.eur} (ledger: \`${DIR}/boxes/*\`). Every box is deleted. Pages read so far are applied; the rest of the cohort is unread and stays held (\`paddle-zh-5600-ocr-only\`). Status: \`node ${LANE} status\`. Log: \`${F.log}\`.`);
+  if (!fs.existsSync(F.stop)) comment('budget-stop', `**#${ISSUE} Paddle fleet stopped itself: ${why}.** Spend €${sp.eur} (ledger: \`${DIR}/boxes/*\`). Every box is deleted. Pages read so far are applied; the rest of the cohort is unread and stays held (\`${HOLD}\`). Status: \`node ${LANE} status\`. Log: \`${F.log}\`.`);
   S.status = fs.existsSync(F.stop) ? 'stopped' : 'budget-stopped'; save();
   process.exit(0);
 }
@@ -296,7 +329,7 @@ if (allCut && open === 0) {
   const byBook = {};
   for (const l of readText(path.join(DIR, 'qa-flagged.jsonl')).split('\n').filter(Boolean)) { try { const x = JSON.parse(l); byBook[x.title || x.bid] = (byBook[x.title || x.bid] || 0) + 1; } catch { /* partial line */ } }
   const top = Object.entries(byBook).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([t, n]) => `${t} ${n}`).join('; ');
-  comment('done', `**DONE — #5600 Paddle fleet.** Books applied ${st.books_applied} of ${st.books_planned} planned; pages read ${st.pages_read} (box errors ${st.pages_box_error}), written ${st.pages_written}, refused ${st.pages_refused}, skipped ${JSON.stringify(st.skipped_by_reason)}. QA screen (Kanripo WYG, Dice < 0.6): ${st.qa?.flagged}/${st.qa?.screened} flagged = ${st.qa?.rate}; ${Object.keys(byBook).length} books have a flag, the most-flagged: ${top}. Skipped duplicates: ${st.dedup?.skip_books} books / ${st.dedup?.skip_pages} pages (\`${DIR}/skipped-duplicates.tsv\`). GPU spend €${sp.eur}. Every box and pod deleted (Scaleway €${sp.scw}, RunPod €${sp.runpod}${PRIOR_EUR ? `, prior €${PRIOR_EUR}` : ''}). ${st.books_planned} books stay held (\`paddle-zh-5600-ocr-only\`) — translation is its own decision. Log: \`${F.log}\`.`);
+  comment('done', `**DONE — #${ISSUE} Paddle fleet.** Books applied ${st.books_applied} of ${st.books_planned} planned; pages read ${st.pages_read} (box errors ${st.pages_box_error}), written ${st.pages_written}, refused ${st.pages_refused}, skipped ${JSON.stringify(st.skipped_by_reason)}. QA screen (Kanripo WYG, Dice < 0.6): ${st.qa?.flagged}/${st.qa?.screened} flagged = ${st.qa?.rate}; ${Object.keys(byBook).length} books have a flag, the most-flagged: ${top}. Skipped duplicates: ${st.dedup?.skip_books} books / ${st.dedup?.skip_pages} pages (\`${DIR}/skipped-duplicates.tsv\`). GPU spend €${sp.eur}. Every box and pod deleted (Scaleway €${sp.scw}, RunPod €${sp.runpod}${PRIOR_EUR ? `, prior €${PRIOR_EUR}` : ''}). ${st.books_planned} books stay held (\`${HOLD}\`) — translation is its own decision. Log: \`${F.log}\`.`);
   S.status = 'done'; save();
   process.exit(0);
 }

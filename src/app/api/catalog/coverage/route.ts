@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     if (isMongoTimeout(err)) {
       return NextResponse.json(
-        { error: 'Catalog coverage data is temporarily unavailable — the database is under load. Try again shortly.' },
+        { error: 'Catalog coverage data is temporarily unavailable because the database is under load. Try again shortly.' },
         { status: 503, headers: { 'Cache-Control': 'no-store' } },
       );
     }

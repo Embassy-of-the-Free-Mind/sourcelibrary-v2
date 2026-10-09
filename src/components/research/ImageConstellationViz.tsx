@@ -693,7 +693,7 @@ export default function ImageConstellationViz({ data }: { data: ConstellationDat
           <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>
               Each cube is an illustration extracted from a pre-modern text. Position
-              reflects visual/thematic similarity — AI descriptions of subjects, figures,
+              reflects visual/thematic similarity: AI descriptions of subjects, figures,
               and symbols are embedded and projected with UMAP.
             </p>
             <p>

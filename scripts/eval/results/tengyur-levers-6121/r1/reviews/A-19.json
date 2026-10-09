@@ -1,0 +1,112 @@
+[
+{"id": "Q8SBC", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ལྡན་པ་ཅན་ལ་སོགས་པ་ལས་བསྒྲུབ་པར་བྱ་བ་ལས་ཐ་དད་པའི་ཕྱིར",
+   "english": "possessor of conjunction (shaktimat)",
+   "why": "ldan pa can is the possessor of conjunction, Skt. saṃyogin; śaktimat ('possessor of capacity') is a different term.",
+   "fix": {"find": "possessor of conjunction (shaktimat)", "replace": "possessor of conjunction (saṃyogin)"}},
+  {"type": "addition", "confidence": "high",
+   "tibetan": "གཉི་ག་ལ་ནི་མི་",
+   "english": "it would not reside in both one line of text partially obscured or broken at the margin.",
+   "why": "The Tibetan simply breaks off at 'would not [reside] in both'; the remark about an obscured line is an editorial intrusion that is not in the text.",
+   "fix": {"find": "it would not reside in both one line of text partially obscured or broken at the margin.", "replace": "it would not reside in both..."}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "དེ་ལས་བྱུང་བའི་ངེས་པ་དེའི་རྗེས་སུ་འཇུག་པ་ཡིན་པ",
+   "english": "and the certainty of arising from that are what follow",
+   "why": "The point is that the capacity to make known follows the certainty of identity/causality; it is not the certainty that follows."}
+ ],
+ "note": "The argument is mostly tracked, but it has a wrong Sanskrit equivalent, a stray editorial sentence at the end and one inverted dependency."},
+{"id": "QILW2", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དོན་དང་ཤེས་པ་དང་འབྲེལ་པའི་དོན་རྣམ་པ་གཉིས་གཞན་ལ་མ་ལྟོས་པས་བསྒྲུབ་ནུས་པ",
+   "english": "refers to the two aspects of the object and the cognition related to the object",
+   "why": "Substance is defined as the conditioned thing (a pot, etc.) that can accomplish, without depending on anything else, the two kinds of purpose relating to object and cognition; the 'two' does not define substance by itself."}
+ ],
+ "note": "A sound rendering of the substance/quality discussion and the refutation; one definitional clause is mis-segmented."},
+{"id": "QRA1X", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "སྨྱོན་པས་ཉེ་དུ་མ་ཡིན་པ་དང་དེའི་ཁྱིམ་ནས་བླངས་པ་ལ་བླང་བར་མི་བྱའོ",
+   "english": "one should not take what is taken from the house of a madman who is not a relative",
+   "why": "The madman is the one who took the goods, from a non-relative's house, as the commentary's own gloss shows; it is not the madman's house."}
+ ],
+ "note": "The robe-distribution passage ('doms pa, 'count of being authentic') is rendered literally and is barely intelligible, but the rest of the Vinaya rulings are broadly right."},
+{"id": "Q0X3Q", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཆོས་འདི་དག་ནི་ཉོན་མོངས་པ་མེད་པ",
+   "english": "these phenomena are neither without afflictions nor are they possessed of afflictions",
+   "why": "The sūtra says these dharmas are without afflictions; they are not accompanied by afflictions.",
+   "fix": {"find": "these phenomena are neither without afflictions nor are they possessed of afflictions", "replace": "these phenomena are without afflictions; they are not possessed of afflictions"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཕྱི་ནས་སྐྱེ་བ་ལ་སྐྱོན་འདི་ཉིད་ཡིན་པར་ཇི་ལྟར་སྲིད་པ་བཟློག་པར་བྱའོ",
+   "english": "one must refute how such a defect could possibly exist",
+   "why": "The Tibetan says the same fault applies to simultaneous or later arising, so [arising] is to be refuted accordingly; it does not ask the reader to refute the fault itself."}
+ ],
+ "note": "A good rendering of the Akṣayamati quotation, apart from one inverted negation."},
+{"id": "Q324Z", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གྲངས་ཅན་ཉེ་བར་འགོད་པ",
+   "english": "introduces the (Samkhya) an ancient school of Hindu philosophy position",
+   "why": "Here grangs can most likely means that 'and so forth' introduces the enumerated items (namely colour etc.), not the Sāṃkhya school."}
+ ],
+ "note": "A faithful rendering of terse pratīka-commentary on universals, with one probable misreading."},
+{"id": "QBWST", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A faithful rendering of the Akṣayamati citations on right view and right thought, and of the argument on habitual tendencies."},
+{"id": "QRXP7", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high",
+   "tibetan": "འཇིག་རྟེན་འདི་རུ་མ་སྨད་ཅིང་། །ཕ་རོལ་དུ་ཡང་#བདེ་བ་ནི། །འདྲེན་པ་གང་ཡིན་དེ་བྱའོ",
+   "english": "Should not be disparaged in this world;\nIn the next world too, happiness is found\nBy doing whatever is led by that [note: virtue].",
+   "why": "The verse says that one who wants happiness elsewhere should do what is not blamed in this world and what brings happiness in the next.",
+   "fix": {"find": "Should not be disparaged in this world;\nIn the next world too, happiness is found\nBy doing whatever is led by that [note: virtue].", "replace": "Should do what is not blamed in this world\nAnd what leads to happiness\nIn the next world as well."}},
+  {"type": "addition", "confidence": "high",
+   "tibetan": "དེའི་ཕྱིར་ཇི་ལྟར་ངན་འགྲོའི་ཚོར་བ",
+   "english": "In 그 that case",
+   "why": "A stray Korean character is inserted; the Tibetan says simply 'therefore'.",
+   "fix": {"find": "In 그 that case", "replace": "In that case"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བླ་མ་དག་ལྟ་བུའམ། རྗེ་བོ་#བཞིན་",
+   "english": "act like a teacher or a master",
+   "why": "The sentence continues on the next side: one should not treat others with contempt, as a guru or lord would; the English closes it as a positive injunction."}
+ ],
+ "note": "The narrative (buffalo sacrifice, the butcher's son) is good, but the first verse is mistranslated and a stray character appears in the dialogue."},
+{"id": "Q5DAQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཁྱབ་པར་བྱེད་པ་གོ་བར་བྱ་བ་ལ་ཁྱད་པར་བྱ་བ་གོ་བར་བྱེད་པ་ཉིད་དུ་འཐད་པས",
+   "english": "the understanding of the qualifier leads to the understanding of the pervader",
+   "why": "khyad par bya ba is the qualified (viśeṣya), not the qualifier; the qualified makes the pervader known."},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "པར་མི་སྲིད་པའི་ཕྱིར་རོ",
+   "english": "also because a qualifier is impossible there",
+   "why": "The point is that positive and negative concomitance is impossible in a particular (khyad par); it is not the qualifier that is impossible."}
+ ],
+ "note": "The pervasion/avadhāraṇa analysis is largely right; there are some slips between qualifier and qualified."},
+{"id": "Q20U9", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "པ་ནི་ཡོད་པར་བརྗོད་པ་ཡིན་པར་བསྟན་པའི་ཕྱིར་རོ",
+   "english": "the object of inference is said to exist",
+   "why": "dmigs pa is perception/observation (upalambha), not inference.",
+   "fix": {"find": "the object of inference is said to exist", "replace": "perception is said to exist"}}
+ ],
+ "note": "The dream-and-rebirth argument is followed adequately, though the second paragraph is somewhat opaque."},
+{"id": "QA8P5", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "སྐྱེས་བཞིན་དུ་འགྱུར་ཏེ",
+   "english": "they become like a living presence",
+   "why": "skyes here is 'gift': his words, meeting noble people, become like a gift.",
+   "fix": {"find": "they become like a living presence", "replace": "they become like a gift"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "མི་བཤེས་པ་ནི་མ་འདྲིས་",
+   "english": "**unfriendly**",
+   "why": "mi bshes pa here means strangers (people not acquainted, not seen before), not hostile people."}
+ ],
+ "note": "A faithful rendering of the grammatical glosses on the verses, with one mistranslated simile."}
+]

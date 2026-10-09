@@ -1,0 +1,138 @@
+{
+ "note": "Curated 2026-10-02 for #5653 (Decoding the Maya Script). Milestones from Coe, Breaking the Maya Code (chapter 'Forefathers: the dawn of decipherment') and Wikipedia 'Maya script' > Decipherment, matched to open IA scans. Already held, not re-imported: Landa Relación (Brasseur 1864, 2 copies), Brasseur Manuscrit Troano (2 vols), Rosny Codex Cortesianus, Dresden (2) and Paris codices, Förstemann 1906 Commentary, Brinton Critical Remarks + Maya Chronicles, Stephens Incidents (hidden), Maudslay Biologia Centrali-Americana (hidden). NOT found as an open scan: Rosny, Essai sur le déchiffrement de l'écriture hiératique (1876) - not on IA or Gallica; HathiTrust is behind a Cloudflare challenge from this box. Rosny's 1878 Revue orientale offprint on the same thesis is imported instead. Gates's Landa (1937) exists only as the 1978 Dover reprint under controlled lending, so it is not imported. In copyright and not imported: Whorf 1933+, Thompson 1950/1962, Knorozov 1952, Berlin 1958, Proskouriakoff 1960, Coe 1992.",
+ "campaign": "maya-decipherment-2026-10-02",
+ "collections": [
+  "maya",
+  "maya-decipherment"
+ ],
+ "BOOKS": [
+  {
+   "id": "trent_0116401914092",
+   "title": "Proceedings of the American Antiquarian Society, 1878-1880 (with Valentini, 'The Landa Alphabet; a Spanish Fabrication')",
+   "author": "American Antiquarian Society; Philipp J. J. Valentini",
+   "year": 1880,
+   "lang": "English",
+   "note": "Bound run of the old-series Proceedings. Holds Valentini's April 1880 paper arguing Landa's alphabet was a Spanish invention (djvu text: 'THE LANDA ALPHABET; A SPANISH FABRICATION'), and his 'Katunes of Maya History' (Oct 1879)."
+  },
+  {
+   "id": "lecodextroanoetl00rosn",
+   "title": "Le Codex Troano et l'écriture hiératique de l'Amérique centrale",
+   "author": "Léon de Rosny",
+   "year": 1878,
+   "lang": "French",
+   "note": "Offprint from the Revue orientale et américaine; stands in for Rosny's 1876 Essai sur le déchiffrement, which has no open scan we can reach. Copy has six inserted hand-written pages of a German translation."
+  },
+  {
+   "id": "jstor-2449789",
+   "title": "The Manuscript Troano",
+   "author": "Cyrus Thomas",
+   "year": 1881,
+   "lang": "English",
+   "note": "American Naturalist, Aug 1881. Thomas's first paper on the Troano, the year before the Study."
+  },
+  {
+   "id": "astudymanuscrip00unkngoog",
+   "title": "A Study of the Manuscript Troano",
+   "author": "Cyrus Thomas; introduction by D. G. Brinton",
+   "year": 1882,
+   "lang": "English",
+   "note": "Contributions to North American Ethnology vol. V (US Geographical and Geological Survey). Google scan with jp2."
+  },
+  {
+   "id": "erluterungenzur00frgoog",
+   "title": "Erläuterungen zur Mayahandschrift der Königlichen Öffentlichen Bibliothek zu Dresden",
+   "author": "Ernst Förstemann",
+   "year": 1886,
+   "lang": "German",
+   "note": "Förstemann's own commentary on the Dresden Codex: calendar, numbers, the Venus table. Google scan, no jp2 in the item; may fail the IIIF page count."
+  },
+  {
+   "id": "jstor-1765562",
+   "title": "A Key to the Mystery of the Maya Codices",
+   "author": "Cyrus Thomas",
+   "year": 1892,
+   "lang": "English",
+   "note": "Science, 27 May 1892. Opens the Thomas-Seler exchange on phoneticism."
+  },
+  {
+   "id": "jstor-1767782",
+   "title": "Does There Really Exist a Phonetic Key to the Maya Hieroglyphic Writing?",
+   "author": "Eduard Seler",
+   "year": 1892,
+   "lang": "English",
+   "note": "Science, 26 Aug 1892. Seler's reply to Thomas."
+  },
+  {
+   "id": "jstor-1766625",
+   "title": "Is the Maya Hieroglyphic Writing Phonetic?",
+   "author": "Eduard Seler",
+   "year": 1893,
+   "lang": "English",
+   "note": "Science, 6 Jan 1893."
+  },
+  {
+   "id": "jstor-1767135",
+   "title": "Maya Codices",
+   "author": "Cyrus Thomas",
+   "year": 1893,
+   "lang": "English",
+   "note": "Science, 20 Jan 1893. Thomas's rejoinder."
+  },
+  {
+   "id": "jstor-1765331",
+   "title": "Some Additional Remarks on Maya Hieroglyphic Writing",
+   "author": "Eduard Seler",
+   "year": 1893,
+   "lang": "English",
+   "note": "Science, 17 Feb 1893."
+  },
+  {
+   "id": "jstor-658308",
+   "title": "Are the Maya Hieroglyphs Phonetic?",
+   "author": "Cyrus Thomas",
+   "year": 1893,
+   "lang": "English",
+   "note": "American Anthropologist, July 1893. Thomas's fullest statement of the phonetic case."
+  },
+  {
+   "id": "primerofmayanhie00brinrich",
+   "title": "A Primer of Mayan Hieroglyphics",
+   "author": "Daniel G. Brinton",
+   "year": 1895,
+   "lang": "English",
+   "note": "Brinton's survey of the state of decipherment in 1895."
+  },
+  {
+   "id": "archaicmayainscr00good",
+   "title": "The Archaic Maya Inscriptions",
+   "author": "J. T. Goodman",
+   "year": 1897,
+   "lang": "English",
+   "note": "Issued as an appendix to Maudslay's Biologia Centrali-Americana: Archaeology. Goodman's calendar tables and head-variant numerals."
+  },
+  {
+   "id": "representationof00sche",
+   "title": "Representation of Deities of the Maya Manuscripts (Papers of the Peabody Museum, vol. IV)",
+   "author": "Paul Schellhas",
+   "year": 1904,
+   "lang": "English",
+   "note": "Bound Peabody Papers vol. IV (1904-1910): Schellhas's lettered gods A-P (no. 1), with the volume's later numbers."
+  },
+  {
+   "id": "numerationcalend00bowd_0",
+   "title": "The Numeration, Calendar Systems and Astronomical Knowledge of the Mayas",
+   "author": "Charles P. Bowditch",
+   "year": 1910,
+   "lang": "English",
+   "note": "Getty scan."
+  },
+  {
+   "id": "introductiontost00morl_0",
+   "title": "An Introduction to the Study of the Maya Hieroglyphs",
+   "author": "Sylvanus Griswold Morley",
+   "year": 1915,
+   "lang": "English",
+   "note": "Bureau of American Ethnology Bulletin 57. Getty scan."
+  }
+ ]
+}

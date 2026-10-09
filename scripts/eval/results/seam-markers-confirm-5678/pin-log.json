@@ -1,0 +1,64 @@
+{
+  "by": {
+    "pagebreak:latin": 70,
+    "pagebreak:tibetan": 10,
+    "pagebreak:han": 10,
+    "pagebreak:other": 10,
+    "control:latin": 14,
+    "control:tibetan": 1,
+    "control:han": 2,
+    "control:other": 3
+  },
+  "langs": {
+    "latin/latin": 81,
+    "latin/italian": 1,
+    "latin/german": 2,
+    "tibetan/tibetan": 11,
+    "han/chinese": 12,
+    "arabic/ms": 1,
+    "arabic/ar": 1,
+    "cyrillic/russian": 2,
+    "arabic/arabic": 2,
+    "hebrew/hebrew": 2,
+    "greek/ancient greek": 1,
+    "devanagari/sanskrit": 3,
+    "arabic/persian": 1
+  },
+  "fills": [
+    "control:other:6a0f06c5900fb4799cef25f2:62"
+  ],
+  "screen_tally": {
+    "pagebreak:tibetan:mid": 14,
+    "pagebreak:other:reject": 18,
+    "pagebreak:latin:mid": 84,
+    "control:latin:closed": 17,
+    "control:tibetan:reject": 11,
+    "pagebreak:latin:closed": 6,
+    "control:latin:reject": 13,
+    "pagebreak:tibetan:reject": 22,
+    "pagebreak:latin:reject": 5,
+    "control:other:reject": 6,
+    "control:latin:mid": 6,
+    "pagebreak:han:mid": 26,
+    "control:tibetan:closed": 1,
+    "pagebreak:other:mid": 10,
+    "control:other:closed": 6,
+    "pagebreak:other:closed": 2,
+    "control:han:reject": 8,
+    "pagebreak:han:closed": 2,
+    "pagebreak:han:reject": 8,
+    "control:han:closed": 3,
+    "control:han:mid": 1
+  },
+  "estimate": {
+    "calls": 600,
+    "usd": 2.2656296250000016,
+    "byArm": {
+      "A2": 0.3211,
+      "A": 0.3211,
+      "B": 0.3272,
+      "C": 0.6543,
+      "D": 0.6419
+    }
+  }
+}

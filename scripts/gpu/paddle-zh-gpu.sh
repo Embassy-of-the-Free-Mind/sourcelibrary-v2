@@ -19,7 +19,12 @@ BOX=${BOX:?BOX=<name> required}
 TYPE=${TYPE:-L4-1-24G}
 ZONE_FILE=$LANE_DIR/boxes/$BOX/zone
 ZONE=${ZONE:-$(cat "$ZONE_FILE" 2>/dev/null || echo pl-waw-2)}
-NAME=sl-zh-paddle-5600-$BOX
+OWNER=${PADDLE_ZH_ISSUE:-5600}   # a later run of the lane (#5660) names its own issue on the box and its lease
+# the idle check reads lane WRITES; a bench box writes nothing to Mongo, so PROGRESS= (empty) leases it lease-only
+# (the on-box idle-poweroff.sh is then its idle guard)
+PROGRESS=${PROGRESS-mongo:paddle}
+PTAG=${PROGRESS:+,\"progress=$PROGRESS\"}
+NAME=sl-zh-paddle-$OWNER-$BOX
 D=$LANE_DIR/boxes/$BOX
 mkdir -p "$D"
 HERE=$(cd "$(dirname "$0")" && pwd)
@@ -45,7 +50,7 @@ create)
   IMAGE=${IMAGE:-$(TYPE=$TYPE image_for)}
   [ -n "$IMAGE" ] || { log "no GPU OS image for $TYPE in $ZONE"; exit 1; }
   until=$(date -u -d "+${LEASE_H} hours" +%FT%TZ)
-  body=$(printf '{"name":"%s","commercial_type":"%s","image":"%s","project":"%s","dynamic_ip_required":true,"tags":["lease-until=%s","owner=5600","progress=mongo:paddle"],"volumes":{"0":{"size":%s,"volume_type":"sbs_volume"}}}' "$NAME" "$TYPE" "$IMAGE" "$PROJECT" "$until" "$((ROOT_GB*1000000000))")
+  body=$(printf '{"name":"%s","commercial_type":"%s","image":"%s","project":"%s","dynamic_ip_required":true,"tags":["lease-until=%s","owner=%s"%s],"volumes":{"0":{"size":%s,"volume_type":"sbs_volume"}}}' "$NAME" "$TYPE" "$IMAGE" "$PROJECT" "$until" "$OWNER" "$PTAG" "$((ROOT_GB*1000000000))")
   r=$(curl -s -X POST "${H[@]}" "$API/servers" -d "$body")
   echo "$r" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["server"]["id"])' > "$D/server-id" 2>/dev/null || { log "create failed ($TYPE $ZONE): ${r:0:300}"; rm -f "$D/server-id"; exit 1; }
   echo "$ZONE" > "$ZONE_FILE"; echo "$TYPE" > "$D/type"
@@ -57,12 +62,12 @@ create)
   date -u +%s > "$D/created-at"
   [ $ok = 1 ] || { log "did not reach running ($(state)) — out of stock? deleting"; "$0" delete-now; exit 1; }
   log "running $(ip)"
-  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "$LEASE_H" --owner 5600 --progress mongo:paddle) 2>&1 | tail -1 | tee -a "$D/driver.log"
+  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "$LEASE_H" --owner "$OWNER" ${PROGRESS:+--progress "$PROGRESS"}) 2>&1 | tail -1 | tee -a "$D/driver.log"
   # the GPU OS image puts user-data keys on `ubuntu` (disable_root); copy them to root
   for i in $(seq 1 90); do $SSH ubuntu@"$(ip)" "sudo bash -c 'cat /home/ubuntu/.ssh/authorized_keys >> /root/.ssh/authorized_keys'" 2>/dev/null && $SSH root@"$(ip)" true 2>/dev/null && { log SSH-OK; exit 0; }; sleep 10; done
   log SSH-FAIL; exit 1 ;;
 lease)
-  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "${2:-$LEASE_H}" --owner 5600 --progress mongo:paddle) 2>&1 | tail -1 | tee -a "$D/driver.log" ;;
+  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "${2:-$LEASE_H}" --owner "$OWNER" ${PROGRESS:+--progress "$PROGRESS"}) 2>&1 | tail -1 | tee -a "$D/driver.log" ;;
 push)
   B=root@$(ip); M=${2:?manifest}
   $SSH "$B" 'mkdir -p /root/pz/code'
@@ -74,7 +79,7 @@ setup)
   $SSH root@"$(ip)" "cd /root/pz && PV_WORK=/root/pz SERVER=${SERVER:-0} bash code/paddle-zh-box.sh setup" 2>&1 | tail -3 | tee -a "$D/driver.log" ;;
 run)
   # `;` not `&&`: with `&&` the WHOLE list is the async job, its fds are the ssh channel, and ssh never returns
-  $SSH root@"$(ip)" "cd /root/pz; rm -f DONE job.exit; WORKERS=${WORKERS:-2} BACKEND=${BACKEND:-native} CLIENTS=${CLIENTS:-8} MAX_SIDE=${MAX_SIDE:-0} LAYOUT=${LAYOUT:-1} INFER_HOURS=${INFER_HOURS:-6} nohup bash code/idle-poweroff.sh run -- bash -c 'bash code/paddle-zh-box.sh ${MODE:-all}; echo exit=\$? > /root/pz/job.exit; sleep ${LINGER:-1800}' > /root/pz/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$D/driver.log" ;;
+  $SSH root@"$(ip)" "cd /root/pz; rm -f DONE job.exit; WORKERS=${WORKERS:-2} BACKEND=${BACKEND:-native} CLIENTS=${CLIENTS:-8} MAX_SIDE=${MAX_SIDE:-0} LAYOUT=${LAYOUT:-1} INFER_HOURS=${INFER_HOURS:-6} QUEUE_IDLE_MIN=${QUEUE_IDLE_MIN:-30} nohup bash code/idle-poweroff.sh run -- bash -c 'bash code/paddle-zh-box.sh ${MODE:-all}; echo exit=\$? > /root/pz/job.exit; sleep ${LINGER:-1800}' > /root/pz/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$D/driver.log" ;;
 status)
   $SSH root@"$(ip)" 'tail -n 2 /root/pz/box.log 2>/dev/null; echo "txt $(find /root/pz/out -name "*.txt" 2>/dev/null | wc -l)"; cat /root/pz/job.exit 2>/dev/null; ls /root/pz/DONE 2>/dev/null; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader' ;;
 ssh)
