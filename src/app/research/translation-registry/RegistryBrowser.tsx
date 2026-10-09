@@ -26,7 +26,7 @@ const sourceLabel = (s: string) => SOURCE_LABEL[s] || s.replace(/_/g, ' ');
 const ERA_LABEL: Record<string, string> = {
   renaissance_early_modern: 'Renaissance', medieval: 'Medieval', antiquity: 'Antiquity', patristic: 'Patristic', modern: 'Modern',
 };
-const yearLabel = (y: number | null | undefined) => (y == null ? '—' : y < 0 ? `${-y} BC` : `${y}`);
+const yearLabel = (y: number | null | undefined) => (y == null ? '–' : y < 0 ? `${-y} BC` : `${y}`);
 
 // Translation era from a publication year.
 type TEra = 'period' | 'historical' | 'modern';
@@ -103,7 +103,7 @@ export default function RegistryBrowser() {
   const eraButtons: [EraFilter, string, string][] = useMemo(() => [
     ['all', 'All', 'Translations of any era'],
     ['modern', 'Modern', 'We have a 20th–21st-century translation on record'],
-    ['historical', 'Pre-1900', 'The newest translation we have catalogued predates 1900 — a modern one may exist but be uncatalogued'],
+    ['historical', 'Pre-1900', 'The newest translation we have catalogued predates 1900; a modern one may exist but be uncatalogued'],
     ['period', 'Period', 'A contemporaneous translation (made by 1700)'],
   ], []);
 
@@ -115,7 +115,7 @@ export default function RegistryBrowser() {
           <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="search" value={q} onChange={(e) => setQ(e.target.value)}
-            placeholder="Search an author, work, or translator — Ficino, Vesalius, Utopia…"
+            placeholder="Search an author, work, or translator: Ficino, Vesalius, Utopia…"
             className="w-full pl-9 pr-3 py-2 border border-stone-300 rounded bg-white focus:border-stone-500 focus:outline-none"
           />
         </div>
@@ -146,7 +146,7 @@ export default function RegistryBrowser() {
           ))}
         </div>
         <span className="text-stone-400 text-xs">
-          <span className="text-emerald-700">modern</span> = 1900+ · <span className="text-stone-500">historical</span> = 1700–1900 · <span className="text-amber-700">period</span> = contemporaneous (≤1700). Dates are the catalogue&rsquo;s — a missing modern tag may mean uncatalogued, not untranslated.
+          <span className="text-emerald-700">modern</span> = 1900+ · <span className="text-stone-500">historical</span> = 1700–1900 · <span className="text-amber-700">period</span> = contemporaneous (≤1700). Dates are the catalogue&rsquo;s; a missing modern tag may mean uncatalogued, not untranslated.
         </span>
         <span className="text-stone-400 tabular-nums ml-auto">{loading ? '…' : `${total.toLocaleString()} works`}</span>
       </div>
@@ -167,7 +167,7 @@ export default function RegistryBrowser() {
             {loading ? (
               <tr><td colSpan={5} className="py-10 text-center text-stone-400">Loading…</td></tr>
             ) : works.length === 0 ? (
-              <tr><td colSpan={5} className="py-10 text-center text-stone-500">No matching works. (Absent works may simply never have been translated — the gap.)</td></tr>
+              <tr><td colSpan={5} className="py-10 text-center text-stone-500">No matching works. (Absent works may simply never have been translated: the gap.)</td></tr>
             ) : works.map((w, i) => (
               <tr key={i} className="border-t border-stone-100 hover:bg-stone-50 align-top">
                 <td className="py-2.5 px-3 text-stone-600 whitespace-nowrap">{w.a}</td>
@@ -180,7 +180,7 @@ export default function RegistryBrowser() {
                 <td className="py-2.5 px-3 text-stone-700 border-l border-stone-100"><Credits credits={w.c} /></td>
                 <td className="py-2.5 px-3 text-center border-l border-stone-100">
                   {w.h === 'work' && (w.wslug || w.slug) ? (
-                    <Link href={w.wslug ? `/work/${w.wslug}` : `/book/${w.slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900 whitespace-nowrap" title={w.wslug ? 'Read the original — all editions we hold' : 'Read the original'}>
+                    <Link href={w.wslug ? `/work/${w.wslug}` : `/book/${w.slug}`} className="inline-flex items-center gap-1 text-xs bg-stone-800 text-white px-2 py-1 rounded hover:bg-stone-900 whitespace-nowrap" title={w.wslug ? 'Read the original (all editions we hold)' : 'Read the original'}>
                       <BookOpen className="w-3 h-3" /> Read original
                     </Link>
                   ) : w.h === 'work' ? (
@@ -192,7 +192,7 @@ export default function RegistryBrowser() {
                       <User className="w-3 h-3" /> Author held
                     </Link>
                   ) : (
-                    <span className="text-stone-300">—</span>
+                    <span className="text-stone-300">–</span>
                   )}
                 </td>
               </tr>

@@ -91,7 +91,7 @@ export const GET = withAdminAuth(async (request: NextRequest, session, { params 
 
     // Build metadata.txt — human-readable copy-paste version
     const metadataTxt = [
-      'KDP METADATA — COPY-PASTE INTO AMAZON KDP',
+      'KDP METADATA: COPY-PASTE INTO AMAZON KDP',
       '='.repeat(50),
       '',
       `Title: ${meta?.title || ''}`,

@@ -98,7 +98,6 @@ scripts/maintenance/reconcile-authors-grounded.mjs
 scripts/maintenance/reextract-zombie-pages.mjs
 scripts/maintenance/reground-captions.mjs
 scripts/maintenance/resynthesize-summaries.mjs
-scripts/maintenance/retranslate-pages.mjs
 scripts/maintenance/split-audit-visual.mjs
 scripts/match-bph-orphans-gemini.mjs
 scripts/migration/backfill-artwork-embeddings.mjs

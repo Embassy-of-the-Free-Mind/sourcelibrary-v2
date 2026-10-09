@@ -6,7 +6,7 @@ import { getDb } from '@/lib/mongodb';
 import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import {
   getGalleryCandidatesByText,
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
   if (!rl.allowed) {
     const minutes = Math.max(1, Math.ceil(rl.retryAfter / 60));
     return NextResponse.json(
-      { error: `Too many identifications from this network in the last hour — try again in about ${minutes} min` },
+      { error: `Too many identifications from this network in the last hour. Try again in about ${minutes} min` },
       { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
     );
   }
@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
         // Encode uploaded image via CLIP server
         const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: clipHeaders(),
           body: JSON.stringify({ base64, mime_type: mimeType }),
           signal: AbortSignal.timeout(8000),
         });
@@ -261,7 +261,7 @@ export async function POST(request: NextRequest) {
     if (!resp.ok) {
       const err = await resp.text();
       console.error('[identify] Gemini error:', resp.status, err);
-      const detail = resp.status === 429 ? 'Rate limited — try again in a moment' : `Vision API error (${resp.status})`;
+      const detail = resp.status === 429 ? 'Rate limited. Try again in a moment' : `Vision API error (${resp.status})`;
       throw new IdentifyError(detail, 502);
     }
 
@@ -279,7 +279,7 @@ export async function POST(request: NextRequest) {
 
     // Parse JSON from response
     if (!text) {
-      throw new IdentifyError('Vision API returned empty response — try a different image', 502);
+      throw new IdentifyError('Vision API returned empty response. Try a different image', 502);
     }
     const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     const jsonStr = (jsonMatch?.[1] || text).trim();
@@ -287,7 +287,7 @@ export async function POST(request: NextRequest) {
     try {
       identification = JSON.parse(jsonStr);
     } catch {
-      throw new IdentifyError('Could not parse vision response — try a clearer image', 500, text.substring(0, 300));
+      throw new IdentifyError('Could not parse vision response. Try a clearer image', 500, text.substring(0, 300));
     }
 
     // First streamed stage: the reader sees the analysis while retrieval,
@@ -347,7 +347,7 @@ export async function POST(request: NextRequest) {
         const queryOne = async (buf: Buffer): Promise<ClipMatch[]> => {
           const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: clipHeaders(),
             body: JSON.stringify({ base64: buf.toString('base64'), mime_type: 'image/jpeg' }),
             signal: AbortSignal.timeout(8000),
           });
@@ -975,7 +975,7 @@ Return JSON only:
         author: sa.author,
         resource_type: sa.resource_type,
         thumbnail: sa.thumbnail_url,
-        enrichment: { subject: [sa.subjects?.join(', '), sa.figures?.join(', ')].filter(Boolean).join(' — ') },
+        enrichment: { subject: [sa.subjects?.join(', '), sa.figures?.join(', ')].filter(Boolean).join(' · ') },
         _score: semanticScore,
         _visual_similarity: undefined,
         _match_source: 'semantic_artwork',

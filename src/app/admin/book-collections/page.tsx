@@ -189,7 +189,7 @@ export default function BookCollectionsAdmin() {
                             </span>
                           </div>
                           <p className="text-stone-400 text-xs mt-0.5 truncate">
-                            {col.slug} &middot; order: {col.order ?? '—'}
+                            {col.slug} &middot; order: {col.order ?? '–'}
                           </p>
                         </div>
                         <div className="flex items-center gap-1 flex-shrink-0">

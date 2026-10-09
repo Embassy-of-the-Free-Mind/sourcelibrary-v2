@@ -122,7 +122,7 @@ Look at the image carefully. Return JSON with these fields:
   "tgn_place": "If a specific place of creation is identifiable, provide the Getty TGN ID (e.g. 7000874 for Rome, 7006952 for Florence, 7016845 for Amsterdam). Null if unknown.",
   "period": "Art-historical period (e.g. 'Renaissance', 'Baroque', 'Medieval', 'Edo period', 'Mughal', 'Song dynasty', 'Hellenistic', 'Romanesque', 'Gothic', 'Symbolist', 'Art Nouveau'). Be specific to the cultural tradition.",
   "culture": "Cultural origin (e.g. 'Italian', 'Japanese', 'Tibetan', 'Persian', 'Flemish', 'German', 'French', 'Indian', 'Chinese', 'Egyptian', 'Aztec'). Null if unclear.",
-  "museum_description": "2-3 sentences for a museum wall label. What the viewer sees and why it matters. No AI slop."
+  "museum_description": "2-3 sentences for a museum wall label. What the viewer sees and why it matters. No AI slop: no em dashes (—), and none of 'delves', 'tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'."
 }
 
 AVAILABLE COLLECTIONS:

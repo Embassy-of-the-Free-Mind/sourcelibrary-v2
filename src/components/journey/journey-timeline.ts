@@ -29,6 +29,13 @@ export interface Seg {
 /** Scene time where the film rests behind the end card. */
 export const SCENE_END = 53.5;
 
+/**
+ * How fast 3D scene time runs against film time. The prototype's scene was paced at
+ * 1:1 and the whole film ran 2:35, which read as slow (Derek, 2026-10-07); at 1.8 the
+ * moves still land and the film is about 1:45.
+ */
+const SCENE_RATE = 1.8;
+
 export interface Timeline {
   segs: Seg[];
   total: number;
@@ -39,38 +46,38 @@ export function buildTimeline(d: JourneyData, steps: JourneyStep[]): Timeline {
   const ch = (k: JourneyStep['key']) => steps.findIndex(s => s.key === k);
   const has = (k: JourneyStep['key']) => ch(k) >= 0;
   const raw: Omit<Seg, 'f0'>[] = [];
-  const push = (g: Omit<Seg, 'f0' | 'd'> & { d?: number }) => raw.push({ ...g, d: g.d ?? (g.e! - g.s!) });
+  const push = (g: Omit<Seg, 'f0' | 'd'> & { d?: number }) => raw.push({ ...g, d: g.d ?? (g.e! - g.s!) / SCENE_RATE });
 
-  push({ card: 'pro', d: 8, ch: 0 });
-  push({ card: 'p1', d: 4, ch: 0 });
+  push({ card: 'pro', d: 6, ch: 0 });
+  push({ card: 'p1', d: 2.5, ch: 0 });
   push({ s: 0, e: 9, ch: ch('find') });
   if (d.pagesArchived) push({ s: 9, e: 18, ch: ch('find') });
 
-  push({ card: 'p2', d: 4, ch: ch('read') });
+  push({ card: 'p2', d: 2.5, ch: ch('read') });
   push({ s: 27, e: 36.4, ch: ch('read') });
-  push({ screen: 'ocr', d: 6.5, ch: ch('read') });
+  push({ screen: 'ocr', d: 5, ch: ch('read') });
   push({ s: 36.4, e: 44, ch: ch('translate') });
-  push({ screen: 'english', d: 6.5, ch: ch('translate') });
+  push({ screen: 'english', d: 5, ch: ch('translate') });
 
   if (has('connect')) {
     const c = ch('connect');
-    push({ card: 'p3', d: 4, ch: c });
+    push({ card: 'p3', d: 2.5, ch: c });
     push({ s: 45, e: 53, ch: c });
-    if (d.connect.search) push({ screen: 'search', d: 8, ch: c });
-    if (d.connect.index.length || d.connect.editions.length) push({ screen: 'links', d: 8, ch: c });
+    if (d.connect.search) push({ screen: 'search', d: 6, ch: c });
+    if (d.connect.index.length || d.connect.editions.length) push({ screen: 'links', d: 6, ch: c });
   }
 
   const pubCh = ch('publish');
-  push({ card: 'p4', d: 4, ch: pubCh });
-  push({ screen: 'overview', d: 6.5, ch: pubCh });
-  push({ screen: 'cite', d: 7, ch: pubCh });
+  push({ card: 'p4', d: 2.5, ch: pubCh });
+  push({ screen: 'overview', d: 5, ch: pubCh });
+  push({ screen: 'cite', d: 5.5, ch: pubCh });
 
   const chk = ch('check');
-  push({ card: 'p5', d: 4.5, ch: chk });
-  if (d.trace) push({ screen: 'trace', d: 8, ch: chk });
-  push({ screen: 'checks', d: 9, ch: chk });
-  if (d.machineDraft) push({ screen: 'draft', d: 7, ch: chk });
-  push({ end: true, d: 7, ch: chk });
+  push({ card: 'p5', d: 3, ch: chk });
+  if (d.trace) push({ screen: 'trace', d: 6, ch: chk });
+  push({ screen: 'checks', d: 7, ch: chk });
+  if (d.machineDraft) push({ screen: 'draft', d: 5.5, ch: chk });
+  push({ end: true, d: 6, ch: chk });
 
   let f0 = 0;
   const segs: Seg[] = raw.map(g => {
@@ -100,7 +107,7 @@ export function segAt(tl: Timeline, T: number): SegAt {
   while (i < segs.length - 1 && T >= segs[i + 1].f0) i++;
   const g = segs[i];
   const local = T - g.f0;
-  if (g.s !== undefined) return { g, i, local, t: Math.min(g.e!, g.s + local) };
+  if (g.s !== undefined) return { g, i, local, t: Math.min(g.e!, g.s + local * SCENE_RATE) };
   if (g.end) return { g, i, local, t: SCENE_END };
   const nx = segs.slice(i).find(x => x.s !== undefined);
   const pv = segs.slice(0, i).reverse().find(x => x.s !== undefined);

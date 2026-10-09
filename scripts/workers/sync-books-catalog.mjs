@@ -17,6 +17,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { catalogTranslationColumns } from '../lib/page-counts.mjs';
 
 // Locally-sourced .env.production.local values can carry a literal "\n"
 // suffix (vercel env pull escaping — same footgun as the R2 vars, #3000).
@@ -68,7 +69,7 @@ function deriveYear(book) {
   return null;
 }
 
-function transformBook(book) {
+function transformBook(book, previewColumn) {
   return {
     id: book.id,
     slug: book.slug || null,
@@ -93,11 +94,17 @@ function transformBook(book) {
     // helper can tell "not recounted yet" from "genuinely nothing translatable" — 0
     // means a book of plates and must not be confused with a missing value.
     pages_translatable: typeof book.pages_translatable === 'number' ? book.pages_translatable : null,
+    // The translation-state ladder (#5288, .claude/docs/translation-state.md):
+    // `translation_rung` + `english_original`, which browseBooks filters on. Paired
+    // with the counters, `language`, `content_type` and `translation_state` in the
+    // projection below — a missing input computes a wrong rung, silently.
+    ...catalogTranslationColumns(book),
     is_first_translation: book.is_first_translation === true,
     // Partial-scan / preview flag — mirrored so catalogue-fed cards can show
     // the "Preview" badge. Must move together with `preview: 1` in the
-    // projection below (a field here but not there writes NULL for every book).
-    preview: book.preview === true,
+    // projection. Only written once the migration column exists, else the
+    // upsert 42703s and takes the whole sync down (see previewColumnAvailable).
+    ...(previewColumn ? { preview: book.preview === true } : {}),
     // LISTING predicate: matches the canonical public-listing filter
     // (visible: true), so Mongo's unset-visible legacy books collapse to
     // false here. This is intentionally STRICTER than the reader gate
@@ -204,6 +211,23 @@ async function getLastSyncTime() {
   return data?.[0]?.updated_at ? new Date(data[0].updated_at) : null;
 }
 
+// Has `books_catalog.preview` landed yet? Probed once per run by attempting a
+// select of the column — the exact write that fails until the migration runs.
+// Until it exists we must NOT write `preview`, or PostgREST 42703s every upsert
+// batch and the whole incremental sync dies (0 synced, N errors). Mirrors the
+// read-side fallback in src/lib/books-catalog.ts (bookSelect()).
+let previewColumnKnown = null; // null = unknown, true/false = resolved
+async function previewColumnAvailable() {
+  if (previewColumnKnown !== null) return previewColumnKnown;
+  try {
+    const { error } = await supabase.from('books_catalog').select('preview').limit(1);
+    previewColumnKnown = error ? false : true;
+  } catch {
+    previewColumnKnown = false;
+  }
+  return previewColumnKnown;
+}
+
 // ── Main ─────────────────────────────────────────────────────────────
 
 const start = Date.now();
@@ -226,7 +250,18 @@ if (FULL_MODE) {
     ? new Date(watermark.getTime() - WATERMARK_OVERLAP_MS)
     : await getLastSyncTime();
   if (lastSync) {
-    query = { updated_at: { $gt: lastSync } };
+    // Second branch (#5288): sync-worker re-stamps `translation_state` WITHOUT
+    // bumping `updated_at` when only the rung moved (a rule-version bump, a
+    // `pages_translatable` recount, a language fix), so `updated_at` alone would
+    // leave the catalog's rung stale until the weekly --full. `computed_at` is
+    // written on every stamp. Visible books only: a hidden book's rung changes
+    // no listing, and a visibility change bumps `updated_at` anyway.
+    query = {
+      $or: [
+        { updated_at: { $gt: lastSync } },
+        { visible: true, 'translation_state.computed_at': { $gt: lastSync } },
+      ],
+    };
     console.log(`Incremental from: ${lastSync.toISOString()} (${watermark ? 'own watermark' : 'legacy table max'}; visibility changes included)`);
   } else {
     query = { visible: true };
@@ -239,6 +274,7 @@ const projection = {
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, pages_translatable: 1,
+  'translation_state.rung': 1, 'translation_state.english_original': 1, 'translation_state.version': 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
@@ -271,12 +307,20 @@ const cursor = db.collection('books')
   .find(query, { projection })
   .batchSize(BATCH_SIZE);
 
+// Resolve once whether the `preview` column exists — until it does we must not
+// write it (see previewColumnAvailable). Logged so a run that omits preview is
+// explainable rather than looking like a missing field in the row builder.
+const previewColumn = await previewColumnAvailable();
+if (!previewColumn) {
+  console.warn('books_catalog.preview column absent — omitting preview from upserts (badge off until the migration runs).');
+}
+
 let synced = 0;
 let errors = 0;
 let batch = [];
 
 for await (const book of cursor) {
-  batch.push(transformBook(book));
+  batch.push(transformBook(book, previewColumn));
 
   if (batch.length >= BATCH_SIZE) {
     const { error } = await supabase

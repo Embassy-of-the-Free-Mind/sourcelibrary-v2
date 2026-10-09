@@ -140,7 +140,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
               thumb: p.thumbnail as string,
               // Crop from the full-resolution image, not the 150px thumb
               source: (p.image_full || p.thumbnail) as string,
-              label: `${p.bookTitle} — p. ${p.pageNumber}`,
+              label: `${p.bookTitle}, p. ${p.pageNumber}`,
             }))
             .filter(p => isBrowserRenderableImageUrl(p.thumb) && isBrowserRenderableImageUrl(p.source)))
           .catch(() => [] as PickableImage[])
@@ -583,7 +583,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
                           </div>
                           {libraryItems.length === 0 && likedPages.length === 0 && (
                             <p className="text-sm text-center py-10" style={{ color: 'var(--text-muted)' }}>
-                              Nothing found — try another search.
+                              Nothing found. Try another search.
                             </p>
                           )}
                         </>

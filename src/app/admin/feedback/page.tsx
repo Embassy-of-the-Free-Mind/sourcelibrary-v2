@@ -127,7 +127,7 @@ export default function AdminFeedbackPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <h1 className="text-2xl font-semibold mb-2">Feedback</h1>
-      <p className="text-sm text-stone-500 mb-4">From the &quot;Give Feedback&quot; button in the site footer and the public MCP <code>submit_feedback</code> tool. Mark items as <em>addressed</em> once a fix ships &mdash; if the submitter left an email, they&apos;re automatically notified (once).</p>
+      <p className="text-sm text-stone-500 mb-4">From the &quot;Give Feedback&quot; button in the site footer and the public MCP <code>submit_feedback</code> tool. Mark items as <em>addressed</em> once a fix ships. If the submitter left an email, they&apos;re automatically notified (once).</p>
 
       <div className="flex gap-1 mb-4">
         {([['web', `Humans (${channelCounts.web})`], ['mcp', `Agents (${channelCounts.mcp})`], ['all', 'All']] as [Channel, string][]).map(([c, label]) => (
@@ -167,7 +167,7 @@ export default function AdminFeedbackPage() {
                 {item.name && <span> · <span className="text-stone-700">{item.name}</span></span>}
                 {item.email && <span className="text-stone-400"> &lt;{item.email}&gt;</span>}
                 {item.channel === 'mcp' && (
-                  <span className="ml-2 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-200 text-[10px] font-medium align-middle" title="Submitted by an AI agent via the MCP submit_feedback tool — treat claims as unverified">
+                  <span className="ml-2 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-200 text-[10px] font-medium align-middle" title="Submitted by an AI agent via the MCP submit_feedback tool. Treat claims as unverified.">
                     MCP agent
                   </span>
                 )}

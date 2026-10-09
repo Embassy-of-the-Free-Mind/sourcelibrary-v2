@@ -85,8 +85,9 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 4686,
         title: 'Pages the transcription engine refuses to read',
-        detail: 'On famous English texts the engine returns nothing, so 712 pages of the Philosophical Transactions are blank. A free engine, Kraken, reads them at 0.9% character error but gets only 79% of printed numbers right, below the 90% bar set before the test. Nothing has been written yet.',
+        detail: 'On famous English texts the engine returns nothing, so 715 pages of the Philosophical Transactions and Birch’s History of the Royal Society are blank. A free engine, Kraken, reads them at 0.9% character error, but it reads old-style figures as letters (“66” as “cé”). Taking only the numbers from a second engine, GLM-OCR, raised the printed numbers read right from 79% to 89%, and to 96% in the body text, with no loss in the letters. That is one number short of the 90% bar set before the test, so nothing has been written yet.',
         status: 'defect',
+        example: { href: '/book/6ac2798d02c7f994f8506911?page=287', label: 'Birch 1756, vol. II, page 287' },
       },
       {
         n: 5575,
@@ -188,6 +189,12 @@ export const GROUPS: IssueGroup[] = [
         n: 5406,
         title: 'Readers of the source languages check the judges',
         detail: 'Volunteers re-judge 50 pages the model judges already scored. This is the only way to learn how far the judges agree with people. It awaits an ethics approval.',
+        status: 'planned',
+      },
+      {
+        n: 6338,
+        title: 'How much the AI reviewers miss, and whether a second one helps',
+        detail: 'Each page check is read by one AI reviewer, Claude Opus, whose miss rate has not been measured. A preregistered study plants known errors on some pages of three scripts and compares a second Opus read with a Gemini read, counting only errors confirmed against the page image. Every outcome will be published, with the data.',
         status: 'planned',
       },
       {

@@ -81,7 +81,7 @@ interface MetricsSnapshot {
 }
 
 const num = (n: number | null | undefined) => (n ?? 0).toLocaleString('en-US');
-const pct = (a?: number | null, b?: number | null) => (b ? ((100 * (a || 0)) / b).toFixed(1) + '%' : '—');
+const pct = (a?: number | null, b?: number | null) => (b ? ((100 * (a || 0)) / b).toFixed(1) + '%' : '–');
 const dur = (s?: number | null) => `${Math.floor((s || 0) / 60)}m ${Math.round((s || 0) % 60)}s`;
 
 const C = {
@@ -199,10 +199,10 @@ function Table({ headers, rows }: { headers: string[]; rows: (string | number)[]
 }
 
 const METHODOLOGY: [string, string][] = [
-  ['Snapshot cadence', 'Numbers are precomputed once a day at 05:45 UTC by scripts/analytics/snapshot-metrics.mjs and read from system_config.metrics_snapshot — they are NOT live. The header shows when this snapshot was generated; if it is more than ~30h old the timestamp turns amber.'],
+  ['Snapshot cadence', 'Numbers are precomputed once a day at 05:45 UTC by scripts/analytics/snapshot-metrics.mjs and read from system_config.metrics_snapshot. They are NOT live. The header shows when this snapshot was generated; if it is more than ~30h old the timestamp turns amber.'],
   ['Visitors are fingerprints, not people', 'MAU, DAU, unique visitors, dwell and retention are all keyed on (IP + first 60 chars of user-agent), with the last IP octet zeroed at ingest. One person on phone + laptop counts twice; a shared office IP can collapse several people into one. Treat these as a consistent proxy for trend, not a true headcount. Accounts (signups, verified, logins) ARE real per-person counts.'],
   ['Dwell = multi-pageview sessions only', 'Median/mean session duration is measured over the last 7 days and only counts sessions with 2+ pageviews (a single-hit visit has no measurable duration), so it skews high relative to "average time on site across everyone."'],
-  ['Reading depth median = 1 is normal', 'Most reader↔book pairs touch a single page (≈83%). This is the expected shape of a reference library — people land on one page from search or a citation. "Deep reads" (10+ pages) are the signal to watch.'],
+  ['Reading depth median = 1 is normal', 'Most reader↔book pairs touch a single page (≈83%). This is the expected shape of a reference library: people land on one page from search or a citation. "Deep reads" (10+ pages) are the signal to watch.'],
   ['Zero-result searches are mostly typeahead', 'A large share of zero-result queries are truncated keystrokes logged mid-type (e.g. "flu", "parace"), not genuine content gaps. Only conceptual misses (a real subject we lack) indicate acquisition need.'],
   ['Traffic is bot-filtered & path-normalized', 'Pageview counts exclude known bots/crawlers/automation by user-agent. Legacy provider-prefixed and tenant /embed/ book URLs are folded to their canonical /book/<slug> so a book is counted however it was reached.'],
   ['share / cite are under-instrumented', 'The download/share/cite mission-action counts reflect what is currently wired to fire events; near-zero share/cite means the events are barely instrumented, not necessarily that nobody quotes.'],
@@ -258,7 +258,7 @@ export default async function MetricsPage() {
         <Stat value={num(u.everLoggedIn)} label="Ever logged in" sub={`${num(u.repeatLogin)} returning (2+)`}
           def="Accounts with at least one login; 'returning' have logged in 2+ times." />
         <Stat value={num(e.mau)} label="MAU" sub="30d unique ip+ua"
-          def="Distinct visitor fingerprints active in the last 30 days. A proxy — not deduplicated to real people." />
+          def="Distinct visitor fingerprints active in the last 30 days. A proxy, not deduplicated to real people." />
         <Stat value={num(e.avgDau)} label="Avg DAU" sub="mean of last 14 days"
           def="Average daily unique fingerprints over the last 14 days." />
         <Stat value={dur(e.dwellMedianSec)} label="Median dwell" sub={`mean ${dur(e.dwellMeanSec)} · 7d`}
@@ -271,7 +271,7 @@ export default async function MetricsPage() {
       <GrowthChart daily={ser.signupsByDay || []} baseline={ser.signupsBaseline || 0} />
       <div style={{ ...C.grid, marginTop: 12 }}>
         <Stat value={num(dl.signups30?.now)} label={`Signups this ${win}d`} delta={<DeltaChip d={dl.signups30} suffix=" vs prior 30d" />}
-          def="New accounts in this window vs the window before it — the headline growth signal." />
+          def="New accounts in this window vs the window before it: the headline growth signal." />
         <Stat value={num(dl.pageviews7?.now)} label="Pageviews 7d" delta={<DeltaChip d={dl.pageviews7} suffix=" wk/wk" />}
           def="Human (bot-filtered) pageviews in the last 7 days vs the 7 before." />
       </div>
@@ -280,16 +280,16 @@ export default async function MetricsPage() {
       <div style={C.grid}>
         <Stat value={num(c.uniqVisitors)} label="Unique visitors" def="Distinct fingerprints in the window." />
         <Stat value={pct(c.newSignups, c.uniqVisitors)} label="Visitor → signup" sub={`${num(c.newSignups)} signups`}
-          def="New signups divided by unique visitors. A rough funnel rate — numerator is accounts, denominator is fingerprints." />
+          def="New signups divided by unique visitors. A rough funnel rate: numerator is accounts, denominator is fingerprints." />
         <Stat value={pct(c.returningVisitors, c.returningTotal)} label="Returning visitors" sub={`>1 day · ${num(c.returningVisitors)}`}
           def="Fingerprints seen on more than one calendar day in the window." />
         <Stat value={pct(e.avgDau, e.mau)} label="Stickiness" sub="DAU : MAU"
-          def="Avg DAU as a share of MAU — how much of the monthly audience shows up on a given day." />
+          def="Avg DAU as a share of MAU: how much of the monthly audience shows up on a given day." />
       </div>
 
       {ser.dau?.length ? (
         <>
-          <SectionHead title="Daily active (30d)" sub="Unique fingerprints per day — momentum at a glance." />
+          <SectionHead title="Daily active (30d)" sub="Unique fingerprints per day: momentum at a glance." />
           <Bars data={ser.dau.map((d) => ({ date: d.date, value: d.users }))} color="#3fb950" />
         </>
       ) : null}
@@ -297,27 +297,27 @@ export default async function MetricsPage() {
       {s.readingMembers ? (
         <>
           <SectionHead
-            title="Reading depth — signed-in members"
+            title="Reading depth: signed-in members"
             sub={`${num(s.readingMembers.sessions)} sessions from ${num(s.readingMembers.users)} members across ${num(s.readingMembers.books)} books, last ${win} days. A session is one member on one book, activity within 30 minutes collapsed.`}
           />
           <div style={C.grid}>
             <Stat value={String(s.readingMembers.median ?? 0)} label="Median pages / session"
               sub={`p90 ${s.readingMembers.p90 ?? 0} · max ${num(s.readingMembers.max)}`}
-              def="Distinct pages a member reads in one sitting. Counted from reading_history, which is written only behind a session — no crawler can appear in it." />
+              def="Distinct pages a member reads in one sitting. Counted from reading_history, which is written only behind a session, so no crawler can appear in it." />
             <Stat value={pct(s.readingMembers.deep, s.readingMembers.sessions)} label="Deep read (10+ pages)"
               sub={s.readingMembers.pagesDeep != null
-                ? `${num(s.readingMembers.deep)} sessions — but ${pct(s.readingMembers.pagesDeep, s.readingMembers.totalPages)} of all pages read`
+                ? `${num(s.readingMembers.deep)} sessions, but ${pct(s.readingMembers.pagesDeep, s.readingMembers.totalPages)} of all pages read`
                 : `${num(s.readingMembers.deep)} sessions · ${num(s.readingMembers.veryDeep)} read 50+`}
               def="The engaged tail. This is the number the anonymous page_read metric got wrong by an order of magnitude before #3405. Counting sessions understates it: deep sessions are a quarter of sittings and the large majority of pages actually read." />
             <Stat value={pct(s.readingMembers.oneOnly, s.readingMembers.sessions)} label="One page only"
               sub={s.readingMembers.pagesOneOnly != null
                 ? `only ${pct(s.readingMembers.pagesOneOnly, s.readingMembers.totalPages)} of all pages read`
                 : undefined}
-              def="Arrived from a search result or citation and left. Expected to be substantial for a reference library — and near-weightless once you count pages instead of sessions." />
+              def="Arrived from a search result or citation and left. Expected to be substantial for a reference library, and near-weightless once you count pages instead of sessions." />
             {s.readingMembers.multiDayUsers != null ? (
               <Stat value={pct(s.readingMembers.multiDayUsers, s.readingMembers.users)} label="Members who came back"
                 sub={`${num(s.readingMembers.multiDayUsers)} of ${num(s.readingMembers.users)} read on more than one day`}
-                def="Read on more than one calendar day in the window. A session is one user+BOOK, so the older 'more than one session' figure counted opening a second book in the same sitting as a return — it read roughly twice as high." />
+                def="Read on more than one calendar day in the window. A session is one user+BOOK, so the older 'more than one session' figure counted opening a second book in the same sitting as a return, so it read roughly twice as high." />
             ) : (
               <Stat value={pct(s.readingMembers.returningUsers, s.readingMembers.users)} label="Opened more than one book"
                 sub={`${num(s.readingMembers.returningUsers)} of ${num(s.readingMembers.users)} had >1 book-session`}
@@ -326,7 +326,7 @@ export default async function MetricsPage() {
           </div>
           <div style={{ ...C.card, marginBottom: 12, marginTop: 12, lineHeight: 1.5 }}>
             <strong>A ceiling, not an average.</strong> Members are self-selected and read more than
-            a passer-by, so this answers &ldquo;do our members read?&rdquo; — not &ldquo;do visitors
+            a passer-by, so this answers &ldquo;do our members read?&rdquo;, not &ldquo;do visitors
             read?&rdquo; The anonymous instrument below answers the second question, and only for
             windows that sit entirely after the #3405 fix.
             {s.readingMembers.fastPages != null && s.readingMembers.totalPages ? (
@@ -347,11 +347,11 @@ export default async function MetricsPage() {
 
       {s.reading?.contaminated ? (
         <>
-          <SectionHead title="Reading depth — anonymous visitors" sub="Not measurable for this window — see #3405." />
+          <SectionHead title="Reading depth: anonymous visitors" sub="Not measurable for this window (see #3405)." />
           <div style={{ ...C.card, marginBottom: 12, lineHeight: 1.5 }}>
             {num(s.reading.unclassified)} of {num(s.reading.total)} page_read events in the last 7
             days were written before bot classification existed. They record no user-agent, so they
-            cannot be attributed to readers or crawlers after the fact — and the events that caused
+            cannot be attributed to readers or crawlers after the fact, and the events that caused
             this outnumbered real human book-page views 34 to 1. No depth figure is shown rather
             than a confident wrong one. This resolves itself once a full 7-day window has elapsed
             since the fix deployed.
@@ -359,14 +359,14 @@ export default async function MetricsPage() {
         </>
       ) : s.reading ? (
         <>
-          <SectionHead title="Reading depth — anonymous visitors" sub="Human-classified page_read events, last 7 days. Keyed on a /24-truncated IP, so readers behind one NAT merge into one; treat it as coarser than the member figures above." />
+          <SectionHead title="Reading depth: anonymous visitors" sub="Human-classified page_read events, last 7 days. Keyed on a /24-truncated IP, so readers behind one NAT merge into one; treat it as coarser than the member figures above." />
           <div style={C.grid}>
             <Stat value={num(s.reading.opens)} label="Book opens" def="book_read events in the last 7 days." />
             <Stat value={String(s.reading.median ?? 0)} label="Median pages / book" sub={`p90 ${s.reading.p90 ?? 0}`}
               def="Distinct pages a reader views per book. Most land on one page from search or a citation." />
             <Stat value={pct(s.reading.oneOnly, s.reading.pairs)} label="Read 1 page only" def="Share of reader-book pairs that touched a single page." />
             <Stat value={pct(s.reading.deep, s.reading.pairs)} label="Deep read (10+)" sub={`${num(s.reading.deep)} of ${num(s.reading.pairs)}`}
-              def="The engaged tail — pairs where someone read 10+ pages." />
+              def="The engaged tail: pairs where someone read 10+ pages." />
           </div>
         </>
       ) : null}
@@ -401,8 +401,8 @@ export default async function MetricsPage() {
           <SectionHead title="Search" sub={`Last ${win} days. Many zero-result queries are truncated typeahead, not content gaps.`} />
           <div style={{ ...C.grid, marginBottom: 12 }}>
             <Stat value={num(s.search.human)} label="Human searches" sub={`${num(s.search.total)} total incl. bots`} />
-            <Stat value={pct(s.search.zeroResult, s.search.human)} label="Zero-result" def="Share returning no results — mostly mid-type keystrokes; conceptual misses signal real gaps." />
-            <Stat value={s.search.latencyP50 != null ? `${s.search.latencyP50}ms` : '—'} label="Latency p50" sub={s.search.latencyP90 != null ? `p90 ${s.search.latencyP90}ms` : undefined} />
+            <Stat value={pct(s.search.zeroResult, s.search.human)} label="Zero-result" def="Share returning no results, mostly mid-type keystrokes; conceptual misses signal real gaps." />
+            <Stat value={s.search.latencyP50 != null ? `${s.search.latencyP50}ms` : '–'} label="Latency p50" sub={s.search.latencyP90 != null ? `p90 ${s.search.latencyP90}ms` : undefined} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div>
@@ -429,24 +429,24 @@ export default async function MetricsPage() {
 
       {s.ai?.length ? (
         <>
-          <SectionHead title="AI surfaces" sub={`Last ${win} days — librarian, search-expand, voice, and external MCP agents.`} />
+          <SectionHead title="AI surfaces" sub={`Last ${win} days: librarian, search-expand, voice, and external MCP agents.`} />
           <Table headers={['feature', 'calls', 'cost', 'avg ms']} rows={s.ai.map((a) => [a.feature, num(a.calls), '$' + a.cost.toFixed(2), num(a.avgMs)])} />
         </>
       ) : null}
 
       {s.pipelineCost ? (
         <>
-          <SectionHead title="Pipeline cost (Gemini)" sub="From the gemini_usage_daily rollup — can read stale while OCR is paused." />
+          <SectionHead title="Pipeline cost (Gemini)" sub="From the gemini_usage_daily rollup. Can read stale while OCR is paused." />
           <div style={{ ...C.grid, marginBottom: 12 }}>
             <Stat value={'$' + (s.pipelineCost.last7 ?? 0).toFixed(2)} label="Last 7 days" />
             <Stat value={'$' + (s.pipelineCost.last30 ?? 0).toFixed(2)} label="Last 30 days" />
-            <Stat value={s.pipelineCost.latestDay || '—'} label="Latest day" sub={s.pipelineCost.stale ? '⚠ rollup stale (pipeline paused?)' : undefined} />
+            <Stat value={s.pipelineCost.latestDay || '–'} label="Latest day" sub={s.pipelineCost.stale ? '⚠ rollup stale (pipeline paused?)' : undefined} />
           </div>
           <Table headers={['date', 'cost', 'records']} rows={(s.pipelineCost.recentDays || []).map((d) => [d.date, '$' + d.cost.toFixed(2), num(d.records)])} />
         </>
       ) : null}
 
-      <SectionHead title="Methodology & caveats" sub="What these numbers mean — and what they do not." />
+      <SectionHead title="Methodology & caveats" sub="What these numbers mean, and what they do not." />
       <div style={{ ...C.card, display: 'grid', gap: 14 }}>
         {METHODOLOGY.map(([title, body]) => (
           <div key={title}>

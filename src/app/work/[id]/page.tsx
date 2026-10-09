@@ -191,7 +191,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canon = canonWork(id);
   if (canon) {
     return {
-      title: `${canon.title} — ${canon.author} | Source Library`,
+      title: `${canon.title}, ${canon.author} | Source Library`,
       description: `Read the ${canon.title} (${canon.originalTitle}) of ${canon.author} in ${canon.originalLanguage} and English: ${editions.length} editions and manuscripts with page-level translations of the original scans.`,
       alternates: { canonical: `/work/${canon.slug}` },
     };
@@ -201,7 +201,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const libraries = new Set(editions.map(e => e.image_source?.provider_name).filter(Boolean));
 
   return {
-    title: `${title} — ${editions.length} Editions | Source Library`,
+    title: `${title}: ${editions.length} Editions | Source Library`,
     description: `${editions.length} editions and manuscripts of ${title} across ${libraries.size} libraries. Browse, compare, and read translations.`,
     alternates: { canonical: `/work/${editions.find(e => e.work_slug)?.work_slug || id}` },
   };

@@ -8,11 +8,11 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: 'How Big Is the Library? - Research Notes - Source Library',
   description:
-    "We counted every word Source Library holds — original OCR, AI translation, and enrichment. The answer: roughly 5-7 billion words, about the size of English Wikipedia. Here is how we measured it, junk pages and all.",
+    "We counted every word Source Library holds: original OCR, AI translation, and enrichment. The answer: roughly 5-7 billion words, about the size of English Wikipedia. Here is how we measured it, junk pages and all.",
   openGraph: {
     title: 'How Big Is the Library?',
     description:
-      'Roughly 5-7 billion words across 6.5 million pages — about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
+      'Roughly 5-7 billion words across 6.5 million pages, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
     images: [
       {
         url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg',
@@ -90,7 +90,7 @@ export default function HowBigIsTheLibraryPage() {
       <BlogPostSchema
         slug="how-big-is-the-library"
         title="How Big Is the Library?"
-        description="We counted every word Source Library holds — original OCR, AI translation, and enrichment. Roughly 5-7 billion words, about the size of English Wikipedia."
+        description="We counted every word Source Library holds: original OCR, AI translation, and enrichment. Roughly 5-7 billion words, about the size of English Wikipedia."
         datePublished="2026-06-01"
         image="https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg"
       />
@@ -98,7 +98,7 @@ export default function HowBigIsTheLibraryPage() {
         header={
           <ContentHeader
             title="How Big Is the Library?"
-            subtitle="Roughly five to seven billion words — about the size of English Wikipedia"
+            subtitle="Roughly five to seven billion words, about the size of English Wikipedia"
             image="https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg"
             imageAlt="Frontispiece of Athanasius Kircher's Ars Magna Lucis et Umbrae (1671)"
           >
@@ -124,14 +124,14 @@ export default function HowBigIsTheLibraryPage() {
           <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
             A natural question for any library: how much is in here? We have 6.5&nbsp;million
             pages across roughly 15,500 readable books in 158 languages. But pages and books are
-            containers. We wanted the contents &mdash; the actual <em>words</em>.
+            containers. We wanted the contents: the actual <em>words</em>.
           </p>
 
           <p className="text-secondary leading-relaxed mb-10 font-body">
             So we counted. Not just the original texts, but everything the pipeline adds: the
             facing-page English translations, the per-page summaries, the descriptions our vision
             models write for 142,000 illustrations. The answer is about{' '}
-            <strong className="text-primary">seven billion words</strong> &mdash; or, if you only
+            <strong className="text-primary">seven billion words</strong>, or, if you only
             trust the most conservative count, about five. Either way, that puts Source Library at
             roughly the scale of <strong className="text-primary">English Wikipedia</strong>.
           </p>
@@ -200,8 +200,8 @@ export default function HowBigIsTheLibraryPage() {
 
             <p className="text-secondary leading-relaxed mb-6 font-body">
               Counting originals and translations together, we are a little <em>larger</em> than
-              English Wikipedia. Counting only the original source texts &mdash; the
-              centuries-old Latin, Greek, Chinese, Sanskrit, Arabic, and the rest &mdash; we are
+              English Wikipedia. Counting only the original source texts (the
+              centuries-old Latin, Greek, Chinese, Sanskrit, Arabic, and the rest), we are
               about two-thirds of it. And against the whole multilingual Wikipedia, we are
               something like a quarter. For a library of pre-modern primary sources, assembled in
               a few years, that is a strange and slightly vertiginous fact.
@@ -218,7 +218,7 @@ export default function HowBigIsTheLibraryPage() {
             <p className="text-secondary leading-relaxed mb-8 font-body">
               The number is the sum of distinct layers. Roughly half is the original text, scanned
               and OCR&apos;d page by page. Almost as much again is the AI translation that sits
-              beside it &mdash; a little larger per page, because Latin and Greek are compact and
+              beside it, a little larger per page, because Latin and Greek are compact and
               English spells everything out. The enrichment layer (summaries, keywords, the
               museum-style descriptions for every illustration) is real but small.
             </p>
@@ -251,8 +251,8 @@ export default function HowBigIsTheLibraryPage() {
               Why we give a range, not a number
             </h2>
             <p className="text-secondary leading-relaxed mb-6 font-body">
-              The honest answer is a range &mdash; <strong className="text-primary">five to
-              seven billion words</strong> &mdash; and the gap between those two figures is itself
+              The honest answer is a range, <strong className="text-primary">five to
+              seven billion words</strong>, and the gap between those two figures is itself
               a story about machine translation.
             </p>
             <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -263,12 +263,12 @@ export default function HowBigIsTheLibraryPage() {
             </p>
             <p className="text-secondary leading-relaxed mb-6 font-body">
               The culprit was a familiar failure mode. About <strong className="text-primary">2.4%
-              of pages</strong> &mdash; on the order of 150,000 of them &mdash; carry translations
+              of pages</strong> (on the order of 150,000 of them) carry translations
               that <em>run away</em>. The model, an older preview build, hits a repetitive passage
               and gets stuck, emitting the same phrase tens of thousands of times until it slams
               into its output ceiling. One leaf of a Tibetan sutra translated into the sentence{' '}
               <span className="italic">&ldquo;They see the Dharma.&rdquo;</span> repeated{' '}
-              <strong className="text-primary">6,522 times</strong> &mdash; 52,000 words from a
+              <strong className="text-primary">6,522 times</strong>: 52,000 words from a
               page whose original is 1,600. (We wrote about the most extreme case, a Javanese
               Bible leaf, in{' '}
               <Link href="/blog/does-ai-get-religion" className="text-accent-rust hover:text-accent-rust underline">
@@ -279,7 +279,7 @@ export default function HowBigIsTheLibraryPage() {
             <p className="text-secondary leading-relaxed mb-6 font-body">
               A handful of 50,000-word junk pages can fabricate billions of words that no reader
               would ever see. So we don&apos;t use the raw average. We cap each page&apos;s
-              contribution at a generous 3,000 words &mdash; more than any real folio &mdash;
+              contribution at a generous 3,000 words (more than any real folio),
               which gives the seven-billion headline. The five-billion floor is the page{' '}
               <em>median</em>, which ignores the long tail entirely. The truth sits between, and
               both comfortably clear &ldquo;about the size of Wikipedia.&rdquo; Those runaway pages
@@ -292,7 +292,7 @@ export default function HowBigIsTheLibraryPage() {
                   scripts/analytics/corpus-size.mjs
                 </code>{' '}
                 samples pages from the database, strips the editorial annotation that wraps each
-                one, and reports the median, winsorized, and raw figures side by side &mdash; plus
+                one, and reports the median, winsorized, and raw figures side by side, plus
                 a <code className="text-xs bg-white px-1.5 py-0.5 rounded border border-border-light not-italic">--outliers</code>{' '}
                 mode that lists the runaway pages.
               </p>
@@ -304,11 +304,11 @@ export default function HowBigIsTheLibraryPage() {
           {/* Close */}
           <section className="mb-10">
             <p className="text-secondary leading-relaxed mb-6 font-body">
-              Size is not the point of a library &mdash; a single readable page of Ficino that no
+              Size is not the point of a library; a single readable page of Ficino that no
               one could read before is worth more than a million words of boilerplate. But scale
               does say something. A few years ago this was one untranslated book in a glass case in
               Amsterdam. It is now, by word count, a Wikipedia&apos;s worth of primary sources that
-              had mostly never been carried into English &mdash; sitting in one place, readable and
+              had mostly never been carried into English, sitting in one place, readable and
               quotable, page by facing page.
             </p>
             <p className="text-muted text-sm font-body">

@@ -197,7 +197,7 @@ export default function FavoritesPage() {
           <p className="text-xl text-stone-300 max-w-2xl">
             {mode === 'mine'
               ? 'Books, artworks, pages, and illustrations you\'ve liked.'
-              : 'The most loved books, artworks, pages, and illustrations \u2014 as chosen by readers.'}
+              : 'The most loved books, artworks, pages, and illustrations, as chosen by readers.'}
           </p>
 
           {/* Mode toggle */}

@@ -1,0 +1,205 @@
+{
+ "cap_usd": 10,
+ "ledger_usd": 7.2907,
+ "ledger_calls": 2597,
+ "metered": {
+  "usd": 7.291,
+  "rows": 2952,
+  "meterError": null
+ },
+ "mode": "realtime (Batch-equivalent is half)",
+ "by_arm": {
+  "lite-T1a": {
+   "calls": 150,
+   "usd": 0.2821,
+   "in": 469027,
+   "out": 109873,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T1b": {
+   "calls": 150,
+   "usd": 0.28,
+   "in": 469027,
+   "out": 108505,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T1c": {
+   "calls": 150,
+   "usd": 0.2815,
+   "in": 469027,
+   "out": 109491,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T02a": {
+   "calls": 150,
+   "usd": 0.2811,
+   "in": 469027,
+   "out": 109245,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T02b": {
+   "calls": 150,
+   "usd": 0.2802,
+   "in": 469027,
+   "out": 108611,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T0a": {
+   "calls": 150,
+   "usd": 0.2776,
+   "in": 469027,
+   "out": 106924,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T0b": {
+   "calls": 150,
+   "usd": 0.2776,
+   "in": 469027,
+   "out": 106924,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1a": {
+   "calls": 150,
+   "usd": 0.5905,
+   "in": 469027,
+   "out": 118652,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1b": {
+   "calls": 150,
+   "usd": 0.5899,
+   "in": 469027,
+   "out": 118447,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1c": {
+   "calls": 150,
+   "usd": 0.5914,
+   "in": 469027,
+   "out": 118949,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T02a": {
+   "calls": 155,
+   "usd": 0.6003,
+   "in": 488500,
+   "out": 118688,
+   "thinking": 0,
+   "empty_or_nonstop": 5
+  },
+  "flash-T02b": {
+   "calls": 150,
+   "usd": 0.5876,
+   "in": 469027,
+   "out": 117706,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T0a": {
+   "calls": 150,
+   "usd": 0.5931,
+   "in": 469027,
+   "out": 119518,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T0b": {
+   "calls": 150,
+   "usd": 0.5924,
+   "in": 469027,
+   "out": 119282,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-BO3-pick": {
+   "calls": 150,
+   "usd": 0.3261,
+   "in": 518615,
+   "out": 22277,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-BO3-pick": {
+   "calls": 150,
+   "usd": 0.34,
+   "in": 546792,
+   "out": 22200,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-OCR-T0": {
+   "calls": 24,
+   "usd": 0.042,
+   "in": 103122,
+   "out": 10822,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "lite-OCR-T0.4": {
+   "calls": 24,
+   "usd": 0.04,
+   "in": 103122,
+   "out": 9486,
+   "thinking": 0,
+   "empty_or_nonstop": 9
+  },
+  "lite-OCR-T0.8": {
+   "calls": 24,
+   "usd": 0.0437,
+   "in": 103122,
+   "out": 11923,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "flash-OCR-T0": {
+   "calls": 24,
+   "usd": 0.0926,
+   "in": 103122,
+   "out": 13672,
+   "thinking": 0,
+   "empty_or_nonstop": 3
+  },
+  "flash-OCR-T0.4": {
+   "calls": 24,
+   "usd": 0.092,
+   "in": 103122,
+   "out": 13464,
+   "thinking": 0,
+   "empty_or_nonstop": 4
+  },
+  "flash-OCR-T0.8": {
+   "calls": 24,
+   "usd": 0.0859,
+   "in": 103122,
+   "out": 11456,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "lite-OCR-T0.1": {
+   "calls": 24,
+   "usd": 0.0391,
+   "in": 103122,
+   "out": 8887,
+   "thinking": 0,
+   "empty_or_nonstop": 10
+  },
+  "flash-OCR-T0.1": {
+   "calls": 24,
+   "usd": 0.0841,
+   "in": 103122,
+   "out": 10832,
+   "thinking": 0,
+   "empty_or_nonstop": 7
+  }
+ }
+}

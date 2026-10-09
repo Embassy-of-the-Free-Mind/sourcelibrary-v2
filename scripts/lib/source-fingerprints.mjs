@@ -125,7 +125,7 @@ export function sourceFingerprints(book) {
 /**
  * The legacy SCALAR fingerprint — one identifier chosen by priority.
  * Unchanged from `src/lib/dedup.ts`; still written on every import because
- * indexes, the warehouse and several audits read it. `sourceFingerprints()`
+ * indexes and several audits read it. `sourceFingerprints()`
  * above is what tier 1 now matches on.
  */
 export function sourceFingerprint(book) {

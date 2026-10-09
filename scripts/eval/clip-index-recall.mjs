@@ -40,6 +40,7 @@ const { Client } = createRequire(import.meta.url)('pg');
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const IMG = path.join(REPO, 'scripts', 'output', 'identify-bench', 'wall-photos');
+import { embedAuthHeaders } from '../workers/lib/embed-auth.mjs';
 const CLIP = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 const input = process.argv[2];
 if (!input || !process.env.SUPABASE_DB_URL) { console.error('usage: node clip-index-recall.mjs <bench results.json>  (needs SUPABASE_DB_URL)'); process.exit(1); }
@@ -78,7 +79,7 @@ for (const t of bench.perTarget) {
     const file = path.join(IMG, `${t.key}-${kind}.jpg`);
     if (!fs.existsSync(file)) continue;
     const r = await fetch(`${CLIP}/embed-image`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: embedAuthHeaders(),
       body: JSON.stringify({ base64: fs.readFileSync(file).toString('base64'), mime_type: 'image/jpeg' }),
       signal: AbortSignal.timeout(60000),
     });

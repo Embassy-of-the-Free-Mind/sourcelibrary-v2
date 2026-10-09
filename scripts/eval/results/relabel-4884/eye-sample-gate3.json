@@ -1,0 +1,653 @@
+{
+  "seed": 4884,
+  "n": 40,
+  "drawn_from": 647,
+  "per_pattern": {
+    "Greek → Latin": 27,
+    "Greek → Latin-script vernacular": 7,
+    "Latin → Greek": 3,
+    "Sanskrit → English": 3
+  },
+  "rows": [
+    {
+      "n": 1,
+      "book_id": "6a50803278825bd7fde43982",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        25,
+        46,
+        15,
+        36
+      ],
+      "title": "In Libros Ethicorvm Aristotelis Ad Nicomachvm, aliqvot Conimbricensis cursus diaputationes : In quibus praecipua quaedam Ethicae disciplinae capita continentur"
+    },
+    {
+      "n": 2,
+      "book_id": "6a50761578825bd7fde1fdab",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        39,
+        72,
+        23,
+        56
+      ],
+      "title": "Analyticoru[m] posterioru[m] Aristotelis, peripatetice phisicoru[m] secte. principis libri : sine quorum peritia nemo fateri iuste audet se quippia[m] scire ; nedu[m] per tractatus, capita, et capitu[m] partes, verum per com[m]enta quoq[ue] ... studiose digesti, Accuratiori deniq[ue] castigatione, prisce sue integritati restituti"
+    },
+    {
+      "n": 3,
+      "book_id": "6a506a5278825bd7fddf09e0",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        29,
+        52,
+        17,
+        40
+      ],
+      "title": "De hystoria anime"
+    },
+    {
+      "n": 4,
+      "book_id": "6a50562978825bd7fddaeb5f",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        11,
+        22,
+        7,
+        16
+      ],
+      "title": "Plutarchi opusculum de immoderata verecundia"
+    },
+    {
+      "n": 5,
+      "book_id": "6a5055a678825bd7fddab6f2",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        30,
+        53,
+        15,
+        40
+      ],
+      "title": "De ortu et interitu libri duo"
+    },
+    {
+      "n": 6,
+      "book_id": "6a507eec78825bd7fde3b525",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        80,
+        145,
+        45,
+        112
+      ],
+      "title": "Trium librorum di anima Aristotelis familiaris expositio"
+    },
+    {
+      "n": 7,
+      "book_id": "6a50561478825bd7fddae28f",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        6,
+        13,
+        3,
+        10
+      ],
+      "title": "Theses Philosophicae Ex Dvobvs Libris Aristotelis De Ortv Et Interitv Desvmptae"
+    },
+    {
+      "n": 8,
+      "book_id": "6a50888178825bd7fde88f6c",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        116,
+        209,
+        65,
+        162
+      ],
+      "title": "Tractatus meteorologicus in quatuor libros Aristotelis :(c. 2 tabb. aen.)"
+    },
+    {
+      "n": 9,
+      "book_id": "6a50642f78825bd7fddd90d7",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        110,
+        199,
+        61,
+        156
+      ],
+      "title": "Metheorora"
+    },
+    {
+      "n": 10,
+      "book_id": "6a5059d578825bd7fddc6da5",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        29,
+        52,
+        17,
+        40
+      ],
+      "title": "Aristotelis De ortu et interitu : libri duo"
+    },
+    {
+      "n": 11,
+      "book_id": "6a5059d578825bd7fddc6dee",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        68,
+        123,
+        37,
+        96
+      ],
+      "title": "De naturalis scientiae constitutione : (sive Comment. in Aristotelis lib. phys. auscultationis)"
+    },
+    {
+      "n": 12,
+      "book_id": "6a50812878825bd7fde47ed3",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        32,
+        57,
+        19,
+        44
+      ],
+      "title": "Theses Selectæ Ex Organo Aristotelis"
+    },
+    {
+      "n": 13,
+      "book_id": "6a5087c378825bd7fde7e94e",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        11,
+        20,
+        7,
+        16
+      ],
+      "title": "Summa logicae Aristotelis in scholis doceri solitae"
+    },
+    {
+      "n": 14,
+      "book_id": "6a50560978825bd7fddad985",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        10,
+        17,
+        5,
+        12
+      ],
+      "title": "Theses De Mvtatione Elementorum Qva locoferuntur : Ex libro quarto Aristotelis de Caelo"
+    },
+    {
+      "n": 15,
+      "book_id": "6a507c0778825bd7fde2a134",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        17,
+        30,
+        9,
+        24
+      ],
+      "title": "Liber Praedicamentorvm Aristotelis : summa diligentia in vsum studiosorum Dialectices excusus"
+    },
+    {
+      "n": 16,
+      "book_id": "69b64d9518b87551bfc7f404",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        368,
+        663,
+        203,
+        516
+      ],
+      "title": "Poetarum omnium seculorum longe principis Homeri omnia quae quidem extant opera, Graece : adiecta versione Latina ad verbum, ex diversis doctissimorum virorum translationibus concinnata, &amp; difficiliorum thematum explicatione marginibus hinc inde ubi opus videbatur adspersa, ut Graecae linguae tyronibus, vel citra vivam praeceptoris vocem, cognoscere iam atque conferre doctissima poetae huius scripta liceat : Accessit quoque autoris vita, &amp; instructissimus rerum verborumque memorabilium Index"
+    },
+    {
+      "n": 17,
+      "book_id": "699388e61075be7d32054f2f",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": true,
+      "pages": [
+        249,
+        450,
+        137,
+        350
+      ],
+      "title": "Aristotle, Rhetoric and Poetics"
+    },
+    {
+      "n": 18,
+      "book_id": "6a26dd7405d7c1d9b10917c8",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        132,
+        239,
+        73,
+        186
+      ],
+      "title": "Science And Occultism I. K. Taimni"
+    },
+    {
+      "n": 19,
+      "book_id": "6a5086ca78825bd7fde72fd9",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        133,
+        240,
+        73,
+        186
+      ],
+      "title": "Libri XIV qui Aristotelis esse dicuntur, de secretiore parte divinae sapientiae secund. Aegyptios"
+    },
+    {
+      "n": 20,
+      "book_id": "6a50898378825bd7fde94230",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        17,
+        30,
+        9,
+        24
+      ],
+      "title": "Anathemata nonaginta sex ex universa pauperis Aristotelis philosophia anno millesimo sexcentesimo, nonagesimo sexto :mense Majo, die festo S. Peregrini ... in ... universitate Friburgensi Brisg. publicae disputationi oblata ab ... Ioanne Georgio Rüetschlin ..."
+    },
+    {
+      "n": 21,
+      "book_id": "6a4a332f87ace2493ebdd11b",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        248,
+        447,
+        137,
+        348
+      ],
+      "title": "Patrologia Graeca, Vol. 158 (ed. Migne)"
+    },
+    {
+      "n": 22,
+      "book_id": "6a5081ba78825bd7fde4d8b4",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        30,
+        53,
+        17,
+        40
+      ],
+      "title": "Libri de anima, Aristotelis philosophoru[m] peripatetice familie principis et auctoris :nedu[m] per tractatus, capita et capitu[m] sectiones siue partes, studiose distincti, ... in margine numeroru[m] figuris signata ... diuisi, Accurata preterea castigatione reuisi"
+    },
+    {
+      "n": 23,
+      "book_id": "6a5045c078825bd7fdd7c782",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": false,
+      "pages": [
+        37,
+        66,
+        21,
+        52
+      ],
+      "title": "Proklu Diadochu Hypotypōsis Tōn Astronomicōn hypotheseōn : = Procli Diadochi Hypotyposis Astronomicarum positionum"
+    },
+    {
+      "n": 24,
+      "book_id": "6a26e0ca65df759218cd71a5",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        84,
+        151,
+        47,
+        118
+      ],
+      "title": "Encyclopedia Of Vedic Astrology, Tajik, Shastra And Annual Horoscopy Shanker Adawal"
+    },
+    {
+      "n": 25,
+      "book_id": "6a508d1378825bd7fdebfc78",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Italian",
+      "from": "Greek",
+      "to": "Italian",
+      "visible": false,
+      "pages": [
+        54,
+        97,
+        29,
+        76
+      ],
+      "title": "Compendio delle vite de'Filosophi antichi greci et latini"
+    },
+    {
+      "n": 26,
+      "book_id": "6a5063ff78825bd7fddd70c3",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        32,
+        59,
+        19,
+        44
+      ],
+      "title": "Plvtarchi Chaeronei Stoici Ac Viri Clarissimi De His Qvi Tarde A Nvmine Corripivntvr Libellvs"
+    },
+    {
+      "n": 27,
+      "book_id": "6a4a28f387ace2493ebccca4",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        204,
+        367,
+        113,
+        286
+      ],
+      "title": "Patrologia Graeca, Vol. 46 (ed. Migne)"
+    },
+    {
+      "n": 28,
+      "book_id": "6a5089d678825bd7fde97e84",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        132,
+        239,
+        73,
+        186
+      ],
+      "title": "Das Philosophisch Ehezuchtbüchlin oder die Vernunfft gemäse Naturgescheide Ehezucht :sampt der Kinderzucht ; Auß deß ... Philosophi Plutarchi vernunfft gemäsen Ehegebotten unnd allerley andern Anmütigen Gleichnussen ..., Mit beygethaner missiff und Ehelicher schuldigkeit erinnerung Herrn Anthoni von Guevara"
+    },
+    {
+      "n": 29,
+      "book_id": "6a508e9478825bd7fded8a91",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Italian",
+      "from": "Greek",
+      "to": "Italian",
+      "visible": false,
+      "pages": [
+        32,
+        59,
+        19,
+        46
+      ],
+      "title": "Oratione di Cicerone in difesa di Milone"
+    },
+    {
+      "n": 30,
+      "book_id": "6a0a4f517cd8e1e3d0f4a5ac",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        342,
+        615,
+        189,
+        478
+      ],
+      "title": "Architecture of Mānasāra: Translated From Original Sanskrit (Acharya)"
+    },
+    {
+      "n": 31,
+      "book_id": "6a507efa78825bd7fde3b8ec",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        48,
+        85,
+        27,
+        68
+      ],
+      "title": "Omnis malus ignorans (h.e. Aristotelis axioma: Ignorans est omnis malus, expositum)"
+    },
+    {
+      "n": 32,
+      "book_id": "6a506e6778825bd7fddf95c5",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        46,
+        85,
+        27,
+        66
+      ],
+      "title": "Das aller edlest und bewertest Regiment der gesundheit"
+    },
+    {
+      "n": 33,
+      "book_id": "6aa35c30e213def30d6c7403",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Spanish",
+      "from": "Greek",
+      "to": "Spanish",
+      "visible": false,
+      "pages": [
+        109,
+        196,
+        61,
+        152
+      ],
+      "title": "Sueños"
+    },
+    {
+      "n": 34,
+      "book_id": "6a50830978825bd7fde5b64a",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        58,
+        105,
+        33,
+        82
+      ],
+      "title": "Expositio in libros De sophisticis elenchis Aristotelis cum textu :Mit Widmungsbrief an Johannes Stephanus de Ferreriis, Bischof von Vercelli, von Augustinus de Meschiatis. Mit Gedicht an Johannes Stephanus de Ferreriis und an den Leser von Nicolaus Tellucius"
+    },
+    {
+      "n": 35,
+      "book_id": "6a508ddf78825bd7fdeccea7",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Italian",
+      "from": "Greek",
+      "to": "Italian",
+      "visible": false,
+      "pages": [
+        48,
+        85,
+        27,
+        68
+      ],
+      "title": "Regole grammaticali della volgar lingua"
+    },
+    {
+      "n": 36,
+      "book_id": "6a42d2e6e76baa13aa859f37",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        333,
+        600,
+        183,
+        466
+      ],
+      "title": "Tractatus de testibus. Oppositiones omnes contra testium personas, dicta, & examen per tres titulos, quorum primus ex secundo, reliqui vero ex tertio"
+    },
+    {
+      "n": 37,
+      "book_id": "6a50890d78825bd7fde8ccac",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → French",
+      "from": "Greek",
+      "to": "French",
+      "visible": false,
+      "pages": [
+        48,
+        87,
+        27,
+        68
+      ],
+      "title": "Les Quatre Poëtiques: D'Aristote, D'Horace, De Vida, De Despréaux. 2,[2], Art Poëtique De Despréaux"
+    },
+    {
+      "n": 38,
+      "book_id": "6a50456a78825bd7fdd79b97",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": false,
+      "pages": [
+        195,
+        352,
+        107,
+        274
+      ],
+      "title": "Organon"
+    },
+    {
+      "n": 39,
+      "book_id": "6a5080e478825bd7fde46200",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        29,
+        52,
+        15,
+        42
+      ],
+      "title": "Institutionum rhetoricarum libellus ad Aristotelis, Ciceronis, Quintiliani, Rodolphi, Agricolae & aliorum probatissimorum authorum praeceptiones de arte dicendi interpretandas, & intelligendas necessarius ..."
+    },
+    {
+      "n": 40,
+      "book_id": "6a5063f378825bd7fddd69a7",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        29,
+        52,
+        17,
+        40
+      ],
+      "title": "Alcinoi philosophi institutio ad Platonis doctrinam"
+    }
+  ]
+}

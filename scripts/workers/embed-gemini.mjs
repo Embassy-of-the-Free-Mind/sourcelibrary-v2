@@ -9,7 +9,7 @@
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
  * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
- * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * SPEND IN THE REPO. gemini-embedding-2 is $0.20 per 1M input tokens on
  * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
  * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
  * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
@@ -40,6 +40,8 @@
  *   --book ID     Process a single book
  *   --books-file PATH  Embed every page with text and no row, for a JSON array
  *                 of book ids (translated or not)
+ *   --pages-file PATH  RE-embed exactly these page ids (JSON array), row or no
+ *                 row — the repair lane for wrong vectors (#6175). Works with --batch.
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
@@ -53,7 +55,15 @@
  *                 the dial and the scope envelope see committed spend (#4567).
  *                 The spend gate is re-asked before every job. Pages already in an
  *                 uncollected job are skipped, so a re-run resumes. Exit 3 = the
- *                 Batch API refused a job (quota); re-run later.
+ *                 Batch API refused a job (quota) or --max-running was reached;
+ *                 re-run later.
+ *   --max-running N  With --batch: submit only while fewer than N embedding jobs
+ *                 are still running at Gemini. Measured 2026-10-07 (#5729): with
+ *                 ~6–10 10K-page jobs in flight, the project's jobs all ended at
+ *                 the same moment and the later-submitted ones came back with
+ *                 most requests "The operation was cancelled" (up to 100%);
+ *                 jobs submitted on their own succeeded 100%. Cancelled requests
+ *                 are not billed, but every one is a page to submit again.
  *   --collect     Collect finished jobs: stream each results file, re-read the
  *                 page from Mongo, rebuild its text with the same composer, and
  *                 upsert the row only when the text still hashes to what was
@@ -61,6 +71,11 @@
  *                 Closes the submit-time usage rows with the BILLED tokens (batch
  *                 results carry usageMetadata; realtime ones do not). Free: it
  *                 runs whatever the dial says. --collect-concurrency N (default 3).
+ *                 --collect-jobs id,id collects only those jobs (and takes ones
+ *                 parked with status 'held').
+ *                 --collect-resume skips a page whose row already has the job's
+ *                 model and the page's current source timestamp (a re-run after
+ *                 an interrupted collect then rewrites nothing).
  *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
@@ -74,12 +89,14 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { cleanPageText, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
+import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
+import { GEMINI_TEXT_MODEL, GEMINI_TEXT_MODELS } from '../lib/vector-truth.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -119,6 +136,11 @@ const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
 // translation. For budget-capped backfills, where translated pages are the ones
 // readers and the Librarian search by meaning (#5869).
 const TRANSLATED_ONLY = args.includes('--translated-only');
+// --pages-file PATH: RE-embed exactly these page ids (JSON array), whether or not
+// they already have a row. The repair lane for rows whose vector is wrong — an
+// e5 vector under a Gemini label, a vector of text the page no longer holds
+// (#6175). --books-file cannot do it: it only fills pages with NO row.
+const PAGES_FILE = args.find((_, i, a) => a[i - 1] === '--pages-file');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -126,10 +148,19 @@ const BATCH_MODE = args.includes('--batch');
 const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
-if (BATCH_MODE && !BOOKS_FILE) {
+// --collect-jobs id,id: collect ONLY these jobs, including ones set aside with status 'held'.
+// A plain --collect takes every finished job, whoever submitted it; a job composed by a newer
+// checkout than the collector's fails the text-hash check page by page and is lost (#6175).
+const COLLECT_JOBS = (args.find((_, i, a) => a[i - 1] === '--collect-jobs') || '').split(',').filter(Boolean);
+// --collect-resume: skip a page whose row already carries this job's model and the page's current
+// source timestamp — it was written by an earlier, interrupted collect of the same job. Every
+// rewrite is a non-HOT update and a new HNSW insertion on a table that takes 2–50 rows/s (#6175).
+const COLLECT_RESUME = args.includes('--collect-resume');
+const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
+if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
   // would enqueue the whole corpus' spend in one go. Name the books.
-  console.error('--batch needs --books-file');
+  console.error('--batch needs --books-file or --pages-file');
   process.exit(1);
 }
 
@@ -141,7 +172,8 @@ if (BATCH_MODE && !BOOKS_FILE) {
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
 const DIMS = 768;
-const MODEL = 'gemini-embedding-2-preview';
+// gemini-embedding-2 since #6170 (bit-identical to -2-preview; see GEMINI_TEXT_MODELS).
+const MODEL = GEMINI_TEXT_MODEL;
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 // Circuit breaker: abort if too many consecutive Supabase failures
@@ -192,7 +224,7 @@ let usageTotalChars = 0;   // characters recorded, for the closing summary
 // way would read $0 against its budget however much it spent (#5869). The
 // streaming incremental run keeps one unattributed accumulator — its pages span
 // thousands of books per flush window and it is never envelope-capped by book.
-const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || BOOK_ID);
+const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || PAGES_FILE || BOOK_ID);
 const bookUsage = new Map(); // book_id → accumulator
 let bookUsageTexts = 0;
 
@@ -278,7 +310,9 @@ async function embedBatch(items) {
   // Counted only on success — a 429 retried above was not billed for a result.
   recordUsage(items);
   await flushEmbedUsage();
-  return data.embeddings.map(e => e.values);
+  const vectors = data.embeddings.map(e => e.values);
+  vectors.model = MODEL; // the model this request called — buildPageEmbeddingRow requires it (#6175)
+  return vectors;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -304,27 +338,26 @@ const PAGE_PROJECTION = {
   'translation.updated_at': 1,
   'ocr.updated_at': 1,
   updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
-  translation_summary: 1,
-  translation_keywords: 1,
 };
 
 /**
  * The text this worker embeds for a page, or null when it has none worth
- * embedding. Translation (or OCR) plus the compact, high-signal summary and
- * keywords that sharpen the vector for concept-level matching. ONE function
- * for the realtime stream and the batch collector, which rebuilds the text to
- * check it still matches what was submitted.
+ * embedding. ONE function for the realtime stream and the batch collector,
+ * which rebuilds the text to check it still matches what was submitted.
+ *
+ * It is the SHARED composer (`pageEmbeddingInput`), the one enrich Phase 6
+ * uses. This worker used to prepend the page's `translation_summary` and
+ * `translation_keywords`, and because the row's `translation` column is the
+ * composed text, the AI's description of the page was stored as its quotable
+ * snippet — the #2232 misquote class, alive in one writer (#6175: 58 of 148
+ * summary-bearing pages sampled). The 20-character floor is this worker's own
+ * and is kept: a stub translation falls back to the OCR, as before.
  */
 function composeEmbedText(page) {
+  const input = pageEmbeddingInput(page);
+  if (input && input.text.length >= 20) return input;
   const ocrText = cleanText(page.ocr?.data);
-  const translationText = cleanText(page.translation?.data);
-  if (ocrText.length < 20 && translationText.length < 20) return null;
-  let text = translationText.length >= 20 ? translationText : ocrText;
-  const meta = [];
-  if (page.translation_summary) meta.push(page.translation_summary);
-  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
-  if (meta.length) text = meta.join('\n') + '\n\n' + text;
-  return { text, hasTranslation: translationText.length >= 20 };
+  return ocrText.length >= 20 ? { text: ocrText, hasTranslation: false } : null;
 }
 
 // Book metadata cache
@@ -369,7 +402,9 @@ async function addToEmbedJob(item) {
   // Mongo read; the hash lets the collector refuse a vector for changed text.
   const line = JSON.stringify({
     key: `${item.page.book_id}|${item.page.id}|${textHash(item.text)}`,
-    request: { content: { parts: [{ text: item.text }] }, outputDimensionality: DIMS },
+    // toWellFormed: the 8,000-char cut can split a surrogate pair, and the Batch API rejects the
+    // WHOLE job on one lone surrogate (#6175). The key keeps the hash of the composed text.
+    request: { content: { parts: [{ text: item.text.toWellFormed() }] }, outputDimensionality: DIMS },
   });
   embedJob.lines.push(line);
   embedJob.bytes += Buffer.byteLength(line) + 1;
@@ -381,10 +416,32 @@ async function addToEmbedJob(item) {
   if (embedJob.lines.length >= JOB_PAGES || embedJob.bytes >= BATCH_MAX_JOB_BYTES) await submitEmbedJob();
 }
 
+/** Embedding jobs still queued or running at Gemini (submitted, not yet finished). */
+async function runningEmbedJobs() {
+  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: { $in: GEMINI_TEXT_MODELS } }, { projection: { gemini_name: 1 } }).toArray();
+  let running = 0;
+  for (const j of open) {
+    const r = await (await fetch(`${BATCH_API}/${j.gemini_name}?key=${GEMINI_KEY}`)).json().catch(() => ({}));
+    if (!/SUCCEEDED|FAILED|CANCELLED|EXPIRED/.test(r.metadata?.state || r.state || '')) running++;
+  }
+  return running;
+}
+
+/** True (and batchStop = 'busy') when --max-running jobs are already in flight. */
+async function atMaxRunning() {
+  if (!MAX_RUNNING) return false;
+  const running = await runningEmbedJobs();
+  if (running < MAX_RUNNING) return false;
+  batchStop = 'busy';
+  console.log(`[embed-gemini] batch: ${running} embedding job(s) running at Gemini (--max-running ${MAX_RUNNING}) — not submitting more now.`);
+  return true;
+}
+
 async function submitEmbedJob() {
   const job = embedJob;
   embedJob = newEmbedJob();
   if (!job.lines.length || batchStop) return;
+  if (await atMaxRunning()) return;
   // Re-ask the gate for every job: a long run can outlive its envelope.
   const gate = await budgetAllowsDispatchScoped(db, 'embed-gemini');
   if (!gate.allowed || (gate.envelopeIds && [...job.books.keys()].some(id => !gate.envelopeIds.has(id)))) {
@@ -398,7 +455,7 @@ async function submitEmbedJob() {
   await jobs.insertOne({
     _id: jobId, status: 'creating', model: MODEL, dims: DIMS, books_file: BOOKS_FILE || null,
     book_ids: [...job.books.keys()], page_ids: job.pageIds, requests: job.lines.length, bytes: job.bytes,
-    est_usd: +estUsd.toFixed(4), created_at: new Date(),
+    pages_file: PAGES_FILE || null, est_usd: +estUsd.toFixed(4), created_at: new Date(),
   });
   let created;
   try {
@@ -465,8 +522,9 @@ async function collectEmbedJobs() {
   if (!SUPABASE_DB_URL) { console.error('--collect needs SUPABASE_DB_URL'); process.exit(1); }
   const jobs = db.collection(EMBED_JOBS);
   const staleClaim = new Date(Date.now() - 2 * 3600e3);
+  const open = { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] };
   const todo = await jobs.find(
-    { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] },
+    COLLECT_JOBS.length ? { _id: { $in: COLLECT_JOBS }, $or: [...open.$or, { status: 'held' }] } : open,
     { projection: { page_ids: 0 } },
   ).sort({ created_at: 1 }).toArray();
   console.log(`[collect] ${todo.length} job(s) to check`);
@@ -478,8 +536,8 @@ async function collectEmbedJobs() {
       try { await collectEmbedJob(job, report); } catch (e) { report.errored++; console.error(`[collect] ${job._id}: ${e.message}`); }
     }
   }));
-  const open = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting'] } });
-  console.log(`[collect] ${JSON.stringify(report)} — ${open} job(s) still open`);
+  const stillOpen = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting', 'held'] } });
+  console.log(`[collect] ${JSON.stringify(report)} — ${stillOpen} job(s) still open`);
 }
 
 async function collectEmbedJob(job, report) {
@@ -510,7 +568,7 @@ async function collectEmbedJob(job, report) {
 
   const client = await openPg();
   const perBook = new Map(); // bookId → { tokens, pages }
-  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0 };
+  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0, already: 0 };
   let buf = [];
   const flush = async () => {
     if (!buf.length) return;
@@ -535,8 +593,15 @@ async function collectEmbedJob(job, report) {
       const composed = composeEmbedText(page);
       if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
       const book = await getBook(page.book_id);
-      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values }));
+      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
+    }
+    if (COLLECT_RESUME && rows.size) {
+      const { rows: have } = await client.query('SELECT page_id, mongo_updated_at FROM page_translations WHERE page_id = ANY($1) AND embedding_model = $2 AND embedding IS NOT NULL', [[...rows.keys()], job.model]);
+      for (const h of have) {
+        const want = rows.get(h.page_id)?.mongo_updated_at;
+        if (want && h.mongo_updated_at && new Date(want).getTime() === new Date(h.mongo_updated_at).getTime()) { rows.delete(h.page_id); counts.already++; }
+      }
     }
     for (let attempt = 1; ; attempt++) {
       try { await upsertManyPg(client, [...rows.values()]); break; } catch (e) {
@@ -548,7 +613,12 @@ async function collectEmbedJob(job, report) {
     counts.written += rows.size;
   };
   try {
-    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) {
+    // Download the whole results file BEFORE the first upsert. Fed straight from the stream, a
+    // slow table (minutes per 200 rows) leaves the download idle until the server cuts it, and
+    // the job fails with "terminated" after writing part of its rows (2 of 16 jobs, #6175).
+    const lines = [];
+    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) lines.push(line);
+    for (const line of lines) {
       counts.responses++;
       buf.push(line);
       if (buf.length >= 200) await flush();
@@ -575,7 +645,7 @@ async function collectEmbedJob(job, report) {
   report.written += counts.written;
   report.changed += counts.changed;
   report.failedRequests += counts.failedRequests;
-  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
+  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone, ${counts.already} already written; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
 }
 
 // Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
@@ -594,7 +664,7 @@ async function getLegacySyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : PAGES_FILE ? 'pages-file ' + PAGES_FILE : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 /** Books the open scope envelope allows, when the global dial is closed (#4865). */
 let ENVELOPE_IDS = null;
@@ -620,8 +690,8 @@ if (COLLECT_MODE) {
 {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (!BOOK_ID) {
-    if (control?.paused) {
-      console.log('[embed-gemini] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[embed-gemini] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await mongoClient.close();
       process.exit(0);
     }
@@ -645,6 +715,12 @@ if (COLLECT_MODE) {
       console.log(`[embed-gemini] Global dial closed, scope envelope open — confining to ${ENVELOPE_IDS.size} envelope book(s).`);
     }
   }
+}
+
+// Nothing to submit into: skip the stream (and the skip-set load) entirely.
+if (BATCH_MODE && !DRY_RUN && await atMaxRunning()) {
+  await mongoClient.close();
+  process.exit(3);
 }
 
 // Build query — need pages with OCR or translation.
@@ -692,6 +768,25 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
+} else if (PAGES_FILE) {
+  const ids = JSON.parse(fs.readFileSync(PAGES_FILE, 'utf8')).map(String);
+  if (!ids.length) { console.error(`--pages-file ${PAGES_FILE} is empty`); process.exit(1); }
+  const owners = await db.collection('pages').find({ id: { $in: ids } }, { projection: { book_id: 1 } }).toArray();
+  const bookIds = [...new Set(owners.map(p => String(p.book_id)))];
+  // Every listed page is re-embedded, row or no row. Only pages already in an
+  // uncollected Batch job are skipped, so a re-run resumes rather than pays twice.
+  const skip = new Set();
+  if (BATCH_MODE) {
+    const inflight = db.collection(EMBED_JOBS).find(
+      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { projection: { page_ids: 1 } },
+    );
+    for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
+  }
+  globalThis.SKIP_PAGE_IDS = skip;
+  pageQuery.id = { $in: ids };
+  pageQuery.book_id = { $in: bookIds };
+  console.log(`${ids.length.toLocaleString()} listed pages across ${bookIds.length.toLocaleString()} books; ${skip.size} already in an uncollected Batch job.`);
 } else if (BOOKS_FILE) {
   let targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
   if (!Array.isArray(targetIds) || !targetIds.length) {
@@ -878,7 +973,7 @@ if (DRY_RUN) {
 // Watermark bookkeeping (#5869). Anything that confines the book set makes the
 // run "scoped": it may read new pages, but it cannot vouch for the pages it
 // did not look at, so it must not move the mark.
-const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !BOOK_ID;
+const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !PAGES_FILE && !BOOK_ID;
 const RUN_SCOPED = Boolean(ENVELOPE_IDS) || WORKER_COUNT > 1;
 let maxReadTs = null;
 
@@ -912,7 +1007,7 @@ for await (const page of cursor) {
     continue;
   }
   // --books-file: skip pages already in page_translations; embed only the rest.
-  if (BOOKS_FILE && globalThis.SKIP_PAGE_IDS.has(page.id)) {
+  if ((BOOKS_FILE || PAGES_FILE) && globalThis.SKIP_PAGE_IDS.has(page.id)) {
     skipped++;
     processed++;
     continue;
@@ -981,7 +1076,7 @@ if (BATCH_MODE) {
   const pages = batchSubmitted.reduce((t, j) => t + j.pages, 0);
   const usd = batchSubmitted.reduce((t, j) => t + j.estUsd, 0);
   console.log(`Batch: ${batchSubmitted.length} job(s) submitted, ${pages.toLocaleString()} pages, est $${usd.toFixed(4)}${batchStop ? ` — stopped early: ${batchStop}` : ''}. Collect with --collect.`);
-  if (batchStop === 'quota') process.exit(3);
+  if (batchStop === 'quota' || batchStop === 'busy') process.exit(3);
   if (batchStop === 'error') process.exit(1);
 }
 
@@ -1087,6 +1182,7 @@ async function processBatch(items) {
       text: item.text,
       hasTranslation: item.hasTranslation,
       embedding: embeddings[i],
+      model: embeddings.model,
     }));
 
     // Upsert in small sub-batches to avoid overwhelming Supabase

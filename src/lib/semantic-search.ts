@@ -1,4 +1,5 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 
@@ -191,6 +192,50 @@ export async function semanticSiteSearch(query: string, limit: number = 3): Prom
     title: row.title,
     snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
     similarity: Number(row.similarity) || 0,
+  }));
+}
+
+// ── Site pages by NAME (issue #5945) ──────────────────────────────
+
+export interface NavSiteResult {
+  url: string;
+  page_type: NavPageType;
+  title: string;
+  snippet: string;
+  /** Marks a result found by its name, so the page can show it first. */
+  match: 'name';
+  /** Share of the matched name the query covers (1 = the query is the name). */
+  coverage: number;
+}
+
+/**
+ * Pages, tools, essays and author pages whose name the query spells. Main site
+ * only. Collections are left to the collections lane, which holds the card
+ * fields and applies the same rule to its own list.
+ */
+export async function navSiteSearch(query: string, limit = 3): Promise<NavSiteResult[]> {
+  const q = parseNavQuery(query);
+  if (!q) return [];
+  // The bare tokens are a subset of the full ones, so they fetch a superset.
+  const { data, error } = await supabase.rpc('match_site_pages_by_name', {
+    query_tokens: q.bare.length > 0 ? q.bare : q.tokens,
+    match_count: 80,
+    filter_tenant: null,
+  });
+  if (error) throw new SemanticSearchError('match_site_pages_by_name', error.message);
+  const candidates: NavCandidate[] = (data || [])
+    .filter((row: any) => row.page_type !== 'collection')
+    .map((row: any) => ({
+      url: row.url, page_type: row.page_type, title: row.title,
+      names: row.names || [], weight: row.weight || 0, text: row.text || '',
+    }));
+  return rankNavMatches(query, candidates, limit).map(({ candidate: c, coverage }) => ({
+    url: c.url,
+    page_type: c.page_type,
+    title: c.title,
+    snippet: String(c.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    match: 'name' as const,
+    coverage,
   }));
 }
 
@@ -549,6 +594,161 @@ async function searchPagesInBookSet(
   return shapePageRows(rows, limit, opts.maxPerBook);
 }
 
+// ── Original-text lane: pages with no English (#5729) ───────────────
+
+/**
+ * `off` unless SEARCH_UNTRANSLATED_LANE=on. The lane reads an index that is
+ * built after the #5729 backfill, and it changes what a reader sees (results
+ * whose snippet is Latin, German, Chinese), so it is switched on by a person
+ * once the 40-query check passes:
+ *   scripts/eval/orig-lang-recall/untranslated-lane.mjs
+ */
+export function untranslatedLaneEnabled(): boolean {
+  return (process.env.SEARCH_UNTRANSLATED_LANE || '').trim().toLowerCase() === 'on';
+}
+
+/** Why the lane returned what it did. Only `ok` carries rows. */
+export type UntranslatedLaneState = 'ok' | 'off' | 'unavailable' | 'failed' | 'closed';
+
+export interface UntranslatedLaneResult {
+  rows: SemanticPageResult[];
+  state: UntranslatedLaneState;
+}
+
+// A missing function stays missing until someone applies the migration, so
+// one probe answers for ten minutes instead of every search paying a
+// round-trip to learn it again.
+const UNAVAILABLE_TTL_MS = 10 * 60_000;
+let untranslatedUnavailableUntil = 0;
+
+/** Test hook. */
+export function resetUntranslatedLaneProbe(): void {
+  untranslatedUnavailableUntil = 0;
+}
+
+/**
+ * Nearest pages among those with NO English translation, by the vector of
+ * their original text (`match_semantic_untranslated`, the partial HNSW index
+ * of scripts/migration/add-untranslated-pages-index.sql). Through the shared
+ * index these pages reach the top 10 for 0.10 of queries written for them; in
+ * a lane of their own, 0.64.
+ *
+ * This lane is ADDITIVE, so unlike its siblings it never throws: a caller
+ * fuses it with the English lane and must still answer when it is missing.
+ * The reason comes back in `state` so the response can say so.
+ *  - `unavailable`: the function is not deployed, or this server has no
+ *    service-role key (EXECUTE is granted to service_role only).
+ *  - `failed`: it timed out or errored on this call.
+ *
+ * Tenant scope: the function takes no book set, so under a tenant scope the
+ * match is over-fetched and cut to the tenant's books here. That is closed and
+ * starved, the same trade the other lanes made before their `_in_books` twins
+ * existed (#6132). A closed scope asks nothing.
+ *
+ * Rows come back with an empty `snippet`: `page_translations.translation` is
+ * empty for these pages by definition. The caller reads the page's OCR
+ * (concept-search.ts) and must not show a row it found no text for.
+ */
+export async function semanticPageSearchUntranslated(
+  query: string,
+  limit: number,
+  opts: SemanticPageSearchOptions,
+): Promise<UntranslatedLaneResult> {
+  if (!untranslatedLaneEnabled() || usesLangStore(opts.textLang)) return { rows: [], state: 'off' };
+  if (opts.scope.kind === 'closed') return { rows: [], state: 'closed' };
+  if (opts.scope.kind === 'tenant' && opts.scope.bookIds.length === 0) return { rows: [], state: 'closed' };
+  if (!supabaseAdmin || Date.now() < untranslatedUnavailableUntil) return { rows: [], state: 'unavailable' };
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return { rows: [], state: 'failed' };
+
+  const languages = (opts.languages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.languages!)) : null;
+  const excluded = (opts.excludeLanguages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.excludeLanguages!)) : null;
+  const filtered = opts.scope.kind === 'tenant' || !!(opts.language || languages || excluded
+    || opts.yearMin !== undefined || opts.yearMax !== undefined);
+  let data: any[] | null = null;
+  try {
+    const res = await supabaseAdmin
+      .rpc('match_semantic_untranslated', {
+        query_embedding: JSON.stringify(queryEmbedding),
+        match_threshold: 0.3,
+        // The function sets ef_search 100, its ceiling on rows returned.
+        match_count: filtered ? 100 : Math.min(limit, 100),
+      })
+      .abortSignal(AbortSignal.timeout(4000));
+    if (res.error) {
+      const e = res.error as { code?: string; message?: string };
+      if (e.code === 'PGRST202' || e.code === '42883' || e.code === '42501' || /could not find the function|permission denied/i.test(e.message || '')) {
+        untranslatedUnavailableUntil = Date.now() + UNAVAILABLE_TTL_MS;
+        return { rows: [], state: 'unavailable' };
+      }
+      return { rows: [], state: 'failed' };
+    }
+    data = (res.data || []) as any[];
+  } catch {
+    return { rows: [], state: 'failed' };
+  }
+
+  const scope = opts.scope;
+  const rows = data.filter((r) => {
+    if (scope.kind === 'tenant' && !scope.has(r.book_id)) return false;
+    if (opts.language && r.book_language !== opts.language) return false;
+    if (languages && !languages.has(r.book_language)) return false;
+    if (excluded && r.book_language && excluded.has(r.book_language)) return false;
+    if (opts.yearMin !== undefined && (r.book_year == null || r.book_year < opts.yearMin)) return false;
+    if (opts.yearMax !== undefined && (r.book_year == null || r.book_year > opts.yearMax)) return false;
+    return true;
+  });
+  return {
+    state: 'ok',
+    rows: rows.slice(0, limit).map((row) => ({
+      page_id: row.page_id,
+      book_id: row.book_id,
+      page_number: row.page_number,
+      snippet: '',
+      snippet_type: 'ocr' as const,
+      score: Number(row.similarity) || 0,
+      book_title: row.book_title,
+      book_author: row.book_author,
+      book_language: row.book_language,
+      book_year: row.book_year,
+    })),
+  };
+}
+
+/**
+ * The concept lane (#6173, stage 1, EXPERIMENTAL): pages ranked by the
+ * embedding of a model-written abstract of their ideas (`page_concepts`,
+ * `scripts/migration/add-page-concepts.sql`) instead of their text. Built to
+ * put several traditions into a concept query's first ten results; it holds
+ * ~2,000 books, so it is reached only by an explicit flag (`lane=concept`) and
+ * is not part of any default search.
+ *
+ * The snippet is the PAGE's own text, never the abstract: the abstract is an
+ * index key, and a paraphrase shown as the page is a misquote
+ * (`quote-and-snippet-integrity.md`). The RPCs do not return it.
+ *
+ * Scope as everywhere else (#4330): closed returns nothing; a tenant ranks
+ * inside its book set (`match_page_concepts_in_books`, exact over the set).
+ */
+export async function semanticConceptSearch(
+  query: string,
+  limit: number,
+  opts: { scope: SearchScope; maxPerBook?: number },
+): Promise<SemanticPageResult[]> {
+  if (opts.scope.kind === 'closed') return [];
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+  const count = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 100) : limit;
+  const embedding = JSON.stringify(queryEmbedding);
+  const result = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_page_concepts', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    scoped: { fn: 'match_page_concepts_in_books', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    fallbackMaxCount: 100,
+  });
+  if (result.error) throw new SemanticSearchError(result.rpc, result.error);
+  return shapePageRows(result.rows, limit, opts.maxPerBook);
+}
+
 // ── Page-level scoped search (step 2: within specific books) ────────
 
 export interface SemanticPageResult {
@@ -566,7 +766,9 @@ export interface SemanticPageResult {
   full_text?: string;
   // 'translation' = verbatim source text (safe to quote)
   // 'summary'     = AI-written continuity preamble that we could not cleanly strip
-  snippet_type?: 'translation' | 'summary';
+  // 'ocr'         = the page's own untranslated text, in the edition's language
+  //                 (the original-text lane, #5729)
+  snippet_type?: 'translation' | 'summary' | 'ocr';
   score: number;
   book_title: string;
   book_author: string | null;

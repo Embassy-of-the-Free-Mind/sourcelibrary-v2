@@ -1,0 +1,579 @@
+{
+  "seed": 4884,
+  "n": 40,
+  "drawn_from": 1453,
+  "per_pattern": {
+    "Greek → Latin": 15,
+    "rare pairs (< 10 books each)": 4,
+    "Greek → Latin-script vernacular": 4,
+    "translation edition → its own language": 4,
+    "Javanese → Arabic": 3,
+    "Javanese → Balinese": 3,
+    "Latin → Greek": 2,
+    "Sanskrit → English": 2,
+    "Javanese → Malay": 2,
+    "Sanskrit → Hindi": 1
+  },
+  "rows": [
+    {
+      "n": 1,
+      "book_id": "6a1d8f284c9c6027f5e2b7dc",
+      "gate_pattern": "Javanese → Arabic",
+      "pattern": "Javanese → Arabic",
+      "from": "Javanese",
+      "to": "Arabic",
+      "visible": false,
+      "pages": [
+        118,
+        213
+      ],
+      "title": "MSS Jav 42 Primbon collection"
+    },
+    {
+      "n": 2,
+      "book_id": "6a1d6ce633ae1ac2657dacfc",
+      "gate_pattern": "Javanese → Balinese",
+      "pattern": "Javanese → Balinese",
+      "from": "Javanese",
+      "to": "Balinese",
+      "visible": false,
+      "pages": [
+        8,
+        15
+      ],
+      "title": "WM ID 005 00003 - Lontar Putru"
+    },
+    {
+      "n": 3,
+      "book_id": "6a42a216dec0f9e2ecca1cbf",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        350,
+        631
+      ],
+      "title": "Julii Clari Alexandrini... Opera omnia, sive, Practica civilis et criminalis.."
+    },
+    {
+      "n": 4,
+      "book_id": "69e72ca3a409200ea79f535f",
+      "gate_pattern": "rare pairs (< 10 books each)",
+      "pattern": "Syriac → German",
+      "from": "Syriac",
+      "to": "German",
+      "visible": true,
+      "pages": [
+        138,
+        249
+      ],
+      "title": "Die Fabeln des Sophos (Syriac Syntipas)"
+    },
+    {
+      "n": 5,
+      "book_id": "6a50821d78825bd7fde525e7",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        43,
+        78
+      ],
+      "title": "Commentaria in libros De generatione et corruptione Aristotelis"
+    },
+    {
+      "n": 6,
+      "book_id": "699062fbef12272ffdc8ed2e",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": true,
+      "pages": [
+        198,
+        357
+      ],
+      "title": "Astronomicon Libri VIII (Firmicus, Ptolemy, Hermes, Mashallah, Omar, Zahel, Manilius)"
+    },
+    {
+      "n": 7,
+      "book_id": "6a9528c6d5f269de866d54a2",
+      "gate_pattern": "rare pairs (< 10 books each)",
+      "pattern": "French → Persian",
+      "from": "French",
+      "to": "Persian",
+      "visible": false,
+      "pages": [
+        184,
+        335
+      ],
+      "title": "Siasset namèh: traité de gouvernement"
+    },
+    {
+      "n": 8,
+      "book_id": "6a26e5e865df759218cd7e27",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        155,
+        280
+      ],
+      "title": "Science Of Social Organisation Of The Laws Of Manu In The Light Of Theosophy Bhagavan Das Volume 1"
+    },
+    {
+      "n": 9,
+      "book_id": "6a506a5278825bd7fddf0a29",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        90,
+        161
+      ],
+      "title": "Compendium et synopsis in decem libros Ethicorum Aristotelis"
+    },
+    {
+      "n": 10,
+      "book_id": "6a505af578825bd7fddcbad0",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        225,
+        396
+      ],
+      "title": "Aristotelis Stagiritae moralia nichomachia"
+    },
+    {
+      "n": 11,
+      "book_id": "6a4a3a1cb6ee5dd19d98badb",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        228,
+        411
+      ],
+      "title": "Corpus Scriptorum Historiae Byzantinae, Vol. 19 (Bonn ed., Niebuhr)"
+    },
+    {
+      "n": 12,
+      "book_id": "6a1d80dc4c9c6027f5e25068",
+      "gate_pattern": "Javanese → Arabic",
+      "pattern": "Javanese → Arabic",
+      "from": "Javanese",
+      "to": "Arabic",
+      "visible": false,
+      "pages": [
+        22,
+        41
+      ],
+      "title": "WM ID 010 0055 - (Tafsir)"
+    },
+    {
+      "n": 13,
+      "book_id": "5ddd6b40-5a26-4994-86ea-e2dfd4957597",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": true,
+      "pages": [
+        165,
+        298
+      ],
+      "title": "Opera Sancti Dionysii"
+    },
+    {
+      "n": 14,
+      "book_id": "6a1da37d4c9c6027f5e36005",
+      "gate_pattern": "Javanese → Malay",
+      "pattern": "Javanese → Malay",
+      "from": "Javanese",
+      "to": "Malay",
+      "visible": false,
+      "pages": [
+        248,
+        447
+      ],
+      "title": "MSS Jav 79 Caritanya Nabi Muhammad"
+    },
+    {
+      "n": 15,
+      "book_id": "6a5058ec78825bd7fddbfb7a",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → French",
+      "from": "Greek",
+      "to": "French",
+      "visible": false,
+      "pages": [
+        157,
+        282
+      ],
+      "title": "Nouvelle traduction des divers morceaux ... des Oeuvres Morales"
+    },
+    {
+      "n": 16,
+      "book_id": "6a1d807d4c9c6027f5e24de2",
+      "gate_pattern": "Javanese → Arabic",
+      "pattern": "Javanese → Arabic",
+      "from": "Javanese",
+      "to": "Arabic",
+      "visible": false,
+      "pages": [
+        20,
+        37
+      ],
+      "title": "WM ID 010 0053 - (al-Din)"
+    },
+    {
+      "n": 17,
+      "book_id": "6a50781578825bd7fde25104",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        33,
+        58
+      ],
+      "title": "Aristotelis Ethicorum Nicomachiorum Paratitla"
+    },
+    {
+      "n": 18,
+      "book_id": "6a0a4f467cd8e1e3d0f4a24d",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        344,
+        619
+      ],
+      "title": "Architecture of Mānasāra — Sanskrit text on Hindu temple sacred geometry"
+    },
+    {
+      "n": 19,
+      "book_id": "6a508fad78825bd7fdee9140",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Italian",
+      "from": "Greek",
+      "to": "Italian",
+      "visible": false,
+      "pages": [
+        50,
+        89
+      ],
+      "title": "Regole grammaticali della volgar lingua"
+    },
+    {
+      "n": 20,
+      "book_id": "6992470ad263adc1aa7b017f",
+      "gate_pattern": "rare pairs (< 10 books each)",
+      "pattern": "Arabic → English",
+      "from": "Arabic",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        152,
+        275
+      ],
+      "title": "The Quran, Part 2 (SBE Vol. 9)"
+    },
+    {
+      "n": 21,
+      "book_id": "6a1966f5bc198340eea9318f",
+      "gate_pattern": "Javanese → Balinese",
+      "pattern": "Javanese → Balinese",
+      "from": "Javanese",
+      "to": "Balinese",
+      "visible": true,
+      "pages": [
+        3,
+        6
+      ],
+      "title": "WM ID 008 0028 - Usada Dalem"
+    },
+    {
+      "n": 22,
+      "book_id": "6a4a3b3cb6ee5dd19d98f59d",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        378,
+        681
+      ],
+      "title": "Corpus Scriptorum Historiae Byzantinae, Vol. 45 (Bonn ed., Niebuhr)"
+    },
+    {
+      "n": 23,
+      "book_id": "6a50646978825bd7fdddb2e7",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        12,
+        23
+      ],
+      "title": "L. A. Seneca et Plutarchus, naturalis pietatis ac quietis animi, philosophi-doctores illustrati"
+    },
+    {
+      "n": 24,
+      "book_id": "69afd38af4c860f1b891d71f",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": true,
+      "pages": [
+        138,
+        249
+      ],
+      "title": "De Partibus Animalium"
+    },
+    {
+      "n": 25,
+      "book_id": "6a50557c78825bd7fddaa5a9",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        12,
+        21
+      ],
+      "title": "Liber de physiognomia"
+    },
+    {
+      "n": 26,
+      "book_id": "6a94c0f656cac2f882c82b68",
+      "gate_pattern": "translation edition → its own language",
+      "pattern": "translation edition: Sanskrit → Punjabi",
+      "from": "Sanskrit",
+      "to": "Punjabi",
+      "visible": false,
+      "pages": [
+        85,
+        154
+      ],
+      "title": "Chatur Dasodeaya By Dharam Singh Punjabi Gurumukhi Medical Manuscript From Kulgam"
+    },
+    {
+      "n": 27,
+      "book_id": "699069002f82e0fda480401e",
+      "gate_pattern": "translation edition → its own language",
+      "pattern": "translation edition: English → Malayalam",
+      "from": "English",
+      "to": "Malayalam",
+      "visible": true,
+      "pages": [
+        43,
+        78
+      ],
+      "title": "Jyothisha Marga Deepika"
+    },
+    {
+      "n": 28,
+      "book_id": "69907c755f855ec553e75918",
+      "gate_pattern": "Sanskrit → Hindi",
+      "pattern": "Sanskrit → Hindi",
+      "from": "Sanskrit",
+      "to": "Hindi",
+      "visible": true,
+      "pages": [
+        14,
+        27
+      ],
+      "title": "Bhasha Svarodaya"
+    },
+    {
+      "n": 29,
+      "book_id": "6a1d6b6433ae1ac2657daa99",
+      "gate_pattern": "Javanese → Malay",
+      "pattern": "Javanese → Malay",
+      "from": "Javanese",
+      "to": "Malay",
+      "visible": false,
+      "pages": [
+        6,
+        11
+      ],
+      "title": "WM ID 010 0080 - (Kumpulan Doa)"
+    },
+    {
+      "n": 30,
+      "book_id": "6a508b6478825bd7fdea842c",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        23,
+        42
+      ],
+      "title": "Plvtarchi Chaeronensis opuscula quaeda[m]"
+    },
+    {
+      "n": 31,
+      "book_id": "6a50882178825bd7fde83f1e",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        155,
+        280
+      ],
+      "title": "Politicorum, hoc est civilium librorum tertius"
+    },
+    {
+      "n": 32,
+      "book_id": "6a5083eb78825bd7fde6201c",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        43,
+        76
+      ],
+      "title": "Summulae in libros Physicorum Aristotelis :mit Gedicht an den Hrsg. von Petrus Garaottus und Johannes Franciscus Signorectus"
+    },
+    {
+      "n": 33,
+      "book_id": "6a2199954b61907ea5ffc656",
+      "gate_pattern": "translation edition → its own language",
+      "pattern": "translation edition: Hindi → Prakrit",
+      "from": "Hindi",
+      "to": "Prakrit",
+      "visible": true,
+      "pages": [
+        170,
+        305
+      ],
+      "title": "Uttaradhyayana Sutra"
+    },
+    {
+      "n": 34,
+      "book_id": "6a50744978825bd7fde0a1f6",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → French",
+      "from": "Greek",
+      "to": "French",
+      "visible": false,
+      "pages": [
+        233,
+        420
+      ],
+      "title": "Les Vies Des Hommes Illustres De Plutarque, 9"
+    },
+    {
+      "n": 35,
+      "book_id": "6a1d80214c9c6027f5e24b9c",
+      "gate_pattern": "rare pairs (< 10 books each)",
+      "pattern": "Javanese → Thai",
+      "from": "Javanese",
+      "to": "Thai",
+      "visible": false,
+      "pages": [
+        19,
+        36
+      ],
+      "title": "WM ID 008 0032 - Kaputusan Bhatari Durga"
+    },
+    {
+      "n": 36,
+      "book_id": "6a949ed4bf723b215d8bc50a",
+      "gate_pattern": "translation edition → its own language",
+      "pattern": "translation edition: Sanskrit → Punjabi",
+      "from": "Sanskrit",
+      "to": "Punjabi",
+      "visible": false,
+      "pages": [
+        5,
+        10
+      ],
+      "title": "Panchang 1 In"
+    },
+    {
+      "n": 37,
+      "book_id": "6a508e4c78825bd7fded40d8",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        178,
+        321
+      ],
+      "title": "M. Tvllii Ciceronis De Philosophia ... Pars, 2. Id Est De natura deorum libri III., De diuinatione libri II., De fato liber I. ..."
+    },
+    {
+      "n": 38,
+      "book_id": "6a1d6c4633ae1ac2657dac10",
+      "gate_pattern": "Javanese → Balinese",
+      "pattern": "Javanese → Balinese",
+      "from": "Javanese",
+      "to": "Balinese",
+      "visible": false,
+      "pages": [
+        7,
+        14
+      ],
+      "title": "WM ID 008 0013 - Catur Winasa Sari"
+    },
+    {
+      "n": 39,
+      "book_id": "6a442861a43aa84d749145d6",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        324,
+        583
+      ],
+      "title": "Opera omnia, in tres tomos distributa"
+    },
+    {
+      "n": 40,
+      "book_id": "6a507e3578825bd7fde361da",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        13,
+        24
+      ],
+      "title": "Quaternio. Ein schöner Tractat inn welchem hundert vnd fünffvndzweintzig Stuck von vier dingen Auß dem H. Lehrer Thoma von Aquin gezogen : Nit minder nutzlich dann lustig zulesen. Jtem ein nutzliche Lehr Platonis die er einem König gegeben vnnd sie zuhalten jhme befolhen hat. Sampt einer Tafel Sibile Tiberine inn welcher zehen nutzlicher Lehr begriffen seind"
+    }
+  ]
+}
