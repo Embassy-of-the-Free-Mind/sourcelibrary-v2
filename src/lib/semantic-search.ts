@@ -1,4 +1,5 @@
 import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 
@@ -191,6 +192,50 @@ export async function semanticSiteSearch(query: string, limit: number = 3): Prom
     title: row.title,
     snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
     similarity: Number(row.similarity) || 0,
+  }));
+}
+
+// ── Site pages by NAME (issue #5945) ──────────────────────────────
+
+export interface NavSiteResult {
+  url: string;
+  page_type: NavPageType;
+  title: string;
+  snippet: string;
+  /** Marks a result found by its name, so the page can show it first. */
+  match: 'name';
+  /** Share of the matched name the query covers (1 = the query is the name). */
+  coverage: number;
+}
+
+/**
+ * Pages, tools, essays and author pages whose name the query spells. Main site
+ * only. Collections are left to the collections lane, which holds the card
+ * fields and applies the same rule to its own list.
+ */
+export async function navSiteSearch(query: string, limit = 3): Promise<NavSiteResult[]> {
+  const q = parseNavQuery(query);
+  if (!q) return [];
+  // The bare tokens are a subset of the full ones, so they fetch a superset.
+  const { data, error } = await supabase.rpc('match_site_pages_by_name', {
+    query_tokens: q.bare.length > 0 ? q.bare : q.tokens,
+    match_count: 80,
+    filter_tenant: null,
+  });
+  if (error) throw new SemanticSearchError('match_site_pages_by_name', error.message);
+  const candidates: NavCandidate[] = (data || [])
+    .filter((row: any) => row.page_type !== 'collection')
+    .map((row: any) => ({
+      url: row.url, page_type: row.page_type, title: row.title,
+      names: row.names || [], weight: row.weight || 0, text: row.text || '',
+    }));
+  return rankNavMatches(query, candidates, limit).map(({ candidate: c, coverage }) => ({
+    url: c.url,
+    page_type: c.page_type,
+    title: c.title,
+    snippet: String(c.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    match: 'name' as const,
+    coverage,
   }));
 }
 
