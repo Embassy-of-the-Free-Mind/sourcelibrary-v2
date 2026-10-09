@@ -7,7 +7,9 @@ import { IMPROVEMENTS } from '../canon-gap/improvements';
 import { getDb } from '@/lib/mongodb';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { TENGYUR_QUALITY, namedKinds } from '@/lib/tengyur-quality';
-import tengyurCounts from '../../../../scripts/eval/results/tengyur-characterize-5829/counts.json';
+// Snapshot of scripts/eval/results/tengyur-characterize-5829/counts.json: .vercelignore keeps
+// scripts/eval/results out of production builds, so a page cannot import from there.
+import tengyurCounts from '@/data/tengyur-characterize-5829-counts.json';
 
 // Built for the Eternity Foundation working session (#5513, #5864): how each core canon's text and
 // English are checked, and where a scholar's time would go. No new numbers: every figure is copied
