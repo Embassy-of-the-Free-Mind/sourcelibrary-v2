@@ -79,7 +79,7 @@ function resolveMergeable(pr, attempts = 3) {
 }
 
 function candidates() {
-  const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName,headRefOid'));
+  const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName,headRefOid,baseRefName'));
   const out = [];
   for (let pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
     pr = resolveMergeable(pr);
@@ -90,6 +90,9 @@ function candidates() {
     if (labels.includes('blocked')) why.push('blocked label');
     if (labels.includes('tier:hold')) why.push('tier:hold label');
     if (pr.mergeable !== 'MERGEABLE') why.push(`mergeable=${pr.mergeable}`);
+    // `test`/`next-build` never run on a PR into another branch, so `test=missing`
+    // below would read as a CI fault. Say what it is (pr-needs-rebase.mjs labels it).
+    if (pr.baseRefName && pr.baseRefName !== 'main') why.push(`stacked on ${pr.baseRefName} (merges after its parent)`);
     if (g.test !== 'SUCCESS') why.push(`test=${g.test || 'missing'}`);
     if (g.DCO !== 'SUCCESS') why.push(`DCO=${g.DCO || 'missing'}`);
     if (!NEXT_BUILD_OK.has(g.nextBuild)) why.push(`next-build=${g.nextBuild}`);
