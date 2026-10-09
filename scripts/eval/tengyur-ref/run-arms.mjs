@@ -18,7 +18,7 @@
  *      scored — so the chain's first block is seeded exactly as it would be mid-volume.
  *   B  the same model and prompt, one page per request, NO previous translation and NO adjacent OCR.
  *
- *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/tengyur-ref/run-arms.mjs \
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/tengyur-ref/run-arms.mjs [--arms A] [--tag T] \
  *        --dir /root/tref --plan            # spans, chains, prompt (v13 checked), cost estimate
  *        --dir /root/tref --tick [--wait-min 9]  # collect open jobs, then submit the next round
  *        --dir /root/tref --status
@@ -47,6 +47,9 @@ const MODEL = 'gemini-3-flash-preview';
 const PROMPT_VERSION = 13;
 const CHAIN_MAX = 80;
 const CAP = Number(opt('cap-usd', 4.5));
+// --arms A runs the chained-lane arm alone (the #4523 BL pilot); --tag names the batch jobs and the usage rows.
+const ARMS = opt('arms', 'AB');
+const TAG = opt('tag', 'tengyur-ref-5497');
 const STATE = path.join(DIR, 'arms', 'state.json');
 const KEY_ENV = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
 fs.mkdirSync(path.join(DIR, 'arms'), { recursive: true });
@@ -113,7 +116,7 @@ async function phasePlan() {
   const state = { model: MODEL, prompt_ref: prompts.translation.ref, prompts, chains, scored: [...scored], rounds: [], jobs: [], a: {}, b: {}, spent_usd: 0, created_at: new Date().toISOString(), est: { A: +estA.toFixed(3), B: +estB.toFixed(3) } };
   save(state);
   console.log(`spans ${spans.size}, chains ${chains.length}, pages ${allPages.length} (scored ${scored.size}); lead-ins ${chains.filter((c) => c.lead_in).length}`);
-  console.log(`estimate (batch price, conservative): A $${estA.toFixed(3)}  B $${estB.toFixed(3)}  total $${(estA + estB).toFixed(3)}`);
+  console.log(`estimate (batch price, conservative): A $${estA.toFixed(3)}  B $${estB.toFixed(3)}  total $${(estA + estB).toFixed(3)}  (arms ${ARMS})`);
 }
 
 /** Arm A's request for one chain this round, or null when the chain is done. */
@@ -216,7 +219,7 @@ async function collect(state) {
     try {
       const { logUsage } = await import('../../workers/lib/supabase-usage-logger.mjs');
       for (const [book_id, t] of Object.entries(tokByBook)) {
-        await logUsage({ type: 'eval', mode: 'batch', model: MODEL, book_id, page_count: t.n, input_tokens: t.in, output_tokens: t.out, batch_job_id: j.job_name, endpoint: 'eval/tengyur-ref-5497', triggered_by: 'tengyur-ref-5497', prompt_version: `v${PROMPT_VERSION}`, status: 'success' });
+        await logUsage({ type: 'eval', mode: 'batch', model: MODEL, book_id, page_count: t.n, input_tokens: t.in, output_tokens: t.out, batch_job_id: j.job_name, endpoint: `eval/${TAG}`, triggered_by: TAG, prompt_version: `v${PROMPT_VERSION}`, status: 'success' });
       }
     } catch (e) { console.warn(`logUsage failed: ${e.message}`); }
     console.log(`collected ${j.job_name} (${j.units.length} units) $${jobUsd.toFixed(4)}; total $${state.spent_usd.toFixed(4)}`);
@@ -233,7 +236,7 @@ async function phaseTick() {
   const round = state.rounds.length + 1;
   const units = [];
   // B: every page not yet answered (first round: all of them; later: retries).
-  for (const ch of state.chains) for (const p of ch.queue) if (!state.b[p.page_id]) {
+  if (ARMS.includes('B')) for (const ch of state.chains) for (const p of ch.queue) if (!state.b[p.page_id]) {
     const { prompt } = buildTranslationPrompt({ prompts: state.prompts, book: books[p.vol], ocrText: p.src, pageBreak: PAGE_BREAK_SCOPED });
     units.push({ arm: 'B', key: `B:${p.page_id}`, kind: 'single', pages: [p], prompt, maxOutputTokens: maxOutputTokensFor([{ ocr: { data: p.src } }]), round });
   }
@@ -245,7 +248,7 @@ async function phaseTick() {
   if (!units.length) { console.log('ALL DONE'); state.done_at ||= new Date().toISOString(); save(state); return state; }
   const est = units.reduce((n, u) => n + estUsd(u.prompt, u.pages), 0);
   if (state.spent_usd + est > CAP) { console.error(`REFUSING: spent $${state.spent_usd.toFixed(3)} + round estimate $${est.toFixed(3)} > cap $${CAP}`); save(state); process.exit(3); }
-  const job = await submitBatchFile({ model: MODEL, lines: units.map((u) => lineFor(u.key, u.prompt, u.maxOutputTokens)), displayName: `tengyur-ref-5497-r${round}`, key: process.env[KEY_ENV] });
+  const job = await submitBatchFile({ model: MODEL, lines: units.map((u) => lineFor(u.key, u.prompt, u.maxOutputTokens)), displayName: `${TAG}-r${round}`, key: process.env[KEY_ENV] });
   job.units = units.map(({ prompt, ...u }) => ({ ...u, prompt_chars: prompt.length }));
   job.round = round; job.est_usd = +est.toFixed(4);
   state.jobs.push(job);

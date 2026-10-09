@@ -1,0 +1,17 @@
+{
+ "group": "milarepa",
+ "volumes": [
+  "UT1KG4276-I1PD100447"
+ ],
+ "files": [
+  {
+   "vol": "v001",
+   "rid": "UT1KG4276-I1PD100447-0000",
+   "w": "W1KG4276",
+   "coll": "UCB-OCR",
+   "title": "pod 2 rje btsun mi la ras pa'i rnam thar dang mgur 'bum",
+   "licence": null,
+   "pages": 1049
+  }
+ ]
+}
