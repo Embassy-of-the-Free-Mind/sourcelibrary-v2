@@ -49,7 +49,12 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 
 const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
-const imageInstruction = (imagePath) => `\n\nThe page image to transcribe is the file ${imagePath}. Open that image and transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`;
+// The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
+const imageInstruction = (imagePath) => `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`;
+// The CLI is an AGENT. Plan mode stops it running tools; without it the model sometimes tries a shell command
+// (seen: cropping a Chinese page into columns in /tmp), and the auto-approve flag this script used to pass let it
+// run as root on the box. Never auto-approve; tests/unit/no-cli-auto-approve.test.ts sweeps for the flag.
+const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '120s'];
 const workspaceImage = (key) => path.join(OUT, `ws-${key}`, `${key}.jpg`);
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -79,7 +84,7 @@ if (STAGE === 'read') {
     fs.writeFileSync(img, buf);
     const sent = base + imageInstruction(img);
     const t0 = new Date();
-    const r = spawnSync(CLI, ['-p', sent, '--model', MODEL, '--add-dir', path.dirname(img), '--dangerously-skip-permissions', '--print-timeout', '420s'], { encoding: 'utf8', cwd: path.dirname(img), maxBuffer: 64 * 1024 * 1024, timeout: 480_000 });
+    const r = spawnSync(CLI, ['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], { encoding: 'utf8', cwd: path.dirname(img), maxBuffer: 64 * 1024 * 1024, timeout: 180_000 });
     const text = (r.stdout || '').trim();
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify({

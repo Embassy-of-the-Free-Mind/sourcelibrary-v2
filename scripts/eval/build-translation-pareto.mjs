@@ -15,7 +15,7 @@
  *   #6121        results/tengyur-levers-6121/ (round 1) and results/tengyur-models-6121/ (round 2):
  *                refjudge/scores.json per-side rows and arms/ledger.jsonl billed cost; one panel each
  *   #6295        results/syriac-pareto-6295/translation-summary.json (one translator, two inputs, judged gate) and
- *                translation-summary-c38.json (the gemini-3.8-flash CLI arm, its own read; cost from cli-cost.json)
+ *                translation-summary-c3{8,7,6}.json (gemini-3.8 / 3.7 / 3.6-flash CLI arms, each its own read; cost from cli-cost.json)
  *   production   scripts/lib/translate-core.mjs getTranslateModelForBook, the router for new pages
  * Writes src/data/translation-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-translation-pareto.mjs           # write
@@ -529,13 +529,83 @@ for (const [lang, trackId] of LANGS) {
   TRACKS.push({ id: 'pareto-6182', writeup: X.writeup, judges: 2 });
 }
 
+// #6182, Claude on the subscription (PREREG-claude-arms.md): Sonnet 5.5 (CS) and Haiku 4.5 (CH) as Claude Code
+// subagents, $0 billed, beside the API's Gemini 3.8 Flash (G38) and the page's production engine, one blinded item per
+// page, two blind Opus judges on every item. Its own read, so its own panel. G38 and production are placed at their
+// billed Batch dollars; CS and CH have no metered cost, so they are listed under the chart with production's score on
+// the same pages, the way Opus is. Tibetan: the 113 fresh 84000 sides, where both anchors have a per-side bill.
+{
+  const C = { writeup: 'scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md',
+    xl: 'pareto-6182/claude/xljudge/scores.json', tib: 'pareto-6182/claude/tibjudge/scores.json' };
+  const SONNET = 'claude-sonnet-5.5', HAIKU = 'claude-haiku-4.5';
+  Object.assign(LABEL, { [SONNET]: 'Claude Sonnet 5.5', [HAIKU]: 'Claude Haiku 4.5' });
+  const note = 'run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it';
+  const panel = (chart, rs, fid, rev, usd, refs, extra) => {
+    const production = chart.production_engine;
+    const engine = { G38, PROD: production };
+    const pt = (a, e) => ({ engine: e, label: LABEL[e], production: e === production,
+      ...stats(rs.map(r => ({ fidelity: fid(r, a), reversal: rev(r, a) })), hash(`${chart.title}|claude-6182|${a}`)) });
+    const placed = Object.entries(engine).map(([a, e]) => ({ ...pt(a, e), cost: { usd_per_1k: r3(avg(rs.map(r => usd(r, a))) * 1000), basis: 'metered',
+      detail: `billed tokens of the #6182 ${a === 'G38' ? 'Gemini 3.8 Flash' : 'production-engine'} run at the Batch rate, thinking included; averaged over these ${rs.length} pages`, source: C.writeup } }));
+    for (const a of placed) a.on_frontier = false;
+    placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const prodY = r3(avg(rs.map(r => fid(r, 'PROD'))));
+    const noCost = [['CS', SONNET], ['CH', HAIKU]].map(([a, e]) => ({ ...pt(a, e), cost: null,
+      subset: { n_pages: rs.length, production_label: LABEL[production], production_fidelity: prodY }, note }));
+    chart.panels.push({
+      kind: 'claude-subscription-6182', heading: 'Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)', n_pages: rs.length,
+      n_books: new Set(rs.map(r => r.book || r.toh)).size, frontier: false,
+      frontier_note: 'two engines with a measured cost here; the Claude runs have none, so they are listed below the chart', judges: 2,
+      references: refs, date: dateOf(C.writeup), files: [C.writeup],
+      notes: [
+        'A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel',
+        'Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis',
+        'Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them',
+        ...extra,
+      ],
+      placed, no_cost: noCost,
+    });
+  };
+  const xs = JSON.parse(fs.readFileSync(path.join(RES, C.xl), 'utf8'));
+  const xfid = (r, a) => avg(Object.values(r.J).filter(j => j[a]?.fid != null).map(j => j[a].fid));
+  const xrev = (r, a) => Object.values(r.J).some(j => j[a]?.rev > 0);
+  const ARM4 = ['CS', 'CH', 'G38', 'PROD'];
+  for (const chart of charts) {
+    const all = xs.rows.filter(r => r.lang === chart.title && ARM4.every(a => r.arms.includes(a)));
+    const own = xs.primary.languages_ge_10[chart.title];
+    if (own && (own.pages_shared !== all.length || ARM4.some(a => Math.abs(avg(all.map(r => xfid(r, a))) - own.arms[a].fidelity) > 0.0005))) {
+      throw new Error(`${C.xl}: parse does not reproduce ${chart.title}`);
+    }
+    // PROD is each page's own engine; the panel keeps the pages whose engine is the one the chart labels production
+    const rs = all.filter(r => keep(r.page_id) && r.usd.G38 != null && r.usd.PROD != null && ({ L31: LITE, FP: FLASH })[r.prod] === chart.production_engine);
+    if (rs.length < MIN_PAGES) continue;
+    dumpSet(chart.id, 'claude-subscription-6182', rs.map(r => ({ page: r.page_id, book: r.book })));
+    panel(chart, rs, xfid, xrev, (r, a) => r.usd[a], [{ stratum: '6182', reference: REFERENCE.default, pages: rs.length, date: dateOf(C.writeup) }],
+      auditNotes(chart.id, 'claude-subscription-6182'));
+  }
+  const tib = charts.find(c => c.id === 'tibetan');
+  if (!tib) throw new Error('no Tibetan chart for the Claude panel');
+  const ts = JSON.parse(fs.readFileSync(path.join(RES, C.tib), 'utf8'));
+  const fpCall = JSON.parse(fs.readFileSync(path.join(TIB_DIR, 'cost.json'), 'utf8'))[`B2|${FLASH}`];
+  const trs = ts.rows.filter(r => r.set === 'tib-ref113' && keep(r.page_id)).map(r => ({ ...r, J: Object.fromEntries(Object.entries(r.J).map(([j, v]) => [j, { ...v, PROD: v.FP }])) }));
+  const tfid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid));
+  if (trs.length === ts['tib-ref113'].sides && ['CS', 'CH', 'G38', 'FP'].some(a => Math.abs(avg(trs.map(r => tfid(r, a))) - ts['tib-ref113'][a].fidelity_mean) > 0.0005)) throw new Error(`${C.tib}: parse does not reproduce scores.json`);
+  panel(tib, trs, tfid, (r, a) => Object.values(r.J).some(j => j[a].inv > 0), (r, a) => (a === 'G38' ? r.usd_G38 : fpCall.batch_usd_per_call),
+    [{ stratum: 'Tib', reference: REFERENCE.Tib, pages: trs.length, date: dateOf(C.writeup) }], []);
+}
+
 // Syriac (#6295): one translator, two INPUTS. Production would translate the Kraken lane's text; the same model on the
 // typed Digital Syriac Corpus window is the ceiling for that model. The judges read the Syriac e-text, not a published
 // English translation (none was located for these pages), so this panel is fidelity to the source text.
 const SYR_FILE = path.join(RES, 'syriac-pareto-6295', 'translation-summary.json');
 const SYR_WRITEUP = 'scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md';
-const SYR_C38_FILE = path.join(RES, 'syriac-pareto-6295', 'translation-summary-c38.json');
+// The CLI tiers (gemini-3.x-flash through `agy -p`, subscription, $0 billed), one blinded read each.
+const SYR_CLI_TIERS = [['c38', '3.8'], ['c37', '3.7'], ['c36', '3.6']].map(([r, v]) => ({ round: r, v, T: r.toUpperCase(),
+  file: path.join(RES, 'syriac-pareto-6295', `translation-summary-${r}.json`), engine: `gemini-${v}-flash+antigravity-cli`, label: `Gemini ${v} Flash, CLI` }))
+  .filter(t => fs.existsSync(t.file));
 const SYR_CLI_COST = path.join(RES, 'syriac-pareto-6295', 'cli-cost.json');
+// The 3.7 / 3.6 tiers have their own write-up (job cli-queue-6293); 3.8's is the addendum in SYR_WRITEUP.
+const SYR_TIERS_WRITEUP = 'scripts/eval/experiments/2026-10-08-syriac-cli-flash-tiers-6295.md';
 if (fs.existsSync(SYR_FILE)) {
   const s = JSON.parse(fs.readFileSync(SYR_FILE, 'utf8'));
   if (!s.gate_pass) throw new Error('syriac-pareto-6295: the judge gate did not pass, so no Syriac translation number may be plotted');
@@ -565,42 +635,46 @@ if (fs.existsSync(SYR_FILE)) {
       placed, no_cost: [],
     }],
     not_on_shared_pages: [],
-    not_tested: NOT_TESTED,
-    pending: [...(fs.existsSync(SYR_C38_FILE) ? [] : ['Gemini 3.8 Flash']), 'Gemini 3 Flash', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
+    // Gemini 3 Flash and 3.5 Flash-Lite are not offered on the CLI and the paid API is ruled out, so they are not run
+    // (with the reason), not pending (#6293, job cli-queue-b-6293).
+    not_tested: [...NOT_TESTED, 'Gemini 3 Flash and Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer them, and paid Gemini API calls are ruled out for this work, 2026-10-08)'],
+    ...(['3.8', '3.7', '3.6'].some(v => !SYR_CLI_TIERS.some(t => t.v === v)) ? { pending: ['3.8', '3.7', '3.6'].filter(v => !SYR_CLI_TIERS.some(t => t.v === v)).map(v => `Gemini ${v} Flash`) } : {}),
   });
-  // The CLI arm (gemini-3.8-flash through `agy -p`, subscription, $0 billed; 2026-10-08): its own blinded read, with
-  // round 1's two Flash-Lite drafts in every item as anchors, so it is its own panel and compared only within it.
-  // Placed at the API's list price at the Batch rate for the same requests (cli-cost.json), as #6182's CLI arm is.
-  if (fs.existsSync(SYR_C38_FILE)) {
-    const c = JSON.parse(fs.readFileSync(SYR_C38_FILE, 'utf8'));
-    if (!c.gate_pass) throw new Error('syriac-pareto-6295 (c38): the judge gate did not pass, so no Syriac CLI number may be plotted');
-    const C38 = 'gemini-3.8-flash+antigravity-cli';
-    LABEL[C38] = LABEL[C38] || 'Gemini 3.8 Flash, CLI';
+  // The CLI arms (gemini-3.8 / 3.7 / 3.6-flash through `agy -p`, subscription, $0 billed; 2026-10-08): each its own
+  // blinded read, with round 1's two Flash-Lite drafts in every item as anchors, so each is its own panel and compared
+  // only within it. Placed at the API's list price at the Batch rate for the same requests (cli-cost.json), as #6182's
+  // CLI arm is.
+  for (const t of SYR_CLI_TIERS) {
+    const c = JSON.parse(fs.readFileSync(t.file, 'utf8'));
+    if (!c.gate_pass) throw new Error(`syriac-pareto-6295 (${t.round}): the judge gate did not pass, so no Syriac CLI number may be plotted`);
+    const CE = t.engine;
+    LABEL[CE] = LABEL[CE] || t.label;
     const cpt = (arm, engine, label, production, cost) => {
       const a = c.arms[arm];
       return { engine, label, production, fidelity: a.fidelity, fidelity_ci95: a.fidelity_ci95, share_ge4: a.share_ge4,
         reversals: { pages: a.inversion_pages, n: c.n_pages, per_100: a.reversals_per_100, ci95: a.reversals_ci95 }, cost: { usd_per_1k: a.usd_per_1k_batch, ...cost } };
     };
     const lite = { basis: 'metered', detail: `billed tokens of round 1's run at the Batch rate (these are its drafts, re-judged); averaged over these ${c.n_pages} pages`, source: SYR_WRITEUP };
-    const cli = { basis: 'API price for comparison; $0 billed on the subscription', detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI English's length)`, source: rel(SYR_CLI_COST) };
+    const cli = { basis: 'API price for comparison; $0 billed on the subscription', detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-${t.v}-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI English's length)`, source: rel(SYR_CLI_COST) };
     const cplaced = [
       cpt('K', `${LITE}|kraken`, `${LABEL[LITE]} on the Kraken text`, true, lite), cpt('R', `${LITE}|etext`, `${LABEL[LITE]} on the typed e-text`, false, lite),
-      cpt('C38-K', `${C38}|kraken`, `${LABEL[C38]} on the Kraken text`, false, cli), cpt('C38-R', `${C38}|etext`, `${LABEL[C38]} on the typed e-text`, false, cli),
+      cpt(`${t.T}-K`, `${CE}|kraken`, `${LABEL[CE]} on the Kraken text`, false, cli), cpt(`${t.T}-R`, `${CE}|etext`, `${LABEL[CE]} on the typed e-text`, false, cli),
     ];
     for (const a of cplaced) a.on_frontier = !cplaced.some(b => b !== a
       && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
     cplaced.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
     const g = c.gate, kr = c.k_minus_r;
+    const day = new Date(`${(c.model.match(/run (\d{4}-\d{2}-\d{2})/) || [])[1] || dateOf(SYR_WRITEUP)}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
     charts.at(-1).panels.push({
-      kind: 'gemini-cli-6295', heading: 'Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6295)', n_pages: c.n_pages, n_books: c.n_books,
+      kind: t.round === 'c38' ? 'gemini-cli-6295' : `gemini-cli-6295-${t.round}`, heading: `Gemini ${t.v} Flash through the CLI, ${day} (#6295)`, n_pages: c.n_pages, n_books: c.n_books,
       frontier: true, frontier_note: null, judges: 2,
       references: [{ stratum: 'syriac-print-6295', reference: 'the typed Syriac text of the same passage (Digital Syriac Corpus); the judges read the Syriac, not a published English translation', pages: c.n_pages, date: dateOf(SYR_WRITEUP) }],
-      date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(SYR_C38_FILE), rel(SYR_CLI_COST)],
+      date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, ...(t.round === 'c38' ? [] : [SYR_TIERS_WRITEUP]), rel(t.file), rel(SYR_CLI_COST)],
       notes: [
-        "A separate read from the panel above: every item held Flash-Lite's two drafts beside Gemini 3.8 Flash's two, so scores are compared only within this panel (Flash-Lite's drafts scored lower here than above: the scale is relative)",
-        `Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's list price for the same request`,
+        `A separate read from the panel above: every item held Flash-Lite's two drafts beside Gemini ${t.v} Flash's two, so scores are compared only within this panel (Flash-Lite's drafts scored lower here than above: the scale is relative)`,
+        `Gemini ${t.v} Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's list price for the same request`,
         'The frontier runs through the e-text points, the ceiling for each model; production has only the Kraken text, so a reader gets one of the two Kraken-text points',
-        `From the Kraken text against from the e-text, Gemini 3.8 Flash: ${kr.mean} [${kr.ci95.join(', ')}], beyond the noise floor of ${c.noise_floor.f} measured above; reversed statements on ${c.arms['C38-K'].inversion_pages} of ${c.n_pages} pages from the Kraken text, against ${c.arms.K.inversion_pages} for Flash-Lite`,
+        `From the Kraken text against from the e-text, Gemini ${t.v} Flash: ${kr.mean} [${kr.ci95.join(', ')}], ${kr.ci95[0] >= -c.noise_floor.f ? 'within' : 'beyond'} the noise floor of ${c.noise_floor.f} measured above; reversed statements on ${c.arms[`${t.T}-K`].inversion_pages} of ${c.n_pages} pages from the Kraken text, against ${c.arms.K.inversion_pages} for Flash-Lite`,
         `Judge check passed: planted reversals caught ${g.J1.plants_caught}/${g.J1.plants} and ${g.J2.plants_caught}/${g.J2.plants}, identical drafts tied ${g.J1.dups_tied}/${g.J1.dups} and ${g.J2.dups_tied}/${g.J2.dups}`,
       ],
       placed: cplaced, no_cost: [],

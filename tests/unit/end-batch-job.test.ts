@@ -9,7 +9,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import {
-  endBatchJob, endNamelessBatchJobs, decideEnd, normalizeGeminiState, ROUTE_TO_COLLECTION_STATUS,
+  endBatchJob, endNamelessBatchJobs, markRecovered, meterRecovered, decideEnd, normalizeGeminiState, ROUTE_TO_COLLECTION_STATUS,
 } from '../../scripts/lib/end-batch-job.mjs';
 
 class ApiErrorStub extends Error {
@@ -116,6 +116,87 @@ describe('a named row is ended only on Gemini’s word', () => {
 
   it('a row whose output was already collected may be ended without asking', () => {
     expect(decideEnd(named({ results_collected: true }), { status: 'failed' }).action).toBe('write');
+  });
+});
+
+describe('markRecovered closes a recovered row without touching its status', () => {
+  const held = { result_sha256: 'a'.repeat(64), result_bytes: 1234, gemini_job: 'batches/abc' };
+  const succeeded = { verdict: 'exists', state: 'JOB_STATE_SUCCEEDED' };
+
+  it('MARKS a SUCCEEDED job whose result is held: results_collected + recovery, no status', async () => {
+    const { db, calls } = fakeDb();
+    const r = await markRecovered(db, named({ status: 'cancelled' }), { gemini: succeeded, by: 't', recovery: held });
+    expect(r.action).toBe('marked');
+    expect(calls).toHaveLength(1);
+    expect(calls[0].set.results_collected).toBe(true);
+    expect(calls[0].set.status).toBeUndefined();
+    expect(calls[0].filter.results_collected).toEqual({ $ne: true });
+  });
+
+  it('REFUSES without Gemini’s SUCCEEDED, without the held result, or on an already-collected row', async () => {
+    const cases: [Record<string, unknown>, unknown, Record<string, unknown>][] = [
+      [named(), null, held],
+      [named(), { verdict: 'exists', state: 'JOB_STATE_CANCELLED' }, held],
+      [named(), { verdict: 'not_found', attempts: [] }, held],
+      [named(), succeeded, { result_sha256: 'x', result_bytes: 1 }],
+      [named(), succeeded, { result_sha256: 'a'.repeat(64), result_bytes: 0 }],
+      [named({ results_collected: true }), succeeded, held],
+      [named({ job_name: null }), succeeded, held],
+    ];
+    for (const [job, gemini, recovery] of cases) {
+      const { db, calls } = fakeDb();
+      const r = await markRecovered(db, job, { gemini, by: 't', recovery });
+      expect(r.action).toBe('refused');
+      expect(calls).toHaveLength(0);
+    }
+  });
+
+  it('throws if a status is smuggled into the recovery record', async () => {
+    const { db } = fakeDb();
+    await expect(markRecovered(db, named(), { gemini: succeeded, by: 't', recovery: { ...held, status: 'saved' } })).rejects.toThrow(/status/);
+  });
+});
+
+describe('meterRecovered closes out the usage row from the responses (#4599)', () => {
+  const ok = (p: number, c: number, t = 0) => ({ response: { usageMetadata: { promptTokenCount: p, candidatesTokenCount: c, thoughtsTokenCount: t } } });
+  const err = { error: { code: 13, message: 'INTERNAL' } };
+  const job = named({ status: 'cancelled', type: 'ocr', model: 'gemini-3.1-flash-lite', book_id: 'b1', page_count: 3, created_at: new Date('2026-09-15T00:00:00Z') });
+  const recorder = () => { const calls: Record<string, unknown>[] = []; return { calls, complete: async (p: Record<string, unknown>) => { calls.push(p); return 'updated'; } }; };
+
+  it('CLOSES the placeholder with tokens summed per response; an errored line adds 0 and is counted', async () => {
+    const { calls, complete } = recorder();
+    const r = await meterRecovered(job, [ok(100, 40, 10), err, ok(200, 60)], { existing: [{ status: 'submitted', input_tokens: 0, output_tokens: 0 }], complete });
+    expect(r.action).toBe('closed');
+    expect(r.errored).toBe(1);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toMatchObject({ batch_job_id: 'j1', mode: 'batch', input_tokens: 300, output_tokens: 110, status: 'success', page_count: 3, insertIfMissing: true });
+    expect(calls[0].error_message).toMatch(/1\/3 responses were per-request errors/);
+    expect(calls[0].timestamp).toBe('2026-09-15T00:00:00.000Z'); // an insert lands on the job's day, not today's dial
+  });
+
+  it('is idempotent: a row already closed with these tokens is SKIPPED, and a dry run writes nothing', async () => {
+    const { calls, complete } = recorder();
+    const existing = [{ status: 'success', input_tokens: 300, output_tokens: 110 }];
+    expect((await meterRecovered(job, [ok(100, 40, 10), ok(200, 60)], { existing, complete })).action).toBe('skipped');
+    expect((await meterRecovered(job, [err], { existing: [{ status: 'failed', input_tokens: 0, output_tokens: 0 }], complete })).action).toBe('skipped');
+    expect((await meterRecovered(job, [ok(1, 1)], { existing: [], complete, dryRun: true })).action).toBe('closed');
+    expect(calls).toHaveLength(0);
+  });
+
+  it('a zero close-out (the waived shape) is overwritten; another reading or two rows is REFUSED', async () => {
+    const { calls, complete } = recorder();
+    expect((await meterRecovered(job, [ok(5, 5)], { existing: [{ status: 'failed', input_tokens: 0, output_tokens: 0 }], complete })).action).toBe('closed');
+    expect((await meterRecovered(job, [ok(5, 5)], { existing: [{ status: 'success', input_tokens: 9, output_tokens: 9 }], complete })).action).toBe('refused');
+    expect((await meterRecovered(job, [ok(5, 5)], { existing: [{ status: 'submitted' }, { status: 'submitted' }], complete })).action).toBe('refused');
+    expect(calls).toHaveLength(1);
+  });
+
+  it('all-error job: closes a placeholder to $0 failed, but inserts no new $0 row', async () => {
+    const { calls, complete } = recorder();
+    expect((await meterRecovered(job, [err, err], { existing: [], complete })).action).toBe('skipped');
+    const r = await meterRecovered(job, [err, err], { existing: [{ status: 'submitted', input_tokens: 0, output_tokens: 0 }], complete });
+    expect(r.action).toBe('closed');
+    expect(calls[0]).toMatchObject({ input_tokens: 0, output_tokens: 0, status: 'failed', insertIfMissing: false });
   });
 });
 

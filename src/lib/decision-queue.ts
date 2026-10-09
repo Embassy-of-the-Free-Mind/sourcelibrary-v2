@@ -10,14 +10,15 @@
  * the `/decisions` terminal command on Derek's laptop, which has no code in this
  * repo to reuse; src/app/shared/[slug]/route.ts is the existing ops-repo reader.
  *
- * Three sources, one card shape:
+ * Four sources, one card shape:
  *   pr      — open PRs labelled tier:hold (Default = queue a safe-merge)
  *   ops     — rows of the private ops repo's DECISIONS-PENDING.md (answers recorded)
+ *   apikey  — pending API key requests (Default = approve, Other = deny; acted on at once)
  *   session — stuck background sessions (stage 2; read-only placeholder today)
  */
 import { createHash } from 'crypto';
 
-export type DecisionSource = 'pr' | 'ops' | 'session';
+export type DecisionSource = 'pr' | 'ops' | 'apikey' | 'session';
 export type DecisionChoice = 'default' | 'other' | 'skip';
 
 export interface DecisionCard {
@@ -40,8 +41,10 @@ export interface DecisionCard {
   raisedAt: string | null;
   /** Dollars at stake when the row states them; 0 when unknown. */
   costUsd: number;
+  /** What Other does, when the source gives it a fixed meaning (the Other box's placeholder). */
+  otherDoes?: string;
   /** Source-specific reference the answer carries to whoever acts on it. */
-  ref: { pr?: number; headSha?: string; section?: string; line?: number };
+  ref: { pr?: number; headSha?: string; section?: string; line?: number; keyRequest?: string };
   /** A previous answer that failed to act (refused merge); shown on the card. */
   lastAttempt?: string;
 }
@@ -301,6 +304,48 @@ export function parseOpsDecisions(markdown: string): DecisionCard[] {
   return cards;
 }
 
+// ── Source C: pending API key requests ─────────────────────────────────────
+
+/** The fields of an `api_key_requests` row a card shows. */
+export interface PendingKeyRequest {
+  id: string;
+  name: string;
+  email: string;
+  organization: string | null;
+  use_case: string;
+  requested_tier: string;
+  created_at: string | null;
+}
+
+export const KEY_REQUESTS_GROUP = 'API key requests';
+
+/**
+ * Default approves at the requested tier and emails the key; Other denies, with
+ * the text kept as the request's note. Both act when tapped (the route calls
+ * reviewKeyRequest), because minting a key needs no GitHub write and no box.
+ */
+export function keyRequestCard(r: PendingKeyRequest): DecisionCard {
+  const who = r.organization ? `${r.name} (${r.organization})` : r.name;
+  return {
+    // Keyed to the request: a request is reviewed once.
+    id: cardId('apikey', r.id),
+    source: 'apikey',
+    question: `Give ${who} an API key?`,
+    defaultLabel: `Approve, ${r.requested_tier} tier`,
+    defaultDoes: `Mints a ${r.requested_tier}-tier key and emails it to ${r.email} now. It can be revoked later on /admin/api-keys.`,
+    otherDoes: 'Denies the request now; what you write is kept as the note. The requester is not emailed.',
+    defaultActionable: true,
+    evidence: [{ label: 'API keys page', url: '/admin/api-keys' }],
+    details: [
+      `${r.email} · asked for ${r.requested_tier}`,
+      ...(r.use_case ? [`Use: ${truncate(r.use_case.replace(/\s+/g, ' ').trim(), 600)}`] : []),
+    ],
+    raisedAt: r.created_at,
+    costUsd: 0,
+    ref: { keyRequest: r.id, section: KEY_REQUESTS_GROUP },
+  };
+}
+
 // ── Ordering and filtering ─────────────────────────────────────────────────
 
 /**
@@ -326,7 +371,8 @@ export const SKIP_HOURS = 24;
 /**
  * queued   — waiting for the Hetzner drainer (PR actions)
  * recorded — kept as the record; nothing in this system acts on it (ops rows, skips)
- * acting   — claimed by a drainer run (a run that dies here is turned into `failed` after 30 min)
+ * acting   — claimed by a drainer run (a run that dies here is turned into `failed` after 30 min),
+ *            or an API key answer being acted on by the answer route
  * done     — the drainer acted (merged / commented + blocked)
  * refused  — safe-merge.sh or a drainer guard refused; the card comes back with the reason
  * failed   — the drainer errored; the card comes back with the error
@@ -363,8 +409,8 @@ export interface AnswerInput {
 export function buildAnswer(input: AnswerInput, answeredBy: string, now: Date): DecisionAnswer {
   const { card } = input;
   if (!answeredBy) throw new Error('an answer needs a signed-in answerer');
-  if (!['pr', 'ops', 'session'].includes(card.source)) throw new Error(`unknown source ${card.source}`);
-  if (!/^(pr|ops|session):[0-9a-f]{16}$/.test(card.id) || !card.id.startsWith(`${card.source}:`)) {
+  if (!['pr', 'ops', 'apikey', 'session'].includes(card.source)) throw new Error(`unknown source ${card.source}`);
+  if (!/^(pr|ops|apikey|session):[0-9a-f]{16}$/.test(card.id) || !card.id.startsWith(`${card.source}:`)) {
     throw new Error(`bad card id ${card.id}`);
   }
   if (!['default', 'other', 'skip'].includes(input.choice)) throw new Error(`unknown choice ${input.choice}`);
@@ -376,12 +422,18 @@ export function buildAnswer(input: AnswerInput, answeredBy: string, now: Date): 
     if (!Number.isInteger(card.ref.pr) || (card.ref.pr as number) <= 0) throw new Error('PR card without a PR number');
     if (!/^[0-9a-f]{40}$/.test(card.ref.headSha ?? '')) throw new Error('PR card without the head sha it was judged at');
   }
+  if (card.source === 'apikey' && !/^[0-9a-f]{24}$/.test(card.ref.keyRequest ?? '')) {
+    throw new Error('API key card without its request id');
+  }
 
   // A Default that cannot act (PR not mergeable) is a skip, said plainly in the record.
   const choice: DecisionChoice = input.choice === 'default' && !card.defaultActionable ? 'skip' : input.choice;
+  // An API key answer is acted on by the route that records it: `acting` until
+  // it reports `done` or `failed`.
   const status: AnswerStatus = choice === 'skip' ? 'recorded'
     : card.source === 'pr' ? 'queued'
-      : 'recorded';
+      : card.source === 'apikey' ? 'acting'
+        : 'recorded';
   return {
     card_id: card.id,
     source: card.source,

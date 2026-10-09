@@ -1,4 +1,7 @@
 import { describe, it, expect } from 'vitest';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { join, resolve, relative } from 'node:path';
+import { tmpdir } from 'node:os';
 import * as mjs from '../../scripts/lib/write-provenance.mjs';
 import * as ts from '@/lib/write-provenance';
 
@@ -358,5 +361,35 @@ describe('a read through a subscription CLI is a recorded api, with the CLI name
     const sub = { data: 'text', source: 'ai', updated_at: new Date(), content_hash: mjs.contentHash('text'), engine: stripped };
     expect(mjs.missingProvenance('ocr', sub).missing).toContain('ocr.engine.cli');
     expect(ts.missingProvenance('ocr', sub as never).missing).toContain('ocr.engine.cli');
+  });
+});
+
+// #6307: 167 translations stamped a commit that did not contain the script that wrote them (it ran from a
+// scratch copy). The sha stays; the run block now says when the running script is not the committed one.
+describe('entryScriptState: a commit sha names the code only if the running script is in that commit', () => {
+  const root = resolve(__dirname, '../..');
+
+  it('a clean tracked script adds nothing', async () => {
+    expect(await mjs.entryScriptState(join(root, 'scripts/lib/mongo.mjs'), root)).toBeNull();
+  });
+
+  it('an untracked script inside the checkout is named, with its hash', async () => {
+    const dir = mkdtempSync(join(root, 'scripts/_tmp-entry-'));
+    try {
+      const f = join(dir, 'writer.mjs');
+      writeFileSync(f, 'console.log(1)\n');
+      const s = await mjs.entryScriptState(f, root);
+      expect(s).toMatchObject({ state: 'untracked', path: relative(root, f) });
+      expect(s!.sha256).toMatch(/^[0-9a-f]{64}$/);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  it('a script outside the checkout is named', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'entry-'));
+    try {
+      const f = join(dir, 'writer.mjs');
+      writeFileSync(f, 'console.log(1)\n');
+      expect(await mjs.entryScriptState(f, root)).toMatchObject({ state: 'outside-checkout' });
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });

@@ -14,6 +14,7 @@ Derek, on his phone, in bursts of a few minutes. One card per decision, oldest a
 |---|---|---|---|
 | `tier:hold` PRs | GitHub GraphQL, live, with `GITHUB_TOKEN` | queues a merge; the drainer runs `safe-merge.sh` | queues a PR comment + the `blocked` label |
 | ops `DECISIONS-PENDING.md` | GitHub contents API, live, the same `GITHUB_TOKEN` `/shared/[slug]` uses | records the answer | records the answer |
+| pending API key requests | Mongo `api_key_requests` (`status: 'pending'`), the rows `/admin/api-keys` lists | approves at the requested tier, mints the key and emails it, **at once** | denies, with the text kept as the request's note, **at once** |
 | stuck sessions | not yet (stage 2, below) | — | — |
 
 **Every answer** is a row in Mongo `decision_answers`: who, when, what the card said, the choice, the text, and a status (`queued` → `acting` → `done` / `refused` / `failed`, or `recorded`). The page hides a card once it has an answer; a refused or failed action brings it back with the reason. Skip hides it for 24 h.
@@ -27,6 +28,10 @@ A web function that can merge to `main` deploys production: the site would need 
 The answer route rebuilds the card from its live source and refuses (409) when it no longer exists, so a stale page cannot queue a merge of code Derek did not see. It accepts only a platform superadmin: `withAuth` lets the `CRON_SECRET` bearer through as `admin` without checking `minRole`, so the route checks the platform grant itself.
 
 Known gap: between the drainer's sha check and `safe-merge.sh`'s own pinned merge there are a few seconds in which a push could land; `safe-merge.sh` then merges the sha *it* checked. An `--expect-head <sha>` flag on `safe-merge.sh` would close it.
+
+### Why API key answers act at once, not through the drainer
+
+Approving a key needs no GitHub write and no box: it is the same Mongo write and email `/admin/api-keys` already makes from a web function. So the answer route calls `reviewKeyRequest` (`src/lib/dataset/api-key-review.ts`, shared with `/api/admin/api-key-requests`) itself, and the answer row goes `acting` → `done` or `failed` (a failure brings the card back with the reason). The request is claimed with one conditional update before the key is minted, so the queue and the page cannot mint two keys for one request. The plaintext key is never stored: if the email does not send, the page shows the key once, for Derek to forward. API key cards get no brief and no packet (`decision-briefs.ts` skips them), so a requester's name and email are never copied into a working directory.
 
 ### Why the ops file is read through the GitHub API, not mirrored into Mongo
 
