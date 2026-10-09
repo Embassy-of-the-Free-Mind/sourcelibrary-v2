@@ -149,27 +149,77 @@
               "both_unaligned": 0
             }
           },
-          "gemini-3.8-flash+antigravity-cli": {
+          "gemini-3.6-flash+antigravity-cli": {
             "pages_run": 23,
-            "aligned": 18,
+            "aligned": 23,
             "refused": 0,
             "refused_inferred": 0,
-            "median_cer_windowed": 0.001,
-            "mean_cer_windowed": 0.009,
-            "mean_acc_windowed": 0.991,
-            "mean_acc_upper": 0.996,
-            "median_cer_refusals_as_1": 0.001,
-            "mean_cer_refusals_as_1": 0.009,
-            "catastrophic": 5,
-            "catastrophic_answered": 5,
+            "median_cer_windowed": 0.003,
+            "mean_cer_windowed": 0.005,
+            "mean_acc_windowed": 0.995,
+            "mean_acc_upper": 0.998,
+            "median_cer_refusals_as_1": 0.003,
+            "mean_cer_refusals_as_1": 0.005,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
             "paired_vs_ref": {
-              "n": 18,
+              "n": 23,
               "excluded_refused": 0,
-              "wins": 13,
-              "losses": 2,
+              "wins": 12,
+              "losses": 5,
+              "ties": 6,
+              "median_delta_cer": 0.001,
+              "p_sign": 0.143,
+              "ref_engine_aligned": 23,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 23,
+            "aligned": 16,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.006,
+            "mean_cer_windowed": 0.024,
+            "mean_acc_windowed": 0.976,
+            "mean_acc_upper": 0.988,
+            "median_cer_refusals_as_1": 0.006,
+            "mean_cer_refusals_as_1": 0.024,
+            "catastrophic": 7,
+            "catastrophic_answered": 7,
+            "paired_vs_ref": {
+              "n": 16,
+              "excluded_refused": 0,
+              "wins": 8,
+              "losses": 5,
               "ties": 3,
-              "median_delta_cer": 0.004,
-              "p_sign": 0.007,
+              "median_delta_cer": 0.001,
+              "p_sign": 0.581,
+              "ref_engine_aligned": 23,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.8-flash+antigravity-cli": {
+            "pages_run": 23,
+            "aligned": 17,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.003,
+            "mean_cer_windowed": 0.011,
+            "mean_acc_windowed": 0.989,
+            "mean_acc_upper": 0.995,
+            "median_cer_refusals_as_1": 0.003,
+            "mean_cer_refusals_as_1": 0.011,
+            "catastrophic": 6,
+            "catastrophic_answered": 6,
+            "paired_vs_ref": {
+              "n": 17,
+              "excluded_refused": 0,
+              "wins": 8,
+              "losses": 5,
+              "ties": 4,
+              "median_delta_cer": 0,
+              "p_sign": 0.581,
               "ref_engine_aligned": 23,
               "both_unaligned": 0
             }
@@ -614,6 +664,56 @@
               "ties": 13,
               "median_delta_cer": 0,
               "p_sign": 1,
+              "ref_engine_aligned": 13,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 13,
+            "aligned": 13,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.005,
+            "mean_cer_windowed": 0.007,
+            "mean_acc_windowed": 0.993,
+            "mean_acc_upper": 0.996,
+            "median_cer_refusals_as_1": 0.005,
+            "mean_cer_refusals_as_1": 0.007,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 13,
+              "excluded_refused": 0,
+              "wins": 3,
+              "losses": 5,
+              "ties": 5,
+              "median_delta_cer": 0,
+              "p_sign": 0.727,
+              "ref_engine_aligned": 13,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 13,
+            "aligned": 13,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.002,
+            "mean_cer_windowed": 0.006,
+            "mean_acc_windowed": 0.994,
+            "mean_acc_upper": 0.997,
+            "median_cer_refusals_as_1": 0.002,
+            "mean_cer_refusals_as_1": 0.006,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 13,
+              "excluded_refused": 0,
+              "wins": 6,
+              "losses": 2,
+              "ties": 5,
+              "median_delta_cer": 0,
+              "p_sign": 0.289,
               "ref_engine_aligned": 13,
               "both_unaligned": 0
             }
@@ -1087,6 +1187,56 @@
               "both_unaligned": 0
             }
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 45,
+            "aligned": 44,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.006,
+            "mean_cer_windowed": 0.032,
+            "mean_acc_windowed": 0.968,
+            "mean_acc_upper": 0.99,
+            "median_cer_refusals_as_1": 0.006,
+            "mean_cer_refusals_as_1": 0.032,
+            "catastrophic": 2,
+            "catastrophic_answered": 2,
+            "paired_vs_ref": {
+              "n": 44,
+              "excluded_refused": 0,
+              "wins": 19,
+              "losses": 12,
+              "ties": 13,
+              "median_delta_cer": 0,
+              "p_sign": 0.281,
+              "ref_engine_aligned": 45,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 45,
+            "aligned": 41,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.004,
+            "mean_cer_windowed": 0.02,
+            "mean_acc_windowed": 0.98,
+            "mean_acc_upper": 0.996,
+            "median_cer_refusals_as_1": 0.004,
+            "mean_cer_refusals_as_1": 0.02,
+            "catastrophic": 4,
+            "catastrophic_answered": 4,
+            "paired_vs_ref": {
+              "n": 41,
+              "excluded_refused": 0,
+              "wins": 23,
+              "losses": 4,
+              "ties": 14,
+              "median_delta_cer": 0.001,
+              "p_sign": 0,
+              "ref_engine_aligned": 45,
+              "both_unaligned": 0
+            }
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 45,
             "aligned": 27,
@@ -1443,6 +1593,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -1508,6 +1664,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -1619,15 +1781,35 @@
           "span_dispersion": 1,
           "chars": 3942
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.029,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 3943
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
-          "guard": 0.878,
-          "acc_upper": 0.199,
-          "acc_windowed": 0.199,
-          "cer": 0.801,
+          "guard": 0.817,
+          "acc_upper": 0.403,
+          "acc_windowed": 0.36,
+          "cer": 0.64,
+          "span_dispersion": 10.7,
+          "chars": 1351
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.032,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
           "span_dispersion": 1,
-          "chars": 424
+          "chars": 3945
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -1776,6 +1958,26 @@
           "cer": 0.003,
           "span_dispersion": 1,
           "chars": 1371
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2030
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.032,
+          "acc_upper": 0.991,
+          "acc_windowed": 0.969,
+          "cer": 0.031,
+          "span_dispersion": 1,
+          "chars": 1643
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -1935,6 +2137,26 @@
           "span_dispersion": 1,
           "chars": 1113
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.006,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1427
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.81,
+          "acc_upper": 0.455,
+          "acc_windowed": 0.404,
+          "cer": 0.596,
+          "span_dispersion": 1.367,
+          "chars": 825
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -1943,7 +2165,7 @@
           "acc_windowed": 1,
           "cer": 0,
           "span_dispersion": 1,
-          "chars": 1119
+          "chars": 1113
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2093,15 +2315,35 @@
           "span_dispersion": 1,
           "chars": 724
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0,
+          "guard": 0.03,
+          "acc_upper": 1,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 728
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.02,
           "acc_upper": 1,
           "acc_windowed": 1,
           "cer": 0,
           "span_dispersion": 1,
-          "chars": 702
+          "chars": 719
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.02,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 719
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2251,15 +2493,35 @@
           "span_dispersion": 1,
           "chars": 887
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.023,
-          "acc_upper": 0.999,
-          "acc_windowed": 0.994,
-          "cer": 0.006,
+          "guard": 0.047,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
           "span_dispersion": 1,
-          "chars": 889
+          "chars": 1400
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.535,
+          "acc_upper": 0.759,
+          "acc_windowed": 0.579,
+          "cer": 0.421,
+          "span_dispersion": 1,
+          "chars": 1417
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2409,7 +2671,7 @@
           "span_dispersion": 1,
           "chars": 692
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0,
@@ -2418,6 +2680,26 @@
           "cer": 0,
           "span_dispersion": 1,
           "chars": 692
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.042,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 712
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.042,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 698
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2567,15 +2849,35 @@
           "span_dispersion": 1,
           "chars": 4054
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.021,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 2.487,
+          "chars": 4584
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0,
           "acc_upper": 1,
           "acc_windowed": 1,
           "cer": 0,
-          "span_dispersion": 2.447,
-          "chars": 3207
+          "span_dispersion": 2.525,
+          "chars": 3086
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.014,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 2.474,
+          "chars": 4127
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2725,15 +3027,35 @@
           "span_dispersion": 1,
           "chars": 4505
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.013,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 4543
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.594,
+          "acc_upper": 0.732,
+          "acc_windowed": 0.497,
+          "cer": 0.503,
+          "span_dispersion": 1.851,
+          "chars": 4157
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
-          "guard": 0.731,
-          "acc_upper": 0.39,
-          "acc_windowed": 0.387,
-          "cer": 0.613,
-          "span_dispersion": 1,
-          "chars": 914
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -2883,15 +3205,35 @@
           "span_dispersion": 1,
           "chars": 884
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.033,
-          "acc_upper": 0.997,
-          "acc_windowed": 0.997,
-          "cer": 0.003,
+          "guard": 0.008,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
           "span_dispersion": 1,
-          "chars": 890
+          "chars": 1525
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.106,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 888
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3040,6 +3382,26 @@
           "cer": 0.008,
           "span_dispersion": 1,
           "chars": 1019
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.007,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1331
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.318,
+          "acc_upper": 0.89,
+          "acc_windowed": 0.79,
+          "cer": 0.21,
+          "span_dispersion": 1,
+          "chars": 1433
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -3199,6 +3561,26 @@
           "span_dispersion": 1,
           "chars": 5115
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.024,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 5133
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.021,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 5164
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -3207,7 +3589,7 @@
           "acc_windowed": 0.997,
           "cer": 0.003,
           "span_dispersion": 1,
-          "chars": 5138
+          "chars": 5152
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3357,15 +3739,35 @@
           "span_dispersion": 1,
           "chars": 984
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.043,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1277
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.034,
           "acc_upper": 1,
-          "acc_windowed": 1,
-          "cer": 0,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
           "span_dispersion": 1,
-          "chars": 988
+          "chars": 984
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.034,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 1,
+          "chars": 983
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3473,6 +3875,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -3540,6 +3948,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -3605,6 +4019,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -3716,15 +4136,35 @@
           "span_dispersion": 1,
           "chars": 1184
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.088,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1465
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.088,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 37,
+          "chars": 1181
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0,
-          "acc_upper": 1,
-          "acc_windowed": 1,
-          "cer": 0,
-          "span_dispersion": 1,
-          "chars": 1188
+          "guard": 0.088,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 37,
+          "chars": 1257
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3871,15 +4311,35 @@
           "finish_reason": "RECITATION",
           "chars": 0
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.014,
+          "acc_upper": 1,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 3847
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
-          "guard": 0.56,
-          "acc_upper": 0.522,
-          "acc_windowed": 0.518,
-          "cer": 0.482,
+          "guard": 0.495,
+          "acc_upper": 0.639,
+          "acc_windowed": 0.618,
+          "cer": 0.382,
           "span_dispersion": 1,
-          "chars": 880
+          "chars": 1237
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.018,
+          "acc_upper": 1,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1816
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4029,15 +4489,35 @@
           "span_dispersion": 1,
           "chars": 1483
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0,
+          "guard": 0.024,
           "acc_upper": 1,
-          "acc_windowed": 1,
-          "cer": 0,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
           "span_dispersion": 1,
-          "chars": 1498
+          "chars": 2051
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.03,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": null,
+          "chars": 1482
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4143,6 +4623,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4254,15 +4740,35 @@
           "span_dispersion": 1,
           "chars": 723
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0,
-          "acc_upper": 1,
-          "acc_windowed": 1,
-          "cer": 0,
+          "guard": 0.03,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
           "span_dispersion": 1,
-          "chars": 714
+          "chars": 717
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.079,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 6.357,
+          "chars": 725
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4412,6 +4918,26 @@
           "span_dispersion": 1.06,
           "chars": 1407
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1.222,
+          "chars": 1600
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 1,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1.222,
+          "chars": 2353
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -4420,7 +4946,7 @@
           "acc_windowed": 0.996,
           "cer": 0.004,
           "span_dispersion": 1.261,
-          "chars": 1561
+          "chars": 1581
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4526,6 +5052,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4637,15 +5169,35 @@
           "span_dispersion": 1,
           "chars": 4868
         },
-        "gemini-3.8-flash+antigravity-cli": {
-          "aligned": false,
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
           "refused": false,
-          "guard": 0.781,
-          "acc_upper": 0.334,
-          "acc_windowed": 0.333,
-          "cer": 0.667,
+          "guard": 0.018,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
           "span_dispersion": 1,
-          "chars": 715
+          "chars": 4949
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.065,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 5949
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.072,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 4944
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4794,6 +5346,26 @@
           "cer": 0.008,
           "span_dispersion": null,
           "chars": 2670
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.061,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2720
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.03,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": null,
+          "chars": 2728
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -4953,6 +5525,26 @@
           "span_dispersion": 1,
           "chars": 1069
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1068
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1070
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -5107,6 +5699,26 @@
           "refusal_source": "finishReason",
           "finish_reason": "RECITATION",
           "chars": 0
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.006,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1467
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.151,
+          "acc_upper": 0.959,
+          "acc_windowed": 0.907,
+          "cer": 0.093,
+          "span_dispersion": 1,
+          "chars": 1496
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -5263,6 +5875,26 @@
           "finish_reason": "RECITATION",
           "chars": 0
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.03,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 16.25,
+          "chars": 1014
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.738,
+          "acc_upper": 0.535,
+          "acc_windowed": 0.443,
+          "cer": 0.557,
+          "span_dispersion": 14.125,
+          "chars": 1004
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -5418,6 +6050,26 @@
           "finish_reason": "RECITATION",
           "chars": 0
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.038,
+          "acc_upper": 0.985,
+          "acc_windowed": 0.953,
+          "cer": 0.047,
+          "span_dispersion": 1,
+          "chars": 3290
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.685,
+          "acc_upper": 0.542,
+          "acc_windowed": 0.483,
+          "cer": 0.517,
+          "span_dispersion": 1,
+          "chars": 1610
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -5568,6 +6220,26 @@
           "cer": 0.011,
           "span_dispersion": 1.01,
           "chars": 1415
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.989,
+          "cer": 0.011,
+          "span_dispersion": 1.033,
+          "chars": 1807
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.005,
+          "acc_upper": 1,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 10.833,
+          "chars": 1442
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -5720,6 +6392,26 @@
           "span_dispersion": 1,
           "chars": 3088
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.032,
+          "acc_upper": 0.969,
+          "acc_windowed": 0.949,
+          "cer": 0.051,
+          "span_dispersion": 1,
+          "chars": 3493
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.032,
+          "acc_upper": 0.971,
+          "acc_windowed": 0.957,
+          "cer": 0.043,
+          "span_dispersion": 1,
+          "chars": 3196
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -5871,6 +6563,26 @@
           "span_dispersion": 1,
           "chars": 1598
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.01,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1616
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.01,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1631
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -5987,6 +6699,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6088,6 +6806,26 @@
           "cer": 0.002,
           "span_dispersion": 1,
           "chars": 4413
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.017,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 4853
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.007,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 4544
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -6205,6 +6943,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6306,6 +7050,26 @@
           "cer": 0,
           "span_dispersion": 1,
           "chars": 1079
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1459
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1080
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -6423,6 +7187,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6524,6 +7294,26 @@
           "cer": 0.007,
           "span_dispersion": 1,
           "chars": 981
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.029,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 1300
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.022,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1010
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -6676,6 +7466,26 @@
           "span_dispersion": 1,
           "chars": 1415
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.018,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1834
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1440
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -6792,6 +7602,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6857,6 +7673,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6958,6 +7780,26 @@
           "acc_upper": 0.999,
           "acc_windowed": 0.999,
           "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 875
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.008,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 896
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.008,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
           "span_dispersion": 1,
           "chars": 875
         },
@@ -7077,6 +7919,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7178,6 +8026,26 @@
           "cer": 0.004,
           "span_dispersion": 1,
           "chars": 675
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.018,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 986
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 676
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -7295,6 +8163,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7396,6 +8270,26 @@
           "cer": 0,
           "span_dispersion": null,
           "chars": 1676
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": null,
+          "chars": 1663
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": null,
+          "chars": 1680
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -7513,6 +8407,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7578,6 +8478,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -7681,6 +8587,26 @@
           "cer": 0.001,
           "span_dispersion": 1,
           "chars": 1838
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.014,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 1838
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.025,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1854
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -7833,6 +8759,26 @@
           "span_dispersion": 1,
           "chars": 1763
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 0.995,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1767
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.008,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1790
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -7949,6 +8895,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -8014,6 +8966,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -8117,6 +9075,26 @@
           "cer": 0.001,
           "span_dispersion": 1,
           "chars": 1665
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 2219
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.014,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1657
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -8234,6 +9212,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -8342,6 +9326,26 @@
           "cer": 0,
           "span_dispersion": 1,
           "chars": 2835
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.03,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3187
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.634,
+          "acc_upper": 0.6,
+          "acc_windowed": 0.536,
+          "cer": 0.464,
+          "span_dispersion": 1,
+          "chars": 1781
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -8494,6 +9498,26 @@
           "span_dispersion": 3.4,
           "chars": 1620
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.386,
+          "acc_upper": 0.961,
+          "acc_windowed": 0.959,
+          "cer": 0.041,
+          "span_dispersion": 1,
+          "chars": 1618
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.295,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.981,
+          "cer": 0.019,
+          "span_dispersion": 3.4,
+          "chars": 1630
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -8645,6 +9669,26 @@
           "span_dispersion": 1.555,
           "chars": 1630
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.042,
+          "acc_upper": 0.991,
+          "acc_windowed": 0.989,
+          "cer": 0.011,
+          "span_dispersion": 1,
+          "chars": 2269
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.023,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1.555,
+          "chars": 1636
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -8793,6 +9837,26 @@
           "finish_reason": "RECITATION",
           "chars": 0
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.014,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 2174
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.891,
+          "acc_upper": 0.388,
+          "acc_windowed": 0.336,
+          "cer": 0.664,
+          "span_dispersion": 1,
+          "chars": 1108
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -8902,6 +9966,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -8967,6 +10037,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -9077,6 +10153,26 @@
           "cer": 0.005,
           "span_dispersion": 1.008,
           "chars": 1782
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.03,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1791
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.026,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1785
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -9229,6 +10325,26 @@
           "span_dispersion": null,
           "chars": 1666
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.235,
+          "acc_upper": 0.959,
+          "acc_windowed": 0.956,
+          "cer": 0.044,
+          "span_dispersion": null,
+          "chars": 1664
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.028,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": null,
+          "chars": 1647
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -9380,6 +10496,26 @@
           "span_dispersion": 1,
           "chars": 3182
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.169,
+          "acc_upper": 0.966,
+          "acc_windowed": 0.964,
+          "cer": 0.036,
+          "span_dispersion": 1,
+          "chars": 3111
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.022,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3198
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -9489,6 +10625,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -9556,6 +10698,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -9621,6 +10769,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -9728,6 +10882,26 @@
           "refusal_source": "finishReason",
           "finish_reason": "RECITATION",
           "chars": 0
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 810
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 794
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -9880,6 +11054,26 @@
           "span_dispersion": 1,
           "chars": 1469
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1,
+          "chars": 1784
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1,
+          "chars": 1488
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -10030,6 +11224,26 @@
           "cer": 0,
           "span_dispersion": 1,
           "chars": 1344
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1357
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1363
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -10182,6 +11396,26 @@
           "span_dispersion": 1,
           "chars": 2836
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.015,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2839
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2839
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -10332,6 +11566,26 @@
           "cer": 0.037,
           "span_dispersion": null,
           "chars": 1451
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.029,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 2109
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.024,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1601
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -10484,6 +11738,26 @@
           "span_dispersion": 1,
           "chars": 1534
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.024,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 1534
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 1589
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -10591,6 +11865,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -10702,6 +11982,26 @@
           "span_dispersion": 1,
           "chars": 1585
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.025,
+          "acc_upper": 0.987,
+          "acc_windowed": 0.979,
+          "cer": 0.021,
+          "span_dispersion": 1,
+          "chars": 1572
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1590
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -10811,6 +12111,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -10911,6 +12217,26 @@
           "chars": 1326
         },
         "gemini-3.1-flash-lite-b": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.006,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1326
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1649
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.006,
@@ -11071,6 +12397,26 @@
           "span_dispersion": 1,
           "chars": 1611
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 1,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1609
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 1,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1611
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -11222,6 +12568,26 @@
           "span_dispersion": 1,
           "chars": 2664
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.006,
+          "acc_upper": 1,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1,
+          "chars": 3058
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.006,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1,
+          "chars": 2683
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -11329,6 +12695,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -11439,6 +12811,26 @@
           "cer": 0.001,
           "span_dispersion": 1,
           "chars": 1837
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1834
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1835
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -11591,6 +12983,26 @@
           "span_dispersion": 1,
           "chars": 1840
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.174,
+          "acc_upper": 0.967,
+          "acc_windowed": 0.967,
+          "cer": 0.033,
+          "span_dispersion": 1,
+          "chars": 1862
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.013,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1866
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -11741,6 +13153,26 @@
           "cer": 0.047,
           "span_dispersion": 1,
           "chars": 929
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.23,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.95,
+          "cer": 0.05,
+          "span_dispersion": 1,
+          "chars": 1238
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.222,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.952,
+          "cer": 0.048,
+          "span_dispersion": 1,
+          "chars": 932
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -11893,6 +13325,26 @@
           "span_dispersion": 1,
           "chars": 709
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.211,
+          "acc_upper": 0.956,
+          "acc_windowed": 0.956,
+          "cer": 0.044,
+          "span_dispersion": 1,
+          "chars": 710
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.078,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 710
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -12043,6 +13495,26 @@
           "cer": 0.085,
           "span_dispersion": null,
           "chars": 1312
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.073,
+          "acc_upper": 0.988,
+          "acc_windowed": 0.947,
+          "cer": 0.053,
+          "span_dispersion": null,
+          "chars": 1933
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.068,
+          "acc_upper": 0.96,
+          "acc_windowed": 0.947,
+          "cer": 0.053,
+          "span_dispersion": null,
+          "chars": 1338
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -12195,6 +13667,26 @@
           "span_dispersion": 1,
           "chars": 2852
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.032,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 2870
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.027,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 2873
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -12304,6 +13796,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -12369,6 +13867,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -12479,6 +13983,26 @@
           "cer": 0.002,
           "span_dispersion": 3.938,
           "chars": 2114
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 4189
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.016,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2128
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -12631,6 +14155,26 @@
           "span_dispersion": 1,
           "chars": 768
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.047,
+          "acc_upper": 0.985,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 1138
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.047,
+          "acc_upper": 0.983,
+          "acc_windowed": 0.981,
+          "cer": 0.019,
+          "span_dispersion": 1,
+          "chars": 768
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -12738,6 +14282,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -12848,6 +14398,26 @@
           "cer": 0.004,
           "span_dispersion": 1,
           "chars": 1702
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.017,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1701
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.012,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 1737
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -13000,6 +14570,26 @@
           "span_dispersion": 1.778,
           "chars": 1552
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.15,
+          "acc_upper": 1,
+          "acc_windowed": 0.32,
+          "cer": 0.68,
+          "span_dispersion": 1.818,
+          "chars": 1784
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.01,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 1584
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -13142,6 +14732,26 @@
           "chars": 1637
         },
         "gemini-3.1-flash-lite-b": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 68.667,
+          "chars": 1637
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.008,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 68.667,
+          "chars": 2002
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.004,
@@ -13302,6 +14912,26 @@
           "span_dispersion": 1,
           "chars": 985
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.031,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 986
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.024,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1008
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -13409,6 +15039,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -13520,6 +15156,26 @@
           "span_dispersion": 1,
           "chars": 1823
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 2434
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.778,
+          "acc_upper": 0.363,
+          "acc_windowed": 0.359,
+          "cer": 0.641,
+          "span_dispersion": 1,
+          "chars": 768
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -13627,6 +15283,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -13737,6 +15399,26 @@
           "cer": 0.061,
           "span_dispersion": null,
           "chars": 1489
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.078,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.989,
+          "cer": 0.011,
+          "span_dispersion": null,
+          "chars": 2021
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.024,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1510
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -13880,6 +15562,26 @@
           "chars": 1678
         },
         "gemini-3.1-flash-lite-b": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.009,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 1678
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.026,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 2077
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.009,
@@ -14040,6 +15742,26 @@
           "span_dispersion": 1.017,
           "chars": 1033
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1.008,
+          "chars": 1501
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1.008,
+          "chars": 1019
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -14147,6 +15869,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -14257,6 +15985,26 @@
           "cer": 0.007,
           "span_dispersion": 1,
           "chars": 4926
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.038,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.993,
+          "cer": 0.007,
+          "span_dispersion": 1,
+          "chars": 4981
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.031,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 4927
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -14409,6 +16157,26 @@
           "span_dispersion": 1,
           "chars": 3452
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 3426
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3473
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -14560,6 +16328,26 @@
           "span_dispersion": 1,
           "chars": 1623
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.142,
+          "acc_upper": 0.913,
+          "acc_windowed": 0.913,
+          "cer": 0.087,
+          "span_dispersion": 1,
+          "chars": 1629
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.868,
+          "acc_upper": 0.453,
+          "acc_windowed": 0.366,
+          "cer": 0.634,
+          "span_dispersion": 1.577,
+          "chars": 1411
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -14669,6 +16457,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -14736,6 +16530,12 @@
         "gemini-3.1-flash-lite-b": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -14801,6 +16601,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -14912,6 +16718,26 @@
           "span_dispersion": 1,
           "chars": 2090
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.008,
+          "acc_upper": 1,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 2419
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0,
+          "acc_upper": 1,
+          "acc_windowed": 1,
+          "cer": 0,
+          "span_dispersion": 1,
+          "chars": 2285
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -15019,6 +16845,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -15130,6 +16962,26 @@
           "span_dispersion": null,
           "chars": 3406
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.034,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": null,
+          "chars": 3388
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.017,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3373
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -15237,6 +17089,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -15347,6 +17205,26 @@
           "cer": 0.008,
           "span_dispersion": 1,
           "chars": 914
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.042,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 1479
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.042,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.992,
+          "cer": 0.008,
+          "span_dispersion": 1,
+          "chars": 915
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -15499,6 +17377,26 @@
           "span_dispersion": 1,
           "chars": 1454
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.025,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1,
+          "chars": 1775
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 1463
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -15649,6 +17547,26 @@
           "cer": 0.003,
           "span_dispersion": 1,
           "chars": 1072
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.017,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1419
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.017,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.995,
+          "cer": 0.005,
+          "span_dispersion": 1,
+          "chars": 1113
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -15801,6 +17719,26 @@
           "span_dispersion": 1,
           "chars": 1738
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1760
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.004,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.999,
+          "cer": 0.001,
+          "span_dispersion": 1,
+          "chars": 1760
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -15951,6 +17889,26 @@
           "cer": 0.087,
           "span_dispersion": 87.286,
           "chars": 4445
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.106,
+          "acc_upper": 0.934,
+          "acc_windowed": 0.922,
+          "cer": 0.078,
+          "span_dispersion": 87.286,
+          "chars": 4399
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.084,
+          "acc_upper": 0.98,
+          "acc_windowed": 0.548,
+          "cer": 0.452,
+          "span_dispersion": 5.286,
+          "chars": 4472
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -16103,6 +18061,26 @@
           "span_dispersion": 1,
           "chars": 3964
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.054,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.98,
+          "cer": 0.02,
+          "span_dispersion": 1,
+          "chars": 3993
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.061,
+          "acc_upper": 0.99,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
+          "span_dispersion": 1,
+          "chars": 3980
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -16254,6 +18232,26 @@
           "span_dispersion": null,
           "chars": 1296
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.04,
+          "acc_upper": 0.996,
+          "acc_windowed": 0.912,
+          "cer": 0.088,
+          "span_dispersion": 1,
+          "chars": 1289
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.04,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.913,
+          "cer": 0.087,
+          "span_dispersion": null,
+          "chars": 1314
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -16361,6 +18359,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite-b": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {

@@ -163,12 +163,17 @@ function costOf(engine, chartId) {
 // set (PREREGISTRATION-engine-wave2-6011.md); a page wave 1 already read keeps its wave-1 row.
 const WAVE_ENGINES = new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']);
 // Then #6293 Part A (results/ocr-pareto-6293/scored, PREREGISTRATION-ocr-pareto-6293.md): gemini-3.8-flash through the
-// Antigravity CLI on the subscription ($0 billed), on every page of each chart's frozen most-pages set. Only that
-// engine is taken; it feeds a chart only where it has a scored row on the WHOLE frozen set (CLI_6293_CHARTS below),
-// so it can never shrink a panel the other engines already share.
+// Antigravity CLI on the subscription ($0 billed), on every page of each chart's frozen most-pages set; then (Amendment
+// 2, job cli-queue-b-6293) 3.7 and 3.6 Flash the same way on a capped set: every chart whole except Chinese
+// manuscript, 150 of its pages. Only these engines are taken; each feeds a chart's main panels only where it has a
+// scored row on the WHOLE frozen set (keepCli6293 below), so it can never shrink a panel the other engines already
+// share. An engine that read only the capped subsample gets its own panel on those pages (subsamplePanel).
 const CLI_6293 = 'gemini-3.8-flash+antigravity-cli';
+const CLI_6293_TIERS = [['3.8', 'cli-cost.json'], ['3.7', 'cli-cost-gemini-3.7-flash.json'], ['3.6', 'cli-cost-gemini-3.6-flash.json']]
+  .map(([v, f]) => ({ v, engine: `gemini-${v}-flash+antigravity-cli`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
+const CLI_6293_ENGINES = new Set(CLI_6293_TIERS.map(t => t.engine));
 const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored', 'engine-wave2-6011/scored', 'ocr-pareto-6293/scored'];
-const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES, 'ocr-pareto-6293/scored': new Set([CLI_6293]) };
+const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES, 'ocr-pareto-6293/scored': CLI_6293_ENGINES };
 const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production; it is the noise floor, not an engine
 const benchRows = [];
 {
@@ -186,10 +191,10 @@ const benchRows = [];
     }
   }
 }
-// #6293's CLI arm: a reference-tier page it ran but that could not be aligned (an empty read, a stub, or the model's
+// #6293's CLI arms: a reference-tier page one ran but that could not be aligned (an empty read, a stub, or the model's
 // prose refusal "I cannot provide the full transcription…") is a failed read, so it counts as CER 1.0, as a refusal
 // does in the sealed strata, rather than leaving the chart's shared set (the preregistration: a page counts as read).
-const cliFailed = r => r.engine === CLI_6293 && r.referenced && !r.aligned && /ocr-pareto-6293/.test(r.file || '');
+const cliFailed = r => CLI_6293_ENGINES.has(r.engine) && r.referenced && !r.aligned && /ocr-pareto-6293/.test(r.file || '');
 const accRows = benchRows
   .map(r => (cliFailed(r) ? { ...r, aligned: true, cer: 1, cli_unaligned: true } : r))
   .filter(r => r.referenced && r.aligned && r.cer != null && !isRepeatArm(r.engine))
@@ -199,7 +204,7 @@ const accRows = benchRows
 // the six wave engines with the same scorer against the same ground truth into its own file; only those engines are taken.
 const SYRIAC_FILE = 'syriac-retest-2026-09-16/score.json';
 const SYRIAC_SOURCES = [[path.join(BENCHMARK_DIR, SYRIAC_FILE), null, '2026-09-16'], [path.join(__dirname, 'results', 'engine-wave2-6011', 'syriac-gt-score.json'), WAVE_ENGINES, null],
-  [path.join(__dirname, 'results', 'ocr-pareto-6293', 'syriac-gt-score.json'), new Set([CLI_6293]), null]];
+  [path.join(__dirname, 'results', 'ocr-pareto-6293', 'syriac-gt-score.json'), CLI_6293_ENGINES, null]];
 const syriacRows = [];
 for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
   if (!fs.existsSync(file)) continue;
@@ -245,26 +250,63 @@ if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine]
 }
 const syriacPrintCI = syriacPrint ? Object.fromEntries(syriacPrint.panel.filter(p => SYRIAC_PRINT_ARMS[p.arm]).map(p => [SYRIAC_PRINT_ARMS[p.arm], p.cer_ci95])) : {};
 
-// #6293's CLI arm: per chart, kept only if it has a scored row on every page of the frozen set (minus the #6304
-// drops, applied below); placed at the preregistered x-axis formula with the CLI's own output ratio (cli-cost.json).
+// #6293's CLI arms: per chart, kept only if each has a scored row on every page of the frozen set (minus the #6304
+// drops, applied below); placed at the preregistered x-axis formula with the CLI's own output ratio (cli-cost*.json).
+// 3.7 and 3.6 read the capped set (capped-set.json); where that is smaller than the chart (Chinese manuscript), an
+// engine covering it is held back for the subsample panel instead.
 const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.json');
-const CLI_6293_COST_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'cli-cost.json');
+const CAP_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'capped-set.json');
 const SEL_6293 = fs.existsSync(SEL_6293_FILE) ? JSON.parse(fs.readFileSync(SEL_6293_FILE, 'utf8')) : null;
-const CLI_6293_COST = fs.existsSync(CLI_6293_COST_FILE) ? JSON.parse(fs.readFileSync(CLI_6293_COST_FILE, 'utf8')) : null;
-if (CLI_6293_COST) for (const [chart, c] of Object.entries(CLI_6293_COST.charts)) (COST[CLI_6293] ||= []).push({
-  charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
-  detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${CLI_6293_COST.model}'s API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×${c.r_out}); thinking not counted`,
-  source: path.relative(REPO, CLI_6293_COST_FILE) });
-const CLI_6293_NOTE = "Gemini 3.8 Flash, CLI is gemini-3.8-flash-low run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; it sits at the API's list price for the same request. It differs from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level. A page it could not be placed on (an empty read, or the model declining in prose) counts as 100% error";
-const cli6293Coverage = {};
+const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSync(CAP_6293_FILE, 'utf8')).uids) : null;
+for (const t of CLI_6293_TIERS) {
+  if (!fs.existsSync(t.costFile)) continue;
+  const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
+  LABEL[t.engine] = `Gemini ${t.v} Flash, CLI`;
+  for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
+    charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
+    detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${cc.model}'s API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×${c.r_out}); thinking not counted`,
+    source: path.relative(REPO, t.costFile) });
+}
+const cliNote = engines => {
+  const ts = CLI_6293_TIERS.filter(t => engines.has(t.engine)), many = ts.length > 1;
+  const and = xs => (xs.length > 1 ? `${xs.slice(0, -1).join('; ')} and ${xs.at(-1)}` : xs[0]);
+  return `${and(ts.map(t => `Gemini ${t.v} Flash, CLI`))} ${many ? 'are' : 'is'} ${and(ts.map(t => `gemini-${t.v}-flash-low`)).replace(/; /g, ', ')} run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; ${many ? 'each sits' : 'it sits'} at the API's list price for the same request. ${many ? 'They differ' : 'It differs'} from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level. A page ${many ? 'one' : 'it'} could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read`;
+};
+const cli6293Coverage = {}, cli6293Subsample = {};
+// Arms #6293 / #6295 asked for that cannot run: the CLI does not offer them, and the paid API is ruled out (2026-10-08).
+const NOT_ON_CLI = 'Gemini 3 Flash (a fresh read) and Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer them, and paid Gemini API calls are ruled out for this work, 2026-10-08)';
 function keepCli6293(scriptId, rows, exclude) {
   const set = SEL_6293?.charts?.[scriptId]?.pages;
-  if (!set) return rows.filter(r => r.engine !== CLI_6293 || !r.file?.includes('ocr-pareto-6293'));
+  if (!set) return rows.filter(r => !CLI_6293_ENGINES.has(r.engine) || !r.file?.includes('ocr-pareto-6293'));
   const need = set.filter(p => !exclude.has(p));
-  const have = new Set(rows.filter(r => r.engine === CLI_6293).map(r => r.page));
-  const missing = need.filter(p => !have.has(p));
-  cli6293Coverage[scriptId] = { frozen: need.length, scored: need.length - missing.length, missing };
-  return missing.length ? rows.filter(r => r.engine !== CLI_6293) : rows;
+  const capped = CAP_6293 ? need.filter(p => CAP_6293.has(p)) : need;
+  const drop = new Set();
+  for (const e of CLI_6293_ENGINES) {
+    const have = new Set(rows.filter(r => r.engine === e).map(r => r.page));
+    if (!have.size) continue;
+    const missing = need.filter(p => !have.has(p));
+    cli6293Coverage[`${scriptId}|${e}`] = { frozen: need.length, scored: need.length - missing.length, missing };
+    if (!missing.length) continue;
+    drop.add(e);
+    if (capped.length < need.length && capped.every(p => have.has(p))) (cli6293Subsample[scriptId] ||= { pages: capped, of: need.length, engines: [] }).engines.push(e);
+  }
+  return drop.size ? rows.filter(r => !drop.has(r.engine)) : rows;
+}
+/** The capped subsample (Amendment 2): the main panel's engines plus the CLI tiers that read only these pages,
+ *  on the main panel's shared pages that fall in the subsample, minus any page a subsample engine refused. */
+function subsamplePanel(script, rowsAll, wide, production) {
+  const sub = cli6293Subsample[script.id];
+  if (!sub) return null;
+  const byEngine = pagesOf(rowsAll), inSub = new Set(sub.pages);
+  let pages = new Set([...wide.pages].filter(p => inSub.has(p)));
+  for (const e of sub.engines) pages = intersect(pages, answered(byEngine, e));
+  if (pages.size < MIN_PAGES) return null;
+  const engines = [...wide.engines, ...sub.engines];
+  const p = panel(script, 'cli-subsample', byEngine, engines, pages, production);
+  p.heading = `${pages.size} of these pages, drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')} (#6293)`;
+  const names = sub.engines.map(e => LABEL[e].replace(/, CLI$/, '')).join(' and ');
+  p.notes = [`${names} read ${sub.pages.length} of this chart's ${sub.of} pages through the CLI, a seeded random draw made to fit the subscription's time. Every engine here is scored on the same ${pages.size} of them, so these points compare with each other, not with the panel above`, cliNote(new Set(engines))];
+  return p;
 }
 
 // ── shared-page sets ─────────────────────────────────────────────────────────────────────────
@@ -352,8 +394,8 @@ function syriacPrintExtra() {
   return {
     elsewhere: st.map(x => ({ label: x.arm === 'stored-gemini-flash' ? 'Gemini 3 Flash, stored read' : 'Gemini 3.1 Flash-Lite, stored read', pages: x.n_pages,
       why: `the read each page had before the Kraken lane: ${pctOf(x.accuracy)} against ${pctOf(x.vs_served_lane_on_same_pages.accuracy)} for the lane on the same pages` })),
-    notRun: ['PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)'],
-    pending: [...SYRIAC_CLI_TIERS.filter(t => !syriacPrint[t.key]).map(t => `Gemini ${t.v} Flash`), 'Gemini 3 Flash (fresh read; not offered on the CLI)', 'Gemini 3.5 Flash-Lite (not offered on the CLI)'],
+    notRun: ['PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)', NOT_ON_CLI],
+    pending: SYRIAC_CLI_TIERS.filter(t => !syriacPrint[t.key]).map(t => `Gemini ${t.v} Flash`),
   };
 }
 function cliTierNotes(t, c, n) {
@@ -377,10 +419,12 @@ const AUDIT = !process.argv.includes('--keep-dropped') && fs.existsSync(AUDIT_FI
 const CLI_EXCLUDE = argOf('exclude') ? JSON.parse(fs.readFileSync(argOf('exclude'), 'utf8')) : [];
 const EXCLUDE = new Set([...CLI_EXCLUDE, ...(AUDIT?.drops || []).filter(d => d.family === 'ocr').map(d => d.page)]);
 const without = s => (EXCLUDE.size ? { ...s, pages: new Set([...s.pages].filter(p => !EXCLUDE.has(p))) } : s);
-const charts = [], noChart = [], mostPagesSets = {};
+const charts = [], noChart = [], mostPagesSets = {}, chartRows = {};
 for (const script of SCRIPTS) {
   const rows0 = script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row));
   const rows = script.source === 'syriac-print' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
+  const subEngines = new Set(cli6293Subsample[script.id]?.engines || []);
+  chartRows[script.id] = rows0.filter(r => !EXCLUDE.has(r.page)).map(r => ({ page: r.page, engine: r.engine, cer: r.cer, refused: !!r.refused }));
   const byEngine = pagesOf(rows);
   const production = script.production || getOcrModelForBook({ language: script.language, visible: true });
   const tested = new Set(rows.map(r => r.engine));
@@ -397,16 +441,22 @@ for (const script of SCRIPTS) {
   if (script.source === 'syriac-print') syriacPrintPanel(panels[0]);
   const notes = AUDIT?.notes?.ocr?.[`${script.id}|most-pages`];
   if (notes?.length) panels[0].notes = notes;
-  if (script.source !== 'syriac-print') for (const p of panels) if ([...p.placed, ...p.no_cost].some(x => x.engine === CLI_6293)) p.notes = [...(p.notes || []), CLI_6293_NOTE];
+  if (script.source !== 'syriac-print') for (const p of panels) {
+    const onPanel = new Set([...p.placed, ...p.no_cost].map(x => x.engine).filter(e => CLI_6293_ENGINES.has(e)));
+    if (onPanel.size) p.notes = [...(p.notes || []), cliNote(onPanel)];
+  }
   mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
   const broad = without(greedy(byEngine, production, MIN_PAGES));
   // a panel the #6304 drops leave under MIN_PAGES has no interval, so it is not drawn
   if (broad.engines.length > wide.engines.length && broad.pages.size >= MIN_PAGES) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
+  const sub = subEngines.size ? subsamplePanel(script, [...rows, ...rows0.filter(r => subEngines.has(r.engine))], wide, production) : null;
+  if (sub) panels.push(sub);
   // Engines run with a reference on this script but on too few of the same pages to join either panel.
   const shown = new Set(panels.flatMap(p => [...p.placed, ...p.no_cost].map(x => x.engine)));
   const elsewhere = [...byEngine.keys()].filter(e => !shown.has(e)).sort().map(e => ({ engine: e, label: LABEL[e] || e, pages: byEngine.get(e).size }));
   const extra = script.source === 'syriac-print' ? syriacPrintExtra() : {};
-  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, panels, not_on_shared_pages: [...elsewhere, ...(extra.elsewhere || [])], not_tested: [...notTested.filter(t => ![...(extra.notRun || []), ...(extra.pending || [])].some(n => n.startsWith(t))), ...(extra.notRun || [])], ...(extra.pending ? { pending: extra.pending } : {}) });
+  const notRun = [...(extra.notRun || []), ...(SEL_6293?.charts?.[script.id] ? ['Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer it, and paid Gemini API calls are ruled out for this work, 2026-10-08)'] : [])];
+  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, panels, not_on_shared_pages: [...elsewhere, ...(extra.elsewhere || [])], not_tested: [...notTested.filter(t => ![...notRun, ...(extra.pending || [])].some(n => n.startsWith(t))), ...notRun], ...(extra.pending?.length ? { pending: extra.pending } : {}) });
 }
 
 const out = {
@@ -423,6 +473,9 @@ const json = JSON.stringify(out, null, 1) + '\n';
 const dumpTo = process.argv.find(a => a.startsWith('--dump-sets='))?.slice('--dump-sets='.length);
 if (argOf('out')) { fs.writeFileSync(argOf('out'), json); console.log(`wrote ${argOf('out')} (${EXCLUDE.size} pages excluded)`); process.exit(0); }
 if (CLI_EXCLUDE.length) throw new Error('--exclude needs --out: the committed file is never built without pages');
+// --dump-rows=<file>: every scored page × engine per chart after the #6304 drops (CLI arms included whatever their
+// coverage), for the paired comparisons in ocr-pareto-6293/analyze-cli-tiers.py; writes nothing else.
+if (argOf('dump-rows')) { fs.writeFileSync(argOf('dump-rows'), JSON.stringify(chartRows) + '\n'); console.log(`wrote ${argOf('dump-rows')}`); process.exit(0); }
 if (dumpTo) { fs.writeFileSync(dumpTo, JSON.stringify(mostPagesSets, null, 1) + '\n'); console.log(`wrote ${dumpTo}`); process.exit(0); }
 // --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
 if (process.argv.includes('--check')) {
@@ -435,4 +488,4 @@ fs.writeFileSync(OUT, json);
 for (const c of charts) for (const p of c.panels) console.log(`${c.title} [${p.kind}] ${p.n_pages} pages / ${p.n_books} books · ${p.placed.map(x => `${x.engine} ${x.accuracy}@$${x.cost.usd_per_1k}${x.on_frontier ? '*' : ''}`).join(', ')}${p.no_cost.length ? ` · no cost: ${p.no_cost.map(x => `${x.engine} ${x.accuracy}`).join(', ')}` : ''}`);
 for (const n of out.no_chart) console.log(`no chart: ${n.title} — ${n.why}`);
 console.log(`wrote ${path.relative(process.cwd(), OUT)}`);
-for (const [id, c] of Object.entries(cli6293Coverage)) if (c.missing.length) console.log(`#6293 CLI arm not placed on ${id}: scored on ${c.scored} of ${c.frozen} frozen pages (missing ${c.missing.slice(0, 6).join(", ")}${c.missing.length > 6 ? " …" : ""})`);
+for (const [id, c] of Object.entries(cli6293Coverage)) if (c.missing.length) console.log(`#6293 CLI arm not on the main panels of ${id}${cli6293Subsample[id.split('|')[0]]?.engines.includes(id.split('|')[1]) ? ' (on the subsample panel)' : ''}: scored on ${c.scored} of ${c.frozen} frozen pages (missing ${c.missing.slice(0, 6).join(", ")}${c.missing.length > 6 ? " …" : ""})`);

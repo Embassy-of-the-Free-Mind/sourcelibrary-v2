@@ -570,9 +570,10 @@ if (fs.existsSync(SYR_FILE)) {
       placed, no_cost: [],
     }],
     not_on_shared_pages: [],
-    not_tested: NOT_TESTED,
-    pending: [...['3.8', '3.7', '3.6'].filter(v => !SYR_CLI_TIERS.some(t => t.v === v)).map(v => `Gemini ${v} Flash`),
-      'Gemini 3 Flash (not offered on the CLI)', 'Gemini 3.5 Flash-Lite (not offered on the CLI)'],
+    // Gemini 3 Flash and 3.5 Flash-Lite are not offered on the CLI and the paid API is ruled out, so they are not run
+    // (with the reason), not pending (#6293, job cli-queue-b-6293).
+    not_tested: [...NOT_TESTED, 'Gemini 3 Flash and Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer them, and paid Gemini API calls are ruled out for this work, 2026-10-08)'],
+    ...(['3.8', '3.7', '3.6'].some(v => !SYR_CLI_TIERS.some(t => t.v === v)) ? { pending: ['3.8', '3.7', '3.6'].filter(v => !SYR_CLI_TIERS.some(t => t.v === v)).map(v => `Gemini ${v} Flash`) } : {}),
   });
   // The CLI arms (gemini-3.8 / 3.7 / 3.6-flash through `agy -p`, subscription, $0 billed; 2026-10-08): each its own
   // blinded read, with round 1's two Flash-Lite drafts in every item as anchors, so each is its own panel and compared
