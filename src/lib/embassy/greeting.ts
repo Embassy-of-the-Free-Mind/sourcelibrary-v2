@@ -44,8 +44,8 @@ export function isBareGreeting(message: string): boolean {
 }
 
 const WELCOME: Record<Locale, string> = withEnglishFallback({
-  en: 'Welcome to the reading room. I can find passages, page references, and illustrations across the collection — alchemy, Hermetica, Kabbalah, astrology, natural philosophy, and more.\n\nAsk me about an author, a work, or an idea — for example *"Where does Agrippa discuss the celestial harmony?"* or *"Show me the earliest emblem of the green lion."*',
-  es: 'Bienvenido a la sala de lectura. Puedo encontrar pasajes, referencias de página e ilustraciones en toda la colección: alquimia, Hermetica, Cábala, astrología, filosofía natural y más.\n\nPregúntame por un autor, una obra o una idea — por ejemplo *"¿Dónde trata Agripa la armonía celeste?"* o *"Muéstrame el emblema más antiguo del león verde."*',
+  en: 'Welcome to the reading room. I can find passages, page references, and illustrations across the collection: alchemy, Hermetica, Kabbalah, astrology, natural philosophy, and more.\n\nAsk me about an author, a work, or an idea, for example *"Where does Agrippa discuss the celestial harmony?"* or *"Show me the earliest emblem of the green lion."*',
+  es: 'Bienvenido a la sala de lectura. Puedo encontrar pasajes, referencias de página e ilustraciones en toda la colección: alquimia, Hermetica, Cábala, astrología, filosofía natural y más.\n\nPregúntame por un autor, una obra o una idea, por ejemplo *"¿Dónde trata Agripa la armonía celeste?"* o *"Muéstrame el emblema más antiguo del león verde."*',
 });
 
 /** The canned welcome for a bare greeting, in the reader's chrome language. */
@@ -74,7 +74,7 @@ export function isKeepalivePing(message: string): boolean {
 }
 
 const PING: Record<Locale, string> = withEnglishFallback({
-  en: 'Still here. Nothing was searched — this read as a keepalive rather than a question. Send one whenever you have it.',
+  en: 'Still here. Nothing was searched: this read as a keepalive rather than a question. Send one whenever you have it.',
   es: 'Sigo aquí. No se buscó nada: esto parecía una señal de actividad, no una pregunta. Envíala cuando la tengas.',
 });
 
@@ -84,7 +84,7 @@ export function pingReply(lang: Locale = 'en'): string {
 }
 
 const DUPLICATE: Record<Locale, string> = withEnglishFallback({
-  en: 'That is the same message as your last one, so I have not run it again — my previous answer stands above. If you want a different angle, say what changed or rephrase the question.',
+  en: 'That is the same message as your last one, so I have not run it again. My previous answer stands above. If you want a different angle, say what changed or rephrase the question.',
   es: 'Es el mismo mensaje que el anterior, así que no lo he vuelto a ejecutar: mi respuesta anterior sigue arriba. Si quieres otro enfoque, di qué ha cambiado o reformula la pregunta.',
 });
 

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/bald10",
+  "edition": "De Eclipsi Solari Anno MDCLIV Die XII. Augusti, In Europa — 1662",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a48d782df05f7ea342b7309",
+  "page_number": 163,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 178076,
+    "to_char": 178319,
+    "overlap": 0.5,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Seven text lines then woodcut tailpiece; ref ends ~1.5 short lines early (missing 'ferociam propinavimus').",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      161,
+      162,
+      163
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.756Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "fe45b1a20d57911101b6c5e6c1a646e2bca425489c985002a292501d3f62b418",
+  "unit": {
+    "chars": 243
+  }
+}

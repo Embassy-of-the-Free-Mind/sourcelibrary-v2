@@ -1,0 +1,184 @@
+{
+ "note": "descriptive only (prereg); f_for_s counted only where a reference exists; ref_* are the reference text's own counts (EEBO-TCP keeps ſ; Wikisource often normalises it)",
+ "engines": {
+  "gemini-3.1-flash-lite": {
+   "eebo-tcp-5488": {
+    "pages": 73,
+    "long_s_glyph": 491,
+    "f_for_s": 1030,
+    "abbrev_marks": 10,
+    "ligature_glyphs": 153,
+    "ref_long_s_glyph": 634,
+    "ref_abbrev_marks": 14
+   },
+   "eebo-tcp-latin-5660": {
+    "pages": 25,
+    "long_s_glyph": 67,
+    "f_for_s": 580,
+    "abbrev_marks": 21,
+    "ligature_glyphs": 209,
+    "ref_long_s_glyph": 305,
+    "ref_abbrev_marks": 21
+   },
+   "ref-ws": {
+    "pages": 24,
+    "long_s_glyph": 356,
+    "f_for_s": 0,
+    "abbrev_marks": 92,
+    "ligature_glyphs": 293,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "latin-pre1700": {
+    "pages": 23,
+    "long_s_glyph": 86,
+    "f_for_s": 0,
+    "abbrev_marks": 206,
+    "ligature_glyphs": 169,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "longs-en-fr": {
+    "pages": 28,
+    "long_s_glyph": 92,
+    "f_for_s": 0,
+    "abbrev_marks": 8,
+    "ligature_glyphs": 21,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "german-fraktur": {
+    "pages": 24,
+    "long_s_glyph": 225,
+    "f_for_s": 0,
+    "abbrev_marks": 0,
+    "ligature_glyphs": 126,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   }
+  },
+  "gemini-3.1-flash-lite-b": {
+   "eebo-tcp-5488": {
+    "pages": 73,
+    "long_s_glyph": 491,
+    "f_for_s": 1092,
+    "abbrev_marks": 10,
+    "ligature_glyphs": 156,
+    "ref_long_s_glyph": 634,
+    "ref_abbrev_marks": 14
+   },
+   "eebo-tcp-latin-5660": {
+    "pages": 25,
+    "long_s_glyph": 67,
+    "f_for_s": 580,
+    "abbrev_marks": 21,
+    "ligature_glyphs": 209,
+    "ref_long_s_glyph": 305,
+    "ref_abbrev_marks": 21
+   },
+   "ref-ws": {
+    "pages": 24,
+    "long_s_glyph": 356,
+    "f_for_s": 0,
+    "abbrev_marks": 92,
+    "ligature_glyphs": 293,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   }
+  },
+  "mineru25-pro": {
+   "eebo-tcp-5488": {
+    "pages": 73,
+    "long_s_glyph": 0,
+    "f_for_s": 1228,
+    "abbrev_marks": 11,
+    "ligature_glyphs": 97,
+    "ref_long_s_glyph": 634,
+    "ref_abbrev_marks": 14
+   },
+   "eebo-tcp-latin-5660": {
+    "pages": 25,
+    "long_s_glyph": 0,
+    "f_for_s": 376,
+    "abbrev_marks": 9,
+    "ligature_glyphs": 119,
+    "ref_long_s_glyph": 305,
+    "ref_abbrev_marks": 21
+   },
+   "ref-ws": {
+    "pages": 24,
+    "long_s_glyph": 0,
+    "f_for_s": 0,
+    "abbrev_marks": 83,
+    "ligature_glyphs": 161,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "latin-pre1700": {
+    "pages": 23,
+    "long_s_glyph": 0,
+    "f_for_s": 0,
+    "abbrev_marks": 101,
+    "ligature_glyphs": 112,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "longs-en-fr": {
+    "pages": 28,
+    "long_s_glyph": 0,
+    "f_for_s": 0,
+    "abbrev_marks": 0,
+    "ligature_glyphs": 13,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "german-fraktur": {
+    "pages": 24,
+    "long_s_glyph": 0,
+    "f_for_s": 0,
+    "abbrev_marks": 0,
+    "ligature_glyphs": 69,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   }
+  },
+  "gemini-3-flash-preview": {
+   "ref-ws": {
+    "pages": 24,
+    "long_s_glyph": 564,
+    "f_for_s": 0,
+    "abbrev_marks": 209,
+    "ligature_glyphs": 313,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "latin-pre1700": {
+    "pages": 23,
+    "long_s_glyph": 629,
+    "f_for_s": 0,
+    "abbrev_marks": 300,
+    "ligature_glyphs": 164,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "longs-en-fr": {
+    "pages": 28,
+    "long_s_glyph": 679,
+    "f_for_s": 0,
+    "abbrev_marks": 11,
+    "ligature_glyphs": 22,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   },
+   "german-fraktur": {
+    "pages": 24,
+    "long_s_glyph": 111,
+    "f_for_s": 0,
+    "abbrev_marks": 11,
+    "ligature_glyphs": 134,
+    "ref_long_s_glyph": 0,
+    "ref_abbrev_marks": 0
+   }
+  }
+ }
+}

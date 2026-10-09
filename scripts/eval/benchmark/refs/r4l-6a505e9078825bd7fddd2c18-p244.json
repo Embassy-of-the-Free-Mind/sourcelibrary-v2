@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg7",
+  "edition": "Satyrarum libri quinque priores. — Basel: Oporinus, 1555.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a505e9078825bd7fddd2c18",
+  "page_number": 244,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 286944,
+    "to_char": 288358,
+    "overlap": 0.368,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Ref matches 'tans, animumque' to 'quod' + pad; marginal 'Socrates' not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      243,
+      244,
+      245
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.389Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "0af39357120004e5146bece64d24063e7b65508544e6daa7b8a3ea6839b78313",
+  "unit": {
+    "chars": 1414
+  }
+}

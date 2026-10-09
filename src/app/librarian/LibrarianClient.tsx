@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 import { isTenantSubdomain } from '@/hooks/useEmbedContext';
-import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals } from '@/lib/embassy/citation-fixes';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from './_components/MessageBody';
@@ -676,6 +676,16 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                   updateLastAssistant(m => ({
                     ...m,
                     content: applyCitationFixes(m.content, event.fixes || []),
+                  }));
+                  break;
+
+                case 'grounding_edits':
+                  // The grounding pass (#5904) rewrote spans of the streamed
+                  // answer — a sentence no page supports, a quote's marks, a
+                  // page citation, a caption. Same rewrite as the saved message.
+                  updateLastAssistant(m => ({
+                    ...m,
+                    content: applyGroundingEdits(m.content, event.edits || []),
                   }));
                   break;
 

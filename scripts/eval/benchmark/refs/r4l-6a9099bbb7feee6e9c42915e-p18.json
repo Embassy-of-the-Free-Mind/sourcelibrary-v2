@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg3",
+  "edition": "Hieremias: tragoedia nova. — Basel: [?], 1551.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a9099bbb7feee6e9c42915e",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 21314,
+    "to_char": 21720,
+    "overlap": 0.476,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Close of epistle, dated Basel 4 July 1551; ref matches; left margin of text faded.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      16,
+      17,
+      18
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.417Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "e7b11b8808018aa27b7d804488b7a10cc00fabe4392487f415caf21a1a798469",
+  "unit": {
+    "chars": 406
+  }
+}
