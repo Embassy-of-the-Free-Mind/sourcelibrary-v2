@@ -360,7 +360,7 @@ export default function SudaBenchmarkPage() {
             loyalty. The section now reports the corrected finding.
           </li>
           <li>
-            <strong>12 August 2026: the 27,149-entry census demoted to a screen.</strong>
+            <strong>12 August 2026: the 27,149-entry census demoted to a screen.</strong>{' '}
             Scored against the gold labels it missed all three known events, and on seeded
             contradictions it caught four of twelve. Its clean-rate and recitation percentages were
             removed as statistics and are now described as candidates at measured low sensitivity.
