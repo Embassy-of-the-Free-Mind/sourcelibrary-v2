@@ -230,14 +230,14 @@ export default function SoundLaboratoryPage() {
             src="https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a741-0.jpg?v=17718766663"
             alt="A personified wind head blows rays onto a string marked A through F, showing how pressing it at different division points yields different notes"
             caption={<>Wind as plectrum, from the wind-harp chapter: press the string at a division point and the remainder sounds the octave, the fifth (<em>necessariò quintam sonabit</em>), the fifteenth — one string, many voices, by pure arithmetic.</>}
-            href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=382"
+            href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher?page=389"
             sourceLabel="Musurgia Universalis II, p382"
           />
           <FolioFigure
             src="https://images.sourcelibrary.org/gallery/695592747bd6d2cd1d61a5c3/695592757bd6d2cd1d61a73f-0.jpg?v=17718766731"
             alt="Diagram of a wind-harp: a box of strings sounded by wind entering through an opening, with no player"
             caption={<>Two pages earlier, the wind-harp: strings that sound with no player at all.</>}
-            href="/book/kircher-musurgia-universalis-vol-ii-1650-kircher?page=380"
+            href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher?page=387"
             sourceLabel="Musurgia Universalis II, p380"
           />
         </FolioPair>

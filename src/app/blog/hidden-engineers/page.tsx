@@ -521,7 +521,7 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous?page=58"
+                href="/book/the-secret-symbols-of-the-rosicrucians?page=164"
                 className="text-accent-rust hover:underline"
               >
                 <em>Die Lehren der Rosenkreuzer</em>, p. 58&ndash;59

@@ -241,7 +241,7 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Pages 58&ndash;59 of <em>Die Lehren der Rosenkreuzer</em> contain what may be
             the most unexpected document in the collection: a{' '}
-            <Link href="/book/690c27e6e0787282ad593282?page=58" className="text-accent-rust hover:underline">
+            <Link href="/book/the-secret-symbols-of-the-rosicrucians?page=164" className="text-accent-rust hover:underline">
               construction plan for a steam-powered device</Link>,
             labeled &ldquo;Elijah&rsquo;s Chariot.&rdquo; It includes materials (red brick,
             iron plate, angle iron bands), measurements (scale of three-quarters of an inch
