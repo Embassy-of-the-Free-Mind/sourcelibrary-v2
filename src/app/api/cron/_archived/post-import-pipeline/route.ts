@@ -1250,7 +1250,7 @@ export async function GET(request: NextRequest) {
             );
             if (hasSplitPages === 0) {
               await setPipelineStatus(db, book.id, 'needs_attention', {
-                error: 'Book needs splitting before OCR — has two-page spreads',
+                error: 'Book needs splitting before OCR: has two-page spreads',
               });
               log.needs_attention++;
               log.errors.push(`OCR skip ${book.id} (${book.title}): needs splitting first`);
@@ -1275,7 +1275,7 @@ export async function GET(request: NextRequest) {
 
           if (httpPageCount === 0) {
             await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: 'No pages with HTTP image URLs — cannot OCR',
+              error: 'No pages with HTTP image URLs; cannot OCR',
             });
             log.needs_attention++;
             log.errors.push(`OCR skip ${book.id} (${book.title}): no HTTP image URLs`);
