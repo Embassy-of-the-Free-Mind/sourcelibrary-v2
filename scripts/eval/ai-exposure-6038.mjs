@@ -43,7 +43,7 @@ import { wilson } from './lib/agreement-stats.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, 'results', 'ai-exposure-6038');
 const PRIVATE = process.env.AIEXP_PRIVATE || '/root/claude-jobs/ai-exposure-6038-private';
-const SEED = 6038;
+export const SEED = 6038;
 const MAIN_N = 2000;
 const STRATUM_N = 150;
 const SUB_N = 500;
@@ -57,28 +57,28 @@ const args = Object.fromEntries(process.argv.slice(2).map((a) => {
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(path.join(PRIVATE, 'texts'), { recursive: true });
 
-const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
-const writeJsonl = (f, rows) => fs.writeFileSync(f, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+export const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
+export const writeJsonl = (f, rows) => fs.writeFileSync(f, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
 
 // ---------- catalogue normalisation ----------
-const LANG = { la: 'Latin', lat: 'Latin', de: 'German', ger: 'German', deu: 'German', fr: 'French', fre: 'French', fra: 'French', en: 'English', eng: 'English', it: 'Italian', ita: 'Italian', zh: 'Chinese', lzh: 'Classical Chinese', bo: 'Tibetan', sa: 'Sanskrit', pi: 'Pali', ar: 'Arabic', fa: 'Persian', he: 'Hebrew', heb: 'Hebrew', el: 'Greek', grc: 'Greek', nl: 'Dutch', es: 'Spanish', ja: 'Japanese', ko: 'Korean', ru: 'Russian' };
-const SENTINEL = /^(unknown|und|x-unknown|not applicable|no linguistic content|visual|n\/a|\?|)$/i;
-function langOf(b) {
+export const LANG = { la: 'Latin', lat: 'Latin', de: 'German', ger: 'German', deu: 'German', fr: 'French', fre: 'French', fra: 'French', en: 'English', eng: 'English', it: 'Italian', ita: 'Italian', zh: 'Chinese', lzh: 'Classical Chinese', bo: 'Tibetan', sa: 'Sanskrit', pi: 'Pali', ar: 'Arabic', fa: 'Persian', he: 'Hebrew', heb: 'Hebrew', el: 'Greek', grc: 'Greek', nl: 'Dutch', es: 'Spanish', ja: 'Japanese', ko: 'Korean', ru: 'Russian' };
+export const SENTINEL = /^(unknown|und|x-unknown|not applicable|no linguistic content|visual|n\/a|\?|)$/i;
+export function langOf(b) {
   const raw = String(b.language || '').trim();
   const l = LANG[raw.toLowerCase()] || raw;
   return SENTINEL.test(l) ? null : l;
 }
-const STRATA = {
+export const STRATA = {
   nalanda: (b) => /^(tibetan|sanskrit|pali)$/i.test(langOf(b) || ''),
   hermetica: (b) => b.provider === 'bph' || (b.collections || []).some((c) => /herme|kabbal|cabal|alchem|rosicruc|theosoph|magia|magic|occult|astrolog/i.test(c)),
   chinese: (b) => /chinese/i.test(langOf(b) || ''),
   arabic_persian: (b) => /^(arabic|persian|ottoman turkish)$/i.test(langOf(b) || ''),
   hebrew: (b) => /^(hebrew|judeo-|aramaic)/i.test(langOf(b) || ''),
 };
-const fold = (s) => String(s || '').normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-const SENTINEL_AUTHOR = /^(unknown|anonymous|anon|anonym|unbekannt|n a|none|various|)$/;
-function authorKey(b) { const a = fold(b.author).split(' ').filter((w) => w.length > 2).sort().slice(0, 3).join(' '); return SENTINEL_AUTHOR.test(a) ? null : a; }
-function workKey(b) {
+export const fold = (s) => String(s || '').normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+export const SENTINEL_AUTHOR = /^(unknown|anonymous|anon|anonym|unbekannt|n a|none|various|)$/;
+export function authorKey(b) { const a = fold(b.author).split(' ').filter((w) => w.length > 2).sort().slice(0, 3).join(' '); return SENTINEL_AUTHOR.test(a) ? null : a; }
+export function workKey(b) {
   if (b.work_id) return `w:${b.work_id}`;
   const a = authorKey(b); const t = fold(b.title).slice(0, 60);
   return a && t && !/^(unknown|untitled)/.test(t) ? `t:${a}|${t}` : `b:${b.id}`;
@@ -116,7 +116,7 @@ async function stageIds() {
 }
 
 // ---------- page text (what a reader sees) ----------
-function cleanServed(raw) {
+export function cleanServed(raw) {
   return String(raw || '')
     .replace(/<(scan-quality|language|script|page-type|page-num|header|meta|warning|vocab|image-desc|figure|detected-images|columns)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ').replace(/\*\*/g, '').replace(/[ \t]+/g, ' ').trim();
@@ -188,7 +188,7 @@ async function stageDraw() {
   fs.writeFileSync(path.join(OUT, 'draw-summary.json'), JSON.stringify(summary, null, 1) + '\n');
   console.log(summary);
 }
-const pick = (b) => ({ id: b.id, work_id: b.work_id, title: b.title, author: b.author, year: b.year, language: b.language, visible: b.visible, hidden_reason: b.hidden_reason, provider: b.provider, ia: b.ia, created_at: b.created_at, disposition: b.disposition, has_en: b.has_en, n_tr: b.n_tr, tr_publishers: b.tr_publishers, tr_oldest: b.tr_oldest, is_first_translation: b.is_first_translation, collections: b.collections });
+export const pick = (b) => ({ id: b.id, work_id: b.work_id, title: b.title, author: b.author, year: b.year, language: b.language, visible: b.visible, hidden_reason: b.hidden_reason, provider: b.provider, ia: b.ia, created_at: b.created_at, disposition: b.disposition, has_en: b.has_en, n_tr: b.n_tr, tr_publishers: b.tr_publishers, tr_oldest: b.tr_oldest, is_first_translation: b.is_first_translation, collections: b.collections });
 
 // ---------- stage: controls ----------
 // Canonical positives we hold: [label, title regex, author regex | null]. The first held edition
@@ -221,7 +221,7 @@ const KNOWN = [
 ];
 // Invented decoys: plausible titles, authors and years, in the corpus's languages. None is a real
 // book (checked by the author of this list against memory; a decoy a model "knows" is a finding).
-const DECOYS = [
+export const DECOYS = [
   ['De concordia elementorum libri tres', 'Ioannes Bertholdus Vlmensis', 1583, 'Latin'], ['Tractatus de lumine metallorum occulto', 'Matthias Kesselring', 1617, 'Latin'],
   ['Disputatio physica de igne coelesti et terrestri', 'Henricus Altdorfius', 1642, 'Latin'], ['Speculum mysteriorum Hermeticorum', 'Petrus Lanzenius', 1609, 'Latin'],
   ['Clavis sapientiae Salomonis restituta', 'Andreas Wolfhardus', 1598, 'Latin'], ['Commentarius in Psalmum centesimum decimum nonum', 'Ioannes Caspar Rötelius', 1671, 'Latin'],
@@ -267,7 +267,7 @@ async function stageControls() {
 
 // ---------- probe ----------
 const PROMPT_VERSION = 'ai-exposure-6038-v1';
-function bookLine(i, b) {
+export function bookLine(i, b) {
   const parts = [`Title: ${String(b.title).replace(/\s+/g, ' ').slice(0, 220)}`];
   if (b.author && !SENTINEL_AUTHOR.test(fold(b.author))) parts.push(`Author: ${b.author}`);
   if (b.year) parts.push(`Year: ${b.year}`);
@@ -329,7 +329,7 @@ function stagePackets() {
   console.log(set, packets.length, 'packets', packets.reduce((s, p) => s + p.length, 0), 'items');
 }
 
-function parseAnswers(text, ids) {
+export function parseAnswers(text, ids) {
   const m = String(text || '').match(/\[[\s\S]*\]/);
   if (!m) return null;
   let arr; try { arr = JSON.parse(m[0]); } catch { return null; }
@@ -400,7 +400,7 @@ function stageIngest() {
 // Normalise per non-latin-text-operations.md: NFKC, letters+digits of EVERY script, marks
 // dropped on both sides alike, Latin early-modern folds (ſ/s, v/u, j/i, æ, œ, ß), no spaces
 // (word segmentation differs between OCR and memory; Tibetan, CJK have none or tsheg).
-function normQuote(s) {
+export function normQuote(s) {
   return String(s || '').normalize('NFKC').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()
     .replace(/ſ/g, 's').replace(/æ/g, 'ae').replace(/œ/g, 'oe').replace(/ß/g, 'ss').replace(/v/g, 'u').replace(/j/g, 'i')
     .replace(/[^\p{L}\p{N}]+/gu, '');
@@ -411,7 +411,7 @@ function grams(s, n) { const g = new Set(); for (let i = 0; i + n <= s.length; i
 // verbatim (after normalisation) in our text. Runs survive scattered OCR errors; a 5-gram
 // share did not — generic English sentences scored 0.6–0.75 against unrelated books.
 const gramCache = new Map();
-function containment(quote, text, key) {
+export function containment(quote, text, key) {
   const q = normQuote(quote); const t = normQuote(text);
   const han = isHan(q); const L = han ? 4 : 12; const minLen = han ? 8 : 20;
   if (q.length < minLen) return { judgeable: false, why: 'quote too short' };
@@ -423,7 +423,7 @@ function containment(quote, text, key) {
   return { judgeable: true, score: +(cov.reduce((s, x) => s + x, 0) / q.length).toFixed(3), qlen: q.length };
 }
 const textCache = new Map();
-function textOf(id) {
+export function textOf(id) {
   if (!textCache.has(id)) { const f = path.join(PRIVATE, 'texts', `${id}.txt`); textCache.set(id, fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : ''); }
   return textCache.get(id);
 }
@@ -521,7 +521,7 @@ function fuse(b, byModel, models, verifyMap, { prior = true, scale = 1 } = {}) {
 }
 
 // ---------- stage: report ----------
-function bootstrap(vals, iters = 4000, seed = SEED) {
+export function bootstrap(vals, iters = 4000, seed = SEED) {
   const rng = makeRng(seed); const n = vals.length; if (n < 2) return [null, null]; const ms = [];
   for (let i = 0; i < iters; i++) { let s = 0; for (let j = 0; j < n; j++) s += vals[Math.floor(rng() * n)]; ms.push(s / n); }
   ms.sort((a, b) => a - b); return [ms[Math.floor(iters * 0.025)], ms[Math.floor(iters * 0.975)]];
@@ -535,7 +535,7 @@ function summarise(ps, w = null) {
   if (w) { const W = w.reduce((s, x) => s + x, 0); out.book_weighted_new_lt25 = +(100 * ps.reduce((s, p, i) => s + (p < 0.25 ? w[i] : 0), 0) / W).toFixed(1); out.book_weighted_expected_in = +(100 * ps.reduce((s, p, i) => s + p * w[i], 0) / W).toFixed(1); }
   return out;
 }
-function cohenKappa(pairs, cats = ['yes', 'no', 'unsure']) {
+export function cohenKappa(pairs, cats = ['yes', 'no', 'unsure']) {
   const n = pairs.length; if (!n) return null; let agree = 0; const pa = {}, pb = {};
   for (const [a, b] of pairs) { if (a === b) agree++; pa[a] = (pa[a] || 0) + 1; pb[b] = (pb[b] || 0) + 1; }
   const po = agree / n; const pe = cats.reduce((s, c) => s + ((pa[c] || 0) / n) * ((pb[c] || 0) / n), 0);
@@ -682,8 +682,10 @@ function stageReport() {
   console.log(JSON.stringify({ answer_rates: rep.answer_rates, kappa: rep.kappa, by_disposition: rep.by_disposition, verify: rep.verify, spend: rep.spend_usd }, null, 1));
 }
 
-const stage = args.stage;
-if (stage === 'ids') await stageIds();
+// Run 2 (scripts/eval/ai-exposure-r2-6038.mjs) imports the helpers above; dispatch only when run directly.
+const stage = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) ? args.stage : '__imported__';
+if (stage === '__imported__') { /* imported as a module */ }
+else if (stage === 'ids') await stageIds();
 else if (stage === 'draw') await stageDraw();
 else if (stage === 'controls') await stageControls();
 else if (stage === 'packets') stagePackets();
