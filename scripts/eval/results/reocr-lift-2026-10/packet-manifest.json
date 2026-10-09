@@ -1,0 +1,3136 @@
+{
+ "built": "2026-10-03T22:44:16.203Z",
+ "seed": 5700,
+ "input": "/data/scratch/sl/reocr-lift-5700-work/records.jsonl",
+ "input_sha": "30d54d33767831ac",
+ "any_private": true,
+ "n_items": 93,
+ "n_gate": 9,
+ "n_main": 84,
+ "chunk": 5,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/gate-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/gate-02.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/gate-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-02.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-03.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-04.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-05.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-06.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-07.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-07.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-08.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-08.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-09.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-09.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-10.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-10.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-11.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-11.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-12.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-12.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-13.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-13.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-14.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-14.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-15.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-15.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-16.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-16.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j1/main-17.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j1/main-17.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/gate-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/gate-02.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/gate-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-02.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-03.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-04.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-05.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-06.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-07.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-07.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-08.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-08.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-09.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-09.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-10.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-10.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-11.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-11.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-12.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-12.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-13.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-13.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-14.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-14.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-15.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-15.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-16.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-16.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/reocr-lift-5700-work/packet/packets/j2/main-17.jsonl",
+   "verdicts": "/data/scratch/sl/reocr-lift-5700-work/packet/verdicts/j2/main-17.jsonl",
+   "n": 4
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "c87fadfa-1543-44b9-a138-573c144246e6_00328",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page_number": 328,
+   "reference_meta": {
+    "title": "A Tract of Great Price concerning the Philosophical Stone (Concerning the Generation of Metals), in The Hermetic Museum, Restored and Enlarged, vol. I",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic Museum vol. I, pp. 249-250 (end of ch. I to start of ch. II)",
+    "url": "https://archive.org/download/b24927363_0001/b24927363_0001_djvu.txt",
+    "source_edition_used_by_translator": "Musaeum Hermeticum reformatum et amplificatum, Frankfurt 1678 (same edition as ours)",
+    "coverage_note": "~90%. Waite smooths several clauses: 'quo ex itidem aurum fieri potest quam ex aliis metallis, nisi aestu suo destituatur vel naturalis operatio illi non adimatur' becomes 'Like all the other metals it may still be developed into gold, if it remain under the influence of its natural heat'; 'nec etiam est materia quae ad impuram aliquam formam spectat, qualia imperfecta metalla sunt' becomes 'that which has once become perfectly pure can never become impure again'; 'quam finis fiet ad quem natura laborando tendit' becomes 'because gold is the highest possible stage of metallic development'. Page opens mid-word ('[albumque] naturae sulphur'); the English cut starts at 'and white sulphur'."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95",
+   "page_number": 256,
+   "reference_meta": {
+    "title": "Alchemy, the Third Column of Medicine (Paragranum, Tractatus III), in The Hermetic and Alchemical Writings of Paracelsus, vol. II",
+    "translator": "A. E. Waite",
+    "year": 1894,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Cornell University Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic and Alchemical Writings of Paracelsus vol. II, pp. 160-161",
+    "url": "https://archive.org/download/cu31924092287113/cu31924092287113_djvu.txt",
+    "source_edition_used_by_translator": "Paracelsus, Opera omnia medico-chemico-chirurgica, Geneva (de Tournes) 1658, the same edition as ours",
+    "coverage_note": "~97%. All sentences rendered in order. The marginal notes (Alchimiae finis non aurum et argentum sed arcana; Venenum etiam in reb. optimis; Correctio Medicorum ventilatur; Diagridion; Corrigo Medicu quid; Ignis omnia perficit; Officinae reprehend.) are NOT translated by Waite, so the reference has no [margin] lines. Translator slips: 'Cotonea' (quince) rendered 'Comfrey'; 'Ut vero simplicitatem vestram tueamini' rendered 'See your own simplicity'; 'penes ipsas situm est, non penes te' rendered 'The power is in them, not in you'; 'sell their skill for money' expands 'venditant'. Waite's 'how it is separated' adds 'these elements'."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aea708971abe996d21b4aa_00471",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "69aea708971abe996d21b4aa",
+   "page_number": 471,
+   "reference_meta": {
+    "title": "Phisicke against Fortune, aswell prosperous, as aduerse",
+    "translator": "Thomas Twyne",
+    "year": 1579,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, end of Dialogue xxv and Dialogue xxvi 'Of shame procured by meanes of vnwoorthy commendation'",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A09530/master/A09530.xml",
+    "source_edition_used_by_translator": "16th-c. Latin De remediis (Twyne 1579); our 1649 edition has the same dialogue numbering (Dial. XXVI) here",
+    "coverage_note": "~90%: all dialogue exchanges rendered, but (1) the verse motto 'Parce laudato, nam cum laudaris inique / Si rursus damnes, pars leuitatis erit' at the head of Dial. XXVI is not in Twyne; (2) in Reason's first reply the TCP text is defective ('springeth from a good roter and good and innocent persons') - the clause 'Boni enim, & innocui, quales ipsi sunt' is garbled in the source; (3) 'Haec quidem pro te volens patior' expanded to 'All these thynges ... doo I wyllyngly susteyne for thy sake'. Long s normalised to s."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699062f5ef12272ffdc8e9d5_00505",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "699062f5ef12272ffdc8e9d5",
+   "page_number": 505,
+   "reference_meta": {
+    "title": "The City of God, Volume II",
+    "translator": "Marcus Dods",
+    "year": 1871,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book XIX, ch. 23 (Porphyry's oracles; 'He that sacrificeth unto any god...'), from 'to God, and command it to worship Him' to 'would offer one sacrifice.'",
+    "url": "https://www.gutenberg.org/cache/epub/45305/pg45305.txt",
+    "source_edition_used_by_translator": "Benedictine (Maurist) text",
+    "coverage_note": "~90% covered. Dods omits Augustine's sentence 'ne forte quia ait domino soli, deum Solem credat esse quispiam cui sacrificandum putet. Quod non ita esse intellegendum in scripturis Graecis facillime reperitur' and replaces it with his footnote 661 (included inline in brackets); the second repetition 'Sacrificans diis eradicabitur, inquit, nisi domino tantum' is abridged to '\"He that sacrifices,\" He says'. 'ubique' in the first line is not rendered."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69523495ab34727b1f044a45_00063",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "69523495ab34727b1f044a45",
+   "page_number": 63,
+   "reference_meta": {
+    "title": "The Malleus Maleficarum of Heinrich Kramer and James Sprenger",
+    "translator": "Montague Summers",
+    "year": 1928,
+    "licence": "Public domain in the US (published 1928; US term expired 2024)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Part I, Question IX, 'Solutions of the Arguments' (entire) and Question X from its opening to 'he does so either by projecting himself'",
+    "url": "https://archive.org/download/MalleusMaleficarumHeinrichKramer/Malleus%20Maleficarum%2C%20Heinrich%20Kramer_djvu.txt",
+    "source_edition_used_by_translator": "Summers used a later printed edition (not stated precisely; text matches the 1486 editio princeps here)",
+    "coverage_note": "~100% covered. The archive.org text is OCR of a printout of the Windhaven online edition of Summers 1928; OCR errors corrected ('deviis'->'devils', 'ciear'->'clear', '2ncl'->'2nd'); Summers' own wording kept, including his 'so also can devils taken off that member'. Summers renders the canon reference 'xxvi. q. v. Episcopi ex concilio Ancyrensi' only as 'Episcopus (XXVI, 5)'. Marginal headings rendered by Summers' section titles."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69dbc9491040d1d5e20a1afd_00087",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "69dbc9491040d1d5e20a1afd",
+   "page_number": 87,
+   "reference_meta": {
+    "title": "Cicero, De Officiis (Loeb Classical Library)",
+    "translator": "Walter Miller",
+    "year": 1913,
+    "licence": "Public domain (LacusCurtius transcription of the 1913 Loeb)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, §§27 (end)–30 (start): from 'actually embraced whole provinces' to 'But we do not all feel this need to the same extent'",
+    "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Cicero/de_Officiis/2A*.html",
+    "source_edition_used_by_translator": "Miller's Loeb Latin text (1913)",
+    "coverage_note": "~95% covered. The rubric 'De caritate adipiscenda' (added in the 1465 print) has no counterpart in Miller. The page ends with 'Sed ea non pariter' (sentence completed on the next page: 'omnes egemus'); the cut ends at Miller's rendering of that clause. Miller's section numbers and page markers removed."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b21d1a429e087c6f866ee7_00452",
+   "track": "T1",
+   "lang": "Latin",
+   "book_id": "69b21d1a429e087c6f866ee7",
+   "page_number": 452,
+   "reference_meta": {
+    "title": "Physical Science in the Time of Nero, being a translation of the Quaestiones Naturales of Seneca",
+    "translator": "John Clarke",
+    "year": 1910,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Naturales Quaestiones Book VII, ch. 25 (end, 'the character of their paths') – ch. 26 – ch. 27 §3 ('does not correspond to the type'); Clarke pp. 299–301 (his chapter numbering XXVI–XXVII)",
+    "url": "https://archive.org/download/physicalsciencei00seneiala/physicalsciencei00seneiala_djvu.txt",
+    "source_edition_used_by_translator": "Gercke (Teubner, 1907) text",
+    "coverage_note": "~95% covered. Clarke inserts the name 'Apollonius' for the 1515 'inquit' (his reading of the opponent); Clarke's 'Aries again rises in a moment' follows the reading 'exoritur' given as a marginal variant in the 1515 print (text: 'excolitur'). OCR junk (running heads, page and section numbers, hyphenation) removed. The page ends mid-sentence 'nec sit [ceteris similis]'."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699389f10f04c37dcfa627f0_00160",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "699389f10f04c37dcfa627f0",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "The Dissertations of Maximus Tyrius, vol. II, Dissertation XXIX: Whether poets have entertained better conceptions about the gods than philosophers",
+    "translator": "Thomas Taylor",
+    "year": 1804,
+    "licence": "public domain (US & worldwide; translator d. 1835)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Maximus of Tyre, Or. 4.1–3 (Hobein) = Davies/Taylor Dissertation XXIX, Taylor vol. II pp. 97–99",
+    "url": "https://archive.org/stream/bub_gb_YcYfAAAAMAAJ/bub_gb_YcYfAAAAMAAJ_djvu.txt",
+    "coverage_note": "full (page begins at 'οὕτω τοι καὶ τὰ ποιητικῆς πρὸς φιλοσοφίαν ἔχει' and breaks off at 'σοφώτερον Ἀριστοτέλους'); preceding simile and the rest of the final sentence given as context"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699388f374305116d72d08a6_00120",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "699388f374305116d72d08a6",
+   "page_number": 120,
+   "reference_meta": {
+    "title": "The Dissertations of Maximus Tyrius, vol. II, Dissertation XXVIII (Whether disciplines are reminiscences)",
+    "translator": "Thomas Taylor",
+    "year": 1804,
+    "licence": "public domain (US & worldwide; translator d. 1835)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Maximus of Tyre, Or. 10.6–7 (Hobein; 'Εἰ αἱ μαθήσεις ἀναμνήσεις') = Davies/Taylor Dissertation XXVIII, Taylor vol. II pp. 92–93",
+    "url": "https://archive.org/stream/bub_gb_YcYfAAAAMAAJ/bub_gb_YcYfAAAAMAAJ_djvu.txt",
+    "coverage_note": "full; page begins at ἔρως (the word 'beauty'/κάλλει is on the previous page, hence the context line) and ends with 'ὁ δὲ ἐκείνῳ τὴν ἀσ-', the rest of ἀσφάλειαν running onto the next page; bleed-through of a diagram from the verso at the foot not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a5e5e985fa13e734e41cba_00196",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69a5e5e985fa13e734e41cba",
+   "page_number": 196,
+   "reference_meta": {
+    "title": "The Commentaries of Proclus on the Timaeus of Plato, Book III (Martin Euser's 2010 e-text of Taylor's translation)",
+    "translator": "Thomas Taylor",
+    "year": 1820,
+    "licence": "public domain (US & worldwide; translator d. 1835)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Proclus, In Tim. III, on Tim. 35a (mixture of same/different/essence) (soul as medium between same and different; harmony of the soul) = Taylor 1820 vol. II (Euser e-text pp. 684–686, margin 2,161–2,162)",
+    "url": "https://archive.org/download/proclus-on-the-timaeus-of-plato/PROCLUS_ON_THE_TIMAEUS_OF_PLATO_djvu.txt",
+    "coverage_note": "covers the LEFT page of the spread (MS p. 376), which is all that the page OCR transcribes; the right page (MS p. 377, continuing 'ὑφισταμένου σύγκρασιν...' through the Demiurge's mixing) is NOT covered; left page ends mid-word 'ὑφι-' so the rest of the sentence is context"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aff9af3346b1fdd94b33c9_00265",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69aff9af3346b1fdd94b33c9",
+   "page_number": 265,
+   "reference_meta": {
+    "title": "The Philosophical and Mathematical Commentaries of Proclus on the First Book of Euclid's Elements, vol. II (on Prop. VI)",
+    "translator": "Thomas Taylor",
+    "year": 1789,
+    "licence": "public domain (US & worldwide; translator d. 1835)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Proclus, In Eucl. I, on Prop. 6, Friedlein p. 253.1–20 (Basel/Grynaeus p. 68; Barocius p. 144) = Taylor 1789 vol. II pp. 55–56",
+    "url": "https://archive.org/download/philosophicalan00marigoog/philosophicalan00marigoog_djvu.txt",
+    "coverage_note": "Greek main text covered; Friedlein's Latin critical apparatus at the foot not covered; page ends mid-word (μερικώτε-), rest of sentence given as context"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69920bff01d3dcea63458842_00389",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69920bff01d3dcea63458842",
+   "page_number": 389,
+   "reference_meta": {
+    "title": "Origen Against Celsus, Book IV (ANF vol. 4)",
+    "translator": "Frederick Crombie",
+    "year": 1885,
+    "licence": "public domain (US & worldwide; translator d. 1889)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Contra Celsum 4.31 (Koetschau I.301.1-33) = ANF 4 IV.xxxi",
+    "url": "https://www.newadvent.org/fathers/04164.htm",
+    "coverage_note": "main text full; Koetschau's apparatus and source-notes at page foot not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69bfccd88ab50eb88e8c69fd_00521",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69bfccd88ab50eb88e8c69fd",
+   "page_number": 521,
+   "reference_meta": {
+    "title": "Gregory Nazianzen, Oration 37, On the Words of the Gospel (Matt. 19:1) (NPNF2 vol. 7)",
+    "translator": "Charles Gordon Browne & James Edward Swallow",
+    "year": 1894,
+    "licence": "public domain (US & worldwide; translators d. before 1956)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Or. 37.5 (last word)-37.6 (PG 36.289) = NPNF2 7 Or. XXXVII.vi",
+    "url": "https://www.newadvent.org/fathers/310237.htm",
+    "coverage_note": "main text; ca. one line of Greek ('εἷς χοῦς ἀμφότεροι ... γεγόναμεν') is not rendered by the reference; partial facing-page column in left margin not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699438446879ff0184cb8593_00431",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "699438446879ff0184cb8593",
+   "page_number": 431,
+   "reference_meta": {
+    "title": "Fifty Spiritual Homilies of St. Macarius the Egyptian, Homily XXVII",
+    "translator": "A. J. Mason",
+    "year": 1921,
+    "licence": "public domain (US & worldwide; translator d. 1928)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Ps.-Macarius Hom. 27.21-22 (Coll. II; Pritchard 1698 p. 391) = Mason pp. 211-212",
+    "url": "https://archive.org/stream/fiftyspiritualho00pseuuoft/fiftyspiritualho00pseuuoft_djvu.txt",
+    "coverage_note": "Greek column covered (page header misreports language as Latin); Latin translation column not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "697b079711cc8928b55ea3a8_00659",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "697b079711cc8928b55ea3a8",
+   "page_number": 659,
+   "reference_meta": {
+    "title": "The Ecclesiastical History of Socrates Scholasticus (NPNF2 vol. 2)",
+    "translator": "A.C. Zenos",
+    "year": 1890,
+    "licence": "public domain (US & worldwide; translator d. 1942)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Socrates Scholasticus, Historia Ecclesiastica 6.22 (from 'insomuch that ... Eunomius') to 6.23 opening (death of Arcadius) = NPNF2 2, Socrates VI.xxii-xxiii",
+    "url": "https://www.newadvent.org/fathers/26016.htm",
+    "coverage_note": "full"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6952e4cc77f38f6761bc8c0b_00121",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "6952e4cc77f38f6761bc8c0b",
+   "page_number": 121,
+   "reference_meta": {
+    "title": "American Standard Version (Matthew)",
+    "translator": "American Revision Committee",
+    "year": 1901,
+    "licence": "public domain (US & worldwide; pub. 1901)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Matthew 16:4-9a (to 'τοὺς πέντε')",
+    "url": "https://ebible.org/eng-asv/MAT16.htm",
+    "coverage_note": "Main text covered; Ammonian section numbers, margin parallels and the critical apparatus (about two-thirds of the page) not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699246bebc722ec0ee81286a_00231",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "699246bebc722ec0ee81286a",
+   "page_number": 231,
+   "reference_meta": {
+    "title": "The Testaments of the Twelve Patriarchs, translated from the editor's Greek text",
+    "translator": "R.H. Charles",
+    "year": 1908,
+    "licence": "public domain (US & worldwide; translator d. 1931)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "T. Naphtali 9:1-3 + title and T. Gad 1:1-3a (Charles Greek ed. p. 158 = Charles transl. 1908 pp. 148-149)",
+    "url": "https://archive.org/stream/cu31924014615235/cu31924014615235_djvu.txt",
+    "coverage_note": "Main text covered; critical apparatus (lower two-thirds of page) and margin variant not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699389f2ce15387065947f46_00560",
+   "track": "T2",
+   "lang": "Byzantine Greek",
+   "book_id": "699389f2ce15387065947f46",
+   "page_number": 560,
+   "reference_meta": {
+    "title": "Memnon: History of Heracleia (Photius cod. 224), chapters 1–21 (attalus.org)",
+    "translator": "Andrew Smith",
+    "year": 2004,
+    "licence": "in-copyright",
+    "private": true,
+    "style": "literal",
+    "canonical": false,
+    "located": "Photius Bibl. cod. 224 = Memnon FGrH 434 F1 2.4–3.2 (Bekker 222b–223a)",
+    "url": "https://www.attalus.org/translate/memnon1.html",
+    "coverage_note": "full (page opens inside the word καρ|κίνωμα; the first English sentence is given whole)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6993838250654cbbe2916e4c_00385",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "6993838250654cbbe2916e4c",
+   "page_number": 385,
+   "reference_meta": {
+    "title": "The Histories of Polybius (Perseus TEI, perseus-eng2)",
+    "translator": "Evelyn S. Shuckburgh",
+    "year": 1889,
+    "licence": "public domain (US & worldwide; translator d. 1906)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Polybius IV.10.7–IV.11.6 (Vat. gr. 124, f. 187) = Shuckburgh vol. I pp. 286–287",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0543/tlg001/tlg0543.tlg001.perseus-eng2.xml",
+    "coverage_note": "full (both columns); OCR of the manuscript is heavily garbled but the span was fixed from the image"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69938e26d5a98fd66f4307b0_00136",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69938e26d5a98fd66f4307b0",
+   "page_number": 136,
+   "reference_meta": {
+    "title": "Pausanias, Description of Greece, vol. II (Book IV, Messenia)",
+    "translator": "W.H.S. Jones & H.A. Ormerod",
+    "year": 1926,
+    "licence": "public domain (US, pub. ≤1930)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Pausanias 4.9.4 (oracle) – 4.10.4 (Euphaes wounded)",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0525/tlg001/tlg0525.tlg001.perseus-eng2.xml",
+    "coverage_note": "full; the oracle's opening words may stand on the preceding page (page opens mid-oracle with Κόρῳ ἄχραντον), but the English oracle is given whole; page ends on λιποψυχήσαντα"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6993897cce1538706594711f_00614",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "6993897cce1538706594711f",
+   "page_number": 614,
+   "reference_meta": {
+    "title": "History of the Peloponnesian War, Book V",
+    "translator": "Richard Crawley",
+    "year": 1874,
+    "licence": "public domain (US & worldwide; translator d. 1893)",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Thucydides 5.35.7 (τοὺς ἄλλους Εἵλωτας) – 5.36.1 (… Ἀργείους σφίσι φίλους)",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0003/tlg001/tlg0003.tlg001.perseus-eng6.xml",
+    "coverage_note": "full Greek main text; margin notes (Μέγαρα? / scholia in right margin) not covered; page ends at φίλους mid-sentence, which falls inside Crawley's sentence ending 'rupture of the treaty' (the Greek continues καὶ ξυμμάχους γενέσθαι on the next page)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a08550315c643eb1af5470c_00099",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "6a08550315c643eb1af5470c",
+   "page_number": 99,
+   "reference_meta": {
+    "title": "Philostratus, The Life of Apollonius of Tyana, Book VII",
+    "translator": "F.C. Conybeare (as edited on Livius.org by Jona Lendering)",
+    "year": 1912,
+    "licence": "public domain (US & worldwide; translator d. 1924)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "VA 7.26 (last words, ἐκείνῳ ξυνόντες) – 7.31.1 (… πλέον ἀπέχοντες ἢ)",
+    "url": "https://www.livius.org/sources/content/philostratus-life-of-apollonius/philostratus-life-of-apollonius-7.26-30/ + .../philostratus-life-of-apollonius-7.31-35/",
+    "coverage_note": "full; Livius section markers ([7.28]…) omitted"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e41a008a8dae1074c52565_00515",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69e41a008a8dae1074c52565",
+   "page_number": 515,
+   "reference_meta": {
+    "title": "The Greek Romances of Heliodorus, Longus, and Achilles Tatius (Bohn), Achilles Tatius Book V",
+    "translator": "Rowland Smith",
+    "year": 1855,
+    "licence": "public domain (US, pub. ≤1930)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Achilles Tatius, Leucippe and Clitophon 5.23.5–5.24.3 (Salmasius p. 343; Bohn p. 465)",
+    "url": "https://archive.org/download/GreekRomancesOfHeliodorusLongusAndAchillesTatius/greek_romances_Smith_djvu.txt",
+    "coverage_note": "main Greek text covered; chapter heading ΚΕΦΑΛ. κδ' and the Latin/Greek variorum footnotes (Salmasius, Boden, Fabricius) not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e41a108a8dae1074c52a29_00493",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69e41a108a8dae1074c52a29",
+   "page_number": 493,
+   "reference_meta": {
+    "title": "The Greek Romances of Heliodorus, Longus, and Achilles Tatius (Bohn), Heliodorus, Aethiopica Book VII",
+    "translator": "Rowland Smith",
+    "year": 1855,
+    "licence": "public domain (US, pub. ≤1930)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Heliodorus, Aethiopica 7.19.4–7.20.1 (Mitscherlich, Script. Erot. Graeci vol. 2, p. 182; Bohn p. 169)",
+    "url": "https://archive.org/download/GreekRomancesOfHeliodorusLongusAndAchillesTatius/greek_romances_Smith_djvu.txt",
+    "coverage_note": "Greek column covered; Latin translation column and the marginal variant note (Palat. ἀπέστειλεν) not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69938d615d28b693146cee47_00697",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69938d615d28b693146cee47",
+   "page_number": 697,
+   "reference_meta": {
+    "title": "Nonnos, Dionysiaca (Loeb Classical Library, vol. II, books XVI-XXXV)",
+    "translator": "W. H. D. Rouse",
+    "year": 1940,
+    "licence": "in-copyright",
+    "private": true,
+    "style": "literal",
+    "canonical": false,
+    "located": "Dionysiaca 25.270-300 (Rouse Loeb II pp. 270-273)",
+    "url": "https://archive.org/download/dionysiaca02nonnuoft/dionysiaca02nonnuoft_djvu.txt",
+    "coverage_note": "full; 'Indianslaying' rejoined from a line-break hyphen (source: Indian-/slaying)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69938df1d5a98fd66f42f9be_00068",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69938df1d5a98fd66f42f9be",
+   "page_number": 68,
+   "reference_meta": {
+    "title": "Oppian, Colluthus, Tryphiodorus (Loeb Classical Library): Halieutica",
+    "translator": "A. W. Mair",
+    "year": 1928,
+    "licence": "public domain (US & worldwide; translator d. 1928)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Halieutica 3.25-51 (Mair Loeb pp. 346-349)",
+    "url": "https://archive.org/download/oppiancolluthust0000tryp/oppiancolluthust0000tryp_djvu.txt",
+    "coverage_note": "full"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69938dfed5a98fd66f42fd32_00217",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69938dfed5a98fd66f42fd32",
+   "page_number": 217,
+   "reference_meta": {
+    "title": "Quintus Smyrnaeus, The Fall of Troy (Loeb Classical Library)",
+    "translator": "A. S. Way",
+    "year": 1913,
+    "licence": "public domain (US & worldwide; translator d. 1930)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Posthomerica 10.204-234 (Aldine margin 210-230)",
+    "url": "https://www.gutenberg.org/cache/epub/658/pg658.txt",
+    "coverage_note": "full; Way's verse lines are joined with spaces"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7538b095c302d3fddb092_00355",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69e7538b095c302d3fddb092",
+   "page_number": 355,
+   "reference_meta": {
+    "title": "Euripides, Rhesus (The Plays of Euripides, vol. I)",
+    "translator": "E. P. Coleridge",
+    "year": 1891,
+    "licence": "public domain (US, pub. ≤1930)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Rhesus 715-744 (Perseus perseus-eng3)",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0006/tlg019/tlg0006.tlg019.perseus-eng3.xml",
+    "coverage_note": "speaker names (ΗΜΙ., ΗΝΙΟΧ./ΟΙΚ., ΧΟ.) omitted from the reference; two half-lines (730, 732a) not translated by Coleridge"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699383a150654cbbe29179f7_00189",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "699383a150654cbbe29179f7",
+   "page_number": 189,
+   "reference_meta": {
+    "title": "Icaromenippus, in The Works of Lucian of Samosata, vol. III",
+    "translator": "H. W. Fowler and F. G. Fowler",
+    "year": 1905,
+    "licence": "public domain (US & worldwide; translators d. 1933 and 1918)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Icaromenippus 15-18 (from 'Arsaces ... slaying his mistress' to 'μάλιστα δὲ ἐπ᾽ ἐκείνοις')",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0062/tlg021/tlg0062.tlg021.perseus-eng4.xml",
+    "coverage_note": "main text covered; marginal scholia and the bottom-margin scholion on κυκεών not covered; the OCR of this page is badly garbled, alignment made from the image"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69bd9d6a6120d54bd0376a04_00060",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69bd9d6a6120d54bd0376a04",
+   "page_number": 60,
+   "reference_meta": {
+    "title": "The Hieroglyphics of Horapollo Nilous",
+    "translator": "Alexander Turner Cory",
+    "year": 1840,
+    "licence": "public domain (US & worldwide; translator d. 1885)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Horapollo, Hieroglyphica I.21 (rising of the Nile), from 'even to this day in prayer for an abundant inundation' to 'take place in the winter' = Cory 1840 pp. 43-44",
+    "url": "https://www.sacred-texts.com/egy/hh/hh023.htm (via web.archive.org/web/2020)",
+    "coverage_note": "full (Greek main text); the opening fragment 'χεινῶ' is mid-sentence, so 'Wherefore,' is context; marginal glosses not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6993882474305116d72cf673_00163",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "6993882474305116d72cf673",
+   "page_number": 163,
+   "reference_meta": {
+    "title": "Plotinus: Psychic and Physical Treatises, comprising the Second and Third Enneads",
+    "translator": "Stephen MacKenna",
+    "year": 1921,
+    "licence": "public domain (US & worldwide; translator d. 1934)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Enneads II.5.5 (end, from 'ἐὰν ἀφέλῃς τὸ ψεῦδος') + II.6.1 (to 'ἐν ἄλλῳ οὐ συμπληροῦσα') = MacKenna 1921 pp. 202-204",
+    "url": "https://archive.org/stream/plotinuspsychicp00plotuoft/plotinuspsychicp00plotuoft_djvu.txt",
+    "coverage_note": "full main text; the red rubric title is represented by MacKenna's tractate title 'Quality and Form-Idea' (Greek title differs: περὶ οὐσίας ἢ περὶ ποιότητος); marginal notes not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b6848470c69d645a737f80_00588",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69b6848470c69d645a737f80",
+   "page_number": 588,
+   "reference_meta": {
+    "title": "Lives of Eminent Philosophers (Loeb), Book VII, Chrysippus",
+    "translator": "Robert Drew Hicks",
+    "year": 1925,
+    "licence": "public domain (US & worldwide; translator d. 1929)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Diogenes Laertius VII.197 (end, 'Of the Argument from Small Increments') - VII.199 ('First series:'), catalogue of Chrysippus' writings = Loeb vol. II pp. 311-313",
+    "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0004/tlg001/tlg0004.tlg001.perseus-eng2.xml",
+    "coverage_note": "Greek column covered; Latin translation column not covered"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b2fedda1a4246ddb45a8df_00318",
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "book_id": "69b2fedda1a4246ddb45a8df",
+   "page_number": 318,
+   "reference_meta": {
+    "title": "Political Precepts (Praecepta gerendae reipublicae), Plutarch's Essays and Miscellanies vol. 5",
+    "translator": "Several hands (17th-c. translation), corrected and revised by William W. Goodwin",
+    "year": 1874,
+    "licence": "public domain (US & worldwide; translator d. 1912)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Praecepta gerendae reipublicae 13-14, Stephanus 807B-809B (from κυ]βερνήτης ... to θηριῶδες· ἀλ[λὰ), Aldine 1509 pp. 586-587 (two-page opening)",
+    "url": "https://www.gutenberg.org/cache/epub/78000/pg78000.txt",
+    "coverage_note": "Both columns/pages (586 and 587) covered; marginal variant notes not covered. Section number '14.' and footnote markers removed from the reference."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b1da4879939cb4065ddf2e_00044",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69b1da4879939cb4065ddf2e",
+   "page_number": 44,
+   "reference_meta": {
+    "title": "A Discourse Presented to the Most Serene Don Cosimo II, Great Duke of Tuscany, concerning the Natation of Bodies upon, and Submersion in, the Water (in Mathematical Collections and Translations, vol. 1)",
+    "translator": "Thomas Salusbury",
+    "year": 1663,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Second edition (Florence 1612), with Galileo's additions printed in italics",
+    "located": "Discourse, passage on muddy waters / 'What then is this Crassitude of the water', Gutenberg #37729 marginal notes 58-61",
+    "url": "https://www.gutenberg.org/cache/epub/37729/pg37729.txt",
+    "ref_file": "refs/galileo-natation-salusbury-1663.txt",
+    "coverage_note": "Page opens mid-sentence ('...posizione d'alcune ore ancora'); the whole English question from 'And, what greater proof' is included. Salusbury's italic second-edition insertion ('Nor let them say, that the seeing of such small Bodies...') is ABSENT from this first-edition page and was omitted from the cut. Page ends on 'ma' mid-sentence; cut stops at the colon after 'some downwards' (the English sentence runs on for several lines onto the next page's content). Marginal notes and footnote numbers stripped; translator's bracket '[i. e. out of the water]' kept. 'Grain of Musterd-seed' renders 'grano di miglio' (millet)."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aebfa4c337b1e6a4d582f3_00161",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69aebfa4c337b1e6a4d582f3",
+   "page_number": 161,
+   "reference_meta": {
+    "title": "The Book of the Courtier",
+    "translator": "Leonard Eckstein Opdycke",
+    "year": 1901,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian text of Il Cortegiano (modern critical text, not the 1528 Aldine specifically)",
+    "located": "Book II, §§42-44 (end of 42 'at present some call them arguzie' to Federico's 'Here are the masters of witticism')",
+    "url": "https://archive.org/details/bookofcourtier0000coun",
+    "ref_file": "refs/castiglione-1901.txt",
+    "coverage_note": "Page opens mid-sentence ('adesso alcuni le chiamano argutie'); the whole English sentence 'By the ancients also they were called apothegms...' is included. Page ends at 'Eccoui i maestri di questo:'; the English sentence is completed ('from whom I must first learn...' is on the next source page). Section numbers (43, 44) and footnote markers stripped. The IA scan is a 1929 reprint of Opdycke's 1901/1903 translation; Opdycke died 1914."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69790e9eeb0dcfd399123423_00297",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69790e9eeb0dcfd399123423",
+   "page_number": 297,
+   "reference_meta": {
+    "title": "The Adornment of the Spiritual Marriage; The Sparkling Stone; The Book of Supreme Truth",
+    "translator": "C. A. Wynschenk Dom (ed. Evelyn Underhill)",
+    "year": 1916,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Middle Dutch text (Die chierheit der gheestelijker brulocht), ed. J. B. David (Maetschappy der Vlaemsche Bibliophilen, 1858-68); the 1624 Brussels print is an early-modernised version of the same Dutch text",
+    "located": "Book II, Chapter LIX 'Showing how one possesses God in union and rest, above all likeness through grace', from 'In this unity we are taken possession of' to chapter end",
+    "url": "https://archive.org/download/adornmentofthesp00ruysuoft/adornmentofthesp00ruysuoft_djvu.txt",
+    "ref_file": "refs/ruusbroec-adornment-dom1916.txt",
+    "coverage_note": "Full coverage. Page opens with the last words of the previous sentence ('der middel' = 'without means'), given as [context]. Two marginal notes ('Hoe edel dese eenicheyt is'; 'Al soo saen als hem den mensch van sonden keert...') are 1624 editorial additions with no English counterpart. Translator's note marker (23) and page number stripped; OCR 'rcBt'/'chanty' in the IA text corrected to 'rest'/'charity'."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a5d8d3a63a00aaae8aab0d_00322",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69a5d8d3a63a00aaae8aab0d",
+   "page_number": 322,
+   "reference_meta": {
+    "title": "John Huighen van Linschoten his Discours of Voyages into ye Easte & West Indies",
+    "translator": "William Phillip",
+    "year": 1598,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Linschoten, Itinerario / Beschryvinghe van ... America, Amsterdam 1595-96",
+    "located": "The 2. booke (description of America/Peru), section 'The way by land from Truxillo to Lima', from 'In this towne are faire houses' to 'according to the manner of the country' (sig. Aa4, c. p. 255)",
+    "url": "https://archive.org/details/bim_early-english-books-1475-1640_john-huighen-van-linscho_linschoten-jan-huygen-v_1598",
+    "ref_file": "refs/linschoten-wolfe-1598-discours.txt",
+    "coverage_note": "Full coverage, same order. Reference hand-transcribed from a noisy black-letter OCR: long-s and r-rotunda normalised, u/v left as early-modern reading, obvious OCR letter errors corrected (e.g. 'Rings towne' -> 'Kings towne', 'water mules' -> 'water milles'); 'canwoorden' (Dutch 'Cauwaerden', calabashes) is an uncertain reading. The Dutch has 'als die schandale oneenicheden en oorloge daer niet en ware' where the English adds 'of the Spaniards ... without a cause'."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ea0f5413a685002bb8dc8a_00107",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69ea0f5413a685002bb8dc8a",
+   "page_number": 107,
+   "reference_meta": {
+    "title": "The Memoirs of the Conquistador Bernal Diaz del Castillo, Vol. 1",
+    "translator": "John Ingram Lockhart",
+    "year": 1844,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Historia verdadera (Madrid 1632, Remón edition) — the same text family as this scan, not the Guatemala MS used by Maudslay",
+    "located": "End of Chap. LXV ('We, nevertheless, kept up our spirits...') through Chap. LXVI to '...to a considerable distance.' (Gutenberg #32474)",
+    "url": "https://www.gutenberg.org/cache/epub/32474/pg32474.txt",
+    "ref_file": "refs/bernal-diaz-lockhart-1844-v1.txt",
+    "coverage_note": "Page opens mid-sentence ('velas y rondas'); reference starts with the whole English sentence (Lockhart's 'outposts and the patrols'). Lockhart is paraphrastic and omits the transition 'Y dexallo he aqui; e diré lo que otro dia hizimos en esta batalla, y prendimos tres Indios principales', compresses the rubric, omits 'y dize que no les quisieron escuchar de buena gana' nuance, the 'varas con sus tiraderas', 'espadas y macanas, y montantes', and 'E boluamos a los Papas'; adds details not in the Spanish ('our cannon loaded', 'cut among them so vigorously with our swords'). Page ends 'y hazia luna' mid-sentence; reference completes the sentence (cavalry pursuit). Marginal notes have no English."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699ef9fd15618a982bb1ebd9_00790",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "699ef9fd15618a982bb1ebd9",
+   "page_number": 790,
+   "reference_meta": {
+    "title": "Shney Luchot Habrit (Torah Shebikhtav, Re'eh: Ner Mitzvah & Torah Ohr)",
+    "translator": "Eliyahu Munk",
+    "year": null,
+    "licence": "CC-BY",
+    "licence_detail": "Sefaria version 'Shney Luchot Habrit by Rabbi Eliyahu Munk', license field CC-BY; source Urim Publications (3 vols.). Sefaria notes obvious translation errors were corrected against the Hebrew.",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Sefaria: Shenei Luchot HaBerit, Torah Shebikhtav, Re'eh, Ner Mitzvah 47(second half)–54 + Torah Ohr 1–13(first sentence)",
+    "url": "https://www.sefaria.org/Shenei_Luchot_HaBerit,_Torah_Shebikhtav,_Re'eh,_Torah_Ohr?ven=Shney_Luchot_Habrit_by_Rabbi_Eliyahu_Munk",
+    "coverage_note": "Covers whole running text of the page. Munk is expansive: adds glosses, explanations and bracketed editor notes not in the Hebrew (e.g. seg 5 long expansion on the serpent, seg 10 '[... Ed.]'), so length exceeds the source; page ends mid seg 13 (after 'Isaac, an unblemished total offering').",
+    "source_edition": "Shenei Luchot HaBrit, Hebrew text based on Amsterdam 1698 ed. (same edition as the page)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6990633def12272ffdc907b0_00211",
+   "track": "T4",
+   "lang": "Aramaic",
+   "book_id": "6990633def12272ffdc907b0",
+   "page_number": 211,
+   "reference_meta": {
+    "title": "The Zohar (Soncino Press), vol. V",
+    "translator": "Harry Sperling, Maurice Simon and Paul P. Levertoff",
+    "year": 1933,
+    "licence": "Public Domain",
+    "licence_detail": "Sefaria version 'The Zohar; London, Soncino Press, 1933', license field 'Public Domain'",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Zohar, Emor 43:9-44:3 (Sefaria) = Zohar III 103b-104a",
+    "url": "https://www.sefaria.org/Zohar,_Emor.43.9-44.3?ven=The_Zohar;_London,_Soncino_Press,_1933",
+    "coverage_note": "Soncino abridges and paraphrases (e.g. drops the 'pharash chageikhem' gloss and the 'Ve-amekh kulam tzaddikim' close). Not referenced: the Ra'aya Mehemna commandment on taking the lulav ('פקודא דא ליטול לולב...', ~50 words), which Soncino omits. Two Soncino footnote markers removed; Soncino's lacuna note in 43:11 shown as [lacuna].",
+    "source_edition": "standard (Vilna-type) Zohar text"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69c79fed92b884e4f817374f_00107",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "69c79fed92b884e4f817374f",
+   "page_number": 107,
+   "reference_meta": {
+    "title": "Gates of Light (Sha'arei Orah)",
+    "translator": "Rabbi Amiram Markel and Rabbi Yehudah S. Markel",
+    "year": 2023,
+    "licence": "CC-BY",
+    "licence_detail": "Sefaria version 'Gates of Light, trans. by Rabbi Amiram Markel and Rabbi Yehudah S. Markel, 2023', license field CC-BY; source http://neirot.com/",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Sha'arei Orah, Fifth Gate, Sixth Sefirah 197 (from 'About this the verse states', Gen 27:1) through 206 (to 'Why are they referred to as great mercies?'); Hebrew paragraphing 198-206",
+    "url": "https://www.sefaria.org/Sha'arei_Orah,_Fifth_Gate,_Sixth_Sefirah.197-206?ven=Gates_of_Light,_trans._by_Rabbi_Amiram_Markel_and_Rabbi_Yehudah_S._Markel,_2023",
+    "coverage_note": "Translator's footnotes removed. Translation interleaves transliterations/Hebrew glosses (e.g. 'mercy-Rachamim-רחמים') and occasional bracketed expansions ('in HaShem's Godliness'). The page's opening fragment ('לכלות במשפט ...') does not map cleanly onto the Sefaria Hebrew (1561 print reads differently there); the preceding Isaiah 5:16 sentence is given as [context]. Minor textual variants between the 1561 print and the modern Hebrew base.",
+    "source_edition": "modern critical Hebrew text as on Sefaria (grimoar), not the 1561 Riva di Trento print"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b4cd44d5b6c3815e1a52de_00215",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "69b4cd44d5b6c3815e1a52de",
+   "page_number": 215,
+   "reference_meta": {
+    "title": "Mishnah Yomit (English translation of the Mishnah)",
+    "translator": "Joshua Kulp",
+    "year": null,
+    "licence": "CC-BY",
+    "licence_detail": "Sefaria version 'Mishnah Yomit by Dr. Joshua Kulp', license field CC-BY; source http://learn.conservativeyeshiva.org/mishnah/",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Mishnah Mikvaot 10:3 (from 'of a sandal') – 10:8; Mishnah Parah 1:1–4; Parah 2:1 – 2:5 (first words 'two black hairs')",
+    "url": "https://www.sefaria.org/Mishnah_Mikvaot.10.3-Mishnah_Parah.2.5?ven=Mishnah_Yomit_by_Dr._Joshua_Kulp",
+    "coverage_note": "Mishnah text fully covered. Not referenced: the narrow marginal word-gloss columns printed beside Parah 1–2 (small share of the running text). The colophon/tractate-title lines are given as a plain editorial line. Kulp's explanatory commentary is not included.",
+    "source_edition": "Standard Mishnah text as on Sefaria; Kulp translation keyed to it."
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e7934280b52390feb18445_00049",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e7934280b52390feb18445",
+   "page_number": 49,
+   "reference_meta": {
+    "title": "The Improvement of Human Reason, Exhibited in the Life of Hai Ebn Yokdhan",
+    "translator": "Simon Ockley",
+    "year": 1708,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1708; translator d. 1720)",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Ockley 1708, Introduction (Ibn Tufayl's prefatory epistle), pp. [20]-23, just before 'The History of Hai Ebn Yokdhan'",
+    "url": "https://archive.org/details/improvementhuma00ocklgoog",
+    "coverage_note": "Full page covered; transcribed by hand from a poor long-s OCR, spelling kept as 1708 with long s normalised to s.",
+    "source_edition": "Pococke's Arabic text (Oxford 1671), i.e. this edition"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e8b0fd839ca3f47ec56c17_00048",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e8b0fd839ca3f47ec56c17",
+   "page_number": 48,
+   "reference_meta": {
+    "title": "The Algebra of Mohammed ben Musa",
+    "translator": "Frederic Rosen",
+    "year": 1831,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1831; translator d. 1837)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Rosen 1831, English pp. 102-104 (Arabic page markers (76)-(77)), Legacies chapter",
+    "url": "https://archive.org/details/algebraofmohamme00khuwuoft",
+    "coverage_note": "Full page covered; Rosen's algebraic footnotes and the heading 'On another Species of Legacies' (Arabic has only 'وفي وجه اخر من الوصايا') are his; footnotes omitted.",
+    "source_edition": "Rosen's own Arabic text (London 1831), of which this book is the Arabic part"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a2198371994d1df1e5e0235_00118",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "6a2198371994d1df1e5e0235",
+   "page_number": 118,
+   "reference_meta": {
+    "title": "The Chronology of Ancient Nations",
+    "translator": "C. Edward Sachau",
+    "year": 1879,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1879; translator d. 1930)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Sachau 1879, ch. VII (Jewish calendar), pp. 149-150 (Arabic edition p. 155 in margin)",
+    "url": "https://archive.org/details/chronologyofanci00biru",
+    "coverage_note": "Full page covered. Sachau's parenthetical glosses and the sub-heading 'Relation between the beginning of the Year and its Character' are his additions. Sachau reads 13h. for the longest day where this manuscript has أربع عشرة ساعة (14 h). Greek ὧραι καιρικαί restored from a garbled OCR; Arabic has الساعات الزمانية.",
+    "source_edition": "Sachau's Arabic edition (Chronologie orientalischer Völker, Leipzig 1878); this book is a manuscript copy (BnF, via Gallica btv1b8406161z), not that edition"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e53454d48480a386965c84_00230",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e53454d48480a386965c84",
+   "page_number": 230,
+   "reference_meta": {
+    "title": "Kalila and Dimna, or, The Fables of Bidpai: translated from the Arabic",
+    "translator": "Wyndham Knatchbull",
+    "year": 1819,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1819; translator d. 1833)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Knatchbull 1819, Trial of Dimna chapter, pp. 182-185",
+    "url": "https://archive.org/details/kalilaanddimnao00almgoog",
+    "coverage_note": "Knatchbull translates de Sacy's 1816 recension, not Cheikho's older MS; he adds a long exchange (judge's address on the afterlife, Dimna's protest at the haste of his trial, judge's speech on the duty of judges) absent from this page, and omits the mother's direct speech ('if I am harsh, do not be angry') and the scholars' silence. The page's last clause (my case looks ugly to you because you supposed I slandered...) only loosely matched; given as context.",
+    "source_edition": "Silvestre de Sacy, Calila et Dimna (Paris 1816)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7933580b52390feb18277_00263",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e7933580b52390feb18277",
+   "page_number": 263,
+   "reference_meta": {
+    "title": "The Assemblies of al-Hariri, vol. II (Assemblies XXVII-L)",
+    "translator": "Francis Joseph Steingass",
+    "year": 1898,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1898; translator d. 1903)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Steingass vol. 2, Thirty-fourth Assembly (al-Zabidiyya), pp. 69-70",
+    "url": "https://archive.org/details/TheAssembliesOfAlHaririVolII",
+    "coverage_note": "Main printed Arabic text only; the extensive Persian Nasta'liq marginal/interlinear commentary on the page is not referenced (and was only summarised, not transcribed, by the OCR).",
+    "source_edition": "Arabic text of de Sacy (2nd ed. Reinaud & Derenbourg)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7933d80b52390feb1841a_00027",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e7933d80b52390feb1841a",
+   "page_number": 27,
+   "reference_meta": {
+    "title": "The Maqamat of Badi' al-Zaman al-Hamadhani, translated from the Arabic with an introduction and notes",
+    "translator": "W. J. Prendergast",
+    "year": 1915,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain in the US (published 1915, Madras/London: Luzac); translator's death date not established",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Prendergast 1915, Maqama XXXIII (al-Hulwaniyya, end) pp. 132-135 and Maqama XXXIV 'of Fresh Butter' (al-Nahidiyya) pp. 135-138",
+    "url": "https://archive.org/details/in.ernet.dli.2015.172209",
+    "coverage_note": "Prendergast's footnotes and footnote markers removed. Page spans the end of the bath/cupper maqama and almost all of the Fresh Butter maqama; the page ends mid-speech, so the swordsman's question is context. The Arabic page has the maqama title 'al-Nahidiyya'; Prendergast's heading is 'The Maqama of Fresh Butter'.",
+    "source_edition": "Beirut edition of Muhammad 'Abduh (1889)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69d5ac5f4dc55b8478ddd6b6_00299",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69d5ac5f4dc55b8478ddd6b6",
+   "page_number": 299,
+   "reference_meta": {
+    "title": "The Book of the Thousand Nights and a Night, vol. 1",
+    "translator": "Richard F. Burton",
+    "year": 1885,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1885; translator d. 1890); text via Project Gutenberg #3435",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "located": "Burton vol. 1, The Barber's Tale of his Fifth Brother (Al-Nashshar), Night 33 in Burton's numbering; Gutenberg #3435 lines 12044-12060",
+    "url": "https://www.gutenberg.org/ebooks/3435",
+    "coverage_note": "Main 9-line text block only. Not referenced: the later pen-trial scribbles in the lower half of the page (garbled in the OCR) and the red/black night-ending formula (MS Night 150), which falls at a point where Burton's Calcutta-based text has no night break.",
+    "source_edition": "Calcutta II (Macnaghten) edition, 1839-42; the MS is a different (Syrian/Galland-type) recension"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ea3e91300d991d0f1d37ee_00092",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69ea3e91300d991d0f1d37ee",
+   "page_number": 92,
+   "reference_meta": {
+    "title": "Ahsanu-t-Taqasim fi Ma'rifati-l-Aqalim, translated from the Arabic and edited with notes (Bibliotheca Indica)",
+    "translator": "G. S. A. Ranking and R. F. Azoo",
+    "year": 1897,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published Calcutta, Asiatic Society of Bengal, 1897–1910; G. S. A. Ranking d. 1934); digitised by Digital Library of India",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Ranking & Azoo, transl. pp. 122–124, de Goeje BGA III pp. 77–78 (marginal page markers 77/78)",
+    "url": "https://archive.org/details/in.ernet.dli.2015.103150",
+    "coverage_note": "Main text only; de Goeje's Latin/Arabic variant apparatus (notes a–t, codex C additions) not referenced. Translator's bracketed glosses and footnote markers dropped; OCR of the reference hand-corrected.",
+    "source_edition": "de Goeje, BGA III (Leiden 1877)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e96123390d3ed634590b97_00226",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69e96123390d3ed634590b97",
+   "page_number": 226,
+   "reference_meta": {
+    "title": "The Travels of Ibn Battuta A.D. 1325–1354, vol. II (Hakluyt Society, 2nd ser. 117)",
+    "translator": "H. A. R. Gibb",
+    "year": 1962,
+    "licence": "in-copyright",
+    "licence_detail": "Hakluyt Society / Cambridge University Press 1962; translator d. 1971; in copyright. Chosen over the suggested Gibb 1929 selection, which abridges this page to ~4 sentences (<60% coverage); Lee 1829 is likewise an abridgement.",
+    "private": true,
+    "style": "literal",
+    "canonical": false,
+    "located": "Gibb, Travels vol. II pp. 431–432 (Defrémery-Sanguinetti II 284–287), 'Account of the Sultan of al-Laranda' to arrival at Qaisariya",
+    "url": "https://archive.org/details/travelsofibnbatt02harg",
+    "coverage_note": "Covers the whole page; Gibb's footnotes and the D-S page markers dropped; the pronunciation glosses in parentheses in the Arabic (e.g. 'بفتح القاف والراء') are not translated by Gibb.",
+    "source_edition": "Defrémery & Sanguinetti, Voyages d'Ibn Batoutah (Paris 1853–58)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a06cdd7c749b698e5b2c9a4_00104",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "6a06cdd7c749b698e5b2c9a4",
+   "page_number": 104,
+   "reference_meta": {
+    "title": "The Perfumed Garden of the Cheikh Nefzaoui: A Manual of Arabian Erotology (XVI. Century). Revised and corrected translation",
+    "translator": "Sir Richard F. Burton (attrib.; Kama Shastra Society), from the French version of 'Baron R***' (1876)",
+    "year": 1886,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (privately printed, Cosmopoli/Benares 1886; Burton d. 1890)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Ch. 9 'Names given to the sexual organs of women', story of Abu Nuwas' friend and Fadehat el Djemal, pp. 154–156 of the 1886 ed.",
+    "url": "https://archive.org/details/perfumedgardenof00nafz",
+    "coverage_note": "INDIRECT translation: Burton's English renders the French version, made from a different Arabic recension, not this Gafsa manuscript. Content and order diverge: the reference puts the vulva description before the kiss (the MS has the face shining like lightning 'when the stallion drew near' and the white/red 'pistachio' description at the page end); oaths differ ('son of a debauched woman' vs 'son of a whore', 'religion of my father' vs 'by the right of your mother'); the reference adds phrases absent from the page (crystal tinged with carmine, superiors and masters). The page's 'like a well' and lightning simile are not rendered. Roughly 70% of the page's content is covered.",
+    "source_edition": "French translation by 'Baron R***' (Algiers/Paris 1876, Liseux reprint), from an Arabic MS other than this one"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69d5abf3d0bd3547a5654427_00104",
+   "track": "T4",
+   "lang": "Arabic",
+   "book_id": "69d5abf3d0bd3547a5654427",
+   "page_number": 104,
+   "reference_meta": {
+    "title": "A Treatise on the Canon of Medicine of Avicenna, incorporating a translation of the first book",
+    "translator": "O. Cameron Gruner",
+    "year": 1930,
+    "licence": "in-copyright",
+    "licence_detail": "London: Luzac, 1930 (text from the 1984 Classics of Medicine Library facsimile on archive.org). Public domain in the US since 2026 (published 1930); still in copyright in the UK/EU (translator d. 1972). Treated as private.",
+    "private": true,
+    "style": "free",
+    "canonical": false,
+    "located": "Canon Book I, Fen 4, end of ch. 3 and ch. 4 'General rules to be observed in procuring emesis or purgation', Gruner §§940–957, pp. 477–480",
+    "url": "https://archive.org/details/bwb_KU-555-886",
+    "coverage_note": "Gruner translates chiefly from the Latin and abridges. Not covered: the last ~quarter of the page (from 'والدوا الملقي قد يعود مسهلا' to the end — emetics turning purgative and vice versa, compound purgatives, humours quick or slow to respond to emesis, signs of a cleansed body), which Gruner omits; he also renders the nosebleed example as 'sanious matter from the ears or nose'. Gruner's paragraph numbers dropped. Estimated coverage ~75% of the page.",
+    "source_edition": "Latin Canon (Gerard of Cremona/Alpago) with reference to the Arabic (Bulaq/Rome 1593)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7299ba409200ea79f0b56_00211",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e7299ba409200ea79f0b56",
+   "page_number": 211,
+   "reference_meta": {
+    "title": "The Mathnawí of Jalálu'ddín Rúmí, vol. II: Translation of the First and Second Books (E. J. W. Gibb Memorial N.S. IV.2)",
+    "translator": "Reynold A. Nicholson",
+    "year": 1926,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1926; translator d. 1945) — PD in the US (pre-1931 publication) and in life+70 jurisdictions",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Nicholson, Mathnawi Book II vv. 578-606 (heading 'How the criers of the Cadi advertised an insolvent round the town' before v. 585), pp. 251-253",
+    "url": "https://archive.org/details/in.ernet.dli.2015.70297",
+    "coverage_note": "Covers the Persian couplets only. Every row also carries an Ottoman Turkish verse rendering of the same couplet (and the heading has a Turkish rendering); that Turkish column is not referenced. Nicholson's parenthetical glosses are part of his translation; his footnote omitted.",
+    "source_edition": "Nicholson's own critical text (GMS vol. I, 1925), not the Bulaq 1851 text"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e729a1a409200ea79f0ca5_00257",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e729a1a409200ea79f0ca5",
+   "page_number": 257,
+   "reference_meta": {
+    "title": "The Mathnawí of Jalálu'ddín Rúmí, vol. IV: Translation of the Third and Fourth Books (E. J. W. Gibb Memorial N.S. IV.4)",
+    "translator": "Reynold A. Nicholson",
+    "year": 1930,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain in life+70 jurisdictions (published 1930; translator d. 1945); US: published 1930, term expired 2026-01-01",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Nicholson, Mathnawi Book IV vv. 1495-1519 incl. the heading on the hadith of the three orders of creation, pp. 355-356",
+    "url": "https://archive.org/details/in.ernet.dli.2015.70298",
+    "coverage_note": "Covers the Persian couplets and the Arabic hadith heading. The Ottoman Turkish verse rendering printed beside every couplet (and the Turkish gloss on the heading) is not referenced. Nicholson's footnotes omitted.",
+    "source_edition": "Nicholson's own critical text (GMS vol. III, 1929), not the Bulaq 1851 text"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e729a7a409200ea79f0e08_00279",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e729a7a409200ea79f0e08",
+   "page_number": 279,
+   "reference_meta": {
+    "title": "The Mathnawí of Jalálu'ddín Rúmí, vol. VI: Translation of the Fifth and Sixth Books (E. J. W. Gibb Memorial N.S. IV.6)",
+    "translator": "Reynold A. Nicholson",
+    "year": 1934,
+    "licence": "in-copyright",
+    "licence_detail": "Published 1934; translator d. 1945. Public domain in life+70 jurisdictions (UK/EU) since 2016, but US copyright (95 years from publication, URAA-restored) runs to end of 2029; treat as private.",
+    "private": true,
+    "style": "literal",
+    "canonical": false,
+    "located": "Nicholson, Mathnawi Book VI vv. 2516-2544 (story of Dalqak and the Sayyid, King of Tirmid), pp. 397-399",
+    "url": "https://archive.org/details/in.ernet.dli.2015.172836",
+    "coverage_note": "Covers the 30 Persian couplets except that the Bulaq couplet 'گنج‌ها بخشم ورا اندر عوض / چون شود حاصل ز پیغام غرض' has no separate verse in Nicholson's text (only 'would bestow his treasures' in v. 2542). The Ottoman Turkish verse rendering of every couplet (two lower columns) is not referenced. Nicholson's footnotes omitted.",
+    "source_edition": "Nicholson's own critical text (GMS vol. V, 1933), not the Bulaq 1851 text"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69afd049ae982b9d51d6dd32_00292",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69afd049ae982b9d51d6dd32",
+   "page_number": 292,
+   "reference_meta": {
+    "title": "Selected Poems from the Divani Shamsi Tabriz",
+    "translator": "Reynold A. Nicholson",
+    "year": 1898,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1898; translator d. 1945). Printed in this same book on the facing page (book p. 191 = page 293).",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Nicholson 1898, ode XLVII, beyts 7-13, English p. 191 (facing Persian p. 190)",
+    "url": "https://archive.org/details/dli.bengal.10689.3512",
+    "coverage_note": "Covers all seven beyts on the page. Nicholson's variant-reading margin notes (V readings for beyts 8, 11, 13) not referenced.",
+    "source_edition": "Nicholson's own text printed in this volume (same edition as the page)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a21994b4b61907ea5ffb7e5_00027",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "6a21994b4b61907ea5ffb7e5",
+   "page_number": 27,
+   "reference_meta": {
+    "title": "Lawa'ih: A Treatise on Sufism by Nur-ud-din Abd-ur-rahman Jami (Oriental Translation Fund N.S. XVI)",
+    "translator": "E. H. Whinfield and Mirza Muhammad Kazvini",
+    "year": 1906,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published 1906; Whinfield d. 1922, Qazvini d. 1949). Printed in this same volume (English half, book pp. 32-33).",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Whinfield & Kazvini 1906, Flash XVII, pp. 32-33",
+    "url": "https://archive.org/details/in.gov.ignca.20965",
+    "coverage_note": "Whinfield's footnotes omitted. The page's last words ('کما ظهرت ثبت…') run on into page 28 ('و شاهد فی المراتب'); Whinfield reorders the clause ('past, present or future, manifested in all grades'), so the final sentence is given whole and slightly overshoots the page end.",
+    "source_edition": "This manuscript (facsimile reproduced in the same volume), with BM Add. 16,819 readings; Flash VIII onward is Whinfield's English from Kazvini's literal French version"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699249c5a2d53df4853bfdaf_00012",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "699249c5a2d53df4853bfdaf",
+   "page_number": 12,
+   "reference_meta": {
+    "title": "The Book of Ighan, revealed by Baha Ullah",
+    "translator": "Ali Kuli Khan",
+    "year": 1904,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published New York 1904; translator d. 1966) — US pre-1931 publication",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Ali Kuli Khan 1904, pp. 13-15",
+    "url": "https://archive.org/details/bookofighanrevea00bah",
+    "coverage_note": "Covers the whole page. Khan paraphrases in places ('wonderful harmonies of Hijaz' / 'cheerful melodies of Irak' for the page's references to former Tablets and this request; 'hear the warble of the Nightingales of Paradise' where the page has 'inhale the sweetest fragrances of the leaves of Paradise'). The page's last words ('if seen with the eye of spiritual insight, in truth [in the time of] the Seal') begin a sentence whose substance (the Book and Cause of Jesus confirmed) is on page 13; that remainder is marked [context].",
+    "source_edition": "Persian text of the Iqan; Khan's source copy not stated (not necessarily the 1882 Bombay lithograph)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e74eeb5cf1eaf3ad80ddc1",
+   "page_number": 237,
+   "reference_meta": {
+    "title": "The Divan-i-Hafiz, vol. II",
+    "translator": "H. Wilberforce Clarke",
+    "year": 1891,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published Calcutta 1891; translator d. 1905)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Clarke vol. 2, letter Shin, Ode 326 (324) couplets 2-9 (pp. 563-565), then Ode 325 (336) couplets 1-3, 5-6 (p. 563)",
+    "url": "https://archive.org/details/in.ernet.dli.2015.62301",
+    "coverage_note": "Clarke's footnotes not included. Page omits Ode 325 couplet 4 ('O son! counsel hear...'), so it is left out; Ode 325 continues on the next page (couplets 7+ not included). Ode 326 couplet 1 is on the previous page; Clarke's couplets 10-11 of Ode 326 are not in this manuscript.",
+    "source_edition": "Calcutta/Brockhaus-type text used by Clarke; ghazal order differs from this manuscript (326 precedes 325 here)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6992cf0970ab3737555456ae_00100",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "6992cf0970ab3737555456ae",
+   "page_number": 100,
+   "reference_meta": {
+    "title": "The Shahnama of Firdausi, vol. I",
+    "translator": "Arthur George Warner and Edmond Warner",
+    "year": 1905,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published London 1905, Trübner's Oriental Series)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Warner vol. 1, Minuchihr, §15 'How Sindukht heard of the Case of Rudaba', pp. 280-283 (Vullers-Landauer V. 176-179)",
+    "url": "https://archive.org/details/FirdausiShahnamaTrWarnerVol1",
+    "coverage_note": "Blank-verse translation, close but not line-for-line. Page opens inside Zal's message ('when matters come to grievous straits'), so the preceding words are [context]. The lithograph's last couplet ('he asked the ancient mobed') differs from Warner's text ('gave large presents'), marked [context]. Warner's text lacks nothing major on the page, but the lithograph has extra dialogue lines (the woman's 'I sold ornaments to the people') rendered only loosely in Warner.",
+    "source_edition": "Vullers-Landauer / Macan text"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e74ef95cf1eaf3ad80e04c",
+   "page_number": 131,
+   "reference_meta": {
+    "title": "The Sikandar Nama, e Bara, or Book of Alexander the Great",
+    "translator": "H. Wilberforce Clarke",
+    "year": 1881,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published London 1881; translator d. 1905)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Clarke, Canto XXV 'Sikandar prepares for war', couplets 15-29 (pp. 267-269)",
+    "url": "https://archive.org/details/sikandarnmaebara00nimg",
+    "coverage_note": "Main verse only (~64% of the page's running text); the Persian editor's four footnotes (glosses and variant readings) are not referenced. The page lacks Clarke's couplet 19 (wolf and sheep), so it is omitted. The page reads 'three hundred thousand' (its footnote gives 'six hundred thousand' as a variant) where Clarke has six hundred thousand; the page has 'be mehr-e malek' where Clarke's main text reads 'in love' (Clarke's note gives the 'seal' reading).",
+    "source_edition": "Clarke's collated Persian text (Calcutta editions)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e748da49abba5e98281b25_00103",
+   "track": "T4",
+   "lang": "Persian",
+   "book_id": "69e748da49abba5e98281b25",
+   "page_number": 103,
+   "reference_meta": {
+    "title": "The Haft Paikar (The Seven Beauties), vol. I: Translation",
+    "translator": "C. E. Wilson",
+    "year": 1924,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published London 1924; translator Charles Edward Wilson d. 1938)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Wilson vol. 1, ch. on Bahram and Fitna (the ox-bearing girl), pp. 89-90, notes 932-939",
+    "url": "https://archive.org/details/in.ernet.dli.2015.81011",
+    "coverage_note": "Wilson's bracketed note numbers removed; his notes (vol. II) not included. Page's marginal line numbers 27-42 and a brief apparatus line not referenced.",
+    "source_edition": "Wilson's collated text (Bombay lithographs and MSS)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6990630be7b7642c081de08b_00353",
+   "track": "T4",
+   "lang": "Aramaic",
+   "book_id": "6990630be7b7642c081de08b",
+   "page_number": 353,
+   "reference_meta": {
+    "title": "The Zohar (Soncino Press), vol. IV",
+    "translator": "Harry Sperling and Maurice Simon (vols. III–IV with Paul P. Levertoff)",
+    "year": 1933,
+    "licence": "Public Domain",
+    "licence_detail": "Sefaria version 'The Zohar; London, Soncino Press, 1933', license field 'Public Domain'",
+    "private": false,
+    "style": "free",
+    "canonical": true,
+    "located": "Zohar, Terumah 96:4–98:1 and Zohar, Sifra DiTzniuta 1:1–2 (Sefaria) = Zohar II 175b–176b",
+    "url": "https://www.sefaria.org/Zohar,_Terumah.96.4-98.1?ven=The_Zohar;_London,_Soncino_Press,_1933",
+    "coverage_note": "Whole page referenced except its first two or three words (tail of Terumah 96:3, a passage Soncino leaves untranslated). Soncino paraphrases and expands throughout. The page breaks off two words into the parable's moral ('because of that [opinion]…'); that sentence is given as [context]. One Soncino footnote removed.",
+    "source_edition": "standard (Mantua/Vilna-type) Zohar text; the Cremona print's wording differs in places"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69c1bbc68522835be8460774_00281",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "69c1bbc68522835be8460774",
+   "page_number": 281,
+   "reference_meta": {
+    "title": "The New Testament … A Literal Translation from the Syriac Peshito Version",
+    "translator": "James Murdock",
+    "year": 1851,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published New York 1851; translator d. 1856)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Murdock, Acts 14:12b–21 (+ v. 22 as context), p. 243–244; the manuscript numbers these verses 11b–21/22 (one behind Murdock in vv. 12–18)",
+    "url": "https://archive.org/details/newtestamentorbo00murd",
+    "coverage_note": "INDIRECT reference: this Hebrew New Testament is itself a translation made from the Syriac Peshitta, not from the Greek (e.g. 'priest of the lord of gods … to the door of the house where they lodged', 'Konya' for Iconium, the Peshitta verse division), so the suggested KJV/ASV would diverge; Murdock translates the same Peshitta text. The Hebrew still differs in wording in places (it has 'a bull and a wreath' singular; v. 17 'the people … said that no man should sacrifice to them'; 'taught the people against them'). Page header 'Apostolos' not referenced. Verse numbers and Murdock's footnote markers removed; scan errors in the archive.org text corrected by hand. The page's last two or three words open the next verse, given as [context].",
+    "source_edition": "Syriac Peshitta (Murdock used the 1816 British and Foreign Bible Society edition and others)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b2f3b821208ea9dc278c50_00277",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "69b2f3b821208ea9dc278c50",
+   "page_number": 277,
+   "reference_meta": {
+    "title": "Rabbi David Kimchi's Commentary upon the Prophecies of Zechariah, translated from the Hebrew",
+    "translator": "Alexander McCaul",
+    "year": 1837,
+    "licence": "Public Domain",
+    "licence_detail": "Public Domain (published London 1837; translator d. 1863)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "McCaul pp. 55–56, Kimchi on Zechariah 6:4 (end) – 6:8 (first comment)",
+    "url": "https://archive.org/details/rabbidavidkimchi00kimcrich",
+    "coverage_note": "Covers Kimhi's commentary, which is c. 85% of the page. NOT referenced: the four vocalised Bible verses printed in the middle of the page (Zechariah 6:5–8; their lemmas do recur inside the commentary) and the marginal Bible references. McCaul prints verse numbers (removed) and explains the missing preposition in English with the Hebrew words quoted; the Hebrew words, garbled in the archive.org scan text, were restored from the commentary itself. McCaul renders 'kingdom of Ishmael' as 'the Turkish empire' and prints 'Lulianus Cæsar'. The page ends mid-sentence; the remainder is given as [context].",
+    "source_edition": "McCaul translated from the printed rabbinic Bible text of Kimhi (the same recension Estienne printed)"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69906606ef12272ffdc94dd0_00106",
+   "track": "T4",
+   "lang": "Hebrew",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "page_number": 106,
+   "reference_meta": {
+    "title": "3 Enoch or The Hebrew Book of Enoch",
+    "translator": "Hugo Odeberg",
+    "year": 1928,
+    "licence": "in-copyright",
+    "licence_detail": "Cambridge University Press 1928; translator d. 1973. Public domain in the United States since 2024 (published 1928) and freely readable on archive.org, but still in copyright in life+70 jurisdictions (UK/EU) until 2044; treated as private.",
+    "private": true,
+    "style": "literal",
+    "canonical": false,
+    "located": "Odeberg, translation part pp. 58–60, 3 Enoch ch. xviii vv. 16 (end) – 21",
+    "url": "https://archive.org/details/3enochorhebrewbo00unse",
+    "coverage_note": "Whole page covered. Not referenced: the five-word marginal note ('Torah, crown, holiness, crown, kingship'). Odeberg translates Bodleian MS Opp. 556 (his A) with variants from other witnesses; this Vatican manuscript differs in places: it names Zakzakiel's successor sentence with 'Anaphiel as subject ('And Anaphiel H’ the prince, when he sees…') where Odeberg has 'And when he sees', gives the height as 'seventy thousand myriads' against Odeberg's '7000 myriads', and spells the names differently. 'H’' is Odeberg's sign for the Tetragrammaton attached to angel names. Verse numbers, footnote markers and scan errors in the archive.org text removed by hand. First and last lines of the page are mid-sentence; the off-page parts are [context].",
+    "source_edition": "Odeberg's edition of Bodleian MS Opp. 556 with variants"
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e681f30176bf4d3798a",
+   "page_number": 155,
+   "reference_meta": {
+    "title": "Aṅguttara-Nikāya (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an10.73:2.1 – an10.73:3.3",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an10/an10.73_translation-en-sujato.json translation/en/sujato/sutta/an/an10/an10.74_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.94, shingle density 0.666; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e856ed9e0490990a0b5_00301",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e856ed9e0490990a0b5",
+   "page_number": 301,
+   "reference_meta": {
+    "title": "Aṅguttara-Nikāya, Part V (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an10.211:2.1 – an10.211:21.2",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an10/an10.211_translation-en-sujato.json translation/en/sujato/sutta/an/an10/an10.212_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 2.409, shingle density 0.85; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e8b6ed9e0490990a274_00179",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e8b6ed9e0490990a274",
+   "page_number": 179,
+   "reference_meta": {
+    "title": "Sutta-Nipāta (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "snp4.9:2.1 – snp4.9:6.5",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/kn/snp/vagga4/snp4.9_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.074, shingle density 0.54; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a31c8b74400787ae5a9d7a7_00042",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "6a31c8b74400787ae5a9d7a7",
+   "page_number": 42,
+   "reference_meta": {
+    "title": "Dhammapada (Pali text with aṭṭhakathā references)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "dhp249:6 – dhp255:4",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/kn/dhp/dhp235-255_translation-en-sujato.json translation/en/sujato/sutta/kn/dhp/dhp256-272_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.923, shingle density 0.342; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69bc7a3f8888fef520b73c1e_00217",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69bc7a3f8888fef520b73c1e",
+   "page_number": 217,
+   "reference_meta": {
+    "title": "The Vinaya Pitakam, Vol. I",
+    "translator": "Bhikkhu Brahmali",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "pli-tv-kd3:14.5.3 – pli-tv-kd3:14.11.52",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/brahmali/vinaya/pli-tv-kd/pli-tv-kd3_translation-en-brahmali.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 4.196, shingle density 0.615; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69bd014bf403a9ca2380f091_00054",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69bd014bf403a9ca2380f091",
+   "page_number": 54,
+   "reference_meta": {
+    "title": "Buddha Jayanti Tripiṭaka — Vinaya Piṭaka (Complete, Sinhala Script)",
+    "translator": "Bhikkhu Brahmali",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "pli-tv-bu-vb-pj1:8.2.47 – pli-tv-bu-vb-pj1:8.3.20",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/brahmali/vinaya/pli-tv-bu-vb/pli-tv-bu-vb-pj/pli-tv-bu-vb-pj1_translation-en-brahmali.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 2.295, shingle density 0.414; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699258c28812793469fdd6be_00160",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "699258c28812793469fdd6be",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "Commentary on the Brahma Sutras (Brahma Sutra Bhashya)",
+    "translator": "George Thibaut",
+    "year": 1896,
+    "licence": "public domain (published 1896)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Brahmasūtra III.2.5 (sūtra + whole bhāṣya), III.2.6 (sūtra + whole bhāṣya), III.2.7 (sūtra, the scriptural passages on deep sleep, and the opening of the pūrvapakṣa up to 'na hi ekārthānāṃ kvacit parasparasāpekṣatvaṃ')",
+    "url": "https://archive.org/download/vedntasutrastr02bdar/vedntasutrastr02bdar_djvu.txt",
+    "coverage_note": "Reference covers the whole page span and ends exactly where the page breaks off ('...are never seen to be dependent on each other.'). Thibaut's footnotes and footnote markers dropped. The archive.org OCR mangles some transliterations and a few letters (e.g. 'na^is' = nâdîs, '5ruti' = Sruti, '5vet.' = Svet., 'pov^ers', 'froni', 'pra^/^a'); these are left as fetched.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra / sutra + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69935b4d8e28d8f4c5d3cfaa",
+   "page_number": 177,
+   "reference_meta": {
+    "title": "Yoga-Sūtra with Three Classical Commentaries (Sanskrit)",
+    "translator": "James Haughton Woods",
+    "year": 1914,
+    "licence": "public domain (published 1914)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Yogasūtra III.48 (sūtra + whole Vyāsa bhāṣya) and III.49 (sūtra + bhāṣya up to 'sarvātmāno guṇā vyavasāyavya-', page break); lower half: Vācaspati's Tattvavaiśāradī on III.48 (whole) and on III.49 up to 'etad eva vivṛṇoti — sarvātmāna iti'",
+    "url": "https://archive.org/download/yogasystemofpata00wooduoft/yogasystemofpata00wooduoft_djvu.txt",
+    "coverage_note": "Woods translates all three layers, so the reference covers the whole page, arranged in Woods's order (sūtra 48, bhāṣya 48, Vācaspati on 48, sūtra 49, bhāṣya 49, Vācaspati on 49) rather than the page's (sūtra+bhāṣya above, Vācaspati below). The bhāṣya on 49 continues past the page break to its end ('...takes his recreation as having mastery.') as boundary context; the Vācaspati on 49 is cut exactly where the page ends ('This same he explains by the words «essence of all things.»'). Woods's footnotes and markers dropped; guillemet quote marks around the last lemma restored from OCR '^'. Some OCR noise left as fetched (e.g. 'rnadhupratika', '<one who knows alb'). The variant-reading apparatus has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra / sutra + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99f256ed9e0490990aa8a_00185",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69b99f256ed9e0490990aa8a",
+   "page_number": 185,
+   "reference_meta": {
+    "title": "Lotus Sutra",
+    "translator": "H. Kern",
+    "year": 1884,
+    "licence": "public domain (published 1884)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "ch. 13 Sukhavihāraparivarta, opening prose (Kern ch. XIII 'Peaceful Life', SBE 21 pp. 262-264): from Mañjuśrī's question through the 'proper sphere' and the start of the first proper sphere (page ends mid-sentence at 'sa nāntaśo dharmasaṃrāgeṇāpi dharmaṃ', = Kern 'he does not do so by passionate attachment to the law')",
+    "url": "https://archive.org/download/saddharmapundark0021unse/saddharmapundark0021unse_djvu.txt",
+    "coverage_note": "Reference covers the whole page from the chapter opening; it continues past the page's last (broken) sentence to the end of that paragraph ('...first proper sphere of a Bodhisattva Mahasattva.') as boundary context. Kern translated from Nepalese MSS (Cambridge MS), not Vaidya's text, so small wording differences are expected. The footnote apparatus has no reference. The archive.org OCR garbles diacritics (e.g. 'Mazgusri', 'Ma#gusri', 'Mahdsattva' for Mañgusrî/Mahâsattva, 'Aarakas', 'KAndalas'); these are left as fetched; only Kern's footnote markers and one stray quote mark were dropped.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69d91e423a50087f7bd9afc5_00214",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69d91e423a50087f7bd9afc5",
+   "page_number": 214,
+   "reference_meta": {
+    "title": "The Atharva Veda",
+    "translator": "William Dwight Whitney",
+    "year": 1905,
+    "licence": "public domain (published 1905)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XIX, hymn 58, verses 5-6 (preceded by the tail of Sāyaṇa on 58.4; followed by the colophon and the viniyoga introduction to XIX.59)",
+    "url": "https://archive.org/download/atharvavedasainh02whit/atharvavedasainh02whit_djvu.txt",
+    "coverage_note": "reference covers the root text XIX.58.5-6 plus verse 58.4 as context (the page opens with the end of Sāyaṇa's comment on 58.4). Sāyaṇa's commentary, the padapāṭha and the viniyoga note on XIX.59 have no reference. Whitney's notes after each verse omitted. OCR of Whitney's italic Sanskrit glosses normalised (vrajá, várman, ádhṛṣṭa, ā-i, ṛtvij, havyá, yā́vant).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "veda",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e3ff61b142e5dd9d6b0095_00128",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e3ff61b142e5dd9d6b0095",
+   "page_number": 128,
+   "reference_meta": {
+    "title": "Gita Govinda",
+    "translator": "Edwin Arnold",
+    "year": 1875,
+    "licence": "public domain (first published 1875; this impression 1904)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Sarga 7: closing signature stanza (v. 8) of song 14 (aṣṭapadī 'smara-samarocita-viracita-veśā', the Haririmitacampakaśekhara prabandha), then the following śloka 'virahapāṇḍu-murāri-mukhāmbuja-dyutir ayaṃ' (Rādhā to the moon)",
+    "url": "https://www.gutenberg.org/cache/epub/25965/pg25965.txt",
+    "coverage_note": "Arnold is a free verse paraphrase. Mapping: stanza 'Till at length, a fatal victress ... my Pain!' = song 14 v. 7 (context, not on the page); the italic 'But may Radha's fond annoy ... evil age' = song 14 v. 8 (the Jayadeva signature couplet on the page); 'O Moon! (she sang) ... I have striven in vain.' = the śloka virahapāṇḍu... (on the page; Arnold expands 2 Sanskrit lines to 6 English lines and adds the apostrophe to Krishna). Reference stops before Arnold's next line, which opens song 15. Italic underscores removed. The commentaries (about 95% of the page) have no reference; consider this a weak page for the A/B because the root text is short.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7490585f786e884a4d1aa_00097",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7490585f786e884a4d1aa",
+   "page_number": 97,
+   "reference_meta": {
+    "title": "The Cloud Messenger",
+    "translator": "Arthur W. Ryder",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Uttaramegha: end of Mallinātha's commentary on v. 40 (this edition's numbering), v. 41 'tām āyuṣman mama ca vacanād' (whole, with commentary), and the first two pādas of v. 42 'aṅgenāṅgaṃ pratanu tanunā'. = Ryder's Latter Cloud stanzas XXXVII (end) - XXXIX",
+    "url": "https://www.gutenberg.org/cache/epub/16659/pg16659.txt",
+    "coverage_note": "Reference covers the root text only: XXXVIII = v. 41 (whole, on page); XXXIX = v. 42 (only its first two pādas are on the page; the rest is on the next page); XXXVII = v. 40 (context: on this page only the tail of its commentary appears). Ryder's italic marginal analyses (his own additions, drawn from Mallinātha) were removed, as were the stanza-gloss lines; his Roman stanza numbers are kept. Ryder renders each 4-line Sanskrit stanza as a rhymed 5-line English stanza and is free in places. Mallinātha's commentary (most of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7490d85f786e884a4d40e_00180",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7490d85f786e884a4d40e",
+   "page_number": 180,
+   "reference_meta": {
+    "title": "कुमारसम्भव (Kumārasambhava)",
+    "translator": "Ralph T. H. Griffith",
+    "year": 1879,
+    "licence": "public domain (published 1879)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Canto VII, verses 28-30 (whole)",
+    "url": "https://www.gutenberg.org/cache/epub/31968/pg31968.txt",
+    "coverage_note": "Reference covers the three root verses only; Mallinātha's commentary and the variant footnotes have no reference. Griffith's 1879 version is a free rhymed paraphrase, not verse-for-verse. Mapping: 'Then at her mother's hest ... reverend feet' = VII.27 (context); 'They raised the maiden ... perfect bliss' = VII.28; 'Well-pleased HIMÁLAYA ... monarch's state' = VII.29; 'Meanwhile by heavenly matrons' care ... the bridegroom wore' = VII.30; 'He laid his hand ... wish to wear' = VII.31 (context; Griffith's couplet is loose). PG markup ['S]IVA rendered as ŚIVA.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7491a85f786e884a4d6f9_00789",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7491a85f786e884a4d6f9",
+   "page_number": 789,
+   "reference_meta": {
+    "title": "श्रीमद्वाल्मीकिरामायण (Rāmāyaṇa)",
+    "translator": "Manmatha Nath Dutt",
+    "year": 1893,
+    "licence": "public domain (published 1893)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Yuddhakāṇḍa sarga 39 (Laṅkādarśana) vv. 17–29 (end of sarga) and sarga 40 (Rāvaṇa–Sugrīva duel) vv. 1–7; printed page 730",
+    "url": "https://archive.org/download/in.ernet.dli.2015.217238/2015.217238.The-Ramayana_djvu.txt (cross-checked against https://archive.org/download/india.history.resource.78269/78269_djvu.txt)",
+    "coverage_note": "Dutt's prose = Yuddha Kandam Section XXXIX end and Section XL opening. Context added: one sentence before (v. 16, the dust cloud) and one after (sarga 40 v. 8, Sugriva bounds to the gateway). Dutt's text gives Lanka as 'ten yojanas in width and twenty in length' whereas this edition reads 100 x 30 yojanas (v. 21). Text taken from two archive.org OCRs of the same 1893 print, used to correct single-witness OCR errors (e.g. 'moiinlains'); diacritics flattened (Rāma -> Rama, chāmaras -> chamaras), 'yoyanas' kept as both OCRs read it; translator's footnotes (on Trikuta, Vishnu's middle step) and footnote markers dropped. Section XXXIX heading is not on this page.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "epic",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e7491f85f786e884a4dc2f_00182",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7491f85f786e884a4dc2f",
+   "page_number": 182,
+   "reference_meta": {
+    "title": "महाभारत (Mahābhārata) — BORI Critical Edition",
+    "translator": "Kisari Mohan Ganguli",
+    "year": 1883,
+    "licence": "public domain (published 1883–96)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Karṇaparvan 8.22.58–61 (end of adhyāya 22: Karṇa's boast; Duryodhana grants the carts and cars; turns to Śalya) and 8.23.1–2ab (Duryodhana humbly approaches Śalya); printed page 174; edition's concordance line: Calcutta 8.1318, Bombay 8.31.68, Kumbhakonam 8.22.72",
+    "url": "https://www.gutenberg.org/cache/epub/15476/pg15476.txt",
+    "coverage_note": "Ganguli follows the vulgate (Bombay/Calcutta) numbering: BORI 8.22 = Ganguli Karna Parva Section XXXI, BORI 8.23 = Ganguli Section XXXII (offset of 9 adhyāyas here). Context added: one sentence before 8.22.58 ('Thou wilt then see...') and the rest of Duryodhana's vocative string after 8.23.2ab (to '...hostile troops with fear,'). Ganguli's 'The very gods and Asuras are not able to advance against me... of human origin?' after 8.22.58 has no counterpart on this page (vulgate-only lines, not in the critical text); Ganguli also expands 8.22.59–60 (cars with steeds, vulturine feathers). The critical apparatus has no reference. The Project Gutenberg text prints section headings as bare numerals ('32' = Section XXXII), kept as printed.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "epic",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e8b27f2ff2a8dc09e77ed7",
+   "page_number": 48,
+   "reference_meta": {
+    "title": "श्रीमद्भगवद्गीता (Bhagavad Gita, 1492 MS)",
+    "translator": "K. T. Telang",
+    "year": 1882,
+    "licence": "public domain (published 1882)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "folio 45 recto: 11.21b to 11.25a; verso (from the image): 11.25b to about 11.29a",
+    "url": "https://archive.org/download/bhagavadgtwi00tela/bhagavadgtwi00tela_djvu.txt",
+    "coverage_note": "the stored OCR reads the recto reasonably well but the verso badly (it mostly repeats invented strings). I located the verso by viewing the page image (images.sourcelibrary.org/archived/69e8b27f2ff2a8dc09e77ed7/48.jpg). The reference runs from the start of 11.21 to the end of 11.30, so the page's exact end inside 11.29 or 11.30 is covered; the first half of 11.21 is context (the page begins mid-verse). Telang prints the chapter as running prose without verse numbers. Djvu OCR artefacts normalised: 'Vi^vas' → 'Visvas', 'A^vins' → 'Asvins', 'Vish;Ai'/'Vish;ai' → 'Vishnu', 'Dhr/tarash/ra' → 'Dhritarâshtra', 'Dro;/a' → 'Drona', 'recog-- nise' rejoined. Footnote markers dropped. A judge whose machine translation runs from the OCR will find the verso weakly supported.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "gita",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69ea3e63300d991d0f1d3186_00160",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69ea3e63300d991d0f1d3186",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "अर्थशास्त्र (Arthaśāstra)",
+    "translator": "R. Shamasastry",
+    "year": 1915,
+    "licence": "public domain (published 1915)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Book II, ch. 27 (Gaṇikādhyakṣa, prakaraṇa 44), from 'rājājñayā puruṣam anabhigacchantī gaṇikā…' to the end of the chapter (colophon: 27th chapter of Adhyakṣapracāra, 48th from the beginning)",
+    "url": "https://en.wikisource.org/w/index.php?title=Arthashastra/Book_II&action=raw",
+    "coverage_note": "reference covers the whole page; the first paragraph (graded punishments for repeat offences) is one paragraph of context from before the page; the edition's variant footnotes have no reference. Wikisource transcription of the 1915 Bangalore edition used because the archive.org scans are 4th-8th editions (1951-1967).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra (polity)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69935b692c63944063133f67",
+   "page_number": 112,
+   "reference_meta": {
+    "title": "Tao Te Ching with Commentary",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "commentaries on ch. 48 (蘇註, 呂註, 黃茂材註, 息齋註), then root text of ch. 49 from 聖人無常心 to 聖人 (breaks off before the final 皆孩之)",
+    "url": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    "coverage_note": "reference = Legge ch. 48 §3 (the opening paragraph numbered '3.'; context: the last clause discussed by the ch. 48 commentaries) + ch. 49 whole. Ch. 49 §3's last clause ('and he deals with them all as his children', 皆孩之) lies past the page break. The ch. 48 commentaries (about 80% of the page) have no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c60a409200ea79f46f6_00141",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c60a409200ea79f46f6",
+   "page_number": 141,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk V, Ai-thâi Tho story, from 子食於其死母者 to 形全猶足以為爾 (Legge SBE 39 pp. 230–231)",
+    "url": "https://archive.org/download/sacredbooksofchi01oxfo/sacredbooksofchi01oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; the marginal 旁注 glosses have no reference. Opens with the start of the sentence the page enters mid-way (the page begins at 子食), and ends with one extra clause ('how much greater results…', 而況全德之人乎) beyond the page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c6ba409200ea79f484e",
+   "page_number": 102,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 3",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk XX end of §4 (大公任 to Confucius: 至人不聞…; Confucius retires to the marsh) and start of §5 (Confucius asks 子桑雽), Legge SBE 40 pp. 23–24",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; marginal glosses have no reference. Begins with the sentence containing 責焉 (the page's first words) and ends at the end of Confucius's question; Ȝze-sang Hû's reply begins on the next page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c75a409200ea79f4976_00100",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c75a409200ea79f4976",
+   "page_number": 100,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XXXII (列御寇) par. 10, from 「（醉之以）酒而觀其則」 (the drunkenness test) to the end of par. 10 (九徵至不肖人得矣); par. 11 正考父… through 「凶德有五中德（為首）」 ('This evil quality has five forms, and the chief of them is that which is the central')",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "Reference covers the whole root text on the page. Context added: the beginning of par. 10 (Confucius on the nine tests; on the previous page) and the next sentence after the page break ('What do we mean by the central quality?...'). The page ends at 中德 mid-sentence. Marginal glosses (旁注) have no reference. Legge's translator's footnotes and markers dropped; diacritics in 'Hsü (Yû)' and 'Yâo' restored from garbled OCR ('Hsli (Yii)').",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e8b2642ff2a8dc09e778a1_00439",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e8b2642ff2a8dc09e778a1",
+   "page_number": 439,
+   "reference_meta": {
+    "title": "墨子 (Mòzǐ)",
+    "translator": "Y. P. Mei",
+    "year": 1929,
+    "licence": "public domain in the US (published 1929; entered US public domain 1 Jan 2025)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "ch. 48 公孟 (Kung Meng): second half of the 'no propitiousness' exchange, the mourning/Three Hundred Odes exchange, ending mid-sentence in Motse's reply (治之廢則國之治亦廢國之...)",
+    "url": "https://archive.org/download/in.ernet.dli.2015.283868/2015.283868.The-Works_djvu.txt",
+    "coverage_note": "page begins mid-paragraph (不能為禍福...); the start of that paragraph is included as context. Page ends mid-sentence at 'A country [may be rich]'; the reference runs to the end of that sentence group. Bi Yuan's small editorial notes have no reference. Obvious OCR errors in the archive.org text were corrected to the printed reading (tlie->the, he->be, moiixning->mourning, Ghitse->Chitse, curly-quote debris); Mei's footnotes omitted.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "philosophy (Mozi)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr",
+    "lite-reocr2",
+    "flash-reocr2"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e72698a409200ea79ef8c3_00129",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72698a409200ea79ef8c3",
+   "page_number": 129,
+   "reference_meta": {
+    "title": "Liaozhai zhiyi 聊齋志異, tale 曾友于 (Zeng Youyu) = Giles 'The Quarrelsome Brothers'",
+    "translator": "Herbert A. Giles",
+    "year": 1880,
+    "licence": "public domain (published 1880)",
+    "private": false,
+    "style": "free",
+    "style_note": "Victorian literary prose; follows the narrative sentence by sentence but smooths, condenses and occasionally glosses details",
+    "located": "曾友于, mid-tale: from ……共出田宅居成 (the younger brothers give the returned eldest brother Cheng a share) through 成不聽刻期 (Cheng ignores Youyu and fixes a day for the reburial)",
+    "url": "https://www.gutenberg.org/cache/epub/43629/pg43629.txt",
+    "coverage_note": "Page begins mid-sentence (共出田宅居成); reference starts at the beginning of Giles's paragraph ('One day the eldest brother, Ch‘êng…'), so Cheng's return, Jen and Yi inviting him and sending for Yu-yü precede the page as context; it ends with the sentence that completes 刻期 ('fixed a day for her interment in the family vault'). Giles condenses a few details (e.g. 以石投孝 'threw a stone at Hsiao and knocked him down'; 使七分相準 'divided equally among the seven brothers'). Translator's footnote markers removed.",
+    "page_content": "Root narrative text only (no commentary on this page); reference covers ~100% of it",
+    "confidence": 0.9,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Herbert A. Giles, Strange Stories from a Chinese Studio, 2 vols, London: Thos. De La Rue, 1880 (Project Gutenberg #43629, transcribed from the 1880 edition)",
+    "canonical": false,
+    "genre": "fiction (tales)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69906a861cf6ed5fbc8f5d21_00078",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69906a861cf6ed5fbc8f5d21",
+   "page_number": 78,
+   "reference_meta": {
+    "title": "Līlāvatī of Bhāskara II (with Sanskrit anvaya and Hindi commentary)",
+    "translator": "Henry Thomas Colebrooke",
+    "year": 1817,
+    "licence": "public domain (published 1817)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Regency-era scholarly translation, close to the Sanskrit, with Bhāskara's statements rendered as worked arithmetic",
+    "located": "Līlāvatī, Miscellaneous rules (guṇakarma, root-multiplier problems): example verse 3 of this edition = Colebrooke ch. III sect. V §66 (the flock of geese, answer 144)",
+    "url": "https://archive.org/download/algebrawitharith00brahuoft/algebrawitharith00brahuoft_djvu.txt",
+    "coverage_note": "Colebrooke translates the verse and Bhāskara's statement/solution; he has no equivalent of the Sanskrit anvaya or the modern Hindi explanation. Colebrooke printed the fractions stacked; all four archive.org OCRs of the 1817 book garble them (e.g. 'i', '%^', 'y'), so each is marked '[fraction illegible in OCR]' rather than supplied (true values per the page: 1/8; 7/8; 80/7 and 48/7; 40/7). OCR letter errors corrected: 'M&nasa' -> 'Mánasa' (as in https://archive.org/download/1817-henry-colebrooke-algebra-with-arithmetic-and-mensuration-from-the-sanskrit-of-br/1817-HCOLEBROOKE_Algebra_with_Arithmetic_and_Mensuration_from_the_Sanskrit_of_Brahmagupta_and_Bhaskara_djvu.txt), 'coefiicient' -> 'coefficient'; footnote markers dropped. No neighbouring examples included (they carry further garbled fractions).",
+    "page_content": "Example verse (flock of geese; ten times the square root to the Mānasa lake, an eighth to the sthalapadminī forest, three pairs remain), Sanskrit anvaya, Hindi artha, Sanskrit nyāsa (statement and working: 7/8, 48/7, 80/7, 40/7, 1600/49, 1936/49, 44/7, 144), and the start of a Hindi worked explanation (phailāv) cut off at page foot. The reference covers the verse, anvaya, artha and nyāsa (~60% of the page); the Hindi phailāv (~40%) has no reference beyond the matching steps in Colebrooke's solution.",
+    "confidence": 0.85,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "H. T. Colebrooke, Algebra, with Arithmetic and Mensuration, from the Sanscrit of Brahmegupta and Bháscara, London: John Murray 1817, Líláwatí ch. III sect. V §66 (p. 30)",
+    "canonical": false,
+    "genre": "mathematics + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7267ca409200ea79ef51d_00353",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7267ca409200ea79ef51d",
+   "page_number": 353,
+   "reference_meta": {
+    "title": "Hitopadeśa",
+    "translator": "Francis Johnson",
+    "year": 1848,
+    "licence": "public domain (published 1848)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Victorian scholarly crib, numbered verses, supplied words italicised; close to the Sanskrit",
+    "located": "Book III (Vigraha, War), the Chakravāka's counsel after the Parrot's arrival: from 'vigrahas tāvat samupasthitaḥ' (King: war is now settled) through Johnson's verses III.41-45 and the prose 'kiṃ tu vigraham upasthitaṃ vilokya ... yataḥ' that introduces III.46",
+    "url": "https://archive.org/download/hitopadeaorsalu00johngoog/page/n92_w1200.jpg (page image; djvu text at https://archive.org/download/hitopadeaorsalu00johngoog/hitopadeaorsalu00johngoog_djvu.txt)",
+    "coverage_note": "Context: one sentence before the span (the porter withdrawing with the Parrot) and verse III.46 after it. Text transcribed from the page image of Johnson p. 81 (the archive.org djvu OCR of this page is garbled, e.g. 'fiuicAHi«ry ({/'timber' for 'machinery of timber'); italics (Johnson's supplied words) dropped. The printed Sanskrit OCR is noisy (e.g. 'prayate cārīn' for 'prayatetārīn'), but the verse sequence matches Johnson's 41-45 exactly.",
+    "page_content": "Sanskrit root text (prose + verses III.41-45, ~55% of the page) followed by a Bengali prose rendering (~45%) that covers the same passage only up to the start of verse 44. Reference covers 100% of the Sanskrit root; the Bengali block is a parallel translation of part of the same span, so it is also covered.",
+    "confidence": 0.85,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Francis Johnson, Hitopadeśa, or Salutary Counsels of Vishnu Śarman, in a series of connected fables ... literally translated, London 1848, Book III (War), p. 81",
+    "canonical": false,
+    "genre": "fable (didactic)",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e80662fdad300064d9ed7c_00171",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e80662fdad300064d9ed7c",
+   "page_number": 171,
+   "reference_meta": {
+    "title": "Suśruta Saṃhitā (Sūtrasthāna), Sanskrit text with Hindi bhāṣā-ṭīkā of Paṇḍit Muralīdhara Śarmā",
+    "translator": "Kaviraj Kunja Lal Bhishagratna",
+    "year": 1907,
+    "licence": "public domain (published 1907)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Edwardian scholarly-medical prose, close to the Sanskrit with parenthetical glosses and Sanskrit terms kept",
+    "located": "Sūtrasthāna ch. 18 (Vraṇālepana-bandha-vidhi) vv. 39-43 (end of chapter; vv. 39-41 only in the Hindi rendering, vv. 42-43 Sanskrit + Hindi) and ch. 19 (Vraṇitopāsanīya) opening + vv. 1-4 (Sanskrit only)",
+    "url": "https://archive.org/download/englishtranslati01susruoft/englishtranslati01susruoft_djvu.txt",
+    "coverage_note": "Reference starts one sentence before the page (ch. 18 'All secreting measures...', context) and ends one sentence after ch. 19 v. 4 ('Thus the patient shall lie...', likely v. 5, context). Bhishagratna follows the Sanskrit closely but treats some verses as 'Metrical Text' blocks; his ch. 18 v. 40 adds a parenthetical gloss. The ch. 19 vv. 1-4 Sanskrit on the page has no Hindi on this page; the reference gives Bhishagratna's English for them. Obvious OCR glyph errors in the archive.org djvu text were corrected to the printed reading (b}- -> by, bod}' -> body, lielp -> help, IVIetrical -> Metrical, Sutrasth^nam -> Sutrasthanam, Siishruta -> Sushruta, Vranito-pa^saniya-madhyaryam -> Vranito-pasaniya-madhyayam); the translator's footnote (interpolation note) and page headers were dropped.",
+    "page_content": "Printed p. 143. Root Sanskrit verses (ch. 18 vv. 42-43, ch. 19 vv. 1-4) plus a Hindi translation of ch. 18 vv. 39-43 (the Hindi is a close rendering of the root, not independent commentary); one-line Sanskrit/Hindi footnote. The reference covers essentially the whole page (~95%); only the footnote '(सूत्र ४२) वधयुक्त व्रण' and the two colophons' Hindi-commentator naming have no counterpart.",
+    "confidence": 0.8,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Kaviraj Kunja Lal Bhishagratna, An English Translation of the Sushruta Samhita, Vol. I (Sutrasthanam), Calcutta 1907, pp. 174-177",
+    "canonical": false,
+    "genre": "medicine",
+    "publishable": true
+   },
+   "arms": [
+    "lite-ocr",
+    "lite-reocr",
+    "lite-corr",
+    "flash-ocr",
+    "flash-reocr",
+    "flash-corr"
+   ],
+   "canonical": false
+  }
+ ]
+}

@@ -45,6 +45,7 @@ import { mkdirSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
 import { MongoClient } from 'mongodb';
 import { pgClient } from '../works-catalog/lib.mjs';
+import { loadHoldingCandidates, corpusBookSets, sumHoldings } from '../lib/canon-holdings.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('--')).map(a => {
   const [k, v] = a.slice(2).split('='); return [k, v ?? true];
@@ -157,6 +158,8 @@ async function measureRates(db) {
     hebrew: { langs: ['Hebrew', 'Aramaic'], model: 'gemini-3.1-flash-lite' },
     arabic: { langs: ['Arabic'], model: 'gemini-3.1-flash-lite' },
     persian: { langs: ['Persian'], model: 'gemini-3.1-flash-lite' },
+    latin: { langs: ['Latin'], model: 'gemini-3.1-flash-lite' },
+    greek: { langs: ['Greek', 'Ancient Greek'], model: 'gemini-3.1-flash-lite' },
   };
   const out = {};
   for (const [k, lane] of Object.entries(LANES)) {
@@ -186,67 +189,18 @@ async function measureRates(db) {
 }
 
 // ---------------------------------------------------------------- holdings
+// The selectors live in scripts/lib/canon-holdings.mjs, shared with the status file (canon-gap-status.mjs).
 async function holdings(db) {
-  const B = db.collection('books');
-  const proj = { projection: { id: 1, title: 1, english_title: 1, language: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1, collections: 1, 'image_source.provider': 1, 'image_source.source_url': 1, source_url: 1, metadata: 1 } };
-  const langs = ['Tibetan', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)', 'Sanskrit', 'Pali', 'Hebrew', 'Aramaic', 'Arabic', 'Persian', 'Mongolian', 'Korean'];
-  const colls = ['tibetan-canon', 'buddhist-canon', 'chinese-buddhist-texts', 'zen-chan', 'kabbalah', 'jewish-kabbalistic-mysticism', 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism', 'vedanta-darshana', 'persian-literary-tradition', 'daoist-classics', 'buddhism'];
-  const byLang = await B.find({ language: { $in: langs } }, proj).toArray();
-  const byColl = await B.find({ collections: { $in: colls } }, proj).toArray();
-  // works-catalog title-auto holdings (build-holdings.mjs) per source catalog
   const pgc = pgClient(); await pgc.connect();
-  const wh = (await pgc.query(`select distinct w.source_catalog, h.book_id from work_holdings h join works w on w.id=h.work_id where w.source_catalog in ('kanripo','cbeta','openiti','gretil','sefaria','bdrc')`)).rows;
+  const { books, whBy, counts } = await loadHoldingCandidates(db, pgc);
   await pgc.end();
-  const whBooks = await B.find({ id: { $in: [...new Set(wh.map(r => r.book_id))] } }, proj).toArray();
-  const all = new Map(); for (const b of [...byLang, ...byColl, ...whBooks]) all.set(b.id, b);
-  const books = [...all.values()];
   writeFileSync(`${CACHE}/holdings-books.json`, JSON.stringify(books));
-  const whBy = {}; for (const r of wh) (whBy[r.source_catalog] ||= new Set()).add(r.book_id);
-  log(`holdings: ${books.length} candidate books (lang ${byLang.length}, collections ${byColl.length}, work_holdings ${whBooks.length})`);
-  const hay = b => `${b.title || ''} | ${b.english_title || ''} | ${b.image_source?.source_url || ''} | ${b.source_url || ''}`;
-  const sum = (sel, method) => {
-    const live = sel.filter(b => b.visible === true && (b.pages_count || 0) > 0);
-    const hid = sel.filter(b => !(b.visible === true && (b.pages_count || 0) > 0));
-    return { live_books: live.length, live_pages: live.reduce((a, b) => a + (b.pages_count || 0), 0), live_pages_translated: live.reduce((a, b) => a + (b.pages_translated || 0), 0),
-      hidden_books: hid.length, hidden_pages: hid.reduce((a, b) => a + (b.pages_count || 0), 0), method };
-  };
-  const has = (b, ...cs) => (b.collections || []).some(c => cs.includes(c));
-  const tib = books.filter(b => b.language === 'Tibetan');
-  const zh = books.filter(b => /Chinese/.test(b.language || ''));
+  log(`holdings: ${books.length} candidate books (lang ${counts.lang}, collections ${counts.collections}, work_holdings ${counts.work_holdings})`);
+  const S = corpusBookSets(books, whBy);
   const R = {};
-  R.tengyur = sum(tib.filter(b => /W23703|derge-tengyur/i.test(hay(b)) || (/bstan ?'?gyur|tengyur|tanjur/i.test(hay(b)) && /sde dge|derge|dege/i.test(hay(b)))),
-    "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)");
-  R.tengyur.other_editions = sum(tib.filter(b => /bstan ?'?gyur|tengyur|tanjur/i.test(hay(b))), "any Tengyur edition by title");
-  R.kangyur = sum(tib.filter(b => /W22084|derge-kangyur/i.test(hay(b)) || (/bka'? ?'?gyur|kangyur|kanjur/i.test(hay(b)) && /sde dge|derge|dege/i.test(hay(b)))),
-    "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W22084, Esukhia)");
-  R.kangyur.other_editions = sum(tib.filter(b => /bka'? ?'?gyur|kangyur|kanjur/i.test(hay(b))), "any Kangyur edition by title (e.g. BL Thadrak manuscript Kanjur)");
-  const cbetaSet = whBy.cbeta || new Set();
-  R.cbeta = sum(zh.filter(b => cbetaSet.has(b.id) || b.metadata?.cbeta_id || b.image_source?.provider === 'sat_daizokyo' || has(b, 'buddhist-canon', 'chinese-buddhist-texts', 'zen-chan')),
-    'Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings');
-  R.cbeta_chan = sum(zh.filter(b => /景德傳燈錄|景德传灯录|祖堂集|五燈會元|五灯会元|語錄|语录|廣錄|語要/.test(hay(b)) || has(b, 'zen-chan')),
-    'Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan');
-  R.pali = sum(books.filter(b => b.language === 'Pali'), 'language=Pali (any edition; not matched to the VRI CSCD edition)');
-  const skt = books.filter(b => b.language === 'Sanskrit');
-  R.gretil = sum(skt, 'language=Sanskrit (any edition; NOT matched to GRETIL e-texts — work_holdings has no gretil rows)');
-  R.gretil_buddhist = sum(skt.filter(b => has(b, 'buddhism', 'buddhist-canon', 'indian-buddhist-jain') || /buddh|bauddh|sūtra|sutra|prajñā|prajna|abhidharma|bodhi/i.test(hay(b))), 'Sanskrit books in buddhism collections or Buddhist title terms');
-  R.gretil_vedanta = sum(skt.filter(b => has(b, 'vedanta-darshana') || /vedānta|vedanta|brahmasūtra|brahmasutra|upaniṣad|upanishad|śaṅkara|shankara/i.test(hay(b))), 'Sanskrit books in vedanta-darshana or Vedānta title terms');
-  R.gretil_gaudiya = sum(skt.filter(b => /gosvām|gosvam|caitanya|chaitanya|rūpa|jīva gos|bhaktirasām|bhaktirasam|haribhakti/i.test(hay(b))), 'Sanskrit books with Gauḍīya author/title terms');
-  const heb = books.filter(b => /Hebrew|Aramaic/.test(b.language || '') || has(b, 'kabbalah', 'jewish-kabbalistic-mysticism'));
-  const kab = heb.filter(b => has(b, 'kabbalah', 'jewish-kabbalistic-mysticism') || /zohar|זהר|זוהר|kabbal|qabbal|cabbal|עץ חיים|etz ?chaim|ets ?hayy?im|pardes rimm?on|פרדס רמונים|cordovero|קורדובירו|luria|vital|ויטאל|tikk?un/i.test(hay(b)));
-  R.kabbalah = sum(kab, 'Hebrew/Aramaic or kabbalah collections, with Kabbalah collection/title terms (any edition)');
-  R.zohar = sum(kab.filter(b => /zohar|זהר|זוהר|tikk?un/i.test(hay(b))), 'Zohar / Tikkunei Zohar by title');
-  R.lurianic = sum(kab.filter(b => /etz ?chaim|ets ?hayy?im|עץ חיים|luria|vital|ויטאל|ari\b|shemonah sh|שמונה שערים|pri etz|sha.ar ha/i.test(hay(b))), 'Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)');
-  R.cordovero = sum(kab.filter(b => /cordovero|קורדובירו|pardes rimm?on|פרדס רמונים|tomer dev|תומר דבורה|or ne.erav|אור נערב/i.test(hay(b))), 'Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)');
-  const isl = books.filter(b => /Arabic|Persian/.test(b.language || '') || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism'));
-  const oitiSet = whBy.openiti || new Set();
-  R.openiti_sufi = sum(isl.filter(b => oitiSet.has(b.id) || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism') || /ibn ?.?arab[iī]|fus[uū]s|fut[uū]h[aā]t|فصوص|فتوحات|ابن عربي|ابن العربي/i.test(hay(b))),
-    'Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings');
-  R.ganjoor = sum(books.filter(b => b.language === 'Persian' && (has(b, 'persian-literary-tradition') || /d[iī]v[aā]n|diwan|masnav|mathnaw|shahnam|sh[aā]hn[aā]m|gulist|bust[aā]n|دیوان|ديوان|مثنوی|شاهنامه|گلستان|بوستان|غزل|hafez|hafiz|sa.di|rumi|attar|ferdowsi|nizami|jami/i.test(hay(b)))),
-    'Persian books in persian-literary-tradition or with classical poetry title terms (any edition)');
-  R.mongolian_kanjur = sum(books.filter(b => b.language === 'Mongolian' || /W4CZ5370|mongolian (kanjur|kangyur)|ganjuur/i.test(hay(b))), 'language=Mongolian or Mongolian Kanjur by title/source');
-  R.tripitaka_koreana = sum(books.filter(b => (/Korean|Chinese/.test(b.language || '')) && /高麗|高丽|tripitaka koreana|koryo|goryeo|海印寺|再雕/i.test(hay(b))), 'Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms');
-  const krSet = whBy.kanripo || new Set();
-  R.kanripo = sum(books.filter(b => krSet.has(b.id)), 'works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)');
+  for (const [k, v] of Object.entries(S)) if (!k.endsWith('_other_editions')) R[k] = sumHoldings(v);
+  R.tengyur.other_editions = sumHoldings(S.tengyur_other_editions);
+  R.kangyur.other_editions = sumHoldings(S.kangyur_other_editions);
   return R;
 }
 
@@ -569,6 +523,102 @@ async function worksCatalogCoverage() {
   return out;
 }
 
+
+// ---------------------------------------------------------------- Latin and Greek (#6220)
+/** Letter runs: the word unit Corpus Corporum counts (punctuation and paratext excluded). */
+const words = s => (s.match(/\p{L}+/gu) || []).length;
+const teiBody = t => t.replace(/<teiHeader[\s\S]*?<\/teiHeader>/, '').replace(/<note[\s\S]*?<\/note>/g, '');
+
+/** Corpus Corporum (Zurich): per-corpus text and word counts from its own navigation API. */
+async function corpusCorporum() {
+  const xml = (await fetchLive('https://mlat.uzh.ch/php_modules/navigate.php?load=/')).text;
+  const corpora = [...xml.matchAll(/<corpus type="corpus">([\s\S]*?)<\/corpus>/g)].map(m => {
+    const g = k => (m[1].match(new RegExp(`<${k}>([^<]*)`)) || [])[1];
+    return { nr: +g('nr'), idno: g('idno'), name: g('name'), texts: +g('texts_count'), accessible_texts: +g('accessible_texts_count'), works: +g('works_count'), authors: +g('authors_count'), words: +g('words_count'), source: g('source') };
+  });
+  // base chars per word, measured on the Open Greek and Latin EpiDoc of the PL (the text Corpus Corporum loaded)
+  const tree = await ghTree('OpenGreekAndLatin/patrologia_latina-dev');
+  const files = tree.blobs.filter(b => /^data\/.*-lat\d*\.xml$/.test(b.path));
+  let c = 0, w = 0, n = 0;
+  await pool(sample(files, 12, 6220), 4, async f => {
+    const t = teiBody((await fetchCached(`https://raw.githubusercontent.com/OpenGreekAndLatin/patrologia_latina-dev/${tree.sha}/${encodeURI(f.path)}`)).toString('utf8')).replace(/<[^>]*>/g, ' ');
+    c += baseChars(t, { stripTags: false }); w += words(t); n++;
+  });
+  return { corpora, chars_per_word: round(c / w, 3), calibration: { repo: 'OpenGreekAndLatin/patrologia_latina-dev', sha: tree.sha, sample_files: n, base_chars: c, words: w },
+    source: 'https://mlat.uzh.ch/php_modules/navigate.php?load=/ (Corpus Corporum navigation API: texts_count, words_count per corpus)' };
+}
+
+/**
+ * A CTS repository (Perseus, First1KGreek): one source-language edition per work (the largest), and
+ * whether the same work folder holds an English translation. English share = source bytes of works
+ * with English ÷ all source bytes, the SuttaCentral method.
+ */
+async function ctsRepo(repo, srcLang, sampleN, seed) {
+  const tree = await ghTree(repo);
+  const re = new RegExp(`^data/([^/]+/[^/]+)/[^/]+-${srcLang}\\d*\\.xml$`), en = /^data\/([^/]+\/[^/]+)\/[^/]+-eng\d*\.xml$/;
+  const works = new Map(), eng = new Set();
+  for (const b of tree.blobs) {
+    const m = b.path.match(re);
+    if (m && (!works.has(m[1]) || works.get(m[1]).size < b.size)) works.set(m[1], b);
+    const e = b.path.match(en); if (e) eng.add(e[1]);
+  }
+  const ed = [...works.entries()];
+  const bytes = ed.reduce((a, [, b]) => a + b.size, 0), enBytes = ed.filter(([k]) => eng.has(k)).reduce((a, [, b]) => a + b.size, 0);
+  let sb = 0, sc = 0, n = 0;
+  await pool(sample(ed.map(([, b]) => b).filter(b => b.size < 8e6), sampleN, seed), 4, async b => {
+    const buf = await fetchCached(`https://raw.githubusercontent.com/${repo}/${tree.sha}/${encodeURI(b.path)}`);
+    sb += buf.length; sc += baseChars(teiBody(buf.toString('utf8'))); n++;
+  });
+  return { tree_sha: tree.sha, works: works.size, works_with_english: ed.filter(([k]) => eng.has(k)).length, bytes, base_chars: Math.round(bytes * sc / sb),
+    english_fraction_by_bytes: round(enBytes / bytes, 3),
+    method: `git tree API: ${works.size} works with a ${srcLang} edition under data/ (largest edition per work, ${(bytes / 1e6).toFixed(0)} MB); ${n} sampled editions downloaded and counted (teiHeader and notes excluded), chars scaled by bytes (${(sc / sb).toFixed(3)} base chars/byte)`,
+    english_method: `${repo}: works whose folder also holds an -eng translation, weighted by source-edition bytes` };
+}
+
+/** Sefaria counts for every title in a TOC category path (segments with English ÷ segments with Hebrew). */
+async function sefariaCategory(path) {
+  const toc = await fetchJson('https://www.sefaria.org/api/index');
+  let node = { contents: toc };
+  for (const c of path) node = node.contents.find(x => x.category === c);
+  const titles = [];
+  // the six orders only (Seder Zeraim … Seder Tahorot); the category's commentary branches are skipped
+  for (const seder of node.contents.filter(x => /^Seder /.test(x.category || ''))) for (const x of seder.contents || []) if (x.title && !x.category) titles.push(x.title);
+  let he = 0, en = 0;
+  await pool(titles, 1, async t => {
+    const c = await fetchJson(`https://www.sefaria.org/api/counts/${encodeURIComponent(t)}`);
+    (function walk(n) { if (!n || typeof n !== 'object') return;
+      if (n._he?.availableTexts) he += flat(n._he.availableTexts).filter(x => x > 0).length;
+      if (n._en?.availableTexts) en += flat(n._en.availableTexts).filter(x => x > 0).length;
+      for (const [k, v] of Object.entries(n)) if (!k.startsWith('_')) walk(v); })(c);
+  });
+  return { titles: titles.length, he_segments: he, en_segments: en, fraction: he ? round(Math.min(1, en / he), 3) : null };
+}
+
+/**
+ * Canons with a complete or near-complete English translation: listed with their English share and
+ * its source, never priced as gaps.
+ */
+async function alreadyInEnglish(sc) {
+  const tz = htmlToText((await fetchLive('https://tanzil.net/trans/')).text);
+  const tanzilEnglish = (tz.match(/\bEnglish (?!Transliteration)[A-Z]/g) || []).length;
+  const eb = htmlToText((await fetchLive('https://ebible.org/find/details.php?id=eng-kjv2006')).text);
+  const mishnah = await sefariaCategory(['Mishnah']);
+  const bavli = await sefariaCategory(['Talmud', 'Bavli']);
+  const sutta = sc.by_pitaka.sutta;
+  return [
+    { id: 'bible', corpus: 'Bible (Hebrew Bible and New Testament)', tradition: 'Jewish and Christian scripture', url: 'https://ebible.org/find/details.php?id=eng-kjv2006', english: { fraction: 1, complete_translations: 'many; e.g. the King James Version, public domain',
+      source: 'https://ebible.org/find/details.php?id=eng-kjv2006', quote: /public domain/.test(eb) ? 'King James (Authorized) Version … public domain' : null, note: 'Complete English translations exist; eBible.org lists the King James Version as public domain.' } },
+    { id: 'quran', corpus: "Qur'an", tradition: 'Islamic scripture', url: 'https://tanzil.net/trans/', english: { fraction: 1, complete_translations: tanzilEnglish || null,
+      source: 'https://tanzil.net/trans/', note: `Tanzil lists ${tanzilEnglish} complete English translations, among them Arberry, Pickthall and Saheeh International.` } },
+    { id: 'mishnah', corpus: 'Mishnah', tradition: 'Rabbinic Judaism', url: 'https://www.sefaria.org/texts/Mishnah', english: { fraction: mishnah.fraction, titles: mishnah.titles, he_segments: mishnah.he_segments, en_segments: mishnah.en_segments,
+      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Mishnah in https://www.sefaria.org/api/index', note: `Share of Sefaria's passages that have English, over all ${mishnah.titles} tractates.` } },
+    { id: 'talmud-bavli', corpus: 'Babylonian Talmud', tradition: 'Rabbinic Judaism', url: 'https://www.sefaria.org/texts/Talmud', english: { fraction: bavli.fraction, titles: bavli.titles, he_segments: bavli.he_segments, en_segments: bavli.en_segments,
+      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Talmud › Bavli in https://www.sefaria.org/api/index', note: `Share of Sefaria's passages that have English, over all ${bavli.titles} tractates, mainly the William Davidson translation.` } },
+    { id: 'pali-suttas', corpus: 'Pali suttas (Sutta Piṭaka)', tradition: 'Theravāda', url: 'https://suttacentral.net', english: { fraction: round(sutta.en_bytes / sutta.bytes, 3), files: sutta.files, en_files: sutta.en_files,
+      source: sc.source, note: 'Share of the Pali sutta text on SuttaCentral that has an English translation there; printed translations are not counted. The untranslated rest is priced in the Pali canon rows.' } },
+  ];
+}
+
 // ---------------------------------------------------------------- assemble
 const LIC_FACTOR = { open: 1, 'open-nc': 0.75, 'reference-only': 0.25, unverified: 0.25, restricted: 0 };
 const PAIR_FACTOR = { yes: 1, partial: 0.6, no: 0.3, unknown: 0.3 };
@@ -592,6 +642,10 @@ async function main() {
   log('— Mongolian Kanjur'); const mk = await mongolianKanjur();
   log('— Tripitaka Koreana'); const tk = await koreana(cb);
   log('— Kanripo'); const kr = await kanripo();
+  log('— Corpus Corporum'); const cc = await corpusCorporum();
+  log('— Perseus / First1KGreek'); const pgrc = await ctsRepo('PerseusDL/canonical-greekLit', 'grc', 40, 61);
+  const plat = await ctsRepo('PerseusDL/canonical-latinLit', 'lat', 40, 62); const f1k = await ctsRepo('OpenGreekAndLatin/First1KGreek', 'grc', 40, 63);
+  log('— already in English'); const already = await alreadyInEnglish(sc);
 
   // licences — quoted, re-fetched, checked
   log('— licences');
@@ -607,6 +661,14 @@ async function main() {
     bdrcMong: { label: 'BDRC adm:access ' + bdrc.mongolian.access + ' (scans); no open typed text found', url: bdrc.mongolian.url, quote: bdrc.mongolian.access, verified: bdrc.mongolian.access !== 'unknown', open: 'unverified', note: 'access status ≠ a reuse licence; BDRC asks attribution' },
     koreana: await licence({ url: 'https://kb.sutra.re.kr/', quote: null, note: 'K-Tripitaka site (Research Institute of Tripitaka Koreana) did not answer from this host (connection failed); licence unverified. CBETA carries only its K-canon supplement under its own licence.' }),
     kanripo: await licence({ url: 'https://api.github.com/orgs/kanripo', quote: 'Licensed as CC BY SA 4.0.', label: 'CC BY-SA 4.0 (Kanripo GitHub organisation profile)', open: 'open', viaApi: true }),
+    corpusCorporum: await licence({ url: 'https://mlat.uzh.ch/cc_modules/home.js', quote: 'Texts may be downloaded as TEI xml for non-commercial use and can thus be reused by other researchers.', label: 'non-commercial reuse (Corpus Corporum "About" text)', open: 'open-nc',
+      note: "The same page says the texts \"stem from various online sources\" and are \"either in the public domain or their use was granted us by their owners\". The Open Greek and Latin EpiDoc of the PL on GitHub (patrologia_latina-dev) states no licence." }),
+    camena: await licence({ url: 'http://mateo.uni-mannheim.de/camenahtdocs/camena_e.html', quote: 'The machine-readable texts of CAMENA (and MATEO / Alte Drucke) may be used in compliance with the licence Creative Commons Attribution / Share Alike.', label: 'CC BY-SA (CAMENA project page; links CC BY-SA 3.0)', open: 'open' }),
+    perseusGrc: await licence({ url: 'https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/README.md', quote: 'Unless otherwise indicated, all contents of this repository are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.', label: 'CC BY-SA 4.0 unless otherwise indicated (repository README)', open: 'open',
+      note: 'The same README: "Materials within the Perseus DL have varying copyright status"; check each file header before import.' }),
+    perseusLat: await licence({ url: 'https://raw.githubusercontent.com/PerseusDL/canonical-latinLit/master/README.md', quote: 'Unless otherwise indicated, all contents of this repository are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.', label: 'CC BY-SA 4.0 unless otherwise indicated (repository README)', open: 'open',
+      note: 'The same README: "Materials within the Perseus DL have varying copyright status"; check each file header before import.' }),
+    first1k: await licence({ url: 'https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/license.md', quote: 'Attribution-ShareAlike 4.0 International', label: 'CC BY-SA 4.0 (repository license.md)', open: 'open' }),
   };
 
   const rate = k => rates[k]?.usd_per_million_chars;
@@ -623,6 +685,8 @@ async function main() {
     r.score = r.cost.english_words_est != null ? Math.round(r.cost.english_words_est / 1e3 * LIC_FACTOR[r.licence.open] * PAIR_FACTOR[r.pairing.status]) : null;
     return r;
   };
+  const ccPL = cc.corpora.find(c => c.name === 'Patrologia Latina'), ccNeo = cc.corpora.find(c => /CAMENA/.test(c.source || ''));
+  const CAMENA_PAGES = 60000; // quoted: "more than 60.000 pages" (camena_e.html)
   const kP = e84.total.Kangyur.pages, kPub = e84.by_status.Kangyur.Published?.pages || 0, kProg = e84.by_status.Kangyur['In Progress']?.pages || 0;
   const tP = e84.total.Tengyur.pages, tPub = e84.by_status.Tengyur.Published?.pages || 0, tProg = e84.by_status.Tengyur['In Progress']?.pages || 0;
   const TIB_FRAME = 0.0024; // brief #5513: Tibetan flash chained batch, per page-frame
@@ -718,6 +782,34 @@ async function main() {
       english: { fraction: null, source: null, floor: wcStat('kanripo'), note: 'unknown (the Siku census #2234 put the imperial canon at ~1–2% translated — a sample, not a measure of Kanripo)' },
       holdings: hold.kanripo, pairing: { status: 'partial', source: `SL works catalog: ${wc.kanripo?.with_scan_source || 0}/${wc.kanripo?.works || 0} Kanripo works have a matched scan (IA-CADAL / Harvard-Yenching; edition not checked)`, url: null },
       cost_extra: { usd_whole_incl_kr6: cost(kr.base_chars_est, 'chinese'), note: 'KR6 (Buddhist, 4,850 works) mirrors CBETA and is excluded here so the row adds to CBETA without double counting' } }),
+    row({ id: 'patrologia-latina', corpus: 'Patrologia Latina (Migne), via Corpus Corporum', tradition: 'Latin Christian: Church Fathers and medieval authors to 1216', partner: 'unknown', lang: 'latin',
+      source: { name: 'Corpus Corporum (University of Zurich)', url: 'https://mlat.uzh.ch/browser?path=/38' }, licence: LIC.corpusCorporum,
+      size: { texts: ccPL.texts, works: ccPL.works, authors: ccPL.authors, words: ccPL.words, base_chars: Math.round(ccPL.words * cc.chars_per_word), calibration: cc.calibration,
+        method: `${cc.source}: corpus "Patrologia Latina" ${ccPL.texts} texts, ${ccPL.words} words; base chars = words × ${cc.chars_per_word} base chars per word, measured on ${cc.calibration.sample_files} sampled PL texts from ${cc.calibration.repo}` },
+      english: { fraction: null, source: null, note: 'unknown: no catalogue maps English translations to PL columns. Many Fathers are in English (the 19th-century Ante-Nicene and Nicene and Post-Nicene Fathers series, Fathers of the Church), so the cost is an upper bound' },
+      holdings: hold.patrologia_latina, pairing: { status: 'unknown', source: "Migne's printed volumes are on the Internet Archive and Google Books; not matched volume by volume", url: null } }),
+    row({ id: 'camena-poemata', corpus: 'CAMENA POEMATA (Neo-Latin poetry by German authors, 16th–17th c.)', tradition: 'Neo-Latin (humanist and early modern)', partner: 'unknown', lang: 'latin',
+      source: { name: 'CAMENA (Heidelberg / Mannheim)', url: 'http://mateo.uni-mannheim.de/camenahtdocs/camena_e.html' }, licence: LIC.camena,
+      size: { texts: null, pages_stated: CAMENA_PAGES, base_chars: CAMENA_PAGES && rates.latin?.base_chars_per_page ? Math.round(CAMENA_PAGES * rates.latin.base_chars_per_page) : null,
+        corpus_corporum_neolatinitas: ccNeo ? { texts: ccNeo.texts, words: ccNeo.words, base_chars: Math.round(ccNeo.words * cc.chars_per_word) } : null,
+        method: `CAMENA states POEMATA "presents more than 60.000 pages of early editions reproduced both as images and as machine-readable texts" (camena_e.html); base chars = ${CAMENA_PAGES} pages × our own average Latin page (${rates.latin?.base_chars_per_page} base chars, rates.latin). An estimate: the e-texts are spread over per-author pages with no download list. CAMENA's other four collections (HISTORICA, THESAURUS, CERA, ITALI) are mostly typed as tables of contents and indexes only and are not counted. Cross-check: the 30 CAMENA texts loaded into Corpus Corporum ("Neolatinitas") are counted in corpus_corporum_neolatinitas` },
+      english: { fraction: null, source: null, note: 'unknown; very little Neo-Latin poetry has been translated, but no catalogue measures it' },
+      holdings: hold.camena, pairing: { status: 'yes', source: 'CAMENA serves the page images of the same printed editions beside each e-text', url: 'http://mateo.uni-mannheim.de/camenahtdocs/camenapoem_e.html' } }),
+    row({ id: 'perseus-latin', corpus: 'Perseus classical Latin (canonical-latinLit)', tradition: 'Classical Latin', partner: 'unknown', lang: 'latin',
+      source: { name: 'Perseus Digital Library, canonical-latinLit', url: 'https://github.com/PerseusDL/canonical-latinLit', sha: plat.tree_sha }, licence: LIC.perseusLat,
+      size: { texts: plat.works, base_chars: plat.base_chars, bytes: plat.bytes, method: plat.method },
+      english: { fraction: plat.english_fraction_by_bytes, works_with_english: plat.works_with_english, source: plat.english_method, note: 'Perseus English only; Loeb and other print translations are not counted, so this understates English coverage' },
+      holdings: hold.latin_classical, pairing: { status: 'unknown', source: 'the 19th- and early 20th-century source editions are mostly on the Internet Archive; not matched', url: null } }),
+    row({ id: 'perseus-greek', corpus: 'Perseus classical Greek (canonical-greekLit)', tradition: 'Classical Greek', partner: 'unknown', lang: 'greek',
+      source: { name: 'Perseus Digital Library, canonical-greekLit', url: 'https://github.com/PerseusDL/canonical-greekLit', sha: pgrc.tree_sha }, licence: LIC.perseusGrc,
+      size: { texts: pgrc.works, base_chars: pgrc.base_chars, bytes: pgrc.bytes, method: pgrc.method },
+      english: { fraction: pgrc.english_fraction_by_bytes, works_with_english: pgrc.works_with_english, source: pgrc.english_method, note: 'Perseus English only; Loeb and other print translations are not counted, so this understates English coverage' },
+      holdings: { ...hold.greek, method: `${hold.greek.method}; shared with the First1KGreek row` }, pairing: { status: 'unknown', source: 'the source editions are mostly on the Internet Archive; not matched', url: null } }),
+    row({ id: 'first1k-greek', corpus: 'First Thousand Years of Greek (First1KGreek)', tradition: 'Greek: Church Fathers, philosophers, scientists to c. 250 CE and later', partner: 'unknown', lang: 'greek',
+      source: { name: 'Open Greek and Latin, First1KGreek', url: 'https://github.com/OpenGreekAndLatin/First1KGreek', sha: f1k.tree_sha }, licence: LIC.first1k,
+      size: { texts: f1k.works, base_chars: f1k.base_chars, bytes: f1k.bytes, method: f1k.method },
+      english: { fraction: f1k.english_fraction_by_bytes, works_with_english: f1k.works_with_english, source: f1k.english_method, note: 'only translations in the repository are counted; many of these authors have printed English translations, so this understates English coverage' },
+      holdings: { ...hold.greek, method: `${hold.greek.method}; shared with the Perseus Greek row` }, pairing: { status: 'unknown', source: 'source editions (Teubner, Migne PG, GCS) partly on the Internet Archive; not matched', url: null } }),
   ];
 
   // whole-corpus context rows (not in the top-5 ranking)
@@ -728,7 +820,8 @@ async function main() {
   };
 
   // total: the rows as scoped in #5513, without double counting
-  const additive = ['derge-tengyur', 'derge-kangyur', 'cbeta', 'pali-mula', 'pali-atthakatha', 'pali-tika', 'gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya', 'sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero', 'openiti-sufi', 'ganjoor'];
+  const additive = ['derge-tengyur', 'derge-kangyur', 'cbeta', 'pali-mula', 'pali-atthakatha', 'pali-tika', 'gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya', 'sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero', 'openiti-sufi', 'ganjoor',
+    'patrologia-latina', 'camena-poemata', 'perseus-latin', 'perseus-greek', 'first1k-greek'];
   const total = additive.reduce((a, id) => a + (rows.find(r => r.id === id).cost.usd || 0), 0) + (rows.find(r => r.id === 'kanripo').cost.usd || 0);
   const ranked = rows.filter(r => r.score != null && !r.subset_of).sort((a, b) => b.score - a.score);
 
@@ -745,12 +838,23 @@ async function main() {
     total_draft_usd: round(total, 0), total_scope: `${additive.join(' + ')} + kanripo (excl. KR6). Excludes the Chan subset and the Sefaria/OpenITI whole-corpus figures (contained in other rows), Tripitaka Koreana (same text as CBETA T) and the Mongolian Kanjur (no typed text).`,
     ranking_top5: ranked.slice(0, 5).map(r => ({ id: r.id, score: r.score, untranslated_english_words_est: r.cost.english_words_est, licence: r.licence.open, pairing: r.pairing.status, usd: r.cost.usd })),
     rows, context, works_catalog: wc, english_sources: { '84000': e84, suttacentral: sc },
+    already_in_english: already,
+    left_out: LEFT_OUT, corpus_corporum: cc.corpora,
   };
   mkdirSync(OUT.slice(0, OUT.lastIndexOf('/')), { recursive: true });
   writeFileSync(OUT, JSON.stringify(result, null, 2));
   writeFileSync(MD, markdown(result));
   log(`\nwrote ${OUT} and ${MD}; total draft $${result.total_draft_usd}; downloaded ${result.measurement.gb_downloaded_total} GB total`);
 }
+
+// Canons considered for #6220 and not given a row, each with the reason. Checked by hand on 2026-10-07;
+// the quotes are from the pages named.
+const LEFT_OUT = [
+  { corpus: 'Daoist canon (Zhengtong Daozang)', reason: 'Already inside the Kanripo row: Kanripo section KR5 is the Daoist canon.', source: 'https://github.com/kanripo/KR-Catalog' },
+  { corpus: 'Avesta', reason: 'No open typed text found. TITUS (Frankfurt), the standard typed Avesta, states: "No parts of this document may be republished in any form without prior permission by the copyright holder." avesta.org states no licence for its Avestan text. Most of the Avesta has had English since the Sacred Books of the East (Darmesteter and Mills).', source: 'https://titus.uni-frankfurt.de/texte/etcs/iran/airan/avesta/avest.htm' },
+  { corpus: 'Jain Āgamas', reason: 'No open typed canon found. GRETIL holds 8 Prakrit files, a few of the 45 Āgamas (Āyāraṅga, Sūyagaḍa, Uttarajjhāyā, Dasaveyāliya, Isibhāsiyāiṃ), each marked "FOR REFERENCE PURPOSES ONLY".', source: 'https://github.com/INDOLOGY/GRETIL-mirror' },
+  { corpus: 'Other Corpus Corporum corpora (Acta Sanctorum, Monumenta Germaniae Historica, Thomas Aquinas and others)', reason: 'Listed with their sizes in corpus_corporum. Not priced: they mix public-domain and permission-only texts, and Thomas Aquinas shows 0 downloadable texts.', source: 'https://mlat.uzh.ch/php_modules/navigate.php?load=/' },
+];
 
 const fmt = x => x == null ? '—' : x >= 1e6 ? `${(x / 1e6).toFixed(1)}M` : x >= 1e4 ? `${Math.round(x / 1e3)}K` : String(x);
 const pct = x => x == null ? 'unknown' : `${(x * 100).toFixed(1)}%`;

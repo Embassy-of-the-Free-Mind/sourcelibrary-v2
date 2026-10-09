@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/bald3",
+  "edition": "Poemata. — Balde, Jacob SJ: Poemata. Koeln: Busaeus, 1660. T. 3: Complectens Satyrica. 252 [recte 254], [9] S.; Signatur: Sch 073/265 Notation: L 334 D 027",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "8/9",
+    "pb_aligned_pages": "0/8"
+  },
+  "origin": "library",
+  "book_id": "6a448ab6bd67d80f01c767fe",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 11493,
+    "to_char": 12605,
+    "overlap": 0.957,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'grantia Veterum vina redolens' (tail of fragrantia); ends 'poteris etiam' + catchword 'tibi'; header DISSERTATIO; ref has 'dictione, facilique imitandi felicitate,' padding before and 'circumdare opes' after.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:38.460Z",
+  "text_location": "repo",
+  "text_sha256": "85720ede58fac362e72802c3d0e3ec5c4d7c361c5c9aaae2c95ea5d34d9b39a2",
+  "unit": {
+    "chars": 1112
+  },
+  "stratum": "latin-period-5126"
+}

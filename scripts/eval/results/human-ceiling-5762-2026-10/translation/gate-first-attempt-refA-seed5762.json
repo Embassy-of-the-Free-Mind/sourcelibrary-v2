@@ -1,0 +1,18 @@
+{
+ "gate_pass": false,
+ "j1": {
+  "wrong_page": "3/3 scored ≤ 2",
+  "planted": "2/3 caught (3 located the planted word)",
+  "duplicate": "3/3 tied",
+  "missing": 0,
+  "pass": false
+ },
+ "j2": {
+  "wrong_page": "3/3 scored ≤ 2",
+  "planted": "2/3 caught (2 located the planted word)",
+  "duplicate": "3/3 tied",
+  "missing": 0,
+  "pass": false
+ },
+ "n_problems": 0
+}

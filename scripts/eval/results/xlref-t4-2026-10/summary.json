@@ -1,0 +1,3506 @@
+{
+ "n_pages": 52,
+ "by_lang": {
+  "Hebrew": 15,
+  "Aramaic": 5,
+  "Arabic": 20,
+  "Persian": 12
+ },
+ "references": {
+  "open": 47,
+  "private": 5,
+  "by_licence": {
+   "CC-BY": 6,
+   "CC-BY-NC": 2,
+   "Public Domain": 39,
+   "in-copyright": 5
+  },
+  "by_style": {
+   "free": 12,
+   "literal": 36,
+   "early-modern": 4
+  },
+  "canonical": 12,
+  "famous": 10,
+  "first_candidate_taken": 37,
+  "translators": {
+   "Eliyahu Munk": 1,
+   "Amiram Markel and Yehudah S. Markel": 1,
+   "Mike Feuer": 1,
+   "Justin S. Kerber": 1,
+   "Dr. Joshua Kulp": 1,
+   "Rabbi Adin Even-Israel Steinsaltz": 1,
+   "Simeon Singer": 1,
+   "Jewish Publication Society committee": 1,
+   "Harry Sperling, Maurice Simon and Paul P": 1,
+   "A. Asher": 1,
+   "James A. Montgomery": 1,
+   "Rabbi Amiram Markel and Rabbi Yehudah S.": 1,
+   "Joshua Kulp": 1,
+   "Jewish Publication Society translation c": 1,
+   "Simon Ockley": 1,
+   "Frederic Rosen": 1,
+   "Mohammad Jamil-ur-Rehman": 2,
+   "Claud Field": 1,
+   "Edward C. Sachau": 2,
+   "C. Edward Sachau": 1,
+   "Wyndham Knatchbull": 2,
+   "Francis Joseph Steingass": 1,
+   "W. J. Prendergast": 1,
+   "Richard F. Burton": 1,
+   "G. S. A. Ranking and R. F. Azoo": 1,
+   "H. A. R. Gibb": 2,
+   "Marmaduke Pickthall": 1,
+   "King James translators": 1,
+   "Sir Richard F. Burton": 1,
+   "O. Cameron Gruner": 1,
+   "Reynold A. Nicholson": 5,
+   "E. H. Whinfield and Mirza Muhammad Kazvi": 1,
+   "Ali Kuli Khan": 1,
+   "H. Wilberforce Clarke": 2,
+   "John T. Platts": 1,
+   "Arthur George Warner and Edmond Warner": 1,
+   "C. E. Wilson": 1,
+   "A. P. Mendes": 1,
+   "Harry Sperling and Maurice Simon": 1,
+   "Moses Gaster": 1,
+   "James Murdock": 1,
+   "Alexander McCaul": 1,
+   "Hugo Odeberg": 1
+  }
+ },
+ "served_by_stratum": {
+  "all": {
+   "pages": 52,
+   "fidelity": 3.442,
+   "ci": [
+    3.192,
+    3.683
+   ],
+   "share_ge4": 0.481,
+   "share_le2": 0.115,
+   "omission": {
+    "rate": 0.413,
+    "ci": [
+     0.288,
+     0.538
+    ]
+   },
+   "reversal": {
+    "rate": 0.163,
+    "ci": [
+     0.077,
+     0.269
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.346,
+    "ci": [
+     0.231,
+     0.471
+    ]
+   },
+   "boundary": {
+    "rate": 0.173,
+    "ci": [
+     0.077,
+     0.288
+    ]
+   },
+   "reportable": true
+  },
+  "Hebrew": {
+   "pages": 15,
+   "fidelity": 3.8,
+   "ci": [
+    3.433,
+    4.133
+   ],
+   "share_ge4": 0.733,
+   "share_le2": 0.067,
+   "omission": {
+    "rate": 0.467,
+    "ci": [
+     0.2,
+     0.733
+    ]
+   },
+   "reversal": {
+    "rate": 0.133,
+    "ci": [
+     0.0,
+     0.333
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.433,
+    "ci": [
+     0.2,
+     0.667
+    ]
+   },
+   "boundary": {
+    "rate": 0.133,
+    "ci": [
+     0.0,
+     0.333
+    ]
+   },
+   "reportable": true
+  },
+  "Aramaic": {
+   "pages": 5,
+   "fidelity": 3.3,
+   "ci": [
+    2.8,
+    3.8
+   ],
+   "share_ge4": 0.4,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.2,
+    "ci": [
+     0.0,
+     0.6
+    ]
+   },
+   "reversal": {
+    "rate": 0.2,
+    "ci": [
+     0.0,
+     0.6
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.7,
+    "ci": [
+     0.3,
+     1.0
+    ]
+   },
+   "boundary": {
+    "rate": 0.4,
+    "ci": [
+     0.0,
+     0.8
+    ]
+   },
+   "reportable": false
+  },
+  "Hebrew+Aramaic": {
+   "pages": 20,
+   "fidelity": 3.675,
+   "ci": [
+    3.35,
+    3.95
+   ],
+   "share_ge4": 0.65,
+   "share_le2": 0.05,
+   "omission": {
+    "rate": 0.4,
+    "ci": [
+     0.2,
+     0.6
+    ]
+   },
+   "reversal": {
+    "rate": 0.15,
+    "ci": [
+     0.0,
+     0.3
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.5,
+    "ci": [
+     0.3,
+     0.7
+    ]
+   },
+   "boundary": {
+    "rate": 0.2,
+    "ci": [
+     0.05,
+     0.4
+    ]
+   },
+   "reportable": true
+  },
+  "Arabic": {
+   "pages": 20,
+   "fidelity": 3.5,
+   "ci": [
+    3.05,
+    3.925
+   ],
+   "share_ge4": 0.5,
+   "share_le2": 0.15,
+   "omission": {
+    "rate": 0.45,
+    "ci": [
+     0.25,
+     0.65
+    ]
+   },
+   "reversal": {
+    "rate": 0.1,
+    "ci": [
+     0.0,
+     0.225
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.275,
+    "ci": [
+     0.125,
+     0.475
+    ]
+   },
+   "boundary": {
+    "rate": 0.2,
+    "ci": [
+     0.05,
+     0.4
+    ]
+   },
+   "reportable": true
+  },
+  "Persian": {
+   "pages": 12,
+   "fidelity": 2.958,
+   "ci": [
+    2.458,
+    3.417
+   ],
+   "share_ge4": 0.167,
+   "share_le2": 0.167,
+   "omission": {
+    "rate": 0.375,
+    "ci": [
+     0.167,
+     0.625
+    ]
+   },
+   "reversal": {
+    "rate": 0.292,
+    "ci": [
+     0.083,
+     0.542
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.208,
+    "ci": [
+     0.042,
+     0.417
+    ]
+   },
+   "boundary": {
+    "rate": 0.083,
+    "ci": [
+     0.0,
+     0.25
+    ]
+   },
+   "reportable": true
+  },
+  "canonical": {
+   "pages": 12,
+   "fidelity": 3.833,
+   "ci": [
+    3.375,
+    4.25
+   ],
+   "share_ge4": 0.667,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.333,
+    "ci": [
+     0.083,
+     0.583
+    ]
+   },
+   "reversal": {
+    "rate": 0.167,
+    "ci": [
+     0.0,
+     0.417
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.333,
+    "ci": [
+     0.083,
+     0.583
+    ]
+   },
+   "boundary": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.5
+    ]
+   },
+   "reportable": true
+  },
+  "famous classic": {
+   "pages": 10,
+   "fidelity": 2.95,
+   "ci": [
+    2.4,
+    3.45
+   ],
+   "share_ge4": 0.2,
+   "share_le2": 0.2,
+   "omission": {
+    "rate": 0.4,
+    "ci": [
+     0.2,
+     0.65
+    ]
+   },
+   "reversal": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.5
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.3,
+    "ci": [
+     0.05,
+     0.55
+    ]
+   },
+   "boundary": {
+    "rate": 0.1,
+    "ci": [
+     0.0,
+     0.3
+    ]
+   },
+   "reportable": true
+  },
+  "neither canonical nor famous": {
+   "pages": 30,
+   "fidelity": 3.45,
+   "ci": [
+    3.117,
+    3.75
+   ],
+   "share_ge4": 0.5,
+   "share_le2": 0.133,
+   "omission": {
+    "rate": 0.45,
+    "ci": [
+     0.267,
+     0.617
+    ]
+   },
+   "reversal": {
+    "rate": 0.133,
+    "ci": [
+     0.033,
+     0.25
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.367,
+    "ci": [
+     0.217,
+     0.517
+    ]
+   },
+   "boundary": {
+    "rate": 0.167,
+    "ci": [
+     0.033,
+     0.3
+    ]
+   },
+   "reportable": true
+  },
+  "excluding reference-in-context pages": {
+   "pages": 50,
+   "fidelity": 3.44,
+   "ci": [
+    3.18,
+    3.69
+   ],
+   "share_ge4": 0.48,
+   "share_le2": 0.12,
+   "omission": {
+    "rate": 0.42,
+    "ci": [
+     0.29,
+     0.55
+    ]
+   },
+   "reversal": {
+    "rate": 0.15,
+    "ci": [
+     0.06,
+     0.25
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.36,
+    "ci": [
+     0.24,
+     0.48
+    ]
+   },
+   "boundary": {
+    "rate": 0.16,
+    "ci": [
+     0.06,
+     0.26
+    ]
+   },
+   "reportable": true
+  },
+  "excluding any translation-in-context pages": {
+   "pages": 48,
+   "fidelity": 3.385,
+   "ci": [
+    3.135,
+    3.635
+   ],
+   "share_ge4": 0.458,
+   "share_le2": 0.125,
+   "omission": {
+    "rate": 0.438,
+    "ci": [
+     0.312,
+     0.573
+    ]
+   },
+   "reversal": {
+    "rate": 0.156,
+    "ci": [
+     0.062,
+     0.26
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.375,
+    "ci": [
+     0.25,
+     0.5
+    ]
+   },
+   "boundary": {
+    "rate": 0.146,
+    "ci": [
+     0.062,
+     0.25
+    ]
+   },
+   "reportable": true
+  },
+  "served by flash": {
+   "pages": 23,
+   "fidelity": 3.63,
+   "ci": [
+    3.348,
+    3.891
+   ],
+   "share_ge4": 0.609,
+   "share_le2": 0.087,
+   "omission": {
+    "rate": 0.261,
+    "ci": [
+     0.087,
+     0.435
+    ]
+   },
+   "reversal": {
+    "rate": 0.174,
+    "ci": [
+     0.043,
+     0.326
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.391,
+    "ci": [
+     0.217,
+     0.565
+    ]
+   },
+   "boundary": {
+    "rate": 0.174,
+    "ci": [
+     0.043,
+     0.348
+    ]
+   },
+   "reportable": true
+  },
+  "served by lite": {
+   "pages": 29,
+   "fidelity": 3.293,
+   "ci": [
+    2.914,
+    3.655
+   ],
+   "share_ge4": 0.379,
+   "share_le2": 0.138,
+   "omission": {
+    "rate": 0.534,
+    "ci": [
+     0.362,
+     0.69
+    ]
+   },
+   "reversal": {
+    "rate": 0.155,
+    "ci": [
+     0.034,
+     0.293
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.31,
+    "ci": [
+     0.155,
+     0.466
+    ]
+   },
+   "boundary": {
+    "rate": 0.172,
+    "ci": [
+     0.034,
+     0.31
+    ]
+   },
+   "reportable": true
+  },
+  "reference style: literal": {
+   "pages": 36,
+   "fidelity": 3.375,
+   "ci": [
+    3.083,
+    3.667
+   ],
+   "share_ge4": 0.444,
+   "share_le2": 0.139,
+   "omission": {
+    "rate": 0.431,
+    "ci": [
+     0.278,
+     0.583
+    ]
+   },
+   "reversal": {
+    "rate": 0.181,
+    "ci": [
+     0.069,
+     0.306
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.333,
+    "ci": [
+     0.194,
+     0.486
+    ]
+   },
+   "boundary": {
+    "rate": 0.167,
+    "ci": [
+     0.056,
+     0.306
+    ]
+   },
+   "reportable": true
+  },
+  "reference style: free": {
+   "pages": 12,
+   "fidelity": 3.458,
+   "ci": [
+    2.875,
+    3.958
+   ],
+   "share_ge4": 0.5,
+   "share_le2": 0.083,
+   "omission": {
+    "rate": 0.417,
+    "ci": [
+     0.167,
+     0.667
+    ]
+   },
+   "reversal": {
+    "rate": 0.167,
+    "ci": [
+     0.0,
+     0.417
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.417,
+    "ci": [
+     0.167,
+     0.667
+    ]
+   },
+   "boundary": {
+    "rate": 0.167,
+    "ci": [
+     0.0,
+     0.417
+    ]
+   },
+   "reportable": true
+  },
+  "reference style: early-modern": {
+   "pages": 4,
+   "fidelity": 4.0,
+   "ci": [
+    3.25,
+    4.75
+   ],
+   "share_ge4": 0.75,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.75
+    ]
+   },
+   "reversal": {
+    "rate": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.75
+    ]
+   },
+   "boundary": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.75
+    ]
+   },
+   "reportable": false
+  },
+  "period: 1000–1299": {
+   "pages": 24,
+   "fidelity": 3.167,
+   "ci": [
+    2.75,
+    3.562
+   ],
+   "share_ge4": 0.375,
+   "share_le2": 0.208,
+   "omission": {
+    "rate": 0.521,
+    "ci": [
+     0.333,
+     0.708
+    ]
+   },
+   "reversal": {
+    "rate": 0.229,
+    "ci": [
+     0.083,
+     0.396
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.333,
+    "ci": [
+     0.167,
+     0.521
+    ]
+   },
+   "boundary": {
+    "rate": 0.083,
+    "ci": [
+     0.0,
+     0.208
+    ]
+   },
+   "reportable": true
+  },
+  "period: 1300–1599": {
+   "pages": 6,
+   "fidelity": 3.333,
+   "ci": [
+    3.0,
+    3.833
+   ],
+   "share_ge4": 0.167,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.583
+    ]
+   },
+   "reversal": {
+    "rate": 0.167,
+    "ci": [
+     0.0,
+     0.5
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.417,
+    "ci": [
+     0.083,
+     0.75
+    ]
+   },
+   "boundary": {
+    "rate": 0.333,
+    "ci": [
+     0.0,
+     0.667
+    ]
+   },
+   "reportable": false
+  },
+  "period: 1600+": {
+   "pages": 3,
+   "fidelity": 4.0,
+   "ci": [
+    3.5,
+    4.5
+   ],
+   "share_ge4": 0.667,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.333,
+    "ci": [
+     0.0,
+     1.0
+    ]
+   },
+   "reversal": {
+    "rate": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.5,
+    "ci": [
+     0.0,
+     1.0
+    ]
+   },
+   "boundary": {
+    "rate": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "reportable": false
+  },
+  "period: before 1000": {
+   "pages": 19,
+   "fidelity": 3.737,
+   "ci": [
+    3.395,
+    4.079
+   ],
+   "share_ge4": 0.684,
+   "share_le2": 0.053,
+   "omission": {
+    "rate": 0.342,
+    "ci": [
+     0.132,
+     0.553
+    ]
+   },
+   "reversal": {
+    "rate": 0.105,
+    "ci": [
+     0.0,
+     0.237
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.316,
+    "ci": [
+     0.158,
+     0.5
+    ]
+   },
+   "boundary": {
+    "rate": 0.263,
+    "ci": [
+     0.105,
+     0.474
+    ]
+   },
+   "reportable": true
+  },
+  "genre: kabbalah & mysticism": {
+   "pages": 12,
+   "fidelity": 3.042,
+   "ci": [
+    2.5,
+    3.542
+   ],
+   "share_ge4": 0.333,
+   "share_le2": 0.25,
+   "omission": {
+    "rate": 0.458,
+    "ci": [
+     0.208,
+     0.75
+    ]
+   },
+   "reversal": {
+    "rate": 0.333,
+    "ci": [
+     0.083,
+     0.583
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.542,
+    "ci": [
+     0.292,
+     0.792
+    ]
+   },
+   "boundary": {
+    "rate": 0.25,
+    "ci": [
+     0.0,
+     0.5
+    ]
+   },
+   "reportable": true
+  },
+  "genre: philosophy, science, history": {
+   "pages": 19,
+   "fidelity": 3.658,
+   "ci": [
+    3.237,
+    4.0
+   ],
+   "share_ge4": 0.579,
+   "share_le2": 0.053,
+   "omission": {
+    "rate": 0.447,
+    "ci": [
+     0.237,
+     0.684
+    ]
+   },
+   "reversal": {
+    "rate": 0.079,
+    "ci": [
+     0.0,
+     0.211
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.368,
+    "ci": [
+     0.184,
+     0.553
+    ]
+   },
+   "boundary": {
+    "rate": 0.158,
+    "ci": [
+     0.0,
+     0.316
+    ]
+   },
+   "reportable": true
+  },
+  "genre: poetry & adab": {
+   "pages": 11,
+   "fidelity": 3.0,
+   "ci": [
+    2.636,
+    3.364
+   ],
+   "share_ge4": 0.182,
+   "share_le2": 0.182,
+   "omission": {
+    "rate": 0.409,
+    "ci": [
+     0.182,
+     0.636
+    ]
+   },
+   "reversal": {
+    "rate": 0.182,
+    "ci": [
+     0.0,
+     0.409
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.227,
+    "ci": [
+     0.045,
+     0.455
+    ]
+   },
+   "boundary": {
+    "rate": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "reportable": true
+  },
+  "genre: scripture, liturgy, law": {
+   "pages": 10,
+   "fidelity": 4.0,
+   "ci": [
+    3.5,
+    4.45
+   ],
+   "share_ge4": 0.8,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.3,
+    "ci": [
+     0.0,
+     0.6
+    ]
+   },
+   "reversal": {
+    "rate": 0.1,
+    "ci": [
+     0.0,
+     0.3
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.2,
+    "ci": [
+     0.0,
+     0.5
+    ]
+   },
+   "boundary": {
+    "rate": 0.3,
+    "ci": [
+     0.0,
+     0.6
+    ]
+   },
+   "reportable": true
+  }
+ },
+ "arms_packet1": {
+  "served": {
+   "pages": 52,
+   "fidelity": 3.442,
+   "ci": [
+    3.192,
+    3.683
+   ],
+   "share_ge4": 0.481,
+   "share_le2": 0.115,
+   "omission": {
+    "rate": 0.413,
+    "ci": [
+     0.288,
+     0.538
+    ]
+   },
+   "reversal": {
+    "rate": 0.163,
+    "ci": [
+     0.077,
+     0.26
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.346,
+    "ci": [
+     0.231,
+     0.471
+    ]
+   },
+   "boundary": {
+    "rate": 0.173,
+    "ci": [
+     0.077,
+     0.288
+    ]
+   }
+  },
+  "prod-A": {
+   "pages": 52,
+   "fidelity": 3.433,
+   "ci": [
+    3.212,
+    3.654
+   ],
+   "share_ge4": 0.442,
+   "share_le2": 0.096,
+   "omission": {
+    "rate": 0.327,
+    "ci": [
+     0.212,
+     0.442
+    ]
+   },
+   "reversal": {
+    "rate": 0.106,
+    "ci": [
+     0.038,
+     0.192
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.337,
+    "ci": [
+     0.221,
+     0.462
+    ]
+   },
+   "boundary": {
+    "rate": 0.212,
+    "ci": [
+     0.115,
+     0.317
+    ]
+   }
+  },
+  "prod-B": {
+   "pages": 52,
+   "fidelity": 3.365,
+   "ci": [
+    3.154,
+    3.587
+   ],
+   "share_ge4": 0.423,
+   "share_le2": 0.135,
+   "omission": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.49
+    ]
+   },
+   "reversal": {
+    "rate": 0.192,
+    "ci": [
+     0.096,
+     0.298
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.481
+    ]
+   },
+   "boundary": {
+    "rate": 0.212,
+    "ci": [
+     0.115,
+     0.317
+    ]
+   }
+  },
+  "flash-0": {
+   "pages": 52,
+   "fidelity": 3.962,
+   "ci": [
+    3.76,
+    4.163
+   ],
+   "share_ge4": 0.712,
+   "share_le2": 0.038,
+   "omission": {
+    "rate": 0.288,
+    "ci": [
+     0.183,
+     0.404
+    ]
+   },
+   "reversal": {
+    "rate": 0.048,
+    "ci": [
+     0.0,
+     0.106
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.346,
+    "ci": [
+     0.231,
+     0.462
+    ]
+   },
+   "boundary": {
+    "rate": 0.125,
+    "ci": [
+     0.048,
+     0.212
+    ]
+   }
+  },
+  "flash-think8k": {
+   "pages": 52,
+   "fidelity": 3.952,
+   "ci": [
+    3.712,
+    4.173
+   ],
+   "share_ge4": 0.692,
+   "share_le2": 0.038,
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0.144,
+     0.365
+    ]
+   },
+   "reversal": {
+    "rate": 0.125,
+    "ci": [
+     0.048,
+     0.212
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.356,
+    "ci": [
+     0.25,
+     0.471
+    ]
+   },
+   "boundary": {
+    "rate": 0.308,
+    "ci": [
+     0.202,
+     0.423
+    ]
+   }
+  },
+  "lite-noctx": {
+   "pages": 52,
+   "fidelity": 3.471,
+   "ci": [
+    3.231,
+    3.721
+   ],
+   "share_ge4": 0.462,
+   "share_le2": 0.115,
+   "omission": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.49
+    ]
+   },
+   "reversal": {
+    "rate": 0.154,
+    "ci": [
+     0.067,
+     0.25
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.49
+    ]
+   },
+   "boundary": {
+    "rate": 0.038,
+    "ci": [
+     0.0,
+     0.096
+    ]
+   }
+  }
+ },
+ "ceiling_20_pages": {
+  "served": {
+   "pages": 20,
+   "fidelity": 3.325,
+   "ci": [
+    2.975,
+    3.65
+   ],
+   "share_ge4": 0.35,
+   "share_le2": 0.1,
+   "omission": {
+    "rate": 0.35,
+    "ci": [
+     0.15,
+     0.55
+    ]
+   },
+   "reversal": {
+    "rate": 0.2,
+    "ci": [
+     0.05,
+     0.375
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.4,
+    "ci": [
+     0.2,
+     0.6
+    ]
+   },
+   "boundary": {
+    "rate": 0.15,
+    "ci": [
+     0.0,
+     0.3
+    ]
+   }
+  },
+  "prod-A": {
+   "pages": 20,
+   "fidelity": 3.175,
+   "ci": [
+    2.875,
+    3.5
+   ],
+   "share_ge4": 0.3,
+   "share_le2": 0.1,
+   "omission": {
+    "rate": 0.15,
+    "ci": [
+     0.025,
+     0.3
+    ]
+   },
+   "reversal": {
+    "rate": 0.125,
+    "ci": [
+     0.0,
+     0.275
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.4,
+    "ci": [
+     0.2,
+     0.6
+    ]
+   },
+   "boundary": {
+    "rate": 0.125,
+    "ci": [
+     0.0,
+     0.275
+    ]
+   }
+  },
+  "flash-0": {
+   "pages": 20,
+   "fidelity": 3.85,
+   "ci": [
+    3.5,
+    4.175
+   ],
+   "share_ge4": 0.65,
+   "share_le2": 0.05,
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0.075,
+     0.425
+    ]
+   },
+   "reversal": {
+    "rate": 0.1,
+    "ci": [
+     0.0,
+     0.25
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.425,
+    "ci": [
+     0.225,
+     0.625
+    ]
+   },
+   "boundary": {
+    "rate": 0.075,
+    "ci": [
+     0.0,
+     0.2
+    ]
+   }
+  },
+  "flash-think8k": {
+   "pages": 20,
+   "fidelity": 3.7,
+   "ci": [
+    3.225,
+    4.15
+   ],
+   "share_ge4": 0.55,
+   "share_le2": 0.1,
+   "omission": {
+    "rate": 0.35,
+    "ci": [
+     0.15,
+     0.55
+    ]
+   },
+   "reversal": {
+    "rate": 0.15,
+    "ci": [
+     0.025,
+     0.3
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.35,
+    "ci": [
+     0.175,
+     0.55
+    ]
+   },
+   "boundary": {
+    "rate": 0.175,
+    "ci": [
+     0.05,
+     0.3
+    ]
+   }
+  },
+  "opus": {
+   "pages": 20,
+   "fidelity": 4.725,
+   "ci": [
+    4.475,
+    4.925
+   ],
+   "share_ge4": 0.95,
+   "share_le2": 0.0,
+   "omission": {
+    "rate": 0.075,
+    "ci": [
+     0.0,
+     0.2
+    ]
+   },
+   "reversal": {
+    "rate": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.075,
+    "ci": [
+     0.0,
+     0.2
+    ]
+   },
+   "boundary": {
+    "rate": 0.1,
+    "ci": [
+     0.025,
+     0.2
+    ]
+   }
+  }
+ },
+ "arms_by_lang": {
+  "Hebrew+Aramaic": {
+   "served": {
+    "pages": 20,
+    "fidelity": 3.675,
+    "ci": [
+     3.35,
+     3.975
+    ],
+    "share_ge4": 0.65,
+    "share_le2": 0.05,
+    "omission": {
+     "rate": 0.4,
+     "ci": [
+      0.2,
+      0.6
+     ]
+    },
+    "reversal": {
+     "rate": 0.15,
+     "ci": [
+      0.0,
+      0.3
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.5,
+     "ci": [
+      0.3,
+      0.7
+     ]
+    },
+    "boundary": {
+     "rate": 0.2,
+     "ci": [
+      0.05,
+      0.4
+     ]
+    }
+   },
+   "prod-A": {
+    "pages": 20,
+    "fidelity": 3.425,
+    "ci": [
+     3.025,
+     3.8
+    ],
+    "share_ge4": 0.5,
+    "share_le2": 0.2,
+    "omission": {
+     "rate": 0.45,
+     "ci": [
+      0.25,
+      0.65
+     ]
+    },
+    "reversal": {
+     "rate": 0.05,
+     "ci": [
+      0.0,
+      0.15
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.45,
+     "ci": [
+      0.25,
+      0.65
+     ]
+    },
+    "boundary": {
+     "rate": 0.225,
+     "ci": [
+      0.05,
+      0.4
+     ]
+    }
+   },
+   "prod-B": {
+    "pages": 20,
+    "fidelity": 3.425,
+    "ci": [
+     3.025,
+     3.825
+    ],
+    "share_ge4": 0.55,
+    "share_le2": 0.2,
+    "omission": {
+     "rate": 0.4,
+     "ci": [
+      0.2,
+      0.6
+     ]
+    },
+    "reversal": {
+     "rate": 0.075,
+     "ci": [
+      0.0,
+      0.2
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.525,
+     "ci": [
+      0.325,
+      0.725
+     ]
+    },
+    "boundary": {
+     "rate": 0.15,
+     "ci": [
+      0.0,
+      0.3
+     ]
+    }
+   },
+   "flash-0": {
+    "pages": 20,
+    "fidelity": 4.0,
+    "ci": [
+     3.6,
+     4.375
+    ],
+    "share_ge4": 0.65,
+    "share_le2": 0.05,
+    "omission": {
+     "rate": 0.3,
+     "ci": [
+      0.125,
+      0.5
+     ]
+    },
+    "reversal": {
+     "rate": 0.05,
+     "ci": [
+      0.0,
+      0.15
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.475,
+     "ci": [
+      0.275,
+      0.675
+     ]
+    },
+    "boundary": {
+     "rate": 0.1,
+     "ci": [
+      0.0,
+      0.25
+     ]
+    }
+   }
+  },
+  "Arabic": {
+   "served": {
+    "pages": 20,
+    "fidelity": 3.5,
+    "ci": [
+     3.05,
+     3.925
+    ],
+    "share_ge4": 0.5,
+    "share_le2": 0.15,
+    "omission": {
+     "rate": 0.45,
+     "ci": [
+      0.25,
+      0.65
+     ]
+    },
+    "reversal": {
+     "rate": 0.1,
+     "ci": [
+      0.0,
+      0.225
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.275,
+     "ci": [
+      0.1,
+      0.45
+     ]
+    },
+    "boundary": {
+     "rate": 0.2,
+     "ci": [
+      0.05,
+      0.4
+     ]
+    }
+   },
+   "prod-A": {
+    "pages": 20,
+    "fidelity": 3.675,
+    "ci": [
+     3.35,
+     4.025
+    ],
+    "share_ge4": 0.55,
+    "share_le2": 0.05,
+    "omission": {
+     "rate": 0.2,
+     "ci": [
+      0.075,
+      0.35
+     ]
+    },
+    "reversal": {
+     "rate": 0.05,
+     "ci": [
+      0.0,
+      0.15
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.325,
+     "ci": [
+      0.125,
+      0.525
+     ]
+    },
+    "boundary": {
+     "rate": 0.175,
+     "ci": [
+      0.025,
+      0.35
+     ]
+    }
+   },
+   "prod-B": {
+    "pages": 20,
+    "fidelity": 3.625,
+    "ci": [
+     3.35,
+     3.925
+    ],
+    "share_ge4": 0.5,
+    "share_le2": 0.0,
+    "omission": {
+     "rate": 0.225,
+     "ci": [
+      0.075,
+      0.4
+     ]
+    },
+    "reversal": {
+     "rate": 0.125,
+     "ci": [
+      0.0,
+      0.275
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.25,
+     "ci": [
+      0.1,
+      0.425
+     ]
+    },
+    "boundary": {
+     "rate": 0.25,
+     "ci": [
+      0.1,
+      0.425
+     ]
+    }
+   },
+   "flash-0": {
+    "pages": 20,
+    "fidelity": 4.1,
+    "ci": [
+     3.775,
+     4.4
+    ],
+    "share_ge4": 0.85,
+    "share_le2": 0.05,
+    "omission": {
+     "rate": 0.325,
+     "ci": [
+      0.125,
+      0.525
+     ]
+    },
+    "reversal": {
+     "rate": 0.025,
+     "ci": [
+      0.0,
+      0.075
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.225,
+     "ci": [
+      0.1,
+      0.375
+     ]
+    },
+    "boundary": {
+     "rate": 0.125,
+     "ci": [
+      0.0,
+      0.275
+     ]
+    }
+   }
+  },
+  "Persian": {
+   "served": {
+    "pages": 12,
+    "fidelity": 2.958,
+    "ci": [
+     2.458,
+     3.417
+    ],
+    "share_ge4": 0.167,
+    "share_le2": 0.167,
+    "omission": {
+     "rate": 0.375,
+     "ci": [
+      0.167,
+      0.625
+     ]
+    },
+    "reversal": {
+     "rate": 0.292,
+     "ci": [
+      0.083,
+      0.542
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.208,
+     "ci": [
+      0.042,
+      0.417
+     ]
+    },
+    "boundary": {
+     "rate": 0.083,
+     "ci": [
+      0.0,
+      0.25
+     ]
+    }
+   },
+   "prod-A": {
+    "pages": 12,
+    "fidelity": 3.042,
+    "ci": [
+     2.792,
+     3.333
+    ],
+    "share_ge4": 0.167,
+    "share_le2": 0.0,
+    "omission": {
+     "rate": 0.333,
+     "ci": [
+      0.125,
+      0.583
+     ]
+    },
+    "reversal": {
+     "rate": 0.292,
+     "ci": [
+      0.083,
+      0.542
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.167,
+     "ci": [
+      0.0,
+      0.375
+     ]
+    },
+    "boundary": {
+     "rate": 0.25,
+     "ci": [
+      0.042,
+      0.5
+     ]
+    }
+   },
+   "prod-B": {
+    "pages": 12,
+    "fidelity": 2.833,
+    "ci": [
+     2.5,
+     3.167
+    ],
+    "share_ge4": 0.083,
+    "share_le2": 0.25,
+    "omission": {
+     "rate": 0.542,
+     "ci": [
+      0.292,
+      0.792
+     ]
+    },
+    "reversal": {
+     "rate": 0.5,
+     "ci": [
+      0.25,
+      0.75
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.292,
+     "ci": [
+      0.083,
+      0.5
+     ]
+    },
+    "boundary": {
+     "rate": 0.25,
+     "ci": [
+      0.042,
+      0.5
+     ]
+    }
+   },
+   "flash-0": {
+    "pages": 12,
+    "fidelity": 3.667,
+    "ci": [
+     3.417,
+     3.875
+    ],
+    "share_ge4": 0.583,
+    "share_le2": 0.0,
+    "omission": {
+     "rate": 0.208,
+     "ci": [
+      0.042,
+      0.417
+     ]
+    },
+    "reversal": {
+     "rate": 0.083,
+     "ci": [
+      0.0,
+      0.25
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.333,
+     "ci": [
+      0.125,
+      0.583
+     ]
+    },
+    "boundary": {
+     "rate": 0.167,
+     "ci": [
+      0.0,
+      0.375
+     ]
+    }
+   }
+  }
+ },
+ "noise_floor_A_vs_A": {
+  "fidelity": {
+   "n": 52,
+   "delta": 0.067,
+   "ci": [
+    -0.077,
+    0.212
+   ],
+   "pages_changed_by_1_or_more": 12
+  },
+  "prod_A": {
+   "pages": 52,
+   "fidelity": 3.433,
+   "ci": [
+    3.212,
+    3.654
+   ],
+   "share_ge4": 0.442,
+   "share_le2": 0.096,
+   "omission": {
+    "rate": 0.327,
+    "ci": [
+     0.212,
+     0.442
+    ]
+   },
+   "reversal": {
+    "rate": 0.106,
+    "ci": [
+     0.038,
+     0.192
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.337,
+    "ci": [
+     0.221,
+     0.462
+    ]
+   },
+   "boundary": {
+    "rate": 0.212,
+    "ci": [
+     0.115,
+     0.317
+    ]
+   }
+  },
+  "prod_B": {
+   "pages": 52,
+   "fidelity": 3.365,
+   "ci": [
+    3.154,
+    3.587
+   ],
+   "share_ge4": 0.423,
+   "share_le2": 0.135,
+   "omission": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.49
+    ]
+   },
+   "reversal": {
+    "rate": 0.192,
+    "ci": [
+     0.096,
+     0.298
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.365,
+    "ci": [
+     0.25,
+     0.481
+    ]
+   },
+   "boundary": {
+    "rate": 0.212,
+    "ci": [
+     0.115,
+     0.317
+    ]
+   }
+  },
+  "abs_page_delta_mean": 0.337,
+  "judge_retest_prodA_packet1_vs_packet2_uncorrected_pages": {
+   "n": 22,
+   "delta": -0.159,
+   "ci": [
+    -0.318,
+    -0.023
+   ],
+   "pages_changed_by_1_or_more": 2
+  }
+ },
+ "levers": {
+  "flash_vs_lite": {
+   "n": 52,
+   "delta": 0.529,
+   "ci": [
+    0.308,
+    0.721
+   ],
+   "pages_changed_by_1_or_more": 25
+  },
+  "flash_vs_lite_B": {
+   "n": 52,
+   "delta": 0.596,
+   "ci": [
+    0.375,
+    0.788
+   ],
+   "pages_changed_by_1_or_more": 31
+  },
+  "thinking_8k_vs_flash0": {
+   "n": 52,
+   "delta": -0.01,
+   "ci": [
+    -0.221,
+    0.212
+   ],
+   "pages_changed_by_1_or_more": 13
+  },
+  "no_context_vs_prodA": {
+   "n": 52,
+   "delta": 0.038,
+   "ci": [
+    -0.125,
+    0.202
+   ],
+   "pages_changed_by_1_or_more": 11
+  },
+  "no_context_vs_prodB": {
+   "n": 52,
+   "delta": 0.106,
+   "ci": [
+    -0.048,
+    0.25
+   ],
+   "pages_changed_by_1_or_more": 11
+  },
+  "opus_vs_prodA": {
+   "n": 20,
+   "delta": 1.55,
+   "ci": [
+    1.25,
+    1.85
+   ],
+   "pages_changed_by_1_or_more": 18
+  },
+  "opus_vs_flash0": {
+   "n": 20,
+   "delta": 0.875,
+   "ci": [
+    0.55,
+    1.175
+   ],
+   "pages_changed_by_1_or_more": 16
+  },
+  "checkfix_vs_prodA": {
+   "n": 52,
+   "delta": -0.048,
+   "ci": [
+    -0.115,
+    0.0
+   ],
+   "pages_changed_by_1_or_more": 2
+  }
+ },
+ "corrected_transcription": {
+  "pages": 30,
+  "arms_judged_against_corrected_text": {
+   "prod-A": {
+    "pages": 30,
+    "fidelity": 2.533,
+    "ci": [
+     2.267,
+     2.817
+    ],
+    "share_ge4": 0.133,
+    "share_le2": 0.533,
+    "omission": {
+     "rate": 0.833,
+     "ci": [
+      0.7,
+      0.95
+     ]
+    },
+    "reversal": {
+     "rate": 0.433,
+     "ci": [
+      0.283,
+      0.6
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.433,
+     "ci": [
+      0.283,
+      0.6
+     ]
+    },
+    "boundary": {
+     "rate": 0.067,
+     "ci": [
+      0.0,
+      0.167
+     ]
+    }
+   },
+   "flash-0": {
+    "pages": 30,
+    "fidelity": 2.85,
+    "ci": [
+     2.6,
+     3.1
+    ],
+    "share_ge4": 0.2,
+    "share_le2": 0.3,
+    "omission": {
+     "rate": 0.733,
+     "ci": [
+      0.567,
+      0.883
+     ]
+    },
+    "reversal": {
+     "rate": 0.383,
+     "ci": [
+      0.233,
+      0.533
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.4,
+     "ci": [
+      0.25,
+      0.55
+     ]
+    },
+    "boundary": {
+     "rate": 0.133,
+     "ci": [
+      0.033,
+      0.267
+     ]
+    }
+   },
+   "lite-fixocr": {
+    "pages": 30,
+    "fidelity": 3.917,
+    "ci": [
+     3.717,
+     4.117
+    ],
+    "share_ge4": 0.767,
+    "share_le2": 0.0,
+    "omission": {
+     "rate": 0.333,
+     "ci": [
+      0.183,
+      0.5
+     ]
+    },
+    "reversal": {
+     "rate": 0.117,
+     "ci": [
+      0.017,
+      0.233
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.083,
+     "ci": [
+      0.0,
+      0.183
+     ]
+    },
+    "boundary": {
+     "rate": 0.05,
+     "ci": [
+      0.0,
+      0.133
+     ]
+    }
+   },
+   "flash-fixocr": {
+    "pages": 30,
+    "fidelity": 4.317,
+    "ci": [
+     4.117,
+     4.517
+    ],
+    "share_ge4": 0.933,
+    "share_le2": 0.0,
+    "omission": {
+     "rate": 0.3,
+     "ci": [
+      0.15,
+      0.467
+     ]
+    },
+    "reversal": {
+     "rate": 0.033,
+     "ci": [
+      0.0,
+      0.1
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.117,
+     "ci": [
+      0.017,
+      0.233
+     ]
+    },
+    "boundary": {
+     "rate": 0.133,
+     "ci": [
+      0.05,
+      0.25
+     ]
+    }
+   },
+   "lite-checkfix": {
+    "pages": 30,
+    "fidelity": 2.517,
+    "ci": [
+     2.25,
+     2.8
+    ],
+    "share_ge4": 0.133,
+    "share_le2": 0.567,
+    "omission": {
+     "rate": 0.833,
+     "ci": [
+      0.7,
+      0.95
+     ]
+    },
+    "reversal": {
+     "rate": 0.517,
+     "ci": [
+      0.35,
+      0.683
+     ]
+    },
+    "unreadable_fill": {
+     "rate": 0.433,
+     "ci": [
+      0.283,
+      0.6
+     ]
+    },
+    "boundary": {
+     "rate": 0.067,
+     "ci": [
+      0.0,
+      0.167
+     ]
+    }
+   }
+  },
+  "lite_fixocr_vs_prodA": {
+   "n": 30,
+   "delta": 1.383,
+   "ci": [
+    1.083,
+    1.667
+   ],
+   "pages_changed_by_1_or_more": 23
+  },
+  "flash_fixocr_vs_flash0": {
+   "n": 30,
+   "delta": 1.467,
+   "ci": [
+    1.2,
+    1.733
+   ],
+   "pages_changed_by_1_or_more": 26
+  },
+  "flash0_vs_prodA_on_uncorrected_ocr": {
+   "n": 30,
+   "delta": 0.317,
+   "ci": [
+    0.183,
+    0.467
+   ],
+   "pages_changed_by_1_or_more": 6
+  },
+  "flash_fixocr_vs_lite_fixocr": {
+   "n": 30,
+   "delta": 0.4,
+   "ci": [
+    0.133,
+    0.667
+   ],
+   "pages_changed_by_1_or_more": 13
+  },
+  "low_pages_only": {
+   "n": 22,
+   "lite_fixocr_vs_prodA": {
+    "n": 22,
+    "delta": 1.591,
+    "ci": [
+     1.25,
+     1.909
+    ],
+    "pages_changed_by_1_or_more": 18
+   },
+   "flash_fixocr_vs_flash0": {
+    "n": 22,
+    "delta": 1.591,
+    "ci": [
+     1.25,
+     1.909
+    ],
+    "pages_changed_by_1_or_more": 20
+   }
+  },
+  "by_primary_cause": {
+   "ocr_misread": {
+    "n": 18,
+    "lite_fixocr_vs_prodA": {
+     "n": 18,
+     "delta": 1.694,
+     "ci": [
+      1.417,
+      1.944
+     ],
+     "pages_changed_by_1_or_more": 17
+    }
+   },
+   "translation": {
+    "n": 7,
+    "lite_fixocr_vs_prodA": {
+     "n": 7,
+     "delta": 0.786,
+     "ci": [
+      0.286,
+      1.357
+     ],
+     "pages_changed_by_1_or_more": 3
+    }
+   }
+  },
+  "judge_blind_spot": {
+   "note": "the same prod-A and flash-0 outputs, judged against the OCR (packet 1) and against the corrected transcription (packet 2), on the corrected pages",
+   "prodA_vs_ocr": 3.05,
+   "prodA_vs_corrected": 2.533,
+   "flash0_vs_ocr": 3.683,
+   "flash0_vs_corrected": 2.85
+  }
+ },
+ "image_check": {
+  "low_scoring_served_le3": {
+   "n": 23,
+   "shares": {
+    "ocr_misread": {
+     "pages": 14,
+     "share": 0.609,
+     "wilson95": [
+      0.408,
+      0.778
+     ]
+    },
+    "translation": {
+     "pages": 6,
+     "share": 0.261,
+     "wilson95": [
+      0.125,
+      0.465
+     ]
+    },
+    "served_stale": {
+     "pages": 2,
+     "share": 0.087,
+     "wilson95": [
+      0.024,
+      0.268
+     ]
+    },
+    "reading_order": {
+     "pages": 1,
+     "share": 0.043,
+     "wilson95": [
+      0.008,
+      0.21
+     ]
+    }
+   },
+   "ocr_word_errors_per_100_median": 17,
+   "ocr_word_errors_per_100_mean": 17.435
+  },
+  "random_others": {
+   "n": 10,
+   "shares": {
+    "ocr_misread": {
+     "pages": 4,
+     "share": 0.4,
+     "wilson95": [
+      0.168,
+      0.687
+     ]
+    },
+    "none": {
+     "pages": 4,
+     "share": 0.4,
+     "wilson95": [
+      0.168,
+      0.687
+     ]
+    },
+    "translation": {
+     "pages": 2,
+     "share": 0.2,
+     "wilson95": [
+      0.057,
+      0.51
+     ]
+    }
+   },
+   "ocr_word_errors_per_100_median": 5,
+   "ocr_word_errors_per_100_mean": 6.7
+  },
+  "per_defect_low_pages": {
+   "translation": 46,
+   "ocr_misread": 92,
+   "reading_order": 3,
+   "page_seam": 2,
+   "served_stale": 4,
+   "not_a_defect": 1
+  },
+  "per_defect_low_pages_ocr_share": {
+   "k": 92,
+   "n": 148,
+   "share": 0.622,
+   "wilson95": [
+    0.541,
+    0.696
+   ]
+  },
+  "by_lang_low": {
+   "Hebrew": {
+    "ocr_misread": 2,
+    "translation": 1
+   },
+   "Aramaic": {
+    "ocr_misread": 3
+   },
+   "Arabic": {
+    "ocr_misread": 5,
+    "translation": 2,
+    "served_stale": 1
+   },
+   "Persian": {
+    "translation": 3,
+    "ocr_misread": 4,
+    "reading_order": 1,
+    "served_stale": 1
+   }
+  }
+ },
+ "dimensions": {
+  "profiles": {
+   "all": {
+    "pages": 52,
+    "ours": {
+     "fidelity": {
+      "mean": 3.442,
+      "ci": [
+       3.192,
+       3.683
+      ],
+      "n": 52
+     },
+     "readability": {
+      "mean": 3.423,
+      "ci": [
+       3.154,
+       3.673
+      ],
+      "n": 52
+     },
+     "register": {
+      "mean": 3.462,
+      "ci": [
+       3.25,
+       3.654
+      ],
+      "n": 52
+     },
+     "terminology": {
+      "mean": 3.481,
+      "ci": [
+       3.269,
+       3.692
+      ],
+      "n": 52
+     },
+     "ambiguity": {
+      "mean": 3.712,
+      "ci": [
+       3.462,
+       3.942
+      ],
+      "n": 52
+     },
+     "transparency": {
+      "mean": 3.404,
+      "ci": [
+       3.154,
+       3.635
+      ],
+      "n": 52
+     }
+    },
+    "reference": {
+     "readability": {
+      "mean": 4.115,
+      "ci": [
+       3.904,
+       4.308
+      ],
+      "n": 52
+     },
+     "register": {
+      "mean": 4.288,
+      "ci": [
+       4.096,
+       4.462
+      ],
+      "n": 52
+     },
+     "terminology": {
+      "mean": 4.058,
+      "ci": [
+       3.865,
+       4.25
+      ],
+      "n": 52
+     },
+     "ambiguity": {
+      "mean": 4.019,
+      "ci": [
+       3.827,
+       4.212
+      ],
+      "n": 52
+     },
+     "transparency": {
+      "mean": 3.481,
+      "ci": [
+       3.192,
+       3.769
+      ],
+      "n": 52
+     }
+    },
+    "stance_ours": {
+     "balanced": 11,
+     "literal": 40,
+     "free": 1
+    },
+    "stance_reference": {
+     "free": 14,
+     "literal": 17,
+     "balanced": 21
+    }
+   },
+   "lang:Hebrew": {
+    "pages": 15,
+    "ours": {
+     "fidelity": {
+      "mean": 3.8,
+      "ci": [
+       3.433,
+       4.133
+      ],
+      "n": 15
+     },
+     "readability": {
+      "mean": 3.8,
+      "ci": [
+       3.4,
+       4.2
+      ],
+      "n": 15
+     },
+     "register": {
+      "mean": 3.6,
+      "ci": [
+       3.267,
+       3.933
+      ],
+      "n": 15
+     },
+     "terminology": {
+      "mean": 3.667,
+      "ci": [
+       3.333,
+       3.933
+      ],
+      "n": 15
+     },
+     "ambiguity": {
+      "mean": 3.8,
+      "ci": [
+       3.2,
+       4.333
+      ],
+      "n": 15
+     },
+     "transparency": {
+      "mean": 3.467,
+      "ci": [
+       3,
+       3.867
+      ],
+      "n": 15
+     }
+    },
+    "reference": {
+     "readability": {
+      "mean": 4,
+      "ci": [
+       3.667,
+       4.333
+      ],
+      "n": 15
+     },
+     "register": {
+      "mean": 4.4,
+      "ci": [
+       4.067,
+       4.667
+      ],
+      "n": 15
+     },
+     "terminology": {
+      "mean": 4.4,
+      "ci": [
+       4.133,
+       4.667
+      ],
+      "n": 15
+     },
+     "ambiguity": {
+      "mean": 4.267,
+      "ci": [
+       4,
+       4.533
+      ],
+      "n": 15
+     },
+     "transparency": {
+      "mean": 3.8,
+      "ci": [
+       3.4,
+       4.2
+      ],
+      "n": 15
+     }
+    },
+    "stance_ours": {
+     "balanced": 5,
+     "literal": 10
+    },
+    "stance_reference": {
+     "free": 2,
+     "literal": 7,
+     "balanced": 6
+    }
+   },
+   "lang:Aramaic": {
+    "pages": 5,
+    "ours": {
+     "fidelity": {
+      "mean": 3.3,
+      "ci": [
+       2.8,
+       3.8
+      ],
+      "n": 5
+     },
+     "readability": {
+      "mean": 2.8,
+      "ci": [
+       1.8,
+       3.8
+      ],
+      "n": 5
+     },
+     "register": {
+      "mean": 3.4,
+      "ci": [
+       2.6,
+       4
+      ],
+      "n": 5
+     },
+     "terminology": {
+      "mean": 3.2,
+      "ci": [
+       2.4,
+       4
+      ],
+      "n": 5
+     },
+     "ambiguity": {
+      "mean": 3,
+      "ci": [
+       2.2,
+       3.8
+      ],
+      "n": 5
+     },
+     "transparency": {
+      "mean": 3,
+      "ci": [
+       2.4,
+       3.6
+      ],
+      "n": 5
+     }
+    },
+    "reference": {
+     "readability": {
+      "mean": 4.6,
+      "ci": [
+       3.8,
+       5
+      ],
+      "n": 5
+     },
+     "register": {
+      "mean": 4.4,
+      "ci": [
+       4,
+       4.8
+      ],
+      "n": 5
+     },
+     "terminology": {
+      "mean": 4,
+      "ci": [
+       3.4,
+       4.6
+      ],
+      "n": 5
+     },
+     "ambiguity": {
+      "mean": 3.8,
+      "ci": [
+       3.2,
+       4.4
+      ],
+      "n": 5
+     },
+     "transparency": {
+      "mean": 3.6,
+      "ci": [
+       3,
+       4.4
+      ],
+      "n": 5
+     }
+    },
+    "stance_ours": {
+     "literal": 4,
+     "balanced": 1
+    },
+    "stance_reference": {
+     "balanced": 2,
+     "free": 2,
+     "literal": 1
+    }
+   },
+   "lang:Arabic": {
+    "pages": 20,
+    "ours": {
+     "fidelity": {
+      "mean": 3.5,
+      "ci": [
+       3.05,
+       3.925
+      ],
+      "n": 20
+     },
+     "readability": {
+      "mean": 3.55,
+      "ci": [
+       3.2,
+       3.85
+      ],
+      "n": 20
+     },
+     "register": {
+      "mean": 3.55,
+      "ci": [
+       3.25,
+       3.8
+      ],
+      "n": 20
+     },
+     "terminology": {
+      "mean": 3.55,
+      "ci": [
+       3.2,
+       3.85
+      ],
+      "n": 20
+     },
+     "ambiguity": {
+      "mean": 4,
+      "ci": [
+       3.7,
+       4.3
+      ],
+      "n": 20
+     },
+     "transparency": {
+      "mean": 3.5,
+      "ci": [
+       3.1,
+       3.85
+      ],
+      "n": 20
+     }
+    },
+    "reference": {
+     "readability": {
+      "mean": 4.2,
+      "ci": [
+       3.85,
+       4.5
+      ],
+      "n": 20
+     },
+     "register": {
+      "mean": 4.35,
+      "ci": [
+       4.1,
+       4.6
+      ],
+      "n": 20
+     },
+     "terminology": {
+      "mean": 3.8,
+      "ci": [
+       3.45,
+       4.15
+      ],
+      "n": 20
+     },
+     "ambiguity": {
+      "mean": 3.95,
+      "ci": [
+       3.65,
+       4.3
+      ],
+      "n": 20
+     },
+     "transparency": {
+      "mean": 2.9,
+      "ci": [
+       2.5,
+       3.35
+      ],
+      "n": 20
+     }
+    },
+    "stance_ours": {
+     "literal": 17,
+     "balanced": 3
+    },
+    "stance_reference": {
+     "free": 9,
+     "balanced": 9,
+     "literal": 2
+    }
+   },
+   "lang:Persian": {
+    "pages": 12,
+    "ours": {
+     "fidelity": {
+      "mean": 2.958,
+      "ci": [
+       2.458,
+       3.417
+      ],
+      "n": 12
+     },
+     "readability": {
+      "mean": 3,
+      "ci": [
+       2.417,
+       3.583
+      ],
+      "n": 12
+     },
+     "register": {
+      "mean": 3.167,
+      "ci": [
+       2.667,
+       3.583
+      ],
+      "n": 12
+     },
+     "terminology": {
+      "mean": 3.25,
+      "ci": [
+       2.75,
+       3.667
+      ],
+      "n": 12
+     },
+     "ambiguity": {
+      "mean": 3.417,
+      "ci": [
+       3.167,
+       3.667
+      ],
+      "n": 12
+     },
+     "transparency": {
+      "mean": 3.333,
+      "ci": [
+       2.75,
+       3.917
+      ],
+      "n": 12
+     }
+    },
+    "reference": {
+     "readability": {
+      "mean": 3.917,
+      "ci": [
+       3.5,
+       4.333
+      ],
+      "n": 12
+     },
+     "register": {
+      "mean": 4,
+      "ci": [
+       3.417,
+       4.5
+      ],
+      "n": 12
+     },
+     "terminology": {
+      "mean": 4.083,
+      "ci": [
+       3.833,
+       4.333
+      ],
+      "n": 12
+     },
+     "ambiguity": {
+      "mean": 3.917,
+      "ci": [
+       3.5,
+       4.25
+      ],
+      "n": 12
+     },
+     "transparency": {
+      "mean": 4,
+      "ci": [
+       3.333,
+       4.583
+      ],
+      "n": 12
+     }
+    },
+    "stance_ours": {
+     "literal": 9,
+     "free": 1,
+     "balanced": 2
+    },
+    "stance_reference": {
+     "balanced": 4,
+     "literal": 7,
+     "free": 1
+    }
+   }
+  },
+  "disagreements": {
+   "n": 151,
+   "by_right": {
+    "reference": 94,
+    "ours": 32,
+    "both_defensible": 21,
+    "neither": 1,
+    "cant_tell": 3
+   },
+   "pages_with_ours_right_reference_wrong": 20,
+   "pages_with_reference_right_ours_wrong": 44
+  },
+  "legit_choice_pages": 22
+ },
+ "cost": {
+  "per_page_realtime_usd": {
+   "prod-A": 0.00258,
+   "flash-0": 0.00466,
+   "flash-think8k": 0.01213,
+   "lite-noctx": 0.00201,
+   "lite-checkfix": 0.00397,
+   "lite-fixocr": 0.00242,
+   "flash-fixocr": 0.00504
+  },
+  "thinking_tokens_mean_8k_arm": 2416.288,
+  "translated_pages_census_2026_10_03": {
+   "Hebrew": 55154,
+   "Aramaic": 365,
+   "Arabic": 56626,
+   "Persian": 13755
+  },
+  "translated_pages_total": 125900,
+  "at_corpus_scale_realtime_usd": {
+   "prod-A": 325.0,
+   "flash-0": 587.0,
+   "flash-think8k": 1527.0,
+   "lite-noctx": 253.0,
+   "lite-checkfix": 500.0,
+   "lite-fixocr": 305.0,
+   "flash-fixocr": 635.0
+  },
+  "at_corpus_scale_batch_usd": {
+   "prod-A": 162.0,
+   "flash-0": 293.0,
+   "flash-think8k": 764.0,
+   "lite-noctx": 127.0,
+   "lite-checkfix": 250.0,
+   "lite-fixocr": 152.0,
+   "flash-fixocr": 317.0
+  }
+ },
+ "agreement": {
+  "packet1": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 332,
+   "fidelity_exact": 0.843,
+   "within_1": 1,
+   "weighted_kappa": 0.907
+  },
+  "packet2": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 194,
+   "fidelity_exact": 0.866,
+   "within_1": 1,
+   "weighted_kappa": 0.937
+  },
+  "gate_packet1": {
+   "pass": true,
+   "by_judge": {
+    "j1": {
+     "wrong_page": [
+      {
+       "id": "69e7933d80b52390feb1841a_00027",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69afd049ae982b9d51d6dd32_00292",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69920befebe5b0fa6be5d569_00199",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "69e8b2ac2ff2a8dc09e7883c_00025",
+       "op": "drop-negation",
+       "from": "is not",
+       "to": "is",
+       "planted_fidelity": 3,
+       "base_fidelity": 5,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e8b0fd839ca3f47ec56c17_00048",
+       "op": "add-negation",
+       "from": "is ",
+       "to": "is not ",
+       "planted_fidelity": 3,
+       "base_fidelity": 5,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69d5ac07d0bd3547a5654dcc_00313",
+       "op": "drop-negation",
+       "from": "does not",
+       "to": "does",
+       "planted_fidelity": 3,
+       "base_fidelity": 3,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "699ef9fd15618a982bb1ebd9_00790",
+       "arm": "prod-A",
+       "fidelity": [
+        3,
+        3
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      },
+      {
+       "id": "69d5ac5f4dc55b8478ddd6b6_00299",
+       "arm": "opus",
+       "fidelity": [
+        5,
+        5
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      },
+      {
+       "id": "69e7518610ee9075bcdcde12_00071",
+       "arm": "prod-B",
+       "fidelity": [
+        5,
+        5
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "3/3 scored ≤ 2",
+      "planted": "3/3 caught (3 located the planted word)",
+      "duplicate": "3/3 tied"
+     },
+     "pass": true
+    },
+    "j2": {
+     "wrong_page": [
+      {
+       "id": "69e7933d80b52390feb1841a_00027",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69afd049ae982b9d51d6dd32_00292",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69920befebe5b0fa6be5d569_00199",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "69e8b2ac2ff2a8dc09e7883c_00025",
+       "op": "drop-negation",
+       "from": "is not",
+       "to": "is",
+       "planted_fidelity": 3,
+       "base_fidelity": 5,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e8b0fd839ca3f47ec56c17_00048",
+       "op": "add-negation",
+       "from": "is ",
+       "to": "is not ",
+       "planted_fidelity": 3,
+       "base_fidelity": 5,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69d5ac07d0bd3547a5654dcc_00313",
+       "op": "drop-negation",
+       "from": "does not",
+       "to": "does",
+       "planted_fidelity": 3,
+       "base_fidelity": 3,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "699ef9fd15618a982bb1ebd9_00790",
+       "arm": "prod-A",
+       "fidelity": [
+        4,
+        4
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      },
+      {
+       "id": "69d5ac5f4dc55b8478ddd6b6_00299",
+       "arm": "opus",
+       "fidelity": [
+        5,
+        5
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      },
+      {
+       "id": "69e7518610ee9075bcdcde12_00071",
+       "arm": "prod-B",
+       "fidelity": [
+        5,
+        5
+       ],
+       "tier": [
+        0,
+        0
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "3/3 scored ≤ 2",
+      "planted": "3/3 caught (3 located the planted word)",
+      "duplicate": "3/3 tied"
+     },
+     "pass": true
+    }
+   },
+   "problems": [],
+   "n_problems": 0,
+   "forced": false
+  },
+  "gate_packet2": {
+   "pass": true,
+   "by_judge": {
+    "j1": {
+     "wrong_page": [
+      {
+       "id": "699ef9f2c2bcb75dbdbaad92_00102",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69afd049ae982b9d51d6dd32_00292",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69920bb1e0a548a13d884da7_00342",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "6a06cdd7c749b698e5b2c9a4_00104",
+       "op": "drop-negation",
+       "from": "could not",
+       "to": "could",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e9612a390d3ed634590dd2_00365",
+       "op": "drop-negation",
+       "from": "could not",
+       "to": "could",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e7933d80b52390feb1841a_00027",
+       "op": "drop-negation",
+       "from": "did not",
+       "to": "did",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "69d5ac07d0bd3547a5654dcc_00313",
+       "arm": "prod-A",
+       "fidelity": [
+        4,
+        4
+       ],
+       "tier": [
+        1,
+        1
+       ],
+       "tie": true
+      },
+      {
+       "id": "6992cf0970ab3737555456ae_00100",
+       "arm": "flash-0",
+       "fidelity": [
+        3,
+        3
+       ],
+       "tier": [
+        2,
+        2
+       ],
+       "tie": true
+      },
+      {
+       "id": "69e7934280b52390feb18445_00049",
+       "arm": "lite-checkfix",
+       "fidelity": [
+        4,
+        4
+       ],
+       "tier": [
+        1,
+        1
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "3/3 scored ≤ 2",
+      "planted": "3/3 caught (3 located the planted word)",
+      "duplicate": "3/3 tied"
+     },
+     "pass": true
+    },
+    "j2": {
+     "wrong_page": [
+      {
+       "id": "699ef9f2c2bcb75dbdbaad92_00102",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69afd049ae982b9d51d6dd32_00292",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      },
+      {
+       "id": "69920bb1e0a548a13d884da7_00342",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "6a06cdd7c749b698e5b2c9a4_00104",
+       "op": "drop-negation",
+       "from": "could not",
+       "to": "could",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e9612a390d3ed634590dd2_00365",
+       "op": "drop-negation",
+       "from": "could not",
+       "to": "could",
+       "planted_fidelity": 3,
+       "base_fidelity": 5,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      },
+      {
+       "id": "69e7933d80b52390feb1841a_00027",
+       "op": "drop-negation",
+       "from": "did not",
+       "to": "did",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "69d5ac07d0bd3547a5654dcc_00313",
+       "arm": "prod-A",
+       "fidelity": [
+        4,
+        4
+       ],
+       "tier": [
+        1,
+        1
+       ],
+       "tie": true
+      },
+      {
+       "id": "6992cf0970ab3737555456ae_00100",
+       "arm": "flash-0",
+       "fidelity": [
+        2,
+        2
+       ],
+       "tier": [
+        2,
+        2
+       ],
+       "tie": true
+      },
+      {
+       "id": "69e7934280b52390feb18445_00049",
+       "arm": "lite-checkfix",
+       "fidelity": [
+        4,
+        4
+       ],
+       "tier": [
+        2,
+        2
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "3/3 scored ≤ 2",
+      "planted": "3/3 caught (3 located the planted word)",
+      "duplicate": "3/3 tied"
+     },
+     "pass": true
+    }
+   },
+   "problems": [],
+   "n_problems": 0,
+   "forced": false
+  },
+  "reference_fit_packet1": {
+   "exact": 68,
+   "narrower": 26,
+   "wider": 10
+  }
+ },
+ "served_states": {
+  "span_different_or_T4": [
+   "69e8b2ac2ff2a8dc09e7883c_00025",
+   "69e729a7a409200ea79f0e08_00279"
+  ]
+ }
+}

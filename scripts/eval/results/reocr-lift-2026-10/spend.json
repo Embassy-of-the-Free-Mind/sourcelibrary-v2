@@ -1,0 +1,118 @@
+{
+ "ocr": {
+  "reocr gemini-3-flash-preview": {
+   "n": 109,
+   "usd_realtime": 0.6161665,
+   "in": 473651,
+   "out": 126447,
+   "outcomes": {
+    "text": 105,
+    "truncated": 1,
+    "empty": 3
+   }
+  },
+  "reocr-display gemini-3-flash-preview": {
+   "n": 22,
+   "usd_realtime": 0.12474349999999998,
+   "in": 95527,
+   "out": 25660,
+   "outcomes": {
+    "text": 22
+   }
+  },
+  "reocr-display ": {
+   "n": 1,
+   "usd_realtime": 0,
+   "in": 0,
+   "out": 0,
+   "outcomes": {
+    "empty": 1
+   }
+  },
+  "reocr2 gemini-3-flash-preview": {
+   "n": 30,
+   "usd_realtime": 0.16272450000000005,
+   "in": 130473,
+   "out": 32496,
+   "outcomes": {
+    "text": 30
+   }
+  }
+ },
+ "translate": {
+  "flash-corr gemini-3-flash-preview": {
+   "n": 99,
+   "usd_realtime": 0.41914599999999996,
+   "in": 284630,
+   "out": 92277,
+   "outcomes": {
+    "text": 99
+   }
+  },
+  "flash-ocr gemini-3-flash-preview": {
+   "n": 99,
+   "usd_realtime": 0.4153874999999999,
+   "in": 284433,
+   "out": 91057,
+   "outcomes": {
+    "text": 99
+   }
+  },
+  "flash-reocr gemini-3-flash-preview": {
+   "n": 95,
+   "usd_realtime": 0.41428700000000007,
+   "in": 274378,
+   "out": 92366,
+   "outcomes": {
+    "text": 95
+   }
+  },
+  "flash-reocr2 gemini-3-flash-preview": {
+   "n": 30,
+   "usd_realtime": 0.12608199999999997,
+   "in": 86240,
+   "out": 27654,
+   "outcomes": {
+    "text": 30
+   }
+  },
+  "lite-corr gemini-3.1-flash-lite": {
+   "n": 99,
+   "usd_realtime": 0.19890050000000004,
+   "in": 284630,
+   "out": 85162,
+   "outcomes": {
+    "text": 99
+   }
+  },
+  "lite-ocr gemini-3.1-flash-lite": {
+   "n": 99,
+   "usd_realtime": 0.19975424999999997,
+   "in": 284433,
+   "out": 85764,
+   "outcomes": {
+    "text": 98,
+    "truncated": 1
+   }
+  },
+  "lite-reocr gemini-3.1-flash-lite": {
+   "n": 95,
+   "usd_realtime": 0.19455550000000002,
+   "in": 274378,
+   "out": 83974,
+   "outcomes": {
+    "text": 95
+   }
+  },
+  "lite-reocr2 gemini-3.1-flash-lite": {
+   "n": 30,
+   "usd_realtime": 0.05961049999999999,
+   "in": 86240,
+   "out": 25367,
+   "outcomes": {
+    "text": 30
+   }
+  }
+ },
+ "total_usd_realtime": 2.931357749999998
+}

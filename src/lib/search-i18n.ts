@@ -1,4 +1,4 @@
-import type { Locale } from '@/lib/locale-path';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 /**
  * Strings for the search page (`src/app/search/page.tsx`), which renders under
@@ -118,6 +118,12 @@ export interface SearchStrings {
   kindFeature: string;
   kindCollection: string;
 
+  // ---- "Which Bacon?" — people who share a surname (#5950) ----
+  whichName: (surname: string) => string;
+  whichNameBody: string;
+  namedInBooks: (n: number) => string;
+  whichNameAuthor: string;
+
   // ---- unified-view section headings ----
   illustrations: string;
   seeAllImages: string;
@@ -201,7 +207,9 @@ export interface SearchStrings {
  */
 export const EXAMPLE_QUERY_PROPER_NOUNS = ['Hermes', 'Paracelsus', 'Kabbalah', 'rasayana', 'Ficino'] as const;
 
-export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback({
   en: {
     numberLocale: 'en-US',
 
@@ -283,6 +291,11 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     kindLibrary: 'Library partner',
     kindFeature: 'Tool',
     kindCollection: 'Collection',
+
+    whichName: (surname) => `Which ${surname}?`,
+    whichNameBody: 'More than one person in the library has this name.',
+    namedInBooks: (n) => (n === 1 ? 'named in 1 book' : `named in ${n.toLocaleString('en')} books`),
+    whichNameAuthor: 'Author page',
 
     illustrations: 'Illustrations',
     seeAllImages: 'See all images',
@@ -418,6 +431,11 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     kindFeature: 'Herramienta',
     kindCollection: 'Colección',
 
+    whichName: (surname) => `¿Qué ${surname}?`,
+    whichNameBody: 'Más de una persona en la biblioteca lleva este nombre.',
+    namedInBooks: (n) => (n === 1 ? 'nombrado en 1 libro' : `nombrado en ${n.toLocaleString('es')} libros`),
+    whichNameAuthor: 'Página del autor',
+
     illustrations: 'Ilustraciones',
     seeAllImages: 'Ver todas las imágenes',
     semanticDegraded: 'No se han podido cargar los resultados relacionados — puede que veas menos coincidencias de las que tenemos. Inténtalo de nuevo en un momento.',
@@ -469,13 +487,13 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
 
     imagesEnglishNote: 'Las descripciones de las ilustraciones están indexadas en inglés, así que la búsqueda de imágenes usa palabras inglesas. Las imágenes se pueden explorar en cualquier idioma.',
   },
-};
+});
 
 /**
  * Example queries for the empty-results screen, per locale: the leading common
  * noun translated, the names left alone.
  */
-export const EXAMPLE_QUERIES: Record<Locale, string[]> = {
+export const EXAMPLE_QUERIES: Record<Locale, string[]> = withEnglishFallback({
   en: ['alchemy', ...EXAMPLE_QUERY_PROPER_NOUNS],
   es: ['alquimia', ...EXAMPLE_QUERY_PROPER_NOUNS],
-};
+});

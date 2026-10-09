@@ -1,0 +1,51 @@
+[
+{"id": "Q0IWM", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "རིམས་སེལ་བའི་མཐའ་ཡས་ཀྱི་རིན་པོ་ཆེ", "english": "an \"infinite jewel\" that cures fever", "why": "མཐའ་ཡས is the nāga king Ananta: the stock example of an attractive but unattainable purpose, the fever-curing jewel of the nāga, not an 'infinite jewel' (the note's gloss of it as irrelevant is also off).", "fix": {"find": "an \"infinite jewel\" that cures fever", "replace": "the fever-curing jewel of the nāga Ananta"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དགོས་པ་མེད་པའི་སྒྲོ་འདོགས་བཟློག་ནས", "english": "just as engagement is brought about by removing misconceptions that lack purpose", "why": "The Tibetan says the purpose brings about engagement by removing the superimposition that [the treatise] has no purpose, not 'misconceptions that lack purpose'."},
+  {"type": "term", "confidence": "medium", "tibetan": "དགོས་པ་མེད་པ་ལོག་པར་རྟོགས་པ་ཡང་འཇུག་པའམ། མ་ལོག་ན་ཡང་ལྡོག་པ་ཡིན་ནོ", "english": "then engagement occurs through a mistaken understanding of the lack of purpose; or, if not mistaken, it results in turning away", "why": "ལོག་པ here means 'removed/reversed': when [the notion of] purposelessness is understood to be removed one engages, if it is not removed one turns away; it does not mean 'mistaken'."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཅི་སྟེ་བརྗོད་བྱའི་", "english": "If it were certain that the purpose of the subject matter must be stated, then as Dharmottara", "why": "ཅི་སྟེ introduces an opposing view ('Suppose one says it is certain...'), so the Dharmottara citation and the following 'Therefore it is certain...' belong to the objector, not to the author's conclusion."}
+ ],
+ "note": "Follows the argument in outline but misreads the Ananta-jewel example and blurs several steps of the dialectic about the purpose of the opening statement."},
+{"id": "QZ2X8", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Accurate rendering of the Vinaya bowl and teaching-posture rules with their origin stories."},
+{"id": "Q25KX", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དབྱར་གྱི་ནང་ལོགས་སུ་བགོས་པ་དང་། གོས་", "english": "if one wears it during the summer or keeps it past the time for wearing such clothing", "why": "In this context བགོ་བ is 'distribute/divide' (the summer gains distributed within the rains, kept past the robe-distribution time), not 'wear'; the same misreading recurs for the five urgent robes."}
+ ],
+ "note": "Sound account of the urgent-robe (atyayika) rule and the forest-dweller's robe deposit, with bgo ba read as 'wear' rather than 'distribute'."},
+{"id": "Q8SUO", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "གཞལ་བྱ་རང་རིག་འབྲས་བུ་ཡིན།", "english": "the object of measurement is self-awareness, which is the result", "why": "The verse lists three items: suitability is the pramāṇa, [cognition itself] is the prameya, self-awareness is the result; the English merges prameya and result.", "fix": {"find": "the object of measurement is self-awareness, which is the result", "replace": "the object of measurement is cognition itself, and self-awareness is the result"}},
+  {"type": "structure", "confidence": "high", "tibetan": "དེ་ཕྱིར་སྣང་དོན་བློ་དེ་དག །ཕྱི་དོན་ཡོད་ཀྱང་ཐ་དད་མིན།", "english": "those cognitions which appear as objects are not distinct from the objects even if external objects exist", "why": "The root verse says the appearing object and the cognition are not distinct (even granting an external object), as the commentary then explains.", "fix": {"find": "those cognitions which appear as objects are not distinct from the objects even if external objects exist", "replace": "the appearing object and the cognition are not distinct, even if external objects exist"}}
+ ],
+ "note": "Commentary portions are serviceable, but two of the Pramāṇaviniścaya root verses are mis-segmented in ways that change the doctrine."},
+{"id": "QJ8AN", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the novice verses on householder dress and robe colours with their commentary."},
+{"id": "QB3N7", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "ཕྱིན་ཅི་ལོག་མ་རྟོགས་པ་འོང་བ་དང་འགྲོ་བའི་དངོས་པོ", "english": "The entities of the aggregates, which are the coming and going of unlearned misconceptions", "why": "The Tibetan says the aggregates, entities that come and go, are dependent or caused for one who has not understood the errors (viparyāsa); when the errors are understood they are not; there are no 'unlearned misconceptions' that come and go."}
+ ],
+ "note": "MMK 25 verses and commentary rendered correctly, apart from one garbled gloss on verse 9."},
+{"id": "QS6W9", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "medium", "tibetan": "དབང་པོ་ལས་རྟོགས་པ་ཡོད་པ་ཡིན་གྱི་སྒྲ་ལས་རྟོགས་པ་ནི་མ་ཡིན་སྙམ་དུ་དོགས་པ", "english": "Regarding the doubt that cognition arises only from the senses and not from sound", "why": "The doubt is that what is known through the senses exists, but what is known from words does not; the point about existence is lost."}
+ ],
+ "note": "Dense lemma-gloss commentary followed reasonably well, with one misread objection."},
+{"id": "Q0ZV4", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "རྟེན་ཁྱད་པར་གྱིས་མ་གྲུབ་པའི་ཕྱིར་གཏན་ཚིགས་གཞི་མ་གྲུབ་པ", "english": "because the basis lacks differentiation", "why": "The reason is āśrayāsiddha because the qualified (specific) substratum is unestablished, not because the basis 'lacks differentiation'.", "fix": {"find": "because the basis lacks differentiation", "replace": "because the qualified substratum is not established"}},
+  {"type": "term", "confidence": "medium", "tibetan": "རེས་འགའ་སྨྲ་བ་ཉིད་རང་དབང་", "english": "Does one intend to establish speech itself autonomously", "why": "The question is whether 'being a speaker' (vaktṛtva) is put forward as an independent (svatantra) reason or as a prasaṅga, not whether one proves speech."}
+ ],
+ "note": "Generally sound rendering of Kamalaśīla's reply on the svatantra/prasaṅga options and the smoke-fire example, with one logical term wrong."},
+{"id": "QOA53", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བརྟགས་པའི་འབྲས་བུ་དང་རང་བཞིན་ལ་བརྟེན་ནས་ཁས་བླངས་པའི་དབྱེ་བ་རྣམ་པ་གཉིས", "english": "Two divisions based on consequence and essence within what is accepted", "why": "The two divisions of 'accepted' rest on imputed effect- and nature-signs (as the text goes on to explain: effect-sign, nature-sign); 'consequence' is wrong and 'imputed' is dropped.", "fix": {"find": "based on consequence and essence", "replace": "based on imputed effect and nature [signs]"}},
+  {"type": "term", "confidence": "high", "tibetan": "རྣམ་པར་འགྲེལ་པར་བཤད་པ་ནི", "english": "The explanation in the commentary (viniścaya) the Ascertainment", "why": "རྣམ་འགྲེལ is the (Pramāṇa)vārttika, not the Viniścaya.", "fix": {"find": "the commentary (viniścaya) the Ascertainment", "replace": "the Vārttika (Pramāṇavārttika)"}},
+  {"type": "term", "confidence": "medium", "tibetan": "འགྱུར་བ་ཅན་ཡིན་པའི་ཕྱིར་ཕྱོགས་ལྟར་སྣང་བ", "english": "because it is subject to change based only on that", "why": "འགྱུར་བ here means 'occurring/arising' (a thesis fault that arises merely from that), not 'subject to change'; repeated later as 'changes based on that alone'."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཚད་མ་དག་ཉིད་ཀྱིས་བསལ་བ་ཕྱོགས་མ་ཡིན་ན", "english": "If the refuted is not a thesis by means of the valid cognitions themselves", "why": "'By the pramāṇas' qualifies 'refuted': if what is refuted by the pramāṇas is not a thesis, how is [refutation] taught as fourfold?"}
+ ],
+ "note": "Follows the discussion of the refuted thesis, but the account of the kinds of inference-based refutation misrenders the technical terms and cites the wrong treatise."},
+{"id": "QQ4JR", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful verse rendering of the Tibetan of the peacock-queen episode; the interleaved Sanskrit is correctly left aside."}
+]

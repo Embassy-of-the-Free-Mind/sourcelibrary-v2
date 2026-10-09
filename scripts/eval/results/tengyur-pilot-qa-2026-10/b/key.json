@@ -1,0 +1,30 @@
+{
+ "B130": {
+  "vol": 113,
+  "page": 130,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "labels": {
+   "T1": "real",
+   "T3": "plant",
+   "T2": "dup"
+  },
+  "plant": {
+   "find": "One cannot realize enlightenment with ignorance or minor diligence.",
+   "replace": "One can realize enlightenment even with ignorance or minor diligence."
+  }
+ },
+ "B131": {
+  "vol": 113,
+  "page": 131,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "labels": {
+   "T1": "real",
+   "T2": "plant",
+   "T3": "dup"
+  },
+  "plant": {
+   "find": "3. Not being oriented toward sentient beings.",
+   "replace": "3. Being oriented toward sentient beings."
+  }
+ }
+}

@@ -1,0 +1,40 @@
+{
+  "source": "xlref-t1 corrected transcription",
+  "edition": "the served OCR of this leaf, corrected against the image (#5695 T1, PR #5721)",
+  "licence": "CC0-1.0",
+  "kind": "corrected-served-ocr",
+  "canonical": false,
+  "memorization_risk": "low",
+  "anchored_on": "gemini-3-flash-preview",
+  "source_url": "results/xlref-t1-2026-10/fixed-transcriptions/c87fadfa-1543-44b9-a138-573c144246e6_328.txt",
+  "origin": "library",
+  "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+  "page_number": 328,
+  "script": "latin",
+  "reference_kind": "corrected-served-ocr",
+  "window": null,
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.939Z",
+  "text_location": "repo",
+  "text_sha256": "b61eaa710ae7247395cf387d0a490581c7d1bc64d260a3a4a30ad1aaea22aa0d",
+  "unit": {
+    "chars": 2084
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "xlref-t1 (image opened there)",
+    "at": "2026-10-04",
+    "note": "Transcription corrected against this leaf's image in #5695 T1 (PR #5721); it is a correction of the served gemini-3-flash-preview read, so it leans toward that engine",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": null,
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": "our-own-leaf",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "stratum": "latin-period-5126"
+}

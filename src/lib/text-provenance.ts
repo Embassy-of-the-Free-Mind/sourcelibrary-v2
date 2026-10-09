@@ -79,13 +79,97 @@ export function translationCorpus(page: Pick<Page, 'translation'>): CorpusInfo |
 
 import type { ReaderStrings } from '@/lib/reader-strings';
 
+// ── Open e-text sources and their licences (#5571) ───────────────────────────
+//
+// Three lanes write page text from an open e-text fitted to OUR scan: the
+// Esukhia Derge Tengyur/Kangyur (#5497, public domain), Sefaria (#5560, licence
+// per version) and CBETA (#5566, CC BY-NC-SA). The text's licence is not the
+// scan's (`image_source.license`), and a reader quoting the page needs both.
+// Tengyur and Sefaria store `ocr.text_source`; CBETA stores its licence only in
+// `ocr.text_edition.licence`. This is the one place both shapes are read.
+
+export interface TextSourceInfo {
+  /** Short name for the pane-header chip, e.g. 'CBETA'. */
+  shortName: string;
+  /** Full name for the drawer, e.g. 'Esukhia digital Derge Tengyur'. */
+  name: string;
+  url: string | null;
+  license: string;
+  licenseUrl: string | null;
+  /** Which version of the e-text, e.g. 'T51n2076@1a2b3c4d5e'. */
+  version: string | null;
+}
+
+/** `ocr.source` → the name a reader knows the source by. */
+const TEXT_SOURCE_SHORT: Record<string, string> = {
+  'esukhia-derge-tengyur': 'Esukhia',
+  'esukhia-derge-kangyur': 'Esukhia',
+  'cbeta-xml-p5': 'CBETA',
+  sefaria: 'Sefaria',
+};
+
+const str = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v.trim() : null);
+
+/**
+ * A licence as a reader reads it. Writers append glosses ("public domain — 'mechanical
+ * reproduction…' (Esukhia README)", "CC BY-NC-SA 4.0 (CBETA)") that belong in the
+ * record, not the label.
+ */
+function licenseLabel(raw: string): string {
+  const s = raw.split(' — ')[0].replace(/\s*\([^)]*\)\s*$/, '').trim() || raw.trim();
+  return /^public domain$/i.test(s) ? 'public domain' : s;
+}
+
+/** Where this page's text came from and its licence, or null when it was read from the scan. */
+export function pageTextSource(page: Pick<Page, 'ocr'>): TextSourceInfo | null {
+  const ocr = page.ocr;
+  if (!ocr) return null;
+  const ts = ocr.text_source;
+  const te = ocr.text_edition;
+  const name = str(ts?.name) ?? str(te?.name);
+  const license = str(ts?.license) ?? str(te?.licence);
+  // No licence, no label: an unlicensed claim is worse than none, and each lane's
+  // publish step asserts the licence is there (#5571).
+  if (!name || !license) return null;
+  const shortName = (ocr.source && TEXT_SOURCE_SHORT[ocr.source]) || name.split(' — ')[0];
+  const version = str(ts?.version)
+    ?? (str(te?.work) ? `${te!.work}${str(te?.commit) ? `@${String(te!.commit).slice(0, 10)}` : ''}` : null);
+  return {
+    shortName,
+    name,
+    url: str(ts?.url) ?? str(te?.repo),
+    license: licenseLabel(license),
+    licenseUrl: str(ts?.license_url) ?? str(te?.licence_url),
+    version,
+  };
+}
+
+/**
+ * True when this page's English is a machine translation that no person has
+ * reviewed or edited — the reader says so beside it. Corpus translations,
+ * Sefaria's own English (`source: 'manual'`), hand edits and any provenance we do
+ * not recognise are never called machine drafts (see `ContentSource`).
+ */
+export function isUnreviewedMachineTranslation(page: Pick<Page, 'translation'>): boolean {
+  const tr = page.translation;
+  if (!tr?.data || !tr.model) return false;
+  if (translationCorpus(page)) return false;
+  if (tr.edited_by || tr.edited_at) return false;
+  return tr.source == null || tr.source === 'ai' || tr.source === 'batch_api';
+}
+
 export type TranscriptProvenance =
+  /** Open e-text fitted to this scan (#5571) — not read from it, and under its own licence. */
+  | { kind: 'text_source'; source: TextSourceInfo }
   /** Text imported from a scholarly corpus (#4350) — no scan, no OCR. */
   | { kind: 'corpus'; corpus: CorpusInfo }
   /** The Internet Archive's own OCR of the leaf (`ocr.source === 'ia_djvu'`). */
   | { kind: 'ia'; engine: string | null; year: string | null; agreement: number | null }
   /** Written or corrected by a person; `model` is what they started from, if known. */
   | { kind: 'manual'; model: string | null }
+  /** Syriac read by a specialist Kraken model (#4883): Sophro Mhiro for
+   *  manuscripts, omnisyr for print. Named, with its measured accuracy. */
+  | { kind: 'kraken'; route: 'manuscript' | 'print' }
   /** Read from the scan by a model in the ordinary pipeline. */
   | { kind: 'model'; model: string };
 
@@ -97,9 +181,14 @@ export type TranscriptProvenance =
  * engine and the Archive's OCR date; the provisional test pages of 2026-09-12
  * carry only the engine string in `ocr.model` and no `ocr.ia` at all.
  */
+/** The by-eye check the reader's Syriac Kraken notice cites (ten pages, 2026-09-18). */
+export const KRAKEN_EVIDENCE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4883#issuecomment-6055359829';
+
 export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvenance | null {
   const ocr = page.ocr;
   if (!ocr) return null;
+  const textSource = pageTextSource(page);
+  if (textSource) return { kind: 'text_source', source: textSource };
   const corpus = pageTextCorpus(page);
   if (corpus) return { kind: 'corpus', corpus };
   if (ocr.source === 'ia_djvu') {
@@ -113,6 +202,10 @@ export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvena
     return { kind: 'ia', engine, year, agreement: typeof median === 'number' ? median : null };
   }
   if (ocr.source === 'manual') return { kind: 'manual', model: ocr.model || null };
+  const engine = ocr.engine;
+  if (engine && engine.name === 'kraken') {
+    return { kind: 'kraken', route: 'route' in engine && engine.route === 'print' ? 'print' : 'manuscript' };
+  }
   if (ocr.model) return { kind: 'model', model: ocr.model };
   return null;
 }
@@ -140,6 +233,10 @@ export function transcriptProvenanceLabel(
   form: 'short' | 'full',
 ): string {
   switch (prov.kind) {
+    case 'text_source':
+      return form === 'short'
+        ? t.transcriptChipTextSource(prov.source.shortName, prov.source.license)
+        : t.textSourceTranscript(prov.source.name, prov.source.license, prov.source.version);
     case 'corpus':
       return form === 'short'
         ? t.transcriptChipCorpus(prov.corpus.shortName)
@@ -152,6 +249,10 @@ export function transcriptProvenanceLabel(
       return form === 'short'
         ? t.transcriptChipManual
         : t.manualTranscript(prov.model ? modelDisplayName(prov.model) : null);
+    case 'kraken':
+      return form === 'short'
+        ? (prov.route === 'print' ? 'omnisyr (Kraken)' : 'Sophro Mhiro (Kraken)')
+        : t.krakenTranscript(prov.route);
     case 'model':
       return form === 'short' ? modelDisplayName(prov.model) : t.transcribedBy(prov.model);
   }

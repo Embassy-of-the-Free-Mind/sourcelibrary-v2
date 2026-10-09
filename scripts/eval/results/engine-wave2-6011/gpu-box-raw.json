@@ -1,0 +1,45 @@
+{
+ "gpu": "NVIDIA H100 PCIe, 580.126.20",
+ "vllm": "0.31.0",
+ "engines": {
+  "deepseek-ocr": {
+   "pages_out": 661,
+   "runs": [
+    {
+     "engine": "deepseek-ocr",
+     "pages": 661,
+     "ok": 661,
+     "wall_secs": 503.1,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 503.1
+  },
+  "qwen3-vl-8b": {
+   "pages_out": 661,
+   "runs": [
+    {
+     "engine": "qwen3-vl-8b",
+     "pages": 661,
+     "ok": 661,
+     "wall_secs": 1056.3,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 1056.3
+  },
+  "chandra-ocr-2": {
+   "pages_out": 661,
+   "runs": [
+    {
+     "engine": "chandra-ocr-2",
+     "pages": 661,
+     "ok": 661,
+     "wall_secs": 1820.0,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 1820.0
+  }
+ }
+}

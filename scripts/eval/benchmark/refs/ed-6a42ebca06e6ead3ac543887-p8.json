@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/neugebauer1",
+  "edition": "Historia Rerum Polonicarum: Concinnata Et Ad Sigismundum Tertium Poloniae Sueciaeque Regem Usque Deducta Libris Decem. — Hanoviae: Sumptibus Danielis et Davidis Aubriorum, nec non Clementis Schleichii, 1618.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/12",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "6a42ebca06e6ead3ac543887",
+  "page_number": 8,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 2784,
+    "to_char": 5881,
+    "overlap": 0.796,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'ducant, sic vt liceat inde celerrime ac sine labore'; ends 'ea gratia ipsis indulta, vt ex oppido humeris, quantum possent, efferrent. Tum / illae' ; running head EPISTOLA.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:05.633Z",
+  "text_location": "repo",
+  "text_sha256": "d519b9cec5339cffb4b7afd329d52f490d6b88aca2d8d634580737bd8d610255",
+  "unit": {
+    "chars": 3097
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,19 @@
+{
+ "seed": 4195,
+ "counts": {
+  "W": 31,
+  "T": 38,
+  "S3": 88,
+  "S5": 38
+ },
+ "labels": {
+  "real-ink": 45,
+  "white": 74,
+  "show-through": 42
+ },
+ "eligible": {
+  "W": 63,
+  "T": 42,
+  "S3_new_real_ink": 45
+ }
+}

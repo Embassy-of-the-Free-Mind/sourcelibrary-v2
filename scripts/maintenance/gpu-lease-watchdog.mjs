@@ -34,6 +34,17 @@
  * (storage bills while compute does not), with an approximate monthly cost, so leftovers
  * get deleted deliberately.
  *
+ * Running Scaleway instances of a NON-GPU type with no lease-until tag and no role=permanent tag
+ * are REPORTED (email digest once per 6 h, /admin/work) and never stopped (#5736).
+ *
+ * --hetzner: a separate hourly pass over the Hetzner Cloud account (HCLOUD_TOKEN, read-only is
+ * enough). Leases are server LABELS (lease-until, owner, role=permanent — scripts/lib/infra-lease.mjs).
+ * No lease / expired lease / leased but CPU < 5 % over 24 h → FLAG: one email digest per 6 h and
+ * the /admin/work board (ops_reports work-board:infra-hetzner), each with €/month, age and CPU.
+ * It NEVER powers off or deletes a Hetzner server: a stopped Hetzner server still bills, and
+ * deletion destroys data — that is Derek's call. A missing token or a failed API call is flagged
+ * the same way: an unreadable provider is not an empty one.
+ *
  * Its own failure looks different from "nothing running": every pass writes a heartbeat file
  * (STATE_DIR/heartbeat) only after the API answered, an API failure exits 1 and emails
  * (6 h cooldown), and a stop that could not be confirmed exits 2 and emails.
@@ -43,11 +54,13 @@
  *   ... --apply            # stop expired leases, send emails
  *   ... --apply --weekly   # plus the leftover-volume section
  *   ... --lease <id> --zone <zone> --hours <n> --owner <issue> [--progress mongo:<ocr.source>]
+ *   ... --hetzner [--apply]  # the Hetzner pass (flag only); env HCLOUD_TOKEN from /root/.hcloud.env
  * Idle rule and tag grammar: scripts/lib/gpu-idle.mjs (GPU_IDLE_MINUTES, GPU_GRACE_MINUTES override).
  * Env: SCALEWAY_SECRET_KEY (required), RESEND_API_KEY + ALERT_EMAIL (email), GPU_WATCHDOG_STATE_DIR.
  */
 import fs from 'node:fs';
 import { idleDecision, parseProgressTag } from '../lib/gpu-idle.mjs';
+import { leaseLabels, leaseVerdict, hetznerMonthlyEur, scalewayMonthlyEur, meanCpuPct, flagLine, IDLE_WINDOW_H } from '../lib/infra-lease.mjs';
 import path from 'node:path';
 import os from 'node:os';
 
@@ -56,9 +69,7 @@ const flag = n => args.includes(`--${n}`);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
 const APPLY = flag('apply');
 const WEEKLY = flag('weekly');
-
-const TOKEN = process.env.SCALEWAY_SECRET_KEY;
-if (!TOKEN) { console.error('SCALEWAY_SECRET_KEY is not set'); process.exit(1); }
+const HETZNER = flag('hetzner');
 const ZONES = (process.env.SCALEWAY_ZONES || 'fr-par-1,fr-par-2,fr-par-3,nl-ams-1,nl-ams-2,nl-ams-3,pl-waw-1,pl-waw-2,pl-waw-3').split(',');
 // Commercial types that carry a GPU. Anything with a lease tag is watched regardless.
 const GPU_TYPE = /^(L4|L40S|H100|A100|B200|GPU|RENDER)/i;
@@ -68,6 +79,7 @@ const STOP_CONFIRM_MS = 4 * 60 * 1000;
 // Scaleway Block Storage 5K IOPS list price, €/GB/month — approximate, for the weekly nudge only.
 const SBS_EUR_PER_GB_MONTH = 0.08;
 
+const TOKEN = process.env.SCALEWAY_SECRET_KEY;
 const API = 'https://api.scaleway.com';
 async function scw(method, url, body) {
   const res = await fetch(API + url, { method, headers: { 'X-Auth-Token': TOKEN, 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
@@ -76,26 +88,140 @@ async function scw(method, url, body) {
 }
 
 fs.mkdirSync(STATE_DIR, { recursive: true });
-const STATE_FILE = path.join(STATE_DIR, 'state.json');
+// The Hetzner pass runs from its own cron line; its own state file keeps the two passes from clobbering each other.
+const STATE_FILE = path.join(STATE_DIR, HETZNER ? 'hetzner-state.json' : 'state.json');
 const state = fs.existsSync(STATE_FILE) ? JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')) : { nagged: {}, api_failure_emailed_at: null };
 const saveState = () => fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 1));
 const now = new Date();
 
-async function email(subject, lines) {
+async function email(subject, lines, tag = HETZNER ? '[INFRA]' : '[GPU]') {
   if (!APPLY) { console.log(`  [dry-run] would email: ${subject}`); return; }
   if (!process.env.RESEND_API_KEY) { console.log(`  (no RESEND_API_KEY; not emailed) ${subject}`); return; }
   const { Resend } = await import('resend');
   await new Resend(process.env.RESEND_API_KEY).emails.send({
     from: 'Source Library <noreply@sourcelibrary.org>',
     to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
-    subject: `[GPU] ${subject}`,
+    subject: `${tag} ${subject}`,
     text: [`${now.toISOString()} — gpu-lease-watchdog on ${os.hostname()}`, '', ...lines].join('\n'),
   });
   console.log(`  emailed: ${subject}`);
 }
 
-const parseTags = tags => Object.fromEntries((tags || []).filter(t => t.includes('=')).map(t => { const i = t.indexOf('='); return [t.slice(0, i), t.slice(i + 1)]; }));
+const parseTags = leaseLabels;
 const hours = ms => (ms / 3.6e6).toFixed(1);
+
+let mongoDb = null;
+async function getMongo() {
+  if (!mongoDb) {
+    if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI not set');
+    const { MongoClient } = await import('mongodb');
+    const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
+    await client.connect();
+    mongoDb = { client, db: client.db(process.env.MONGODB_DB || 'bookstore') };
+  }
+  return mongoDb.db;
+}
+
+/**
+ * Flags onto /admin/work (src/lib/work-board.ts reads `flags` on any work-board document). One
+ * document per provider, replaced every pass, so a cleared flag disappears. The page is the only
+ * reader: this write actuates nothing.
+ */
+async function pushBoard(box, flags, staleAfterMin) {
+  const doc = { type: 'work-board', box, generated_at: now, generated_by: 'scripts/maintenance/gpu-lease-watchdog.mjs', host: os.hostname(), stale_after_min: staleAfterMin, jobs: [], chains: [], flags };
+  if (!APPLY) { console.log(`  [dry-run] would push ${flags.length} flag(s) to ops_reports work-board:${box}`); return; }
+  try {
+    await (await getMongo()).collection('ops_reports').replaceOne({ _id: `work-board:${box}` }, doc, { upsert: true });
+    console.log(`  board: ${flags.length} flag(s) → work-board:${box}`);
+  } catch (e) {
+    exitCode = exitCode || 1;
+    console.log(`  board push FAILED: ${e.message}`);
+  }
+}
+
+/** One digest email for every flag whose 6 h cooldown has passed. */
+async function nagDigest(flags, subjectTail, footer) {
+  const due = flags.filter(f => { const at = state.nagged[`${f.provider}:${f.id}`]; return !at || Date.now() - new Date(at).getTime() > NAG_COOLDOWN_MS; });
+  if (!due.length) return;
+  const total = flags.reduce((a, f) => a + (f.eur_month || 0), 0);
+  await email(`${flags.length} ${subjectTail} · ≈ €${total.toFixed(0)}/month`, [...flags.map(flagLine), '', ...footer]);
+  if (APPLY) { for (const f of due) state.nagged[`${f.provider}:${f.id}`] = now.toISOString(); saveState(); }
+}
+
+const ownerIssue = o => (/^#?\d{3,6}$/.test(String(o || '')) ? Number(String(o).replace('#', '')) : null);
+
+let exitCode = 0;
+
+// ── --hetzner: the flag-only pass over the Hetzner Cloud account ─────────────
+if (HETZNER) {
+  const HAPI = 'https://api.hetzner.cloud/v1';
+  const HTOKEN = process.env.HCLOUD_TOKEN;
+  const hcloud = async url => {
+    const res = await fetch(HAPI + url, { headers: { Authorization: `Bearer ${HTOKEN}` } });
+    if (!res.ok) throw new Error(`GET ${url.split('?')[0]} → ${res.status} ${(await res.text()).slice(0, 200)}`);
+    return res.json();
+  };
+  const unwatched = async why => {
+    console.error(`Hetzner NOT watched: ${why}`);
+    const last = state.api_failure_emailed_at ? Date.now() - new Date(state.api_failure_emailed_at).getTime() : Infinity;
+    if (last > NAG_COOLDOWN_MS) {
+      await email('watchdog cannot read the Hetzner account', [why, 'Hetzner servers are NOT being watched until this clears.',
+        'Fix: create a READ-ONLY Hetzner Cloud API token (console.hetzner.cloud → project → Security → API tokens),',
+        'then on the Hetzner box: echo HCLOUD_TOKEN=<token> > /root/.hcloud.env && chmod 600 /root/.hcloud.env']);
+      if (APPLY) { state.api_failure_emailed_at = now.toISOString(); saveState(); }
+    }
+    await pushBoard('infra-hetzner', [{ provider: 'hetzner', id: 'account', name: 'Hetzner account', type: '—', location: null, status: 'unreadable', eur_month: null, age_days: null, cpu_24h: null, owner: '5736', issue: 5736, kind: 'unwatched', reason: why }], 150);
+    if (mongoDb) await mongoDb.client.close().catch(() => {});
+    process.exit(1);
+  };
+  if (!HTOKEN) await unwatched('HCLOUD_TOKEN is not set — create a read-only token and store it in /root/.hcloud.env');
+
+  let servers = [];
+  try {
+    for (let page = 1; page < 50; page++) {
+      const r = await hcloud(`/servers?per_page=50&page=${page}`);
+      servers.push(...(r.servers || []));
+      if (!r.meta?.pagination?.next_page) break;
+    }
+  } catch (e) { await unwatched(`Hetzner API failed: ${e.message}`); }
+  fs.writeFileSync(path.join(STATE_DIR, 'heartbeat-hetzner'), now.toISOString() + '\n');
+  console.log(`${now.toISOString()} ${APPLY ? 'APPLY' : 'DRY RUN'} · hetzner · ${servers.length} servers (flag only — never stopped)`);
+
+  const flags = [];
+  for (const s of servers) {
+    const labels = leaseLabels(s.labels);
+    const running = s.status === 'running';
+    let cpu = null;
+    if (running && labels.role !== 'permanent') {
+      const end = now.toISOString(), start = new Date(now - IDLE_WINDOW_H * 3.6e6).toISOString();
+      try {
+        const m = await hcloud(`/servers/${s.id}/metrics?type=cpu&start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&step=3600`);
+        cpu = meanCpuPct(m.metrics?.time_series?.cpu?.values, s.server_type?.cores);
+      } catch (e) { console.log(`  metrics failed for ${s.name}: ${e.message}`); }
+    }
+    const v = leaseVerdict({ labels, running, since: new Date(s.created), now, cpuPct: cpu });
+    const f = {
+      provider: 'hetzner', id: String(s.id), name: s.name, type: s.server_type?.name ?? '?',
+      location: s.datacenter?.location?.name ?? null, status: s.status, eur_month: hetznerMonthlyEur(s),
+      age_days: Math.floor((now - new Date(s.created)) / 864e5), cpu_24h: cpu,
+      owner: labels.owner ?? null, issue: ownerIssue(labels.owner), kind: v.kind, reason: v.reason,
+    };
+    console.log(`  ${(v.action === 'flag' ? v.kind.toUpperCase() : v.action).padEnd(9)}${f.name} (${f.type}, ${f.status}, €${f.eur_month ?? '?'}/mo) · ${v.reason}`);
+    if (v.action === 'flag') flags.push(f);
+  }
+  flags.sort((a, b) => (b.eur_month || 0) - (a.eur_month || 0));
+  await nagDigest(flags, 'Hetzner server(s) flagged', [
+    'Nothing was stopped: a stopped Hetzner server still bills; delete (after the data is safe) or label it.',
+    'Lease it:      hcloud server add-label <name> lease-until=2026-10-31 && hcloud server add-label <name> owner=<issue>',
+    'Keep it:       hcloud server add-label <name> role=permanent',
+    'Board:         https://sourcelibrary.org/admin/work',
+  ]);
+  await pushBoard('infra-hetzner', flags, 150);
+  if (mongoDb) await mongoDb.client.close().catch(() => {});
+  process.exit(exitCode);
+}
+
+if (!TOKEN) { console.error('SCALEWAY_SECRET_KEY is not set'); process.exit(1); }
 
 // ── --lease: set or extend a lease on one server ─────────────────────────────
 if (opt('lease')) {
@@ -113,7 +239,6 @@ if (opt('lease')) {
 }
 
 // ── the pass ─────────────────────────────────────────────────────────────────
-let exitCode = 0;
 const servers = [];
 try {
   for (const zone of ZONES) {
@@ -164,17 +289,9 @@ async function poweroff(s, label, why) {
 }
 
 // Newest output for a `progress=mongo:<ocr.source>` tag, inside the idle window.
-let mongoDb = null;
 async function newestOutput(progress, windowMin) {
-  if (!mongoDb) {
-    if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI not set');
-    const { MongoClient } = await import('mongodb');
-    const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
-    await client.connect();
-    mongoDb = { client, db: client.db(process.env.MONGODB_DB || 'bookstore') };
-  }
   const since = new Date(Date.now() - windowMin * 60000);
-  const doc = await mongoDb.db.collection('pages').findOne(
+  const doc = await (await getMongo()).collection('pages').findOne(
     { 'ocr.updated_at': { $gte: since }, 'ocr.source': progress.source },
     { sort: { 'ocr.updated_at': -1 }, projection: { _id: 0, 'ocr.updated_at': 1 }, maxTimeMS: 20000 });
   return doc?.ocr?.updated_at ? new Date(doc.ocr.updated_at) : null;
@@ -223,6 +340,41 @@ for (const s of watched) {
   console.log(`  EXPIRED  ${label} · lease ended ${hours(now - until)} h ago · owner ${tags.owner || '?'}`);
   await poweroff(s, label, `lease expired ${until.toISOString()} (owner ${tags.owner || '?'})`);
 }
+
+// ── non-GPU instances: report, never stop (#5736) ────────────────────────────
+// A CPU instance is often another project's long-lived service; the cost of not tagging it is the nag.
+const products = {};
+async function monthlyEur(s) {
+  try {
+    products[s.zone] ??= (await scw('GET', `/instance/v1/zones/${s.zone}/products/servers?per_page=100`)).servers || {};
+    return scalewayMonthlyEur(products[s.zone][s.commercial_type]);
+  } catch { return null; }
+}
+const scwFlags = [];
+for (const s of servers) {
+  if (s.state !== 'running') continue;
+  const labels = parseTags(s.tags);
+  const gpu = GPU_TYPE.test(s.commercial_type);
+  if (gpu && labels['lease-until']) continue; // the lease rules above own it
+  const v = gpu ? { action: 'flag', kind: 'no-lease', reason: 'GPU with no lease-until tag' }
+    : labels['lease-until'] ? { action: 'ok' } // a leased CPU instance is in `watched` above
+    : leaseVerdict({ labels, running: true, since: new Date(s.modification_date), now, checkCpu: false });
+  if (v.action !== 'flag') continue;
+  const f = {
+    provider: 'scaleway', id: s.id, name: s.name, type: s.commercial_type, location: s.zone, status: s.state,
+    eur_month: await monthlyEur(s), age_days: Math.floor((now - new Date(s.creation_date)) / 864e5), cpu_24h: null,
+    owner: labels.owner ?? null, issue: ownerIssue(labels.owner), kind: v.kind, reason: v.reason,
+  };
+  if (!gpu) console.log(`  REPORT   ${s.name} (${s.commercial_type}, ${s.zone}) · non-GPU · ${v.reason} · €${f.eur_month ?? '?'}/mo`);
+  scwFlags.push(f);
+}
+// Untagged GPUs already have their own per-server email above; the digest covers CPU instances only.
+await nagDigest(scwFlags.filter(f => !GPU_TYPE.test(f.type)), 'untagged Scaleway CPU instance(s) running', [
+  'Nothing was stopped. Tag it or stop it deliberately:',
+  '  scw instance server update <id> zone=<zone> tags.0=role=permanent tags.1=owner=<project-or-issue>',
+  'Board: https://sourcelibrary.org/admin/work',
+]);
+await pushBoard('infra-scaleway', scwFlags, 30);
 if (mongoDb) await mongoDb.client.close().catch(() => {});
 
 // ── weekly: storage that bills while compute does not ────────────────────────

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
+import { adminSectionsFor, type AdminViewer } from '@/lib/admin-links';
 
 interface NavItem {
   href: string;
@@ -11,47 +12,28 @@ interface NavItem {
   children?: { href: string; label: string }[];
 }
 
-const adminLinks: NavItem[] = [
-  { href: '/admin', label: 'Dashboard', exact: true },
-  { href: '/admin/canon', label: 'Canon' },
-  { href: '/curation/identity-review', label: 'Identity review' },
-  { href: '/admin/pipeline', label: 'Pipeline' },
-  { href: '/admin/processing', label: 'Processing' },
-  { href: '/admin/quality', label: 'Quality' },
-  { href: '/admin/realtime', label: 'Realtime' },
-  { href: '/admin/collections', label: 'Collections' },
-  { href: '/admin/collection-proposals', label: 'Proposals' },
-  { href: '/admin/duplicates', label: 'Duplicates' },
-  { href: '/admin/catalog-coverage', label: 'Catalogue' },
-  { href: '/admin/r2-coverage', label: 'R2 Storage' },
-  {
-    href: '/admin/outreach',
-    label: 'Outreach',
-    children: [
-      { href: '/admin/social', label: 'Social' },
-      { href: '/admin/marketing', label: 'Marketing' },
-      { href: '/admin/email', label: 'Email' },
-    ],
-  },
-  { href: '/admin/kdp', label: 'Publishing' },
-  { href: '/admin/users', label: 'Users' },
-  { href: '/admin/introductions', label: 'Introductions' },
-  { href: '/admin/members', label: 'Members' },
-  { href: '/admin/api-keys', label: 'API Keys' },
-  { href: '/analytics', label: 'Analytics' },
-  { href: '/platform/admin/metrics', label: 'Metrics' },
-  { href: '/admin/bots', label: 'Bots' },
-  { href: '/admin/errors', label: 'Errors' },
-  { href: '/admin/system-map', label: 'System Map' },
-];
+/**
+ * Built from src/lib/admin-links.ts, the one list the account menu also reads.
+ * The first section (Today) is shown flat; the others are dropdowns, so the bar
+ * fits a laptop screen without scrolling. A section of one link is a link.
+ */
+function navItems(viewer: AdminViewer): NavItem[] {
+  const [first, ...rest] = adminSectionsFor(viewer);
+  return [
+    ...(first?.links ?? []),
+    ...rest.map((s) => (s.links.length === 1
+      ? s.links[0]
+      : { href: s.links[0].href, label: s.label, children: s.links.map(({ href, label }) => ({ href, label })) })),
+  ];
+}
 
 /**
- * `extraLinks`: links the server layout decided this viewer may see (the
- * allow-listed spend report, #5225). Appended after the static list.
+ * `role` comes from the layout's session; `canSeeSpend` is the server's answer
+ * for the allow-listed spend report (#5225), narrower than any role.
  */
-export function AdminNav({ extraLinks = [] }: { extraLinks?: { href: string; label: string }[] }) {
+export function AdminNav({ role, canSeeSpend }: { role: string | undefined; canSeeSpend: boolean }) {
   const pathname = usePathname();
-  const links: NavItem[] = extraLinks.length ? [...adminLinks, ...extraLinks] : adminLinks;
+  const links = navItems({ role, canSeeSpend });
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -87,7 +69,8 @@ export function AdminNav({ extraLinks = [] }: { extraLinks?: { href: string; lab
     <nav style={{
       display: 'flex', gap: 4, padding: '8px 16px',
       background: '#161b22', borderBottom: '1px solid #30363d',
-      overflowX: 'auto', fontSize: 13,
+      // Wrap, not scroll: a scrolling bar clips its own dropdowns.
+      flexWrap: 'wrap', fontSize: 13,
     }}>
       {links.map((link) => {
         if (link.children) {

@@ -34,9 +34,11 @@ function LeadCard({ item, href, count }: { item: CuratedShowcaseItem; href: stri
         <h3 className="font-display text-2xl md:text-3xl text-primary group-hover:text-accent-rust transition-colors">
           {item.name}
         </h3>
-        <p className="mt-2 font-serif text-lg md:text-xl text-secondary leading-snug max-w-xl">
-          {item.subtitle}
-        </p>
+        {item.subtitle && (
+          <p className="mt-2 font-serif text-lg md:text-xl text-secondary leading-snug max-w-xl">
+            {item.subtitle}
+          </p>
+        )}
       </div>
     </Link>
   );
@@ -58,9 +60,11 @@ function SideCard({ item, href, count }: { item: CuratedShowcaseItem; href: stri
         <h3 className="font-display text-lg md:text-xl text-primary group-hover:text-accent-rust transition-colors leading-tight">
           {item.name}
         </h3>
-        <p className="mt-1.5 font-serif text-base md:text-lg text-secondary leading-snug line-clamp-3">
-          {item.subtitle}
-        </p>
+        {item.subtitle && (
+          <p className="mt-1.5 font-serif text-base md:text-lg text-secondary leading-snug line-clamp-3">
+            {item.subtitle}
+          </p>
+        )}
       </div>
     </Link>
   );

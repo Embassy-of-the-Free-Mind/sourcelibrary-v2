@@ -1,0 +1,2286 @@
+{
+ "generated": "2026-10-06T08:58:10.569Z",
+ "issue": 5919,
+ "n_main": 40,
+ "n_scored": 40,
+ "measure": "fidelity: judged against a human reference, two blind Opus judges (#5695 harness, unchanged); mechanical: exact string counts",
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69e72c6ba409200ea79f484e_00102",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69e9617a2beefe2f6f72ba14_00253",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b2f3b821208ea9dc278c50_00277",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69de10185cedf736edb851e4_00244",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b99e8b6ed9e0490990a274_00179",
+      "op": "drop-negation",
+      "from": "would not",
+      "to": "would",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69d5ac07d0bd3547a5654dcc_00313",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "697b079711cc8928b55ea3a8_00659",
+      "arm": "v13-a",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6991e171b53cae6bb6024476_00216",
+      "arm": "v13-plain",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69bfccd88ab50eb88e8c69fd_00521",
+      "arm": "v13-b",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       2,
+       2
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69e72c6ba409200ea79f484e_00102",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69e9617a2beefe2f6f72ba14_00253",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b2f3b821208ea9dc278c50_00277",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69de10185cedf736edb851e4_00244",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 2,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b99e8b6ed9e0490990a274_00179",
+      "op": "drop-negation",
+      "from": "would not",
+      "to": "would",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69d5ac07d0bd3547a5654dcc_00313",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "697b079711cc8928b55ea3a8_00659",
+      "arm": "v13-a",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6991e171b53cae6bb6024476_00216",
+      "arm": "v13-plain",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69bfccd88ab50eb88e8c69fd_00521",
+      "arm": "v13-b",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 144,
+  "fidelity_exact": 0.792,
+  "within_1": 1,
+  "weighted_kappa": 0.825
+ },
+ "P1_fidelity": {
+  "mean": {
+   "v13-a": 3.9125,
+   "v13-b": 3.9375,
+   "v13-plain": 4.0125
+  },
+  "ci": {
+   "v13-a": [
+    3.6625,
+    4.15
+   ],
+   "v13-b": [
+    3.725,
+    4.1375
+   ],
+   "v13-plain": [
+    3.7625,
+    4.25
+   ]
+  },
+  "plain_minus_v13a": {
+   "n": 40,
+   "delta": 0.1,
+   "ci": [
+    -0.0875,
+    0.2875
+   ]
+  },
+  "v13b_minus_v13a": {
+   "n": 40,
+   "delta": 0.025,
+   "ci": [
+    -0.1125,
+    0.1625
+   ]
+  },
+  "margin": 0.15,
+  "ci_lower_bound_needed": -0.3,
+  "pass_mean": true,
+  "pass_ci": true,
+  "pass": true
+ },
+ "P2_reversals": {
+  "reversal_pages_either_judge": {
+   "v13-a": 3,
+   "v13-b": 2,
+   "v13-plain": 1
+  },
+  "reversal_pages_both_judges": {
+   "v13-a": 2,
+   "v13-b": 2,
+   "v13-plain": 1
+  },
+  "allowed": 4,
+  "pass": true,
+  "pages": [
+   {
+    "id": "69b2f3b821208ea9dc278c50_00277",
+    "lang": "Hebrew",
+    "v13-a": [
+     {
+      "candidate": "He mentions the black ones because the time of the kingdom of Babylon had",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     },
+     {
+      "candidate": "He mentions the black ones because the time of the kingdom of Babylon",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     }
+    ],
+    "v13-b": [],
+    "v13-plain": [
+     {
+      "candidate": "And it mentions the black ones because the time of the Babylonian kingdom had",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     },
+     {
+      "candidate": "And it mentions the black ones because the time of the Babylonian kingdom",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     }
+    ]
+   },
+   {
+    "id": "69de10185cedf736edb851e4_00244",
+    "lang": "Sanskrit",
+    "v13-a": [
+     {
+      "candidate": "and therefore special efforts are required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग"
+     },
+     {
+      "candidate": "and therefore special efforts are required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग इति"
+     }
+    ],
+    "v13-b": [
+     {
+      "candidate": "a specific method of approach is required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग"
+     },
+     {
+      "candidate": "a specific method of approach is required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग इति"
+     }
+    ],
+    "v13-plain": []
+   },
+   {
+    "id": "69e7933580b52390feb18277_00263",
+    "lang": "Arabic",
+    "v13-a": [
+     {
+      "candidate": "let your companions see what befell you",
+      "source_or_reference": "وَكَانَ أَصْحَابُكَ مَا أَصَابَكَ — conceal from thy friends what has befallen thee"
+     }
+    ],
+    "v13-b": [
+     {
+      "candidate": "Then the judge said: \"Do you know his father?\" He replied",
+      "source_or_reference": "لِلْقَاضِي أَوْ تَعْرِفُ أَبَاهُ ... فَقَالَ / 'Then I said to the Kadi'"
+     },
+     {
+      "candidate": "so I did as the judge asked. Then the judge said: \"Do you know his father?\"",
+      "source_or_reference": "فَفَعَلْتُ لِلْقَاضِي أَوْ تَعْرِفُ أَبَاهُ — Then I said to the Kadi"
+     }
+    ],
+    "v13-plain": []
+   }
+  ]
+ },
+ "omission_rate": {
+  "v13-a": 0.325,
+  "v13-b": 0.3625,
+  "v13-plain": 0.15,
+  "plain_minus_v13a": {
+   "n": 40,
+   "delta": -0.175,
+   "ci": [
+    -0.3125,
+    -0.05
+   ]
+  },
+  "v13b_minus_v13a": {
+   "n": 40,
+   "delta": 0.0375,
+   "ci": [
+    -0.1,
+    0.1625
+   ]
+  }
+ },
+ "P3_cost": {
+  "v13-a": {
+   "usd_per_page": 0.00318285625,
+   "output_tokens_per_page": 764.6,
+   "output_tokens_ratio_vs_v13a": 1,
+   "cost_ratio_vs_v13a": 1,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 12,
+     "cost_usd": 0.0014515624999999997,
+     "outputTokens": 557.4166666666666
+    },
+    "gemini-3-flash-preview": {
+     "n": 28,
+     "cost_usd": 0.003924839285714286,
+     "outputTokens": 853.3928571428571
+    }
+   }
+  },
+  "v13-b": {
+   "usd_per_page": 0.0032036312499999996,
+   "output_tokens_per_page": 773.125,
+   "output_tokens_ratio_vs_v13a": 1.0111496207167145,
+   "cost_ratio_vs_v13a": 1.006527156229566,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 12,
+     "cost_usd": 0.0014675625,
+     "outputTokens": 568.0833333333334
+    },
+    "gemini-3-flash-preview": {
+     "n": 28,
+     "cost_usd": 0.003947660714285714,
+     "outputTokens": 861
+    }
+   }
+  },
+  "v13-plain": {
+   "usd_per_page": 0.0028440437499999993,
+   "output_tokens_per_page": 692.4,
+   "output_tokens_ratio_vs_v13a": 0.9055715406748627,
+   "cost_ratio_vs_v13a": 0.8935508004799146,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 12,
+     "cost_usd": 0.0013339375,
+     "outputTokens": 531.5
+    },
+    "gemini-3-flash-preview": {
+     "n": 28,
+     "cost_usd": 0.0034912321428571423,
+     "outputTokens": 761.3571428571429
+    }
+   }
+  }
+ },
+ "P4_leakage": {
+  "note_or_gloss_left_in_plain": {
+   "notes": 0,
+   "gloss": 33,
+   "source_printed_gloss": 30,
+   "source_printed_note": 8
+  },
+  "loops": {
+   "v13-a": 0,
+   "v13-b": 0,
+   "v13-plain": 0
+  },
+  "body_length_as_preregistered": {
+   "v13b_gap": 0.0000701325505205741,
+   "plain_gap": -0.03791165302421573,
+   "allowed_shortfall": 0.0000701325505205741,
+   "pass": false
+  },
+  "body_length_translation_only": {
+   "v13b_gap": -0.00016360085481448294,
+   "plain_gap": -0.03181014120798786,
+   "allowed_shortfall": 0.00016360085481448294,
+   "pass": false
+  },
+  "note": "body_chars (the #5698 bodyNoNotes) drops <note> spans but keeps <gloss> definitions and, in plain, the <image-desc> text that v13 puts inside a <note>; translation_chars drops notes, glosses and image descriptions from every arm alike."
+ },
+ "brackets": {
+  "v13-a": {
+   "total": 3,
+   "with_words": 3,
+   "definition_after_term": 0,
+   "pages": 2
+  },
+  "v13-b": {
+   "total": 6,
+   "with_words": 6,
+   "definition_after_term": 0,
+   "pages": 3
+  },
+  "v13-plain": {
+   "total": 43,
+   "with_words": 43,
+   "definition_after_term": 14,
+   "pages": 12
+  }
+ },
+ "by_judge": {
+  "j1": {
+   "v13-a": 3.95,
+   "v13-b": 4.025,
+   "v13-plain": 4.05,
+   "plain_minus_v13a": {
+    "n": 40,
+    "delta": 0.1,
+    "ci": [
+     -0.1,
+     0.3
+    ]
+   }
+  },
+  "j2": {
+   "v13-a": 3.875,
+   "v13-b": 3.85,
+   "v13-plain": 3.975,
+   "plain_minus_v13a": {
+    "n": 40,
+    "delta": 0.1,
+    "ci": [
+     -0.1,
+     0.3
+    ]
+   }
+  }
+ },
+ "by_model": {
+  "gemini-3.1-flash-lite": {
+   "n": 12,
+   "v13-a": 4.625,
+   "v13-b": 4.375,
+   "v13-plain": 4.375,
+   "plain_minus_v13a": {
+    "n": 12,
+    "delta": -0.25,
+    "ci": [
+     -0.5833333333333334,
+     0.08333333333333333
+    ]
+   }
+  },
+  "gemini-3-flash-preview": {
+   "n": 28,
+   "v13-a": 3.607142857142857,
+   "v13-b": 3.75,
+   "v13-plain": 3.857142857142857,
+   "plain_minus_v13a": {
+    "n": 28,
+    "delta": 0.25,
+    "ci": [
+     0.05357142857142857,
+     0.44642857142857145
+    ]
+   }
+  }
+ },
+ "by_lang": {
+  "Latin": {
+   "n": 8,
+   "v13-a": 4.5625,
+   "v13-b": 4.25,
+   "v13-plain": 4.0625
+  },
+  "Greek": {
+   "n": 6,
+   "v13-a": 3.5833333333333335,
+   "v13-b": 3.6666666666666665,
+   "v13-plain": 3.5833333333333335
+  },
+  "vernaculars": {
+   "n": 6,
+   "v13-a": 4.583333333333333,
+   "v13-b": 4.416666666666667,
+   "v13-plain": 4.75
+  },
+  "Hebrew/Aramaic": {
+   "n": 5,
+   "v13-a": 3.4,
+   "v13-b": 3.6,
+   "v13-plain": 3.5
+  },
+  "Arabic/Persian": {
+   "n": 7,
+   "v13-a": 3.5,
+   "v13-b": 3.5,
+   "v13-plain": 3.642857142857143
+  },
+  "Sanskrit/Pali": {
+   "n": 5,
+   "v13-a": 3.7,
+   "v13-b": 4.1,
+   "v13-plain": 4.4
+  },
+  "Chinese": {
+   "n": 3,
+   "v13-a": 3.6666666666666665,
+   "v13-b": 4,
+   "v13-plain": 4.333333333333333
+  }
+ },
+ "decision": {
+  "P1": true,
+  "P2": true,
+  "rule": "P1 and P2 pass: recommend note-free translation plus a separate, on-demand notes step"
+ },
+ "per_page": [
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b2f3b821208ea9dc278c50_00277",
+   "lang": "Hebrew",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0.5,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "He mentions the black ones because the time of the kingdom of Babylon had",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     },
+     {
+      "candidate": "He mentions the black ones because the time of the kingdom of Babylon",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 2.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 2
+    },
+    "omission": 0.5,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "And it mentions the black ones because the time of the Babylonian kingdom had",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     },
+     {
+      "candidate": "And it mentions the black ones because the time of the Babylonian kingdom",
+      "source_or_reference": "He does not mention the red horses, for the Babylonian monarchy had already passed"
+     }
+    ]
+   }
+  },
+  {
+   "id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "and therefore special efforts are required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग"
+     },
+     {
+      "candidate": "and therefore special efforts are required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग इति"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "a specific method of approach is required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग"
+     },
+     {
+      "candidate": "a specific method of approach is required",
+      "source_or_reference": "ततश्च न तासु विशेषाभियोग इति"
+     }
+    ]
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69d5ac07d0bd3547a5654dcc_00313",
+   "lang": "Arabic",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6991e171b53cae6bb6024476_00216",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69bfccd88ab50eb88e8c69fd_00521",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6976f5fb7b4366f057e0e974_00631",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b18a89c4be2cdd0edc810d_00135",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b2ff9f5545150b61b48a36_00075",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6953e46f77f38f6761bee559_00040",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "697947a145e954e8a877872d_00218",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6952872cab34727b1f04d284_00499",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69bd9c796120d54bd036f318_00389",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69affc54b3b18e354e59b7d8_00198",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69938e26d5a98fd66f4307b0_00136",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69bd9d6a6120d54bd0376a04_00060",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69920bff01d3dcea63458842_00389",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69557433f63a75710917330c_00146",
+   "lang": "Greek",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a26c3beaad44c98627cb64a_00013",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b51e6947b06ecd5818faf1_00131",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69a6827ed5bf106c72bb8d6f_00286",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "699047e512d83c216b7e8c3f_00086",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69520588ab34727b1f042d0c_00165",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b185e9c4be2cdd0edc464c_00489",
+   "lang": "Dutch",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6990630be7b7642c081de08b_00353",
+   "lang": "Aramaic",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e7933580b52390feb18277_00263",
+   "lang": "Arabic",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 2.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 0,
+    "reversal_quotes": [
+     {
+      "candidate": "let your companions see what befell you",
+      "source_or_reference": "وَكَانَ أَصْحَابُكَ مَا أَصَابَكَ — conceal from thy friends what has befallen thee"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "Then the judge said: \"Do you know his father?\" He replied",
+      "source_or_reference": "لِلْقَاضِي أَوْ تَعْرِفُ أَبَاهُ ... فَقَالَ / 'Then I said to the Kadi'"
+     },
+     {
+      "candidate": "so I did as the judge asked. Then the judge said: \"Do you know his father?\"",
+      "source_or_reference": "فَفَعَلْتُ لِلْقَاضِي أَوْ تَعْرِفُ أَبَاهُ — Then I said to the Kadi"
+     }
+    ]
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69908ac1c0656c0b3bcc0813_00050",
+   "lang": "Arabic",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a2198371994d1df1e5e0235_00118",
+   "lang": "Arabic",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 2.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 2
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e80670fdad300064d9ef9d_00599",
+   "lang": "Sanskrit",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "lang": "Pali",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e792f880b52390feb17389_00344",
+   "lang": "Chinese",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  }
+ ]
+}

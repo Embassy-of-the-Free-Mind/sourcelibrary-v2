@@ -1,0 +1,50 @@
+{
+ "refused_requests": [
+  {
+   "id": "69b525b56be6046083030af0_00213",
+   "lang": "Hebrew",
+   "arm": "flash",
+   "request": "arms",
+   "finishReason": "RECITATION"
+  },
+  {
+   "id": "69c1bb558522835be845f021_00073",
+   "lang": "Hebrew",
+   "arm": "lite2",
+   "request": "arms",
+   "finishReason": "RECITATION"
+  },
+  {
+   "id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "arm": "lite",
+   "request": "arms",
+   "finishReason": "RECITATION"
+  },
+  {
+   "id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "arm": "lite",
+   "request": "arms-retry",
+   "finishReason": "RECITATION"
+  },
+  {
+   "id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "arm": "lite2",
+   "request": "arms",
+   "finishReason": "RECITATION"
+  },
+  {
+   "id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "arm": "lite2",
+   "request": "arms-retry",
+   "finishReason": "RECITATION"
+  }
+ ],
+ "pages_without_a_lite_flash_pair": [
+  "69c1ba9b8522835be8459ac5_42"
+ ],
+ "gemini_cost_usd_batch": 0.2293
+}

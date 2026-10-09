@@ -602,6 +602,13 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
+      {/* Crawl path to every member: the full A–Z list (#2266). */}
+      <p className="max-w-4xl mx-auto px-6 md:px-12 my-8 text-sm text-center">
+        <Link href="/collections/mycology/catalog" className="underline hover:opacity-70">
+          All books in this collection, as a list
+        </Link>
+      </p>
+
       <SignUpCTA
         bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"
         bgAttribution={{

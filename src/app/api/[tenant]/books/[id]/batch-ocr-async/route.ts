@@ -9,7 +9,7 @@ import { PROMPT_VERSION, liftOcrTags, parseDetectedImages, parseMultiPageOcr } f
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
-import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
@@ -702,7 +702,7 @@ export const GET = withAuth(async (request, session, context) => {
           for (let ri = 0; ri < responses.length; ri++) {
             const response = responses[ri];
             const candidate = response.response?.candidates?.[0];
-            const responseText = candidate?.content?.parts?.[0]?.text;
+            const responseText = candidateText(candidate);
             if (!responseText) {
               console.warn(`[batch-ocr] Response ${ri}: empty (no text in candidate)`);
               failCount++;
@@ -750,7 +750,7 @@ export const GET = withAuth(async (request, session, context) => {
             }
 
             const candidate = response.response?.candidates?.[0];
-            const text = candidate?.content?.parts?.[0]?.text;
+            const text = candidateText(candidate);
             if (!text) {
               failCount++;
               continue;

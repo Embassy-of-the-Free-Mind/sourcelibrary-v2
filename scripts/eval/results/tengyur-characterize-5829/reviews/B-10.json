@@ -1,0 +1,99 @@
+[
+{"id": "P9M6I", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཐ་སྙད་ཀྱི་རྒྱུ་ཐ་དད་པ", "english": "distinct causes of ultimate designations",
+   "why": "tha snyad is conventional designation (vyavahāra); 'ultimate' inverts the term.",
+   "fix": {"find": "ultimate designations", "replace": "conventional designations"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སོ་སོའི་སྐྱེ་བོ་མངོན་པའི་ང་རྒྱལ་ཅན་གཞན་རྣམས", "english": "ordinary people who possess pride",
+   "why": "mngon pa'i nga rgyal is abhimāna, the conceit of having attained what one has not, not pride in general."}
+ ],
+ "note": "Faithful list-by-list rendering of the commentary; one term inverted (conventional rendered as ultimate)."},
+{"id": "P176H", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "དེ་གནས་པས་ལྡོག་པའམ། རབ་ཏུ་འབྱུང་བ་མེད་པ", "english": "when the substance remains, its cessation or its new arising would be stated as being the substance",
+   "why": "The Tibetan says that since the substance persists there is no cessation or arising, so how could these be said to be it; the 'there is none' is lost."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཐ་དད་པ་གང་ཡིན་པ་དེ་ཉིད་ཀྱི་རང་བཞིན་དུ་གྱུར་པ་དེ་ཉིད་དངོས་པོའི་ཐ་དད་པའི་མཚན་ཉིད་ཡིན་ཏེ", "english": "That which is distinct is indeed the nature of that very thing; this is the definition of a distinct entity",
+   "why": "One clause: having become of a distinct nature is itself the defining mark of a difference between things; the English splits it into two claims."}
+ ],
+ "note": "The Sāṃkhya pariṇāma refutation is followed well overall; two sentences are garbled."},
+{"id": "PUPWI", "score": 3, "verdict": "work",
+ "errors": [
+  {"type": "omission", "confidence": "high",
+   "tibetan": "དེ་བཞིན་གཤེགས་པ་ཡང་ཡིན་པས་དེ་བཞིན་གཤེགས་པ་ཐམས་ཅད་དེ། དེ་དག་གི་སྐུ་དང་གསུང་དང་ཐུགས་ཞེས་ཞེས་པ་ནི་གསང་བ་གསུམ་བསྡུས་པ་ལ།", "english": "which are the body, speech, and mind of all tathāgatas.",
+   "why": "The gloss 'they are all and they are tathāgatas, hence all tathāgatas; their body, speech and mind sums up the three secrets' is not translated.",
+   "fix": {"find": "of all tathāgatas. The bhagas", "replace": "of all tathāgatas. They are all, and they are tathāgatas, hence \"all tathāgatas\"; \"their body, speech, and mind\" sums up the three secrets. The bhagas"}},
+  {"type": "addition", "confidence": "high",
+   "tibetan": "ཡང་དེ་ནི་བཅོམ་ལྡན་འདས་རྡོ་རྗེ་འཆང་གི་གཟུགས་", "english": "referring to Locanā and so forth",
+   "why": "No mention of Locanā or other goddesses in the Tibetan; it says the bhaga is the form of the Blessed One Vajradhara.",
+   "fix": {"find": "‍—referring to Locanā and so forth‍—", "replace": " "}}
+ ],
+ "note": "The nidāna gloss is mostly right, but the last sentence drops the commentary's analysis and adds goddesses not in the text."},
+{"id": "P0AP9", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "A faithful rendering of the erysipelas treatments; the plant identifications are defensible glosses."},
+{"id": "P4TD7", "score": 3, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྲིད་པ་བརྒྱད་པར་ངེས་པར་འགྱུར་བའི་ལས", "english": "those that lead to a certain eighth existence",
+   "why": "nges par 'gyur ba means karma that necessarily leads to an eighth existence, not 'a certain' one."},
+  {"type": "omission", "confidence": "high",
+   "tibetan": "ཕ་མ་ནི་དེ་དག་གི་ལུས་མ་ཚང་བའི་བདག་པོར་འགྱུར་བའི་", "english": "Because the parents are the masters of the body's development",
+   "why": "The parents are the authors of their (the eunuchs') defective body; the defectiveness, which is the point of the argument, is lost, and the two reasons are merged into a conditional.",
+   "fix": {"find": "Because the parents are the masters of the body's development, if there is little love, there is little benefit.", "replace": "Because the parents are the authors of their defective bodies, and because their affection is slight, the benefit received from the parents is slight."}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "མེད་པར་བྱས་པས་མཚམས་མེད་པའི་ཁ་ན་མ་ཐོ་བས་རེག་པར་འགྱུར་བ", "english": "that would prevent them from being touched by the downfall of immediate retribution",
+   "why": "The Tibetan says it is by destroying that great shame and conscience that one is touched by the ānantarya fault; it does not say shame prevents it."}
+ ],
+ "note": "Good rendering of the Kośa discussion of ānantarya; the eunuch argument at the end is weakened."},
+{"id": "P1RPH", "score": 3, "verdict": "work",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཀྱི་རྒྱུ་ཡིས་འབྲས་བུ་སྐྱེད་པར་མི་བྱེད་དེ་ཕྱིར་འབྲས།", "english": "The cause does not produce an effect; therefore, the effect is not something to be known.",
+   "why": "The root verse says 'if YOUR (the realist's) cause does not produce the effect'; the English states it as Candrakīrti's own unconditional claim."},
+  {"type": "structure", "confidence": "high",
+   "tibetan": "རྣམ་པར་རྟོག་པའི་ཡུལ་དུ་འགྱུར་བ་དེ་ལ་ནི་བསམ་དུ་མེད་པ་ཉིད་དེ", "english": "they become objects of conceptual thought and are thus inconceivable",
+   "why": "bsam du med pa says that, for one who holds things to be illusion-like, this analysis has no place; it does not call the things inconceivable.",
+   "fix": {"find": "they become objects of conceptual thought and are thus inconceivable.", "replace": "they become objects of conceptual thought; for such a person this analysis has no place."}},
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཅི་རྒྱུས་འབྲས་བུ་ཕྲད་ནས་སྐྱེད་པར་བྱེད་དམ། འོན་ཏེ་མ་ཕྲད་པར་ཡིན་ཞེས་གང་སྨྲས་པས", "english": "Since I have said this, the same challenge and investigation applies to you as well.",
+   "why": "The opponent says: as for what YOU said ('does the cause produce the effect having met it or not?'), the same objection applies to you; the English puts the question in the opponent's mouth and has 'I' say it.",
+   "fix": {"find": "some respond by saying: \"Does the cause produce the effect by meeting it, or without meeting it?\" Since I have said this, the same challenge and investigation applies to you as well.", "replace": "some respond: \"As for what you said ('Does the cause produce the effect by meeting it, or without meeting it?'), the same challenge and investigation applies to you as well.\""}}
+ ],
+ "note": "Madhyamakāvatāra 6.170-172 with the bhāṣya; the argument's speakers and the key point of 6.171 are blurred."},
+{"id": "P4U2D", "score": 3, "verdict": "work",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "རྒྱུད་ཕྱི་མ་ལས་བཤད་དོ", "english": "*Explanatory Tantra*",
+   "why": "rgyud phyi ma is the Later Tantra (Uttaratantra) of the Guhyasamāja, not an 'explanatory tantra' (bshad rgyud).",
+   "fix": {"find": "*Explanatory Tantra*", "replace": "*Later Tantra*"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "འདིའི་སྐུ་རྡོ་རྗེ་ལ་སོགས་པ་དང་ཡེ་ཤེས་སེམས་དཔའི་ཐུགས་ཀར་འཁོར་ལོ་ལ་སོགས་པ་ལ་དགོད་", "english": "Because one should place the circle and so forth in the heart of the Wisdom Being (jñānasattva) and the Vajra Body and so forth",
+   "why": "What is placed is the Body-vajra and so on; the wheel and so on in the jñānasattva's heart are where it is placed. The English swaps the object and the location."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དེ་ཕྱིར་དེ་རྣམས་སྤྲོ་སོགས་གསུམ་མ་ཡིན།", "english": "Therefore, those three are not merely emanation and so forth.",
+   "why": "The others' view is given in verse, but the English turns it into prose and adds 'merely'; the verse flatly denies that they are the three, emanation and the rest."}
+ ],
+ "note": "Usable, but a title is mistranslated and the placement gloss and the quoted verse of the others' view are confused."},
+{"id": "P95SY", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "ཐམས་ཅད་ཀྱང་བདག་ཏུ་ང་རྒྱལ་བའི་བདག་ཉིད་ཅན་ནི་ས་ལི་ཛའོ།", "english": "These five together constitute individual existence (ātman) that stirs the sense of self.",
+   "why": "The Tibetan glosses the song word sālija as all of these taken with the conceit of self; the word being glossed is not translated."}
+ ],
+ "note": "A careful word-by-word gloss of the Apabhraṃśa song that tracks the Tibetan closely."},
+{"id": "PBCYQ", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "A faithful rendering of the Vairocana sādhana steps, deity iconography and seats."},
+{"id": "PFG9L", "score": 3, "verdict": "light",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཟབ་པར་འདུ་ཤེས་ཤིང་རྣམ་པར་རྟོག་", "english": "If one perceives them as profound without conceptualizing them",
+   "why": "med na negates both: if one has no perception of them as profound and does not conceptualize, one practises; the parallel passage on 'unfathomable' confirms this.",
+   "fix": {"find": "If one perceives them as profound without conceptualizing them", "replace": "If one has no perception of them as profound and does not conceptualize them"}}
+ ],
+ "note": "Otherwise accurate; one negation is lost in the first gloss, which inverts the point."}
+]

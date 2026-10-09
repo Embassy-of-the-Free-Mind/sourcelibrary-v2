@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/bornitz3",
+  "edition": "Tractatus politicus De Rerum Sufficientia In Rep. et Civitate procuranda. — Frankfurt (Main), 1625.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "14/14",
+    "pb_aligned_pages": "14/14"
+  },
+  "origin": "library",
+  "book_id": "6a4388a857a09c2c0fcc46bb",
+  "page_number": 8,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 8586,
+    "to_char": 11481,
+    "overlap": 0.775,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'quod omnibus suis partibus constet'; ends 'sim. de' (ref carries 'passim. de physicis, Metallorum, ex' padding); header EPISTOLA II. skipped; Google watermark.",
+    "leaf_language": "lat (a few Greek words)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:18.476Z",
+  "text_location": "repo",
+  "text_sha256": "03466460917ac6e8609b09de7c0c4994d5ec1744cdb76bd814bbb1d0aa794ed7",
+  "unit": {
+    "chars": 2895
+  },
+  "stratum": "latin-period-5126"
+}

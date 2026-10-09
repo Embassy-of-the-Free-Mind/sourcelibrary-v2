@@ -1,0 +1,321 @@
+{
+ "generated": "2026-10-05T11:14:53.972Z",
+ "prices_per_page": {
+  "flash_reocr": 0.00283,
+  "lite_translate": 0.00102,
+  "kraken_translate": 0.00095
+ },
+ "cuts": {
+  "Greek print ≤1699 | all": {
+   "n": 11,
+   "served": 2.68,
+   "flash": 3.27,
+   "kraken": 3.5,
+   "lift_flash": 0.59,
+   "lift_flash_ci": [
+    0,
+    1.18
+   ],
+   "lift_kraken": 0.82,
+   "lift_kraken_ci": [
+    0.05,
+    1.45
+   ],
+   "kraken_minus_flash": 0.23,
+   "kraken_minus_flash_ci": [
+    -0.32,
+    0.73
+   ]
+  },
+  "Greek print ≤1699 | served lite": {
+   "n": 4,
+   "served": 2,
+   "flash": 3.63,
+   "kraken": 3.5,
+   "lift_flash": 1.63,
+   "lift_flash_ci": [
+    1.25,
+    2
+   ],
+   "lift_kraken": 1.5,
+   "lift_kraken_ci": [
+    1,
+    2
+   ],
+   "kraken_minus_flash": -0.12,
+   "kraken_minus_flash_ci": [
+    -1,
+    0.75
+   ]
+  },
+  "Greek print ≤1699 | served flash": {
+   "n": 7,
+   "served": 3.07,
+   "flash": 3.07,
+   "kraken": 3.5,
+   "lift_flash": 0,
+   "lift_flash_ci": [
+    -0.5,
+    0.57
+   ],
+   "lift_kraken": 0.43,
+   "lift_kraken_ci": [
+    -0.57,
+    1.29
+   ],
+   "kraken_minus_flash": 0.43,
+   "kraken_minus_flash_ci": [
+    -0.29,
+    0.93
+   ]
+  },
+  "Persian print | all": {
+   "n": 7,
+   "served": 2.86,
+   "flash": 3.57,
+   "kraken": 1.86,
+   "lift_flash": 0.71,
+   "lift_flash_ci": [
+    0.14,
+    1.36
+   ],
+   "lift_kraken": -1,
+   "lift_kraken_ci": [
+    -1.71,
+    -0.29
+   ],
+   "kraken_minus_flash": -1.71,
+   "kraken_minus_flash_ci": [
+    -1.93,
+    -1.43
+   ]
+  },
+  "Persian print | served lite": {
+   "n": 3,
+   "served": 3,
+   "flash": 3.83,
+   "kraken": 2,
+   "lift_flash": 0.83,
+   "lift_flash_ci": [
+    0,
+    2
+   ],
+   "lift_kraken": -1,
+   "lift_kraken_ci": [
+    -2,
+    0
+   ],
+   "kraken_minus_flash": -1.83,
+   "kraken_minus_flash_ci": [
+    -2,
+    -1.5
+   ]
+  },
+  "Persian print | served flash": {
+   "n": 4,
+   "served": 2.75,
+   "flash": 3.38,
+   "kraken": 1.75,
+   "lift_flash": 0.63,
+   "lift_flash_ci": [
+    0,
+    1.5
+   ],
+   "lift_kraken": -1,
+   "lift_kraken_ci": [
+    -2,
+    0
+   ],
+   "kraken_minus_flash": -1.62,
+   "kraken_minus_flash_ci": [
+    -2,
+    -1.25
+   ]
+  },
+  "Arabic print | all": {
+   "n": 8,
+   "served": 3.19,
+   "flash": 3.69,
+   "kraken": 2.69,
+   "lift_flash": 0.5,
+   "lift_flash_ci": [
+    -0.06,
+    1.13
+   ],
+   "lift_kraken": -0.5,
+   "lift_kraken_ci": [
+    -1.25,
+    0.13
+   ],
+   "kraken_minus_flash": -1,
+   "kraken_minus_flash_ci": [
+    -1.81,
+    -0.25
+   ]
+  },
+  "Arabic print | served lite": {
+   "n": 8,
+   "served": 3.19,
+   "flash": 3.69,
+   "kraken": 2.69,
+   "lift_flash": 0.5,
+   "lift_flash_ci": [
+    -0.06,
+    1.13
+   ],
+   "lift_kraken": -0.5,
+   "lift_kraken_ci": [
+    -1.25,
+    0.13
+   ],
+   "kraken_minus_flash": -1,
+   "kraken_minus_flash_ci": [
+    -1.81,
+    -0.25
+   ]
+  },
+  "Arabic-script print | all": {
+   "n": 15,
+   "served": 3.03,
+   "flash": 3.63,
+   "kraken": 2.3,
+   "lift_flash": 0.6,
+   "lift_flash_ci": [
+    0.2,
+    1.03
+   ],
+   "lift_kraken": -0.73,
+   "lift_kraken_ci": [
+    -1.3,
+    -0.2
+   ],
+   "kraken_minus_flash": -1.33,
+   "kraken_minus_flash_ci": [
+    -1.8,
+    -0.83
+   ]
+  },
+  "Arabic-script print | served lite": {
+   "n": 11,
+   "served": 3.14,
+   "flash": 3.73,
+   "kraken": 2.5,
+   "lift_flash": 0.59,
+   "lift_flash_ci": [
+    0.09,
+    1.14
+   ],
+   "lift_kraken": -0.64,
+   "lift_kraken_ci": [
+    -1.27,
+    -0.09
+   ],
+   "kraken_minus_flash": -1.23,
+   "kraken_minus_flash_ci": [
+    -1.82,
+    -0.59
+   ]
+  },
+  "Arabic-script print | served flash": {
+   "n": 4,
+   "served": 2.75,
+   "flash": 3.38,
+   "kraken": 1.75,
+   "lift_flash": 0.63,
+   "lift_flash_ci": [
+    0,
+    1.5
+   ],
+   "lift_kraken": -1,
+   "lift_kraken_ci": [
+    -2,
+    0
+   ],
+   "kraken_minus_flash": -1.62,
+   "kraken_minus_flash_ci": [
+    -2,
+    -1.25
+   ]
+  }
+ },
+ "per_dollar": {
+  "Greek print ≤1699": {
+   "flash_usd_per_1k_pages": 3.85,
+   "kraken_usd_per_1k_pages": 0.95,
+   "lift_flash": 0.59,
+   "lift_kraken": 0.82,
+   "page_points_per_1k_usd_flash_thousands": 153,
+   "page_points_per_1k_usd_kraken_thousands": 863
+  },
+  "Persian print": {
+   "flash_usd_per_1k_pages": 3.85,
+   "kraken_usd_per_1k_pages": 0.95,
+   "lift_flash": 0.71,
+   "lift_kraken": -1,
+   "page_points_per_1k_usd_flash_thousands": 184,
+   "page_points_per_1k_usd_kraken_thousands": -1053
+  },
+  "Arabic print": {
+   "flash_usd_per_1k_pages": 3.85,
+   "kraken_usd_per_1k_pages": 0.95,
+   "lift_flash": 0.5,
+   "lift_kraken": -0.5,
+   "page_points_per_1k_usd_flash_thousands": 130,
+   "page_points_per_1k_usd_kraken_thousands": -526
+  },
+  "Arabic-script print": {
+   "flash_usd_per_1k_pages": 3.85,
+   "kraken_usd_per_1k_pages": 0.95,
+   "lift_flash": 0.6,
+   "lift_kraken": -0.73,
+   "page_points_per_1k_usd_flash_thousands": 156,
+   "page_points_per_1k_usd_kraken_thousands": -768
+  }
+ },
+ "wall_clock": {
+  "greek_cllg": {
+   "n": 11,
+   "mean": 307.46,
+   "median": 227.4,
+   "hours_per_10k_one_process": 854
+  },
+  "openiti": {
+   "n": 15,
+   "mean": 111.57,
+   "median": 106.9,
+   "hours_per_10k_one_process": 310
+  },
+  "conditions": "two Kraken processes side by side (one Greek, one Arabic-script), nice 19, box load average 8–13 over 8 cores shared with every worker"
+ },
+ "plan": {
+  "Greek": {
+   "lite_read_pages": 123511,
+   "winner": "flash re-read",
+   "flash_reocr_plus_lite_usd": 476,
+   "if_kraken_usd": 117,
+   "if_kraken_cpu_days_one_process": 440
+  },
+  "Persian": {
+   "lite_read_pages": 6222,
+   "winner": "flash re-read",
+   "flash_reocr_plus_lite_usd": 24,
+   "if_kraken_usd": 6,
+   "if_kraken_cpu_days_one_process": 8
+  },
+  "Sanskrit": {
+   "lite_read_pages": 49278,
+   "winner": "flash re-read",
+   "flash_reocr_plus_lite_usd": 190,
+   "if_kraken_usd": null,
+   "if_kraken_cpu_days_one_process": null
+  },
+  "Pali": {
+   "lite_read_pages": 7479,
+   "winner": "flash re-read",
+   "flash_reocr_plus_lite_usd": 29,
+   "if_kraken_usd": null,
+   "if_kraken_cpu_days_one_process": null
+  }
+ },
+ "plan_total_usd": 719
+}

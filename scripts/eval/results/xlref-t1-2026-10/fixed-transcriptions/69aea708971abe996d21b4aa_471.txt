@@ -1,0 +1,38 @@
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>431</page-num>
+<header>Utriuſque Fortunæ. Lib. II.</header>
+<meta>catchword: Si quis</meta>
+
+plectere, atque illi dicito: Hæc quidem, ô regina, pro te volens patior: tu me in integrum reſtitues, aut certè una mihi pro omnibus ſatis es. Tu me ſolâ ſinu pio refove, ſic non famæ tantum, ſed vitæ quoque damna non ſentiam.
+
+*Do.* Vulgò paſſim in triviis laceror
+
+*Ra.* Boni conſule. Notum te vulgus faciet, clarum virtus, conſcientia ſecurum.
+
+---
+
+### De quæſito ex indignis laudibus pudore.
+## D I A L. XXVI.
+
+> Parcè laudato, nam cùm laudaris iniquè
+> Si rurſus damnes, pars levitatis erit.
+
+*Do.* Laudasſe arguor indignum.
+<image-desc size="small" type="decorative" significance="low">Large ornamental initial L at the start of the dialogue response.</image-desc>
+*Ra.* Malum quidem quod eſt, bonâ ſæpe oritur radice. Boni enim, & innocui, quales ipſi ſunt, tales alios opinantur. Hinc ad laudandum, æquo etiam proniores ſunt: & quamvis indignum laudare malum, fatear: vituperare tamen immeritum multò eſt pejus.
+
+*Do.* Laudavi indignum.
+
+*Ra.* Si id ſciens reprehenſibilis: at ſi ignorans, excuſabilis. Minus etſi malum falli, quàm fallere. Falli enim alienum; fallere autem, proprium fallentis eſt crimen.
+
+*Do.* Aliena laus in meam vergit infamiam.
+
+*Ra.* Immo quidem tua vel culpa vel ignorantia. Ex alieno enim, ut laus ſic infamia nulla eſt.
+
+*Do.* Laudasſe indignum, valde doleo.
+
+*Ra.* Vide ergò ne id ipſum ſæpè doleas. Cave ne temere ad laudandum vituperandúmque profilias. Eſt enim utriuſque rei libido: & (ut dicam propriè) morbus, ac pruritus quidam linguæ mobilis & quietis inſciæ: cujus frenum, ac cuſtodia inter opera perfectionis eximiæ numerantur, dicente Scripturâ:
+
+<vocab>Fortuna, laus, infamia, pudor, virtus, conscientia, Scriptura</vocab>

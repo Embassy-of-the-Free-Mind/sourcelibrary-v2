@@ -1,0 +1,47 @@
+{
+ "id": "69aea708971abe996d21b4aa_00471",
+ "image_legible": true,
+ "ocr_word_errors": 3,
+ "ocr_words_approx": 185,
+ "ocr_errors": [
+  {
+   "image": "Do. LAudasse arguor indignum. Ra. Malum quidem quod est",
+   "ocr": "*Do.* Laudasſe arguor indignum. … *Ra.* Laudasſe arguor indignum. Malum quidem",
+   "effect_on_english": "spurious sentence in Reason's reply: 'You are accused of having praised someone unworthy.'"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "'to be deceived is foreign to one's nature' for 'Falli enim alienum' (another's doing)",
+   "cause": "translation",
+   "image": "Falli enim alienum ; fallere autem, proprium fallentis est crimen",
+   "ocr": "Falli enim alienum; fallere autem, proprium fallentis eſt crimen",
+   "english": "For to be deceived is foreign to one's nature"
+  },
+  {
+   "finding": "'even more prone to praise' drops 'aequo' (than is just)",
+   "cause": "translation",
+   "image": "Hinc ad laudandum, æquo etiam proniores sunt",
+   "ocr": "Hinc ad laudandum, æquo etiam proniores ſunt",
+   "english": "Hence, they are even more prone to praise"
+  },
+  {
+   "finding": "'You alone cherish me' turns imperative 'Tu me sola ... refove' into a statement",
+   "cause": "translation",
+   "image": "Tu me solâ sinu pio refove, sic non famæ tantum",
+   "ocr": "Tu me ſolâ ſinu pio refove, ſic non famæ tantum",
+   "english": "You alone cherish me with a pious bosom"
+  },
+  {
+   "finding": "(not flagged by judges) Reason's reply opens with a sentence not on the page",
+   "cause": "ocr_misread",
+   "image": "Ra. Malum quidem quod est, bonâ sæpe oritur radice",
+   "ocr": "*Ra.* Laudasſe arguor indignum. Malum quidem quod eſt",
+   "english": "You are accused of having praised someone unworthy."
+  }
+ ],
+ "share_of_served_error_from_ocr": "some",
+ "fixed_transcription_written": true,
+ "note": "Clean 1649 print; OCR is right except that it repeats 'Laudasse arguor indignum' after 'Ra.' (the drop-initial L line belongs only to Do.), which the English renders as an extra sentence. All three judge findings are minor and sit where OCR = image."
+}

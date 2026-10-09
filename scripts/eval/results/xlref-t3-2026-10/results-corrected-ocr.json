@@ -1,0 +1,2854 @@
+{
+ "generated": "2026-10-03T20:56:18.478Z",
+ "packet": "/data/scratch/sl/xlref-t3-work/packet-fix",
+ "seed_bootstrap": 5695,
+ "seed_packet": 5696,
+ "input_sha": "44f6b8f79b901503",
+ "n_items": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69aebfa4c337b1e6a4d582f3_00161",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69a5d8d3a63a00aaae8aab0d_00322",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69ef3d8c72c1376fdf2b04e9_00105",
+      "arm": "L1",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69aebfa4c337b1e6a4d582f3_00161",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69a5d8d3a63a00aaae8aab0d_00322",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69ef3d8c72c1376fdf2b04e9_00105",
+      "arm": "L1",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "measure": "judged against a human reference (fidelity of meaning; the reference guides meaning, not wording)",
+ "arms": {
+  "L1": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 3.833,
+    "ci": [
+     3.333,
+     4.333
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 3.833,
+     "j2": 3.833
+    }
+   },
+   "omission": {
+    "rate": 0.333,
+    "ci": [
+     0,
+     0.667
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0.167,
+    "ci": [
+     0,
+     0.5
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.833,
+    "ci": [
+     0.5,
+     1
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.167,
+     "ci": [
+      0,
+      0.5
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.417,
+     "ci": [
+      0.083,
+      0.75
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.667,
+     "ci": [
+      0.333,
+      1
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 9,
+    "starts_later": 2,
+    "ends_earlier": 0,
+    "extends_before": 1,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "T8": 3,
+    "mistranslation": 18,
+    "terminology": 7,
+    "name": 2,
+    "T9": 4
+   },
+   "reversals": [
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j1",
+     "candidate": "that nature and talent do not have the primary roles",
+     "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+    },
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j2",
+     "candidate": "that is, that nature and talent do not have the primary roles",
+     "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+    }
+   ]
+  },
+  "L1_fix": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 4,
+    "ci": [
+     3.333,
+     4.667
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    }
+   },
+   "omission": {
+    "rate": 0.333,
+    "ci": [
+     0,
+     0.667
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0.333,
+    "ci": [
+     0,
+     0.667
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.75,
+    "ci": [
+     0.417,
+     1
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.333,
+     "ci": [
+      0,
+      0.667
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.333,
+     "ci": [
+      0,
+      0.667
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.583,
+     "ci": [
+      0.25,
+      0.917
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 10,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 2,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "T8": 4,
+    "mistranslation": 7,
+    "T9": 5,
+    "terminology": 3
+   },
+   "reversals": [
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j1",
+     "candidate": "that nature and talent do not have the primary roles",
+     "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+    },
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j2",
+     "candidate": "that nature and talent do not have the primary roles, especially regarding invention",
+     "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+    },
+    {
+     "id": "69790e9eeb0dcfd399123423_00297",
+     "judge": "j1",
+     "candidate": "through the means with God in this unity, we are received",
+     "source_or_reference": "son-|der middel met Godt (prev tail + page: 'without means')"
+    },
+    {
+     "id": "69790e9eeb0dcfd399123423_00297",
+     "judge": "j2",
+     "candidate": "through the means with God in this unity, we are received",
+     "source_or_reference": "vereenicht son-der middel met Godt (reference: 'united with God without means')"
+    }
+   ]
+  },
+  "F0": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 3.917,
+    "ci": [
+     3.333,
+     4.5
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4,
+     "j2": 3.833
+    }
+   },
+   "omission": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0.333,
+    "ci": [
+     0,
+     0.667
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.833,
+    "ci": [
+     0.5,
+     1
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.083,
+     "ci": [
+      0,
+      0.25
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.833,
+     "ci": [
+      0.667,
+      1
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.833,
+     "ci": [
+      0.5,
+      1
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 12,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "T8": 5,
+    "mistranslation": 6,
+    "terminology": 5,
+    "name": 2,
+    "T6": 1
+   },
+   "reversals": [
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j1",
+     "candidate": "namely that nature and genius do not play the primary roles",
+     "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+    },
+    {
+     "id": "69aebfa4c337b1e6a4d582f3_00161",
+     "judge": "j2",
+     "candidate": "namely that nature and genius do not play the primary roles",
+     "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+    },
+    {
+     "id": "69a5d8d3a63a00aaae8aab0d_00322",
+     "judge": "j1",
+     "candidate": "Though it thunders, lightens, and rains within ten miles of the city",
+     "source_or_reference": "daer 't op 10. mylen weghes noch dondert/ bliremt noch regent"
+    },
+    {
+     "id": "69a5d8d3a63a00aaae8aab0d_00322",
+     "judge": "j2",
+     "candidate": "Though it thunders, lightens, and rains within ten miles of the city",
+     "source_or_reference": "daer 't op 10. mylen weghes noch dondert/ bliremt noch regent"
+    }
+   ]
+  },
+  "F0_fix": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 4.833,
+    "ci": [
+     4.667,
+     5
+    ],
+    "median": 5,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.833,
+     "j2": 4.833
+    }
+   },
+   "omission": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.833,
+    "ci": [
+     0.5,
+     1
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.75,
+     "ci": [
+      0.417,
+      1
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.833,
+     "ci": [
+      0.5,
+      1
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 12,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "terminology": 1,
+    "T6": 1
+   },
+   "reversals": []
+  }
+ },
+ "strata": {
+  "canonical:non-canonical": {
+   "L1": {
+    "pages": 6,
+    "fidelity_mean": 3.833,
+    "fidelity_ci": [
+     3.333,
+     4.333
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.833
+   },
+   "L1_fix": {
+    "pages": 6,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3.333,
+     4.667
+    ],
+    "omission": 0.333,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.75
+   },
+   "F0": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.333,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.833
+   },
+   "F0_fix": {
+    "pages": 6,
+    "fidelity_mean": 4.833,
+    "fidelity_ci": [
+     4.667,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.833
+   }
+  },
+  "style:literal": {
+   "L1": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.5,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "L1_fix": {
+    "pages": 2,
+    "fidelity_mean": 3,
+    "fidelity_ci": [
+     3,
+     3
+    ],
+    "omission": 0,
+    "reversal": 1,
+    "invention_any_but_added_fact": 0.75
+   },
+   "F0": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "F0_fix": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "lang:Italian": {
+   "L1": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "L1_fix": {
+    "pages": 2,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 0.5
+   },
+   "F0": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "F0_fix": {
+    "pages": 2,
+    "fidelity_mean": 5,
+    "fidelity_ci": [
+     5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  },
+  "track:T3": {
+   "L1": {
+    "pages": 6,
+    "fidelity_mean": 3.833,
+    "fidelity_ci": [
+     3.333,
+     4.333
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.833
+   },
+   "L1_fix": {
+    "pages": 6,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3.333,
+     4.667
+    ],
+    "omission": 0.333,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.75
+   },
+   "F0": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.333,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.833
+   },
+   "F0_fix": {
+    "pages": 6,
+    "fidelity_mean": 4.833,
+    "fidelity_ci": [
+     4.667,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.833
+   }
+  },
+  "fit:usable": {
+   "L1": {
+    "pages": 6,
+    "fidelity_mean": 3.833,
+    "fidelity_ci": [
+     3.333,
+     4.333
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.833
+   },
+   "L1_fix": {
+    "pages": 6,
+    "fidelity_mean": 4,
+    "fidelity_ci": [
+     3.333,
+     4.667
+    ],
+    "omission": 0.333,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.75
+   },
+   "F0": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.333,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0.333,
+    "invention_any_but_added_fact": 0.833
+   },
+   "F0_fix": {
+    "pages": 6,
+    "fidelity_mean": 4.833,
+    "fidelity_ci": [
+     4.667,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.833
+   }
+  },
+  "style:early-modern": {
+   "L1": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "L1_fix": {
+    "pages": 2,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "F0": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "F0_fix": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   }
+  },
+  "lang:Dutch": {
+   "L1": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "L1_fix": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.5,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 0.75
+   },
+   "F0": {
+    "pages": 2,
+    "fidelity_mean": 3.5,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0,
+    "reversal": 0.5,
+    "invention_any_but_added_fact": 1
+   },
+   "F0_fix": {
+    "pages": 2,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": [
+     4.5,
+     4.5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "style:free": {
+   "L1": {
+    "pages": 2,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "L1_fix": {
+    "pages": 2,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": [
+     4,
+     5
+    ],
+    "omission": 0.5,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "F0": {
+    "pages": 2,
+    "fidelity_mean": 4.75,
+    "fidelity_ci": [
+     4.5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "F0_fix": {
+    "pages": 2,
+    "fidelity_mean": 5,
+    "fidelity_ci": [
+     5,
+     5
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "lang:German": {
+   "L1": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "L1_fix": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "F0": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "F0_fix": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  },
+  "lang:Spanish": {
+   "L1": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 1,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "L1_fix": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 1,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "F0": {
+    "pages": 1,
+    "fidelity_mean": 4.5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   },
+   "F0_fix": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  }
+ },
+ "pairs": {
+  "L1:L1_fix": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 1,
+     "ties": 3,
+     "b_wins": 2,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 1,
+     "ties": 2,
+     "b_wins": 3,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 1,
+    "ties": 2,
+    "b_wins": 3,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.625,
+   "fidelity_delta": {
+    "mean": -0.167,
+    "ci": [
+     -0.667,
+     0.333
+    ],
+    "n": 6,
+    "note": "L1 minus L1_fix"
+   }
+  },
+  "L1:F0": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 0,
+     "ties": 2,
+     "b_wins": 4,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 1,
+     "ties": 2,
+     "b_wins": 3,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 0,
+    "ties": 2,
+    "b_wins": 4,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.125,
+   "fidelity_delta": {
+    "mean": -0.083,
+    "ci": [
+     -0.25,
+     0
+    ],
+    "n": 6,
+    "note": "L1 minus F0"
+   }
+  },
+  "L1:F0_fix": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 0,
+     "ties": 1,
+     "b_wins": 5,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 0,
+     "ties": 1,
+     "b_wins": 5,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 0,
+    "ties": 1,
+    "b_wins": 5,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.063,
+   "fidelity_delta": {
+    "mean": -1,
+    "ci": [
+     -1.5,
+     -0.5
+    ],
+    "n": 6,
+    "note": "L1 minus F0_fix"
+   }
+  },
+  "L1_fix:F0": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 2,
+     "ties": 1,
+     "b_wins": 3,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 2,
+     "ties": 2,
+     "b_wins": 2,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 2,
+    "ties": 1,
+    "b_wins": 3,
+    "cant_tell": 0
+   },
+   "sign_test_p": 1,
+   "fidelity_delta": {
+    "mean": 0.083,
+    "ci": [
+     -0.5,
+     0.667
+    ],
+    "n": 6,
+    "note": "L1_fix minus F0"
+   }
+  },
+  "L1_fix:F0_fix": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 0,
+     "ties": 2,
+     "b_wins": 4,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 0,
+     "ties": 2,
+     "b_wins": 4,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 0,
+    "ties": 2,
+    "b_wins": 4,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.125,
+   "fidelity_delta": {
+    "mean": -0.833,
+    "ci": [
+     -1.417,
+     -0.25
+    ],
+    "n": 6,
+    "note": "L1_fix minus F0_fix"
+   }
+  },
+  "F0:F0_fix": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 0,
+     "ties": 2,
+     "b_wins": 4,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 0,
+     "ties": 1,
+     "b_wins": 5,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 0,
+    "ties": 1,
+    "b_wins": 5,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.063,
+   "fidelity_delta": {
+    "mean": -0.917,
+    "ci": [
+     -1.417,
+     -0.417
+    ],
+    "n": 6,
+    "note": "F0 minus F0_fix"
+   }
+  }
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 24,
+  "fidelity_exact": 0.875,
+  "within_1": 1,
+  "weighted_kappa": 0.9
+ },
+ "reference_fit": {
+  "wider": 8,
+  "exact": 4
+ },
+ "per_page": [
+  {
+   "id": "69aebfa4c337b1e6a4d582f3_00161",
+   "book_id": "69aebfa4c337b1e6a4d582f3",
+   "page_number": 161,
+   "lang": "Italian",
+   "track": "T3",
+   "canonical": false,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "witticisms/pleasantries"
+        },
+        {
+         "kind": "gloss",
+         "quote": "witty remarks/jests"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "short for M. Federico"
+        }
+       ],
+       "reversal": {
+        "candidate": "that nature and talent do not have the primary roles",
+        "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and talent do not have the primary roles': pleonastic 'non' after 'non vi nega' kept; reference has 'play the chief part'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Bembo's speech closed after 'reject the bad.'; 'Però lasciando quello ... dechiarateci' is still Bembo speaking"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'which are convenient for the Courtier' for 'quai son conuenienti al Cortegiano' (befitting)"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witticisms/pleasantries</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witty remarks/jests</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "short for M. Federico"
+        }
+       ],
+       "reversal": {
+        "candidate": "that is, that nature and talent do not have the primary roles",
+        "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and talent do not have the primary roles' — 'non vi nega ... non habbiano le prime parti' means they DO have the chief part"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Bembo's quotation closed after 'reject the bad' though his speech runs to 'ch'el S. Prefetto v'addimanda'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "as we often hear among us, and which are biting; nor does it seem"
+        },
+        {
+         "kind": "gloss",
+         "quote": "witticisms/subtleties"
+        },
+        {
+         "kind": "gloss",
+         "quote": "jokes/quips"
+        }
+       ],
+       "reversal": {
+        "candidate": "that nature and talent do not have the primary roles",
+        "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+       },
+       "span": "extends_before",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and talent do not have the primary roles': pleonastic 'non' after 'non vi nega' kept; reference has 'play the chief part'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "Bembo's speech closed after 'rejects the bad ones.'; 'Però lasciando quello ... dechiarateci' is still Bembo speaking"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'except if perhaps the sillinesses ... were not themselves also accepted' for 'non fussero esse anchora accettate' (unless they too be counted)"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "as we often hear among us, and which are biting; nor does it seem they have grace"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witticisms/subtleties</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witty remarks</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>jokes/quips</gloss>"
+        }
+       ],
+       "reversal": {
+        "candidate": "that nature and talent do not have the primary roles, especially regarding invention",
+        "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and talent do not have the primary roles' — pleonastic 'non habbiano le prime parti' after 'non vi nega' means they DO have the chief part (reference: 'play the chief part')"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'also laughing' for 'pur ridendo' (still laughing); Bembo's quotation closed after 'rejects the bad ones' though his speech runs to 'v'addimanda'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "witticisms or clever puns"
+        },
+        {
+         "kind": "gloss",
+         "quote": "invention or the finding of ideas"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Pietro Bembo (1470–1547) was a Venetian scholar, cardinal"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Bernardo Dovizi da Bibiena (1470–1520) was a cardinal and author of the comedy La Calandria"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Federico Fregoso prepares to define which jests are suitable"
+        }
+       ],
+       "reversal": {
+        "candidate": "namely that nature and genius do not play the primary roles",
+        "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and genius do not play the primary roles': pleonastic 'non' after 'non vi nega' kept; reference has 'play the chief part'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witticisms or clever puns</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>invention or the finding of ideas</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Pietro Bembo (1470–1547) was a Venetian scholar, cardinal, and influential figure"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Bernardo Dovizi da Bibiena (1470–1520) was a cardinal and author of the comedy La Calandria"
+        }
+       ],
+       "reversal": {
+        "candidate": "namely that nature and genius do not play the primary roles",
+        "source_or_reference": "reference: 'that nature and intellect play the chief part' (source 'non habbiano' is pleonastic after 'non vi nega')"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'nature and genius do not play the primary roles' — 'non vi nega ... non habbiano le prime parti' means they DO play the chief part"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "witticisms or clever conceits"
+        },
+        {
+         "kind": "gloss",
+         "quote": "invention or the finding of ideas"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Francesco Maria della Rovere, the Duke of Urbino and Prefect of Rome"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Ludovico di Canossa, a diplomat and relative of Castiglione"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Bernardo Dovizi da Bibiena, a playwright and diplomat known for his sharp wit"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "A celebrated Venetian scholar and later Cardinal"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>witticisms or clever conceits</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>invention or the finding of ideas</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "A celebrated Venetian scholar and later Cardinal, influential in the development of the Italian language"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Francesco Maria della Rovere, the Duke of Urbino and Prefect of Rome"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Ludovico di Canossa, a diplomat and relative of Castiglione"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Bernardo Dovizi da Bibiena, a playwright and diplomat known for his sharp wit"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[control:wrong_page] is a different text (water's resistance to division, not the Courtier page); [F0_fix] alone renders 'non vi nega ... che la natura, & lo ingegno non habbiano le prime parti' as nature and talent holding the chief part, as the reference does; [F0], [L1] and [L1_fix] keep the pleonastic negative and so say they do NOT have it; [L1] and [L1_fix] also end Bembo's speech before 'Però lasciando ... dechiarateci', and [L1_fix] pulls previous-page text into a meta line.",
+    "j2": "[control:wrong_page] is a different text (water resistance, sand atoms), not this page; [L1_fix], [F0], [L1] render the pleonastic 'non habbiano le prime parti' as 'do not have/play the primary roles', reversing Bembo's concession (reference: 'play the chief part'); [F0_fix] alone has 'hold the primary roles' and is otherwise faithful; its added notes are correct."
+   }
+  },
+  {
+   "id": "69a5d8d3a63a00aaae8aab0d_00322",
+   "book_id": "69a5d8d3a63a00aaae8aab0d",
+   "page_number": 322,
+   "lang": "Dutch",
+   "track": "T3",
+   "canonical": false,
+   "style": "early-modern",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "...as many people come there from all the surrounding cities."
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Epiphany, January 6th"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "the Equator"
+        }
+       ],
+       "reversal": null,
+       "span": "extends_before",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'Arriving at the coast, besides the fish' for 'aenlangēde lijftocht/ behalven die visch' (concerning victuals)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'the city was built very white, so that there may well be 2,000 now' for 'seer wijt ghebout/ datter wel 2000 staē mogen'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'for 10 miles of the way the city does not thunder' for 'daer 't op 10. mylen weghes noch dondert'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'some wear single hoods' / 'wear a cap on the head' for 'enckele coordekēs' / 'draecht yet op t hooft'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'arbors of reeds', 'huts made of reeds' for 'prieelkens van meyen' (green boughs); 'galleries' for 'saletten'"
+        },
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'Catchi' for source 'Carchi'"
+        }
+       ],
+       "tier": 3
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "as many people come there from all the surrounding cities"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Epiphany, January 6th"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "the Equator"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'Arriving at the coast, besides the fish' for 'aenlangēde lijftocht' (concerning provisions)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the city was built very white' for 'die stadt is seer wijt ghebout' (very widely built)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'for 10 miles of the way the city does not thunder' — source 'daer 't op 10. mylen weghes noch dondert' has no city"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'some wear single hoods' for 'sommighe enckele coordekēs' (single cords); 'a cap' for 'yet' (something)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'arbors of reeds' / 'huts made of reeds' for 'van meyen' (green boughs); 'galleries' for 'saletten' (parlours)"
+        },
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'Catchi' for source 'Carchi'"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Epiphany, January 6th"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "likely referring to dry, buoyant squash gourds used as floats"
+        },
+        {
+         "kind": "gloss",
+         "quote": "Equator"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "marginal list '1. Quitto. 2. Cusco. ... 15. S. Francisco.' absent (names remain in the running text)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'which they have clean and pleasant' for 'die zy schoon en genoechlijck hebben'; '80 feet of ground area' for '80. voete erfs'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Epiphany, January 6th"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>Equator</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "likely referring to dry, buoyant squash gourds used as floats"
+        },
+        {
+         "kind": "gloss",
+         "quote": "kirtle or tunic"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "margin list '1. Quitto. 2. Cusco. ... 15. S. Francisco.' absent (the names survive only in the running text)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'80 feet of ground area' for '80. voete erfs' (80 feet of plot breadth)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'a mile wide or sometimes wider, sometimes less' compresses 'ofte ooc wyder/ somtyts meer/ somtyts min'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "gold coins"
+        },
+        {
+         "kind": "gloss",
+         "quote": "terraces or galleries"
+        },
+        {
+         "kind": "gloss",
+         "quote": "the Equator"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Three Kings Day, January 6"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "La Paz"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Puerto Viejo"
+        }
+       ],
+       "reversal": {
+        "candidate": "Though it thunders, lightens, and rains within ten miles of the city",
+        "source_or_reference": "daer 't op 10. mylen weghes noch dondert/ bliremt noch regent"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'Though it thunders, lightens, and rains within ten miles of the city, it does not do so there' vs 'op 10. mylen weghes noch dondert ... noch regent'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'the city is built so white that 2,000 might well stand there' for 'seer wijt ghebout' (very widely)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'faletten' glossed 'terraces or galleries' for 'salē en saletten' (halls and parlours); 'bowers of reeds' for 'van meyen'"
+        },
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'Catchi' for source 'Carchi'"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>gold coins</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Three Kings Day, January 6"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>terraces or galleries</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>the Equator</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "La Paz"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Puerto Viejo"
+        }
+       ],
+       "reversal": {
+        "candidate": "Though it thunders, lightens, and rains within ten miles of the city",
+        "source_or_reference": "daer 't op 10. mylen weghes noch dondert/ bliremt noch regent"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'Though it thunders, lightens, and rains within ten miles of the city, it does not do so there' vs 'op 10. mylen weghes noch dondert/ bliremt noch regent' (no thunder or rain within the 10 miles)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the city is built so white that 2,000 might well stand' for 'seer wijt ghebout' (very widely built)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'<term>faletten</term> terraces or galleries' misreads 'saletten' (parlours)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'small bowers of reeds' for 'prieelkens van meyen' (green boughs)"
+        },
+        {
+         "class": "name",
+         "severity": "minor",
+         "detail": "'Catchi' for source 'Carchi'"
+        }
+       ],
+       "tier": 3
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "gold coins"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Three Kings Day"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>gold coins</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Three Kings Day"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'a coarse garment of cotton' for 'ee Cours vā Cottoen' (a keurs/kirtle, not 'coarse')"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[F0_fix] matches source throughout ('seer wijt ghebout' = spaciously, 'aenlangende lijftocht' = provisions, no rain for ten miles, 'coordekens' = cords); [L1_fix] equally sound in the text but drops the marginal list of 15 bishoprics and has 'clean' for 'schoon'; [F0] turns 'noch dondert ... noch regent' into thunder and rain within ten miles and reads 'wijt' as white; [L1] has 'Arriving at the coast' for provisions, 'built very white', 'the city does not thunder', hoods/cap for cords/something, and imports a previous-page line; [control:planted] is [L1] plus 'it does rain there' against 'ten regent daer niet'.",
+    "j2": "[F0_fix] follows the Dutch throughout bar 'coarse' for 'Cours'; [L1_fix] equally close but drops the numbered margin list; [L1] and [control:planted] share 'Arriving at the coast' (aenlangende lijftocht), 'built very white' (wijt), 'single hoods' (coordekens); [control:planted] additionally says 'it does rain there' where source has 'ten regent daer niet'; [F0] turns 'noch dondert ... noch regent' within 10 miles into 'it thunders ... within ten miles' and has 'white'."
+   }
+  },
+  {
+   "id": "69ef3d8c72c1376fdf2b04e9_00105",
+   "book_id": "69ef3d8c72c1376fdf2b04e9",
+   "page_number": 105,
+   "lang": "German",
+   "track": "T3",
+   "canonical": false,
+   "style": "free",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "that poetry is able to command"
+        }
+       ],
+       "reversal": null,
+       "span": "extends_before",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "that poetry is able to command"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Spence's work"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "poets used symbols that artists often omitted for aesthetic or practical reasons"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Spence's work"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "symbols that artists often omitted for aesthetic or practical reasons"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "from Ovid's Metamorphoses"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Joseph Spence (1699–1768) was an English historian and literary figure"
+        },
+        {
+         "kind": "gloss",
+         "quote": "a work by Joseph Spence"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>a work by Joseph Spence</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "from Ovid's Metamorphoses"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Joseph Spence (1699–1768) was an English historian and literary figure"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "All five carry the whole page: 'Gebothe stehen ... nicht zu erreichen vermag', Spence's two reasons, 'Stirnschmuck, den er aufsetzen und ablegen konnte', the Ovid couplet and the margin note; [L1] and [L1#dup] are identical text; differences are only the opening fragment ('stand' vs 'at its disposal' vs [L1_fix] supplying the carried-over subject) and 'wonderful'/'strange' for 'wunderbar'; the added notes (Metamorphoses, Spence's dates) are correct; catchword 'heißt' is not a criterion.",
+    "j2": "All five carry the page's sense from 'Gebothe stehen, welche die Mahlerey nicht zu erreichen vermag' to the Ovid couplet with nothing wrong: horns 'ein Stirnschmuck, den er aufsetzen und ablegen konnte' rendered correctly everywhere; [L1#dup] and [L1] are identical text; [F0_fix]'s added notes (Ovid's Metamorphoses, Spence's dates) are correct; differences are only wording of the opening fragment and 'wunderbar'."
+   }
+  },
+  {
+   "id": "69b1da4879939cb4065ddf2e_00044",
+   "book_id": "69b1da4879939cb4065ddf2e",
+   "page_number": 44,
+   "lang": "Italian",
+   "track": "T3",
+   "canonical": false,
+   "style": "early-modern",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>a unit of measurement, approximately two feet</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>grains of sand</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>equal weight/equilibrium</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "'in a few hours, or as we say, clarify' for 'd'alcune ore ancora, come diciamo noi, albicce' (after some hours still whitish)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'What, in good faith, would it do if we' for 'quale per nostra fe, sarà ella' (what will it be)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'divided and distracted' for 'diuisa, e distratta' (pulled apart); 'another experience' for 'esperienza' (experiment)"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "a unit of measurement, approximately two feet"
+        },
+        {
+         "kind": "gloss",
+         "quote": "grains of sand"
+        },
+        {
+         "kind": "gloss",
+         "quote": "equal weight/equilibrium"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'in a few hours, or as we say, clarify' for 'd'alcune ore ancora, come diciamo noi, albicce' (still whitish after some hours)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'What, in good faith, would it do if we' for 'quale per nostra fe, sarà ella' (what shall it be)"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "A unit of length, roughly equivalent to an arm's length or half a meter."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "A unit of length, roughly equivalent to an arm's length or half a meter."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>density or viscous consistency</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "meaning suspended in the middle of the fluid, neither at the bottom nor the surface"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>equilibrium</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'How, in truth, will it act if we' for 'quale per nostra fe, sarà ella' (what, by our faith, will it be)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "continues from previous page: after the"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "meaning suspended in the middle of the fluid, neither at the bottom nor the surface"
+        },
+        {
+         "kind": "gloss",
+         "quote": "density or viscous consistency"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'How, in truth, will it act if we' for 'quale per nostra fe, sarà ella' (what shall it be)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[F0_fix] and [L1_fix] follow the Italian clause for clause ('What, in/upon our faith, shall/could it be', millet-grain of lead, hair-drawn mass, 'divided quickly') with nothing I can fault; [F0] turns 'quale ... sarà ella' into 'How will it act'; [L1] does the same and also renders 'ancora ... albicce' (still whitish) as 'clarify', garbling the opening clause. All read 'ne può ... ?' as a rhetorical question, which the source punctuation allows.",
+    "j2": "All four cover the page from 'posizione d'alcune ore' to the final 'ma' and keep the millet-grain, woman's-hair and oars/sails arguments; [L1] turns 'ancora ... albicce' (still whitish) into 'clarify' and, like [F0], makes 'quale ... sarà ella' a question about what the water does; [F0_fix] and [L1_fix] match source and reference sense throughout."
+   }
+  },
+  {
+   "id": "69790e9eeb0dcfd399123423_00297",
+   "book_id": "69790e9eeb0dcfd399123423",
+   "page_number": 297,
+   "lang": "Dutch",
+   "track": "T3",
+   "canonical": false,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>love</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "starts_later",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "opens 'In this unity, we are received'; the page's first words 'der middel met Godt' are dropped"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'all that the spirit receives therein in a natural way' for 'oyt ... ontfinckt' (ever received)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'likeness consists in charity ... the unity consists in rest' for 'bestaet' (endures)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "love"
+        }
+       ],
+       "reversal": null,
+       "span": "starts_later",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "opens 'In this unity, we are received'; the carried-over 'der middel met Godt' at the head of the page is absent"
+        },
+        {
+         "class": "T8",
+         "severity": "minor",
+         "detail": "'all that the spirit receives therein in a natural way' drops 'oyt' and the past tense of 'oyt ... ontfinckt' (ever received)"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>divine love</gloss>"
+        }
+       ],
+       "reversal": {
+        "candidate": "through the means with God in this unity, we are received",
+        "source_or_reference": "son-|der middel met Godt (prev tail + page: 'without means')"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'through the means with God' for carried-over '[son]der middel met Godt' = without means; fragment also fused into the next sentence"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'in the faculty of their powers' for 'in dat eygendom zijnder crachten' (the proper ground/property of his powers)"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": false,
+       "invention": [],
+       "reversal": {
+        "candidate": "through the means with God in this unity, we are received",
+        "source_or_reference": "vereenicht son-der middel met Godt (reference: 'united with God without means')"
+       },
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "'through the means with God' where the sentence carried from the previous page reads 'son-der middel met Godt' (without means)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'in the faculty of their powers' for 'in dat eygendom zijnder crachtē' (the property / proper ground of his powers)"
+        }
+       ],
+       "tier": 3
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>divine love</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>deadly sin</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Ruusbroec explains that the soul receives the entire Trinity"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T6",
+         "severity": "minor",
+         "detail": "'means with God in this unity, we are received' fuses the tail '[son]der middel met Godt' into the new sentence 'In dese eenicheydt'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'all that the spirit receives therein naturally' for 'oyt natuerlijck daer in ontfinckt' (ever received, past)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'likeness consists in charity ... unity consist in rest' for 'bestaet' (endures/lasts, with 'alsoo lange')"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "divine love"
+        },
+        {
+         "kind": "gloss",
+         "quote": "deadly sin"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "minor",
+         "detail": "'all that the spirit receives therein naturally' drops 'oyt' and the past tense of 'oyt natuerlijck daer in ontfinckt' (ever received)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>divine love</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Ruusbroec emphasizes that this unity is established the moment"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T6",
+         "severity": "minor",
+         "detail": "'means with God in this unity we are received' fuses the tail '[son]der middel met Godt' into the sentence 'In dese eenicheydt'"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "divine love"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "All four track the page closely; the split is the carried-over fragment '[son]der middel met Godt' (without means): [L1_fix] makes it 'through the means' (inverted), [F0]/[F0_fix] leave a dangling 'means' fused into the next sentence, [L1] drops it. [F0_fix] alone keeps 'ever received' and 'persists' for 'bestaet' with nothing else wrong; [F0]/[L1] flatten 'oyt ontfinckt' to present and use 'consists'.",
+    "j2": "Early modern Dutch read with reasonable but not native confidence. [F0_fix] keeps 'oyt ... ontfinckt' (ever received) and everything else; [F0] and [L1] make it a present 'receives' and [L1] also drops the page-opening 'der middel met Godt'; [L1_fix] supplies 'through the means' for the tail of 'son-der middel' (without means), inverting the sense. All four keep 'verlicht met gheestelijck verstant', which the reference lacks."
+   }
+  },
+  {
+   "id": "69ea0f5413a685002bb8dc8a_00107",
+   "book_id": "69ea0f5413a685002bb8dc8a",
+   "page_number": 107,
+   "lang": "Spanish",
+   "track": "T3",
+   "canonical": false,
+   "style": "free",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "L1": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>gods/demigods</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>sorcerers/fortune tellers</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "'we resisted them with the arquebuses and crossbows, and they quickly turned' drops 'y a estocadas' (with sword thrusts)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the great noise they brought to kill us' for 'gran ruido que traian a matacauallo' (at breakneck speed)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'horses bridled and bitted' for 'cauallos ensillados, y enfrenados' (saddled and bridled); 'another day' for 'otro dia' (next day)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "gods/demigods"
+        },
+        {
+         "kind": "gloss",
+         "quote": "sorcerers/fortune tellers"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "'with the arquebuses and crossbows, and they quickly turned their backs' drops 'y a estocadas' (with sword thrusts)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the great noise they brought to kill us' for 'gran ruido que traian a matacauallo' (at breakneck speed)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the horses bridled and bitted' for 'los cauallos ensillados, y enfrenados' (saddled and bridled); 'another day' for 'otro dia'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'their charms cast ... in the charms they found' for 'echadas sus suertes ... en las suertes hallaron' (lots)"
+        }
+       ],
+       "tier": 3
+      }
+     }
+    },
+    "L1_fix": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>gods or demons</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>sorcerers/fortune-tellers</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "'believe that we were Teules, and that the cannons threw lightning' drops 'e que comiamos corazones de Indios'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "'the great noise they made approaching' drops 'a matacauallo'; final 'and as it was level ground, and' drops 'hazia'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'what we did another day in this battle' for 'otro dia' (the next day)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "gods or demons"
+        },
+        {
+         "kind": "gloss",
+         "quote": "sorcerers/fortune-tellers"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "'made them believe that we were Teules, and that the cannons threw lightning' drops 'e que comiamos corazones de Indios'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'what we did another day' for 'lo que otro dia hizimos' (the next day); 'a matacauallo' and the final 'hazia luna' are also left out"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    },
+    "F0": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Mexico <note>Tenochtitlan</note>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>sorcerers/shape-shifters</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "serpentines <note>light cannons</note>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "Tenochtitlan"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "light cannons"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "sorcerers/shape-shifters"
+        },
+        {
+         "kind": "gloss",
+         "quote": "divine beings/demons"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the people of Cempoal said (whom I have said other times are evil things like demons)' makes the Cempoalans, not the Teules, the 'cosas malas como demonios'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'the serpentines' for 'las bombardas' (bombards / cannon)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "F0_fix": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<gloss>sorcerers/shape-shifters</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "<term>macanas</term> <gloss>obsidian-edged clubs</gloss>"
+        },
+        {
+         "kind": "gloss",
+         "quote": "<gloss>small cannons</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "sorcerers/shape-shifters"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "obsidian-edged clubs"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "small cannons"
+        },
+        {
+         "kind": "gloss",
+         "quote": "gods/demons"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[F0] and [F0_fix] carry every clause of the page (the Cempoal tales incl. eating hearts, 'a matacauallo' as breakneck speed, 'a estocadas', saddled and bridled); only trivial literalisms ('a hand of arrows'; [F0] 'serpentines' for bombardas, [F0_fix] 'open field' for campo llano) that do not change the sense. [L1] drops 'a estocadas' and misreads 'a matacauallo' as 'to kill us'; [L1_fix] drops 'e que comiamos corazones de Indios' and 'a matacauallo'. Reference is free and omits several source phrases, so judged against the Spanish.",
+    "j2": "The reference is a free paraphrase that skips several clauses, so the candidates were scored against the Spanish. [F0_fix] carries every clause, including 'comiamos corazones de Indios', 'a matacauallo' and 'a estocadas'; [F0] attaches 'cosas malas como demonios' to the people of Cempoal and renders bombardas as serpentines; [L1_fix] drops the hearts-of-Indians clause; [L1] drops 'a estocadas', misreads 'a matacauallo' as 'to kill us' and 'ensillados' as bridled."
+   }
+  }
+ ]
+}

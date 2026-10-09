@@ -1,0 +1,120 @@
+{"arm": "flatten", "stem": "69a5e461006a409842216e78-351", "ok": true, "secs": 77, "gutter": null, "klass": "clean", "w": 2910, "h": 3704, "aspect": 0.786, "dark_share": 0.0555}
+{"arm": "flatten", "stem": "69a5e484006a4098422176a4-160", "ok": true, "secs": 140, "gutter": null, "klass": "clean", "w": 5000, "h": 3845, "aspect": 1.3, "dark_share": 0.003}
+{"arm": "flatten", "stem": "69a5e65ce751f06e74b89aa5-116", "ok": true, "secs": 66, "gutter": null, "klass": "unsure", "w": 4495, "h": 7177, "aspect": 0.626, "dark_share": 0.2091}
+{"arm": "flatten", "stem": "69a5f1ed0a8b44a5d9dc867e-136", "ok": true, "secs": 69, "gutter": {"x": 0.4658, "band": 0.0683}, "klass": "clean", "w": 1516, "h": 2308, "aspect": 0.657, "dark_share": 0.0035}
+{"arm": "flatten", "stem": "69a5f1ee0a8b44a5d9dc8750-41", "ok": true, "secs": 109, "gutter": {"x": 0.6733, "band": 0.0467}, "klass": "clean", "w": 1821, "h": 2467, "aspect": 0.738, "dark_share": 0.0012}
+{"arm": "flatten", "stem": "69a5f1ff1cf742c360413320-148", "ok": true, "secs": 54, "gutter": null, "klass": "clean", "w": 1420, "h": 2224, "aspect": 0.638, "dark_share": 0.0011}
+{"arm": "flatten", "stem": "69a5f2000a8b44a5d9dc887e-144", "ok": true, "secs": 44, "gutter": null, "klass": "clean", "w": 1994, "h": 3170, "aspect": 0.629, "dark_share": 0.062}
+{"arm": "flatten", "stem": "69a5f2010a8b44a5d9dc89ba-351", "ok": true, "secs": 58, "gutter": {"x": 0.5458, "band": 0.0517}, "klass": "clean", "w": 1308, "h": 2019, "aspect": 0.648, "dark_share": 0.0007}
+{"arm": "flatten", "stem": "69a5f20f0a8b44a5d9dc8d25-54", "ok": true, "secs": 39, "gutter": null, "klass": "clean", "w": 2666, "h": 3937, "aspect": 0.677, "dark_share": 0.0766}
+{"arm": "flatten", "stem": "69a5f2100a8b44a5d9dc8d8f-67", "ok": true, "secs": 52, "gutter": null, "klass": "clean", "w": 1702, "h": 2401, "aspect": 0.709, "dark_share": 0.0187}
+{"arm": "flatten", "stem": "69a5f2110a8b44a5d9dc8e20-1118", "ok": true, "secs": 88, "gutter": null, "klass": "clean", "w": 2682, "h": 4174, "aspect": 0.643, "dark_share": 0.0471}
+{"arm": "flatten", "stem": "69a5f2110a8b44a5d9dc9296-233", "ok": true, "secs": 72, "gutter": {"x": 0.5708, "band": 0.0217}, "klass": "clean", "w": 1866, "h": 2945, "aspect": 0.634, "dark_share": 0.0007}
+{"arm": "flatten", "stem": "69a5f2580a8b44a5d9dc9416-288", "ok": true, "secs": 138, "gutter": {"x": 0.5617, "band": 0.0533}, "klass": "clean", "w": 3547, "h": 5044, "aspect": 0.703, "dark_share": 0.0001}
+{"arm": "flatten", "stem": "69a5f25a0a8b44a5d9dc961e-336", "ok": true, "secs": 64, "gutter": null, "klass": "clean", "w": 2806, "h": 4189, "aspect": 0.67, "dark_share": 0.0}
+{"arm": "flatten", "stem": "69a5f25b0a8b44a5d9dc982a-220", "ok": true, "secs": 60, "gutter": null, "klass": "clean", "w": 3871, "h": 5362, "aspect": 0.722, "dark_share": 0.0009}
+{"arm": "flatten", "stem": "69a5f25c0a8b44a5d9dc9968-152", "ok": true, "secs": 49, "gutter": null, "klass": "clean", "w": 1943, "h": 2841, "aspect": 0.684, "dark_share": 0.0059}
+{"arm": "flatten", "stem": "69a5f357d4c2e3cf8ecb80b3-18", "ok": true, "secs": 68, "gutter": null, "klass": "clean", "w": 1830, "h": 2663, "aspect": 0.687, "dark_share": 0.0013}
+{"arm": "flatten", "stem": "69a5f358d4c2e3cf8ecb80e3-254", "ok": true, "secs": 63, "gutter": null, "klass": "clean", "w": 1580, "h": 2361, "aspect": 0.669, "dark_share": 0.0009}
+{"arm": "flatten", "stem": "69a5f359d4c2e3cf8ecb82c3-234", "ok": true, "secs": 58, "gutter": null, "klass": "clean", "w": 1587, "h": 2276, "aspect": 0.697, "dark_share": 0.0239}
+{"arm": "flatten", "stem": "69a5f364d4c2e3cf8ecb8477-269", "ok": true, "secs": 54, "gutter": {"x": 0.5392, "band": 0.0483}, "klass": "clean", "w": 2192, "h": 3185, "aspect": 0.688, "dark_share": 0.0053}
+{"arm": "flatten", "stem": "69a5f366d4c2e3cf8ecb88c5-318", "ok": true, "secs": 68, "gutter": null, "klass": "clean", "w": 1558, "h": 2266, "aspect": 0.688, "dark_share": 0.0008}
+{"arm": "flatten", "stem": "69a5f366d4c2e3cf8ecb8a85-130", "ok": true, "secs": 56, "gutter": null, "klass": "clean", "w": 1711, "h": 2102, "aspect": 0.814, "dark_share": 0.0219}
+{"arm": "flatten", "stem": "69a5f367d4c2e3cf8ecb8bea-84", "ok": true, "secs": 131, "gutter": null, "klass": "clean", "w": 2380, "h": 1815, "aspect": 1.311, "dark_share": 0.0941}
+{"arm": "flatten", "stem": "69a5f3b61cf742c3604133ea-141", "ok": true, "secs": 61, "gutter": null, "klass": "clean", "w": 1317, "h": 1917, "aspect": 0.687, "dark_share": 0.0699}
+{"arm": "flatten", "stem": "69a5f3b61cf742c3604134ce-210", "ok": true, "secs": 110, "gutter": null, "klass": "clean", "w": 2404, "h": 1816, "aspect": 1.324, "dark_share": 0.0654}
+{"arm": "flatten", "stem": "69a5f3b71cf742c3604135bb-92", "ok": true, "secs": 84, "gutter": null, "klass": "clean", "w": 2356, "h": 1813, "aspect": 1.3, "dark_share": 0.0766}
+{"arm": "flatten", "stem": "69b3e67e304c1c6b3950b94a-157", "ok": true, "secs": 59, "gutter": null, "klass": "unsure", "w": 2922, "h": 4000, "aspect": 0.731, "dark_share": 0.1758}
+{"arm": "flatten", "stem": "69c1b7d78522835be844a19c-14", "ok": true, "secs": 63, "gutter": null, "klass": "unsure", "w": 6433, "h": 9650, "aspect": 0.667, "dark_share": 0.1389}
+{"arm": "flatten", "stem": "69c1bb658522835be845f635-347", "ok": true, "secs": 54, "gutter": null, "klass": "clean", "w": 5040, "h": 6500, "aspect": 0.775, "dark_share": 0.0452}
+{"arm": "flatten", "stem": "69c1bd328522835be846821a-134", "ok": true, "secs": 66, "gutter": null, "klass": "clean", "w": 1395, "h": 2000, "aspect": 0.698, "dark_share": 0.0258}
+{"arm": "flatten", "stem": "69c1bd378522835be8468614-2", "ok": true, "secs": 33, "gutter": null, "klass": "clean", "w": 1464, "h": 2000, "aspect": 0.732, "dark_share": 0.0693}
+{"arm": "flatten", "stem": "69c1bd3a8522835be846870e-209", "ok": true, "secs": 47, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0236}
+{"arm": "flatten", "stem": "69c1bd3c8522835be8468834-6", "ok": true, "secs": 51, "gutter": null, "klass": "clean", "w": 1265, "h": 2000, "aspect": 0.632, "dark_share": 0.0014}
+{"arm": "flatten", "stem": "69c1bd3e8522835be846885c-22", "ok": true, "secs": 49, "gutter": {"x": 0.4383, "band": 0.05}, "klass": "clean", "w": 1394, "h": 2000, "aspect": 0.697, "dark_share": 0.0004}
+{"arm": "flatten", "stem": "69c1bd408522835be8468876-31", "ok": true, "secs": 64, "gutter": null, "klass": "clean", "w": 1440, "h": 2000, "aspect": 0.72, "dark_share": 0.0318}
+{"arm": "flatten", "stem": "69c1bd428522835be8468988-104", "ok": true, "secs": 38, "gutter": null, "klass": "clean", "w": 1391, "h": 2000, "aspect": 0.696, "dark_share": 0.0343}
+{"arm": "flatten", "stem": "69c1bd458522835be8468a08-66", "ok": true, "secs": 64, "gutter": null, "klass": "clean", "w": 1319, "h": 2000, "aspect": 0.659, "dark_share": 0.0272}
+{"arm": "flatten", "stem": "69c1bd478522835be8468b5e-47", "ok": true, "secs": 46, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0365}
+{"arm": "flatten", "stem": "69a5f2110a8b44a5d9dc8e20-53", "ok": true, "secs": 73, "gutter": null, "klass": "clean", "w": 2668, "h": 4176, "aspect": 0.639, "dark_share": 0.0712}
+{"arm": "flatten", "stem": "69a5f364d4c2e3cf8ecb8477-679", "ok": true, "secs": 60, "gutter": null, "klass": "clean", "w": 2145, "h": 3185, "aspect": 0.673, "dark_share": 0.0024}
+{"arm": "base", "stem": "69a5e461006a409842216e78-351", "ok": true, "secs": 90, "gutter": null, "klass": "clean", "w": 2910, "h": 3704, "aspect": 0.786, "dark_share": 0.0555}
+{"arm": "base", "stem": "69a5e484006a4098422176a4-160", "ok": true, "secs": 157, "gutter": null, "klass": "clean", "w": 5000, "h": 3845, "aspect": 1.3, "dark_share": 0.003}
+{"arm": "base", "stem": "69a5e65ce751f06e74b89aa5-116", "ok": true, "secs": 84, "gutter": null, "klass": "unsure", "w": 4495, "h": 7177, "aspect": 0.626, "dark_share": 0.2091}
+{"arm": "base", "stem": "69a5f1ed0a8b44a5d9dc867e-136", "ok": true, "secs": 99, "gutter": {"x": 0.4658, "band": 0.0683}, "klass": "clean", "w": 1516, "h": 2308, "aspect": 0.657, "dark_share": 0.0035}
+{"arm": "base", "stem": "69a5f1ee0a8b44a5d9dc8750-41", "ok": true, "secs": 121, "gutter": {"x": 0.6733, "band": 0.0467}, "klass": "clean", "w": 1821, "h": 2467, "aspect": 0.738, "dark_share": 0.0012}
+{"arm": "base", "stem": "69a5f1ff1cf742c360413320-148", "ok": true, "secs": 53, "gutter": null, "klass": "clean", "w": 1420, "h": 2224, "aspect": 0.638, "dark_share": 0.0011}
+{"arm": "base", "stem": "69a5f2000a8b44a5d9dc887e-144", "ok": true, "secs": 48, "gutter": null, "klass": "clean", "w": 1994, "h": 3170, "aspect": 0.629, "dark_share": 0.062}
+{"arm": "base", "stem": "69a5f2010a8b44a5d9dc89ba-351", "ok": true, "secs": 67, "gutter": {"x": 0.5458, "band": 0.0517}, "klass": "clean", "w": 1308, "h": 2019, "aspect": 0.648, "dark_share": 0.0007}
+{"arm": "base", "stem": "69a5f20f0a8b44a5d9dc8d25-54", "ok": true, "secs": 35, "gutter": null, "klass": "clean", "w": 2666, "h": 3937, "aspect": 0.677, "dark_share": 0.0766}
+{"arm": "base", "stem": "69a5f2100a8b44a5d9dc8d8f-67", "ok": true, "secs": 52, "gutter": null, "klass": "clean", "w": 1702, "h": 2401, "aspect": 0.709, "dark_share": 0.0187}
+{"arm": "base", "stem": "69a5f2110a8b44a5d9dc8e20-1118", "ok": true, "secs": 86, "gutter": null, "klass": "clean", "w": 2682, "h": 4174, "aspect": 0.643, "dark_share": 0.0471}
+{"arm": "base", "stem": "69a5f2110a8b44a5d9dc9296-233", "ok": true, "secs": 73, "gutter": {"x": 0.5708, "band": 0.0217}, "klass": "clean", "w": 1866, "h": 2945, "aspect": 0.634, "dark_share": 0.0007}
+{"arm": "base", "stem": "69a5f2580a8b44a5d9dc9416-288", "ok": true, "secs": 143, "gutter": {"x": 0.5617, "band": 0.0533}, "klass": "clean", "w": 3547, "h": 5044, "aspect": 0.703, "dark_share": 0.0001}
+{"arm": "base", "stem": "69a5f25a0a8b44a5d9dc961e-336", "ok": true, "secs": 59, "gutter": null, "klass": "clean", "w": 2806, "h": 4189, "aspect": 0.67, "dark_share": 0.0}
+{"arm": "base", "stem": "69a5f25b0a8b44a5d9dc982a-220", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 3871, "h": 5362, "aspect": 0.722, "dark_share": 0.0009}
+{"arm": "base", "stem": "69a5f25c0a8b44a5d9dc9968-152", "ok": true, "secs": 50, "gutter": null, "klass": "clean", "w": 1943, "h": 2841, "aspect": 0.684, "dark_share": 0.0059}
+{"arm": "base", "stem": "69a5f357d4c2e3cf8ecb80b3-18", "ok": true, "secs": 75, "gutter": null, "klass": "clean", "w": 1830, "h": 2663, "aspect": 0.687, "dark_share": 0.0013}
+{"arm": "base", "stem": "69a5f358d4c2e3cf8ecb80e3-254", "ok": true, "secs": 63, "gutter": null, "klass": "clean", "w": 1580, "h": 2361, "aspect": 0.669, "dark_share": 0.0009}
+{"arm": "base", "stem": "69a5f359d4c2e3cf8ecb82c3-234", "ok": true, "secs": 59, "gutter": null, "klass": "clean", "w": 1587, "h": 2276, "aspect": 0.697, "dark_share": 0.0239}
+{"arm": "base", "stem": "69a5f364d4c2e3cf8ecb8477-269", "ok": true, "secs": 56, "gutter": {"x": 0.5392, "band": 0.0483}, "klass": "clean", "w": 2192, "h": 3185, "aspect": 0.688, "dark_share": 0.0053}
+{"arm": "base", "stem": "69a5f366d4c2e3cf8ecb88c5-318", "ok": true, "secs": 70, "gutter": null, "klass": "clean", "w": 1558, "h": 2266, "aspect": 0.688, "dark_share": 0.0008}
+{"arm": "base", "stem": "69a5f366d4c2e3cf8ecb8a85-130", "ok": true, "secs": 60, "gutter": null, "klass": "clean", "w": 1711, "h": 2102, "aspect": 0.814, "dark_share": 0.0219}
+{"arm": "base", "stem": "69a5f367d4c2e3cf8ecb8bea-84", "ok": true, "secs": 134, "gutter": null, "klass": "clean", "w": 2380, "h": 1815, "aspect": 1.311, "dark_share": 0.0941}
+{"arm": "base", "stem": "69a5f3b61cf742c3604133ea-141", "ok": true, "secs": 53, "gutter": null, "klass": "clean", "w": 1317, "h": 1917, "aspect": 0.687, "dark_share": 0.0699}
+{"arm": "base", "stem": "69a5f3b61cf742c3604134ce-210", "ok": true, "secs": 106, "gutter": null, "klass": "clean", "w": 2404, "h": 1816, "aspect": 1.324, "dark_share": 0.0654}
+{"arm": "base", "stem": "69a5f3b71cf742c3604135bb-92", "ok": true, "secs": 78, "gutter": null, "klass": "clean", "w": 2356, "h": 1813, "aspect": 1.3, "dark_share": 0.0766}
+{"arm": "base", "stem": "69b3e67e304c1c6b3950b94a-157", "ok": true, "secs": 59, "gutter": null, "klass": "unsure", "w": 2922, "h": 4000, "aspect": 0.731, "dark_share": 0.1758}
+{"arm": "base", "stem": "69c1b7d78522835be844a19c-14", "ok": true, "secs": 61, "gutter": null, "klass": "unsure", "w": 6433, "h": 9650, "aspect": 0.667, "dark_share": 0.1389}
+{"arm": "base", "stem": "69c1bb658522835be845f635-347", "ok": true, "secs": 54, "gutter": null, "klass": "clean", "w": 5040, "h": 6500, "aspect": 0.775, "dark_share": 0.0452}
+{"arm": "base", "stem": "69c1bd328522835be846821a-134", "ok": true, "secs": 61, "gutter": null, "klass": "clean", "w": 1395, "h": 2000, "aspect": 0.698, "dark_share": 0.0258}
+{"arm": "base", "stem": "69c1bd378522835be8468614-2", "ok": true, "secs": 32, "gutter": null, "klass": "clean", "w": 1464, "h": 2000, "aspect": 0.732, "dark_share": 0.0693}
+{"arm": "base", "stem": "69c1bd3a8522835be846870e-209", "ok": true, "secs": 49, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0236}
+{"arm": "base", "stem": "69c1bd3c8522835be8468834-6", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 1265, "h": 2000, "aspect": 0.632, "dark_share": 0.0014}
+{"arm": "base", "stem": "69c1bd3e8522835be846885c-22", "ok": true, "secs": 47, "gutter": {"x": 0.4383, "band": 0.05}, "klass": "clean", "w": 1394, "h": 2000, "aspect": 0.697, "dark_share": 0.0004}
+{"arm": "base", "stem": "69c1bd408522835be8468876-31", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 1440, "h": 2000, "aspect": 0.72, "dark_share": 0.0318}
+{"arm": "base", "stem": "69c1bd428522835be8468988-104", "ok": true, "secs": 29, "gutter": null, "klass": "clean", "w": 1391, "h": 2000, "aspect": 0.696, "dark_share": 0.0343}
+{"arm": "base", "stem": "69c1bd458522835be8468a08-66", "ok": true, "secs": 58, "gutter": null, "klass": "clean", "w": 1319, "h": 2000, "aspect": 0.659, "dark_share": 0.0272}
+{"arm": "base", "stem": "69c1bd478522835be8468b5e-47", "ok": true, "secs": 46, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0365}
+{"arm": "base", "stem": "69a5f2110a8b44a5d9dc8e20-53", "ok": true, "secs": 77, "gutter": null, "klass": "clean", "w": 2668, "h": 4176, "aspect": 0.639, "dark_share": 0.0712}
+{"arm": "base", "stem": "69a5f364d4c2e3cf8ecb8477-679", "ok": true, "secs": 52, "gutter": null, "klass": "clean", "w": 2145, "h": 3185, "aspect": 0.673, "dark_share": 0.0024}
+{"arm": "sauvola", "stem": "69a5e461006a409842216e78-351", "ok": true, "secs": 82, "gutter": null, "klass": "clean", "w": 2910, "h": 3704, "aspect": 0.786, "dark_share": 0.0555}
+{"arm": "sauvola", "stem": "69a5e484006a4098422176a4-160", "ok": true, "secs": 144, "gutter": null, "klass": "clean", "w": 5000, "h": 3845, "aspect": 1.3, "dark_share": 0.003}
+{"arm": "sauvola", "stem": "69a5e65ce751f06e74b89aa5-116", "ok": true, "secs": 77, "gutter": null, "klass": "unsure", "w": 4495, "h": 7177, "aspect": 0.626, "dark_share": 0.2091}
+{"arm": "sauvola", "stem": "69a5f1ed0a8b44a5d9dc867e-136", "ok": true, "secs": 72, "gutter": {"x": 0.4658, "band": 0.0683}, "klass": "clean", "w": 1516, "h": 2308, "aspect": 0.657, "dark_share": 0.0035}
+{"arm": "sauvola", "stem": "69a5f1ee0a8b44a5d9dc8750-41", "ok": true, "secs": 112, "gutter": {"x": 0.6733, "band": 0.0467}, "klass": "clean", "w": 1821, "h": 2467, "aspect": 0.738, "dark_share": 0.0012}
+{"arm": "sauvola", "stem": "69a5f1ff1cf742c360413320-148", "ok": true, "secs": 54, "gutter": null, "klass": "clean", "w": 1420, "h": 2224, "aspect": 0.638, "dark_share": 0.0011}
+{"arm": "sauvola", "stem": "69a5f2000a8b44a5d9dc887e-144", "ok": true, "secs": 49, "gutter": null, "klass": "clean", "w": 1994, "h": 3170, "aspect": 0.629, "dark_share": 0.062}
+{"arm": "sauvola", "stem": "69a5f2010a8b44a5d9dc89ba-351", "ok": true, "secs": 62, "gutter": {"x": 0.5458, "band": 0.0517}, "klass": "clean", "w": 1308, "h": 2019, "aspect": 0.648, "dark_share": 0.0007}
+{"arm": "sauvola", "stem": "69a5f20f0a8b44a5d9dc8d25-54", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 2666, "h": 3937, "aspect": 0.677, "dark_share": 0.0766}
+{"arm": "sauvola", "stem": "69a5f2100a8b44a5d9dc8d8f-67", "ok": true, "secs": 60, "gutter": null, "klass": "clean", "w": 1702, "h": 2401, "aspect": 0.709, "dark_share": 0.0187}
+{"arm": "sauvola", "stem": "69a5f2110a8b44a5d9dc8e20-1118", "ok": true, "secs": 95, "gutter": null, "klass": "clean", "w": 2682, "h": 4174, "aspect": 0.643, "dark_share": 0.0471}
+{"arm": "sauvola", "stem": "69a5f2110a8b44a5d9dc9296-233", "ok": true, "secs": 78, "gutter": {"x": 0.5708, "band": 0.0217}, "klass": "clean", "w": 1866, "h": 2945, "aspect": 0.634, "dark_share": 0.0007}
+{"arm": "sauvola", "stem": "69a5f2580a8b44a5d9dc9416-288", "ok": true, "secs": 142, "gutter": {"x": 0.5617, "band": 0.0533}, "klass": "clean", "w": 3547, "h": 5044, "aspect": 0.703, "dark_share": 0.0001}
+{"arm": "sauvola", "stem": "69a5f25a0a8b44a5d9dc961e-336", "ok": true, "secs": 62, "gutter": null, "klass": "clean", "w": 2806, "h": 4189, "aspect": 0.67, "dark_share": 0.0}
+{"arm": "sauvola", "stem": "69a5f25b0a8b44a5d9dc982a-220", "ok": true, "secs": 62, "gutter": null, "klass": "clean", "w": 3871, "h": 5362, "aspect": 0.722, "dark_share": 0.0009}
+{"arm": "sauvola", "stem": "69a5f25c0a8b44a5d9dc9968-152", "ok": true, "secs": 51, "gutter": null, "klass": "clean", "w": 1943, "h": 2841, "aspect": 0.684, "dark_share": 0.0059}
+{"arm": "sauvola", "stem": "69a5f357d4c2e3cf8ecb80b3-18", "ok": true, "secs": 80, "gutter": null, "klass": "clean", "w": 1830, "h": 2663, "aspect": 0.687, "dark_share": 0.0013}
+{"arm": "sauvola", "stem": "69a5f358d4c2e3cf8ecb80e3-254", "ok": true, "secs": 63, "gutter": null, "klass": "clean", "w": 1580, "h": 2361, "aspect": 0.669, "dark_share": 0.0009}
+{"arm": "sauvola", "stem": "69a5f359d4c2e3cf8ecb82c3-234", "ok": true, "secs": 63, "gutter": null, "klass": "clean", "w": 1587, "h": 2276, "aspect": 0.697, "dark_share": 0.0239}
+{"arm": "sauvola", "stem": "69a5f364d4c2e3cf8ecb8477-269", "ok": true, "secs": 68, "gutter": {"x": 0.5392, "band": 0.0483}, "klass": "clean", "w": 2192, "h": 3185, "aspect": 0.688, "dark_share": 0.0053}
+{"arm": "sauvola", "stem": "69a5f366d4c2e3cf8ecb88c5-318", "ok": true, "secs": 73, "gutter": null, "klass": "clean", "w": 1558, "h": 2266, "aspect": 0.688, "dark_share": 0.0008}
+{"arm": "sauvola", "stem": "69a5f366d4c2e3cf8ecb8a85-130", "ok": true, "secs": 71, "gutter": null, "klass": "clean", "w": 1711, "h": 2102, "aspect": 0.814, "dark_share": 0.0219}
+{"arm": "sauvola", "stem": "69a5f367d4c2e3cf8ecb8bea-84", "ok": true, "secs": 140, "gutter": null, "klass": "clean", "w": 2380, "h": 1815, "aspect": 1.311, "dark_share": 0.0941}
+{"arm": "sauvola", "stem": "69a5f3b61cf742c3604133ea-141", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 1317, "h": 1917, "aspect": 0.687, "dark_share": 0.0699}
+{"arm": "sauvola", "stem": "69a5f3b61cf742c3604134ce-210", "ok": true, "secs": 114, "gutter": null, "klass": "clean", "w": 2404, "h": 1816, "aspect": 1.324, "dark_share": 0.0654}
+{"arm": "sauvola", "stem": "69a5f3b71cf742c3604135bb-92", "ok": true, "secs": 82, "gutter": null, "klass": "clean", "w": 2356, "h": 1813, "aspect": 1.3, "dark_share": 0.0766}
+{"arm": "sauvola", "stem": "69b3e67e304c1c6b3950b94a-157", "ok": true, "secs": 64, "gutter": null, "klass": "unsure", "w": 2922, "h": 4000, "aspect": 0.731, "dark_share": 0.1758}
+{"arm": "sauvola", "stem": "69c1b7d78522835be844a19c-14", "ok": true, "secs": 72, "gutter": null, "klass": "unsure", "w": 6433, "h": 9650, "aspect": 0.667, "dark_share": 0.1389}
+{"arm": "sauvola", "stem": "69c1bb658522835be845f635-347", "ok": true, "secs": 57, "gutter": null, "klass": "clean", "w": 5040, "h": 6500, "aspect": 0.775, "dark_share": 0.0452}
+{"arm": "sauvola", "stem": "69c1bd328522835be846821a-134", "ok": true, "secs": 68, "gutter": null, "klass": "clean", "w": 1395, "h": 2000, "aspect": 0.698, "dark_share": 0.0258}
+{"arm": "sauvola", "stem": "69c1bd378522835be8468614-2", "ok": true, "secs": 39, "gutter": null, "klass": "clean", "w": 1464, "h": 2000, "aspect": 0.732, "dark_share": 0.0693}
+{"arm": "sauvola", "stem": "69c1bd3a8522835be846870e-209", "ok": true, "secs": 48, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0236}
+{"arm": "sauvola", "stem": "69c1bd3c8522835be8468834-6", "ok": true, "secs": 52, "gutter": null, "klass": "clean", "w": 1265, "h": 2000, "aspect": 0.632, "dark_share": 0.0014}
+{"arm": "sauvola", "stem": "69c1bd3e8522835be846885c-22", "ok": true, "secs": 49, "gutter": {"x": 0.4383, "band": 0.05}, "klass": "clean", "w": 1394, "h": 2000, "aspect": 0.697, "dark_share": 0.0004}
+{"arm": "sauvola", "stem": "69c1bd408522835be8468876-31", "ok": true, "secs": 60, "gutter": null, "klass": "clean", "w": 1440, "h": 2000, "aspect": 0.72, "dark_share": 0.0318}
+{"arm": "sauvola", "stem": "69c1bd428522835be8468988-104", "ok": true, "secs": 52, "gutter": null, "klass": "clean", "w": 1391, "h": 2000, "aspect": 0.696, "dark_share": 0.0343}
+{"arm": "sauvola", "stem": "69c1bd458522835be8468a08-66", "ok": true, "secs": 65, "gutter": null, "klass": "clean", "w": 1319, "h": 2000, "aspect": 0.659, "dark_share": 0.0272}
+{"arm": "sauvola", "stem": "69c1bd478522835be8468b5e-47", "ok": true, "secs": 47, "gutter": null, "klass": "clean", "w": 1502, "h": 2000, "aspect": 0.751, "dark_share": 0.0365}
+{"arm": "sauvola", "stem": "69a5f2110a8b44a5d9dc8e20-53", "ok": true, "secs": 72, "gutter": null, "klass": "clean", "w": 2668, "h": 4176, "aspect": 0.639, "dark_share": 0.0712}
+{"arm": "sauvola", "stem": "69a5f364d4c2e3cf8ecb8477-679", "ok": true, "secs": 55, "gutter": null, "klass": "clean", "w": 2145, "h": 3185, "aspect": 0.673, "dark_share": 0.0024}

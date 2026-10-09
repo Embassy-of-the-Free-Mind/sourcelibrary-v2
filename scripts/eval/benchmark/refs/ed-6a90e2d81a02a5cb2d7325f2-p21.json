@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/locher2",
+  "edition": "Stultifera navis mortalium. — Basel: (Seb. Henricpetri, 1572).",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "12/13",
+    "pb_aligned_pages": "12/12"
+  },
+  "origin": "library",
+  "book_id": "6a90e2d81a02a5cb2d7325f2",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 19367,
+    "to_char": 20565,
+    "overlap": 0.833,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'legatque quisquis ueluti in speculo'; ends 'In precio magno turbidus orbis habet.' (catchword 'Doti-'). Ref pad at start is about 7 words ('expurgandam editus. Intueatur ergo hunc perlegatque'), slightly more than 3 but within a line.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:08.515Z",
+  "text_location": "repo",
+  "text_sha256": "db7644e8027e7b96810f4313f1486a4c62d58ecada994d2321717c8fd694add5",
+  "unit": {
+    "chars": 1198
+  },
+  "stratum": "latin-period-5126"
+}

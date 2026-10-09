@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/spener1",
+  "edition": "Historia Insignium Illustrium Seu Operis Heraldici Pars Generalis. — Frankfurt [Main]: Johann Adam Jung, 1717.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "3/11",
+    "pb_aligned_pages": "3/3"
+  },
+  "origin": "library",
+  "book_id": "69b51e69768235dc65992e2f",
+  "page_number": 15,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 5246,
+    "to_char": 6454,
+    "overlap": 0.755,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts '[am]plissimae ditiones, ejus prudentia'; ends 'PHILIPPUS JACOBUS SPENERUS, D.'; it is the end of a dedication (Dresdae 31. Martii 1690, ILLUSTRISS. V. EXCELL.); ref's 'ut universa provincia, et' and 'BENEVOLO LECTORI S. D. IUstum' are padding.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "none",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:05.981Z",
+  "text_location": "repo",
+  "text_sha256": "2ef44f00f3e5471781d24f8912c4e43b87d42805c123bbc5bfeb5398d3a73315",
+  "unit": {
+    "chars": 1208
+  },
+  "stratum": "latin-period-5126"
+}

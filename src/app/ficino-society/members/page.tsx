@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Members — The Ficino Society',
+  title: 'Members | The Ficino Society',
   description: 'The circle of scholars and readers translating the Western esoteric tradition.',
 };
 

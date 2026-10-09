@@ -27,8 +27,10 @@
  *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
  *                                                             submit the first rounds in shared jobs
  *             [--pages-file=F] [--exclude-withheld]          F = JSON { bookId: [pageId] }: queue only
- *             [--dry-run]                                    those pages (implies --exclude-withheld);
- *                                                             --dry-run plans + prices, enrols nothing
+ *             [--dry-run] [--no-context]                     those pages (implies --exclude-withheld);
+ *                                                             --dry-run plans + prices, enrols nothing;
+ *                                                             --no-context: one request per page, no
+ *                                                             seed, no adjacent OCR (#5497 arm B)
  *   --chained --enrol-auto [--limit=40] [--max-open=60] PAID  enrol what the gap-fill would want
  *             [--zero-only] [--min-pages=N]                     (AUTO_STATUSES), each approved at
  *             [--exclude-chinese] [--include-hidden]            pages × $0.0012, then submit;
@@ -51,6 +53,7 @@ import { GoogleGenAI } from '@google/genai';
 import { loadTranslationPrompts, syncBookTranslationCounters } from '../lib/translate-core.mjs';
 import {
   planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, batchRequestToJsonlLine, RUNS_COLLECTION, TERMINAL_PHASES,
+  translateSubmitBrake,
 } from '../lib/translate-batch-seam.mjs';
 import {
   enrolChainedRun, tickChained, submitRounds, selectAutoCandidates, planNextRound, estimateChainedUsd,
@@ -256,6 +259,14 @@ async function chained(db) {
     };
   };
 
+  // The pause (#5492). Enrolment sends nothing, but an open run is stored spend, so a paused lane
+  // enrols nothing. A tick still runs: collecting a finished round is free and writes pages the
+  // run already paid for, and submitRounds asks the same brake before every job it sends.
+  if (has('enrol-auto') || has('enrol')) {
+    const brake = await translateSubmitBrake(db);
+    if (brake.stop) { console.log(`  ${brake.stop} — enrolling nothing`); return; }
+  }
+
   if (has('plan')) {
     const bookId = arg('book');
     if (!bookId) throw new Error('--chained --plan needs --book=ID');
@@ -288,6 +299,9 @@ async function chained(db) {
       limit: room, zeroOnly: has('zero-only'), minPages: Number(arg('min-pages') || 0),
       visibleOnly: !has('include-hidden'), excludeChinese: has('exclude-chinese'),
       ...(arg('statuses') ? { statuses: arg('statuses').split(',').map((s) => s.trim()) } : {}),
+      // #5700: never a silent skip — the gate's refusals are printed here and recorded in book_events.
+      recordRefusals: !has('dry-run'),
+      onRefused: (b, trust) => console.log(`  ${b.id}: REFUSED — ${trust.reason}  ${String(b.title || '').slice(0, 60)}`),
     });
     const total = candidates.reduce((s, b) => s + b.approvedUsd, 0);
     for (const b of candidates) console.log(`  ${b.id}  ${String(b.language).slice(0, 12).padEnd(12)} ${b.pages_ocr}/${b.pages_count}pp tr ${b.pages_translated || 0}  ${b.pipeline_auto?.status}  approve $${b.approvedUsd}  ${String(b.title || '').slice(0, 60)}`);
@@ -317,7 +331,9 @@ async function chained(db) {
     const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
     if (!ids.length && pagesByBook) ids.push(...Object.keys(pagesByBook));
     if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID (or --pages-file)');
-    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld });
+    // --allow-untrusted-ocr: enrol a book the OCR trust gate (#5700) refuses — for a named pilot on
+    // re-read pages only. Never available to --enrol-auto.
+    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld, noContext: has('no-context'), allowUntrustedOcr: has('allow-untrusted-ocr') });
     const prompts = await loadTranslationPrompts(db);
     if (has('dry-run')) {
       // FREE: the queue and estimate each enrol would make; nothing written, nothing sent.

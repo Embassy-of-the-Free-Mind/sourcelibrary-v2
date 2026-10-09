@@ -1,0 +1,626 @@
+[
+  {
+    "book_id": "69b99e681f30176bf4d3798a",
+    "slot": 13,
+    "title": "Aṅguttara-Nikāya (Pali Text)",
+    "tradition": "pali",
+    "shelf_fit": "fits",
+    "shelf_note": "PTS Pali text of the Aṅguttara-Nikāya; belongs on a Pali shelf. The 'americana' collection tag is an Internet Archive collection label, not a subject.",
+    "rights_flag": null,
+    "structure_note": "Catalogue identity is wrong (I7). The record says 'Aṅguttara-Nikāya (Pali Text)', 'Richard Morris & Edmund Hardy (eds.)', 1885 (the date of Part I), but every sampled page is Part V (Hardy, 1900): the preface opens 'In issuing this last volume of the Aṅguttara-Nikāya' and says Hardy finished 'the eleventh Nipāta' in 1898; running heads are 'LXXXVII.13—18 Thera-Vagga. 167', 'CXV.3—4' p. 226, 'XIX.1—XX.1' p. 354 (Dasaka and Ekādasaka Nipātas). It appears to be a second scan of the same volume as 69b99e856ed9e0490990a0b5 ('Aṅguttara-Nikāya, Part V', 1900), whose pages show the same Part V chapters (Ānisaṃsa-vagga, Ekādasaka IX–X). The 3 printed backsteps and 3 repeats are probably front-matter roman numerals or misread numerals; not checked.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 186,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "sātheyуāni",
+            "image": "sāṭheyyāni",
+            "problem": "retroflex ṭ lost and a Cyrillic 'у' inserted in the word",
+            "severity": "minor"
+          },
+          {
+            "ocr": "M. Ph. sātho",
+            "image": "M. Ph. sāṭh°",
+            "problem": "variant reading in note 1 misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ayam pi dhammo piyattāya . . .¹¹ ekibhāvāya saṃvattati",
+            "english": "leads to endearment, to . . . <unclear>unity</unclear> leads to unity",
+            "problem": "the elided formula is rendered as a stuttering duplicate wrapped in an <unclear> tag, though nothing on the page is unclear; repeated in §§15–18",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "source": "amakkhī hoti makkhavinayassa vaṇṇavādī",
+            "english": "is not contemptuous and praises the discipline of contempt",
+            "problem": "vinaya here means removal; 'discipline of contempt' reads as praising contempt",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "16 footnotes (¹–¹⁶)",
+            "english": "<meta> list numbered 1–14",
+            "problem": "the variant notes are moved into a <meta> block and renumbered (notes 1–2 and 5–6 merged), so the numbers no longer match the markers in the text",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 245,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "yenāyasmā Ānando upasaṅkameyyāma⁵",
+            "image": "yenāyasmā Ānando ten' upasaṅkameyyāma⁵",
+            "problem": "word 'ten'' dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "atthaṃ avibhattassa vitthārena atthaṃ vibhajitum",
+            "image": "avibhattassa⁴",
+            "problem": "footnote marker 4 dropped; note 4 orphaned",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "adhammo ca … veditabbo dhammo ca, anattho ca veditabbo attho ca",
+            "english": "The unwholesome … should be known, and the wholesome; the lack of benefit … and the benefit",
+            "problem": "dhamma/adhamma rendered as wholesome/unwholesome: an interpretive choice that hides the dhamma/non-dhamma contrast",
+            "severity": "minor"
+          },
+          {
+            "source": "19 variant footnotes",
+            "english": "(none)",
+            "problem": "the apparatus is dropped from the English pane",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 373,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "evamsaññī … paṭhaviyam",
+            "image": "evaṃsaññī … paṭhaviyaṃ",
+            "problem": "anusvāra ṃ normalised to m throughout (also on pp. 186, 245)",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "yam p'idam diṭṭham sutam mutam viññātam … saññī ca pana assā' ti?",
+            "english": "<unclear>... and yet he would still have perception, for whatever is seen, heard, sensed, cognized …</unclear>",
+            "problem": "a clearly printed passage is wrapped in an <unclear> tag, so the reader is told the source is doubtful when it is not",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "source": "(page opens mid-sentence with pe¹ . . .)",
+            "english": "<meta>continues from previous page</meta>",
+            "problem": "meta tag in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The pages are good transcriptions of the PTS edition with a usable English, but the record is mis-catalogued: it is Part V (Hardy, 1900) under a generic title and the 1885 date, and appears to duplicate the separate Part V record. The English pane shows recurring <unclear> and <meta> markup.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      8,
+      245
+    ],
+    "reader_summary": "This is the last volume (Part V, Books of Tens and Elevens) of the Pali Text Society edition of the Aṅguttara-Nikāya, although the catalogue presents it as the whole work dated 1885. The transcription is of the right text and close to the print, with small diacritic slips. The English is readable and mostly faithful, but it drops or renumbers the variant notes and puts spurious <unclear> tags around clear passages."
+  },
+  {
+    "book_id": "69b99e856ed9e0490990a0b5",
+    "slot": 14,
+    "title": "Aṅguttara-Nikāya, Part V (Pali Text)",
+    "tradition": "pali",
+    "shelf_fit": "fits",
+    "shelf_note": "PTS Pali text, Aṅguttara-Nikāya Part V (Dasaka and Ekādasaka Nipātas). The collection tags (digitallibraryindia, JaiGyan) are IA source labels.",
+    "rights_flag": null,
+    "structure_note": "There are 444 page records but pages_count is 439, so five records are not counted by the field. This is the same volume as 69b99e681f30176bf4d3798a (mis-titled 'Aṅguttara-Nikāya (Pali Text)', 1885), whose pages show the same Part V chapters; one of the two is a duplicate record. No backsteps.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "saññī ca pana assā' ti? … pe . . . na paraloke",
+            "image": "saññī¹ ca pana … pe² . . . na⁴ paraloke",
+            "problem": "all 17 footnote markers dropped from the body; the notes are kept in a table but nothing points to them",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "evam eva kho me āvuso bhavanirodho nibbānam, bhavanirodho nibbānan ti aññā 'va saññā [page ends]",
+            "english": "…a different perception arises and a different perception ceases, yet I was perceiving at that time, friend.",
+            "problem": "the sentence is completed with words from the next page ('nirujjhati, saññī ca panāhaṃ … ahosiṃ')",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "17 variant footnotes",
+            "english": "(none)",
+            "problem": "apparatus dropped from the English",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Gosiṅgālavanadāyo",
+            "image": "Gosiṅgasālavanadāyo",
+            "problem": "place name (Gosiṅga sāl-tree wood) misread; carried into the English as 'Gosiṅgāla forest park'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Caḷena",
+            "image": "Cālena",
+            "problem": "name of the elder Cāla misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "āyasmātā",
+            "image": "āyasmatā",
+            "problem": "repeated misspelling (6×)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "jhāñā",
+            "image": "jhānā",
+            "problem": "ñ for n",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "āyasmatā ca Cālena",
+            "english": "the Venerable Caḷa",
+            "problem": "OCR misreading of the name carried into English",
+            "severity": "moderate"
+          },
+          {
+            "source": "yena Gosiṅgasālavanadāyo",
+            "english": "the Gosiṅgāla forest park",
+            "problem": "misread place name",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 288,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "samhappalāpī",
+            "image": "samphappalāpī",
+            "problem": "p dropped, repeated throughout",
+            "severity": "minor"
+          },
+          {
+            "ocr": "mālānānaḷamkārassa",
+            "image": "mālānānālaṃkārassa",
+            "problem": "ḷ for l",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "'Aṭṭhāne pi bhavaṃ Gotamo parikappaṃ vadatī' ti? 'Aṭṭhāne pi kho ahaṃ brāhmaṇa parikappaṃ vadāmi.'",
+            "english": "You might say, 'The recluse Gotama speaks of speculative consequences even in impossible situations.' Brahmin, I do indeed speak of speculative consequences in certain situations.",
+            "problem": "the brahmin's question becomes a hypothetical in the Buddha's mouth, and the answer 'even in an impossible case I declare it' becomes 'in certain situations', losing the point of the reply",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Api ca brāhmaṇa dāyako pi anipphalo' ti",
+            "english": "But, brahmin, is a giver ever fruitless?",
+            "problem": "a statement ('the giver too is not without fruit') turned into a question",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 339,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "⁴ M. Ñātike",
+            "image": "⁴ M. Nātike",
+            "problem": "the variant in note 4 is given the headword's spelling, which erases the variant",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "1. Ekaṃ samayaṃ Bhagavā Ñātike viharati Giñjakā- [page ends]",
+            "english": "…at the Giñjakāvasatha <gloss>Brick Hall monastery</gloss>. Then the Venerable Sandha approached the Blessed One...",
+            "problem": "a sentence naming Sandha is added that is not on this page (taken from the next page or the known sutta)",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "Ñātike",
+            "english": "the land of the Ñātikas <gloss>the Jñātrika clan's territory</gloss>",
+            "problem": "the gloss asserts a clan identification that is not in the text (Ñātika/Nādika is a village)",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "yam p'idam … pe² …",
+            "english": "<note>The text repeats the list of phenomena excluded from attention.</note>",
+            "problem": "note tag in reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A sound transcription of PTS Aṅguttara Part V with small name misreadings. The English is fluent, but on two of four pages it either reassigns a speaker or adds words from the following page. The book duplicates another record of the same volume.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      26
+    ],
+    "reader_summary": "This is the Pali Text Society edition of the Aṅguttara-Nikāya, Part V (Books of Tens and Elevens), and the transcription is of the right text, close to the print apart from a few misread names and dropped footnote markers. The English is readable but not reliable line by line: it sometimes completes a sentence from the next page, adds a speaker who is not on the page, or shifts who asks a question. A reader should check it against the Pali."
+  },
+  {
+    "book_id": "6a09ff3dfa20006dbaba8b4d",
+    "slot": 15,
+    "title": "Atthasālinī (Buddhaghosa's commentary on the Dhammasaṅgaṇī) — PTS Pali",
+    "tradition": "pali",
+    "shelf_fit": "fits",
+    "shelf_note": "PTS edition (E. Müller, 1897) of Buddhaghosa's Abhidhamma commentary; belongs on the Pali shelf.",
+    "rights_flag": true,
+    "structure_note": "5 printed backsteps and 5 repeats. The running head carries two numbers (paragraph and page, e.g. 'Atthasālinī 279. 103'), so some backsteps are probably the paragraph number read as the page number, not scan defects. Not checked further.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 114,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "allasamaṃsam laddhuṃ vaṭṭati",
+            "image": "allasasamaṃsaṃ laddhuṃ vaṭṭati",
+            "problem": "'sasa' (hare) dropped: the physician prescribes fresh hare's flesh, which is what makes the story work",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "taruṇassaṃ",
+            "image": "taruṇasassaṃ",
+            "problem": "syllable dropped (young corn)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "allasasamaṃsaṃ",
+            "english": "fresh meat was required",
+            "problem": "following the OCR, the hare is lost, and with it the link between the prescription and the captured hare",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "bhāvaniyassa garuno",
+            "english": "a venerable teacher who is worthy of cultivation",
+            "problem": "awkward literalism",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 152,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Mahādakakkhandho",
+            "image": "Mahāudakakkhandho",
+            "problem": "letters dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "sañjātidesaṭṭhena pi āyatanaṃ",
+            "image": "sañjātidesaṭṭhena pi etaṃ āyatanaṃ",
+            "problem": "'etaṃ' dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<sig>A.III p.43.</sig>",
+            "image": "footnote ¹ A.III p.43.",
+            "problem": "footnote tagged as a signature mark; its marker in the text dropped",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "…naṭṭhena sañjātidesaṭṭhena kāraṇaṭṭhena ca āyatanaṃ veditabbaṃ",
+            "english": "...the base should be understood.",
+            "problem": "the senses listed at the head of the page (place of origin, cause) are dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "suvaṇṇāyatanaṃ ratanāyatanaṃ ti ādīsu ākaro",
+            "english": "in expressions like 'gold-base' or 'jewel-base,' it is an aspect",
+            "problem": "ākara here means a mine (gold-mine, jewel-mine); 'aspect' gives the wrong sense",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Rāsaṭṭhena hi viññāṇakkhandhassa ekadeso ekaṃ viññāṇaṃ",
+            "english": "For one part of the consciousness-aggregate, one single consciousness, is a heap in the sense of a mass.",
+            "problem": "the argument is garbled: it says that one consciousness is a part of the aggregate taken as a heap",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 409,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "āvāso paṭijaggitabbam",
+            "image": "āvāso paṭijaggitabbo",
+            "problem": "ending changed",
+            "severity": "minor"
+          },
+          {
+            "ocr": "sāyam kathetvā dātabbam",
+            "image": "sayaṃ kathetvā dātabbaṃ",
+            "problem": "sayaṃ (oneself) read as sāyaṃ (evening); the English correctly follows the image",
+            "severity": "minor"
+          },
+          {
+            "ocr": "khiṇāsavatherī; Guttasālāgame",
+            "image": "khīṇāsavatherī; Guttasālagāme",
+            "problem": "length marks",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "khīṇāsavatherī",
+            "english": "an Elder nun",
+            "problem": "'khīṇāsava' (one whose taints are destroyed, an arahant) dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "Sace gilāno vā avassiko vā atthi",
+            "english": "If there is a sick person or one who is on a temporary stay",
+            "problem": "avassika = a monk without a rains retreat (newly ordained), not a temporary visitor",
+            "severity": "moderate"
+          },
+          {
+            "source": "Sāyaṃ pana navakatarehi attano upaṭṭhānaṃ anāgatehi yeva",
+            "english": "As for the afternoon, if those who are junior have not come to attend to him",
+            "problem": "'before the juniors come to attend on oneself' becomes a condition",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 516,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Sineru (-ṇ-), 28",
+            "english": "Sineru, 28",
+            "problem": "spelling note dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "An index of proper names is 'translated' by inserting <gloss> tags into the entries, even inside parentheses ('Saṃyutta(-nikāya <gloss>collection</gloss>)'). The glosses add clutter and generic words ('division', 'discourse') rather than anything a reader needs",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A faithful transcription of the PTS Atthasālinī with small slips. The English works for the stories but loses technical sense in the Abhidhamma exegesis. The typewriter-set index suggests a later reprint whose rights should be checked.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      114
+    ],
+    "reader_summary": "This is the Pali Text Society edition of the Atthasālinī, Buddhaghosa's commentary on the Dhammasaṅgaṇī, and the transcription is of the right text with minor slips (one drops the hare from 'fresh hare's flesh'). The English follows the narrative passages well but blurs technical terms in the exegesis, translating 'mine' as 'aspect' and dropping 'arahant'. The index appears to come from a later reprint."
+  },
+  {
+    "book_id": "69b99eea76b9bab2de21a3d4",
+    "slot": 16,
+    "title": "Kathāvatthu (Pali Text)",
+    "tradition": "pali",
+    "shelf_fit": "fits",
+    "shelf_note": "Arnold C. Taylor's PTS edition of the Kathāvatthu (1894–97), the Abhidhamma book of points of controversy.",
+    "rights_flag": null,
+    "structure_note": "One printed repeat in 676 pages. The two-volume edition is scanned as one, so the repeat is probably where the second volume begins, or a misread numeral. Nothing else stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 106,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "bhavasaññojano sammadaññā vimutto",
+            "english": "liberated through right knowledge",
+            "problem": "the opening word (the tail of 'parikkhīṇabhavasaññojano', whose fetters of becoming are destroyed) is dropped",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "asamayavimutto",
+            "english": "untemporary-liberated",
+            "problem": "an awkward coinage, but consistent and recoverable",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 313,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Arahattasacchikiriyāya paṭipanno puggalo",
+            "english": "a person who has practiced for the realization of the fruit of Arahantship",
+            "problem": "paṭipanno = one who is practising (on the path), not one who has finished; the tense matters to the argument",
+            "severity": "moderate"
+          },
+          {
+            "source": "anusahagataṃ kāmarāgaṃ anusahagataṃ byāpādaṃ",
+            "english": "the sensual desire that accompanies it and the ill will that accompanies it",
+            "problem": "anusahagata = residual, subtle; 'that accompanies it' changes the sense",
+            "severity": "moderate"
+          },
+          {
+            "source": "Nanu … sotāpattiphalaṃ vītivatto ti? Āmantā.",
+            "english": "Does a person … not transcend the fruit of the Stream-Enterer? Yes.",
+            "problem": "nanu ('has he not…?') is rendered as a negative question, so the 'Yes' reads ambiguously",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 372,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "->Sampayuttakathā.<-",
+            "image": "S a m p a y u t t a k a t h ā . (spaced, centred)",
+            "problem": "centring encoded as arrow markup",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "<margin>¹ sīlamhi, P.S₂.</margin>",
+            "image": "footnote ¹ sīlamhi, P.S₂.",
+            "problem": "footnote tagged as a marginal note",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Yathā tilamhi telaṃ anugataṃ anupaviṭṭhaṃ",
+            "english": "Just as oil is permeated and entered into sesame seeds",
+            "problem": "syntax garbled (the oil permeates the sesame)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->The Discourse on Associated Phenomena.<-': arrow markup is shown in the reader text, and the end-title of VII.2 is presented as a heading for what follows",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 645,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean transcription of Taylor's PTS Kathāvatthu, with an English that faithfully follows the question-and-answer form. There are a few imprecise technical renderings and one leak of arrow markup.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      106,
+      645,
+      313
+    ],
+    "reader_summary": "This is the Pali Text Society edition of the Kathāvatthu, and the transcription is of the right text and very close to the print. The English keeps the debate's question-and-answer form and can be followed, though a few technical words are loose ('has practiced' for one still on the path, 'accompanying' for residual defilements)."
+  }
+]

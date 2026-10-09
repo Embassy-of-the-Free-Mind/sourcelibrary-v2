@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const pct = (v: number | null | undefined) => (v == null ? '—' : `${v.toFixed(1)}%`);
+const pct = (v: number | null | undefined) => (v == null ? '–' : `${v.toFixed(1)}%`);
 const ci = (c: Interval) => (c ? `${c[0].toFixed(1)}–${c[1].toFixed(1)}` : 'no interval');
 const day = (iso: string | null | undefined) =>
-  iso ? new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : '—';
+  iso ? new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : '–';
 
 /** Palette: dataviz reference slots 1–2 (blue, orange) and neutrals, stepped separately for dark. */
 const THEME = `
@@ -63,7 +63,7 @@ function Table({ head, children }: { head: string[]; children: ReactNode }) {
 function NoMeasurement({ what, last }: { what: string; last?: ReactNode }) {
   return (
     <div className="q-card px-4 py-3 text-sm">
-      <b>No measurement</b> <span className="q-muted">— {what}{last ? <> · {last}</> : null}</span>
+      <b>No measurement:</b> <span className="q-muted">{what}{last ? <> · {last}</> : null}</span>
     </div>
   );
 }
@@ -90,7 +90,7 @@ function Headline({ label, rate, prev, n, instrument, date, href, prevLabel, low
           <>Previous ({prevLabel}): <span className="tabular-nums">{pct(prev.est)}</span>{' '}
             <span className="q-muted tabular-nums">({ci(prev.ci)})</span>{' '}
             <span style={{ color: worse ? 'var(--q-warn)' : 'var(--q-muted)' }}>
-              {delta! > 0 ? '▲' : delta! < 0 ? '▼' : '='} {Math.abs(delta!).toFixed(1)} pp — intervals {
+              {delta! > 0 ? '▲' : delta! < 0 ? '▼' : '='} {Math.abs(delta!).toFixed(1)} pp; intervals {
                 rate.ci && prev.ci && (rate.ci[0] > prev.ci[1] || prev.ci[0] > rate.ci[1]) ? 'do not overlap' : 'overlap: not a measured change'}
             </span></>
         ) : <span className="q-muted">No earlier run to compare.</span>}
@@ -149,20 +149,20 @@ export default async function QualityPage() {
           ) : <NoMeasurement what="no translation corpus audit with passing controls is on main" />}
           {T.pending.length > 0 && (
             <p className="text-xs q-muted">
-              Drawn, not yet judged: {T.pending.map(p => <code key={p.branch} className="mr-2">{p.branch}</code>)} — the judge routine lands it on main.
+              Drawn, not yet judged: {T.pending.map(p => <code key={p.branch} className="mr-2">{p.branch}</code>)}. The judge routine lands it on main.
             </p>
           )}
           {D.ocr ? (
             <div className="grid gap-1">
               <div className="text-sm">
-                OCR by script — {D.ocr.measure}, production engine <code>{D.ocr.production_engine}</code>
+                OCR by script: {D.ocr.measure}, production engine <code>{D.ocr.production_engine}</code>
               </div>
               <Table head={['Script', 'Median CER', '95% CI', 'Pages with reference', 'Pages run', 'Grade']}>
                 {D.ocr.rows.map(r => (
                   <tr key={r.script} className={r.median_cer == null ? 'q-muted' : ''}>
                     <td>{r.script}</td>
                     <td>{r.median_cer == null ? 'no measurement' : r.median_cer.toFixed(3)}</td>
-                    <td>{r.ci ? `${r.ci[0].toFixed(3)}–${r.ci[1].toFixed(3)}` : '—'}</td>
+                    <td>{r.ci ? `${r.ci[0].toFixed(3)}–${r.ci[1].toFixed(3)}` : '–'}</td>
                     <td>{r.n}</td>
                     <td>{r.n_run}</td>
                     <td>{r.grade}</td>
@@ -183,7 +183,7 @@ export default async function QualityPage() {
                   <td>{o.value.toFixed(2)}</td>
                   <td className="q-muted">{o.value_kind}</td>
                   <td>{o.n_note ?? o.n}</td>
-                  <td>{o.chance == null ? '—' : o.chance.toFixed(2)}</td>
+                  <td>{o.chance == null ? '–' : o.chance.toFixed(2)}</td>
                   <td>{day(o.date)}</td>
                   <td><a href={o.source}>source</a></td>
                 </tr>
@@ -208,7 +208,7 @@ export default async function QualityPage() {
                     <td>{r.n}</td>
                     <td>{pct(r.groups.all?.ge4.est)} <span className="q-muted">({ci(r.groups.all?.ge4.ci ?? null)})</span></td>
                     <td>{pct(r.groups.all?.any_major.est)} <span className="q-muted">({ci(r.groups.all?.any_major.ci ?? null)})</span></td>
-                    <td style={{ color: r.controls_pass ? 'var(--q-good)' : 'var(--q-bad)' }}>{r.controls_pass ? 'pass' : 'FAIL — not reported'}</td>
+                    <td style={{ color: r.controls_pass ? 'var(--q-good)' : 'var(--q-bad)' }}>{r.controls_pass ? 'pass' : 'FAIL: not reported'}</td>
                     <td><a href={r.report}>report</a></td>
                   </tr>
                 ))}
@@ -232,10 +232,10 @@ export default async function QualityPage() {
                     <td style={{ color: VERDICT_COLOR[w.verdict] ?? 'inherit', fontWeight: 600 }}>{w.verdict}</td>
                     <td>{pct(w.major_pct)} <span className="q-muted">({w.defective}/{w.n})</span></td>
                     <td className="q-muted">{ci(w.ci)}</td>
-                    <td>{w.seeded ? `${w.seeded.major}/${w.seeded.n}` : '—'} · {w.seam ? `${w.seam.major}/${w.seam.n}` : '—'}</td>
-                    <td className="q-muted">{w.controls ? Object.entries(w.controls).map(([k, v]) => `${k} ${v}`).join(' · ') : '—'}</td>
-                    <td style={{ color: w.trend_warn ? 'var(--q-warn)' : 'var(--q-muted)' }}>{w.trend_warn ? 'WARN' : '—'}</td>
-                    <td>{w.warn_count || '—'}</td>
+                    <td>{w.seeded ? `${w.seeded.major}/${w.seeded.n}` : '–'} · {w.seam ? `${w.seam.major}/${w.seam.n}` : '–'}</td>
+                    <td className="q-muted">{w.controls ? Object.entries(w.controls).map(([k, v]) => `${k} ${v}`).join(' · ') : '–'}</td>
+                    <td style={{ color: w.trend_warn ? 'var(--q-warn)' : 'var(--q-muted)' }}>{w.trend_warn ? 'WARN' : '–'}</td>
+                    <td>{w.warn_count || '–'}</td>
                   </tr>
                 ))}
               </Table>
@@ -256,13 +256,13 @@ export default async function QualityPage() {
             <Table head={['Stratum', 'n', 'Cost / book', 'Days', 'OCR score', 'Translation major', 'Verdict']}>
               {D.round1.rows.map(r => (
                 <tr key={r.stratum}>
-                  <td>{r.stratum}</td><td>{r.n ?? '—'}</td>
-                  <td>{r.cost_per_book_usd == null ? '—' : `$${r.cost_per_book_usd.toFixed(2)}`}</td>
-                  <td>{r.days ?? '—'}</td><td>{r.ocr_score ?? '—'}</td><td>{pct(r.translation_major_pct)}</td><td>{r.verdict ?? '—'}</td>
+                  <td>{r.stratum}</td><td>{r.n ?? '–'}</td>
+                  <td>{r.cost_per_book_usd == null ? '–' : `$${r.cost_per_book_usd.toFixed(2)}`}</td>
+                  <td>{r.days ?? '–'}</td><td>{r.ocr_score ?? '–'}</td><td>{pct(r.translation_major_pct)}</td><td>{r.verdict ?? '–'}</td>
                 </tr>
               ))}
             </Table>
-          ) : <NoMeasurement what="not yet run — no results file on main" last={D.round1.drawn ? <>books drawn {day(D.round1.drawn)}</> : undefined} />}
+          ) : <NoMeasurement what="not yet run (no results file on main)" last={D.round1.drawn ? <>books drawn {day(D.round1.drawn)}</> : undefined} />}
         </Section>
 
         {/* 5 — Defect classes */}
@@ -275,7 +275,7 @@ export default async function QualityPage() {
                   <td>{r.label}</td>
                   <td>{pct(r.est)}</td>
                   <td className="q-muted">{ci(r.ci)}</td>
-                  <td>{r.count == null ? '—' : `${r.count}/${D.defects!.n}`}</td>
+                  <td>{r.count == null ? '–' : `${r.count}/${D.defects!.n}`}</td>
                   <td>
                     {r.classes.map(c => (
                       <div key={c.code}>

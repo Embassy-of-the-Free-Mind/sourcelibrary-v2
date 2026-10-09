@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "centred-markers",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "->ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ<-",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "why": "the #5123 tag-stripper regression: ->TEXT<- must not eat the body"
+}

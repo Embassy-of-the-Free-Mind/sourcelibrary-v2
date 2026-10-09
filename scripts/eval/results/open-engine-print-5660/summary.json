@@ -1,0 +1,271 @@
+{
+ "engines": {
+  "paddleocr-vl-1.6": {
+   "english-1600-1699": {
+    "n_pages": 59,
+    "n_library": 59,
+    "lite_cer": 0.053,
+    "engine_cer": 0.063,
+    "delta": 0.012,
+    "delta_ci95": [
+     0.001,
+     0.023
+    ],
+    "wlt": "20/38/1",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 3
+    },
+    "lite_refused": 3,
+    "answered_only": {
+     "n": 56,
+     "lite_cer": 0.053,
+     "engine_cer": 0.064,
+     "delta": 0.014,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "paddleocr-vl-1.6": 0.214,
+     "gemini-3.1-flash-lite": 0.171
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   },
+   "latin-1500-1699": {
+    "n_pages": 36,
+    "n_library": 15,
+    "lite_cer": 0.067,
+    "engine_cer": 0.091,
+    "delta": 0.022,
+    "delta_ci95": [
+     0.016,
+     0.036
+    ],
+    "wlt": "2/33/1",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 36,
+     "lite_cer": 0.067,
+     "engine_cer": 0.091,
+     "delta": 0.022,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "paddleocr-vl-1.6": 0.323,
+     "gemini-3.1-flash-lite": 0.231
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=15 library < 50) — no lane decision"
+   },
+   "english-1700+": {
+    "n_pages": 106,
+    "n_library": 106,
+    "lite_cer": 0.022,
+    "engine_cer": 0.019,
+    "delta": 0,
+    "delta_ci95": [
+     0,
+     0
+    ],
+    "wlt": "32/29/45",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 21
+    },
+    "lite_refused": 21,
+    "answered_only": {
+     "n": 85,
+     "lite_cer": 0.017,
+     "engine_cer": 0.02,
+     "delta": 0,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "paddleocr-vl-1.6": 0.02,
+     "gemini-3.1-flash-lite": 0.018
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "REJECTED"
+   },
+   "german": {
+    "n_pages": 29,
+    "n_library": 0,
+    "lite_cer": 0.005,
+    "engine_cer": 0.055,
+    "delta": 0.047,
+    "delta_ci95": [
+     0.035,
+     0.063
+    ],
+    "wlt": "1/28/0",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 0
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 29,
+     "lite_cer": 0.005,
+     "engine_cer": 0.055,
+     "delta": 0.047,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "paddleocr-vl-1.6": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": false,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "latin-1700+": {
+    "n_pages": 39,
+    "n_library": 0,
+    "lite_cer": 0.007,
+    "engine_cer": 0.039,
+    "delta": 0.01,
+    "delta_ci95": [
+     0.006,
+     0.02
+    ],
+    "wlt": "4/33/2",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 39,
+     "lite_cer": 0.007,
+     "engine_cer": 0.039,
+     "delta": 0.01,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "paddleocr-vl-1.6": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "greek-print": {
+    "n_pages": 114,
+    "n_library": 114,
+    "lite_cer": 0.145,
+    "engine_cer": 0.51,
+    "delta": 0.327,
+    "delta_ci95": [
+     0.269,
+     0.364
+    ],
+    "wlt": "1/113/0",
+    "catastrophic": {
+     "engine": 58,
+     "lite": 1
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 114,
+     "lite_cer": 0.145,
+     "engine_cer": 0.51,
+     "delta": 0.327,
+     "catastrophic_engine": 58,
+     "catastrophic_lite": 1
+    },
+    "invention": {
+     "paddleocr-vl-1.6": 0.87,
+     "gemini-3.1-flash-lite": 0.244
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": false,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": false,
+     "invention_le_ref": false,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   }
+  }
+ },
+ "agreement": {
+  "latin-pre1700": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.955,
+   "paddleocr-vl-1.6_vs_lite": 0.946
+  },
+  "latin-1700s": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.977,
+   "paddleocr-vl-1.6_vs_lite": 0.967
+  },
+  "german-fraktur": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.985,
+   "paddleocr-vl-1.6_vs_lite": 0.905
+  },
+  "longs-en-fr": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.962,
+   "paddleocr-vl-1.6_vs_lite": 0.956
+  }
+ },
+ "cost": {
+  "paddleocr-vl-1.6": {
+   "pages": 632,
+   "errors": 0,
+   "wall_secs": 608.8,
+   "s_per_page": 0.963,
+   "usd_per_page_gex45": 0.0000913
+  },
+  "gemini-3.1-flash-lite": {
+   "pages": 195,
+   "usd_per_page_realtime": 0.000902,
+   "usd_per_page_batch": 0.000451,
+   "note": "generic transcription prompt, thinking 0; production prompt output is longer"
+  }
+ }
+}

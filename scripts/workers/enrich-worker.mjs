@@ -32,23 +32,37 @@
  *   --limit=N          Max books per phase (default: 30 for phase 6, 50 for phase 7)
  *   --dry-run          Print what would be done, don't modify
  *   --book=ID          Process a single book (for debugging)
+ *
+ * Batch API lane (#2141) — Phase 6 + 7 over books already PAST their status, at half price:
+ *   --batch                 collect finished jobs, admit gap books, advance them a round (see
+ *                           ./lib/enrich-batch-lane.mjs). Re-run until nothing is pending.
+ *   --max-usd=N             ceiling on new admissions this run, all rounds priced (default 2)
+ *   --limit=N               max new books this run (default 50 in --batch)
+ *   --book-ids-file=PATH    confine admission to these ids (one per line)
+ *   --run-tag=TAG           recorded on the lane's state rows (e.g. the envelope tag)
  */
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { logUsage as logUsageToSupabase, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { logUsage as logUsageToSupabase, outputTokensFrom, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
 import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
-import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
+import { assertStoreVector, GEMINI_TEXT_MODEL } from '../lib/vector-truth.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
+import fs from 'node:fs';
 import pg from 'pg';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -74,12 +88,6 @@ const LITE_MODEL = 'gemini-3.1-flash-lite';
 const TARGET_BATCH_CHARS = 50000;
 const MAX_RETRIES = 3;
 
-// Model pricing per 1M tokens (USD)
-const MODEL_PRICING = {
-  'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
-  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-  'default': { input: 0.10, output: 0.40 },
-};
 
 // ── CLI args ──
 const args = process.argv.slice(2);
@@ -96,6 +104,10 @@ const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8');
 const MAX_BATCH_CONCURRENCY = 20; // Cap parallel Gemini calls per book (prevents 100+ simultaneous calls for huge books)
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
+const BATCH_MODE = args.includes('--batch');
+const BATCH_MAX_USD = parseFloat(args.find(a => a.startsWith('--max-usd='))?.split('=')[1] || '2');
+const BATCH_IDS_FILE = args.find(a => a.startsWith('--book-ids-file='))?.split('=')[1];
+const BATCH_RUN_TAG = args.find(a => a.startsWith('--run-tag='))?.split('=')[1] || 'enrich-batch';
 const MAX_RUNTIME_MS = 90 * 60 * 1000; // 90 min hard cap — prevents 12h runs blocking the scheduler
 const PHASE_7_BOOK_TIMEOUT_MS = 5 * 60 * 1000;  // 5 min per book for chapter extraction
 const PHASE_7_5_BOOK_TIMEOUT_MS = 2 * 60 * 1000; // 2 min per book for quality scoring (one Gemini call)
@@ -187,15 +199,13 @@ async function withTimeout(promise, ms, label) {
 const PER_BATCH_CALL_MS = 90 * 1000;        // 90s per processBatch Gemini call
 const PER_SUMMARY_CALL_MS = 3 * 60 * 1000;  // 3 min for the final book-summary call
 
-function computeCost(model, inputTokens, outputTokens) {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
-  return (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
-}
-
+// Priced by the shared logger's table. This file used to carry its own, with flash-lite at
+// $0.075/$0.30 per M tokens against a real $0.25/$1.50 — every enrichment row under-reported
+// ~3-5x to the dial (measured on #2141, 2026-10-07).
 async function logUsage(db, params) {
   await logUsageToSupabase({
     ...params,
-    cost_usd: computeCost(params.model, params.input_tokens, params.output_tokens),
+    cost_usd: calculateUsageCost(params.model, params.input_tokens, params.output_tokens, params.mode === 'batch'),
   }, db);
 }
 
@@ -241,7 +251,7 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } })
   : null;
 
-const EMBED_MODEL = 'gemini-embedding-2-preview';
+const EMBED_MODEL = GEMINI_TEXT_MODEL; // gemini-embedding-2 since #6170
 const EMBED_DIMS = 768;
 
 /**
@@ -324,6 +334,8 @@ async function upsertBookEmbedding(book, indexData) {
     const data = await res.json();
     const embedding = data?.embeddings?.[0]?.values;
     if (!embedding) return;
+    // The request above called EMBED_MODEL; refuse a vector that does not look like it (#6175).
+    assertStoreVector(embedding, { model: EMBED_MODEL });
 
     const yearMatch = (book.published || '').match(/\d{3,4}/);
     const { error } = await supabaseClient.from('book_embeddings').upsert({
@@ -404,12 +416,17 @@ async function researchBook(title, author) {
 }
 
 // ── Batch extraction ──
-async function processBatch(pages, bookTitle, bookAuthor, bookLanguage) {
-  const model = getClient().getGenerativeModel({
-    model: LITE_MODEL,
-    generationConfig: { temperature: 0.2, maxOutputTokens: 2000, thinkingConfig: { thinkingBudget: 0 } },
-  });
+// Shared by the realtime call below and the Batch API lane (./lib/enrich-batch-lane.mjs):
+// the prompt and the parse are the same text either way; only the transport differs.
+const INDEX_BATCH_GEN_CONFIG = { temperature: 0.2, maxOutputTokens: 2000, thinkingConfig: { thinkingBudget: 0 } };
+const CHAPTERS_GEN_CONFIG = { thinkingConfig: { thinkingBudget: 0 } };
 
+function emptyExtraction(pageRange, usage = null) {
+  return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage };
+}
+
+/** The per-page-batch extraction prompt, or prompt=null when the batch has no translated text. */
+function buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage) {
   const pageRange = {
     start: pages[0].page_number,
     end: pages[pages.length - 1].page_number,
@@ -428,9 +445,7 @@ async function processBatch(pages, bookTitle, bookAuthor, bookLanguage) {
     })
     .join('\n\n---\n\n');
 
-  if (!batchContent.trim()) {
-    return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage: null };
-  }
+  if (!batchContent.trim()) return { pageRange, prompt: null };
 
   const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (translated from ${bookLanguage})` : ''}.
 
@@ -450,7 +465,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes (—). No filler like 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'. Short, direct sentences."
 }
 
 CRITICAL for quotes:
@@ -459,6 +474,36 @@ CRITICAL for quotes:
 - Look for: bold claims, definitions, vivid descriptions, key arguments
 - Include the page number where each quote appears
 - 3-5 quotes per batch`;
+
+  return { pageRange, prompt };
+}
+
+/** Parse one extraction response. Throws on malformed JSON (the realtime path retries on it). */
+function parseIndexBatchResponse(responseText, pageRange, usage) {
+  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return emptyExtraction(pageRange, usage);
+
+  const parsed = JSON.parse(jsonMatch[0]);
+  return {
+    pageRange,
+    themes: Array.isArray(parsed.themes) ? parsed.themes : [],
+    quotes: Array.isArray(parsed.quotes) ? parsed.quotes : [],
+    people: Array.isArray(parsed.people) ? parsed.people : [],
+    places: Array.isArray(parsed.places) ? parsed.places : [],
+    concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
+    summary: typeof parsed.summary === 'string' ? parsed.summary : '',
+    usage,
+  };
+}
+
+async function processBatch(pages, bookTitle, bookAuthor, bookLanguage) {
+  const model = getClient().getGenerativeModel({
+    model: LITE_MODEL,
+    generationConfig: INDEX_BATCH_GEN_CONFIG,
+  });
+
+  const { pageRange, prompt } = buildIndexBatchPrompt(pages, bookTitle, bookAuthor, bookLanguage);
+  if (!prompt) return emptyExtraction(pageRange);
 
   // One retry on timeout/transient error — the second call may rotate to a
   // healthier key after a 429. Without the per-call timeout, a hung call
@@ -478,23 +523,7 @@ CRITICAL for quotes:
         input_tokens: usageMetadata?.promptTokenCount || 0,
         output_tokens: outputTokensFrom(usageMetadata),
       };
-
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage };
-      }
-
-      const parsed = JSON.parse(jsonMatch[0]);
-      return {
-        pageRange,
-        themes: Array.isArray(parsed.themes) ? parsed.themes : [],
-        quotes: Array.isArray(parsed.quotes) ? parsed.quotes : [],
-        people: Array.isArray(parsed.people) ? parsed.people : [],
-        places: Array.isArray(parsed.places) ? parsed.places : [],
-        concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
-        summary: typeof parsed.summary === 'string' ? parsed.summary : '',
-        usage,
-      };
+      return parseIndexBatchResponse(responseText, pageRange, usage);
     } catch (e) {
       lastErr = e;
       if (e.message?.includes('429') || e.message?.includes('RESOURCE_EXHAUSTED')) {
@@ -504,7 +533,7 @@ CRITICAL for quotes:
     }
   }
   console.error(`  Batch processing error (pages ${pageRange.start}-${pageRange.end}):`, lastErr?.message);
-  return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', usage: null };
+  return emptyExtraction(pageRange);
 }
 
 // ── Batch creation ──
@@ -546,10 +575,14 @@ function createBatchesFromChapters(chapterTexts, pages) {
   return batches;
 }
 
-async function processAllBatches(pages, bookTitle, bookAuthor, bookLanguage, chapterTexts) {
-  const pageBatches = chapterTexts && chapterTexts.length > 1
+function planPageBatches(pages, chapterTexts) {
+  return chapterTexts && chapterTexts.length > 1
     ? createBatchesFromChapters(chapterTexts, pages)
     : createBatches(pages);
+}
+
+async function processAllBatches(pages, bookTitle, bookAuthor, bookLanguage, chapterTexts) {
+  const pageBatches = planPageBatches(pages, chapterTexts);
   if (pageBatches.length === 0) return [];
 
   const batchSource = chapterTexts && chapterTexts.length > 1 ? 'chapters' : 'char-count';
@@ -708,22 +741,8 @@ function extractPageSummaries(pages) {
 }
 
 // ── Book summary generation ──
-async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, bookLanguage, researchContext, chapters, englishTitle) {
-  const model = getClient().getGenerativeModel({
-    model: LITE_MODEL,
-    generationConfig: SUMMARY_GEN_CONFIG,
-  });
-
-  if (batchExtractions.length === 0) {
-    return {
-      brief: researchContext ? `A text by ${bookAuthor}. ${researchContext.substring(0, 200)}...` : `A text by ${bookAuthor}. Process page translations to generate a detailed summary.`,
-      abstract: researchContext || 'No page content available yet. Process translations to generate a summary based on the actual text.',
-      detailed: researchContext || 'This book has not been processed yet. Generate OCR and translations for the pages, then regenerate this summary to see content-based analysis.',
-      sections: [],
-      usage: null,
-    };
-  }
-
+/** The synthesis prompt over a book's batch extractions (non-empty). Shared with the Batch API lane. */
+function buildBookSummaryRequest(batchExtractions, bookTitle, bookAuthor, bookLanguage, chapters, englishTitle) {
   const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))];
   const allQuotes = batchExtractions.flatMap(b => b.quotes);
   const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))];
@@ -750,24 +769,15 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
   const hasChapters = chapters && chapters.length > 0;
   const chapterSection = hasChapters ? `\n## Detected Chapter Structure\n${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}\n` : '';
 
-  const prompt = buildSummaryPrompt({
+  return buildSummaryPrompt({
     bookTitle, englishTitle, bookAuthor, languageContext, researchSection, chapterSection,
     themes: allThemes, people: allPeople, places: allPlaces, concepts: allConcepts,
     sectionSummariesText: batchSummariesText, quotesText, hasChapters,
   });
+}
 
-  const result = await withTimeout(
-    model.generateContent(prompt),
-    PER_SUMMARY_CALL_MS,
-    `generateBookSummary "${bookTitle.slice(0, 40)}"`,
-  );
-  const responseText = result.response.text();
-  const usageMetadata = result.response.usageMetadata;
-  const usage = {
-    input_tokens: usageMetadata?.promptTokenCount || 0,
-    output_tokens: outputTokensFrom(usageMetadata),
-  };
-
+/** Parse the synthesis response. Throws when no JSON object can be recovered. */
+function parseBookSummaryResponse(responseText, usage) {
   const jsonMatch = responseText.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error('Failed to parse book summary JSON');
 
@@ -801,6 +811,36 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
     sections: Array.isArray(parsed.sections) ? parsed.sections : [],
     usage,
   };
+}
+
+async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, bookLanguage, researchContext, chapters, englishTitle) {
+  const model = getClient().getGenerativeModel({
+    model: LITE_MODEL,
+    generationConfig: SUMMARY_GEN_CONFIG,
+  });
+
+  if (batchExtractions.length === 0) {
+    return {
+      brief: researchContext ? `A text by ${bookAuthor}. ${researchContext.substring(0, 200)}...` : `A text by ${bookAuthor}. Process page translations to generate a detailed summary.`,
+      abstract: researchContext || 'No page content available yet. Process translations to generate a summary based on the actual text.',
+      detailed: researchContext || 'This book has not been processed yet. Generate OCR and translations for the pages, then regenerate this summary to see content-based analysis.',
+      sections: [],
+      usage: null,
+    };
+  }
+
+  const prompt = buildBookSummaryRequest(batchExtractions, bookTitle, bookAuthor, bookLanguage, chapters, englishTitle);
+
+  const result = await withTimeout(
+    model.generateContent(prompt),
+    PER_SUMMARY_CALL_MS,
+    `generateBookSummary "${bookTitle.slice(0, 40)}"`,
+  );
+  const usageMetadata = result.response.usageMetadata;
+  return parseBookSummaryResponse(result.response.text(), {
+    input_tokens: usageMetadata?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(usageMetadata),
+  });
 }
 
 // ── Quote grounding ──
@@ -923,12 +963,9 @@ const PHASE_6_CHAPTER_TEXT_PROJECTION = {
 };
 
 // ── Main Phase 6 function ──
-async function enrichBook(db, book) {
-  const bookTitle = book.display_title || book.title;
-  const bookAuthor = book.author || 'Unknown';
+/** Everything Phase 6 reads from Mongo for one book: its pages, chapter list, and page batching. */
+async function loadPhase6Inputs(db, book) {
   const bookId = book.id;
-
-  console.log(`  [Phase 6] ${bookTitle}`);
 
   // Get all pages
   const pages = await db.collection('pages')
@@ -953,16 +990,58 @@ async function enrichBook(db, book) {
     .toArray();
   const useChapters = chapterTexts.length > 1;
 
+  return { pages, translatedCount, chapters, chapterTexts: useChapters ? chapterTexts : undefined };
+}
+
+async function enrichBook(db, book) {
+  const bookTitle = book.display_title || book.title;
+  const bookAuthor = book.author || 'Unknown';
+
+  console.log(`  [Phase 6] ${bookTitle}`);
+  const inputs = await loadPhase6Inputs(db, book);
+  const { pages, chapters } = inputs;
+
   // Research in parallel with batch processing
   const researchPromise = researchBook(bookTitle, bookAuthor).catch(() => '');
 
   // Process batches
   const batchExtractions = await processAllBatches(
-    pages, bookTitle, bookAuthor, book.language || undefined,
-    useChapters ? chapterTexts : undefined
+    pages, bookTitle, bookAuthor, book.language || undefined, inputs.chapterTexts
   );
 
   const researchContext = await researchPromise;
+
+  // Generate final summary
+  let generated = null;
+  if (batchExtractions.length > 0 || researchContext) {
+    try {
+      generated = await generateBookSummary(
+        batchExtractions, book.title || bookTitle, bookAuthor,
+        book.language || undefined,
+        researchContext || undefined,
+        chapters.length > 0 ? chapters : undefined,
+        book.display_title || undefined
+      );
+    } catch (e) {
+      console.error(`    Summary generation failed:`, e.message);
+    }
+  }
+
+  await finishEnrichBook(db, book, inputs, batchExtractions, generated, { mode: 'realtime' });
+}
+
+/**
+ * Write Phase 6's outputs from finished model results: concept index, grounded quotes,
+ * book_indexes, summary/reading_summary, entities and embeddings. The realtime path and
+ * the Batch API lane both end here, so a book enriched either way is written identically.
+ * `mode: 'batch'` skips the usage rows — the batch lane meters its own, per job, at submit
+ * and again at collect (#4567).
+ */
+async function finishEnrichBook(db, book, inputs, batchExtractions, generated, { mode = 'realtime' } = {}) {
+  const bookTitle = book.display_title || book.title;
+  const bookAuthor = book.author || 'Unknown';
+  const bookId = book.id;
+  const { pages, translatedCount } = inputs;
 
   // Build concept index
   const conceptIndex = buildConceptIndexFromBatches(batchExtractions, pages);
@@ -972,26 +1051,14 @@ async function enrichBook(db, book) {
     batch.summary ? [{ page: batch.pageRange.start, summary: batch.summary }] : []
   );
 
-  // Generate final summary
+  // Final summary (null when generation failed or was not attempted)
   let bookSummary = { brief: '', abstract: '', detailed: '' };
   let sectionSummaries = [];
   let summaryUsage = null;
-
-  if (batchExtractions.length > 0 || researchContext) {
-    try {
-      const generated = await generateBookSummary(
-        batchExtractions, book.title || bookTitle, bookAuthor,
-        book.language || undefined,
-        researchContext || undefined,
-        chapters.length > 0 ? chapters : undefined,
-        book.display_title || undefined
-      );
-      bookSummary = { brief: generated.brief, abstract: generated.abstract, detailed: generated.detailed };
-      sectionSummaries = generated.sections || [];
-      summaryUsage = generated.usage;
-    } catch (e) {
-      console.error(`    Summary generation failed:`, e.message);
-    }
+  if (generated) {
+    bookSummary = { brief: generated.brief, abstract: generated.abstract, detailed: generated.detailed };
+    sectionSummaries = generated.sections || [];
+    summaryUsage = generated.usage;
   }
 
   // Ground quotes. One page index and ONE wall-clock budget for the whole book: grounding is a
@@ -1093,7 +1160,7 @@ async function enrichBook(db, book) {
     }
   }
 
-  if (totalInputTokens > 0) {
+  if (mode === 'realtime' && totalInputTokens > 0) {
     await logUsage(db, {
       type: 'index', mode: 'realtime', model: LITE_MODEL,
       book_id: bookId, book_title: bookTitle,
@@ -1103,7 +1170,7 @@ async function enrichBook(db, book) {
     });
   }
 
-  if (summaryUsage) {
+  if (mode === 'realtime' && summaryUsage) {
     await logUsage(db, {
       type: 'summary', mode: 'realtime', model: LITE_MODEL,
       book_id: bookId, book_title: bookTitle,
@@ -1279,13 +1346,17 @@ const PHASE_7_BOOK_PROJECTION = {
 // Of the whole book_indexes doc only sectionSummaries feeds the section hints.
 const PHASE_7_BOOK_INDEX_PROJECTION = { _id: 0, sectionSummaries: 1 };
 
-async function extractChaptersForBook(db, bookId) {
+/** Phase 7's inputs and prompt for one book. Shared with the Batch API lane. */
+async function prepareChapterExtraction(db, bookId) {
   const book = await db.collection('books').findOne({ id: bookId }, { projection: PHASE_7_BOOK_PROJECTION });
   if (!book) throw new Error('Book not found');
 
   const pages = await db.collection('pages')
     .find(
-      { book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } },
+      // page_number > 0: a split book keeps its spreads as archived pages at page_number <= 0, still carrying
+      // their old OCR. Read here they anchored chapters at page -5 and stretched the last endPage past the
+      // book's length (#6114 wave A).
+      { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: '' } },
       { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, page_type: 1 } }
     )
     .sort({ page_number: 1 })
@@ -1328,12 +1399,6 @@ async function extractChaptersForBook(db, bookId) {
     }
   }
 
-  // Call Gemini — flash-lite is sufficient for structured chapter extraction
-  const modelId = LITE_MODEL;
-  const model = getClient().getGenerativeModel({
-    model: modelId,
-    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
-  });
   const prompt = buildExtractionPrompt(
     book.display_title || book.title,
     book.author || 'Unknown',
@@ -1343,13 +1408,12 @@ async function extractChaptersForBook(db, bookId) {
     tocPages.slice(0, 5),
     sectionHints,
   );
+  return { pages, rawHeadings, tocPages, prompt };
+}
 
-  const result = await model.generateContent(prompt);
-  const response = result.response;
-  const responseText = response.text();
-  const usageMetadata = response.usageMetadata;
-  const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = outputTokensFrom(usageMetadata);
+/** Parse, validate and save one chapter-extraction response. Throws on an unparseable response. */
+async function applyChapterExtraction(db, bookId, prep, responseText) {
+  const { pages } = prep;
 
   // Parse AI response
   let aiChapters;
@@ -1408,11 +1472,31 @@ async function extractChaptersForBook(db, bookId) {
     { id: bookId },
     { $set: { chapters, chapters_extracted_at: new Date() } }
   );
+  return chapters;
+}
+
+async function extractChaptersForBook(db, bookId) {
+  const prep = await prepareChapterExtraction(db, bookId);
+  const { rawHeadings, tocPages } = prep;
+
+  // Call Gemini — flash-lite is sufficient for structured chapter extraction
+  const modelId = LITE_MODEL;
+  const model = getClient().getGenerativeModel({
+    model: modelId,
+    generationConfig: CHAPTERS_GEN_CONFIG,
+  });
+  const result = await model.generateContent(prep.prompt);
+  const response = result.response;
+  const usageMetadata = response.usageMetadata;
+  const inputTokens = usageMetadata?.promptTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
+
+  const chapters = await applyChapterExtraction(db, bookId, prep, response.text());
 
   // Log usage
   await logUsage(db, {
     type: 'extract_chapters', mode: 'realtime', model: modelId,
-    book_id: bookId, page_count: pages.length,
+    book_id: bookId, page_count: prep.pages.length,
     input_tokens: inputTokens, output_tokens: outputTokens,
     status: 'success', endpoint: 'worker/hetzner-enrich',
   });
@@ -1440,10 +1524,13 @@ async function main() {
 
   // Check pause status
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  // Selective unpause: scoped books enrich while globally paused; the explicit
-  // enrichment-phase pause still hard-stops regardless of scope.
-  if (control?.paused_phases?.includes('enrichment') || !shouldBypassPause(control)) {
-    const reason = control?.paused_phases?.includes('enrichment') ? 'enrichment phase paused' : 'pipeline paused';
+  // Selective unpause: scoped books enrich while globally paused; the step pause
+  // ('enrich', or the legacy 'enrichment' / 6 / 7 — scripts/lib/pause.mjs, #5492)
+  // still hard-stops regardless of scope. A pause stops SUBMISSION only: under one,
+  // --batch still collects its already-paid jobs and submits nothing (#5496 review B2).
+  const pause = enrichPauseMode(control, { batchMode: BATCH_MODE });
+  if (pause.mode === 'skip') {
+    const reason = pause.reason;
     console.log(`[ENRICH] ${reason}, exiting`);
     await db.collection('cron_runs').insertOne({
       cron: 'hetzner-enrich-worker', timestamp: new Date(),
@@ -1454,8 +1541,9 @@ async function main() {
     await client.close();
     return;
   }
+  if (pause.mode === 'collect-only') console.log(`[ENRICH] ${pause.reason} — batch lane collects finished jobs only, submits nothing`);
   // When globally paused with a scope, confine every candidate query to it.
-  if (control?.paused && hasScope(control)) {
+  if (pause.mode === 'run' && control?.paused && hasScope(control)) {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
@@ -1466,10 +1554,45 @@ async function main() {
   // is paid work. A scope ENVELOPE (#4540) can open a confined lane when the
   // global dial is closed — the gate then returns the book ids the lane is
   // limited to, and the candidate queries below are confined to them.
-  const _gate = DRY_RUN ? { allowed: true, envelopeIds: null } : await budgetAllowsDispatchScoped(db, 'enrich-worker', { control });
+  // The batch lane asks under its own label, so an envelope can be opened for it alone
+  // (lanes: ['enrich-worker-batch']); an envelope laned 'enrich-worker' still opens both.
+  const gateLabel = BATCH_MODE ? 'enrich-worker-batch' : 'enrich-worker';
+  const _gate = pause.mode !== 'run' ? { allowed: false, envelopeIds: null }
+    : DRY_RUN ? { allowed: true, envelopeIds: null }
+    : await budgetAllowsDispatchScoped(db, gateLabel, { control });
   if (_gate.envelopeIds) {
     SCOPE_FILTER = { id: { $in: [..._gate.envelopeIds] } };
     console.log(`[ENRICH] Global dial closed, scope envelope open — confining to ${_gate.envelopeIds.size} envelope book(s).`);
+  }
+
+  if (BATCH_MODE) {
+    // Collecting is free and runs whatever the gate says; only submission needs it.
+    const report = await runEnrichBatchLane({
+      db, model: LITE_MODEL, dryRun: DRY_RUN, runTag: BATCH_RUN_TAG,
+      scopeFilter: SCOPE_FILTER, dispatchAllowed: pause.mode === 'run' && (DRY_RUN || _gate.allowed),
+      maxUsd: BATCH_MAX_USD, limit: limitArg ? parseInt(limitArg) : 50,
+      bookIds: BATCH_IDS_FILE ? fs.readFileSync(BATCH_IDS_FILE, 'utf8').split(/\s+/).filter(Boolean) : (SINGLE_BOOK ? [SINGLE_BOOK] : null),
+      phases: {
+        INDEX_BATCH_GEN_CONFIG, SUMMARY_GEN_CONFIG, CHAPTERS_GEN_CONFIG,
+        emptyExtraction, buildIndexBatchPrompt, parseIndexBatchResponse, planPageBatches,
+        buildBookSummaryRequest, parseBookSummaryResponse, loadPhase6Inputs, finishEnrichBook,
+        prepareChapterExtraction, applyChapterExtraction, revalidateBookPage,
+      },
+    });
+    console.log(`[ENRICH] batch — collected=${report.collected} written=${report.written} chapters=${report.chaptersWritten} admitted=${report.admitted} ($${report.admittedUsd}) submitted=${report.submitted.length} pending=${report.pending} failed=${report.failed} dropped=${report.dropped} errors=${report.errors.length}`);
+    for (const e of report.errors.slice(0, 10)) console.log(`    ${e}`);
+    if (!DRY_RUN) {
+      await db.collection('cron_runs').insertOne({
+        cron: 'hetzner-enrich-worker-batch', timestamp: new Date(), duration_ms: Date.now() - startTime,
+        status: report.errors.length ? 'completed_with_errors' : 'success', failed: false,
+        actions: { ...report, errors: undefined }, errors: report.errors.slice(0, 20).map(message => ({ message, timestamp: new Date() })),
+        error_count: report.errors.length,
+        summary: `W:${report.written} C:${report.chaptersWritten} A:${report.admitted} S:${report.submitted.length} P:${report.pending} err:${report.errors.length}`,
+      }).catch(() => {});
+    }
+    await drainBackgroundTasks();
+    await client.close();
+    return;
   }
   if (!DRY_RUN && !_gate.allowed) {
     await db.collection('cron_runs').insertOne({
@@ -1847,6 +1970,18 @@ NO explanation, just the JSON array.`;
 
       const validSlugs = new Set(collections.map(c => c.slug));
 
+      // Copy guard (#5689): never add a scan to a collection that already holds the
+      // keeper of a CONFIRMED copy pair — one card per edition-volume on the grid.
+      // Evidence is committed in scripts/identity-evidence/; load failure → no guard.
+      let confirmedCopies = null;
+      try {
+        confirmedCopies = loadConfirmedCopies();
+        console.log(`  Copy guard: ${confirmedCopies.pairs.length} confirmed copy pairs from ${confirmedCopies.files.join(', ') || 'no evidence files'}`);
+      } catch (err) {
+        console.error(`  Copy guard disabled — evidence unreadable: ${err.message}`);
+      }
+      let copySkips = 0;
+
       // Find books that have content but haven't been classified yet.
       // CANNOT use collection_scores: { $exists: false } in the DB query — Atlas times out
       // even with pipeline_auto.status index. Fetch by status (indexed), filter client-side.
@@ -1936,16 +2071,41 @@ NO explanation, just the JSON array.`;
             }
           }
 
+          // PUBLIC keepers' current collections, for the books in this batch that are
+          // confirmed copies. A keeper off the shelf does not block its copy.
+          const keeperCollections = new Map();
+          const keeperIds = confirmedCopies
+            ? [...new Set(batch.flatMap(b => (confirmedCopies.keepersOfCopy.get(b.id) || []).map(k => k.keeper_id)))]
+            : [];
+          if (keeperIds.length) {
+            const keepers = await db.collection('books')
+              .find({ id: { $in: keeperIds }, ...publicationFilter('public') })
+              .project({ _id: 0, id: 1, collections: 1 })
+              .toArray();
+            for (const k of keepers) keeperCollections.set(k.id, k.collections || []);
+          }
+          const skipRows = [];
+
           // Write results for this batch
           const bulkOps = [];
           for (const res of results) {
             const book = batch[res.i];
             if (!book) continue;
 
-            const assignments = (res.c || [])
+            const ranked = (res.c || [])
               .filter(a => a.s && validSlugs.has(a.s) && a.r >= 50)
               .sort((a, b) => b.r - a.r)
               .slice(0, 3);
+            const guard = copyGuard(book.id, ranked.map(a => a.s), confirmedCopies, keeperCollections);
+            for (const sk of guard.skipped) {
+              skipRows.push({
+                sweep: 'collection-tagger-copy-guard',
+                book_id: book.id,
+                action: 'collection-skipped-confirmed-copy',
+                detail: { collection: sk.slug, keeper_id: sk.keeper_id, basis: sk.basis, evidence: sk.source, issue: 5689 },
+              });
+            }
+            const assignments = ranked.filter(a => guard.keep.includes(a.s));
 
             const slugs = assignments.map(a => a.s);
 
@@ -1974,7 +2134,8 @@ NO explanation, just the JSON array.`;
               });
               collectionAssigned++;
             } else {
-              // Mark as processed even with no match, so we don't re-attempt
+              // Mark as processed even with no match (or every match was a confirmed
+              // copy's keeper collection — the sweep_log row says which), so we don't re-attempt
               bulkOps.push({
                 updateOne: {
                   filter: { id: book.id },
@@ -1983,7 +2144,7 @@ NO explanation, just the JSON array.`;
                       collection_scores: {
                         assigned_at: new Date(),
                         model: COLLECTION_MODEL,
-                        result: 'no_match',
+                        result: guard.skipped.length ? 'copy_guard' : 'no_match',
                       },
                     },
                   },
@@ -1995,10 +2156,14 @@ NO explanation, just the JSON array.`;
           if (bulkOps.length > 0) {
             await db.collection('books').bulkWrite(bulkOps);
           }
+          if (skipRows.length > 0) {
+            copySkips += skipRows.length;
+            await recordSweepActions(db, skipRows).catch(err => console.error(`  Copy guard sweep_log write failed: ${err.message}`));
+          }
 
           process.stdout.write(`  Processed: ${Math.min(i + COLLECTION_BATCH_SIZE, unclassifiedBooks.length)}/${unclassifiedBooks.length}\r`);
         }
-        console.log(`\n  Collection assignments: ${collectionAssigned}`);
+        console.log(`\n  Collection assignments: ${collectionAssigned}, copy-guard skips: ${copySkips}`);
       } else if (DRY_RUN) {
         console.log(`  Would classify ${unclassifiedBooks.length} books`);
       }

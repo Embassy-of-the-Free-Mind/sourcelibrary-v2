@@ -1,0 +1,67 @@
+{
+ "id": "69b21d1a429e087c6f866ee7_00452",
+ "image_legible": true,
+ "ocr_word_errors": 4,
+ "ocr_words_approx": 740,
+ "ocr_errors": [
+  {
+   "image": "qui Patriculo & Vopisco cōsulibus apparuit",
+   "ocr": "q̃ Patruculo & Vopisco cōsulibus apparuit",
+   "effect_on_english": "name rendered 'Patruculus' (print: Patriculo; i.e. Paterculus)"
+  },
+  {
+   "image": "qua sydus ipsum est spissi ac solidi ignis",
+   "ocr": "qua sydus ipsum spissi ac solidi ignis",
+   "effect_on_english": "none ('is' supplied)"
+  },
+  {
+   "image": "& in crines dispergit' (= dispergitur)",
+   "ocr": "& in crines dispergit",
+   "effect_on_english": "none in practice ('disperses into hair')"
+  },
+  {
+   "image": "qui maior est ardentiorque quam cæteris",
+   "ocr": "ardentiorsq̃ q̃ cæteris",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "per Cometas / enim / quam / qui / -que / corrotundatur (abbreviated in print)",
+   "ocr": "p Cometas, em̃, q̃, corrotundat̃ left as signs",
+   "effect_on_english": "none - all resolved correctly by the translator"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "minor: 'Do you not judge it to be a star because it denounces future things?' for 'sydus esse, quod futura denunciat'",
+   "cause": "translation",
+   "image": "non iudicas sydus esse, quod futura denunciat?",
+   "ocr": "non iudicas sydus esse, quod futura denunciat?",
+   "english": "Do you not judge it to be a star because it denounces"
+  },
+  {
+   "finding": "minor: 'did not draw the signs for the near future from the near future' garbles 'non ex proximo, quae in proximum daret'",
+   "cause": "translation",
+   "image": "illum nō ex proximo, quæ in proximum daret signa traxisse",
+   "ocr": "illum nō ex proximo, quæ in proximum daret signa traxisse",
+   "english": "did not draw the signs for the near future from the near future"
+  },
+  {
+   "finding": "minor: 'it is very similar to that which returns ... compared to this one' muddles 'simillima est illa ... huic'",
+   "cause": "translation",
+   "image": "Vides enim, simillima est illa, quæ tricesimo anno reuertitur ... huic quæ",
+   "ocr": "Vides enim, simillima est illa, quæ tricesimo anno reuertitur ... huic quæ",
+   "english": "You see, it is very similar to that which returns"
+  },
+  {
+   "finding": "minor T7: 'that they flow to those who observe' for garbled 'intuentes afflent' (reference: deceive the eye)",
+   "cause": "reference",
+   "image": "ut certo tēpore intuētes afflent",
+   "ocr": "ut certo tempore intuētes afflent",
+   "english": "that they flow to those who observe at a certain time"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": true,
+ "note": "Low-resolution scan (1078 px wide) but legible roman type. OCR matches the image except Patriculo→'Patruculo', a dropped 'est', dispergit'→'dispergit' and 'ardentiorsq̃'; q̃/p/em̃ were left unexpanded (fixed file expands them). The 1515 print really reads 'intuentes afflent' and 'Vides enim' where the modern text (and the reference) has 'fallant' / 'Quid enim?', so those findings are edition differences, not OCR."
+}

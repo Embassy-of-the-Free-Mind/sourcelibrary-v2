@@ -1,0 +1,168 @@
+{
+ "gallery": [
+  {
+   "id": "699209b5bed8f4b5ff5b25ac_00590",
+   "group": "Best 5",
+   "fidelity": 5,
+   "publishable": true,
+   "defect_classes": [
+    "none found"
+   ],
+   "cause": null
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12_00071",
+   "group": "Best 5",
+   "fidelity": 5,
+   "publishable": true,
+   "defect_classes": [
+    "none found"
+   ],
+   "cause": null
+  },
+  {
+   "id": "69e7934280b52390feb18445_00049",
+   "group": "Best 5",
+   "fidelity": 5,
+   "publishable": true,
+   "defect_classes": [
+    "none found"
+   ],
+   "cause": "none"
+  },
+  {
+   "id": "6953dd4277f38f6761be739a_00057",
+   "group": "Best 5",
+   "fidelity": 4.5,
+   "publishable": true,
+   "defect_classes": [
+    "T12",
+    "mistranslation"
+   ],
+   "cause": null
+  },
+  {
+   "id": "699243fabc722ec0ee80b251_00066",
+   "group": "Best 5",
+   "fidelity": 4.5,
+   "publishable": true,
+   "defect_classes": [
+    "mistranslation"
+   ],
+   "cause": null
+  },
+  {
+   "id": "6a2198371994d1df1e5e0235_00118",
+   "group": "Median 5",
+   "fidelity": 4,
+   "publishable": true,
+   "defect_classes": [
+    "mistranslation",
+    "terminology"
+   ],
+   "cause": "translation"
+  },
+  {
+   "id": "6a7de037fd8615d37af98df8_00106",
+   "group": "Median 5",
+   "fidelity": 4,
+   "publishable": true,
+   "defect_classes": [
+    "T10",
+    "T2",
+    "mistranslation",
+    "terminology"
+   ],
+   "cause": null
+  },
+  {
+   "id": "699ef9fd15618a982bb1ebd9_00790",
+   "group": "Median 5",
+   "fidelity": 3.5,
+   "publishable": true,
+   "defect_classes": [
+    "T7"
+   ],
+   "cause": "ocr_misread"
+  },
+  {
+   "id": "69d5ac07d0bd3547a5654dcc_00313",
+   "group": "Median 5",
+   "fidelity": 3.5,
+   "publishable": true,
+   "defect_classes": [
+    "name"
+   ],
+   "cause": null
+  },
+  {
+   "id": "69f33c97876dd827cbc5a94f_00258",
+   "group": "Median 5",
+   "fidelity": 3.5,
+   "publishable": true,
+   "defect_classes": [
+    "T7"
+   ],
+   "cause": null
+  },
+  {
+   "id": "69c79fed92b884e4f817374f_00107",
+   "group": "Worst 5",
+   "fidelity": 2,
+   "publishable": true,
+   "defect_classes": [
+    "T7",
+    "T8",
+    "T9",
+    "number"
+   ],
+   "cause": "ocr_misread"
+  },
+  {
+   "id": "69e7299ba409200ea79f0b56_00211",
+   "group": "Worst 5",
+   "fidelity": 2,
+   "publishable": true,
+   "defect_classes": [
+    "T9",
+    "mistranslation"
+   ],
+   "cause": "ocr_misread"
+  },
+  {
+   "id": "69e7933580b52390feb18277_00263",
+   "group": "Worst 5",
+   "fidelity": 2,
+   "publishable": true,
+   "defect_classes": [
+    "T8",
+    "mistranslation"
+   ],
+   "cause": "ocr_misread"
+  },
+  {
+   "id": "69e7933d80b52390feb1841a_00027",
+   "group": "Worst 5",
+   "fidelity": 2,
+   "publishable": true,
+   "defect_classes": [
+    "T9"
+   ],
+   "cause": "translation"
+  },
+  {
+   "id": "69e8b2ac2ff2a8dc09e7883c_00025",
+   "group": "Worst 5",
+   "fidelity": 1,
+   "publishable": true,
+   "defect_classes": [
+    "T4"
+   ],
+   "cause": "served_stale"
+  }
+ ],
+ "principles_pages": [
+  "69920bb1e0a548a13d884da7_00342",
+  "69935b208e28d8f4c5d3c445_00228"
+ ]
+}

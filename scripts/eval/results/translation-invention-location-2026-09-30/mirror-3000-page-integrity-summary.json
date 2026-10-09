@@ -1,0 +1,3029 @@
+{
+ "generated": "2026-09-30T09:48:30.883Z",
+ "all": {
+  "books": 3000,
+  "unreadable": 0,
+  "pages": 323046,
+  "trPages": 228405,
+  "catch": {
+   "books": 2384,
+   "pagesWithCw": 81415,
+   "judged": 69824,
+   "ok": 57485,
+   "shapes": {
+    "plate-between": 107,
+    "absent": 7784,
+    "mid-page": 2801,
+    "facing-text": 242,
+    "repeat": 82,
+    "back": 514,
+    "skip": 809
+   },
+   "unjudged": {
+    "last-word-of-page": 3340,
+    "one-letter": 2250,
+    "no-letters": 1722,
+    "described": 551,
+    "next-no-ocr": 2,
+    "next-empty": 98,
+    "no-next-page": 1292,
+    "cjk-fore-edge": 2336
+   },
+   "booksWithBreak": 1216
+  },
+  "pn": {
+   "booksTagged": 2720,
+   "booksJudged": 1137,
+   "pagesTagged": 214654,
+   "pairs": 154960,
+   "outliers": 4015,
+   "shapes": {
+    "misnumbered": 249,
+    "restart": 261,
+    "jump": 485,
+    "back": 671,
+    "repeat": 240,
+    "extra": 516
+   },
+   "booksWithBreak": 362,
+   "rates": {
+    "1": 1147,
+    "2": 33,
+    "0.5": 75
+   }
+  },
+  "dup": {
+   "judged": 264263,
+   "dup": 1079,
+   "books": 187
+  },
+  "trunc": {
+   "judged": 189739,
+   "flagged": 2708,
+   "books": 313
+  },
+  "echo": {
+   "judged": 187539,
+   "echo": 1302,
+   "listLike": 1204,
+   "books": 209,
+   "unjudged": {
+    "short": 11275,
+    "english-source": 29591
+   }
+  },
+  "meta": {
+   "marker": 12347,
+   "shapes": {
+    "short": 4650,
+    "copied": 2162,
+    "bare": 2841,
+    "hidden-text": 1919,
+    "partial": 601,
+    "descriptive": 21
+   },
+   "unjudged": 153,
+   "wholePage": 113,
+   "booksWithHidden": 240,
+   "booksWithWholePage": 66
+  }
+ },
+ "byLang": {
+  "latin": {
+   "books": 1343,
+   "unreadable": 0,
+   "pages": 121005,
+   "trPages": 87414,
+   "catch": {
+    "books": 1271,
+    "pagesWithCw": 45397,
+    "judged": 40274,
+    "ok": 33848,
+    "shapes": {
+     "plate-between": 51,
+     "absent": 4242,
+     "mid-page": 1300,
+     "facing-text": 174,
+     "repeat": 40,
+     "back": 244,
+     "skip": 375
+    },
+    "unjudged": {
+     "last-word-of-page": 1696,
+     "one-letter": 1280,
+     "no-letters": 869,
+     "described": 227,
+     "no-next-page": 1011,
+     "next-empty": 40
+    },
+    "booksWithBreak": 754
+   },
+   "pn": {
+    "booksTagged": 1247,
+    "booksJudged": 585,
+    "pagesTagged": 75727,
+    "pairs": 52634,
+    "outliers": 1639,
+    "shapes": {
+     "misnumbered": 132,
+     "restart": 140,
+     "back": 257,
+     "jump": 206,
+     "extra": 171,
+     "repeat": 113
+    },
+    "booksWithBreak": 155,
+    "rates": {
+     "1": 551,
+     "2": 8,
+     "0.5": 46
+    }
+   },
+   "dup": {
+    "judged": 106521,
+    "dup": 440,
+    "books": 85
+   },
+   "trunc": {
+    "judged": 75479,
+    "flagged": 1153,
+    "books": 129
+   },
+   "echo": {
+    "judged": 83202,
+    "echo": 576,
+    "listLike": 797,
+    "books": 102,
+    "unjudged": {
+     "short": 3792,
+     "english-source": 420
+    }
+   },
+   "meta": {
+    "marker": 5133,
+    "shapes": {
+     "short": 1721,
+     "bare": 756,
+     "hidden-text": 1099,
+     "copied": 1180,
+     "partial": 308
+    },
+    "unjudged": 69,
+    "wholePage": 71,
+    "booksWithHidden": 107,
+    "booksWithWholePage": 39
+   }
+  },
+  "chinese": {
+   "books": 566,
+   "unreadable": 0,
+   "pages": 17079,
+   "trPages": 6461,
+   "catch": {
+    "books": 436,
+    "pagesWithCw": 2375,
+    "judged": 3,
+    "ok": 2,
+    "shapes": {
+     "mid-page": 1
+    },
+    "unjudged": {
+     "cjk-fore-edge": 2323,
+     "described": 41,
+     "one-letter": 1,
+     "no-letters": 5,
+     "next-empty": 1,
+     "no-next-page": 1
+    },
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 536,
+    "booksJudged": 3,
+    "pagesTagged": 8596,
+    "pairs": 93,
+    "outliers": 2,
+    "shapes": {
+     "jump": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 3
+    }
+   },
+   "dup": {
+    "judged": 3141,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 1018,
+    "flagged": 30,
+    "books": 7
+   },
+   "echo": {
+    "judged": 4813,
+    "echo": 3,
+    "listLike": 3,
+    "books": 1,
+    "unjudged": {
+     "short": 1645,
+     "english-source": 3
+    }
+   },
+   "meta": {
+    "marker": 539,
+    "shapes": {
+     "copied": 57,
+     "short": 113,
+     "hidden-text": 56,
+     "bare": 276,
+     "partial": 30,
+     "descriptive": 1
+    },
+    "unjudged": 6,
+    "wholePage": 1,
+    "booksWithHidden": 10,
+    "booksWithWholePage": 1
+   }
+  },
+  "german": {
+   "books": 276,
+   "unreadable": 0,
+   "pages": 38734,
+   "trPages": 28176,
+   "catch": {
+    "books": 250,
+    "pagesWithCw": 13786,
+    "judged": 12628,
+    "ok": 11458,
+    "shapes": {
+     "mid-page": 328,
+     "back": 76,
+     "absent": 650,
+     "skip": 85,
+     "repeat": 11,
+     "facing-text": 18,
+     "plate-between": 2
+    },
+    "unjudged": {
+     "last-word-of-page": 417,
+     "one-letter": 227,
+     "described": 57,
+     "no-letters": 299,
+     "no-next-page": 153,
+     "next-empty": 5
+    },
+    "booksWithBreak": 155
+   },
+   "pn": {
+    "booksTagged": 256,
+    "booksJudged": 163,
+    "pagesTagged": 29911,
+    "pairs": 25382,
+    "outliers": 605,
+    "shapes": {
+     "misnumbered": 35,
+     "repeat": 54,
+     "jump": 47,
+     "restart": 29,
+     "back": 109,
+     "extra": 66
+    },
+    "booksWithBreak": 57,
+    "rates": {
+     "1": 161,
+     "2": 7,
+     "0.5": 10
+    }
+   },
+   "dup": {
+    "judged": 35002,
+    "dup": 261,
+    "books": 31
+   },
+   "trunc": {
+    "judged": 23729,
+    "flagged": 70,
+    "books": 31
+   },
+   "echo": {
+    "judged": 26726,
+    "echo": 239,
+    "listLike": 105,
+    "books": 34,
+    "unjudged": {
+     "short": 1359,
+     "english-source": 91
+    }
+   },
+   "meta": {
+    "marker": 2512,
+    "shapes": {
+     "short": 1191,
+     "copied": 279,
+     "bare": 775,
+     "hidden-text": 186,
+     "partial": 78,
+     "descriptive": 1
+    },
+    "unjudged": 2,
+    "wholePage": 12,
+    "booksWithHidden": 36,
+    "booksWithWholePage": 9
+   }
+  },
+  "english": {
+   "books": 233,
+   "unreadable": 0,
+   "pages": 45820,
+   "trPages": 29235,
+   "catch": {
+    "books": 128,
+    "pagesWithCw": 5115,
+    "judged": 4469,
+    "ok": 3631,
+    "shapes": {
+     "mid-page": 205,
+     "skip": 124,
+     "absent": 460,
+     "back": 41,
+     "repeat": 4,
+     "facing-text": 3,
+     "plate-between": 1
+    },
+    "unjudged": {
+     "one-letter": 116,
+     "last-word-of-page": 211,
+     "next-no-ocr": 2,
+     "next-empty": 11,
+     "no-letters": 156,
+     "described": 89,
+     "no-next-page": 61
+    },
+    "booksWithBreak": 73
+   },
+   "pn": {
+    "booksTagged": 223,
+    "booksJudged": 172,
+    "pagesTagged": 31622,
+    "pairs": 29346,
+    "outliers": 408,
+    "shapes": {
+     "restart": 33,
+     "jump": 70,
+     "back": 88,
+     "repeat": 30,
+     "extra": 148,
+     "misnumbered": 28
+    },
+    "booksWithBreak": 57,
+    "rates": {
+     "1": 218,
+     "2": 3,
+     "0.5": 1
+    }
+   },
+   "dup": {
+    "judged": 40800,
+    "dup": 101,
+    "books": 28
+   },
+   "trunc": {
+    "judged": 25435,
+    "flagged": 585,
+    "books": 38
+   },
+   "echo": {
+    "judged": 1671,
+    "echo": 177,
+    "listLike": 23,
+    "books": 9,
+    "unjudged": {
+     "short": 870,
+     "english-source": 26694
+    }
+   },
+   "meta": {
+    "marker": 153,
+    "shapes": {
+     "descriptive": 14,
+     "short": 52,
+     "hidden-text": 21,
+     "bare": 41,
+     "copied": 19,
+     "partial": 6
+    },
+    "unjudged": 0,
+    "wholePage": 1,
+    "booksWithHidden": 6,
+    "booksWithWholePage": 1
+   }
+  },
+  "tibetan": {
+   "books": 103,
+   "unreadable": 0,
+   "pages": 13650,
+   "trPages": 869,
+   "catch": {
+    "books": 7,
+    "pagesWithCw": 9,
+    "judged": 6,
+    "ok": 1,
+    "shapes": {
+     "absent": 4,
+     "mid-page": 1
+    },
+    "unjudged": {
+     "last-word-of-page": 3
+    },
+    "booksWithBreak": 5
+   },
+   "pn": {
+    "booksTagged": 89,
+    "booksJudged": 14,
+    "pagesTagged": 1596,
+    "pairs": 741,
+    "outliers": 8,
+    "shapes": {
+     "restart": 2,
+     "repeat": 5,
+     "extra": 2
+    },
+    "booksWithBreak": 3,
+    "rates": {
+     "1": 14,
+     "2": 2
+    }
+   },
+   "dup": {
+    "judged": 1524,
+    "dup": 2,
+    "books": 2
+   },
+   "trunc": {
+    "judged": 654,
+    "flagged": 6,
+    "books": 3
+   },
+   "echo": {
+    "judged": 854,
+    "echo": 3,
+    "listLike": 2,
+    "books": 2,
+    "unjudged": {
+     "short": 13,
+     "english-source": 2
+    }
+   },
+   "meta": {
+    "marker": 30,
+    "shapes": {
+     "copied": 13,
+     "short": 8,
+     "bare": 1
+    },
+    "unjudged": 8,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "french": {
+   "books": 77,
+   "unreadable": 0,
+   "pages": 16433,
+   "trPages": 15579,
+   "catch": {
+    "books": 59,
+    "pagesWithCw": 3318,
+    "judged": 2824,
+    "ok": 1804,
+    "shapes": {
+     "skip": 92,
+     "repeat": 5,
+     "absent": 546,
+     "mid-page": 273,
+     "back": 50,
+     "facing-text": 3,
+     "plate-between": 51
+    },
+    "unjudged": {
+     "last-word-of-page": 272,
+     "one-letter": 109,
+     "described": 18,
+     "no-letters": 63,
+     "next-empty": 15,
+     "no-next-page": 17
+    },
+    "booksWithBreak": 47
+   },
+   "pn": {
+    "booksTagged": 74,
+    "booksJudged": 48,
+    "pagesTagged": 14107,
+    "pairs": 12103,
+    "outliers": 250,
+    "shapes": {
+     "repeat": 9,
+     "back": 58,
+     "jump": 24,
+     "extra": 44,
+     "misnumbered": 16,
+     "restart": 9
+    },
+    "booksWithBreak": 23,
+    "rates": {
+     "1": 45,
+     "2": 5,
+     "0.5": 3
+    }
+   },
+   "dup": {
+    "judged": 14482,
+    "dup": 103,
+    "books": 11
+   },
+   "trunc": {
+    "judged": 13521,
+    "flagged": 308,
+    "books": 20
+   },
+   "echo": {
+    "judged": 14550,
+    "echo": 153,
+    "listLike": 137,
+    "books": 15,
+    "unjudged": {
+     "short": 955,
+     "english-source": 74
+    }
+   },
+   "meta": {
+    "marker": 1037,
+    "shapes": {
+     "bare": 216,
+     "short": 492,
+     "copied": 158,
+     "hidden-text": 106,
+     "partial": 58
+    },
+    "unjudged": 7,
+    "wholePage": 5,
+    "booksWithHidden": 13,
+    "booksWithWholePage": 2
+   }
+  },
+  "greek": {
+   "books": 60,
+   "unreadable": 0,
+   "pages": 21125,
+   "trPages": 17977,
+   "catch": {
+    "books": 54,
+    "pagesWithCw": 3791,
+    "judged": 3132,
+    "ok": 1776,
+    "shapes": {
+     "absent": 827,
+     "facing-text": 21,
+     "mid-page": 415,
+     "skip": 43,
+     "back": 38,
+     "repeat": 12
+    },
+    "unjudged": {
+     "no-letters": 175,
+     "last-word-of-page": 260,
+     "one-letter": 177,
+     "described": 38,
+     "no-next-page": 8,
+     "next-empty": 1
+    },
+    "booksWithBreak": 46
+   },
+   "pn": {
+    "booksTagged": 60,
+    "booksJudged": 39,
+    "pagesTagged": 15970,
+    "pairs": 11825,
+    "outliers": 342,
+    "shapes": {
+     "extra": 35,
+     "restart": 7,
+     "jump": 49,
+     "misnumbered": 12,
+     "back": 60,
+     "repeat": 6
+    },
+    "booksWithBreak": 20,
+    "rates": {
+     "1": 44,
+     "2": 4,
+     "0.5": 3
+    }
+   },
+   "dup": {
+    "judged": 19967,
+    "dup": 38,
+    "books": 9
+   },
+   "trunc": {
+    "judged": 14472,
+    "flagged": 255,
+    "books": 25
+   },
+   "echo": {
+    "judged": 16070,
+    "echo": 48,
+    "listLike": 65,
+    "books": 14,
+    "unjudged": {
+     "english-source": 1421,
+     "short": 486
+    }
+   },
+   "meta": {
+    "marker": 460,
+    "shapes": {
+     "hidden-text": 67,
+     "short": 223,
+     "copied": 96,
+     "descriptive": 1,
+     "bare": 57,
+     "partial": 8
+    },
+    "unjudged": 8,
+    "wholePage": 5,
+    "booksWithHidden": 9,
+    "booksWithWholePage": 3
+   }
+  },
+  "unknown": {
+   "books": 45,
+   "unreadable": 0,
+   "pages": 792,
+   "trPages": 196,
+   "catch": {
+    "books": 29,
+    "pagesWithCw": 342,
+    "judged": 309,
+    "ok": 270,
+    "shapes": {
+     "back": 3,
+     "absent": 21,
+     "facing-text": 12,
+     "mid-page": 3
+    },
+    "unjudged": {
+     "described": 2,
+     "one-letter": 4,
+     "no-next-page": 14,
+     "last-word-of-page": 9,
+     "no-letters": 3,
+     "next-empty": 1
+    },
+    "booksWithBreak": 16
+   },
+   "pn": {
+    "booksTagged": 28,
+    "booksJudged": 12,
+    "pagesTagged": 337,
+    "pairs": 190,
+    "outliers": 9,
+    "shapes": {
+     "extra": 2,
+     "misnumbered": 1,
+     "back": 1,
+     "restart": 2
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 9,
+     "2": 1,
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 530,
+    "dup": 4,
+    "books": 2
+   },
+   "trunc": {
+    "judged": 141,
+    "flagged": 1,
+    "books": 1
+   },
+   "echo": {
+    "judged": 180,
+    "echo": 1,
+    "listLike": 0,
+    "books": 1,
+    "unjudged": {
+     "short": 15,
+     "english-source": 1
+    }
+   },
+   "meta": {
+    "marker": 55,
+    "shapes": {
+     "partial": 2,
+     "bare": 28,
+     "short": 21,
+     "copied": 3
+    },
+    "unjudged": 1,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "italian": {
+   "books": 29,
+   "unreadable": 0,
+   "pages": 6893,
+   "trPages": 6582,
+   "catch": {
+    "books": 26,
+    "pagesWithCw": 2091,
+    "judged": 1778,
+    "ok": 1465,
+    "shapes": {
+     "absent": 208,
+     "back": 14,
+     "mid-page": 67,
+     "skip": 22,
+     "plate-between": 1,
+     "repeat": 1
+    },
+    "unjudged": {
+     "last-word-of-page": 174,
+     "described": 12,
+     "one-letter": 111,
+     "no-letters": 12,
+     "next-empty": 1,
+     "no-next-page": 3
+    },
+    "booksWithBreak": 20
+   },
+   "pn": {
+    "booksTagged": 29,
+    "booksJudged": 21,
+    "pagesTagged": 4922,
+    "pairs": 2723,
+    "outliers": 98,
+    "shapes": {
+     "repeat": 4,
+     "back": 10,
+     "misnumbered": 5,
+     "restart": 2,
+     "jump": 7,
+     "extra": 4
+    },
+    "booksWithBreak": 9,
+    "rates": {
+     "1": 20,
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 6385,
+    "dup": 4,
+    "books": 3
+   },
+   "trunc": {
+    "judged": 5795,
+    "flagged": 46,
+    "books": 8
+   },
+   "echo": {
+    "judged": 6014,
+    "echo": 30,
+    "listLike": 13,
+    "books": 9,
+    "unjudged": {
+     "short": 235,
+     "english-source": 333
+    }
+   },
+   "meta": {
+    "marker": 245,
+    "shapes": {
+     "partial": 9,
+     "hidden-text": 59,
+     "copied": 30,
+     "short": 106,
+     "bare": 39
+    },
+    "unjudged": 2,
+    "wholePage": 9,
+    "booksWithHidden": 12,
+    "booksWithWholePage": 5
+   }
+  },
+  "sanskrit": {
+   "books": 27,
+   "unreadable": 0,
+   "pages": 5813,
+   "trPages": 5035,
+   "catch": {
+    "books": 14,
+    "pagesWithCw": 153,
+    "judged": 60,
+    "ok": 10,
+    "shapes": {
+     "absent": 29,
+     "skip": 14,
+     "back": 2,
+     "facing-text": 2,
+     "mid-page": 3
+    },
+    "unjudged": {
+     "described": 14,
+     "last-word-of-page": 22,
+     "no-letters": 23,
+     "one-letter": 34
+    },
+    "booksWithBreak": 9
+   },
+   "pn": {
+    "booksTagged": 26,
+    "booksJudged": 9,
+    "pagesTagged": 5127,
+    "pairs": 2582,
+    "outliers": 141,
+    "shapes": {
+     "jump": 18,
+     "restart": 9,
+     "back": 8,
+     "extra": 1,
+     "repeat": 2
+    },
+    "booksWithBreak": 5,
+    "rates": {
+     "1": 12
+    }
+   },
+   "dup": {
+    "judged": 5445,
+    "dup": 2,
+    "books": 1
+   },
+   "trunc": {
+    "judged": 4731,
+    "flagged": 49,
+    "books": 6
+   },
+   "echo": {
+    "judged": 4911,
+    "echo": 1,
+    "listLike": 1,
+    "books": 1,
+    "unjudged": {
+     "short": 66,
+     "english-source": 58
+    }
+   },
+   "meta": {
+    "marker": 294,
+    "shapes": {
+     "bare": 146,
+     "descriptive": 4,
+     "partial": 22,
+     "short": 38,
+     "copied": 30,
+     "hidden-text": 44
+    },
+    "unjudged": 10,
+    "wholePage": 0,
+    "booksWithHidden": 2,
+    "booksWithWholePage": 0
+   }
+  },
+  "dutch": {
+   "books": 27,
+   "unreadable": 0,
+   "pages": 6073,
+   "trPages": 5929,
+   "catch": {
+    "books": 23,
+    "pagesWithCw": 2910,
+    "judged": 2731,
+    "ok": 2528,
+    "shapes": {
+     "mid-page": 44,
+     "absent": 120,
+     "skip": 19,
+     "back": 14,
+     "repeat": 3,
+     "facing-text": 2,
+     "plate-between": 1
+    },
+    "unjudged": {
+     "last-word-of-page": 47,
+     "one-letter": 82,
+     "no-next-page": 20,
+     "no-letters": 10,
+     "next-empty": 19,
+     "described": 1
+    },
+    "booksWithBreak": 21
+   },
+   "pn": {
+    "booksTagged": 25,
+    "booksJudged": 17,
+    "pagesTagged": 5087,
+    "pairs": 4276,
+    "outliers": 159,
+    "shapes": {
+     "back": 31,
+     "misnumbered": 14,
+     "extra": 20,
+     "repeat": 8,
+     "restart": 8,
+     "jump": 10
+    },
+    "booksWithBreak": 10,
+    "rates": {
+     "1": 16,
+     "2": 1
+    }
+   },
+   "dup": {
+    "judged": 5308,
+    "dup": 99,
+    "books": 6
+   },
+   "trunc": {
+    "judged": 5014,
+    "flagged": 5,
+    "books": 5
+   },
+   "echo": {
+    "judged": 5453,
+    "echo": 14,
+    "listLike": 9,
+    "books": 8,
+    "unjudged": {
+     "short": 447,
+     "english-source": 29
+    }
+   },
+   "meta": {
+    "marker": 491,
+    "shapes": {
+     "hidden-text": 30,
+     "bare": 111,
+     "partial": 13,
+     "short": 262,
+     "copied": 75
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 6,
+    "booksWithWholePage": 0
+   }
+  },
+  "sogdian": {
+   "books": 25,
+   "unreadable": 0,
+   "pages": 56,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 8,
+    "booksJudged": 0,
+    "pagesTagged": 9,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 3,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "middle persian": {
+   "books": 24,
+   "unreadable": 0,
+   "pages": 51,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 6,
+    "booksJudged": 0,
+    "pagesTagged": 6,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 6,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "hebrew": {
+   "books": 23,
+   "unreadable": 0,
+   "pages": 3941,
+   "trPages": 3696,
+   "catch": {
+    "books": 18,
+    "pagesWithCw": 719,
+    "judged": 563,
+    "ok": 219,
+    "shapes": {
+     "absent": 265,
+     "back": 11,
+     "mid-page": 58,
+     "facing-text": 3,
+     "skip": 7
+    },
+    "unjudged": {
+     "last-word-of-page": 134,
+     "one-letter": 18,
+     "next-empty": 1,
+     "no-next-page": 2,
+     "no-letters": 1
+    },
+    "booksWithBreak": 18
+   },
+   "pn": {
+    "booksTagged": 19,
+    "booksJudged": 4,
+    "pagesTagged": 2465,
+    "pairs": 407,
+    "outliers": 44,
+    "shapes": {
+     "restart": 1,
+     "jump": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 2,
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 3590,
+    "dup": 3,
+    "books": 2
+   },
+   "trunc": {
+    "judged": 2849,
+    "flagged": 7,
+    "books": 4
+   },
+   "echo": {
+    "judged": 3454,
+    "echo": 0,
+    "listLike": 4,
+    "books": 0,
+    "unjudged": {
+     "english-source": 46,
+     "short": 196
+    }
+   },
+   "meta": {
+    "marker": 22,
+    "shapes": {
+     "bare": 7,
+     "copied": 7,
+     "short": 5,
+     "hidden-text": 3
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "russian": {
+   "books": 19,
+   "unreadable": 0,
+   "pages": 7232,
+   "trPages": 6978,
+   "catch": {
+    "books": 18,
+    "pagesWithCw": 236,
+    "judged": 148,
+    "ok": 78,
+    "shapes": {
+     "absent": 46,
+     "mid-page": 18,
+     "back": 3,
+     "skip": 3
+    },
+    "unjudged": {
+     "no-letters": 51,
+     "one-letter": 14,
+     "last-word-of-page": 8,
+     "described": 14,
+     "no-next-page": 1
+    },
+    "booksWithBreak": 10
+   },
+   "pn": {
+    "booksTagged": 19,
+    "booksJudged": 18,
+    "pagesTagged": 6671,
+    "pairs": 5925,
+    "outliers": 71,
+    "shapes": {
+     "extra": 18,
+     "restart": 7,
+     "misnumbered": 4,
+     "jump": 17,
+     "back": 7,
+     "repeat": 3
+    },
+    "booksWithBreak": 9,
+    "rates": {
+     "1": 22
+    }
+   },
+   "dup": {
+    "judged": 6763,
+    "dup": 8,
+    "books": 2
+   },
+   "trunc": {
+    "judged": 6522,
+    "flagged": 79,
+    "books": 13
+   },
+   "echo": {
+    "judged": 6702,
+    "echo": 26,
+    "listLike": 19,
+    "books": 3,
+    "unjudged": {
+     "english-source": 21,
+     "short": 255
+    }
+   },
+   "meta": {
+    "marker": 5,
+    "shapes": {
+     "hidden-text": 2,
+     "bare": 1,
+     "short": 1
+    },
+    "unjudged": 1,
+    "wholePage": 1,
+    "booksWithHidden": 2,
+    "booksWithWholePage": 1
+   }
+  },
+  "sumerian": {
+   "books": 19,
+   "unreadable": 0,
+   "pages": 357,
+   "trPages": 357,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 37,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 21,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 89,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 268
+    }
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "arabic": {
+   "books": 17,
+   "unreadable": 0,
+   "pages": 5992,
+   "trPages": 5848,
+   "catch": {
+    "books": 14,
+    "pagesWithCw": 554,
+    "judged": 410,
+    "ok": 218,
+    "shapes": {
+     "mid-page": 25,
+     "skip": 8,
+     "absent": 148,
+     "back": 8,
+     "facing-text": 3
+    },
+    "unjudged": {
+     "last-word-of-page": 62,
+     "one-letter": 18,
+     "no-letters": 46,
+     "described": 17,
+     "next-empty": 1
+    },
+    "booksWithBreak": 13
+   },
+   "pn": {
+    "booksTagged": 17,
+    "booksJudged": 5,
+    "pagesTagged": 5283,
+    "pairs": 1452,
+    "outliers": 44,
+    "shapes": {
+     "restart": 5,
+     "misnumbered": 1,
+     "repeat": 4,
+     "jump": 3,
+     "back": 6,
+     "extra": 1
+    },
+    "booksWithBreak": 2,
+    "rates": {
+     "1": 6
+    }
+   },
+   "dup": {
+    "judged": 5639,
+    "dup": 8,
+    "books": 4
+   },
+   "trunc": {
+    "judged": 5077,
+    "flagged": 50,
+    "books": 7
+   },
+   "echo": {
+    "judged": 5596,
+    "echo": 13,
+    "listLike": 15,
+    "books": 4,
+    "unjudged": {
+     "english-source": 150,
+     "short": 102
+    }
+   },
+   "meta": {
+    "marker": 671,
+    "shapes": {
+     "hidden-text": 113,
+     "short": 237,
+     "bare": 202,
+     "partial": 32,
+     "copied": 85
+    },
+    "unjudged": 2,
+    "wholePage": 1,
+    "booksWithHidden": 10,
+    "booksWithWholePage": 1
+   }
+  },
+  "persian": {
+   "books": 14,
+   "unreadable": 0,
+   "pages": 1172,
+   "trPages": 571,
+   "catch": {
+    "books": 13,
+    "pagesWithCw": 108,
+    "judged": 90,
+    "ok": 40,
+    "shapes": {
+     "absent": 36,
+     "mid-page": 10,
+     "back": 2,
+     "skip": 2
+    },
+    "unjudged": {
+     "next-empty": 1,
+     "one-letter": 9,
+     "last-word-of-page": 7,
+     "no-next-page": 1
+    },
+    "booksWithBreak": 12
+   },
+   "pn": {
+    "booksTagged": 13,
+    "booksJudged": 3,
+    "pagesTagged": 498,
+    "pairs": 46,
+    "outliers": 2,
+    "shapes": {
+     "jump": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1,
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 897,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 460,
+    "flagged": 2,
+    "books": 1
+   },
+   "echo": {
+    "judged": 528,
+    "echo": 0,
+    "listLike": 1,
+    "books": 0,
+    "unjudged": {
+     "short": 42,
+     "english-source": 1
+    }
+   },
+   "meta": {
+    "marker": 47,
+    "shapes": {
+     "copied": 8,
+     "hidden-text": 5,
+     "short": 15,
+     "partial": 3,
+     "bare": 12
+    },
+    "unjudged": 4,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "parthian": {
+   "books": 14,
+   "unreadable": 0,
+   "pages": 31,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 2,
+    "booksJudged": 0,
+    "pagesTagged": 2,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 2,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "korean": {
+   "books": 13,
+   "unreadable": 0,
+   "pages": 1457,
+   "trPages": 1273,
+   "catch": {
+    "books": 2,
+    "pagesWithCw": 8,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {
+     "cjk-fore-edge": 8
+    },
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 9,
+    "booksJudged": 0,
+    "pagesTagged": 237,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 539,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 284,
+    "flagged": 3,
+    "books": 3
+   },
+   "echo": {
+    "judged": 1203,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 64,
+     "english-source": 6
+    }
+   },
+   "meta": {
+    "marker": 272,
+    "shapes": {
+     "short": 52,
+     "bare": 108,
+     "hidden-text": 49,
+     "copied": 30,
+     "partial": 19
+    },
+    "unjudged": 14,
+    "wholePage": 0,
+    "booksWithHidden": 12,
+    "booksWithWholePage": 0
+   }
+  },
+  "japanese": {
+   "books": 6,
+   "unreadable": 0,
+   "pages": 1148,
+   "trPages": 1116,
+   "catch": {
+    "books": 2,
+    "pagesWithCw": 6,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {
+     "no-letters": 1,
+     "cjk-fore-edge": 5
+    },
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 5,
+    "booksJudged": 2,
+    "pagesTagged": 914,
+    "pairs": 590,
+    "outliers": 39,
+    "shapes": {
+     "jump": 13,
+     "restart": 3,
+     "back": 12,
+     "extra": 1,
+     "repeat": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 399,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 626,
+    "flagged": 7,
+    "books": 1
+   },
+   "echo": {
+    "judged": 889,
+    "echo": 1,
+    "listLike": 0,
+    "books": 1,
+    "unjudged": {
+     "short": 226,
+     "english-source": 1
+    }
+   },
+   "meta": {
+    "marker": 146,
+    "shapes": {
+     "hidden-text": 34,
+     "short": 51,
+     "copied": 49,
+     "partial": 7,
+     "bare": 4
+    },
+    "unjudged": 1,
+    "wholePage": 3,
+    "booksWithHidden": 4,
+    "booksWithWholePage": 1
+   }
+  },
+  "spanish": {
+   "books": 5,
+   "unreadable": 0,
+   "pages": 475,
+   "trPages": 417,
+   "catch": {
+    "books": 5,
+    "pagesWithCw": 273,
+    "judged": 241,
+    "ok": 122,
+    "shapes": {
+     "mid-page": 29,
+     "absent": 73,
+     "back": 8,
+     "skip": 8,
+     "repeat": 1
+    },
+    "unjudged": {
+     "last-word-of-page": 8,
+     "one-letter": 23,
+     "next-empty": 1
+    },
+    "booksWithBreak": 5
+   },
+   "pn": {
+    "booksTagged": 5,
+    "booksJudged": 4,
+    "pagesTagged": 389,
+    "pairs": 338,
+    "outliers": 6,
+    "shapes": {
+     "jump": 1,
+     "back": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1,
+     "2": 1,
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 419,
+    "dup": 6,
+    "books": 1
+   },
+   "trunc": {
+    "judged": 382,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 399,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 15,
+     "english-source": 3
+    }
+   },
+   "meta": {
+    "marker": 12,
+    "shapes": {
+     "bare": 5,
+     "copied": 3,
+     "hidden-text": 2,
+     "short": 2
+    },
+    "unjudged": 0,
+    "wholePage": 2,
+    "booksWithHidden": 2,
+    "booksWithWholePage": 2
+   }
+  },
+  "egyptian hieroglyphs": {
+   "books": 5,
+   "unreadable": 0,
+   "pages": 708,
+   "trPages": 304,
+   "catch": {
+    "books": 2,
+    "pagesWithCw": 15,
+    "judged": 2,
+    "ok": 0,
+    "shapes": {
+     "absent": 2
+    },
+    "unjudged": {
+     "described": 13
+    },
+    "booksWithBreak": 2
+   },
+   "pn": {
+    "booksTagged": 2,
+    "booksJudged": 2,
+    "pagesTagged": 528,
+    "pairs": 388,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 392,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 127,
+    "flagged": 7,
+    "books": 2
+   },
+   "echo": {
+    "judged": 111,
+    "echo": 0,
+    "listLike": 2,
+    "books": 0,
+    "unjudged": {
+     "english-source": 143,
+     "short": 50
+    }
+   },
+   "meta": {
+    "marker": 17,
+    "shapes": {
+     "short": 5,
+     "hidden-text": 1
+    },
+    "unjudged": 11,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "old turkic": {
+   "books": 4,
+   "unreadable": 0,
+   "pages": 7,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 1,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "syriac": {
+   "books": 3,
+   "unreadable": 0,
+   "pages": 2225,
+   "trPages": 160,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 151,
+    "judged": 121,
+    "ok": 6,
+    "shapes": {
+     "mid-page": 16,
+     "absent": 88,
+     "skip": 5,
+     "repeat": 5,
+     "facing-text": 1
+    },
+    "unjudged": {
+     "one-letter": 24,
+     "no-letters": 1,
+     "described": 2,
+     "last-word-of-page": 3
+    },
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 3,
+    "booksJudged": 2,
+    "pagesTagged": 618,
+    "pairs": 564,
+    "outliers": 8,
+    "shapes": {
+     "extra": 1,
+     "restart": 1
+    },
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2,
+     "2": 1
+    }
+   },
+   "dup": {
+    "judged": 2176,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 104,
+    "flagged": 2,
+    "books": 1
+   },
+   "echo": {
+    "judged": 129,
+    "echo": 3,
+    "listLike": 2,
+    "books": 1,
+    "unjudged": {
+     "short": 26,
+     "english-source": 5
+    }
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "pali": {
+   "books": 3,
+   "unreadable": 0,
+   "pages": 539,
+   "trPages": 284,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 3,
+    "booksJudged": 2,
+    "pagesTagged": 266,
+    "pairs": 219,
+    "outliers": 12,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "0.5": 2
+    }
+   },
+   "dup": {
+    "judged": 453,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 270,
+    "flagged": 7,
+    "books": 1
+   },
+   "echo": {
+    "judged": 272,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 9,
+     "english-source": 3
+    }
+   },
+   "meta": {
+    "marker": 1,
+    "shapes": {},
+    "unjudged": 1,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "armenian": {
+   "books": 2,
+   "unreadable": 0,
+   "pages": 822,
+   "trPages": 817,
+   "catch": {
+    "books": 2,
+    "pagesWithCw": 18,
+    "judged": 12,
+    "ok": 3,
+    "shapes": {
+     "absent": 8,
+     "mid-page": 1
+    },
+    "unjudged": {
+     "one-letter": 1,
+     "described": 1,
+     "no-letters": 2,
+     "last-word-of-page": 2
+    },
+    "booksWithBreak": 2
+   },
+   "pn": {
+    "booksTagged": 2,
+    "booksJudged": 2,
+    "pagesTagged": 767,
+    "pairs": 744,
+    "outliers": 14,
+    "shapes": {
+     "misnumbered": 1,
+     "back": 4
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 746,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 752,
+    "flagged": 23,
+    "books": 2
+   },
+   "echo": {
+    "judged": 777,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "english-source": 5,
+     "short": 35
+    }
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "lenape": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 36,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 23,
+    "pairs": 20,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 16,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "urdu": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 158,
+   "trPages": 157,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 1,
+    "judged": 1,
+    "ok": 0,
+    "shapes": {
+     "absent": 1
+    },
+    "unjudged": {},
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 0,
+    "pagesTagged": 155,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 153,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 151,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 157,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "punjabi": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 48,
+   "trPages": 0,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 1,
+    "judged": 1,
+    "ok": 0,
+    "shapes": {
+     "skip": 1
+    },
+    "unjudged": {},
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 0,
+    "pagesTagged": 43,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 42,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "samaritan": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 5,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 0,
+    "pagesTagged": 2,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 3,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "romanian": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 2,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 0,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "geʾez": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 4,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 1,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "judeo-arabic": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 2,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 0,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "manichaean": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 2,
+   "trPages": 0,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 0,
+    "booksJudged": 0,
+    "pagesTagged": 0,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 0,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "javanese": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 224,
+   "trPages": 121,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 1,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {
+     "last-word-of-page": 1
+    },
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 182,
+    "pairs": 4,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 210,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 72,
+    "flagged": 1,
+    "books": 1
+   },
+   "echo": {
+    "judged": 115,
+    "echo": 0,
+    "listLike": 1,
+    "books": 0,
+    "unjudged": {
+     "english-source": 2,
+     "short": 4
+    }
+   },
+   "meta": {
+    "marker": 23,
+    "shapes": {
+     "hidden-text": 3,
+     "copied": 3,
+     "short": 11
+    },
+    "unjudged": 6,
+    "wholePage": 2,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 1
+   }
+  },
+  "hausa": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 135,
+   "trPages": 127,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 5,
+    "judged": 1,
+    "ok": 0,
+    "shapes": {
+     "absent": 1
+    },
+    "unjudged": {
+     "described": 2,
+     "one-letter": 2
+    },
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 110,
+    "pairs": 99,
+    "outliers": 3,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 114,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 15,
+    "flagged": 1,
+    "books": 1
+   },
+   "echo": {
+    "judged": 54,
+    "echo": 10,
+    "listLike": 4,
+    "books": 1,
+    "unjudged": {
+     "short": 1,
+     "english-source": 72
+    }
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "turkish": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 422,
+   "trPages": 421,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 5,
+    "judged": 3,
+    "ok": 1,
+    "shapes": {
+     "absent": 2
+    },
+    "unjudged": {
+     "no-letters": 2
+    },
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 405,
+    "pairs": 396,
+    "outliers": 7,
+    "shapes": {
+     "back": 2
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 388,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 380,
+    "flagged": 4,
+    "books": 1
+   },
+   "echo": {
+    "judged": 401,
+    "echo": 1,
+    "listLike": 1,
+    "books": 1,
+    "unjudged": {
+     "short": 20
+    }
+   },
+   "meta": {
+    "marker": 7,
+    "shapes": {
+     "partial": 1,
+     "copied": 3,
+     "short": 2,
+     "hidden-text": 1
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "danish": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 814,
+   "trPages": 780,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 20,
+    "judged": 13,
+    "ok": 2,
+    "shapes": {
+     "skip": 1,
+     "absent": 6,
+     "mid-page": 4
+    },
+    "unjudged": {
+     "last-word-of-page": 2,
+     "no-letters": 3,
+     "described": 2
+    },
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 676,
+    "pairs": 643,
+    "outliers": 10,
+    "shapes": {
+     "restart": 2,
+     "jump": 2,
+     "repeat": 1
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 701,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 649,
+    "flagged": 6,
+    "books": 1
+   },
+   "echo": {
+    "judged": 739,
+    "echo": 1,
+    "listLike": 0,
+    "books": 1,
+    "unjudged": {
+     "english-source": 2,
+     "short": 39
+    }
+   },
+   "meta": {
+    "marker": 14,
+    "shapes": {
+     "bare": 2,
+     "hidden-text": 5,
+     "short": 5,
+     "copied": 2
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "swahili": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 68,
+   "trPages": 67,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 1,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {
+     "last-word-of-page": 1
+    },
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 55,
+    "pairs": 52,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 57,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 56,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 58,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 5,
+     "english-source": 4
+    }
+   },
+   "meta": {
+    "marker": 1,
+    "shapes": {
+     "bare": 1
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "bengali": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 708,
+   "trPages": 707,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 1,
+    "judged": 1,
+    "ok": 0,
+    "shapes": {
+     "absent": 1
+    },
+    "unjudged": {},
+    "booksWithBreak": 1
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 659,
+    "pairs": 570,
+    "outliers": 63,
+    "shapes": {
+     "back": 4,
+     "jump": 6,
+     "restart": 1,
+     "extra": 2
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 697,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 675,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 700,
+    "echo": 2,
+    "listLike": 0,
+    "books": 1,
+    "unjudged": {
+     "short": 7
+    }
+   },
+   "meta": {
+    "marker": 37,
+    "shapes": {
+     "hidden-text": 14,
+     "bare": 7,
+     "copied": 9,
+     "short": 6,
+     "partial": 1
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "malay": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 258,
+   "trPages": 258,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 3,
+    "judged": 1,
+    "ok": 1,
+    "shapes": {},
+    "unjudged": {
+     "described": 1,
+     "last-word-of-page": 1
+    },
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 254,
+    "pairs": 253,
+    "outliers": 0,
+    "shapes": {
+     "jump": 3
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 254,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 253,
+    "flagged": 1,
+    "books": 1
+   },
+   "echo": {
+    "judged": 256,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 2
+    }
+   },
+   "meta": {
+    "marker": 6,
+    "shapes": {
+     "hidden-text": 2,
+     "copied": 2,
+     "short": 2
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "hindi": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 424,
+   "trPages": 418,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 374,
+    "pairs": 341,
+    "outliers": 31,
+    "shapes": {
+     "back": 13,
+     "jump": 6
+    },
+    "booksWithBreak": 1,
+    "rates": {
+     "1": 1
+    }
+   },
+   "dup": {
+    "judged": 383,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 8,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 401,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 16,
+     "english-source": 1
+    }
+   },
+   "meta": {
+    "marker": 110,
+    "shapes": {
+     "hidden-text": 17,
+     "bare": 39,
+     "copied": 21,
+     "partial": 4,
+     "short": 29
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 1,
+    "booksWithWholePage": 0
+   }
+  },
+  "kannada": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 82,
+   "trPages": 75,
+   "catch": {
+    "books": 0,
+    "pagesWithCw": 0,
+    "judged": 0,
+    "ok": 0,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 0,
+    "pagesTagged": 45,
+    "pairs": 0,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {}
+   },
+   "dup": {
+    "judged": 61,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 17,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 65,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {
+     "short": 10
+    }
+   },
+   "meta": {
+    "marker": 7,
+    "shapes": {
+     "bare": 7
+    },
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  },
+  "an": {
+   "books": 1,
+   "unreadable": 0,
+   "pages": 24,
+   "trPages": 0,
+   "catch": {
+    "books": 1,
+    "pagesWithCw": 2,
+    "judged": 2,
+    "ok": 2,
+    "shapes": {},
+    "unjudged": {},
+    "booksWithBreak": 0
+   },
+   "pn": {
+    "booksTagged": 1,
+    "booksJudged": 1,
+    "pagesTagged": 16,
+    "pairs": 14,
+    "outliers": 0,
+    "shapes": {},
+    "booksWithBreak": 0,
+    "rates": {
+     "1": 2
+    }
+   },
+   "dup": {
+    "judged": 16,
+    "dup": 0,
+    "books": 0
+   },
+   "trunc": {
+    "judged": 0,
+    "flagged": 0,
+    "books": 0
+   },
+   "echo": {
+    "judged": 0,
+    "echo": 0,
+    "listLike": 0,
+    "books": 0,
+    "unjudged": {}
+   },
+   "meta": {
+    "marker": 0,
+    "shapes": {},
+    "unjudged": 0,
+    "wholePage": 0,
+    "booksWithHidden": 0,
+    "booksWithWholePage": 0
+   }
+  }
+ }
+}

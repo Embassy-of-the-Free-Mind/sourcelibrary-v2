@@ -1,0 +1,45 @@
+{
+ "key": "v011_f224a",
+ "arm": "hinted",
+ "page": {
+  "key": "v011_f224a",
+  "vol": 11,
+  "book_id": "6ac0298f9a86d56c1aa18000",
+  "page_number": 447,
+  "page_label": "f. 224a",
+  "bdrc_canvas": "I1PD1102790450.jpg",
+  "ligeti": "Mng1.133",
+  "mng_span": "Da Dandr a 221b–227b",
+  "toh": "D501",
+  "skt": "Ārya-vajrapāṇinīlāmbaradharatrilokavinaya-nāma-tantra",
+  "derge_vol": 87,
+  "derge_file": "087_རྒྱུད་འབུམ།_ད.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>25</columns>\n<page-num>447</page-num>\n<header>ᠳᠥᠷᠪᠡᠨ ᠵᠠᠭᠤᠨ ᠳᠥᠴᠢᠨ ᠳᠣᠯᠣᠭ᠎ᠠ</header>\n<meta>Beijing Kanjur (1718-1720), woodblock print. Marginal Chinese text: 秘密經第十一᠂ 卷一百二十二᠂ 四百四十七.</meta>\n\n<margin>\nᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠳᠤ ᠭᠦᠷᠦᠭᠰᠡᠨ ᠂ ᠵᠠᠭᠤᠨ ᠂ ᠬᠣᠷᠢᠨ ᠬᠣᠶᠠᠷ ᠂ ᠳᠥᠷᠪᠡᠨ ᠵᠠᠭᠤᠨ ᠳᠥᠴᠢᠨ ᠳᠣᠯᠣᠭ᠎ᠠ ᠂ ᠪᠠᠮᠪᠠᠢ ᠃\n</margin>\n\nᠪᠣᠳᠢᠰᠠᠳᠤᠪᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠪᠠ ᠪᠡᠷ ᠂ ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠳᠤ ᠭᠦᠷᠦᠭᠰᠡᠨ ᠳᠤ\nᠳᠡᠶᠢᠨ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠂ ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠳᠤ ᠭᠦᠷᠦᠭᠰᠡᠨ ᠳᠤ ᠳᠡᠶᠢᠨ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠂\nᠰᠢᠯᠦᠭ ᠦᠨ ᠦᠨᠳᠦᠰᠦᠨ ᠳᠤ ᠳᠡᠶᠢᠨ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠂ ᠰᠢᠯᠦᠭ ᠦᠨ ᠦᠨᠳᠦᠰᠦᠨ ᠳᠤ\nᠳᠡᠶᠢᠨ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠳᠤ ᠂ ᠳᠡᠶᠢᠨ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠪᠠᠷ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠪᠠᠷ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\nᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ ᠂ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠭᠡᠵᠦ ᠦᠯᠦ ᠦᠵᠡᠬᠦ ᠳᠤ ᠂\n\n<vocab>ᠪᠣᠳᠢᠰᠠᠳᠤᠪᠠ (Bodhisattva), ᠮᠠᠬᠠᠰᠠᠳᠤᠪᠠ (Mahasattva), ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠳᠤ ᠭᠦᠷᠦᠭᠰᠡᠨ (Prajnaparamita), ᠦᠯᠦ ᠦᠵᠡᠮᠦᠢ (not seeing/not perceiving)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 3752,
+  "cost_usd": 0.0134265
+ },
+ "translation": {
+  "text": "# Four Hundred Forty-Seven\n\n<margin>\nPerfection of Wisdom, One Hundred Twenty-Two, Four Hundred Forty-Seven, Protective Shield <note>The marginal text indicates the title, volume number, page number, and section</note>.\n</margin>\n\nBy the <term>Bodhisattva</term> <gloss>enlightenment being</gloss> <term>Mahasattva</term> <gloss>great being</gloss>, in the <term>Prajnaparamita</term> <gloss>Perfection of Wisdom</gloss>,\nit is thus performed; in the Perfection of Wisdom it is thus performed,\nin the root of the verses it is thus performed; in the root of the verses\nit is thus performed, they do not see it as thus performed,\nby not seeing they do not see, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\nthey do not see it as not seeing, by not seeing they do not see,\n\n<summary>This page contains a repetitive meditative formula from the Perfection of Wisdom sutra emphasizing the non-perception of actions and the state of not seeing as a path to Buddhist insight. The rhythmic repetition is a characteristic feature of the Prajnaparamita literature intended for recitation and contemplation.</summary>\n<keywords>Prajnaparamita, Perfection of Wisdom, Bodhisattva, Mahasattva, non-perception, emptiness, Kanjur</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 5482,
+  "outputTokens": 602,
+  "cost_usd": 0.004547
+ }
+}

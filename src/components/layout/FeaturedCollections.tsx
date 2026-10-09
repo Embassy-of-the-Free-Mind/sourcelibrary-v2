@@ -30,7 +30,7 @@ const CUSTOM_COLLECTION = {
   title: 'The Contemplative Traditions',
   shortTitle: 'Contemplative',
   description:
-    'Primary sources from five wisdom traditions — Taoism, Sufism, Zen Buddhism, Advaita Vedanta, and depth psychology — in their original languages alongside English translations.',
+    'Primary sources from five wisdom traditions (Taoism, Sufism, Zen Buddhism, Advaita Vedanta, and depth psychology) in their original languages alongside English translations.',
   dateRange: '975 AD – 1936',
   totalBooks: 40,
   totalPages: 0,

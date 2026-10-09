@@ -718,7 +718,7 @@ export default function BookConstellationViz({ data, initialColorMode }: { data:
           </div>
           <div className="border-t border-gray-200 pt-3 text-gray-500 text-sm leading-relaxed space-y-2">
             <p>
-              Each rectangle is a book. Position reflects content similarity — AI
+              Each rectangle is a book. Position reflects content similarity: AI
               embeddings of summaries, themes, and index terms are projected with UMAP.
               Height represents date of composition.
             </p>
@@ -733,7 +733,7 @@ export default function BookConstellationViz({ data, initialColorMode }: { data:
             </p>
             <p>
               <strong className="text-gray-600">Z-axis:</strong>{' '}
-              Piecewise linear normalization — pre-1400 compressed, 1400-1970 expanded.
+              Piecewise linear normalization, with pre-1400 compressed and 1400-1970 expanded.
             </p>
           </div>
         </div>
