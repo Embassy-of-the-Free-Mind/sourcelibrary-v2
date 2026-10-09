@@ -456,7 +456,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                     className="w-full text-left px-3 py-2 hover:bg-stone-50 text-sm border-b border-stone-100 last:border-0"
                   >
                     <span className="font-medium text-stone-800">{book.display_title || book.title}</span>
-                    {book.author && <span className="text-stone-500 ml-1">— <AuthorName author={book.author} /></span>}
+                    {book.author && <span className="text-stone-500 ml-1">· <AuthorName author={book.author} /></span>}
                   </button>
                 ))}
               </div>
@@ -806,7 +806,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
               <p className="text-stone-500 text-base">
                 {data.total > 0
-                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} — ${resultsKind}`
+                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} · ${resultsKind}`
                   : resultsKind.charAt(0).toUpperCase() + resultsKind.slice(1)}
               </p>
             </div>

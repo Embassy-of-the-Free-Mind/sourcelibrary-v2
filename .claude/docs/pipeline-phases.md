@@ -50,19 +50,49 @@ node scripts/workers/pipeline-orchestrator.mjs --dry-run
 
 ## Pausing
 
+`system_config.processing_control.paused_phases` takes ONE vocabulary, the pipeline steps
+(`pipeline-next-step.md`) plus embeddings, defined in `scripts/lib/pause.mjs` (#5492):
+
+| key | stops |
+|-----|-------|
+| `archive` | orchestrator Phase 1, `archive-bulk.mjs`, `archive-ocr.mjs` |
+| `ocr` | orchestrator Phases 1.25, 1.45, 1.5, 1.6, 2, 3.7 |
+| `translate` | orchestrator Phase 4 (incl. chained enrolment), `translate-worker.mjs` (drain, mid-run, self-dispatch), the chained and seam batch lanes before every submit |
+| `enrich` | orchestrator Phases 6–7, `enrich-worker.mjs` (all its phases, 7.5/7.6 included) |
+| `images` | orchestrator Phase 8, `image-extract-worker.mjs` |
+| `embeddings` | `embed-gemini.mjs`, `image-embeddings-cron.mjs` |
+
+Legacy entries are aliases for a whole step: `'translation'` → translate, `'enrichment'` →
+enrich, `1.5`/`2` → ocr, `4`/`5` → translate, `6`/`7` → enrich, `8` → images. Any other
+orchestrator phase number (e.g. `1.97`, `3`, `9`) still pauses only that phase. **Any other
+word pauses nothing** and is logged as `UNKNOWN paused_phases entry` by every lane, every cycle.
+
+A step pause is **absolute**. The global `paused: true` is bypassed by any selective-unpause
+scope (`allow_scopes`) for the scoped books; a step pause is not. Completion checks (Phases 3,
+5, `batch-collector.mjs`) spend nothing and are not stopped by a key.
+
 ```bash
-# Pause all phases
+# Full stop: cancels jobs, parks open translate_batch_runs, sets paused:true AND every key
 POST /api/admin/emergency-stop
 
-# Pause specific phases (by name, not number)
-# In system_config.processing_control:
-paused_phases: ['ocr', 'translation', 'images']
+# Stop some steps (unknown keys → 400 with the valid list)
+POST /api/admin/emergency-stop   body: { "paused_phases": ["ocr", "translate"] }
+# which writes, in system_config.processing_control:
+paused_phases: ['ocr', 'translate']
 
-# Resume
+# Resume one step (everything else that was stopped stays stopped)
+POST /api/admin/emergency-stop?resume=true&key=translate
+
+# Resume everything (and un-park the runs the stop parked)
 POST /api/admin/emergency-stop?resume=true
 ```
 
-Note: `paused: true` in `system_config` only stops the orchestrator. Lambda and Hetzner workers with active jobs will continue until their current job finishes. To truly stop processing, cancel jobs in MongoDB.
+`scripts/audit/spend-perimeter.mjs` (CI) fails if a spender's spending path stops asking its
+key, or if this doc, the system map, or the route names a key no lane reads.
+
+A pause stops new paid work at the next check; work already at Gemini (a submitted Batch
+job) still completes and bills. Verify a pause by watching the CALL COUNT freeze
+(`spend-controls.md`), not by the API returning success.
 
 ## Status Flow Diagram
 

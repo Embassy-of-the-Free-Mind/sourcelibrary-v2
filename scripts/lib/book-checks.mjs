@@ -19,10 +19,15 @@
  *     (compare *_updated_at with the page's), so a verdict is never silently carried over onto new text.
  *   - which run: run_id, the run's own id (a results dir, a hide reason). Required, because {book_id, method_id, run_id}
  *     is the write-once key: with an optional run_id every later run-less check would collide with the first.
- * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq.
+ * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq, and page_findings (#6199): the serious
+ * findings per page — [{ page_number, wrong_page?, errors: [{ stage: ocr | translation | other, class?, problem? }] }],
+ * one entry per page WITH a serious finding, so `[]` says every page read was free of them and an absent field says
+ * the run kept no per-page record. The reader's page-level warning is built from it (src/lib/book-warnings.ts).
  *
- * Not a field on `books` (.claude/docs/invariants/field-sprawl.md). There is no update or delete here: a correction
- * is a new row. {book_id, method_id, run_id} is unique, so re-running a backfill or a writer cannot double a run.
+ * Not a field on `books` (.claude/docs/invariants/field-sprawl.md). There is no delete here and a verdict is never
+ * rewritten: a correction is a new row. {book_id, method_id, run_id} is unique, so re-running a backfill or a writer
+ * cannot double a run. The one addition to an existing row is attachPageFindings(), which fills page_findings from the
+ * row's own evidence file when the row has none, and never replaces one.
  *
  *   import { recordBookCheck, pageProvenance, ensureBookCheckIndexes } from '../lib/book-checks.mjs';
  *   const text_provenance = await pageProvenance(db, bookId, [12, 13, 14]);   // live read, at check time
@@ -35,6 +40,7 @@ import { fileURLToPath } from 'node:url';
 export const COLLECTION = 'book_checks';
 export const VERDICTS = ['show', 'caveat', 'fix'];
 export const READER_KINDS = ['model', 'human', 'detector'];
+export const FINDING_STAGES = ['ocr', 'translation', 'other'];
 export const METHODS_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'eval', 'methods');
 
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -64,7 +70,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   const p = [];
   const {
     book_id, checked_at, method_id, method_version, run_id, frame, pages_read, reader, verdict, verdict_source,
-    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq,
+    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq, page_findings,
   } = input;
   if (!nonEmpty(book_id)) p.push('book_id');
   const at = checked_at instanceof Date ? checked_at : (nonEmpty(checked_at) ? new Date(checked_at) : null);
@@ -103,6 +109,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   if (verdict_source !== undefined && !nonEmpty(verdict_source)) p.push('verdict_source, when given, is a non-empty string');
   for (const [k, v] of [['api_usd', api_usd], ['subscription_usd_eq', subscription_usd_eq]]) if (v !== undefined && v !== null && !(isNum(v) && v >= 0)) p.push(`${k} must be a number ≥ 0`);
   if (classes !== undefined && !(Array.isArray(classes) && classes.every(nonEmpty))) p.push('classes must be a list of strings');
+  if (page_findings !== undefined) p.push(...pageFindingProblems(page_findings, pages_read));
   if (p.length) throw new TypeError(`book_checks row refused (${book_id ?? '?'}, ${method_id ?? '?'}): missing or bad ${p.join('; ')}`);
 
   return {
@@ -115,6 +122,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
     ...(verdict_source ? { verdict_source } : {}),
     ...(classes ? { classes: [...new Set(classes)] } : {}),
     ...(nonEmpty(note) ? { note } : {}),
+    ...(page_findings !== undefined ? { page_findings } : {}),
     evidence_path,
     text_provenance,
     ...(isNum(api_usd) ? { api_usd } : {}),
@@ -122,6 +130,45 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
     recorded_at: new Date(),
     recorded_by: basename(process.argv[1] || 'unknown'),
   };
+}
+
+/** What is wrong with a page_findings value, as a list of strings (empty = valid). */
+export function pageFindingProblems(findings, pagesRead) {
+  if (!Array.isArray(findings)) return ['page_findings must be a list'];
+  const p = [];
+  const read = new Set(Array.isArray(pagesRead) ? pagesRead : []);
+  const seen = new Set();
+  for (const f of findings) {
+    if (!f || !isNum(f.page_number)) { p.push('page_findings[].page_number'); continue; }
+    const at = `page_findings p.${f.page_number}`;
+    if (!read.has(f.page_number)) p.push(`${at}: not in pages_read`);
+    if (seen.has(f.page_number)) p.push(`${at}: listed twice`);
+    seen.add(f.page_number);
+    if (f.wrong_page !== undefined && f.wrong_page !== true) p.push(`${at}: wrong_page is true or absent`);
+    if (!Array.isArray(f.errors)) { p.push(`${at}: errors must be a list`); continue; }
+    if (!f.errors.length && f.wrong_page !== true) p.push(`${at}: an entry needs a serious error or wrong_page (a clean page has no entry)`);
+    for (const e of f.errors) {
+      if (!e || !FINDING_STAGES.includes(e.stage)) p.push(`${at}: errors[].stage (${FINDING_STAGES.join(' | ')})`);
+      else for (const k of ['class', 'problem']) if (e[k] !== undefined && !nonEmpty(e[k])) p.push(`${at}: errors[].${k}, when given, is a non-empty string`);
+    }
+  }
+  return p;
+}
+
+/**
+ * Fill page_findings on a row that has none, from the same evidence the row already cites. Write-once: the filter
+ * requires the field to be absent, so a second call changes nothing and a row's findings are never replaced.
+ * Returns { attached: boolean }.
+ */
+export async function attachPageFindings(db, { book_id, method_id, run_id, pages_read, page_findings }) {
+  if (!db || typeof db.collection !== 'function') throw new TypeError('attachPageFindings: first argument must be a connected Mongo db handle');
+  const bad = [!nonEmpty(book_id) && 'book_id', !nonEmpty(method_id) && 'method_id', !nonEmpty(run_id) && 'run_id', ...pageFindingProblems(page_findings, pages_read)].filter(Boolean);
+  if (bad.length) throw new TypeError(`page_findings refused (${book_id ?? '?'}, ${method_id ?? '?'}): ${bad.join('; ')}`);
+  const r = await db.collection(COLLECTION).updateOne(
+    { book_id, method_id, run_id, pages_read, page_findings: { $exists: false } },
+    { $set: { page_findings, page_findings_attached_at: new Date(), page_findings_attached_by: basename(process.argv[1] || 'unknown') } },
+  );
+  return { attached: r.modifiedCount === 1 };
 }
 
 /**

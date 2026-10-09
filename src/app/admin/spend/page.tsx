@@ -262,7 +262,7 @@ export default async function SpendPage() {
 
       {D.completion ? (
         <Section id="completion" title="How far along each book is"
-          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
+          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top; their true counts are printed.">
           <div className="rounded border border-stone-200 bg-white p-3">
             <CompletionHistogram ocr={D.completion.ocr} translation={D.completion.translation}
               booksWithOcr={D.completion.books_with_ocr} nonEnglishWithOcr={D.completion.non_english_with_ocr} />

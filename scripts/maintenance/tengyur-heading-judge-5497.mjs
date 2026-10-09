@@ -45,6 +45,7 @@ import { GoogleGenAI } from '@google/genai';
 import { costOf, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 import { logUsage, completeBatchUsage, sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { repairTranslationText, resyncMirrors } from '../lib/translation-text-repair.mjs';
+import { registerEvalBatch, closeEvalBatch } from '../lib/eval-batch-registry.mjs';
 import { classifyHeading, sourceMarkers, headingText } from './tengyur-invented-headings-5497.mjs';
 
 const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3) ?? d;
@@ -167,10 +168,9 @@ async function runBatch(db, label, units) {
         jobs[label] = job; saveJobs(jobs);
         await logUsage({ type: 'heading_judge', mode: 'batch', model: MODEL, page_count: units.length, input_tokens: 0, output_tokens: 0, status: 'submitted', batch_job_id: created.name, endpoint: ENDPOINT, prompt_version: `${SOURCE}-${PROMPT_VERSION}`, triggered_by: 'manual' });
         // Registered so batch-collector's orphan sweep (batch-reconcile.mjs rule 3) knows the job and spares it (#5845).
-        await db.collection('batch_jobs').updateOne({ gemini_job_name: created.name }, { $setOnInsert: {
-          id: `${SOURCE}-${label}`, job_name: created.name, gemini_job_name: created.name, status: 'external_eval', type: 'heading_judge', model: MODEL,
-          page_count: units.length, created_at: new Date(job.submitted_at), updated_at: new Date(), issue: ISSUE,
-          note: `hand-submitted Batch (${ENDPOINT}); verdicts go to files, the script applies deletions itself` } }, { upsert: true });
+        await registerEvalBatch(db, { jobName: created.name, id: `${SOURCE}-${label}`, type: 'heading_judge', model: MODEL, pageCount: units.length,
+          submittedAt: job.submitted_at, issue: ISSUE, submittedBy: 'scripts/maintenance/tengyur-heading-judge-5497.mjs',
+          note: `hand-submitted Batch (${ENDPOINT}); verdicts go to files, the script applies deletions itself` });
         console.log(`${label}: submitted ${created.name} (${units.length} requests) with key ${k}; registered in batch_jobs`);
       } catch (err) {
         console.log(`${label}: key ${k} refused (${String(err.message).slice(0, 160)})`);
@@ -202,8 +202,9 @@ async function runBatch(db, label, units) {
     job.metered = await completeBatchUsage({ type: 'heading_judge', mode: 'batch', model: MODEL, page_count: units.length, input_tokens: inputTokens, output_tokens: outputTokens, status: 'success', batch_job_id: job.name, endpoint: ENDPOINT, triggered_by: 'manual' });
     job.usage = { inputTokens, outputTokens, usd: Number(usd.toFixed(4)) };
     jobs[label] = job; saveJobs(jobs);
-    await db.collection('batch_jobs').updateOne({ gemini_job_name: job.name }, { $set: { updated_at: new Date(), completed_at: new Date(), cost_usd: Number(usd.toFixed(4)), input_tokens: inputTokens, output_tokens: outputTokens } });
   }
+  // Outside the metered guard: a no-op once closed, and a resumed run still ends the registration (#5897).
+  await closeEvalBatch(db, job.name, { evidence: `${responses.length} responses downloaded and metered (${ENDPOINT})`, usage: { cost_usd: Number(usd.toFixed(4)), input_tokens: inputTokens, output_tokens: outputTokens } });
   console.log(`${label}: ${responses.length} responses, ${inputTokens} in / ${outputTokens} out = $${usd.toFixed(4)} at the Batch rate`);
   const m = new Map();
   fs.writeFileSync(outFile, responses.map((r) => { const key = r.key || r.metadata?.key; m.set(key, r.response); return JSON.stringify({ key, response: r.response, error: r.error }); }).join('\n') + '\n');

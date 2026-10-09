@@ -110,7 +110,7 @@ export default function TranslationCheckReview() {
           written on the page?
         </li>
         <li>
-          <b>Then the English.</b> Does it say what the original says — no dropped clauses, no
+          <b>Then the English.</b> Does it say what the original says, with no dropped clauses, no
           invented sentences, no lost negation, no changed name or number?
         </li>
         <li>
@@ -125,7 +125,7 @@ export default function TranslationCheckReview() {
         </h3>
         <p className="text-xs text-stone-500 mt-0.5 mb-3">
           Optional, and the most useful thing you can give us. One line of the original and what
-          it should have said is something we can actually fix — and when the same mistake turns
+          it should have said is something we can actually fix. And when the same mistake turns
           up across different books, it tells us the pipeline is wrong, not the page.
         </p>
 
@@ -166,7 +166,7 @@ export default function TranslationCheckReview() {
 
   return (
     <QueueShell
-      queueTitle={q.item?.language ? `Translation check — ${q.item.language}` : 'Translation check'}
+      queueTitle={q.item?.language ? `Translation check: ${q.item.language}` : 'Translation check'}
       question="Does our English say what the original says?"
       ratings={q.ratings}
       sessionCount={q.sessionCount}
@@ -180,7 +180,7 @@ export default function TranslationCheckReview() {
       canSubmit={q.canSubmit}
       authStatus={q.authStatus}
       note={q.note}
-      notePlaceholder="e.g. line 4 renders 'nisi' as 'if' — it should be 'unless', which reverses the sense"
+      notePlaceholder="e.g. line 4 renders 'nisi' as 'if'; it should be 'unless', which reverses the sense"
       onNoteChange={q.setNote}
       onNoteSubmit={q.submitNote}
       noteSaved={q.noteSaved}

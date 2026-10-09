@@ -177,6 +177,12 @@ export const PAGE_FIELDS = Object.freeze([
   // rate, method, source?, run_len, fit_share, fitter, run, at }. Absent where the book's
   // own sequence does not vouch for it. Cited as "p. 217 [scan 219]".
   'printed_page',
+  // #6173: a model-written abstract of the ideas on the page — an INDEX KEY for the
+  // concept lane (Supabase `page_concepts`), never shown or quoted as the page.
+  // { data, none, content_hash, source, run, prompt_version, model, updated_at,
+  //   engine (gemini-engine/1, input.source_text_hash = the page text it was made from) }.
+  // Written by scripts/batch/concept-abstracts.mjs.
+  'concept_abstract',
   // pipeline
   'status', 'archive_metadata',
   // host record: the source's own catalogue entry for THIS page, verbatim, as

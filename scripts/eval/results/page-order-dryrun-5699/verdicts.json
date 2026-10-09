@@ -1,0 +1,3177 @@
+{
+ "generated_at": "2026-10-08",
+ "issue": 5699,
+ "detector": "scripts/eval/page-marker-order.mjs (v5, unchanged)",
+ "page_numbers": "storage page_number as stored on 2026-10-08, inclusive",
+ "totals": {
+  "books": 60,
+  "confirmed": 50,
+  "false_positive": 10,
+  "by_pattern": {
+   "whole book descending": {
+    "books": 26,
+    "affected_pages": 15559,
+    "translated_ai_in_range": 7734
+   },
+   "one part descending": {
+    "books": 17,
+    "affected_pages": 5126,
+    "translated_ai_in_range": 3318
+   },
+   "pair-swapped": {
+    "books": 6,
+    "affected_pages": 2568,
+    "translated_ai_in_range": 1163
+   },
+   "isolated swap": {
+    "books": 1,
+    "affected_pages": 3,
+    "translated_ai_in_range": 3
+   },
+   "false positive": {
+    "books": 10,
+    "affected_pages": 0,
+    "translated_ai_in_range": 0
+   }
+  },
+  "affected_pages": 23256,
+  "translated_ai_in_range": 12218,
+  "confirmed_visible": 48,
+  "by_provider": {
+   "internet_archive": {
+    "flagged": 56,
+    "confirmed": 48
+   },
+   "gallica": {
+    "flagged": 2,
+    "confirmed": 1
+   },
+   "bph": {
+    "flagged": 1,
+    "confirmed": 1
+   },
+   "manchester": {
+    "flagged": 1,
+    "confirmed": 0
+   }
+  },
+  "retranslate_usd_at_0_0012": 14.66,
+  "ia_page_progression_vs_verdict": {
+   "unset|descending": 29,
+   "lr|descending": 6,
+   "rl|descending": 7,
+   "unset|other": 5,
+   "rl|other": 1,
+   "rl|in order": 5,
+   "unset|in order": 3
+  }
+ },
+ "books": [
+  {
+   "book_id": "699249a3a2d53df4853bdd12",
+   "title": "Kojiki (Japanese edition)",
+   "language": "Japanese",
+   "provider": "internet_archive",
+   "ia_identifier": "kojikits00tsukuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "iasw8",
+   "served_pages": 618,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 607,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     618
+    ]
+   ],
+   "affected_pages": 618,
+   "translated_ai_in_range": 604,
+   "mapping": "pages 1-618 reversed (n → 619 − n)",
+   "note": "descending at 100, 300 and 508 (Izumo fudoki and Kojiki parts)",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      516,
+      517,
+      518
+     ],
+     "printed": [
+      77,
+      76,
+      75
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      100,
+      101,
+      102
+     ],
+     "printed": [
+      493,
+      492,
+      491
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302
+     ],
+     "printed": [
+      293,
+      292,
+      291
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eaa82c1720a023b0ceeb",
+   "title": "S. Ephraemi Syri, Rabulae Episcopi Edesseni, Balaei, Aliorumque Opera Selecta",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "sephraemisyrirab00over",
+   "ia_page_progression": "lr",
+   "ia_scanner": "scribe2.toronto.archive.org",
+   "served_pages": 512,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 80,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     512
+    ]
+   ],
+   "affected_pages": 512,
+   "translated_ai_in_range": 65,
+   "mapping": "pages 1-512 reversed (n → 513 − n)",
+   "note": "IA page-progression says lr",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      249,
+      250,
+      251
+     ],
+     "printed": [
+      220,
+      219,
+      218
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eb453af7491d2c6a7c29",
+   "title": "Acta Martyrum et Sanctorum, Tomus I",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ActaMartyrumEtSanctorumvolume2Ed.PaulBedjan",
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 565,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 18,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     565
+    ]
+   ],
+   "affected_pages": 565,
+   "translated_ai_in_range": 10,
+   "mapping": "pages 1-565 reversed (n → 566 − n)",
+   "note": "Bedjan volume, uploaded PDF",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      276,
+      277,
+      278
+     ],
+     "printed": [
+      276,
+      275,
+      274
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eb64aa8e0e4092147557",
+   "title": "Acta Martyrum et Sanctorum, Tomus VI",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ActaMartyrumEtSanctorumvolume6Ed.PaulBedjan",
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 708,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 18,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     708
+    ]
+   ],
+   "affected_pages": 708,
+   "translated_ai_in_range": 10,
+   "mapping": "pages 1-708 reversed (n → 709 − n)",
+   "note": "Bedjan volume, uploaded PDF",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      450,
+      451,
+      452
+     ],
+     "printed": [
+      244,
+      243,
+      242
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eb4daa8e0e4092146d10",
+   "title": "Acta Martyrum et Sanctorum, Tomus III",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ActaMartyrumEtSanctorumvolume3Ed.PaulBedjan",
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 698,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 8,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     698
+    ]
+   ],
+   "affected_pages": 698,
+   "translated_ai_in_range": 4,
+   "mapping": "pages 1-698 reversed (n → 699 − n)",
+   "note": "Bedjan volume, uploaded PDF",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      367,
+      368,
+      369
+     ],
+     "printed": [
+      322,
+      321,
+      320
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eb54aa8e0e4092146fcc",
+   "title": "Acta Martyrum et Sanctorum, Tomus IV",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ActaMartyrumEtSanctorumvolume4Ed.PaulBedjan_807",
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 692,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 19,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     692
+    ]
+   ],
+   "affected_pages": 692,
+   "translated_ai_in_range": 14,
+   "mapping": "pages 1-692 reversed (n → 693 − n)",
+   "note": "Bedjan volume, uploaded PDF",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      495,
+      496,
+      497
+     ],
+     "printed": [
+      178,
+      177,
+      176
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eb5baa8e0e4092147282",
+   "title": "Acta Martyrum et Sanctorum, Tomus V",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ActaMartyrumEtSanctorumvolume5Ed.PaulBedjan",
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 723,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 20,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     723
+    ]
+   ],
+   "affected_pages": 723,
+   "translated_ai_in_range": 12,
+   "mapping": "pages 1-723 reversed (n → 724 − n)",
+   "note": "Bedjan volume, uploaded PDF",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      531,
+      532,
+      533
+     ],
+     "printed": [
+      178,
+      177,
+      176
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eaa32c1720a023b0cb7e",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Tomus I",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "BedjanJacobOfSarugVolume1",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 875,
+   "visible": false,
+   "hidden_reason": "duplicate",
+   "translated_pages": 21,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     875
+    ]
+   ],
+   "affected_pages": 875,
+   "translated_ai_in_range": 18,
+   "mapping": "pages 1-875 reversed (n → 876 − n)",
+   "note": "hidden as duplicate",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      685,
+      686,
+      687
+     ],
+     "printed": [
+      169,
+      168,
+      167
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ed3396d6dd816a569e2c",
+   "title": "Ethicon seu Moralia",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ethiconseumorali00barhuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "scribe17.toronto.archive.org",
+   "served_pages": 646,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 24,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     646
+    ]
+   ],
+   "affected_pages": 646,
+   "translated_ai_in_range": 13,
+   "mapping": "pages 1-646 reversed (n → 647 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      307,
+      308,
+      309
+     ],
+     "printed": [
+      306,
+      305,
+      304
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5f460d4c2e3cf8ecb90a2",
+   "title": "Ethicon, seu Moralia",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ethiconseumorali00greg",
+   "ia_page_progression": "lr",
+   "ia_scanner": "scribe4.nj.archive.org",
+   "served_pages": 640,
+   "visible": false,
+   "hidden_reason": "duplicate",
+   "translated_pages": 21,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     640
+    ]
+   ],
+   "affected_pages": 640,
+   "translated_ai_in_range": 15,
+   "mapping": "pages 1-640 reversed (n → 641 − n)",
+   "note": "hidden as duplicate; IA page-progression says lr",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      303,
+      304,
+      305
+     ],
+     "printed": [
+      306,
+      305,
+      304
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5eda496d6dd816a56ae46",
+   "title": "Homiliae S. Isaaci Antiocheni",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "homiliaesisaacis01isaauoft",
+   "ia_page_progression": null,
+   "ia_scanner": "scribe20.toronto.archive.org",
+   "served_pages": 894,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 32,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     894
+    ]
+   ],
+   "affected_pages": 894,
+   "translated_ai_in_range": 21,
+   "mapping": "pages 1-894 reversed (n → 895 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      433,
+      434,
+      435
+     ],
+     "printed": [
+      434,
+      433,
+      432
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ed2c96d6dd816a569bc2",
+   "title": "Chronicon Syriacum",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "ketabademadatbez00barhuoft",
+   "ia_page_progression": "lr",
+   "ia_scanner": "iasw4.toronto.archive.org",
+   "served_pages": 616,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 14,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     616
+    ]
+   ],
+   "affected_pages": 616,
+   "translated_ai_in_range": 6,
+   "mapping": "pages 1-616 reversed (n → 617 − n)",
+   "note": "IA page-progression says lr",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      311,
+      312,
+      313
+     ],
+     "printed": [
+      294,
+      293,
+      292
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69b63e852a1dde00d5a9e472",
+   "title": "Al-Kashshaf (Quran Commentary)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "alquranmaatafsir01zamauoft",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe15.toronto.archive.org",
+   "served_pages": 852,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 850,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     852
+    ]
+   ],
+   "affected_pages": 852,
+   "translated_ai_in_range": 843,
+   "mapping": "pages 1-852 reversed (n → 853 − n)",
+   "note": "descending at 100, 300 and 660",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      659,
+      660,
+      661
+     ],
+     "printed": [
+      215,
+      214,
+      213
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      100,
+      101,
+      102
+     ],
+     "printed": [
+      748,
+      747,
+      746
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302
+     ],
+     "printed": [
+      566,
+      565,
+      564
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac5f4dc55b8478ddd6b5",
+   "title": "Talmud Bavli",
+   "language": "Hebrew",
+   "provider": "internet_archive",
+   "ia_identifier": "talmudbavliimkol571unse",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe1.durham.archive.org",
+   "served_pages": 764,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 456,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     764
+    ]
+   ],
+   "affected_pages": 764,
+   "translated_ai_in_range": 450,
+   "mapping": "pages 1-764 reversed (n → 765 − n)",
+   "note": "descending at 50, 108, 300 and 600; the detector saw only two short runs",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      7,
+      8,
+      9,
+      10
+     ],
+     "printed": [
+      58,
+      29,
+      56,
+      28
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      50,
+      51,
+      52
+     ],
+     "printed": [
+      8,
+      14,
+      7
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302,
+      303
+     ],
+     "printed": [
+      31,
+      60,
+      30,
+      58
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      600,
+      601,
+      602,
+      603
+     ],
+     "printed": [
+      25,
+      48,
+      24,
+      46
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69de99261b234a773e43a275",
+   "title": "韓非子 (Han Feizi)",
+   "language": "Chinese",
+   "provider": "internet_archive",
+   "ia_identifier": "hanfeizi038800uoft",
+   "ia_page_progression": "rl",
+   "ia_scanner": "iasw4",
+   "served_pages": 556,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 542,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     556
+    ]
+   ],
+   "affected_pages": 556,
+   "translated_ai_in_range": 542,
+   "mapping": "pages 1-556 reversed (n → 557 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      356,
+      357,
+      358
+     ],
+     "printed": [
+      191,
+      190,
+      189
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e8b2742ff2a8dc09e77bdb",
+   "title": "韓非子 (Hán Fēizǐ), Vol. 1",
+   "language": "Chinese",
+   "provider": "internet_archive",
+   "ia_identifier": "hanfeizi018800uoft",
+   "ia_page_progression": "rl",
+   "ia_scanner": "ias1",
+   "served_pages": 622,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 611,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     622
+    ]
+   ],
+   "affected_pages": 622,
+   "translated_ai_in_range": 611,
+   "mapping": "pages 1-622 reversed (n → 623 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      326,
+      327,
+      328
+     ],
+     "printed": [
+      287,
+      286,
+      285
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e41f39d0364cb0bcf7a95b",
+   "title": "源氏物語 (Genji Monogatari), Vol. 1",
+   "language": "Japanese",
+   "provider": "internet_archive",
+   "ia_identifier": "genjimonogatari01murauoft",
+   "ia_page_progression": null,
+   "ia_scanner": "ias1",
+   "served_pages": 672,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 669,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     672
+    ]
+   ],
+   "affected_pages": 672,
+   "translated_ai_in_range": 669,
+   "mapping": "pages 1-672 reversed (n → 673 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      275,
+      276,
+      277
+     ],
+     "printed": [
+      384,
+      383,
+      382
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e534c6d48480a3869670b2",
+   "title": "Kitab al-Bukhala (Book of Misers, French)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "lelivredesavares00jahiuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "scribe19.toronto.archive.org",
+   "served_pages": 326,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 321,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     326
+    ]
+   ],
+   "affected_pages": 326,
+   "translated_ai_in_range": 321,
+   "mapping": "pages 1-326 reversed (n → 327 − n)",
+   "note": "printed 289 to 2 over storage 35-320 of 326",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      221,
+      222,
+      223
+     ],
+     "printed": [
+      103,
+      102,
+      101
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e534dad48480a38696741e",
+   "title": "Kitab al-Aghani (Book of Songs), Vols. 1-3",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "alaghani0103abaluoft",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe19.toronto.archive.org",
+   "served_pages": 574,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 570,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     574
+    ]
+   ],
+   "affected_pages": 574,
+   "translated_ai_in_range": 570,
+   "mapping": "pages 1-574 reversed (n → 575 − n)",
+   "note": "three parts, each descending, and the parts in the order 3, 2, 1",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      137,
+      138,
+      139
+     ],
+     "printed": [
+      67,
+      66,
+      65
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      212,
+      213,
+      214,
+      215
+     ],
+     "printed": [
+      2,
+      null,
+      null,
+      null
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      410,
+      411,
+      412,
+      413
+     ],
+     "printed": [
+      2,
+      null,
+      null,
+      null
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e753db095c302d3fddc45c",
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 1",
+   "language": "Japanese",
+   "provider": "internet_archive",
+   "ia_identifier": "chikamatsujoruri01chikuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "iasw3.toronto.archive.org",
+   "served_pages": 662,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 646,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     662
+    ]
+   ],
+   "affected_pages": 662,
+   "translated_ai_in_range": 646,
+   "mapping": "pages 1-662 reversed (n → 663 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      358,
+      359,
+      360
+     ],
+     "printed": [
+      291,
+      290,
+      289
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e753e8095c302d3fddc6f5",
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 2",
+   "language": "Japanese",
+   "provider": "internet_archive",
+   "ia_identifier": "chikamatsujoruri02chikuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "iasw3.toronto.archive.org",
+   "served_pages": 618,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 607,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     618
+    ]
+   ],
+   "affected_pages": 618,
+   "translated_ai_in_range": 607,
+   "mapping": "pages 1-618 reversed (n → 619 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      340,
+      341,
+      342
+     ],
+     "printed": [
+      261,
+      260,
+      259
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e75accb3d509fcb7a48f0e",
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 3",
+   "language": "Japanese",
+   "provider": "internet_archive",
+   "ia_identifier": "chikamatsujoruri03chikuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "iasw3.toronto.archive.org",
+   "served_pages": 622,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 608,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     622
+    ]
+   ],
+   "affected_pages": 622,
+   "translated_ai_in_range": 608,
+   "mapping": "pages 1-622 reversed (n → 623 − n)",
+   "note": "",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      324,
+      325,
+      326
+     ],
+     "printed": [
+      285,
+      284,
+      283
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e8b0fd839ca3f47ec56c17",
+   "title": "كتاب الجبر والمقابلة (Kitāb al-Jabr)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "1342TheAlgebraOfMohammedBenMusaAlKwarizmiInArabic",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.5.2",
+   "served_pages": 127,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 125,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     127
+    ]
+   ],
+   "affected_pages": 127,
+   "translated_ai_in_range": 125,
+   "mapping": "pages 1-127 reversed (n → 128 − n)",
+   "note": "printed 93 to 2 over storage 31-122 of 127; pages 1-30 not checked",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      31,
+      32,
+      33
+     ],
+     "printed": [
+      93,
+      92,
+      91
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69ea3e83300d991d0f1d3743",
+   "title": "كتاب البلدان (Kitāb al-Buldān)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "kitabalbuldan00yaquuoft",
+   "ia_page_progression": "rl",
+   "ia_scanner": "ias11",
+   "served_pages": 168,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 162,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     168
+    ]
+   ],
+   "affected_pages": 168,
+   "translated_ai_in_range": 162,
+   "mapping": "pages 1-168 reversed (n → 169 − n)",
+   "note": "printed 138 to 15 over storage 27-150 of 168",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      36,
+      37,
+      38
+     ],
+     "printed": [
+      129,
+      128,
+      127
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69ea3ea1300d991d0f1d3bd6",
+   "title": "الأعلاق النفيسة (al-Aʿlāq al-Nafīsa)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "almujalladalsbi00goejgoog",
+   "ia_page_progression": null,
+   "ia_scanner": "google",
+   "served_pages": 421,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 405,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     421
+    ]
+   ],
+   "affected_pages": 421,
+   "translated_ai_in_range": 405,
+   "mapping": "pages 1-421 reversed (n → 422 − n)",
+   "note": "printed 350 to 8 over storage 60-407 of 421; pages 1-59 not checked",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      229,
+      230,
+      231
+     ],
+     "printed": [
+      189,
+      188,
+      177
+     ],
+     "order": "descending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69ea0f8f13a685002bb8e780",
+   "title": "Instructions Nautiques Arabes (incl. Ahmad ibn Majid)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "instructionsnaut01ferruoft",
+   "ia_page_progression": null,
+   "ia_scanner": "scribe15.toronto.archive.org",
+   "served_pages": 388,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 383,
+   "split_pages": 0,
+   "pattern": "whole book descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     388
+    ]
+   ],
+   "affected_pages": 388,
+   "translated_ai_in_range": 383,
+   "mapping": "pages 1-388 reversed (n → 389 − n)",
+   "note": "manuscript facsimile: folio 145 at storage 101, folio 67 at storage 251; contents pages 4, 3, 2. Low confidence, few numbers",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      20,
+      21,
+      22
+     ],
+     "printed": [
+      4,
+      3,
+      2
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      100,
+      101,
+      102
+     ],
+     "printed": [
+      null,
+      145,
+      null
+     ],
+     "order": "unclear",
+     "confidence": "low"
+    },
+    {
+     "storage": [
+      250,
+      251,
+      252
+     ],
+     "printed": [
+      null,
+      67,
+      null
+     ],
+     "order": "unclear",
+     "confidence": "low"
+    }
+   ]
+  },
+  {
+   "book_id": "69920bb1e0a548a13d884da7",
+   "title": "Der Hebräische Pentateuch der Samaritaner",
+   "language": "Hebrew",
+   "provider": "internet_archive",
+   "ia_identifier": "vonGall_SamaritanPentateuch",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 563,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 558,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     126,
+     563
+    ]
+   ],
+   "affected_pages": 438,
+   "translated_ai_in_range": 434,
+   "mapping": "pages 126-563 reversed (n → 689 − n)",
+   "note": "Hebrew text descends; the German introduction (v-lxvii) ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      269,
+      270,
+      271
+     ],
+     "printed": [
+      293,
+      292,
+      291
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      20,
+      21,
+      22
+     ],
+     "printed": [
+      5,
+      6,
+      7
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      80,
+      81,
+      82
+     ],
+     "printed": [
+      65,
+      66,
+      67
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69935b208e28d8f4c5d3c445",
+   "title": "Kashf al-Maḥjūb (Persian Critical Edition)",
+   "language": "Persian",
+   "provider": "internet_archive",
+   "ia_identifier": "kashf-al-mahjoob-persianbooks-1",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.4",
+   "served_pages": 687,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 685,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     619,
+     687
+    ]
+   ],
+   "affected_pages": 69,
+   "translated_ai_in_range": 67,
+   "mapping": "pages 619-687 reversed (n → 1306 − n)",
+   "note": "the Russian introduction at the back descends (64 to 2); the Persian text ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      650,
+      651,
+      652
+     ],
+     "printed": [
+      33,
+      32,
+      31
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "699443fa12a63b0c95d4d7dd",
+   "title": "Carmina Nisibena",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "carminanisibenaa00ephr",
+   "ia_page_progression": "lr",
+   "ia_scanner": "scribe13.toronto.archive.org",
+   "served_pages": 400,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 253,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     248,
+     400
+    ]
+   ],
+   "affected_pages": 153,
+   "translated_ai_in_range": 3,
+   "mapping": "pages 248-400 reversed (n → 648 − n)",
+   "note": "Syriac text descends (145 to 3); the Latin part ascends. IA page-progression says lr",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      319,
+      320,
+      321
+     ],
+     "printed": [
+      74,
+      73,
+      72
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ed7996d6dd816a56aae6",
+   "title": "Anecdota Syriaca vols. 3-4",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "anecdotasyriaca0304land",
+   "ia_page_progression": "lr",
+   "ia_scanner": "scribe1.toronto.archive.org",
+   "served_pages": 862,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 274,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     9,
+     363
+    ],
+    [
+     635,
+     862
+    ]
+   ],
+   "affected_pages": 583,
+   "translated_ai_in_range": 5,
+   "mapping": "pages 9-363 reversed (n → 372 − n); pages 635-862 reversed (n → 1497 − n)",
+   "note": "the Syriac text of both volumes descends; the Latin of vol. 4 (storage 399-617) ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      186,
+      187,
+      188
+     ],
+     "printed": [
+      181,
+      180,
+      179
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ed6d96d6dd816a56a840",
+   "title": "Le Livre des Splendeurs (Grammaire)",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "lelivredessplend00barhuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "iasw3",
+   "served_pages": 380,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 58,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     109,
+     380
+    ]
+   ],
+   "affected_pages": 272,
+   "translated_ai_in_range": 0,
+   "mapping": "pages 109-380 reversed (n → 489 − n)",
+   "note": "Syriac text descends (266 to 5)",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      243,
+      244,
+      245
+     ],
+     "printed": [
+      132,
+      131,
+      130
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5f052ac4e926899bd4c0d",
+   "title": "Historia Compendiosa Dynastiarum (Pocock ed.)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "TarikhMukhtasarAlDuwalLatin",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.4",
+   "served_pages": 1117,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 1023,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     576,
+     1117
+    ]
+   ],
+   "affected_pages": 542,
+   "translated_ai_in_range": 446,
+   "mapping": "pages 576-1117 reversed (n → 1693 − n)",
+   "note": "the LATIN half descends (translation and index); the Arabic text ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      600,
+      601,
+      602
+     ],
+     "printed": [
+      42,
+      41,
+      40
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302
+     ],
+     "printed": [
+      293,
+      294,
+      295
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      690,
+      691,
+      692
+     ],
+     "printed": [
+      null,
+      null,
+      null
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      1060,
+      1061,
+      1062
+     ],
+     "printed": [
+      42,
+      41,
+      40
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5f469d4c2e3cf8ecb9324",
+   "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "bibliothquedelc16unkngoog",
+   "ia_page_progression": null,
+   "ia_scanner": "google",
+   "served_pages": 871,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 603,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     28,
+     277
+    ]
+   ],
+   "affected_pages": 250,
+   "translated_ai_in_range": 5,
+   "mapping": "pages 28-277 reversed (n → 305 − n)",
+   "note": "Syriac text descends (253 to 8); the French translation ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      158,
+      159,
+      160
+     ],
+     "printed": [
+      123,
+      122,
+      121
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      400,
+      401,
+      402
+     ],
+     "printed": [
+      83,
+      null,
+      85
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69ae9cd3591c8449ffb83443",
+   "title": "Horae Semiticae VIII: Codex Climaci Rescriptus",
+   "language": "Greek, Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "horaesemiticae08unse",
+   "ia_page_progression": "lr",
+   "ia_scanner": "scribe2.nj.archive.org",
+   "served_pages": 252,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 246,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     38,
+     236
+    ]
+   ],
+   "affected_pages": 199,
+   "translated_ai_in_range": 188,
+   "mapping": "pages 38-236 reversed (n → 274 − n)",
+   "note": "201, 200, 199 on the image; range from the 3 October run. The re-run reads no markers from this book. IA page-progression says lr",
+   "still_flagged_2026_10_08": false,
+   "image_reads": [
+    {
+     "storage": [
+      37,
+      38,
+      39,
+      40
+     ],
+     "printed": [
+      31,
+      201,
+      200,
+      199
+     ],
+     "order": "descending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69b63e87535439aaa48911a3",
+   "title": "Kitab al-Luma (Book of Flashes)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "KitabAlLumaByAbuNasrAlSarrajNicholson",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 712,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 712,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     225,
+     697
+    ]
+   ],
+   "affected_pages": 473,
+   "translated_ai_in_range": 473,
+   "mapping": "pages 225-697 reversed (n → 922 − n)",
+   "note": "Arabic text descends (397 at storage 300, 73 at 624); the English abstract ascends. Start of range computed from the slope, not seen",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      623,
+      624,
+      625
+     ],
+     "printed": [
+      74,
+      73,
+      72
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      100,
+      101,
+      102
+     ],
+     "printed": [
+      32,
+      33,
+      34
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302
+     ],
+     "printed": [
+      397,
+      396,
+      395
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac2ed0bd3547a565582f",
+   "title": "Kitab al-Fihrist",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "KitabAlFihrist",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.4",
+   "served_pages": 725,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 714,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     364,
+     725
+    ]
+   ],
+   "affected_pages": 362,
+   "translated_ai_in_range": 357,
+   "mapping": "pages 364-725 reversed (n → 1089 − n)",
+   "note": "Arabic text descends (358 to 3); the German notes (storage 18-289) ascend",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      550,
+      551,
+      552
+     ],
+     "printed": [
+      173,
+      171,
+      170
+     ],
+     "order": "descending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69e4209e813af15d2bdc1eb7",
+   "title": "Tawq al-Hamama (The Ring of the Dove, French)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "TawqAlHamamahByIbnHazmFrench_201904",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.4",
+   "served_pages": 222,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 217,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     55,
+     222
+    ]
+   ],
+   "affected_pages": 168,
+   "translated_ai_in_range": 163,
+   "mapping": "pages 55-222 reversed (n → 277 − n)",
+   "note": "Arabic text descends (162 to 4)",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      135,
+      136,
+      137
+     ],
+     "printed": [
+      82,
+      81,
+      80
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e53454d48480a386965c84",
+   "title": "Kalila wa Dimna (Arabic critical edition)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "laversionarabed00cheigoog",
+   "ia_page_progression": "rl",
+   "ia_scanner": "google",
+   "served_pages": 363,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 358,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     84,
+     363
+    ]
+   ],
+   "affected_pages": 280,
+   "translated_ai_in_range": 277,
+   "mapping": "pages 84-363 reversed (n → 447 − n)",
+   "note": "Arabic text descends at 150, 250, 293 and 340, with a duplicated leaf near 293-296; the French notes (12-81) ascend",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      292,
+      293,
+      294,
+      295
+     ],
+     "printed": [
+      70,
+      69,
+      68,
+      69
+     ],
+     "order": "descending",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      150,
+      151,
+      152
+     ],
+     "printed": [
+      202,
+      201,
+      200
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      250,
+      251,
+      252
+     ],
+     "printed": [
+      102,
+      101,
+      100
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      340,
+      341,
+      342
+     ],
+     "printed": [
+      24,
+      23,
+      22
+     ],
+     "order": "descending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      40,
+      41,
+      42
+     ],
+     "printed": [
+      27,
+      28,
+      29
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e72cb6a409200ea79f54bc",
+   "title": "Kalilah and Dimnah (Syriac text)",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "bookofkalilahdim00bdpwuoft",
+   "ia_page_progression": null,
+   "ia_scanner": "scribe11.toronto.archive.org",
+   "served_pages": 498,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 77,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     96,
+     498
+    ]
+   ],
+   "affected_pages": 403,
+   "translated_ai_in_range": 3,
+   "mapping": "pages 96-498 reversed (n → 594 − n)",
+   "note": "Syriac text descends (402 to 12)",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      290,
+      291,
+      292
+     ],
+     "printed": [
+      210,
+      209,
+      208
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e961442beefe2f6f72ac2b",
+   "title": "رحلة ابن جبير (Riḥlat Ibn Jubayr)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "travelsibnjubay00goejgoog",
+   "ia_page_progression": null,
+   "ia_scanner": "google",
+   "served_pages": 433,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 429,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     64,
+     433
+    ]
+   ],
+   "affected_pages": 370,
+   "translated_ai_in_range": 370,
+   "mapping": "pages 64-433 reversed (n → 497 − n)",
+   "note": "Arabic text descends in two blocks (360 to 127, then 136 to 3: ten printed pages repeat at storage 297/298); the English introduction ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      148,
+      149,
+      150
+     ],
+     "printed": [
+      276,
+      275,
+      274
+     ],
+     "order": "descending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69e9617a2beefe2f6f72ba14",
+   "title": "מסעות בנימין (Masa'ot Binyamin / Itinerary)",
+   "language": "Hebrew-English",
+   "provider": "internet_archive",
+   "ia_identifier": "itineraryrabbib00benjgoog",
+   "ia_page_progression": null,
+   "ia_scanner": "google",
+   "served_pages": 319,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 307,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     183,
+     310
+    ]
+   ],
+   "affected_pages": 128,
+   "translated_ai_in_range": 125,
+   "mapping": "pages 183-310 reversed (n → 493 − n)",
+   "note": "Hebrew text descends (50, 49, 48 on the image); the English translation ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      258,
+      259,
+      260
+     ],
+     "printed": [
+      50,
+      49,
+      48
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "6a21994b4b61907ea5ffb7e5",
+   "title": "Lawa'ih",
+   "language": "Persian",
+   "provider": "internet_archive",
+   "ia_identifier": "in.ernet.dli.2015.491093",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive Python library 1.2.0.dev4",
+   "served_pages": 124,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 97,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     60,
+     124
+    ]
+   ],
+   "affected_pages": 65,
+   "translated_ai_in_range": 41,
+   "mapping": "pages 60-124 reversed (n → 184 − n)",
+   "note": "the English translation descends (63 to 18); the Persian facsimile ascends",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      84,
+      85,
+      86
+     ],
+     "printed": [
+      40,
+      39,
+      38
+     ],
+     "order": "descending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac07d0bd3547a5654dcc",
+   "title": "Tahqiq ma li-l-Hind",
+   "language": "Arabic",
+   "provider": "gallica",
+   "ia_identifier": null,
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 428,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 415,
+   "split_pages": 0,
+   "pattern": "one part descending",
+   "verdict_basis": "from OCR text",
+   "affected_ranges": [
+    [
+     58,
+     428
+    ]
+   ],
+   "affected_pages": 371,
+   "translated_ai_in_range": 361,
+   "mapping": "pages 58-428 reversed (n → 486 − n)",
+   "note": "printed 361 to 1 in the OCR; on the image the page numbers are too small to read but chapter labels (57, 56, 55) and sheet signatures (21, 20) run backwards",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      240,
+      241,
+      242
+     ],
+     "printed": [
+      null,
+      null,
+      null
+     ],
+     "order": "descending",
+     "confidence": "low"
+    },
+    {
+     "storage": [
+      240,
+      241,
+      242
+     ],
+     "printed": [
+      null,
+      null,
+      null
+     ],
+     "order": "unclear",
+     "confidence": "low"
+    }
+   ]
+  },
+  {
+   "book_id": "6976db51097b3607ee4be2f9",
+   "title": "[Hebrew: Avodat ha-kodesh]",
+   "language": "Hebrew",
+   "provider": "bph",
+   "ia_identifier": null,
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 288,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 288,
+   "split_pages": 0,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     30,
+     283
+    ]
+   ],
+   "affected_pages": 248,
+   "translated_ai_in_range": 248,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 30-283",
+   "note": "two samples swapped (catchword of storage 37 leads to storage 36); OCR has 26 swapped neighbour pairs against 11 in order, so not every pair is confirmed. BPH upload, crop-era split",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      35,
+      36,
+      37,
+      38
+     ],
+     "printed": [
+      null,
+      17,
+      null,
+      18
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      96,
+      97,
+      98,
+      99
+     ],
+     "printed": [
+      44,
+      null,
+      45,
+      null
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69943c7813c9a0dce2757b20",
+   "title": "De Perfectione Religiosa",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "deperfectionerel0000isaa",
+   "ia_page_progression": null,
+   "ia_scanner": "station41.cebu.archive.org",
+   "served_pages": 672,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 23,
+   "split_pages": 0,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     672
+    ]
+   ],
+   "affected_pages": 672,
+   "translated_ai_in_range": 17,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 1-672",
+   "note": "110, 113, 112, 115 and 379, 378, 381, 380",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      133,
+      134,
+      135,
+      136
+     ],
+     "printed": [
+      110,
+      113,
+      112,
+      115
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      400,
+      401,
+      402,
+      403
+     ],
+     "printed": [
+      379,
+      378,
+      381,
+      380
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ed4896d6dd816a56a0b4",
+   "title": "Liber Superiorum seu Historia Monastica",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "libersuperiorums0000bedj",
+   "ia_page_progression": null,
+   "ia_scanner": "station11.cebu.archive.org",
+   "served_pages": 744,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 27,
+   "split_pages": 0,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     744
+    ]
+   ],
+   "affected_pages": 744,
+   "translated_ai_in_range": 24,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 1-744",
+   "note": "60, 63, 62, 65 and 371, 370, 373, 372",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      89,
+      90,
+      91,
+      92
+     ],
+     "printed": [
+      60,
+      63,
+      62,
+      65
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      400,
+      401,
+      402,
+      403
+     ],
+     "printed": [
+      371,
+      370,
+      373,
+      372
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e7518610ee9075bcdcde12",
+   "title": "ספר תהלים (Sepher Tehillim / Psalms)",
+   "language": "Hebrew",
+   "provider": "internet_archive",
+   "ia_identifier": "bim_early-english-books-1641-1700_sepher-tehillim-_bible-hebrew_1685",
+   "ia_page_progression": null,
+   "ia_scanner": "microfilm03.cebu.archive.org",
+   "served_pages": 249,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 248,
+   "split_pages": 0,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     249
+    ]
+   ],
+   "affected_pages": 249,
+   "translated_ai_in_range": 246,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 1-249",
+   "note": "34, 37, 36, 39 and 93, 92, 95, 94 (Hebrew letter numerals); microfilm scan",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      171,
+      172,
+      173,
+      174
+     ],
+     "printed": [
+      162,
+      165,
+      164,
+      167
+     ],
+     "order": "swapped",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      43,
+      44,
+      45,
+      46
+     ],
+     "printed": [
+      34,
+      37,
+      36,
+      39
+     ],
+     "order": "swapped",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      100,
+      101,
+      102,
+      103
+     ],
+     "printed": [
+      93,
+      92,
+      95,
+      94
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "6a9fb207732b9e75e96ba46f",
+   "title": "El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āthār, Vol. II (MIFAO 33)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "MIFAO33",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 247,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 236,
+   "split_pages": 247,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     247
+    ]
+   ],
+   "affected_pages": 247,
+   "translated_ai_in_range": 236,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 1-247",
+   "note": "208, 211, 210, 213: the right half of each split spread is stored first, and in this book the right half is the later page",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      226,
+      227,
+      228,
+      229
+     ],
+     "printed": [
+      208,
+      211,
+      210,
+      213
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "6a9fb1ff732b9e75e96ba39d",
+   "title": "El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āthār, Vol. I (MIFAO 30)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "MIFAO30",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 408,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 392,
+   "split_pages": 408,
+   "pattern": "pair-swapped",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     1,
+     408
+    ]
+   ],
+   "affected_pages": 408,
+   "translated_ai_in_range": 392,
+   "mapping": "swap page_number within each pair (2k, 2k+1) across 1-408",
+   "note": "16, 19, 18, 21 and 174, 177, 176, 179: same as the other Maqrizi volume",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      40,
+      41,
+      42,
+      43
+     ],
+     "printed": [
+      16,
+      19,
+      18,
+      21
+     ],
+     "order": "swapped",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      200,
+      201,
+      202,
+      203
+     ],
+     "printed": [
+      174,
+      177,
+      176,
+      179
+     ],
+     "order": "swapped",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69e8b29f2ff2a8dc09e78458",
+   "title": "مقدمة ابن خلدون (Muqaddimah)",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "prolgomnesde01abda",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe17.toronto.archive.org",
+   "served_pages": 434,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 430,
+   "split_pages": 0,
+   "pattern": "isolated swap",
+   "verdict_basis": "read from image",
+   "affected_ranges": [
+    [
+     159,
+     161
+    ]
+   ],
+   "affected_pages": 3,
+   "translated_ai_in_range": 3,
+   "mapping": "move page 159 after page 161 (159→161, 160→159, 161→160)",
+   "note": "149, 147, 148 at storage 159-161; ascending elsewhere (287-290 at storage 300)",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      158,
+      159,
+      160,
+      161
+     ],
+     "printed": [
+      145,
+      149,
+      147,
+      148
+     ],
+     "order": "unclear",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      300,
+      301,
+      302,
+      303
+     ],
+     "printed": [
+      287,
+      288,
+      289,
+      290
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69908a7693003de39c9658e5",
+   "title": "Shams al-Maarif al-Kubra",
+   "language": "Arabic",
+   "provider": "gallica",
+   "ia_identifier": null,
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 110,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 110,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "unsplit two-page spreads: two page numbers per image; they ascend",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      77,
+      78,
+      79,
+      80
+     ],
+     "printed": [
+      169,
+      171,
+      173,
+      175
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69920befebe5b0fa6be5d569",
+   "title": "Mishnah: Kaufmann Manuscript (Complete)",
+   "language": "Hebrew",
+   "provider": "internet_archive",
+   "ia_identifier": "MishnaCorrectedKaufman00WHOLE",
+   "ia_page_progression": "rl",
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 874,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 874,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "no page numbers at all (typeset transcription); the numbers are Mishnah chapter and paragraph numbers",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      301,
+      302,
+      303
+     ],
+     "printed": [
+      null,
+      null,
+      null
+     ],
+     "order": "unclear",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69943f7b338b1d7fd14de029",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 1",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "homiliaeselectae01jaco",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe16.toronto.archive.org",
+   "served_pages": 870,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 28,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "22, 23, 24, 25: ascending; one OCR digit misread",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      46,
+      47,
+      48,
+      49
+     ],
+     "printed": [
+      22,
+      23,
+      24,
+      25
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69943ce1a668f66e6953cccb",
+   "title": "Narsai Doctoris Syri Homiliae et Carmina, Vol. 1",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "narsaidoctorissy0000nars",
+   "ia_page_progression": "rl",
+   "ia_scanner": "ttscribe1.pts.archive.org",
+   "served_pages": 857,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 40,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "Syriac letter numerals ascend (292-296); the detector read other numbers",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      359,
+      360,
+      361,
+      362
+     ],
+     "printed": [
+      292,
+      293,
+      294,
+      295
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      360,
+      361,
+      362,
+      363
+     ],
+     "printed": [
+      293,
+      294,
+      295,
+      296
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69a5ea9a2c1720a023b0c9c0",
+   "title": "Narsai: Homiliae et Carmina, Tomus I",
+   "language": "Syriac",
+   "provider": "internet_archive",
+   "ia_identifier": "narsaihomiliaeetcarmina1",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 444,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 41,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "Syriac letter numerals ascend (164-167); the detector read other numbers",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      232,
+      233,
+      234,
+      235
+     ],
+     "printed": [
+      164,
+      165,
+      166,
+      167
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69c1bb3c8522835be845d9af",
+   "title": "Hasidic discourses (MS Gaster Hebrew 1343)",
+   "language": "Hebrew",
+   "provider": "manchester",
+   "ia_identifier": null,
+   "ia_page_progression": null,
+   "ia_scanner": null,
+   "served_pages": 802,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 722,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "manuscript folios 153, 154 ascend; the falling numbers are paragraph numbers",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      304,
+      305,
+      306,
+      307
+     ],
+     "printed": [
+      null,
+      153,
+      null,
+      154
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac17d0bd3547a565520e",
+   "title": "Kitab al-Hayawan",
+   "language": "Arabic",
+   "provider": "internet_archive",
+   "ia_identifier": "hadhakitabalhaya567jahi",
+   "ia_page_progression": "rl",
+   "ia_scanner": "scribe1.chapelhill.archive.org",
+   "served_pages": 452,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 443,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "15, 16, 17, 18: ascending; one OCR digit misread",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      328,
+      329,
+      330
+     ],
+     "printed": [
+      142,
+      143,
+      144
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      379,
+      380,
+      381,
+      382
+     ],
+     "printed": [
+      15,
+      16,
+      17,
+      18
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac824dc55b8478dddb9a",
+   "title": "Ein Yaakov",
+   "language": "Hebrew",
+   "provider": "internet_archive",
+   "ia_identifier": "Sefaria-EinYaakov-Vilna-1922",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.1",
+   "served_pages": 270,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 89,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "folio letters on one side and page numbers on the other (2, 4, 3, 6): two counts mixed, both ascending",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      33,
+      34,
+      35,
+      36
+     ],
+     "printed": [
+      2,
+      4,
+      3,
+      6
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "69e74ef95cf1eaf3ad80e04c",
+   "title": "شرفنامه (Sharafnāma)",
+   "language": "Persian",
+   "provider": "internet_archive",
+   "ia_identifier": "Sharafnama-HakeemNizamiGanjaviFarsi",
+   "ia_page_progression": null,
+   "ia_scanner": "Internet Archive HTML5 Uploader 1.6.3",
+   "served_pages": 510,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 499,
+   "split_pages": 510,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "87-90, 109-112, 205-208: ascending in three places; OCR digit misreads",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      52,
+      53,
+      54,
+      55
+     ],
+     "printed": [
+      87,
+      88,
+      89,
+      90
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    },
+    {
+     "storage": [
+      74,
+      75,
+      76,
+      77
+     ],
+     "printed": [
+      109,
+      110,
+      111,
+      112
+     ],
+     "order": "ascending",
+     "confidence": "high"
+    },
+    {
+     "storage": [
+      172,
+      173,
+      174,
+      175
+     ],
+     "printed": [
+      205,
+      206,
+      207,
+      208
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  },
+  {
+   "book_id": "6a09ea8c3ca4edcd1ef0207b",
+   "title": "皇極經世書·卷一上 (Book of Supreme World-Ordering Principles, juan 1.1) — Siku Quanshu",
+   "language": "Chinese",
+   "provider": "internet_archive",
+   "ia_identifier": "06071571.cn",
+   "ia_page_progression": "rl",
+   "ia_scanner": null,
+   "served_pages": 141,
+   "visible": true,
+   "hidden_reason": null,
+   "translated_pages": 24,
+   "split_pages": 0,
+   "pattern": "false positive",
+   "verdict_basis": "read from image",
+   "affected_ranges": [],
+   "affected_pages": 0,
+   "translated_ai_in_range": 0,
+   "mapping": "none",
+   "note": "folios 65, 66 ascend; the falling numbers are labels inside a table",
+   "still_flagged_2026_10_08": true,
+   "image_reads": [
+    {
+     "storage": [
+      128,
+      129,
+      130,
+      131
+     ],
+     "printed": [
+      82,
+      83,
+      null,
+      84
+     ],
+     "order": "ascending",
+     "confidence": "low"
+    },
+    {
+     "storage": [
+      133,
+      134,
+      135,
+      136
+     ],
+     "printed": [
+      null,
+      65,
+      null,
+      66
+     ],
+     "order": "ascending",
+     "confidence": "medium"
+    }
+   ]
+  }
+ ]
+}

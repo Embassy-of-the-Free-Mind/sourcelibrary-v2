@@ -84,6 +84,9 @@ Rules:
   they are weighted.
 
 ## 5. Act (cheap, reversible, inside the spend floor)
+- **A page whose text is invented or not on the leaf, in a book that is otherwise sound** (this applies to a
+  `--picked` spot check too): contain it in this run, per `.claude/docs/invariants/containment-on-finding.md`.
+  Hold the book, withhold those pages with `--by-eye-pages`, label the issue `contained`. No sign-off needed.
 - **`do_not_show` because the text is invented or not on the leaf:** hide it with
   `scripts/maintenance/hide-named-books.mjs` (reason `broken_text_<issue>`) and hold it with `holdBook()` from
   `scripts/lib/pipeline-hold.mjs`, stating a release condition.
