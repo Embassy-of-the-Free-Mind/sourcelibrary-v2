@@ -4,11 +4,11 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Where Source Library Came From - Research Notes - Source Library',
-  description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations — the origin story of Source Library.',
+  description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations: the origin story of Source Library.',
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg', alt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind' }],
     title: 'Where Source Library Came From',
-    description: 'From a single untranslated Ficino manuscript to 5,000+ books — the origin story of Source Library.',
+    description: 'From a single untranslated Ficino manuscript to 5,000+ books: the origin story of Source Library.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -55,7 +55,7 @@ export default function OriginStoryPage() {
         <p className="text-secondary leading-relaxed mb-10 font-body">
           In February 2022, I was working at the{' '}
           <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:text-accent-rust underline">Embassy of the Free Mind</a>{' '}
-          in Amsterdam &mdash; the Ritman Library, formally the Bibliotheca Philosophica Hermetica &mdash; when I came across Marsilio Ficino&apos;s <em>Liber de Voluptate</em>, his &ldquo;Book on Pleasure.&rdquo; Ficino wrote it in 1457, when he was twenty-four years old. It was published by Aldus Manutius in 1497. And in all the centuries since, no one had ever translated it into English.
+          in Amsterdam (the Ritman Library, formally the Bibliotheca Philosophica Hermetica) when I came across Marsilio Ficino&apos;s <em>Liber de Voluptate</em>, his &ldquo;Book on Pleasure.&rdquo; Ficino wrote it in 1457, when he was twenty-four years old. It was published by Aldus Manutius in 1497. And in all the centuries since, no one had ever translated it into English.
         </p>
 
         {/* Ficino bust with laptop */}
@@ -67,12 +67,12 @@ export default function OriginStoryPage() {
             className="w-full max-w-md mx-auto rounded-lg shadow-md"
           />
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Marsilio Ficino, &ldquo;Divinus Interpres&rdquo; &mdash; with a laptop open to the translation of Plotinus&apos;s Enneads. Embassy of the Free Mind, Amsterdam. Ritualistically good luck.
+            Marsilio Ficino, &ldquo;Divinus Interpres,&rdquo; with a laptop open to the translation of Plotinus&apos;s Enneads. Embassy of the Free Mind, Amsterdam. Ritualistically good luck.
           </figcaption>
         </figure>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          That fact stopped me cold. Ficino is not an obscure figure. He is the translator who sparked the Renaissance &mdash; the man who, under the patronage of Cosimo de&apos; Medici, translated the complete works of Plato into Latin for the first time, along with the Corpus Hermeticum, Plotinus, Porphyry, Iamblichus, and Proclus. Before Ficino, Plato&apos;s works had been lost to the West for nearly a thousand years. His translations made them available again, and the intellectual consequences are still unfolding. Da Vinci, Raphael, Michelangelo &mdash; the art and thought of the Renaissance is incomprehensible without Ficino&apos;s work.
+          That fact stopped me cold. Ficino is not an obscure figure. He is the translator who sparked the Renaissance, the man who, under the patronage of Cosimo de&apos; Medici, translated the complete works of Plato into Latin for the first time, along with the Corpus Hermeticum, Plotinus, Porphyry, Iamblichus, and Proclus. Before Ficino, Plato&apos;s works had been lost to the West for nearly a thousand years. His translations made them available again, and the intellectual consequences are still unfolding. Da Vinci, Raphael, Michelangelo: the art and thought of the Renaissance is incomprehensible without Ficino&apos;s work.
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -85,12 +85,12 @@ export default function OriginStoryPage() {
             Can the pursuit of pleasure lead to virtue? Might the pursuit of the greatest virtues lead to the greatest pleasures?
           </p>
           <p className="text-sm text-muted mt-3 not-italic">
-            &mdash; the question at the heart of Ficino&apos;s <em>Liber de Voluptate</em>
+            The question at the heart of Ficino&apos;s <em>Liber de Voluptate</em>
           </p>
         </div>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          I arranged for the Neolatin to be digitized by Christian Ruel of W&uuml;rzburg University and commissioned an English translation from Alice Ahearn of Oxford. On February 22, 2022, I published the first draft &mdash; Ficino&apos;s original Latin alongside Ahearn&apos;s English &mdash; a young philosopher trying to reconcile Plato&apos;s virtue with Epicurus&apos;s pleasure. That side-by-side format, original and translation together, became the template for everything that followed.
+          I arranged for the Neolatin to be digitized by Christian Ruel of W&uuml;rzburg University and commissioned an English translation from Alice Ahearn of Oxford. On February 22, 2022, I published the first draft (Ficino&apos;s original Latin alongside Ahearn&apos;s English): a young philosopher trying to reconcile Plato&apos;s virtue with Epicurus&apos;s pleasure. That side-by-side format, original and translation together, became the template for everything that followed.
         </p>
 
         <hr className="border-border-light my-12" />
@@ -114,7 +114,7 @@ export default function OriginStoryPage() {
               <div className="border-l-2 border-border-light pl-6 pb-2">
                 <p className="font-medium text-stone-800 mb-2">Fine-tuning on the complete works of Plato</p>
                 <p className="text-secondary leading-relaxed font-body">
-                  Before the current generation of large language models, I built a model fine-tuned on every surviving text by Plato. The goal was simple: could a machine learn to think like a philosopher? The model was crude by today&apos;s standards, but it proved that something real was happening &mdash; that the patterns of philosophical reasoning could be captured, at least in part, by a neural network trained on the right corpus.
+                  Before the current generation of large language models, I built a model fine-tuned on every surviving text by Plato. The goal was simple: could a machine learn to think like a philosopher? The model was crude by today&apos;s standards, but it proved that something real was happening: that the patterns of philosophical reasoning could be captured, at least in part, by a neural network trained on the right corpus.
                 </p>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function OriginStoryPage() {
               <div className="border-l-2 border-border-light pl-6 pb-2">
                 <p className="font-medium text-stone-800 mb-2">GPT-4 and the two breakthroughs</p>
                 <p className="text-secondary leading-relaxed font-body">
-                  When GPT-4 arrived, I gave a lecture demonstrating two capabilities that changed my sense of what was possible. First, you could use it to create new philosophical dialogues in the style of Plato &mdash; not pastiche, but genuinely interesting explorations of ideas that Plato never addressed. Second, and more practically, you could point it at a scan of a 500-year-old book and get usable OCR and translation. Not perfect. But usable. The bottleneck that had kept thousands of historical texts locked in their original languages was suddenly, dramatically, thinner.
+                  When GPT-4 arrived, I gave a lecture demonstrating two capabilities that changed my sense of what was possible. First, you could use it to create new philosophical dialogues in the style of Plato: not pastiche, but genuinely interesting explorations of ideas that Plato never addressed. Second, and more practically, you could point it at a scan of a 500-year-old book and get usable OCR and translation. Not perfect. But usable. The bottleneck that had kept thousands of historical texts locked in their original languages was suddenly, dramatically, thinner.
                 </p>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function OriginStoryPage() {
               <div className="border-l-2 border-border-light pl-6 pb-2">
                 <p className="font-medium text-stone-800 mb-2">Philosophers Library: can AI make philosophical progress?</p>
                 <p className="text-secondary leading-relaxed font-body">
-                  With a collaborator, I built Philosophers Library &mdash; a system where AI philosophers could read each other&apos;s work and reflect on it. The question was genuinely open: could artificial minds, trained on the full history of philosophy, produce novel philosophical insight? We were particularly interested in the old problems. In a material world, what are the Platonic forms? Can a machine trained on Plato actually <em>do</em> Platonism? The experiment didn&apos;t settle these questions, but it sharpened them. And it made clear that the quality of AI philosophical engagement depended entirely on the quality of the source material it had access to.
+                  With a collaborator, I built Philosophers Library, a system where AI philosophers could read each other&apos;s work and reflect on it. The question was genuinely open: could artificial minds, trained on the full history of philosophy, produce novel philosophical insight? We were particularly interested in the old problems. In a material world, what are the Platonic forms? Can a machine trained on Plato actually <em>do</em> Platonism? The experiment didn&apos;t settle these questions, but it sharpened them. And it made clear that the quality of AI philosophical engagement depended entirely on the quality of the source material it had access to.
                 </p>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function OriginStoryPage() {
               <div className="border-l-2 border-border-light pl-6 pb-2">
                 <p className="font-medium text-stone-800 mb-2">Setting the intention: translate the Renaissance</p>
                 <p className="text-secondary leading-relaxed font-body">
-                  At the beginning of 2025, I set an explicit goal with the Wisdom Frontiers Society: systematically translate the untranslated works of the Renaissance. Not selected highlights. Not the texts that scholars had already deemed important. Everything &mdash; the alchemy, the astrology, the radical theology, the natural philosophy, the women writers, the anonymous pamphleteers. The entire buried stratum of Early Modern thought that had never been rendered into English.
+                  At the beginning of 2025, I set an explicit goal with the Wisdom Frontiers Society: systematically translate the untranslated works of the Renaissance. Not selected highlights. Not the texts that scholars had already deemed important. Everything: the alchemy, the astrology, the radical theology, the natural philosophy, the women writers, the anonymous pamphleteers. The entire buried stratum of Early Modern thought that had never been rendered into English.
                 </p>
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function OriginStoryPage() {
                 <p className="text-secondary leading-relaxed font-body">
                   At the beginning of this year, a donor whose identity I still don&apos;t fully understand funded the AI tokens needed to translate at scale. The collection grew to over 5,000 books. Nearly{' '}
                   <Link href="https://sourcelibrary.org/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>{' '}
-                  emerged &mdash; texts that had never been readable in English before. The pipeline now processes hundreds of pages per day, with OCR, translation, and image extraction running continuously.
+                  emerged: texts that had never been readable in English before. The pipeline now processes hundreds of pages per day, with OCR, translation, and image extraction running continuously.
                 </p>
               </div>
             </div>
@@ -180,15 +180,15 @@ export default function OriginStoryPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            I should explain how I ended up caring about any of this. I studied cognitive science at Yale. My path was quantitative &mdash; how the mind works, how people learn, how to measure experience. I nearly missed the classics entirely.
+            I should explain how I ended up caring about any of this. I studied cognitive science at Yale. My path was quantitative: how the mind works, how people learn, how to measure experience. I nearly missed the classics entirely.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The story is almost embarrassing. I was enrolled in a philosophy of mind course, and we had philosophical differences &mdash; serious enough that I dropped the course. But I needed one more philosophy class to graduate. So I begged Gabriel Richardson Lear to let me into her seminar: &ldquo;Pleasure, Beauty, and Happiness through the Eyes of Plato and Aristotle.&rdquo;
+            The story is almost embarrassing. I was enrolled in a philosophy of mind course, and we had philosophical differences, serious enough that I dropped the course. But I needed one more philosophy class to graduate. So I begged Gabriel Richardson Lear to let me into her seminar: &ldquo;Pleasure, Beauty, and Happiness through the Eyes of Plato and Aristotle.&rdquo;
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            I fell in love with Plato. Not the caricature &mdash; not the authoritarian of the <em>Republic</em> or the mystical hand-waver. The real Plato: the philosopher of beauty, of the harmony of the cosmos, of the idea that understanding the structure of reality is itself the deepest form of pleasure. The <em>Timaeus</em>. The <em>Symposium</em>. The <em>Philebus</em>. These texts rewired how I thought about cognition, about experience, about what it means for a mind to be in contact with truth.
+            I fell in love with Plato. Not the caricature, not the authoritarian of the <em>Republic</em> or the mystical hand-waver. The real Plato: the philosopher of beauty, of the harmony of the cosmos, of the idea that understanding the structure of reality is itself the deepest form of pleasure. The <em>Timaeus</em>. The <em>Symposium</em>. The <em>Philebus</em>. These texts rewired how I thought about cognition, about experience, about what it means for a mind to be in contact with truth.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -197,7 +197,7 @@ export default function OriginStoryPage() {
 
           <div className="border-l-4 border-accent-gold pl-6 my-12">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
-              So I walked out of college with two threads: Plato&apos;s vision of the cosmos as an intelligible, beautiful whole &mdash; and Bostrom&apos;s warning that superintelligent AI could end everything if we get the values wrong.
+              So I walked out of college with two threads: Plato&apos;s vision of the cosmos as an intelligible, beautiful whole, and Bostrom&apos;s warning that superintelligent AI could end everything if we get the values wrong.
             </p>
           </div>
 
@@ -223,19 +223,19 @@ export default function OriginStoryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            If you talk to Latin scholars, the scale of what hasn&apos;t been translated is so enormous that it is hardly discussed &mdash; it&apos;s simply the water they swim in. But to most people, it is genuinely surprising that we haven&apos;t done this work. The assumption is that if a text is important, someone must have translated it by now. That assumption is wrong. Thousands of significant works &mdash; books cited in footnotes, referenced in histories, discussed in secondary literature for centuries &mdash; have never been rendered into English. The gap is not at the margins. It runs through the center of intellectual history.
+            If you talk to Latin scholars, the scale of what hasn&apos;t been translated is so enormous that it is hardly discussed; it&apos;s simply the water they swim in. But to most people, it is genuinely surprising that we haven&apos;t done this work. The assumption is that if a text is important, someone must have translated it by now. That assumption is wrong. Thousands of significant works (books cited in footnotes, referenced in histories, discussed in secondary literature for centuries) have never been rendered into English. The gap is not at the margins. It runs through the center of intellectual history.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            AI systems are trained on text. The text they are trained on shapes their values, their reasoning patterns, their sense of what matters. Right now, the training data is overwhelmingly modern, overwhelmingly English, and overwhelmingly oriented toward the concerns of the last fifty years. The deep humanistic tradition &mdash; the two thousand years of thought about virtue, beauty, the nature of the soul, the structure of the cosmos, the relationship between human beings and the divine &mdash; is mostly absent. Not because it doesn&apos;t exist, but because it was never digitized, never translated, never made machine-readable.
+            AI systems are trained on text. The text they are trained on shapes their values, their reasoning patterns, their sense of what matters. Right now, the training data is overwhelmingly modern, overwhelmingly English, and overwhelmingly oriented toward the concerns of the last fifty years. The deep humanistic tradition (the two thousand years of thought about virtue, beauty, the nature of the soul, the structure of the cosmos, the relationship between human beings and the divine) is mostly absent. Not because it doesn&apos;t exist, but because it was never digitized, never translated, never made machine-readable.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The Renaissance was the last time Western civilization undertook a project like this. Ficino translated Plato. Pico della Mirandola synthesized every tradition he could find &mdash; Greek, Hebrew, Arabic, Chaldean. The entire Hermetic corpus was recovered and disseminated. The result was an explosion of human creativity and self-understanding that we are still living inside of. They gathered the wisdom of the past and made it available to the present, and the present was transformed by it.
+            The Renaissance was the last time Western civilization undertook a project like this. Ficino translated Plato. Pico della Mirandola synthesized every tradition he could find: Greek, Hebrew, Arabic, Chaldean. The entire Hermetic corpus was recovered and disseminated. The result was an explosion of human creativity and self-understanding that we are still living inside of. They gathered the wisdom of the past and made it available to the present, and the present was transformed by it.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We are at a similar inflection point. The minds being born now are artificial, and they will be shaped by what we give them to read. If we want those minds to carry forward the humanistic tradition &mdash; if we want them to understand beauty, to reason about virtue, to grasp the Platonic intuition that reality is structured and intelligible and worth contemplating &mdash; then we need to make that tradition available to them. In their language. At scale.
+            We are at a similar inflection point. The minds being born now are artificial, and they will be shaped by what we give them to read. If we want those minds to carry forward the humanistic tradition, if we want them to understand beauty, to reason about virtue, to grasp the Platonic intuition that reality is structured and intelligible and worth contemplating, then we need to make that tradition available to them. In their language. At scale.
           </p>
 
           <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -247,7 +247,7 @@ export default function OriginStoryPage() {
         <div className="bg-warm rounded-xl p-6 md:p-8 border border-border-light mb-8">
           <p className="font-serif text-lg text-primary mb-3">Read the book that started it all</p>
           <p className="text-secondary leading-relaxed font-body mb-4">
-            Ficino&apos;s <em>Liber de Voluptate</em> &mdash; written in 1457, published in 1497, and now available in English translation for the first time. A young philosopher asking whether the pursuit of pleasure and the pursuit of virtue might be the same thing.
+            Ficino&apos;s <em>Liber de Voluptate</em>, written in 1457, published in 1497, and now available in English translation for the first time. A young philosopher asking whether the pursuit of pleasure and the pursuit of virtue might be the same thing.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
@@ -268,7 +268,7 @@ export default function OriginStoryPage() {
         {/* === Footer === */}
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
-            Source Library is a project of the Embassy of the Free Mind. If you want to help translate the Renaissance, or if you have leads on untranslated texts that belong in the collection, reach out &mdash;{' '}
+            Source Library is a project of the Embassy of the Free Mind. If you want to help translate the Renaissance, or if you have leads on untranslated texts that belong in the collection, reach out:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

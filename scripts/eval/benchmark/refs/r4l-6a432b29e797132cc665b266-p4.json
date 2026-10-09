@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A01809",
+  "edition": "Nuncius inanimatus — STC 11944; ESTC S118694 (1629)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A01809",
+  "origin": "library",
+  "book_id": "6a432b29e797132cc665b266",
+  "page_number": 4,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 620,
+    "to_char": 1605,
+    "overlap": 0.424,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "ref matches; starts with last line of prior page",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      2,
+      3,
+      4
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.569Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "250d76dc4c69cfb9d2a1164c31c04a8fb268b415ad7a7edcfaee3490acaf18ea",
+  "unit": {
+    "chars": 985
+  }
+}

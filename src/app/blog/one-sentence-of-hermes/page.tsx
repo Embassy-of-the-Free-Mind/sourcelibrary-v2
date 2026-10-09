@@ -552,7 +552,7 @@ export default function OneSentenceOfHermesPage() {
           <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4877" className={linkClass}>
             issue #4877
           </a>
-          . The 1516 Aldine has since been re-read with a stronger model, and its text of this passage now matches the page. The other editions and the manuscript had not been corrected when this was published. If you find an error on any page, the feedback button on
+          . The 1516 Aldine has since been re-read with a stronger model, and its Latin transcription of this passage now matches the page; the English translation beside it had not yet been redone. The other editions and the manuscript had not been corrected when this was published. If you find an error on any page, the feedback button on
           that page reaches us.
         </p>
 

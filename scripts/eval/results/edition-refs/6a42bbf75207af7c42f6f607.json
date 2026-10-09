@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a42bbf75207af7c42f6f607",
+    "title": "Increpatio Barjesu sive Polimicae adsentiones Locorum aliquot S. Scripture ab imposturis per versionum in Catechesis Racoviana",
+    "published": "1660",
+    "source": "EEBO-TCP A67147",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9033,
+    "median_char_acc_windowed": 0.8834,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42bbf75207af7c42f6f607-p10",
+      "page": 10,
+      "overlap": 0.911,
+      "probe_words": 149,
+      "ref_chars": 4777,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.158,
+      "char_acc": 0.9033,
+      "char_acc_windowed": 0.8834
+    }
+  ]
+}

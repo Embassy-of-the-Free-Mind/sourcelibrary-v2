@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tenantDoc = await db.collection('tenants').findOne({ slug: tenant });
   const name = tenantDoc?.name || tenant;
   return {
-    title: `Catalogue — ${name}`,
+    title: `Catalogue | ${name}`,
     description: `Full catalogue of manuscripts in the ${name} collection.`,
   };
 }

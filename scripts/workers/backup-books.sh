@@ -6,7 +6,9 @@
 #   - /root/backups/books-latest/  — overwritten daily, always current (fast restore)
 #   - /root/backups/books-weekly/  — snapshot every Sunday, kept forever (point-in-time)
 #
-# Only backs up book metadata (books, books_warehouse, deleted_books).
+# Only backs up book metadata (books, deleted_books). The retired warehouse
+# collections were snapshotted once at retirement (2026-10, #5470) and are not
+# dumped daily.
 #
 # The TEXT (pages, page_revisions, chapter_texts, entities, …) is covered by its
 # sibling, backup-corpus-text.sh — NOT by this script. An earlier version of this
@@ -47,7 +49,6 @@ else
   exit 1
 fi
 
-mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books_warehouse --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || log "WARNING: warehouse dump failed"
 mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || true
 
 # On Sundays, copy to a weekly snapshot for point-in-time history
