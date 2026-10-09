@@ -497,9 +497,10 @@ export default function QualityCenterPage() {
             Each OCR engine we have measured: what it costs to read 1,000 pages, and how closely its text agrees with a
             typed reference. Where the reference is a modern edition rather than a transcription of the same print, the
             score is partly agreement with that edition (<a href="#chart-limits" className={LINK}>how far these charts can be
-            trusted</a>). Within a figure, the engines are compared only on pages every one of them read. The bar is
-            the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
-            (invented text). The teal line joins the engines no other engine beats on both cost and score. Gemini
+            trusted</a>). Within a figure, the engines are compared only on pages every one of them read. The thin
+            whisker is the 95% interval. The teal line joins the engines no other engine beats on both cost and score;
+            the amber dot is the engine we use now. Hover over or tap a dot for its numbers, including the share of words
+            that appear nowhere in the reference (invented text). Gemini
             costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
             priced on its inference time alone, which assumes the machine does nothing else, so it reads low.{' '}
             <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
@@ -522,8 +523,8 @@ export default function QualityCenterPage() {
             keeps to the meaning of a published human translation of the same page. The score is model-judged, not
             human-scored: blind AI judges read both and grade from 1 to 5, and they read our transcription, not the page
             image, so this is not accuracy. Within a figure, the engines are compared only on pages every one of them
-            translated, graded in the same read. The bar is the 95% interval; the dashed ring grows with the share of pages
-            where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
+            translated, graded in the same read. The thin whisker is the 95% interval; hover over or tap a dot for its
+            numbers, including the share of pages where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
             engine run without a metered cost is listed under its chart, scored on the pages it did translate.{' '}
             <Link href="/quality/pareto#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
               One per screen, for presenting
