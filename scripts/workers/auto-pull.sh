@@ -25,7 +25,13 @@ worker_drift() {
   node --env-file=/root/sourcelibrary/.env.production.local scripts/audit/worker-code-drift.mjs \
     --repo /root/sourcelibrary --alert 2>&1 | sed 's/^/[auto-pull] drift: /'
 }
-trap worker_drift EXIT
+# The job wrapper lives in the repo (#6358); /root/bin/claude-job.sh is a copy of it. Refresh the copy on
+# every exit path too: it is a no-op when nothing changed, and it refuses a file that is not committed.
+install_job_wrapper() {
+  [ -f scripts/workers/install-claude-job.sh ] || return 0
+  bash scripts/workers/install-claude-job.sh 2>&1 | sed 's/^/[auto-pull] /'
+}
+trap 'worker_drift; install_job_wrapper' EXIT
 
 # Bail if there are unstaged changes — sync-crontab.sh stages and pushes
 # crontab.production on its own schedule, so a working tree dirty for any
