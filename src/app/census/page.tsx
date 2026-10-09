@@ -9,7 +9,7 @@ import CensusSearch from './CensusSearch';
 export const metadata: Metadata = {
   title: 'Translation Census | Source Library',
   description:
-    'A living record of which pre-modern European texts have been translated into English. Validated estimate: ~85% of all early-modern print — and ~93% of Renaissance-composed Latin — has never been Englished.',
+    'A living record of which pre-modern European texts have been translated into English. Validated estimate: ~85% of all early-modern print, and ~93% of Renaissance-composed Latin, has never been Englished.',
   alternates: { canonical: '/census' },
 };
 
@@ -164,7 +164,7 @@ export default async function CensusPage() {
       header={
         <ContentHeader
           title="The Translation Census"
-          subtitle="A living record of which pre-modern European texts have been translated into English — and which never have. The validated answer: most of early-modern thought has never been Englished. We are closing that gap, verifiably."
+          subtitle="A living record of which pre-modern European texts have been translated into English, and which never have. The validated answer: most of early-modern thought has never been Englished. We are closing that gap, verifiably."
         />
       }
     >
@@ -196,16 +196,16 @@ export default async function CensusPage() {
         <Section kicker="The finding" title="Most of early-modern thought has never been Englished">
           <p className="mb-4">
             Between the invention of the printing press and 1700, European presses produced{' '}
-            {fmt(data.total_editions)} recorded editions — roughly {fmt(data.total_works)} distinct
-            works — in Latin, German, French, Italian, Dutch, Spanish, and other languages. The
+            {fmt(data.total_editions)} recorded editions (roughly {fmt(data.total_works)} distinct
+            works) in Latin, German, French, Italian, Dutch, Spanish, and other languages. The
             intellectual output of the Renaissance, the Reformation, and the Scientific Revolution.
           </p>
           <p className="mb-4">
             How much of it can an English reader actually read? Our validated estimate ({VALIDATED.evalDate}): across{' '}
             <strong>all</strong> early-modern print, <strong>{VALIDATED.allPrintGapPct}%</strong>{' '}
             <span className="text-stone-500">[{VALIDATED.allPrintCI}]</span> has no known English
-            translation. Restricted to works actually <em>composed</em> in the Renaissance — not
-            reprints of ancient classics — the Latin gap rises to{' '}
+            translation. Restricted to works actually <em>composed</em> in the Renaissance, not
+            reprints of ancient classics, the Latin gap rises to{' '}
             <strong>{VALIDATED.renaissanceGapPct}%</strong>{' '}
             <span className="text-stone-500">[{VALIDATED.renaissanceCI}]</span>: essentially the
             whole of Renaissance Latin thought.
@@ -230,7 +230,7 @@ export default async function CensusPage() {
             records finds a match for only {data.raw_pct_translated}% of works. That raw figure{' '}
             <strong>overstates the gap</strong>: translated ancient and medieval classics hide in
             it under divergent titles, and author-level matches inflate the translated side where
-            it matters least. The validation run measured both errors and corrected for them —
+            it matters least. The validation run measured both errors and corrected for them,
             which is why we headline the debiased estimates above, with their confidence
             intervals, and treat the raw join only as a lower-bound floor. Full method, data, and
             robustness checks:{' '}
@@ -245,7 +245,7 @@ export default async function CensusPage() {
         <Section kicker="Look it up" title="Has it been translated?">
           <p className="mb-6 text-stone-600">
             Search by author or title to check whether a pre-1700 work has a known English
-            translation — and whether Source Library holds the original.
+            translation, and whether Source Library holds the original.
           </p>
           <CensusSearch editionCount={data.total_editions} catalogCount={data.catalog_records} />
         </Section>
@@ -255,7 +255,7 @@ export default async function CensusPage() {
           <p className="mb-6 text-stone-600">
             Each bar shows the share of distinct works in that original language with a translation
             documented in our federated catalogs. These are <strong>raw catalog floors, not the
-            debiased estimates</strong> — they count only translations we could locate and match,
+            debiased estimates</strong>: they count only translations we could locate and match,
             so every bar understates the true rate. They are shown for their <em>shape</em>: the
             relative neglect of German, Dutch, and Spanish print is real however you count.
           </p>
@@ -283,7 +283,7 @@ export default async function CensusPage() {
         {/* ── State of our census (#2933) ─────────────────────── */}
         <Section kicker="The state of the census" title="Verifying our own shelves">
           <p className="mb-6 text-stone-600">
-            The census is not only a measurement of the world&rsquo;s catalogs — it runs over our
+            The census does more than measure the world&rsquo;s catalogs. It runs over our
             own corpus too. Every readable non-English book in Source Library is being put through
             a documented, grounded search for prior English translations, so that every
             &ldquo;first translation&rdquo; claim we make is evidenced, not asserted.
@@ -302,8 +302,8 @@ export default async function CensusPage() {
           </div>
           <Callout label="One number, site-wide">
             The first-translation count above is the same canonical figure shown on the{' '}
-            <Link href="/" className="text-amber-800 underline hover:text-amber-900">homepage</Link>{' '}
-            — verified badges on books you can actually read, refreshed nightly. Claims that fail
+            <Link href="/" className="text-amber-800 underline hover:text-amber-900">homepage</Link>
+            : verified badges on books you can actually read, refreshed nightly. Claims that fail
             verification are demoted; the count only ever reflects the evidence on file.
           </Callout>
         </Section>
@@ -311,7 +311,7 @@ export default async function CensusPage() {
         {/* ── Source Library's contribution ───────────────────── */}
         <Section kicker="Closing it" title="Source Library&rsquo;s contribution">
           <p className="mb-6">
-            Source Library pairs facsimiles of the originals with complete English translations —{' '}
+            Source Library pairs facsimiles of the originals with complete English translations:{' '}
             {fmt(data.sl_books_readable)} books readable in English so far, including{' '}
             {fmt(data.sl_first_translations)} first-ever English translations. Each one moves a
             work from the untranslated column of this census into the translated one.
@@ -340,7 +340,7 @@ export default async function CensusPage() {
               {VALIDATED.allPrintGapPct}% all-print, {VALIDATED.renaissanceGapPct}%
               Renaissance-composed Latin) are debiased measurements with confidence intervals,
               validated in {VALIDATED.evalDate} and unchanged until the study is re-run. The per-language bars and the raw {data.raw_pct_translated}% join rate
-              are catalog floors — lower bounds from record matching, useful for shape, not for
+              are catalog floors: lower bounds from record matching, useful for shape, not for
               headlines.
             </li>
             <li>
@@ -358,7 +358,7 @@ export default async function CensusPage() {
             <li>
               <strong>Match precision is era-dependent.</strong> Of pipeline-matched
               &ldquo;translated&rdquo; works, {VALIDATED.matcherPrecisionPct}% had a confirmed
-              real translation in the {VALIDATED.evalDate} validation — higher for classics, lower for Renaissance titles, which is one
+              real translation in the {VALIDATED.evalDate} validation, higher for classics, lower for Renaissance titles, which is one
               of the biases the debiased estimates correct.
             </li>
             <li>
@@ -379,7 +379,7 @@ export default async function CensusPage() {
             Translation records federated from the UNESCO Index Translationum, Library of Congress,
             Open Library / Internet Archive, HathiTrust, the Loeb Classical Library, I Tatti and
             Dumbarton Oaks, Brill, Oxford, Cambridge, Yale, Chicago, Penguin Classics, and other
-            catalogs and publisher series — {fmt(data.catalog_records)} records at last count.
+            catalogs and publisher series, {fmt(data.catalog_records)} records at last count.
             Author reconciliation via VIAF, Wikidata, GND, and CERL. Gap estimates validated
             against an n={fmt(VALIDATED.sampleSize)} blind sample, {VALIDATED.evalDate}.{' '}
             Know of a translation we missed?{' '}

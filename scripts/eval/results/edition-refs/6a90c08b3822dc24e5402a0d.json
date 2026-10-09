@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "book_id": "6a90c08b3822dc24e5402a0d",
+    "title": "Epigrammatum libri tres autore Ioanne Owen ...",
+    "published": "1606",
+    "source": "EEBO-TCP A68538",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 0,
+    "skips": {
+      "no-window": 8
+    },
+    "median_char_acc": null,
+    "median_char_acc_windowed": null,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p7",
+      "page": 7,
+      "skipped": "no-window",
+      "overlap": 0.105
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p8",
+      "page": 8,
+      "skipped": "no-window",
+      "overlap": 0.143
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.081
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p10",
+      "page": 10,
+      "skipped": "no-window",
+      "overlap": 0.091
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p15",
+      "page": 15,
+      "skipped": "no-window",
+      "overlap": 0.091
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.123
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p24",
+      "page": 24,
+      "skipped": "no-window",
+      "overlap": 0.082
+    },
+    {
+      "slug": "ed-6a90c08b3822dc24e5402a0d-p25",
+      "page": 25,
+      "skipped": "no-window",
+      "overlap": 0.065
+    }
+  ]
+}

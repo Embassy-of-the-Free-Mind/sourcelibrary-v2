@@ -346,7 +346,7 @@ export default function BrandPage() {
             <p className="text-sm text-stone-500 mb-4">
               The dominant interactive color. Used via raw Tailwind classes across 93 files (479 occurrences of amber-600 alone).
               Buttons, CTAs, hover states, focus rings, loading spinners, badges.
-              Not defined as a design token &mdash; used directly as Tailwind <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">amber-*</code>.
+              Not defined as a design token; used directly as Tailwind <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">amber-*</code>.
             </p>
             <div className="flex flex-wrap gap-3 mb-4">
               {[
@@ -373,7 +373,7 @@ export default function BrandPage() {
 
           {/* Amber vs Gold comparison */}
           <div className="mb-12 bg-accent-gold/5 border border-accent-gold/15 rounded-lg p-5">
-            <h4 className="font-medium text-accent-gold-dark mb-2">Amber vs Gold &mdash; are these the same color?</h4>
+            <h4 className="font-medium text-accent-gold-dark mb-2">Amber vs Gold: are these the same color?</h4>
             <div className="flex items-center gap-6 mb-3">
               <div className="text-center">
                 <div className="w-16 h-16 rounded-lg border-2 border-accent-gold/20" style={{ backgroundColor: '#d97706' }} />
@@ -388,8 +388,8 @@ export default function BrandPage() {
               </div>
             </div>
             <p className="text-sm text-stone-600">
-              These serve different roles. Amber is saturated and high-energy &mdash; used for clickable actions.
-              Gold is muted and warm &mdash; used for decorative/ornamental purposes (search highlight backgrounds, flame accents).
+              These serve different roles. Amber is saturated and high-energy, used for clickable actions.
+              Gold is muted and warm, used for decorative/ornamental purposes (search highlight backgrounds, flame accents).
             </p>
           </div>
 
@@ -442,7 +442,7 @@ export default function BrandPage() {
             <h3 className="text-lg font-semibold text-stone-800 mb-1">Neutral Palette: Stone</h3>
             <p className="text-sm text-stone-500 mb-4">
               The structural/neutral system. Used via raw Tailwind classes across 117 files.
-              Backgrounds, borders, text, cards &mdash; the foundational gray scale.
+              Backgrounds, borders, text, cards: the foundational gray scale.
             </p>
             <div className="flex flex-wrap gap-3">
               {[
@@ -469,7 +469,7 @@ export default function BrandPage() {
           <div className="mb-12">
             <h3 className="text-lg font-semibold text-stone-800 mb-1">Semantic Colors</h3>
             <p className="text-sm text-stone-500 mb-4">
-              Standard UI states. Used via raw Tailwind classes. Not design tokens &mdash; this is fine.
+              Standard UI states. Used via raw Tailwind classes. Not design tokens, and that is fine.
             </p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div>
@@ -513,23 +513,23 @@ export default function BrandPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-stone-600">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded bg-purple-500" />
-                <span>purple-* &mdash; annotations, experiment variant B</span>
+                <span>purple-*: annotations, experiment variant B</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded bg-rose-500" />
-                <span>rose-* &mdash; annotation type colors</span>
+                <span>rose-*: annotation type colors</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded bg-teal-500" />
-                <span>teal-* &mdash; scattered, minor usage</span>
+                <span>teal-*: scattered, minor usage</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded bg-emerald-500" />
-                <span>emerald-* &mdash; alternative success states</span>
+                <span>emerald-*: alternative success states</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded bg-sky-500" />
-                <span>sky-* &mdash; scattered, minor usage</span>
+                <span>sky-*: scattered, minor usage</span>
               </div>
             </div>
           </div>
@@ -563,8 +563,8 @@ export default function BrandPage() {
             <DecisionCard
               title="3. Two color systems: consolidate?"
               status="open"
-              problem="CSS vars (--accent-rust, etc.) are used in ~35 files. Raw Tailwind (amber-*, stone-*) in ~117 files. They overlap — stone-900 and --text-primary are nearly the same color."
-              proposal="Don't consolidate now — the cost is too high (touching 117+ files) for minimal benefit. The @theme inline bridge already makes CSS vars available as Tailwind classes. Instead, prefer design tokens for new code and let raw Tailwind usage naturally decrease over time."
+              problem="CSS vars (--accent-rust, etc.) are used in ~35 files. Raw Tailwind (amber-*, stone-*) in ~117 files. They overlap: stone-900 and --text-primary are nearly the same color."
+              proposal="Don't consolidate now. The cost is too high (touching 117+ files) for minimal benefit. The @theme inline bridge already makes CSS vars available as Tailwind classes. Instead, prefer design tokens for new code and let raw Tailwind usage naturally decrease over time."
               evidence="109 files use only raw Tailwind with zero CSS vars. Migrating them all would be a huge refactor with risk of visual regressions and no user-facing improvement."
             />
           </div>
@@ -604,15 +604,15 @@ export default function BrandPage() {
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Body / Reading</p>
-                  <p className="text-lg text-stone-800 font-body">Newsreader &mdash; optimized for extended reading</p>
+                  <p className="text-lg text-stone-800 font-body">Newsreader: optimized for extended reading</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Scholarly / OCR text</p>
-                  <p className="text-lg text-stone-800 font-serif">Cormorant Garamond &mdash; historical text display</p>
+                  <p className="text-lg text-stone-800 font-serif">Cormorant Garamond: historical text display</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">UI / Navigation</p>
-                  <p className="font-sans text-lg text-stone-800">Inter &mdash; clean, functional interface text</p>
+                  <p className="font-sans text-lg text-stone-800">Inter: clean, functional interface text</p>
                 </div>
               </div>
             </div>
@@ -686,7 +686,7 @@ export default function BrandPage() {
                 <div key={v.file}>
                   <div className="rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/${v.file}`} alt={`Source Library OG share card — ${v.label}`} className="w-full block" />
+                    <img src={`/${v.file}`} alt={`Source Library OG share card: ${v.label}`} className="w-full block" />
                   </div>
                   <div className="mt-2 flex items-center justify-between text-sm">
                     <div>

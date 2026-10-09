@@ -7,8 +7,8 @@
  * item: is a digitization of this already visible anywhere we can see?
  *
  * "Anywhere we can see" =
- *   - our own library (`books`, any visibility) and acquisition warehouse
- *     (`books_warehouse`), matched on the canonical edition-key parts;
+ *   - our own library (`books`, any visibility — the acquisition warehouse was
+ *     merged into it 2026-10, #5470), matched on the canonical edition-key parts;
  *   - the IIIF/IA discovery corpus (`import_candidates`, ~3.5M records
  *     harvested from IA, e-rara, Gallica, MDZ, Biblissima…), matched the
  *     same way, computed streaming;
@@ -110,7 +110,7 @@ async function main() {
     if (k && !m.has(k)) m.set(k, src);
   };
 
-  for (const cn of ['books', 'books_warehouse'] as const) {
+  for (const cn of ['books'] as const) {
     const cursor = db.collection(cn).find(
       { content_type: { $ne: 'artwork' } },
       { projection: { _id: 0, title: 1, author: 1, year: 1, published: 1, 'image_source.provider': 1 } },
@@ -263,7 +263,7 @@ async function main() {
     console.log(`  construction), the key matcher independently finds ${ctlEdition} at edition grain, ${ctlWork} at work grain.`);
     console.log(`\n  THE list: P1 + pre-1830 (public domain, nothing digitized anywhere we can see, no scan at BPH).`);
     console.log(`  Post-1930 P1 items are unique but in-copyright — a rights question, not a scanning queue.`);
-    console.log(`  Bounds: "anywhere we can see" = our library + warehouse + ${candCount.toLocaleString()} harvested candidates;`);
+    console.log(`  Bounds: "anywhere we can see" = our library + ${candCount.toLocaleString()} harvested candidates;`);
     console.log(`  matching is title+surname(+year) — a ranking signal, not a proof of uniqueness.`);
     console.log(`\n  full report: ${jsonPath}\n  spreadsheet:  ${csvPath}`);
   }
