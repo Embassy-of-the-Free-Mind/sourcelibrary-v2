@@ -263,7 +263,7 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
   for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
   const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
   const frontier = panel.frontier ? pts.filter(p => p.on_frontier) : [];
-  const r = f * 0.8;
+  const r = f * 0.62;
 
   return (
     <g fontFamily={FONT}>
@@ -305,8 +305,8 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
               <line x1={cx} x2={cx} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[1])} stroke="#a8a29e" strokeWidth={f * 0.2} strokeLinecap="round" />
             )}
             {ring && <circle cx={cx} cy={cy} r={ring} fill="none" stroke="#a8a29e" strokeWidth={1} strokeDasharray="2 2" />}
-            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.5 : 2} />
-            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.95} fontWeight={700} fill={compute ? INK : '#fff'}>{i + 1}</text>
+            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.2 : 1.5} />
+            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.72} fontWeight={600} fill={compute ? INK : '#fff'}>{i + 1}</text>
             {/* a hit target bigger than the mark */}
             <circle cx={cx} cy={cy} r={r * 1.6} fill="transparent" />
           </g>
@@ -388,13 +388,18 @@ function Tag({ color, children }: { color: string; children: ReactNode }) {
 function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m: Measure; present?: boolean }) {
   const refs = panel.references;
   const ciDigits = m.key === 'ocr' ? 0 : 2;
-  // Presenting: wider and shorter, so the plot and its table fit one 1280×800 screen.
-  const [W, H, f] = present ? [340, 230, 11] : [300, 250, 11];
-  const plot = (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`}>
+  // The figure scales to its column, so text and marks grow with it. Presenting, the column is
+  // ≈ 680 px at 1280: a 560-unit viewBox keeps 11 units ≈ 13 px there. On a phone that box would
+  // shrink text to ≈ 7 px, so below md the presenting view falls back to the 300-unit grid geometry.
+  const label = `${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`;
+  const svg = ([W, H, f]: number[], className: string) => (
+    <svg viewBox={`0 0 ${W} ${H}`} className={`w-full h-auto ${className}`} role="img" aria-label={label}>
       <PlotBody panel={panel} m={m} W={W} H={H} f={f} />
     </svg>
   );
+  const plot = present
+    ? <>{svg([300, 250, 11], 'md:hidden')}{svg([560, 360, 11], 'hidden md:block')}</>
+    : svg([300, 250, 11], '');
   const table = (
     <div className="overflow-x-auto"><table className="w-full tabular-nums text-sm">
       <thead>
