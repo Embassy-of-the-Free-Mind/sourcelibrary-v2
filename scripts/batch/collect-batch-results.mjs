@@ -7,13 +7,17 @@
  *   secret-lover run -- node scripts/collect-batch-results.mjs [--limit N] [--concurrency N]
  */
 
-// usage-ok: reads batch job status and downloads finished result files. It
-// generates nothing, so there is no spend here to record; the batch's own
-// spend is closed out by completeBatchUsage() when the results land (#3452).
+// It generates nothing itself, but it IS one of the places a batch's results land,
+// so it closes out the batch's usage row with completeBatchUsage() (#3452) the same
+// way batch-collector.mjs does. Until 2026-10-06 it did not, while this comment said
+// it did: every job this cron won the race for kept its submit-time row forever —
+// 3,072 rows since 2026-08-01 still read `submitted` with the ESTIMATE as their cost
+// and zero tokens, and the API-route submits ($0 placeholders) read $0 (#4599).
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -21,9 +25,10 @@ const COLLECTOR_CALL_SITE = 'scripts/batch/collect-batch-results.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { isTruncatedCandidate, candidateText } from '../lib/truncated-response.mjs';
-import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { outputTokensFrom, sumBatchResponseUsage, completeBatchUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { endBatchJob } from '../lib/end-batch-job.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -141,11 +146,15 @@ const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extra
 
 async function processOneJob(db, job) {
   if (!KNOWN_JOB_TYPES.has(job.type)) {
-    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
-    );
+    // Ended only on Gemini's word (#6276): a SUCCEEDED or running job is left open for a human.
+    const name = job.job_name || job.gemini_job_name;
+    const found = name ? await getJobData(name) : null;
+    const error = `unknown job type '${job.type}' — collector allowlist refused (#3725)`;
+    const ended = await endBatchJob(db, job, {
+      status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error },
+      gemini: found ? { verdict: 'exists', state: getJobState(found.data) } : null,
+    });
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; end as failed: ${ended.action} (${ended.why}).`);
     return { status: 'unknown_type' };
   }
   const jobName = job.job_name || job.gemini_job_name;
@@ -158,6 +167,7 @@ async function processOneJob(db, job) {
 
   if (state === 'JOB_STATE_SUCCEEDED' || state === 'BATCH_STATE_SUCCEEDED' || state === 'SUCCEEDED') {
     const responses = await extractResults(geminiData, workingKey);
+    const billed = sumBatchResponseUsage(responses);
     let successCount = 0;
     let failCount = 0;
     const now = new Date();
@@ -299,10 +309,16 @@ async function processOneJob(db, job) {
           if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
           failCount++; continue;
         }
+        // #6117 — the model's reasoning or a chat reply is not a translation; same refusal as batch-collector.mjs.
+        if (refusableReasoningLeak(text)) {
+          console.warn(`  REASONING LEAK: refusing page ${pageId} — the text is the model's reasoning or a chat reply`);
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, REASONING_LEAK_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; continue;
+        }
         // #5734 — same stray-script gate as batch-collector.mjs.
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { console.warn(`  STRAY SCRIPT: refusing page ${pageId}`); failCount++; continue; }
-        text = stray.text;
+        text = guardTranslationText(stray.text); // #5902: term definitions → <note>
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
@@ -366,20 +382,36 @@ async function processOneJob(db, job) {
           results_collected: true,
           completed_at: now,
           updated_at: now,
+          // Every response is billed, including the ones refused above as
+          // truncated or empty — so the sum is over `responses`, not pageResults.
+          input_tokens: billed.inputTokens,
+          output_tokens: billed.outputTokens,
         },
       }
     );
+
+    // Close out the submit-time usage row. Awaited: it is the only record of
+    // this batch's spend. A meter failure must not undo a page write, so it is
+    // logged, not thrown.
+    await completeBatchUsage({
+      type: job.type, mode: 'batch', model: job.model,
+      book_id: job.book_id, page_ids: job.page_ids,
+      page_count: job.page_count || job.page_ids?.length || successCount,
+      input_tokens: billed.inputTokens, output_tokens: billed.outputTokens,
+      status: successCount > 0 || protectedCount > 0 ? 'success' : 'failed',
+      batch_job_id: jobIdStr,
+      endpoint: job.submitted_by || COLLECTOR_CALL_SITE,
+    }, db).catch(err => console.warn(`  Usage close-out failed for ${jobIdStr}: ${err.message}`));
 
     return { status: 'collected', successCount, failCount, bookId: job.book_id, parentJobId: job.parent_job_id };
 
   } else if (['JOB_STATE_PENDING', 'JOB_STATE_RUNNING', 'BATCH_STATE_PENDING', 'BATCH_STATE_RUNNING'].includes(state)) {
     return { status: 'pending' };
-  } else if (['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STATE_EXPIRED', 'BATCH_STATE_FAILED', 'BATCH_STATE_CANCELLED'].includes(state)) {
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', gemini_state: state, updated_at: new Date() } }
-    );
-    return { status: 'failed', state };
+  } else if (['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STATE_EXPIRED', 'BATCH_STATE_FAILED', 'BATCH_STATE_CANCELLED', 'BATCH_STATE_EXPIRED'].includes(state)) {
+    const ended = await endBatchJob(db, job, {
+      status: 'failed', reason: `Gemini state: ${state}`, by: COLLECTOR_CALL_SITE, gemini: { verdict: 'exists', state },
+    });
+    return { status: ended.action === 'written' ? 'failed' : 'unknown', state };
   } else {
     return { status: 'unknown', state };
   }

@@ -59,3 +59,22 @@ Fill-only, to pages that are refusal-marked and have no `ocr.data`, never a page
 ## Not decided here
 
 Routing every future RECITATION refusal to Kraken automatically (a pipeline change, other languages, other books) is Derek's, after this result.
+
+## Amendment 1 (2026-10-06, job `kraken-digits-4686`): GLM-OCR digit repair, re-gated on the same 20 pages
+
+Committed and pushed **before any GLM-OCR output on these pages exists**. The rule below was written after Kraken's 20 digit misses were known (they are listed in the experiment file), so it is not blind to Kraken; it is blind to GLM. Derek chose this option on #4686, 2026-10-06 (GPU ≈ $1, hard cap $5).
+
+**Why.** The original gate stopped on G4 alone (digits 78.5 % < 90 %). Kraken reads old-style figures as letters. GLM-OCR (the best open English reader in #5660 r3) reads figures as figures, but drops page furniture and substitutes plausible words, so it may not replace Kraken's letters.
+
+**New arm `kraken-catmus-glm-digits`.** Kraken CATMuS-Print's text with number tokens arbitrated against GLM-OCR's read of the same leaf, by `scripts/lib/glm-digit-repair.mjs` (rule in its header, pinned by `tests/unit/glm-digit-repair.test.ts`): LCS token alignment; only gaps between agreed tokens are candidates; a Kraken token is replaced only by a GLM *number* token (a decimal digit, ≤ 3 letters) and only when the Kraken token is number-confusable (has a digit, or ≤ 4 characters and within one of GLM's length; never a spelled number or roman numeral); short unequal gaps (≤ 3 tokens a side, one Kraken line) only when every GLM token is a number or bare punctuation and every Kraken token has a digit or ≤ 2 characters. GLM's words never enter; Kraken's lines, running heads, catchwords and line breaks stay.
+
+**Engines.** Both on one leased Scaleway L4 (`scripts/gpu/kraken-digits-4686-scw.sh`):
+- GLM-OCR (`zai-org/GLM-OCR`, vLLM, prompt `Text Recognition:`, temperature 0, one attempt, image downscaled to ≤ 2400 px wide), the #5660 r3 / PR #5816 client (`glm-english-run.py`) unchanged.
+- Kraken 7.1 CATMuS-Print large (same sha256 `1ed39e73…5b64`), `segment -bl ocr` on the archived master, **on the GPU** (`-d cuda:0`), so the 715-page fill does not take ~9 h of the shared Hetzner CPU. On the 20 eval pages the GPU read is compared with the CPU read already scored (CER of one against the other, reported). The gate is scored on the GPU read, because that is what would be written; the CPU read + GLM digits is reported beside it.
+
+**Gate (same 20 pages, same adjudicated references, same scorer and `analyze.mjs` measures).** Applied to `kraken-catmus-glm-digits`:
+- G1, G2, G3 as before;
+- **G4 ≥ 90 % of reference digit strings reproduced, pooled** (unchanged);
+- **G5 no CER regression:** median CER ≤ the plain Kraken read's median on the same pages, and no page more than 0.005 CER worse than the plain Kraken read.
+
+All five pass → write the repaired text to the 715 refused pages (the original write plan, plus `ocr.source: 'kraken'`, `ocr.engine.digit_repair` naming GLM-OCR, its revision, vLLM version, the GPU run id, and the count of tokens changed on that page). Any fails → STOP, no writes, evidence on #4686. Over the 695 non-eval pages, the share of tokens changed per page is reported, and every page where the repair changed more than 5 % of tokens is listed for a by-eye look before the write.

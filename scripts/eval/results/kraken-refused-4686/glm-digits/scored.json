@@ -1,0 +1,4612 @@
+{
+  "summary": {
+    "stratum": "refused-en-4686",
+    "issue": 4686,
+    "date": "2026-10-06",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 20,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 20,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 1,
+          "mean_cer": 1,
+          "catastrophic": 20,
+          "median_gap": 0,
+          "median_seq": 0,
+          "refused": 20,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": null,
+          "mean": null,
+          "n_engines": 6,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac391b421755a8abfd8e653-p172",
+            "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+            "year": 1676,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac391b421755a8abfd8e653-p315",
+            "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+            "year": 1676,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "glm-ocr": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.006,
+          "mean_cer": 0.013,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.986,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.006,
+          "mean_cer_answered": 0.013,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.02,
+          "mean": 0.025,
+          "n_engines": 6,
+          "ref_median": 0.023,
+          "ref_mean": 0.028
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.073,
+            "gap": 0.03,
+            "invention": 0.031,
+            "has_ref": true,
+            "unsupported": [
+              "chelsea",
+              "college",
+              "hyperbolae",
+              "1669"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.03,
+            "gap": 0.007,
+            "invention": 0.018,
+            "has_ref": true,
+            "unsupported": [
+              "thurday",
+              "within",
+              "happly",
+              "sculpture"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.027,
+            "gap": 0,
+            "invention": 0.107,
+            "has_ref": true,
+            "unsupported": [
+              "judine",
+              "ἀχμὴν",
+              "declinationem",
+              "etiamfi",
+              "effent",
+              "moleftia",
+              "femel",
+              "invadere"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.025,
+            "gap": 0.003,
+            "invention": 0.038,
+            "has_ref": true,
+            "unsupported": [
+              "iheca",
+              "faith",
+              "lincolnshire",
+              "vespa",
+              "flender",
+              "numbers"
+            ]
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.014,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-catmus": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.009,
+          "mean_cer": 0.016,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.958,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.009,
+          "mean_cer_answered": 0.016,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 6,
+          "ref_median": 0.056,
+          "ref_mean": 0.066
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.073,
+            "gap": 0.022,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.037,
+            "gap": 0.007,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.033,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.029,
+            "gap": 0.004,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.027,
+            "gap": 0.014,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-catmus-cpu-glm-digits": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.008,
+          "mean_cer": 0.015,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.958,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.008,
+          "mean_cer_answered": 0.015,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 6,
+          "ref_median": 0.056,
+          "ref_mean": 0.066
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.072,
+            "gap": 0.022,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.035,
+            "gap": 0.007,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.033,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.03,
+            "gap": 0.004,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.026,
+            "gap": 0.014,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-catmus-glm-digits": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.008,
+          "mean_cer": 0.015,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.958,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.008,
+          "mean_cer_answered": 0.015,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 6,
+          "ref_median": 0.056,
+          "ref_mean": 0.066
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.073,
+            "gap": 0.022,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.035,
+            "gap": 0.007,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.033,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.03,
+            "gap": 0.004,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.026,
+            "gap": 0.014,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "kraken-catmus-gpu": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.009,
+          "mean_cer": 0.016,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.958,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.009,
+          "mean_cer_answered": 0.016,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 6,
+          "ref_median": 0.056,
+          "ref_mean": 0.066
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.073,
+            "gap": 0.022,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.037,
+            "gap": 0.007,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.033,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.029,
+            "gap": 0.004,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.027,
+            "gap": 0.014,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+      "substratum": "English 1700s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+      "year": 1756,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 2285,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.03,
+          "acc": 0.97,
+          "seq": 0.974,
+          "bow": 0.981,
+          "gap": 0.007,
+          "len_ratio": 0.987,
+          "invention": 0.018,
+          "invention_indep": 0.018,
+          "invention_ref": 0.018,
+          "unsupported_sample": [
+            "thurday",
+            "within",
+            "happly",
+            "sculpture"
+          ],
+          "invention_ref_sample": [
+            "thurday",
+            "within",
+            "happly",
+            "sculpture"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.928,
+            "kraken-catmus-cpu-glm-digits": 0.932,
+            "kraken-catmus-glm-digits": 0.932,
+            "kraken-catmus-gpu": 0.928
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2312,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.037,
+          "acc": 0.963,
+          "seq": 0.926,
+          "bow": 0.934,
+          "gap": 0.007,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.082,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "chalcograpby",
+            "whercof",
+            "sour",
+            "thuri",
+            "fuch",
+            "thougnt",
+            "consi",
+            "brouncrer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.928,
+            "kraken-catmus-cpu-glm-digits": 0.995,
+            "kraken-catmus-glm-digits": 0.995,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 2313,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.035,
+          "acc": 0.965,
+          "seq": 0.931,
+          "bow": 0.938,
+          "gap": 0.007,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.082,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "chalcograpby",
+            "whercof",
+            "sour",
+            "thuri",
+            "fuch",
+            "thougnt",
+            "consi",
+            "brouncrer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.932,
+            "kraken-catmus": 0.995,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.995
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 2313,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.035,
+          "acc": 0.965,
+          "seq": 0.931,
+          "bow": 0.938,
+          "gap": 0.007,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.082,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "chalcograpby",
+            "whercof",
+            "sour",
+            "thuri",
+            "fuch",
+            "thougnt",
+            "consi",
+            "brouncrer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.932,
+            "kraken-catmus": 0.995,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.995
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 2312,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.037,
+          "acc": 0.963,
+          "seq": 0.926,
+          "bow": 0.934,
+          "gap": 0.007,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.082,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "chalcograpby",
+            "whercof",
+            "sour",
+            "thuri",
+            "fuch",
+            "thougnt",
+            "consi",
+            "brouncrer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.928,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.995,
+            "kraken-catmus-glm-digits": 0.995
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac2798d02c7f994f8506911-p287",
+      "substratum": "English 1700s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+      "year": 1756,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 2675,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.895,
+          "bow": 0.895,
+          "gap": 0,
+          "len_ratio": 0.994,
+          "invention": 0.107,
+          "invention_indep": 0.107,
+          "invention_ref": 0.117,
+          "unsupported_sample": [
+            "judine",
+            "ἀχμὴν",
+            "declinationem",
+            "etiamfi",
+            "effent",
+            "moleftia",
+            "femel",
+            "invadere"
+          ],
+          "invention_ref_sample": [
+            "judine",
+            "ἀχμὴν",
+            "declinationem",
+            "etiamfi",
+            "effent",
+            "moleftia",
+            "femel",
+            "invadere"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.863,
+            "kraken-catmus-cpu-glm-digits": 0.869,
+            "kraken-catmus-glm-digits": 0.87,
+            "kraken-catmus-gpu": 0.864
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2710,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.029,
+          "acc": 0.971,
+          "seq": 0.915,
+          "bow": 0.919,
+          "gap": 0.004,
+          "len_ratio": 1.007,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "historyof",
+            "fudine",
+            "azan",
+            "de2e",
+            "codem",
+            "fint",
+            "cadique",
+            "securdum"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.863,
+            "kraken-catmus-cpu-glm-digits": 0.992,
+            "kraken-catmus-glm-digits": 0.985,
+            "kraken-catmus-gpu": 0.993
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 2713,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.03,
+          "acc": 0.97,
+          "seq": 0.915,
+          "bow": 0.919,
+          "gap": 0.004,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "historyof",
+            "fudine",
+            "azan",
+            "de2e",
+            "codem",
+            "fint",
+            "cadique",
+            "securdum"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.869,
+            "kraken-catmus": 0.992,
+            "kraken-catmus-glm-digits": 0.993,
+            "kraken-catmus-gpu": 0.985
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 2713,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.03,
+          "acc": 0.97,
+          "seq": 0.916,
+          "bow": 0.92,
+          "gap": 0.004,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.084,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "historyof",
+            "fudine",
+            "azan",
+            "codem",
+            "fint",
+            "cadique",
+            "securdum",
+            "pluviæe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.87,
+            "kraken-catmus": 0.985,
+            "kraken-catmus-cpu-glm-digits": 0.993,
+            "kraken-catmus-gpu": 0.992
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 2710,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.029,
+          "acc": 0.971,
+          "seq": 0.916,
+          "bow": 0.92,
+          "gap": 0.004,
+          "len_ratio": 1.007,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.084,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "historyof",
+            "fudine",
+            "azan",
+            "codem",
+            "fint",
+            "cadique",
+            "securdum",
+            "pluviæe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.864,
+            "kraken-catmus": 0.993,
+            "kraken-catmus-cpu-glm-digits": 0.985,
+            "kraken-catmus-glm-digits": 0.992
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac2798d02c7f994f8506911-p352",
+      "substratum": "English 1700s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+      "year": 1756,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1577,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.073,
+          "acc": 0.927,
+          "seq": 0.946,
+          "bow": 0.977,
+          "gap": 0.03,
+          "len_ratio": 0.98,
+          "invention": 0.031,
+          "invention_indep": 0.031,
+          "invention_ref": 0.039,
+          "unsupported_sample": [
+            "chelsea",
+            "college",
+            "hyperbolae",
+            "1669"
+          ],
+          "invention_ref_sample": [
+            "chelsea",
+            "college",
+            "monfr",
+            "hyperbolae",
+            "1669"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.908,
+            "kraken-catmus-cpu-glm-digits": 0.911,
+            "kraken-catmus-glm-digits": 0.911,
+            "kraken-catmus-gpu": 0.908
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1622,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.073,
+          "acc": 0.927,
+          "seq": 0.894,
+          "bow": 0.916,
+          "gap": 0.022,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.173,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "societyof",
+            "insorm",
+            "junoius",
+            "hexry",
+            "berxley",
+            "georce",
+            "clarre",
+            "oldenburc"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.908,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-glm-digits": 0.995,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1623,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.072,
+          "acc": 0.928,
+          "seq": 0.896,
+          "bow": 0.918,
+          "gap": 0.022,
+          "len_ratio": 1.009,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.173,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "societyof",
+            "insorm",
+            "junoius",
+            "hexry",
+            "berxley",
+            "georce",
+            "clarre",
+            "oldenburc"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.911,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-glm-digits": 0.997,
+            "kraken-catmus-gpu": 0.995
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1623,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.073,
+          "acc": 0.927,
+          "seq": 0.896,
+          "bow": 0.918,
+          "gap": 0.022,
+          "len_ratio": 1.009,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.173,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "societyof",
+            "insorm",
+            "junoius",
+            "hexay",
+            "berxley",
+            "georce",
+            "clarre",
+            "oldenburc"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.911,
+            "kraken-catmus": 0.995,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1622,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.073,
+          "acc": 0.927,
+          "seq": 0.894,
+          "bow": 0.916,
+          "gap": 0.022,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.173,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "societyof",
+            "insorm",
+            "junoius",
+            "hexay",
+            "berxley",
+            "georce",
+            "clarre",
+            "oldenburc"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.908,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-cpu-glm-digits": 0.995,
+            "kraken-catmus-glm-digits": 0.997
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p172",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1841,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.995,
+          "bow": 0.995,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.006,
+          "invention_indep": 0.006,
+          "invention_ref": 0.006,
+          "unsupported_sample": [
+            "tried"
+          ],
+          "invention_ref_sample": [
+            "tried"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.966,
+            "kraken-catmus-cpu-glm-digits": 0.97,
+            "kraken-catmus-glm-digits": 0.97,
+            "kraken-catmus-gpu": 0.966
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1850,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.968,
+          "bow": 0.968,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.055,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "toit",
+            "prifms",
+            "litrle",
+            "prisin",
+            "whofe",
+            "lutas's",
+            "confideration",
+            "hank"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.966,
+            "kraken-catmus-cpu-glm-digits": 0.995,
+            "kraken-catmus-glm-digits": 0.995,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1850,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.973,
+          "bow": 0.973,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.055,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "toit",
+            "prifms",
+            "litrle",
+            "prisin",
+            "whofe",
+            "lutas's",
+            "confideration",
+            "hank"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.97,
+            "kraken-catmus": 0.995,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.995
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1850,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.973,
+          "bow": 0.973,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.055,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "toit",
+            "prifms",
+            "litrle",
+            "prisin",
+            "whofe",
+            "lutas's",
+            "confideration",
+            "hank"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.97,
+            "kraken-catmus": 0.995,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.995
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1850,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.968,
+          "bow": 0.968,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.055,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "toit",
+            "prifms",
+            "litrle",
+            "prisin",
+            "whofe",
+            "lutas's",
+            "confideration",
+            "hank"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.966,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.995,
+            "kraken-catmus-glm-digits": 0.995
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p315",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1713,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.007,
+          "acc": 0.993,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.03,
+          "invention_indep": 0.03,
+          "invention_ref": 0.03,
+          "unsupported_sample": [
+            "carefled",
+            "crafts",
+            "disemper",
+            "apithiness",
+            "monfleur"
+          ],
+          "invention_ref_sample": [
+            "carefled",
+            "crafts",
+            "disemper",
+            "apithiness",
+            "monfleur"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.965,
+            "kraken-catmus-cpu-glm-digits": 0.965,
+            "kraken-catmus-glm-digits": 0.965,
+            "kraken-catmus-gpu": 0.965
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1716,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "muchas",
+            "ions",
+            "wben",
+            "brainand",
+            "gent",
+            "lemans",
+            "veighing",
+            "tour"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1716,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "muchas",
+            "ions",
+            "wben",
+            "brainand",
+            "gent",
+            "lemans",
+            "veighing",
+            "tour"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1716,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "muchas",
+            "ions",
+            "wben",
+            "brainand",
+            "gent",
+            "lemans",
+            "veighing",
+            "tour"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1716,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "muchas",
+            "ions",
+            "wben",
+            "brainand",
+            "gent",
+            "lemans",
+            "veighing",
+            "tour"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p36",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1917,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.984,
+          "bow": 0.984,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.028,
+          "invention_indep": 0.028,
+          "invention_ref": 0.028,
+          "unsupported_sample": [
+            "ceases",
+            "faith",
+            "phenomena",
+            "ether",
+            "themselves"
+          ],
+          "invention_ref_sample": [
+            "ceases",
+            "faith",
+            "phenomena",
+            "ether",
+            "themselves"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.925,
+            "kraken-catmus-cpu-glm-digits": 0.925,
+            "kraken-catmus-glm-digits": 0.925,
+            "kraken-catmus-gpu": 0.925
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sigure",
+            "mater",
+            "wise",
+            "phænemena",
+            "borliana",
+            "land",
+            "princi",
+            "ples"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.925,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sigure",
+            "mater",
+            "wise",
+            "phænemena",
+            "borliana",
+            "land",
+            "princi",
+            "ples"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.925,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sigure",
+            "mater",
+            "wise",
+            "phænemena",
+            "borliana",
+            "land",
+            "princi",
+            "ples"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.925,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.091,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sigure",
+            "mater",
+            "wise",
+            "phænemena",
+            "borliana",
+            "land",
+            "princi",
+            "ples"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.925,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p407",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.985,
+          "bow": 0.985,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.022,
+          "invention_indep": 0.022,
+          "invention_ref": 0.022,
+          "unsupported_sample": [
+            "costula",
+            "gloceastershire",
+            "generally",
+            "haile"
+          ],
+          "invention_ref_sample": [
+            "costula",
+            "gloceastershire",
+            "generally",
+            "haile"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.962,
+            "kraken-catmus-cpu-glm-digits": 0.962,
+            "kraken-catmus-glm-digits": 0.962,
+            "kraken-catmus-gpu": 0.962
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.972,
+          "bow": 0.972,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "intest",
+            "sirm",
+            "aecount",
+            "lron",
+            "worls",
+            "glocesteri",
+            "shire",
+            "stee"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.962,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 0.997,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.972,
+          "bow": 0.972,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "intest",
+            "sirm",
+            "aecount",
+            "lron",
+            "worls",
+            "glocesteri",
+            "shire",
+            "stee"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.962,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 0.997,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.972,
+          "bow": 0.972,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "intest",
+            "sirm",
+            "aecount",
+            "lron",
+            "worbs",
+            "glocesteri",
+            "shire",
+            "stee"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.962,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.972,
+          "bow": 0.972,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "intest",
+            "sirm",
+            "aecount",
+            "lron",
+            "worbs",
+            "glocesteri",
+            "shire",
+            "stee"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.962,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p532",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 2178,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.989,
+          "bow": 0.989,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.017,
+          "invention_indep": 0.017,
+          "invention_ref": 0.028,
+          "unsupported_sample": [
+            "liebie",
+            "after",
+            "varicus"
+          ],
+          "invention_ref_sample": [
+            "liebie",
+            "look",
+            "high",
+            "after",
+            "varicus"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.974,
+            "kraken-catmus-cpu-glm-digits": 0.974,
+            "kraken-catmus-glm-digits": 0.972,
+            "kraken-catmus-gpu": 0.972
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 2182,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "look",
+            "high",
+            "arervaricus",
+            "upmich",
+            "soot",
+            "aboutio",
+            "louer",
+            "fide"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.974,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 0.998,
+            "kraken-catmus-gpu": 0.998
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 2182,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.044,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "look",
+            "high",
+            "arervaricus",
+            "upmich",
+            "soot",
+            "aboutio",
+            "louer",
+            "fide"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.974,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 0.998,
+            "kraken-catmus-gpu": 0.998
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 2182,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.976,
+          "bow": 0.976,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.049,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "look",
+            "high",
+            "arervaricus",
+            "upmich",
+            "soot",
+            "aboutio",
+            "houfes",
+            "louer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.972,
+            "kraken-catmus": 0.998,
+            "kraken-catmus-cpu-glm-digits": 0.998,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 2182,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.976,
+          "bow": 0.976,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.049,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "look",
+            "high",
+            "arervaricus",
+            "upmich",
+            "soot",
+            "aboutio",
+            "houfes",
+            "louer"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.972,
+            "kraken-catmus": 0.998,
+            "kraken-catmus-cpu-glm-digits": 0.998,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1987,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.975,
+          "bow": 0.975,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.05,
+          "invention_indep": 0.05,
+          "invention_ref": 0.05,
+          "unsupported_sample": [
+            "absolved",
+            "kath",
+            "magnetisms",
+            "subterranean",
+            "observed",
+            "easy",
+            "ever",
+            "greens"
+          ],
+          "invention_ref_sample": [
+            "absolved",
+            "kath",
+            "magnetisms",
+            "subterranean",
+            "observed",
+            "easy",
+            "ever",
+            "greens"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.896,
+            "kraken-catmus-cpu-glm-digits": 0.896,
+            "kraken-catmus-glm-digits": 0.897,
+            "kraken-catmus-gpu": 0.897
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1992,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.018,
+          "acc": 0.982,
+          "seq": 0.914,
+          "bow": 0.914,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.121,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "seass",
+            "maters",
+            "offthe",
+            "togive",
+            "epen",
+            "folumes",
+            "mill",
+            "agre"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.896,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 0.999,
+            "kraken-catmus-gpu": 0.999
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1992,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.018,
+          "acc": 0.982,
+          "seq": 0.914,
+          "bow": 0.914,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.121,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "seass",
+            "maters",
+            "offthe",
+            "togive",
+            "epen",
+            "folumes",
+            "mill",
+            "agre"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.896,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 0.999,
+            "kraken-catmus-gpu": 0.999
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1994,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.915,
+          "bow": 0.915,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.121,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "seass",
+            "maters",
+            "offthe",
+            "togive",
+            "epen",
+            "folumes",
+            "mill",
+            "agre"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.897,
+            "kraken-catmus": 0.999,
+            "kraken-catmus-cpu-glm-digits": 0.999,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1994,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.915,
+          "bow": 0.915,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.121,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "seass",
+            "maters",
+            "offthe",
+            "togive",
+            "epen",
+            "folumes",
+            "mill",
+            "agre"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.897,
+            "kraken-catmus": 0.999,
+            "kraken-catmus-cpu-glm-digits": 0.999,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 493,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.982,
+          "bow": 0.982,
+          "gap": 0,
+          "len_ratio": 0.988,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.926,
+            "kraken-catmus-cpu-glm-digits": 0.926,
+            "kraken-catmus-glm-digits": 0.926,
+            "kraken-catmus-gpu": 0.926
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 500,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.086,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "c1016",
+            "haye",
+            "experimen",
+            "ithink",
+            "obfervations"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.926,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 500,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.086,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "c1016",
+            "haye",
+            "experimen",
+            "ithink",
+            "obfervations"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.926,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 500,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.086,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "c1016",
+            "haye",
+            "experimen",
+            "ithink",
+            "obfervations"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.926,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 500,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.086,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "c1016",
+            "haye",
+            "experimen",
+            "ithink",
+            "obfervations"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.926,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1741,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.995,
+          "bow": 0.995,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.006,
+          "invention_indep": 0.006,
+          "invention_ref": 0.006,
+          "unsupported_sample": [
+            "riches"
+          ],
+          "invention_ref_sample": [
+            "riches"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.981,
+            "kraken-catmus-cpu-glm-digits": 0.981,
+            "kraken-catmus-glm-digits": 0.981,
+            "kraken-catmus-gpu": 0.981
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1749,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.025,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "neighbeurs",
+            "romona",
+            "surnish",
+            "ialea"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.981,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1749,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.025,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "neighbeurs",
+            "romona",
+            "surnish",
+            "ialea"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.981,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1749,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.025,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "neighbeurs",
+            "romona",
+            "surnish",
+            "ialea"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.981,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1749,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.025,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "neighbeurs",
+            "romona",
+            "surnish",
+            "ialea"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.981,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1113,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.996,
+          "bow": 0.996,
+          "gap": 0,
+          "len_ratio": 0.994,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.955,
+            "kraken-catmus-cpu-glm-digits": 0.955,
+            "kraken-catmus-glm-digits": 0.955,
+            "kraken-catmus-gpu": 0.955
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1147,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.024,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.081,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "mant",
+            "statichs",
+            "statenanovel",
+            "podlur",
+            "prob",
+            "pued",
+            "gaidie",
+            "finishr"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.955,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1147,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.024,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.081,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "mant",
+            "statichs",
+            "statenanovel",
+            "podlur",
+            "prob",
+            "pued",
+            "gaidie",
+            "finishr"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.955,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1147,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.024,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.081,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "mant",
+            "statichs",
+            "statenanovel",
+            "podlur",
+            "prob",
+            "pued",
+            "gaidie",
+            "finishr"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.955,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1147,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.033,
+          "acc": 0.967,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.024,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.081,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "mant",
+            "statichs",
+            "statenanovel",
+            "podlur",
+            "prob",
+            "pued",
+            "gaidie",
+            "finishr"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.955,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p211",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1544,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.025,
+          "acc": 0.975,
+          "seq": 0.965,
+          "bow": 0.968,
+          "gap": 0.003,
+          "len_ratio": 0.992,
+          "invention": 0.038,
+          "invention_indep": 0.038,
+          "invention_ref": 0.044,
+          "unsupported_sample": [
+            "iheca",
+            "faith",
+            "lincolnshire",
+            "vespa",
+            "flender",
+            "numbers"
+          ],
+          "invention_ref_sample": [
+            "iheca",
+            "faith",
+            "lincolnshire",
+            "informed",
+            "vespa",
+            "flender",
+            "numbers"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.95,
+            "kraken-catmus-cpu-glm-digits": 0.953,
+            "kraken-catmus-glm-digits": 0.953,
+            "kraken-catmus-gpu": 0.95
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1558,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.957,
+          "bow": 0.971,
+          "gap": 0.014,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.043,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ibeca's",
+            "mritten",
+            "tork",
+            "shellr",
+            "informed",
+            "smeet",
+            "nembe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-glm-digits": 0.997,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1558,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.026,
+          "acc": 0.974,
+          "seq": 0.96,
+          "bow": 0.974,
+          "gap": 0.014,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.043,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ibeca's",
+            "mritten",
+            "tork",
+            "shellr",
+            "informed",
+            "smeet",
+            "nembe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.953,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1558,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.026,
+          "acc": 0.974,
+          "seq": 0.96,
+          "bow": 0.974,
+          "gap": 0.014,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.043,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ibeca's",
+            "mritten",
+            "tork",
+            "shellr",
+            "informed",
+            "smeet",
+            "nembe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.953,
+            "kraken-catmus": 0.997,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.997
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1558,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.957,
+          "bow": 0.971,
+          "gap": 0.014,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.043,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ibeca's",
+            "mritten",
+            "tork",
+            "shellr",
+            "informed",
+            "smeet",
+            "nembe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.997,
+            "kraken-catmus-glm-digits": 0.997
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p326",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1490,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.011,
+          "acc": 0.989,
+          "seq": 0.949,
+          "bow": 0.949,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.016,
+          "invention_indep": 0.016,
+          "invention_ref": 0.016,
+          "unsupported_sample": [
+            "frac",
+            "freight"
+          ],
+          "invention_ref_sample": [
+            "frac",
+            "freight"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.933,
+            "kraken-catmus-cpu-glm-digits": 0.938,
+            "kraken-catmus-glm-digits": 0.938,
+            "kraken-catmus-gpu": 0.933
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1505,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.912,
+          "bow": 0.921,
+          "gap": 0.009,
+          "len_ratio": 1.007,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vill",
+            "mingièd",
+            "vanifh",
+            "fevered",
+            "iv'hiteness",
+            "tellow"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.933,
+            "kraken-catmus-cpu-glm-digits": 0.993,
+            "kraken-catmus-glm-digits": 0.993,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1506,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.914,
+          "bow": 0.923,
+          "gap": 0.009,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vill",
+            "mingièd",
+            "vanifh",
+            "fevered",
+            "iv'hiteness",
+            "tellow"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.938,
+            "kraken-catmus": 0.993,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.993
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1506,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.914,
+          "bow": 0.923,
+          "gap": 0.009,
+          "len_ratio": 1.008,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vill",
+            "mingièd",
+            "vanifh",
+            "fevered",
+            "iv'hiteness",
+            "tellow"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.938,
+            "kraken-catmus": 0.993,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.993
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1505,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.912,
+          "bow": 0.921,
+          "gap": 0.009,
+          "len_ratio": 1.007,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.047,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vill",
+            "mingièd",
+            "vanifh",
+            "fevered",
+            "iv'hiteness",
+            "tellow"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.933,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.993,
+            "kraken-catmus-glm-digits": 0.993
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p476",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1817,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.024,
+          "invention_indep": 0.024,
+          "invention_ref": 0.024,
+          "unsupported_sample": [
+            "furnish",
+            "transferfly",
+            "bronchia",
+            "vehicles"
+          ],
+          "invention_ref_sample": [
+            "furnish",
+            "transferfly",
+            "bronchia",
+            "vehicles"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.973,
+            "kraken-catmus-cpu-glm-digits": 0.975,
+            "kraken-catmus-glm-digits": 0.975,
+            "kraken-catmus-gpu": 0.973
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1823,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.986,
+          "bow": 0.986,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.012,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "subfiding",
+            "frefh"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.973,
+            "kraken-catmus-cpu-glm-digits": 0.998,
+            "kraken-catmus-glm-digits": 0.998,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1823,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.988,
+          "bow": 0.988,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.012,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "subfiding",
+            "frefh"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.975,
+            "kraken-catmus": 0.998,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.998
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1823,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.988,
+          "bow": 0.988,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.012,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "subfiding",
+            "frefh"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.975,
+            "kraken-catmus": 0.998,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.998
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1823,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.986,
+          "bow": 0.986,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.012,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "subfiding",
+            "frefh"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.973,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.998,
+            "kraken-catmus-glm-digits": 0.998
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p70",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1363,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.99,
+          "bow": 0.99,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": 0.016,
+          "unsupported_sample": [
+            "ease"
+          ],
+          "invention_ref_sample": [
+            "ease",
+            "ever"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.95,
+            "kraken-catmus-cpu-glm-digits": 0.95,
+            "kraken-catmus-glm-digits": 0.95,
+            "kraken-catmus-gpu": 0.95
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1368,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.95,
+          "bow": 0.954,
+          "gap": 0.003,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "consideratiens",
+            "ming",
+            "mhat",
+            "grast",
+            "mith",
+            "stoch",
+            "publisper",
+            "ever"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1368,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.95,
+          "bow": 0.954,
+          "gap": 0.003,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "consideratiens",
+            "ming",
+            "mhat",
+            "grast",
+            "mith",
+            "stoch",
+            "publisper",
+            "ever"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1368,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.95,
+          "bow": 0.954,
+          "gap": 0.003,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "consideratiens",
+            "ming",
+            "mhat",
+            "grast",
+            "mith",
+            "stoch",
+            "publisper",
+            "ever"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1368,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.95,
+          "bow": 0.954,
+          "gap": 0.003,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "consideratiens",
+            "ming",
+            "mhat",
+            "grast",
+            "mith",
+            "stoch",
+            "publisper",
+            "ever"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.95,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1864,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.994,
+          "bow": 0.994,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.014,
+          "invention_indep": 0.014,
+          "invention_ref": 0.014,
+          "unsupported_sample": [
+            "equinoctial",
+            "equator"
+          ],
+          "invention_ref_sample": [
+            "equinoctial",
+            "equator"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.968,
+            "kraken-catmus-cpu-glm-digits": 0.968,
+            "kraken-catmus-glm-digits": 0.968,
+            "kraken-catmus-gpu": 0.968
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1869,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.974,
+          "bow": 0.974,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.063,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "apogœum",
+            "moonis",
+            "hard",
+            "righi",
+            "fhall",
+            "ofuse",
+            "s'apogaum",
+            "perigænm"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.968,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1869,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.974,
+          "bow": 0.974,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.063,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "apogœum",
+            "moonis",
+            "hard",
+            "righi",
+            "fhall",
+            "ofuse",
+            "s'apogaum",
+            "perigænm"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.968,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1869,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.974,
+          "bow": 0.974,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.063,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "apogœum",
+            "moonis",
+            "hard",
+            "righi",
+            "fhall",
+            "ofuse",
+            "s'apogaum",
+            "perigænm"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.968,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1869,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.974,
+          "bow": 0.974,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.063,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "apogœum",
+            "moonis",
+            "hard",
+            "righi",
+            "fhall",
+            "ofuse",
+            "s'apogaum",
+            "perigænm"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.968,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1488,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.011,
+          "acc": 0.989,
+          "seq": 0.961,
+          "bow": 0.961,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": 0.053,
+          "unsupported_sample": [
+            "loft",
+            "always",
+            "phoenomenis",
+            "eclipsein",
+            "cælo",
+            "dislutissimæ",
+            "eclipsei"
+          ],
+          "invention_ref_sample": [
+            "loft",
+            "twere",
+            "always",
+            "phoenomenis",
+            "eclipsein",
+            "cælo",
+            "servavi",
+            "dislutissimæ"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.942,
+            "kraken-catmus-cpu-glm-digits": 0.945,
+            "kraken-catmus-glm-digits": 0.945,
+            "kraken-catmus-gpu": 0.942
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1490,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.958,
+          "bow": 0.958,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "iooking",
+            "aster",
+            "swistness",
+            "twere",
+            "alway",
+            "remarhs",
+            "mith",
+            "servavi"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.942,
+            "kraken-catmus-cpu-glm-digits": 0.994,
+            "kraken-catmus-glm-digits": 0.994,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1489,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "iooking",
+            "aster",
+            "swistness",
+            "twere",
+            "alway",
+            "remarhs",
+            "mith",
+            "servavi"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.945,
+            "kraken-catmus": 0.994,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 0.994
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1489,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "iooking",
+            "aster",
+            "swistness",
+            "twere",
+            "alway",
+            "remarhs",
+            "mith",
+            "servavi"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.945,
+            "kraken-catmus": 0.994,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 0.994
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1490,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.958,
+          "bow": 0.958,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "iooking",
+            "aster",
+            "swistness",
+            "twere",
+            "alway",
+            "remarhs",
+            "mith",
+            "servavi"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.942,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 0.994,
+            "kraken-catmus-glm-digits": 0.994
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1479,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.991,
+          "bow": 0.991,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.007,
+          "invention_indep": 0.007,
+          "invention_ref": 0.015,
+          "unsupported_sample": [
+            "joys"
+          ],
+          "invention_ref_sample": [
+            "onsieur",
+            "joys"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.965,
+            "kraken-catmus-cpu-glm-digits": 0.965,
+            "kraken-catmus-glm-digits": 0.965,
+            "kraken-catmus-gpu": 0.965
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1487,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.965,
+          "bow": 0.965,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.057,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vsual",
+            "plainty",
+            "deliver",
+            "mahing",
+            "mater",
+            "swect",
+            "onsieur",
+            "ofthe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1487,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.965,
+          "bow": 0.965,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.057,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vsual",
+            "plainty",
+            "deliver",
+            "mahing",
+            "mater",
+            "swect",
+            "onsieur",
+            "ofthe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1487,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.965,
+          "bow": 0.965,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.057,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vsual",
+            "plainty",
+            "deliver",
+            "mahing",
+            "mater",
+            "swect",
+            "onsieur",
+            "ofthe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1487,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.965,
+          "bow": 0.965,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.057,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "vsual",
+            "plainty",
+            "deliver",
+            "mahing",
+            "mater",
+            "swect",
+            "onsieur",
+            "ofthe"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.965,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+      "substratum": "English 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "has_ref": true,
+      "engines": {
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "glm-ocr": 0,
+            "kraken-catmus": 0,
+            "kraken-catmus-cpu-glm-digits": 0,
+            "kraken-catmus-glm-digits": 0,
+            "kraken-catmus-gpu": 0
+          }
+        },
+        "glm-ocr": {
+          "n_content": 1756,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.986,
+          "bow": 0.986,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.027,
+          "invention_indep": 0.027,
+          "invention_ref": 0.027,
+          "unsupported_sample": [
+            "rendered",
+            "always",
+            "publish",
+            "convenience"
+          ],
+          "invention_ref_sample": [
+            "rendered",
+            "always",
+            "publish",
+            "convenience"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "kraken-catmus": 0.967,
+            "kraken-catmus-cpu-glm-digits": 0.967,
+            "kraken-catmus-glm-digits": 0.967,
+            "kraken-catmus-gpu": 0.967
+          }
+        },
+        "kraken-catmus": {
+          "n_content": 1761,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.98,
+          "bow": 0.98,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.033,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "hematicians",
+            "whet",
+            "wherefere",
+            "defirable",
+            "mahing"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.967,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-cpu-glm-digits": {
+          "n_content": 1761,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.98,
+          "bow": 0.98,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.033,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "hematicians",
+            "whet",
+            "wherefere",
+            "defirable",
+            "mahing"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.967,
+            "kraken-catmus": 1,
+            "kraken-catmus-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-glm-digits": {
+          "n_content": 1761,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.98,
+          "bow": 0.98,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.033,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "hematicians",
+            "whet",
+            "wherefere",
+            "defirable",
+            "mahing"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.967,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-gpu": 1
+          }
+        },
+        "kraken-catmus-gpu": {
+          "n_content": 1761,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.98,
+          "bow": 0.98,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.033,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "hematicians",
+            "whet",
+            "wherefere",
+            "defirable",
+            "mahing"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "glm-ocr": 0.967,
+            "kraken-catmus": 1,
+            "kraken-catmus-cpu-glm-digits": 1,
+            "kraken-catmus-glm-digits": 1
+          }
+        }
+      }
+    }
+  ]
+}

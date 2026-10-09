@@ -43,7 +43,7 @@ type QuizMode = 'mixed' | 'vocab' | 'date' | 'author' | 'tradition';
 type QuizState = 'topics' | 'loading' | 'question' | 'answered' | 'complete';
 
 const QUIZ_MODES: { id: QuizMode; label: string; description: string }[] = [
-  { id: 'mixed', label: 'Mixed', description: 'A bit of everything — vocabulary, dates, authors, and traditions' },
+  { id: 'mixed', label: 'Mixed', description: 'A bit of everything: vocabulary, dates, authors, and traditions' },
   { id: 'vocab', label: 'Vocabulary', description: 'Technical terms from alchemical, Hermetic, and philosophical texts' },
   { id: 'date', label: 'Dating', description: 'When was this written? Place passages in their historical decade' },
   { id: 'author', label: 'Attribution', description: 'Who wrote this? Match passages to their authors' },
@@ -51,9 +51,9 @@ const QUIZ_MODES: { id: QuizMode; label: string; description: string }[] = [
 ];
 
 const FALLBACK_TOPICS: Topic[] = [
-  { id: 'alchemy', label: 'Alchemy', description: 'The art of transformation — prima materia, the philosopher\'s stone, and the Great Work' },
+  { id: 'alchemy', label: 'Alchemy', description: 'The art of transformation: prima materia, the philosopher\'s stone, and the Great Work' },
   { id: 'hermetica', label: 'Hermetica', description: 'The teachings of Hermes Trismegistus and the Hermetic tradition' },
-  { id: 'kabbalah', label: 'Kabbalah', description: 'Jewish mystical tradition — the sefirot, the Tree of Life, and divine emanation' },
+  { id: 'kabbalah', label: 'Kabbalah', description: 'Jewish mystical tradition: the sefirot, the Tree of Life, and divine emanation' },
   { id: 'astrology', label: 'Astrology & Astronomy', description: 'Celestial influences, planetary spheres, and the music of the heavens' },
   { id: 'magic', label: 'Magic & Divination', description: 'Natural magic, ceremonial practice, and the hidden forces of nature' },
   { id: 'medicine', label: 'Medicine & Natural Philosophy', description: 'Humors, signatures, Paracelsian medicine, and the book of nature' },

@@ -1,0 +1,313 @@
+{
+ "about": "Control for scripts/maintenance/tengyur-heading-judge-5497.mjs (#5497). by_eye: 31 leftover heading labels read against the page Tibetan on 2026-10-07 (the two lines #6126 names, plus a seeded random draw over both label classes; 1 drawn line dropped as undecidable). PR #6126 did not record its own 30-line sample, so this set replaces it. truth: invented = no Tibetan words at that point; duplicate = restates words the adjacent English also translates, so deleting it loses no translation; translated = the only rendering of a Tibetan span. planted: 10 invented topic labels inserted before the 2nd paragraph of heading-free pages, in the request only (the pages are never written).",
+ "by_eye": [
+  {
+   "book_id": "6abe93ef6a920ffd924d7706",
+   "page": 442,
+   "line": "# Regarding the Connection to the Accumulations",
+   "class": "label_no_marker",
+   "truth": "invented",
+   "note": "#6126 sample: invented (paraphrases the question the next line translates)"
+  },
+  {
+   "book_id": "6abecf9e896ea18127c8bf06",
+   "page": 515,
+   "line": "#### Managing Entry and Possessions",
+   "class": "label_no_marker",
+   "truth": "invented",
+   "note": "#6126 sample: invented"
+  },
+  {
+   "book_id": "6abedbe1896ea18127c90bc1",
+   "page": 127,
+   "line": "### The Suffix Vatu after Taḍit and Others",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb2ec896ea18127c83529",
+   "page": 640,
+   "line": "### The Buddha's Intent",
+   "class": "label_no_marker",
+   "truth": "duplicate",
+   "note": "repeats a verse line the body translates"
+  },
+  {
+   "book_id": "6abebeed896ea18127c8866a",
+   "page": 135,
+   "line": "# 30. Lack of Moral Dread",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb2ec896ea18127c83529",
+   "page": 622,
+   "line": "### Conditioned and unconditioned things",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb158896ea18127c82682",
+   "page": 475,
+   "line": "### The Relationship of the Agent and the Action",
+   "class": "label_no_marker",
+   "truth": "invented"
+  },
+  {
+   "book_id": "6abea9346a920ffd924dd5f1",
+   "page": 194,
+   "line": "# The Aspect of Heat Which Teaches ",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abed08d896ea18127c8c3ca",
+   "page": 137,
+   "line": "# The Training Rules for Teaching the Dharma",
+   "class": "label_no_marker",
+   "truth": "invented"
+  },
+  {
+   "book_id": "6abeb20a896ea18127c82b01",
+   "page": 535,
+   "line": "### On the Diversity of the Teachings",
+   "class": "label_no_marker",
+   "truth": "invented"
+  },
+  {
+   "book_id": "6abeb1dc896ea18127c828bc",
+   "page": 276,
+   "line": "# Chapter Eleven",
+   "class": "label_no_marker",
+   "truth": "duplicate",
+   "note": "Tibetan has rab tu byed pa bcu gcig pa; the body also renders it"
+  },
+  {
+   "book_id": "6abed95d896ea18127c8fcd2",
+   "page": 611,
+   "line": "### The Nineteenth Chapter: Examination of the Meaning of the Category of Particularity",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abe825059b86b7d32a6597a",
+   "page": 267,
+   "line": "### How could arising exist",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abe825059b86b7d32a6597a",
+   "page": 569,
+   "line": "# When one refutes the Perfect Buddha, one's own self",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abecf9e896ea18127c8bf06",
+   "page": 515,
+   "line": "#### Resting with Acquaintances",
+   "class": "label_no_marker",
+   "truth": "invented"
+  },
+  {
+   "book_id": "6abeda5a896ea18127c904b8",
+   "page": 447,
+   "line": "## Seen by the Saman",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb20a896ea18127c82b01",
+   "page": 322,
+   "line": "### The Knowledge of Non-arising and Exhaustion",
+   "class": "label_no_marker",
+   "truth": "duplicate",
+   "note": "repeats the first verse line the body translates"
+  },
+  {
+   "book_id": "6abedbe1896ea18127c90bc1",
+   "page": 225,
+   "line": "### Optionality for Udit Roots",
+   "class": "label_no_marker",
+   "truth": "duplicate",
+   "note": "sutra udito va; the body also renders it"
+  },
+  {
+   "book_id": "6abebe51896ea18127c882ce",
+   "page": 363,
+   "line": "### Not dispelling the grief of others",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abea7436a920ffd924dc999",
+   "page": 317,
+   "line": "# Ritual Bathing Offering",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abee265a43718d234bf1807",
+   "page": 165,
+   "line": "### Names for Dairy, Food, and Drink",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abee417a43718d234bf2288",
+   "page": 167,
+   "line": "### Nouns ending in the letter Ṣa",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abecb0a896ea18127c8b28a",
+   "page": 397,
+   "line": "# Regarding the Downfall of Expulsion",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abed95d896ea18127c8fcd2",
+   "page": 449,
+   "line": "### The Twelfth Chapter: Examination of the Self according to the Vatsiputriya School",
+   "class": "label_no_marker",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb35b896ea18127c83af5",
+   "page": 28,
+   "line": "### Chapter 6: Patience",
+   "class": "label_on_marked_page",
+   "truth": "invented",
+   "note": "page has only the le'u lnga pa colophon; no chapter-6 words"
+  },
+  {
+   "book_id": "6abea6ac6a920ffd924dc1ad",
+   "page": 231,
+   "line": "### Commentary on the Siddhaikavira Tantra",
+   "class": "label_on_marked_page",
+   "truth": "duplicate",
+   "note": "title present (bod skad du); the body also renders it"
+  },
+  {
+   "book_id": "6abedbe1896ea18127c90bc1",
+   "page": 163,
+   "line": "### Conclusion of the Section",
+   "class": "label_on_marked_page",
+   "truth": "invented",
+   "note": "label; the body renders the completion line"
+  },
+  {
+   "book_id": "6abe93ef6a920ffd924d7706",
+   "page": 185,
+   "line": "### Chapter Eight: Cutting Through Doubts Concerning the Realm of Non-Abiding Nirvana",
+   "class": "label_on_marked_page",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb583896ea18127c84e6f",
+   "page": 130,
+   "line": "# The Explanation of the Noble Four Dharmas",
+   "class": "label_on_marked_page",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeca4e896ea18127c8b081",
+   "page": 179,
+   "line": "# The Sutra on Discipline: Volume Nine",
+   "class": "label_on_marked_page",
+   "truth": "translated"
+  },
+  {
+   "book_id": "6abeb1dc896ea18127c828bc",
+   "page": 401,
+   "line": "### The Lamp of Wisdom: A Commentary on the Root of the Middle Way",
+   "class": "label_on_marked_page",
+   "truth": "translated"
+  }
+ ],
+ "planted": [
+  {
+   "book_id": "6abed3c3896ea18127c8d166",
+   "page": 190,
+   "line": "### The Four Great Wheels",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abecd0e896ea18127c8b6de",
+   "page": 168,
+   "line": "### On the Term \"Blue Hair\"",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abed619896ea18127c8e464",
+   "page": 195,
+   "line": "### Distinct Causes and Their Results",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abec24c896ea18127c899be",
+   "page": 114,
+   "line": "# The Protector Who Has Crossed Over",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abed9a6896ea18127c8ffaa",
+   "page": 156,
+   "line": "### The Universal and the Particular",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abebc98896ea18127c87c30",
+   "page": 213,
+   "line": "### The Gateway of Thorough Knowledge",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abe98e76a920ffd924d82e0",
+   "page": 227,
+   "line": "# The Sequence of the Four Gatherings",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abead0e896ea18127c80fe0",
+   "page": 303,
+   "line": "### Entering the Mandala and Self-Initiation",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abee2a5a43718d234bf1afb",
+   "page": 278,
+   "line": "### Objects of Focus with Conceptualization",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  },
+  {
+   "book_id": "6abebc98896ea18127c87c30",
+   "page": 130,
+   "line": "### The Four Paths of Calm Abiding and Insight",
+   "insert_before_paragraph": 2,
+   "truth": "invented",
+   "note": "planted: a topic label written from the next paragraph"
+  }
+ ]
+}

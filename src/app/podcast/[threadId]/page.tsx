@@ -262,7 +262,7 @@ export async function generateMetadata({ params }: Props) {
   const episode = await getEpisode(threadId);
   if (!episode) return { title: 'Episode Not Found' };
   return {
-    title: `${episode.title} — Source Library Deep Dive`,
+    title: `${episode.title} | Source Library Deep Dive`,
     description: `${episode.formatLabel}: ${episode.topic}. AI-generated scholarly podcast grounded in primary sources.`,
   };
 }
@@ -291,7 +291,7 @@ export default async function EpisodePage({ params }: Props) {
                 {episode.heroImage.description}
                 {episode.heroImage.bookTitle && (
                   <>
-                    {' — '}
+                    {', from '}
                     <Link
                       href={`/book/${episode.heroImage.bookId}`}
                       className="text-white/90 underline hover:text-white"
@@ -366,7 +366,7 @@ export default async function EpisodePage({ params }: Props) {
                     </p>
                     <p className="text-[12px] text-[#8a8480] font-sans mt-0.5">
                       {book.author}
-                      {book.findingCount > 1 && ` — ${book.findingCount} passages cited`}
+                      {book.findingCount > 1 && ` · ${book.findingCount} passages cited`}
                     </p>
                   </div>
                 </Link>
@@ -437,7 +437,7 @@ export default async function EpisodePage({ params }: Props) {
                         {finding.source.bookTitle}
                         {finding.source.pageNumber && `, p. ${finding.source.pageNumber}`}
                       </Link>
-                      {finding.source.bookAuthor && ` — ${finding.source.bookAuthor}`}
+                      {finding.source.bookAuthor && `, ${finding.source.bookAuthor}`}
                     </p>
                   </div>
                 </div>

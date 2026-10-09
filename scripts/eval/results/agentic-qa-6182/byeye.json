@@ -1,0 +1,310 @@
+{
+ "label": "read from text (typed corpora; no page image); Opus readers, blind A/B of draft vs final, not scholars",
+ "units": 15,
+ "by_arm": {
+  "SA": {
+   "units": 6,
+   "fid_draft": 3.33,
+   "fid_final": 4.0,
+   "better": {
+    "final": 5,
+    "draft": 1,
+    "TIE": 0
+   },
+   "diffs_right": {
+    "final": 7,
+    "draft": 1,
+    "both": 1,
+    "neither": 0
+   }
+  },
+  "GQ": {
+   "units": 9,
+   "fid_draft": 4.11,
+   "fid_final": 4.33,
+   "better": {
+    "final": 6,
+    "draft": 3,
+    "TIE": 0
+   },
+   "diffs_right": {
+    "final": 18,
+    "draft": 3,
+    "both": 9,
+    "neither": 0
+   }
+  }
+ },
+ "rows": [
+  {
+   "uid": "sa-garuda-purana-p144",
+   "lang": "Sanskrit",
+   "arm": "GQ",
+   "change": 0.0911,
+   "findings": 13,
+   "fid": {
+    "draft": 3,
+    "final": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 7,
+    "draft": 0,
+    "both": 1,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-mahanirvana-p446",
+   "lang": "Sanskrit",
+   "arm": "SA",
+   "change": 0.0243,
+   "findings": 2,
+   "fid": {
+    "draft": 3,
+    "final": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 2,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-mudraraksasa-p115",
+   "lang": "Sanskrit",
+   "arm": "SA",
+   "change": 0.0163,
+   "findings": 1,
+   "fid": {
+    "final": 3,
+    "draft": 3
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 1,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "zh-KR3b0003-ch06",
+   "lang": "Chinese",
+   "arm": "GQ",
+   "change": 0.0119,
+   "findings": 2,
+   "fid": {
+    "draft": 4,
+    "final": 5
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 2,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-siksasamuccaya-p118",
+   "lang": "Sanskrit",
+   "arm": "SA",
+   "change": 0.0104,
+   "findings": 2,
+   "fid": {
+    "final": 3,
+    "draft": 3
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 1,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "pi-sn10-3-pts-p227",
+   "lang": "Pali",
+   "arm": "GQ",
+   "change": 0.0387,
+   "findings": 8,
+   "fid": {
+    "draft": 5,
+    "final": 4
+   },
+   "better": "draft",
+   "diffs_right": {
+    "final": 0,
+    "draft": 1,
+    "both": 3,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "pi-sn46-56-pts-p148",
+   "lang": "Pali",
+   "arm": "SA",
+   "change": 0.0198,
+   "findings": 2,
+   "fid": {
+    "final": 5,
+    "draft": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 1,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-prabodhacandrodaya-p21",
+   "lang": "Sanskrit",
+   "arm": "GQ",
+   "change": 0.0149,
+   "findings": 2,
+   "fid": {
+    "final": 4,
+    "draft": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 2,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "pi-sn7-11-th-p254",
+   "lang": "Pali",
+   "arm": "GQ",
+   "change": 0.0113,
+   "findings": 6,
+   "fid": {
+    "draft": 5,
+    "final": 4
+   },
+   "better": "draft",
+   "diffs_right": {
+    "final": 0,
+    "draft": 1,
+    "both": 1,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "zh-KR1d0026-010",
+   "lang": "Chinese",
+   "arm": "SA",
+   "change": 0.0103,
+   "findings": 2,
+   "fid": {
+    "draft": 4,
+    "final": 4
+   },
+   "better": "draft",
+   "diffs_right": {
+    "final": 0,
+    "draft": 1,
+    "both": 1,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "pi-sn3-1-pts-p089",
+   "lang": "Pali",
+   "arm": "GQ",
+   "change": 0.0369,
+   "findings": 6,
+   "fid": {
+    "final": 4,
+    "draft": 4
+   },
+   "better": "draft",
+   "diffs_right": {
+    "final": 1,
+    "draft": 1,
+    "both": 2,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-avadanakalpalata-p331",
+   "lang": "Sanskrit",
+   "arm": "SA",
+   "change": 0.018,
+   "findings": 2,
+   "fid": {
+    "final": 5,
+    "draft": 3
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 2,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "zh-T1934-p0793b25",
+   "lang": "Chinese",
+   "arm": "GQ",
+   "change": 0.0146,
+   "findings": 4,
+   "fid": {
+    "draft": 4,
+    "final": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 3,
+    "draft": 0,
+    "both": 1,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "sa-rajatarangini-p16",
+   "lang": "Sanskrit",
+   "arm": "GQ",
+   "change": 0.0107,
+   "findings": 1,
+   "fid": {
+    "final": 5,
+    "draft": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 1,
+    "draft": 0,
+    "both": 0,
+    "neither": 0
+   }
+  },
+  {
+   "uid": "zh-T2005-p0296b19",
+   "lang": "Chinese",
+   "arm": "GQ",
+   "change": 0.0088,
+   "findings": 2,
+   "fid": {
+    "final": 5,
+    "draft": 4
+   },
+   "better": "final",
+   "diffs_right": {
+    "final": 2,
+    "draft": 0,
+    "both": 1,
+    "neither": 0
+   }
+  }
+ ]
+}

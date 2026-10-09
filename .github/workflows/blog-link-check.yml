@@ -1,17 +1,24 @@
 name: blog-link-check
 
 # Two jobs, one script (scripts/maintenance/check-blog-links.mjs):
-#  - PR: validate deep links in changed blog posts before they ship.
-#  - Weekly sweep: catch rot in ALL posts (books deleted/renamed after
-#    publication — how the 51 dead links in issue #2959 accumulated).
+#  - PR: validate deep links in changed blog posts, and quotation shortlinks
+#    (/q/<code>) in any changed page or component, before they ship.
+#  - Daily sweep: catch rot in ALL posts and every hard-coded shortlink under
+#    src/ (books deleted/renamed after publication — how the 51 dead links in
+#    issue #2959 accumulated). Daily, not weekly: a sweep that hides books does
+#    not know which of them authored pages cite, and the Monday run of
+#    2026-10-05 passed days before 20 links were found dead (#6307).
 # HTTP-only against production; no secrets, so it also runs on fork PRs.
 
 on:
   pull_request:
     paths:
       - 'src/app/blog/**'
+      - 'src/app/**/page.tsx'
+      - 'src/components/**/*.tsx'
+      - 'scripts/maintenance/check-blog-links.mjs'
   schedule:
-    - cron: '20 6 * * 1' # Mondays 06:20 UTC
+    - cron: '20 6 * * *' # daily 06:20 UTC
   workflow_dispatch:
 
 permissions:
@@ -29,18 +36,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check links in changed blog posts
+      - name: Check links in changed pages
         run: |
-          FILES=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}"...HEAD -- 'src/app/blog/**/page.tsx')
+          # Blog pages get every deep link checked; other pages and components
+          # only their /q/ shortlinks (the script decides per file).
+          FILES=$(git diff --name-only --diff-filter=d "origin/${{ github.base_ref }}"...HEAD -- 'src/app/**/page.tsx' 'src/components/**/*.tsx')
           if [ -z "$FILES" ]; then
-            echo "No blog page files changed."
+            echo "No page or component files changed."
             exit 0
           fi
           echo "$FILES"
           # shellcheck disable=SC2086
           node scripts/maintenance/check-blog-links.mjs $FILES
 
-  weekly-sweep:
+  daily-sweep:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -61,6 +70,7 @@ jobs:
         run: |
           TITLE="Blog link rot: weekly sweep found broken deep links"
           BODY_FILE=issue-body.md
+          MARKER="broken-set:$(sed -n '/BROKEN link/,$p' report.txt | grep -E '^  https?://' | sort | sha256sum | cut -c1-16)"
           {
             echo "The weekly blog link sweep found broken deep links (soft-404s)."
             echo
@@ -70,12 +80,31 @@ jobs:
             echo
             echo "Run locally: \`node scripts/maintenance/check-blog-links.mjs --all\`"
             echo "Playbook: relink to a held edition or unlink (see issue #2959 history)."
+            echo
+            echo "<!-- $MARKER -->"
           } > "$BODY_FILE"
           EXISTING=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
           if [ -n "$EXISTING" ]; then
-            gh issue comment "$EXISTING" --body-file "$BODY_FILE"
+            # A daily run comments only when the broken set changed since the
+            # last report (the marker is a hash of the sorted broken URLs).
+            if gh issue view "$EXISTING" --json body,comments --jq '.body, (.comments[-1].body // "")' | grep -qF "$MARKER"; then
+              echo "Same broken set as the last report on #$EXISTING; not commenting again."
+            else
+              gh issue comment "$EXISTING" --body-file "$BODY_FILE"
+            fi
           else
             gh issue create --title "$TITLE" --label "user-feedback" --body-file "$BODY_FILE"
+          fi
+      # A detector that files an issue closes it when its next run passes.
+      - name: Close rot issue when the sweep is clean
+        if: steps.check.outputs.exit_code == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Blog link rot: weekly sweep found broken deep links"
+          EXISTING=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "The link sweep passed on $(date -u +%F): every hard-coded deep link and shortlink resolves."
           fi
       - name: Fail job if links broken
         if: steps.check.outputs.exit_code == '1'

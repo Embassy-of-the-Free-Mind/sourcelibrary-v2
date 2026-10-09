@@ -1,0 +1,237 @@
+{
+ "seed": 43276,
+ "calib": true,
+ "plants": [
+  {
+   "page_id": "6abeb361896ea18127c83d4d",
+   "vol": 105,
+   "section": "Madhyamaka",
+   "page_number": 598,
+   "kind": "reversal",
+   "old": "Because the practice of rejoicing and the others will also be shown below, they are not explained separately here.",
+   "new": "Because the practice of rejoicing and the others will also be shown below, they are explained separately here.",
+   "how": "\\bare not\\b → are"
+  },
+  {
+   "page_id": "6abed87d896ea18127c8f5e9",
+   "vol": 188,
+   "section": "Pramāṇa",
+   "page_number": 205,
+   "kind": "reversal",
+   "old": "Because it would result in the person undergoing transformation, the person does not grasp the form of pleasure and so forth.",
+   "new": "Because it would result in the person undergoing transformation, the person does grasp the form of pleasure and so forth.",
+   "how": "\\bdoes not\\b → does"
+  },
+  {
+   "page_id": "6abeb3a1896ea18127c83f3b",
+   "vol": 106,
+   "section": "Madhyamaka",
+   "page_number": 392,
+   "kind": "reversal",
+   "old": "Most people are attached to the common and lack the power of wisdom; therefore, they not only fail to seek out eloquent teachings, but are even hostile toward them due to the stains of envy.",
+   "new": "Most people are not attached to the common and lack the power of wisdom; therefore, they not only fail to seek out eloquent teachings, but are even hostile toward them due to the stains of envy.",
+   "how": "\\bare\\b → are not"
+  },
+  {
+   "skipped": "6abed25c896ea18127c8cef2",
+   "kind": "reversal",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed25c896ea18127c8cec6",
+   "kind": "reversal",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed582896ea18127c8e070",
+   "vol": 179,
+   "section": "Pramāṇa",
+   "page_number": 284,
+   "kind": "reversal",
+   "old": "If there were no similarity in that case, how could one otherwise perceive \"this is similar\"?",
+   "new": "If there were no similarity in that case, how could one otherwise perceive \"this is not similar\"?",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abec9d2896ea18127c8af2d",
+   "vol": 158,
+   "section": "Vinaya",
+   "page_number": 290,
+   "kind": "reversal",
+   "old": "One who is overcome by the disease of madness is \"one who has become insane.\" In the intervals between fits, such a person may recover their natural mind.",
+   "new": "One who is not overcome by the disease of madness is \"one who has become insane.\" In the intervals between fits, such a person may recover their natural mind.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abed9ff896ea18127c90383",
+   "vol": 193,
+   "section": "Pramāṇa",
+   "page_number": 319,
+   "kind": "reversal",
+   "old": "By stating \"if it is not accepted,\" the author clarifies that this is uncertain and demonstrates the result of stating such uncertainty.",
+   "new": "By stating \"if it is accepted,\" the author clarifies that this is uncertain and demonstrates the result of stating such uncertainty.",
+   "how": "\\bis not\\b → is"
+  },
+  {
+   "skipped": "6abed76e896ea18127c8f0a9",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed96d896ea18127c8fecf",
+   "vol": 191,
+   "section": "Pramāṇa",
+   "page_number": 507,
+   "kind": "agent",
+   "old": "Even if you claim that while they are equal in their simultaneous nature, forms and so forth are determined by consciousness and not by the sense faculties, you must certainly accept a consciousness whose nature is to grasp those forms and so forth, which are determined to arise simultaneously through previous causes.",
+   "new": "Even if I claim that while they are equal in their simultaneous nature, forms and so forth are determined by consciousness and not by the sense faculties, you must certainly accept a consciousness whose nature is to grasp those forms and so forth, which are determined to arise simultaneously through previous causes.",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  },
+  {
+   "page_id": "6abec483896ea18127c8a169",
+   "vol": 151,
+   "section": "Vinaya",
+   "page_number": 509,
+   "kind": "agent",
+   "old": "One should greet others without a frown, being the first to smile and saying things like, \"Come here, you are welcome.\"",
+   "new": "One should greet others without a frown, being the first to smile and saying things like, \"Come here, I am welcome.\"",
+   "how": "\\b[Yy]ou are\\b → I am"
+  },
+  {
+   "skipped": "6abed4cf896ea18127c8db90",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abecf0f896ea18127c8bd5c",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed7ae896ea18127c8f2bb",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb4e8896ea18127c84ab1",
+   "vol": 111,
+   "section": "Madhyamaka",
+   "page_number": 188,
+   "kind": "agent",
+   "old": "Homage to the Tathagata who clearly understands through the playful manifestation of the Lotus light rays.",
+   "new": "Homage to the Lotus who clearly understands through the playful manifestation of the Tathagata light rays.",
+   "how": "swap Tathagata ↔ Lotus"
+  },
+  {
+   "skipped": "6abeb20c896ea18127c82b1e",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeca68896ea18127c8b149",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed47c896ea18127c8da8c",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb3a1896ea18127c83eb4",
+   "vol": 106,
+   "section": "Madhyamaka",
+   "page_number": 257,
+   "kind": "agent",
+   "old": "You are afflicted refers to the face that one covers while being happy.",
+   "new": "I am afflicted refers to the face that one covers while being happy.",
+   "how": "\\b[Yy]ou are\\b → I am"
+  },
+  {
+   "skipped": "6abeb442896ea18127c84702",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed81b896ea18127c8f412",
+   "vol": 187,
+   "section": "Pramāṇa",
+   "page_number": 326,
+   "kind": "agent",
+   "old": "If one thinks that because the dissimilar class does not exist, there is no exclusion and no positive concomitance regarding it, we say: to deny both by saying \"it is neither positive concomitance nor exclusion\" is a contradiction.",
+   "new": "If one thinks that because the dissimilar class does not exist, there is no exclusion and no positive concomitance regarding it, you say: to deny both by saying \"it is neither positive concomitance nor exclusion\" is a contradiction.",
+   "how": "\\b[Ww]e (have|had|said|say|explain|ask|teach|hold|accept|assert|maintain|think)\\b → you $1"
+  },
+  {
+   "skipped": "6abec4f0896ea18127c8a1a9",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed9ff896ea18127c90332",
+   "vol": 193,
+   "section": "Pramāṇa",
+   "page_number": 238,
+   "kind": "agent",
+   "old": "Otherwise, it would not be possible to apprehend this as \"the wealth of this person.\" Furthermore, it would make the subsequent recollection of the relationship useless, because the master would have already been established previously.",
+   "new": "Otherwise, it would not be possible to apprehend this as \"the wealth of this person.\" Furthermore, it would make the subsequent recollection of the relationship useless, because the student would have already been established previously.",
+   "how": "\\bthe master\\b → the student"
+  },
+  {
+   "page_id": "6abed914896ea18127c8fb5e",
+   "vol": 190,
+   "section": "Pramāṇa",
+   "page_number": 366,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abed914896ea18127c8fb57",
+   "vol": 190,
+   "section": "Pramāṇa",
+   "page_number": 359,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abeb2ee896ea18127c837a1",
+   "vol": 103,
+   "section": "Madhyamaka",
+   "page_number": 630,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abecb12896ea18127c8b317",
+   "vol": 160,
+   "section": "Vinaya",
+   "page_number": 139,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b06",
+   "vol": 102,
+   "section": "Madhyamaka",
+   "page_number": 394,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abeb4ba896ea18127c8474e",
+   "vol": 110,
+   "section": "Madhyamaka",
+   "page_number": 39,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abeb406896ea18127c84240",
+   "vol": 108,
+   "section": "Madhyamaka",
+   "page_number": 9,
+   "kind": "none"
+  },
+  {
+   "page_id": "6abece79896ea18127c8ba53",
+   "vol": 163,
+   "section": "Vinaya",
+   "page_number": 105,
+   "kind": "none"
+  }
+ ]
+}

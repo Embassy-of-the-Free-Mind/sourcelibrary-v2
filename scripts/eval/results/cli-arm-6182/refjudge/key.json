@@ -1,0 +1,692 @@
+{
+ "R001": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R002": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R003": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R004": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R005": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R006": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R007": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "After that, even if one is born among humans, it produces two types of karmic ripening: falling into evil views and becoming deceitful and crafty.",
+   "new": "After that, even if one is not born among humans, it produces two types of karmic ripening: falling into evil views and becoming deceitful and crafty.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R008": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R009": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "Furthermore, the capacity to connect does not arise merely from the absence of an object.",
+   "new": "Furthermore, the capacity to connect does arise merely from the absence of an object.",
+   "how": "\\bdoes not\\b → does"
+  }
+ },
+ "R010": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bd",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R011": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R012": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R013": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R014": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R015": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b42",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R016": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R017": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ac",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R018": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "Therefore, one should understand that \"non-erroneous\" refers to being non-mistaken regarding the apprehension of a thing that is capable of performing a function.",
+   "new": "Therefore, one should understand that \"non-erroneous\" refers to being non-mistaken regarding the apprehension of a thing that is not capable of performing a function.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R019": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b38",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R020": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7be",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R021": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R022": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R023": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b41",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R024": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R025": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R026": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b44",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R027": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R028": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ab",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R029": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b37",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R030": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R031": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "S"
+  }
+ },
+ "R032": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b46",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R033": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R034": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b36",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R035": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "S"
+  }
+ },
+ "R036": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bf",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R037": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R038": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bc",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R039": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R040": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "S"
+  }
+ },
+ "R041": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R042": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R043": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R044": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "If it is asked: \"Is it only Bodhisattvas who see the lack of inherent nature in this way?\"",
+   "new": "If it is not asked: \"Is it only Bodhisattvas who see the lack of inherent nature in this way?\"",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R045": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b45",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R046": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R047": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R048": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R049": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b40",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R050": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R051": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R052": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R053": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3f",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R054": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R055": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R056": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ },
+ "R057": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b48",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R058": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b32",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R059": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "C38",
+   "T3": "FP"
+  }
+ },
+ "R060": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "toh": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "C38"
+  }
+ },
+ "R061": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R062": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "### Compassion, non-dual awareness, and the mind of awakening are the causes of the Sons of the Conquerors.",
+   "new": "### Compassion, non-dual awareness, and the mind of awakening are not the causes of the Sons of the Conquerors.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "R063": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R064": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "R065": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b35",
+  "toh": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "C38",
+   "T3": "G38"
+  }
+ },
+ "R066": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "All of these are both the mind and its mental factors.",
+   "new": "All of these are not both the mind and its mental factors.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "R067": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "C38"
+  }
+ },
+ "R068": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b47",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C38",
+   "T2": "G38",
+   "T3": "FP"
+  }
+ }
+}

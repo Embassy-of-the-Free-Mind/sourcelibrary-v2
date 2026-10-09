@@ -1,0 +1,2194 @@
+{
+ "X001": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b36",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X002": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X003": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X004": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c9",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X005": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8221e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X006": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998125",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X007": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b45",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X008": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X009": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8224b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X010": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X011": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X012": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82283",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X013": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c3",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X014": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82207",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X015": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c0",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X016": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bc",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X017": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b46",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X018": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X019": {
+  "kind": "PLANT",
+  "page_id": "6abee362a43718d234bf225b",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "The Verses of Well-Being Requested by a Deity are complete.",
+   "new": "The Verses of Well-Being Requested by a Deity are not complete.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "X020": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d10",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X021": {
+  "kind": "PLANT",
+  "page_id": "6abeafd9896ea18127c821d8",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "That son studies all the fields of arts and crafts, but because his faculties are dull and not sharp, he learns later what should have been learned earlier, and learns earlier what should have been learned later.",
+   "new": "That son studies all the fields of arts and crafts, but because his faculties are not dull and not sharp, he learns later what should have been learned earlier, and learns earlier what should have been learned later.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "X022": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998126",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X023": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d23",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X024": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8226c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X025": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "labels": {
+   "T1": "FP_DUP",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "X026": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239a",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X027": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8225b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X028": {
+  "kind": "ARMS",
+  "page_id": "6abeb58b896ea18127c84ef4",
+  "set": "tib-ref113",
+  "text": "An",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X029": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822af",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X030": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X031": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822b7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X032": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980ca",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X033": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2211",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X034": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7be",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X035": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e4",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X036": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82314",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X037": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99813b",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X038": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b37",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X039": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8235c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X040": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X041": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X042": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce1",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X043": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d22",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X044": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823bd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X045": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "# So what need is there to mention the joy of giving everything?",
+   "new": "# So what need is not there to mention the joy of giving everything?",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "X046": {
+  "kind": "DUP",
+  "page_id": "6abeafd9896ea18127c82216",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "FP_DUP"
+  }
+ },
+ "X047": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980eb",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X048": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b42",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X049": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cbf",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X050": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99814a",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X051": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82383",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X052": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d02",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X053": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82223",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X054": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8231b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X055": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X056": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X057": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823a4",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X058": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf225b",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X059": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823b6",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X060": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b5",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X061": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b44",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X062": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821fc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X063": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980bf",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X064": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821c7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X065": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b38",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X066": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998101",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X067": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99811a",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X068": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X069": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82330",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X070": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822e7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X071": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X072": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220f",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X073": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4a",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X074": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823ca",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X075": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2210",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X076": {
+  "kind": "PLANT",
+  "page_id": "6abeafd9896ea18127c82220",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "When one practices the seven types of emptiness, if the practice of diligence is not yet fully perfected by that alone, it is not yet called diligence.",
+   "new": "When one practices the seven types of emptiness, if the practice of diligence is yet fully perfected by that alone, it is not yet called diligence.",
+   "how": "\\bis not\\b → is"
+  }
+ },
+ "X077": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X078": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfa",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X079": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8235d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X080": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998147",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X081": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82256",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X082": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821d8",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X083": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cea",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X084": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82268",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X085": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X086": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d25",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X087": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bf",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X088": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b35",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X089": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82355",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X090": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998130",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X091": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d0d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X092": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821b0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X093": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3f",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X094": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X095": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82200",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X096": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3d",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X097": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X098": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b2",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X099": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ac",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X100": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X101": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cd2",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X102": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822df",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X103": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82216",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X104": {
+  "kind": "ARMS",
+  "page_id": "6abe9be46a920ffd924d915c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X105": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X106": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X107": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf225a",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X108": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b48",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X109": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e3",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X110": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X111": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X112": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a8",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X113": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82240",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X114": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998127",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X115": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "labels": {
+   "T1": "FP_DUP",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "X116": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82351",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X117": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X118": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce8",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X119": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d21",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X120": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bd",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X121": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d0b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X122": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82363",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X123": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "This is because the specific definitions cannot be shown without first showing the numerical divisions of the manifestations themselves.",
+   "new": "This is because the specific definitions can be shown without first showing the numerical divisions of the manifestations themselves.",
+   "how": "\\bcannot\\b → can"
+  }
+ },
+ "X124": {
+  "kind": "ARMS",
+  "page_id": "6abe914d6a920ffd924d6b35",
+  "set": "tib-ref113",
+  "text": "Eight",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X125": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X126": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X127": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823a0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X128": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d1b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X129": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b1",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X130": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ab",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X131": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X132": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X133": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfe",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X134": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82398",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X135": {
+  "kind": "PLANT",
+  "page_id": "6abeafd9896ea18127c822ee",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "In this context, there are three stages: the beginning, the middle, and the end.",
+   "new": "In this context, there are not three stages: the beginning, the middle, and the end.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "X136": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cc6",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X137": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X138": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8238e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X139": {
+  "kind": "DUP",
+  "page_id": "6abe83c2433559215a998130",
+  "labels": {
+   "T1": "FP_DUP",
+   "T2": "FP",
+   "T3": "G38"
+  }
+ },
+ "X140": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X141": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b47",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X142": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cf0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X143": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b32",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X144": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X145": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b9",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X146": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82365",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X147": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2212",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X148": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2259",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X149": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821ce",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X150": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239f",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X151": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X152": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "This is the specifically arranged aspiration prayer of Samantabhadra.",
+   "new": "This is not the specifically arranged aspiration prayer of Samantabhadra.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "X153": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cb3",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X154": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X155": {
+  "kind": "ARMS",
+  "page_id": "6abeb58b896ea18127c84ef3",
+  "set": "tib-ref113",
+  "text": "An",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X156": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822ee",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X157": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b40",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X158": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c2",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X159": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8223a",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "CS"
+  }
+ },
+ "X160": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8223e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "CH"
+  }
+ },
+ "X161": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822c4",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X162": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X163": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980fe",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X164": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823cd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "CH",
+   "T4": "FP"
+  }
+ },
+ "X165": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "FP",
+   "T3": "CH",
+   "T4": "G38"
+  }
+ },
+ "X166": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e1",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X167": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8222e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X168": {
+  "kind": "PLANT",
+  "page_id": "6abe83c2433559215a99811f",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "For that reason, because there is no perishing in this, there is also no birth, since there is no perishing.",
+   "new": "For that reason, because there is not no perishing in this, there is also no birth, since there is no perishing.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "X169": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998114",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X170": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce5",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X171": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82217",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X172": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822d0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "CS",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X173": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "G38"
+  }
+ },
+ "X174": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "FP"
+  }
+ },
+ "X175": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b41",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X176": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cdc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "CS",
+   "T4": "CH"
+  }
+ },
+ "X177": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cbc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CS"
+  }
+ },
+ "X178": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ },
+ "X179": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X180": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "CH",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "CS"
+  }
+ },
+ "X181": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cc1",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CS",
+   "T2": "CH",
+   "T3": "FP",
+   "T4": "G38"
+  }
+ },
+ "X182": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99811f",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "CS",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "CH"
+  }
+ },
+ "X183": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82220",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "CH",
+   "T2": "CS",
+   "T3": "G38",
+   "T4": "FP"
+  }
+ }
+}

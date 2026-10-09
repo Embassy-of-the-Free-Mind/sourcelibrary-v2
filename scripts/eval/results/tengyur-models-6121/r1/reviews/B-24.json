@@ -1,0 +1,88 @@
+[
+{"id": "QIJHL", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཅེས་གསོད་པར་བྱེད་ན", "english": "If one kills someone thinking",
+   "why": "The patient is the animals (elephants, horses, cattle etc.) named on the previous side; 'someone' suggests a person, whose killing would not be a sthūlātyaya."},
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "ཤོ་གམ་གྱི་བྱ་བ་མ་ཆགས་པར་གྱུར་པ", "english": "causes property to bypass customs duty through the airspace connected to the body",
+   "why": "The qualification that the airspace is one where the customs function does not apply is not translated."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "མངོན་#པར་ཤེས་པ་མེད་པར་ཞིང་ཉིད་མ་ཡིན་པའི་ཕྱིར", "english": "because it is not an object of reality",
+   "why": "ཞིང here is the Vinaya 'field' (kṣetra), the valid basis for the offence: without supernormal knowledge it does not constitute a field for the offence."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཁྱེར་བ་པོ་ལ་དགོས་པ་མེད་པ་དེ་ལ་ལྟུང་བ་མེད་དོ", "english": "has no intent, there is no transgression",
+   "why": "དགོས་པ is 'need' (no carrier standing within the boundary is required), not intent; the following sentence likewise says nothing of intent."}
+ ],
+ "note": "Follows the commentary in outline, but the customs-evasion casuistry is muddled in several places and the field (kṣetra) notion is lost."},
+{"id": "QXJL9", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "རབ་ཏུ་ཞི་བའི་བདེ་བའི་རོ་མྱོང་བ", "english": "the taste of the pain of perfect peace",
+   "why": "བདེ་བ is bliss/happiness: he experienced the taste of the bliss of perfect peace.",
+   "fix": {"find": "the taste of the pain of perfect peace", "replace": "the taste of the bliss of perfect peace"}},
+  {"type": "agent", "confidence": "high",
+   "tibetan": "དེ་ཁྱིམ་པ་དང་བརྟེན་པ་དེས། སེམས་མི་བདེ་བར་གྱུར་ནས", "english": "The one who had relied on the householder [note: referring to the king's previous companion or the ascetic himself in a different role] became unhappy",
+   "why": "The subject is the Bodhisattva himself, disheartened by association with householders; the English and its note invent a different person.",
+   "fix": {"find": "The one who had relied on the householder [note: referring to the king's previous companion or the ascetic himself in a different role] became unhappy", "replace": "Disheartened by his association with householders, he"}}
+ ],
+ "note": "The four ministers' views and their verses are rendered well; the opening narrative misidentifies the subject and reverses 'bliss'."},
+{"id": "QM432", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "གདུང་མ་འདེགས་པ་དེ་ལ་སོ་སོར་ནུས་པ་མེད་པ་དེ་རྣམས", "english": "those beams, which individually lack the capacity to support the pillar, are in a state of assembly",
+   "why": "The beam is what is lifted; those individually unable to lift it (the bearers) produce the effect when assembled.",
+   "fix": {"find": "those beams, which individually lack the capacity to support the pillar, are in a state of assembly", "replace": "those who individually lack the capacity to lift the beam are in a state of assembly"}}
+ ],
+ "note": "The avayavin argument (recognition, memory, the water pot) is followed accurately apart from the beam-lifting example."},
+{"id": "QZZQI", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྐད་ཅིག་མ་ཉིད་ལ་སོགས་པ་བཞིན", "english": "just like impermanence and the like",
+   "why": "སྐད་ཅིག་མ་ཉིད is momentariness (kṣaṇikatva), distinct in Pramāṇa from impermanence."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "བརྒྱ་བྱིན་གྱི་སྤྱི་བོ", "english": "the crown of Indra's head",
+   "why": "Śakramūrdhan is the stock Pramāṇa example of an anthill emitting smoke-like vapour; the literal rendering without a note leaves the argument unintelligible."}
+ ],
+ "note": "The fire/smoke causal argument and the objection-reply structure are rendered faithfully."},
+{"id": "QVT5A", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཆེན་པོས་ལོ་བཅོ་བརྒྱད་ལོན་པ་རྣམས་ལ་བསྙེན་པར་རྫོགས་པའི་དབང་དུ་མཛད་ནས", "english": "The Great One [note: likely referring to the Buddha or a high authority in the Vinaya tradition] established this examination regarding those who have reached eighteen years of age and are candidates for full ordination",
+   "why": "ཆེན་པོས completes the name from the previous side (the preceptor Ārya Mahāmaudgalyāyana): the rule was laid down on account of his ordaining those who were eighteen.",
+   "fix": {"find": "The Great One [note: likely referring to the Buddha or a high authority in the Vinaya tradition] established this examination regarding those who have reached eighteen years of age and are candidates for full ordination", "replace": "This was laid down with reference to [the preceptor Mahā]maudgalyāyana's having given full ordination to those who were eighteen years old"}},
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "འདིར་རྣམ་པ་གཉིས་ཀྱིས་#ཞིང་", "english": "here there are not two ways...",
+   "why": "The Tibetan says the field (kṣetra) is established in two ways (by the object and by intention, continued on the next side), with no negation.",
+   "fix": {"find": "here there are not two ways...", "replace": "here it is established as a field (kṣetra) in two ways..."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གང་ཞིག་འདི་རྣམས་ལ་སྨད་#པར་བྱ་བ", "english": "Whoever disparages these",
+   "why": "The phrase is 'those among them who are to be censured', the other monks who incur a duṣkṛta, not someone who disparages."}
+ ],
+ "note": "The age-perception casuistry is mostly clear, but the founding narrative's agent is lost and the closing 'two ways' is negated."},
+{"id": "Q6TRE", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the path argument and the Akṣayamatinirdeśa quotation on right view and right intention."},
+{"id": "QO0IC", "score": 4, "verdict": "light", "span": "extra",
+ "span_why": "The opening sentence ('This is because even if the absence of a self is excluded, a nature characterized as a self is not positively projected') translates a sentence complete on the previous side.",
+ "errors": [
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "བཟློག་པའི་ཁྱབ་པ", "english": "the rule that if the result is absent, the cause must be absent",
+   "why": "Negative pervasion is that where the probandum (sādhya) is absent the reason (hetu) is absent; the hetu is not a cause and the sādhya not a result."}
+ ],
+ "note": "The anvaya/vyatireka critique of the prāṇādimattva reason is followed correctly; the final note mislabels the pervasion terms."},
+{"id": "QEIR6", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "The Tibetan verses on the Buddha's funeral rites for Śuddhodana are rendered accurately, with the interleaved Sanskrit set apart in notes."},
+{"id": "QRRB7", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A careful, literal rendering of the argument against the variegated whole and successive superimposition, with root verses kept as verse."},
+{"id": "QDC6J", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཇི་ལྟར་ཡང་ནི་མེད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་མ་དམིགས་ཕྱིར།", "english": "are in every way of a nonexistent nature, because they are not apprehended in any way",
+   "why": "ཇི་ལྟར་ཡང (kathaṃcit) means 'in some respect', as the translator renders it in the parallel verses; 'in every way' inverts the Jain qualified-predication argument.",
+   "fix": {"find": "are in every way of a nonexistent nature, because they are not apprehended in any way", "replace": "are in some respect of a nonexistent nature, because in some respect they are not apprehended"}}
+ ],
+ "note": "Sound rendering of Pātrasvāmin's single-characteristic (anyathānupapatti) verses; one mistranslation of kathaṃcit."}
+]

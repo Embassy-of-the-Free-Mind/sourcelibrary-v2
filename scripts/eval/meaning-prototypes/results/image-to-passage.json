@@ -1,0 +1,4075 @@
+{
+ "source": "69520c46ab34727b1f044141",
+ "target": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+ "target_pages": 194,
+ "summary": {
+  "image": {
+   "n": 44,
+   "top1": 5,
+   "top3": 12,
+   "mrr": 0.249
+  },
+  "centred": {
+   "n": 44,
+   "top1": 34,
+   "top3": 35,
+   "mrr": 0.798
+  },
+  "words": {
+   "n": 44,
+   "top1": 34,
+   "top3": 39,
+   "mrr": 0.839
+  }
+ },
+ "emblems": [
+  {
+   "emblem": 1,
+   "image_id": "69520c46ab34727b1f044154-0",
+   "source_page": 19,
+   "gold_pages": [
+    22,
+    23,
+    24
+   ],
+   "first_right_page_rank": {
+    "image": 5,
+    "centred": 30,
+    "words": 2
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 11,
+    "words": 129
+   },
+   "library_top": [
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 17,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.631
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 13,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.63
+    },
+    {
+     "book_id": "69e5340bd48480a386965093",
+     "page_number": 10,
+     "title": "The Book of the Thousand Nights and a Night",
+     "year": 1900,
+     "sim": 0.599
+    },
+    {
+     "book_id": "6a267b736c1f37c9c4f31c63",
+     "page_number": 13,
+     "title": "Michaelis Majeri, Imperial. Consistor. Comit. Med. D. Eq. Ex. &amp; Secretioris Naturae Secretorum Scrutinium Chymicum",
+     "year": 1687,
+     "sim": 0.592
+    },
+    {
+     "book_id": "69b51e6447b06ecd5818f199",
+     "page_number": 297,
+     "title": "The World of Phaethon or On All the Vices of the Tongue",
+     "year": 1629,
+     "sim": 0.587
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1261,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.58
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 19,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.579
+    },
+    {
+     "book_id": "69e5340bd48480a386965093",
+     "page_number": 8,
+     "title": "The Book of the Thousand Nights and a Night",
+     "year": 1900,
+     "sim": 0.578
+    },
+    {
+     "book_id": "697d9c9fb401034cf463d2bb",
+     "page_number": 187,
+     "title": "The Golden Lion, or the Vinegar of the Sages",
+     "year": 1671,
+     "sim": 0.575
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 21,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.57
+    }
+   ]
+  },
+  {
+   "emblem": 2,
+   "image_id": "69520c46ab34727b1f044158-0",
+   "source_page": 23,
+   "gold_pages": [
+    25,
+    26,
+    27
+   ],
+   "first_right_page_rank": {
+    "image": 20,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 77,
+    "centred": 25,
+    "words": 25
+   },
+   "library_top": [
+    {
+     "book_id": "6abeeb6353b9aa5a21af8a27",
+     "page_number": 8,
+     "title": "Of the Eggs and Nests of Birds",
+     "year": 1737,
+     "sim": 0.624
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 56,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.616
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 239,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.612
+    },
+    {
+     "book_id": "69b4cc48d2bf9b45ea47a0e7",
+     "page_number": 72,
+     "title": "Basilius Valentinus — Les Douze Clefs (French, Paris 1660)",
+     "year": 1660,
+     "sim": 0.61
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 90,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.605
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 970,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.603
+    },
+    {
+     "book_id": "69b6e11da8d7b8d17a6727ab",
+     "page_number": 6,
+     "title": "Lithographiae Wirceburgensis, ducentis lapidum figuratorum, a potiori insectiformium, prodigiosis imaginibus exornatae specimen primum",
+     "year": null,
+     "sim": 0.601
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1214,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.601
+    },
+    {
+     "book_id": "69b525ba29577f283b57b9cc",
+     "page_number": 65,
+     "title": "\n              Twee vermaarde scheeps-togten, van Thomas Candisch, Engels edelman, de eerste rond-om den geheelen aard-k...\n        ",
+     "year": 1707,
+     "sim": 0.601
+    },
+    {
+     "book_id": "69b525b92f891867c1ae4500",
+     "page_number": 69,
+     "title": "\n              Aanmerklĳke en geheugenis-waardige scheeps-togt, van Eduard Lopez, Portugeez, gedaan na 't vermaarde koni...\n        ",
+     "year": 1706,
+     "sim": 0.6
+    }
+   ]
+  },
+  {
+   "emblem": 3,
+   "image_id": "69520c46ab34727b1f04415c-0",
+   "source_page": 27,
+   "gold_pages": [
+    28,
+    29,
+    30
+   ],
+   "first_right_page_rank": {
+    "image": 1,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 29,
+    "centred": 30,
+    "words": 29
+   },
+   "library_top": [
+    {
+     "book_id": "69b1cb28a282e3475aab498b",
+     "page_number": 128,
+     "title": "The Duty of Maidens",
+     "year": 1618,
+     "sim": 0.58
+    },
+    {
+     "book_id": "6a267b736c1f37c9c4f31c63",
+     "page_number": 19,
+     "title": "Michaelis Majeri, Imperial. Consistor. Comit. Med. D. Eq. Ex. &amp; Secretioris Naturae Secretorum Scrutinium Chymicum",
+     "year": 1687,
+     "sim": 0.573
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 21,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.544
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 447,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.524
+    },
+    {
+     "book_id": "6a195ae93e125aa8d6dff22f",
+     "page_number": 22,
+     "title": "Beschrijving van Barabudur",
+     "year": 1931,
+     "sim": 0.52
+    },
+    {
+     "book_id": "6a410da41a801ceb221640b3",
+     "page_number": 82,
+     "title": "Ānandakanda (आनन्दकन्द) — Root of Bliss (alchemical tantra)",
+     "year": null,
+     "sim": 0.517
+    },
+    {
+     "book_id": "69b4c0a56248be021e01f957",
+     "page_number": 42,
+     "title": "Manly P. Hall Collection, Box 40",
+     "year": 1500,
+     "sim": 0.514
+    },
+    {
+     "book_id": "69b4c09b6248be021e01f7e9",
+     "page_number": 121,
+     "title": "Manly P. Hall Collection, Box 37",
+     "year": 1750,
+     "sim": 0.493
+    },
+    {
+     "book_id": "69e75e75cc48e59ad74ecbfe",
+     "page_number": 936,
+     "title": "黙阿弥全集 (Mokuami Complete Works), Vol. 5",
+     "year": 1924,
+     "sim": 0.492
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1389,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.49
+    }
+   ]
+  },
+  {
+   "emblem": 4,
+   "image_id": "69520c46ab34727b1f044160-0",
+   "source_page": 31,
+   "gold_pages": [
+    31,
+    32,
+    33
+   ],
+   "first_right_page_rank": {
+    "image": 1,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 33,
+    "words": 33
+   },
+   "library_top": [
+    {
+     "book_id": "6a267b736c1f37c9c4f31c63",
+     "page_number": 22,
+     "title": "Michaelis Majeri, Imperial. Consistor. Comit. Med. D. Eq. Ex. &amp; Secretioris Naturae Secretorum Scrutinium Chymicum",
+     "year": 1687,
+     "sim": 0.617
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 23,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.58
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 31,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.551
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 988,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.525
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 33,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.525
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 22,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.486
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 116,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.483
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 243,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.48
+    },
+    {
+     "book_id": "69bda00af6d63c9197483f7c",
+     "page_number": 997,
+     "title": "Jo. Jacobi Mangeti ... Bibliotheca chemica curiosa, seu rerum ad alchemiam pertinentium thesaurus instructissimus: quo non tantum artis auriferae ... verum etiam tractatus omnes virorum ... ad quorum omnium illustrationem additae sunt quamplurimae figurae aeneae. Tomus primus [-secundus]",
+     "year": 1702,
+     "sim": 0.476
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 97,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.474
+    }
+   ]
+  },
+  {
+   "emblem": 6,
+   "image_id": "69520c46ab34727b1f044168-0",
+   "source_page": 39,
+   "gold_pages": [
+    37,
+    38,
+    39
+   ],
+   "first_right_page_rank": {
+    "image": 13,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 38,
+    "words": 38
+   },
+   "library_top": [
+    {
+     "book_id": "69ee64bd7b983848aff5885b",
+     "page_number": 244,
+     "title": "Det Første Forsøg paa Norges Naturlige Historie (The Natural History of Norway)",
+     "year": 1752,
+     "sim": 0.456
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 28,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.454
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 27,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.45
+    },
+    {
+     "book_id": "6ab77b716b38d27997d19ff9",
+     "page_number": 286,
+     "title": "Gedenkweerdige Brasiliaense zee- en lant-reize",
+     "year": null,
+     "sim": 0.447
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 41,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.445
+    },
+    {
+     "book_id": "6992cdcb23b3ade43ec150d5",
+     "page_number": 45,
+     "title": "Sancai Tuhui (Vol. 53)",
+     "year": 1609,
+     "sim": 0.437
+    },
+    {
+     "book_id": "69b525b92f891867c1ae4500",
+     "page_number": 45,
+     "title": "\n              Aanmerklĳke en geheugenis-waardige scheeps-togt, van Eduard Lopez, Portugeez, gedaan na 't vermaarde koni...\n        ",
+     "year": 1706,
+     "sim": 0.436
+    },
+    {
+     "book_id": "6a26ca585ac5aecc53ce6102",
+     "page_number": 38,
+     "title": "Beuther, David: David Beuthers, Weyland Chur-Fürstl. Sächsischen Müntz-Guardein zu Dreßden, und wahren Adepti, Universal und Particularia, Worin die Verwandelung geringer Metalle in Gold und Silber klahr und deutlich gelehret wird",
+     "year": 1718,
+     "sim": 0.435
+    },
+    {
+     "book_id": "69b51db2cf111105c428e461",
+     "page_number": 249,
+     "title": "The Golden Fleece",
+     "year": 1599,
+     "sim": 0.435
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 39,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.427
+    }
+   ]
+  },
+  {
+   "emblem": 8,
+   "image_id": "69520c46ab34727b1f044170-0",
+   "source_page": 47,
+   "gold_pages": [
+    43,
+    44,
+    45
+   ],
+   "first_right_page_rank": {
+    "image": 1,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 44,
+    "centred": 43,
+    "words": 44
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 49,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.523
+    },
+    {
+     "book_id": "69b525bc6be60460830317aa",
+     "page_number": 55,
+     "title": "\n              Aanmerklyke reys, en verwonderlĳk-seldsame voorvallen op de selve, van Antony Knivet, gedaan uyt Engellan...\n        ",
+     "year": 1706,
+     "sim": 0.5
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 31,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.457
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 34,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.453
+    },
+    {
+     "book_id": "69b51db1f23ccdcced308bff",
+     "page_number": 340,
+     "title": "Pandora: The Noblest Gift of God",
+     "year": 1598,
+     "sim": 0.45
+    },
+    {
+     "book_id": "69b41865f1200e2ab53cf7f4",
+     "page_number": 147,
+     "title": "Preparation of Drinkable Gold — Marcus Eugenius Bonacina",
+     "year": 1750,
+     "sim": 0.449
+    },
+    {
+     "book_id": "69b1cb28a282e3475aab498b",
+     "page_number": 228,
+     "title": "The Duty of Maidens",
+     "year": 1618,
+     "sim": 0.445
+    },
+    {
+     "book_id": "69b52c263dd6d9423027e308",
+     "page_number": 260,
+     "title": "Herbarium of Apuleius & Dioscorides On Herbs (c. 1000 AD)",
+     "year": 1000,
+     "sim": 0.439
+    },
+    {
+     "book_id": "69b51e8e768235dc65995de5",
+     "page_number": 6,
+     "title": "Le Tombeau de Jacques Molai : ou histoire secrète et abrégée des initiés, anciens et modernes, des templiers franc-maçons, illuminés, etc. et Recherches sur leur influence dans la Révolution française ; suivie de la Clef des Loges",
+     "year": 1796,
+     "sim": 0.437
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 97,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.432
+    }
+   ]
+  },
+  {
+   "emblem": 9,
+   "image_id": "69520c46ab34727b1f044174-0",
+   "source_page": 51,
+   "gold_pages": [
+    46,
+    47,
+    48
+   ],
+   "first_right_page_rank": {
+    "image": 3,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 46,
+    "words": 46
+   },
+   "library_top": [
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 57,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.468
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 37,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.466
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 53,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.464
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1389,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.455
+    },
+    {
+     "book_id": "69b6c98231b7f0d07f50701a",
+     "page_number": 1,
+     "title": "Antonii a Leeuwenhoek ... Epistolae physiologicae super compluribus naturae arcanis : ubi variorum animalium atque plantarum fabrica, conformatio, proprietates atque operationes, novis & hactenus inobservatis experimentis illustrantur & oculis exhibentur, item peculiares & hactenus incognitae rerum quarumdam qualitates explicantur : ut sequens pagina docet : hactenus numquam editae, cum figuris aeneis, et indice locupletissime",
+     "year": 1719,
+     "sim": 0.455
+    },
+    {
+     "book_id": "6a195ae93e125aa8d6dff22f",
+     "page_number": 22,
+     "title": "Beschrijving van Barabudur",
+     "year": 1931,
+     "sim": 0.453
+    },
+    {
+     "book_id": "69f3399a876dd827cbc552f0",
+     "page_number": 588,
+     "title": "Primum Volumen[-volumen XVII] Tractatuum ex Variis Iuris Interpretibus Collectorum. Vols. 6-7. Lugduni: [Compagnie des libraires], MDXLIX. [1549]. Law School Rare Foreign Treatises T Folio. Harvard Law School Library.",
+     "year": 1549,
+     "sim": 0.45
+    },
+    {
+     "book_id": "69bda08af6d63c91974888d0",
+     "page_number": 6,
+     "title": "Henrici Cornelii Agrippae ab Nettesheym de incertitudine &amp; vanitate omnium scientiarum &amp; artium liber, lectu plane iucundus &amp; elegans et de nobilitate et praecellentia foeminei sexus, eiusdemque supra virilem eminentia libellus, lectu etiam iucundissimus ... / Geschichte des Teuffels ... in zwey Theilen",
+     "year": 1733,
+     "sim": 0.447
+    },
+    {
+     "book_id": "69b5259d95677df8153c65a8",
+     "page_number": 27,
+     "title": "\n              Groote comptoir almanach op 't jaer ons heeren Jesu Christi, 1661 na de Nieuwe en Ouden-stijl, is versien...\n        ",
+     "year": 1661,
+     "sim": 0.444
+    },
+    {
+     "book_id": "69bd9edaf6d63c919747d0bd",
+     "page_number": 596,
+     "title": "Henrici Cornelii Agrippae ab Nettesheym de incertitudine &amp; vanitate omnium scientiarum &amp; artium liber, lectu plane iucundus &amp; elegans et de nobilitate et praecellentia foeminei sexus, eiusdemque supra virilem eminentia libellus, lectu etiam iucundissimus ...",
+     "year": 1653,
+     "sim": 0.442
+    }
+   ]
+  },
+  {
+   "emblem": 10,
+   "image_id": "69520c46ab34727b1f044178-0",
+   "source_page": 55,
+   "gold_pages": [
+    49,
+    50,
+    51
+   ],
+   "first_right_page_rank": {
+    "image": 2,
+    "centred": 18,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 147,
+    "words": 50
+   },
+   "library_top": [
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1219,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.669
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.613
+    },
+    {
+     "book_id": "69bd9e7ef6d63c919747b26e",
+     "page_number": 43,
+     "title": "Viatorium spagyricum. Das ist ein gebenedeyter spagyrischer Wegweiser in den edlen Sonnengarten der Hesperidum zu kommen unnd daselbst den güldenen Tincturzweig dess Universals (sonsten Lapis philosophorum genandt) zu erlangen ...",
+     "year": 1625,
+     "sim": 0.61
+    },
+    {
+     "book_id": "69b52c43a2d71b015aa97877",
+     "page_number": 1003,
+     "title": "Compendium Alchymisticum Novum (new alchemical compendium)",
+     "year": 1706,
+     "sim": 0.586
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 986,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.585
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 967,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.585
+    },
+    {
+     "book_id": "6953ab8477f38f6761bd76fc",
+     "page_number": 21,
+     "title": "The Mirror of Truth",
+     "year": 1650,
+     "sim": 0.565
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1382,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.564
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 93,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.563
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1298,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.562
+    }
+   ]
+  },
+  {
+   "emblem": 11,
+   "image_id": "69520c46ab34727b1f04417c-0",
+   "source_page": 59,
+   "gold_pages": [
+    52,
+    53,
+    54
+   ],
+   "first_right_page_rank": {
+    "image": 27,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 52,
+    "words": 52
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 61,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.625
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 59,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.601
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 43,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.545
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 67,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.532
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 37,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.527
+    },
+    {
+     "book_id": "69b51e84768235dc659948a4",
+     "page_number": 11,
+     "title": "Experimental Kircherian Physiology",
+     "year": 1680,
+     "sim": 0.516
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 69,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.508
+    },
+    {
+     "book_id": "69b51e84768235dc659948a4",
+     "page_number": 13,
+     "title": "Experimental Kircherian Physiology",
+     "year": 1680,
+     "sim": 0.505
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 58,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.498
+    },
+    {
+     "book_id": "69b51e84768235dc659948a4",
+     "page_number": 5,
+     "title": "Experimental Kircherian Physiology",
+     "year": 1680,
+     "sim": 0.497
+    }
+   ]
+  },
+  {
+   "emblem": 12,
+   "image_id": "69520c46ab34727b1f044180-0",
+   "source_page": 63,
+   "gold_pages": [
+    55,
+    56,
+    57
+   ],
+   "first_right_page_rank": {
+    "image": 24,
+    "centred": 64,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 129,
+    "words": 55
+   },
+   "library_top": [
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 39,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.739
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 65,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.719
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 46,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.7
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 82,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.687
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 161,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.679
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 73,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.678
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 71,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.675
+    },
+    {
+     "book_id": "69ac8e58e54b190acc1d3b1d",
+     "page_number": 76,
+     "title": "The Seven Holy Pillars of Eternity",
+     "year": 1783,
+     "sim": 0.673
+    },
+    {
+     "book_id": "6a4f04b3b18250223e2f408a",
+     "page_number": 16,
+     "title": "Theogonia deu de diis gentium",
+     "year": 1637,
+     "sim": 0.671
+    },
+    {
+     "book_id": "69bd9f1cf6d63c919747f65e",
+     "page_number": 286,
+     "title": "Reconditorium ac reclusorium opulentiae sapientiaeque numinis mundi magni, cui deditur in titulum chymica vannus, obtenta quidem &amp; erecta auspice mortale coepto ...",
+     "year": null,
+     "sim": 0.668
+    }
+   ]
+  },
+  {
+   "emblem": 13,
+   "image_id": "69520c46ab34727b1f044184-0",
+   "source_page": 67,
+   "gold_pages": [
+    58,
+    59,
+    60
+   ],
+   "first_right_page_rank": {
+    "image": 4,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 59,
+    "words": 59
+   },
+   "library_top": [
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 41,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.514
+    },
+    {
+     "book_id": "69b4cccbd5b6c3815e1a24c0",
+     "page_number": 129,
+     "title": "Jan Philipsz. Schabaelje — Lusthof des gemoets — Biblical figures (1642)",
+     "year": 1642,
+     "sim": 0.489
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 75,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.486
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 69,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.484
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 145,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.452
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 67,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.45
+    },
+    {
+     "book_id": "69b525bf2f891867c1ae4753",
+     "page_number": 166,
+     "title": "\n              Aanmerkelyke zee en landreysen, gedaan door Caspar Balby, Venetiaans koopman, naar Oost-Indien, van 't ja...\n        ",
+     "year": 1706,
+     "sim": 0.45
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 49,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.449
+    },
+    {
+     "book_id": "69b41865f1200e2ab53cf7f4",
+     "page_number": 188,
+     "title": "Preparation of Drinkable Gold — Marcus Eugenius Bonacina",
+     "year": 1750,
+     "sim": 0.441
+    },
+    {
+     "book_id": "69bd9d7b6120d54bd0376fac",
+     "page_number": 282,
+     "title": "Aureum vellus oder Guldin Schatz und Kunstkammer: darinnen der aller fürnemisten ... Auctorum Schrifften und Bücher auss dem gar uralten Schatz der uberblibnen verborgnen ... Reliquien und Monumenten der Aegyptiorum, Arabum, Chaldaeorum &amp; Assyriorum Königen und Weysen",
+     "year": 1598,
+     "sim": 0.438
+    }
+   ]
+  },
+  {
+   "emblem": 14,
+   "image_id": "69520c46ab34727b1f044188-0",
+   "source_page": 71,
+   "gold_pages": [
+    61,
+    62,
+    63
+   ],
+   "first_right_page_rank": {
+    "image": 14,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 62,
+    "words": 61
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 73,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.711
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 71,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.705
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 81,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.696
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 43,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.689
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 52,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.685
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 161,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.666
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1226,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.659
+    },
+    {
+     "book_id": "69c581e3551fbd40b95eaa36",
+     "page_number": 88,
+     "title": "Ancient Chemical Work",
+     "year": 1760,
+     "sim": 0.65
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 215,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.642
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1225,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.64
+    }
+   ]
+  },
+  {
+   "emblem": 15,
+   "image_id": "69520c46ab34727b1f04418c-0",
+   "source_page": 75,
+   "gold_pages": [
+    64,
+    65,
+    66
+   ],
+   "first_right_page_rank": {
+    "image": 11,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 64,
+    "words": 64
+   },
+   "library_top": [
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 55,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.525
+    },
+    {
+     "book_id": "69ddd6a53c3b788d50e7d93e",
+     "page_number": 175,
+     "title": "Orbis Sensualium Pictus (The Visible World in Pictures)",
+     "year": 1685,
+     "sim": 0.504
+    },
+    {
+     "book_id": "69a5b973486a857b0587cbf2",
+     "page_number": 50,
+     "title": "Theatre of Instruments and Machines",
+     "year": 1578,
+     "sim": 0.5
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 77,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.486
+    },
+    {
+     "book_id": "69a5ba02d76b98f272fcfc19",
+     "page_number": 66,
+     "title": "Theater of Mathematical and Mechanical Instruments",
+     "year": 1578,
+     "sim": 0.483
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 75,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.478
+    },
+    {
+     "book_id": "69b51de047b06ecd58185f3e",
+     "page_number": 64,
+     "title": "Theater of Machines, Volume 4",
+     "year": 1708,
+     "sim": 0.474
+    },
+    {
+     "book_id": "69b51de2cf111105c4292c21",
+     "page_number": 96,
+     "title": "Theatrum machinarum. 5",
+     "year": 1708,
+     "sim": 0.465
+    },
+    {
+     "book_id": "69b51de0261c58d63664c471",
+     "page_number": 30,
+     "title": "Theater of Machines, Part 2",
+     "year": 1708,
+     "sim": 0.459
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 87,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.459
+    }
+   ]
+  },
+  {
+   "emblem": 16,
+   "image_id": "69520c46ab34727b1f044190-0",
+   "source_page": 79,
+   "gold_pages": [
+    67,
+    68,
+    69
+   ],
+   "first_right_page_rank": {
+    "image": 19,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 69,
+    "words": 67
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 240,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.562
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 47,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.56
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 81,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.557
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 253,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.556
+    },
+    {
+     "book_id": "6a26ca585ac5aecc53ce6102",
+     "page_number": 29,
+     "title": "Beuther, David: David Beuthers, Weyland Chur-Fürstl. Sächsischen Müntz-Guardein zu Dreßden, und wahren Adepti, Universal und Particularia, Worin die Verwandelung geringer Metalle in Gold und Silber klahr und deutlich gelehret wird",
+     "year": 1718,
+     "sim": 0.534
+    },
+    {
+     "book_id": "69b51e4fcf111105c429a6f9",
+     "page_number": 196,
+     "title": "Life of the Reverend Father Friar Girolamo Savonarola of Ferrara",
+     "year": 1674,
+     "sim": 0.517
+    },
+    {
+     "book_id": "69c63da4b463eebe7caac5ae",
+     "page_number": 94,
+     "title": "Viridarium chymicum, das ist: Chymisches Lust-Gärtlein",
+     "year": 1688,
+     "sim": 0.51
+    },
+    {
+     "book_id": "6a26ba8561b3857ed05b0488",
+     "page_number": 2,
+     "title": "Wo und wie röm. Kays. Majestaet und die Koenige von Ungarn, Pohlen und Boehmen zusammen gekommen und zu Wien eingeritten sind",
+     "year": 1515,
+     "sim": 0.507
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 79,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.5
+    },
+    {
+     "book_id": "69b4cc48d2bf9b45ea47a0e7",
+     "page_number": 147,
+     "title": "Basilius Valentinus — Les Douze Clefs (French, Paris 1660)",
+     "year": 1660,
+     "sim": 0.498
+    }
+   ]
+  },
+  {
+   "emblem": 17,
+   "image_id": "69520c46ab34727b1f044194-0",
+   "source_page": 83,
+   "gold_pages": [
+    70,
+    71,
+    72
+   ],
+   "first_right_page_rank": {
+    "image": 10,
+    "centred": 1,
+    "words": 7
+   },
+   "top_page": {
+    "image": 77,
+    "centred": 71,
+    "words": 29
+   },
+   "library_top": [
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 107,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.569
+    },
+    {
+     "book_id": "69c6e994da9771c7163146db",
+     "page_number": 229,
+     "title": "Wasserstein der Weisen. Via veritatis",
+     "year": 1760,
+     "sim": 0.446
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 189,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.434
+    },
+    {
+     "book_id": "69b51e95cf111105c42a07b8",
+     "page_number": 1,
+     "title": "Theosophical Epistles",
+     "year": 1682,
+     "sim": 0.424
+    },
+    {
+     "book_id": "6ab5a6a16122fe9080c03fa9",
+     "page_number": 65,
+     "title": "Iournael ofte gedenckwaerdige beschrijvinghe vande Oost-Indische reyse",
+     "year": null,
+     "sim": 0.418
+    },
+    {
+     "book_id": "69b525bf29577f283b57bb89",
+     "page_number": 16,
+     "title": "\n              Cæsar Frederiks agtien-jarige reys, na en door Indien, anno 1563 en vervolgens\n              seer naauwke...\n        ",
+     "year": 1706,
+     "sim": 0.416
+    },
+    {
+     "book_id": "69b525b229577f283b57afd4",
+     "page_number": 116,
+     "title": "\n              Voyage au Levant, c'est à dire dans les principaux endroits de l'Asie Mineure, dans les isles de Chio, d...\n        ",
+     "year": 1700,
+     "sim": 0.415
+    },
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 105,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.413
+    },
+    {
+     "book_id": "6ab77b716b38d27997d19ff9",
+     "page_number": 571,
+     "title": "Gedenkweerdige Brasiliaense zee- en lant-reize",
+     "year": null,
+     "sim": 0.411
+    },
+    {
+     "book_id": "69b525b229577f283b57afd4",
+     "page_number": 321,
+     "title": "\n              Voyage au Levant, c'est à dire dans les principaux endroits de l'Asie Mineure, dans les isles de Chio, d...\n        ",
+     "year": 1700,
+     "sim": 0.41
+    }
+   ]
+  },
+  {
+   "emblem": 18,
+   "image_id": "69520c46ab34727b1f044198-0",
+   "source_page": 87,
+   "gold_pages": [
+    73,
+    74,
+    75
+   ],
+   "first_right_page_rank": {
+    "image": 30,
+    "centred": 4,
+    "words": 68
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 30,
+    "words": 101
+   },
+   "library_top": [
+    {
+     "book_id": "69b51db4ff09e4fe943a7937",
+     "page_number": 162,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.458
+    },
+    {
+     "book_id": "6a10098ef71729295096aa5e",
+     "page_number": 434,
+     "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in sex partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- sextum] / Volumen secundum.",
+     "year": 1659,
+     "sim": 0.454
+    },
+    {
+     "book_id": "69b51d2a261c58d636648e8a",
+     "page_number": 162,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.453
+    },
+    {
+     "book_id": "69b51d2cf23ccdcced306a10",
+     "page_number": 118,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.449
+    },
+    {
+     "book_id": "69b51d2cf23ccdcced306a10",
+     "page_number": 102,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.449
+    },
+    {
+     "book_id": "69b51d2cf23ccdcced306a10",
+     "page_number": 158,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.448
+    },
+    {
+     "book_id": "69b51d26f23ccdcced306929",
+     "page_number": 25,
+     "title": "The Alchemy of Andreas Libavius",
+     "year": 1606,
+     "sim": 0.446
+    },
+    {
+     "book_id": "69b51db4ff09e4fe943a7937",
+     "page_number": 104,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.444
+    },
+    {
+     "book_id": "69b51d2a261c58d636648e8a",
+     "page_number": 178,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.442
+    },
+    {
+     "book_id": "69b51db4ff09e4fe943a7937",
+     "page_number": 150,
+     "title": "Commentaries on Alchemy",
+     "year": 1606,
+     "sim": 0.441
+    }
+   ]
+  },
+  {
+   "emblem": 19,
+   "image_id": "69520c46ab34727b1f04419c-0",
+   "source_page": 91,
+   "gold_pages": [
+    76,
+    77,
+    78
+   ],
+   "first_right_page_rank": {
+    "image": 1,
+    "centred": 1,
+    "words": 3
+   },
+   "top_page": {
+    "image": 77,
+    "centred": 77,
+    "words": 44
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 93,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.668
+    },
+    {
+     "book_id": "69b525b829577f283b57b86e",
+     "page_number": 166,
+     "title": "\n              Verscheyde Scheeps-togten na Florida, door Pontius, Ribald, Laudonniere, Gourgues en andere: gedaan in he...\n        ",
+     "year": 1706,
+     "sim": 0.509
+    },
+    {
+     "book_id": "69b525c56be6046083032144",
+     "page_number": 124,
+     "title": "\n              De roem-waardige zee- en land-togten door den vermaarden Ferdinandes Cortes, als bevel-hebber met een sch...\n        ",
+     "year": 1706,
+     "sim": 0.503
+    },
+    {
+     "book_id": "69b525b92f891867c1ae4500",
+     "page_number": 45,
+     "title": "\n              Aanmerklĳke en geheugenis-waardige scheeps-togt, van Eduard Lopez, Portugeez, gedaan na 't vermaarde koni...\n        ",
+     "year": 1706,
+     "sim": 0.502
+    },
+    {
+     "book_id": "69b525bc6be60460830317aa",
+     "page_number": 66,
+     "title": "\n              Aanmerklyke reys, en verwonderlĳk-seldsame voorvallen op de selve, van Antony Knivet, gedaan uyt Engellan...\n        ",
+     "year": 1706,
+     "sim": 0.496
+    },
+    {
+     "book_id": "69b525b96be6046083030fc0",
+     "page_number": 30,
+     "title": "\n              Drie scheeps-togten na het goud-rĳke koningrĳk Guiana, in America geleegen, door den Engelssen ridder Wal...\n        ",
+     "year": 1706,
+     "sim": 0.496
+    },
+    {
+     "book_id": "6a08575149638a50931c443a",
+     "page_number": 218,
+     "title": "Il padre di famiglia dialogo del s. Torquato Tasso. Nel quale breuemente trattando la vera economia, s'insegna, non meno con facilità, che dottamente, il gouerno non pur della casa, tanto di città, quanto di contado; ma ancora il vero modo di accrescere, & conseruar le ricchezze. Con la tauola delle cose notabili.",
+     "year": 1583,
+     "sim": 0.493
+    },
+    {
+     "book_id": "69b525ba29577f283b57b9cc",
+     "page_number": 64,
+     "title": "\n              Twee vermaarde scheeps-togten, van Thomas Candisch, Engels edelman, de eerste rond-om den geheelen aard-k...\n        ",
+     "year": 1707,
+     "sim": 0.491
+    },
+    {
+     "book_id": "69b525cb6be6046083032716",
+     "page_number": 119,
+     "title": "\n              Sesde reys van de Engelsche Maatschappy, na Oost-Indien, door den Generaal, Hendrik Middelton, vervattend...\n        ",
+     "year": 1707,
+     "sim": 0.49
+    },
+    {
+     "book_id": "69b525b629577f283b57b3bf",
+     "page_number": 162,
+     "title": "\n              De voorname scheeps-togten van Jan Staden van Homburg in Hessen, na Brazil, gedaan anno 1547 en 1549. :\n ...\n        ",
+     "year": 1707,
+     "sim": 0.49
+    }
+   ]
+  },
+  {
+   "emblem": 20,
+   "image_id": "69520c46ab34727b1f0441a0-0",
+   "source_page": 95,
+   "gold_pages": [
+    79,
+    80,
+    81
+   ],
+   "first_right_page_rank": {
+    "image": 12,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 79,
+    "words": 79
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 97,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.621
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 55,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.516
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 10,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.515
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 70,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.498
+    },
+    {
+     "book_id": "69b51dc6cf111105c4290129",
+     "page_number": 425,
+     "title": "Tragic Theatre",
+     "year": 1647,
+     "sim": 0.491
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 95,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.487
+    },
+    {
+     "book_id": "69b525ca6be60460830325cb",
+     "page_number": 27,
+     "title": "\n              De trotsmoedige scheeps-togt van Sebastiaan Gaboto, met 3 scheepen en veel adelĳke manschap ondernoomen n...\n        ",
+     "year": 1707,
+     "sim": 0.464
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 109,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.461
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 164,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.461
+    },
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 105,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.459
+    }
+   ]
+  },
+  {
+   "emblem": 21,
+   "image_id": "69520c46ab34727b1f0441a4-0",
+   "source_page": 99,
+   "gold_pages": [
+    82,
+    83,
+    84
+   ],
+   "first_right_page_rank": {
+    "image": 2,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 84,
+    "words": 82
+   },
+   "library_top": [
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1243,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.621
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.576
+    },
+    {
+     "book_id": "69c63da4b463eebe7caac5ae",
+     "page_number": 86,
+     "title": "Viridarium chymicum, das ist: Chymisches Lust-Gärtlein",
+     "year": 1688,
+     "sim": 0.559
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1219,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.557
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1298,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.556
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 204,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.548
+    },
+    {
+     "book_id": "69bda0dcf6d63c919748b7f1",
+     "page_number": 6,
+     "title": "Des  berühmten Philosophi Nicolai Flamelli chymische Werke : als Das güldene Kleinod der hieroglyphischen Figuren ; Das Kleinod der Philosophiae ; Summarium philosophicum ; Die grosse Erklärung des Steins der Weisen zur Verwandelung aller Metallen ; Schatz der Philosophiae",
+     "year": 1751,
+     "sim": 0.547
+    },
+    {
+     "book_id": "6953ab8477f38f6761bd76fc",
+     "page_number": 21,
+     "title": "The Mirror of Truth",
+     "year": 1650,
+     "sim": 0.546
+    },
+    {
+     "book_id": "69b418f82b0edf3eaa2de64c",
+     "page_number": 151,
+     "title": "Flamel, Bernard of Trevisan & Llull — Alchemical Collection, 18th C.",
+     "year": 1740,
+     "sim": 0.537
+    },
+    {
+     "book_id": "69a5e476006a4098422172b0",
+     "page_number": 452,
+     "title": "Introductory Book",
+     "year": 1350,
+     "sim": 0.535
+    }
+   ]
+  },
+  {
+   "emblem": 22,
+   "image_id": "69520c46ab34727b1f0441a8-0",
+   "source_page": 103,
+   "gold_pages": [
+    85,
+    86,
+    87
+   ],
+   "first_right_page_rank": {
+    "image": 22,
+    "centred": 3,
+    "words": 4
+   },
+   "top_page": {
+    "image": 50,
+    "centred": 50,
+    "words": 44
+   },
+   "library_top": [
+    {
+     "book_id": "69b4c0a56248be021e01f957",
+     "page_number": 42,
+     "title": "Manly P. Hall Collection, Box 40",
+     "year": 1500,
+     "sim": 0.602
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 447,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.587
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1243,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.58
+    },
+    {
+     "book_id": "69e80555fdad300064d9cfc8",
+     "page_number": 931,
+     "title": "Opera dell'arte del cucinare",
+     "year": 1570,
+     "sim": 0.579
+    },
+    {
+     "book_id": "695592ca7bd6d2cd1d61b2d0",
+     "page_number": 956,
+     "title": "Della Porta Magia Naturalis (German 1713)",
+     "year": 1607,
+     "sim": 0.576
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 103,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.572
+    },
+    {
+     "book_id": "69c6e994da9771c7163146db",
+     "page_number": 229,
+     "title": "Wasserstein der Weisen. Via veritatis",
+     "year": 1760,
+     "sim": 0.564
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 105,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.563
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1369,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.561
+    },
+    {
+     "book_id": "69bda0dcf6d63c919748b7f1",
+     "page_number": 6,
+     "title": "Des  berühmten Philosophi Nicolai Flamelli chymische Werke : als Das güldene Kleinod der hieroglyphischen Figuren ; Das Kleinod der Philosophiae ; Summarium philosophicum ; Die grosse Erklärung des Steins der Weisen zur Verwandelung aller Metallen ; Schatz der Philosophiae",
+     "year": 1751,
+     "sim": 0.561
+    }
+   ]
+  },
+  {
+   "emblem": 23,
+   "image_id": "69520c46ab34727b1f0441ac-0",
+   "source_page": 107,
+   "gold_pages": [
+    88,
+    89,
+    90
+   ],
+   "first_right_page_rank": {
+    "image": 15,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 88,
+    "words": 88
+   },
+   "library_top": [
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 20,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.606
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 79,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.588
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 107,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.585
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 19,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.577
+    },
+    {
+     "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+     "page_number": 88,
+     "title": "Atalanta Fugiens (c.1625 English MS)",
+     "year": 1618,
+     "sim": 0.568
+    },
+    {
+     "book_id": "697b079611cc8928b55ea388",
+     "page_number": 666,
+     "title": "Egyptian and Greek Fables",
+     "year": 1758,
+     "sim": 0.562
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.554
+    },
+    {
+     "book_id": "69bd9e7ef6d63c919747b26e",
+     "page_number": 43,
+     "title": "Viatorium spagyricum. Das ist ein gebenedeyter spagyrischer Wegweiser in den edlen Sonnengarten der Hesperidum zu kommen unnd daselbst den güldenen Tincturzweig dess Universals (sonsten Lapis philosophorum genandt) zu erlangen ...",
+     "year": 1625,
+     "sim": 0.549
+    },
+    {
+     "book_id": "6a10093ff7172929509684a4",
+     "page_number": 989,
+     "title": "Jo. Jacobi Mangeti ... Bibliotheca chemica curiosa, seu rerum ad alchemiam pertinentium thesaurus instructissimus: quo non tantum artis auriferae ... verum etiam tractatus omnes virorum ... ad quorum omnium illustrationem additae sunt quamplurimae figurae aeneae. Tomus primus [-secundus] / Tomus primus.",
+     "year": 1702,
+     "sim": 0.548
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 994,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.545
+    }
+   ]
+  },
+  {
+   "emblem": 24,
+   "image_id": "69520c46ab34727b1f0441b0-0",
+   "source_page": 111,
+   "gold_pages": [
+    91,
+    92,
+    93
+   ],
+   "first_right_page_rank": {
+    "image": 3,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 92,
+    "words": 92
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 113,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.593
+    },
+    {
+     "book_id": "69b525c56be6046083032144",
+     "page_number": 124,
+     "title": "\n              De roem-waardige zee- en land-togten door den vermaarden Ferdinandes Cortes, als bevel-hebber met een sch...\n        ",
+     "year": 1706,
+     "sim": 0.554
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 111,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.545
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 82,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.535
+    },
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 82,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.535
+    },
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 107,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.532
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 125,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.53
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 23,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.514
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 61,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.512
+    },
+    {
+     "book_id": "69b4cc48d2bf9b45ea47a0e7",
+     "page_number": 56,
+     "title": "Basilius Valentinus — Les Douze Clefs (French, Paris 1660)",
+     "year": 1660,
+     "sim": 0.51
+    }
+   ]
+  },
+  {
+   "emblem": 25,
+   "image_id": "69520c46ab34727b1f0441b4-0",
+   "source_page": 115,
+   "gold_pages": [
+    94,
+    95,
+    96
+   ],
+   "first_right_page_rank": {
+    "image": 9,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 158,
+    "centred": 94,
+    "words": 95
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 164,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.638
+    },
+    {
+     "book_id": "69b418f02b0edf3eaa2de597",
+     "page_number": 195,
+     "title": "Flamel — Book of Hieroglyphic Figures & Abraham le Juif",
+     "year": 1750,
+     "sim": 0.625
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 63,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.6
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 129,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.599
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1395,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.597
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 115,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.592
+    },
+    {
+     "book_id": "69bda107f6d63c919748ca14",
+     "page_number": 308,
+     "title": "R. Abrahami Eleazaris uraltes chymisches Werk, welches ehedessen von dem Autore theils in lateinischer und arabischer, theils auch in chaldäischer und syrischer Sprache geschrieben, nachmals von einem Anonymo in unsere deutsche Muttersprache übersetzet, nun aber nebst zugehörigen Kupfern, Figuren, Gefässen, Oefen, einer kurzen Vorrede, nöthigen Registern, wie auch beygefügtem Schlüssel derer in selbigem vorkommenden fremden Wörter ... zum öffentlichen Druck befördert worden",
+     "year": 1760,
+     "sim": 0.589
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 219,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.588
+    },
+    {
+     "book_id": "69b418f02b0edf3eaa2de597",
+     "page_number": 171,
+     "title": "Flamel — Book of Hieroglyphic Figures & Abraham le Juif",
+     "year": 1750,
+     "sim": 0.568
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 426,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.568
+    }
+   ]
+  },
+  {
+   "emblem": 28,
+   "image_id": "69520c46ab34727b1f0441c0-0",
+   "source_page": 127,
+   "gold_pages": [
+    103,
+    104,
+    105
+   ],
+   "first_right_page_rank": {
+    "image": 2,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 105,
+    "words": 104
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 129,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.56
+    },
+    {
+     "book_id": "69b51db2cf111105c428e461",
+     "page_number": 249,
+     "title": "The Golden Fleece",
+     "year": 1599,
+     "sim": 0.524
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 127,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.512
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 98,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.5
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 141,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.488
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 94,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.486
+    },
+    {
+     "book_id": "69b418882b0edf3eaa2dd354",
+     "page_number": 35,
+     "title": "Alchemical Illustrations — 18th-Century German MS",
+     "year": 1750,
+     "sim": 0.484
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 90,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.479
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 39,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.478
+    },
+    {
+     "book_id": "69b51db2cf111105c428e461",
+     "page_number": 247,
+     "title": "The Golden Fleece",
+     "year": 1599,
+     "sim": 0.466
+    }
+   ]
+  },
+  {
+   "emblem": 29,
+   "image_id": "69520c46ab34727b1f0441c4-0",
+   "source_page": 131,
+   "gold_pages": [
+    106,
+    107,
+    108
+   ],
+   "first_right_page_rank": {
+    "image": 8,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 107,
+    "words": 107
+   },
+   "library_top": [
+    {
+     "book_id": "69804b952c52aad359879321",
+     "page_number": 29,
+     "title": "On the Philosopher's Stone",
+     "year": 1625,
+     "sim": 0.695
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 71,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.691
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 133,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.682
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 97,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.668
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 132,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.663
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 42,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.661
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 44,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.659
+    },
+    {
+     "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+     "page_number": 107,
+     "title": "Atalanta Fugiens (c.1625 English MS)",
+     "year": 1618,
+     "sim": 0.649
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 132,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.647
+    },
+    {
+     "book_id": "69b1cb28a282e3475aab498b",
+     "page_number": 120,
+     "title": "The Duty of Maidens",
+     "year": 1618,
+     "sim": 0.647
+    }
+   ]
+  },
+  {
+   "emblem": 30,
+   "image_id": "69520c46ab34727b1f0441c8-0",
+   "source_page": 135,
+   "gold_pages": [
+    109,
+    110,
+    111
+   ],
+   "first_right_page_rank": {
+    "image": 7,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 110,
+    "words": 110
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 137,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.641
+    },
+    {
+     "book_id": "69b51de1cf111105c429258a",
+     "page_number": 1090,
+     "title": "Joh. Michaelis Faustij, Med. Doct. Physici Francofurt. Ordinarij, Academ. Leopoldino Imperialis Theophili, Compendium Alchymist. Novum, Sive Pandora Explicata & Figuris Jllustrata. Das ist, die Edelste Gabe Gottes, Oder Ein Güldener Schatz, Mit welchem die alten und neuen Philosophi, die unvollkommene Metall, durch die Gewalt des Feuers verbessert, und allerhand schädliche und unheylsame Kranckheiten innerlich und äusserlich, durch deren Würckung, vertrieben haben",
+     "year": 1706,
+     "sim": 0.596
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 149,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.595
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 135,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.58
+    },
+    {
+     "book_id": "6a410da41a801ceb221640b3",
+     "page_number": 82,
+     "title": "Ānandakanda (आनन्दकन्द) — Root of Bliss (alchemical tantra)",
+     "year": null,
+     "sim": 0.579
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1389,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.573
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.57
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 160,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.569
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 243,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.566
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 47,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.564
+    }
+   ]
+  },
+  {
+   "emblem": 31,
+   "image_id": "69520c46ab34727b1f0441cc-0",
+   "source_page": 139,
+   "gold_pages": [
+    112,
+    113,
+    114
+   ],
+   "first_right_page_rank": {
+    "image": 7,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 113,
+    "words": 113
+   },
+   "library_top": [
+    {
+     "book_id": "69b6b4a396dc15d4a16e0aeb",
+     "page_number": 22,
+     "title": "Athanasii Kircheri e Soc. Jesu Mundus Subterraneus, in XII libros digestus",
+     "year": 1678,
+     "sim": 0.355
+    },
+    {
+     "book_id": "69e9c962625ec74a14473399",
+     "page_number": 150,
+     "title": "De Orbe Novo Decades (Editio Princeps)",
+     "year": null,
+     "sim": 0.353
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 120,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.352
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 118,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.35
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 153,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.347
+    },
+    {
+     "book_id": "69c8716b6c6f3cc53c857589",
+     "page_number": -255,
+     "title": "Cosmographey: das ist Beschreibung aller Laender",
+     "year": 1598,
+     "sim": 0.344
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 43,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.343
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 44,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.343
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 154,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.341
+    },
+    {
+     "book_id": "69b52591ea48bdf05847e5d8",
+     "page_number": 117,
+     "title": "'T Derde deel van 't Licht der zee-vaert, inhoudende de beschryvinghe der zeecusten van de Middelandtsche Zee /, By een vergaedert ende in't licht ghebracht door Willem Janssen.",
+     "year": 1621,
+     "sim": 0.34
+    }
+   ]
+  },
+  {
+   "emblem": 32,
+   "image_id": "69520c46ab34727b1f0441d0-0",
+   "source_page": 143,
+   "gold_pages": [
+    115,
+    116,
+    117
+   ],
+   "first_right_page_rank": {
+    "image": 3,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 115,
+    "words": 115
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 145,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.568
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 77,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.489
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 106,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.479
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 115,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.464
+    },
+    {
+     "book_id": "69dbca511040d1d5e20aae49",
+     "page_number": 671,
+     "title": "Garden of Health",
+     "year": 1491,
+     "sim": 0.459
+    },
+    {
+     "book_id": "69b525ba6be60460830310a9",
+     "page_number": 45,
+     "title": "\n              Ontdekking van West-Indien, vlĳtig ondersogt, en naauw-keurig aangeteekend, door Joseph d'Acosta, Soc. Je...\n        ",
+     "year": 1706,
+     "sim": 0.454
+    },
+    {
+     "book_id": "6a10093ff7172929509684a4",
+     "page_number": 978,
+     "title": "Jo. Jacobi Mangeti ... Bibliotheca chemica curiosa, seu rerum ad alchemiam pertinentium thesaurus instructissimus: quo non tantum artis auriferae ... verum etiam tractatus omnes virorum ... ad quorum omnium illustrationem additae sunt quamplurimae figurae aeneae. Tomus primus [-secundus] / Tomus primus.",
+     "year": 1702,
+     "sim": 0.449
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 143,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.448
+    },
+    {
+     "book_id": "6a26c4a5aad44c98627d0ce4",
+     "page_number": 1,
+     "title": "Dispensatorium pharmacorum omnium, tam Galenicorum, quam chymicorum, quae hodie in usu potiore sunt",
+     "year": 1666,
+     "sim": 0.445
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 157,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.444
+    }
+   ]
+  },
+  {
+   "emblem": 33,
+   "image_id": "69520c46ab34727b1f0441d4-0",
+   "source_page": 147,
+   "gold_pages": [
+    118,
+    119,
+    120
+   ],
+   "first_right_page_rank": {
+    "image": 5,
+    "centred": 1,
+    "words": 2
+   },
+   "top_page": {
+    "image": 77,
+    "centred": 119,
+    "words": 31
+   },
+   "library_top": [
+    {
+     "book_id": "69c63da4b463eebe7caac5ae",
+     "page_number": 118,
+     "title": "Viridarium chymicum, das ist: Chymisches Lust-Gärtlein",
+     "year": 1688,
+     "sim": 0.564
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 84,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.553
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 219,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.545
+    },
+    {
+     "book_id": "69b418882b0edf3eaa2dd354",
+     "page_number": 35,
+     "title": "Alchemical Illustrations — 18th-Century German MS",
+     "year": 1750,
+     "sim": 0.541
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 149,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.536
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.533
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 986,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.53
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 213,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.53
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 289,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.53
+    },
+    {
+     "book_id": "69bda0dcf6d63c919748b7f1",
+     "page_number": 6,
+     "title": "Des  berühmten Philosophi Nicolai Flamelli chymische Werke : als Das güldene Kleinod der hieroglyphischen Figuren ; Das Kleinod der Philosophiae ; Summarium philosophicum ; Die grosse Erklärung des Steins der Weisen zur Verwandelung aller Metallen ; Schatz der Philosophiae",
+     "year": 1751,
+     "sim": 0.523
+    }
+   ]
+  },
+  {
+   "emblem": 34,
+   "image_id": "69520c46ab34727b1f0441d8-0",
+   "source_page": 151,
+   "gold_pages": [
+    121,
+    122,
+    123
+   ],
+   "first_right_page_rank": {
+    "image": 34,
+    "centred": 9,
+    "words": 10
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 118,
+    "words": 115
+   },
+   "library_top": [
+    {
+     "book_id": "69b418882b0edf3eaa2dd354",
+     "page_number": 35,
+     "title": "Alchemical Illustrations — 18th-Century German MS",
+     "year": 1750,
+     "sim": 0.723
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 970,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.703
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 988,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.678
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 969,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.669
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1219,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.667
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1396,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.664
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 152,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.664
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 84,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.661
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 344,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.66
+    },
+    {
+     "book_id": "69b51dde261c58d63664bf05",
+     "page_number": 968,
+     "title": "Curious Chemical Library",
+     "year": 1702,
+     "sim": 0.659
+    }
+   ]
+  },
+  {
+   "emblem": 35,
+   "image_id": "69520c46ab34727b1f0441dc-0",
+   "source_page": 155,
+   "gold_pages": [
+    124,
+    125,
+    126
+   ],
+   "first_right_page_rank": {
+    "image": 21,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 124,
+    "words": 124
+   },
+   "library_top": [
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 62,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.667
+    },
+    {
+     "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+     "page_number": 124,
+     "title": "Atalanta Fugiens (c.1625 English MS)",
+     "year": 1618,
+     "sim": 0.666
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 169,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.659
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 157,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.655
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 115,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.647
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 154,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.645
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 155,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.639
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 79,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.621
+    },
+    {
+     "book_id": "69942ce5b2f6748db4abedad",
+     "page_number": 1006,
+     "title": "Auctores Mythographi Latini (Hyginus, Fulgentius, Lactantius Placidus, Albricus)",
+     "year": 1742,
+     "sim": 0.607
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 64,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.6
+    }
+   ]
+  },
+  {
+   "emblem": 37,
+   "image_id": "69520c46ab34727b1f0441e4-0",
+   "source_page": 163,
+   "gold_pages": [
+    130,
+    131,
+    132
+   ],
+   "first_right_page_rank": {
+    "image": 4,
+    "centred": 1,
+    "words": 3
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 131,
+    "words": 68
+   },
+   "library_top": [
+    {
+     "book_id": "699065ffef12272ffdc94bc3",
+     "page_number": 82,
+     "title": "Pal.lat.1885",
+     "year": 1400,
+     "sim": 0.513
+    },
+    {
+     "book_id": "69c74af76a0f3d112faf828c",
+     "page_number": 14,
+     "title": "Chronica, oder Beschreibung, der fürnembsten, gedenckwürdigen Thaten und Geschichten",
+     "year": 1597,
+     "sim": 0.513
+    },
+    {
+     "book_id": "6992475d4c402ed78ad6999e",
+     "page_number": 415,
+     "title": "Jaina Sutras, Part 1 (SBE Vol. 22)",
+     "year": 1884,
+     "sim": 0.502
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 177,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.479
+    },
+    {
+     "book_id": "69b65fe1b3f4fc044152c723",
+     "page_number": 2,
+     "title": "Apologia brevis et necessaria Marci Beumleri Tigurini, in qua primo exponuntur caussae, cur Iacobi Andreae manus & lingua, instar Ismaelis, sit contra omnes",
+     "year": 1585,
+     "sim": 0.475
+    },
+    {
+     "book_id": "6992475d4c402ed78ad6999e",
+     "page_number": 274,
+     "title": "Jaina Sutras, Part 1 (SBE Vol. 22)",
+     "year": 1884,
+     "sim": 0.473
+    },
+    {
+     "book_id": "69af4521e9a2e38648e400aa",
+     "page_number": 2,
+     "title": "Corpus Scriptorum Ecclesiasticorum Latinorum, Vol. LVI: Augustini Epistulae Pars III",
+     "year": 1918,
+     "sim": 0.468
+    },
+    {
+     "book_id": "69b51e6c47b06ecd5818fd50",
+     "page_number": 2,
+     "title": "Bound Writings of Johann Valentin Pietsch",
+     "year": 1740,
+     "sim": 0.468
+    },
+    {
+     "book_id": "69b4cccbd5b6c3815e1a24c0",
+     "page_number": 129,
+     "title": "Jan Philipsz. Schabaelje — Lusthof des gemoets — Biblical figures (1642)",
+     "year": 1642,
+     "sim": 0.467
+    },
+    {
+     "book_id": "6992475d4c402ed78ad6999e",
+     "page_number": 370,
+     "title": "Jaina Sutras, Part 1 (SBE Vol. 22)",
+     "year": 1884,
+     "sim": 0.463
+    }
+   ]
+  },
+  {
+   "emblem": 38,
+   "image_id": "69520c46ab34727b1f0441e8-0",
+   "source_page": 167,
+   "gold_pages": [
+    133,
+    134,
+    135
+   ],
+   "first_right_page_rank": {
+    "image": 15,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 77,
+    "centred": 134,
+    "words": 134
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 169,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.638
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1219,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.636
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 84,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.596
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 243,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.586
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 71,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.584
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 26,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.581
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 181,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.581
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1190,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.577
+    },
+    {
+     "book_id": "69592fb8a41e40e9146a4943",
+     "page_number": 61,
+     "title": "Splendor of the Sun",
+     "year": 1550,
+     "sim": 0.577
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 203,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.576
+    }
+   ]
+  },
+  {
+   "emblem": 39,
+   "image_id": "69520c46ab34727b1f0441ec-0",
+   "source_page": 171,
+   "gold_pages": [
+    136,
+    137,
+    138
+   ],
+   "first_right_page_rank": {
+    "image": 50,
+    "centred": 56,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 153,
+    "words": 138
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 173,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.748
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 127,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.743
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 171,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.708
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 85,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.703
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 185,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.687
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 184,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.683
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 170,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.679
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 74,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.677
+    },
+    {
+     "book_id": "6a08aaa026bf28a2268d1f6b",
+     "page_number": 4,
+     "title": "The Sphinx Mystagogue",
+     "year": 1676,
+     "sim": 0.669
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 172,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.664
+    }
+   ]
+  },
+  {
+   "emblem": 40,
+   "image_id": "69520c46ab34727b1f0441f0-0",
+   "source_page": 175,
+   "gold_pages": [
+    139,
+    140,
+    141
+   ],
+   "first_right_page_rank": {
+    "image": 36,
+    "centred": 4,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 58,
+    "words": 139
+   },
+   "library_top": [
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 130,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.824
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 87,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.82
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 37,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.792
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 177,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.783
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 189,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.782
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 112,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.78
+    },
+    {
+     "book_id": "69b52bf7a2d71b015aa975ab",
+     "page_number": 108,
+     "title": "Aureum Vellus (Splendor Solis — Golden Fleece)",
+     "year": 1598,
+     "sim": 0.779
+    },
+    {
+     "book_id": "69b51e0b47b06ecd58188f5e",
+     "page_number": 44,
+     "title": "Of the Great Stone of the Ancients and the Twelve Keys",
+     "year": 1645,
+     "sim": 0.776
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 77,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.772
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 45,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.772
+    }
+   ]
+  },
+  {
+   "emblem": 41,
+   "image_id": "69520c46ab34727b1f0441f4-0",
+   "source_page": 179,
+   "gold_pages": [
+    142,
+    143,
+    144
+   ],
+   "first_right_page_rank": {
+    "image": 30,
+    "centred": 33,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 1,
+    "words": 143
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 181,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.755
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 180,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.697
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 89,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.694
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 133,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.69
+    },
+    {
+     "book_id": "69b302b85b20b70aa065b17f",
+     "page_number": 390,
+     "title": "The Massacre of the Innocents",
+     "year": 1678,
+     "sim": 0.668
+    },
+    {
+     "book_id": "69938e1dd5a98fd66f430715",
+     "page_number": 25,
+     "title": "Bucolic Poems",
+     "year": 1515,
+     "sim": 0.662
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 179,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.659
+    },
+    {
+     "book_id": "69b302b85b20b70aa065b17f",
+     "page_number": 389,
+     "title": "The Massacre of the Innocents",
+     "year": 1678,
+     "sim": 0.649
+    },
+    {
+     "book_id": "69b302b85b20b70aa065b17f",
+     "page_number": 388,
+     "title": "The Massacre of the Innocents",
+     "year": 1678,
+     "sim": 0.646
+    },
+    {
+     "book_id": "69b62f971c1c21a3737f76bc",
+     "page_number": 404,
+     "title": "<Ta Sôzomena tôn palaiotatôn poiêtôn geôrgika, boukolixa kai gnômika>. Vetustissimorum authorum georgica, bucolica, et gnomica poëmata quae supersunt. Accessit huic editioni Is. Hortiboni Theocritic",
+     "year": 1589,
+     "sim": 0.64
+    }
+   ]
+  },
+  {
+   "emblem": 42,
+   "image_id": "69520c46ab34727b1f0441f8-0",
+   "source_page": 183,
+   "gold_pages": [
+    145,
+    146,
+    147
+   ],
+   "first_right_page_rank": {
+    "image": 24,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 146,
+    "words": 146
+   },
+   "library_top": [
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 91,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.638
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 185,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.636
+    },
+    {
+     "book_id": "69c81efc6c6f3cc53c84a3cd",
+     "page_number": 345,
+     "title": "Duldung und Menschenliebe",
+     "year": 1788,
+     "sim": 0.628
+    },
+    {
+     "book_id": "69b51e0bcf111105c4295ab7",
+     "page_number": 217,
+     "title": "The Chemical Writings of Brother Basil Valentine",
+     "year": 1740,
+     "sim": 0.61
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 136,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.599
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 197,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.593
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 37,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.589
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 83,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.58
+    },
+    {
+     "book_id": "69bda0a2f6d63c9197489271",
+     "page_number": 179,
+     "title": "Fr. Basilii Valentini ... Chymische Schriften, aus einigen alten MSten aufs Fleissigste verbessert, mit vielen Tractaten, auch etlichen Figuren vermehret, und nebst einem vollständigen Register in drey Theile verfasset ...",
+     "year": 1740,
+     "sim": 0.579
+    },
+    {
+     "book_id": "69bd9e78f6d63c919747b0a7",
+     "page_number": 172,
+     "title": "Viridarium chymicum figuris cupro incisis adornatum, et poeticis picturis illustratum. Ita ut non tantum oculorum et animi recreationem suppeditet, sed et profundiorem rerum naturalium considerationem excitet, adhaec forma sua oblonga amicorum albo inservire queat",
+     "year": 1624,
+     "sim": 0.576
+    }
+   ]
+  },
+  {
+   "emblem": 43,
+   "image_id": "69520c46ab34727b1f0441fc-0",
+   "source_page": 187,
+   "gold_pages": [
+    148,
+    149,
+    150
+   ],
+   "first_right_page_rank": {
+    "image": 11,
+    "centred": 1,
+    "words": 2
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 149,
+    "words": 40
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 189,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.761
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 139,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.734
+    },
+    {
+     "book_id": "6a1008f3f7172929509672d0",
+     "page_number": 220,
+     "title": "Bibliothèque des philosophes chimiques / Tome troisième.",
+     "year": 1741,
+     "sim": 0.725
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1397,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.715
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 93,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.715
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1225,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.705
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 187,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.692
+    },
+    {
+     "book_id": "698255f193a818bfc04b84bd",
+     "page_number": 8,
+     "title": "Microcosmic Preludes of the New Heaven and the New Earth",
+     "year": 1784,
+     "sim": 0.688
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 43,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.686
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 201,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.684
+    }
+   ]
+  },
+  {
+   "emblem": 44,
+   "image_id": "69520c46ab34727b1f044200-0",
+   "source_page": 191,
+   "gold_pages": [
+    151,
+    152,
+    153
+   ],
+   "first_right_page_rank": {
+    "image": 53,
+    "centred": 67,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 165,
+    "words": 151
+   },
+   "library_top": [
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 142,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.838
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 95,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.831
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 193,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.816
+    },
+    {
+     "book_id": "69bd9e0b6120d54bd037b199",
+     "page_number": 25,
+     "title": "Arcana arcanissima hoc est hieroglyphica Aegyptio-Graeca, vulgo necdum cognita, ad demonstrandam falsorum apud antiquos deorum, dearum, heroum, animantium &amp; institutorum pro sacris receptorum, originem, ex uno Aegyptiorum artificio, quod aureum animi &amp; corporis medicamentum peregit, deductam, unde tot poetarum allegoriae, scriptorum narrationes fabulosae &amp; pertotam encyclopaediam errores sparsi clarissima veritatis luce manifestantur, suaeque tribui singula restituuntur, sex libris exposita",
+     "year": 1614,
+     "sim": 0.803
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 133,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.794
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 192,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.781
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 217,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.78
+    },
+    {
+     "book_id": "6a100911f717292950967898",
+     "page_number": 308,
+     "title": "Les  fables egyptiennes et grecques dévoilées & réduites au même principe, avec une explication des hiéroglyphes, et de la guerre de Troye / Tome premier.",
+     "year": 1758,
+     "sim": 0.775
+    },
+    {
+     "book_id": "69b21e0194025df5d290b059",
+     "page_number": 515,
+     "title": "Moralia, Vol. 2",
+     "year": 1889,
+     "sim": 0.774
+    },
+    {
+     "book_id": "69942c74b2f6748db4abdcdd",
+     "page_number": 5,
+     "title": "On the Error of Profane Religions",
+     "year": 1603,
+     "sim": 0.774
+    }
+   ]
+  },
+  {
+   "emblem": 45,
+   "image_id": "69520c46ab34727b1f044204-0",
+   "source_page": 195,
+   "gold_pages": [
+    154,
+    155,
+    156
+   ],
+   "first_right_page_rank": {
+    "image": 2,
+    "centred": 1,
+    "words": 4
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 154,
+    "words": 94
+   },
+   "library_top": [
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1389,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.716
+    },
+    {
+     "book_id": "69b4c0a56248be021e01f957",
+     "page_number": 109,
+     "title": "Manly P. Hall Collection, Box 40",
+     "year": 1500,
+     "sim": 0.711
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 97,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.691
+    },
+    {
+     "book_id": "69b51de1cf111105c429258a",
+     "page_number": 1090,
+     "title": "Joh. Michaelis Faustij, Med. Doct. Physici Francofurt. Ordinarij, Academ. Leopoldino Imperialis Theophili, Compendium Alchymist. Novum, Sive Pandora Explicata & Figuris Jllustrata. Das ist, die Edelste Gabe Gottes, Oder Ein Güldener Schatz, Mit welchem die alten und neuen Philosophi, die unvollkommene Metall, durch die Gewalt des Feuers verbessert, und allerhand schädliche und unheylsame Kranckheiten innerlich und äusserlich, durch deren Würckung, vertrieben haben",
+     "year": 1706,
+     "sim": 0.654
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 197,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.645
+    },
+    {
+     "book_id": "698420e0acbeea3119317589",
+     "page_number": 283,
+     "title": "Revelation of Jesus Christ",
+     "year": 1619,
+     "sim": 0.633
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 145,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.624
+    },
+    {
+     "book_id": "69b4c0a56248be021e01f957",
+     "page_number": 51,
+     "title": "Manly P. Hall Collection, Box 40",
+     "year": 1500,
+     "sim": 0.619
+    },
+    {
+     "book_id": "6970e35b9b09d309d780a258",
+     "page_number": 318,
+     "title": "Portraits of Men Learned in the Word of God",
+     "year": 1603,
+     "sim": 0.618
+    },
+    {
+     "book_id": "6a427b8cda827ceee625d97b",
+     "page_number": 36,
+     "title": "Cosmographia physica: seu mundi materialis philosophica descriptio. Secundùm doctrinam mosaïcam. Autore Richardo Bunworth.",
+     "year": null,
+     "sim": 0.616
+    }
+   ]
+  },
+  {
+   "emblem": 46,
+   "image_id": "69520c46ab34727b1f044208-0",
+   "source_page": 199,
+   "gold_pages": [
+    157,
+    158,
+    159
+   ],
+   "first_right_page_rank": {
+    "image": 4,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 159,
+    "words": 159
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 201,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.783
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 75,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.758
+    },
+    {
+     "book_id": "69b51de5efd8df28f2dac9dd",
+     "page_number": 202,
+     "title": "Opened Secrets of the Philosopher's Stone or the Treasury of Alchemy",
+     "year": 1718,
+     "sim": 0.756
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 141,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.751
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 103,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.747
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 99,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.745
+    },
+    {
+     "book_id": "69bd9ecdf6d63c919747ccec",
+     "page_number": 191,
+     "title": "Michaelis Maieri viatorium, hoc est, de montibus planetarum septem, seu metallorum",
+     "year": 1651,
+     "sim": 0.744
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 112,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.744
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 215,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.729
+    },
+    {
+     "book_id": "69b51d8cff09e4fe943a6f1d",
+     "page_number": 116,
+     "title": "The Wayfarer",
+     "year": 1618,
+     "sim": 0.726
+    }
+   ]
+  },
+  {
+   "emblem": 47,
+   "image_id": "69520c46ab34727b1f04420c-0",
+   "source_page": 203,
+   "gold_pages": [
+    160,
+    161,
+    162
+   ],
+   "first_right_page_rank": {
+    "image": 14,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 32,
+    "centred": 161,
+    "words": 161
+   },
+   "library_top": [
+    {
+     "book_id": "69f3377a876dd827cbc521e9",
+     "page_number": 170,
+     "title": "Livre de la chass, with Llull's Livre de l'ordre de chevalerie",
+     "year": 1485,
+     "sim": 0.455
+    },
+    {
+     "book_id": "69f3377a876dd827cbc521e9",
+     "page_number": 166,
+     "title": "Livre de la chass, with Llull's Livre de l'ordre de chevalerie",
+     "year": 1485,
+     "sim": 0.428
+    },
+    {
+     "book_id": "69f3377a876dd827cbc521e9",
+     "page_number": 192,
+     "title": "Livre de la chass, with Llull's Livre de l'ordre de chevalerie",
+     "year": 1485,
+     "sim": 0.409
+    },
+    {
+     "book_id": "69dbc9b31040d1d5e20a55f8",
+     "page_number": 197,
+     "title": "Mirror of Wisdom",
+     "year": 1490,
+     "sim": 0.407
+    },
+    {
+     "book_id": "69f3377a876dd827cbc521e9",
+     "page_number": 68,
+     "title": "Livre de la chass, with Llull's Livre de l'ordre de chevalerie",
+     "year": 1485,
+     "sim": 0.404
+    },
+    {
+     "book_id": "69e72cd0a409200ea79f5c3f",
+     "page_number": 514,
+     "title": "Mythologia Aesopica (Aesop, Babrius, Phaedrus, Avianus)",
+     "year": 1610,
+     "sim": 0.404
+    },
+    {
+     "book_id": "69f3377a876dd827cbc521e9",
+     "page_number": 113,
+     "title": "Livre de la chass, with Llull's Livre de l'ordre de chevalerie",
+     "year": 1485,
+     "sim": 0.404
+    },
+    {
+     "book_id": "69e72cd0a409200ea79f5c3f",
+     "page_number": 297,
+     "title": "Mythologia Aesopica (Aesop, Babrius, Phaedrus, Avianus)",
+     "year": 1610,
+     "sim": 0.393
+    },
+    {
+     "book_id": "69dbca511040d1d5e20aae49",
+     "page_number": 524,
+     "title": "Garden of Health",
+     "year": 1491,
+     "sim": 0.392
+    },
+    {
+     "book_id": "69f337bf876dd827cbc529fb",
+     "page_number": 527,
+     "title": "Ortus sanitatis. [Mainz : Jacob Meydenbach, 23 June 1491].",
+     "year": 1491,
+     "sim": 0.39
+    }
+   ]
+  },
+  {
+   "emblem": 48,
+   "image_id": "69520c46ab34727b1f044210-0",
+   "source_page": 207,
+   "gold_pages": [
+    163,
+    164,
+    165
+   ],
+   "first_right_page_rank": {
+    "image": 1,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 164,
+    "words": 163
+   },
+   "library_top": [
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 154,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.687
+    },
+    {
+     "book_id": "69b4c0926248be021e01f719",
+     "page_number": 103,
+     "title": "Manly P. Hall Collection, Box 27",
+     "year": 1618,
+     "sim": 0.67
+    },
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 209,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.67
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 207,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.661
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 225,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.636
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 106,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.629
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 208,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.622
+    },
+    {
+     "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+     "page_number": 163,
+     "title": "Atalanta Fugiens (c.1625 English MS)",
+     "year": 1618,
+     "sim": 0.62
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 226,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.618
+    },
+    {
+     "book_id": "69b419212b0edf3eaa2ded76",
+     "page_number": 69,
+     "title": "Generation & Operation of the Great Work — Early 20th C. MS",
+     "year": 1920,
+     "sim": 0.617
+    }
+   ]
+  },
+  {
+   "emblem": 49,
+   "image_id": "69520c46ab34727b1f044214-0",
+   "source_page": 211,
+   "gold_pages": [
+    166,
+    167,
+    168
+   ],
+   "first_right_page_rank": {
+    "image": 14,
+    "centred": 1,
+    "words": 1
+   },
+   "top_page": {
+    "image": 164,
+    "centred": 166,
+    "words": 166
+   },
+   "library_top": [
+    {
+     "book_id": "69bd9e336120d54bd037bf37",
+     "page_number": 213,
+     "title": "Atalanta fugiens, hoc est, emblemata nova de secretis naturae chymica, accommodata partim oculis & intellectui, figuris cupro incisis, adiectisque sententiis, epigrammatis & notis, partim auribus & recreationi animi plus minus 50 fugis musicalibus trium vocum, quarum duae ad unam simplicem melodiam distichis canendis peraptam, correspondeant, non absque singulari iucunditate videnda, legenda, meditanda, intelligenda, diiudicanda, canenda & audienda",
+     "year": 1617,
+     "sim": 0.627
+    },
+    {
+     "book_id": "6978f4c9eb0dcfd39912341c",
+     "page_number": 108,
+     "title": "Chemical Cabinet",
+     "year": 1708,
+     "sim": 0.627
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 229,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.622
+    },
+    {
+     "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+     "page_number": 166,
+     "title": "Atalanta Fugiens (c.1625 English MS)",
+     "year": 1618,
+     "sim": 0.617
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 211,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.609
+    },
+    {
+     "book_id": "69c889796c6f3cc53c85a445",
+     "page_number": 157,
+     "title": "Secretioris naturae secretorum scrutinium chymicum",
+     "year": 1687,
+     "sim": 0.607
+    },
+    {
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_number": 231,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.577
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 210,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.576
+    },
+    {
+     "book_id": "69520c46ab34727b1f044141",
+     "page_number": 213,
+     "title": "Atalanta Fleeing",
+     "year": 1618,
+     "sim": 0.57
+    },
+    {
+     "book_id": "69bda0acf6d63c919748958e",
+     "page_number": 1219,
+     "title": "Bibliothèque des philosophes chimiques",
+     "year": 1741,
+     "sim": 0.568
+    }
+   ]
+  }
+ ]
+}

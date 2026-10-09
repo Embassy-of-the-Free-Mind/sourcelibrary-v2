@@ -6,9 +6,10 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
-import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -73,6 +74,18 @@ const experiments = listExperiments();
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
+
+const audit = sampleAudit();
+const of = (v: Of) => `${v.n} of ${v.of}`;
+const DROP_REASON: Record<DropReason, string> = {
+  judges: 'the judges themselves said the published translation does not fit the page',
+  'by-eye': 'read by eye, the reference does not match the page',
+  language: 'the page is mostly in another language or script',
+  cer: 'on a printed page, no engine came within 35% character error of the reference',
+};
+const reasonList = (family: 'translation' | 'ocr') =>
+  audit.dropped.reasons.filter(r => r.family === family).map(r => `${DROP_REASON[r.reason]} (${r.n})`).join('; ');
+const cov = audit.coverage;
 
 type Theme = (typeof feedback.themes)[number];
 
@@ -345,6 +358,16 @@ export default function QualityCenterPage() {
                 .
               </li>
             )}
+            <li>
+              The pages behind the cost charts below do not look like the library in four places (checked{' '}
+              {longDate(audit.date)}, <IssueLink num={audit.issue} />). Chinese translation is {pct(cov.chineseTranslationPrinted.sample)}{' '}
+              printed pages, where {pct(cov.chineseHandwritten.corpus)} of the library&rsquo;s Chinese pages are handwritten.
+              Tibetan translation covers {cov.tibetan.texts} texts, {cov.tibetan.printed.sample === 1 ? 'all' : pct(cov.tibetan.printed.sample)} printed, where{' '}
+              {pct(cov.tibetan.handwritten.corpus)} of Tibetan pages are manuscripts. Early English OCR is{' '}
+              {pct(cov.english17c.sample)} 17th-century print, against {pct(cov.english17c.corpus)} of English pages. German
+              and French OCR is {cov.germanFrench.n} pages{cov.germanFrench.wikisource.sample === 1 && <>, all from Wikisource&rsquo;s own scans</>},{' '}
+              {pct(cov.germanFrench.c19.sample)} 19th century.
+            </li>
             {caveats.map(r => (
               <li key={r.language}>
                 {r.language} &mdash; {r.caveat!.text}
@@ -414,6 +437,115 @@ export default function QualityCenterPage() {
             The quality figures above come from experiments, and each experiment has a written record: the question, how
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
+
+          <Sub>Cost against agreement with a typed text, by script</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            Each OCR engine we have measured: what it costs to read 1,000 pages, and how closely its text agrees with a
+            typed reference. Where the reference is a modern edition rather than a transcription of the same print, the
+            score is partly agreement with that edition (<a href="#chart-limits" className={LINK}>how far these charts can be
+            trusted</a>). Within a figure, the engines are compared only on pages every one of them read. The bar is
+            the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
+            (invented text). The teal line joins the engines no other engine beats on both cost and score. Gemini
+            costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
+            priced on its inference time alone, which assumes the machine does nothing else, so it reads low.{' '}
+            <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
+              One per screen, for presenting
+            </Link>
+            .
+          </p>
+          <ParetoCharts />
+          <Source>
+            Generated from the benchmark results by{' '}
+            <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
+            the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
+            <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
+            Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
+          </Source>
+
+          <Sub>Translation cost against fidelity, by language</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            Each translation engine we have measured: what it costs to translate 1,000 pages, and how closely its English
+            keeps to the meaning of a published human translation of the same page. The score is model-judged, not
+            human-scored: blind AI judges read both and grade from 1 to 5, and they read our transcription, not the page
+            image, so this is not accuracy. Within a figure, the engines are compared only on pages every one of them
+            translated, graded in the same read. The bar is the 95% interval; the dashed ring grows with the share of pages
+            where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
+            engine run without a metered cost is listed under its chart, scored on the pages it did translate.{' '}
+            <Link href="/quality/pareto#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
+              One per screen, for presenting
+            </Link>
+            .
+          </p>
+          <ParetoCharts m={TRANSLATION} />
+          <Source>
+            Generated from the per-page results of the translation-against-reference write-ups (<IssueLink num={5695} />,{' '}
+            <IssueLink num={5497} />) by{' '}
+            <A href={`${GH}blob/main/scripts/eval/build-translation-pareto.mjs`}>scripts/eval/build-translation-pareto.mjs</A>.
+          </Source>
+
+          <div id="chart-limits" className="scroll-mt-24">
+            <Sub>How far these charts can be trusted</Sub>
+            <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+              On {longDate(audit.date)} we checked whether the pages behind both sets of charts suit the measure. A script
+              checked all {n(audit.checked.translation)} translation page slots and {n(audit.checked.ocr)} OCR pages.{' '}
+              {audit.eye.pages} of them, one page per book, were read against the page image by {audit.eye.readers} AI
+              reviewers (Claude Opus). No scholar has read them yet.
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl">
+              <li>
+                <b>Pages left out.</b> {audit.dropped.translation + audit.dropped.ocr} pages no longer count in the charts.
+                Translation ({audit.dropped.translation}): {reasonList('translation')}. OCR ({audit.dropped.ocr}):{' '}
+                {reasonList('ocr')}.
+              </li>
+              <li>
+                <b>What still ranks.</b> Without those pages, the order of engines and the frontier stayed the same on{' '}
+                {of(audit.held.translation)} translation charts and {of(audit.held.ocr)} OCR charts
+                {audit.held.swapsAllOverlap && <>; every pair of engines that changed places was already within each other&rsquo;s 95% intervals</>}.
+                Not fit to rank engines:{' '}
+                {audit.unfit.map((u, i) => (
+                  <span key={u.chart}>
+                    {i > 0 && (i === audit.unfit.length - 1 ? ' and ' : '; ')}
+                    {u.chart}
+                    {u.qualifier && <>, for {u.qualifier}</>}
+                  </span>
+                ))}
+                . The others can rank engines, with the limit stated under each chart.
+              </li>
+              <li>
+                <b>An OCR score is partly agreement with an edition.</b> Greek: on {of(audit.edition.greek)} pages the
+                reference is a modern edition of the work, not a transcription of this print. Latin: on{' '}
+                {of(audit.edition.latinNormalised)} pages the reference expands abbreviations or modernises u and v where the
+                print does not. Chinese manuscripts: on {of(audit.edition.chineseOverrun)} pages the reference runs more than
+                15% past the page. Large gaps between engines hold; small ones are within what the reference itself differs by.
+              </li>
+              <li>
+                <b>Famous texts.</b> Some pages come from texts whose published English is widely reproduced, so a model may
+                recall it rather than translate. Share of such pages in each language&rsquo;s chart of Gemini models:{' '}
+                {audit.famous.map((f, i) => (
+                  <span key={f.language}>
+                    {i > 0 && ', '}
+                    {f.language} {f.famous} of {f.n}
+                  </span>
+                ))}
+                . On those pages the engines keep the same order as on the rest (rank correlation{' '}
+                {audit.spearman[0].toFixed(2)} to {audit.spearman[1].toFixed(2)}), but the level moves, from{' '}
+                {Math.abs(audit.levelShift[0]).toFixed(1)} lower to {audit.levelShift[1].toFixed(1)} higher on the scale of 5.
+                Read these charts for order more than for level.
+              </li>
+              <li>
+                <b>The script is a screen, not a verdict.</b> By eye, {of(audit.eye.flagged)} pages it flagged were unfit,
+                and so were {of(audit.eye.unflagged)} it passed. If you read one of these languages, reading the pages we
+                left out and the ones we kept is a check we cannot yet make ourselves:{' '}
+                <a href="#take-part" className={LINK}>take part</a>.
+              </li>
+            </ul>
+            <Source>
+              <A href={audit.writeup}>The write-up</A> (<IssueLink num={audit.issue} />), with the verdict for each chart;
+              figures read from <A href={`${BLOB}${audit.files.summary}`}>summary.json</A>; the pages left out and why,{' '}
+              <A href={`${BLOB}${audit.files.drops}`}>drops.json</A>; the {audit.eye.pages} readings by eye,{' '}
+              <A href={`${BLOB}${audit.files.eye}`}>eye.json</A>.
+            </Source>
+          </div>
 
           <Sub>Running now</Sub>
           <ul className="space-y-2 text-stone-700 leading-relaxed">

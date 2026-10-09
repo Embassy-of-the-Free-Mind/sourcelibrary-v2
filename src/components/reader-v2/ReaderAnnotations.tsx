@@ -371,7 +371,7 @@ export default function ReaderAnnotations({ bookId, pageId, pageNumber }: Reader
       window.getSelection()?.removeAllRanges();
       setTimeout(dismissPending, 900);
     } catch {
-      setSaveError('Could not save — try again.');
+      setSaveError('Could not save. Try again.');
     } finally {
       setSaving(false);
     }

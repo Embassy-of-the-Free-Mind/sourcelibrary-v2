@@ -1,0 +1,524 @@
+[
+  {
+    "book_id": "6abed155896ea18127c8c872",
+    "slot": 1,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཨུ (Derge Tengyur, vol. 169)",
+    "tradition": "tengyur-verse",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur Jātaka section (skyes rabs): a Bodhisattva prose-and-verse narrative (p.77), the Sudhana/Manoharā kinnarī tale (pp.240, 267) and a drama with a Vidyādharī and Padmāvatī (p.395). It is Tengyur, but much of it is prose and drama, not verse.",
+    "rights_flag": null,
+    "structure_note": "503 page records, 502 with text and 502 translated: one leaf without text, probably the title/cover leaf. No printed page numbers are recorded, so no backsteps. The book is visible:false.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 77,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྨོངས་པས་སེམས་ཀྱི་གླང་པོ་སྐྱོན། །དྲན་པའི་སྟོབས་ཀྱིས་ལྕགས་ཀྱུ་དོར།",
+            "english": "Delusion stains the elephant of the mind. Through the power of mindfulness, the iron hook is cast away.",
+            "problem": "Agent reversed. The deluded mind-elephant throws off the iron hook, which is the power of mindfulness. The English has mindfulness doing the casting away.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "གལ་ཏེ་དབང་པོ་གཅིག་ལ་གནས་པར་བྱས་པར་གྱུར་ན ... དབང་པོ་ཐམས་ཅད་ལ་ནི་གནས།",
+            "english": "If one were to reside within only a single sense organ ... reside in all the senses.",
+            "problem": "In a beggar's verse about spreading the burden of his begging, དབང་པོ more likely means 'lord/patron' here, not 'sense organ'. Read as 'senses', the passage makes little sense. Low confidence.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "(verse lines with ། separators)",
+            "english": "If one were to reside ... (run on as prose)",
+            "problem": "The last two verses are rendered as prose",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "E-text variant apparatus shown raw in the transcription: {རིངས་,རིང་}. The leaf prints one reading; the brace/parenthesis pair is the source e-text's variant notation, not on the page",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 240,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆུ་གཏེར་རྣམས་ནི་གློག་བརྒྱ་རྣམས་ཀྱིས་ནི།",
+            "english": "These great masses of water are like a hundred flashes of lightning",
+            "problem": "The simile is garbled. The verse describes rain clouds lit by a hundred lightning flashes, not water that resembles lightning.",
+            "severity": "minor"
+          },
+          {
+            "source": "(subject of མཐོང་ནས་འཇིགས་པའི་ཡིད་ཀྱིས)",
+            "english": "the <note>Naga king</note> remained there with a terrified mind",
+            "problem": "The supplied subject is wrapped in a <note> tag in the running sentence",
+            "severity": "minor"
+          },
+          {
+            "source": "པདྨ་ཅན་ཞེས་བྱ་བ་ཉ་ཤོར་བ",
+            "english": "A fisherman named Padmaca",
+            "problem": "The name is mangled: པདྨ་ཅན is Padmaka/Padmin",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 267,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཡི་གེར་བྲིས་པ་པི་ཝང་དང་ལྕགས་ཀྱི་ཕུར་པ་གཉིས་དང་ཐོ་བ་དང་རལ་གྲི་...",
+            "english": "the lute on which the letter was written, along with two iron stakes, a hammer, a sword",
+            "problem": "The source lists the items written in the letter (lute, two iron stakes, hammer, sword, quiver). It does not describe a lute with the letter written on it.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "མཛའ་བོའི་ལྗོན་ཤིང་མེ་ཏོག་ནི། །སོར་གདུབ་...",
+            "english": "->Today I have found the flower of my beloved's tree, this ring...<-",
+            "problem": "The verse is flattened into one centred prose line",
+            "severity": "minor"
+          },
+          {
+            "source": "འགྲམ་ངན་",
+            "english": "Bad-Bank <note>original: \"འགྲམ་ངན་\"</note>",
+            "problem": "A place name is rendered literally",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 395,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྦྲང་རྩི་བྱེད་པའི་རྐང་པའི་ཁུར་གྱིས་... རྡོ་ལེབ་སྟེང་ ... དགའ་བའི་གྲོགས་མོ་པདྨ་བ་ཏཱི་ནི་སྦྲང་གི་བུ་མོ་དང་ལྷན་ཅིག་ཏུ་གནས་ཤིང་",
+            "english": "just like a honey-maker burdened by its legs, she moved along a path of Nagakesara onto a stone slab",
+            "problem": "The scene description is garbled. The source describes the pollen-covered stone slab where Padmāvatī sits with Madhukarikā. The English invents a 'she moved' and drops the setting.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "སྦྲང་གི་བུ་མོ",
+            "english": "the \"daughter of honey\" <note>likely a maidservant or a specific companion named after a bee</note>",
+            "problem": "A character name (Madhukarikā) is treated as a phrase, with a speculative note",
+            "severity": "minor"
+          },
+          {
+            "source": "(drama: X ནས / སྨྲས speaker cues, ཞུགས = enters)",
+            "english": "narrative prose",
+            "problem": "The drama form and stage directions are flattened into narrative",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "E-text variant apparatus shown raw in the transcription: (གྱི་,ཀྱི་). The leaf prints one reading; the brace/parenthesis pair is the source e-text's variant notation, not on the page",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      240,
+      77
+    ],
+    "reader_summary": "This is the Jātaka volume of the Derge Tengyur: Bodhisattva tales in mixed prose and verse, the Sudhana–Manoharā story, and a play. The Tibetan is a keyed e-text of the Derge edition aligned leaf by leaf, and it matches every image checked. The English follows the story reliably, but it flattens verse and drama into prose and sometimes confuses an agent or a simile.",
+    "book_verdict": "Right leaves and a sound Derge text. The translation is usable for the narrative but loose in the poetry, with one or two meaning slips per page and nothing serious."
+  },
+  {
+    "book_id": "6abed0ea896ea18127c8c5c8",
+    "slot": 2,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཧུ (Derge Tengyur, vol. 168)",
+    "tradition": "tengyur-verse",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur Jātaka section: Haṃsa-jātaka narrative (p.155), a tale of a king and a river fruit (p.199), and a word-by-word Jātakamālā commentary (pp.354, 619). The last two are prose commentary, not verse.",
+    "rights_flag": null,
+    "structure_note": "679 records, 678 with text and translation: one leaf without text, probably the title leaf. No printed numbers are recorded. The book is visible:false.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 155,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཁྱོད་ཀྱི་སྲོག་པས་ཕོངས་དེ་ལ། །གནོད་པ་བྱེད་པ་སུ་ཞིག་ཡོད།",
+            "english": "Who would dare to harm one who cherishes your life so dearly?",
+            "problem": "Reversed. The source says 'one who is dearer to you than your life', meaning the goose king.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "རྔོན་པ་དེས་རྒྱལ་པོ་དེའི་བཀའ་མཉན་པར",
+            "english": "the hunter followed the command of that official <note>referring to Sumukha</note>",
+            "problem": "The source says 'king' (རྒྱལ་པོ), not 'official'. A note then misidentifies the referent.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "ལྷ་མིན་རྒྱལ་པོ་ཟླ་བ་བཟང་པོ་བཞིན།",
+            "english": "as beautiful ... as the Asura King Vimala <gloss>the Moon</gloss>",
+            "problem": "The name 'Vimala' is invented. The simile is of the fair moon and the asura king (Rāhu), not an asura named Vimala. Low confidence on the intended sense.",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 199,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆུ་དེའི་ནང་དུ་རྩེ་བ་བཏང་སྟེ",
+            "english": "he set out to play in that water <note>or to follow the course of the river</note>",
+            "problem": "Uncertain rendering, hedged with a note. Low confidence either way.",
+            "severity": "minor"
+          },
+          {
+            "source": "སྨིན་པ་ཡིད་ཆེས་པ་རྣམས་ཀྱིས་བརྟགས་ཏེ",
+            "english": "those who were reliable and experienced in ripening",
+            "problem": "Awkward. The source means trusted experts (or ministers) examined it.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 354,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྐྱེས་པའི་ལས་ལ་སོགས་པ་བྱ་བ་རྣམས་ནི་བྱས",
+            "english": "having performed the deeds of a man <note>original: \"skyes pa'i las\"</note>",
+            "problem": "སྐྱེས་པའི་ལས means the birth rites (jātakarman), not 'deeds of a man'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཕུལ་བ་རྣམས་བླངས་པ་ཞེས་བྱ་བ་འདིས་ནི་ལེན་པ་བསྟན་ཏོ",
+            "english": "refers to receiving gifts <term>dāna</term> <gloss>the act of receiving ...</gloss>",
+            "problem": "The wrong Sanskrit term is supplied. Receiving gifts is pratigraha; dāna (giving) is the next duty.",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 619,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཡོན་ཏན་མངོན་བསྒྲུབས་བཟོད་པ",
+            "english": "\"Patience Accomplished by Virtue\"",
+            "problem": "The name gloss is literal and a little stiff. The repeated clauses are faithful to the print, which repeats itself.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      619,
+      199
+    ],
+    "reader_summary": "This is the second Jātaka volume of the Derge Tengyur: Āryaśūra-style tales and a phrase-by-phrase commentary on them. The Tibetan is the right text for every leaf checked. The English is careful on the commentary pages but slips on names and referents in the narrative, so a reader should check any named figure or Sanskrit term against the Tibetan.",
+    "book_verdict": "Right leaves and a sound text. The translation is mostly faithful, with several moderate slips: a reversed clause, a 'king' turned into an 'official', invented or misapplied Sanskrit names. None is serious."
+  },
+  {
+    "book_id": "6abed259896ea18127c8cd4a",
+    "slot": 3,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཁེ (Derge Tengyur, vol. 171)",
+    "tradition": "tengyur-verse",
+    "shelf_fit": "fits",
+    "shelf_note": "Kṣemendra's Avadānakalpalatā in the Derge bilingual layout: Sanskrit in Tibetan transliteration alternates line by line with the Tibetan verse translation. It is genuinely verse and fits the shelf.",
+    "rights_flag": null,
+    "structure_note": "657 records, 656 with text: one leaf without text, probably the title leaf. Every page is bilingual (Sanskrit lines interleaved with Tibetan). The translation treats the Sanskrit lines differently from page to page. The book is visible:false.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བཅོམ་ལྡན་རྒྱལ་བ་རྣམ་པར་གཟིགས།",
+            "english": "Vipashyin <note>The 19th Buddha of the 27 Buddhas of the past</note>",
+            "problem": "An invented, muddled note that is not on the page. Vipaśyin is usually counted first of the seven past Buddhas, and no standard list has '27'.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "མུ་སྟེགས་བུ་མོའི་རྫུན་གྱིས",
+            "english": "the lies of the daughter of an ascetic",
+            "problem": "Should read 'a tīrthika (non-Buddhist) woman', i.e. Ciñcā, not 'the daughter of an ascetic'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Half the page is Sanskrit (in Tibetan script). The English silently translates only the Tibetan lines and does not tell the reader the Sanskrit is there.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 215,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཨ་པི་ཏྭ་ཡསྣིགྡྷ་ཏ་ཌིཏྤྲ་ཀཱ་ཤཱངྻ་ན་ ... མ་ཡཱུ་རི་དྲྀཥྚཱ (api tvayā ... mayūri dṛṣṭā)",
+            "english": "Sanskrit Verse: ... Have you seen the peahen who looks like the flash of a tender lightning bolt amidst the clouds? Even your own beautiful tail, which is made of merit, is wondrous to behold.",
+            "problem": "The 'Sanskrit Verse' English is mostly a reworking of the Tibetan and misconstrues the Sanskrit. The peahen is the one addressed (vocative), not the one seen. The tail clause compares the woman's braid to the peacock's tail.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "བྷཱ་བཾ།",
+            "english": "Sanskrit Verse: <term>Bhāvaṃ</term> <gloss>The state or feeling</gloss>.",
+            "problem": "A word fragment carried over from the previous leaf is presented as a glossed verse",
+            "severity": "minor"
+          },
+          {
+            "source": "ཕུད་བུ་ཅན་དེ་འཁྲི་ཤིང་བཞིན་དུ",
+            "english": "(Sanskrit verse) her breasts like clusters of flowers / (Tibetan verse) her hair like clusters of blossoms",
+            "problem": "The two parallel renderings contradict each other on the same image",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "This page labels and translates 'Sanskrit Verse' and 'Tibetan Verse' separately. p.22 and p.575 drop the Sanskrit silently, and p.340 gives model-romanised Sanskrit in <note>s. The convention flips from page to page.",
+            "severity": "moderate",
+            "class": "T11"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 340,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(Sanskrit lines)",
+            "english": "<note>original Sanskrit: nām tāvaḥ kvāpi praśama kusunā rāma bhājaṃ jagāma ...</note>",
+            "problem": "The 'original Sanskrit' notes are the model's own romanisation of the Tibetan-script Sanskrit, with errors (e.g. 'kusunā rāma' for kusumārāma, 'ṣaṭasaptatatamaḥ'). They are presented as the original.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 575,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལེགས་བཤད་ཀྱིས",
+            "english": "... for his mind had been stolen by that elegant speech.",
+            "problem": "The page ends mid-sentence. The English completes it from the Sanskrit line on the same leaf. This is acceptable, but the seam is invisible.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The Sanskrit lines are dropped silently on this page (compare p.215)",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      340,
+      575
+    ],
+    "reader_summary": "This is Kṣemendra's Avadānakalpalatā as printed in Derge: each Tibetan verse line follows its Sanskrit original in Tibetan transliteration. The transcription is the right text, line for line. The English follows the Tibetan well, but it handles the Sanskrit inconsistently: ignored on some pages, 'translated' or romanised by the model on others. Any Sanskrit offered in the English should not be trusted.",
+    "book_verdict": "Right leaves and a good bilingual text. The Tibetan-based English is sound. The Sanskrit side is mishandled and inconsistent between pages, and one page has invented notes. Show it, with a warning about the Sanskrit."
+  },
+  {
+    "book_id": "6abed3c3896ea18127c8d166",
+    "slot": 4,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྤྲིང་ཡིག ངེ (Derge Tengyur, vol. 173)",
+    "tradition": "tengyur-verse",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur epistles (spring yig): the end of Nāgārjuna's Suhṛllekha and the start of Candragomin's Śiṣyalekha (p.91), commentaries on epistles (pp.154, 255), and the volume's final text, the Li yul lung bstan pa (Prophecy of Khotan, p.373). The last is prose history, not verse, but it is canonically in this volume.",
+    "rights_flag": null,
+    "structure_note": "373 records, all with text and translation. p.373 is the volume's last leaf (colophon of the Li yul lung bstan pa), consistent with a complete volume. Raw e-text markers ('#', '{D4183}') leak into the transcription at a text boundary. The book is visible:false.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 91,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཀླུ་མགོ་གདེངས་ཀ་ཅན། །ཆེན་པོ་རྣམས་ཀྱིས་གཙུག་གི་རྒྱན་བཞིན་གུས་མནོས་",
+            "english": "Those who are great accept the way of pure conduct with devotion, wearing it like a crown ornament, just like the expanded hood of a Naga king",
+            "problem": "The subject is lost. The great hooded nāgas are the ones who wear the teaching as a crown ornament. The English turns them into a simile.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "མཛའ་བོ་རྒྱལ་པོ་བདེ་སྤྱོད་ལ",
+            "english": "King Gautamiputra <note>original: \"bde spyod\", identified as a king of the Satavahana dynasty</note>",
+            "problem": "A scholarly identification is substituted for the name on the page. The note discloses it.",
+            "severity": "minor"
+          },
+          {
+            "source": "དཔལ་བརྩེགས",
+            "english": "Paltssek <note>original: \"ban de dpal brtsregs\"</note>",
+            "problem": "Misspelled transliteration (Paltsek / dpal brtsegs)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Raw e-text markup shown in the transcription and not on the leaf: 'བདེ་དགས་#དགའ་བ', 'ཉིད་#བརྙེས', 'སྤྲིང་#ཡིག', '#བ་རྫོགས', 'སརྦ་ཛྙ་#དེ་བ', 'དཔལ་བརྩེགས་#ཀྱིས', and a catalogue tag '{D4183}' before the yig-mgo",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 154,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Variant notation leaks from the transcription into the English: '<gloss>original: {bla dags}</gloss>' (from OCR '{བླ་དགས་,བླ་དྭགས་}')",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 255,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གང་གིས་ཞེས་རྐང་པ་ཕྱེད་དང་གཉིས་སོ།",
+            "english": "the section beginning with \"By whom\" consists of one and a half stanzas",
+            "problem": "རྐང་པ means verse-lines (pādas), not stanzas. The same page renders རྐང་པ་གཉིས correctly as 'two lines', so the extent of the cited passage is overstated.",
+            "severity": "moderate",
+            "class": "other:unit mistranslated"
+          },
+          {
+            "source": "བྱང་ཆུབ་མཆོག་གི་ས་བོན་དགེ་བ་ནི་དེ་སྐྱེད་པ་སྟེ",
+            "english": "The virtue of the supreme seed of awakening (bodhicitta) is what produces this path.",
+            "problem": "The gloss is misparsed. 'Virtue' (in the root verse) is glossed as what produces the seed of awakening, not as the seed's virtue producing the path.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 373,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "སུམ་སྟོང་དྲུག་བརྒྱ་བརྒྱད་ཅུ་རྩ་བརྒྱད་བཞུགས",
+            "english": "there are three thousand eight hundred and eighty-eight temples and stupas",
+            "problem": "The count is mistranslated. The source (and the image) read 3,688, not 3,888. This is a census figure, where the number is the content.",
+            "severity": "serious",
+            "class": "other:numeral mistranslated"
+          },
+          {
+            "source": "འུ་ཐེན་ན་དགེ་འདུན་སྒོས་འཚོ་ཡན་ཆད་བྱི་བ་ལོ་ལ་བརྩིས་ན་ཁྲི་ཙམ་ཞིག་བཞུགས",
+            "english": "In Khotan, including those provided for by the monastic community, a count taken in the Year of the Mouse totals approximately ten thousand.",
+            "problem": "The subject is blurred. The ten thousand are the saṅgha (monks), counted with the self-supporting members. The English leaves it unclear what is counted.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "མདོ་ལོ་དང་མེ་སྐར",
+            "english": "Toward Molo and Meka",
+            "problem": "Place names are misspelled (Dolo, Mekar)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "E-text variant apparatus shown raw in the transcription: (ཆོད་,མཆོད་) and {ཆུངས་,ཆུང་}. The leaf prints one reading; the brace/parenthesis pair is the source e-text's variant notation, not on the page",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      154,
+      91
+    ],
+    "reader_summary": "This is the Epistles volume of the Derge Tengyur: the end of Nāgārjuna's Letter to a Friend, Candragomin's Letter to a Disciple, commentaries on these letters, and at the end the Prophecy of the Li Country (Khotan). The Tibetan is the right text on every leaf. The English of the doctrinal commentary is good, but on the Khotan census page the English gets a figure wrong (3,888 for 3,688), so numbers must be checked against the Tibetan.",
+    "book_verdict": "Right leaves and a sound text. Good English on the letters and commentaries. One serious numeral error in the Khotan census, and raw e-text markers ('#', '{D4183}') visible in the transcription at a text boundary."
+  }
+]

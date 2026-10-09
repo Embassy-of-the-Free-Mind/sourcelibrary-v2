@@ -1,0 +1,162 @@
+[
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "page_number": 40,
+  "image_url": "https://images.sourcelibrary.org/archived/6993899a0f04c37dcfa61b3c/40.jpg",
+  "file": "images/6993899a0f04c37dcfa61b3c_40.jpg",
+  "sha256": "2cbf7f50fdfb4aed252a8475aa9b0ce991482812dd05fc87ed18e6010a751387",
+  "bytes": 1683689,
+  "dims": "2983x3967",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "page_number": 173,
+  "image_url": "https://images.sourcelibrary.org/archived/6993899a0f04c37dcfa61b3c/173.jpg",
+  "file": "images/6993899a0f04c37dcfa61b3c_173.jpg",
+  "sha256": "60f2e0b3107034c5695d20642cb70bbd75970427e65390be28040e1664ff0b71",
+  "bytes": 1896467,
+  "dims": "3203x3977",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "page_number": 363,
+  "image_url": "https://images.sourcelibrary.org/archived/6993899a0f04c37dcfa61b3c/363.jpg",
+  "file": "images/6993899a0f04c37dcfa61b3c_363.jpg",
+  "sha256": "9905912c416f52eea418ce092e03cb7c1641b66053f936ff0fe84cc9c8a59f98",
+  "bytes": 1832220,
+  "dims": "3116x3907",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "page_number": 524,
+  "image_url": "https://images.sourcelibrary.org/archived/6993899a0f04c37dcfa61b3c/524.jpg",
+  "file": "images/6993899a0f04c37dcfa61b3c_524.jpg",
+  "sha256": "cebc57dce2056981233f6c7d7e3f46dfece3ae175dbfbcd9160a344989fca760",
+  "bytes": 1369160,
+  "dims": "3094x4097",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "page_number": 47,
+  "image_url": "https://images.sourcelibrary.org/archived/69a5e60885fa13e734e42186/47.jpg",
+  "file": "images/69a5e60885fa13e734e42186_47.jpg",
+  "sha256": "3f8fe8bf99489a09baf06936a03d66ce5e09eef1ab1d2001cbd322da64e54f80",
+  "bytes": 5350437,
+  "dims": "5154x6697",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "page_number": 124,
+  "image_url": "https://images.sourcelibrary.org/archived/69a5e60885fa13e734e42186/124.jpg",
+  "file": "images/69a5e60885fa13e734e42186_124.jpg",
+  "sha256": "d627a5064017c9aa7a2970251b4e8d3c62d4efb83c5a6af9cff3e1bd0c83bf9a",
+  "bytes": 5745374,
+  "dims": "5144x6898",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "page_number": 236,
+  "image_url": "https://images.sourcelibrary.org/archived/69a5e60885fa13e734e42186/236.jpg",
+  "file": "images/69a5e60885fa13e734e42186_236.jpg",
+  "sha256": "4328dba9be37727e96847a6c1e7ea7f8fe91d55ff4b64e03166b87955b4db20c",
+  "bytes": 5419433,
+  "dims": "5001x6806",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "page_number": 270,
+  "image_url": "https://images.sourcelibrary.org/archived/69a5e60885fa13e734e42186/270.jpg",
+  "file": "images/69a5e60885fa13e734e42186_270.jpg",
+  "sha256": "b766ab7b8f2e0fe58197c00efd5a16c7fdc67c54a0da0b8bbae3b9ba3d8b7d69",
+  "bytes": 5386782,
+  "dims": "4990x6855",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "page_number": 98,
+  "image_url": "https://images.sourcelibrary.org/archived/69a9768ee12635ded71c4e2f/98.jpg",
+  "file": "images/69a9768ee12635ded71c4e2f_98.jpg",
+  "sha256": "c272cba032f9bf6da4be10b9d6dbd741f24a7c41f3bc0d0eaf82d8ef24161b0b",
+  "bytes": 380362,
+  "dims": "1471x2500",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "page_number": 127,
+  "image_url": "https://images.sourcelibrary.org/archived/69a9768ee12635ded71c4e2f/127.jpg",
+  "file": "images/69a9768ee12635ded71c4e2f_127.jpg",
+  "sha256": "453c217a9b4efcd3dc3baed515e40f665c4fb6bde4508238f9c6bc7ec4f3ae51",
+  "bytes": 336472,
+  "dims": "1455x2500",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "page_number": 232,
+  "image_url": "https://images.sourcelibrary.org/archived/69a9768ee12635ded71c4e2f/232.jpg",
+  "file": "images/69a9768ee12635ded71c4e2f_232.jpg",
+  "sha256": "222bed11945022fc276899edbb6d7224f6b519c1e0a18b543d4727146b3a5e87",
+  "bytes": 737749,
+  "dims": "2500x4303",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "page_number": 358,
+  "image_url": "https://images.sourcelibrary.org/archived/69a9768ee12635ded71c4e2f/358.jpg",
+  "file": "images/69a9768ee12635ded71c4e2f_358.jpg",
+  "sha256": "593c3d386e21ec30eda55d6878be3a324c171530abd9c48d1b23805db8c54a0f",
+  "bytes": 358293,
+  "dims": "1453x2500",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "page_number": 24,
+  "image_url": "https://images.sourcelibrary.org/archived/69b52c953dd6d94230281474/24.jpg",
+  "file": "images/69b52c953dd6d94230281474_24.jpg",
+  "sha256": "8c31150381b791f6940c7bfe327b13854306e3484910094ecf1330d5b5541605",
+  "bytes": 958916,
+  "dims": "1920x2536",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "page_number": 30,
+  "image_url": "https://images.sourcelibrary.org/archived/69b52c953dd6d94230281474/30.jpg",
+  "file": "images/69b52c953dd6d94230281474_30.jpg",
+  "sha256": "1e4c983322a65d3a7d2db1a0e2a98d5564785b720017a65359adffac7398fca7",
+  "bytes": 1024451,
+  "dims": "1932x2528",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "page_number": 60,
+  "image_url": "https://images.sourcelibrary.org/archived/69b52c953dd6d94230281474/60.jpg",
+  "file": "images/69b52c953dd6d94230281474_60.jpg",
+  "sha256": "5df782ef0c95d474bafa372abdffe268184f73c105093417f4716fd7c2fc1f63",
+  "bytes": 901460,
+  "dims": "1932x2504",
+  "magic": "ffd8ff"
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "page_number": 115,
+  "image_url": "https://images.sourcelibrary.org/archived/69b52c953dd6d94230281474/115.jpg",
+  "file": "images/69b52c953dd6d94230281474_115.jpg",
+  "sha256": "3c24ba9e4ca984af0656147becbbb5068cbabea60806bbf4b0498fbf37db377b",
+  "bytes": 715391,
+  "dims": "1868x2532",
+  "magic": "ffd8ff"
+ }
+]

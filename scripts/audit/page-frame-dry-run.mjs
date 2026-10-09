@@ -16,6 +16,21 @@
  *   node --env-file=.env.production.local scripts/audit/page-frame-dry-run.mjs \
  *     [--per-provider=20] [--out=scratchpad/page-frame] [--provider=bl]
  *
+ * Review mode, for the sweep's waves: draw the frames actually WRITTEN, not new
+ * detections. --written-since=<ISO> picks books the sweep framed since then
+ * (sweep_log), one random framed page from each of --random=30 of them, plus the
+ * --tightest=18 books whose most-cropped page kept the least area:
+ *   ... page-frame-dry-run.mjs --written-since=2026-10-06T09:00:00Z --out=<dir>
+ * writes <out>/sheet-random.jpg and <out>/sheet-tightest.jpg (+ .txt keys).
+ *
+ * Compare mode, for a detector change (#4276): run the old and the new detector
+ * on the SAME pages and draw every page whose verdict or box changed.
+ *   git show origin/main:src/lib/page-frame.ts > scratchpad/page-frame-old.ts
+ *   ... page-frame-dry-run.mjs --per-provider=12 --compare=scratchpad/page-frame-old.ts --out=<dir>
+ * writes <out>/sheet-changes-<n>.jpg (old box blue, new box red) and changes.txt.
+ * --pages-from=<results.jsonl> re-reads the pages of an earlier run instead of
+ * drawing a new sample; --book=<id> reads every page of one book.
+ *
  * PRIOR ART: scripts/auto-crop-black-borders.mjs — single-book writer that
  * rewrites images; this is a read-only, cross-provider sample with sheets.
  */
@@ -29,16 +44,65 @@ const arg = (k, d) => process.argv.find(a => a.startsWith(`--${k}=`))?.split('='
 const PER = Number(arg('per-provider', '20'));
 const OUT = arg('out', 'scratchpad/page-frame');
 const ONLY = arg('provider', null);
+const WRITTEN_SINCE = arg('written-since', null);
+const COMPARE = arg('compare', null);
+const PAGES_FROM = arg('pages-from', null);
+const ONE_BOOK = arg('book', null);
+const baseline = COMPARE ? await import(path.resolve(COMPARE)) : null;
 const R2 = /^https:\/\/images\.sourcelibrary\.org\//;
 const ANALYSIS = 256;
-const TILE = 240;
+const TILE = Number(arg('tile', '240'));
+const ACROSS = Math.max(1, Math.floor(1440 / TILE));
 
 fs.mkdirSync(OUT, { recursive: true });
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db('bookstore');
 
-const providers = ONLY ? [ONLY] : (await db.collection('books').aggregate([
+if (WRITTEN_SINCE) {
+  const { PAGE_FRAME_VERSION } = await import('../../src/lib/page-frame.ts');
+  const logged = await db.collection('sweep_log').find(
+    { sweep: `page-frame-v${PAGE_FRAME_VERSION}`, action: 'framed', timestamp: { $gte: new Date(WRITTEN_SINCE) }, 'detail.framed': { $gt: 0 } },
+    { projection: { _id: 0, book_id: 1, detail: 1 } },
+  ).toArray();
+  const shuffled = [...logged].sort(() => Math.random() - 0.5).slice(0, Number(arg('random', '30')));
+  const tight = [...logged].filter(r => r.detail?.tightest)
+    .sort((a, b) => a.detail.tightest.area - b.detail.tightest.area).slice(0, Number(arg('tightest', '18')));
+  const toRow = async (r, pn) => {
+    const match = { book_id: r.book_id, page_frame: { $exists: true }, ...(pn ? { page_number: pn } : {}) };
+    const [p] = await db.collection('pages').aggregate([{ $match: match }, { $sample: { size: 1 } },
+      { $project: { _id: 0, page_number: 1, page_frame: 1, display_photo: 1, archived_photo: 1 } }]).toArray();
+    const url = [p?.display_photo, p?.archived_photo].find(u => u && R2.test(u));
+    if (!p || !url) return null;
+    const f = p.page_frame;
+    const w = f.ar >= 1 ? ANALYSIS : Math.round(ANALYSIS * f.ar), h = f.ar >= 1 ? Math.round(ANALYSIS / f.ar) : ANALYSIS;
+    return { id: r.book_id, provider: r.detail.provider ?? '?', pn: p.page_number, url, w, h, verdict: 'frame', frame: f,
+      box: { x: Math.round(f.x * w), y: Math.round(f.y * h), w: Math.round(f.w * w), h: Math.round(f.h * h) } };
+  };
+  const randomRows = (await Promise.all(shuffled.map(r => toRow(r)))).filter(Boolean);
+  const tightRows = (await Promise.all(tight.map(r => toRow(r, r.detail.tightest.page)))).filter(Boolean);
+  await client.close();
+  // sheet() is a hoisted declaration further down.
+  await sheet(randomRows, 'sheet-random.jpg');
+  await sheet(tightRows, 'sheet-tightest.jpg');
+  const errs = logged.reduce((n, r) => n + (r.detail?.errors || 0), 0);
+  console.log(`review: ${logged.length} framed books since ${WRITTEN_SINCE}, ${errs} failed reads; ` +
+    `sheet-random ${randomRows.length}, sheet-tightest ${tightRows.length} (min kept area ${tightRows[0]?.frame ? (tightRows[0].frame.w * tightRows[0].frame.h).toFixed(2) : '-'})`);
+  process.exit(0);
+}
+
+let fixed = PAGES_FROM
+  ? fs.readFileSync(PAGES_FROM, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)).map(({ id, provider, pages_count, pn }) => ({ id, provider, pages_count, pn }))
+  : null;
+if (ONE_BOOK && !fixed) {
+  const b = await db.collection('books').findOne({ $or: [{ id: ONE_BOOK }, { _id: ONE_BOOK }] }, { projection: { _id: 0, id: 1, pages_count: 1, 'image_source.provider': 1 } });
+  if (!b) { console.error(`no book ${ONE_BOOK}`); process.exit(1); }
+  const only = arg('pages', null)?.split(',').map(Number);
+  const pns = await db.collection('pages').find({ book_id: b.id, ...(only ? { page_number: { $in: only } } : {}) }, { projection: { _id: 0, page_number: 1 } }).sort({ page_number: 1 }).toArray();
+  fixed = pns.map(p => ({ id: b.id, provider: b.image_source?.provider ?? '?', pages_count: b.pages_count, pn: p.page_number }));
+}
+
+const providers = fixed ? [] : ONLY ? [ONLY] : (await db.collection('books').aggregate([
   { $match: { visible: true, pages_count: { $gt: 4 } } },
   { $group: { _id: '$image_source.provider', n: { $sum: 1 } } },
   { $match: { n: { $gte: 5 } } },
@@ -54,7 +118,8 @@ for (const provider of providers) {
   ]).toArray();
   for (const b of books) sample.push({ ...b, provider });
 }
-console.log(`providers ${providers.length}, books ${sample.length}`);
+if (fixed) sample.push(...fixed);
+console.log(fixed ? `fixed pages ${sample.length}` : `providers ${providers.length}, books ${sample.length}`);
 
 async function analyse(url) {
   const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
@@ -62,7 +127,10 @@ async function analyse(url) {
   const buf = Buffer.from(await res.arrayBuffer());
   const { data, info } = await sharp(buf).greyscale()
     .resize(ANALYSIS, ANALYSIS, { fit: 'inside' }).raw().toBuffer({ resolveWithObject: true });
-  return { buf, verdict: detectPageFrame(data, info.width, info.height), w: info.width, h: info.height };
+  return {
+    buf, verdict: detectPageFrame(data, info.width, info.height), w: info.width, h: info.height,
+    base: baseline ? baseline.detectPageFrame(data, info.width, info.height) : null,
+  };
 }
 
 const rows = [];
@@ -70,7 +138,7 @@ let next = 0;
 await Promise.all(Array.from({ length: 10 }, async () => {
   while (next < sample.length) {
     const b = sample[next++];
-    const pn = 1 + Math.floor(Math.random() * b.pages_count);
+    const pn = b.pn ?? 1 + Math.floor(Math.random() * b.pages_count);
     const p = await db.collection('pages').findOne(
       { book_id: b.id, page_number: pn },
       { projection: { _id: 0, display_photo: 1, archived_photo: 1, crop: 1, split_from_spread: 1 } },
@@ -78,13 +146,17 @@ await Promise.all(Array.from({ length: 10 }, async () => {
     const url = [p?.display_photo, p?.archived_photo].find(u => u && R2.test(u));
     if (!url) { rows.push({ ...b, pn, verdict: 'no-r2-image' }); continue; }
     try {
-      const { verdict, w, h } = await analyse(url);
+      const { verdict, w, h, base } = await analyse(url);
       rows.push({
         ...b, pn, url, w, h,
         split: !!(p.crop || p.split_from_spread),
         verdict: verdict.kind === 'skip' ? `skip:${verdict.reason}` : verdict.kind,
         box: verdict.kind === 'frame' ? verdict.box : undefined,
         frame: verdict.kind === 'frame' ? toPageFrame(verdict.box, w, h) : undefined,
+        ...(base ? {
+          verdict_old: base.kind === 'skip' ? `skip:${base.reason}` : base.kind,
+          box_old: base.kind === 'frame' ? base.box : undefined,
+        } : {}),
       });
     } catch (e) {
       rows.push({ ...b, pn, url, verdict: 'error', error: String(e.message || e) });
@@ -109,16 +181,19 @@ async function sheet(items, file) {
   for (const [i, r] of items.entries()) {
     try {
       const buf = Buffer.from(await (await fetch(r.url, { signal: AbortSignal.timeout(20000) })).arrayBuffer());
-      const base = await sharp(buf).resize(r.w, r.h, { fit: 'fill' }).png().toBuffer();
-      const rect = r.box ? `<rect x="${r.box.x}" y="${r.box.y}" width="${r.box.w}" height="${r.box.h}" fill="none" stroke="red" stroke-width="2"/>` : '';
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${r.w}" height="${r.h}">${rect}<rect x="0" y="0" width="${r.w}" height="15" fill="black" opacity="0.6"/><text x="3" y="11" font-size="11" fill="#7f7">${i} ${r.provider}</text></svg>`;
+      // Boxes are in analysis pixels; draw them on a copy `k` times that size so a large tile stays sharp.
+      const k = Math.max(1, Math.round(TILE / 240));
+      const base = await sharp(buf).resize(r.w * k, r.h * k, { fit: 'fill' }).png().toBuffer();
+      const box = (b, colour) => b ? `<rect x="${b.x * k}" y="${b.y * k}" width="${b.w * k}" height="${b.h * k}" fill="none" stroke="${colour}" stroke-width="2"/>` : '';
+      const rect = box(r.box_old, '#39f') + box(r.box, 'red');
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${r.w * k}" height="${r.h * k}">${rect}<rect x="0" y="0" width="${r.w * k}" height="15" fill="black" opacity="0.6"/><text x="3" y="11" font-size="11" fill="#7f7">${i} ${r.provider}${r.pn ? ` p${r.pn}` : ''}</text></svg>`;
       const tile = await sharp(await sharp(base).composite([{ input: Buffer.from(svg) }]).png().toBuffer())
         .resize(TILE, TILE, { fit: 'contain', background: '#777' }).png().toBuffer();
-      tiles.push({ input: tile, left: (i % 6) * TILE, top: Math.floor(i / 6) * TILE });
-      key += `${i}\t${r.provider}\t${r.id}\tp${r.pn}\t${r.verdict}\t${r.frame ? `kept=${(r.frame.w * r.frame.h).toFixed(2)}` : ''}\thttps://sourcelibrary.org/book/${r.id}?page=${r.pn}\n`;
+      tiles.push({ input: tile, left: (i % ACROSS) * TILE, top: Math.floor(i / ACROSS) * TILE });
+      key += `${i}\t${r.provider}\t${r.id}\tp${r.pn}\t${r.verdict_old ? `${r.verdict_old} -> ` : ''}${r.verdict}\t${r.frame ? `kept=${(r.frame.w * r.frame.h).toFixed(2)}` : ''}\thttps://sourcelibrary.org/book/${r.id}?page=${r.pn}\n`;
     } catch { key += `${i}\t(fetch failed)\n`; }
   }
-  await sharp({ create: { width: 6 * TILE, height: Math.ceil(items.length / 6) * TILE, channels: 3, background: '#777' } })
+  await sharp({ create: { width: ACROSS * TILE, height: Math.ceil(items.length / ACROSS) * TILE, channels: 3, background: '#777' } })
     .composite(tiles).jpeg({ quality: 82 }).toFile(path.join(OUT, file));
   fs.writeFileSync(path.join(OUT, file.replace(/\.jpg$/, '.txt')), key);
 }
@@ -126,6 +201,16 @@ async function sheet(items, file) {
 const framed = rows.filter(r => r.verdict === 'frame');
 for (let s = 0; s * 36 < framed.length; s++) await sheet(framed.slice(s * 36, s * 36 + 36), `sheet-${s + 1}.jpg`);
 await sheet(rows.filter(r => r.verdict.startsWith('skip:') && r.url && r.w).slice(0, 36), 'sheet-skip.jpg');
+
+if (baseline) {
+  rows.sort((a, b) => (a.id + String(a.pn).padStart(5, '0') < b.id + String(b.pn).padStart(5, '0') ? -1 : 1));
+  const same = (a, b) => (!a && !b) || (a && b && a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h);
+  const changed = rows.filter(r => r.verdict_old && (r.verdict_old !== r.verdict || !same(r.box_old, r.box)));
+  for (let s = 0; s * 36 < changed.length; s++) await sheet(changed.slice(s * 36, s * 36 + 36), `sheet-changes-${s + 1}.jpg`);
+  const kinds = changed.reduce((a, r) => { const k = `${r.verdict_old} -> ${r.verdict}`; a[k] = (a[k] || 0) + 1; return a; }, {});
+  fs.writeFileSync(path.join(OUT, 'changes.txt'), changed.map(r => `${r.provider}\t${r.id}\tp${r.pn}\t${r.verdict_old} -> ${r.verdict}\t${JSON.stringify(r.box_old ?? null)} -> ${JSON.stringify(r.box ?? null)}`).join('\n') + '\n');
+  console.log(`compare: ${rows.filter(r => r.verdict_old).length} pages read by both, ${changed.length} changed`, JSON.stringify(kinds));
+}
 
 const tally = rows.reduce((a, r) => (a[r.verdict] = (a[r.verdict] || 0) + 1, a), {});
 console.log('verdicts', JSON.stringify(tally));

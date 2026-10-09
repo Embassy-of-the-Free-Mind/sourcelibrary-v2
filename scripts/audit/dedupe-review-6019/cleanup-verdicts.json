@@ -1,0 +1,44 @@
+{
+  "note": "By-eye verdicts for #6019 decisions 2-4, read by scripts/maintenance/dedupe-cleanup-6019.mjs. Decision 1 needs no verdict file: it is computed from erara-merge-plan.json plus a per-page image check. `seen` is what the title pages showed (job dedupe-data-6019, 2026-10-06, one reader). Decision 2's pairs were read from the image by the review job (m1-sample-classified.json); they were not re-read here.",
+  "decision_2": {
+    "link_hidden": [
+      { "copy": "6a4a5c2c9050f0b43431a984", "keeper": "6a492bb817814bcc1598d7eb", "title": "Popp, De Pestilitate (Frankfurt 1625)" },
+      { "copy": "69b632c01c1c21a37381328d", "keeper": "6a45414189beae48d3af8758", "title": "Eyb, Praecepta artis rhetoricae ([Basel, not after 1488])" },
+      { "copy": "6a4a58a69050f0b4342ecd62", "keeper": "6a26c250aad44c98627c29b6", "title": "Hornung, Cista medica (Nuremberg [1626])" },
+      { "copy": "69b67d9d70c69d645a705447", "keeper": "6a42f4802a88606fd148ce21", "title": "Gretser, Commentariolus (Ingolstadt 1610)" }
+    ],
+    "visible_pairs": [
+      { "a": "69b51e2acf111105c429798f", "b": "69b51e2a47b06ecd5818ad8a", "expect_keeper": "69b51e2acf111105c429798f", "title": "Mylius, Memorabilia Bibliothecae Academicae Ienensis (Jena 1746)", "seen": "Neither copy has a translated page (0 and 0), so the tie goes to the copy with more transcribed pages: 374 against 89." },
+      { "a": "69b63f1ca85a63b8ab1957d2", "b": "69bf60f6065df5d87d778aa2", "expect_keeper": "69bf60f6065df5d87d778aa2", "title": "Todd, The Books of the Vaudois (1865)", "seen": "254 translated pages against 253; the keeper also carries the authors' names where the other says 'Various'." }
+    ]
+  },
+  "decision_3": [
+    { "copy": "69b51e6947b06ecd5818faf1", "target": "69c4ec33a3a4a7c546ee611b", "verdict": "not_same_edition", "title": "Magia Adamica Sammelband (474 pp) against the tract alone (89 pp)", "seen": "Both open on the same title page (Amsterdam 1704, Eugenius Philaletha). The copy is a BSB Sammelband with an Augsburg Collegium Evangelicum bookplate that binds three more tracts after it; the target is the BPH copy of the one tract. Same printing of the first tract, not the same book." },
+    { "copy": "6984e8498a2f054f912420d1", "target": "69c4ec33a3a4a7c546ee610b", "verdict": "same_edition", "title": "Faust, Philaletha illustratus (Frankfurt 1728)", "seen": "Same title page and the same BPH photographs: the 213-page copy holds the spreads cut into single pages, the 104-page target holds the spreads." },
+    { "copy": "69804b901fb2ba7cf1d43a1c", "target": "690c2476e0787282ad5930dd", "verdict": "same_edition", "title": "Meiners, Lebensbeschreibungen, vol. 1 (Zürich 1795)", "seen": "Same title page (Erster Band, Orell, Gessner, Füssli 1795) and the same BPH photographs, paged differently (510 against 416)." },
+    { "copy": "69af0fb51107dce13648c5be", "target": "69af0fc06f6d83348c7fa40c", "verdict": "same_edition", "title": "Ramazzini, De morbis artificum (Utrecht 1703)", "seen": "Same title page (Editio secunda, van de Water 1703) and the same Praefatio setting; two copies (a Google scan and the Wellcome copy)." },
+    { "copy": "69527326ab34727b1f048b7a", "target": "69b6660cb3f4fc044155888e", "verdict": "same_edition", "title": "Bruno, De triplici minimo (Frankfurt 1591)", "seen": "Same title page (Wechel & Fischer, MDLXXXXI) and the same dedication setting; two copies (Rome BNC via Google, ETH Zürich via e-rara)." },
+    { "copy": "6984e8498a2f054f912420c9", "target": "6991ec02e93551dd846a7c58", "verdict": "same_edition", "title": "Postel, De orbis terrae concordia ([Basel 1544])", "seen": "Title page, argumenta and the first page of the dedication are the same setting line for line; two copies (BPH, Internet Archive)." },
+    { "copy": "69942e50d607f8e57e4b82da", "target": "69b20f7baed0c6181c6c67b5", "verdict": "same_edition", "title": "Metochites, Miscellanea (Leipzig 1821)", "seen": "Same title page (Lipsiae MDCCCXXI, Vogel) and the same Praefatio; two copies (Harvard via Google, BnF via Gallica)." },
+    { "copy": "69b6a4f5080b19f98fd2144e", "target": "69a5f6cd1cf742c3604142ea", "verdict": "same_edition", "title": "Schott, Mechanica hydraulico-pneumatica (Würzburg 1657)", "seen": "Same letterpress title (Pigrin for Schönwetter, M.DC.LVII). The target's Google scan also has a half-title dated 1658 before it; the e-rara copy opens on the engraved title." },
+    { "copy": "6a084e6a15c643eb1af41957", "target": "6a08514149638a50931b85a3", "verdict": "same_edition", "title": "Vairo, De fascino (Venice, Aldus 1589)", "seen": "Same title page with the Aldine anchor; two copies (Rome BNC via Google, Florence BNC)." },
+    { "copy": "6952949cb184004c526a1ea2", "target": "69b2ff985545150b61b4870e", "verdict": "same_edition", "title": "Bacon, Sylva sylvarum (Amsterdam, Elzevir 1648)", "seen": "Same engraved title (Amstelodami, Elzevir, 1648); two copies (BSB, KB The Hague)." },
+    { "copy": "69b6ae73dc00a90e322b11c7", "target": "6a4fb2576c11f99c0e42501a", "verdict": "handled_in_decision_1", "title": "Grotius, Poemata omnia (e-rara 15151935)", "seen": "Same e-rara object; the pointer runs from the visible copy to the hidden one. Decision 1 reverses it." },
+    { "copy": "6985ca72b037546226b9db91", "target": "68fb0dc412055a03a58d3281", "verdict": "handled_in_decision_4", "title": "Pymander", "seen": "See decision 4." }
+  ],
+  "decision_4": {
+    "clear": [
+      { "book": "6985ca72b037546226b9db91", "other": "68fb0dc412055a03a58d3281", "title": "Pymander: Rosselli's commentary, Liber III (Kraków 1586), visible", "seen": "Not the same book as its target. This one is Pymander Mercurii Trismegisti cum commento Hannibalis Rosseli, Liber III, Kraków, Lazarus 1586; the target is the Basel 1532 Pymander with Asclepius, Iamblichus and Proclus." },
+      { "book": "68fb0dc412055a03a58d3281", "other": "6985ca72b037546226b9db91", "title": "Pymander, Asclepius, Iamblichus, Proclus (Basel 1532), hidden", "seen": "The other half of the same cycle, and for the same reason not a duplicate. Stays hidden; a candidate to unhide.", "unhide_candidate": true },
+      { "book": "699067e68da6face82f779a6", "other": "6953ab3677f38f6761bd6ab2", "title": "Liber Razielis, Vat. Reg. lat. 1300, visible", "seen": "The same Vatican manuscript and the same photographs as the hidden record. The hidden record keeps its pointer at this one; only the visible book's pointer back is cleared." },
+      { "book": "699067f8249ce014347d530c", "other": "6953ab1477f38f6761bd68ea", "title": "Hermetic and alchemical anthology, Vat. Pal. lat. 1328, visible", "seen": "The same Vatican manuscript and the same photographs as the hidden record. The hidden record keeps its pointer at this one; only the visible book's pointer back is cleared." },
+      { "book": "697a5562c915282d8f071f74", "other": "6909c96acf28baa1b4cafbf3", "title": "Doni, Dichiaratione (Venice 1562), 40-page record, hidden", "seen": "Both records are BPH photographs of the Venice 1562 Giolito edition and both are hidden: the 50-page one for its page order (#5900), this one as its duplicate. This is the intact record, so it should not point at the broken one. The broken record keeps its pointer here. Stays hidden; a candidate to unhide.", "unhide_candidate": true }
+    ],
+    "left_alone": [
+      { "book": "69907bd95f855ec553e7160b", "other": "6953b56577f38f6761bd979d", "title": "Kitab al-Bulhan, Bodleian MS. Bodl. Or. 133", "seen": "The same manuscript and the same photographs, and BOTH records are visible. The pointer is true, so clearing it would erase the one record that they are duplicates. Hiding one was not among the approved writes; left for a decision." },
+      { "book": "6a516e1dc337fd5f57a095a7", "other": "69b631a51c1c21a373809403", "title": "Antoninus, Summula confessionis (e-rara 11045422)", "seen": "Decision 1 hides this second visible copy; its pointer is already right." },
+      { "book": "6a4261a8744db9e3105aac94", "other": "69b66857b3f4fc0441569673", "title": "Hotman, Scholae (e-rara 1752458)", "seen": "Decision 1 reverses this pointer." },
+      { "book": "69b6ae73dc00a90e322b11c7", "other": "6a4fb2576c11f99c0e42501a", "title": "Grotius, Poemata omnia (e-rara 15151935)", "seen": "Decision 1 reverses this pointer." }
+    ]
+  }
+}

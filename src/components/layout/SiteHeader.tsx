@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { trackEvent } from '@/lib/track-event';
@@ -161,8 +161,12 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // `homeLocale` is set on the statically-prerendered homepage, where pathname
   // is null at build — treat that as localized so the toggle renders server-side.
   const showLangToggle = homeLocale !== undefined || hasLocalizedTwin(pathname);
-  const enHref = localeHref('en', pathname);
-  const esHref = localeHref('es', pathname);
+  // English, then every prefixed locale this page exists in. The homepage has a
+  // twin in all of them; elsewhere a locale with no twin is left out rather
+  // than linked to its front page.
+  const langLinks: Locale[] = ['en', ...PREFIXED_LOCALES.filter(
+    (l) => homeLocale !== undefined || l === locale || hasLocalizedTwin(pathname, l),
+  )];
 
   // Close menus on route change
   useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
@@ -298,32 +302,28 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             </Link>
           )}
 
-          {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
+          {/* Language toggle — one link per locale that has a real twin of this
+              page (#2763, #6254). Built from the registry, so a new locale shows
+              up here without another hand-written link. */}
           {showLangToggle && (
           <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
-            <Link
-              href={enHref}
-              aria-current={locale === 'en' ? 'page' : undefined}
-              className={
-                locale === 'en'
-                  ? (isWhiteText ? 'text-white' : 'text-primary')
-                  : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
-              }
-            >
-              EN
-            </Link>
-            <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>
-            <Link
-              href={esHref}
-              aria-current={locale === 'es' ? 'page' : undefined}
-              className={
-                locale === 'es'
-                  ? (isWhiteText ? 'text-white' : 'text-primary')
-                  : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
-              }
-            >
-              ES
-            </Link>
+            {langLinks.map((l, i) => (
+              <span key={l} className="flex items-center gap-1.5">
+                {i > 0 && <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>}
+                <Link
+                  href={localeHref(l, pathname)}
+                  hrefLang={l}
+                  aria-current={locale === l ? 'page' : undefined}
+                  className={
+                    locale === l
+                      ? (isWhiteText ? 'text-white' : 'text-primary')
+                      : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
+                  }
+                >
+                  {l.toUpperCase()}
+                </Link>
+              </span>
+            ))}
           </div>
           )}
 

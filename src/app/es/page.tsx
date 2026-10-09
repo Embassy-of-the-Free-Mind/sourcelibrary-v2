@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     languages: {
       en: '/',
       es: '/es',
+      la: '/la',
       'x-default': '/',
     },
     // See src/lib/feed-links.ts — declaring `languages` here replaces the
