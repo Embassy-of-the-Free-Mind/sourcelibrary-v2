@@ -89,7 +89,7 @@ export async function GET(
     for (const [, book] of books) {
       const url = `https://sourcelibrary.org/book/${book.slug || ''}`;
       const pageList = [...new Set(book.pages)].sort((a, b) => a - b).join(', ');
-      lines.push(`- **${book.title}** by ${book.author} — [View in Source Library](${url}) · Pages: ${pageList}`);
+      lines.push(`- **${book.title}** by ${book.author} · [View in Source Library](${url}) · Pages: ${pageList}`);
     }
     lines.push('');
   }

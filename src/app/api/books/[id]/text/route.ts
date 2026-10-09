@@ -480,7 +480,7 @@ export const GET = withApiAuth(async (
           limit_24h: budget.limit,
           note: budget.tier === 'apikey'
             ? `Served up to p.${budgetMaxPage}; the rest of this range is beyond your Explorer key's daily page budget (${budget.used}/${budget.limit} used in 24h). Upgrade for uncapped /text access (https://sourcelibrary.org/licensing) or bulk-export instead.`
-            : `Served up to p.${budgetMaxPage}; the rest of this range is beyond your remaining daily page budget (${budget.used}/${budget.limit} used in 24h). Retrying immediately will be rate-limited — sign in or use an API key for a higher limit, or bulk-export instead.`,
+            : `Served up to p.${budgetMaxPage}; the rest of this range is beyond your remaining daily page budget (${budget.used}/${budget.limit} used in 24h). Retrying immediately will be rate-limited. Sign in or use an API key for a higher limit, or bulk-export instead.`,
           next_steps: budget.tier === 'apikey'
             ? {
                 upgrade: 'https://sourcelibrary.org/licensing',

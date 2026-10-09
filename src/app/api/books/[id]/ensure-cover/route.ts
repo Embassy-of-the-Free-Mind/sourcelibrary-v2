@@ -141,8 +141,8 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     let method = pick.method === 'smart-ocr' ? 'ensure-cover-scored' : 'ensure-cover-on-view';
     let confidence = pick.method === 'smart-ocr' ? 0.85 : 0.5;
     let detail = pick.method === 'smart-ocr'
-      ? `page ${coverPage.page_number} — ${pick.reason} (score: ${pick.score})`
-      : `page ${coverPage.page_number} (${pick.reason}) — first-view fallback, pending Phase 8.9`;
+      ? `page ${coverPage.page_number}: ${pick.reason} (score: ${pick.score})`
+      : `page ${coverPage.page_number} (${pick.reason}): first-view fallback, pending Phase 8.9`;
 
     // Text couldn't decide (no OCR yet, or nothing scored like a cover): one
     // vision pass, at most once per book EVER. The atomic claim means two
@@ -166,7 +166,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
             source = 'vision';
             method = 'ensure-cover-vision';
             confidence = vision.confidence === 'high' ? 0.9 : 0.7;
-            detail = `page ${visionPage.page_number} — ${vision.rationale}`;
+            detail = `page ${visionPage.page_number}: ${vision.rationale}`;
           }
         } catch (err) {
           // Non-fatal: the text pick stands. The claim marker stays set on
