@@ -353,7 +353,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
   const displayYear = (book: BookItem) => {
     if (book.year) return book.year;
     if (book.published) return book.published;
-    return '—';
+    return '–';
   };
 
   return (
@@ -481,7 +481,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                   placeholder="From"
                   className="w-20 text-xs border border-border-light rounded-lg px-2 py-1.5 bg-white text-primary focus:outline-none focus:border-accent-rust"
                 />
-                <span className="text-muted text-xs">—</span>
+                <span className="text-muted text-xs">–</span>
                 <input
                   type="number"
                   value={filters.yearMax}
@@ -569,7 +569,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                       {match.display_title || match.title}
                     </span>
                     {match.page_number && <span className="text-muted ml-1">p. {match.page_number}</span>}
-                    {match.author && <span className="text-secondary ml-2">— {match.author}</span>}
+                    {match.author && <span className="text-secondary ml-2">· {match.author}</span>}
                   </Link>
                   {match.snippet && (
                     <p className="text-xs text-muted mt-0.5 line-clamp-2 pl-4 border-l-2 border-border-light">
@@ -638,7 +638,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                         )}
                       </div>
                       <div className="text-xs text-muted mt-1 flex flex-wrap items-center gap-x-1.5">
-                        <AuthorName author={book.author} fallback="—" />
+                        <AuthorName author={book.author} fallback="–" />
                         <span aria-hidden>·</span>
                         <span className="tabular-nums">{displayYear(book)}</span>
                         {book.language && (<><span aria-hidden>·</span><span>{book.language}</span></>)}
@@ -700,7 +700,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                       </td>
                       <td className="py-3 pr-4 hidden sm:table-cell">
                         <Link href={href} className="text-sm text-secondary line-clamp-1 block">
-                          <AuthorName author={book.author} fallback="—" />
+                          <AuthorName author={book.author} fallback="–" />
                         </Link>
                       </td>
                       <td className="py-3 pr-4 text-sm text-muted tabular-nums">
@@ -710,11 +710,11 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                       </td>
                       <td className="py-3 pr-4 hidden md:table-cell">
                         <Link href={href} className="block">
-                          <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded">{book.language || '—'}</span>
+                          <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded">{book.language || '–'}</span>
                         </Link>
                       </td>
                       <td className="py-3 hidden lg:table-cell text-right">
-                        <Link href={href} className="block text-sm text-muted tabular-nums">{book.pages_count || '—'}</Link>
+                        <Link href={href} className="block text-sm text-muted tabular-nums">{book.pages_count || '–'}</Link>
                       </td>
                     </tr>
                   );

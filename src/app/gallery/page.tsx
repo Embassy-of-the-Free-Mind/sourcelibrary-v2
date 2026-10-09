@@ -35,8 +35,8 @@ const getGalleryBookCollections = (tenantId: string | null) =>
 
 export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing only)
 
-const GALLERY_TITLE = 'Image Gallery — Source Library';
-const GALLERY_DESCRIPTION = 'Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts — searchable by subject, technique, and period.';
+const GALLERY_TITLE = 'Image Gallery | Source Library';
+const GALLERY_DESCRIPTION = 'Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts, searchable by subject, technique, and period.';
 
 export const metadata: Metadata = {
   title: GALLERY_TITLE,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     canonical: '/gallery',
   },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: GALLERY_TITLE,
     description: GALLERY_DESCRIPTION,
     type: 'website',
@@ -79,7 +79,7 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header renders instantly; the data-heavy grid streams in below. */}
       <ConditionalSiteHeader variant="light" />
-      <h1 className="sr-only">Image Gallery — Illustrations from Rare Historical Texts</h1>
+      <h1 className="sr-only">Image Gallery: Illustrations from Rare Historical Texts</h1>
       <Suspense fallback={<GalleryShell />}>
         <GalleryData searchParams={searchParams} />
       </Suspense>

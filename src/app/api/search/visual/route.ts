@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
+import { resolveSearchScope, matchClip, isScoped } from '@/lib/tenant-search-scope';
 
 export const maxDuration = 15;
 
@@ -37,6 +37,10 @@ export async function GET(request: NextRequest) {
   if (tenantSlug && !tenantId) {
     return NextResponse.json({ results: [], query, total: 0 });
   }
+  const scope = await resolveSearchScope(request.headers);
+  if (scope.kind === 'closed') {
+    return NextResponse.json({ results: [], query, total: 0 });
+  }
 
   try {
     // Encode text query via CLIP text encoder on Hetzner
@@ -62,21 +66,21 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Search Supabase for visually matching images. The CLIP RPC has no
-    // tenant column, so when a tenant filter is active we post-filter the
-    // matches in MongoDB below — oversample here so enough survive the
-    // filter (top-N globally would otherwise leave only a handful for niche
-    // tenant queries). Until the RPC gains a tenant column, this is the
-    // pragmatic fix.
+    // Search Supabase for visually matching images. Under a tenant the match
+    // runs inside the tenant's book set (matchClip → match_clip_in_books), so
+    // a niche shelf is ranked on its own rather than picked out of the global
+    // top-N. The Mongo check below stays: clip_embeddings.book_id is a
+    // denormalised copy and Mongo is the truth.
     const baseCount = offset + limit + 10;
-    const { data, error } = await supabase.rpc('match_clip_text', {
-      query_embedding: embedding,
-      match_threshold: threshold,
-      match_count: tenantId ? Math.min(baseCount * 10, 1000) : baseCount,
+    const { rows: data, error } = await matchClip(embedding, {
+      scope,
+      rpc: 'match_clip_text',
+      threshold,
+      count: baseCount,
     });
 
     if (error) {
-      console.error('[visual-search] Supabase error:', error.message);
+      console.error('[visual-search] Supabase error:', error);
       return NextResponse.json(
         { error: 'Search failed', results: [], query, total: 0 },
         { status: 500 },
@@ -140,7 +144,9 @@ export async function GET(request: NextRequest) {
       offset,
       mode: 'visual',
     }, {
-      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
+      // A scoped body must not be stored under a URL the global site shares:
+      // tenant context can arrive by header, which the CDN key cannot see.
+      headers: { 'Cache-Control': isScoped(scope) ? 'private, no-store' : 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);

@@ -1,0 +1,3561 @@
+{
+ "k": 10,
+ "pool": 100766,
+ "candidates": 88318,
+ "sets": {
+  "A": {
+   "queries": 64,
+   "dropped": 0,
+   "views": {
+    "all": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 64,
+       "hits": 37,
+       "recall": 0.578125,
+       "ci": [
+        0.45610031445865895,
+        0.6913021760670425
+       ],
+       "mrr": 0.3560575804616914,
+       "top1": 15,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 10
+        },
+        "German": {
+         "n": 12,
+         "hits": 7
+        },
+        "French": {
+         "n": 10,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 14
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 0
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 64,
+       "hits": 37,
+       "recall": 0.578125,
+       "ci": [
+        0.45610031445865895,
+        0.6913021760670425
+       ],
+       "mrr": 0.32878756237120293,
+       "top1": 14,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 9
+        },
+        "German": {
+         "n": 12,
+         "hits": 3
+        },
+        "French": {
+         "n": 10,
+         "hits": 7
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 17
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 1
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 7,
+        "lost": 7,
+        "rankBetter": 20,
+        "rankWorse": 35,
+        "signP": 0.05806414679240935,
+        "strata": {
+         "Latin": {
+          "n": 16,
+          "gained": 1,
+          "lost": 2
+         },
+         "German": {
+          "n": 12,
+          "gained": 0,
+          "lost": 4
+         },
+         "French": {
+          "n": 10,
+          "gained": 2,
+          "lost": 1
+         },
+         "Chinese": {
+          "n": 24,
+          "gained": 3,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 1,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 64,
+       "hits": 60,
+       "recall": 0.9375,
+       "ci": [
+        0.850025148169819,
+        0.9754287987741092
+       ],
+       "mrr": 0.6830133408258412,
+       "top1": 35,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 14
+        },
+        "German": {
+         "n": 12,
+         "hits": 11
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 23
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.359375,
+        "gained": 23,
+        "lost": 0,
+        "rankBetter": 44,
+        "rankWorse": 3,
+        "signP": 2.464730641804624e-10,
+        "strata": {
+         "Latin": {
+          "n": 16,
+          "gained": 4,
+          "lost": 0
+         },
+         "German": {
+          "n": 12,
+          "gained": 4,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 24,
+          "gained": 9,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 64,
+       "hits": 62,
+       "recall": 0.96875,
+       "ci": [
+        0.8930270814228412,
+        0.9913878617313676
+       ],
+       "mrr": 0.7659479843073596,
+       "top1": 42,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 15
+        },
+        "German": {
+         "n": 12,
+         "hits": 12
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 23
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.390625,
+        "gained": 25,
+        "lost": 0,
+        "rankBetter": 45,
+        "rankWorse": 2,
+        "signP": 1.6044054973463036e-11,
+        "strata": {
+         "Latin": {
+          "n": 16,
+          "gained": 5,
+          "lost": 0
+         },
+         "German": {
+          "n": 12,
+          "gained": 5,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 24,
+          "gained": 9,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 64,
+       "hits": 29,
+       "recall": 0.453125,
+       "ci": [
+        0.3372944769635036,
+        0.5742640287210753
+       ],
+       "mrr": 0.2025199371330451,
+       "top1": 6,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 7
+        },
+        "German": {
+         "n": 12,
+         "hits": 6
+        },
+        "French": {
+         "n": 10,
+         "hits": 9
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 7
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 0
+        }
+       },
+       "vsBase": {
+        "delta": -0.125,
+        "gained": 6,
+        "lost": 14,
+        "rankBetter": 21,
+        "rankWorse": 38,
+        "signP": 0.036343179957053745,
+        "strata": {
+         "Latin": {
+          "n": 16,
+          "gained": 0,
+          "lost": 3
+         },
+         "German": {
+          "n": 12,
+          "gained": 1,
+          "lost": 2
+         },
+         "French": {
+          "n": 10,
+          "gained": 3,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 24,
+          "gained": 2,
+          "lost": 9
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 64,
+       "hits": 63,
+       "recall": 0.984375,
+       "ci": [
+        0.9166589831521346,
+        0.9972364581072146
+       ],
+       "mrr": 0.8610064338235296,
+       "top1": 50,
+       "strata": {
+        "Latin": {
+         "n": 16,
+         "hits": 16
+        },
+        "German": {
+         "n": 12,
+         "hits": 12
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 24,
+         "hits": 23
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.40625,
+        "gained": 26,
+        "lost": 0,
+        "rankBetter": 48,
+        "rankWorse": 1,
+        "signP": 1.7763568394002527e-13,
+        "strata": {
+         "Latin": {
+          "n": 16,
+          "gained": 6,
+          "lost": 0
+         },
+         "German": {
+          "n": 12,
+          "gained": 5,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 24,
+          "gained": 9,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    "orig": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 40,
+       "hits": 26,
+       "recall": 0.65,
+       "ci": [
+        0.4950588071541522,
+        0.7786547121083087
+       ],
+       "mrr": 0.43469209371276724,
+       "top1": 13,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 6
+        },
+        "German": {
+         "n": 10,
+         "hits": 6
+        },
+        "French": {
+         "n": 10,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 8
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 40,
+       "hits": 22,
+       "recall": 0.55,
+       "ci": [
+        0.39829091686504514,
+        0.6929469228891086
+       ],
+       "mrr": 0.3717589482672722,
+       "top1": 11,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 5
+        },
+        "German": {
+         "n": 10,
+         "hits": 2
+        },
+        "French": {
+         "n": 10,
+         "hits": 7
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 8
+        }
+       },
+       "vsBase": {
+        "delta": -0.09999999999999998,
+        "gained": 3,
+        "lost": 7,
+        "rankBetter": 10,
+        "rankWorse": 23,
+        "signP": 0.03508203336969027,
+        "strata": {
+         "Latin": {
+          "n": 10,
+          "gained": 1,
+          "lost": 2
+         },
+         "German": {
+          "n": 10,
+          "gained": 0,
+          "lost": 4
+         },
+         "French": {
+          "n": 10,
+          "gained": 2,
+          "lost": 1
+         },
+         "Chinese": {
+          "n": 10,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 40,
+       "hits": 38,
+       "recall": 0.95,
+       "ci": [
+        0.8349612250489412,
+        0.9861793327384413
+       ],
+       "mrr": 0.7039935064935064,
+       "top1": 22,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 9
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.29999999999999993,
+        "gained": 12,
+        "lost": 0,
+        "rankBetter": 24,
+        "rankWorse": 2,
+        "signP": 0.00001049041748046876,
+        "strata": {
+         "Latin": {
+          "n": 10,
+          "gained": 3,
+          "lost": 0
+         },
+         "German": {
+          "n": 10,
+          "gained": 3,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 10,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.8308630952380952,
+       "top1": 30,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.35,
+        "gained": 14,
+        "lost": 0,
+        "rankBetter": 26,
+        "rankWorse": 1,
+        "signP": 4.1723251342773416e-7,
+        "strata": {
+         "Latin": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "German": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 10,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 40,
+       "hits": 19,
+       "recall": 0.475,
+       "ci": [
+        0.329354700094151,
+        0.6250263800287721
+       ],
+       "mrr": 0.21643905081684908,
+       "top1": 4,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 4
+        },
+        "German": {
+         "n": 10,
+         "hits": 5
+        },
+        "French": {
+         "n": 10,
+         "hits": 9
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 1
+        }
+       },
+       "vsBase": {
+        "delta": -0.17500000000000004,
+        "gained": 4,
+        "lost": 11,
+        "rankBetter": 11,
+        "rankWorse": 26,
+        "signP": 0.02007385191973305,
+        "strata": {
+         "Latin": {
+          "n": 10,
+          "gained": 0,
+          "lost": 2
+         },
+         "German": {
+          "n": 10,
+          "gained": 1,
+          "lost": 2
+         },
+         "French": {
+          "n": 10,
+          "gained": 3,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 10,
+          "gained": 0,
+          "lost": 7
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.9018750000000001,
+       "top1": 34,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.35,
+        "gained": 14,
+        "lost": 0,
+        "rankBetter": 27,
+        "rankWorse": 0,
+        "signP": 1.4901161193847648e-8,
+        "strata": {
+         "Latin": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "German": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "French": {
+          "n": 10,
+          "gained": 4,
+          "lost": 0
+         },
+         "Chinese": {
+          "n": 10,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      }
+     }
+    },
+    "new": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 24,
+       "hits": 11,
+       "recall": 0.4583333333333333,
+       "ci": [
+        0.27891333613001446,
+        0.6492513477492627
+       ],
+       "mrr": 0.22500005837656512,
+       "top1": 2,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 6
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 4
+        },
+        "German": {
+         "n": 2,
+         "hits": 1
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 0
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 24,
+       "hits": 15,
+       "recall": 0.625,
+       "ci": [
+        0.4270996229526447,
+        0.7884063254095233
+       ],
+       "mrr": 0.2571685858777542,
+       "top1": 3,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 9
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 4
+        },
+        "German": {
+         "n": 2,
+         "hits": 1
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 1
+        }
+       },
+       "vsBase": {
+        "delta": 0.16666666666666669,
+        "gained": 4,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 12,
+        "signP": 0.8318119049072255,
+        "strata": {
+         "Chinese": {
+          "n": 14,
+          "gained": 3,
+          "lost": 0
+         },
+         "Latin": {
+          "n": 6,
+          "gained": 0,
+          "lost": 0
+         },
+         "German": {
+          "n": 2,
+          "gained": 0,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 1,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 24,
+       "hits": 22,
+       "recall": 0.9166666666666666,
+       "ci": [
+        0.7415119762950233,
+        0.9768411849122034
+       ],
+       "mrr": 0.6480463980463982,
+       "top1": 13,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 13
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 5
+        },
+        "German": {
+         "n": 2,
+         "hits": 2
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.4583333333333333,
+        "gained": 11,
+        "lost": 0,
+        "rankBetter": 20,
+        "rankWorse": 1,
+        "signP": 0.00002098083496093749,
+        "strata": {
+         "Chinese": {
+          "n": 14,
+          "gained": 7,
+          "lost": 0
+         },
+         "Latin": {
+          "n": 6,
+          "gained": 1,
+          "lost": 0
+         },
+         "German": {
+          "n": 2,
+          "gained": 1,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 24,
+       "hits": 22,
+       "recall": 0.9166666666666666,
+       "ci": [
+        0.7415119762950233,
+        0.9768411849122034
+       ],
+       "mrr": 0.6577561327561329,
+       "top1": 12,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 13
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 5
+        },
+        "German": {
+         "n": 2,
+         "hits": 2
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.4583333333333333,
+        "gained": 11,
+        "lost": 0,
+        "rankBetter": 19,
+        "rankWorse": 1,
+        "signP": 0.00004005432128906248,
+        "strata": {
+         "Chinese": {
+          "n": 14,
+          "gained": 7,
+          "lost": 0
+         },
+         "Latin": {
+          "n": 6,
+          "gained": 1,
+          "lost": 0
+         },
+         "German": {
+          "n": 2,
+          "gained": 1,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 24,
+       "hits": 10,
+       "recall": 0.4166666666666667,
+       "ci": [
+        0.24467602500194355,
+        0.6116533427566112
+       ],
+       "mrr": 0.17932141432670534,
+       "top1": 2,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 6
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 3
+        },
+        "German": {
+         "n": 2,
+         "hits": 1
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 0
+        }
+       },
+       "vsBase": {
+        "delta": -0.04166666666666663,
+        "gained": 2,
+        "lost": 3,
+        "rankBetter": 10,
+        "rankWorse": 12,
+        "signP": 0.8318119049072255,
+        "strata": {
+         "Chinese": {
+          "n": 14,
+          "gained": 2,
+          "lost": 2
+         },
+         "Latin": {
+          "n": 6,
+          "gained": 0,
+          "lost": 1
+         },
+         "German": {
+          "n": 2,
+          "gained": 0,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 24,
+       "hits": 23,
+       "recall": 0.9583333333333334,
+       "ci": [
+        0.7975819334115467,
+        0.9926065439164028
+       ],
+       "mrr": 0.7928921568627452,
+       "top1": 16,
+       "strata": {
+        "Chinese": {
+         "n": 14,
+         "hits": 13
+        },
+        "Latin": {
+         "n": 6,
+         "hits": 6
+        },
+        "German": {
+         "n": 2,
+         "hits": 2
+        },
+        "Dutch": {
+         "n": 2,
+         "hits": 2
+        }
+       },
+       "vsBase": {
+        "delta": 0.5,
+        "gained": 12,
+        "lost": 0,
+        "rankBetter": 21,
+        "rankWorse": 1,
+        "signP": 0.000010967254638671875,
+        "strata": {
+         "Chinese": {
+          "n": 14,
+          "gained": 7,
+          "lost": 0
+         },
+         "Latin": {
+          "n": 6,
+          "gained": 2,
+          "lost": 0
+         },
+         "German": {
+          "n": 2,
+          "gained": 1,
+          "lost": 0
+         },
+         "Dutch": {
+          "n": 2,
+          "gained": 2,
+          "lost": 0
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "perQuery": {
+    "q01": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "Augustine on whether the Lord's Supper may be received after a meal rather than fasting",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 143,
+     "2 query prefix, plain docs": 40,
+     "2d plain query, prefixed docs": 21,
+     "4 prefix both sides": 7,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 539,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q02": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "letter-writing manual chapters on letters of consolation, congratulation and jokes",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 57,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 8,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q03": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "why a letter of the alphabet is called littera, from erasing on wax tablets",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 28,
+     "2 query prefix, plain docs": 868,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 161,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q04": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "Plato's Timaeus on vision: inner fire streams out of the eyes and meets daylight",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 4,
+     "2 query prefix, plain docs": 18,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 6,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q05": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "medieval church calendar for July with saints' days and the golden number",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 19,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q06": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "did the ancient Greeks know of America? Aelian's tale of a continent beyond the ocean",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 20,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 25,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q07": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "schoolmasters must be learned and pious, and magistrates and parents should support them",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q08": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "cooling wine and water with saltpetre",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 189,
+     "2 query prefix, plain docs": 700,
+     "2d plain query, prefixed docs": 5,
+     "4 prefix both sides": 8,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 17,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 8
+    },
+    "q09": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "do animals have reason? bees guarding their king and spiders weaving webs",
+     "gold_rows": 2,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 5,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q10": {
+     "part": "orig",
+     "stratum": "Latin",
+     "query": "Botero on the Christian preacher: preaching was Christ's chief office",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 17,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q11": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "forensic medicine: Caesarean section, hermaphrodites and signs of infanticide",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 13,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 420,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q12": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "magnetic somnambulism compared with temple incubation of Asclepius",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 55,
+     "2 query prefix, plain docs": 292,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 32,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q13": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "course of the Rhine from the Alps through Lake Constance to Basel",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 9,
+     "2 query prefix, plain docs": 23,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 28,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q14": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "Emperor John Komnenos refused to have his wounded hand amputated and died",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 5,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q15": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "books about the Asiatic Brethren and the rituals of the Illuminati",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q16": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "which foods and fish to avoid during the plague",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 39,
+     "2 query prefix, plain docs": 83,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q17": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "plague preservative of walnuts, figs and rue eaten fasting in the morning",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 57,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 10,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q18": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "uroscopy criticised: diseases cannot be diagnosed from urine",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 108,
+     "2 query prefix, plain docs": 725,
+     "2d plain query, prefixed docs": 22,
+     "4 prefix both sides": 10,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 815,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 5
+    },
+    "q19": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "Paracelsus on three kinds of dog bite: rabid, angry and common",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 96,
+     "2 query prefix, plain docs": 85,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 35,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q20": {
+     "part": "orig",
+     "stratum": "German",
+     "query": "clothes of plague victims: wash and air them rather than burn them",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 5,
+     "2 query prefix, plain docs": 100,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 8,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q21": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "ignorance is the source of corruption among Christians",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 10,
+     "2 query prefix, plain docs": 8,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "q22": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "natural law: some reason too abstractly, others reduce everything to the will of God",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 140,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q23": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "an easy new method for beginners to learn chess, explained by a key diagram",
+     "gold_rows": 2,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q24": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "Zosimos of Panopolis on the divine water; the serpent, one is all",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 26,
+     "2 query prefix, plain docs": 127,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 965,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q25": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "Gold Coast Africans anoint their bodies with palm oil and how they greet friends",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 523,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q26": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "Vattel's youth: reading Leibniz and going to Berlin to seek a post under Frederick II",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 33,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q27": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "Bonnefons and Gilles Durant studying law at Bourges, friendship with Cujas's son",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q28": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "Pascal's arithmetical triangle: find the number of a cell without the triangle",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q29": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "declaration of war: when it is required and why defensive war needs none",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 33,
+     "2 query prefix, plain docs": 540,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 6,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q30": {
+     "part": "orig",
+     "stratum": "French",
+     "query": "rules of piquet: counting tierces, quartes and sequences",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q31": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "heart palpitations caused by blood deficiency or phlegm, according to Zhu Danxi",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 14,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q32": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "strong drugs for patients who tolerate poison, mild drugs for weak patients",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1717,
+     "2 query prefix, plain docs": 3218,
+     "2d plain query, prefixed docs": 5,
+     "4 prefix both sides": 5,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 348,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 4
+    },
+    "q33": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "why old people cannot sleep at night while the young cannot wake",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 74,
+     "2 query prefix, plain docs": 1068,
+     "2d plain query, prefixed docs": 6,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 153,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q34": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "sacrifices to the five sacred mountains and the eight zha harvest sacrifices",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 6,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 37,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q35": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "fox lore: a thousand-year-old fox becomes a beautiful woman and communicates with heaven",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 4,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 90,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q36": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "the eight trigrams are counted in reverse to know the future",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q37": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "Zhou great archery ceremony: tiger, bear and leopard targets and music",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 36,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "q38": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "the writing brush as Mao Ying in Han Yu's biography, and inkstones",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 5,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 221,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "q39": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "kinds of pears in classical literature; Dao'an dividing ten pears among monks",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 4,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 226,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "q40": {
+     "part": "orig",
+     "stratum": "Chinese",
+     "query": "Jin attacked Qin at Xiao while still in mourning for Duke Wen",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 4,
+     "2 query prefix, plain docs": 4,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 20,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-01": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "famous arrow episodes, including Guan Yu calmly letting a surgeon scrape poison from his arm bone",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 7,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "a100-02": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "why Mencius scorned Guan Zhong and Yanzi as mere ministers of hegemons rather than true kings",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 9,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-03": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "why the chaste woman in the ode about dew on the road refuses to travel at night",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 141,
+     "2 query prefix, plain docs": 508,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 5,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-04": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "hearing without learning is like never hearing; learning without practice is like never learning",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 16,
+     "2 query prefix, plain docs": 1558,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 15,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-05": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "anecdotes of misers: Wang Rong counting coins all night and a ghost laughing at Liu Bolong",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 13,
+     "2 query prefix, plain docs": 239,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 14,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-06": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "Zhao Meng hears the ministers of Zheng recite odes at a banquet and judges each choice",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 178,
+     "2 query prefix, plain docs": 10,
+     "2d plain query, prefixed docs": 13,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1145,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "a100-07": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "why a petty man among superior men may sometimes be tolerated rather than expelled, Treading hexagram",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 221,
+     "2 query prefix, plain docs": 336,
+     "2d plain query, prefixed docs": 6,
+     "4 prefix both sides": 35,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 171,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 34
+    },
+    "a100-08": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "how thick the hemp mourning headband should be: one grip of thumb and forefinger, per Zhu Xi",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 7,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-09": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "intercalary months and why Duke Wen of Lu stopped announcing the new moon but still visited the temple",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 6,
+     "2 query prefix, plain docs": 7,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 12,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "a100-10": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "the six betrothal-rite tablets for an imperial wedding: their dimensions, symbolism and gifts of geese and sheep",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 25,
+     "2 query prefix, plain docs": 5,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 287,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-11": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "origin of the Han Yue cavalry and the Changshui colonel commanding foreign horsemen",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 5,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-12": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "Zhou tally system: metal tiger, human and dragon tallies, and bamboo tallies for roads and gates",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 6,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1275,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "a100-13": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "the legend of Hou Ji abandoned as a baby after his mother stepped in a giant's footprint",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 28,
+     "2 query prefix, plain docs": 120,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 5,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "a100-14": {
+     "part": "new",
+     "stratum": "Chinese",
+     "query": "divination by tortoise shell and yarrow stalks must not exceed three tries or be mixed after failure",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 51,
+     "2 query prefix, plain docs": 7,
+     "2d plain query, prefixed docs": 10,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 257,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-15": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "is fever heat real or imaginary, against Bontekoe, and can anger or fear cause fever",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 34,
+     "2 query prefix, plain docs": 25,
+     "2d plain query, prefixed docs": 7,
+     "4 prefix both sides": 6,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 141,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-16": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "Plotinus on how intellect is both one and many, like a face with eyes and nose",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 840,
+     "2 query prefix, plain docs": 118,
+     "2d plain query, prefixed docs": 15,
+     "4 prefix both sides": 11,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 81,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-17": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "high priest Jaddua meets Alexander the Great, who honours God's name and spares the Jews",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 4,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 6,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "a100-18": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "three kinds of true divination, Syrian, Chaldean and Sibylline, as the basis for trustworthy history",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-19": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "how Baubo made grieving Demeter laugh with an indecent display before she drank the barley drink",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 51,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "a100-20": {
+     "part": "new",
+     "stratum": "Latin",
+     "query": "sacraments as signs of God's will requiring faith, rejecting grace from the mere act performed",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 8,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-21": {
+     "part": "new",
+     "stratum": "German",
+     "query": "Tannhauser denied pardon by the pope, the blossoming staff, and faithful Eckhart warning people",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-22": {
+     "part": "new",
+     "stratum": "German",
+     "query": "divine revelation and books as the third and fourth sources of human learning",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 518,
+     "2 query prefix, plain docs": 1777,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 80,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-23": {
+     "part": "new",
+     "stratum": "Dutch",
+     "query": "Javanese: when a word-final consonant is doubled before a suffix starting with a vowel",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 474,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 13,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "a100-24": {
+     "part": "new",
+     "stratum": "Dutch",
+     "query": "why there cannot be two or more creators of the world, according to Hermes",
+     "gold_rows": 1,
+     "1f plain query, plain docs (production format)": 441,
+     "2 query prefix, plain docs": 750,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 34,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    }
+   }
+  },
+  "B": {
+   "queries": 51,
+   "dropped": 0,
+   "views": {
+    "all": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 51,
+       "hits": 48,
+       "recall": 0.9411764705882353,
+       "ci": [
+        0.8407537384479102,
+        0.9797933607348854
+       ],
+       "mrr": 0.676019296607532,
+       "top1": 27,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 51,
+       "hits": 44,
+       "recall": 0.8627450980392157,
+       "ci": [
+        0.7427830763077481,
+        0.9318889830203283
+       ],
+       "mrr": 0.5968884105464882,
+       "top1": 25,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 5
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 18
+        }
+       },
+       "vsBase": {
+        "delta": -0.07843137254901955,
+        "gained": 1,
+        "lost": 5,
+        "rankBetter": 11,
+        "rankWorse": 19,
+        "signP": 0.20048842206597328,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 1
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 1
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 1
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         },
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 2
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 51,
+       "hits": 48,
+       "recall": 0.9411764705882353,
+       "ci": [
+        0.8407537384479102,
+        0.9797933607348854
+       ],
+       "mrr": 0.782201213818861,
+       "top1": 35,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 19
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 2,
+        "lost": 2,
+        "rankBetter": 17,
+        "rankWorse": 11,
+        "signP": 0.34492845088243623,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 1
+         },
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 1
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 51,
+       "hits": 50,
+       "recall": 0.9803921568627451,
+       "ci": [
+        0.8969543117128449,
+        0.9965303073973102
+       ],
+       "mrr": 0.8071078431372549,
+       "top1": 37,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       },
+       "vsBase": {
+        "delta": 0.039215686274509776,
+        "gained": 3,
+        "lost": 1,
+        "rankBetter": 19,
+        "rankWorse": 7,
+        "signP": 0.028959274291992236,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 1,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 1
+         },
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 51,
+       "hits": 48,
+       "recall": 0.9411764705882353,
+       "ci": [
+        0.8407537384479102,
+        0.9797933607348854
+       ],
+       "mrr": 0.676019296607532,
+       "top1": 27,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 0,
+        "rankWorse": 0,
+        "signP": 1,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 51,
+       "hits": 38,
+       "recall": 0.7450980392156863,
+       "ci": [
+        0.6113171804897563,
+        0.8445423190562414
+       ],
+       "mrr": 0.5172975473164269,
+       "top1": 22,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 5
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 3
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 3
+        },
+        "content-no-name": {
+         "n": 20,
+         "hits": 15
+        }
+       },
+       "vsBase": {
+        "delta": -0.196078431372549,
+        "gained": 1,
+        "lost": 11,
+        "rankBetter": 8,
+        "rankWorse": 26,
+        "signP": 0.002935055643320087,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 1
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 1
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 2
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 2
+         },
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 5
+         }
+        }
+       }
+      }
+     }
+    },
+    "orig": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 31,
+       "hits": 28,
+       "recall": 0.9032258064516129,
+       "ci": [
+        0.7510006140569959,
+        0.9665353560978241
+       ],
+       "mrr": 0.6977982590885818,
+       "top1": 17,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 31,
+       "hits": 26,
+       "recall": 0.8387096774193549,
+       "ci": [
+        0.6736564589149602,
+        0.9290737560150889
+       ],
+       "mrr": 0.6580388282165486,
+       "top1": 18,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 5
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": -0.06451612903225801,
+        "gained": 1,
+        "lost": 3,
+        "rankBetter": 9,
+        "rankWorse": 9,
+        "signP": 1,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 1
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 1
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 1
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 31,
+       "hits": 29,
+       "recall": 0.9354838709677419,
+       "ci": [
+        0.7928136311278255,
+        0.9821252166393801
+       ],
+       "mrr": 0.7592933947772658,
+       "top1": 20,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 2,
+        "lost": 1,
+        "rankBetter": 9,
+        "rankWorse": 8,
+        "signP": 0.9999999999999998,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 1
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.8369623655913978,
+       "top1": 24,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 3,
+        "lost": 1,
+        "rankBetter": 11,
+        "rankWorse": 4,
+        "signP": 0.11846923828125006,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 1,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 1,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 1
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 31,
+       "hits": 28,
+       "recall": 0.9032258064516129,
+       "ci": [
+        0.7510006140569959,
+        0.9665353560978241
+       ],
+       "mrr": 0.6977982590885818,
+       "top1": 17,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 6
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 0,
+        "rankWorse": 0,
+        "signP": 1,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 0
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 0
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 31,
+       "hits": 23,
+       "recall": 0.7419354838709677,
+       "ci": [
+        0.5675386404606986,
+        0.8629829416321935
+       ],
+       "mrr": 0.581370805326732,
+       "top1": 16,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 5
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 3
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 3
+        }
+       },
+       "vsBase": {
+        "delta": -0.16129032258064513,
+        "gained": 1,
+        "lost": 6,
+        "rankBetter": 7,
+        "rankWorse": 13,
+        "signP": 0.26317596435546864,
+        "strata": {
+         "well-known-concept": {
+          "n": 7,
+          "gained": 0,
+          "lost": 1
+         },
+         "niche-passage": {
+          "n": 4,
+          "gained": 0,
+          "lost": 1
+         },
+         "verbatim-quote": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "cross-lingual": {
+          "n": 5,
+          "gained": 0,
+          "lost": 0
+         },
+         "broad-theme": {
+          "n": 5,
+          "gained": 0,
+          "lost": 2
+         },
+         "bibliographic": {
+          "n": 5,
+          "gained": 1,
+          "lost": 2
+         }
+        }
+       }
+      }
+     }
+    },
+    "new": {
+     "arms": {
+      "1f plain query, plain docs (production format)": {
+       "n": 20,
+       "hits": 20,
+       "recall": 1,
+       "ci": [
+        0.8388748398148705,
+        1
+       ],
+       "mrr": 0.6422619047619047,
+       "top1": 10,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       }
+      },
+      "2 query prefix, plain docs": {
+       "n": 20,
+       "hits": 18,
+       "recall": 0.9,
+       "ci": [
+        0.6989663528135878,
+        0.9721335190383086
+       ],
+       "mrr": 0.5021052631578947,
+       "top1": 7,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 18
+        }
+       },
+       "vsBase": {
+        "delta": -0.09999999999999998,
+        "gained": 0,
+        "lost": 2,
+        "rankBetter": 2,
+        "rankWorse": 10,
+        "signP": 0.038574218750000014,
+        "strata": {
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 2
+         }
+        }
+       }
+      },
+      "2d plain query, prefixed docs": {
+       "n": 20,
+       "hits": 19,
+       "recall": 0.95,
+       "ci": [
+        0.7638688045357189,
+        0.9911185512976646
+       ],
+       "mrr": 0.8177083333333334,
+       "top1": 15,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 19
+        }
+       },
+       "vsBase": {
+        "delta": -0.050000000000000044,
+        "gained": 0,
+        "lost": 1,
+        "rankBetter": 8,
+        "rankWorse": 3,
+        "signP": 0.22656250000000008,
+        "strata": {
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 1
+         }
+        }
+       }
+      },
+      "4 prefix both sides": {
+       "n": 20,
+       "hits": 20,
+       "recall": 1,
+       "ci": [
+        0.8388748398148705,
+        1
+       ],
+       "mrr": 0.7608333333333334,
+       "top1": 13,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 8,
+        "rankWorse": 3,
+        "signP": 0.22656250000000008,
+        "strata": {
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x1 (exploratory) plain query, prefix on OCR-only docs": {
+       "n": 20,
+       "hits": 20,
+       "recall": 1,
+       "ci": [
+        0.8388748398148705,
+        1
+       ],
+       "mrr": 0.6422619047619047,
+       "top1": 10,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 20
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 0,
+        "rankWorse": 0,
+        "signP": 1,
+        "strata": {
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 0
+         }
+        }
+       }
+      },
+      "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+       "n": 20,
+       "hits": 15,
+       "recall": 0.75,
+       "ci": [
+        0.5312991206074114,
+        0.8881382993000237
+       ],
+       "mrr": 0.41798399740045367,
+       "top1": 6,
+       "strata": {
+        "content-no-name": {
+         "n": 20,
+         "hits": 15
+        }
+       },
+       "vsBase": {
+        "delta": -0.25,
+        "gained": 0,
+        "lost": 5,
+        "rankBetter": 1,
+        "rankWorse": 13,
+        "signP": 0.0018310546875000013,
+        "strata": {
+         "content-no-name": {
+          "n": 20,
+          "gained": 0,
+          "lost": 5
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "perQuery": {
+    "agrippa-natural-magic": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Agrippa on natural magic and planetary correspondences",
+     "gold_rows": 240,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "bruno-art-of-memory": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Giordano Bruno on memory images and the art of memory",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 18,
+     "2 query prefix, plain docs": 14,
+     "2d plain query, prefixed docs": 14,
+     "4 prefix both sides": 4,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 18,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 14
+    },
+    "ficino-spiritus-talismans": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Ficino on drawing down celestial spirits with talismans and music",
+     "gold_rows": 280,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "kepler-harmony-spheres": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Kepler on the harmony of the spheres and planetary music",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "fludd-macrocosm-microcosm": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Robert Fludd on the macrocosm and microcosm",
+     "gold_rows": 180,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "paracelsus-archidoxes": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Paracelsus on the spagyric preparation of metals and the archidoxes",
+     "gold_rows": 140,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 40,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 46
+    },
+    "porta-natural-magic": {
+     "part": "orig",
+     "stratum": "well-known-concept",
+     "query": "Della Porta on natural magic and the secrets of nature",
+     "gold_rows": 200,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "kircher-magnetism": {
+     "part": "orig",
+     "stratum": "niche-passage",
+     "query": "magnetic experiments with iron and lodestone",
+     "gold_rows": 260,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "vesalius-anatomy-skull": {
+     "part": "orig",
+     "stratum": "niche-passage",
+     "query": "anatomy of the human skull and cranial sutures",
+     "gold_rows": 140,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "boehme-aurora": {
+     "part": "orig",
+     "stratum": "niche-passage",
+     "query": "the seven fountain spirits or properties of nature",
+     "gold_rows": 100,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 54,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 10,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 122
+    },
+    "emerald-tablet": {
+     "part": "orig",
+     "stratum": "verbatim-quote",
+     "query": "as above so below — the Emerald Tablet of Hermes",
+     "gold_rows": 81,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "rosicrucian-manifestos": {
+     "part": "orig",
+     "stratum": "verbatim-quote",
+     "query": "Fama Fraternitatis brothers of the Rose Cross",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "indian-rasa-alchemy": {
+     "part": "orig",
+     "stratum": "cross-lingual",
+     "query": "Indian alchemy mercury rasa preparation",
+     "gold_rows": 40,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 10
+    },
+    "artemidorus-dreams": {
+     "part": "orig",
+     "stratum": "broad-theme",
+     "query": "dream interpretation in the ancient world",
+     "gold_rows": 120,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "sympathetic-magic-renaissance": {
+     "part": "orig",
+     "stratum": "broad-theme",
+     "query": "sympathetic magic and occult virtues in nature",
+     "gold_rows": 720,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "books-on-geomancy": {
+     "part": "orig",
+     "stratum": "bibliographic",
+     "query": "books about geomancy and divination by points",
+     "gold_rows": 136,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 7,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 41
+    },
+    "christian-cabala": {
+     "part": "orig",
+     "stratum": "bibliographic",
+     "query": "Christian cabala in the Renaissance",
+     "gold_rows": 120,
+     "1f plain query, plain docs (production format)": 4,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 5,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "zohar-sefirot": {
+     "part": "orig",
+     "stratum": "cross-lingual",
+     "query": "Kabbalah on the ten sefirot and divine emanation",
+     "gold_rows": 280,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 7,
+     "2d plain query, prefixed docs": 4,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 7
+    },
+    "sefer-yetzirah-creation": {
+     "part": "orig",
+     "stratum": "cross-lingual",
+     "query": "Hebrew letters and the creation of the world",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "ibn-arabi-unity": {
+     "part": "orig",
+     "stratum": "cross-lingual",
+     "query": "Sufi metaphysics of the unity of being and divine names",
+     "gold_rows": 100,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "suhrawardi-illumination": {
+     "part": "orig",
+     "stratum": "cross-lingual",
+     "query": "philosophy of illumination and the world of light",
+     "gold_rows": 20,
+     "1f plain query, plain docs (production format)": 14,
+     "2 query prefix, plain docs": 682,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 14,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2618
+    },
+    "rosicrucian-fama": {
+     "part": "orig",
+     "stratum": "verbatim-quote",
+     "query": "Fama Fraternitatis and the discovery of the tomb of Christian Rosenkreutz",
+     "gold_rows": 320,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "chymical-wedding": {
+     "part": "orig",
+     "stratum": "verbatim-quote",
+     "query": "the chymical wedding of Christian Rosenkreutz",
+     "gold_rows": 120,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "maier-atalanta-motto": {
+     "part": "orig",
+     "stratum": "verbatim-quote",
+     "query": "Atalanta Fugiens emblem the wind carried him in his belly",
+     "gold_rows": 120,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "coniunctio-opposites": {
+     "part": "orig",
+     "stratum": "broad-theme",
+     "query": "the marriage and union of opposites in alchemy",
+     "gold_rows": 157,
+     "1f plain query, plain docs (production format)": 4,
+     "2 query prefix, plain docs": 19,
+     "2d plain query, prefixed docs": 10,
+     "4 prefix both sides": 5,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 83
+    },
+    "rosicrucian-reformation": {
+     "part": "orig",
+     "stratum": "broad-theme",
+     "query": "the universal reformation of the whole wide world",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 9,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 52
+    },
+    "neoplatonic-ascent": {
+     "part": "orig",
+     "stratum": "broad-theme",
+     "query": "the ascent of the soul to the One",
+     "gold_rows": 720,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "alchemical-emblem-books": {
+     "part": "orig",
+     "stratum": "bibliographic",
+     "query": "alchemical emblem books with engraved plates",
+     "gold_rows": 280,
+     "1f plain query, plain docs (production format)": 10,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 12,
+     "4 prefix both sides": 16,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 10,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 45
+    },
+    "corpus-hermeticum-editions": {
+     "part": "orig",
+     "stratum": "bibliographic",
+     "query": "editions of the Corpus Hermeticum",
+     "gold_rows": 450,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "paracelsus-medicine": {
+     "part": "orig",
+     "stratum": "bibliographic",
+     "query": "works of Paracelsus on medicine and chemistry",
+     "gold_rows": 100,
+     "1f plain query, plain docs (production format)": 14,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 3,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 14,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 3
+    },
+    "ripley-green-lion": {
+     "part": "orig",
+     "stratum": "niche-passage",
+     "query": "the green lion devouring the sun in alchemy",
+     "gold_rows": 125,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 10
+    },
+    "b100-crypto": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "How did Renaissance writers hide messages with ciphers, invented alphabets and secret letter codes?",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-christian-defense-rome": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Early Christian defense against Roman persecution arguing pagan gods are really demons",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 5,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 6
+    },
+    "b100-fungi": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Systematic classification and descriptions of mushroom species with caps, gills and stalks",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 6,
+     "2 query prefix, plain docs": 5,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 6,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 9
+    },
+    "b100-eloquence-dialogue": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Roman dialogue on the ideal public speaker's training, knowledge and eloquence",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 4,
+     "2 query prefix, plain docs": 5,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 4,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 6
+    },
+    "b100-induction-method": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "A new inductive method for studying nature to replace the old syllogistic logic",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-demon-expulsion": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Manual for priests on driving demons out of possessed and bewitched people",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 5,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-chan-sermons": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Chan Buddhist masters' sermons and dialogues with monks about sudden awakening",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 9,
+     "2d plain query, prefixed docs": 16,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 9
+    },
+    "b100-physiognomy-palmistry": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Reading a person's character from the face, the nose and the lines of the hand",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 7,
+     "2 query prefix, plain docs": 9,
+     "2d plain query, prefixed docs": 6,
+     "4 prefix both sides": 3,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 7,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 160
+    },
+    "b100-astrology-signs": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Medieval astrology explaining the zodiac signs, planetary lordships and the moon's power over tides",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 4,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 4
+    },
+    "b100-court-gentleman": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Renaissance dialogue on the perfect gentleman at a prince's court and graceful manners",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "b100-world-soul-commentary": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Late antique Latin commentary on the creation of the world soul and its harmonic number ratios",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 2,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-animal-fables-virtue": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Medieval Latin moral fables of animals like the lion and ass teaching wisdom",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-misery-human-life": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Medieval meditation on the wretchedness of human life from birth to death",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 2,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 11
+    },
+    "b100-lead-into-gold-witness": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Eyewitness account of a stranger's powder transmuting lead into gold in an instant",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 3,
+     "2 query prefix, plain docs": 3,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 3,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 6
+    },
+    "b100-roman-law-textbook": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Roman law textbook for students on persons, slaves, paternal power and marriage",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 1
+    },
+    "b100-parish-priest-doctrine": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Official Catholic teaching for parish priests explaining the creed and the sacraments",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 1,
+     "2 query prefix, plain docs": 1,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 1,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 4
+    },
+    "b100-chinese-military-campaigns": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Chinese military treatise recounting generals' campaigns, sieges, mountain passes and stratagems",
+     "gold_rows": 140,
+     "1f plain query, plain docs (production format)": 7,
+     "2 query prefix, plain docs": 36,
+     "2d plain query, prefixed docs": 8,
+     "4 prefix both sides": 10,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 7,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2833
+    },
+    "b100-celestial-circles": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Elementary Greek astronomy of the celestial sphere's parallel circles, zones and antipodes",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 2,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 2
+    },
+    "b100-vortices-matter": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Mechanical philosophy where matter is extension, there is no vacuum, and vortices move planets",
+     "gold_rows": 60,
+     "1f plain query, plain docs (production format)": 2,
+     "2 query prefix, plain docs": 10,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 1,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 2,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 32
+    },
+    "b100-great-perfection-tantras": {
+     "part": "new",
+     "stratum": "content-no-name",
+     "query": "Tibetan tantras on primordial awareness, the natural state of mind and non-conceptual enlightenment",
+     "gold_rows": 80,
+     "1f plain query, plain docs (production format)": 7,
+     "2 query prefix, plain docs": 114,
+     "2d plain query, prefixed docs": 1,
+     "4 prefix both sides": 4,
+     "x1 (exploratory) plain query, prefix on OCR-only docs": 7,
+     "x2 (exploratory) query prefix, prefix on OCR-only docs": 115
+    }
+   }
+  }
+ },
+ "verdict": {
+  "2 query prefix, plain docs": {
+   "deltaA": 0,
+   "deltaB": -0.078,
+   "reversals": [
+    "set B",
+    "A/Latin",
+    "A/German"
+   ],
+   "meetsBar": false
+  },
+  "2d plain query, prefixed docs": {
+   "deltaA": 0.359,
+   "deltaB": 0,
+   "reversals": [],
+   "meetsBar": false
+  },
+  "4 prefix both sides": {
+   "deltaA": 0.391,
+   "deltaB": 0.039,
+   "reversals": [],
+   "meetsBar": false
+  },
+  "x1 (exploratory) plain query, prefix on OCR-only docs": {
+   "deltaA": -0.125,
+   "deltaB": 0,
+   "reversals": [
+    "set A",
+    "A/Latin",
+    "A/German",
+    "A/Chinese"
+   ],
+   "meetsBar": false
+  },
+  "x2 (exploratory) query prefix, prefix on OCR-only docs": {
+   "deltaA": 0.406,
+   "deltaB": -0.196,
+   "reversals": [
+    "set B"
+   ],
+   "meetsBar": false
+  }
+ }
+}

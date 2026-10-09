@@ -63,6 +63,7 @@ export type ImageSourceProvider =
   | 'tartu_dspace'   // University of Tartu Library (DSpace)
   | 'morgan'         // Morgan Library & Museum, New York
   | 'ia'             // Internet Archive (alternate key)
+  | 'museumsofindia' // Museums of India (museumsofindia.gov.in)
   | 'library'
   | 'user_upload'
   | 'other';

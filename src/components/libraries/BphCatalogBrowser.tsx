@@ -983,7 +983,7 @@ export default function BphCatalogBrowser({
                         ) : null}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                        {displayAuthor ? hl(displayAuthor) : <span className="text-muted">—</span>}
+                        {displayAuthor ? hl(displayAuthor) : <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top">
                         <div className="font-medium text-primary leading-snug">
@@ -1030,13 +1030,13 @@ export default function BphCatalogBrowser({
                         )}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                        {w.place ? hl(w.place) : <span className="text-muted">—</span>}
+                        {w.place ? hl(w.place) : <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                        {w.year ? hl(w.year) : <span className="text-muted">—</span>}
+                        {w.year ? hl(w.year) : <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                        {w.shelf_mark ? hl(w.shelf_mark) : <span className="text-muted">—</span>}
+                        {w.shelf_mark ? hl(w.shelf_mark) : <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top hidden lg:table-cell">
                         {w.keywords ? (
@@ -1044,7 +1044,7 @@ export default function BphCatalogBrowser({
                             {hl(w.keywords)}
                           </span>
                         ) : (
-                          <span className="text-muted">—</span>
+                          <span className="text-muted">–</span>
                         )}
                       </td>
                     </tr>

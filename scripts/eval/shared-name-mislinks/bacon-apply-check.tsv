@@ -1,0 +1,21 @@
+n	tier	plan	by_eye	agrees	book	basis
+1	printed	francis	Francis Bacon	yes	Maine de Biran, Oeuvres (1841) p34	"quand Bacon promulgua l'instauration universelle ... Instauratio facienda est"
+2	printed	francis	Francis Bacon	yes	Mersenne, Harmonicorum libri XII (1636) p22	"Addebat Verulamius in Sylua"
+3	printed	francis	Francis Bacon	yes	Rozanov, Priroda i istoriia (1900) p106	"Bacon conceived the Novum Organon" (also row 1 of bacon-plan-check.tsv: 19 new rows, not 20)
+4	printed	francis	Francis Bacon	yes	Heumann, Apparatus iurisprudentiae (1752) p223	"RAMO, VERULAMIO atque CARTESIO"
+5	printed	francis	Francis Bacon	yes	Bacon, Scripta (1653) p512	heading "FRANCISCI BACONI TOPICA INQVISITIONIS"
+6	same-book	roger	Roger Bacon	yes	Duhem, Systeme du monde V (1917) p391	running head "Les Questions de Bacon", questions on Aristotle's Physics
+7	same-book	roger	Roger Bacon	yes	Barrett, The Magus (1801) p78	list of magical authors: Hermes, Tritemius, Paracelsus, Bacon, Dee, Porta, Agrippa (medium)
+8	same-book	roger	Francis Bacon	NO	Rozanov, O ponimanii (1886) p457	"the experimental philosophy of Bacon" of the English: Francis
+9	same-book	roger	Roger Bacon	yes	Musaeum Hermeticum (1678) p474	"Raymundus Lullius, aut Bacon monachus"
+10	same-book	francis	Francis Bacon	yes	Maine de Biran, Oeuvres (1841) p139	Bacon beside Descartes, "le veritable art d'observer"
+11	same-book	francis	Francis Bacon	yes	Oetinger, Wahrheit des sensus communis (1754) p-15	"des Baconis Weg zur Untersuchung der Wahrheit"
+12	same-book	francis	Francis Bacon	yes	Jevons, Substitution of Similars (1869) p14	footnote cites Novum Organum I.84
+13	same-book	francis	Francis Bacon	yes	De Morgan, Formal Logic (1847) p290	"Truly said Bacon, that writing makes an exact man"
+14	same-book	francis	Francis Bacon	yes	Bacon, Scripta (1653) p505	his own text; the name is in the summary only, not printed on the page
+15	note	francis	Francis Bacon	yes	Schelling, Von der Weltseele (1806) p188	"Was Baco schon gewuenscht hat", the attention of naturalists
+16	note	francis	Francis Bacon	yes	Madison, Letters IV (1865) p540	"what Bacon was in universal science", beside Newton and Locke
+17	note	francis	Francis Bacon	yes	Fabre d'Olivet, Golden Verses (1917) p211	continues the critique of Bacon on Greek philosophy; name not printed on this page
+18	printed	roger	Roger Bacon	yes	Bonacina, Compendiolum (1750) p53	"Rogerius Bacco" in his Speculum
+19	printed	roger	Roger Bacon	yes	Grataroli, Verae alchemiae (1561) p117	"authoritate Rogerii Bachonis, cap. 3. sui Speculi"
+20	note	roger	Roger Bacon	yes	Maier, Tripus aureus (1618) p139	"Ex Raymondi & Baconi doctrina ... in tribus suis epistolis"

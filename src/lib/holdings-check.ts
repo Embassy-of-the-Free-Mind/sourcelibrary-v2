@@ -34,12 +34,19 @@
  *   related_title     only a near-title search hit. Look, don't conclude.
  *   new               nothing found. A negative is only as good as the input:
  *                     a URL alone cannot find another edition (no title).
+ *
+ * RECORDED RELATIONS. Books that a person has linked to a held match in
+ * `book_relations` (src/lib/book-relations.ts) are listed too, with reason
+ * `related_copy` (another copy of the same edition) or `bound_with` (bound
+ * with it, contains it, or is contained in it). They are listed, never the
+ * verdict: the verdict stays what the lookup itself found.
  */
 
 import { ObjectId, type Db, type Document } from 'mongodb';
 import { checkDuplicate, editionYear, sourceFingerprints, type DedupCandidate, type DedupMatch } from './dedup';
 import { buildEditionKey, editionSurname, normalizeEditionTitle } from './edition-key';
 import { BOOK_SEARCH_INDEX } from './atlas-search';
+import { relationsOfIds, type RelationRole } from './book-relations';
 
 export type HoldingsVerdict =
   | 'same_object'
@@ -57,9 +64,12 @@ export type HoldingReason =
   | 'same_edition_year_unknown'
   | 'other_edition'
   | 'same_work'
+  | 'same_work_same_year'
   | 'title_author_near_same_year'
   | 'title_author_near'
-  | 'near_title';
+  | 'near_title'
+  | 'related_copy'
+  | 'bound_with';
 
 export interface HoldingsInput {
   /** A library URL (IA, Gallica, e-rara, BSB/MDZ, a IIIF manifest…) or a
@@ -73,6 +83,9 @@ export interface HoldingsInput {
   year?: number | null;
   /** Free-text imprint, e.g. "Amsterdam, 1682" — the year is parsed from it. */
   published?: string | null;
+  /** Page count of the copy about to be imported, when known. With the year it
+   *  tells a second copy of one edition from another edition of the work. */
+  pages?: number | null;
 }
 
 export interface HoldingCandidate {
@@ -95,6 +108,10 @@ export interface HoldingCandidate {
   pages_ocr: number;
   pages_translated: number;
   provider: string | null;
+  /** Set when a `book_relations` row links this record to a held match. Kept
+   *  out of `reason_detail`, which the public route prints: the match it
+   *  points at may be hidden, and `evidence` is a curator's free text. */
+  related_to?: { book_id: string; relation: RelationRole; evidence: string };
 }
 
 export interface HoldingsResult {
@@ -119,10 +136,19 @@ const REASON_RANK: Record<HoldingReason, number> = {
   same_edition_year_unknown: 3,
   other_edition: 4,
   same_work: 5,
+  same_work_same_year: 3,
   title_author_near_same_year: 3,
   title_author_near: 5,
   near_title: 6,
+  // A person's by-eye statement about a held match: below the match itself
+  // (rank <= 3, so never the top candidate), above every heuristic guess.
+  related_copy: 3.5,
+  bound_with: 4.5,
 };
+
+/** Relations are followed from matches at least this strong — the records that
+ *  ARE the thing asked about, not look-alikes of it. */
+const RELATION_SOURCE_RANK = 3;
 
 const REASON_VERDICT: Record<HoldingReason, HoldingsVerdict> = {
   same_book: 'same_object',
@@ -132,9 +158,20 @@ const REASON_VERDICT: Record<HoldingReason, HoldingsVerdict> = {
   same_edition_year_unknown: 'possible_same_edition',
   other_edition: 'other_edition',
   same_work: 'other_edition',
+  same_work_same_year: 'possible_same_edition',
   title_author_near_same_year: 'possible_same_edition',
   title_author_near: 'other_edition',
   near_title: 'related_title',
+  // Never read: a related record always sorts below the match it hangs from.
+  related_copy: 'possible_same_edition',
+  bound_with: 'related_title',
+};
+
+const RELATION_DETAIL: Record<RelationRole, string> = {
+  other_copy_of_edition: 'Recorded as another copy of the same edition as a held match.',
+  bound_with: 'Recorded as bound with a held match.',
+  contains: 'Recorded as a part of a held match (a volume that contains it).',
+  contained_in: 'Recorded as the volume that contains a held match.',
 };
 
 const BOOK_PROJ = {
@@ -391,8 +428,24 @@ export async function checkHoldings(
   const workIds = [...new Set([...found.values()].map((c) => c.work_id).filter((w): w is string => !!w))];
   if (workIds.length > 0) {
     const rows = await db.collection('books').find({ work_id: { $in: workIds } }, { projection: BOOK_PROJ }).limit(otherLimit * 2).toArray();
+    // Same work AND same year (and, when both are known, a page count within
+    // 2%) is a second copy of this edition far more often than another
+    // edition: the #6019 review found every live same-edition duplicate in its
+    // sample as the top candidate, half of them only as `same_work` (Mylius
+    // 1746: same author, same year, 678 vs 680 pp).
+    const refYear = candYear ?? (anchor ? editionYear(anchor as { year?: number | null; published?: string | null }) : null);
+    const refPages = input.pages ?? (anchor ? Number(anchor.pages_count) || null : null);
     for (const r of rows) {
-      if (!found.has(idOf(r))) add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another copy, edition or translation.'));
+      if (found.has(idOf(r))) continue;
+      const y = editionYear(r as { year?: number | null; published?: string | null });
+      const p = Number(r.pages_count) || null;
+      const pagesClose = refPages == null || p == null || Math.abs(p - refPages) <= Math.max(2, refPages * 0.02);
+      if (refYear != null && y === refYear && pagesClose) {
+        const pagesNote = refPages != null && p != null ? `, ${p} pp against ${refPages}` : ', page count not compared';
+        add(toCandidate(r, 'books', 'same_work_same_year', `Same work and year (${y})${pagesNote}: possibly another copy of this edition.`));
+      } else {
+        add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another copy, edition or translation.'));
+      }
     }
   }
 
@@ -407,8 +460,13 @@ export async function checkHoldings(
         // Same author and most of the title: the same work catalogued under a
         // different title form — another edition, or this one (#6019: Becher
         // "Weiszheit" vs "Weißheit" never shared an edition key).
-        if (h.sameAuthor && h.coverage >= 0.75) {
-          const y = editionYear(doc as { year?: number | null; published?: string | null });
+        const y = editionYear(doc as { year?: number | null; published?: string | null });
+        const p = Number(doc.pages_count) || null;
+        // Same author and year with matching page counts is the same-edition
+        // signature even when the title words only half overlap (a Latin
+        // title against the English one, #6019 review).
+        const pagesMatch = input.pages != null && p != null && Math.abs(p - input.pages) <= Math.max(2, input.pages * 0.02);
+        if (h.sameAuthor && (h.coverage >= 0.75 || (pagesMatch && candYear != null && y === candYear))) {
           const sameYear = candYear != null && y === candYear;
           add(toCandidate(doc, 'books', sameYear ? 'title_author_near_same_year' : 'title_author_near',
             sameYear
@@ -420,6 +478,31 @@ export async function checkHoldings(
       }
     } catch {
       limits.push('The catalogue search (Atlas) did not answer, so near-title matches are missing.');
+    }
+  }
+
+  // 7. Recorded relations (`book_relations`) of the records that matched as
+  // this object or this edition. A relation never changes the verdict, and
+  // never anything about the book: it only puts the linked record on the list.
+  const sources = [...found.values()].filter((c) => c.collection === 'books' && REASON_RANK[c.reason] <= RELATION_SOURCE_RANK);
+  if (sources.length > 0) {
+    try {
+      const rels = await relationsOfIds(db, sources.map((c) => c.book_id));
+      const related = await fetchByIds(db, 'books', [...new Set(rels.map((r) => r.book_id))]);
+      const missing = new Set<string>();
+      for (const r of rels) {
+        const doc = related.get(r.book_id);
+        if (!doc) { missing.add(r.book_id); continue; }
+        const related_to = { book_id: r.of, relation: r.role, evidence: r.evidence };
+        add({ ...toCandidate(doc, 'books', r.role === 'other_copy_of_edition' ? 'related_copy' : 'bound_with', RELATION_DETAIL[r.role]), related_to });
+        // Already listed for a stronger reason (two matches linked to each
+        // other): keep that reason, and still say the link is on record.
+        const listed = found.get(idOf(doc));
+        if (listed && !listed.related_to) listed.related_to = related_to;
+      }
+      if (missing.size > 0) limits.push(`${missing.size} recorded relation${missing.size === 1 ? ' points' : 's point'} at a book that no longer resolves (${[...missing].slice(0, 3).join(', ')}).`);
+    } catch {
+      limits.push('Recorded relations (book_relations) could not be read.');
     }
   }
 
@@ -451,7 +534,7 @@ export function summarize(verdict: HoldingsVerdict, candidates: HoldingCandidate
   switch (verdict) {
     case 'same_object': return `We hold this scan: ${where}${more}.`;
     case 'same_edition': return `We hold this edition: ${where}${more}.`;
-    case 'possible_same_edition': return `Possibly this edition (a year is missing on one side): ${where}${more}.`;
+    case 'possible_same_edition': return `Possibly this edition (${top.reason_detail.replace(/\.$/, '')}): ${where}${more}.`;
     case 'other_edition': return `We hold another edition: ${where}${more}.`;
     case 'related_title': return `Not found as such; similar titles: ${where}${more}.`;
     default: return 'New: nothing in our holdings matches.';

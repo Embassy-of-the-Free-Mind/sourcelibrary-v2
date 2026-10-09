@@ -1,0 +1,480 @@
+[
+  {
+    "book_id": "6abec470896ea18127c89f6a",
+    "slot": 9,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ནུ (Derge Tengyur, vol. 151)",
+    "tradition": "vinaya",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, 'dul ba (Vinaya) section volume; the leaves read are Vinaya commentary/manual material, so it sits correctly on the vinaya shelf. Pages read: training rules on sitting posture (śaikṣa 34–35), matchmaking (saṅghāvaśeṣa), parivāsa/mānatva protocol, care of bedding and fire/flood procedure.",
+    "rights_flag": null,
+    "structure_note": "Counts are clean: 535 records, 535 distinct page numbers, no duplicates, 534 of 535 transcribed and translated (one untranslated record, probably the cover/title leaf). No printed numbers were extracted, so backsteps cannot be judged; on all four sampled leaves the transcription begins and ends with the words on the image, so the e-text alignment holds. The record has no author or work title: the volume contains one or more works and a reader is told only the volume letter. '1982–1985' is the date of the Delhi reprint of the Derge blocks, not of the text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བཤགས་པར་བྱ་བའི་ཉེས་བྱས་",
+            "english": "a <term>dusyata</term> <gloss>wrongdoing</gloss> to be confessed",
+            "problem": "ཉེས་བྱས is duṣkṛta; 'dusyata' is not a Vinaya term",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A <note> tag is opened for the Group of Six gloss and not closed until after 'The determination of the primary downfall', so the translated sentences 'The affliction was their lack of proper conduct. The fault was sitting … with feet crossed. Regarding \"not crossing the feet\" …' sit inside a note wrapper and leave the reader text",
+            "severity": "serious",
+            "class": "T3"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 245,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གཅིག་བདག་གིས་བྱས་ཀྱང་རུང་། གཞན་བྱེད་དུ་བཅུག་ཀྱང་རུང་སྟེ་སྦོམ་པོ་གཅིག་གོ",
+            "english": "If one stage is done by oneself and others are assigned to be done, it is one Sthulatyaya",
+            "problem": "the source says: if one stage is done, whether oneself or by having another do it, one sthūlātyaya; the English makes it a mixed case",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation opens with <meta>The text is from the Vinaya commentary section of the Derge Tengyur, specifically discussing … matchmaking.</meta> — model description shown before the text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 272,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གང་ན་ལས་མ་བྱས་ཀྱང་འཐབ་ཀྲོལ་བྱེད་པ་འོང་བ་ཐོས་ན་དགེ་སློང་གི་མདུན་དུ་གཏང་བར་བྱའོ། …སོང་བའི་འོག་ཏུ་དགེ་སློང་གི་མདུན་དུ་བླང་བར་བྱའོ",
+            "english": "If one hears that quarrels or disputes will occur even if the ritual is not performed, one should send word to the monks. … After going, one should receive it before the monks.",
+            "problem": "the rule is that the probationer lays aside (gtang) the observance before a monk when quarrelsome monks arrive and resumes (blang) it after they leave; 'send word' loses the procedure",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "བརྡུང་བ་དང་།",
+            "english": "Beat <note>perhaps referring to mats or laundry</note>",
+            "problem": "speculative note; in this list the beating is most likely of the gaṇḍī",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 406,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གང་དེ་ལ་ཆགས་པར་འགྱུར་ནས་མ་གུས་པར་བྱས་ཏེ་བརྟུལ་བར་མི་བྱའོ",
+            "english": "If someone becomes attached to the items and acts disrespectfully, they should not be stored away.",
+            "problem": "sense blurred: the rule is not to fold/put them away disrespectfully",
+            "severity": "minor"
+          },
+          {
+            "source": "སྤངས་ལ་གདོན་པར་བྱའོ",
+            "english": "One should renounce <note>forbidden behaviors</note> and remove them",
+            "problem": "guessed note for a sentence continuing from the previous leaf",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Esukhia e-text matches every leaf checked and the translations follow it closely, but the reader text carries model markup: a broken <note> that swallows a paragraph of translation on p. 56 and a <meta> preamble on p. 245, plus one procedural rule garbled on p. 272.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      406
+    ],
+    "reader_summary": "A volume of Vinaya commentary from the Derge Tengyur: rule-by-rule explanations of monastic training rules and of the probation procedure. The Tibetan is the right text for each leaf (a digital e-text aligned to the Derge print). The English is usable for following the argument, but technical rulings need checking against the Tibetan, and leaked note/meta markup interrupts some pages."
+  },
+  {
+    "book_id": "6abec9bf896ea18127c8ae09",
+    "slot": 10,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཛུ (Derge Tengyur, vol. 158)",
+    "tradition": "vinaya",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, 'dul ba (Vinaya) section volume; the leaves read are Vinaya commentary/manual material, so it sits correctly on the vinaya shelf. Pages read: a word-commentary glossing terms (martial arts, Brahmin conduct, nuns' garments, renunciation of possessions, false-accusation offences, citing the Upāli-paripṛcchā).",
+    "rights_flag": null,
+    "structure_note": "Counts are clean: 629 records, 629 distinct page numbers, no duplicates, 628 of 629 transcribed and translated (one untranslated record, probably the cover/title leaf). No printed numbers were extracted, so backsteps cannot be judged; on all four sampled leaves the transcription begins and ends with the words on the image, so the e-text alignment holds. The record has no author or work title: the volume contains one or more works and a reader is told only the volume letter. '1982–1985' is the date of the Delhi reprint of the Derge blocks, not of the text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདི་ལ་མཁས་པ་ཉིད་ནི་གནས་གསུམ་ཡིན་ནོ",
+            "english": "Mastery in this consists of three stages.",
+            "problem": "gnas gsum here is 'the third field' of a five-part list (the text then names the fourth and fifth); 'three stages' misreads the structure",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 295,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྲང་ཆིངས / མཛེས་གྱུར་གྱི་བར་ཆད / མཚན་བཟང་མ",
+            "english": "<gloss>pratigraha</gloss>, <gloss>vicittra-antarika</gloss>, <term>Lady of Noble Marks</term> <gloss>Laksmi</gloss>",
+            "problem": "Sanskrit equivalents not on the page and not the standard ones; presented as if from the source",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "བརྒྱད་པ་ཞེས་བྱ་བ་ནི་མངོན་སུམ་དུ་བསྡིགས་པའོ",
+            "english": "The eighth refers to a direct threat",
+            "problem": "lemma rendered as a number without sense; probably a different word in the root text",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Esukhia e-text variant apparatus left in the transcription the reader sees: མཚན་{བཟངས་,བཟང་}མ (three times)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 325,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བཙོས་པ་མ་ཡིན་པ",
+            "english": "unbaked rice",
+            "problem": "'uncooked'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 544,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཕམ་པ་བྱུང་བ་ལ་སྐུར་ན་ཡང་དགེ་འདུན་ལྷག་མར་གྱུར་པ་ཁོ་ནའོ",
+            "english": "even if one falsely accuses another of a parajika, it remains only a sanghavasheshah",
+            "problem": "the source says even accusing one who HAS incurred a pārājika is still saṅghāvaśeṣa; 'falsely accuses' drops the point",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "མ་ནིང་དང་ལྷན་ཅིག་སྐུར་པ་འདེབས་ན",
+            "english": "if one makes a false accusation together with a pandaka",
+            "problem": "means accusing someone of (intercourse) with a paṇḍaka, not accusing jointly with one",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "མ་ངེས་ལངས་དང་མ་ནིང་དང་།",
+            "english": "The indefinite, the pandaka,",
+            "problem": "'ལངས' (rising from the seat) dropped from the summary verse",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Esukhia e-text variant apparatus left in the transcription the reader sees: {གོ་རིམས་,གོ་རིམ་}",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Transcription is the right text on every leaf; translation is generally sound on narrative and glossing but slips on fine legal points (p. 544) and adds invented Sanskrit glosses (p. 295); e-text variant braces show in the transcription.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      67,
+      325
+    ],
+    "reader_summary": "A Vinaya word-commentary in the Derge Tengyur that glosses terms from the root text, from martial skills and Brahmin conduct to nuns' garments and false-accusation offences. The Tibetan is the correct text for each leaf. The English reads well and is reliable for the plain glosses, but on offence classifications it sometimes misstates the ruling, and some Sanskrit glosses are the model's guesses."
+  },
+  {
+    "book_id": "6abed040896ea18127c8c1b8",
+    "slot": 11,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
+    "tradition": "vinaya",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, 'dul ba (Vinaya) section volume; the leaves read are Vinaya commentary/manual material, so it sits correctly on the vinaya shelf. Pages read: verse rules on robe boundaries and on the novice precepts (kārikā style), and prose commentary on water-straining and the proper time for eating.",
+    "rights_flag": null,
+    "structure_note": "Counts are clean: 527 records, 527 distinct page numbers, no duplicates, 526 of 527 transcribed and translated (one untranslated record, probably the cover/title leaf). No printed numbers were extracted, so backsteps cannot be judged; on all four sampled leaves the transcription begins and ends with the words on the image, so the e-text alignment holds. The record has no author or work title: the volume contains one or more works and a reader is told only the volume letter. '1982–1985' is the date of the Delhi reprint of the Derge blocks, not of the text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཟད་བྱེད་ལྟུང་བར་ལྡན་མ་ཡིན",
+            "english": "it does not constitute an exhausting downfall <note>A category of monastic offense leading to the loss of merit or status</note>",
+            "problem": "ཟད་བྱེད་ (spang ba'i) ltung byed is the naiḥsargika-pātayantika, forfeiture; the English name and the explanatory note are invented",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "སྨིན་དྲུག་ནས་ནི་ཁྲ་ཡི་བར།",
+            "english": "From the month of Kartika … until the month of Phalguna <gloss>February-March</gloss>",
+            "problem": "ཁྲ is Citrā/Caitra, not Phālguna; the end of the robe season is put a month early",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "འཁོར་ལོས་སྤྱོད་པ",
+            "english": "<note>Likely referring to followers of certain Tantric or solar-centric non-Buddhist traditions</note>",
+            "problem": "speculative note",
+            "severity": "minor"
+          },
+          {
+            "source": "(verse, seven-syllable lines)",
+            "english": "(rendered as prose paragraphs)",
+            "problem": "verse form lost",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 138,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྤོང་#བ་སྟེ … ཉེས་#མེད་དོ# … སྤོས་སོགས་ཕྱོགས་མཐུན་སྐབས་ཡིན་པས#",
+            "image": "སྤོང་བ་སྟེ … ཉེས་མེད་དོ … ཡིན་པས",
+            "problem": "e-text '#' markers (about 15) left inside words in the transcription",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉེས་བྱས་འགྱུར",
+            "english": "<term>dusyata</term>",
+            "problem": "duṣkṛta misnamed",
+            "severity": "minor"
+          },
+          {
+            "source": "(verse)",
+            "english": "(prose)",
+            "problem": "verse form lost",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 340,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Esukhia e-text variant apparatus left in the transcription the reader sees: མཆུ་{རིངས་,རིང་}",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 480,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Esukhia e-text variant apparatus left in the transcription the reader sees: (ཞས་,ཞེས་)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right text throughout; the prose commentary pages (340, 480) are translated faithfully, the verse pages less well (a forfeiture category renamed with an invented note, a month misidentified). Esukhia '#' markers and variant braces show in the transcription.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      340,
+      480
+    ],
+    "reader_summary": "A Derge Tengyur Vinaya volume combining a verse manual of monastic rules (robes, novice precepts) with prose commentary (straining water, the permitted time for meals with an astronomical account of dawn). The Tibetan is the correct text for each leaf, though e-text markers clutter it in places. The English of the commentary is trustworthy; the verse sections are paraphrased into prose and some technical terms are mislabelled."
+  },
+  {
+    "book_id": "6abed08d896ea18127c8c3ca",
+    "slot": 12,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། སུ (Derge Tengyur, vol. 167)",
+    "tradition": "vinaya",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, 'dul ba (Vinaya) section volume; the leaves read are Vinaya commentary/manual material, so it sits correctly on the vinaya shelf. Pages read: the novice's rains-retreat formula and seven-day leave, a commentary on the Vinaya-praśna (Upāli's questions) on poṣadha, and two Vinaya narratives (Kāśisundarī; the captain Karṇa's jewelled house).",
+    "rights_flag": null,
+    "structure_note": "Counts are clean: 507 records, 507 distinct page numbers, no duplicates, 506 of 507 transcribed and translated (one untranslated record, probably the cover/title leaf). No printed numbers were extracted, so backsteps cannot be judged; on all four sampled leaves the transcription begins and ends with the words on the image, so the e-text alignment holds. The record has no author or work title: the volume contains one or more works and a reader is told only the volume letter. '1982–1985' is the date of the Delhi reprint of the Derge blocks, not of the text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 110,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དབྱར་ཟླ་འབྲིང་པོ",
+            "english": "the middle summer retreat",
+            "problem": "'middle summer month'; later the same retreat is called the 'earlier' retreat, which is inconsistent in English",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Esukhia e-text variant apparatus left in the transcription the reader sees: ཐ་{ཆུངས་ཀྱི་,ཆུང་གི་}",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 217,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྨྱོན་མ་ཤུལ་པོ་ཆེ་ན་མཆིས་པ",
+            "english": "a woman who is a broad-shouldered lunatic",
+            "problem": "ཤུལ་པོ་ཆེ is the highway: 'a madwoman on the main road'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 357,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "དེས་བུ་མོའི་རྐང་པ་གཡས་པ་ནས་བཟུང་བ་དང་དེས་དེ་མཐོང་ནས་བྲོས་སོ། །བུ་མོ་…སྦྲུལ་ནག་པོས་ཟིན་པར་མ་ཤེས་ནས",
+            "english": "it bit the girl on her right foot, and when she saw it, she tried to run. However, Kashi-mdzes-dgah-mo … did not realize she had been bitten",
+            "problem": "the one who saw the snake and fled is the pursuing minister; the English gives the flight to the girl and then contradicts itself, so the minister's retreat drops out of the story",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>…</meta> model preamble prepended to the translation (\"continues from previous page\" / a description of the text) rather than a translation of anything on the leaf",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 436,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Transcriptions are the right text on every leaf; the ritual formulae and the verse of p. 436 are translated well, but a narrative page reverses who flees (p. 357) and a gloss mistakes a highway for broad shoulders (p. 217).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      436,
+      110
+    ],
+    "reader_summary": "A Derge Tengyur Vinaya volume holding ritual manuals (rains-retreat declarations for novices), a commentary on Upāli's questions, and Vinaya stories. The Tibetan is the correct text for each leaf. The English is good on formulae and verse, but in the narrative it sometimes confuses who does what, so a story's turns should be checked against the Tibetan."
+  }
+]

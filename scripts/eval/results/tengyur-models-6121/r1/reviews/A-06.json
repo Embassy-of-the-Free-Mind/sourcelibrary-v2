@@ -1,0 +1,223 @@
+[
+ {
+  "id": "Q6KLK",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "སྤང་ལེབ་དག་གིས་གཡོགས་#པར་བྱེད་ན",
+    "english": "If they cover it with leaves, there is no offense.",
+    "why": "spang leb are slabs of turf/sod, not leaves."
+   }
+  ],
+  "note": "A faithful rendering of the Vinaya commentary on the building rule; only the roofing material 'sod' is misread as 'leaves'."
+ },
+ {
+  "id": "QJX9Q",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ཆོས་འདི་དག་ནི་ཉོན་མོངས་པ་མེད་པ་འདི་དག་ནི་",
+    "english": "these phenomena are neither unafflicted nor are they afflicted",
+    "why": "The Tibetan says these dharmas are without afflictions and are not afflicted; the English negates the first clause.",
+    "fix": {
+     "find": "these phenomena are neither unafflicted nor are they afflicted",
+     "replace": "these phenomena are without afflictions; they are not afflicted"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "གང་ལས་འབྱུང་བ་མེད་པའི་ཆོས་དེ་གང་ཡང་མི་མཐོང་ངོ་། །དེས་ཆོས་ཐམས་ཅད་",
+    "english": "and from which origination does not occur. Recognizing the origination of all phenomena",
+    "why": "In this sūtra passage 'byung ba is emergence/deliverance (niḥsaraṇa/nairyāṇika): he sees no dharma that is not a way out, and knows all dharmas as deliverance, not 'origination'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཆོས་དྲན་པ་ཉེ་བར་གཞག་པ་བརྗོད་པ",
+    "english": "the exposition of the mindful engagement with phenomena",
+    "why": "chos dran pa nye bar gzhag pa is the technical 'application of mindfulness to dharmas' (dharma-smṛtyupasthāna), the fourth smṛtyupasthāna, which 'mindful engagement' obscures."
+   }
+  ],
+  "note": "Generally follows the argument and the Akṣayamatinirdeśa quotation, but reverses a key clause about afflictions and blurs two technical terms."
+ },
+ {
+  "id": "Q5TBH",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ཆད་པ་ལ་སོགས་པ་དགེ་འདུན་ལས་མྱུར་དུ་གནོད་#པ་དང་མྱུར་དུ་འབྲལ་བར་བསྟང་ཞིང་གྲོགས་བྱ་བའོ",
+    "english": "the monastic community should quickly administer punishment, take charge, and assist the student in separating from that negative influence",
+    "why": "When the preceptor or master has a saṅghāvaśeṣa offence, the pupil should strive and help so that the teacher quickly receives probation etc. from the saṅgha and is quickly released from it; the student is the helper, not the one separated.",
+    "fix": {
+     "find": "the monastic community should quickly administer punishment, take charge, and assist the student in separating from that negative influence",
+     "replace": "the pupil should strive and help so that the teacher quickly receives probation and the other penalties from the monastic community and is quickly released from them"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ཕྱིར། །དེས་ཀྱང་དྲི་བ་མ་གཏོགས་ཀྱི། །འདི་དག་དེ་ལ་བྱ་ཞེས་པ་ཡིན་ཏེ། གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི།",
+    "english": "the text now explains the duties of one who is under dependence:\n\n\"Even so, except for asking questions, these actions should be done for him,\" which means that the resident pupil should not only ask questions, but should also take charge",
+    "why": "gnas here is the master who grants dependence: the passage gives the master's duties, who likewise does these things for the pupil, except that he need not ask permission.",
+    "fix": {
+     "find": "the duties of one who is under dependence:\n\n\"Even so, except for asking questions, these actions should be done for him,\" which means that the resident pupil should not only ask questions, but should also take charge",
+     "replace": "the duties of the master who grants dependence:\n\n\"He too, except for asking permission, should do these things for him,\" which means that the master, while he need not ask permission, should also take charge"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དང་དབྱུང་བར་འདོད་ན། མནོད་པ་དང་འབྲལ་བར་རོ་ཞེས་པ་ཡིན་ཏེ།",
+    "english": "If one wishes to be released from dependence, the text states, \"it means to be separated from taking dependence.\"",
+    "why": "This finishes the list of saṅghāvaśeṣa penalties (probation, mānatva, and rehabilitation, dbyung ba): the pupil helps the teacher obtain and be freed from them; it has nothing to do with leaving dependence."
+   }
+  ],
+  "note": "The pentad section is sound, but the opening misreads who is penalised and who helps, and the master's duties are given to the pupil."
+ },
+ {
+  "id": "QWJMU",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དུས་ནི་མངོན་སུམ་གྱི་ཚད་མས་གཟུང་བར་བྱ་བ་ཁོ་ན་ཡིན་ནོ",
+    "english": "the valid means of direct inference",
+    "why": "The Tibetan says time is grasped by direct perception (pratyakṣa); 'direct inference' contradicts the argument.",
+    "fix": {
+     "find": "the valid means of direct inference",
+     "replace": "the valid means of direct perception"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དེས་ན་དལ་བུ་ལ་སོགས་པ་གཞན་དུ་མི་འཐད་པས། དུས་དཔག་པར་བྱ་བ་མ་",
+    "english": "Thus, since slowness and other qualities would not be otherwise logical, the intention is that time is not something to be inferred.",
+    "why": "The point is that time is not to be inferred through the argument that slowness etc. are otherwise impossible; the English makes that premise the reason for the conclusion, which is self-contradictory."
+   }
+  ],
+  "note": "Follows the commentary's lemmata, but one clause turns perception into inference and the conclusion of the siddhāntin's reply is garbled."
+ },
+ {
+  "id": "QNHIL",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཉེ་བར་གནས་པའི་སྡོམ་པ་མ་གཏོགས་",
+    "english": "which excludes the vow of \"nearly abiding\" [note: likely referring to temporary or preparatory vows]",
+    "why": "nye bar gnas pa is upavāsa, the lay fasting-day (poṣadha) vow, a recognised technical term rather than 'nearly abiding'."
+   }
+  ],
+  "note": "The karman mechanics (jñapti, jñaptidvitīya, jñapticaturtha) and the Upāli boundary passage are rendered correctly; only the upavāsa term is left opaque."
+ },
+ {
+  "id": "Q3MBI",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གང་གྱུར་པ་དེ་ནི་གཙོ་བོ་ཡང་ཤིན་ཏུ་གསོག་པ་ངོ་བོ་ཉིད་མེད་པ་ཡིན་ནོ",
+    "english": "is also the (Pradhana) Fundamental Nature/Primary Matter; however, this is said to be utterly hollow",
+    "why": "The quoted Sāṃkhya verse says what comes into view is utterly hollow, without nature; it does not assert that the visible is the pradhāna, and 'however' inverts the logic."
+   }
+  ],
+  "note": "The dilemma about capacity and manifest effects is rendered clearly and correctly; one line of the quoted verse is restructured."
+ },
+ {
+  "id": "QR13R",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ། །གུས་",
+    "english": "the Tathagata [note: The Buddha] caused his body to be illuminated with supreme clarity. Out of devotion, he performed the funeral rites and constructed stupas",
+    "why": "'Supremely illuminating' is an epithet of the Tathāgata, who with devotion worshipped the king's body and built stūpas; he did not illuminate the body.",
+    "fix": {
+     "find": "the Tathagata [note: The Buddha] caused his body to be illuminated with supreme clarity. Out of devotion, he performed the funeral rites and constructed stupas",
+     "replace": "the Tathagata [note: The Buddha], the supreme illuminator, devotedly worshipped his body and also built stupas"
+    }
+   },
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "དེ་ཉིད་ཉིན་མོ་དག་ལ་བསྔགས་པར་འོས།",
+    "english": "The one who serves the feet of the Great One is sustained in this world and the next",
+    "why": "The line 'that very one is worthy of praise through the days' is not rendered, and 'his followers' are not touched by darkness becomes 'is sustained'."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "བཅོམ་ལྡན་ཆོས་གཟིགས་དག་གིས་དེར་གསུངས་པ། །དགེ་བའི་གནས་སུ་གྱུར་པའི་ལུས་དག་གི།",
+    "english": "The Blessed One [note: The Buddha], who perceives the true nature of reality, spoke to them: For this body",
+    "why": "The Tibetan verses (quatrains) are rendered throughout as running prose."
+   }
+  ],
+  "note": "The gist of the Śuddhodana episode comes through, but the funeral verse is misconstrued and the verse form is lost."
+ },
+ {
+  "id": "QEE4R",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "འགྱུར་བའི་རྒྱུ་གང་ཡིན་པ་དང་། རྐྱེན་གང་ཡིན་པ་དེ་ཡང་",
+    "english": "whatever is the cause and whatever is the condition for alteration",
+    "why": "This completes 'for sentient beings' becoming purified' (rnam par dag par 'gyur ba) from the previous side; 'gyur ba is 'becoming', not 'alteration'."
+   }
+  ],
+  "note": "A close and accurate rendering of the sūtra passage on causes, conditions and the Tathāgata's absorptions; only the boundary-crossing first clause is misread."
+ },
+ {
+  "id": "QEXHH",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "A faithful, clear rendering of the argument that shape differences belong only to conventionally existent, partite things and not to atoms."
+ },
+ {
+  "id": "QFUOW",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཇི་ལྟར་སྲིད་པའི་རྒྱུ་ལ་དེའི་ཁྱད་པར་ཡིན་ན་འབྲས་བུའི་ཁྱད་པར་ཁོ་ན་ཡིན་པར",
+    "english": "if there is a distinction in the cause of existence, it is strictly a distinction in the result",
+    "why": "ji ltar srid pa means 'to whatever extent / accordingly' (insofar as the cause is distinguished, so is the effect), not 'the cause of existence'."
+   }
+  ],
+  "note": "The body-consciousness argument and the milk example are followed accurately; one idiom is misread as a technical phrase."
+ }
+]
