@@ -58,7 +58,7 @@ describe('#5644 · annotation-tag repair', () => {
     const chained = fs.readFileSync(path.join(REPO, 'scripts/lib/translate-batch-chained.mjs'), 'utf8');
     const core = fs.readFileSync(path.join(REPO, 'scripts/lib/translate-core.mjs'), 'utf8');
     expect(chained).toMatch(/sanitizeTranslationTags\(/);
-    expect(core).toMatch(/tr: sanitizeTranslationTags\(text\)/);
+    expect(core).toMatch(/tr: (?:guardTranslationText\()?sanitizeTranslationTags\(text\)/);
     expect(core).toMatch(/validateTranslationTags\(repairAnnotationTags\(/);
   });
 

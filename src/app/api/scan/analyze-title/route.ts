@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { performOCRWithBuffer } from '@/lib/ai';
 
@@ -99,7 +100,7 @@ async function searchUstc(query: string): Promise<CatalogMatch[]> {
   }
 }
 
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -176,3 +177,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const POST = withAuth(async (request) => handlePOST(request), { minRole: 'admin' });

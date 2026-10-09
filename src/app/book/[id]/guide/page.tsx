@@ -71,7 +71,7 @@ export default function GuidePage({ params }: GuidePageProps) {
       try {
         setLoading(true);
 
-        // Fetch book with pages (include full text for reader)
+        // Fetch book with pages (page text is returned to admins only)
         const bookData = await books.get(bookId!, { full: true }) as import('@/lib/api-client').BookWithPages;
         setBook(bookData);
         setPages(bookData.pages || []);
@@ -145,7 +145,8 @@ export default function GuidePage({ params }: GuidePageProps) {
   };
 
   // Get translated pages
-  const translatedPages = pages.filter(p => p.translation?.data);
+  // Non-admin responses carry no page text, only the translation timestamp.
+  const translatedPages = pages.filter(p => p.translation?.data || p.translation?.updated_at);
   const translationProgress = pages.length > 0
     ? Math.round((translatedPages.length / pages.length) * 100)
     : 0;

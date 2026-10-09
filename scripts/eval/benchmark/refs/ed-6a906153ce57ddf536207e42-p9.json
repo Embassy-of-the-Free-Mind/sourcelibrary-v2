@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/avan1",
+  "edition": "POESIS LYRICA — Wien: i. Blaeu et A. Harttung, 1670",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/11",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6a906153ce57ddf536207e42",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 832,
+    "to_char": 1335,
+    "overlap": 0.694,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'nus sese insinuare. Non potui'; ends 'comparatâ glo-' (signature *3); dedication ('Dedicatoria') page; ref pads 'ac sponte in ma-' and 'gloria saeculorum Poetas'.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:42.943Z",
+  "text_location": "repo",
+  "text_sha256": "1c50aa72e60dbe20ca6378099a407d3b1a5b5d972bdff34492cd3ad18af9d25b",
+  "unit": {
+    "chars": 503
+  },
+  "stratum": "latin-period-5126"
+}

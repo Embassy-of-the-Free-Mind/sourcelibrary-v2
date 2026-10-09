@@ -1,0 +1,14 @@
+{
+ "model": "Qwen/Qwen3-8B",
+ "pairs": 18587,
+ "steps": 15,
+ "wall_s": 48.2,
+ "tokens_seen": 285954,
+ "attn": "flash_attention_2",
+ "padding_free": true,
+ "bs": 8,
+ "accum": 2,
+ "probe": true,
+ "final_loss": 1.0235,
+ "gpu": "NVIDIA H100 80GB HBM3"
+}

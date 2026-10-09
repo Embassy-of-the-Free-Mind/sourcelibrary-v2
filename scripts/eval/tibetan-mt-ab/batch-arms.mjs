@@ -25,6 +25,8 @@
 //                          responses (supabase-usage-logger.mjs, the lane's own meter), so the spend
 //                          is on the ledger and under the daily dial, not hand-copied
 //   --cap-usd X            refuse to submit if the Batch-rate estimate over all arms exceeds X
+//   --register <issue>     record each submitted job in `batch_jobs` as `external_eval` (#5845: a
+//                          hand-submitted Batch the collector does not know is cancelled as an orphan)
 
 import fs from 'node:fs';
 import os from 'node:os';
@@ -45,6 +47,7 @@ const DRY = flag('dry-run');
 const PRODUCTION_CONFIG = flag('production-config');
 const METER = opt('meter', null);
 const CAP_USD = opt('cap-usd', null) == null ? null : Number(opt('cap-usd'));
+const REGISTER = opt('register', null);
 if (!IDS || !OUT) { console.error('--ids and --out are required'); process.exit(1); }
 const BATCH_MULTIPLIER = 0.5;
 const SAFETY = ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT', 'HARM_CATEGORY_DANGEROUS_CONTENT', 'HARM_CATEGORY_CIVIC_INTEGRITY']
@@ -118,6 +121,13 @@ for (const { model, label } of ARMS) {
         if (METER) await logUsage({ type: 'translation', mode: 'batch', model, page_count: units.length, input_tokens: 0, output_tokens: 0, status: 'submitted', batch_job_id: created.name, endpoint: METER, prompt_version: String(units[0]?.promptRef?.version ?? ''), triggered_by: 'manual' });
         fs.writeFileSync(path.join(OUT, 'jobs.json'), JSON.stringify(jobs, null, 1));
         console.log(`${label}: submitted ${created.name} with key ${keyIndex}`);
+        if (REGISTER) {
+          const { withMongo } = await import('../../lib/mongo.mjs');
+          const { registerEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+          await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `${METER || 'tibetan-mt-ab'}-${label}`, model,
+            pageCount: units.length, submittedAt: job.submitted_at, issue: REGISTER, submittedBy: 'scripts/eval/tibetan-mt-ab/batch-arms.mjs' }));
+          console.log(`${label}: registered ${created.name} as external_eval`);
+        }
         break;
       } catch (err) {
         console.log(`${label}: key ${keyIndex} refused (${String(err.message).slice(0, 100)})`);
@@ -164,4 +174,9 @@ for (const { model, label } of ARMS) {
     fs.writeFileSync(path.join(dir, `${u.id}.json`), JSON.stringify({ id: u.id, arm: label, model, text, finishReason: resp.candidates?.[0]?.finishReason, inputTokens: um.promptTokenCount, outputTokens: um.candidatesTokenCount, thinkingTokens: um.thoughtsTokenCount || 0, ms, cost_usd, cost_basis: 'usageMetadata × batch rate', prompt_ref: u.promptRef, src_chars: u.src_chars, job: job.name }, null, 1));
   }
   console.log(`${label}: ${n}/${units.length} written, $${spent.toFixed(4)} at the Batch rate (${(spent / Math.max(1, n)).toFixed(5)}/page)`);
+  // The responses are on disk: end the `external_eval` registration (#5897). A no-op for a job that was never registered.
+  const { withMongo } = await import('../../lib/mongo.mjs');
+  const { closeEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+  const closed = await withMongo((d) => closeEvalBatch(d, job.name, { evidence: `${n}/${units.length} responses written to ${path.relative(process.cwd(), dir)}` }));
+  if (closed) console.log(`${label}: batch_jobs row closed as collected`);
 }

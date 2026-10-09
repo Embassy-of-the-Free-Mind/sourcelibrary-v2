@@ -1,0 +1,1859 @@
+{
+  "at": "2026-10-03T22:48:11.856Z",
+  "judges": [
+    "p1j1",
+    "p1j2",
+    "p2j1",
+    "p2j2",
+    "p3j1",
+    "p3j2",
+    "p4j1",
+    "p4j2",
+    "p5j1",
+    "p5j2",
+    "p6j1",
+    "p6j2",
+    "p7j1",
+    "p7j2",
+    "p8j1",
+    "p8j2"
+  ],
+  "judges_set_aside": [],
+  "strata": {
+    "pagebreak": {
+      "n": 100,
+      "arms": {
+        "A2": {
+          "judged_by_both": 100,
+          "real_both": 26,
+          "real_both_ci": [
+            0.184,
+            0.354
+          ],
+          "real_either": 26,
+          "real_either_ci": [
+            0.184,
+            0.354
+          ],
+          "undrafted_blocks": 2,
+          "types": {
+            "duplication": {
+              "both": 7,
+              "either": 8
+            },
+            "forced_closure": {
+              "both": 17,
+              "either": 18
+            },
+            "omission_edge": {
+              "both": 3,
+              "either": 3
+            },
+            "import6": {
+              "both": 14,
+              "either": 14
+            }
+          },
+          "mech_duplication": 3,
+          "moved_1_5_either": 27,
+          "reads_broken_both": 19,
+          "by_group": {
+            "latin": {
+              "n": 70,
+              "real_both": 18,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 10,
+              "real_both": 4,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 2
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 70,
+              "real_both": 18,
+              "real_both_ci": [
+                0.169,
+                0.37
+              ]
+            },
+            "non_latin": {
+              "n": 30,
+              "real_both": 8,
+              "real_both_ci": [
+                0.142,
+                0.444
+              ]
+            }
+          }
+        },
+        "A": {
+          "judged_by_both": 100,
+          "real_both": 26,
+          "real_both_ci": [
+            0.184,
+            0.354
+          ],
+          "real_either": 26,
+          "real_either_ci": [
+            0.184,
+            0.354
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 8,
+              "either": 10
+            },
+            "forced_closure": {
+              "both": 19,
+              "either": 20
+            },
+            "omission_edge": {
+              "both": 3,
+              "either": 3
+            },
+            "import6": {
+              "both": 10,
+              "either": 10
+            }
+          },
+          "mech_duplication": 2,
+          "moved_1_5_either": 31,
+          "reads_broken_both": 22,
+          "by_group": {
+            "latin": {
+              "n": 70,
+              "real_both": 16,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 10,
+              "real_both": 4,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 10,
+              "real_both": 3,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 10,
+              "real_both": 3,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 70,
+              "real_both": 16,
+              "real_both_ci": [
+                0.146,
+                0.34
+              ]
+            },
+            "non_latin": {
+              "n": 30,
+              "real_both": 10,
+              "real_both_ci": [
+                0.192,
+                0.512
+              ]
+            }
+          }
+        },
+        "B": {
+          "judged_by_both": 100,
+          "real_both": 19,
+          "real_both_ci": [
+            0.125,
+            0.278
+          ],
+          "real_either": 22,
+          "real_either_ci": [
+            0.15,
+            0.311
+          ],
+          "undrafted_blocks": 2,
+          "types": {
+            "duplication": {
+              "both": 4,
+              "either": 4
+            },
+            "forced_closure": {
+              "both": 9,
+              "either": 11
+            },
+            "omission_edge": {
+              "both": 6,
+              "either": 9
+            },
+            "import6": {
+              "both": 11,
+              "either": 11
+            }
+          },
+          "mech_duplication": 1,
+          "moved_1_5_either": 30,
+          "reads_broken_both": 11,
+          "by_group": {
+            "latin": {
+              "n": 70,
+              "real_both": 12,
+              "undrafted": 1
+            },
+            "tibetan": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 10,
+              "real_both": 3,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 1
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 70,
+              "real_both": 12,
+              "real_both_ci": [
+                0.101,
+                0.276
+              ]
+            },
+            "non_latin": {
+              "n": 30,
+              "real_both": 7,
+              "real_both_ci": [
+                0.118,
+                0.409
+              ]
+            }
+          },
+          "marker_readings": {
+            "literal": 92,
+            "opener-missing": 6,
+            "partial": 1,
+            "rejected": 1
+          }
+        },
+        "C": {
+          "judged_by_both": 100,
+          "real_both": 11,
+          "real_both_ci": [
+            0.063,
+            0.186
+          ],
+          "real_either": 12,
+          "real_either_ci": [
+            0.07,
+            0.198
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 1
+            },
+            "forced_closure": {
+              "both": 1,
+              "either": 2
+            },
+            "omission_edge": {
+              "both": 3,
+              "either": 3
+            },
+            "import6": {
+              "both": 9,
+              "either": 9
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 41,
+          "reads_broken_both": 2,
+          "by_group": {
+            "latin": {
+              "n": 70,
+              "real_both": 7,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 10,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 70,
+              "real_both": 7,
+              "real_both_ci": [
+                0.049,
+                0.192
+              ]
+            },
+            "non_latin": {
+              "n": 30,
+              "real_both": 4,
+              "real_both_ci": [
+                0.053,
+                0.297
+              ]
+            }
+          },
+          "marker_readings": {
+            "literal": 100
+          }
+        },
+        "D": {
+          "judged_by_both": 100,
+          "real_both": 16,
+          "real_both_ci": [
+            0.101,
+            0.244
+          ],
+          "real_either": 16,
+          "real_either_ci": [
+            0.101,
+            0.244
+          ],
+          "undrafted_blocks": 1,
+          "types": {
+            "duplication": {
+              "both": 3,
+              "either": 3
+            },
+            "forced_closure": {
+              "both": 11,
+              "either": 12
+            },
+            "omission_edge": {
+              "both": 3,
+              "either": 3
+            },
+            "import6": {
+              "both": 4,
+              "either": 5
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 32,
+          "reads_broken_both": 11,
+          "by_group": {
+            "latin": {
+              "n": 70,
+              "real_both": 8,
+              "undrafted": 1
+            },
+            "tibetan": {
+              "n": 10,
+              "real_both": 3,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 10,
+              "real_both": 2,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 10,
+              "real_both": 3,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 70,
+              "real_both": 8,
+              "real_both_ci": [
+                0.059,
+                0.21
+              ]
+            },
+            "non_latin": {
+              "n": 30,
+              "real_both": 8,
+              "real_both_ci": [
+                0.142,
+                0.444
+              ]
+            }
+          }
+        }
+      },
+      "paired": {
+        "both": {
+          "A2_vs_A": {
+            "A2_only": 13,
+            "A_only": 13,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5775
+          },
+          "B_vs_A": {
+            "B_only": 8,
+            "A_only": 15,
+            "p_two_sided": 0.21,
+            "p_one_sided_x_lower": 0.105
+          },
+          "C_vs_D": {
+            "C_only": 7,
+            "D_only": 12,
+            "p_two_sided": 0.3593,
+            "p_one_sided_x_lower": 0.1796
+          },
+          "C_vs_B": {
+            "C_only": 5,
+            "B_only": 13,
+            "p_two_sided": 0.0963,
+            "p_one_sided_x_lower": 0.0481
+          },
+          "D_vs_A": {
+            "D_only": 8,
+            "A_only": 18,
+            "p_two_sided": 0.0755,
+            "p_one_sided_x_lower": 0.0378
+          },
+          "C_vs_A": {
+            "C_only": 5,
+            "A_only": 20,
+            "p_two_sided": 0.0041,
+            "p_one_sided_x_lower": 0.002
+          },
+          "B_vs_A2": {
+            "B_only": 10,
+            "A2_only": 17,
+            "p_two_sided": 0.2478,
+            "p_one_sided_x_lower": 0.1239
+          }
+        },
+        "either": {
+          "A2_vs_A": {
+            "A2_only": 13,
+            "A_only": 13,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5775
+          },
+          "B_vs_A": {
+            "B_only": 11,
+            "A_only": 15,
+            "p_two_sided": 0.5572,
+            "p_one_sided_x_lower": 0.2786
+          },
+          "C_vs_D": {
+            "C_only": 7,
+            "D_only": 11,
+            "p_two_sided": 0.4807,
+            "p_one_sided_x_lower": 0.2403
+          },
+          "C_vs_B": {
+            "C_only": 5,
+            "B_only": 15,
+            "p_two_sided": 0.0414,
+            "p_one_sided_x_lower": 0.0207
+          },
+          "D_vs_A": {
+            "D_only": 8,
+            "A_only": 18,
+            "p_two_sided": 0.0755,
+            "p_one_sided_x_lower": 0.0378
+          },
+          "C_vs_A": {
+            "C_only": 5,
+            "A_only": 19,
+            "p_two_sided": 0.0066,
+            "p_one_sided_x_lower": 0.0033
+          },
+          "B_vs_A2": {
+            "B_only": 11,
+            "A2_only": 15,
+            "p_two_sided": 0.5572,
+            "p_one_sided_x_lower": 0.2786
+          }
+        },
+        "omission_both": {
+          "A2_vs_A": {
+            "A2_only": 2,
+            "A_only": 2,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.6875
+          },
+          "B_vs_A": {
+            "B_only": 6,
+            "A_only": 3,
+            "p_two_sided": 0.5078,
+            "p_one_sided_x_lower": 0.9102
+          },
+          "C_vs_D": {
+            "C_only": 2,
+            "D_only": 2,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.6875
+          },
+          "C_vs_B": {
+            "C_only": 3,
+            "B_only": 6,
+            "p_two_sided": 0.5078,
+            "p_one_sided_x_lower": 0.2539
+          },
+          "D_vs_A": {
+            "D_only": 3,
+            "A_only": 3,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.6563
+          },
+          "C_vs_A": {
+            "C_only": 3,
+            "A_only": 3,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.6563
+          },
+          "B_vs_A2": {
+            "B_only": 6,
+            "A2_only": 3,
+            "p_two_sided": 0.5078,
+            "p_one_sided_x_lower": 0.9102
+          }
+        }
+      },
+      "paired_by_script_class": {
+        "latin": {
+          "A2_vs_A": {
+            "A2_only": 10,
+            "A_only": 8,
+            "p_two_sided": 0.8145,
+            "p_one_sided_x_lower": 0.7597
+          },
+          "B_vs_A": {
+            "B_only": 5,
+            "A_only": 9,
+            "p_two_sided": 0.424,
+            "p_one_sided_x_lower": 0.212
+          },
+          "C_vs_D": {
+            "C_only": 6,
+            "D_only": 7,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5
+          },
+          "C_vs_B": {
+            "C_only": 4,
+            "B_only": 9,
+            "p_two_sided": 0.2668,
+            "p_one_sided_x_lower": 0.1334
+          },
+          "D_vs_A": {
+            "D_only": 4,
+            "A_only": 12,
+            "p_two_sided": 0.0768,
+            "p_one_sided_x_lower": 0.0384
+          },
+          "C_vs_A": {
+            "C_only": 4,
+            "A_only": 13,
+            "p_two_sided": 0.049,
+            "p_one_sided_x_lower": 0.0245
+          },
+          "B_vs_A2": {
+            "B_only": 6,
+            "A2_only": 12,
+            "p_two_sided": 0.2379,
+            "p_one_sided_x_lower": 0.1189
+          }
+        },
+        "non_latin": {
+          "A2_vs_A": {
+            "A2_only": 3,
+            "A_only": 5,
+            "p_two_sided": 0.7266,
+            "p_one_sided_x_lower": 0.3633
+          },
+          "B_vs_A": {
+            "B_only": 3,
+            "A_only": 6,
+            "p_two_sided": 0.5078,
+            "p_one_sided_x_lower": 0.2539
+          },
+          "C_vs_D": {
+            "C_only": 1,
+            "D_only": 5,
+            "p_two_sided": 0.2188,
+            "p_one_sided_x_lower": 0.1094
+          },
+          "C_vs_B": {
+            "C_only": 1,
+            "B_only": 4,
+            "p_two_sided": 0.375,
+            "p_one_sided_x_lower": 0.1875
+          },
+          "D_vs_A": {
+            "D_only": 4,
+            "A_only": 6,
+            "p_two_sided": 0.7539,
+            "p_one_sided_x_lower": 0.377
+          },
+          "C_vs_A": {
+            "C_only": 1,
+            "A_only": 7,
+            "p_two_sided": 0.0703,
+            "p_one_sided_x_lower": 0.0352
+          },
+          "B_vs_A2": {
+            "B_only": 4,
+            "A2_only": 5,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5
+          }
+        }
+      },
+      "best_seam_votes": {
+        "A2": 69,
+        "A": 66,
+        "B": 98,
+        "C": 109,
+        "D": 105,
+        "tie": 31
+      }
+    },
+    "control": {
+      "n": 20,
+      "arms": {
+        "A2": {
+          "judged_by_both": 20,
+          "real_both": 1,
+          "real_both_ci": [
+            0.009,
+            0.236
+          ],
+          "real_either": 1,
+          "real_either_ci": [
+            0.009,
+            0.236
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 0
+            },
+            "forced_closure": {
+              "both": 0,
+              "either": 0
+            },
+            "omission_edge": {
+              "both": 1,
+              "either": 1
+            },
+            "import6": {
+              "both": 0,
+              "either": 0
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 0,
+          "reads_broken_both": 1,
+          "by_group": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 1,
+              "real_both": 1,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 2,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 3,
+              "real_both": 0,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.215
+              ]
+            },
+            "non_latin": {
+              "n": 6,
+              "real_both": 1,
+              "real_both_ci": [
+                0.03,
+                0.564
+              ]
+            }
+          }
+        },
+        "A": {
+          "judged_by_both": 20,
+          "real_both": 0,
+          "real_both_ci": [
+            0,
+            0.161
+          ],
+          "real_either": 0,
+          "real_either_ci": [
+            0,
+            0.161
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 0
+            },
+            "forced_closure": {
+              "both": 0,
+              "either": 0
+            },
+            "omission_edge": {
+              "both": 0,
+              "either": 0
+            },
+            "import6": {
+              "both": 0,
+              "either": 0
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 0,
+          "reads_broken_both": 1,
+          "by_group": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 1,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 2,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 3,
+              "real_both": 0,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.215
+              ]
+            },
+            "non_latin": {
+              "n": 6,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.39
+              ]
+            }
+          }
+        },
+        "B": {
+          "judged_by_both": 20,
+          "real_both": 1,
+          "real_both_ci": [
+            0.009,
+            0.236
+          ],
+          "real_either": 3,
+          "real_either_ci": [
+            0.052,
+            0.36
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 0
+            },
+            "forced_closure": {
+              "both": 0,
+              "either": 0
+            },
+            "omission_edge": {
+              "both": 1,
+              "either": 3
+            },
+            "import6": {
+              "both": 0,
+              "either": 0
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 0,
+          "reads_broken_both": 1,
+          "by_group": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 1,
+              "real_both": 1,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 2,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 3,
+              "real_both": 0,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.215
+              ]
+            },
+            "non_latin": {
+              "n": 6,
+              "real_both": 1,
+              "real_both_ci": [
+                0.03,
+                0.564
+              ]
+            }
+          },
+          "marker_readings": {
+            "literal": 20
+          }
+        },
+        "C": {
+          "judged_by_both": 20,
+          "real_both": 0,
+          "real_both_ci": [
+            0,
+            0.161
+          ],
+          "real_either": 0,
+          "real_either_ci": [
+            0,
+            0.161
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 0
+            },
+            "forced_closure": {
+              "both": 0,
+              "either": 0
+            },
+            "omission_edge": {
+              "both": 0,
+              "either": 0
+            },
+            "import6": {
+              "both": 0,
+              "either": 0
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 0,
+          "reads_broken_both": 0,
+          "by_group": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 1,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 2,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 3,
+              "real_both": 0,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.215
+              ]
+            },
+            "non_latin": {
+              "n": 6,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.39
+              ]
+            }
+          },
+          "marker_readings": {
+            "literal": 20
+          }
+        },
+        "D": {
+          "judged_by_both": 20,
+          "real_both": 0,
+          "real_both_ci": [
+            0,
+            0.161
+          ],
+          "real_either": 0,
+          "real_either_ci": [
+            0,
+            0.161
+          ],
+          "undrafted_blocks": 0,
+          "types": {
+            "duplication": {
+              "both": 0,
+              "either": 0
+            },
+            "forced_closure": {
+              "both": 0,
+              "either": 0
+            },
+            "omission_edge": {
+              "both": 0,
+              "either": 0
+            },
+            "import6": {
+              "both": 0,
+              "either": 0
+            }
+          },
+          "mech_duplication": 0,
+          "moved_1_5_either": 0,
+          "reads_broken_both": 1,
+          "by_group": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "tibetan": {
+              "n": 1,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "han": {
+              "n": 2,
+              "real_both": 0,
+              "undrafted": 0
+            },
+            "other": {
+              "n": 3,
+              "real_both": 0,
+              "undrafted": 0
+            }
+          },
+          "by_script_class": {
+            "latin": {
+              "n": 14,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.215
+              ]
+            },
+            "non_latin": {
+              "n": 6,
+              "real_both": 0,
+              "real_both_ci": [
+                0,
+                0.39
+              ]
+            }
+          }
+        }
+      },
+      "paired": {
+        "both": {
+          "A2_vs_A": {
+            "A2_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A": {
+            "B_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_D": {
+            "C_only": 0,
+            "D_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_B": {
+            "C_only": 0,
+            "B_only": 1,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5
+          },
+          "D_vs_A": {
+            "D_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_A": {
+            "C_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A2": {
+            "B_only": 0,
+            "A2_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          }
+        },
+        "either": {
+          "A2_vs_A": {
+            "A2_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A": {
+            "B_only": 3,
+            "A_only": 0,
+            "p_two_sided": 0.25,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_D": {
+            "C_only": 0,
+            "D_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_B": {
+            "C_only": 0,
+            "B_only": 3,
+            "p_two_sided": 0.25,
+            "p_one_sided_x_lower": 0.125
+          },
+          "D_vs_A": {
+            "D_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_A": {
+            "C_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A2": {
+            "B_only": 2,
+            "A2_only": 0,
+            "p_two_sided": 0.5,
+            "p_one_sided_x_lower": 1
+          }
+        },
+        "omission_both": {
+          "A2_vs_A": {
+            "A2_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A": {
+            "B_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_D": {
+            "C_only": 0,
+            "D_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_B": {
+            "C_only": 0,
+            "B_only": 1,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5
+          },
+          "D_vs_A": {
+            "D_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_A": {
+            "C_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A2": {
+            "B_only": 0,
+            "A2_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          }
+        }
+      },
+      "paired_by_script_class": {
+        "latin": {
+          "A2_vs_A": {
+            "A2_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A": {
+            "B_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_D": {
+            "C_only": 0,
+            "D_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_B": {
+            "C_only": 0,
+            "B_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "D_vs_A": {
+            "D_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_A": {
+            "C_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A2": {
+            "B_only": 0,
+            "A2_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          }
+        },
+        "non_latin": {
+          "A2_vs_A": {
+            "A2_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A": {
+            "B_only": 1,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_D": {
+            "C_only": 0,
+            "D_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_B": {
+            "C_only": 0,
+            "B_only": 1,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 0.5
+          },
+          "D_vs_A": {
+            "D_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "C_vs_A": {
+            "C_only": 0,
+            "A_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          },
+          "B_vs_A2": {
+            "B_only": 0,
+            "A2_only": 0,
+            "p_two_sided": 1,
+            "p_one_sided_x_lower": 1
+          }
+        }
+      },
+      "best_seam_votes": {
+        "A2": 2,
+        "A": 4,
+        "B": 0,
+        "C": 6,
+        "D": 4,
+        "tie": 34
+      }
+    }
+  },
+  "undrafted_blocks_120": {
+    "A2": [
+      "6a20331a18654bf8e19042ab:15",
+      "69e7490485f786e884a4d186:26"
+    ],
+    "A": [],
+    "B": [
+      "6a4b557e0a16719d49320a0d:10",
+      "6a2032ba18654bf8e1903672:13"
+    ],
+    "C": [],
+    "D": [
+      "6a4a3f076720cfc23da44114:14"
+    ]
+  },
+  "plants": {
+    "n": 64,
+    "caught": 64,
+    "flagged_real": 64,
+    "by_judge": {
+      "p1j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p1j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p2j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p2j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p3j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p3j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p4j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p4j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p5j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p5j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p6j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p6j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p7j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p7j2": {
+        "n": 4,
+        "caught": 4
+      },
+      "p8j1": {
+        "n": 4,
+        "caught": 4
+      },
+      "p8j2": {
+        "n": 4,
+        "caught": 4
+      }
+    },
+    "rows": [
+      {
+        "jid": "p1j1",
+        "unit": "6a4de2016aec9da58ec0b0dc:10",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j1",
+        "unit": "6a4eb182ccea9baa4f4951f3:11",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j1",
+        "unit": "69b51cd098963ba069532757:138",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j1",
+        "unit": "6a4aebf5241e7e67cf5b8f9b:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j2",
+        "unit": "6a4de2016aec9da58ec0b0dc:10",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j2",
+        "unit": "6a4eb182ccea9baa4f4951f3:11",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j2",
+        "unit": "69b51cd098963ba069532757:138",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p1j2",
+        "unit": "6a4aebf5241e7e67cf5b8f9b:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j1",
+        "unit": "69b62fca1c1c21a3737fa7b0:195",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j1",
+        "unit": "6a4cc92ea9f864a5d7dd4d68:12",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j1",
+        "unit": "6a4a4a7e547be098cf67e9ab:3",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j1",
+        "unit": "6a76d4ed6ba8d6d1d3f8e9e5:21",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j2",
+        "unit": "69b62fca1c1c21a3737fa7b0:195",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j2",
+        "unit": "6a4cc92ea9f864a5d7dd4d68:12",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j2",
+        "unit": "6a4a4a7e547be098cf67e9ab:3",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p2j2",
+        "unit": "6a76d4ed6ba8d6d1d3f8e9e5:21",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j1",
+        "unit": "69e787654a6785cfd60cbaaf:198",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j1",
+        "unit": "6a4c8ba79c6f8cb186b8451a:18",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j1",
+        "unit": "6a4ef76c1a64e53b6a0a2c53:9",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j1",
+        "unit": "6a4bb7dfdf01eead78d6e3be:12",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j2",
+        "unit": "69e787654a6785cfd60cbaaf:198",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j2",
+        "unit": "6a4c8ba79c6f8cb186b8451a:18",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j2",
+        "unit": "6a4ef76c1a64e53b6a0a2c53:9",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p3j2",
+        "unit": "6a4bb7dfdf01eead78d6e3be:12",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j1",
+        "unit": "6a42697f175f31ca3ec5240e:20",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j1",
+        "unit": "6a3c61de40c88a541d8f0994:124",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j1",
+        "unit": "69aec410a1e0be599604e152:613",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j1",
+        "unit": "6a49e434267dd367e203e24a:15",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j2",
+        "unit": "6a42697f175f31ca3ec5240e:20",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j2",
+        "unit": "6a3c61de40c88a541d8f0994:124",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j2",
+        "unit": "69aec410a1e0be599604e152:613",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p4j2",
+        "unit": "6a49e434267dd367e203e24a:15",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j1",
+        "unit": "6a3c61b3879008ba7e15fc71:50",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j1",
+        "unit": "6a2032ba18654bf8e1903672:13",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j1",
+        "unit": "69e78b254a6785cfd60d509d:10",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j1",
+        "unit": "6a4a4d79b5dd4074593fc730:18",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j2",
+        "unit": "6a3c61b3879008ba7e15fc71:50",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j2",
+        "unit": "6a2032ba18654bf8e1903672:13",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j2",
+        "unit": "69e78b254a6785cfd60d509d:10",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p5j2",
+        "unit": "6a4a4d79b5dd4074593fc730:18",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j1",
+        "unit": "6a4accdeeecacd70e47189f1:14",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j1",
+        "unit": "6a4c3cecc76e9337c3b9794e:17",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j1",
+        "unit": "6a4ad55f02f968641aca2a58:19",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j1",
+        "unit": "6a4b787a998fdd30218fbc5a:18",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j2",
+        "unit": "6a4accdeeecacd70e47189f1:14",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j2",
+        "unit": "6a4c3cecc76e9337c3b9794e:17",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j2",
+        "unit": "6a4ad55f02f968641aca2a58:19",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p6j2",
+        "unit": "6a4b787a998fdd30218fbc5a:18",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j1",
+        "unit": "6a4c8f7c9c6f8cb186b84bb2:13",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j1",
+        "unit": "6a4a000e2781c5f4d4f2090e:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j1",
+        "unit": "69e7ab425f1a22ab19a95749:214",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j1",
+        "unit": "6a4acc08eecacd70e47183e8:9",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j2",
+        "unit": "6a4c8f7c9c6f8cb186b84bb2:13",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j2",
+        "unit": "6a4a000e2781c5f4d4f2090e:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j2",
+        "unit": "69e7ab425f1a22ab19a95749:214",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p7j2",
+        "unit": "6a4acc08eecacd70e47183e8:9",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j1",
+        "unit": "6a4adf9c9a3f4fa983d99b16:11",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j1",
+        "unit": "6a49ed85521e227d5227eb98:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j1",
+        "unit": "6a3c618f879008ba7e15f063:24",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j1",
+        "unit": "69e7abe75f1a22ab19aa00d4:107",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j2",
+        "unit": "6a4adf9c9a3f4fa983d99b16:11",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j2",
+        "unit": "6a49ed85521e227d5227eb98:9",
+        "plant": "PLANT_DUP",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j2",
+        "unit": "6a3c618f879008ba7e15f063:24",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      },
+      {
+        "jid": "p8j2",
+        "unit": "69e7abe75f1a22ab19aa00d4:107",
+        "plant": "PLANT_CLOSURE",
+        "caught": true,
+        "any": true
+      }
+    ]
+  },
+  "inter_judge": {
+    "pairs": 600,
+    "agree_real": 594
+  },
+  "repeats": {
+    "pairs": 160,
+    "agree_real": 158
+  },
+  "decision": {
+    "counts": {
+      "A2": 26,
+      "A": 26,
+      "B": 19,
+      "C": 11,
+      "D": 16
+    },
+    "noise": 0,
+    "T1_markers_on_lite_B_vs_A": false,
+    "T2_markers_on_flash_C_vs_D": false,
+    "S1_model_without_markers_D_vs_A": true,
+    "S2_model_with_markers_C_vs_B": true,
+    "control_counts": {
+      "A2": 1,
+      "A": 0,
+      "B": 1,
+      "C": 0,
+      "D": 0
+    },
+    "omission_counts": {
+      "A2": 3,
+      "A": 3,
+      "B": 6,
+      "C": 3,
+      "D": 3
+    },
+    "undrafted_counts": {
+      "A2": 2,
+      "A": 0,
+      "B": 2,
+      "C": 0,
+      "D": 1
+    },
+    "guards": {
+      "B": {
+        "control": true,
+        "omission": false,
+        "undrafted": true
+      },
+      "C": {
+        "control": true,
+        "omission": true,
+        "undrafted": true
+      }
+    },
+    "guards_hold_B": false,
+    "guards_hold_C": true,
+    "markers_on_chained_lane": "NO",
+    "attribution": "MODEL",
+    "only_flash_markers_win": false
+  }
+}

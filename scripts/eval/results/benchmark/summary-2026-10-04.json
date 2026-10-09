@@ -1,0 +1,383 @@
+{
+  "latin-period-5126": {
+    "stratum": "latin-period-5126",
+    "issue": 5126,
+    "date": "2026-10-04",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 93,
+    "n_with_ref": 91,
+    "ref_mismatch": [
+      "ed-690986dccf28baa1b4cae0e3-p81",
+      "ed-69e9c962625ec74a14473399-p93"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 93,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 91,
+          "median_cer": 0.07,
+          "mean_cer": 0.081,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.866,
+          "refused": 0,
+          "n_answered": 91,
+          "median_cer_answered": 0.07,
+          "mean_cer_answered": 0.081,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.061,
+          "catastrophic": 0,
+          "median_gap": 0.001,
+          "median_bow": 0.795,
+          "refused": 0,
+          "n_answered": 2,
+          "median_cer_answered": 0.061,
+          "mean_cer": 0.061,
+          "mean_cer_answered": 0.061
+        },
+        "invention": {
+          "median": 0.038,
+          "mean": 0.049,
+          "n_engines": 3,
+          "ref_median": 0.128,
+          "ref_mean": 0.131
+        },
+        "paired_vs_ref": {
+          "n": 91,
+          "excluded_refused": 0,
+          "wins": 59,
+          "losses": 30,
+          "ties": 2,
+          "median_delta_cer": 0.006,
+          "p_sign": 0.003,
+          "invention_wins": 66,
+          "invention_losses": 20
+        },
+        "worst": [
+          {
+            "slug": "ed-69afd0df775a23a98ee93a30-p420",
+            "title": "Historia Naturalis",
+            "year": 1481,
+            "cer": 0.726,
+            "gap": 0.007,
+            "invention": 0.194,
+            "has_ref": true,
+            "unsupported": [
+              "hysope",
+              "nitro",
+              "quae",
+              "inueniuntur",
+              "adalligatus",
+              "perutilia",
+              "prurientibusque",
+              "uaccae"
+            ]
+          },
+          {
+            "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+            "title": "Tragoedia nova pammachius, autore thoma naogeorgo Straubingensi. Cum praefatione luculenta.",
+            "year": 1538,
+            "cer": 0.23,
+            "gap": 0.009,
+            "invention": 0.057,
+            "has_ref": true,
+            "unsupported": [
+              "primicijs",
+              "peterma",
+              "baccal",
+              "manus",
+              "1585"
+            ]
+          },
+          {
+            "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+            "title": "Commentariorum, de bello. Inter invictissimos imperatores Ferdinandos II. & III. et eorum hostes",
+            "year": 1641,
+            "cer": 0.179,
+            "gap": 0.063,
+            "invention": 0.079,
+            "has_ref": true,
+            "unsupported": [
+              "bohemicum",
+              "praehenderent",
+              "exarferunt",
+              "alium",
+              "anno",
+              "nulla",
+              "legitima",
+              "septemviromatthias"
+            ]
+          },
+          {
+            "slug": "ed-6a425bef744db9e3105a3b00-p18",
+            "title": "Critici atque Polyhistoris famigeratissimi Epistolarum ad Nesteros, Patrem Et Filium Conscriptarum Farrago: In Qua Varia",
+            "year": 1670,
+            "cer": 0.164,
+            "gap": 0.004,
+            "invention": 0.104,
+            "has_ref": true,
+            "unsupported": [
+              "recipe",
+              "uncias",
+              "drachmas",
+              "semis",
+              "absinth",
+              "unciam",
+              "drachmam",
+              "acetosæ"
+            ]
+          },
+          {
+            "slug": "ed-69b649aa18b87551bfc5e743-p59",
+            "title": "Opera Bebeliana sequentia : Triumphus Veneris sex libris co[n]scriptus Heroico carmine : Hecatostichon de victoria Cæsar",
+            "year": 1509,
+            "cer": 0.143,
+            "gap": 0.035,
+            "invention": 0.028,
+            "has_ref": true,
+            "unsupported": [
+              "dulcesue",
+              "oiucundissima",
+              "uillis",
+              "amereque"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 93,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 91,
+          "median_cer": 0.079,
+          "mean_cer": 0.094,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.832,
+          "refused": 0,
+          "n_answered": 91,
+          "median_cer_answered": 0.079,
+          "mean_cer_answered": 0.094,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.045,
+          "mean": 0.072,
+          "n_engines": 3,
+          "ref_median": 0.148,
+          "ref_mean": 0.168
+        },
+        "worst": [
+          {
+            "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+            "title": "Opera didactica omnia",
+            "year": 1657,
+            "cer": 0.646,
+            "gap": 0.137,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69e9c962625ec74a14473399-p93",
+            "title": "De Orbe Novo Decades (Editio Princeps)",
+            "year": 1516,
+            "invention": 0.351,
+            "has_ref": false,
+            "unsupported": [
+              "bononia",
+              "coitatum",
+              "firinofregu",
+              "bononiama",
+              "tranfeuerit",
+              "fufceperit",
+              "cælati",
+              "cuiufque"
+            ]
+          },
+          {
+            "slug": "ed-69dbcc3e0f8c5edf20f484a0-p330",
+            "title": "Summa theologiae: Pars prima",
+            "year": 1484,
+            "cer": 0.334,
+            "gap": 0.025,
+            "invention": 0.47,
+            "has_ref": true,
+            "unsupported": [
+              "dtertium",
+              "uertitur",
+              "clora",
+              "phisi",
+              "diffinituz",
+              "euenimus",
+              "posteri",
+              "vlib"
+            ]
+          },
+          {
+            "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+            "title": "Tragoedia nova pammachius, autore thoma naogeorgo Straubingensi. Cum praefatione luculenta.",
+            "year": 1538,
+            "cer": 0.266,
+            "gap": 0.009,
+            "invention": 0.057,
+            "has_ref": true,
+            "unsupported": [
+              "sanè",
+              "petermannus",
+              "baccab",
+              "maus",
+              "1785"
+            ]
+          },
+          {
+            "slug": "ed-699062f5ef12272ffdc8e9d5-p505",
+            "title": "De Civitate Dei",
+            "year": 1475,
+            "cer": 0.204,
+            "gap": 0.005,
+            "invention": 0.462,
+            "has_ref": true,
+            "unsupported": [
+              "illa",
+              "cole",
+              "ueru",
+              "idocti",
+              "ipie",
+              "fatu",
+              "cessit",
+              "obtiere"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.082,
+          "mean_cer": 0.108,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.831,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.082,
+          "mean_cer_answered": 0.108,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 3,
+          "ref_median": 0.146,
+          "ref_mean": 0.153
+        },
+        "paired_vs_ref": {
+          "n": 20,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 20,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+            "title": "Opera didactica omnia",
+            "year": 1657,
+            "cer": 0.646,
+            "gap": 0.137,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69b649aa18b87551bfc5e743-p59",
+            "title": "Opera Bebeliana sequentia : Triumphus Veneris sex libris co[n]scriptus Heroico carmine : Hecatostichon de victoria Cæsar",
+            "year": 1509,
+            "cer": 0.14,
+            "gap": 0.015,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69b6e47ea8d7b8d17a676440-p218",
+            "title": "Conradi Samuelis Schurzfleischii Epistolae selectiores : secundum nunc sine lacunis et cum memoria auctoris emendatius e",
+            "year": 1729,
+            "cer": 0.135,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a90658feb8fb726ee3b3f2a-p18",
+            "title": "Hebraeis. Continens duodecim libros: quibus tota regum judaicorum, et israëliticorum historia,ex sacris literis ad verbu",
+            "year": 1599,
+            "cer": 0.129,
+            "gap": 0.02,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69b2f46f5ef23d31023f6f1c-p176",
+            "title": "Orationes",
+            "year": 1594,
+            "cer": 0.1,
+            "gap": 0.014,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    }
+  }
+}

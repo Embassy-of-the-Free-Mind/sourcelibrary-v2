@@ -36,6 +36,59 @@ export async function deleteGeminiFile(fileName, apiKey, { fetchImpl = fetch } =
 }
 
 /**
+ * Upload a JSONL Batch API input (resumable, one PUT, retried 3× 30 s apart).
+ * The enrich lane's copy, moved here so the embedding lane can share it (#5729).
+ * @returns {Promise<string>} the File API name (`files/<id>`)
+ */
+export async function uploadBatchInputFile(body, displayName, apiKey, { fetchImpl = fetch, retryMs = 30000 } = {}) {
+  const start = await fetchImpl(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start',
+      'X-Goog-Upload-Header-Content-Length': String(Buffer.byteLength(body)), 'X-Goog-Upload-Header-Content-Type': 'text/plain',
+    },
+    body: JSON.stringify({ file: { displayName } }),
+  });
+  if (!start.ok) throw new Error(`upload start ${start.status}: ${await start.text()}`);
+  const url = start.headers.get('X-Goog-Upload-URL');
+  if (!url) throw new Error('no upload URL returned');
+  for (let attempt = 1; ; attempt++) {
+    const put = await fetchImpl(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body })
+      .catch(e => ({ ok: false, status: e.message }));
+    if (put.ok) {
+      const info = await put.json();
+      if (!info.file?.name) throw new Error('upload returned no file name');
+      return info.file.name;
+    }
+    if (attempt >= 3) throw new Error(`upload PUT failed: ${put.status}`);
+    await new Promise(r => setTimeout(r, retryMs));
+  }
+}
+
+/**
+ * Stream a finished job's results file, one parsed JSONL line at a time. An
+ * embedding result line is ~10 KB (768 floats as text), so a 20K-request job is
+ * ~200 MB: read it as a stream, never as one string.
+ */
+export async function* streamBatchResponses(responsesFile, apiKey, { fetchImpl = fetch } = {}) {
+  const res = await fetchImpl(`https://generativelanguage.googleapis.com/download/v1beta/${responsesFile}:download?alt=media&key=${apiKey}`);
+  if (!res.ok) throw new Error(`results download ${res.status}`);
+  const decoder = new TextDecoder();
+  let buf = '';
+  for await (const chunk of res.body) {
+    buf += decoder.decode(chunk, { stream: true });
+    let nl;
+    while ((nl = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (line) yield JSON.parse(line);
+    }
+  }
+  buf += decoder.decode();
+  if (buf.trim()) yield JSON.parse(buf.trim());
+}
+
+/**
  * Run `create()` (the batchGenerateContent call for an uploaded input), then
  * delete the input whether create succeeded or failed. A failed create's input
  * is pure waste; a successful one's is no longer needed. The create's result

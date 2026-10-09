@@ -1,0 +1,91 @@
+[
+{"id": "Q8B0H", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the Vinaya commentary on the building rule; the gloss on 'entirely' is loose but the obscure Tibetan allows it."},
+{"id": "QQUB3", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དྲན་པ་དང་རིག་བྱེད་ཀྱི་དེ་ཁོ་ན་ཤེས་པ",
+   "english": "He thoroughly knew the truth of recollection",
+   "why": "དྲན་པ here is smṛti, the traditional law books paired with the Vedas, not 'recollection'.",
+   "fix": {"find": "He thoroughly knew the truth of recollection", "replace": "He thoroughly knew the truth of the (smṛti) traditional law books"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འཆི་མེད་བདག་པོ་ལྷའི་བླ་མ་དང་",
+   "english": "equal to the immortal master and teacher of the gods",
+   "why": "The compound is 'the guru of the lord of the immortals' (Bṛhaspati, preceptor of Indra), not 'the immortal master and teacher of the gods'."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འདི་ལྟར་རྗེས་སུ་ཐོས་ཏེ",
+   "english": "Thus have I heard",
+   "why": "This is the jātaka narrative formula anuśrūyate 'it is told/handed down', not the sūtra formula evaṃ mayā śrutam."}
+ ],
+ "note": "Content is broadly followed, but the opening verses are flattened into prose and the description of the Brahmin learning misreads two standard terms."},
+{"id": "QSO09", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གང་ལས་འབྱུང་བ་མེད་པའི་ཆོས་དེ་གང་ཡང་མི་མཐོང་ངོ",
+   "english": "or from which arising does not occur",
+   "why": "In this list (no buddha-qualities, no awakening, no path, no liberation) འབྱུང་བ is deliverance/going forth (niryāṇa), not 'arising'; the same misreading recurs in 'understood the source of all phenomena'."}
+ ],
+ "note": "A sound rendering of the Madhyamaka argument and the Akṣayamatinirdeśa quotation, with one doubtful term."},
+{"id": "QYKXF", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཁྱེའུ་ཁ་འཐོན་པར་རུང་བར་མ་བྱས་པ",
+   "english": "or those that have not been rendered permissible for mouth consumption",
+   "why": "ཁྱེའུ་ཁ་འཐོན་པ are sprouted shoots whose tips have emerged; 'not made allowable' (kalpika) has nothing to do with the mouth or eating.",
+   "fix": {"find": "or those that have not been rendered permissible for mouth consumption", "replace": "or sprouted shoots, that have not been made allowable (kalpika)"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཐ་ན་རྩ་རྒྱུད་ཡན་",
+   "english": "down to their very root system",
+   "why": "ཐ་ན…ཡན་ཆད sets a minimum: damaging even so little as a root fibre counts, not destroying them thoroughly down to the roots."}
+ ],
+ "note": "The plant lists and the definition of pātayantika are fine, but the operative rule's description of the protected object is garbled."},
+{"id": "Q72BF", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate translation of the five modes of Prātimokṣa recitation and the reciter's and elder's duties."},
+{"id": "QD9LU", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "དེ་ལྟ་མ་ཡིན་ཏེ། ",
+   "english": "But this is not the case; if it were possessing parts",
+   "why": "དེ་ལྟ་མ་ཡིན་ཏེ here means 'otherwise' (if it were not partless), supporting the preceding claim; 'this is not the case' reads as denying it."}
+ ],
+ "note": "A good rendering of the atom-and-arrangement argument against the Vaiśeṣika, with one connective that blurs the argument."},
+{"id": "QAGWN", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Careful, literal rendering of the commentary on mantra efficacy that tracks the argument and the lemmata correctly."},
+{"id": "QEE4R", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འགྱུར་བའི་རྒྱུ་གང་ཡིན་པ་དང་། རྐྱེན་གང་ཡིན་པ་དེ་ཡང་",
+   "english": "whatever is the cause and whatever is the condition for alteration",
+   "why": "འགྱུར་བ completes སེམས་ཅན་རྣམས་ཀྱི་རྣམ་པར་དག་པར་ from the previous side: the cause and condition for beings' becoming purified, not 'alteration'.",
+   "fix": {"find": "the condition for alteration", "replace": "the condition for sentient beings' becoming completely purified"}}
+ ],
+ "note": "Faithful rendering of the sūtra passage on causes, conditions and the Tathāgata's absorptions, apart from the cross-boundary opening."},
+{"id": "QN5HG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རྟོགས་པའི་དོགས་པ་བསུ་བ་ནི། གང་ལ་ཞེས་བྱ་བའོ",
+   "english": "To anticipate an objection regarding perception",
+   "why": "རྟོགས་པ is understanding/cognizing the universal, not perception (pratyakṣa); the same slip produces 'Perception is the universal' below."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ཅི་ཙམ་ཡང་ཡིན་ལ་བསལ་བ་ཡང་ཡིན་པ་དེ་མཐོང་བ་ལའོ",
+   "english": "that are being excluded [note: original: བསལ་བ་, Sanskrit: apoha",
+   "why": "In context (how many individuals must be seen; next side: not all individuals) བསལ་བ stands for གསལ་བ 'individual/manifest', and the apoha note is misleading."}
+ ],
+ "note": "The lemma-by-lemma structure is followed, but several glosses on cognition and individuals mislead in an already terse commentary."},
+{"id": "QF2CE", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དག་པར་ནི་བསྟན་པ་ཡིན་ཏེ",
+   "english": "is taught as purified",
+   "why": "With སྔར་ཡང་ from the previous side this is ཡང་དག་པར་ནི་བསྟན་པ 'has been properly/correctly shown', glossed as 'stated clearly'; nothing is 'purified'.",
+   "fix": {"find": "is taught as purified", "replace": "has been properly shown"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "རྗེས་སུ་དཔག་པར་བྱའོ། །ངེས་པའི་ཁྱད་པར་གྱི་ལྷན་ཅིག་བྱེད་པ་ཅན་ཡིན་པའི་ཕྱིར་རོ་ཞེས་དོགས་པ་བསུ་བ་ནི",
+   "english": "for since a definite effect is seen at all times, it is to be inferred.",
+   "why": "The whole argument from གལ་ཏེ to ཕྱིར་རོ is the anticipated objection introduced by 'But the effect…', yet the English presents its first part as the commentator's own assertion."}
+ ],
+ "note": "Close and mostly careful construal of a difficult commentary, but it misreads the cross-boundary opening and mis-scopes one objection."}
+]

@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -10,7 +11,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
  * Returns books created via Mobile Scan, sorted by created_at desc.
  * Unauthenticated — only returns books with provider_name: 'Mobile Scan'.
  */
-export async function GET(request: NextRequest) {
+async function handleGET(request: NextRequest) {
   try {
     const db = await getReadDb();
     const { id: tenantId } = getTenantContextFromRequest(request);
@@ -52,3 +53,7 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const GET = withAuth(async (request) => handleGET(request), { minRole: 'admin' });

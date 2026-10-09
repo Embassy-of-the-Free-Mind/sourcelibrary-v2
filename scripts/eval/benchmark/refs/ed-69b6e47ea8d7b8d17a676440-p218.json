@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA cera/schurzfleisch2",
+  "edition": "Epistolae Selectiores [Hrsg.: Io. Guil. Meyerus & God. Zimmermannus]. - Secundum Nunc Sine Lacunis Et Cum Memoria Auctoris Emendatius Editae [....]. — Wittenberg: Heredes G. Zimmermann, 1729",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b6e47ea8d7b8d17a676440",
+  "page_number": 218,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 213,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.905Z",
+  "text_location": "repo",
+  "text_sha256": "ee66c83f74402a3dce609514b210064de19afdf9b8bc2cc52eed03ceccaf47c2",
+  "unit": {
+    "chars": 1398
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts one word early: print opens with 'stolas scripsisset.' (tail of 'epi-/stolas' hyphenated from previous page) and transcription begins at 'scripsisset', so the leading 'stolas' is missing (edge). Ends at 'De Poetices professione mihi' = last body line (catchword 'beni-' omitted, fine). Running head 'C. S. SCHVRZFLEISCHII' and printed folio 198 omitted as expected. Letter number CLXXXXV and heading 'HENRICO, L. B. A FRISEN.' present; date 'CIC ICC LXXIV' = printed 'cIɔ Iɔc LXXIV'. Same page boundaries and identical text, so same edition. Right-hand strip of next leaf visible but not a spread. Page number offset: our page_number = pb + 5 (p230 shows folio 210 = pb 225). Note odd: p230 prints letter number CCVI at the same position later, consistent.",
+    "leaf_language": "la",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

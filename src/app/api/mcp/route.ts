@@ -131,6 +131,8 @@ async function searchPassages(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.book_id) params.set('book_id', String(args.book_id));
+  const passageDiversity = diversityArg(args);
+  if (passageDiversity) params.set('diversity', passageDiversity);
   const textLang = langArg(args);
   if (textLang !== 'en') params.set('lang', textLang);
 
@@ -197,8 +199,16 @@ async function searchConcept(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_min', String(args.year_from));
   if (args.year_to) params.set('year_max', String(args.year_to));
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
+  const conceptDiversity = diversityArg(args);
+  if (conceptDiversity) params.set('diversity', conceptDiversity);
   const conceptLang = langArg(args);
   if (conceptLang !== 'en') params.set('lang', conceptLang);
+  // EXPERIMENTAL (#6173): `lane: "concept"` reads the concept-abstract lane
+  // (1,216 books in stage 1) instead of the page vectors, so a Librarian or
+  // agent run can be judged against it. Deliberately NOT in the tool's input
+  // schema: a model reading the schema would reach for it on ordinary queries.
+  const conceptLane = args.lane === 'concept' && conceptLang === 'en';
+  if (conceptLane) params.set('lane', 'concept');
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
@@ -207,13 +217,19 @@ async function searchConcept(args: Record<string, unknown>) {
     author: r.book_author,
     // Edition language, not the work's — see the note in searchPassages (#3942).
     language: r.book_language,
-    snippet_language: conceptLang === 'en' ? 'English' : conceptLang,
+    // An 'ocr' snippet is the page's own untranslated text (the original-text
+    // lane, #5729), so it is in the edition's language, not the one searched.
+    snippet_language: r.snippet_type === 'ocr' ? r.book_language : (conceptLang === 'en' ? 'English' : conceptLang),
+    // books.tradition: one or two of the library's 31 tradition labels (#4773).
+    // Absent when the book has none; never inferred here.
+    ...(Array.isArray(r.tradition) && r.tradition.length ? { tradition: r.tradition } : {}),
     published: r.book_year,
     page: r.page_number,
     snippet: stripProvenanceMarks(r.snippet as string),
     // 'translation' = verbatim source text (safe to quote).
     // 'summary'     = AI-written page-continuity preamble we couldn't cleanly strip —
     //                 useful as topical evidence but DO NOT quote as the author's words.
+    // 'ocr'         = the page's own text, untranslated; quote it in the original only.
     snippet_type: r.snippet_type || 'translation',
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
@@ -228,8 +244,16 @@ async function searchConcept(args: Record<string, unknown>) {
     returned: passages.length,
     lang: (result.lang as string) ?? conceptLang,
     ...(result.lang_note ? { lang_note: result.lang_note } : {}),
+    // How the passages were spread, said out loud so a caller does not read a
+    // spread list as "the ten nearest": `tradition` holds each ten to at most 2
+    // passages per tradition family and per work, `author` to one per author.
+    ...(result.diversity ? { diversity: result.diversity } : {}),
+    ...(result.diversity && result.diversity !== 'off' ? {
+      diversity_note: 'Passages are re-ordered for spread, not dropped: pass diversity "off" for the plain nearest-first order. This is a ranked sample, not a census of what the library holds on the topic.',
+    } : {}),
+    ...(conceptLane ? { lane: 'concept', lane_note: 'Experimental concept lane (#6173): ranked by an abstract of each page\'s ideas, 1,216 books only. Snippets are the page text.' } : {}),
     passages,
-    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -241,6 +265,12 @@ async function searchConcept(args: Record<string, unknown>) {
  * actually served. `en` and anything malformed collapse to English, the default
  * store, rather than erroring: a bad language code should not fail a search.
  */
+/** The `diversity` argument: one of the three modes, or undefined to take the endpoint's default. */
+function diversityArg(args: Record<string, unknown>): 'tradition' | 'author' | 'off' | undefined {
+  const raw = String(args.diversity || '').trim().toLowerCase();
+  return raw === 'tradition' || raw === 'author' || raw === 'off' ? raw : undefined;
+}
+
 function langArg(args: Record<string, unknown>): string {
   const raw = String(args.lang || '').trim().toLowerCase();
   return /^[a-z]{2,3}$/.test(raw) ? raw : 'en';
@@ -1073,6 +1103,7 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
+        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": keyword results come in match order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
@@ -1095,6 +1126,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
         max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'How the passages are spread. Default "tradition": each ten holds at most 2 passages per tradition family and per work, so a concept query returns several traditions and not one tradition\'s nearest pages (a clearly closer match is never passed over). "author": at most one per author and per work, for a cross-author survey. "off": plain nearest-first; use it when looking for one known passage. A quoted query or one naming a year defaults to "off". Each passage carries its book\'s `tradition` when it has one.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
       },
@@ -1774,7 +1806,20 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 
 // ── Next.js route handlers ─────────────────────────────────────────
 
-export async function GET() {
+export async function GET(req: Request) {
+  // A Streamable HTTP client opens GET with `Accept: text/event-stream` to get a
+  // server→client stream. The spec allows exactly two answers: an event stream
+  // or 405. We are stateless and have no stream, so 405 — the SDK reads it as
+  // "no stream offered" and stops. A 200 JSON banner instead reads as a stream
+  // that ended at once, and the client reconnects: 4.4M GETs in the week to
+  // 2026-10-06, 40% of every request that reached Vercel (#4753).
+  if (req.headers.get('accept')?.includes('text/event-stream')) {
+    return new Response(null, {
+      status: 405,
+      headers: { Allow: 'POST, DELETE, OPTIONS', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+  // Browsers and curl still get the banner.
   return new Response(JSON.stringify({
     name: 'source-library',
     version: SERVER_VERSION,

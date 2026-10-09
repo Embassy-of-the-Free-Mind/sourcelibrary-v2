@@ -1,0 +1,33 @@
+{
+ "note": "Pages of OTHER editions of a set-A gold work that hold the gold passage. Candidates: character-shingle containment >= 0.2 between the gold page OCR and the sibling page OCR (build/equiv step, job embed-next-6173); each then read against the gold page. Kept = same passage; rejected = neighbouring pages that overlap only at the page edge.",
+ "equivalents": [
+  {
+   "qid": "q09",
+   "book_id": "6a4267d6aedf4c943f91dffe",
+   "page_number": 17,
+   "containment": 0.895
+  },
+  {
+   "qid": "q23",
+   "book_id": "6a09e8cc2111a8b71cc38358",
+   "page_number": 16,
+   "containment": 0.648
+  }
+ ],
+ "rejected": [
+  {
+   "qid": "q09",
+   "book_id": "6a4267d6aedf4c943f91dffe",
+   "page_number": 16,
+   "containment": 0.335,
+   "why": "other content (page-edge overlap only)"
+  },
+  {
+   "qid": "q09",
+   "book_id": "6a4267d6aedf4c943f91dffe",
+   "page_number": 18,
+   "containment": 0.243,
+   "why": "other content (page-edge overlap only)"
+  }
+ ]
+}

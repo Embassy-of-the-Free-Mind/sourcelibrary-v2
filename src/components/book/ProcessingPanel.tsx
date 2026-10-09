@@ -252,7 +252,7 @@ export default function ProcessingPanel({
             value={reason}
             maxLength={500}
             onChange={e => onReasonChange(e.target.value)}
-            placeholder="Optional — why by hand? (e.g. reader request, bad OCR on plates)"
+            placeholder="Optional: why by hand? (e.g. reader request, bad OCR on plates)"
             className="flex-1 px-3 py-1.5 text-sm bg-white border border-accent-gold/20 rounded-lg text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
           />
         </div>

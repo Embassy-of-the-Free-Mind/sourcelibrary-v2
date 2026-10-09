@@ -98,16 +98,16 @@ function Table({ headers, rows }: { headers: string[]; rows: React.ReactNode[][]
 }
 
 const SCHEMA: { name: string; fields: string[]; note: string }[] = [
-  { name: 'mcp_tool_calls', fields: ['tool', 'args', 'ms', 'ok', 'error', 'ip_hash', 'user_agent', 'ts'], note: 'One row per agent tool-call. args holds the payload — the exact query, or a book_id + page. That is where intent lives.' },
+  { name: 'mcp_tool_calls', fields: ['tool', 'args', 'ms', 'ok', 'error', 'ip_hash', 'user_agent', 'ts'], note: 'One row per agent tool-call. args holds the payload: the exact query, or a book_id + page. That is where intent lives.' },
   { name: 'search_queries', fields: ['query', 'total', 'route', 'ms', 'ok', 'identity_kind', 'filters', 'stage_ms', 'ip_hash', 'user_agent'], note: 'One row per search (web + MCP). total is the result count (0 flags a possible miss); filters records language + ranking; stage_ms times each lane.' },
 ];
 
 const METHODOLOGY: [string, string][] = [
-  ['External-only', 'Our own dev CLIs (claude-code), edge functions (Deno/Supabase), audit probes, and test queries are filtered out at snapshot time. What remains is outside readers and agents. In the last window that removed ~72% of raw MCP calls — do not compare these numbers to the raw logs.'],
+  ['External-only', 'Our own dev CLIs (claude-code), edge functions (Deno/Supabase), audit probes, and test queries are filtered out at snapshot time. What remains is outside readers and agents. In the last window that removed ~72% of raw MCP calls, so do not compare these numbers to the raw logs.'],
   ['Snapshot, not live', 'Precomputed daily by scripts/analytics/snapshot-reading-register.mjs and read from system_config.reading_register. The header shows when it was generated; older than ~30h turns amber.'],
   ['Zero-result ≠ missing book', 'Each zero-result query is checked against holdings. "held" / "visible" columns > 0 mean we HAVE the book and search failed to surface it (a recall bug), not that we lack it. Only held=0 is a genuine acquisition signal.'],
-  ['Readers vs agents are different shelves', 'Human page views and agent tool-calls rank different books — readers spread across the whole collection; agents cluster hard on the Hermetic core. Neither is "the" popularity.'],
-  ['Identifiers are pseudonymous', 'ip_hash is a salted hash, never a raw IP — but it is still pseudonymous, not anonymous, so this page stays internal. Recommended hygiene: age operational logs out at 30–90 days, keep only anonymised aggregates beyond that.'],
+  ['Readers vs agents are different shelves', 'Human page views and agent tool-calls rank different books: readers spread across the whole collection; agents cluster hard on the Hermetic core. Neither is "the" popularity.'],
+  ['Identifiers are pseudonymous', 'ip_hash is a salted hash, never a raw IP, but it is still pseudonymous, not anonymous, so this page stays internal. Recommended hygiene: age operational logs out at 30–90 days, keep only anonymised aggregates beyond that.'],
 ];
 
 export default async function ReadingRegisterPage() {
@@ -146,7 +146,7 @@ export default async function ReadingRegisterPage() {
         </span>
       </div>
       <p style={{ fontSize: 12, color: '#6e7681', margin: '6px 0 0' }}>
-        External readers &amp; agents only — our own dev, testing, and infrastructure traffic is filtered out. Internal view; never publish as-is.
+        External readers &amp; agents only. Our own dev, testing, and infrastructure traffic is filtered out. Internal view; never publish as-is.
       </p>
 
       <SectionHead title="Headline" sub={`Trailing ${win} days. Reader views are human page views; agent calls exclude our own clients.`} />
@@ -186,7 +186,7 @@ export default async function ReadingRegisterPage() {
         </div>
       </div>
 
-      <SectionHead title="Search, and what it can't find" sub="Top human searches resolve well. Zero-result queries are checked against holdings — held/visible > 0 means a recall bug, not a gap." />
+      <SectionHead title="Search, and what it can't find" sub="Top human searches resolve well. Zero-result queries are checked against holdings: held/visible > 0 means a recall bug, not a gap." />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
         <div>
           <SectionHead title="Top queries" sub="avg results" />
@@ -204,15 +204,15 @@ export default async function ReadingRegisterPage() {
 
       {s.agentQueries?.length ? (
         <>
-          <SectionHead title="What agents searched for" sub="External concept / library / image queries — the research campaigns passing through." />
+          <SectionHead title="What agents searched for" sub="External concept / library / image queries: the research campaigns passing through." />
           <Table headers={['query', 'tools', 'count']} rows={s.agentQueries.map((q) => [q.query, (q.tools || []).join(', '), num(q.n)])} />
         </>
       ) : null}
 
-      <SectionHead title="Who is calling — external agents only" sub={`${num(s.mcp?.clients)} clients · ${num(s.mcp?.external)} calls. Internal (${num(s.mcp?.internal)}) excluded.`} />
+      <SectionHead title="Who is calling: external agents only" sub={`${num(s.mcp?.clients)} clients · ${num(s.mcp?.external)} calls. Internal (${num(s.mcp?.internal)}) excluded.`} />
       <RankBars color="#3fb950" rows={(s.mcp?.clientRows || []).map((c) => ({ label: <span style={C.mono}>{c.client}</span>, value: c.n }))} />
 
-      <SectionHead title="Methodology & caveats" sub="What these numbers mean — and what they do not." />
+      <SectionHead title="Methodology & caveats" sub="What these numbers mean, and what they do not." />
       <div style={{ ...C.card, display: 'grid', gap: 14 }}>
         {METHODOLOGY.map(([title, body]) => (
           <div key={title}>

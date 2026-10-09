@@ -1,0 +1,902 @@
+{
+ "run_id": "latin-period-5126-2026-10-04",
+ "issue": 5126,
+ "preregistration_commit": "6a18acab6",
+ "measure": "accuracy",
+ "prompt": "production-v19.1",
+ "prompt_hash": "9d8f959e053491362b2c4acec1e20c9a",
+ "cost_usd": 0.6934,
+ "meter": {
+  "gemini-3.1-flash-lite": {
+   "calls": 94,
+   "cost_usd": 0.2034,
+   "refused_first_attempt": [
+    {
+     "slug": "ed-6a90675ceb8fb726ee3b7f5a-p9",
+     "finishReason": "RECITATION"
+    }
+   ],
+   "refused_final": 0,
+   "prompt": "production-v19.1",
+   "prompt_hash": "9d8f959e053491362b2c4acec1e20c9a"
+  },
+  "gemini-3.1-flash-lite-b": {
+   "calls": 20,
+   "cost_usd": 0.0407,
+   "refused_first_attempt": [],
+   "refused_final": 0,
+   "prompt": "production-v19.1",
+   "prompt_hash": "9d8f959e053491362b2c4acec1e20c9a"
+  },
+  "gemini-3-flash-preview": {
+   "calls": 95,
+   "cost_usd": 0.4494,
+   "refused_first_attempt": [
+    {
+     "slug": "ed-6a90a3b93a69baad5d30cf72-p9",
+     "finishReason": "RECITATION"
+    },
+    {
+     "slug": "ed-6a90e7e5544007b776b3806a-p18",
+     "finishReason": "RECITATION"
+    }
+   ],
+   "refused_final": 0,
+   "prompt": "production-v19.1",
+   "prompt_hash": "9d8f959e053491362b2c4acec1e20c9a"
+  }
+ },
+ "rule_output": {
+  "Latin 1400s (corrected-OCR reference)": {
+   "n": 5,
+   "prereg": {
+    "decidable": false,
+    "note": "directional (n=5 < 50) — rule (e): no routing decision",
+    "a_lite": "inadequate",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0.6,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": null,
+     "repeat_pages_identical": 0,
+     "n": 0,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": [
+    0.096,
+    0.334
+   ],
+   "median_cer": {
+    "gemini-3-flash-preview": 0.07,
+    "gemini-3.1-flash-lite": 0.187,
+    "gemini-3.1-flash-lite-b": null
+   },
+   "delta": {
+    "median": -0.111,
+    "ci95": [
+     -0.264,
+     0.547
+    ],
+    "wins": 4,
+    "losses": 1,
+    "ties": 0,
+    "untied": 5,
+    "p_sign": 0.375,
+    "share_le_minus_005": 0.6
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 1,
+    "gemini-3.1-flash-lite": 0
+   },
+   "loops": {
+    "gemini-3-flash-preview": 1,
+    "gemini-3.1-flash-lite": 0
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.141,
+     "gemini-3.1-flash-lite": 0.401
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.141,
+     "gemini-3.1-flash-lite": 0.401
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.164,
+     "gemini-3.1-flash-lite": 0.423
+    }
+   }
+  },
+  "Latin 1500s": {
+   "n": 27,
+   "prereg": {
+    "decidable": false,
+    "note": "directional (n=27 < 50) — rule (e): no routing decision",
+    "a_lite": "degraded",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0.074,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": 0,
+     "repeat_pages_identical": 7,
+     "n": 7,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": [
+    0.076,
+    0.097
+   ],
+   "median_cer": {
+    "gemini-3-flash-preview": 0.068,
+    "gemini-3.1-flash-lite": 0.08,
+    "gemini-3.1-flash-lite-b": 0.086
+   },
+   "delta": {
+    "median": -0.009,
+    "ci95": [
+     -0.022,
+     0.003
+    ],
+    "wins": 17,
+    "losses": 9,
+    "ties": 1,
+    "untied": 26,
+    "p_sign": 0.169,
+    "share_le_minus_005": 0.074
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "loops": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.03,
+     "gemini-3.1-flash-lite": 0.035
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.03,
+     "gemini-3.1-flash-lite": 0.043
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.132,
+     "gemini-3.1-flash-lite": 0.164
+    }
+   }
+  },
+  "Latin 1500s (corrected-OCR reference)": {
+   "n": 1,
+   "prereg": {
+    "decidable": false,
+    "note": "directional (n=1 < 50) — rule (e): no routing decision",
+    "a_lite": "degraded",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": null,
+     "repeat_pages_identical": 0,
+     "n": 0,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": null,
+   "median_cer": {
+    "gemini-3-flash-preview": 0.085,
+    "gemini-3.1-flash-lite": 0.081,
+    "gemini-3.1-flash-lite-b": null
+   },
+   "delta": {
+    "median": 0.004,
+    "ci95": null,
+    "wins": 0,
+    "losses": 1,
+    "ties": 0,
+    "untied": 1,
+    "p_sign": 1,
+    "share_le_minus_005": 0
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "loops": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.041,
+     "gemini-3.1-flash-lite": 0.08
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.041,
+     "gemini-3.1-flash-lite": 0.08
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.129,
+     "gemini-3.1-flash-lite": 0.167
+    }
+   }
+  },
+  "Latin 1600s": {
+   "n": 50,
+   "prereg": {
+    "decidable": true,
+    "note": null,
+    "a_lite": "degraded",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0.04,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": 0,
+     "repeat_pages_identical": 10,
+     "n": 10,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": [
+    0.068,
+    0.083
+   ],
+   "median_cer": {
+    "gemini-3-flash-preview": 0.071,
+    "gemini-3.1-flash-lite": 0.075,
+    "gemini-3.1-flash-lite-b": 0.069
+   },
+   "delta": {
+    "median": -0.003,
+    "ci95": [
+     -0.011,
+     -0.001
+    ],
+    "wins": 33,
+    "losses": 16,
+    "ties": 1,
+    "untied": 49,
+    "p_sign": 0.021,
+    "share_le_minus_005": 0.04
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 1
+   },
+   "loops": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.038,
+     "gemini-3.1-flash-lite": 0.052
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.038,
+     "gemini-3.1-flash-lite": 0.065
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.125,
+     "gemini-3.1-flash-lite": 0.143
+    }
+   }
+  },
+  "Latin 1600s (corrected-OCR reference)": {
+   "n": 3,
+   "prereg": {
+    "decidable": false,
+    "note": "directional (n=3 < 50) — rule (e): no routing decision",
+    "a_lite": "degraded",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": null,
+     "repeat_pages_identical": 0,
+     "n": 0,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": [
+    0.051,
+    0.118
+   ],
+   "median_cer": {
+    "gemini-3-flash-preview": 0.07,
+    "gemini-3.1-flash-lite": 0.052,
+    "gemini-3.1-flash-lite-b": null
+   },
+   "delta": {
+    "median": 0.012,
+    "ci95": [
+     0.007,
+     0.019
+    ],
+    "wins": 0,
+    "losses": 3,
+    "ties": 0,
+    "untied": 3,
+    "p_sign": 0.25,
+    "share_le_minus_005": 0
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "loops": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.07,
+     "gemini-3.1-flash-lite": 0.042
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.07,
+     "gemini-3.1-flash-lite": 0.042
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.098,
+     "gemini-3.1-flash-lite": 0.069
+    }
+   }
+  },
+  "Latin 1700s": {
+   "n": 5,
+   "prereg": {
+    "decidable": false,
+    "note": "directional (n=5 < 50) — rule (e): no routing decision",
+    "a_lite": "degraded",
+    "b_preferred_over_lite": {
+     "core": false,
+     "with_invention_literal": false,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "c_better_reader": {
+     "core": false,
+     "share_le_minus_005": 0.2,
+     "with_invention_indep": false,
+     "with_invention_ref": false
+    },
+    "d_noise_floor": {
+     "median_delta0": 0,
+     "repeat_pages_identical": 3,
+     "n": 3,
+     "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+    }
+   },
+   "lite_median_ci95": [
+    0.033,
+    0.135
+   ],
+   "median_cer": {
+    "gemini-3-flash-preview": 0.045,
+    "gemini-3.1-flash-lite": 0.059,
+    "gemini-3.1-flash-lite-b": 0.089
+   },
+   "delta": {
+    "median": -0.023,
+    "ci95": [
+     -0.09,
+     -0.003
+    ],
+    "wins": 5,
+    "losses": 0,
+    "ties": 0,
+    "untied": 5,
+    "p_sign": 0.063,
+    "share_le_minus_005": 0.2
+   },
+   "catastrophic": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 0
+   },
+   "loops": {
+    "gemini-3-flash-preview": 0,
+    "gemini-3.1-flash-lite": 1
+   },
+   "invention_three_ways": {
+    "invention": {
+     "gemini-3-flash-preview": 0.008,
+     "gemini-3.1-flash-lite": 0
+    },
+    "invention_indep": {
+     "gemini-3-flash-preview": 0.008,
+     "gemini-3.1-flash-lite": 0.046
+    },
+    "invention_ref": {
+     "gemini-3-flash-preview": 0.102,
+     "gemini-3.1-flash-lite": 0.13
+    }
+   }
+  }
+ },
+ "slices": {
+  "Latin 1500s": {
+   "all": {
+    "n": 27,
+    "lite_median": 0.08,
+    "flash_median": 0.068,
+    "median_delta": -0.009,
+    "W": 17,
+    "L": 9,
+    "T": 1,
+    "p_sign": 0.169
+   },
+   "located_by_eye_no_served_ocr_filter": {
+    "n": 7,
+    "lite_median": 0.07,
+    "flash_median": 0.044,
+    "median_delta": -0.007,
+    "W": 5,
+    "L": 2,
+    "T": 0,
+    "p_sign": 0.453
+   },
+   "located_with_served_ocr": {
+    "n": 20,
+    "lite_median": 0.082,
+    "flash_median": 0.079,
+    "median_delta": -0.01,
+    "W": 12,
+    "L": 7,
+    "T": 1,
+    "p_sign": 0.359
+   },
+   "body_text_and_verse": {
+    "n": 26,
+    "lite_median": 0.082,
+    "flash_median": 0.07,
+    "median_delta": -0.008,
+    "W": 16,
+    "L": 9,
+    "T": 1,
+    "p_sign": 0.23
+   },
+   "front_matter": {
+    "n": 1,
+    "lite_median": 0.08,
+    "flash_median": 0.056,
+    "median_delta": -0.024,
+    "W": 1,
+    "L": 0,
+    "T": 0,
+    "p_sign": 1
+   },
+   "by_source": {
+    "CAMENA": {
+     "n": 25,
+     "lite_median": 0.084,
+     "flash_median": 0.072,
+     "median_delta": -0.009,
+     "W": 16,
+     "L": 8,
+     "T": 1,
+     "p_sign": 0.152
+    },
+    "EEBO-TCP": {
+     "n": 0,
+     "lite_median": null,
+     "flash_median": null,
+     "median_delta": null,
+     "W": 0,
+     "L": 0,
+     "T": 0,
+     "p_sign": null
+    },
+    "la.wikisource": {
+     "n": 2,
+     "lite_median": 0.067,
+     "flash_median": 0.064,
+     "median_delta": -0.003,
+     "W": 1,
+     "L": 1,
+     "T": 0,
+     "p_sign": 1
+    }
+   }
+  },
+  "Latin 1600s": {
+   "all": {
+    "n": 50,
+    "lite_median": 0.0745,
+    "flash_median": 0.071,
+    "median_delta": -0.0035,
+    "W": 33,
+    "L": 16,
+    "T": 1,
+    "p_sign": 0.021
+   },
+   "located_by_eye_no_served_ocr_filter": {
+    "n": 0,
+    "lite_median": null,
+    "flash_median": null,
+    "median_delta": null,
+    "W": 0,
+    "L": 0,
+    "T": 0,
+    "p_sign": null
+   },
+   "located_with_served_ocr": {
+    "n": 50,
+    "lite_median": 0.0745,
+    "flash_median": 0.071,
+    "median_delta": -0.0035,
+    "W": 33,
+    "L": 16,
+    "T": 1,
+    "p_sign": 0.021
+   },
+   "body_text_and_verse": {
+    "n": 41,
+    "lite_median": 0.075,
+    "flash_median": 0.07,
+    "median_delta": -0.005,
+    "W": 28,
+    "L": 12,
+    "T": 1,
+    "p_sign": 0.017
+   },
+   "front_matter": {
+    "n": 8,
+    "lite_median": 0.076,
+    "flash_median": 0.075,
+    "median_delta": 0.0025,
+    "W": 4,
+    "L": 4,
+    "T": 0,
+    "p_sign": 1
+   },
+   "by_source": {
+    "CAMENA": {
+     "n": 35,
+     "lite_median": 0.076,
+     "flash_median": 0.068,
+     "median_delta": -0.005,
+     "W": 24,
+     "L": 10,
+     "T": 1,
+     "p_sign": 0.024
+    },
+    "EEBO-TCP": {
+     "n": 11,
+     "lite_median": 0.09,
+     "flash_median": 0.077,
+     "median_delta": -0.009,
+     "W": 8,
+     "L": 3,
+     "T": 0,
+     "p_sign": 0.227
+    },
+    "la.wikisource": {
+     "n": 4,
+     "lite_median": 0.0545,
+     "flash_median": 0.07,
+     "median_delta": 0.0155,
+     "W": 1,
+     "L": 3,
+     "T": 0,
+     "p_sign": 0.625
+    }
+   },
+   "without_two_pages_a_second_reader_flagged": {
+    "n": 48,
+    "lite_median": 0.0735,
+    "flash_median": 0.069,
+    "median_delta": -0.0035,
+    "W": 32,
+    "L": 15,
+    "T": 1,
+    "p_sign": 0.019
+   }
+  },
+  "Latin 1700s": {
+   "all": {
+    "n": 5,
+    "lite_median": 0.059,
+    "flash_median": 0.045,
+    "median_delta": -0.023,
+    "W": 5,
+    "L": 0,
+    "T": 0,
+    "p_sign": 0.063
+   },
+   "located_by_eye_no_served_ocr_filter": {
+    "n": 2,
+    "lite_median": 0.084,
+    "flash_median": 0.0275,
+    "median_delta": -0.0565,
+    "W": 2,
+    "L": 0,
+    "T": 0,
+    "p_sign": 0.5
+   },
+   "located_with_served_ocr": {
+    "n": 3,
+    "lite_median": 0.059,
+    "flash_median": 0.053,
+    "median_delta": -0.003,
+    "W": 3,
+    "L": 0,
+    "T": 0,
+    "p_sign": 0.25
+   },
+   "body_text_and_verse": {
+    "n": 4,
+    "lite_median": 0.074,
+    "flash_median": 0.0405,
+    "median_delta": -0.023,
+    "W": 4,
+    "L": 0,
+    "T": 0,
+    "p_sign": 0.125
+   },
+   "front_matter": {
+    "n": 1,
+    "lite_median": 0.056,
+    "flash_median": 0.053,
+    "median_delta": -0.003,
+    "W": 1,
+    "L": 0,
+    "T": 0,
+    "p_sign": 1
+   },
+   "by_source": {
+    "CAMENA": {
+     "n": 5,
+     "lite_median": 0.059,
+     "flash_median": 0.045,
+     "median_delta": -0.023,
+     "W": 5,
+     "L": 0,
+     "T": 0,
+     "p_sign": 0.063
+    },
+    "EEBO-TCP": {
+     "n": 0,
+     "lite_median": null,
+     "flash_median": null,
+     "median_delta": null,
+     "W": 0,
+     "L": 0,
+     "T": 0,
+     "p_sign": null
+    },
+    "la.wikisource": {
+     "n": 0,
+     "lite_median": null,
+     "flash_median": null,
+     "median_delta": null,
+     "W": 0,
+     "L": 0,
+     "T": 0,
+     "p_sign": null
+    }
+   }
+  },
+  "pooled 1500–1799 (secondary, not a century verdict)": {
+   "all": {
+    "n": 82,
+    "lite_median": 0.078,
+    "flash_median": 0.068,
+    "median_delta": -0.0065,
+    "W": 55,
+    "L": 25,
+    "T": 2,
+    "p_sign": 0.001
+   }
+  },
+  "incunabula, corrected-OCR references (exploratory)": {
+   "all": {
+    "n": 5,
+    "lite_median": 0.187,
+    "flash_median": 0.07,
+    "median_delta": -0.111,
+    "W": 4,
+    "L": 1,
+    "T": 0,
+    "p_sign": 0.375
+   },
+   "corrected_from_flash_read": {
+    "n": 3,
+    "lite_median": 0.179,
+    "flash_median": 0.07,
+    "median_delta": -0.027,
+    "W": 2,
+    "L": 1,
+    "T": 0,
+    "p_sign": 1
+   },
+   "corrected_from_lite_read": {
+    "n": 2,
+    "lite_median": 0.2605,
+    "flash_median": 0.073,
+    "median_delta": -0.1875,
+    "W": 2,
+    "L": 0,
+    "T": 0,
+    "p_sign": 0.5
+   },
+   "pages": [
+    {
+     "slug": "ed-69523495ab34727b1f044a45-p63",
+     "cell": "Latin 1400s (corrected-OCR reference)",
+     "lite": 0.096,
+     "flash": 0.069,
+     "rep": null,
+     "evidence": "our-own-leaf",
+     "page_type": "text",
+     "source": "xlref-t1",
+     "anchored_on": "gemini-3-flash-preview",
+     "canonical": false
+    },
+    {
+     "slug": "ed-699062f5ef12272ffdc8e9d5-p505",
+     "cell": "Latin 1400s (corrected-OCR reference)",
+     "lite": 0.204,
+     "flash": 0.07,
+     "rep": null,
+     "evidence": "our-own-leaf",
+     "page_type": "text",
+     "source": "xlref-t1",
+     "anchored_on": "gemini-3-flash-preview",
+     "canonical": true
+    },
+    {
+     "slug": "ed-69afd0df775a23a98ee93a30-p420",
+     "cell": "Latin 1400s (corrected-OCR reference)",
+     "lite": 0.179,
+     "flash": 0.726,
+     "rep": null,
+     "evidence": "our-own-leaf",
+     "page_type": "text",
+     "source": "xlref-t1",
+     "anchored_on": "gemini-3-flash-preview",
+     "canonical": true
+    },
+    {
+     "slug": "ed-69dbc9491040d1d5e20a1afd-p87",
+     "cell": "Latin 1400s (corrected-OCR reference)",
+     "lite": 0.187,
+     "flash": 0.076,
+     "rep": null,
+     "evidence": "our-own-leaf",
+     "page_type": "text",
+     "source": "xlref-t1",
+     "anchored_on": "gemini-3.1-flash-lite-preview",
+     "canonical": true
+    },
+    {
+     "slug": "ed-69dbcc3e0f8c5edf20f484a0-p330",
+     "cell": "Latin 1400s (corrected-OCR reference)",
+     "lite": 0.334,
+     "flash": 0.07,
+     "rep": null,
+     "evidence": "our-own-leaf",
+     "page_type": "text",
+     "source": "xlref-t1",
+     "anchored_on": "gemini-3.1-flash-lite-preview",
+     "canonical": true
+    }
+   ]
+  }
+ },
+ "noise_floor": {
+  "n": 20,
+  "identical_cer": 20,
+  "median_delta0": 0,
+  "max_abs_delta0": 0,
+  "byte_identical_outputs": 20
+ },
+ "convention_floor": {
+  "note": "diagnostic only, not the scorer: tags out, &amp;→&, then (folded) accents off, æ→ae, &→et, q;→que, j→i, v→u, punctuation off. The two engines are far closer to each other than either is to the reference: most of the absolute CER is page furniture the reference omits, the reference pad, convention and reference typos.",
+  "cells": {
+   "Latin 1500s": {
+    "n": 27,
+    "engine_to_engine_distance_median": 0.0496,
+    "engine_to_engine_convention_folded": 0.0232,
+    "lite_vs_reference_convention_folded": 0.0564,
+    "flash_vs_reference_convention_folded": 0.0466,
+    "folded_W_L": [
+     19,
+     8
+    ]
+   },
+   "Latin 1600s": {
+    "n": 50,
+    "engine_to_engine_distance_median": 0.0357,
+    "engine_to_engine_convention_folded": 0.0133,
+    "lite_vs_reference_convention_folded": 0.0471,
+    "flash_vs_reference_convention_folded": 0.05,
+    "folded_W_L": [
+     23,
+     21
+    ]
+   },
+   "Latin 1700s": {
+    "n": 5,
+    "engine_to_engine_distance_median": 0.0249,
+    "engine_to_engine_convention_folded": 0.0054,
+    "lite_vs_reference_convention_folded": 0.0376,
+    "flash_vs_reference_convention_folded": 0.0341,
+    "folded_W_L": [
+     4,
+     0
+    ]
+   }
+  }
+ },
+ "better_reader_by_eye_on_worst_pages": {
+  "Latin 1500s": {
+   "A_lite": 0,
+   "B_flash": 4,
+   "tie": 2
+  },
+  "Latin 1600s": {
+   "A_lite": 2,
+   "B_flash": 6,
+   "tie": 1
+  },
+  "Latin 1400s (corrected-OCR reference)": {
+   "A_lite": 1,
+   "B_flash": 4,
+   "tie": 0
+  },
+  "Latin 1700s": {
+   "A_lite": 0,
+   "B_flash": 4,
+   "tie": 1
+  }
+ }
+}
