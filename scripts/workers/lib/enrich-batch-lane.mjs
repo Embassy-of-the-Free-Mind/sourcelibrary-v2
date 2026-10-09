@@ -464,13 +464,25 @@ async function submitJob(o, stage, usageType, entries, lines, report) {
     const jobId = `enrich-${stage}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
     try {
       const fileName = await uploadJsonl(g.lines.join('\n'), jobId);
-      const created = await createBatch(model, fileName, jobId);
       const estUsd = g.entries.reduce((t, e) => t + e.estUsd, 0);
+      // The row is written BEFORE the job exists at Gemini and named after. Written after,
+      // a submit killed in between left a paid job no store knew: enrich-index-muy4a57p-qf1e
+      // (2026-10-07, 4,693 requests, $6.32) finished at Gemini with its 108 books parked at
+      // `index_pending` and nothing to collect it (#6333). A row left at `submitting` is found
+      // by the batch ledger under the display name, which is this _id.
       await db.collection(JOBS_COLL).insertOne({
-        _id: jobId, gemini_name: created.name, stage, type: usageType, model, run_tag: o.runTag,
+        _id: jobId, gemini_name: null, stage, type: usageType, model, run_tag: o.runTag,
         book_ids: g.entries.map(e => e.bookId), requests: g.lines.length, bytes: g.bytes,
-        est_usd: +estUsd.toFixed(4), status: 'submitted', created_at: new Date(),
+        est_usd: +estUsd.toFixed(4), status: 'submitting', created_at: new Date(),
       });
+      let created;
+      try {
+        created = await createBatch(model, fileName, jobId);
+      } catch (e) {
+        await db.collection(JOBS_COLL).updateOne({ _id: jobId, status: 'submitting' }, { $set: { status: 'submit_failed', error: String(e?.message || e).slice(0, 300), updated_at: new Date() } });
+        throw e;
+      }
+      await db.collection(JOBS_COLL).updateOne({ _id: jobId }, { $set: { gemini_name: created.name, status: 'submitted', submitted_at: new Date() } });
       await db.collection(BOOKS_COLL).updateMany(
         { _id: { $in: g.entries.map(e => e.bookId) } },
         { $set: { stage: `${stage}_submitted`, [`${stage}_job`]: jobId, updated_at: new Date() } },

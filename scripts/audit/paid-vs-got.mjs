@@ -40,16 +40,19 @@
  *                  sees NON-terminal rows, so a row wrongly written cancelled/failed is invisible
  *                  to it — this section is what sees it. Classes: succeeded-uncollected,
  *                  unknown-to-DB, DB-terminal-while-Gemini-alive (scripts/lib/gemini-batch-ledger.mjs).
- *                  Daily walks every job Gemini retains; findings older than 48 h since Gemini
- *                  ended them are reported, not FAILed.
+ *                  Daily walks every job Gemini retains. A finding is a FAIL however old, until
+ *                  a store says the job was collected or discarded on purpose (discardBatchJob,
+ *                  scripts/maintenance/resolve-batch-findings.mjs): it used to drop to WARN at
+ *                  48 h, which is how an unfixed loss went quiet (#6333). A SUCCEEDED job whose
+ *                  every request failed (Gemini's batchStats) billed nothing and is not a finding.
  *
  * HOURLY: --collection-only runs sections 1 and 8 only (Gemini window: jobs created in the last
- * 72 h), writes ops_reports `paid-vs-got-collection` (with --apply), pages ntfy
- * sourcelibrary-uptime when the set of findings changes, and keeps ONE issue open
+ * 72 h, plus the last run's findings that have left that window, asked about by name), writes
+ * ops_reports `paid-vs-got-collection` (with --apply), pages ntfy sourcelibrary-uptime when the set of findings changes, and keeps ONE issue open
  * ("paid-vs-got: batch collection FAIL") while findings stand — closed by a passing run.
  *
- * FAIL (exit 1) when: a batch is open past 40 h; Gemini finished a job inside 48 h that nothing
- * collected (or is running one the DB calls over); duplicate-submission spend > $1/day; or
+ * FAIL (exit 1) when: a batch is open past 40 h; Gemini finished a job that nothing
+ * collected or discarded (or is running one the DB calls over); duplicate-submission spend > $1/day; or
  * unattributed paid usage > 5% of metered. Exit 2 = could not measure (a store unreadable, a
  * Gemini key that cannot be listed, a positive control that did not fire, the bill unreadable on
  * a bill day). 0 = ran, clean (WARNs included). Never branch on != 0 — measurement-instruments.md.
@@ -79,7 +82,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { estimateBatchCostUsd } from '../workers/lib/supabase-usage-logger.mjs';
 import {
   listAllBatches, readLedgerRecords, classifyLedger, countFindings, ledgerPositiveControl,
-  makeSupabaseUsageReader, fillRequestCounts, HOURLY_WINDOW_H, ACTIONABLE_H, IN_FLIGHT_GRACE_H, LEDGER_CLASSES,
+  makeSupabaseUsageReader, settleFindings, carryForwardFindings, HOURLY_WINDOW_H, IN_FLIGHT_GRACE_H, LEDGER_CLASSES,
 } from '../lib/gemini-batch-ledger.mjs';
 
 const HOUR = 3600e3;
@@ -399,10 +402,10 @@ export function verdict({ collection, dupUsd = 0, unattributedPct = 0, gemini = 
     const label = { succeeded_uncollected: 'Gemini SUCCEEDED, our record never collected it',
       unknown_to_db: 'Gemini SUCCEEDED, no store records the job',
       terminal_while_alive: 'Gemini still running, every record we hold says it is over' };
+    // Every finding is a FAIL however old (#6333): a loss nobody collected or discarded on
+    // purpose used to drop to WARN at 48 h and stop paging.
     for (const k of LEDGER_CLASSES) {
-      if (c[k].actionable) fails.push(`${c[k].actionable} batch job(s): ${label[k]} (${c[k].actionable_pages.toLocaleString('en-US')} pp)`);
-      const old = c[k].jobs - c[k].actionable;
-      if (old) warns.push(`${old} older (> ${ACTIONABLE_H} h) job(s): ${label[k]}`);
+      if (c[k].jobs) fails.push(`${c[k].jobs} batch job(s): ${label[k]} (${c[k].pages.toLocaleString('en-US')} pp)`);
     }
   }
   if (dupUsd > DUP_FAIL_USD) fails.push(`duplicate-submission spend $${dupUsd.toFixed(2)} > $${DUP_FAIL_USD}/day`);
@@ -550,7 +553,7 @@ export function geminiKeys(env = process.env) {
  * Section 8. `windowH` null = every job Gemini retains (daily); a number = jobs created in that
  * window (hourly). Returns the section; `unknown` non-empty means it could not be measured.
  */
-async function geminiSection(db, { now, windowH, log }) {
+async function geminiSection(db, { now, windowH, log, prevFindings = [] }) {
   const keys = geminiKeys();
   if (!keys.length) return { unknown: ['no GEMINI_API_KEY* set — Gemini side not measured'] };
   const { GoogleGenAI } = await import('@google/genai');
@@ -562,6 +565,8 @@ async function geminiSection(db, { now, windowH, log }) {
     key: clean(process.env.SUPABASE_SERVICE_ROLE_KEY),
   });
   const unknown = [...listing.unknown];
+  // Findings of the last run that have left the window stay findings until resolved.
+  const carried = windowH == null ? 0 : await carryForwardFindings(prevFindings, listing.jobs, keys, { now });
   if (!supabaseUsage) unknown.push('SUPABASE_SERVICE_ROLE_KEY not set — usage rows (how one-off scripts record their jobs) unreadable');
   let records = new Map();
   try {
@@ -571,11 +576,12 @@ async function geminiSection(db, { now, windowH, log }) {
   }
   const res = classifyLedger({ jobs: listing.jobs, records, now });
   const positive = ledgerPositiveControl({ jobs: listing.jobs, records, now });
-  const asked = await fillRequestCounts(res.findings, keys);
+  const settled = await settleFindings(res, keys);
   return {
     window_h: windowH, listed: res.listed, per_key: listing.perKey, unknown,
-    counts: countFindings(res.findings), ok_counts: res.ok_counts, grace_h: IN_FLIGHT_GRACE_H, actionable_h: ACTIONABLE_H,
-    findings: res.findings.slice(0, 200), findings_total: res.findings.length, request_counts_asked: asked,
+    counts: countFindings(res.findings), ok_counts: res.ok_counts, grace_h: IN_FLIGHT_GRACE_H,
+    findings: res.findings.slice(0, 200), findings_total: res.findings.length, request_counts_asked: settled.asked,
+    carried_forward: carried, empty: settled.empty.slice(0, 50),
     positive,
   };
 }
@@ -585,15 +591,16 @@ export function renderGemini(G) {
   if (!G) return '8. GEMINI  not run (--no-gemini).';
   if (!G.counts) { L.push(`8. GEMINI  UNKNOWN — ${G.unknown.join('; ')}`); return L.join('\n'); }
   L.push(`8. GEMINI  ${G.listed.toLocaleString('en-US')} jobs listed (${G.window_h == null ? 'everything Gemini retains' : `created in the last ${G.window_h} h`}); `
-    + `ok: ${G.ok_counts.collected} collected, ${G.ok_counts.in_flight} in flight (< ${G.grace_h} h since Gemini finished), ${G.ok_counts.discarded} discarded on purpose, ${G.ok_counts.twin_collected} re-submissions whose twin was collected (paid twice, not lost), ${G.ok_counts.alive_tracked} running and tracked`);
+    + `ok: ${G.ok_counts.collected} collected, ${G.ok_counts.in_flight} in flight (< ${G.grace_h} h since Gemini finished), ${G.ok_counts.discarded} discarded on purpose, ${G.ok_counts.twin_collected} re-submissions whose twin was collected (paid twice, not lost), ${G.ok_counts.empty || 0} finished with every request cancelled (nothing billed), ${G.ok_counts.alive_tracked} running and tracked`
+    + (G.carried_forward ? `; ${G.carried_forward} finding(s) carried forward from the last run (older than the window)` : ''));
   if (G.unknown.length) for (const u of G.unknown) L.push(`  UNKNOWN  ${u}`);
-  L.push(`  ${pad('class', 26)}${lpad('jobs', 7)}${lpad('pages', 10)}${lpad(`≤${G.actionable_h} h`, 9)}${lpad('pages', 10)}`);
+  L.push(`  ${pad('class', 26)}${lpad('jobs', 7)}${lpad('pages', 10)}`);
   for (const k of LEDGER_CLASSES) {
     const c = G.counts[k];
-    L.push(`  ${pad(k, 26)}${lpad(int(c.jobs), 7)}${lpad(int(c.pages), 10)}${lpad(int(c.actionable), 9)}${lpad(int(c.actionable_pages), 10)}`);
+    L.push(`  ${pad(k, 26)}${lpad(int(c.jobs), 7)}${lpad(int(c.pages), 10)}`);
   }
   for (const f of G.findings.slice(0, 15)) {
-    L.push(`    ${f.actionable ? 'FAIL' : 'old '}  ${pad(f.class, 22)} ${pad(f.name, 48)} ${pad(f.display_name || '', 34).slice(0, 34)} ${lpad(f.since_end_h == null ? 'running' : f.since_end_h + ' h', 9)} ${lpad(int(f.pages), 6)} pp  ${f.records.join(', ') || '(no record)'}`);
+    L.push(`    ${f.output_gone ? 'GONE' : 'FAIL'}  ${pad(f.class, 22)} ${pad(f.name, 48)} ${pad(f.display_name || '', 34).slice(0, 34)} ${lpad(f.since_end_h == null ? 'running' : f.since_end_h + ' h', 9)} ${lpad(int(f.pages), 6)} pp  ${f.records.join(', ') || '(no record)'}`);
   }
   if (G.findings_total > 15) L.push(`    … ${G.findings_total - 15} more (ops_reports row holds the first 200)`);
   L.push(`  keys: ${G.per_key.map((k) => `${k.key_index}${k.canonical !== k.key_index ? `=${k.canonical}` : ''}:${k.error ? 'ERROR' : `${k.listed}/${k.stop}`}`).join(' ')}`);
@@ -602,7 +609,7 @@ export function renderGemini(G) {
 }
 
 /** A stable key per finding, so the hourly run pages and comments only when the set changes. */
-const findingKeys = (G) => (G?.findings || []).filter((f) => f.actionable).map((f) => `${f.class}:${f.name}`).sort();
+const findingKeys = (G) => (G?.findings || []).map((f) => `${f.class}:${f.name}`).sort();
 
 async function page(title, body, priority) {
   const res = await fetch(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'moneybag' }, body, signal: AbortSignal.timeout(15_000) });
@@ -817,8 +824,12 @@ async function main() {
 
     // 8. Gemini side — before the long DB reads, so a dead key is known early.
     const glog = (m) => console.error(m);
+    // The hourly run's own last report: its findings are carried forward once they leave the window.
+    const prevCollection = COLLECTION_ONLY && !NO_GEMINI
+      ? await db.collection('ops_reports').findOne({ _id: 'paid-vs-got-collection' }, { projection: { 'gemini.findings': 1 } })
+      : null;
     const gemini = NO_GEMINI ? null : await geminiSection(db, {
-      now, log: glog,
+      now, log: glog, prevFindings: prevCollection?.gemini?.findings || [],
       windowH: windowArg ? Number(windowArg) : COLLECTION_ONLY ? HOURLY_WINDOW_H : null,
     });
     const geminiUnknown = gemini && (gemini.unknown?.length || !gemini.counts || !gemini.positive?.ok);

@@ -1,0 +1,9 @@
+{
+ "packet": 5,
+ "prompt_version": "ai-exposure-r2-6038-neutral",
+ "ids": [
+  "69e8b2562ff2a8dc09e774b0",
+  "decoy-07"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: 孟子 (Mencius) — Chinese Classics Vol. 2 | Author: Mencius (ed. James Legge) | Year: 1861 | Language: Chinese\n2. Title: Oratio de laudibus geometriae habita Lipsiae | Author: Georgius Fabricius Pirnensis | Year: 1556 | Language: Latin\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

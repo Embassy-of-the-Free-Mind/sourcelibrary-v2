@@ -40,6 +40,23 @@ const longDate = (iso: string) =>
 /* ── data, shaped once ── */
 
 type LangRow = (typeof byLanguage.rows)[number];
+/** Transcription error three ways (#5939): raw, after the OCR prompt's own conventions, and the kinds. */
+type ThreeWays = {
+  pages: number;
+  median_cer_raw: number;
+  median_cer_prompt: number;
+  kinds: { long_s_as_f: number; refusals: number; modernised: number; reference_wrong: number; other: number } | null;
+};
+const threeWaysOf = (row: LangRow | null) => ((row?.ocr ?? null) as { three_ways?: ThreeWays } | null)?.three_ways ?? null;
+const twMeta = (byLanguage as { ocr_three_ways?: { hand_check?: { file: string; examples: number; reference_wrong: number } | null } }).ocr_three_ways;
+const twSource = (byLanguage.sources as { ocr_three_ways?: string }).ocr_three_ways;
+const TW_KINDS: [keyof NonNullable<ThreeWays['kinds']>, string][] = [
+  ['long_s_as_f', 'long s read as f'],
+  ['refusals', 'refused'],
+  ['modernised', 'spelling modernised'],
+  ['reference_wrong', 'published text wrong'],
+  ['other', 'other'],
+];
 type Fidelity = {
   kind: string;
   language: string;
@@ -277,14 +294,28 @@ export default function QualityCenterPage() {
           </Figure>
 
           <Sub>By language</Sub>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            We score each transcription three ways: the raw share of characters that differ from a published text of the same
+            printing, the share left once we allow the conventions our transcription instructions ask for (abbreviations written
+            out, the long s written as s, standard characters), and what kinds of error make up the rest, a rough sorting
+            {twMeta?.hand_check ? (
+              <>
+                {' '}that we checked by eye on {twMeta.hand_check.examples} examples, in {twMeta.hand_check.reference_wrong} of
+                which the published text, not ours, was wrong (<A href={`${BLOB}${twMeta.hand_check.file}`}>the check</A>).
+              </>
+            ) : (
+              '.'
+            )}
+          </p>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-            <table className="min-w-[680px] w-full text-sm text-stone-700">
+            <table className="min-w-[860px] w-full text-sm text-stone-700">
               <thead>
                 <tr>
                   <th className={th}>Language</th>
                   <th className={th}>Share of English pages</th>
                   <th className={th}>Transcription: median character error against a published text</th>
+                  <th className={th}>Transcription three ways: raw, after the prompt&rsquo;s own conventions, and what the error is</th>
                   <th className={th}>English rated 4 or 5 of 5 by a model judge</th>
                   <th className={th}>English against a published translation: pages at 4 or 5 of 5</th>
                   <th className={th}>Checked by a person who reads it</th>
@@ -294,6 +325,7 @@ export default function QualityCenterPage() {
                 {languages.map(({ language, row, fid }) => {
                   const ocr = row?.ocr?.current;
                   const tr = row?.translation;
+                  const tw = threeWaysOf(row);
                   return (
                     <tr key={language}>
                       <td className={`${td} font-semibold text-stone-900`}>{language}</td>
@@ -303,6 +335,21 @@ export default function QualityCenterPage() {
                           <>{pct(ocr.median_cer, 1)} <span className="text-stone-500 text-xs">({ocr.pages_scored} pages)</span></>
                         ) : (
                           <span className="text-stone-500">{row ? 'not measured' : '–'}</span>
+                        )}
+                      </td>
+                      <td className={td}>
+                        {tw ? (
+                          <>
+                            {pct(tw.median_cer_raw, 1)} raw, {pct(tw.median_cer_prompt, 1)} after{' '}
+                            <span className="text-stone-500 text-xs">({tw.pages} pages)</span>
+                            {tw.kinds && (
+                              <span className="block text-stone-500 text-xs mt-1">
+                                {TW_KINDS.filter(([k]) => tw.kinds![k] >= 0.005).map(([k, label]) => `${label} ${pct(tw.kinds![k])}`).join(' · ')}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-stone-500">{ocr?.median_cer != null ? 'not broken down' : '–'}</span>
                         )}
                       </td>
                       <td className={td}>
@@ -327,6 +374,13 @@ export default function QualityCenterPage() {
           <Source>
             Share, transcription and model-judge columns: <A href={`${BLOB}src/data/quality-by-language.json`}>src/data/quality-by-language.json</A>{' '}
             (generated {longDate(byLanguage.generated)}). {byLanguage.notes.ocr} {byLanguage.notes.translation}{' '}
+            {twSource && (
+              <>
+                Three-ways column: <A href={`${BLOB}${twSource}`}>{twSource.split('/').pop()}</A>, Wikisource and EEBO-TCP pages
+                of the same scan or edition, the current engine (flash-lite) on a plain transcription prompt; &ldquo;other&rdquo;
+                is mostly marginal notes placed differently, and misreads.{' '}
+              </>
+            )}
             Published-translation column: the <code>translation_fidelity</code> cells of{' '}
             <A href={`${BLOB}src/data/ocr-benchmark-evidence.json`}>src/data/ocr-benchmark-evidence.json</A>
             {fidelityRun && <> (run {fidelityRun}{fidelityIssue && <>, <IssueLink num={fidelityIssue} /></>})</>}: one page per book,

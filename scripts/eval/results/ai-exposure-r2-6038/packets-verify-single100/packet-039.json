@@ -1,0 +1,8 @@
+{
+ "packet": 39,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "6a4ab57b0a459d47e0d000db"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Dissertatio Moralis De Principio Actionum Humanarum, Quam Ex Benevolo Amplissimae Facultatis Philosophicae Permissu, Praeside Dno. M. Matthaeo […], publicae Eruditorum ventilationi subiiciet Johan. Christoph. Ketschau, L | Language: Latin\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

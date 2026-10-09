@@ -188,7 +188,14 @@ const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
 const listOf = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
 
-const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
+const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'Main view: the most pages' : 'Second view: every engine, on fewer pages');
+
+/** Why a second view exists, said once under its heading: readers otherwise take it for a repeat of the
+ *  first chart and wonder why the same engines score so differently. */
+const SECOND_VIEW_WHY =
+  'The main view leaves out engines that were not run on enough of its pages. This view keeps every engine, ' +
+  'on only the pages all of them read. Those pages are not the same pages, and are often easier, so compare ' +
+  'engines within a view, not across the two.';
 
 /** "28 pages from 28 books" — always on the face of the figure. */
 function sample(p: Panel) {
@@ -248,6 +255,18 @@ export function meaning(p: Panel, m: Measure = OCR): string {
   return out.join(' ') + offPlot;
 }
 
+/** Points far below the cluster: under the lower quartile by more than three interquartile ranges (and at
+ *  least a tenth of the spread of the whole field). Needs five points, and never takes more than a quarter. */
+function lowOutliers(pts: Point[]): Set<Point> {
+  const ys = pts.map(p => p.y!).sort((a, b) => a - b);
+  if (ys.length < 5) return new Set();
+  const q = (f: number) => ys[Math.floor(f * (ys.length - 1))];
+  const iqr = q(0.75) - q(0.25);
+  const cut = q(0.25) - Math.max(3 * iqr, (ys[ys.length - 1] - ys[0]) / 10);
+  const out = pts.filter(p => p.y! < cut);
+  return out.length && out.length <= ys.length / 4 ? new Set(out) : new Set();
+}
+
 // ── geometry ─────────────────────────────────────────────────────────────────
 // Font sizes are in viewBox units, and each plot is drawn at close to 1:1 (see PanelView), so f is
 // the type size in CSS pixels.
@@ -305,8 +324,13 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
   const warn = caution(panel);
   const costs = pts.map(p => p.cost!.usd_per_1k);
   const x0 = Math.log10(Math.min(...costs) / 1.8), x1 = Math.log10(Math.max(...costs) * 1.8);
-  const lows = pts.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
-  const highs = pts.map(p => p.y_ci95?.[1] ?? p.y ?? m.yRange[1]);
+  // One engine far below the rest (a route that failed on many pages) would stretch the axis to the floor
+  // and flatten every other engine into a line along the top. Such a point sits on the bottom edge,
+  // marked ↓ with its value, and the axis spans the others.
+  const below = lowOutliers(pts);
+  const inRange = pts.filter(p => !below.has(p));
+  const lows = inRange.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
+  const highs = inRange.map(p => p.y_ci95?.[1] ?? p.y ?? m.yRange[1]);
   // y range in whole steps that leave a margin; the measure picks a step that gives 3–6 ticks
   const step = m.step(Math.max(...highs) - Math.min(...lows));
   const y0 = Math.max(m.yRange[0], Math.floor((Math.min(...lows) - step / 4) / step) * step);
@@ -321,13 +345,15 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
   const pad = f * 0.9;
   const sx = (c: number) => M.l + pad + ((Math.log10(c) - x0) / (x1 - x0)) * (W - M.l - M.r - pad);
   const sy = (a: number) => H - M.b - pad - ((a - y0) / (y1 - y0 || 1)) * (H - M.t - M.b - pad * 1.5);
+  // main #6383: a far-low outlier sits on the bottom edge of the plot, marked ↓ with its value
+  const yOf = (p: Point) => (below.has(p) ? H - M.b - pad : sy(p.y!));
   const yTicks: number[] = [];
   for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
   const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
   const frontier = panel.frontier ? pts.filter(p => p.on_frontier) : [];
   const r = Math.max(4, f * 0.32);
   const fs = f * 0.9;
-  const at = pts.map(p => ({ x: sx(p.cost!.usd_per_1k), y: sy(p.y!) }));
+  const at = pts.map(p => ({ x: sx(p.cost!.usd_per_1k), y: yOf(p) }));
   const labels = placeLabels(
     pts.map((p, i) => ({ ...at[i], name: p.label, num: String(i + 1), must: p.production || (frontier.length >= 2 && !!p.on_frontier) })),
     r, fs, { x0: M.l + 2, y0: M.t - f * 0.2, x1: W, y1: H - M.b },
@@ -363,11 +389,11 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
 
       {/* frontier */}
       {frontier.length >= 2 && (
-        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${sy(p.y!)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={Math.max(1.5, f * 0.14)} strokeLinejoin="round" />
+        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${yOf(p)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={Math.max(1.5, f * 0.14)} strokeLinejoin="round" />
       )}
 
       {/* 95% intervals: thin, behind every dot */}
-      {pts.map((p, i) => p.y_ci95 && (
+      {pts.map((p, i) => p.y_ci95 && !below.has(p) && (
         <g key={`ci-${p.engine}`} stroke={FAINT} strokeWidth={1}>
           <line x1={at[i].x} x2={at[i].x} y1={sy(Math.max(p.y_ci95[0], y0))} y2={sy(Math.min(p.y_ci95[1], y1))} />
           <line x1={at[i].x - 2} x2={at[i].x + 2} y1={sy(Math.max(p.y_ci95[0], y0))} y2={sy(Math.max(p.y_ci95[0], y0))} />
@@ -384,6 +410,9 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
             {!tips && <title>{tipLines(p, panel, m).join('; ')}</title>}
             <circle cx={at[i].x} cy={at[i].y} r={r + 2} fill={SURFACE} />
             <circle cx={at[i].x} cy={at[i].y} r={compute ? r - 0.75 : r} fill={compute ? SURFACE : c} stroke={c} strokeWidth={compute ? 1.5 : 0} />
+            {below.has(p) && (
+              <text x={at[i].x + r * 1.4} y={at[i].y - r * 0.4} fontSize={f * 0.85} fill={MUTED}>↓ {m.fmtY(p.y)}</text>
+            )}
           </g>
         );
       })}
@@ -583,7 +612,12 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
     </p>
   );
   const heading = chart.panels.length > 1 && (
-    <div className={`uppercase tracking-wider text-stone-600 mb-1 ${present ? 'text-sm' : 'text-xs'}`}>{panelHeading(panel)}</div>
+    <>
+      <div className={`uppercase tracking-wider text-stone-600 mb-1 ${present ? 'text-sm' : 'text-xs'}`}>{panelHeading(panel)}</div>
+      {panel.kind !== 'most-pages' && !panel.heading && (
+        <p className={`text-stone-600 leading-snug mb-2 ${present ? 'text-base' : 'text-xs'}`}>{SECOND_VIEW_WHY}</p>
+      )}
+    </>
   );
   const says = <p className={`text-stone-900 leading-snug ${present ? 'text-lg' : 'text-sm font-medium mb-2'}`}>{meaning(panel, m)}</p>;
   const download = (
@@ -663,10 +697,18 @@ export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
       {m.charts.map(chart => chart.panels.map((panel, i) => (
         <figure key={`${chart.id}-${panel.kind}`} id={anchorOf(m, chart, panel)}
           className="min-h-screen flex flex-col justify-center first:justify-start py-8 border-b border-stone-200 scroll-mt-0">
-          <div className="font-serif text-3xl md:text-4xl text-stone-900">
-            {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
-          </div>
-          <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
+          {/* The title and the how-to-read paragraph once per script; a later view of the same script is
+              marked as a continuation, so it does not read as a second chart with the same name. */}
+          {i === 0 ? (
+            <>
+              <div className="font-serif text-3xl md:text-4xl text-stone-900">
+                {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
+              </div>
+              <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
+            </>
+          ) : (
+            <div className="font-serif text-xl text-stone-600">{m.title(chart)}, continued</div>
+          )}
           <div className="mt-4"><PanelView chart={chart} panel={panel} m={m} present /></div>
           {i === chart.panels.length - 1 && <Caption chart={chart} m={m} present />}
         </figure>

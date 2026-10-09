@@ -558,14 +558,19 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   };
 
   // book_count is cached by syncCollectionCounts in scripts/workers/sync-worker.mjs
-  // (Hetzner, every 2h) and reflects only translated books (pages_translated > 0) —
-  // meaningless for visual_art collections, whose items are artworks. Count those live.
+  // (Hetzner, every 2h) and counts the members readable in English (#5288) — the
+  // same view the expanded grid (/api/collections/[id]?mode=manifest) renders.
+  // A `show_all_books` collection's grid drops that filter, so its header is the
+  // whole membership (total_book_count). Meaningless for visual_art collections,
+  // whose items are artworks: count those live.
   const total = isArtCollection
     ? await withTimeout(
       db.collection('books').countDocuments(artFilter, { maxTimeMS: 8000 }),
       8000, collection.artwork_count || 0,
     )
-    : collection.book_count || 0;
+    : collection.show_all_books === true
+      ? collection.total_book_count ?? collection.book_count ?? 0
+      : collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;

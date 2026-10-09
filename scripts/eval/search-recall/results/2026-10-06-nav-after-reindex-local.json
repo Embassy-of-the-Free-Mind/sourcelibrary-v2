@@ -1,0 +1,685 @@
+{
+ "at": "2026-10-06T11:39:24.194Z",
+ "source": "/tmp/nav/after-a-raw.json",
+ "ranking": "default",
+ "rows": [
+  {
+   "id": "page-about",
+   "kind": "page",
+   "query": "about",
+   "r1": 0,
+   "r3": 0,
+   "total": 5,
+   "ranking": "#4",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/secret-societies",
+    "/collections/moral-philosophy",
+    "/collections/the-cosmos",
+    "/about",
+    "/terms"
+   ]
+  },
+  {
+   "id": "page-donate",
+   "kind": "page",
+   "query": "donate",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/support",
+    "/give",
+    "/support/business"
+   ]
+  },
+  {
+   "id": "page-volunteer",
+   "kind": "page",
+   "query": "volunteer",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/volunteers",
+    "/contribute/volunteer",
+    "/contribute"
+   ]
+  },
+  {
+   "id": "page-map",
+   "kind": "page",
+   "query": "map",
+   "r1": 0,
+   "r3": 0,
+   "total": 6,
+   "ranking": "#4",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/jungs-library",
+    "/collections/music-sound",
+    "/collections/encyclopedic-works",
+    "/explore/map",
+    "/explore/constellation",
+    "/explore"
+   ]
+  },
+  {
+   "id": "page-libraries",
+   "kind": "page",
+   "query": "libraries",
+   "r1": 0,
+   "r3": 0,
+   "total": 6,
+   "ranking": "#4",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/jungs-library",
+    "/collections/school-of-athens",
+    "/collections/indonesian-manuscripts",
+    "/libraries",
+    "/about/sources",
+    "/for-researchers"
+   ]
+  },
+  {
+   "id": "page-languages",
+   "kind": "page",
+   "query": "languages",
+   "r1": 1,
+   "r3": 1,
+   "total": 6,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/languages",
+    "/collections/judaism",
+    "/collections/drama",
+    "/collections/indian-philosophy",
+    "/about/progress",
+    "/catalog"
+   ]
+  },
+  {
+   "id": "page-research",
+   "kind": "page",
+   "query": "research",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/research",
+    "/for-researchers",
+    "/blog"
+   ]
+  },
+  {
+   "id": "page-timeline",
+   "kind": "page",
+   "query": "timeline",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/explore/timeline"
+   ]
+  },
+  {
+   "id": "page-check-pages",
+   "kind": "page",
+   "query": "check pages",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/review",
+    "/review/page-check"
+   ]
+  },
+  {
+   "id": "page-quality",
+   "kind": "page",
+   "query": "quality",
+   "r1": 0,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#3",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/research/quality/open",
+    "/research/quality/summary",
+    "/research/quality"
+   ]
+  },
+  {
+   "id": "page-faq",
+   "kind": "page",
+   "query": "faq",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/about/faq",
+    "/privacy"
+   ]
+  },
+  {
+   "id": "page-roadmap",
+   "kind": "page",
+   "query": "roadmap",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/roadmap"
+   ]
+  },
+  {
+   "id": "page-privacy-policy",
+   "kind": "page",
+   "query": "privacy policy",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/privacy",
+    "/dmca",
+    "/terms"
+   ]
+  },
+  {
+   "id": "page-press-releases",
+   "kind": "page",
+   "query": "press releases",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/press-releases"
+   ]
+  },
+  {
+   "id": "page-sponsors",
+   "kind": "page",
+   "query": "sponsors",
+   "r1": 0,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#3",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/florentine-neoplatonism",
+    "/collections/ficinos-florence",
+    "/sponsors"
+   ]
+  },
+  {
+   "id": "page-for-libraries",
+   "kind": "page",
+   "query": "for libraries",
+   "r1": 0,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#2",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/for-researchers",
+    "/for-libraries",
+    "/review/page-check"
+   ]
+  },
+  {
+   "id": "page-vision",
+   "kind": "page",
+   "query": "vision",
+   "r1": 0,
+   "r3": 0,
+   "total": 4,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/christian-mysticism-sub",
+    "/collections/theosophical-tradition",
+    "/collections/spiritual-alchemy",
+    "/collections/the-visionary"
+   ]
+  },
+  {
+   "id": "page-licensing",
+   "kind": "page",
+   "query": "licensing",
+   "r1": 0,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#2",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/terms",
+    "/licensing"
+   ]
+  },
+  {
+   "id": "page-models",
+   "kind": "page",
+   "query": "models",
+   "r1": 0,
+   "r3": 0,
+   "total": 4,
+   "ranking": "#4",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/indian-natural-philosophy",
+    "/collections/accademia-dei-segreti",
+    "/collections/indian-mathematics-astronomy",
+    "/about/models"
+   ]
+  },
+  {
+   "id": "page-page-errors",
+   "kind": "page",
+   "query": "page errors",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/research/page-errors",
+    "/research/quality/summary",
+    "/blog/translation-collapse"
+   ]
+  },
+  {
+   "id": "page-translation-gap",
+   "kind": "page",
+   "query": "translation gap",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/research/translation-gap",
+    "/census",
+    "/research/translation-registry"
+   ]
+  },
+  {
+   "id": "page-feedback",
+   "kind": "page",
+   "query": "feedback",
+   "r1": 0,
+   "r3": 0,
+   "total": 0,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": []
+  },
+  {
+   "id": "tool-ngram-viewer",
+   "kind": "tool",
+   "query": "ngram viewer",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/ngrams",
+    "/blog/ngram-viewer",
+    "/explore"
+   ]
+  },
+  {
+   "id": "tool-librarian",
+   "kind": "tool",
+   "query": "librarian",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/librarian",
+    "/libraries",
+    "/catalog/scholar"
+   ]
+  },
+  {
+   "id": "tool-gallery",
+   "kind": "tool",
+   "query": "gallery",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/gallery",
+    "/gallery/review",
+    "/artwork"
+   ]
+  },
+  {
+   "id": "tool-census",
+   "kind": "tool",
+   "query": "census",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/census",
+    "/blog/counting-the-gap",
+    "/blog/untranslated-renaissance"
+   ]
+  },
+  {
+   "id": "tool-api",
+   "kind": "tool",
+   "query": "api",
+   "r1": 1,
+   "r3": 1,
+   "total": 5,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/developers",
+    "/collections/cosmology-astronomy",
+    "/collections/anatomical-revolution",
+    "/collections/microscopy",
+    "/for-libraries"
+   ]
+  },
+  {
+   "id": "tool-identify-artwork",
+   "kind": "tool",
+   "query": "identify artwork",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/identify",
+    "/artwork",
+    "/browse/artists"
+   ]
+  },
+  {
+   "id": "tool-podcast",
+   "kind": "tool",
+   "query": "podcast",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/podcast"
+   ]
+  },
+  {
+   "id": "collection-drebbel-collection",
+   "kind": "collection",
+   "query": "Drebbel collection",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/drebbel"
+   ]
+  },
+  {
+   "id": "collection-alchemy-collection",
+   "kind": "collection",
+   "query": "alchemy collection",
+   "r1": 0,
+   "r3": 0,
+   "total": 1,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/categories/alchemy"
+   ]
+  },
+  {
+   "id": "collection-mycology",
+   "kind": "collection",
+   "query": "mycology",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/mycology",
+    "/collections/mycology/catalog",
+    "/collections/slime-moulds",
+    "/collections/slime-moulds/catalog"
+   ]
+  },
+  {
+   "id": "collection-kabbalah",
+   "kind": "collection",
+   "query": "kabbalah",
+   "r1": 1,
+   "r3": 1,
+   "total": 6,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/kabbalah",
+    "/collections/theosophical-tradition",
+    "/collections/mystical-practice",
+    "/categories/jewish-kabbalah",
+    "/collections/kabbalah-sacred-geometry",
+    "/categories/christian-cabala"
+   ]
+  },
+  {
+   "id": "author-huygens",
+   "kind": "author",
+   "query": "Huygens",
+   "r1": 0,
+   "r3": 0,
+   "total": 3,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/mechanical-engineering",
+    "/collections/dutch-golden-age-of-science",
+    "/collections/strategy-games"
+   ]
+  },
+  {
+   "id": "author-paracelsus",
+   "kind": "author",
+   "query": "Paracelsus",
+   "r1": 0,
+   "r3": 0,
+   "total": 5,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/alchemy",
+    "/collections/paracelsian-medicine",
+    "/collections/paracelsian-hermetica",
+    "/categories/paracelsian",
+    "/blog/astrological-diagrams"
+   ]
+  },
+  {
+   "id": "author-ficino",
+   "kind": "author",
+   "query": "Ficino",
+   "r1": 0,
+   "r3": 0,
+   "total": 3,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/hermetica",
+    "/collections/renaissance-philosophy",
+    "/collections/magic"
+   ]
+  },
+  {
+   "id": "author-kircher-author-page",
+   "kind": "author",
+   "query": "Kircher author page",
+   "r1": 0,
+   "r3": 0,
+   "total": 3,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/categories/paracelsian",
+    "/collections/optics",
+    "/collections/renaissance-music"
+   ]
+  },
+  {
+   "id": "blog-hidden-engineers",
+   "kind": "blog",
+   "query": "hidden engineers",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/blog/hidden-engineers",
+    "/collections/theatres-of-machines"
+   ]
+  },
+  {
+   "id": "blog-philosophers-stone-essay",
+   "kind": "blog",
+   "query": "philosophers stone essay",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/blog/philosophers-stone",
+    "/blog/hogwarts-library"
+   ]
+  },
+  {
+   "id": "blog-how-we-measure-ocr-quality",
+   "kind": "blog",
+   "query": "how we measure ocr quality",
+   "r1": 0,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#2",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/blog/ocr-consistency",
+    "/blog/how-we-measure-ocr-quality",
+    "/blog/rashi-ocr"
+   ]
+  },
+  {
+   "id": "browse-latin",
+   "kind": "browse",
+   "query": "latin",
+   "r1": 0,
+   "r3": 0,
+   "total": 6,
+   "ranking": "#4",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/humanist-scholarship",
+    "/collections/syriac-tradition",
+    "/collections/byzantine-philosophy",
+    "/languages/latin",
+    "/languages/lat",
+    "/languages/greek-latin"
+   ]
+  },
+  {
+   "id": "browse-hermeticism",
+   "kind": "browse",
+   "query": "hermeticism",
+   "r1": 0,
+   "r3": 0,
+   "total": 6,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/hermetica",
+    "/collections/gnostic-texts",
+    "/collections/theosophical-tradition",
+    "/collections/hermetic-image",
+    "/search",
+    "/blog/demonology"
+   ]
+  }
+ ]
+}
