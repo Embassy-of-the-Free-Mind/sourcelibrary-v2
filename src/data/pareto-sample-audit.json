@@ -1,0 +1,206 @@
+{
+ "generated_by": "scripts/eval/build-pareto-sample-digest.mjs",
+ "issue": 6304,
+ "date": "2026-10-08",
+ "writeup": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/2026-10-08-pareto-sample-audit-6304.md",
+ "files": {
+  "summary": "scripts/eval/results/pareto-sample-audit-6304/summary.json",
+  "drops": "scripts/eval/results/pareto-sample-audit-6304/drops.json",
+  "eye": "scripts/eval/results/pareto-sample-audit-6304/eye.json"
+ },
+ "checked": {
+  "translation": 880,
+  "ocr": 908
+ },
+ "dropped": {
+  "translation": 21,
+  "ocr": 22,
+  "reasons": [
+   {
+    "family": "translation",
+    "reason": "judges",
+    "n": 11
+   },
+   {
+    "family": "translation",
+    "reason": "by-eye",
+    "n": 7
+   },
+   {
+    "family": "translation",
+    "reason": "language",
+    "n": 3
+   },
+   {
+    "family": "ocr",
+    "reason": "by-eye",
+    "n": 10
+   },
+   {
+    "family": "ocr",
+    "reason": "cer",
+    "n": 10
+   },
+   {
+    "family": "ocr",
+    "reason": "language",
+    "n": 2
+   }
+  ]
+ },
+ "held": {
+  "translation": {
+   "n": 21,
+   "of": 25
+  },
+  "ocr": {
+   "n": 10,
+   "of": 13
+  },
+  "swapsAllOverlap": true
+ },
+ "unfit": [
+  {
+   "chart": "Chinese translation (the #6182 chart)",
+   "qualifier": "the top engines"
+  },
+  {
+   "chart": "Chinese print OCR",
+   "qualifier": null
+  },
+  {
+   "chart": "Armenian OCR",
+   "qualifier": null
+  }
+ ],
+ "edition": {
+  "greek": {
+   "n": 109,
+   "of": 121
+  },
+  "latinNormalised": {
+   "n": 40,
+   "of": 143
+  },
+  "chineseOverrun": {
+   "n": 145,
+   "of": 498
+  }
+ },
+ "famous": [
+  {
+   "language": "Pali",
+   "famous": 25,
+   "n": 29
+  },
+  {
+   "language": "Chinese",
+   "famous": 19,
+   "n": 25
+  },
+  {
+   "language": "Hebrew",
+   "famous": 19,
+   "n": 28
+  },
+  {
+   "language": "Arabic",
+   "famous": 11,
+   "n": 24
+  },
+  {
+   "language": "Latin",
+   "famous": 31,
+   "n": 70
+  },
+  {
+   "language": "Sanskrit",
+   "famous": 13,
+   "n": 30
+  },
+  {
+   "language": "Greek",
+   "famous": 28,
+   "n": 69
+  },
+  {
+   "language": "Persian",
+   "famous": 8,
+   "n": 23
+  },
+  {
+   "language": "German",
+   "famous": 3,
+   "n": 22
+  },
+  {
+   "language": "Italian",
+   "famous": 1,
+   "n": 10
+  },
+  {
+   "language": "French",
+   "famous": 0,
+   "n": 14
+  }
+ ],
+ "spearman": [
+  0.833,
+  0.976
+ ],
+ "levelShift": [
+  -0.463,
+  0.904
+ ],
+ "coverage": {
+  "chineseTranslationPrinted": {
+   "sample": 0.875,
+   "corpus": 0.054
+  },
+  "chineseHandwritten": {
+   "sample": 0.125,
+   "corpus": 0.945
+  },
+  "tibetan": {
+   "texts": 8,
+   "printed": {
+    "sample": 1,
+    "corpus": 0.399
+   },
+   "handwritten": {
+    "sample": 0,
+    "corpus": 0.598
+   }
+  },
+  "english17c": {
+   "sample": 0.795,
+   "corpus": 0.095
+  },
+  "germanFrench": {
+   "n": 23,
+   "wikisource": {
+    "sample": 1,
+    "corpus": 0
+   },
+   "c19": {
+    "sample": 0.696,
+    "corpus": 0.138
+   }
+  }
+ },
+ "eye": {
+  "pages": 57,
+  "readers": 8,
+  "fit": 9,
+  "limit": 29,
+  "unfit": 19,
+  "flagged": {
+   "n": 15,
+   "of": 31
+  },
+  "unflagged": {
+   "n": 4,
+   "of": 26
+  }
+ }
+}

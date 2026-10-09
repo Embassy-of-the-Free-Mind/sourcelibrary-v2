@@ -32,6 +32,8 @@ const WRITE_LINE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A
 const ALLOWED: Record<string, string> = {
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text (not a model reading), cannot loop; written only where a Kraken read of the image verifies it (#5560)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',
+  'scripts/batch/greek-reocr-5813/restore-truncated.mjs': "puts back the page's own previous transcription from its page_revisions snapshot after a cut-off write (#5813); no model is read",
+  'scripts/batch/greek-reocr-5813/restore-pages.mjs': "puts back the page's own previous transcription from its page_revisions snapshot (#5813); no model is read",
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'builds the $set for scripts/workers/syriac-kraken-lane.mjs, which runs loopVerdict on the text before calling it (#4883)',
   'scripts/lib/ndl-koten-lane.mjs': 'builds the $set for scripts/workers/ndl-koten-lane.mjs, which runs loopVerdict on the text before calling it (#4925)',

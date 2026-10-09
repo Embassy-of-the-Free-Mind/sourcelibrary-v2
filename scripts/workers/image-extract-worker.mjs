@@ -46,6 +46,7 @@ import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
@@ -596,6 +597,14 @@ async function main() {
   // globally paused; SCOPE_FILTER confines every candidate query (empty {} in
   // normal operation).
   const ctrl = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  // The images step pause ('images', or the legacy 8 — scripts/lib/pause.mjs) is absolute;
+  // before #5492 this worker read only the global flag, so `paused_phases: ['images']` —
+  // the documented form — stopped nothing here.
+  if (isPaused(ctrl, 'images')) {
+    console.log('[IMAGE-EXTRACT] images step paused, exiting');
+    await client.close();
+    return;
+  }
   if (!shouldBypassPause(ctrl)) {
     console.log('[IMAGE-EXTRACT] Pipeline paused, exiting');
     await client.close();

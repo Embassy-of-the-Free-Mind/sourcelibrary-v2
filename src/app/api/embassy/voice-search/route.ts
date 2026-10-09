@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { hybridSearch } from '@/lib/search/librarian-search';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { supabase } from '@/lib/supabase';
-import { CLIP_URL } from '@/lib/clip';
+import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { logAiUsage } from '@/lib/log-ai-usage';
 
@@ -43,19 +43,17 @@ async function searchImages(query: string): Promise<GalleryImage[]> {
   try {
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });
     if (resp.ok) {
       const { embedding } = await resp.json();
       if (embedding) {
-        const { data } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.2,
-          match_count: 8,
-        });
-        if (data) {
+        // GLOBAL_SCOPE: the Librarian answers for the main site only (see
+        // tenantVisibilityFilter in src/lib/embassy/librarian.ts).
+        const { rows: data } = await matchClip(embedding, { scope: GLOBAL_SCOPE, threshold: 0.2, count: 8 });
+        if (data.length > 0) {
           for (const match of data) {
             if (match.source_type === 'gallery_image' && match.id) clipIds.set(match.id, match.similarity);
           }

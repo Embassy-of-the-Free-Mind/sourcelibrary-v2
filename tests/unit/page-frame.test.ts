@@ -46,6 +46,14 @@ describe('detectPageFrame', () => {
     expect(detectPageFrame(img(100, 140, () => 15), 100, 140)).toEqual({ kind: 'skip', reason: 'dark-page' });
   });
 
+  it('refuses a frame that keeps under 0.65 of the image area, though each side keeps enough', () => {
+    // Bed on all four sides: 0.77 of the width and 0.77 of the height stay, 0.59 of the area.
+    const bed = (lo: number, hi: number) => (x: number, y: number) => (x < lo || x > hi || y < lo || y > hi ? 25 : undefined);
+    expect(detectPageFrame(img(200, 200, bed(22, 177)), 200, 200)).toEqual({ kind: 'skip', reason: 'too-much' });
+    // The same page with a narrower bed (0.67 of the area) is framed.
+    expect(detectPageFrame(img(200, 200, bed(17, 182)), 200, 200).kind).toBe('frame');
+  });
+
   it('refuses several leaves on one board (dark band across the kept box)', () => {
     // Bed on the left and right, and a dark gap between two palm leaves at mid-height.
     const v = detectPageFrame(img(200, 100, (x, y) => (x < 10 || x > 189 || (y >= 46 && y <= 53) ? 20 : undefined)), 200, 100);
@@ -66,6 +74,11 @@ describe('stored frames', () => {
     expect(usablePageFrame({ x: 0, y: 0, w: 0.9, h: 1, v: 1 })).toBeNull();
     expect(usablePageFrame({ x: 0.5, y: 0, w: 0.8, h: 1, ar: 0.7, v: 1 })).toBeNull();
     expect(usablePageFrame({ x: 0, y: 0, w: '1', h: 1, v: 1 })).toBeNull();
+  });
+
+  it('does not apply a stored frame that keeps under 0.65 of the area', () => {
+    expect(usablePageFrame({ x: 0.1, y: 0.1, w: 0.79, h: 0.79, ar: 0.7, v: 3 })).toBeNull();
+    expect(usablePageFrame({ x: 0.1, y: 0.1, w: 0.82, h: 0.82, ar: 0.7, v: 3 })).not.toBeNull();
   });
 
   it('maps a full-image bbox into the frame, and drops one outside it', () => {
@@ -161,5 +174,116 @@ describe('detectPageFrame refuses printing mistaken for bed', () => {
     // Downsampled letters: strokes of ink three pixels wide with paper between.
     const v = detectPageFrame(img(100, 140, x => (x < 4 ? 20 : x < 22 && x % 4 !== 3 ? 30 : undefined)), 100, 140);
     expect(v.kind).not.toBe('frame');
+  });
+});
+
+describe('detectPageFrame refuses edge-on views of a closed book', () => {
+  it('leaves a head or tail edge (very wide) whole', () => {
+    expect(detectPageFrame(img(240, 60, (x, y) => (y < 8 || y > 50 ? 20 : undefined)), 240, 60))
+      .toEqual({ kind: 'skip', reason: 'not-a-page' });
+  });
+});
+
+describe('detectPageFrame on white canvas (#4276)', () => {
+  // Fixtures are 84×126 with the page at x 10-79, y 12-119: 0.71 of the area, over the v6 floor.
+  // Toned, textured paper (236-247), as a dithered scan reads once downsampled.
+  const paper = (x: number, y: number) => 236 + ((x * 7 + y * 13) % 12);
+  // Lines of text inside a text block.
+  const text = (x: number, y: number, x0: number, x1: number, y0: number, y1: number) =>
+    x >= x0 && x <= x1 && y >= y0 && y <= y1 && y % 4 < 2 ? 30 : undefined;
+
+  it('trims flat white canvas around a smaller page, with no inset', () => {
+    // Bodhicaryāvatāra p5: the page at x 10-79, y 12-119, pure white around it.
+    const v = detectPageFrame(img(84, 126, (x, y) => (
+      x < 10 || x > 79 || y < 12 || y > 119 ? 255 : text(x, y, 20, 70, 24, 108) ?? paper(x, y)
+    )), 84, 126);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('keeps near-white paper that fills the image', () => {
+    // The same book's p205: high-contrast paper at 247-254, text, no canvas.
+    const v = detectPageFrame(img(100, 140, (x, y) => text(x, y, 15, 85, 14, 126) ?? 247 + ((x * 7 + y * 13) % 8)), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  it('keeps the margins of a page whose paper is as white as the canvas', () => {
+    // A binarised Google scan: pure white all over, so no edge can be seen.
+    const v = detectPageFrame(img(100, 140, (x, y) => text(x, y, 22, 78, 24, 116) ?? 255), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  it('leaves canvas that runs past the edge zone (a small object on a large ground)', () => {
+    const v = detectPageFrame(img(100, 140, (x, y) => (x > 64 ? 255 : text(x, y, 8, 56, 14, 126) ?? paper(x, y))), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  // A ragged left edge: the page starts at x=10 above y=70 and at x=13 below it.
+  const ragged = (mark: boolean) => img(84, 126, (x, y) => {
+    if (x > 79 || y < 12 || y > 119 || x < (y < 70 ? 10 : 13)) return 255;
+    if (mark && x === 11 && y >= 30 && y <= 50) return 60;
+    return text(x, y, 24, 70, 24, 108) ?? paper(x, y);
+  });
+
+  it('follows a ragged edge in to its innermost line when only blank paper is given up', () => {
+    const v = detectPageFrame(ragged(false), 84, 126);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x).toBeGreaterThanOrEqual(13);
+    expect(v.box.x).toBeLessThanOrEqual(16);
+    expect(v.box.x + v.box.w).toBe(80);
+  });
+
+  it('stays at the outer line of a ragged edge when the strip holds a mark', () => {
+    const v = detectPageFrame(ragged(true), 84, 126);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x).toBe(10);
+  });
+
+  // A stepped top edge (Bodhicaryāvatāra p5): the page's top-left corner is
+  // missing, so canvas fills x 10-44, y 12-19 inside the box the four cuts make.
+  const stepped = (mark: boolean) => img(84, 126, (x, y) => {
+    if (x < 10 || x > 79 || y < 12 || y > 119 || (x < 45 && y < 20)) return 255;
+    if (mark && x >= 62 && x <= 70 && y >= 18 && y <= 21) return 60;
+    return text(x, y, 20, 70, 42, 108) ?? paper(x, y);
+  });
+
+  it('closes a canvas notch in a corner by moving the cut that gives up less', () => {
+    const v = detectPageFrame(stepped(false), 84, 126);
+    // The top cut moves down past the notch (8 lines of 70); the left cut stays.
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 20, w: 70, h: 100 } });
+  });
+
+  it('leaves the notch when closing it would cut a page number beside it', () => {
+    const v = detectPageFrame(stepped(true), 84, 126);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('leaves the notch when the text starts right below it', () => {
+    // No blank paper to spare inside the moved cut: the first line of text is at y 32.
+    const v = detectPageFrame(img(84, 126, (x, y) => {
+      if (x < 10 || x > 79 || y < 12 || y > 119 || (x < 45 && y < 30)) return 255;
+      return text(x, y, 20, 70, 32, 108) ?? paper(x, y);
+    }), 84, 126);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('does not take the wedge beside a tilted edge for a notch', () => {
+    // The left edge runs from x=10 at the top to x=15 at the bottom, text close to it.
+    const v = detectPageFrame(img(84, 126, (x, y) => {
+      if (x > 79 || y < 12 || y > 119 || x < 10 + Math.round((y - 12) / 22)) return 255;
+      return text(x, y, 18, 70, 24, 108) ?? paper(x, y);
+    }), 84, 126);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.y).toBe(12);
+    expect(v.box.y + v.box.h).toBe(120);
+  });
+
+  it('gives the dark-bed verdict unchanged when the canvas trim fails a guard', () => {
+    // Page 13: bed on the right, then a white sliver. Canvas adds nothing.
+    const bed = (x: number) => (x >= 98 ? 255 : x >= 86 ? 22 : undefined);
+    const v = detectPageFrame(img(100, 140, x => bed(x)), 100, 140);
+    expect(v).toEqual({ kind: 'frame', box: { x: 0, y: 0, w: 85, h: 140 } });
   });
 });

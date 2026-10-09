@@ -141,9 +141,9 @@ export default function SchismaSliverDemo() {
 
   return (
     <LabCard
-      title="Station II, continued — Drag his sliver shut"
+      title="Station II, continued: Drag his sliver shut"
       headerRight={<PlayToggle playing={playing} onClick={toggle} label="Play his scale" />}
-      caption="Descartes' own pie, awake. The numbers around the rim are string lengths; the thin wedge marked Schisma is 486:480 — his two sizes of D, disagreeing by a comma. Drag the sliver shut (or use the slider) and watch every boundary drift by exactly the amount equal temperament demands, rust against ink. Then play the scale and hear the pie re-tune."
+      caption="Descartes' own pie, awake. The numbers around the rim are string lengths; the thin wedge marked Schisma is 486:480, his two sizes of D, disagreeing by a comma. Drag the sliver shut (or use the slider) and watch every boundary drift by exactly the amount equal temperament demands, rust against ink. Then play the scale and hear the pie re-tune."
       sourceHref="/book/musicae-compendium-descartes?page=31"
       sourceLabel="Descartes, Compendium Musicae (1618), the octave divided"
     >
@@ -188,19 +188,19 @@ export default function SchismaSliverDemo() {
       </label>
 
       <div className="mt-4 grid grid-cols-3 gap-3">
-        <Readout label="The sliver" value={`${dGapNow.toFixed(1)} ¢`} note={closed ? 'closed — one D remains' : '486 : 480 = 81 : 80'} />
+        <Readout label="The sliver" value={`${dGapNow.toFixed(1)} ¢`} note={closed ? 'closed: one D remains' : '486 : 480 = 81 : 80'} />
         <Readout label="Major tones" value={`${(203.91 - 3.91 * t).toFixed(1)} ¢`} note="9:8 → 200 ¢" />
         <Readout label="Minor tones" value={`${(182.4 + 17.6 * t).toFixed(1)} ¢`} note="10:9 → 200 ¢" />
       </div>
 
       <p className="mt-3 text-xs text-muted">
-        Honesty note: this sliver is the <em>syntonic</em> comma (81:80, 21.5 ¢) — first cousin of
+        Honesty note: this sliver is the <em>syntonic</em> comma (81:80, 21.5 ¢), first cousin of
         the Pythagorean comma (23.5 ¢) that the stacked fifths above leave over. Same disease, same
         cure: Descartes drew two sizes of D, and{' '}
         <Link href="/book/complete-works-on-music-and-tuning-vol-1" className="text-accent-rust underline">
           Zhu Zaiyu&apos;s
         </Link>{' '}
-        equal semitone makes them one note — which is why, as you drag, the sliver does not get
+        equal semitone makes them one note, which is why, as you drag, the sliver does not get
         hidden. It gets <em>resolved</em>.
       </p>
     </LabCard>

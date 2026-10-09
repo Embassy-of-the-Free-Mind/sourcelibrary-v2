@@ -29,7 +29,7 @@ export async function generateMetadata({
 
   const isDraft = release.status === 'draft';
   return {
-    title: `${release.title} — Source Library`,
+    title: `${release.title} | Source Library`,
     description: release.metaDescription,
     alternates: { canonical: `/press-releases/${slug}` },
     robots: isDraft ? { index: false, follow: false } : undefined,
@@ -80,7 +80,7 @@ export default async function PressReleaseDetail({
 
       {isDraft && (
         <div className="mb-8 bg-accent-gold/5 border border-accent-gold/30 rounded-lg p-4 text-sm text-secondary">
-          <strong className="text-stone-800">Draft</strong> — this release is not yet published. It is
+          <strong className="text-stone-800">Draft</strong>: this release is not yet published. It is
           hidden from the public list and search engines, but reachable by direct link for review.
         </div>
       )}

@@ -1,0 +1,145 @@
+{
+ "queries": [
+  {
+   "id": "b100-crypto",
+   "work_id": "Q104840764",
+   "query": "How did Renaissance writers hide messages with ciphers, invented alphabets and secret letter codes?",
+   "category": "content-no-name",
+   "why": "Treatise on secret writing: ancient and modern ciphers, symbol alphabets and ambiguous words for concealed messages."
+  },
+  {
+   "id": "b100-christian-defense-rome",
+   "work_id": "Q110965843",
+   "query": "Early Christian defense against Roman persecution arguing pagan gods are really demons",
+   "category": "content-no-name",
+   "why": "Tertullian's Apology rebuts accusations against Christians and argues the pagan gods are unclean demons."
+  },
+  {
+   "id": "b100-fungi",
+   "work_id": "Q1943729",
+   "query": "Systematic classification and descriptions of mushroom species with caps, gills and stalks",
+   "category": "content-no-name",
+   "why": "Botanical system of fungi with orders, genera and detailed species descriptions of agarics."
+  },
+  {
+   "id": "b100-eloquence-dialogue",
+   "work_id": "Q275297",
+   "query": "Roman dialogue on the ideal public speaker's training, knowledge and eloquence",
+   "category": "content-no-name",
+   "why": "Cicero's dialogue on what the perfect speaker must know and how eloquence is trained."
+  },
+  {
+   "id": "b100-induction-method",
+   "work_id": "Q585046",
+   "query": "A new inductive method for studying nature to replace the old syllogistic logic",
+   "category": "content-no-name",
+   "why": "Aphorisms proposing a new instrument of induction, axioms built from experiments, against the old logic."
+  },
+  {
+   "id": "b100-demon-expulsion",
+   "work_id": "al-thesaurus-exorcismorum-conjurationum-terribilium",
+   "query": "Manual for priests on driving demons out of possessed and bewitched people",
+   "category": "content-no-name",
+   "why": "Collection of exorcists' manuals on interrogating demons and freeing the possessed and bewitched."
+  },
+  {
+   "id": "b100-chan-sermons",
+   "work_id": "kr:KR6q0265",
+   "query": "Chan Buddhist masters' sermons and dialogues with monks about sudden awakening",
+   "category": "content-no-name",
+   "why": "Records of Chan masters' talks and question-and-answer exchanges with monks."
+  },
+  {
+   "id": "b100-physiognomy-palmistry",
+   "work_id": "local:a:albertus-magnus:admirable-secrets",
+   "query": "Reading a person's character from the face, the nose and the lines of the hand",
+   "category": "content-no-name",
+   "why": "Book of secrets whose pages treat complexions, physiognomy and palmistry."
+  },
+  {
+   "id": "b100-astrology-signs",
+   "work_id": "local:a:albumazar:astronomy-introduction",
+   "query": "Medieval astrology explaining the zodiac signs, planetary lordships and the moon's power over tides",
+   "category": "content-no-name",
+   "why": "Introduction to astrology: natures of the signs, triplicities, planetary lordship and the moon's effects on the sea."
+  },
+  {
+   "id": "b100-court-gentleman",
+   "work_id": "local:a:baldassare-castiglione:book-courtier",
+   "query": "Renaissance dialogue on the perfect gentleman at a prince's court and graceful manners",
+   "category": "content-no-name",
+   "why": "Castiglione's dialogue on the qualities of the ideal court gentleman, grace and avoiding affectation."
+  },
+  {
+   "id": "b100-world-soul-commentary",
+   "work_id": "local:a:calcidius:chalcidius-plato-timaeus",
+   "query": "Late antique Latin commentary on the creation of the world soul and its harmonic number ratios",
+   "category": "content-no-name",
+   "why": "Calcidius' translation and commentary on the Timaeus, world soul ratios, planets and cosmology."
+  },
+  {
+   "id": "b100-animal-fables-virtue",
+   "work_id": "local:a:cyrillus-pseudo:mirror-wisdom",
+   "query": "Medieval Latin moral fables of animals like the lion and ass teaching wisdom",
+   "category": "content-no-name",
+   "why": "Moralizing fables with animal characters on speech, haste, envy and wisdom."
+  },
+  {
+   "id": "b100-misery-human-life",
+   "work_id": "local:a:innocentius-iii-pont-max-lotharius-de-conti:add-bartolus-conditionis-contemptu-contra-creatione-genus-humanae-humanum-liber-",
+   "query": "Medieval meditation on the wretchedness of human life from birth to death",
+   "category": "content-no-name",
+   "why": "Innocent III on the misery of the human condition, vanity, sickness, death and torments."
+  },
+  {
+   "id": "b100-lead-into-gold-witness",
+   "work_id": "local:a:johann-friedrich-schweitzer:adorat-aureus-curieuses-ein-et-mundus-oder-orat-quem-sehr-tractatlein-vitulus",
+   "query": "Eyewitness account of a stranger's powder transmuting lead into gold in an instant",
+   "category": "content-no-name",
+   "why": "Helvetius's narrative of seeing lead transmuted into gold by a tiny amount of the philosophers' stone."
+  },
+  {
+   "id": "b100-roman-law-textbook",
+   "work_id": "local:a:justinian-i:civil-institutes-law",
+   "query": "Roman law textbook for students on persons, slaves, paternal power and marriage",
+   "category": "content-no-name",
+   "why": "Justinian's Institutes, introductory Roman civil law on persons, power, marriage and status."
+  },
+  {
+   "id": "b100-parish-priest-doctrine",
+   "work_id": "local:a:manuzio-aldo:5-catechismo-cioe-comandamento-concilio-decreto-del-il-istruttione-lingua-ordine",
+   "query": "Official Catholic teaching for parish priests explaining the creed and the sacraments",
+   "category": "content-no-name",
+   "why": "Roman catechism for pastors explaining doctrine, baptism, confirmation and the eucharist."
+  },
+  {
+   "id": "b100-chinese-military-campaigns",
+   "work_id": "local:a:mao-yuanyi-compiler:wubei-zhi",
+   "query": "Chinese military treatise recounting generals' campaigns, sieges, mountain passes and stratagems",
+   "category": "content-no-name",
+   "why": "Ming military compendium with historical accounts of campaigns, sieges and tactics."
+  },
+  {
+   "id": "b100-celestial-circles",
+   "work_id": "local:a:proclus:1561-cleomedes-phenomena-sphere-world",
+   "query": "Elementary Greek astronomy of the celestial sphere's parallel circles, zones and antipodes",
+   "category": "content-no-name",
+   "why": "Introductory treatise on the sphere: arctic and tropic circles, horizon, zones and antipodes."
+  },
+  {
+   "id": "b100-vortices-matter",
+   "work_id": "local:a:rene-descartes:cartes-philosophi-principia-renati",
+   "query": "Mechanical philosophy where matter is extension, there is no vacuum, and vortices move planets",
+   "category": "content-no-name",
+   "why": "Descartes' system: first principles of knowledge, matter without vacuum, celestial vortices and magnetism."
+  },
+  {
+   "id": "b100-great-perfection-tantras",
+   "work_id": "local:n:collection-drametse-mona:bum-ma-rgyud-rnying",
+   "query": "Tibetan tantras on primordial awareness, the natural state of mind and non-conceptual enlightenment",
+   "category": "content-no-name",
+   "why": "Old-school Tibetan tantra collection teaching the natural state, primordial wisdom and non-conceptuality."
+  }
+ ],
+ "method": "Written 2026-10-07 by an AI reader (job embed-next-6173) from 40 near-duplicate clusters of the 100K pool (title + 6 sample pages of one edition): one query about the work's subject naming no author, title or work. No embedding arm or search tool. Expected = every edition of the work (work_id) in the pool."
+}

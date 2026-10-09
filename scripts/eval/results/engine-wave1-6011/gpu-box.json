@@ -1,0 +1,68 @@
+{
+ "gpu": "NVIDIA H100 PCIe, 580.126.20",
+ "vllm": "0.31.0",
+ "engines": {
+  "deepseek-ocr": {
+   "pages_out": 385,
+   "runs": [
+    {
+     "engine": "deepseek-ocr",
+     "pages": 385,
+     "ok": 0,
+     "wall_secs": 4.5,
+     "workers": 16
+    },
+    {
+     "engine": "deepseek-ocr",
+     "pages": 385,
+     "ok": 0,
+     "wall_secs": 4.5,
+     "workers": 16
+    },
+    {
+     "engine": "deepseek-ocr",
+     "pages": 385,
+     "ok": 385,
+     "wall_secs": 337.8,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 346.8
+  },
+  "qwen3-vl-8b": {
+   "pages_out": 385,
+   "runs": [
+    {
+     "engine": "qwen3-vl-8b",
+     "pages": 385,
+     "ok": 385,
+     "wall_secs": 1205.4,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 1205.4
+  },
+  "chandra-ocr-2": {
+   "pages_out": 385,
+   "runs": [
+    {
+     "engine": "chandra-ocr-2",
+     "pages": 385,
+     "ok": 385,
+     "wall_secs": 2650.7,
+     "workers": 16
+    }
+   ],
+   "infer_wall_secs": 2650.7
+  }
+ },
+ "usd_per_hour": 3.3538,
+ "billed_usd": 4.597,
+ "hardware": "Scaleway H100-1-80G (pl-waw-2), \u20ac2.8665/h, lease 16:25:49Z\u201317:48:04Z (1.37 h, setup and idle included)",
+ "model_revisions": {
+  "deepseek-ai--DeepSeek-OCR": "9f30c71f441d010e5429c532364a86705536c53a",
+  "Qwen--Qwen3-VL-8B-Instruct": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+  "datalab-to--chandra-ocr-2": "af93b47dba1b47b6640c86ccf487ed2260ab9a09"
+ },
+ "notes": "DeepSeek-OCR ran last, on the V1 model runner (VLLM_USE_V2_MODEL_RUNNER=0, TRITON_ALLOW_NON_CONSTEXPR_GLOBALS=1) with its NGramPerReqLogitsProcessor and max_tokens 7000; the two 4.5 s runs before it were HTTP 400s (max_tokens 8192 exceeded the 8,192 context) and read nothing."
+}

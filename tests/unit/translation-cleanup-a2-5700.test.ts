@@ -9,10 +9,11 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { notesToMeta, repairTagsDeletionOnly, fixCentreMarkers, dropAbsentOriginals, strictlyAbsent, cleanupPage, SOURCE } from '../../scripts/maintenance/translation-cleanup-a2-5700.mjs';
+import { notesToMeta, repairTagsDeletionOnly, fixCentreMarkers, dropAbsentOriginals, strictlyAbsent, cleanupPage, SOURCE, TERMDEF_SOURCE, runFor } from '../../scripts/maintenance/translation-cleanup-a2-5700.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { isMaintenanceSource } from '../../scripts/eval/lib/revision-source.mjs';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 
 const stripTags = (s: string) => s.replace(/<\/?[a-zA-Z][a-zA-Z0-9-]*(?:\s[^<>]*?)?\s*\/?>/g, '');
 
@@ -190,5 +191,72 @@ describe('cleanupPage', () => {
   });
   it('writes revisions under a label the measurement stack reads as maintenance, not a reading', () => {
     expect(isMaintenanceSource(SOURCE)).toBe(true);
+  });
+});
+
+/**
+ * #5901: a model definition stored inside the chip. The rule is the reader's
+ * (scripts/lib/term-definitions.mjs); these pin what the STORED rewrite does with it.
+ * Excerpts as in tests/unit/term-definitions.test.ts (Geomancy: 6975158aa88d83c830d99e22 p83).
+ */
+describe('d: definitions inside <term> move to a <note> (#5901)', () => {
+  const d = (t: string) => cleanupPage(t, { classes: ['d_termdef'] });
+  it('splits head and definition, keeping the chip on the head', () => {
+    const r = d('the <term>Luna: the alchemical name for silver</term> is fixed');
+    expect(r.text).toBe('the <term>Luna</term> <note>the alchemical name for silver</note> is fixed');
+    expect(r.fired.d_termdef).toEqual({ split: 1 });
+  });
+  it('keeps only the note when the head already stands before the chip', () => {
+    const r = d('**Geomancy** <term>Geomancy: A method of divination that interprets markings on the ground or the patterns formed by tossed handfuls of soil, rocks, or sand.</term>, an art performed through points without a natural basis;');
+    expect(r.text).toBe('**Geomancy** <note>A method of divination that interprets markings on the ground or the patterns formed by tossed handfuls of soil, rocks, or sand.</note>, an art performed through points without a natural basis;');
+    expect(r.fired.d_termdef).toEqual({ head_dropped: 1 });
+  });
+  it('turns an "original: …" chip into a note with no chip', () => {
+    const r = d('the <term>original: 足陽明經 (zú yáng míng jīng); a major energy channel running from the face to the feet</term> runs');
+    expect(r.text).toBe('the <note>original: 足陽明經 (zú yáng míng jīng); a major energy channel running from the face to the feet</note> runs');
+    expect(r.fired.d_termdef).toEqual({ apparatus: 1 });
+  });
+  it('leaves genuine terms: a mantra, a title, a reference', () => {
+    for (const t of [
+      'he recited <term>oṃ namo bhagavate bhaiṣajyaguru vaiḍūryaprabharājāya tathāgatāya arhate samyaksaṃbuddhāya</term> three times',
+      '<term>De Vita: Liber Primus</term>', '<term>Genesis 1:3</term>', '<term>Psalm: 23</term>',
+    ]) {
+      const r = d(t);
+      expect(r.text).toBe(t);
+      expect(r.fired).toEqual({});
+    }
+  });
+  it('does not touch a <gloss> after a term — page_terms (#4695) indexes those pairs', () => {
+    const t = "where <term>Sulphur</term> boils mixed with perennial <term>Silver</term> <gloss>mercury or 'quicksilver'</gloss>, fleeing";
+    expect(d(t).text).toBe(t);
+  });
+  it('leaves a chip inside another annotation span: a note written there would be nested', () => {
+    const t = '<note>The author means <term>Luna: the alchemical name for silver</term> here.</note> and <margin><term>Sol: the alchemical name for gold</term></margin>';
+    const r = d(t);
+    expect(r.text).toBe(t);
+    expect(r.fired).toEqual({});
+    expect(r.skipped.d_termdef).toBe('in-span');
+  });
+  it('still splits a chip after a span has closed', () => {
+    expect(d('<note>A note.</note> the <term>Luna: the alchemical name for silver</term>').text)
+      .toBe('<note>A note.</note> the <term>Luna</term> <note>the alchemical name for silver</note>');
+  });
+  it('is idempotent, and is not part of a default (#5700) run', () => {
+    const once = d('the <term>Luna: the alchemical name for silver</term> is fixed').text;
+    expect(d(once).text).toBe(once);
+    const t = 'the <term>Luna: the alchemical name for silver</term> is fixed';
+    expect(cleanupPage(t).text).toBe(t);
+  });
+  it('writes under its own maintenance label, and never in a mixed run', () => {
+    expect(runFor(['d_termdef'])).toEqual({ source: 'cleanup-termdef-5901', issue: '#5901', jobId: 'term-defs-5901' });
+    expect(runFor(['a_initial', 'c_tags']).source).toBe(SOURCE);
+    expect(() => runFor(['d_termdef', 'c_tags'])).toThrow(/alone/);
+    expect(isMaintenanceSource(TERMDEF_SOURCE)).toBe(true);
+  });
+  it('stores what the reader already shows: display rule over the rewritten text changes nothing more', () => {
+    for (const t of ['the <term>Luna: the alchemical name for silver</term> is fixed', '**Geomancy** <term>Geomancy: A method of divination by points.</term>, an art']) {
+      expect(d(t).text).toBe(separateTermDefinitions(t));
+      expect(separateTermDefinitions(d(t).text)).toBe(d(t).text);
+    }
   });
 });

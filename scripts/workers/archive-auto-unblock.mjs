@@ -80,9 +80,8 @@ async function run() {
   console.log(`[archive-auto-unblock] Starting at ${new Date().toISOString()} (cutoff: ${MIN_AGE_DAYS}d)`);
 
   const liveUnblocked = await unblockCollection(db, 'books');
-  const warehouseUnblocked = await unblockCollection(db, 'books_warehouse');
 
-  console.log(`[archive-auto-unblock] Done: ${liveUnblocked} live + ${warehouseUnblocked} warehouse unblocked`);
+  console.log(`[archive-auto-unblock] Done: ${liveUnblocked} unblocked`);
 
   await client.close();
 }

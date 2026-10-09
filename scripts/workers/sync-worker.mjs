@@ -475,6 +475,30 @@ async function syncGalleryImages(db) {
 
 // ── Sync Author Slugs ──
 
+/**
+ * `gallery_images.book_hidden` is copied from the book when the row is built
+ * and never again, but hiding a book does not touch its pages, so
+ * syncGalleryImages never revisits them. On 2026-10-07, 10,516 rows of 1,274
+ * hidden books still read as not hidden: the homepage wall and /gallery linked
+ * them, and the image API (which checks the book itself) answered "Image not
+ * found" for 19 of 84 links (#6092). This marks them, every run.
+ *
+ * One direction only. A row marked hidden whose book is no longer `hidden` is
+ * NOT un-hidden here: not-hidden is not the same as published (`visible`), so
+ * showing those plates is a publication decision, not a sync.
+ */
+async function markHiddenBooksGalleryRows(db) {
+  const hidden = await db.collection('books').distinct('id', { hidden: true });
+  let modified = 0;
+  for (let i = 0; i < hidden.length; i += 5000) {
+    const filter = { book_id: { $in: hidden.slice(i, i + 5000) }, book_hidden: { $ne: true } };
+    if (DRY_RUN) { modified += await db.collection('gallery_images').countDocuments(filter); continue; }
+    modified += (await db.collection('gallery_images').updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+  }
+  console.log(`[sync-worker] gallery_images book_hidden: ${DRY_RUN ? 'would mark' : 'marked'} ${modified} rows of hidden books`);
+  return modified;
+}
+
 function authorSlugFn(author) {
   return author.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
     .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-');
@@ -943,6 +967,13 @@ async function run() {
     } catch (err) {
       console.error(`[sync-worker] Gallery sync phase FAILED: ${err.message}`);
       phaseErrors.push({ phase: 'gallery', error: err.message });
+    }
+    try {
+      await markHiddenBooksGalleryRows(db);
+      phasesCompleted.push('gallery_book_hidden');
+    } catch (err) {
+      console.error(`[sync-worker] Gallery book_hidden phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'gallery_book_hidden', error: err.message });
     }
   }
 

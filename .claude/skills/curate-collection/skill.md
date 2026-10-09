@@ -252,6 +252,8 @@ Write 2-3 paragraphs of editorial context. Structure:
 - No first person
 - No exclamation marks
 - Mention specific editions by year when it matters ("the 1550 Basel edition")
+- No em dashes (—) anywhere: in the description, the highlighted-book `note`s, or the subtitle. Use a comma, colon, period or parentheses (#6215).
+- None of the AI vocabulary from #3038: profound, meticulous, pivotal, "landscape of", "not only … but", showcase, interplay, intricate, vibrant, delve, tapestry, "testament to". Before saving, run `node --env-file=.env.production.local scripts/audit/em-dash-prose.mjs --samples 3`.
 
 ### Step 5: Curate Highlighted Books (3 Tiers)
 

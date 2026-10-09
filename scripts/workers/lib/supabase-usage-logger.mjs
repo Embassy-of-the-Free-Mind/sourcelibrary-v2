@@ -21,6 +21,7 @@ const MODEL_PRICING = {
   'gemini-1.5-flash': { input: 0.075, output: 0.30 },
   'gemini-1.5-pro': { input: 1.25, output: 5.00 },
   // Embedding models: input only — they return a vector, not tokens (#4162).
+  'gemini-embedding-2': { input: 0.20, output: 0 },
   'gemini-embedding-2-preview': { input: 0.20, output: 0 },
   'gemini-embedding-001': { input: 0.15, output: 0 },
 };

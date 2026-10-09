@@ -149,7 +149,7 @@ function Glosses({ page, active, onGloss }: { page: ParsedPage; active: string |
           onMouseEnter={() => onGloss(g.id)}
           onMouseLeave={() => onGloss(null)}
         >
-          {g.anchor && <b>{g.anchor}</b>}{g.anchor ? ' — ' : ''}{g.text}
+          {g.anchor && <b>{g.anchor}</b>}{g.anchor ? ': ' : ''}{g.text}
         </li>
       ))}
     </ol>

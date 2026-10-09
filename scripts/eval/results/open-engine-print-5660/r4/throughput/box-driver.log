@@ -1,0 +1,6 @@
+2026-10-06T10:21:15Z [r4] created 4cf741ca-3a82-4204-92e9-18bc9813672e sl-latin-r4-5924-r4 L4-1-24G fr-par-2 (€0.7875/h ≈ $0.9214/h) lease-until=2026-10-06T16:21:14Z
+sl-latin-r4-5924-r4 (L4-1-24G, fr-par-2): lease until 2026-10-06T16:21:26.658Z, owner 5924 (no progress tag: lease-only)
+2026-10-06T10:21:47Z [r4] SSH-OK 151.115.147.27
+2026-10-06T10:22:00Z [r4] pushed code + bench
+2026-10-06T13:43:19Z [r4] volume 58cb5e8b-e002-452f-82d4-13510c17e103 delete -> 204
+2026-10-06T13:43:19Z [r4] TERMINATED 4cf741ca-3a82-4204-92e9-18bc9813672e (confirmed gone); billed ≈ $3.103

@@ -1,0 +1,357 @@
+{
+ "seed": 42948,
+ "calib": false,
+ "plants": [
+  {
+   "page_id": "6abed25c896ea18127c8cdfd",
+   "vol": 171,
+   "section": "Jātaka",
+   "page_number": 177,
+   "kind": "reversal",
+   "old": "For those who are already suffering, sufferings only increase further.",
+   "new": "For those who are not already suffering, sufferings only increase further.",
+   "how": "\\bare\\b → are not"
+  },
+  {
+   "page_id": "6abec769896ea18127c8a9e4",
+   "vol": 156,
+   "section": "Vinaya",
+   "page_number": 6,
+   "kind": "reversal",
+   "old": "One should turn both oneself and others away from what is harmful.",
+   "new": "One should turn both oneself and others away from what is not harmful.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abecb13896ea18127c8b49a",
+   "vol": 160,
+   "section": "Vinaya",
+   "page_number": 526,
+   "kind": "reversal",
+   "old": "If one asks, \"How can it be valid if they have not reached twenty?\" here there are two ways...",
+   "new": "If one asks, \"How can it be valid if they have not reached twenty?\" here there are not two ways...",
+   "how": "\\bare\\b → are not"
+  },
+  {
+   "page_id": "6abed5e1896ea18127c8e30e",
+   "vol": 180,
+   "section": "Pramāṇa",
+   "page_number": 388,
+   "kind": "reversal",
+   "old": "Alternatively, if the cognition of \"self\" determines only the self itself, it is neither the sensory faculties nor the cognition produced by them.",
+   "new": "Alternatively, if the cognition of \"self\" determines only the self itself, it is not neither the sensory faculties nor the cognition produced by them.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abed582896ea18127c8df6d",
+   "vol": 179,
+   "section": "Pramāṇa",
+   "page_number": 25,
+   "kind": "reversal",
+   "old": "The result, which is the awareness of the aspect of the object, is indeed the cognition of the object.",
+   "new": "The result, which is not the awareness of the aspect of the object, is indeed the cognition of the object.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abecf0f896ea18127c8bdbf",
+   "vol": 164,
+   "section": "Vinaya",
+   "page_number": 199,
+   "kind": "reversal",
+   "old": "The phrase \"by means of an untruth\" means that, as mentioned above, if the slander is also untrue, then an offense is committed from the very beginning.",
+   "new": "The phrase \"by means of an untruth\" means that, as mentioned above, if the slander is not also untrue, then an offense is committed from the very beginning.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "skipped": "6abed5e1896ea18127c8e2af",
+   "kind": "agent",
+   "why": "planter defect (no-op or \"the opponent → we\")",
+   "how": "\\bthe opponent\\b → we"
+  },
+  {
+   "skipped": "6abed8d1896ea18127c8f861",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed4cf896ea18127c8dbcf",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83124",
+   "vol": 100,
+   "section": "Madhyamaka",
+   "page_number": 331,
+   "kind": "agent",
+   "old": "Because I accept as the example specifically that portion which is established as not being the sacrificer and that portion which is not the activity of sacrifice, I am not subject to the fault of having an unestablished example.",
+   "new": "Because I accept as the example specifically that portion which is established as not being the sacrificer and that portion which is not the activity of sacrifice, you are not subject to the fault of having an unestablished example.",
+   "how": "\\bI am\\b → you are"
+  },
+  {
+   "skipped": "6abeb4ba896ea18127c847d7",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed0ee896ea18127c8c66c",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed5e1896ea18127c8e346",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abecb12896ea18127c8b2d7",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed1b1896ea18127c8cb0a",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb442896ea18127c846f3",
+   "vol": 109,
+   "section": "Madhyamaka",
+   "page_number": 576,
+   "kind": "agent",
+   "old": "It describes the kinds of Bodhisattvas present in those Buddha-fields, possessing bodies adorned with the primary and secondary marks of a great being.",
+   "new": "It describes the kinds of Buddha-fields present in those Bodhisattvas, possessing bodies adorned with the primary and secondary marks of a great being.",
+   "how": "swap Bodhisattvas ↔ Buddha-fields"
+  },
+  {
+   "skipped": "6abed61a896ea18127c8e4a3",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed5e1896ea18127c8e1de",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb289896ea18127c8309a",
+   "vol": 100,
+   "section": "Madhyamaka",
+   "page_number": 193,
+   "kind": "agent",
+   "old": "When I refute that the attachment of Devadatta himself is the specific, immediate cause of the attachment arising in Devadatta's continuum, I am likewise refuting that Yajnadatta's attachment is the specific, immediate cause for Devadatta's attachment.",
+   "new": "When I refute that the attachment of Devadatta himself is the specific, immediate cause of the attachment arising in Devadatta's continuum, you are likewise refuting that Yajnadatta's attachment is the specific, immediate cause for Devadatta's attachment.",
+   "how": "\\bI am\\b → you are"
+  },
+  {
+   "skipped": "6abed08e896ea18127c8c4af",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abec815896ea18127c8ad22",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeb331896ea18127c8388d",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abec815896ea18127c8acde",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed8d1896ea18127c8f7b6",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abece79896ea18127c8bc40",
+   "vol": 163,
+   "section": "Vinaya",
+   "page_number": 598,
+   "kind": "agent",
+   "old": "This Long-lived One, Greskyé, lives in association with nuns...\"",
+   "new": "This Greskyé One, Long-lived, lives in association with nuns...\"",
+   "how": "swap Long-lived ↔ Greskyé"
+  },
+  {
+   "skipped": "6abec9d2896ea18127c8afc0",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeb51e896ea18127c84ccf",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec9d2896ea18127c8afe0",
+   "vol": 158,
+   "section": "Vinaya",
+   "page_number": 469,
+   "kind": "agent",
+   "old": "Therefore, regarding the phrase \"I will give it to you,\" the value must be calculated.",
+   "new": "Therefore, regarding the phrase \"You will give it to you,\" the value must be calculated.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "skipped": "6abec9d2896ea18127c8b013",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed76e896ea18127c8efea",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abecd20896ea18127c8b747",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed5e1896ea18127c8e424",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed25c896ea18127c8cedc",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abecb13896ea18127c8b47b",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abec5cd896ea18127c8a731",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abec332896ea18127c89ee9",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed08e896ea18127c8c512",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeca68896ea18127c8b085",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec702896ea18127c8a885",
+   "vol": 155,
+   "section": "Vinaya",
+   "page_number": 149,
+   "kind": "agent",
+   "old": "She replied, \"I was commanded by Udayin to process the wool.\"",
+   "new": "She replied, \"You were commanded by Udayin to process the wool.\"",
+   "how": "\\bI was\\b → you were"
+  },
+  {
+   "skipped": "6abeb361896ea18127c83b2f",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed81b896ea18127c8f3cd",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed9ff896ea18127c90453",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f794",
+   "vol": 189,
+   "section": "Pramāṇa",
+   "page_number": 52,
+   "kind": "term",
+   "old": "Even if one argues that there is no contradiction, but that being a speaker would nonetheless be reversed by omniscience, for that reason it is said: \"Because there is no contradiction, failing to perceive something does not mean one realizes its absence.\" Where contradiction is not stated, the non-perception of a second entity cannot be relied upon to prove its absence.",
+   "new": "Even if one argues that there is no contradiction, but that being a speaker would nonetheless be reversed by omniscience, for that reason it is said: \"Because there is no contradiction, failing to perceive something does not mean one realizes its absence.\" Where contradiction is not stated, the non-inference of a second entity cannot be relied upon to prove its absence.",
+   "how": "perception → inference"
+  },
+  {
+   "page_id": "6abed0ee896ea18127c8c670",
+   "vol": 168,
+   "section": "Jātaka",
+   "page_number": 166,
+   "kind": "term",
+   "old": "Experiencing the taste of the bliss of perfect peace, a compassionate memory of the king arose in him.",
+   "new": "Experiencing the taste of the pain of perfect peace, a compassionate memory of the king arose in him.",
+   "how": "bliss → pain"
+  },
+  {
+   "page_id": "6abed3fd896ea18127c8d330",
+   "vol": 174,
+   "section": "Pramāṇa",
+   "page_number": 188,
+   "kind": "term",
+   "old": "Since most people are attached to ordinary views and lack the power of wisdom, they not only fail to seek out these excellent explanations but are even transformed into hostility by the stains of envy.",
+   "new": "Since most people are attached to ordinary views and lack the power of faith, they not only fail to seek out these excellent explanations but are even transformed into hostility by the stains of envy.",
+   "how": "wisdom → faith"
+  },
+  {
+   "page_id": "6abed72a896ea18127c8ed78",
+   "vol": 184,
+   "section": "Pramāṇa",
+   "page_number": 322,
+   "kind": "term",
+   "old": "Therefore, time is indeed something to be grasped by the valid means of direct perception.",
+   "new": "Therefore, time is indeed something to be grasped by the valid means of direct inference.",
+   "how": "perception → inference"
+  },
+  {
+   "page_id": "6abed4cf896ea18127c8dad7",
+   "vol": 177,
+   "section": "Pramāṇa",
+   "page_number": 35,
+   "kind": "span",
+   "old": "",
+   "new": "This is because even if the absence of a self is excluded, a nature characterized as a self is not positively projected or established.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed42d896ea18127c8d722",
+   "vol": 175,
+   "section": "Pramāṇa",
+   "page_number": 465,
+   "kind": "span",
+   "old": "",
+   "new": "If one asks, \"Then what is it?\", it is from the object. That which arises as a consciousness that is itself without aspects is the fruit of the object.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abec9d2896ea18127c8ae87",
+   "vol": 158,
+   "section": "Vinaya",
+   "page_number": 124,
+   "kind": "span",
+   "old": "",
+   "new": "This is because one dedicates it toward the state of Buddhahood itself. One should describe the others in the same way, up to the turning away from wrong views.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed043896ea18127c8c1ea",
+   "vol": 166,
+   "section": "Vinaya",
+   "page_number": 48,
+   "kind": "span",
+   "old": "",
+   "new": "If one says, \"You are impure,\" \"destroyed by a downfall,\" \"malicious,\" \"full of regret,\" or \"your mind is scorched by anger,\" and so forth, it is also the very same downfall.",
+   "how": "previous side's last sentences prepended"
+  }
+ ]
+}

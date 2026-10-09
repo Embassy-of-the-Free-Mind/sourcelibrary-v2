@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
-import { supabase } from '@/lib/supabase';
 
 /** book_indexes fields the index-term lane reads (#5184). */
 const SEARCH_INDEX_PROJECTION = { _id: 0, book_id: 1, concepts: 1, people: 1, places: 1, keywords: 1 } as const;
@@ -16,13 +15,16 @@ import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { CLIP_URL } from '@/lib/clip';
+import { resolveSearchScope, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
+import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
+import { searchCanonTexts } from '@/lib/search/canon-texts';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -160,12 +162,26 @@ export async function GET(request: NextRequest) {
         visual: { results: [], total: 0 },
       });
     }
+    // The book set the vector lanes (semantic books, artworks, CLIP) rank
+    // inside (#4330). The Mongo "defense-in-depth" filter further down stays.
+    const scope = await resolveSearchScope(request.headers);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({
+        query,
+        books: { results: [], total: 0 },
+        index: { results: [], total: 0 },
+        gallery: { results: [], total: 0 },
+        visual: { results: [], total: 0 },
+      });
+    }
 
     const db = await getDb();
     // Strip surrounding quotes for regex/semantic matching (phrase detection handled by each subsystem)
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
     const queryRegex = new RegExp(matchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    // The same, plus each word's related forms (#5517). A quoted phrase is matched as typed.
+    const wordFormRegex = isPhrase ? queryRegex : stemmedQueryRegex(matchQuery);
 
     // Build Atlas Search filters
     const searchFilters: BookSearchFilters = {};
@@ -188,6 +204,23 @@ export async function GET(request: NextRequest) {
           resolve(fallback);
         }, ms)),
       ]);
+
+    // Canon texts (#6145): a Derge Tengyur volume holds ~16 texts by as many authors and is titled
+    // by volume, so the book lane cannot find "Nagarjuna" in it. This lane matches the texts'
+    // catalogue entries and returns each as a page result at the text's opening page. Same book
+    // filters as the keyword lane, applied in the query.
+    const canonFilter: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+    if (tenantContext.id) canonFilter.tenantId = tenantContext.id;
+    if (language) canonFilter.language = language;
+    if (category) canonFilter.categories = category;
+    if (firstTranslation) canonFilter.is_first_translation = true;
+    if (hasTranslation) canonFilter.pages_translated = { $gt: 0 };
+    if (library) canonFilter.$or = [{ held_by: library }, { 'image_source.provider': library }];
+    if (yearRange) canonFilter.year = { ...(yearFrom !== undefined ? { $gte: yearFrom } : {}), ...(yearTo !== undefined ? { $lte: yearTo } : {}) };
+    const canonPromise = withTimeout(
+      searchCanonTexts(db as any, matchQuery, canonFilter, 3).catch((err) => { console.error('Canon text search error:', err); return []; }),
+      [], 'canon', 4000,
+    );
 
     const emptyBooks = {
       results: [] as SearchResult[], total: 0, hasMore: false,
@@ -237,6 +270,14 @@ export async function GET(request: NextRequest) {
           emptySite, 'site', 4000,
         );
 
+    // "Which Bacon?" (#5950): the people a bare surname could mean. Main site only — the counts
+    // and the /author links are library-wide, which a tenant's reading room must not show. Started
+    // here so it runs beside the lanes; for anything but a one-word query it resolves at once,
+    // without a lookup.
+    const nameChoicesPromise: Promise<NameChoices | null> = tenantContext.id || isPhrase
+      ? Promise.resolve(null)
+      : withTimeout(findNameChoices(matchQuery).catch(() => null), null, 'name-chooser', 2000);
+
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, lexicalArtworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
@@ -248,10 +289,10 @@ export async function GET(request: NextRequest) {
         emptyIndex, 'index',
       ),
       withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined, yearRange), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(db, matchQuery, galleryLimit, yearRange), emptyGallery, 'visual', 5000),
+      withTimeout(searchVisual(db, matchQuery, galleryLimit, scope, yearRange), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
+        semanticBookSearch(matchQuery, 12, { scope })
           .then(books => {
             const results = books.map(b => {
               // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)
@@ -289,7 +330,7 @@ export async function GET(request: NextRequest) {
       ),
       // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
       withTimeout(
-        semanticArtworkSearch(matchQuery, 4)
+        semanticArtworkSearch(matchQuery, 4, { scope })
           // Drop hidden artworks — these RPC rows are returned to the client
           // directly (title/thumbnail), not re-resolved against Mongo below.
           .then(raw => filterVisibleArtworks(db, raw, yearRange))
@@ -315,14 +356,15 @@ export async function GET(request: NextRequest) {
       // cards exist but vector search surfaced 4. This lane fuses in every artwork
       // that literally contains the term (#2735).
       withTimeout(
-        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined, yearRange)
+        // Related word forms too (#5517): "herbal" matched no artwork, "herbs" nine.
+        lexicalArtworkSearch(db, wordFormRegex, 24, tenantContext.id || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
       // Collection search: match collection names/descriptions (~300 docs, fast).
       // Stemmed so "botanical" finds the Botany collection (#5517).
       withTimeout(
-        searchCollections(db, stemmedQueryRegex(matchQuery), matchQuery).catch(() => emptyCollections),
+        searchCollections(db, wordFormRegex, matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);
@@ -375,14 +417,19 @@ export async function GET(request: NextRequest) {
     // `groups` / `workKeyByBookId` are internal plumbing for the collapse — they
     // carry raw catalogue rows and must never reach the wire.
     const { groups: _bookGroups, workKeyByBookId: _bookWorkKeys, ...booksResultPublic } = booksResultRaw;
+    const keywordBooks = booksResultRaw.results.map((book: any) => ({
+      ...book,
+      tenant_slug: tenantIdByBookId.get(book.id)
+        ? tenantSlugById.get(tenantIdByBookId.get(book.id)) || null
+        : null,
+    }));
+    // Canon texts sit after the two strongest book rows, so a reader who typed an author sees the
+    // author's own editions first and the texts inside canon volumes before the long tail.
+    const canonHits = await canonPromise;
     const booksResult = {
       ...booksResultPublic,
-      results: booksResultRaw.results.map((book: any) => ({
-        ...book,
-        tenant_slug: tenantIdByBookId.get(book.id)
-          ? tenantSlugById.get(tenantIdByBookId.get(book.id)) || null
-          : null,
-      })),
+      total: (booksResultPublic.total || 0) + canonHits.length,
+      results: [...keywordBooks.slice(0, 2), ...canonHits, ...keywordBooks.slice(2)],
     };
 
     const collectionsWithTenantSlug = {
@@ -668,6 +715,7 @@ export async function GET(request: NextRequest) {
       artworks: filteredArtworks,
       collections: collectionsWithTenantSlug,
       site: siteResult,
+      people: await nameChoicesPromise,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -1024,12 +1072,12 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
  * CLIP visual search: encode text query via CLIP, search against image embeddings.
  * Finds images by what they look like, not just their metadata.
  */
-async function searchVisual(db: any, query: string, limit: number, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchVisual(db: any, query: string, limit: number, scope: SearchScope, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(4000),
     });
@@ -1038,15 +1086,16 @@ async function searchVisual(db: any, query: string, limit: number, yearRange?: {
     if (!embedding) return { results: [], total: 0 };
 
     // Search Supabase CLIP embeddings
-    const { data, error } = await supabase.rpc('match_clip_text', {
-      query_embedding: embedding,
+    const { rows: data, error } = await matchClip(embedding, {
+      scope,
+      rpc: 'match_clip_text',
       // 0.22 → 0.26 (#4338): below ~0.26 CLIP hands back plausible-looking
       // junk (unrelated instruments, screenshots) that the client blends into
       // the image grid as if it matched the query.
-      match_threshold: 0.26,
-      match_count: limit * 2,
+      threshold: 0.26,
+      count: limit * 2,
     });
-    if (error || !data) return { results: [], total: 0 };
+    if (error) return { results: [], total: 0 };
 
     // Keep only gallery-image rows and strip the clip_embeddings id prefix.
     // The clip table mixes three id namespaces: `gallery-<pageId>-<n>`,
@@ -1161,9 +1210,15 @@ async function lexicalArtworkSearch(
 /**
  * Search collections by name/description.
  * ~300 docs, fast regex on a small collection.
+ *
+ * `queryRegex` also matches related word forms (#5517), which is many more
+ * collections than the three shown. A collection NAMED for the word (or one of
+ * its forms) comes before one that only mentions it, largest first within
+ * each. Ordered by size alone, "poetic" lost the Poetry collection to three
+ * larger ones whose descriptions mention a poet.
  */
 async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
-  const cols = await db.collection('collections')
+  const matched = await db.collection('collections')
     .find({
       visible: { $ne: false },
       book_count: { $gt: 0 },
@@ -1175,9 +1230,17 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
     })
     .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
-    .limit(3)
+    .limit(60)
     .maxTimeMS(2000)
     .toArray();
+
+  const rank = (c: any) => (queryRegex.test(c.name || '') || queryRegex.test(c.slug || '') ? 0 : 1);
+  // Stable sort: within a rank the order stays largest first.
+  const cols = matched
+    .map((c: any) => ({ c, r: rank(c) }))
+    .sort((x: any, y: any) => x.r - y.r)
+    .slice(0, 3)
+    .map((x: any) => x.c);
 
   return {
     results: cols.map((c: any) => {

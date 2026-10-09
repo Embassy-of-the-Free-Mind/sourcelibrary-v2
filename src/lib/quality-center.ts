@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import digest from '@/data/pareto-sample-audit.json';
 
 /**
  * Build-time readers for /quality (#5918). Server-only: they read committed files from
@@ -136,4 +137,22 @@ export const TYPED_SOURCE = /^(esukhia|cbeta|sefaria|manual)/i;
 
 export function typedPages(t: Tradition): number {
   return t.ocr_engines.filter(([e]) => TYPED_SOURCE.test(e)).reduce((s, [, n]) => s + n, 0);
+}
+
+/* ── The sample check behind the cost/quality charts (#6304) ── */
+
+// src/data/pareto-sample-audit.json is written by scripts/eval/build-pareto-sample-digest.mjs from
+// scripts/eval/results/pareto-sample-audit-6304/ and the write-up's verdict table. It is a src/data
+// import, not a read of the results dir, because .vercelignore leaves scripts/eval/results out of a
+// Vercel build.
+
+/** n of a whole, as the page states it. */
+export type Of = { n: number; of: number };
+export type DropReason = 'judges' | 'by-eye' | 'language' | 'cer';
+export type SampleAudit = Omit<typeof digest, 'dropped'> & {
+  dropped: Omit<typeof digest.dropped, 'reasons'> & { reasons: { family: 'translation' | 'ocr'; reason: DropReason; n: number }[] };
+};
+
+export function sampleAudit(): SampleAudit {
+  return digest as SampleAudit;
 }

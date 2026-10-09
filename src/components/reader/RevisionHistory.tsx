@@ -61,7 +61,7 @@ function SourceBadge({ source }: { source: string }) {
     'source-column': {
       ...SOURCE_TINT,
       label: 'On the leaf',
-      title: 'Not our translation — this is the column of the page that is already in this language, transcribed from the scan. The words are the historical translator’s; the period spelling is theirs.',
+      title: 'Not our translation. This is the column of the page that is already in this language, transcribed from the scan. The words are the historical translator’s; the period spelling is theirs.',
     },
   };
   // An UNRECOGNISED provenance is shown as unrecognised. Falling through to "AI"
@@ -72,7 +72,7 @@ function SourceBadge({ source }: { source: string }) {
     bg: 'rgba(0,0,0,0.05)',
     color: 'var(--text-muted)',
     label: truncate(source, 14),
-    title: `Provenance recorded as "${source}" — not a value this reader knows how to describe.`,
+    title: `Provenance recorded as "${source}", not a value this reader knows how to describe.`,
   };
 
   return (

@@ -246,7 +246,7 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
   {
     title: "Ficino's Florence",
     description:
-      'Decorative initials, portraits, and woodcut ornaments from the printed works of Marsilio Ficino and his circle — the visual culture of Florentine Neoplatonism.',
+      'Decorative initials, portraits, and woodcut ornaments from the printed works of Marsilio Ficino and his circle: the visual culture of Florentine Neoplatonism.',
     slug: 'ficinos-florence',
     anchorBooks: [
       '694b3abfde93d1d4cec196fd', // Opera Omnia (53 imgs, avgQ 0.73)
@@ -266,7 +266,7 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
   {
     title: 'The Venetian Mystery',
     description:
-      "Woodcuts and printer's marks from the great Venetian presses — Aldus Manutius, the De Gregoriis, and their contemporaries who made Venice the printing capital of Renaissance Europe.",
+      "Woodcuts and printer's marks from the great Venetian presses: Aldus Manutius, the De Gregoriis, and their contemporaries who made Venice the printing capital of Renaissance Europe.",
     slug: 'venetian-mystery',
     anchorBooks: [
       '69528f16b184004c526a0c18', // De mulieribus claris Venice 1506 (128 imgs, avgQ 0.81)

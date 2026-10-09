@@ -818,6 +818,65 @@ describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reade
   });
 });
 
+// ── The pause reaches this lane (#5492) ────────────────────────────────────
+// Until #5492 the chained lane read no pause at all: only the dial stopped it. A ready run must
+// stay READY, with nothing sent, under a translate pause (any spelling of it) or a global pause;
+// a selective-unpause scope bypasses the global pause for its own books only, never a step pause.
+describe('the pause stops every submit', () => {
+  const control = (c: Doc) => ({ _id: 'processing_control', ...c });
+  const enrolled = async (d: any, gemini: any) => {
+    const res = await enrolChainedRun(d, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.ok).toBe(true);
+  };
+  const cases: Array<[string, Doc]> = [
+    ['translate step', { paused_phases: ['translate'] }],
+    ['legacy name', { paused_phases: ['translation'] }],
+    ['legacy number', { paused_phases: [4] }],
+    ['global pause, no scope', { paused: true }],
+    ['step pause with a scope that covers the book', { paused_phases: ['translate'], allow_scopes: { t: { book_ids: ['bk1'] } } }],
+    ['global pause, scope covers other books only', { paused: true, allow_scopes: { t: { book_ids: ['other'] } } }],
+  ];
+  for (const [label, c] of cases) {
+    it(`${label}: nothing is sent and the run waits READY`, async () => {
+      const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control(c)] });
+      const gemini = makeGemini();
+      await enrolled(d, gemini);
+      await tick(d, makeDeps(gemini), 2);
+      expect(gemini.submitted).toHaveLength(0);
+      expect((await runOf(d)).phase).toBe(PHASE.READY);
+    });
+  }
+
+  it('an unrelated step pause, or a global pause whose scope covers the book, lets it run', async () => {
+    for (const c of [{ paused_phases: ['ocr', 'images'] }, { paused: true, allow_scopes: { t: { book_ids: ['bk1'] } } }]) {
+      const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control(c)] });
+      const gemini = makeGemini();
+      await enrolled(d, gemini);
+      await tick(d, makeDeps(gemini));
+      expect(gemini.submitted).toHaveLength(1);
+    }
+  });
+
+  it('lifting the pause resumes the run on the next tick', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control({ paused_phases: ['translate'] })] });
+    const gemini = makeGemini();
+    await enrolled(d, gemini);
+    await tick(d, makeDeps(gemini));
+    expect(gemini.submitted).toHaveLength(0);
+    d.data.system_config[0].paused_phases = [];
+    await tick(d, makeDeps(gemini));
+    expect(gemini.submitted).toHaveLength(1);
+  });
+
+  it('enrolling with submit:true under a pause records the run and sends nothing', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control({ paused_phases: ['translate'] })] });
+    const gemini = makeGemini();
+    await enrolChainedRun(d, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted).toHaveLength(0);
+    expect((await runOf(d)).phase).toBe(PHASE.READY);
+  });
+});
+
 // ── Page-level targeting (eternity finish pass, #5513) ─────────────────────
 describe('enrol can be narrowed to named pages and kept off withheld pages', () => {
   const withhold = (n: number) => { pageDoc(db, n).translation_withheld = { reason: 'withhold-stale-translation-4523', withheld_at: new Date() }; };

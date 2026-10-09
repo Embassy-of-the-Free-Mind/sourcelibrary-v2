@@ -1,4 +1,4 @@
-import { toGalleryCardUrl } from '@/lib/utils';
+import { toDisplayVariantUrl, toGalleryCardUrl } from '@/lib/utils';
 
 /**
  * Shared utilities for collections and homepage.
@@ -157,7 +157,8 @@ export interface CardImageSource {
 export function cardImageCandidates(images: (CardImageSource | string)[] | undefined, override?: string, heroImage?: string): string[] {
   const urls: string[] = [];
   const add = (u: string | undefined | null) => {
-    const s = sanitizeThumbnail(u);
+    // A card never needs the -full.jpg original (#6092: 22MB into a 336px tile).
+    const s = toDisplayVariantUrl(sanitizeThumbnail(u));
     if (s && !urls.includes(s)) urls.push(s);
   };
   add(override); // curated cover wins over everything

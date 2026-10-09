@@ -1,0 +1,92 @@
+[
+{"id": "QHF8D", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཞོ་རྫིའུ", "english": "the butter-churner",
+   "why": "zho rdzi'u is a small pot of curd, not a butter-churner."},
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "ཚང་ཞེས་བྱ་བ་ནི་", "english": "refers to one or two words unread",
+   "why": "The Tibetan only opens the gloss on tshang, which continues on the next side ('...is an abode'); 'one or two words unread' is invented."}
+ ],
+ "note": "A generally faithful rendering of a word-by-word Vinaya commentary, with a misidentified object and an invented ending."},
+{"id": "QDZLL", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འཇིག་པར་བྱེད་པ་མི་གནས་པ་ནི་རང་ཉིད་གནས་པའི་ཕྱིར་རོ", "english": "because a perishing agent does not remain precisely because it remains as itself",
+   "why": "The point is that when the destroying factor is absent the thing remains of itself, so no separate cause of remaining is needed; the English is self-contradictory."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རྟེན་གྱིས་འཇིག་པའི་གནས་བྱེད་ན", "english": "If the support makes a state of perishing",
+   "why": "The support would cause the perishable thing to endure (gnas byed), not make 'a state of perishing'."},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "སྐྱོན་གཉིས་བསྐལ་པ་", "english": "the two faults were averted",
+   "why": "bskal/bskyal pa means the two faults were levelled against (imposed on) the opponent's position, not averted."}
+ ],
+ "note": "Follows the commentary closely in places but garbles the key argument about causes of endurance and inverts the faults imposed."},
+{"id": "QTRG6", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཉེ་བ་#འཁོར་སྦྱིན་པར་བྱའོ་ཞེས་གསུངས་སོ", "english": "(Upali) The Buddha's disciple foremost in knowledge of Vinaya or monastic discipline replied, \"It should be given.\"",
+   "why": "Upāli is the one asking; the Buddha answers, addressing him: 'Upāli, it should be given.'",
+   "fix": {"find": "(Upali) The Buddha's disciple foremost in knowledge of Vinaya or monastic discipline replied, \"It should be given.\"", "replace": "The Buddha replied, \"Upāli, it should be given.\""}},
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "བུ་དེ་#ཕའི་ཁྱིམ་གྱི་བདག་པོ་ལས་ཕྱིར་མི་ལྡོག་པའི་ཕྱིར", "english": "such a son will not return to being the master of the father's house",
+   "why": "The son is not thereby excluded from ownership of the father's house, which is why one may accept from him; the English inverts it.",
+   "fix": {"find": "such a son will not return to being the master of the father's house", "replace": "such a son does not thereby cease to be an owner of the father's house"}}
+ ],
+ "note": "Readable Vinaya commentary, but the quoted Vinaya exchange is misassigned and the reasoning on the expelled son is inverted."},
+{"id": "QYB14", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "དཀའ་ཐུབ་ཅན་གྱི་ཡོན་ཏན་ཡོད་པར་ཡིད་ཆེས་པར་གྱུར་ནས་བསམས་པ", "english": "the ascetic became convinced of his virtues and thought",
+   "why": "It is the king who becomes convinced that the ascetic has virtues and who then thinks and questions the Bodhisattva.",
+   "fix": {"find": "the ascetic became convinced of his virtues and thought", "replace": "the king became convinced of the ascetic's virtues and thought"}}
+ ],
+ "note": "Good verse rendering of the Kṣāntivādin episode, with the king's reaction misattributed to the ascetic."},
+{"id": "Q18VI", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དག་མི་སྐྱེ་བ་མ་གཏོགས་པ་གཞན་དོར་བར་བྱའོ", "english": "Except for the plants that do not grow, all others should be removed.",
+   "why": "Continuing the previous side, this concerns grass in which living creatures (srog chags) have not bred; it is not about plants that do not grow."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འདག་རྫས་ཀྱི་རྒྱུ་ལྕི་བ་དག་གྱོ་མོར་གཞག་པར་བྱའོ", "english": "The clay materials used for cleaning should be placed in earthenware shards.",
+   "why": "lci ba is cow-dung, kept as material for plastering/smearing, not clay for cleaning."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འཆར་ཀས་དེ་དག་རང་ལ་གནས་འཆར་བཅུག་ནས", "english": "he led them to settle",
+   "why": "gnas 'char bcug means Udāyin had them take dependence (niśraya) on himself, i.e. made them his pupils."}
+ ],
+ "note": "Sound translation of the walkway rules and the opening of the eviction narrative, with a few misread practical and Vinaya terms."},
+{"id": "Q2OB0", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A broadly faithful rendering of a difficult passage on toll evasion and boundaries; the remaining rough spots reflect an obscure Tibetan text."},
+{"id": "Q5ZRX", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A faithful, literal rendering of the Madhyamaka argument that the mind of the three times is not the object of self-grasping."},
+{"id": "QEHHG", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བྱུང་བ་དང་འབྱུང་བར་འགྱུར་བའི་དུས་ཁྱབ་པ་ཉིད་དུ་རྟོགས་པ་རྒྱུ་ཡིན་གྱི།", "english": "The cause of realizing pervasion is the time of what has arisen and what will arise",
+   "why": "The sentence says that what is understood as pervading the times of both the arisen and the yet-to-arise is the cause; the English makes the time into the cause of realizing pervasion."}
+ ],
+ "note": "Good handling of the Pramāṇa dialectic on past and future causes, with one restructured sentence."},
+{"id": "QDZAH", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཆོས་མཐུན་པ་ནི་རིགས་མཐུན་པ་རྣམས་ཏེ", "english": "Harmonious factors are not those of a similar class",
+   "why": "The gloss says the homogeneous factors ARE those of the same class, which is why they are the constituents.",
+   "fix": {"find": "Harmonious factors are not those of a similar class", "replace": "Harmonious factors are those of a similar class"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "གལ་ཏེ་གཞན་ཞེས་བྱ་བ་ནི་རིམ་པ་མ་ཡིན་པ་སྣང་ནའོ། །རང་དངོས་སྣང་བ་ཞེས་བྱ་བ་ནི་རིམ་པ་ཉིད་སྣང་བས་སོ", "english": "it would be because the sequential itself appears as the (actual thing)",
+   "why": "These are two separate word glosses ('if the other' = if the non-sequential appears; 'its own reality appears' = by the sequence itself appearing), not one causal statement."},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "ཞེས་བྱ་བ་ནི་གཞལ་བྱ་བའི་བློ་ལ་གནས་པའོ", "english": "means it does not abide in the cognition of the object of appraisal",
+   "why": "The gloss says it refers to what abides in the cognition of the object; the negation is added."}
+ ],
+ "note": "A word-gloss commentary handled patiently but with an inverted opening definition and some misjoined glosses."},
+{"id": "QRZD8", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "གཞན་གྱིས་བསམ་པ་མ་རིག་ནས་ཕྱི་རོལ་པ་རྣམས་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨྲས་སོ", "english": "Others, not understanding this intention, have spoken about \"externalists\" [note: original: \"phyi rol pa rnams\", likely referring to those who posit real universals outside the mind]",
+   "why": "Lest others miss the intention, the author says 'those that are external', which the next sentence glosses as the particulars (external to the universal); it is neither a statement by others nor a reference to realist opponents."}
+ ],
+ "note": "Accurate on the apoha-related argument about conceptual cognition, with one misread root-text lemma and a misleading note."}
+]

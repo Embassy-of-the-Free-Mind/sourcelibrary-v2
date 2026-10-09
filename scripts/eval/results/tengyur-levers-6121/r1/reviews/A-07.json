@@ -1,0 +1,62 @@
+[
+{"id": "Q8LJO", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the Nyāyabinduṭīkā-type discussion of pseudo-proof and the unestablished reason, with correct technical vocabulary."},
+{"id": "QIEJB", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "གྲངས་ཅན་ཉེ་བར་འགོད་པ", "english": "introduces the Sāmkhya [position], namely,",
+   "why": "Here གྲངས་ཅན means an enumeration (the 'and so forth' sets out the list colour etc.), not the Sāṃkhya school.",
+   "fix": {"find": "introduces the Sāmkhya [position], namely,", "replace": "sets out the enumeration, namely,"}}],
+ "note": "A terse lemma-by-lemma commentary rendered reasonably; one misidentified term."},
+{"id": "Q9AU2", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "ལྟོས་པ་ནི་དེར་ངེས་པར་མི་རུང་བའི་ཕྱིར་རོ", "english": "Dependence is definitely not possible in that way.",
+   "why": "With the preceding མི་ the sentence says that what does NOT depend on their benefit cannot be restricted to that place/time; the English makes dependence impossible."},
+  {"type": "term", "confidence": "high", "tibetan": "བརྒྱ་བྱིན་སྤྱི་བོ", "english": "If the head of Indra [note: a reference to a specific type of grass or a mythological origin point]",
+   "why": "Śakramūrdhan ('Indra's head') is the standard Pramāṇavārttika example of an anthill, whose vapour looks like smoke; the note is wrong.",
+   "fix": {"find": "If the head of Indra [note: a reference to a specific type of grass or a mythological origin point]", "replace": "If an anthill (śakramūrdhan, lit. \"Indra's head\") [note: an anthill, whose vapour resembles smoke]"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཅུང་ཟད་ལྕི་བ", "english": "heavy clay",
+   "why": "ལྕི་བ is cow dung (gomaya), the stock example of a dissimilar source from which plants are seen to arise.",
+   "fix": {"find": "heavy clay", "replace": "cow dung"}}],
+ "note": "The causal argument is followed, but the anthill and cow-dung examples, central to the passage, are mistranslated."},
+{"id": "QBATP", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "ཡན་ལག་ཅན་རྟོགས་པ་སྐྱེད་དོ", "english": "The text states that the \"possessor of limbs\" (avayavin) the whole composed of parts produces the cognition.",
+   "why": "Recognition and the parts produce the cognition OF the whole; the whole is the object, not the producer.",
+   "fix": {"find": "The text states that the \"possessor of limbs\" (avayavin) the whole composed of parts produces the cognition.", "replace": "The text states that [recognition and the parts] produce the cognition of the \"possessor of limbs\" (avayavin), the whole composed of parts."}},
+  {"type": "structure", "confidence": "medium", "tibetan": "གཞན་མེད་པའི་ཕྱིར་རོ། །འོན་ཏེ་ཞེས་བྱ་བ་ལ་སོགས་པ་ནི་དོགས་པ་བསུ་བའོ", "english": "because there is no third cognition other than recognition and memory, the objection is raised by the phrase \"but if\" and so forth.",
+   "why": "Two separate glosses: 'from that' is explained by there being no third cognition; separately, 'but if' etc. introduces an objection."},
+  {"type": "term", "confidence": "medium", "tibetan": "ཚད་མ་དོན་དང་ལྡན་པར་འགྱུར་རོ", "english": "then the valid means of knowledge would be consistent with the object",
+   "why": "The point is that the word 'pramāṇa' would then be meaningful/purposeful, not that cognition accords with its object."}],
+ "note": "Argument about the avayavin is broadly tracked, but case roles and the segmentation of glosses slip in places."},
+{"id": "QJFBB", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "མཚམས་ཀྱི་ཁོངས་སུ་བསྡུས་པའི་ས་ལ་གནས་པ", "english": "Physical effort while remaining on land included within the boundary, such as by throwing a weapon;",
+   "why": "Standing on land within the boundary qualifies the monk for all three modes (body, speech, mind), not only the physical one."},
+  {"type": "term", "confidence": "medium", "tibetan": "ཤོ་གམ་གྱི་བྱ་བ་མ་ཆགས་པར་གྱུར་པ", "english": "without attachment",
+   "why": "Means the toll obligation has not been incurred/levied, not 'without attachment'."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཁྱེར་བ་པོ་ལ་དགོས་པ་མེད་པ་དེ་ལ་ལྟུང་བ་མེད་དོ", "english": "If the carrier is positioned on land belonging to the boundary but has no specific purpose, there is no downfall.",
+   "why": "No offence where [the mantra/medicine power] needs no carrier standing within the boundary; it is not about the carrier lacking a purpose."}],
+ "note": "Vinaya toll-evasion casuistry is roughly conveyed but several conditions are misparsed."},
+{"id": "QDJQV", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "སྒྲ་སྒྲོགས་པའི་དབང་པོ་མི་དགེ་བའི་ལས་བྱེད་པ་རྣམས་ཀྱིས་སྡུག་བསྔལ་བའི", "english": "the howling lords of those who commit unwholesome deeds inflict suffering",
+   "why": "It is the evil-doers themselves who cry out piteously in their suffering, not 'lords' inflicting suffering."}],
+ "note": "A fluent and largely faithful rendering of the verses against adultery, given as prose."},
+{"id": "QBLJI", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དམིགས་ཀྱིས་བསལ་བའི་དོན་ཏོ", "english": "it means a specific exclusion",
+   "why": "Here དམིགས་ཀྱིས་བསལ་བ means singling out (nirdhāraṇa): of the two, intention is picked out for discussion, not excluded."}],
+ "note": "Sound rendering of the cetanā/cetayitvā karma division and the 'supreme sage' gloss."},
+{"id": "QRZD8", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "gloss", "confidence": "high", "tibetan": "ཕྱི་རོལ་པ་རྣམས་ཞེས་བྱ་བ", "english": "\"externalists\" [note: original: \"phyi rol pa rnams\", likely referring to those who posit real universals outside the mind]",
+   "why": "The commentary itself glosses ཕྱི་རོལ་པ as what is external to the universal, i.e. the particulars, not a philosophical school.",
+   "fix": {"find": "\"externalists\" [note: original: \"phyi rol pa rnams\", likely referring to those who posit real universals outside the mind]", "replace": "\"those external\" [note: i.e. what is external to the universal, the particulars, as glossed next]"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "གཞན་གྱིས་བསམ་པ་མ་རིག་ནས", "english": "Others, not understanding this intention, have spoken about",
+   "why": "Lest others misunderstand the intention, the author (root text) says 'externals' etc.; the others do not speak."}],
+ "note": "The apoha discussion is well handled overall; one misleading note and one misassigned speaker."},
+{"id": "QW7HY", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "རབ་ཏུ་སྐྱེ་བ", "english": "rebirth",
+   "why": "One of the aspects of origin, prabhava 'arising/production', not rebirth."},
+  {"type": "agent", "confidence": "medium", "tibetan": "རང་བཞིན་བཟུང་བར་གྱུར་པའོ", "english": "one's own nature is grasped",
+   "why": "It is the nature of the Truths that is grasped by the knowledge realizing them, not one's own nature."}],
+ "note": "Clear rendering of the general and specific characteristics of the four Truths with minor slips."},
+{"id": "QYTWA", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "omission", "confidence": "high", "tibetan": "རི་སུལ་ནི་རིའི་སྨན་ལྗོངས་དང་། ཕུག་དང་ཚང་ཚིང་དང་བཅས་པའོ", "english": "the tigress herself.",
+   "why": "The first line of glosses (suitable place, mountain recesses, dwelling and roaming, then, mountain range, there, tigress) is skipped.",
+   "fix": {"find": "the tigress herself. Having", "replace": "a suitable place. Mountain recesses means the mountain's herb-meadows, together with caves and thickets. Dwelling and roaming means roaming and staying. Then means immediately afterwards. Mountain range means the mountain range, the recesses. There means at that time. Tigress means the tigress herself. Having"}}],
+ "note": "The word-by-word gloss of the tigress story is accurate where translated, but the opening line of glosses is dropped."}
+]

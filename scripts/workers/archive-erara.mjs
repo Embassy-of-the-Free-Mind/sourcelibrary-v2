@@ -58,6 +58,7 @@ import * as os from 'os';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -166,10 +167,9 @@ async function processBook(book, db) {
     return;
   }
 
-  // Warehouse books carry their collection names so writes go back to the right
-  // place; live books default to the canonical `pages`/`books` collections.
-  const pagesCol = book._pagesCol || 'pages';
-  const booksCol = book._booksCol || 'books';
+  // The warehouse collections were retired 2026-10 (#5470); everything lives in books/pages.
+  const pagesCol = 'pages';
+  const booksCol = 'books';
 
   // Find unarchived pages
   const pages = await db.collection(pagesCol)
@@ -190,7 +190,7 @@ async function processBook(book, db) {
     // `pages_archived: { $not: { $gte: 1 } }`, so returning here without writing
     // the counter leaves it eligible forever. Measured 2026-08-27: 6,865
     // warehouse e-rara books sat in exactly this state — every page already
-    // archived in `pages_warehouse`, `pages_archived` never written on the
+    // archived in the warehouse pages, `pages_archived` never written on the
     // warehouse doc — and this worker re-selected 100 of them every 30 minutes,
     // ran for ~207s, and reported "0 archived, 0 failed, 100 skipped". 227 such
     // runs in the log, none of which moved anything.
@@ -359,7 +359,11 @@ async function processBook(book, db) {
       );
     }
 
-    // If all pages archived, mark book as archive_complete
+    // If all pages archived, mark book as archive_complete — but only a book that is not yet past
+    // archiving and not held. This worker selects e-rara books at ANY status, so an unconditional
+    // write lifted 329 pipeline holds (`held` -> archive_complete, no audit row) and the orchestrator
+    // then OCR'd 30 of them (#6122). It could equally move a translated book back to OCR. The page
+    // images above are archived either way; only the status advance is conditional.
     const remainingUnarchived = await db.collection(pagesCol).countDocuments({
       book_id: book.id,
       $or: [
@@ -370,7 +374,14 @@ async function processBook(book, db) {
     });
     if (remainingUnarchived === 0) {
       await db.collection(booksCol).updateOne(
-        { id: book.id },
+        {
+          id: book.id,
+          ...NOT_HELD,
+          $or: [
+            { 'pipeline_auto.status': { $exists: false } },
+            { 'pipeline_auto.status': { $in: ['queued', 'archiving'] } },
+          ],
+        },
         {
           $set: {
             'pipeline_auto.status': 'archive_complete',
@@ -414,29 +425,11 @@ async function main() {
     .limit(BOOK_LIMIT)
     .toArray();
 
-  // Also scan the warehouse — the bulk of the e-rara backlog was moved out of the
-  // live `books` collection into `books_warehouse` (statuses archiving/archive_complete)
-  // to keep Atlas queries fast. archive-bulk already scans the warehouse this way;
-  // mirror it here so the e-rara backlog is reachable. Each warehouse book is tagged
-  // with its collection names so processBook() writes back to the right place.
-  const warehouseRemaining = Math.max(0, BOOK_LIMIT - eraraBooks.length);
-  const warehouseEraraBooks = warehouseRemaining > 0
-    ? await db.collection('books_warehouse')
-        .find(eraraFilter)
-        .sort({ pages_count: 1 })
-        .project(eraraProjection)
-        .limit(warehouseRemaining)
-        .toArray()
-        .catch(() => [])
-    : [];
-  warehouseEraraBooks.forEach(b => { b._pagesCol = 'pages_warehouse'; b._booksCol = 'books_warehouse'; });
-  eraraBooks.push(...warehouseEraraBooks);
-
-  console.log(`[archive-erara] Found ${eraraBooks.length - warehouseEraraBooks.length} live + ${warehouseEraraBooks.length} warehouse e-rara books to archive`);
+  console.log(`[archive-erara] Found ${eraraBooks.length} e-rara books to archive`);
 
   if (DRY_RUN) {
     eraraBooks.forEach((b, i) =>
-      console.log(`  ${i + 1}. ${b._booksCol === 'books_warehouse' ? '[WH] ' : ''}${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ID ${extractEraraId(b)})`)
+      console.log(`  ${i + 1}. ${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ID ${extractEraraId(b)})`)
     );
     await client.close();
     return;

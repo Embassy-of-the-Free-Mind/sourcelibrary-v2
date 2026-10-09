@@ -1,0 +1,302 @@
+{
+ "seed": 43275,
+ "calib": false,
+ "plants": [
+  {
+   "page_id": "6abed61a896ea18127c8e61b",
+   "vol": 181,
+   "section": "Pramāṇa",
+   "page_number": 437,
+   "kind": "reversal",
+   "old": "To show that there is no distinction between self and other in the inferential mind that cognizes an object, it says \"even from the realization of the object.\"",
+   "new": "To show that there is not no distinction between self and other in the inferential mind that cognizes an object, it says \"even from the realization of the object.\"",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abed1b1896ea18127c8ccd6",
+   "vol": 170,
+   "section": "Jātaka",
+   "page_number": 616,
+   "kind": "reversal",
+   "old": "It constantly teaches the gathering of virtues, directs one toward the Noble Path, turns one away from evil actions, and is the means for attaining lasting happiness.\"",
+   "new": "It constantly teaches the gathering of virtues, directs one toward the Noble Path, turns one away from evil actions, and is not the means for attaining lasting happiness.\"",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abeb331896ea18127c838e5",
+   "vol": 104,
+   "section": "Madhyamaka",
+   "page_number": 202,
+   "kind": "reversal",
+   "old": "This is because the names of the divisions of their meditative concentrations are countless, immeasurable, and inconceivable.",
+   "new": "This is not because the names of the divisions of their meditative concentrations are countless, immeasurable, and inconceivable.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abec5cd896ea18127c8a733",
+   "vol": 154,
+   "section": "Vinaya",
+   "page_number": 263,
+   "kind": "reversal",
+   "old": "This rule does not apply to all categories of downfalls such as theft; it applies specifically to the context of taking life.",
+   "new": "This rule does apply to all categories of downfalls such as theft; it applies specifically to the context of taking life.",
+   "how": "\\bdoes not\\b → does"
+  },
+  {
+   "page_id": "6abed5e1896ea18127c8e199",
+   "vol": 180,
+   "section": "Pramāṇa",
+   "page_number": 15,
+   "kind": "reversal",
+   "old": "The existence of a yellow that is not an object of perception depends on non-perception.",
+   "new": "The existence of a yellow that is an object of perception depends on non-perception.",
+   "how": "\\bis not\\b → is"
+  },
+  {
+   "page_id": "6abecc48896ea18127c8b6c9",
+   "vol": 161,
+   "section": "Vinaya",
+   "page_number": 527,
+   "kind": "reversal",
+   "old": "The phrase **if the rain stops, leave it in a house** means that when the rain ceases, one should stay in whatever house is nearby, tie the umbrella up, and leave it there.",
+   "new": "The phrase **if the rain stops, leave it in a house** means that when the rain ceases, one should stay in whatever house is not nearby, tie the umbrella up, and leave it there.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "skipped": "6abed81b896ea18127c8f4e4",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed47c896ea18127c8daac",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed87d896ea18127c8f669",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abeb20c896ea18127c82ce8",
+   "vol": 98,
+   "section": "Madhyamaka",
+   "page_number": 485,
+   "kind": "agent",
+   "old": "The signs of direction are the notions of \"this\" and \"that\"; the distinctions of direction are shown by the terms East, South, West, and North, based on whether they were previously or will subsequently be in contact with the sun.",
+   "new": "The signs of direction are the notions of \"this\" and \"that\"; the distinctions of direction are shown by the terms South, East, West, and North, based on whether they were previously or will subsequently be in contact with the sun.",
+   "how": "swap East ↔ South"
+  },
+  {
+   "page_id": "6abec769896ea18127c8aa33",
+   "vol": 156,
+   "section": "Vinaya",
+   "page_number": 85,
+   "kind": "agent",
+   "old": "The phrase while lacking such qualities refers to claiming, \"I have power; attainment is easy; it is merely a matter of whether I choose to attain it or not.\" The phrases \"I know this\" and \"I see this\" refer to claims regarding seeing deities and so forth.",
+   "new": "The phrase while lacking such qualities refers to claiming, \"You have power; attainment is easy; it is merely a matter of whether I choose to attain it or not.\" The phrases \"I know this\" and \"I see this\" refer to claims regarding seeing deities and so forth.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "skipped": "6abecc48896ea18127c8b61b",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeb1dd896ea18127c82974",
+   "kind": "agent",
+   "why": "planter defect (no-op or \"the opponent → we\")",
+   "how": "\\bthe opponent\\b → we"
+  },
+  {
+   "skipped": "6abed914896ea18127c8fb90",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abecb12896ea18127c8b3a7",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed47c896ea18127c8d8dc",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed42d896ea18127c8d6c0",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec815896ea18127c8acf4",
+   "vol": 157,
+   "section": "Vinaya",
+   "page_number": 137,
+   "kind": "agent",
+   "old": "Those who are firm like those two are those who are as stable as the King of Mountains in the salt water ocean.",
+   "new": "Those who are firm like those two are those who are as stable as the Mountains of King in the salt water ocean.",
+   "how": "swap King ↔ Mountains"
+  },
+  {
+   "skipped": "6abed76e896ea18127c8ee59",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec702896ea18127c8a86d",
+   "vol": 155,
+   "section": "Vinaya",
+   "page_number": 125,
+   "kind": "agent",
+   "old": "Ananda thought: If I accept this, it will violate the training rule.",
+   "new": "Ananda thought: If you accept this, it will violate the training rule.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "skipped": "6abec9d2896ea18127c8b029",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed914896ea18127c8fc6e",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abec54e896ea18127c8a407",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec4f0896ea18127c8a220",
+   "vol": 152,
+   "section": "Vinaya",
+   "page_number": 154,
+   "kind": "agent",
+   "old": "In the walkways, the courtyards, and the doorways, they complained: We have heard words from the Noble Udāyin that we never even heard from drunkards, gamblers, or bastards.",
+   "new": "In the walkways, the courtyards, and the doorways, they complained: You have heard words from the Noble Udāyin that we never even heard from drunkards, gamblers, or bastards.",
+   "how": "\\b[Ww]e (have|had|said|say|explain|ask|teach|hold|accept|assert|maintain|think)\\b → you $1"
+  },
+  {
+   "skipped": "6abecfa1896ea18127c8c163",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed3fd896ea18127c8d460",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abece79896ea18127c8bbd8",
+   "vol": 163,
+   "section": "Vinaya",
+   "page_number": 494,
+   "kind": "agent",
+   "old": "His faculty of wisdom flourished through the nectar-like essence of the Sugata’s Dharma and Vinaya, and he harmonized this work with all the scriptural systems of discipline.",
+   "new": "His faculty of wisdom flourished through the nectar-like essence of the Vinaya’s Dharma and Sugata, and he harmonized this work with all the scriptural systems of discipline.",
+   "how": "swap Sugata ↔ Vinaya"
+  },
+  {
+   "page_id": "6abec5cd896ea18127c8a7c8",
+   "vol": 154,
+   "section": "Vinaya",
+   "page_number": 412,
+   "kind": "term",
+   "old": "She met a monk going to Shravasti and traveled with him.",
+   "new": "She met a novice going to Shravasti and traveled with him.",
+   "how": "monk → novice"
+  },
+  {
+   "page_id": "6abeb2ee896ea18127c83812",
+   "vol": 103,
+   "section": "Madhyamaka",
+   "page_number": 743,
+   "kind": "term",
+   "old": "For the purpose of making known the supremely profound reality of phenomena to those who do not know it, this stainless system belongs to the vehicle of emptiness.",
+   "new": "For the purpose of making known the supremely profound reality of phenomena to those who do not know it, this stainless system belongs to the vehicle of impermanence.",
+   "how": "emptiness → impermanence"
+  },
+  {
+   "skipped": "6abed3fd896ea18127c8d2cc",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abeb2b4896ea18127c834a1",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "skipped": "6abed1b1896ea18127c8cc3f",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed5e1896ea18127c8e284",
+   "vol": 180,
+   "section": "Pramāṇa",
+   "page_number": 250,
+   "kind": "term",
+   "old": "Likewise, if it is the direct perception of another, then because it is the conventional expression of that, non-existence is said to be established through direct perception.",
+   "new": "Likewise, if it is the direct perception of another, then because it is the ultimate expression of that, non-existence is said to be established through direct perception.",
+   "how": "conventional → ultimate"
+  },
+  {
+   "skipped": "6abeb331896ea18127c83a5b",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed4cf896ea18127c8dadc",
+   "vol": 177,
+   "section": "Pramāṇa",
+   "page_number": 40,
+   "kind": "term",
+   "old": "To have the sake of others as the primary focus means the supreme benefit of others; this is the meaning of being \"endowed with compassion.\" It is established for their sake, or for some other purpose such as being the cause of fame and so forth.",
+   "new": "To have the sake of others as the primary focus means the supreme benefit of others; this is the meaning of being \"endowed with equanimity.\" It is established for their sake, or for some other purpose such as being the cause of fame and so forth.",
+   "how": "compassion → equanimity"
+  },
+  {
+   "page_id": "6abeb361896ea18127c83c08",
+   "vol": 105,
+   "section": "Madhyamaka",
+   "page_number": 273,
+   "kind": "span",
+   "old": "",
+   "new": "To establish that this is the wrong time, three verses are spoken, beginning with *this has not been obtained.* *This* refers to thinking \"I will do this later\" when that goal has not yet been reached.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed340896ea18127c8cfe4",
+   "vol": 172,
+   "section": "Jātaka",
+   "page_number": 4,
+   "kind": "span",
+   "old": "",
+   "new": "Lying upon a bed with legs of lapis lazuli, marked and blazing with gold under a glorious canopy, there were those with golden lotuses in their hands who showed him respect.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed76e896ea18127c8ee93",
+   "vol": 185,
+   "section": "Pramāṇa",
+   "page_number": 81,
+   "kind": "span",
+   "old": "",
+   "new": "Therefore, it is not a contradiction with conceptual thought, because conceptual thought has as its object only things like the color blue and so on. This is stated as: \"Therefore, the measure is fully...\" in the nature of blue and so forth.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed42d896ea18127c8d6ff",
+   "vol": 175,
+   "section": "Pramāṇa",
+   "page_number": 430,
+   "kind": "span",
+   "old": "",
+   "new": "However, a person with impaired vision sees a double moon immediately upon opening their eyes, without depending on the memory of a previous sight.",
+   "how": "previous side's last sentences prepended"
+  }
+ ]
+}

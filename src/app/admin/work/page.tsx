@@ -54,8 +54,8 @@ function Item({ head, meta, text, href, tone }: { head: string; meta: ReactNode;
         <span className="text-xs text-stone-500 whitespace-nowrap ml-auto shrink-0 tabular-nums">{meta}</span>
       </div>
       {href
-        ? <a href={href} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{text || '—'}</a>
-        : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{text || '—'}</p>}
+        ? <a href={href} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{text || '–'}</a>
+        : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{text || '–'}</p>}
     </li>
   );
 }
@@ -93,13 +93,13 @@ function Sections({ b, now }: { b: Board; now: Date }) {
       </Section>
 
       <Section title="Dead or stuck" count={b.dead.length}>
-        {infraEur > 0 && <p className="text-xs text-red-700">Flagged servers: ≈ €{Math.round(infraEur)}/month. Nothing is stopped automatically — lease, label role=permanent, or delete.</p>}
+        {infraEur > 0 && <p className="text-xs text-red-700">Flagged servers: ≈ €{Math.round(infraEur)}/month. Nothing is stopped automatically: lease, label role=permanent, or delete.</p>}
         {b.dead.length === 0 ? <Empty>Nothing dead.</Empty> : (
           <List>
             {b.dead.map(d => (
               <Item key={`${d.box}:${d.kind}:${d.name}`} head={d.name} tone={d.state === 'stuck' ? 'amber' : 'red'}
                 meta={<>{d.box} · {ago(d.at, now)}</>}
-                text={`${d.why}${d.issue ? ` — #${d.issue.number} ${d.issue.title ?? ''}` : ''}`}
+                text={`${d.why}${d.issue ? ` · #${d.issue.number} ${d.issue.title ?? ''}` : ''}`}
                 href={d.issue?.url ?? null} />
             ))}
           </List>
@@ -130,7 +130,7 @@ function Sections({ b, now }: { b: Board; now: Date }) {
                 </div>
                 {f.verdict_url || f.issue
                   ? <a href={f.verdict_url ?? f.issue!.url} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{f.verdict || `#${f.issue!.number}`}</a>
-                  : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{f.verdict || '—'}</p>}
+                  : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{f.verdict || '–'}</p>}
                 {f.pr && (
                   <a href={f.pr.url} className={`text-xs ${f.pr.checks === 'red' && f.pr.state === 'OPEN' ? 'text-red-700 hover:underline' : 'text-stone-500 hover:underline'}`}>
                     {prWords(f.pr)}
@@ -156,7 +156,7 @@ function Spend({ s }: { s: SpendLine }) {
       <div className="mt-1 grid gap-1 text-xs text-stone-600">
         {s.sections.map(x => (
           <div key={x.title}>
-            <span className="font-medium text-stone-800">{x.title} — {x.status}</span>
+            <span className="font-medium text-stone-800">{x.title}: {x.status}</span>
             <ul className="pl-3">{x.lines.map((l, i) => <li key={i} className="break-words">{l}</li>)}</ul>
           </div>
         ))}
@@ -179,7 +179,7 @@ export default async function WorkPage() {
   try {
     spend = await getSpendLine(now);
   } catch (e) {
-    spend = { status: 'MISSING', line: `spend check: could not read — ${e instanceof Error ? e.message : String(e)}`, day: null, sections: [] };
+    spend = { status: 'MISSING', line: `spend check: could not read (${e instanceof Error ? e.message : String(e)})`, day: null, sections: [] };
   }
   return (
     <main className="px-4 py-5 sm:px-6 max-w-3xl mx-auto grid gap-6">

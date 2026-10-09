@@ -7,8 +7,11 @@
  * stored against that image (detected_images, gallery, deep-zoom remap) stays
  * valid — see .claude/docs/invariants/image-quality-and-bboxes.md.
  *
- * Only bands DARKER than the page are trimmed. White canvas margins (#4276)
- * are a different problem and are left alone.
+ * Two kinds of band are trimmed, both only where they reach the image edge:
+ * bands DARKER than the page (scanner bed, board), and flat pure-white CANVAS
+ * around a page whose own paper is not pure white (#4276). A scan whose paper
+ * is itself pure white (a binarised Google scan) has no edge to find and is
+ * left whole.
  *
  * PRIOR ART: scripts/auto-crop-black-borders.mjs — rewrites display_photo /
  * cropped_photo with sharp trim(), which seeds from the corner pixel and breaks
@@ -31,8 +34,11 @@ export interface PageFrame {
 
 /** 1: one cut per side from whole-image means. 2: the innermost edge of a tilted
  *  page, so no wedge of bed shows beside it. 3: bed must reach the image edge, so
- *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept. */
-export const PAGE_FRAME_VERSION = 3;
+ *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept.
+ *  4: also trims flat pure-white canvas around a page with toned or textured paper.
+ *  5: a stepped page edge no longer leaves a notch of canvas in a corner of the frame.
+ *  6: a frame keeping less than MIN_KEEP_AREA of the image is refused. */
+export const PAGE_FRAME_VERSION = 6;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -48,6 +54,14 @@ const DARK_RATIO = 0.6;
 const INSET = 0.006;
 /** Never keep less than this fraction of either dimension: a dark plate is not a border. */
 const MIN_KEEP = 0.6;
+/** Never keep less than this fraction of the image's AREA. A box that hides
+ *  more is too often not a page with a border: in the 2026-10-06 sweep those were
+ *  a fold-out table cut at the bottom, an open spread cropped to one half, a torn
+ *  leaf with writing at the cut, bindings photographed at an angle, and (keeping
+ *  0.62) a plate of two engravings cut down the middle (#5876). By eye, about 1
+ *  in 13 was bad at 0.55-0.60 and 1 in 54 at 0.60-0.65. A refused frame costs a
+ *  strip of bed; a wrong one costs the content. */
+const MIN_KEEP_AREA = 0.65;
 /** How far in from each edge a border may reach. */
 const EDGE_ZONE = 0.3;
 /** A dark band narrower than this (fraction of the size) is a rule or shadow, not bed. */
@@ -66,9 +80,11 @@ const MAX_PRINTED_LINES = 0.15;
  *  with ink in it, the cut is slicing letters (text that runs up to the bed). */
 const MAX_INKED_LINES = 0.1;
 const CUT_STRIP = 0.01;
-/** An image narrower than this (w/h) is a spine or an edge, not a page; a tall
- *  octavo is ~0.6. Its "bed" is the spine's own ends and label. */
-const MIN_PAGE_AR = 0.4;
+/** Outside this shape (w/h) an image is a spine, or the fore-edge, head or tail
+ *  of a closed book, not a page (a tall octavo is ~0.6, a two-page spread ~1.5).
+ *  Its "bed" is the binding itself. Bounds from the 2026-10-06 sweep reviews. */
+const MIN_PAGE_AR = 0.5;
+const MAX_PAGE_AR = 2.2;
 /** Trimming less than this fraction of the area is not worth a frame. */
 const MIN_TRIM_AREA = 0.02;
 /** Bands along each side, so a tilted page edge is found where it comes furthest in. */
@@ -79,6 +95,28 @@ const MAX_TILT = 0.052;
 const SHADOW_RATIO = 0.8;
 /** Paper the tighter cut removes must be this bright (fraction of the page median): blank, no ink. */
 const BLANK_RATIO = 0.9;
+
+/** A line of canvas: every pixel near-pure white, and the line as a whole flat white.
+ *  Measured on the Bodhicaryavatara scan (#4276): canvas lines read mean 255 /
+ *  min >= 250, the same book's near-white dithered paper mean <= 252 / min <= 245. */
+const CANVAS_MIN = 246;
+const CANVAS_MEAN = 253.5;
+/** The page's paper must be SEEN to differ from the canvas. A paper pixel has
+ *  nothing printed within two pixels of it and is itself toned or textured (not
+ *  pure white). Below MIN_PAPER of the kept box, the paper is as white as the
+ *  canvas (a binarised scan: Google's, most CJK woodblock reprints) and a white
+ *  band at the edge may be the page's own margin, so canvas is not trimmed.
+ *  Measured 2026-10-06: 0.07-0.29 on the Bodhicaryavatara scan (canvas pages and
+ *  full-image pages alike), 0.00-0.01 on 28 binarised pages, 0.02 on a Google
+ *  scan with a grey halo round its text. */
+const NO_INK = 225;
+const PAPER_MAX = 250;
+const MIN_PAPER = 0.05;
+/** Paper that must stay blank inside a ragged-edge cut on canvas (fraction of the size). */
+const CLEAR_INSIDE = 0.03;
+/** A corner notch (canvas inside a corner of the box, where the page edge is
+ *  stepped) is closed by moving one cut in by at most this fraction of the size. */
+const NOTCH_MAX = 0.15;
 
 function median(xs: number[]): number {
   const s = [...xs].sort((a, b) => a - b);
@@ -129,28 +167,32 @@ function interiorDarkBand(m: number[], thr: number, a: number, b: number): boole
  * in, measured per band, but only when the paper it gives up is blank and the
  * slope is one a straight edge could have. Otherwise the cut stays where it was.
  *
- * `profile(lo, hi)` gives the mean across the band [lo, hi] of the other axis for
- * every position along this one; `span` is that other axis's [a, b]; `at(k, j)`
- * is the pixel at position k along this axis and j along the other.
+ * `bandCut(lo, hi)` gives the cut found on the band [lo, hi] of the other axis
+ * (`n` positions along this one); `span` is that other axis's [a, b]; `at(k, j)`
+ * is the pixel at position k along this axis and j along the other. The same
+ * rule serves a ragged page edge on white canvas: what is given up there must
+ * be canvas or blank paper, and `clear` more lines inside the new cut must be
+ * blank too, so the cut never lands against the text (a bed edge has its shadow
+ * inset and the ink-at-cut guard for that; a white edge has neither to spare).
  */
 function innermostCut(
   cut: number, fromEnd: boolean, thr: number, ref: number,
-  span: [number, number], profile: (lo: number, hi: number) => number[],
-  at: (k: number, j: number) => number,
+  span: [number, number], n: number, bandCut: (lo: number, hi: number) => number,
+  at: (k: number, j: number) => number, clear = 0,
 ): number {
   const [a, b] = span;
   const pad = Math.round((b - a) * 0.04), len = b - a - 2 * pad;
   if (len < BANDS * 2) return cut;
-  const bands: number[][] = [];
+  const cuts: number[] = [];
   for (let i = 0; i < BANDS; i++) {
     const lo = a + pad + Math.floor((len * i) / BANDS), hi = a + pad + Math.floor((len * (i + 1)) / BANDS) - 1;
-    bands.push(profile(lo, hi));
+    cuts.push(bandCut(lo, hi));
   }
-  const n = bands[0].length, outer = fromEnd ? n - 1 : 0;
+  const outer = fromEnd ? n - 1 : 0;
   const centre = (i: number) => a + pad + (len * (i + 0.5)) / BANDS;
   // Bands where the bed shows. Their edges lie on a line; a band mean smears it,
   // so fit the line and take its innermost end over the whole span.
-  const pts = bands.map((m, i) => [centre(i), cutFrom(m, ref * SHADOW_RATIO, fromEnd, ref)]).filter(([, c]) => c !== outer);
+  const pts = cuts.map((c, i) => [centre(i), c]).filter(([, c]) => c !== outer);
   if (pts.length === 0) return cut;
   let deepest = fromEnd ? Math.min(...pts.map(p => p[1])) : Math.max(...pts.map(p => p[1]));
   if (pts.length >= 2) {
@@ -163,9 +205,19 @@ function innermostCut(
   const inner = fromEnd ? Math.min(cut, deepest) : Math.max(cut, deepest);
   if (inner === cut) return cut;
   if (Math.abs(inner - cut) > Math.ceil(MAX_TILT * (b - a))) return cut;
-  // What is given up must be bed or blank paper. Along each line, walk inward from
-  // the old cut: the bed (and its shadow ramp) runs into it from outside; past that, any pixel as
-  // dark as the bed is ink, and the paper must average clean.
+  return givesUpOnlyBlank(cut, inner, fromEnd, thr, ref, span, n, at, clear) ? inner : cut;
+}
+
+/**
+ * True when moving a cut from `cut` in to `inner` gives up only bed, canvas or
+ * blank paper (arguments as for innermostCut). Along each line, walk inward from
+ * the old cut: the bed (and its shadow ramp) runs into it from outside; past
+ * that, any pixel as dark as the bed is ink, and the paper must average clean.
+ */
+function givesUpOnlyBlank(
+  cut: number, inner: number, fromEnd: boolean, thr: number, ref: number,
+  [a, b]: [number, number], n: number, at: (k: number, j: number) => number, clear: number,
+): boolean {
   const step = fromEnd ? -1 : 1;
   for (let j = a; j <= b; j++) {
     let k = cut;
@@ -177,12 +229,14 @@ function innermostCut(
     let sum = 0, cnt = 0;
     for (; k !== inner; k += step) {
       const v = at(k, j);
-      if (v < thr) return cut;
+      // On canvas nothing stands between the cut and a faint mark: every pixel must be blank.
+      if (v < (clear ? ref * BLANK_RATIO : thr)) return false;
       sum += v; cnt++;
     }
-    if (cnt && sum / cnt < ref * BLANK_RATIO) return cut;
+    if (cnt && sum / cnt < ref * BLANK_RATIO) return false;
+    for (let c = 0; c < clear && k >= 0 && k < n; c++, k += step) if (at(k, j) < ref * BLANK_RATIO) return false;
   }
-  return inner;
+  return true;
 }
 
 /**
@@ -191,7 +245,7 @@ function innermostCut(
  */
 export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): FrameVerdict {
   if (w < 16 || h < 16) return { kind: 'skip', reason: 'tiny' };
-  if (w / h < MIN_PAGE_AR) return { kind: 'skip', reason: 'not-a-page' };
+  if (w / h < MIN_PAGE_AR || w / h > MAX_PAGE_AR) return { kind: 'skip', reason: 'not-a-page' };
   const col = new Array<number>(w).fill(0);
   const row = new Array<number>(h).fill(0);
   for (let y = 0; y < h; y++) {
@@ -222,20 +276,46 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
     return m.map(v => v / (x1 - x0 + 1));
   };
   const atX = (x: number, y: number) => lum[y * w + x], atY = (y: number, x: number) => lum[y * w + x];
-  l = innermostCut(l, false, thr, ref, [t, b], colsOver, atX);
-  r = innermostCut(r, true, thr, ref, [t, b], colsOver, atX);
-  t = innermostCut(t, false, thr, ref, [l, r], rowsOver, atY);
-  b = innermostCut(b, true, thr, ref, [l, r], rowsOver, atY);
+  const shadow = ref * SHADOW_RATIO;
+  l = innermostCut(l, false, thr, ref, [t, b], w, (lo, hi) => cutFrom(colsOver(lo, hi), shadow, false, ref), atX);
+  r = innermostCut(r, true, thr, ref, [t, b], w, (lo, hi) => cutFrom(colsOver(lo, hi), shadow, true, ref), atX);
+  t = innermostCut(t, false, thr, ref, [l, r], h, (lo, hi) => cutFrom(rowsOver(lo, hi), shadow, false, ref), atY);
+  b = innermostCut(b, true, thr, ref, [l, r], h, (lo, hi) => cutFrom(rowsOver(lo, hi), shadow, true, ref), atY);
 
+  const dark: Cuts = { l, r, t, b, inset: [l > 0, r < w - 1, t > 0, b < h - 1] };
+  // White canvas is tried on top of the dark cuts; if the wider trim fails any
+  // guard, the verdict is the one the dark cuts alone would have had.
+  const canvas = canvasCuts(lum, w, h, dark, thr, ref);
+  if (canvas) {
+    // Closing a corner notch is tried first, and dropped if it fails any guard.
+    const closed = closeNotches(lum, w, h, canvas, thr, ref);
+    if (closed) {
+      const v = verdictFor(lum, w, h, closed, ref, thr);
+      if (v.kind === 'frame') return v;
+    }
+    const v = verdictFor(lum, w, h, canvas, ref, thr);
+    if (v.kind === 'frame') return v;
+  }
+  return verdictFor(lum, w, h, dark, ref, thr);
+}
+
+/** One cut per side (the first and last kept line), and which sides get the
+ *  shadow inset: those cut at a dark edge. A canvas edge casts no shadow ramp. */
+interface Cuts { l: number; r: number; t: number; b: number; inset: [boolean, boolean, boolean, boolean] }
+
+/** The guards, run on the final box whatever found it. */
+function verdictFor(lum: ArrayLike<number>, w: number, h: number, cuts: Cuts, ref: number, thr: number): FrameVerdict {
+  let { l, r, t, b } = cuts;
   if (l === 0 && r === w - 1 && t === 0 && b === h - 1) return { kind: 'clean' };
 
   const ix = Math.round(w * INSET), iy = Math.round(h * INSET);
-  if (l > 0) l += ix;
-  if (r < w - 1) r -= ix;
-  if (t > 0) t += iy;
-  if (b < h - 1) b -= iy;
+  if (cuts.inset[0]) l += ix;
+  if (cuts.inset[1]) r -= ix;
+  if (cuts.inset[2]) t += iy;
+  if (cuts.inset[3]) b -= iy;
   const box = { x: l, y: t, w: r - l + 1, h: b - t + 1 };
   if (box.w < w * MIN_KEEP || box.h < h * MIN_KEEP) return { kind: 'skip', reason: 'too-much' };
+  if (box.w * box.h < w * h * MIN_KEEP_AREA) return { kind: 'skip', reason: 'too-much' };
   if ((box.w * box.h) / (w * h) > 1 - MIN_TRIM_AREA) return { kind: 'clean' };
 
   // Several leaves on one board (palm-leaf pothi frames), or a spread with a dark
@@ -256,6 +336,123 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
     return { kind: 'skip', reason: 'printing-at-edge' };
   }
   return { kind: 'frame', box };
+}
+
+/**
+ * Canvas on one side: the unbroken run of canvas lines from the image edge, over
+ * the other axis's [lo, hi]. `at(k, j)` is the pixel at position k along this
+ * axis. Returns the first kept line, or the edge itself when there is no band:
+ * too thin to matter, or still canvas where the edge zone ends (a small object
+ * on a large ground is not a page with a margin to trim).
+ */
+function canvasCut(n: number, fromEnd: boolean, lo: number, hi: number, at: (k: number, j: number) => number): number {
+  const zone = Math.floor(n * EDGE_ZONE), minRun = Math.max(2, Math.round(n * MIN_RUN));
+  const outer = fromEnd ? n - 1 : 0;
+  let i = 0;
+  for (; i <= zone; i++) {
+    const k = fromEnd ? n - 1 - i : i;
+    let sum = 0, min = 255;
+    for (let j = lo; j <= hi; j++) { const v = at(k, j); sum += v; if (v < min) min = v; }
+    if (min < CANVAS_MIN || sum / (hi - lo + 1) < CANVAS_MEAN) break;
+  }
+  if (i < minRun || i > zone) return outer;
+  return fromEnd ? n - 1 - i : i;
+}
+
+/**
+ * The dark cuts widened by white canvas, or null when no side has any, or when
+ * the paper inside is itself pure white (then a white band is as likely the
+ * page's own margin, and there is no edge to find).
+ */
+function canvasCuts(lum: ArrayLike<number>, w: number, h: number, dark: Cuts, thr: number, ref: number): Cuts | null {
+  const atX = (x: number, y: number) => lum[y * w + x], atY = (y: number, x: number) => lum[y * w + x];
+  let l = canvasCut(w, false, 0, h - 1, atX), r = canvasCut(w, true, 0, h - 1, atX);
+  let t = canvasCut(h, false, 0, w - 1, atY), b = canvasCut(h, true, 0, w - 1, atY);
+  if (l <= dark.l && r >= dark.r && t <= dark.t && b >= dark.b) return null;
+  // A ragged edge: follow it in to its innermost straight line, giving up only
+  // canvas or blank paper. The side must already have a canvas band.
+  const cx = Math.max(3, Math.round(w * CLEAR_INSIDE)), cy = Math.max(3, Math.round(h * CLEAR_INSIDE));
+  if (l > 0) l = innermostCut(l, false, thr, ref, [t, b], w, (lo, hi) => canvasCut(w, false, lo, hi, atX), atX, cx);
+  if (r < w - 1) r = innermostCut(r, true, thr, ref, [t, b], w, (lo, hi) => canvasCut(w, true, lo, hi, atX), atX, cx);
+  if (t > 0) t = innermostCut(t, false, thr, ref, [l, r], h, (lo, hi) => canvasCut(h, false, lo, hi, atY), atY, cy);
+  if (b < h - 1) b = innermostCut(b, true, thr, ref, [l, r], h, (lo, hi) => canvasCut(h, true, lo, hi, atY), atY, cy);
+  // Each side takes whichever cut is deeper, and keeps the inset only if that is the dark one.
+  const cuts: Cuts = {
+    l: Math.max(l, dark.l), r: Math.min(r, dark.r), t: Math.max(t, dark.t), b: Math.min(b, dark.b),
+    inset: [dark.inset[0] && dark.l >= l, dark.inset[1] && dark.r <= r, dark.inset[2] && dark.t >= t, dark.inset[3] && dark.b <= b],
+  };
+  if (cuts.r - cuts.l < 4 || cuts.b - cuts.t < 4) return null;
+  let paper = 0;
+  for (let y = cuts.t; y <= cuts.b; y++) for (let x = cuts.l; x <= cuts.r; x++) {
+    if (lum[y * w + x] > PAPER_MAX) continue;
+    let min = 255;
+    for (let dy = -2; dy <= 2 && min >= NO_INK; dy++) for (let dx = -2; dx <= 2; dx++) {
+      const yy = Math.min(h - 1, Math.max(0, y + dy)), xx = Math.min(w - 1, Math.max(0, x + dx));
+      min = Math.min(min, lum[yy * w + xx]);
+    }
+    if (min >= NO_INK) paper++;
+  }
+  if (paper < (cuts.r - cuts.l + 1) * (cuts.b - cuts.t + 1) * MIN_PAPER) return null;
+  return cuts;
+}
+
+/**
+ * A page whose edge is stepped (a leaf scanned with a corner missing, or laid
+ * over a larger white sheet) leaves a notch of canvas in a corner of the box,
+ * touching both of its edges (#4276, Bodhicaryavatara p5). For each corner with
+ * a notch deeper than a tilted straight edge could leave, ONE of the two cuts
+ * that meet there moves in just past it: the one that gives up less, and only
+ * when everything it gives up is canvas or blank paper, with blank paper inside
+ * the new cut. Otherwise the notch stays: a white corner costs less than a cut
+ * word. Returns null when no cut moved.
+ */
+function closeNotches(lum: ArrayLike<number>, w: number, h: number, cuts: Cuts, thr: number, ref: number): Cuts | null {
+  let { l, r, t, b } = cuts;
+  const win = Math.max(3, Math.round(Math.min(w, h) * MIN_RUN));
+  const cx = Math.max(3, Math.round(w * CLEAR_INSIDE)), cy = Math.max(3, Math.round(h * CLEAR_INSIDE));
+  let moved = false;
+  for (const [left, top] of [[true, true], [false, true], [true, false], [false, false]]) {
+    const bw = r - l + 1, bh = b - t + 1;
+    // The notch must be deeper than the wedge a tilted edge leaves along the other side.
+    const minW = Math.ceil(MAX_TILT * bh) + 2, minH = Math.ceil(MAX_TILT * bw) + 2;
+    if (minW * 2 > bw || minH * 2 > bh) continue;
+    // Pixel i columns in from this corner's vertical cut and j rows in from its horizontal one.
+    const px = (i: number, j: number) => lum[(top ? t + j : b - j) * w + (left ? l + i : r - i)];
+    // A run of `len` pixels from the box edge is canvas when every pixel is
+    // near-white and every short window of it is flat white (the v4 line test,
+    // on windows: a long white run must not dilute a start of faint paper).
+    const canvasRun = (len: number, at: (k: number) => number) => {
+      let sum = 0;
+      for (let k = 0; k < len; k++) {
+        const v = at(k);
+        if (v < CANVAS_MIN) return false;
+        sum += v;
+        if (k >= win) sum -= at(k - win);
+        if (k >= win - 1 && sum / win < CANVAS_MEAN) return false;
+      }
+      return true;
+    };
+    // Rows (from the horizontal cut) whose first minW pixels are canvas, and the same for columns.
+    let rows = 0, cols = 0;
+    while (rows < bh && canvasRun(minW, i => px(i, rows))) rows++;
+    while (cols < bw && canvasRun(minH, j => px(cols, j))) cols++;
+    if (rows < minH || cols < minW) continue;
+    // Moving the horizontal cut gives up `rows` lines of the box's width; the vertical one, `cols` of its height.
+    const horizontal = rows * bw <= cols * bh;
+    if (horizontal) {
+      if (rows > h * NOTCH_MAX) continue;
+      const to = top ? t + rows : b - rows;
+      if (!givesUpOnlyBlank(top ? t : b, to, !top, thr, ref, [l, r], h, (y, x) => lum[y * w + x], cy)) continue;
+      if (top) t = to; else b = to;
+    } else {
+      if (cols > w * NOTCH_MAX) continue;
+      const to = left ? l + cols : r - cols;
+      if (!givesUpOnlyBlank(left ? l : r, to, !left, thr, ref, [t, b], w, (x, y) => lum[y * w + x], cx)) continue;
+      if (left) l = to; else r = to;
+    }
+    moved = true;
+  }
+  return moved ? { ...cuts, l, r, t, b } : null;
 }
 
 /**
@@ -303,6 +500,9 @@ export function usablePageFrame(f: unknown): PageFrame | null {
   const ok = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
   if (!ok(x) || !ok(y) || !ok(w) || !ok(h) || !ok(ar) || !ok(v) || ar <= 0) return null;
   if (x < 0 || y < 0 || w < MIN_KEEP || h < MIN_KEEP || x + w > 1.0001 || y + h > 1.0001) return null;
+  // The read-side half of the area floor: a frame an older detector stored is
+  // not applied either (0.001 of slack for the 4-decimal rounding in toPageFrame).
+  if (w * h < MIN_KEEP_AREA - 0.001) return null;
   return { x, y, w, h, ar, v };
 }
 

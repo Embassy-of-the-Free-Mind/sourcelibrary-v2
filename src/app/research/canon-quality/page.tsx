@@ -12,7 +12,7 @@ import { IMPROVEMENTS } from '../canon-gap/improvements';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'How We Check Each Canon — Source Library Research',
+  title: 'How We Check Each Canon | Source Library Research',
   description:
     'For each canon in the Eternity reading programme: what checks our transcription, what checks our English, the measured figures with their sources, what is not yet measured, and what we would ask of a scholar.',
   alternates: { canonical: '/research/canon-quality' },
@@ -135,7 +135,7 @@ const CANONS: Canon[] = [
         </>
       ),
       shown: (
-        <>All 213 volumes are held from public view. Every page is labelled an unreviewed machine draft.</>
+        <>All 213 volumes have been public since 7 October 2026. Every page is labelled an AI translation not yet reviewed by a scholar.</>
       ),
       notMeasured: (
         <>
