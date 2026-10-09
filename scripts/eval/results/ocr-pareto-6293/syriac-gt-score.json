@@ -1,0 +1,463 @@
+{
+ "syriac-gt": {
+  "n": 40,
+  "engines": {
+   "gemini-3.8-flash+antigravity-cli": {
+    "run": 40,
+    "empty": 6,
+    "loops": 0,
+    "aligned": 34,
+    "median_cer_n1": 0.728,
+    "median_cer_n2": 0.691,
+    "catastrophic": 33,
+    "le_20pct": 0,
+    "median_dice": 0.151,
+    "median_line_cer": 0.657
+   }
+  },
+  "pages": {
+   "jerusalem36-0003_SMMJ_00036__008": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2854,
+     "empty": false,
+     "loop": 0.024,
+     "cer_n1": 0.9084,
+     "cer_n2": 0.8035,
+     "dice_n2": 0.142,
+     "line_cer": 0.5805
+    }
+   },
+   "jerusalem36-0005_SMMJ_00036__010": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 0.9996,
+     "cer_n2": 0.9995,
+     "dice_n2": 0.0,
+     "line_cer": 0.9635
+    }
+   },
+   "jerusalem36-0008_SMMJ_00036__013": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2060,
+     "empty": false,
+     "loop": 0.023,
+     "cer_n1": 0.7273,
+     "cer_n2": 0.7215,
+     "dice_n2": 0.242,
+     "line_cer": 0.5827
+    }
+   },
+   "jerusalem36-0009_SMMJ_00036__014": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2625,
+     "empty": false,
+     "loop": 0.036,
+     "cer_n1": 0.8965,
+     "cer_n2": 0.6942,
+     "dice_n2": 0.154,
+     "line_cer": 0.6535
+    }
+   },
+   "jerusalem36-0029_SMMJ_00036__034": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2028,
+     "empty": false,
+     "loop": 0.007,
+     "cer_n1": 0.6559,
+     "cer_n2": 0.6357,
+     "dice_n2": 0.396,
+     "line_cer": 0.6728
+    }
+   },
+   "jerusalem36-0030_SMMJ_00036__035": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2023,
+     "empty": false,
+     "loop": 0.015,
+     "cer_n1": 0.6985,
+     "cer_n2": 0.6885,
+     "dice_n2": 0.203,
+     "line_cer": 0.6166
+    }
+   },
+   "jerusalem36-0031_SMMJ_00036__036": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 8142,
+     "empty": false,
+     "loop": 0.005,
+     "cer_n1": 2.4831,
+     "cer_n2": 1.911,
+     "dice_n2": 0.431,
+     "line_cer": 0.4386
+    }
+   },
+   "jerusalem36-0054_SMMJ_00036__059": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2641,
+     "empty": false,
+     "loop": 0.017,
+     "cer_n1": 0.7955,
+     "cer_n2": 0.7956,
+     "dice_n2": 0.171,
+     "line_cer": 0.6756
+    }
+   },
+   "jerusalem36-0086_SMMJ_00036__091": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 10689,
+     "empty": false,
+     "loop": 0.018,
+     "cer_n1": 2.4085,
+     "cer_n2": 2.3573,
+     "dice_n2": 0.218,
+     "line_cer": 0.8438
+    }
+   },
+   "jerusalem36-0088_SMMJ_00036__093": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2285,
+     "empty": false,
+     "loop": 0.036,
+     "cer_n1": 0.7256,
+     "cer_n2": 0.7217,
+     "dice_n2": 0.097,
+     "line_cer": 0.6928
+    }
+   },
+   "jerusalem36-0091_SMMJ_00036__096": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1981,
+     "empty": false,
+     "loop": 0.023,
+     "cer_n1": 0.697,
+     "cer_n2": 0.6912,
+     "dice_n2": 0.22,
+     "line_cer": 0.6336
+    }
+   },
+   "jerusalem36-0094_SMMJ_00036__099": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 3290,
+     "empty": false,
+     "loop": 0.019,
+     "cer_n1": 0.8521,
+     "cer_n2": 0.8484,
+     "dice_n2": 0.25,
+     "line_cer": 0.5884
+    }
+   },
+   "jerusalem36-0102_SMMJ_00036__107": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1912,
+     "empty": false,
+     "loop": 0.016,
+     "cer_n1": 0.6811,
+     "cer_n2": 0.6737,
+     "dice_n2": 0.267,
+     "line_cer": 0.5976
+    }
+   },
+   "jerusalem36-0105_SMMJ_00036__110": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 3123,
+     "empty": false,
+     "loop": 0.01,
+     "cer_n1": 0.8771,
+     "cer_n2": 0.8326,
+     "dice_n2": 0.14,
+     "line_cer": 0.5885
+    }
+   },
+   "jerusalem36-0129_SMMJ_00036__134": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2902,
+     "empty": false,
+     "loop": 0.022,
+     "cer_n1": 0.7866,
+     "cer_n2": 0.7778,
+     "dice_n2": 0.173,
+     "line_cer": 0.5733
+    }
+   },
+   "jerusalem36-0139_SMMJ_00036__144": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 3773,
+     "empty": false,
+     "loop": 0.029,
+     "cer_n1": 1.0969,
+     "cer_n2": 0.7613,
+     "dice_n2": 0.142,
+     "line_cer": 0.6451
+    }
+   },
+   "jerusalem36-0206_SMMJ_00036__211": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2399,
+     "empty": false,
+     "loop": 0.021,
+     "cer_n1": 0.7889,
+     "cer_n2": 0.7796,
+     "dice_n2": 0.224,
+     "line_cer": 0.5738
+    }
+   },
+   "jerusalem36-0211_SMMJ_00036__216": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 0,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 1.0,
+     "cer_n2": 1.0,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0227_SMMJ_00036__232": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1453,
+     "empty": false,
+     "loop": 0.036,
+     "cer_n1": 0.7005,
+     "cer_n2": 0.6915,
+     "dice_n2": 0.147,
+     "line_cer": 0.593
+    }
+   },
+   "jerusalem36-0264_SMMJ_00036__269": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 2325,
+     "empty": false,
+     "loop": 0.014,
+     "cer_n1": 0.729,
+     "cer_n2": 0.7328,
+     "dice_n2": 0.213,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0009_00000024": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 736,
+     "empty": false,
+     "loop": 0.046,
+     "cer_n1": 0.6747,
+     "cer_n2": 0.6701,
+     "dice_n2": 0.083,
+     "line_cer": 0.6811
+    }
+   },
+   "onb-syr1-0026_00000041": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 4,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 0.9948,
+     "cer_n2": 0.9945,
+     "dice_n2": 0.017,
+     "line_cer": 0.9886
+    }
+   },
+   "onb-syr1-0029_00000044": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 825,
+     "empty": false,
+     "loop": 0.02,
+     "cer_n1": 0.5917,
+     "cer_n2": 0.5564,
+     "dice_n2": 0.149,
+     "line_cer": 0.5651
+    }
+   },
+   "onb-syr1-0033_00000048": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 19,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 0.9793,
+     "cer_n2": 0.9794,
+     "dice_n2": 0.016,
+     "line_cer": 0.802
+    }
+   },
+   "onb-syr1-0046_00000061": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1404,
+     "empty": false,
+     "loop": 0.032,
+     "cer_n1": 1.0446,
+     "cer_n2": 0.6762,
+     "dice_n2": 0.138,
+     "line_cer": 0.6671
+    }
+   },
+   "onb-syr1-0082_00000097": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 904,
+     "empty": false,
+     "loop": 0.018,
+     "cer_n1": 0.6552,
+     "cer_n2": 0.6289,
+     "dice_n2": 0.156,
+     "line_cer": 0.6266
+    }
+   },
+   "onb-syr1-0085_00000100": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 887,
+     "empty": false,
+     "loop": 0.02,
+     "cer_n1": 0.6623,
+     "cer_n2": 0.6214,
+     "dice_n2": 0.136,
+     "line_cer": 0.6411
+    }
+   },
+   "onb-syr1-0086_00000101": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 892,
+     "empty": false,
+     "loop": 0.019,
+     "cer_n1": 0.6556,
+     "cer_n2": 0.6138,
+     "dice_n2": 0.153,
+     "line_cer": 0.6137
+    }
+   },
+   "onb-syr1-0088_00000103": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 838,
+     "empty": false,
+     "loop": 0.019,
+     "cer_n1": 0.5238,
+     "cer_n2": 0.4975,
+     "dice_n2": 0.355,
+     "line_cer": 0.5078
+    }
+   },
+   "onb-syr1-0107_00000122": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 776,
+     "empty": false,
+     "loop": 0.044,
+     "cer_n1": 0.6641,
+     "cer_n2": 0.6681,
+     "dice_n2": 0.138,
+     "line_cer": 0.6652
+    }
+   },
+   "onb-syr1-0127_00000142": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1258,
+     "empty": false,
+     "loop": 0.059,
+     "cer_n1": 1.0748,
+     "cer_n2": 0.6906,
+     "dice_n2": 0.106,
+     "line_cer": 0.6996
+    }
+   },
+   "onb-syr1-0131_00000146": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1218,
+     "empty": false,
+     "loop": 0.019,
+     "cer_n1": 1.0,
+     "cer_n2": 0.7143,
+     "dice_n2": 0.098,
+     "line_cer": 0.6764
+    }
+   },
+   "onb-syr1-0133_00000148": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 0,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 1.0,
+     "cer_n2": 1.0,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0157_00000172": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 959,
+     "empty": false,
+     "loop": 0.018,
+     "cer_n1": 0.627,
+     "cer_n2": 0.5829,
+     "dice_n2": 0.129,
+     "line_cer": 0.5958
+    }
+   },
+   "onb-syr1-0161_00000176": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1379,
+     "empty": false,
+     "loop": 0.016,
+     "cer_n1": 1.1769,
+     "cer_n2": 0.7874,
+     "dice_n2": 0.116,
+     "line_cer": 0.7578
+    }
+   },
+   "onb-syr1-0179_00000194": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 0.9989,
+     "cer_n2": 0.9988,
+     "dice_n2": 0.0,
+     "line_cer": 0.9766
+    }
+   },
+   "onb-syr1-0235_00000250": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 945,
+     "empty": false,
+     "loop": 0.031,
+     "cer_n1": 0.6682,
+     "cer_n2": 0.6591,
+     "dice_n2": 0.193,
+     "line_cer": 0.6691
+    }
+   },
+   "onb-syr1-0258_00000273": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1534,
+     "empty": false,
+     "loop": 0.016,
+     "cer_n1": 1.0896,
+     "cer_n2": 0.6422,
+     "dice_n2": 0.168,
+     "line_cer": 0.6459
+    }
+   },
+   "onb-syr1-0260_00000275": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1092,
+     "empty": false,
+     "loop": 0.015,
+     "cer_n1": 0.7772,
+     "cer_n2": 0.7509,
+     "dice_n2": 0.184,
+     "line_cer": 0.6842
+    }
+   },
+   "onb-syr1-0261_00000276": {
+    "gemini-3.8-flash+antigravity-cli": {
+     "chars": 1133,
+     "empty": false,
+     "loop": 0.014,
+     "cer_n1": 0.686,
+     "cer_n2": 0.679,
+     "dice_n2": 0.194,
+     "line_cer": 0.6605
+    }
+   }
+  },
+  "date": "2026-10-09",
+  "scored_by": "score-syriac-retest.py with SYRIAC_IMAGES on a tree holding only this engine (#6293 CLI arm); same ground truth"
+ }
+}
