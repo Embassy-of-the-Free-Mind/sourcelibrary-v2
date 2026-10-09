@@ -67,13 +67,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.022,
+      "kind": "spread",
+      "band": 0.136,
       "diff": -0.022,
       "ci95": [
        -0.136,
        0.092
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 69,
+      "identical": 51
      },
      "date": "2026-10-07",
      "files": [
@@ -792,13 +794,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.024,
+      "kind": "spread",
+      "band": 0.156,
       "diff": 0.024,
       "ci95": [
        -0.107,
        0.156
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 62,
+      "identical": 42
      },
      "date": "2026-10-07",
      "files": [
@@ -1485,7 +1489,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -1519,13 +1523,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.023,
+      "kind": "spread",
+      "band": 0.205,
       "diff": 0.023,
       "ci95": [
        -0.159,
        0.205
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 22,
+      "identical": 17
      },
      "date": "2026-10-07",
      "files": [
@@ -2122,13 +2128,14 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.214,
+      "kind": "not_reproduced",
+      "band": null,
       "diff": -0.214,
       "ci95": [
        -0.429,
        -0.036
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 14
      },
      "date": "2026-10-07",
      "files": [
@@ -2172,7 +2179,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": true
       },
       {
@@ -2209,7 +2215,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -2273,7 +2278,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -2310,7 +2314,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -2347,7 +2350,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -2384,7 +2386,6 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -2421,12 +2422,11 @@
         "n_pages": 14,
         "n_works": 14
        },
-       "verdict": "same",
        "on_frontier": false
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3.1 Flash-Lite, the engine we use: the differences are within the noise.",
+     "verdict": "Verdicts withheld: the engine we use did not reproduce itself (−0.21 a page on the 1 to 5 scale between two runs of Gemini 3.1 Flash-Lite on these pages).",
      "role": "primary"
     },
     {
@@ -2558,7 +2558,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Production (each book’s engine), the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Production (each book’s engine), the engine we use.",
      "role": "secondary"
     },
     {
@@ -2690,7 +2690,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3.1 Flash-Lite, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3.1 Flash-Lite, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -2724,13 +2724,9 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0,
-      "diff": 0,
-      "ci95": [
-       0,
-       0
-      ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "kind": "identical",
+      "band": null,
+      "n": 10
      },
      "date": "2026-10-07",
      "files": [
@@ -3028,7 +3024,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.65 a page on the 1 to 5 scale (95% interval +0.20 to +1.15). Also better: Gemini 3.7 Flash, Gemini 3.5 Flash and 2 more.",
+     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3.1 Flash-Lite, the engine we use (+0.65 a page on the 1 to 5 scale, 95% interval +0.20 to +1.15); directional only.",
      "role": "primary"
     },
     {
@@ -3160,7 +3156,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.65 a page on the 1 to 5 scale (95% interval +0.15 to +1.20). Also better: Gemini 3.8 Flash (CLI).",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3.1 Flash-Lite, the engine we use (+0.65 a page on the 1 to 5 scale, 95% interval +0.15 to +1.20); directional only.",
      "role": "secondary"
     },
     {
@@ -3292,7 +3288,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3 Flash (thinking) scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.55 a page on the 1 to 5 scale (95% interval +0.05 to +1.10).",
+     "verdict": "The evidence points toward Gemini 3 Flash (thinking) over Gemini 3.1 Flash-Lite, the engine we use (+0.55 a page on the 1 to 5 scale, 95% interval +0.05 to +1.10); directional only.",
      "role": "secondary"
     }
    ],
@@ -3327,13 +3323,14 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.222,
+      "kind": "not_reproduced",
+      "band": null,
       "diff": -0.222,
       "ci95": [
        -0.423,
        -0.037
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 27
      },
      "date": "2026-10-07",
      "files": [
@@ -3377,7 +3374,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "same",
        "on_frontier": true
       },
       {
@@ -3414,7 +3410,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -3451,7 +3446,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -3515,7 +3509,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -3552,7 +3545,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -3589,7 +3581,6 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "worse",
        "on_frontier": true
       },
       {
@@ -3626,12 +3617,11 @@
         "n_pages": 27,
         "n_works": 26
        },
-       "verdict": "worse",
        "on_frontier": false
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "Verdicts withheld: the engine we use did not reproduce itself (−0.22 a page on the 1 to 5 scale between two runs of Gemini 3 Flash on these pages).",
      "role": "primary"
     },
     {
@@ -3791,7 +3781,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.18 a page on the 1 to 5 scale (95% interval +0.02 to +0.35).",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3 Flash, the engine we use (+0.18 a page on the 1 to 5 scale, 95% interval +0.02 to +0.35); directional only.",
      "role": "secondary"
     },
     {
@@ -3923,7 +3913,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.32 a page on the 1 to 5 scale (95% interval +0.11 to +0.56). Also better: Gemini 3.8 Flash (CLI).",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3 Flash, the engine we use (+0.32 a page on the 1 to 5 scale, 95% interval +0.11 to +0.56); directional only.",
      "role": "secondary"
     },
     {
@@ -4055,7 +4045,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -4089,13 +4079,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.136,
+      "kind": "spread",
+      "band": 0.333,
       "diff": -0.136,
       "ci95": [
        -0.333,
        0
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 22,
+      "identical": 20
      },
      "date": "2026-10-07",
      "files": [
@@ -4393,7 +4385,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise. Gemini 3.1 Flash-Lite ($0.82) costs less than $1.73 per 1,000 pages and is not measurably worse.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "primary"
     },
     {
@@ -4553,7 +4545,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {
@@ -4817,7 +4809,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise. Gemini 3.1 Flash-Lite ($0.99) costs less than $2.03 per 1,000 pages and is not measurably worse.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -4851,13 +4843,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.182,
+      "kind": "spread",
+      "band": 0.381,
       "diff": -0.182,
       "ci95": [
        -0.381,
        0
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 22,
+      "identical": 16
      },
      "date": "2026-10-07",
      "files": [
@@ -5076,7 +5070,7 @@
         "n_pages": 22,
         "n_works": 21
        },
-       "verdict": "worse",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -5155,7 +5149,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "primary"
     },
     {
@@ -5315,7 +5309,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {
@@ -5579,7 +5573,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -5613,13 +5607,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0,
+      "kind": "spread",
+      "band": 0.32,
       "diff": 0,
       "ci95": [
        -0.32,
        0.32
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 27,
+      "identical": 15
      },
      "date": "2026-10-07",
      "files": [
@@ -6077,7 +6073,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {
@@ -6304,7 +6300,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -6338,13 +6334,15 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.054,
+      "kind": "spread",
+      "band": 0.222,
       "diff": -0.054,
       "ci95": [
        -0.222,
        0.107
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 28,
+      "identical": 19
      },
      "date": "2026-10-07",
      "files": [
@@ -6642,7 +6640,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3 Flash, the engine we use, by +0.43 a page on the 1 to 5 scale (95% interval +0.20 to +0.65). Also better: Gemini 3.8 Flash and Gemini 3.7 Flash.",
+     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3 Flash, the engine we use (+0.43 a page on the 1 to 5 scale, 95% interval +0.20 to +0.65); directional only.",
      "role": "primary"
     },
     {
@@ -6802,7 +6800,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.25 a page on the 1 to 5 scale (95% interval +0.04 to +0.48).",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3 Flash, the engine we use (+0.25 a page on the 1 to 5 scale, 95% interval +0.04 to +0.48); directional only.",
      "role": "secondary"
     },
     {
@@ -6934,7 +6932,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.8 Flash (CLI) scores better than Gemini 3 Flash, the engine we use, by +0.36 a page on the 1 to 5 scale (95% interval +0.07 to +0.66). Also better: Gemini 3.8 Flash.",
+     "verdict": "The evidence points toward Gemini 3.8 Flash (CLI) over Gemini 3 Flash, the engine we use (+0.36 a page on the 1 to 5 scale, 95% interval +0.07 to +0.66); directional only.",
      "role": "secondary"
     },
     {
@@ -7029,7 +7027,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     }
    ],
@@ -7200,7 +7198,7 @@
        "verdict": "worse"
       }
      ],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "primary"
     },
     {
@@ -7332,7 +7330,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {
@@ -7427,7 +7425,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise.",
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {
@@ -7450,13 +7448,15 @@
      },
      "frontier": false,
      "noise": {
-      "band": 0,
+      "kind": "spread",
+      "band": 0.167,
       "diff": 0,
       "ci95": [
        -0.15,
        0.167
       ],
-      "source": "a second run of the engine in use, judged in the same items"
+      "n": 21,
+      "identical": 17
      },
      "date": "2026-10-07",
      "files": [
@@ -7747,7 +7747,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     }
    ],
@@ -7915,7 +7915,7 @@
        }
       }
      ],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "primary"
     },
     {
@@ -8060,7 +8060,7 @@
        }
       }
      ],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     },
     {
@@ -8190,7 +8190,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     },
     {
@@ -8284,7 +8284,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     },
     {
@@ -8373,7 +8373,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     }
    ],
@@ -8522,7 +8522,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "primary"
     },
     {
@@ -8662,7 +8662,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     },
     {
@@ -8802,7 +8802,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     },
     {
@@ -8888,7 +8888,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "No verdict: not fit to rank engines.",
+     "verdict": "No verdict.",
      "role": "secondary"
     }
    ],

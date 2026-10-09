@@ -45,13 +45,9 @@ export default function ParetoPage() {
         <section id="method" className="max-w-3xl mt-10 text-stone-700 leading-relaxed space-y-3 scroll-mt-16">
           <h2 className="font-serif text-2xl text-stone-900">How these are measured</h2>
           <p>
-            <strong className="text-stone-900">Same pages.</strong> Within a chart, every engine read or translated the same
-            pages. A page stays in even when an engine failed on it.
-          </p>
-          <p>
-            <strong className="text-stone-900">Reading.</strong> Accuracy is one minus the median character error rate
-            against a typed text of the page. A refused, empty or unplaceable read counts as 100% error, for every engine
-            alike. &ldquo;Pages over half wrong&rdquo; shows the failures a median hides.
+            <strong className="text-stone-900">Reading.</strong> Accuracy is one minus the character error rate against a
+            typed text of the page, averaged over the pages, each page&rsquo;s error capped at 100%. A refused, empty or
+            unplaceable read counts as 100% error, for every engine alike. &ldquo;Over half wrong&rdquo; counts those pages.
           </p>
           <p>
             <strong className="text-stone-900">Translating.</strong> Fidelity is a mean score from 1 to 5 given by blind
@@ -61,9 +57,13 @@ export default function ParetoPage() {
           </p>
           <p>
             <strong className="text-stone-900">Against the engine we use.</strong> For each engine, the average difference
-            per page from the engine in use, on the same pages, with a 95% interval that resamples whole works, so the pages
-            of one work count as one. Where we ran the engine in use twice, a difference must also be larger than the gap
-            between its two runs. Only then does a chart call an engine better or worse.
+            per page from the engine in use on the same pages (a page stays in when an engine fails on it), with a 95%
+            interval that resamples whole works, so the pages
+            of one work count as one. Where the engine in use was run twice the same way, a difference must also be larger
+            than the spread between its two runs; where the two runs disagree outright, the chart withholds its verdict.
+            Only a Decide chart calls an engine better or worse; a Directional one says what the evidence points toward.
+            &ldquo;Within the margin&rdquo; means the whole interval lies within 1 point a page (reading) or 0.10 on the 1
+            to 5 scale (translating) of the engine in use; one margin per measure, never tuned per chart.
           </p>
           <p>
             <strong className="text-stone-900">Cost.</strong> Dollars billed per 1,000 pages: Gemini at its metered Batch

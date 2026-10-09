@@ -1,7 +1,7 @@
 {
  "issue": 6386,
  "generated_by": "scripts/eval/build-ocr-pareto.mjs",
- "measure": "accuracy: 1 − median character error rate against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error",
+ "measure": "accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error",
  "production_rule": "the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script",
  "grade_rules": {
   "decide": "20 or more works, a reference made independently of the engine we use, one error measure, and no problem found by the sample check.",
@@ -42,13 +42,9 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.045,
-      "diff": -0.045,
-      "ci95": [
-       -0.113,
-       0
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "unlike",
+      "band": null,
+      "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-09-16)"
      },
      "date": "2026-10-09",
      "files": [
@@ -63,11 +59,11 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.004,
-       "accuracy": 0.997,
+       "mean_cer": 0.012,
+       "accuracy": 0.988,
        "accuracy_ci95": [
-        0.994,
-        0.997
+        0.981,
+        0.994
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -87,18 +83,18 @@
         "n_pages": 44,
         "n_works": 44
        },
-       "verdict": "same",
+       "verdict": "better",
        "on_frontier": true
       },
       {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.004,
-       "accuracy": 0.996,
+       "mean_cer": 0.014,
+       "accuracy": 0.986,
        "accuracy_ci95": [
-        0.994,
-        0.997
+        0.978,
+        0.992
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -118,18 +114,194 @@
         "n_pages": 44,
         "n_works": 44
        },
+       "verdict": "better",
+       "on_frontier": true
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "mean_cer": 0.015,
+       "accuracy": 0.985,
+       "accuracy_ci95": [
+        0.978,
+        0.991
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "billed",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": 0.023,
+        "ci95": [
+         0.004,
+         0.056
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "mean_cer": 0.022,
+       "accuracy": 0.978,
+       "accuracy_ci95": [
+        0.97,
+        0.985
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": 0.016,
+        "ci95": [
+         -0.005,
+         0.054
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "mean_cer": 0.032,
+       "accuracy": 0.968,
+       "accuracy_ci95": [
+        0.958,
+        0.977
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": 0.006,
+        "ci95": [
+         -0.014,
+         0.039
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "mean_cer": 0.035,
+       "accuracy": 0.965,
+       "accuracy_ci95": [
+        0.951,
+        0.975
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": 0.002,
+        "ci95": [
+         -0.02,
+         0.037
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
        "verdict": "same",
        "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.038,
+       "accuracy": 0.962,
+       "accuracy_ci95": [
+        0.925,
+        0.984
+       ],
+       "fail_share": 0.023,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.054,
+       "accuracy": 0.946,
+       "accuracy_ci95": [
+        0.882,
+        0.987
+       ],
+       "fail_share": 0.045,
+       "failed_reads": 1,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.594,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.016,
+        "ci95": [
+         -0.064,
+         0.009
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "same",
+       "on_frontier": false
       },
       {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.005,
-       "accuracy": 0.996,
+       "mean_cer": 0.109,
+       "accuracy": 0.891,
        "accuracy_ci95": [
-        0.993,
-        0.998
+        0.794,
+        0.969
        ],
        "fail_share": 0.091,
        "failed_reads": 4,
@@ -156,11 +328,11 @@
        "engine": "gemini-3.8-flash-high+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI, high)",
        "production": false,
-       "median_cer": 0.005,
-       "accuracy": 0.995,
+       "mean_cer": 0.278,
+       "accuracy": 0.722,
        "accuracy_ci95": [
-        0.99,
-        0.997
+        0.586,
+        0.856
        ],
        "fail_share": 0.273,
        "failed_reads": 12,
@@ -184,190 +356,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.006,
-       "accuracy": 0.994,
-       "accuracy_ci95": [
-        0.99,
-        0.995
-       ],
-       "fail_share": 0.045,
-       "failed_reads": 1,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 3.594,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.016,
-        "ci95": [
-         -0.064,
-         0.009
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.007,
-       "accuracy": 0.993,
-       "accuracy_ci95": [
-        0.978,
-        0.997
-       ],
-       "fail_share": 0.023,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "mistral-ocr-4-1",
-       "label": "Mistral OCR 4.1",
-       "production": false,
-       "median_cer": 0.008,
-       "accuracy": 0.993,
-       "accuracy_ci95": [
-        0.989,
-        0.997
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 4,
-        "basis": "billed",
-        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.023,
-        "ci95": [
-         0.004,
-         0.056
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.012,
-       "accuracy": 0.988,
-       "accuracy_ci95": [
-        0.98,
-        0.991
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.016,
-        "ci95": [
-         -0.005,
-         0.054
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
-       "production": false,
-       "median_cer": 0.015,
-       "accuracy": 0.985,
-       "accuracy_ci95": [
-        0.951,
-        0.988
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.002,
-        "ci95": [
-         -0.02,
-         0.037
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same",
-       "on_frontier": true
-      },
-      {
-       "engine": "qwen3-vl-8b",
-       "label": "Qwen3-VL 8B",
-       "production": false,
-       "median_cer": 0.025,
-       "accuracy": 0.975,
-       "accuracy_ci95": [
-        0.963,
-        0.987
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 3.43,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.006,
-        "ci95": [
-         -0.014,
-         0.039
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.04,
-       "accuracy": 0.961,
+       "mean_cer": 0.422,
+       "accuracy": 0.578,
        "accuracy_ci95": [
-        0,
-        0.993
+        0.442,
+        0.717
        ],
        "fail_share": 0.409,
        "failed_reads": 18,
@@ -393,40 +389,14 @@
      ],
      "no_cost": [
       {
-       "engine": "kraken-catmus",
-       "label": "Kraken (CATMuS)",
-       "production": false,
-       "median_cer": 0.008,
-       "accuracy": 0.993,
-       "accuracy_ci95": [
-        0.988,
-        0.995
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": null,
-       "no_price": "runs on our own servers; no billed price on record",
-       "vs_in_use": {
-        "diff": 0.014,
-        "ci95": [
-         -0.004,
-         0.043
-        ],
-        "n_pages": 44,
-        "n_works": 44
-       },
-       "verdict": "same"
-      },
-      {
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.01,
-       "accuracy": 0.991,
+       "mean_cer": 0.02,
+       "accuracy": 0.98,
        "accuracy_ci95": [
-        0.983,
-        0.994
+        0.971,
+        0.987
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -445,14 +415,40 @@
        "verdict": "same"
       },
       {
+       "engine": "kraken-catmus",
+       "label": "Kraken (CATMuS)",
+       "production": false,
+       "mean_cer": 0.024,
+       "accuracy": 0.976,
+       "accuracy_ci95": [
+        0.965,
+        0.987
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "runs on our own servers; no billed price on record",
+       "vs_in_use": {
+        "diff": 0.014,
+        "ci95": [
+         -0.004,
+         0.043
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "same"
+      },
+      {
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.018,
-       "accuracy": 0.983,
+       "mean_cer": 0.031,
+       "accuracy": 0.969,
        "accuracy_ci95": [
-        0.975,
-        0.989
+        0.958,
+        0.978
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -474,11 +470,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.042,
-       "accuracy": 0.958,
+       "mean_cer": 0.083,
+       "accuracy": 0.917,
        "accuracy_ci95": [
-        0.943,
-        0.979
+        0.851,
+        0.965
        ],
        "fail_share": 0.045,
        "failed_reads": 2,
@@ -500,11 +496,11 @@
        "engine": "tesseract-lat",
        "label": "Tesseract (lat)",
        "production": false,
-       "median_cer": 0.085,
-       "accuracy": 0.915,
+       "mean_cer": 0.398,
+       "accuracy": 0.602,
        "accuracy_ci95": [
-        0.415,
-        0.939
+        0.468,
+        0.73
        ],
        "fail_share": 0.364,
        "failed_reads": 16,
@@ -525,7 +521,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No engine is clearly better than Gemini 3.1 Flash-Lite, the engine we use: the differences are within the noise. DeepSeek-OCR ($0.96) costs less than $1.28 per 1,000 pages and is not measurably worse."
+     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +2.6 points a page (95% interval +0.7 to +6.1). Also better: Gemini 3 Flash and Mistral OCR 4.1."
     },
     {
      "kind": "family-whole-anchored",
@@ -566,11 +562,11 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.068,
-       "accuracy": 0.932,
+       "mean_cer": 0.075,
+       "accuracy": 0.925,
        "accuracy_ci95": [
-        0.923,
-        0.939
+        0.917,
+        0.933
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -593,35 +589,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.079,
-       "accuracy": 0.921,
-       "accuracy_ci95": [
-        0.916,
-        0.927
-       ],
-       "fail_share": 0.011,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.148,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.083,
-       "accuracy": 0.917,
+       "mean_cer": 0.086,
+       "accuracy": 0.914,
        "accuracy_ci95": [
-        0.912,
-        0.928
+        0.905,
+        0.922
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -644,92 +619,23 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash-high+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI, high)",
-       "production": false,
-       "median_cer": 0.083,
-       "accuracy": 0.917,
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.09,
+       "accuracy": 0.91,
        "accuracy_ci95": [
-        0.91,
-        0.926
+        0.893,
+        0.921
        ],
-       "fail_share": 0.065,
+       "fail_share": 0.011,
        "failed_reads": 0,
-       "words_not_in_ref": 0.135,
+       "words_not_in_ref": 0.148,
        "cost": {
-        "usd_per_1k": 3.471,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.02 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
-       },
-       "vs_in_use": {
-        "diff": -0.056,
-        "ci95": [
-         -0.108,
-         -0.013
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.086,
-       "accuracy": 0.914,
-       "accuracy_ci95": [
-        0.911,
-        0.925
-       ],
-       "fail_share": 0.065,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.163,
-       "cost": {
-        "usd_per_1k": 3.324,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×0.948 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
-       },
-       "vs_in_use": {
-        "diff": -0.051,
-        "ci95": [
-         -0.099,
-         -0.011
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.087,
-       "accuracy": 0.913,
-       "accuracy_ci95": [
-        0.903,
-        0.919
-       ],
-       "fail_share": 0.086,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.155,
-       "cost": {
-        "usd_per_1k": 3.501,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.063,
-        "ci95": [
-         -0.11,
-         -0.021
-        ],
-        "n_pages": 93,
-        "n_works": 93
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": false
       },
@@ -737,11 +643,11 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.089,
-       "accuracy": 0.911,
+       "mean_cer": 0.093,
+       "accuracy": 0.907,
        "accuracy_ci95": [
-        0.907,
-        0.919
+        0.898,
+        0.915
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -764,74 +670,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.089,
-       "accuracy": 0.911,
-       "accuracy_ci95": [
-        0.893,
-        0.92
-       ],
-       "fail_share": 0.065,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.201,
-       "cost": {
-        "usd_per_1k": 3.594,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.075,
-        "ci95": [
-         -0.124,
-         -0.029
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "qwen3-vl-8b",
-       "label": "Qwen3-VL 8B",
-       "production": false,
-       "median_cer": 0.093,
-       "accuracy": 0.907,
-       "accuracy_ci95": [
-        0.894,
-        0.915
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.225,
-       "cost": {
-        "usd_per_1k": 3.43,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.013,
-        "ci95": [
-         -0.028,
-         0.003
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.096,
-       "accuracy": 0.904,
+       "mean_cer": 0.101,
+       "accuracy": 0.899,
        "accuracy_ci95": [
-        0.895,
-        0.916
+        0.889,
+        0.907
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -854,14 +700,134 @@
        "on_frontier": false
       },
       {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "mean_cer": 0.104,
+       "accuracy": 0.896,
+       "accuracy_ci95": [
+        0.883,
+        0.907
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.225,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.013,
+        "ci95": [
+         -0.028,
+         0.003
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.141,
+       "accuracy": 0.859,
+       "accuracy_ci95": [
+        0.812,
+        0.898
+       ],
+       "fail_share": 0.065,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.163,
+       "cost": {
+        "usd_per_1k": 3.324,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×0.948 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": -0.051,
+        "ci95": [
+         -0.099,
+         -0.011
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI, high)",
+       "production": false,
+       "mean_cer": 0.146,
+       "accuracy": 0.854,
+       "accuracy_ci95": [
+        0.803,
+        0.898
+       ],
+       "fail_share": 0.065,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.135,
+       "cost": {
+        "usd_per_1k": 3.471,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.02 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+       },
+       "vs_in_use": {
+        "diff": -0.056,
+        "ci95": [
+         -0.108,
+         -0.013
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.154,
+       "accuracy": 0.846,
+       "accuracy_ci95": [
+        0.803,
+        0.887
+       ],
+       "fail_share": 0.086,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.155,
+       "cost": {
+        "usd_per_1k": 3.501,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.063,
+        "ci95": [
+         -0.11,
+         -0.021
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.118,
-       "accuracy": 0.882,
+       "mean_cer": 0.158,
+       "accuracy": 0.842,
        "accuracy_ci95": [
-        0.876,
-        0.891
+        0.804,
+        0.871
        ],
        "fail_share": 0.032,
        "failed_reads": 0,
@@ -882,12 +848,42 @@
         "n_works": 93
        },
        "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.165,
+       "accuracy": 0.835,
+       "accuracy_ci95": [
+        0.787,
+        0.875
+       ],
+       "fail_share": 0.065,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.201,
+       "cost": {
+        "usd_per_1k": 3.594,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.075,
+        "ci95": [
+         -0.124,
+         -0.029
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [],
      "role": "secondary",
      "heading": "References located with our own reading",
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     },
     {
      "kind": "whole-anchored-more-engines",
@@ -907,13 +903,9 @@
      },
      "frontier": false,
      "noise": {
-      "band": 0,
-      "diff": 0,
-      "ci95": [
-       0,
-       0
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "unlike",
+      "band": null,
+      "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-10-01)"
      },
      "date": "2026-10-09",
      "files": [
@@ -929,11 +921,11 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.062,
-       "accuracy": 0.939,
+       "mean_cer": 0.077,
+       "accuracy": 0.923,
        "accuracy_ci95": [
-        0.916,
-        0.948
+        0.892,
+        0.943
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -956,104 +948,14 @@
        "on_frontier": false
       },
       {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.065,
-       "accuracy": 0.935,
-       "accuracy_ci95": [
-        0.901,
-        0.94
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.114,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.01,
-        "ci95": [
-         0.004,
-         0.016
-        ],
-        "n_pages": 14,
-        "n_works": 14
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.07,
-       "accuracy": 0.931,
-       "accuracy_ci95": [
-        0.904,
-        0.945
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.264,
-       "cost": {
-        "usd_per_1k": 3.594,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": 0,
-        "ci95": [
-         -0.037,
-         0.023
-        ],
-        "n_pages": 14,
-        "n_works": 14
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "mistral-ocr-4-1",
-       "label": "Mistral OCR 4.1",
-       "production": false,
-       "median_cer": 0.07,
-       "accuracy": 0.931,
-       "accuracy_ci95": [
-        0.904,
-        0.939
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.146,
-       "cost": {
-        "usd_per_1k": 4,
-        "basis": "billed",
-        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.007,
-        "ci95": [
-         -0.003,
-         0.018
-        ],
-        "n_pages": 14,
-        "n_works": 14
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.074,
-       "accuracy": 0.927,
+       "mean_cer": 0.083,
+       "accuracy": 0.917,
        "accuracy_ci95": [
-        0.91,
-        0.947
+        0.886,
+        0.938
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1076,29 +978,29 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.082,
-       "accuracy": 0.918,
+       "mean_cer": 0.088,
+       "accuracy": 0.912,
        "accuracy_ci95": [
-        0.904,
-        0.94
+        0.883,
+        0.933
        ],
-       "fail_share": 0.071,
+       "fail_share": 0,
        "failed_reads": 0,
-       "words_not_in_ref": 0.156,
+       "words_not_in_ref": 0.114,
        "cost": {
-        "usd_per_1k": 3.324,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×0.948 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.048,
+        "diff": 0.01,
         "ci95": [
-         -0.172,
-         0.02
+         0.004,
+         0.016
         ],
         "n_pages": 14,
         "n_works": 14
@@ -1106,50 +1008,29 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.084,
-       "accuracy": 0.917,
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "mean_cer": 0.09,
+       "accuracy": 0.91,
        "accuracy_ci95": [
-        0.882,
+        0.88,
         0.932
        ],
        "fail_share": 0,
        "failed_reads": 0,
-       "words_not_in_ref": 0.218,
+       "words_not_in_ref": 0.146,
        "cost": {
-        "usd_per_1k": 1.279,
+        "usd_per_1k": 4,
         "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.085,
-       "accuracy": 0.916,
-       "accuracy_ci95": [
-        0.889,
-        0.944
-       ],
-       "fail_share": 0.143,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.096,
-       "cost": {
-        "usd_per_1k": 3.501,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.106,
+        "diff": 0.007,
         "ci95": [
-         -0.295,
-         0.02
+         -0.003,
+         0.018
         ],
         "n_pages": 14,
         "n_works": 14
@@ -1160,11 +1041,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.09,
-       "accuracy": 0.911,
+       "mean_cer": 0.096,
+       "accuracy": 0.904,
        "accuracy_ci95": [
-        0.89,
-        0.929
+        0.877,
+        0.923
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1187,29 +1068,50 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash-high+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI, high)",
-       "production": false,
-       "median_cer": 0.092,
-       "accuracy": 0.909,
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.097,
+       "accuracy": 0.903,
        "accuracy_ci95": [
-        0,
-        0.943
+        0.875,
+        0.924
        ],
-       "fail_share": 0.357,
+       "fail_share": 0,
        "failed_reads": 0,
-       "words_not_in_ref": 0.082,
+       "words_not_in_ref": 0.218,
        "cost": {
-        "usd_per_1k": 3.471,
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.097,
+       "accuracy": 0.903,
+       "accuracy_ci95": [
+        0.86,
+        0.936
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.264,
+       "cost": {
+        "usd_per_1k": 3.594,
         "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.02 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
        },
        "vs_in_use": {
-        "diff": -0.306,
+        "diff": 0,
         "ci95": [
-         -0.543,
-         -0.104
+         -0.037,
+         0.023
         ],
         "n_pages": 14,
         "n_works": 14
@@ -1220,11 +1122,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.105,
-       "accuracy": 0.895,
+       "mean_cer": 0.124,
+       "accuracy": 0.876,
        "accuracy_ci95": [
-        0.876,
-        0.907
+        0.836,
+        0.902
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1245,6 +1147,96 @@
         "n_works": 14
        },
        "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.145,
+       "accuracy": 0.855,
+       "accuracy_ci95": [
+        0.726,
+        0.93
+       ],
+       "fail_share": 0.071,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.156,
+       "cost": {
+        "usd_per_1k": 3.324,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×0.948 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": -0.048,
+        "ci95": [
+         -0.172,
+         0.02
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.203,
+       "accuracy": 0.797,
+       "accuracy_ci95": [
+        0.616,
+        0.928
+       ],
+       "fail_share": 0.143,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.096,
+       "cost": {
+        "usd_per_1k": 3.501,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.106,
+        "ci95": [
+         -0.295,
+         0.02
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI, high)",
+       "production": false,
+       "mean_cer": 0.403,
+       "accuracy": 0.597,
+       "accuracy_ci95": [
+        0.334,
+        0.802
+       ],
+       "fail_share": 0.357,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.082,
+       "cost": {
+        "usd_per_1k": 3.471,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.02 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+       },
+       "vs_in_use": {
+        "diff": -0.306,
+        "ci95": [
+         -0.543,
+         -0.104
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [
@@ -1252,11 +1244,11 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.078,
-       "accuracy": 0.923,
+       "mean_cer": 0.086,
+       "accuracy": 0.914,
        "accuracy_ci95": [
-        0.899,
-        0.941
+        0.893,
+        0.931
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1277,11 +1269,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.114,
-       "accuracy": 0.886,
+       "mean_cer": 0.137,
+       "accuracy": 0.863,
        "accuracy_ci95": [
-        0.858,
-        0.908
+        0.821,
+        0.894
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1301,7 +1293,7 @@
      ],
      "role": "secondary",
      "heading": "References located with our own reading: more engines, fewer pages",
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   },
@@ -1330,13 +1322,9 @@
      },
      "frontier": false,
      "noise": {
-      "band": 0.021,
-      "diff": -0.021,
-      "ci95": [
-       -0.066,
-       0
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "unlike",
+      "band": null,
+      "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-10-01)"
      },
      "date": "2026-10-09",
      "files": [
@@ -1348,74 +1336,14 @@
      ],
      "placed": [
       {
-       "engine": "claude-sonnet-5-5",
-       "label": "Claude Sonnet 5.5",
-       "production": false,
-       "median_cer": 0.032,
-       "accuracy": 0.968,
-       "accuracy_ci95": [
-        0.957,
-        0.972
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.027,
-       "cost": {
-        "usd_per_1k": 15.27,
-        "basis": "billed",
-        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; billed API spend, realtime rate, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.015,
-        "ci95": [
-         0.007,
-         0.022
-        ],
-        "n_pages": 44,
-        "n_works": 43
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.036,
-       "accuracy": 0.965,
-       "accuracy_ci95": [
-        0.952,
-        0.971
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.033,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": 0.015,
-        "ci95": [
-         0.009,
-         0.021
-        ],
-        "n_pages": 44,
-        "n_works": 43
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.035,
-       "accuracy": 0.965,
+       "mean_cer": 0.044,
+       "accuracy": 0.956,
        "accuracy_ci95": [
-        0.957,
-        0.972
+        0.945,
+        0.964
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1438,29 +1366,59 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.041,
-       "accuracy": 0.959,
+       "mean_cer": 0.045,
+       "accuracy": 0.955,
        "accuracy_ci95": [
-        0.946,
-        0.97
+        0.945,
+        0.963
        ],
-       "fail_share": 0.023,
+       "fail_share": 0,
        "failed_reads": 0,
-       "words_not_in_ref": 0.225,
+       "words_not_in_ref": 0.033,
        "cost": {
-        "usd_per_1k": 3.851,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.208 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.032,
+        "diff": 0.015,
         "ci95": [
-         -0.08,
-         0.005
+         0.009,
+         0.021
+        ],
+        "n_pages": 44,
+        "n_works": 43
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "mean_cer": 0.045,
+       "accuracy": 0.955,
+       "accuracy_ci95": [
+        0.944,
+        0.964
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.027,
+       "cost": {
+        "usd_per_1k": 15.27,
+        "basis": "billed",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; billed API spend, realtime rate, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": 0.015,
+        "ci95": [
+         0.007,
+         0.022
         ],
         "n_pages": 44,
         "n_works": 43
@@ -1471,11 +1429,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.041,
-       "accuracy": 0.959,
+       "mean_cer": 0.05,
+       "accuracy": 0.95,
        "accuracy_ci95": [
-        0.95,
-        0.97
+        0.94,
+        0.959
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1498,44 +1456,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash-high+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI, high)",
-       "production": false,
-       "median_cer": 0.042,
-       "accuracy": 0.958,
-       "accuracy_ci95": [
-        0.929,
-        0.971
-       ],
-       "fail_share": 0.318,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.014,
-       "cost": {
-        "usd_per_1k": 3.433,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.002 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
-       },
-       "vs_in_use": {
-        "diff": -0.283,
-        "ci95": [
-         -0.417,
-         -0.155
-        ],
-        "n_pages": 44,
-        "n_works": 43
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.042,
-       "accuracy": 0.958,
+       "mean_cer": 0.058,
+       "accuracy": 0.942,
        "accuracy_ci95": [
-        0.952,
-        0.97
+        0.922,
+        0.958
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1558,14 +1486,95 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.06,
+       "accuracy": 0.94,
+       "accuracy_ci95": [
+        0.93,
+        0.949
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.166,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "mean_cer": 0.091,
+       "accuracy": 0.909,
+       "accuracy_ci95": [
+        0.876,
+        0.934
+       ],
+       "fail_share": 0.023,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.145,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.031,
+        "ci95": [
+         -0.06,
+         -0.008
+        ],
+        "n_pages": 44,
+        "n_works": 43
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.092,
+       "accuracy": 0.908,
+       "accuracy_ci95": [
+        0.852,
+        0.946
+       ],
+       "fail_share": 0.023,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.225,
+       "cost": {
+        "usd_per_1k": 3.851,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.208 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.032,
+        "ci95": [
+         -0.08,
+         0.005
+        ],
+        "n_pages": 44,
+        "n_works": 43
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.043,
-       "accuracy": 0.957,
+       "mean_cer": 0.203,
+       "accuracy": 0.797,
        "accuracy_ci95": [
-        0.916,
-        0.966
+        0.71,
+        0.875
        ],
        "fail_share": 0.227,
        "failed_reads": 0,
@@ -1591,11 +1600,11 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.051,
-       "accuracy": 0.95,
+       "mean_cer": 0.269,
+       "accuracy": 0.731,
        "accuracy_ci95": [
-        0.707,
-        0.968
+        0.638,
+        0.819
        ],
        "fail_share": 0.295,
        "failed_reads": 0,
@@ -1618,50 +1627,29 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.053,
-       "accuracy": 0.947,
-       "accuracy_ci95": [
-        0.935,
-        0.96
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.166,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI, high)",
        "production": false,
-       "median_cer": 0.062,
-       "accuracy": 0.938,
+       "mean_cer": 0.342,
+       "accuracy": 0.658,
        "accuracy_ci95": [
-        0.925,
-        0.953
+        0.513,
+        0.789
        ],
-       "fail_share": 0.023,
+       "fail_share": 0.318,
        "failed_reads": 0,
-       "words_not_in_ref": 0.145,
+       "words_not_in_ref": 0.014,
        "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+        "usd_per_1k": 3.433,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.002 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
        },
        "vs_in_use": {
-        "diff": -0.031,
+        "diff": -0.283,
         "ci95": [
-         -0.06,
-         -0.008
+         -0.417,
+         -0.155
         ],
         "n_pages": 44,
         "n_works": 43
@@ -1674,11 +1662,11 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.041,
-       "accuracy": 0.959,
+       "mean_cer": 0.052,
+       "accuracy": 0.948,
        "accuracy_ci95": [
-        0.952,
-        0.968
+        0.933,
+        0.959
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1699,11 +1687,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.064,
-       "accuracy": 0.936,
+       "mean_cer": 0.106,
+       "accuracy": 0.894,
        "accuracy_ci95": [
-        0.925,
-        0.942
+        0.841,
+        0.929
        ],
        "fail_share": 0.023,
        "failed_reads": 0,
@@ -1723,7 +1711,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   },
@@ -1752,13 +1740,9 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0.177,
-      "diff": -0.177,
-      "ci95": [
-       -0.357,
-       -0.042
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "unlike",
+      "band": null,
+      "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-09-16)"
      },
      "date": "2026-10-09",
      "files": [
@@ -1770,45 +1754,14 @@
      ],
      "placed": [
       {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": false,
-       "median_cer": 0.003,
-       "accuracy": 0.998,
-       "accuracy_ci95": [
-        0.996,
-        0.999
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 2.709,
-        "basis": "billed",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "vs_in_use": {
-        "diff": 0.003,
-        "ci95": [
-         0.002,
-         0.005
-        ],
-        "n_pages": 22,
-        "n_works": 22
-       },
-       "verdict": "same",
-       "on_frontier": true
-      },
-      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.003,
-       "accuracy": 0.997,
+       "mean_cer": 0.005,
+       "accuracy": 0.995,
        "accuracy_ci95": [
-        0.995,
-        0.999
+        0.99,
+        0.998
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1828,18 +1781,18 @@
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "same",
+       "verdict": "better",
        "on_frontier": false
       },
       {
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.003,
-       "accuracy": 0.997,
+       "mean_cer": 0.005,
+       "accuracy": 0.995,
        "accuracy_ci95": [
-        0.996,
-        0.998
+        0.99,
+        0.997
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1859,49 +1812,49 @@
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "same",
-       "on_frontier": false
+       "verdict": "better",
+       "on_frontier": true
       },
       {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.005,
-       "accuracy": 0.996,
+       "mean_cer": 0.006,
+       "accuracy": 0.994,
        "accuracy_ci95": [
-        0.856,
+        0.988,
         0.998
        ],
-       "fail_share": 0.273,
-       "failed_reads": 6,
+       "fail_share": 0,
+       "failed_reads": 0,
        "words_not_in_ref": null,
        "cost": {
-        "usd_per_1k": 3.472,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.021 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+        "usd_per_1k": 2.709,
+        "basis": "billed",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "vs_in_use": {
-        "diff": -0.272,
+        "diff": 0.003,
         "ci95": [
-         -0.486,
-         -0.097
+         0.002,
+         0.005
         ],
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "worse",
-       "on_frontier": false
+       "verdict": "better",
+       "on_frontier": true
       },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.006,
-       "accuracy": 0.995,
+       "mean_cer": 0.009,
+       "accuracy": 0.991,
        "accuracy_ci95": [
-        0.992,
-        0.997
+        0.985,
+        0.995
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1918,11 +1871,11 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.007,
-       "accuracy": 0.993,
+       "mean_cer": 0.013,
+       "accuracy": 0.987,
        "accuracy_ci95": [
-        0.987,
-        0.996
+        0.979,
+        0.993
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -1946,14 +1899,138 @@
        "on_frontier": false
       },
       {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "mean_cer": 0.017,
+       "accuracy": 0.983,
+       "accuracy_ci95": [
+        0.975,
+        0.989
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.008,
+        "ci95": [
+         -0.013,
+         -0.002
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "mean_cer": 0.019,
+       "accuracy": 0.981,
+       "accuracy_ci95": [
+        0.974,
+        0.988
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.009,
+        "ci95": [
+         -0.016,
+         -0.003
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "mean_cer": 0.047,
+       "accuracy": 0.954,
+       "accuracy_ci95": [
+        0.938,
+        0.967
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.037,
+        "ci95": [
+         -0.051,
+         -0.024
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "worse",
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.281,
+       "accuracy": 0.719,
+       "accuracy_ci95": [
+        0.525,
+        0.899
+       ],
+       "fail_share": 0.273,
+       "failed_reads": 6,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.472,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.021 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": -0.272,
+        "ci95": [
+         -0.486,
+         -0.097
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.008,
-       "accuracy": 0.992,
+       "mean_cer": 0.29,
+       "accuracy": 0.71,
        "accuracy_ci95": [
-        0.79,
-        0.995
+        0.524,
+        0.885
        ],
        "fail_share": 0.273,
        "failed_reads": 6,
@@ -1975,99 +2052,6 @@
        },
        "verdict": "worse",
        "on_frontier": false
-      },
-      {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.012,
-       "accuracy": 0.989,
-       "accuracy_ci95": [
-        0.985,
-        0.991
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.008,
-        "ci95": [
-         -0.013,
-         -0.002
-        ],
-        "n_pages": 22,
-        "n_works": 22
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
-       "engine": "qwen3-vl-8b",
-       "label": "Qwen3-VL 8B",
-       "production": false,
-       "median_cer": 0.011,
-       "accuracy": 0.989,
-       "accuracy_ci95": [
-        0.98,
-        0.991
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 3.43,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.009,
-        "ci95": [
-         -0.016,
-         -0.003
-        ],
-        "n_pages": 22,
-        "n_works": 22
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
-       "production": false,
-       "median_cer": 0.046,
-       "accuracy": 0.955,
-       "accuracy_ci95": [
-        0.942,
-        0.976
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.037,
-        "ci95": [
-         -0.051,
-         -0.024
-        ],
-        "n_pages": 22,
-        "n_works": 22
-       },
-       "verdict": "same",
-       "on_frontier": true
       }
      ],
      "no_cost": [
@@ -2075,11 +2059,11 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.013,
-       "accuracy": 0.987,
+       "mean_cer": 0.023,
+       "accuracy": 0.977,
        "accuracy_ci95": [
-        0.971,
-        0.991
+        0.967,
+        0.985
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2095,17 +2079,17 @@
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "same"
+       "verdict": "worse"
       },
       {
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.019,
-       "accuracy": 0.982,
+       "mean_cer": 0.034,
+       "accuracy": 0.966,
        "accuracy_ci95": [
-        0.959,
-        0.988
+        0.951,
+        0.979
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2121,43 +2105,17 @@
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "same"
-      },
-      {
-       "engine": "tesseract-frk",
-       "label": "Tesseract (frk)",
-       "production": false,
-       "median_cer": 0.039,
-       "accuracy": 0.961,
-       "accuracy_ci95": [
-        0.939,
-        0.971
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": null,
-       "no_price": "runs on our own servers; no billed price on record",
-       "vs_in_use": {
-        "diff": -0.054,
-        "ci95": [
-         -0.083,
-         -0.033
-        ],
-        "n_pages": 22,
-        "n_works": 22
-       },
-       "verdict": "same"
+       "verdict": "worse"
       },
       {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.049,
-       "accuracy": 0.952,
+       "mean_cer": 0.052,
+       "accuracy": 0.948,
        "accuracy_ci95": [
         0.933,
-        0.967
+        0.961
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2173,17 +2131,43 @@
         "n_pages": 22,
         "n_works": 22
        },
-       "verdict": "same"
+       "verdict": "worse"
+      },
+      {
+       "engine": "tesseract-frk",
+       "label": "Tesseract (frk)",
+       "production": false,
+       "mean_cer": 0.064,
+       "accuracy": 0.936,
+       "accuracy_ci95": [
+        0.903,
+        0.96
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "runs on our own servers; no billed price on record",
+       "vs_in_use": {
+        "diff": -0.054,
+        "ci95": [
+         -0.083,
+         -0.033
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "worse"
       },
       {
        "engine": "kraken-austriannewspapers",
        "label": "Kraken (Austrian newspapers)",
        "production": false,
-       "median_cer": 0.099,
-       "accuracy": 0.902,
+       "mean_cer": 0.486,
+       "accuracy": 0.514,
        "accuracy_ci95": [
-        0,
-        0.93
+        0.303,
+        0.72
        ],
        "fail_share": 0.455,
        "failed_reads": 10,
@@ -2205,11 +2189,11 @@
        "engine": "tesseract-deu",
        "label": "Tesseract (deu)",
        "production": false,
-       "median_cer": 0.11,
-       "accuracy": 0.891,
+       "mean_cer": 0.491,
+       "accuracy": 0.509,
        "accuracy_ci95": [
-        0,
-        0.914
+        0.296,
+        0.691
        ],
        "fail_share": 0.455,
        "failed_reads": 10,
@@ -2231,11 +2215,11 @@
        "engine": "kraken-catmus",
        "label": "Kraken (CATMuS)",
        "production": false,
-       "median_cer": 1,
-       "accuracy": 0,
+       "mean_cer": 0.691,
+       "accuracy": 0.309,
        "accuracy_ci95": [
-        0,
-        0.957
+        0.132,
+        0.528
        ],
        "fail_share": 0.682,
        "failed_reads": 15,
@@ -2256,7 +2240,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No engine is clearly better than Gemini 3.1 Flash-Lite, the engine we use: the differences are within the noise."
+     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +0.4 points a page (95% interval +0.2 to +0.8). Also better: Gemini 3.6 Flash (CLI) and Gemini 3 Flash."
     }
    ]
   },
@@ -2296,11 +2280,11 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": true,
-       "median_cer": 0.004,
-       "accuracy": 0.997,
+       "mean_cer": 0.13,
+       "accuracy": 0.87,
        "accuracy_ci95": [
-        0.993,
-        0.998
+        0.742,
+        0.995
        ],
        "fail_share": 0.125,
        "failed_reads": 3,
@@ -2317,11 +2301,11 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.007,
-       "accuracy": 0.994,
+       "mean_cer": 0.175,
+       "accuracy": 0.825,
        "accuracy_ci95": [
-        0.988,
-        0.998
+        0.66,
+        0.951
        ],
        "fail_share": 0.167,
        "failed_reads": 4,
@@ -2347,40 +2331,14 @@
      ],
      "no_cost": [
       {
-       "engine": "kraken-greek-cllg",
-       "label": "Kraken (CLLG Greek)",
-       "production": false,
-       "median_cer": 0.01,
-       "accuracy": 0.99,
-       "accuracy_ci95": [
-        0.981,
-        0.993
-       ],
-       "fail_share": 0.083,
-       "failed_reads": 2,
-       "words_not_in_ref": null,
-       "cost": null,
-       "no_price": "runs on our own servers; no billed price on record",
-       "vs_in_use": {
-        "diff": 0.029,
-        "ci95": [
-         -0.103,
-         0.161
-        ],
-        "n_pages": 24,
-        "n_works": 24
-       },
-       "verdict": "same"
-      },
-      {
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.016,
-       "accuracy": 0.985,
+       "mean_cer": 0.066,
+       "accuracy": 0.934,
        "accuracy_ci95": [
-        0.974,
-        0.992
+        0.847,
+        0.983
        ],
        "fail_share": 0.042,
        "failed_reads": 1,
@@ -2399,40 +2357,40 @@
        "verdict": "same"
       },
       {
-       "engine": "tesseract-grc",
-       "label": "Tesseract (grc)",
+       "engine": "kraken-greek-cllg",
+       "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.072,
-       "accuracy": 0.929,
+       "mean_cer": 0.1,
+       "accuracy": 0.9,
        "accuracy_ci95": [
-        0.432,
-        0.948
+        0.776,
+        0.986
        ],
-       "fail_share": 0.292,
-       "failed_reads": 7,
+       "fail_share": 0.083,
+       "failed_reads": 2,
        "words_not_in_ref": null,
        "cost": null,
        "no_price": "runs on our own servers; no billed price on record",
        "vs_in_use": {
-        "diff": -0.212,
+        "diff": 0.029,
         "ci95": [
-         -0.418,
-         -0.001
+         -0.103,
+         0.161
         ],
         "n_pages": 24,
         "n_works": 24
        },
-       "verdict": "worse"
+       "verdict": "same"
       },
       {
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.09,
-       "accuracy": 0.911,
+       "mean_cer": 0.267,
+       "accuracy": 0.733,
        "accuracy_ci95": [
-        0.855,
-        0.962
+        0.57,
+        0.876
        ],
        "fail_share": 0.208,
        "failed_reads": 5,
@@ -2451,14 +2409,40 @@
        "verdict": "same"
       },
       {
+       "engine": "tesseract-grc",
+       "label": "Tesseract (grc)",
+       "production": false,
+       "mean_cer": 0.341,
+       "accuracy": 0.659,
+       "accuracy_ci95": [
+        0.471,
+        0.823
+       ],
+       "fail_share": 0.292,
+       "failed_reads": 7,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "runs on our own servers; no billed price on record",
+       "vs_in_use": {
+        "diff": -0.212,
+        "ci95": [
+         -0.418,
+         -0.001
+        ],
+        "n_pages": 24,
+        "n_works": 24
+       },
+       "verdict": "worse"
+      },
+      {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.112,
-       "accuracy": 0.888,
+       "mean_cer": 0.432,
+       "accuracy": 0.568,
        "accuracy_ci95": [
-        0,
-        0.938
+        0.388,
+        0.748
        ],
        "fail_share": 0.375,
        "failed_reads": 9,
@@ -2479,7 +2463,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise. Gemini 3.1 Flash-Lite ($1.28) costs less than $2.71 per 1,000 pages and is not measurably worse."
+     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use."
     },
     {
      "kind": "primary-more-engines",
@@ -2512,11 +2496,11 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": true,
-       "median_cer": 0.003,
-       "accuracy": 0.998,
+       "mean_cer": 0.006,
+       "accuracy": 0.994,
        "accuracy_ci95": [
-        0.995,
-        0.999
+        0.987,
+        0.998
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2533,11 +2517,11 @@
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.002,
-       "accuracy": 0.998,
+       "mean_cer": 0.006,
+       "accuracy": 0.994,
        "accuracy_ci95": [
-        0.994,
-        0.999
+        0.987,
+        0.998
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2564,11 +2548,11 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.003,
-       "accuracy": 0.997,
+       "mean_cer": 0.007,
+       "accuracy": 0.993,
        "accuracy_ci95": [
-        0.992,
-        0.999
+        0.986,
+        0.998
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2595,11 +2579,11 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.004,
-       "accuracy": 0.996,
+       "mean_cer": 0.007,
+       "accuracy": 0.993,
        "accuracy_ci95": [
-        0.993,
-        0.998
+        0.986,
+        0.997
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2626,11 +2610,11 @@
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.005,
-       "accuracy": 0.995,
+       "mean_cer": 0.008,
+       "accuracy": 0.992,
        "accuracy_ci95": [
-        0.993,
-        0.998
+        0.984,
+        0.997
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2657,10 +2641,10 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.007,
-       "accuracy": 0.994,
+       "mean_cer": 0.01,
+       "accuracy": 0.99,
        "accuracy_ci95": [
-        0.99,
+        0.982,
         0.995
        ],
        "fail_share": 0,
@@ -2685,45 +2669,14 @@
        "on_frontier": false
       },
       {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.01,
-       "accuracy": 0.99,
-       "accuracy_ci95": [
-        0.967,
-        0.993
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.019,
-        "ci95": [
-         -0.042,
-         -0.005
-        ],
-        "n_pages": 12,
-        "n_works": 12
-       },
-       "verdict": "worse",
-       "on_frontier": false
-      },
-      {
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.012,
-       "accuracy": 0.988,
+       "mean_cer": 0.02,
+       "accuracy": 0.98,
        "accuracy_ci95": [
-        0.98,
-        0.994
+        0.965,
+        0.99
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2747,14 +2700,45 @@
        "on_frontier": false
       },
       {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "mean_cer": 0.025,
+       "accuracy": 0.975,
+       "accuracy_ci95": [
+        0.952,
+        0.991
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.019,
+        "ci95": [
+         -0.042,
+         -0.005
+        ],
+        "n_pages": 12,
+        "n_works": 12
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.029,
-       "accuracy": 0.971,
+       "mean_cer": 0.04,
+       "accuracy": 0.96,
        "accuracy_ci95": [
-        0.946,
-        0.983
+        0.943,
+        0.975
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2783,11 +2767,11 @@
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.009,
-       "accuracy": 0.991,
+       "mean_cer": 0.015,
+       "accuracy": 0.985,
        "accuracy_ci95": [
-        0.979,
-        0.996
+        0.975,
+        0.993
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2809,11 +2793,11 @@
        "engine": "kraken-greek-cllg",
        "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.01,
-       "accuracy": 0.99,
+       "mean_cer": 0.02,
+       "accuracy": 0.98,
        "accuracy_ci95": [
-        0.984,
-        0.995
+        0.96,
+        0.992
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2832,40 +2816,14 @@
        "verdict": "worse"
       },
       {
-       "engine": "tesseract-grc",
-       "label": "Tesseract (grc)",
-       "production": false,
-       "median_cer": 0.052,
-       "accuracy": 0.948,
-       "accuracy_ci95": [
-        0.912,
-        0.961
-       ],
-       "fail_share": 0.083,
-       "failed_reads": 1,
-       "words_not_in_ref": null,
-       "cost": null,
-       "no_price": "runs on our own servers; no billed price on record",
-       "vs_in_use": {
-        "diff": -0.128,
-        "ci95": [
-         -0.293,
-         -0.038
-        ],
-        "n_pages": 12,
-        "n_works": 12
-       },
-       "verdict": "worse"
-      },
-      {
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.055,
-       "accuracy": 0.946,
+       "mean_cer": 0.068,
+       "accuracy": 0.932,
        "accuracy_ci95": [
-        0.881,
-        0.978
+        0.901,
+        0.96
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2887,11 +2845,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.066,
-       "accuracy": 0.935,
+       "mean_cer": 0.076,
+       "accuracy": 0.924,
        "accuracy_ci95": [
-        0.912,
-        0.961
+        0.899,
+        0.947
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -2908,11 +2866,37 @@
         "n_works": 12
        },
        "verdict": "worse"
+      },
+      {
+       "engine": "tesseract-grc",
+       "label": "Tesseract (grc)",
+       "production": false,
+       "mean_cer": 0.134,
+       "accuracy": 0.866,
+       "accuracy_ci95": [
+        0.703,
+        0.958
+       ],
+       "fail_share": 0.083,
+       "failed_reads": 1,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "runs on our own servers; no billed price on record",
+       "vs_in_use": {
+        "diff": -0.128,
+        "ci95": [
+         -0.293,
+         -0.038
+        ],
+        "n_pages": 12,
+        "n_works": 12
+       },
+       "verdict": "worse"
       }
      ],
      "role": "secondary",
      "heading": "Transcriptions of the page: more engines, fewer pages",
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise. Gemini 3.1 Flash-Lite ($1.28) costs less than $2.71 per 1,000 pages and is not measurably worse."
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use."
     },
     {
      "kind": "family-whole-independent",
@@ -2963,14 +2947,35 @@
      ],
      "placed": [
       {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "mean_cer": 0.099,
+       "accuracy": 0.901,
+       "accuracy_ci95": [
+        0.889,
+        0.913
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.142,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "billed",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.084,
-       "accuracy": 0.916,
+       "mean_cer": 0.119,
+       "accuracy": 0.881,
        "accuracy_ci95": [
-        0.908,
-        0.932
+        0.849,
+        0.909
        ],
        "fail_share": 0.028,
        "failed_reads": 3,
@@ -2991,38 +2996,48 @@
         "n_works": 97
        },
        "verdict": "same",
-       "on_frontier": true
+       "on_frontier": false
       },
       {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": true,
-       "median_cer": 0.085,
-       "accuracy": 0.915,
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "mean_cer": 0.153,
+       "accuracy": 0.847,
        "accuracy_ci95": [
-        0.903,
-        0.933
+        0.826,
+        0.865
        ],
-       "fail_share": 0,
+       "fail_share": 0.009,
        "failed_reads": 0,
-       "words_not_in_ref": 0.142,
+       "words_not_in_ref": 0.242,
        "cost": {
-        "usd_per_1k": 2.709,
+        "usd_per_1k": 1.279,
         "basis": "billed",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
+       "vs_in_use": {
+        "diff": -0.054,
+        "ci95": [
+         -0.07,
+         -0.041
+        ],
+        "n_pages": 109,
+        "n_works": 97
+       },
+       "verdict": "worse",
        "on_frontier": true
       },
       {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.085,
-       "accuracy": 0.915,
+       "mean_cer": 0.184,
+       "accuracy": 0.816,
        "accuracy_ci95": [
-        0.896,
-        0.927
+        0.763,
+        0.865
        ],
        "fail_share": 0.101,
        "failed_reads": 1,
@@ -3049,11 +3064,11 @@
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.109,
-       "accuracy": 0.891,
+       "mean_cer": 0.217,
+       "accuracy": 0.783,
        "accuracy_ci95": [
-        0.871,
-        0.905
+        0.727,
+        0.833
        ],
        "fail_share": 0.119,
        "failed_reads": 0,
@@ -3077,45 +3092,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": false,
-       "median_cer": 0.142,
-       "accuracy": 0.858,
-       "accuracy_ci95": [
-        0.835,
-        0.886
-       ],
-       "fail_share": 0.009,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.242,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "vs_in_use": {
-        "diff": -0.054,
-        "ci95": [
-         -0.07,
-         -0.041
-        ],
-        "n_pages": 109,
-        "n_works": 97
-       },
-       "verdict": "worse",
-       "on_frontier": true
-      },
-      {
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.266,
-       "accuracy": 0.734,
+       "mean_cer": 0.255,
+       "accuracy": 0.745,
        "accuracy_ci95": [
-        0.713,
-        0.78
+        0.722,
+        0.768
        ],
        "fail_share": 0.028,
        "failed_reads": 0,
@@ -3142,11 +3126,11 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.271,
-       "accuracy": 0.729,
+       "mean_cer": 0.264,
+       "accuracy": 0.736,
        "accuracy_ci95": [
-        0.698,
-        0.783
+        0.707,
+        0.763
        ],
        "fail_share": 0.037,
        "failed_reads": 0,
@@ -3173,11 +3157,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.305,
-       "accuracy": 0.695,
+       "mean_cer": 0.335,
+       "accuracy": 0.665,
        "accuracy_ci95": [
-        0.67,
-        0.762
+        0.617,
+        0.708
        ],
        "fail_share": 0.138,
        "failed_reads": 0,
@@ -3204,11 +3188,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 1,
-       "accuracy": 0,
+       "mean_cer": 0.738,
+       "accuracy": 0.262,
        "accuracy_ci95": [
-        0,
-        0.138
+        0.205,
+        0.319
        ],
        "fail_share": 0.688,
        "failed_reads": 0,
@@ -3237,11 +3221,11 @@
        "engine": "kraken-greek-cllg",
        "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.082,
-       "accuracy": 0.918,
+       "mean_cer": 0.1,
+       "accuracy": 0.9,
        "accuracy_ci95": [
-        0.909,
-        0.929
+        0.888,
+        0.911
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3260,40 +3244,14 @@
        "verdict": "same"
       },
       {
-       "engine": "olmocr-2-7b-fp8",
-       "label": "olmOCR 2 7B",
-       "production": false,
-       "median_cer": 0.477,
-       "accuracy": 0.523,
-       "accuracy_ci95": [
-        0.453,
-        0.616
-       ],
-       "fail_share": 0.468,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.735,
-       "cost": null,
-       "no_price": "priced on inference time only; no billed rental on record",
-       "vs_in_use": {
-        "diff": -0.429,
-        "ci95": [
-         -0.488,
-         -0.374
-        ],
-        "n_pages": 109,
-        "n_works": 97
-       },
-       "verdict": "worse"
-      },
-      {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.5,
-       "accuracy": 0.5,
+       "mean_cer": 0.508,
+       "accuracy": 0.492,
        "accuracy_ci95": [
-        0.458,
-        0.571
+        0.45,
+        0.539
        ],
        "fail_share": 0.495,
        "failed_reads": 0,
@@ -3310,11 +3268,37 @@
         "n_works": 97
        },
        "verdict": "worse"
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "mean_cer": 0.528,
+       "accuracy": 0.472,
+       "accuracy_ci95": [
+        0.418,
+        0.528
+       ],
+       "fail_share": 0.468,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.735,
+       "cost": null,
+       "no_price": "priced on inference time only; no billed rental on record",
+       "vs_in_use": {
+        "diff": -0.429,
+        "ci95": [
+         -0.488,
+         -0.374
+        ],
+        "n_pages": 109,
+        "n_works": 97
+       },
+       "verdict": "worse"
       }
      ],
      "role": "secondary",
      "heading": "Typed editions of the text",
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise."
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use."
     },
     {
      "kind": "whole-independent-more-engines",
@@ -3347,11 +3331,11 @@
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
-       "median_cer": 0.085,
-       "accuracy": 0.915,
+       "mean_cer": 0.088,
+       "accuracy": 0.912,
        "accuracy_ci95": [
-        0.867,
-        0.942
+        0.882,
+        0.939
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3378,11 +3362,11 @@
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.097,
-       "accuracy": 0.903,
+       "mean_cer": 0.092,
+       "accuracy": 0.908,
        "accuracy_ci95": [
-        0.865,
-        0.936
+        0.877,
+        0.937
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3406,35 +3390,14 @@
        "on_frontier": true
       },
       {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": true,
-       "median_cer": 0.102,
-       "accuracy": 0.898,
-       "accuracy_ci95": [
-        0.855,
-        0.943
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.145,
-       "cost": {
-        "usd_per_1k": 2.709,
-        "basis": "billed",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": true
-      },
-      {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.104,
-       "accuracy": 0.897,
+       "mean_cer": 0.094,
+       "accuracy": 0.906,
        "accuracy_ci95": [
-        0.86,
-        0.938
+        0.876,
+        0.935
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3455,48 +3418,38 @@
         "n_works": 10
        },
        "verdict": "same",
-       "on_frontier": false
+       "on_frontier": true
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.116,
-       "accuracy": 0.884,
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "mean_cer": 0.097,
+       "accuracy": 0.903,
        "accuracy_ci95": [
-        0.462,
-        0.933
+        0.87,
+        0.935
        ],
-       "fail_share": 0.2,
+       "fail_share": 0,
        "failed_reads": 0,
-       "words_not_in_ref": 0.15,
+       "words_not_in_ref": 0.145,
        "cost": {
-        "usd_per_1k": 4.142,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.351 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+        "usd_per_1k": 2.709,
+        "basis": "billed",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
-       "vs_in_use": {
-        "diff": -0.174,
-        "ci95": [
-         -0.431,
-         0.01
-        ],
-        "n_pages": 10,
-        "n_works": 10
-       },
-       "verdict": "same",
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.167,
-       "accuracy": 0.834,
+       "mean_cer": 0.13,
+       "accuracy": 0.87,
        "accuracy_ci95": [
-        0.812,
-        0.936
+        0.828,
+        0.916
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3523,11 +3476,11 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.243,
-       "accuracy": 0.757,
+       "mean_cer": 0.23,
+       "accuracy": 0.77,
        "accuracy_ci95": [
-        0.598,
-        0.936
+        0.665,
+        0.865
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3554,11 +3507,11 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.25,
-       "accuracy": 0.75,
+       "mean_cer": 0.242,
+       "accuracy": 0.758,
        "accuracy_ci95": [
-        0.613,
-        0.914
+        0.66,
+        0.853
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3585,11 +3538,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.268,
-       "accuracy": 0.732,
+       "mean_cer": 0.245,
+       "accuracy": 0.755,
        "accuracy_ci95": [
-        0.596,
-        0.927
+        0.655,
+        0.856
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3613,14 +3566,45 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.271,
+       "accuracy": 0.729,
+       "accuracy_ci95": [
+        0.478,
+        0.912
+       ],
+       "fail_share": 0.2,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.15,
+       "cost": {
+        "usd_per_1k": 4.142,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.351 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.174,
+        "ci95": [
+         -0.431,
+         0.01
+        ],
+        "n_pages": 10,
+        "n_works": 10
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.46,
-       "accuracy": 0.541,
+       "mean_cer": 0.55,
+       "accuracy": 0.45,
        "accuracy_ci95": [
-        0,
-        0.865
+        0.21,
+        0.683
        ],
        "fail_share": 0.5,
        "failed_reads": 0,
@@ -3649,11 +3633,11 @@
        "engine": "kraken-greek-cllg",
        "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.081,
-       "accuracy": 0.919,
+       "mean_cer": 0.096,
+       "accuracy": 0.904,
        "accuracy_ci95": [
-        0.854,
-        0.949
+        0.871,
+        0.936
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3672,40 +3656,14 @@
        "verdict": "same"
       },
       {
-       "engine": "cllg-qwen3vl-8b",
-       "label": "Qwen3-VL 8B (CLLG)",
-       "production": false,
-       "median_cer": 0.228,
-       "accuracy": 0.772,
-       "accuracy_ci95": [
-        0.619,
-        0.94
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.329,
-       "cost": null,
-       "no_price": "no billed price on record",
-       "vs_in_use": {
-        "diff": -0.121,
-        "ci95": [
-         -0.204,
-         -0.041
-        ],
-        "n_pages": 10,
-        "n_works": 10
-       },
-       "verdict": "worse"
-      },
-      {
        "engine": "dots-mocr",
        "label": "dots.mocr",
        "production": false,
-       "median_cer": 0.239,
-       "accuracy": 0.762,
+       "mean_cer": 0.202,
+       "accuracy": 0.798,
        "accuracy_ci95": [
-        0.653,
-        0.964
+        0.712,
+        0.885
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3724,14 +3682,40 @@
        "verdict": "worse"
       },
       {
+       "engine": "cllg-qwen3vl-8b",
+       "label": "Qwen3-VL 8B (CLLG)",
+       "production": false,
+       "mean_cer": 0.218,
+       "accuracy": 0.782,
+       "accuracy_ci95": [
+        0.689,
+        0.886
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.329,
+       "cost": null,
+       "no_price": "no billed price on record",
+       "vs_in_use": {
+        "diff": -0.121,
+        "ci95": [
+         -0.204,
+         -0.041
+        ],
+        "n_pages": 10,
+        "n_works": 10
+       },
+       "verdict": "worse"
+      },
+      {
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.249,
-       "accuracy": 0.751,
+       "mean_cer": 0.225,
+       "accuracy": 0.775,
        "accuracy_ci95": [
-        0.622,
-        0.922
+        0.688,
+        0.863
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -3753,11 +3737,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.497,
-       "accuracy": 0.503,
+       "mean_cer": 0.417,
+       "accuracy": 0.583,
        "accuracy_ci95": [
-        0.37,
-        0.861
+        0.444,
+        0.731
        ],
        "fail_share": 0.5,
        "failed_reads": 0,
@@ -3779,11 +3763,11 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.504,
-       "accuracy": 0.496,
+       "mean_cer": 0.485,
+       "accuracy": 0.516,
        "accuracy_ci95": [
-        0.204,
-        0.843
+        0.321,
+        0.709
        ],
        "fail_share": 0.5,
        "failed_reads": 0,
@@ -3805,11 +3789,11 @@
        "engine": "tesseract-grc",
        "label": "Tesseract (grc)",
        "production": false,
-       "median_cer": 0.545,
-       "accuracy": 0.456,
+       "mean_cer": 0.626,
+       "accuracy": 0.374,
        "accuracy_ci95": [
-        0,
-        0.658
+        0.179,
+        0.568
        ],
        "fail_share": 0.5,
        "failed_reads": 0,
@@ -3830,7 +3814,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text: more engines, fewer pages",
-     "verdict": "No engine is clearly better than Gemini 3 Flash, the engine we use: the differences are within the noise."
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use."
     }
    ]
   },
@@ -3888,11 +3872,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.181,
-       "accuracy": 0.819,
+       "mean_cer": 0.211,
+       "accuracy": 0.789,
        "accuracy_ci95": [
-        0.804,
-        0.835
+        0.776,
+        0.801
        ],
        "fail_share": 0.008,
        "failed_reads": 0,
@@ -3919,11 +3903,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.182,
-       "accuracy": 0.819,
+       "mean_cer": 0.22,
+       "accuracy": 0.78,
        "accuracy_ci95": [
-        0.802,
-        0.832
+        0.767,
+        0.792
        ],
        "fail_share": 0.018,
        "failed_reads": 0,
@@ -3950,11 +3934,11 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.201,
-       "accuracy": 0.8,
+       "mean_cer": 0.236,
+       "accuracy": 0.764,
        "accuracy_ci95": [
-        0.774,
-        0.818
+        0.745,
+        0.781
        ],
        "fail_share": 0.03,
        "failed_reads": 0,
@@ -3981,11 +3965,11 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.205,
-       "accuracy": 0.795,
+       "mean_cer": 0.237,
+       "accuracy": 0.763,
        "accuracy_ci95": [
-        0.763,
-        0.813
+        0.745,
+        0.779
        ],
        "fail_share": 0.022,
        "failed_reads": 0,
@@ -4009,45 +3993,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.212,
-       "accuracy": 0.788,
-       "accuracy_ci95": [
-        0.75,
-        0.81
-       ],
-       "fail_share": 0.112,
-       "failed_reads": 9,
-       "words_not_in_ref": 0.145,
-       "cost": {
-        "usd_per_1k": 3.537,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
-       },
-       "vs_in_use": {
-        "diff": 0.004,
-        "ci95": [
-         -0.016,
-         0.022
-        ],
-        "n_pages": 498,
-        "n_works": 261
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.215,
-       "accuracy": 0.786,
+       "mean_cer": 0.259,
+       "accuracy": 0.741,
        "accuracy_ci95": [
-        0.75,
-        0.813
+        0.723,
+        0.761
        ],
        "fail_share": 0.064,
        "failed_reads": 0,
@@ -4071,14 +4024,45 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.296,
+       "accuracy": 0.704,
+       "accuracy_ci95": [
+        0.67,
+        0.735
+       ],
+       "fail_share": 0.112,
+       "failed_reads": 9,
+       "words_not_in_ref": 0.145,
+       "cost": {
+        "usd_per_1k": 3.537,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": 0.004,
+        "ci95": [
+         -0.016,
+         0.022
+        ],
+        "n_pages": 498,
+        "n_works": 261
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.256,
-       "accuracy": 0.744,
+       "mean_cer": 0.3,
+       "accuracy": 0.7,
        "accuracy_ci95": [
-        0.716,
-        0.775
+        0.669,
+        0.73
        ],
        "fail_share": 0.114,
        "failed_reads": 0,
@@ -4095,11 +4079,11 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.263,
-       "accuracy": 0.737,
+       "mean_cer": 0.3,
+       "accuracy": 0.7,
        "accuracy_ci95": [
-        0.712,
-        0.761
+        0.676,
+        0.72
        ],
        "fail_share": 0.074,
        "failed_reads": 0,
@@ -4126,11 +4110,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.43,
-       "accuracy": 0.571,
+       "mean_cer": 0.551,
+       "accuracy": 0.449,
        "accuracy_ci95": [
-        0.455,
-        0.628
+        0.397,
+        0.5
        ],
        "fail_share": 0.446,
        "failed_reads": 0,
@@ -4157,7 +4141,7 @@
      "no_cost": [],
      "role": "primary",
      "heading": null,
-     "verdict": "PaddleOCR-VL 1.6 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +8.8 points a page (95% interval +5.7 to +12.3), and costs less ($1.04 against $1.28 per 1,000 pages). Also better: Qwen3-VL 8B, Gemini 3 Flash and 2 more."
+     "verdict": "The evidence points toward PaddleOCR-VL 1.6 over Gemini 3.1 Flash-Lite, the engine we use (+8.8 points a page, 95% interval +5.7 to +12.3); directional only."
     },
     {
      "kind": "primary-more-engines",
@@ -4177,13 +4161,9 @@
      },
      "frontier": true,
      "noise": {
-      "band": 0,
-      "diff": 0,
-      "ci95": [
-       0,
-       0
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "identical",
+      "band": null,
+      "n": 21
      },
      "date": "2026-10-09",
      "files": [
@@ -4194,45 +4174,14 @@
      ],
      "placed": [
       {
-       "engine": "paddleocr-vl-1.6",
-       "label": "PaddleOCR-VL 1.6",
-       "production": false,
-       "median_cer": 0.144,
-       "accuracy": 0.856,
-       "accuracy_ci95": [
-        0.805,
-        0.871
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.138,
-       "cost": {
-        "usd_per_1k": 1.036,
-        "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
-        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
-       },
-       "vs_in_use": {
-        "diff": 0.081,
-        "ci95": [
-         0.023,
-         0.161
-        ],
-        "n_pages": 21,
-        "n_works": 19
-       },
-       "verdict": "better",
-       "on_frontier": true
-      },
-      {
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
-       "median_cer": 0.147,
-       "accuracy": 0.853,
+       "mean_cer": 0.173,
+       "accuracy": 0.827,
        "accuracy_ci95": [
-        0.822,
-        0.872
+        0.792,
+        0.855
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4259,11 +4208,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.147,
-       "accuracy": 0.853,
+       "mean_cer": 0.173,
+       "accuracy": 0.827,
        "accuracy_ci95": [
-        0.801,
-        0.875
+        0.79,
+        0.857
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4284,17 +4233,48 @@
         "n_works": 19
        },
        "verdict": "better",
-       "on_frontier": false
+       "on_frontier": true
+      },
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "mean_cer": 0.178,
+       "accuracy": 0.822,
+       "accuracy_ci95": [
+        0.78,
+        0.855
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.138,
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "vs_in_use": {
+        "diff": 0.081,
+        "ci95": [
+         0.023,
+         0.161
+        ],
+        "n_pages": 21,
+        "n_works": 19
+       },
+       "verdict": "better",
+       "on_frontier": true
       },
       {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.151,
-       "accuracy": 0.849,
+       "mean_cer": 0.179,
+       "accuracy": 0.821,
        "accuracy_ci95": [
-        0.802,
-        0.87
+        0.783,
+        0.851
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4321,11 +4301,11 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.163,
-       "accuracy": 0.837,
+       "mean_cer": 0.186,
+       "accuracy": 0.814,
        "accuracy_ci95": [
-        0.789,
-        0.864
+        0.779,
+        0.843
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4349,45 +4329,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.165,
-       "accuracy": 0.835,
-       "accuracy_ci95": [
-        0.756,
-        0.865
-       ],
-       "fail_share": 0.095,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.147,
-       "cost": {
-        "usd_per_1k": 3.537,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
-       },
-       "vs_in_use": {
-        "diff": 0.001,
-        "ci95": [
-         -0.106,
-         0.097
-        ],
-        "n_pages": 21,
-        "n_works": 19
-       },
-       "verdict": "same",
-       "on_frontier": false
-      },
-      {
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.166,
-       "accuracy": 0.834,
+       "mean_cer": 0.199,
+       "accuracy": 0.801,
        "accuracy_ci95": [
-        0.763,
-        0.859
+        0.761,
+        0.834
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4411,35 +4360,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.174,
-       "accuracy": 0.826,
-       "accuracy_ci95": [
-        0.69,
-        0.86
-       ],
-       "fail_share": 0.095,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.175,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.231,
-       "accuracy": 0.769,
+       "mean_cer": 0.253,
+       "accuracy": 0.747,
        "accuracy_ci95": [
-        0.723,
-        0.806
+        0.707,
+        0.783
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4463,14 +4391,66 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.258,
+       "accuracy": 0.742,
+       "accuracy_ci95": [
+        0.617,
+        0.829
+       ],
+       "fail_share": 0.095,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.147,
+       "cost": {
+        "usd_per_1k": 3.537,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": 0.001,
+        "ci95": [
+         -0.106,
+         0.097
+        ],
+        "n_pages": 21,
+        "n_works": 19
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.259,
+       "accuracy": 0.741,
+       "accuracy_ci95": [
+        0.648,
+        0.809
+       ],
+       "fail_share": 0.095,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.175,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "ndlkotenocr-v3",
        "label": "NDL Koten OCR v3",
        "production": false,
-       "median_cer": 0.234,
-       "accuracy": 0.766,
+       "mean_cer": 0.266,
+       "accuracy": 0.734,
        "accuracy_ci95": [
-        0.734,
-        0.799
+        0.666,
+        0.783
        ],
        "fail_share": 0.048,
        "failed_reads": 0,
@@ -4497,11 +4477,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.264,
-       "accuracy": 0.736,
+       "mean_cer": 0.429,
+       "accuracy": 0.571,
        "accuracy_ci95": [
-        0.359,
-        0.8
+        0.425,
+        0.704
        ],
        "fail_share": 0.381,
        "failed_reads": 0,
@@ -4530,11 +4510,11 @@
        "engine": "dots-mocr",
        "label": "dots.mocr",
        "production": false,
-       "median_cer": 0.172,
-       "accuracy": 0.828,
+       "mean_cer": 0.188,
+       "accuracy": 0.812,
        "accuracy_ci95": [
-        0.795,
-        0.871
+        0.773,
+        0.844
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -4556,11 +4536,11 @@
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.174,
-       "accuracy": 0.826,
+       "mean_cer": 0.239,
+       "accuracy": 0.761,
        "accuracy_ci95": [
-        0.723,
-        0.847
+        0.678,
+        0.819
        ],
        "fail_share": 0.048,
        "failed_reads": 0,
@@ -4582,11 +4562,11 @@
        "engine": "tesseract-chi_tra_vert",
        "label": "Tesseract (chi_tra_vert)",
        "production": false,
-       "median_cer": 0.722,
-       "accuracy": 0.278,
+       "mean_cer": 0.733,
+       "accuracy": 0.267,
        "accuracy_ci95": [
-        0.201,
-        0.335
+        0.207,
+        0.326
        ],
        "fail_share": 1,
        "failed_reads": 0,
@@ -4607,7 +4587,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text: more engines, fewer pages",
-     "verdict": "Claude Opus 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +8.6 points a page (95% interval +2.8 to +16.9). Also better: Qwen3-VL 8B, PaddleOCR-VL 1.6 and 4 more. NDL Koten OCR v3 ($1.18) costs less than $1.28 per 1,000 pages and is not measurably worse."
+     "verdict": "The evidence points toward Claude Opus 5.5 over Gemini 3.1 Flash-Lite, the engine we use (+8.6 points a page, 95% interval +2.8 to +16.9); directional only."
     },
     {
      "kind": "cli-subsample",
@@ -4656,11 +4636,11 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.173,
-       "accuracy": 0.828,
+       "mean_cer": 0.203,
+       "accuracy": 0.797,
        "accuracy_ci95": [
-        0.8,
-        0.853
+        0.777,
+        0.814
        ],
        "fail_share": 0.007,
        "failed_reads": 0,
@@ -4687,11 +4667,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.175,
-       "accuracy": 0.826,
+       "mean_cer": 0.221,
+       "accuracy": 0.779,
        "accuracy_ci95": [
-        0.795,
-        0.842
+        0.755,
+        0.802
        ],
        "fail_share": 0.02,
        "failed_reads": 0,
@@ -4715,45 +4695,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.199,
-       "accuracy": 0.802,
-       "accuracy_ci95": [
-        0.764,
-        0.832
-       ],
-       "fail_share": 0.034,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.156,
-       "cost": {
-        "usd_per_1k": 3.632,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.1 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
-       },
-       "vs_in_use": {
-        "diff": 0.057,
-        "ci95": [
-         0.025,
-         0.09
-        ],
-        "n_pages": 148,
-        "n_works": 101
-       },
-       "verdict": "better",
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.208,
-       "accuracy": 0.793,
+       "mean_cer": 0.233,
+       "accuracy": 0.767,
        "accuracy_ci95": [
-        0.762,
-        0.825
+        0.732,
+        0.797
        ],
        "fail_share": 0.027,
        "failed_reads": 0,
@@ -4780,11 +4729,11 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.211,
-       "accuracy": 0.789,
+       "mean_cer": 0.239,
+       "accuracy": 0.761,
        "accuracy_ci95": [
-        0.752,
-        0.826
+        0.728,
+        0.79
        ],
        "fail_share": 0.041,
        "failed_reads": 0,
@@ -4808,45 +4757,45 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.8-flash+antigravity-cli",
-       "label": "Gemini 3.8 Flash (CLI)",
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.217,
-       "accuracy": 0.784,
+       "mean_cer": 0.24,
+       "accuracy": 0.76,
        "accuracy_ci95": [
-        0.751,
-        0.826
+        0.733,
+        0.786
        ],
-       "fail_share": 0.101,
-       "failed_reads": 5,
-       "words_not_in_ref": 0.146,
+       "fail_share": 0.034,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.156,
        "cost": {
-        "usd_per_1k": 3.537,
+        "usd_per_1k": 3.632,
         "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.1 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
        },
        "vs_in_use": {
-        "diff": 0.005,
+        "diff": 0.057,
         "ci95": [
-         -0.026,
-         0.037
+         0.025,
+         0.09
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "same",
+       "verdict": "better",
        "on_frontier": false
       },
       {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.219,
-       "accuracy": 0.782,
+       "mean_cer": 0.261,
+       "accuracy": 0.739,
        "accuracy_ci95": [
-        0.72,
-        0.821
+        0.703,
+        0.774
        ],
        "fail_share": 0.068,
        "failed_reads": 0,
@@ -4870,14 +4819,45 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.292,
+       "accuracy": 0.708,
+       "accuracy_ci95": [
+        0.657,
+        0.757
+       ],
+       "fail_share": 0.101,
+       "failed_reads": 5,
+       "words_not_in_ref": 0.146,
+       "cost": {
+        "usd_per_1k": 3.537,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.8-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.053 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
+       },
+       "vs_in_use": {
+        "diff": 0.005,
+        "ci95": [
+         -0.026,
+         0.037
+        ],
+        "n_pages": 148,
+        "n_works": 101
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.243,
-       "accuracy": 0.758,
+       "mean_cer": 0.297,
+       "accuracy": 0.703,
        "accuracy_ci95": [
-        0.718,
-        0.797
+        0.659,
+        0.745
        ],
        "fail_share": 0.108,
        "failed_reads": 0,
@@ -4894,11 +4874,11 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.269,
-       "accuracy": 0.731,
+       "mean_cer": 0.3,
+       "accuracy": 0.7,
        "accuracy_ci95": [
-        0.701,
-        0.773
+        0.665,
+        0.735
        ],
        "fail_share": 0.068,
        "failed_reads": 0,
@@ -4925,11 +4905,11 @@
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.29,
-       "accuracy": 0.711,
+       "mean_cer": 0.346,
+       "accuracy": 0.654,
        "accuracy_ci95": [
-        0.663,
-        0.779
+        0.613,
+        0.697
        ],
        "fail_share": 0.169,
        "failed_reads": 0,
@@ -4956,11 +4936,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.394,
-       "accuracy": 0.607,
+       "mean_cer": 0.541,
+       "accuracy": 0.459,
        "accuracy_ci95": [
-        0.427,
-        0.674
+        0.378,
+        0.54
        ],
        "fail_share": 0.405,
        "failed_reads": 0,
@@ -4987,7 +4967,7 @@
      "no_cost": [],
      "role": "secondary",
      "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI)",
-     "verdict": "PaddleOCR-VL 1.6 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +9.4 points a page (95% interval +4.8 to +14.6), and costs less ($1.04 against $1.28 per 1,000 pages). Also better: Qwen3-VL 8B, Gemini 3 Flash and 3 more."
+     "verdict": "The evidence points toward PaddleOCR-VL 1.6 over Gemini 3.1 Flash-Lite, the engine we use (+9.4 points a page, 95% interval +4.8 to +14.6); directional only."
     }
    ]
   },
@@ -5021,13 +5001,9 @@
      },
      "frontier": false,
      "noise": {
-      "band": 0,
-      "diff": 0,
-      "ci95": [
-       0,
-       0
-      ],
-      "source": "a second run of the engine in use on the same pages"
+      "kind": "identical",
+      "band": null,
+      "n": 12
      },
      "date": "2026-10-09",
      "files": [
@@ -5045,11 +5021,11 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.126,
-       "accuracy": 0.874,
+       "mean_cer": 0.161,
+       "accuracy": 0.839,
        "accuracy_ci95": [
-        0.809,
-        0.914
+        0.783,
+        0.896
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -5075,11 +5051,11 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.142,
-       "accuracy": 0.859,
+       "mean_cer": 0.162,
+       "accuracy": 0.838,
        "accuracy_ci95": [
-        0.775,
-        0.916
+        0.788,
+        0.889
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -5105,11 +5081,11 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.147,
-       "accuracy": 0.853,
+       "mean_cer": 0.164,
+       "accuracy": 0.836,
        "accuracy_ci95": [
-        0.779,
-        0.909
+        0.789,
+        0.885
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -5132,74 +5108,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.151,
-       "accuracy": 0.85,
-       "accuracy_ci95": [
-        0.789,
-        0.903
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.121,
-       "cost": {
-        "usd_per_1k": 3.549,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.059 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
-       },
-       "vs_in_use": {
-        "diff": 0.011,
-        "ci95": [
-         0.003,
-         0.022
-        ],
-        "n_pages": 12,
-        "n_works": 11
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "paddleocr-vl-1.6",
-       "label": "PaddleOCR-VL 1.6",
-       "production": false,
-       "median_cer": 0.151,
-       "accuracy": 0.85,
-       "accuracy_ci95": [
-        0.82,
-        0.903
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.109,
-       "cost": {
-        "usd_per_1k": 1.036,
-        "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
-        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
-       },
-       "vs_in_use": {
-        "diff": 0.013,
-        "ci95": [
-         0.004,
-         0.025
-        ],
-        "n_pages": 12,
-        "n_works": 11
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
-       "median_cer": 0.152,
-       "accuracy": 0.849,
+       "mean_cer": 0.165,
+       "accuracy": 0.835,
        "accuracy_ci95": [
-        0.784,
-        0.907
+        0.79,
+        0.883
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -5222,14 +5138,74 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "mean_cer": 0.165,
+       "accuracy": 0.835,
+       "accuracy_ci95": [
+        0.789,
+        0.881
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.109,
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "vs_in_use": {
+        "diff": 0.013,
+        "ci95": [
+         0.004,
+         0.025
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.168,
+       "accuracy": 0.832,
+       "accuracy_ci95": [
+        0.79,
+        0.879
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.121,
+       "cost": {
+        "usd_per_1k": 3.549,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.059 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+       },
+       "vs_in_use": {
+        "diff": 0.011,
+        "ci95": [
+         0.003,
+         0.022
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.162,
-       "accuracy": 0.838,
+       "mean_cer": 0.179,
+       "accuracy": 0.821,
        "accuracy_ci95": [
-        0.772,
-        0.894
+        0.767,
+        0.874
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -5246,11 +5222,11 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.165,
-       "accuracy": 0.835,
+       "mean_cer": 0.234,
+       "accuracy": 0.766,
        "accuracy_ci95": [
-        0.722,
-        0.912
+        0.63,
+        0.865
        ],
        "fail_share": 0.083,
        "failed_reads": 0,
@@ -5273,44 +5249,14 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "median_cer": 0.169,
-       "accuracy": 0.831,
-       "accuracy_ci95": [
-        0.749,
-        0.9
-       ],
-       "fail_share": 0.083,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.132,
-       "cost": {
-        "usd_per_1k": 5.608,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×2.074 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.067,
-        "ci95": [
-         -0.228,
-         0.014
-        ],
-        "n_pages": 12,
-        "n_works": 11
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.175,
-       "accuracy": 0.825,
+       "mean_cer": 0.241,
+       "accuracy": 0.759,
        "accuracy_ci95": [
-        0.744,
-        0.906
+        0.599,
+        0.864
        ],
        "fail_share": 0.083,
        "failed_reads": 0,
@@ -5333,14 +5279,44 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.246,
+       "accuracy": 0.754,
+       "accuracy_ci95": [
+        0.598,
+        0.858
+       ],
+       "fail_share": 0.083,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.132,
+       "cost": {
+        "usd_per_1k": 5.608,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×2.074 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.067,
+        "ci95": [
+         -0.228,
+         0.014
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.184,
-       "accuracy": 0.817,
+       "mean_cer": 0.264,
+       "accuracy": 0.736,
        "accuracy_ci95": [
-        0.73,
-        0.882
+        0.579,
+        0.839
        ],
        "fail_share": 0.083,
        "failed_reads": 0,
@@ -5366,11 +5342,11 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.374,
-       "accuracy": 0.627,
+       "mean_cer": 0.507,
+       "accuracy": 0.493,
        "accuracy_ci95": [
-        0,
-        0.793
+        0.266,
+        0.68
        ],
        "fail_share": 0.333,
        "failed_reads": 0,
@@ -5396,7 +5372,7 @@
      "no_cost": [],
      "role": "primary",
      "heading": null,
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   },
@@ -5436,8 +5412,8 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.007,
-       "accuracy": 0.993,
+       "mean_cer": 0.017,
+       "accuracy": 0.983,
        "accuracy_ci95": null,
        "fail_share": 0,
        "failed_reads": 0,
@@ -5457,11 +5433,53 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.025,
+       "accuracy": 0.975,
+       "accuracy_ci95": null,
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "mean_cer": 0.045,
+       "accuracy": 0.955,
+       "accuracy_ci95": null,
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.02,
+        "ci95": null,
+        "n_pages": 5,
+        "n_works": 2
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.025,
-       "accuracy": 0.975,
+       "mean_cer": 0.217,
+       "accuracy": 0.783,
        "accuracy_ci95": null,
        "fail_share": 0.2,
        "failed_reads": 1,
@@ -5484,8 +5502,8 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.025,
-       "accuracy": 0.975,
+       "mean_cer": 0.217,
+       "accuracy": 0.783,
        "accuracy_ci95": null,
        "fail_share": 0.2,
        "failed_reads": 1,
@@ -5505,29 +5523,11 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.029,
-       "accuracy": 0.971,
-       "accuracy_ci95": null,
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.029,
-       "accuracy": 0.971,
+       "mean_cer": 0.221,
+       "accuracy": 0.779,
        "accuracy_ci95": null,
        "fail_share": 0.2,
        "failed_reads": 1,
@@ -5550,8 +5550,8 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.034,
-       "accuracy": 0.966,
+       "mean_cer": 0.42,
+       "accuracy": 0.58,
        "accuracy_ci95": null,
        "fail_share": 0.4,
        "failed_reads": 2,
@@ -5571,35 +5571,11 @@
        "on_frontier": false
       },
       {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.045,
-       "accuracy": 0.955,
-       "accuracy_ci95": null,
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.02,
-        "ci95": null,
-        "n_pages": 5,
-        "n_works": 2
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.111,
-       "accuracy": 0.889,
+       "mean_cer": 0.461,
+       "accuracy": 0.539,
        "accuracy_ci95": null,
        "fail_share": 0.4,
        "failed_reads": 2,
@@ -5622,7 +5598,7 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 1,
+       "mean_cer": 1,
        "accuracy": 0,
        "accuracy_ci95": null,
        "fail_share": 1,
@@ -5648,8 +5624,8 @@
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.038,
-       "accuracy": 0.962,
+       "mean_cer": 0.053,
+       "accuracy": 0.947,
        "accuracy_ci95": null,
        "fail_share": 0,
        "failed_reads": 0,
@@ -5667,8 +5643,8 @@
        "engine": "tesseract-hye_calfa",
        "label": "Tesseract (hye, Calfa)",
        "production": false,
-       "median_cer": 0.039,
-       "accuracy": 0.961,
+       "mean_cer": 0.068,
+       "accuracy": 0.932,
        "accuracy_ci95": null,
        "fail_share": 0,
        "failed_reads": 0,
@@ -5686,8 +5662,8 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.052,
-       "accuracy": 0.948,
+       "mean_cer": 0.252,
+       "accuracy": 0.748,
        "accuracy_ci95": null,
        "fail_share": 0.2,
        "failed_reads": 1,
@@ -5705,7 +5681,7 @@
        "engine": "tesseract-hye",
        "label": "Tesseract (hye)",
        "production": false,
-       "median_cer": 1,
+       "mean_cer": 1,
        "accuracy": 0,
        "accuracy_ci95": null,
        "fail_share": 1,
@@ -5723,7 +5699,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   },
@@ -5763,8 +5739,8 @@
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.702,
-       "accuracy": 0.298,
+       "mean_cer": 0.743,
+       "accuracy": 0.257,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -5787,8 +5763,8 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.718,
-       "accuracy": 0.282,
+       "mean_cer": 0.757,
+       "accuracy": 0.243,
        "accuracy_ci95": null,
        "fail_share": 0.975,
        "failed_reads": 0,
@@ -5811,8 +5787,8 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.767,
-       "accuracy": 0.233,
+       "mean_cer": 0.761,
+       "accuracy": 0.239,
        "accuracy_ci95": null,
        "fail_share": 0.925,
        "failed_reads": 0,
@@ -5832,11 +5808,29 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.875,
+       "accuracy": 0.125,
+       "accuracy_ci95": null,
+       "fail_share": 1,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.959,
-       "accuracy": 0.041,
+       "mean_cer": 0.883,
+       "accuracy": 0.117,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -5856,53 +5850,11 @@
        "on_frontier": false
       },
       {
-       "engine": "mistral-ocr-4-1",
-       "label": "Mistral OCR 4.1",
-       "production": false,
-       "median_cer": 0.964,
-       "accuracy": 0.036,
-       "accuracy_ci95": null,
-       "fail_share": 1,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 4,
-        "basis": "billed",
-        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "vs_in_use": {
-        "diff": -0.081,
-        "ci95": null,
-        "n_pages": 40,
-        "n_works": 2
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.991,
-       "accuracy": 0.009,
-       "accuracy_ci95": null,
-       "fail_share": 1,
-       "failed_reads": 0,
-       "words_not_in_ref": null,
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "billed",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 1,
-       "accuracy": 0,
+       "mean_cer": 0.941,
+       "accuracy": 0.059,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -5922,11 +5874,35 @@
        "on_frontier": false
       },
       {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "mean_cer": 0.956,
+       "accuracy": 0.044,
+       "accuracy_ci95": null,
+       "fail_share": 1,
+       "failed_reads": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "billed",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; billed API spend, realtime rate, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "vs_in_use": {
+        "diff": -0.081,
+        "ci95": null,
+        "n_pages": 40,
+        "n_works": 2
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 1,
-       "accuracy": 0,
+       "mean_cer": 0.994,
+       "accuracy": 0.006,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -5949,7 +5925,7 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 1,
+       "mean_cer": 1,
        "accuracy": 0,
        "accuracy_ci95": null,
        "fail_share": 1,
@@ -5975,8 +5951,8 @@
        "engine": "sophro-defaultseg",
        "label": "Kraken (Sophro)",
        "production": false,
-       "median_cer": 0.376,
-       "accuracy": 0.624,
+       "mean_cer": 0.41,
+       "accuracy": 0.59,
        "accuracy_ci95": null,
        "fail_share": 0.425,
        "failed_reads": 0,
@@ -5994,8 +5970,8 @@
        "engine": "qoruyo-estrangela",
        "label": "Kraken (Qoruyo Estrangela)",
        "production": false,
-       "median_cer": 0.688,
-       "accuracy": 0.312,
+       "mean_cer": 0.676,
+       "accuracy": 0.324,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -6013,8 +5989,8 @@
        "engine": "omnisyr",
        "label": "Kraken (OmniSyr)",
        "production": false,
-       "median_cer": 0.718,
-       "accuracy": 0.282,
+       "mean_cer": 0.7,
+       "accuracy": 0.3,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -6032,8 +6008,8 @@
        "engine": "qoruyo-eastern",
        "label": "Kraken (Qoruyo East)",
        "production": false,
-       "median_cer": 0.746,
-       "accuracy": 0.254,
+       "mean_cer": 0.739,
+       "accuracy": 0.261,
        "accuracy_ci95": null,
        "fail_share": 1,
        "failed_reads": 0,
@@ -6050,7 +6026,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   },
@@ -6088,11 +6064,11 @@
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "median_cer": 0.426,
-       "accuracy": 0.574,
+       "mean_cer": 0.512,
+       "accuracy": 0.488,
        "accuracy_ci95": [
-        0.467,
-        0.66
+        0.357,
+        0.586
        ],
        "fail_share": 0.3,
        "failed_reads": 0,
@@ -6118,11 +6094,11 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "median_cer": 0.433,
-       "accuracy": 0.567,
+       "mean_cer": 0.549,
+       "accuracy": 0.451,
        "accuracy_ci95": [
-        0.368,
-        0.627
+        0.319,
+        0.561
        ],
        "fail_share": 0.4,
        "failed_reads": 0,
@@ -6148,11 +6124,11 @@
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
-       "median_cer": 0.52,
-       "accuracy": 0.48,
+       "mean_cer": 0.604,
+       "accuracy": 0.396,
        "accuracy_ci95": [
-        0.313,
-        0.546
+        0.291,
+        0.492
        ],
        "fail_share": 0.6,
        "failed_reads": 0,
@@ -6178,11 +6154,11 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.683,
-       "accuracy": 0.317,
+       "mean_cer": 0.682,
+       "accuracy": 0.318,
        "accuracy_ci95": [
-        0.289,
-        0.374
+        0.27,
+        0.355
        ],
        "fail_share": 1,
        "failed_reads": 0,
@@ -6210,11 +6186,11 @@
        "engine": "omnisyr",
        "label": "Kraken (OmniSyr)",
        "production": true,
-       "median_cer": 0.13,
-       "accuracy": 0.87,
+       "mean_cer": 0.127,
+       "accuracy": 0.873,
        "accuracy_ci95": [
-        0.831,
-        0.924
+        0.847,
+        0.897
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -6226,11 +6202,11 @@
        "engine": "omnisyr-nosplit",
        "label": "Kraken (OmniSyr), no column split",
        "production": false,
-       "median_cer": 0.14,
-       "accuracy": 0.86,
+       "mean_cer": 0.133,
+       "accuracy": 0.867,
        "accuracy_ci95": [
-        0.824,
-        0.924
+        0.839,
+        0.894
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -6251,11 +6227,11 @@
        "engine": "qoruyo-eastern",
        "label": "Kraken (Qoruyo East)",
        "production": false,
-       "median_cer": 0.14,
-       "accuracy": 0.86,
+       "mean_cer": 0.162,
+       "accuracy": 0.838,
        "accuracy_ci95": [
-        0.776,
-        0.892
+        0.804,
+        0.87
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -6276,11 +6252,11 @@
        "engine": "qoruyo-estrangela",
        "label": "Kraken (Qoruyo Estrangela)",
        "production": false,
-       "median_cer": 0.156,
-       "accuracy": 0.844,
+       "mean_cer": 0.165,
+       "accuracy": 0.835,
        "accuracy_ci95": [
-        0.789,
-        0.922
+        0.793,
+        0.879
        ],
        "fail_share": 0,
        "failed_reads": 0,
@@ -6301,11 +6277,11 @@
        "engine": "sophro-mhiro",
        "label": "Kraken (Sophro Mhiro)",
        "production": false,
-       "median_cer": 0.193,
-       "accuracy": 0.807,
+       "mean_cer": 0.341,
+       "accuracy": 0.659,
        "accuracy_ci95": [
-        0.602,
-        0.91
+        0.475,
+        0.823
        ],
        "fail_share": 0.2,
        "failed_reads": 0,
@@ -6326,7 +6302,7 @@
        "engine": "mineru",
        "label": "MinerU",
        "production": false,
-       "median_cer": 1,
+       "mean_cer": 1,
        "accuracy": 0,
        "accuracy_ci95": [
         0,
@@ -6350,7 +6326,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "No verdict: not fit to rank engines."
+     "verdict": "No verdict."
     }
    ]
   }

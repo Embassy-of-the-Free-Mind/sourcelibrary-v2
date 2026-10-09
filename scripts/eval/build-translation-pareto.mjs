@@ -31,7 +31,7 @@
  *     4.33 / 4.03 / 3.95 / 4.20 in four Syriac rounds);
  *   - y = mean fidelity (1–5), its 95% interval resampling WORKS; each engine's paired difference against the engine
  *     in use on the same pages, work-clustered; where the round re-ran the engine in use (#6182's AA arm), how far
- *     that repeat moved is the noise band, and verdict words need the interval to exclude 0 and clear it;
+ *     that repeat spread (lib/pareto-stats.mjs noiseOf) is the noise band, and verdict words need the interval to exclude 0 and clear it;
  *   - one primary panel per language: the round with the most engines on shared pages among the panels not graded
  *     not fit (lib/pareto-stats.mjs gradePanel); every other round is secondary;
  *   - cost is billed Batch dollars; a CLI run is placed at the API's billed dollars for the same requests, marked
@@ -43,7 +43,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { wilson } from './lib/agreement-stats.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
-import { r3, hash, clusterCI, pairedDiff, verdictOf, gradePanel, GRADE_RULES, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { r3, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -198,8 +198,8 @@ function buildPanel(chart, kind, items, arms, o) {
   SETS.push({ chart: chart.id, kind, pages: items.map(it => ({ page: pkey(it.page), book: it.book })) });
   let noise = null;
   if (aa && prodArm) {
-    const v = pairedDiff(items.map(it => ({ d: it.fid[aa.arm] - it.fid[aa.against], cluster: it.cluster })), hash(`${chart.id}|${kind}|aa`));
-    noise = { band: r3(Math.abs(v.diff)), diff: v.diff, ci95: v.ci95, source: 'a second run of the engine in use, judged in the same items' };
+    // AA re-ran the page's production engine and was judged in the same blinded item, so it is like-for-like
+    noise = noiseOf(items.map(it => ({ d: it.fid[aa.arm] - it.fid[aa.against], cluster: it.cluster })), hash(`${chart.id}|${kind}|aa`));
   }
   const points = arms.map(a => {
     const f = items.map(it => it.fid[a.arm]), rev = items.filter(it => it.rev[a.arm]).length;
@@ -219,7 +219,8 @@ function buildPanel(chart, kind, items, arms, o) {
   });
   const works = new Set(items.map(it => it.cluster)).size;
   const grade = gradePanel({ works, unfit6304: UNFIT_6304.has(`${chart.id}|${kind}`), productionAnchored: anchored, famousShare: famous });
-  if (grade.level === 'not_fit') for (const pt of points) delete pt.verdict;   // a not_fit panel gives no verdict words
+  // a not_fit panel, or one whose engine in use did not reproduce itself, gives no verdict words
+  if (grade.level === 'not_fit' || noise?.kind === 'not_reproduced') for (const pt of points) delete pt.verdict;
   const placed = points.filter(p => p.cost), noCost = points.filter(p => !p.cost);
   markFrontier(placed, p => p.fidelity, grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN);
   placed.sort((a, b) => b.fidelity - a.fidelity || a.engine.localeCompare(b.engine));
@@ -229,7 +230,7 @@ function buildPanel(chart, kind, items, arms, o) {
     reference: references.map(r => r.reference).join('; '), references, grade,
     frontier: grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN, noise, date, files, notes, placed, no_cost: noCost,
   };
-  p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores' });
+  p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
   return p;
 }
 const billed = (usdPerPage, detail, source) => ({ usd_per_1k: r3(usdPerPage * 1000), basis: 'billed', detail, source });
@@ -516,7 +517,7 @@ if (fs.existsSync(SYR_FILE)) {
     const p = { kind: rd.kind, heading: rd.heading, n_pages: s.n_pages, n_works: s.n_editions, n_books: s.n_books, judges: 2,
       reference: 'the typed Syriac text of the same passage; the judges read the Syriac', references: [{ reference: 'the typed Syriac text (Digital Syriac Corpus)', pages: s.n_pages }],
       grade, frontier: false, noise: null, date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(rd.file)], notes: [], placed: pts, no_cost: [] };
-    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores' });
+    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
     syr.panels.push(p);
   }
 }

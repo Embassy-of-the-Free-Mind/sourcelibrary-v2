@@ -59,6 +59,14 @@ describe('translation-pareto.json', () => {
     }
   });
 
+  it('says "better" only on a Decide panel, and withholds verdicts where the engine in use did not reproduce itself', () => {
+    for (const [id, p] of panels) {
+      const q = p as unknown as { verdict: string; noise: { kind: string } | null };
+      if (p.grade.level !== 'decide') expect(q.verdict, `${id}/${p.kind}`).not.toMatch(/\b(better|worse) than\b/);
+      if (q.noise?.kind === 'not_reproduced') expect(q.verdict, `${id}/${p.kind}`).toMatch(/^(Verdicts withheld|No verdict)/);
+    }
+  });
+
   it('puts the primary first: most engines among the panels not graded not_fit', () => {
     for (const c of charts) {
       const n = (p: Panel) => p.placed.length + p.no_cost.length;

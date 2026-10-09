@@ -52,19 +52,41 @@ export function pairedDiff(pairs, seed) {
   return { diff: r3(est), ci95: ci, n_pages: pairs.length, n_works: new Set(pairs.map(p => p.cluster)).size };
 }
 
+
 /**
- * The verdict word for one engine against the engine in use. A difference counts only when its paired 95% interval
- * excludes 0 AND it is larger than the noise band: how far a second run of the engine in use moved on the same
- * pages (|AA − in use|), where such a run exists; else the interval alone decides.
+ * THE NOISE BAND, from a second run of the engine in use on the same pages (#6386 review). Four outcomes:
+ *   - `unlike`: the repeat is not like-for-like (another run date or route); it is not used, and the panel says so;
+ *   - `identical`: the repeat scored the same as the first run on every page; there is no spread to measure, so no band;
+ *   - `not_reproduced`: the repeat's paired interval excludes 0, so the engine in use did not reproduce itself;
+ *     verdict words are withheld on the panel rather than vetoed by a band from a run that may have broken;
+ *   - `spread`: otherwise the band is the repeat's spread, the bound of its paired 95% interval furthest from 0.
+ */
+export function noiseOf(pairs, seed, { like = true, why = null } = {}) {
+  if (!like) return { kind: 'unlike', band: null, why };
+  const v = pairedDiff(pairs, seed);
+  const identical = pairs.filter(p => p.d === 0).length;
+  if (identical === pairs.length) return { kind: 'identical', band: null, n: pairs.length };
+  if (v.ci95 && (v.ci95[0] > 0 || v.ci95[1] < 0)) return { kind: 'not_reproduced', band: null, diff: v.diff, ci95: v.ci95, n: pairs.length };
+  const band = v.ci95 ? Math.max(Math.abs(v.ci95[0]), Math.abs(v.ci95[1])) : null;
+  return { kind: 'spread', band: r3(band), diff: v.diff, ci95: v.ci95, n: pairs.length, identical };
+}
+
+/**
+ * The signal for one engine against the engine in use: `better` / `worse` only when the paired 95% interval excludes 0
+ * AND the difference is larger than the noise band (where one was measured). Words on the page depend on the grade:
+ * a Decide panel says "better", a Directional one says "points toward", a Not fit one says nothing.
  */
 export function verdictOf(vs, band = 0) {
   if (!vs?.ci95) return 'same';
   const [lo, hi] = vs.ci95;
-  if (lo > 0 && vs.diff > band) return 'better';
-  if (hi < 0 && -vs.diff > band) return 'worse';
+  if (lo > 0 && vs.diff > (band ?? 0)) return 'better';
+  if (hi < 0 && -vs.diff > (band ?? 0)) return 'worse';
   return 'same';
 }
 
+/** Non-inferiority margins, fixed before reading the results (#6386 review): an engine is "within the margin" of the
+ *  engine in use only when its whole paired 95% interval sits above −margin. */
+export const MARGIN = { ocr: 0.01, translation: 0.1 };
 /**
  * FITNESS GRADE of one panel, by fixed written rules (#6386). The page lists GRADE_RULES verbatim.
  *
@@ -105,32 +127,43 @@ export function markFrontier(points, yOf, draw) {
 const listOf = xs => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`);
 const usd = x => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 
+
 /**
- * The one sentence above a chart, from the paired comparisons and the grade. `num` writes a signed difference in the
- * measure's unit without the unit ("+1.2"); `unit` names it ("points"); `verb` is "reads" or "scores".
+ * The one sentence above a chart, from the paired comparisons, the noise and the grade. `num` writes a signed difference
+ * in the measure's unit without the unit ("+1.2"); `unit` names it ("points"); `verb` is "reads" or "scores";
+ * `margin` is the measure's non-inferiority margin, `marginText` how the page states it ("1 point").
  */
-export function verdictSentence(panel, { num, unit, verb }) {
-  if (panel.grade.level === 'not_fit') return 'No verdict: not fit to rank engines.';
+export function verdictSentence(panel, { num, unit, verb, margin, marginText }) {
+  if (panel.grade.level === 'not_fit') return 'No verdict.';   // the grade badge beside it says why
   const all = [...panel.placed, ...panel.no_cost];
   const prod = all.find(p => p.production);
   if (!prod) return 'No verdict: the engine we use was not run on these pages.';
+  if (panel.noise?.kind === 'not_reproduced') {
+    return `Verdicts withheld: the engine we use did not reproduce itself (${num(panel.noise.diff)} ${unit} between two runs of ${prod.label} on these pages).`;
+  }
+  const decide = panel.grade.level === 'decide';
+  const ci = v => `95% interval ${num(v.ci95[0])} to ${num(v.ci95[1])}`;
   const better = all.filter(p => p.verdict === 'better').sort((a, b) => b.vs_in_use.diff - a.vs_in_use.diff);
   const out = [];
   if (better.length) {
     const b = better[0], v = b.vs_in_use;
     const cheaper = b.cost && prod.cost && b.cost.basis === 'billed' && b.cost.usd_per_1k < prod.cost.usd_per_1k;
-    out.push(`${b.label} ${verb} better than ${prod.label}, the engine we use, by ${num(v.diff)} ${unit} (95% interval ${num(v.ci95[0])} to ${num(v.ci95[1])})${cheaper ? `, and costs less (${usd(b.cost.usd_per_1k)} against ${usd(prod.cost.usd_per_1k)} per 1,000 pages)` : ''}.`);
-    if (better.length > 1) {
-      const rest = better.slice(1, 3).map(p => p.label);
-      out.push(`Also better: ${better.length > 3 ? `${rest.join(', ')} and ${better.length - 3} more` : listOf(rest)}.`);
+    if (decide) {
+      out.push(`${b.label} ${verb} better than ${prod.label}, the engine we use, by ${num(v.diff)} ${unit} (${ci(v)})${cheaper ? `, and costs less (${usd(b.cost.usd_per_1k)} against ${usd(prod.cost.usd_per_1k)} per 1,000 pages)` : ''}.`);
+      if (better.length > 1) {
+        const rest = better.slice(1, 3).map(p => p.label);
+        out.push(`Also better: ${better.length > 3 ? `${rest.join(', ')} and ${better.length - 3} more` : listOf(rest)}.`);
+      }
+    } else {
+      out.push(`The evidence points toward ${b.label} over ${prod.label}, the engine we use (${num(v.diff)} ${unit}, ${ci(v)}); directional only.`);
     }
   } else {
-    out.push(`No engine is clearly better than ${prod.label}, the engine we use: the differences are within the noise.`);
+    out.push(decide ? `No engine is clearly better than ${prod.label}, the engine we use.` : `No engine stands out from ${prod.label}, the engine we use.`);
   }
-  if (prod.cost) {
-    const cheaper = panel.placed.filter(p => !p.production && p.verdict === 'same' && p.vs_in_use?.ci95 && p.vs_in_use.ci95[1] >= 0 && p.cost.basis === 'billed' && p.cost.usd_per_1k < prod.cost.usd_per_1k)
-      .sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k);
-    if (cheaper.length) out.push(`${listOf(cheaper.slice(0, 2).map(p => `${p.label} (${usd(p.cost.usd_per_1k)})`))} cost${cheaper.length === 1 ? 's' : ''} less than ${usd(prod.cost.usd_per_1k)} per 1,000 pages and ${cheaper.length === 1 ? 'is' : 'are'} not measurably worse.`);
+  if (decide && prod.cost) {
+    const cheaper = panel.placed.filter(p => !p.production && p.verdict !== 'worse' && p.vs_in_use?.ci95 && p.vs_in_use.ci95[0] > -margin
+      && p.cost.basis === 'billed' && p.cost.usd_per_1k < prod.cost.usd_per_1k).sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k);
+    if (cheaper.length) out.push(`${listOf(cheaper.slice(0, 2).map(p => `${p.label} (${usd(p.cost.usd_per_1k)})`))} cost${cheaper.length === 1 ? 's' : ''} less than ${usd(prod.cost.usd_per_1k)} per 1,000 pages and ${cheaper.length === 1 ? 'is' : 'are'} within ${marginText} of it.`);
   }
   return out.join(' ');
 }

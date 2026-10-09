@@ -31,11 +31,11 @@
  *   - ONE FAILURE RULE for every engine: a read that is missing text, refused, or could not be placed against the
  *     reference scores CER 1.0, and the page stays in for every engine. CER is capped at 1. A page drops only when
  *     an engine was never run on it, or #6304 found its reference does not fit the page;
- *   - each engine: median accuracy (1 − median CER) with a 95% interval that resamples WORKS, and the share of pages
+ *   - each engine: mean accuracy (1 − mean CER, each page capped at 1) with a 95% interval that resamples WORKS, and the share of pages
  *     with CER above 0.5;
  *   - each engine against the engine in use: the mean per-page accuracy difference on the same pages, with a
- *     work-clustered bootstrap interval; where a second run of the engine in use covers the panel, its own
- *     difference is the noise band. Verdict words only when the interval excludes 0 and the difference clears it;
+ *     work-clustered bootstrap interval; where a like-for-like second run of the engine in use covers the panel, its
+ *     spread sets the noise band (lib/pareto-stats.mjs noiseOf). Verdict words only when the interval excludes 0 and clears it;
  *   - each panel gets a fitness grade (lib/pareto-stats.mjs gradePanel). Pages are split by how their reference was
  *     made, so a panel never pools two error measures, and the strata whose reference was located with the
  *     production engine's own reading get their own panel, graded not fit;
@@ -48,7 +48,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
 import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
-import { r3, median, hash, clusterCI, pairedDiff, verdictOf, gradePanel, GRADE_RULES, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -330,21 +330,28 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
   const files = new Set(), dates = [];
   for (const p of ps) for (const e of engines) { const x = byEngine.get(e).get(p); files.add(x.file); dates.push(x.date); }
   const prodRows = byEngine.has(production) && engines.includes(production) ? ps.map(p => byEngine.get(production).get(p)) : null;
-  // the noise band: a second run of the engine in use on every page of the panel
+  // The noise band: a second run of the engine in use on every page of the panel. Like-for-like only when the repeat
+  // was scored in the same result file as the read it repeats (same run, date and route). The #5660 repeat of the
+  // Wikisource pages ran on 3 Oct through the realtime API, 17 days after the stored read, and Gemini refused far more
+  // of those pages (7 of 30 German against 1): it is not like-for-like, so it is not used.
   let noise = null;
   if (prodRows && repeat && ps.every(p => repeat.has(p))) {
-    const v = pairedDiff(ps.map((p, i) => ({ d: prodRows[i].cer - repeat.get(p).cer, cluster: work(p) })), hash(`${script.id}|${kind}|aa`));
-    noise = { band: r3(Math.abs(v.diff)), diff: v.diff, ci95: v.ci95, source: 'a second run of the engine in use on the same pages' };
+    const like = ps.every((p, i) => repeat.get(p).file === prodRows[i].file);
+    const dA = [...new Set(prodRows.map(r => r.date))].sort().join(', '), dB = [...new Set(ps.map(p => repeat.get(p).date))].sort().join(', ');
+    noise = noiseOf(ps.map((p, i) => ({ d: prodRows[i].cer - repeat.get(p).cer, cluster: work(p) })), hash(`${script.id}|${kind}|aa`),
+      { like, why: like ? null : `it ran on ${dB}, by another route than the read it repeats (${dA})` });
   }
+  // ONE STATISTIC: accuracy is the MEAN over pages of 1 − CER (each page capped at 100% error, so failed reads count),
+  // and the paired difference below is the mean of per-page differences: the two columns measure the same thing.
   const points = engines.map(e => {
     const rs = ps.map(p => byEngine.get(e).get(p));
     const items = rs.map((r, i) => ({ cer: r.cer, cluster: work(ps[i]) }));
-    const med = median(rs.map(r => r.cer));
-    const ci = clusterCI(items, x => x.cluster, xs => median(xs.map(x => x.cer)), hash(`${script.id}|${kind}|${e}`));
+    const mn = mean(rs.map(r => r.cer));
+    const ci = clusterCI(items, x => x.cluster, xs => mean(xs.map(x => x.cer)), hash(`${script.id}|${kind}|${e}`));
     const inv = rs.filter(r => typeof r.invented === 'number').map(r => r.invented);
     const pt = {
       engine: e, label: LABEL[e] || e, production: e === production,
-      median_cer: r3(med), accuracy: r3(1 - med), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
+      mean_cer: r3(mn), accuracy: r3(1 - mn), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
       fail_share: r3(rs.filter(r => r.cer > 0.5).length / rs.length),
       failed_reads: rs.filter(r => r.failed).length,
       // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
@@ -364,7 +371,8 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     works: works.size, unfit6304: UNFIT_6304.has(script.id), metrics: metricSet.size,
     productionAnchored: [...strata.keys()].some(s => fallbackStratum(s).anchored), modernEdition: editionPages > ps.length / 2,
   });
-  if (grade.level === 'not_fit') for (const pt of points) delete pt.verdict;   // a not_fit panel gives no verdict words
+  // a not_fit panel, or one whose engine in use did not reproduce itself, gives no verdict words
+  if (grade.level === 'not_fit' || noise?.kind === 'not_reproduced') for (const pt of points) delete pt.verdict;
   const placed = points.filter(p => p.cost), noCost = points.filter(p => !p.cost);
   const frontier = grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN;
   markFrontier(placed, p => p.accuracy, frontier);
@@ -378,7 +386,7 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
     placed, no_cost: noCost, ...extra,
   };
-  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads' });
+  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page' });
   return p;
 }
 
@@ -461,7 +469,7 @@ for (const script of SCRIPTS) {
 const out = {
   issue: 6386,
   generated_by: 'scripts/eval/build-ocr-pareto.mjs',
-  measure: 'accuracy: 1 − median character error rate against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error',
+  measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error',
   production_rule: 'the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script',
   grade_rules: GRADE_RULES,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },

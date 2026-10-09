@@ -19,7 +19,7 @@ import pareto from '@/data/ocr-pareto.json';
 type Vs = { diff: number; ci95: number[] | null; n_pages: number };
 type Point = { engine: string; accuracy: number; accuracy_ci95: number[] | null; cost: { usd_per_1k: number; source: string; basis: string } | null;
   on_frontier?: boolean; production: boolean; vs_in_use?: Vs; verdict?: string; label: string };
-type Panel = { kind: string; n_pages: number; n_works: number; frontier: boolean; grade: { level: string }; noise: { band: number } | null; verdict: string; placed: Point[]; no_cost: Point[] };
+type Panel = { kind: string; n_pages: number; n_works: number; frontier: boolean; grade: { level: string }; noise: { kind: string; band: number | null } | null; verdict: string; placed: Point[]; no_cost: Point[] };
 const charts = (pareto as unknown as { charts: { id: string; panels: Panel[] }[] }).charts;
 const panels = charts.flatMap(c => c.panels.map(p => [c.id, p] as const));
 
@@ -74,12 +74,19 @@ describe('ocr-pareto.json', () => {
     for (const [id, p] of panels) for (const x of [...p.placed, ...p.no_cost]) {
       if (!x.vs_in_use) continue;
       const band = p.noise?.band ?? 0, ci = x.vs_in_use.ci95;
-      const expected = p.grade.level === 'not_fit' ? undefined
+      const withheld = p.grade.level === 'not_fit' || p.noise?.kind === 'not_reproduced';
+      const expected = withheld ? undefined
         : ci && ci[0] > 0 && x.vs_in_use.diff > band ? 'better' : ci && ci[1] < 0 && -x.vs_in_use.diff > band ? 'worse' : 'same';
       expect(x.verdict, `${id}/${p.kind}/${x.engine}`).toBe(expected);
-      if (expected === 'better' && p.grade.level !== 'not_fit') expect(p.verdict, id).toMatch(/better/);
+      if (expected === 'better') expect(p.verdict, id).toMatch(p.grade.level === 'decide' ? /better/ : /points toward/);
     }
-    for (const [id, p] of panels) if (p.grade.level === 'not_fit') expect(p.verdict, id).toMatch(/^No verdict/);
+    for (const [id, p] of panels) {
+      if (p.grade.level === 'not_fit') expect(p.verdict, id).toMatch(/^No verdict/);
+      // only a Decide panel may use the words better / worse
+      if (p.grade.level !== 'decide') expect(p.verdict, id).not.toMatch(/\b(better|worse) than\b/);
+      // a repeat that is not like-for-like, or identical on every page, never sets a band
+      if (p.noise && p.noise.kind !== 'spread') expect(p.noise.band, id).toBeNull();
+    }
   });
 });
 

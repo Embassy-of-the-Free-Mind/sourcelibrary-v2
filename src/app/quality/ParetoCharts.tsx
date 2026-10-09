@@ -38,10 +38,11 @@ type Point = {
   /** the measure's extra table cells (pages over half wrong; words not in the reference; reversals) */
   extra: (string | null)[];
 };
+type Noise = { kind: 'spread' | 'identical' | 'not_reproduced' | 'unlike'; band: number | null; diff?: number; why?: string | null; n?: number };
 type Grade = { level: 'decide' | 'directional' | 'not_fit'; why: string };
 type Panel = {
   kind: string; role: string; heading: string | null; n_pages: number; n_works: number; reference: string;
-  grade: Grade; frontier: boolean; noise: { band: number } | null; date: string | null; verdict: string;
+  grade: Grade; frontier: boolean; noise: Noise | null; date: string | null; verdict: string;
   notes: string[]; points: Point[]; extraHeads: { head: string; title: string }[];
 };
 export type Chart = { id: string; title: string; production_label: string; caption: string | null; mentions: string[]; panels: Panel[] };
@@ -60,7 +61,9 @@ export type Measure = {
   /** the unit a difference is in, after the number */
   diffUnit: string;
   yRange: [number, number];
-  step: number;
+  /** candidate axis floors, highest first, and [span, tick step] pairs, smallest span first */
+  floors: number[];
+  steps: [number, number][];
   yColumn: string;
   verb: string;
   charts: Chart[];
@@ -80,7 +83,7 @@ type OcrPoint = {
 };
 type RawPanel<P> = {
   kind: string; role?: string; heading: string | null; n_pages: number; n_works: number; reference: string; grade: Grade;
-  frontier: boolean; noise: { band: number } | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
+  frontier: boolean; noise: Noise | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
 };
 type RawChart<P> = { id: string; title: string; production_label: string; caption?: string | null; mentions?: string[]; panels: RawPanel<P>[] };
 
@@ -129,12 +132,13 @@ export const OCR: Measure = {
   key: 'ocr', anchor: 'pareto-',
   title: c => c.title,
   exportTitle: c => `${c.title}: what it costs to read, against how well it reads`,
-  yAxis: '↑ accuracy against a typed text (median page)',
+  yAxis: '↑ accuracy against a typed text (mean over pages)',
   yTick: v => `${Math.round(v * 100)}%`,
   fmtY: v => pctOf(v),
   fmtDiff: d => signed(Math.abs(d * 100).toFixed(1), d), diffUnit: 'points',
-  yRange: [0, 1], step: 0.2,
-  yColumn: 'accuracy', verb: 'read',
+  yRange: [0, 1], floors: [0.9, 0.8, 0.6, 0.4, 0.2, 0],
+  steps: [[0.1, 0.02], [0.2, 0.05], [0.6, 0.1], [1, 0.2]],
+  yColumn: 'mean accuracy', verb: 'read',
   charts: ocrData.charts.map(c => adapt(c, ocrPanel)),
   noChart: ocrData.no_chart,
   gradeRules: ocrData.grade_rules,
@@ -145,11 +149,12 @@ export const TRANSLATION: Measure = {
   title: c => `${c.title} into English`,
   exportTitle: c => `${c.title} into English: translation cost against fidelity`,
   yAxis: '↑ fidelity to a published translation (1 to 5, model-judged)',
-  yTick: v => v.toFixed(0),
+  yTick: v => String(Math.round(v * 100) / 100),
   fmtY: v => (v == null ? '–' : v.toFixed(2)),
   fmtDiff: d => signed(Math.abs(d).toFixed(2), d), diffUnit: 'on the 1 to 5 scale',
-  yRange: [1, 5], step: 1,
-  yColumn: 'fidelity', verb: 'translated',
+  yRange: [1, 5], floors: [4, 3.5, 3, 2, 1],
+  steps: [[1, 0.25], [2, 0.5], [4, 1]],
+  yColumn: 'mean fidelity', verb: 'translated',
   charts: xData.charts.map(c => adapt(c, translationPanel)),
   noChart: xData.no_chart,
   gradeRules: xData.grade_rules,
@@ -179,10 +184,11 @@ type Label = { text: string; x: number; y: number; anchor: 'start' | 'middle' | 
  *  that beats it) go first and may sit further out on a leader line; every other dot gets its table number
  *  where it fits next to the dot, else nothing (the tooltip and the table still name it). A label never
  *  covers a dot, another label, or the plot's edge. */
-function placeLabels(dots: { x: number; y: number; name: string; num: string; must: boolean }[], r: number, fs: number, area: Box): (Label | null)[] {
+function placeLabels(dots: { x: number; y: number; name: string; num: string; must: boolean }[], r: number, fs: number, area: Box, obstacles: Box[] = []): (Label | null)[] {
+  // hard: dots and placed labels, never covered. soft: whiskers and the frontier line, avoided when there is room
   const taken: Box[] = dots.map(d => ({ x0: d.x - r - 2, y0: d.y - r - 2, x1: d.x + r + 2, y1: d.y + r + 2 }));
   const out: (Label | null)[] = dots.map(() => null);
-  const tryAt = (d: { x: number; y: number }, text: string, named: boolean, far: number): Label | null => {
+  const tryAt = (d: { x: number; y: number }, text: string, named: boolean, far: number, soft = true): Label | null => {
     const w = textW(text, fs, named), g = r + fs * (far || 0.35), asc = fs * 0.75, desc = fs * 0.25;
     const spots: [Label['anchor'], number, number][] = [
       ['start', d.x + g, d.y + fs * 0.35], ['end', d.x - g, d.y + fs * 0.35], ['middle', d.x, d.y - g - desc], ['middle', d.x, d.y + g + asc],
@@ -191,7 +197,7 @@ function placeLabels(dots: { x: number; y: number; name: string; num: string; mu
     for (const [anchor, x, b] of spots) {
       const x0 = anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2;
       const box = { x0: x0 - 3, y0: b - asc - 2, x1: x0 + w + 3, y1: b + desc + 2 };
-      if (!inside(box, area) || taken.some(t => collide(t, box))) continue;
+      if (!inside(box, area) || taken.some(t => collide(t, box)) || (soft && obstacles.some(t => collide(t, box)))) continue;
       taken.push(box);
       const lx = Math.min(Math.max(d.x, box.x0), box.x1), ly = Math.min(Math.max(d.y, box.y0), box.y1);
       const len = Math.hypot(lx - d.x, ly - d.y) || 1;
@@ -202,10 +208,27 @@ function placeLabels(dots: { x: number; y: number; name: string; num: string; mu
   const order = dots.map((_, i) => i).sort((a, b) => Number(dots[b].must) - Number(dots[a].must) || a - b);
   for (const i of order) {
     const d = dots[i];
-    out[i] = (d.must ? tryAt(d, d.name, true, 0) ?? tryAt(d, d.name, true, 1.8) ?? tryAt(d, d.name, true, 3.2) ?? tryAt(d, d.name, true, 4.8) : null)
-      ?? tryAt(d, d.num, false, 0);
+    const named = (soft: boolean) => tryAt(d, d.name, true, 0, soft) ?? tryAt(d, d.name, true, 1.8, soft) ?? tryAt(d, d.name, true, 3.2, soft) ?? tryAt(d, d.name, true, 4.8, soft);
+    out[i] = (d.must ? named(true) ?? named(false) : null) ?? tryAt(d, d.num, false, 0) ?? tryAt(d, d.num, false, 0, false) ?? tryAt(d, d.num, false, 1.8, false);
   }
   return out;
+}
+
+/** The y range for one plot, from its data. The floor is the highest of the measure's candidate floors that leaves
+ *  every engine but a few far-low ones (at most a third, at most five) clear of the bottom edge; those few sit on
+ *  the bottom edge with their value, rather than stretching the axis so the rest collapse into a line at the top. */
+function yAxisOf(pts: Point[], m: Measure): { y0: number; y1: number; step: number } {
+  const y1 = m.yRange[1];
+  const ys = pts.map(p => p.y);
+  const allowed = Math.min(5, Math.floor(ys.length / 3));
+  // a floor works when no engine sits just under or on it, and only a few sit well below it (a quarter of the span)
+  const y0 = m.floors.find(f => {
+    const span = y1 - f;
+    return !ys.some(y => y >= f - span * 0.25 && y < f + span * 0.08) && ys.filter(y => y < f - span * 0.25).length <= allowed;
+  }) ?? m.yRange[0];
+  const span = y1 - y0;
+  const step = m.steps.find(([s]) => span <= s + 1e-9)?.[1] ?? m.steps[m.steps.length - 1][1];
+  return { y0, y1, step };
 }
 
 /** The plot: axes, the frontier, whiskers, dots, labels and the "no price" strip; with `tips`, a tooltip per dot. */
@@ -219,10 +242,11 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
   const costs = priced.map(p => p.cost!.usd_per_1k);
   const x0 = costs.length ? Math.log10(Math.min(...costs) / 1.8) : -1, x1 = costs.length ? Math.log10(Math.max(...costs) * 1.8) : 1;
   const sx = (c: number) => M.l + pad + ((Math.log10(c) - x0) / (x1 - x0 || 1)) * (plotR - M.l - pad * 2);
-  const [y0, y1] = m.yRange;
+  const { y0, y1, step } = yAxisOf(pts, m);
+  const below = (p: Point) => p.y < y0 - 1e-9;
   const sy = (a: number) => H - M.b - pad - ((Math.min(Math.max(a, y0), y1) - y0) / (y1 - y0)) * (H - M.t - M.b - pad * 1.5);
   const yTicks: number[] = [];
-  for (let v = y0; v <= y1 + 1e-9; v += m.step) yTicks.push(Math.round(v * 1000) / 1000);
+  for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
   const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
   const r = Math.max(4, f * 0.32);
   const fs = f * 0.85;
@@ -231,17 +255,30 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
   const at = pts.map(p => ({ x: p.cost ? sx(p.cost.usd_per_1k) : stripX, y: sy(p.y) }));
   const byY = unpriced.map(p => pts.indexOf(p)).sort((a, b) => at[a].y - at[b].y);
   byY.forEach((idx, k) => { const prev = byY[k - 1]; if (prev != null && Math.abs(at[prev].y - at[idx].y) < r * 2.4 && at[prev].x === stripX) at[idx].x = stripX + r * 2.6 * (k % 2 ? 1 : -1); });
+  // engines clipped to the floor sit on the bottom edge, side by side where they would overlap, labelled with their value
+  const clipped = pts.map((_, i) => i).filter(i => below(pts[i])).sort((a, b) => at[a].x - at[b].x);
+  clipped.forEach((idx, k) => { const prev = clipped[k - 1]; if (prev != null && at[idx].x - at[prev].x < r * 2.6) at[idx].x = at[prev].x + r * 2.6; });
   const frontier = panel.frontier ? priced.filter(p => p.on_frontier).sort((a, b) => a.cost!.usd_per_1k - b.cost!.usd_per_1k) : [];
   // the engine the verdict sentence names: the one that beats the engine in use by the most
   const lead = pts.filter(p => p.verdict === 'better').sort((a, b) => b.vs!.diff - a.vs!.diff)[0];
   const labels = placeLabels(
-    pts.map((p, i) => ({ ...at[i], name: p.label, num: String(i + 1), must: p.production || p === lead || (frontier.length >= 2 && p.on_frontier) })),
+    pts.map((p, i) => ({ ...at[i], name: below(p) ? `${p.label} \u2193${m.fmtY(p.y)}` : p.label, num: below(p) ? `${i + 1} ↓${m.fmtY(p.y)}` : String(i + 1), must: p.production || p === lead || (frontier.length >= 2 && p.on_frontier) })),
     r, fs, { x0: M.l + 2, y0: M.t - f * 0.4, x1: W, y1: H - M.b },
+    // whiskers are obstacles too, so a name never sits across an interval
+    [
+      ...pts.flatMap((p, i) => (p.y_ci95 && !below(p) ? [{ x0: at[i].x - 3, y0: sy(p.y_ci95[1]), x1: at[i].x + 3, y1: sy(p.y_ci95[0]) }] : [])),
+      // and the frontier line, sampled every few pixels
+      ...frontier.slice(1).flatMap((p, k) => {
+        const a = at[pts.indexOf(frontier[k])], b = at[pts.indexOf(p)];
+        const n = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / 4);
+        return Array.from({ length: n + 1 }, (_, j) => { const x = a.x + ((b.x - a.x) * j) / n, y = a.y + ((b.y - a.y) * j) / n; return { x0: x - 1.5, y0: y - 1.5, x1: x + 1.5, y1: y + 1.5 }; });
+      }),
+    ],
   );
 
   return (
     <g fontFamily={FONT}>
-      <text x={0} y={f * 0.9} fontSize={f * 0.9} fill={INK}>{m.yAxis}</text>
+      <text x={0} y={f * 0.9} fontSize={f * 0.9} fill={INK}>{m.yAxis}{y0 > m.yRange[0] + 1e-9 ? `; axis starts at ${m.yTick(y0)}` : ''}</text>
       {yTicks.map(v => (
         <g key={`y${v}`}>
           <line x1={M.l} x2={W - M.r} y1={sy(v)} y2={sy(v)} stroke={GRID} strokeWidth={1} />
@@ -267,7 +304,7 @@ function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: nu
         <polyline points={frontier.map(p => `${at[pts.indexOf(p)].x},${at[pts.indexOf(p)].y}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={Math.max(1.5, f * 0.14)} strokeLinejoin="round" />
       )}
 
-      {pts.map((p, i) => p.y_ci95 && (
+      {pts.map((p, i) => p.y_ci95 && !below(p) && (
         <g key={`ci-${p.engine}`} stroke={FAINT} strokeWidth={1}>
           <line x1={at[i].x} x2={at[i].x} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[1])} />
           <line x1={at[i].x - 2} x2={at[i].x + 2} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[0])} />
@@ -376,7 +413,7 @@ function Key({ panel }: { panel: Panel }) {
   const item = 'inline-flex items-center gap-1 whitespace-nowrap';
   return (
     <p className="text-sm text-stone-600 mt-1 flex flex-wrap gap-x-4 gap-y-1">
-      <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={PRODUCTION} /></svg>in use now</span>
+      <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={PRODUCTION} /></svg>in use</span>
       {frontier && <span className={item}><svg width="16" height="10" aria-hidden="true"><line x1="1" x2="15" y1="5" y2="5" stroke={FRONTIER} strokeWidth="2" /></svg>frontier</span>}
       {quota && <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="3.5" fill="none" stroke={INK} strokeWidth="1.5" /></svg>nothing billed, subscription quota</span>}
       <span className={item}><svg width="8" height="12" aria-hidden="true"><g stroke={FAINT} strokeWidth="1"><line x1="4" x2="4" y1="1" y2="11" /><line x1="2" x2="6" y1="1" y2="1" /><line x1="2" x2="6" y1="11" y2="11" /></g></svg>95% interval</span>
@@ -384,10 +421,20 @@ function Key({ panel }: { panel: Panel }) {
   );
 }
 
-function VsCell({ p, m }: { p: Point; m: Measure }) {
+/** What the repeat run of the engine in use says about noise, in one sentence (or nothing when there was none). */
+function noiseText(panel: Panel, m: Measure): string | null {
+  const n = panel.noise;
+  if (!n) return null;
+  if (n.kind === 'spread') return `Noise band from a repeat run of the engine in use: ${m.fmtDiff(n.band!).slice(1)}.`;
+  if (n.kind === 'identical') return `A repeat run of the engine in use scored the same on all ${n.n} pages.`;
+  if (n.kind === 'not_reproduced') return `Repeat run of the engine in use: ${m.fmtDiff(n.diff!)} ${m.diffUnit}.`;
+  return `Repeat run not used: ${n.why}.`;
+}
+
+function VsCell({ p, m, decide }: { p: Point; m: Measure; decide: boolean }) {
   if (p.production) return <span className="text-stone-600">in use</span>;
   if (!p.vs) return <span className="text-stone-600">{'–'}</span>;
-  const strong = p.verdict === 'better' || p.verdict === 'worse';
+  const strong = decide && (p.verdict === 'better' || p.verdict === 'worse');
   return (
     <span className={strong ? 'text-stone-900 font-semibold' : 'text-stone-700'}>
       {m.fmtDiff(p.vs.diff)}
@@ -416,7 +463,7 @@ function Table({ panel, m }: { panel: Panel; m: Measure }) {
             <td className="py-1 pr-2" style={{ color: p.production ? PRODUCTION : undefined }}>{p.label}</td>
             <td className="py-1 pr-2 text-right text-stone-800">{m.fmtY(p.y)}</td>
             {p.extra.map((c, k) => <td key={k} className="py-1 pr-2 text-right text-stone-700">{c ?? '–'}</td>)}
-            <td className="py-1 pr-2 text-right"><VsCell p={p} m={m} /></td>
+            <td className="py-1 pr-2 text-right"><VsCell p={p} m={m} decide={panel.grade.level === 'decide'} /></td>
             <td className="py-1 text-right whitespace-nowrap">
               {p.cost ? (
                 <a href={`${GH}${p.cost.source}`} title={p.cost.detail} className="text-stone-800 hover:text-amber-800">
@@ -441,7 +488,7 @@ function PanelView({ chart, panel, m, small }: { chart: Chart; panel: Panel; m: 
     <div id={chart.panels.indexOf(panel) > 0 ? anchorOf(m, chart, panel) : undefined} className="scroll-mt-24">
       {panel.heading && <div className="font-serif text-lg text-stone-900">{panel.heading}</div>}
       <p className="text-sm mt-1"><GradeBadge g={panel.grade} /></p>
-      <p className="text-sm text-stone-600">{sample(panel)}{panel.noise ? `. A repeat run of the engine in use moved ${m.fmtDiff(panel.noise.band).slice(1)} ${m.diffUnit}` : ''}.</p>
+      <p className="text-sm text-stone-600">{sample(panel)}.{noiseText(panel, m) && <> {noiseText(panel, m)}</>}</p>
       <p className={`text-stone-900 leading-snug mt-2 ${small ? 'text-base' : 'text-lg'}`}>{panel.verdict}</p>
       <div className={`grid gap-6 mt-3 items-start ${small ? '' : 'lg:grid-cols-2'}`}>
         <div className="min-w-0">
@@ -481,9 +528,10 @@ function Figure({ chart, m, base }: { chart: Chart; m: Measure; base: string }) 
       {(rest.length > 0 || chart.mentions.length > 0) && (
         <details className="mt-5 group">
           <summary className="cursor-pointer text-stone-700 hover:text-amber-800">
-            Other runs ({rest.length}), not comparable with this chart
+            Other runs ({rest.length})
           </summary>
           <div className="mt-3 space-y-10 pl-4 border-l border-stone-200">
+            <p className="text-sm text-stone-600">Each is its own page set or judging round: compare engines within a panel, never across panels.</p>
             {chart.mentions.map(t => <p key={t} className="text-sm text-stone-600">{t}</p>)}
             {rest.map(p => <PanelView key={p.kind} chart={chart} panel={p} m={m} small />)}
           </div>
