@@ -155,7 +155,8 @@ describe('parseTranslationLayers — cases the 800-page draw turned up', () => {
 });
 
 describe('a term-and-gloss line that is the book\'s own heading', () => {
-  // book 6992cd54… p.68: notes-off deletes this heading today, the plant's name with it.
+  // book 6992cd54… p.68: when this was measured (2026-10-06) notes-off deleted this heading, the
+  // plant's name with it. Notes-off on main has since been fixed to keep it; both paths now agree.
   const page = '# <term>Shui Yang Mei</term> <gloss>Adina rubella / Chinese buttonbush</gloss>\n\nIt grows beside streams and flowers in summer.';
 
   it('keeps the heading word in the text and lifts only the gloss', () => {
@@ -167,8 +168,8 @@ describe('a term-and-gloss line that is the book\'s own heading', () => {
     expect(renderTranslationLayers(layers, { notes: true })).toBe(canonical(page));
   });
 
-  it('differs from today\'s notes-off, which loses the heading', () => {
-    expect(applyNotesOff(page)).not.toContain('Shui Yang Mei');
+  it('keeps the heading with notes off, on the stored page and on the split text', () => {
+    expect(applyNotesOff(page)).toContain('Shui Yang Mei');
     expect(applyNotesOff(parseTranslationLayers(page).text)).toContain('Shui Yang Mei');
   });
 
