@@ -25,7 +25,7 @@ export default function LicensingPage() {
     >
       <div className="prose-content max-w-none space-y-8">
         <p className="text-xl text-secondary leading-relaxed">
-          We want these texts read, cited, and built upon — including by AI. This
+          We want these texts read, cited, and built upon, including by AI. This
           page states plainly how that works, so there&rsquo;s no ambiguity about
           what is freely permitted and what requires a separate license.
         </p>
@@ -38,7 +38,7 @@ export default function LicensingPage() {
 
         {/* ── Open ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
-          <h2 className="text-2xl text-primary mb-4">Freely permitted — no license needed</h2>
+          <h2 className="text-2xl text-primary mb-4">Freely permitted: no license needed</h2>
           <ul className="space-y-2 text-secondary leading-relaxed list-disc pl-5">
             <li>
               <strong>Original texts &amp; page images</strong> are in the public domain.
@@ -46,7 +46,7 @@ export default function LicensingPage() {
             </li>
             <li>
               <strong>Our AI-generated translations and editorial content</strong> are
-              licensed <strong>CC&nbsp;BY-SA&nbsp;4.0</strong> — free for individuals,
+              licensed <strong>CC&nbsp;BY-SA&nbsp;4.0</strong>, free for individuals,
               researchers, and organizations, with attribution and ShareAlike.
             </li>
             <li>
@@ -57,7 +57,7 @@ export default function LicensingPage() {
             <li>
               <strong>AI assistants reading on a user&rsquo;s behalf.</strong> When a
               person asks an assistant to read or quote a specific Source Library page,
-              that&rsquo;s welcome — please show the quote with its page number and the
+              that&rsquo;s welcome. Please show the quote with its page number and the
               page&rsquo;s sourcelibrary.org link.
             </li>
             <li>
@@ -69,7 +69,7 @@ export default function LicensingPage() {
 
         {/* ── Reserved ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
-          <h2 className="text-2xl text-primary mb-4">Reserved — a separate license is required</h2>
+          <h2 className="text-2xl text-primary mb-4">Reserved: a separate license is required</h2>
           <p className="text-secondary leading-relaxed mb-4">
             <strong>Using our content to train, fine-tune, or build AI models, and
             bulk text-and-data-mining (TDM) for those purposes, is expressly
@@ -87,9 +87,9 @@ export default function LicensingPage() {
               identify and respect this reservation.
             </li>
             <li>
-              <strong>Database right.</strong> The Source Library corpus — the curated,
+              <strong>Database right.</strong> The Source Library corpus (the curated,
               verified, and structured collection of texts, transcriptions,
-              translations, and metadata — is a database within the meaning of EU
+              translations, and metadata) is a database within the meaning of EU
               Directive 96/9/EC, reflecting substantial investment by the Embassy of
               the Free Mind. Extraction or re-utilization of a substantial part of it
               (including the OCR and metadata layers) requires our authorization,
@@ -98,7 +98,7 @@ export default function LicensingPage() {
             <li>
               <strong>First publication of unpublished works.</strong> Where we are
               the first to lawfully publish a previously unpublished public-domain
-              work — as with a number of the manuscripts we digitize — we hold the
+              work, as with a number of the manuscripts we digitize, we hold the
               exclusive economic rights granted by Article&nbsp;4 of EU Directive
               2006/116/EC for 25 years from publication.
             </li>
@@ -106,14 +106,14 @@ export default function LicensingPage() {
               <strong>Copyright.</strong> Human-authored editorial content (collection
               essays, blog posts, curatorial descriptions) is protected by copyright.
               Our AI-generated translations and annotations are offered under
-              CC&nbsp;BY-SA&nbsp;4.0 — and that license&rsquo;s <em>ShareAlike</em> term
+              CC&nbsp;BY-SA&nbsp;4.0, and that license&rsquo;s <em>ShareAlike</em> term
               would require a model built on this material to be released under
               CC&nbsp;BY-SA, which proprietary models do not do. The free license
               therefore does not authorize proprietary AI training.
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4">
-            Bulk or training access is available — through the API or a dataset
+            Bulk or training access is available through the API or a dataset
             license, under the standard terms below or a partnership. We&rsquo;d
             genuinely like these texts in the models that shape how people learn; we
             just ask for a conversation and attribution. Please don&rsquo;t scrape the
@@ -127,24 +127,24 @@ export default function LicensingPage() {
           <p className="text-secondary leading-relaxed mb-4">
             Our content signals declare <code>ai-input=yes</code>: using our pages to
             ground AI answers at inference time, with attribution, is permitted.
-            What a grounding subscription buys is <em>delivery</em> — an API key with
-            no daily page budget, support, and change notifications — for products
+            What a grounding subscription buys is <em>delivery</em> (an API key with
+            no daily page budget, support, and change notifications) for products
             that retrieve and cite our pages at scale:
           </p>
           <ul className="space-y-2 text-secondary leading-relaxed list-disc pl-5">
             <li>
-              <strong>Grounding API:</strong> <strong>$499 per month</strong> —
+              <strong>Grounding API:</strong> <strong>$499 per month</strong>:
               unlimited retrieval, attribution with a link back to the source page
               required in your product&rsquo;s interface.
             </li>
             <li>
-              <strong>Grounding API with SLA:</strong> <strong>$1,999 per month</strong> —
+              <strong>Grounding API with SLA:</strong> <strong>$1,999 per month</strong>:
               adds an uptime commitment, support, and webhook notification of
               re-translated or newly added texts.
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4">
-            Grounding access does not include training rights — those are licensed
+            Grounding access does not include training rights; those are licensed
             separately below. The free budgets on the public API remain available
             for evaluation.
           </p>
@@ -152,7 +152,7 @@ export default function LicensingPage() {
 
         {/* ── Rate card ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
-          <h2 className="text-2xl text-primary mb-4">Standard training license — rate card</h2>
+          <h2 className="text-2xl text-primary mb-4">Standard training license: rate card</h2>
           <p className="text-secondary leading-relaxed mb-4">
             A training license is available to anyone, on standard terms:
           </p>
@@ -164,14 +164,14 @@ export default function LicensingPage() {
             <li>
               <strong>Full corpus:</strong> <strong>$200,000 per year</strong>,
               non-exclusive, with quarterly refresh, delivered as structured data via
-              the API or dataset export — no crawling required.
+              the API or dataset export, with no crawling required.
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4 mb-4">
-            These are the standard terms for training use — and the rates at which
+            These are the standard terms for training use, and the rates at which
             unlicensed use is invoiced. Scoped subscriptions at lower annual rates
-            — a single language corpus, one scholarly domain, or the full
-            collection delivered through our streaming dataset API — are available
+            (a single language corpus, one scholarly domain, or the full
+            collection delivered through our streaming dataset API) are available
             to partners who take the data cooperatively; see{' '}
             <Link href="/dataset" className="text-accent-rust hover:underline">the Dataset page</Link>{' '}
             for plans and a free evaluation tier.
@@ -180,7 +180,7 @@ export default function LicensingPage() {
             The license covers training, fine-tuning, and embedding-index use of our
             translations, transcriptions, and editorial content, with attribution.
             What you&rsquo;re licensing is unique: billions of words of <em>aligned
-            parallel text</em> — original and English translation, page by page —
+            parallel text</em> (original and English translation, page by page)
             across more than a hundred languages, including scarce low-resource ones
             (Latin, classical Chinese, Sanskrit, Tibetan, Syriac), none of it in
             Common Crawl. Corpus partners additionally receive priority input on what
@@ -190,17 +190,17 @@ export default function LicensingPage() {
           <p className="text-secondary leading-relaxed mb-4">
             Two properties of licensed data worth knowing. <strong>It&rsquo;s
             clean:</strong> licensed exports and API responses carry none of the
-            provenance marks embedded in our public serve surfaces — you receive
+            provenance marks embedded in our public serve surfaces. You receive
             unmarked, checksummed text, and the marks in publicly scraped copies
             are how unlicensed use is identified. <strong>It&rsquo;s alive:</strong>{' '}
-            these texts are continuously improved — re-read by newer models, revised
-            by human scholars, extended by new acquisitions — so a license with
+            these texts are continuously improved (re-read by newer models, revised
+            by human scholars, extended by new acquisitions), so a license with
             refresh tracks the best current text while a one-time scrape only
             depreciates.
           </p>
           <p className="text-secondary leading-relaxed">
             <strong>What is not included: the page images.</strong> A license covers
-            our text layer &mdash; transcriptions, translations, metadata and editorial
+            our text layer: transcriptions, translations, metadata and editorial
             content. It does not cover the holding libraries&rsquo; digital
             reproductions of the originals, which stay under whatever terms each
             library sets, and which we neither sublicense nor deliver in a dataset

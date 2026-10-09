@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/drama",
+  "edition": "Dramata sacra: comoediae atque tragoediae aliquot e Veteri Testamento desumptae. Tomus 1. — Basel: Johannes Oporinus, 1547.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b64d3d18b87551bfc7bb8d",
+  "page_number": 858,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 896582,
+    "to_char": 897785,
+    "overlap": 0.423,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "Iudith p.296 italic verse with roman scene heading and roman marginal note; ref matches incl. marginal note.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      857,
+      858,
+      859
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.464Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "7e948e0c7da91686a3e58398165b3b08ae4c4550ee6e0fe60a42914081fa339d",
+  "unit": {
+    "chars": 1203
+  }
+}

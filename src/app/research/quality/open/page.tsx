@@ -8,7 +8,7 @@ import { AS_OF, GROUPS, SHIPPED, type Status } from './issues';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Open Quality Work — Source Library Research',
+  title: 'Open Quality Work | Source Library Research',
   description:
     'Known defects in Source Library’s transcriptions and translations, the measurements under way, and what has already changed, each linked to its public issue.',
   alternates: { canonical: '/research/quality/open' },

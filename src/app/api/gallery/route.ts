@@ -5,7 +5,7 @@ import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-conte
 import { resolveSearchScope, matchClip, matchGalleryText, scopeAdmits, type SearchScope } from '@/lib/tenant-search-scope';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
 import { queryTerms, termVariants, isNoSpaceTerm, evidenceScore, plateFields, artworkFields, EVIDENCE_WEIGHTS } from '@/lib/search-grounding';
@@ -24,7 +24,7 @@ async function clipTextSearch(query: string, limit: number, scope: SearchScope):
     // Encode query text via CLIP server
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });
@@ -1191,7 +1191,7 @@ async function clipGallerySearch(searchParams: URLSearchParams, query: string, s
   try {
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });

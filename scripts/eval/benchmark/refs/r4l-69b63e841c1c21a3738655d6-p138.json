@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/gwalt1",
+  "edition": "Monomachia Davidis et Goliae, et allegorica eiusdem expositio, heroico carmine descripta. — Zuerich: Christoph. Froschauer, [1541?].",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b63e841c1c21a3738655d6",
+  "page_number": 138,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 148164,
+    "to_char": 149085,
+    "overlap": 0.369,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "roman caps title 'Clarissimo viro D. Ioanni Pistorio' plus italic elegy; ref matches through 'cernere forte potest?'; CAMENA normalises u/v and e for ae.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      138,
+      139,
+      140
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.495Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "40f49c52dda414a3b4c434e6f9f8c0129108d3af9ee0b4368cd6f97ad93afb5f",
+  "unit": {
+    "chars": 921
+  }
+}
