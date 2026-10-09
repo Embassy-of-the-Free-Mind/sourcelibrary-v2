@@ -5,7 +5,7 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
-import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
+import { withAdminAuth, withCuratorAuth, isAdmin } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
@@ -33,7 +33,12 @@ export async function GET(
   try {
     const { tenant, id } = await params;
     const { searchParams } = new URL(request.url);
-    const includeFull = searchParams.get('full') === 'true';
+    // `?full=true` returns every page field, text included. It is honoured for
+    // admins only; anyone else asking for it gets the default (no-text) shape,
+    // so one anonymous request can no longer carry a whole book's OCR and
+    // translation past the /text page budget.
+    const wantsFull = searchParams.get('full') === 'true';
+    const includeFull = wantsFull && await isAdmin();
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
     const tenantId = await resolveTenantId(tenant);
     
@@ -91,6 +96,7 @@ export async function GET(
         'translation.updated_at': 1,
         'summary.updated_at': 1,
         'detected_images.type': 1,
+        page_type: 1,
       };
     }
 
@@ -105,7 +111,9 @@ export async function GET(
     if (pageLimit > 0) cursor = cursor.limit(pageLimit);
     const pages = await cursor.toArray();
 
-    const cacheControl = includeFull
+    // Keyed on wantsFull, not includeFull: the same URL answers differently for
+    // an admin, so neither answer may be stored by a shared cache.
+    const cacheControl = wantsFull
       ? 'private, no-cache'
       : 'public, max-age=60, stale-while-revalidate=300';
 

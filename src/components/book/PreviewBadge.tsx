@@ -1,4 +1,5 @@
 import { Eye } from 'lucide-react';
+import type { Locale } from '@/lib/locale-path';
 
 /**
  * "Preview" badge for partial scans.
@@ -12,15 +13,19 @@ import { Eye } from 'lucide-react';
  * tone via `className`/`style` so it can sit on the dark reader hero or on a
  * card cover. `lang` picks the copy (English / Spanish).
  */
+const COPY: Record<Locale, { label: string; tooltip: string }> = {
+  en: { label: 'Preview', tooltip: 'This record shows only a few pages of a larger work.' },
+  es: { label: 'Vista previa', tooltip: 'Este registro muestra solo algunas páginas de una obra más extensa.' },
+  la: { label: 'Specimen', tooltip: 'Hic paucae tantum paginae operis maioris ostenduntur.' },
+};
+
 export default function PreviewBadge({ lang = 'en', className = '', title }: {
-  lang?: 'en' | 'es';
+  lang?: Locale;
   className?: string;
   title?: string;
 }) {
-  const label = lang === 'es' ? 'Vista previa' : 'Preview';
-  const tooltip = title ?? (lang === 'es'
-    ? 'Este registro muestra solo algunas páginas de una obra más extensa.'
-    : 'This record shows only a few pages of a larger work.');
+  const { label, tooltip: defaultTooltip } = COPY[lang];
+  const tooltip = title ?? defaultTooltip;
   return (
     <span
       className={`inline-flex items-center gap-1 ${className}`}

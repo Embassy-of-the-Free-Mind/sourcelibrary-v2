@@ -1,0 +1,70 @@
+[
+{"id": "QXA05", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the latrine rules, root clause and gloss alternating as in the Tibetan; nothing of substance to correct."},
+{"id": "QF5DB", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "structure", "confidence": "high",
+   "tibetan": "དེ་ལྟར་དྲན་བྱ་བསྒྲུབ་བྱ་དང་། །ཐ་དད་མེད་པས་བརྗོད་མིན་ཕྱིར།",
+   "english": "the faults of the previous proof also apply here. Because there is no difference between the object to be remembered and the object to be proven, it cannot be expressed.",
+   "why": "དྲན་བྱ belongs to the preceding line ('the earlier fault of the proof should be recalled here likewise'); the verse says the reason is not different from the probandum, not that 'the object to be remembered' and the probandum are identical.",
+   "fix": {"find": "the faults of the previous proof also apply here. Because there is no difference between the object to be remembered and the object to be proven, it cannot be expressed.", "replace": "the faults of the previous proof should be recalled here likewise: because it is not different from the object to be proven, it cannot be stated."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དམ་པའི་དོན་གྱི་ཕྱོགས་གཅིག་ཡིན་པས",
+   "english": "it is a single part of the ultimate truth",
+   "why": "The argument (and the next sentence's དམ་བཅས་པའི་དོན་གྱི་ཕྱོགས་གཅིག) is about the reason being one part of the thesis (pratijñārthaikadeśa), not of 'the ultimate truth'."}
+ ],
+ "note": "Generally follows the argument, but one verse is mis-segmented and the 'part of the thesis' fault is turned into 'part of the ultimate truth'."},
+{"id": "QI62L", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Accurate rendering of the commentary on particulars benefiting the universal; minor infelicities only."},
+{"id": "Q0DF3", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Vinaya argument on quorum, adhiṣṭhāna and confession rendered faithfully; inline doubled glosses are clumsy but not wrong."},
+{"id": "QOP2Q", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རྫོགས་པ་ཞེས་བྱ་བ་ནི་ཚངས་པ་སྟེ། གསོལ་བ་དང་ལས་ལ་སོགས་པ་ལ་འཇུག་ནུས་པའོ",
+   "english": "\"perfect\" refers to pure conduct",
+   "why": "ཚངས་པ here stands for ཚང་བ 'complete', glossed as being able to perform the jñapti and karma acts; 'pure conduct' (brahmacarya) does not fit the gloss."}
+ ],
+ "note": "Verses and commentary well handled; one gloss on 'complete' misread."},
+{"id": "QQNGG", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "structure", "confidence": "high",
+   "tibetan": "བདེ་བར་གཤེགས་པའི་ཆོས་འདུལ་བ་བདུད་རྩིའི་སྙིང་ཁུས",
+   "english": "through the nectar-like essence of the Vinaya's Dharma and Sugata",
+   "why": "The phrase is 'the nectar-essence of the Sugata's Dharma-Vinaya'; the Sugata is the possessor, not a coordinate item.",
+   "fix": {"find": "through the nectar-like essence of the Vinaya's Dharma and Sugata", "replace": "through the nectar-like essence of the Sugata's Dharma and Vinaya"}}
+ ],
+ "note": "Sound rendering of the quorum and adhiṣṭhāna rules from the Pravāraṇāvastu; one garbled genitive phrase and some clumsy inline glosses."},
+{"id": "QIZAX", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "བ་ལང་ལ་སོགས་པ་ལ་རྗེས་སུ་འཇུག་པའི་ཤེས་པ",
+   "english": "the cognition that follows after a cow and so forth",
+   "why": "རྗེས་སུ་འཇུག་པའི་ཤེས་པ is the recurrent/common cognition (anuvṛtti-pratyaya) that ranges over all cows, the key term of the universals debate; it is rendered as temporal sequence here and as 'sequential cognitions' and 'applied consecutively' elsewhere.",
+   "fix": {"find": "the cognition that follows after a cow and so forth", "replace": "the recurrent cognition (anuvṛtti) regarding cows and so forth"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "སྤྱི་བརྩལ་#ནས་རྒྱུ་མཚན་གཞན་ཅུང་ཟད་ཅིག་ཡོད་དོ་ཞེས་སྒྲུབ་པར་བྱེད་ན",
+   "english": "that some other cause exists after setting aside the universal",
+   "why": "སྤྱི་བརྩལ་ནས means 'in general, without specifying' (contrasted with ཁྱད་པར་སྒྲུབ་ན next); it has nothing to do with setting aside the universal.",
+   "fix": {"find": "that some other cause exists after setting aside the universal", "replace": "in general, without specifying it, that some other cause exists"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འཚེད་པ་ལ་སོགས་པའི་ཤེས་པས་འཁྲུལ་",
+   "english": "cognitions such as that of a \"cooker\" would be erroneous",
+   "why": "འཁྲུལ་པ here is logical deviance (vyabhicāra): the reason is inconclusive on account of the cognitions of 'cooker' etc., not that those cognitions are mistaken."}
+ ],
+ "note": "Follows the sequence of the apoha argument, but the logical vocabulary (anuvṛtti, sāmānyena, vyabhicāra) is repeatedly misread."},
+{"id": "QG2AH", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ངང་པའི་སྡེ་དཔོན་བཞིན་བཟང",
+   "english": "(Vadanavara) Beautiful Face",
+   "why": "བཞིན་བཟང is Sumukha, the haṃsa general of this Jātakamālā story; 'Vadanavara' is not his name (and the wrong name recurs through the page).",
+   "fix": {"find": "(Vadanavara) Beautiful Face", "replace": "(Sumukha) Beautiful Face"}}
+ ],
+ "note": "Lively and accurate narrative and dialogue; the general's Sanskrit name is wrong throughout."},
+{"id": "Q3C4E", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "གཙོ་བོ་ལ་སོགས་པའི་མཉན་པོའོ",
+   "english": "the hearer of the Primal Nature",
+   "why": "མཉན་པ here is the word/expression (as the following 'that expression is applied to…' shows), not a 'hearer'; the same error recurs in 'That hearer who expresses the non-existent'.",
+   "fix": {"find": "the hearer of the Primal Nature", "replace": "the word for the Primal Nature"}}
+ ],
+ "note": "Lemma-by-lemma commentary followed closely; one recurring mistranslation of the word for 'expression'."},
+{"id": "QERIQ", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Prajñāpradīpa on the fire example and the gata/agata/gamyamāna argument rendered faithfully; the note on bsgom pa is muddled but harmless."}
+]

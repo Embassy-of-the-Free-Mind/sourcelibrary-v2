@@ -50,6 +50,7 @@ import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
@@ -1037,8 +1038,14 @@ async function markFailed(db, bookId, error, retryCount) {
   await setPipelineStatus(db, bookId, 'failed', { error, retry_count: retryCount });
 }
 
-// Phases paused via DB (system_config.processing_control.paused_phases)
+// Phases paused via DB (system_config.processing_control.paused_phases).
+// Two readings of the same list (#5492): an entry that is this exact phase number (the
+// pre-#5492 meaning, kept), and the step KEY that governs the phase (PHASE_PAUSE_KEY in
+// scripts/lib/pause.mjs) — so `paused_phases: ['ocr']` stops 1.25/1.45/1.5/1.6/2/3.7, which
+// before #5492 it did not. A step pause is absolute: a selective-unpause scope bypasses the
+// global pause, never this.
 let PAUSED_PHASES = new Set();
+let PAUSE_CONTROL = null;
 
 // `phase` is the pause switch: paused_phases:[phase] stops this phase and nothing else.
 // `cronPhase` is the `--phase N` run the phase rides in, for phases with no cron line of
@@ -1046,7 +1053,18 @@ let PAUSED_PHASES = new Set();
 // the phase pausable by the host's switch (#5472).
 function shouldRun(phase, cronPhase = phase) {
   if (PAUSED_PHASES.has(phase)) return false;
+  const key = PHASE_PAUSE_KEY[phase];
+  if (key && isPaused(PAUSE_CONTROL, key)) return false;
   return ONLY_PHASE === null || ONLY_PHASE === phase || ONLY_PHASE === cronPhase;
+}
+
+// The pre-#5492 reading only: the exact phase number, never its step key. For a FREE step that
+// shares a phase number with a paid one (Phase 8 advance), where a key pause must not freeze
+// already-paid work (#5496 review: images_submitted would sit until 8.5 rolled it back into a
+// second paid dispatch, #4839).
+function shouldRunExactPhase(phase) {
+  if (PAUSED_PHASES.has(phase)) return false;
+  return ONLY_PHASE === null || ONLY_PHASE === phase;
 }
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
@@ -2353,6 +2371,7 @@ async function run() {
 
   // Emergency stop check — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  PAUSE_CONTROL = control;
 
   // ── Selective unpause ──────────────────────────────────────────────
   // Process specific books even while the line is otherwise stopped. Driven by
@@ -2418,12 +2437,12 @@ async function run() {
 
   // DB-driven limit overrides — allows tuning without code deploys
   // Set via: db.system_config.updateOne({_id:'processing_control'}, {$set:{
-  //   paused_phases: [2],           // pause specific phases (e.g. OCR=2)
+  //   paused_phases: ['ocr'],       // pause a step in every lane (keys: scripts/lib/pause.mjs)
   //   limit_overrides: { MAX_ACTIVE_IMAGE_JOBS: 80, IMAGE_SUBMIT_LIMIT: 100 }
   // }})
   if (control?.paused_phases?.length > 0) {
     PAUSED_PHASES = new Set(control.paused_phases);
-    console.log(`[config] Paused phases: ${[...PAUSED_PHASES].join(', ')}`);
+    console.log(`[config] Paused phases: ${[...PAUSED_PHASES].join(', ')} → steps paused: ${[...pausedKeys(control)].join(', ') || 'none'}`);
   }
   if (control?.limit_overrides) {
     const overrides = control.limit_overrides;
@@ -3467,7 +3486,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
   "categories": ["<1-4 subject tags from EXACTLY this list: ${METADATA_CATEGORIES.join(', ')}>"],
   "estimated_year": "<best estimate of publication year as number. null if impossible>",
   "estimated_century": "<e.g. '17th century' — fallback if exact year unclear>",
-  "description": "<1-2 sentence scholarly description. No em-dashes. No filler.>",
+  "description": "<1-2 sentence scholarly description. No em-dashes (—). No filler: no 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'.>",
   "display_title": "<Clear English title. Must be ENTIRELY in English — no foreign words. null for English books.>",
   "confidence": "<high, medium, or low>",
   "subject_keywords": ["<3-5 subject keywords>"],
@@ -4460,7 +4479,9 @@ Rules:
 
     // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
-    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && await budgetAllowsDispatchForPhase('Phase 3.7 (transliteration)')) {
+    // The OR lets `--phase 3` runs reach 3.7; it also means shouldRun(3) — a bookkeeping phase no
+    // key governs — would carry 3.7 past an OCR pause, so the block asks for its own key (#5492).
+    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && !isPaused(PAUSE_CONTROL, 'ocr') && await budgetAllowsDispatchForPhase('Phase 3.7 (transliteration)')) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
       // Find ocr_complete books with non-Latin languages
@@ -5436,7 +5457,8 @@ Rules:
     // writes a status and spends nothing, while dispatch above is paid work. Keeping the two
     // together meant a closed dial froze finished books at images_submitted until the 48h
     // staleness sweep rolled them back — straight into another re-dispatch (#4839).
-    if (shouldRun(8)) {
+    // Same reason it ignores the 'images' pause key: only the exact legacy number 8 stops it.
+    if (shouldRunExactPhase(8)) {
       // Check completed image extraction — both batch API and Lambda/SQS paths
       let imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })

@@ -2,7 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { sampleAudit } from '@/lib/quality-center';
 import { ParetoPresentation, TRANSLATION } from '../ParetoCharts';
+
+const audit = sampleAudit();
+const auditDate = new Date(`${audit.date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 // The cost/quality charts one per screen, for presenting (#5983): OCR by script, then translation by
 // language. Same data and components as the grids on /quality; every number is read at build time from
@@ -12,7 +16,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: 'OCR and Translation Cost Against Quality — Source Library',
   description:
-    'For each script we read, what each OCR engine costs per 1,000 pages and how accurately it reads against a typed edition; for each language we translate, what each engine costs and how faithful its English is to a published translation. With 95% intervals and the frontier of engines nothing else beats.',
+    'For each script we read, what each OCR engine costs per 1,000 pages and how closely its text agrees with a typed edition; for each language we translate, what each engine costs and how faithful its English is to a published translation. With 95% intervals and the frontier of engines nothing else beats.',
   alternates: { canonical: '/quality/pareto' },
 };
 
@@ -27,7 +31,10 @@ export default function ParetoPage() {
         <p className="text-lg text-stone-700 leading-relaxed mt-4">
           One chart per script for reading, then one per language for translation. Within a chart, the engines are compared
           only on pages every one of them handled, against a typed edition or a published translation of the same pages. The
-          bar on each dot is its 95% interval; where only a few books were read, the chart says so. Each chart has its own
+          bar on each dot is its 95% interval; where only a few books were read, the chart says so. A check of the pages
+          behind the charts on {auditDate} left out {audit.dropped.translation + audit.dropped.ocr} that do not suit the
+          measure; the limits it found are under each chart and{' '}
+          <Link href="/quality#chart-limits" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2">summed up on the Quality Center</Link>. Each chart has its own
           link and downloads as SVG or PNG for slides. Scroll for the next one, or jump to{' '}
           <a href="#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2">translation</a>.
         </p>

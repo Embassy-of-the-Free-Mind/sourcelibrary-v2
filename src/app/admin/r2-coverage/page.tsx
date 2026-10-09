@@ -191,15 +191,15 @@ export default function R2CoveragePage() {
                 <>
                   <h2 style={{ fontSize: 16, color: '#8b949e', textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 24, marginBottom: 4 }}>Variant coverage on R2</h2>
                   <p style={{ fontSize: 11, color: '#8b949e', marginTop: 0, marginBottom: 8 }}>
-                    Sampled HEAD probes — verifies the file actually exists at the R2 URL, per variant. {variantCov.samples_per_book} pages × {variantCov.probed_books.toLocaleString('en-US')} books × 3 variants = {variantCov.probes_attempted.toLocaleString('en-US')} probes ({(variantCov.probe_ms / 1000).toFixed(1)}s).
+                    Sampled HEAD probes. Verifies the file actually exists at the R2 URL, per variant. {variantCov.samples_per_book} pages × {variantCov.probed_books.toLocaleString('en-US')} books × 3 variants = {variantCov.probes_attempted.toLocaleString('en-US')} probes ({(variantCov.probe_ms / 1000).toFixed(1)}s).
                     {variantCov.probes_unresolved > 0 && (
                       <> Unresolved (network/timeout) excluded from %: {variantCov.probes_unresolved.toLocaleString('en-US')} probes across {variantCov.books_with_any_unresolved.toLocaleString('en-US')} books.</>
                     )}
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
-                    <Card label="Display .jpg" value={variantCov.library.display_pct !== null ? `${variantCov.library.display_pct}%` : '—'} hint="1200px, browser reader" {...(variantCov.library.display_pct !== null && variantCov.library.display_pct < 99 ? { warn: true } : {})} />
-                    <Card label="Thumbnail -thumb.jpg" value={variantCov.library.thumb_pct !== null ? `${variantCov.library.thumb_pct}%` : '—'} hint="150px, grids & search" {...(variantCov.library.thumb_pct !== null && variantCov.library.thumb_pct < 99 ? { warn: true } : {})} />
-                    <Card label="Full-res -full.jpg" value={variantCov.library.full_pct !== null ? `${variantCov.library.full_pct}%` : '—'} hint="source resolution, OCR & zoom" {...(variantCov.library.full_pct !== null && variantCov.library.full_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Display .jpg" value={variantCov.library.display_pct !== null ? `${variantCov.library.display_pct}%` : '–'} hint="1200px, browser reader" {...(variantCov.library.display_pct !== null && variantCov.library.display_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Thumbnail -thumb.jpg" value={variantCov.library.thumb_pct !== null ? `${variantCov.library.thumb_pct}%` : '–'} hint="150px, grids & search" {...(variantCov.library.thumb_pct !== null && variantCov.library.thumb_pct < 99 ? { warn: true } : {})} />
+                    <Card label="Full-res -full.jpg" value={variantCov.library.full_pct !== null ? `${variantCov.library.full_pct}%` : '–'} hint="source resolution, OCR & zoom" {...(variantCov.library.full_pct !== null && variantCov.library.full_pct < 99 ? { warn: true } : {})} />
                     <Card label="Books with gaps" value={variantCov.gap_books_count.toLocaleString('en-US')} hint="≥1 variant missing in samples" {...(variantCov.gap_books_count > 0 ? { warn: true } : {})} />
                   </div>
                 </>
@@ -244,7 +244,7 @@ export default function R2CoveragePage() {
                 <Card label="Total gallery_images" value={gallery.library.total_gallery_rows.toLocaleString('en-US')} hint={`across ${gallery.library.books_probed.toLocaleString('en-US')} books`} />
               </div>
               <p style={{ fontSize: 11, color: '#8b949e', marginTop: 0, marginBottom: 24 }}>
-                Snapshot computed {new Date(gallery.computed_at).toLocaleString('en-US')} in {(gallery.computation_ms / 1000).toFixed(1)}s — {gallery.settings.samples_per_book} HEAD probe(s) per book.
+                Snapshot computed {new Date(gallery.computed_at).toLocaleString('en-US')} in {(gallery.computation_ms / 1000).toFixed(1)}s, {gallery.settings.samples_per_book} HEAD probe(s) per book.
                 Refresh: <code style={{ background: '#161b22', padding: '1px 5px', borderRadius: 3 }}>node scripts/workers/gallery-coverage-snapshot.mjs</code>
               </p>
             </>
@@ -326,7 +326,7 @@ function StuckTable({ rows }: { rows: StuckBook[] }) {
         <tbody>
           {rows.map(b => (
             <tr key={b.id} style={{ borderTop: '1px solid #30363d' }}>
-              <Td>{b.quality_score ?? '—'}</Td>
+              <Td>{b.quality_score ?? '–'}</Td>
               <Td>
                 <Link href={`/book/${b.id}`} target="_blank" style={{ color: '#58a6ff', textDecoration: 'none' }}>
                   {b.title?.slice(0, 80)}
@@ -375,7 +375,7 @@ function PartialTable({ rows, totalAvailable, showing }: { rows: PartialBook[]; 
                 </Td>
                 <Td>{b.language}</Td>
                 <Td>{b.provider}</Td>
-                <Td>{b.status || '—'}</Td>
+                <Td>{b.status || '–'}</Td>
                 <Td align="right">{b.r2.toLocaleString('en-US')} / {b.pages.toLocaleString('en-US')}</Td>
                 <Td align="right" warn={b.unarchived > 0}>{b.unarchived.toLocaleString('en-US')}</Td>
                 <Td align="right"><Bar pct={b.pct} /></Td>
@@ -415,7 +415,7 @@ function NoR2Table({ rows, totalAvailable, showing }: { rows: NoR2Book[]; totalA
                 </Td>
                 <Td>{b.language}</Td>
                 <Td>{b.provider}</Td>
-                <Td>{b.status || '—'}</Td>
+                <Td>{b.status || '–'}</Td>
                 <Td align="right" warn>{b.pages.toLocaleString('en-US')}</Td>
               </tr>
             ))}
@@ -460,9 +460,9 @@ function VariantGapTable({ rows, totalAvailable, showing }: { rows: VariantGapBo
                 <Td>{b.language}</Td>
                 <Td>{b.provider}</Td>
                 <Td align="right">{b.pages.toLocaleString('en-US')}</Td>
-                <Td align="right" warn={b.display_pct !== null && b.display_pct < 100}>{b.display_pct === null ? '—' : `${b.display_pct}%`}</Td>
-                <Td align="right" warn={b.thumb_pct !== null && b.thumb_pct < 100}>{b.thumb_pct === null ? '—' : `${b.thumb_pct}%`}</Td>
-                <Td align="right" warn={b.full_pct !== null && b.full_pct < 100}>{b.full_pct === null ? '—' : `${b.full_pct}%`}</Td>
+                <Td align="right" warn={b.display_pct !== null && b.display_pct < 100}>{b.display_pct === null ? '–' : `${b.display_pct}%`}</Td>
+                <Td align="right" warn={b.thumb_pct !== null && b.thumb_pct < 100}>{b.thumb_pct === null ? '–' : `${b.thumb_pct}%`}</Td>
+                <Td align="right" warn={b.full_pct !== null && b.full_pct < 100}>{b.full_pct === null ? '–' : `${b.full_pct}%`}</Td>
                 <Td>{b.missing.join(', ')}</Td>
               </tr>
             ))}
@@ -500,7 +500,7 @@ function GalleryTable({ rows, totalAvailable, showing, kind }: { rows: GalleryBo
                     {b.title?.slice(0, 80)}
                   </Link>
                 </Td>
-                <Td>{b.language || '—'}</Td>
+                <Td>{b.language || '–'}</Td>
                 <Td>{b.provider}</Td>
                 <Td align="right" warn>{b.gallery_rows.toLocaleString('en-US')}</Td>
                 <Td align="right">{b.ok}/{b.sampled}</Td>

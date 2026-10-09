@@ -116,3 +116,6 @@ indistinguishable from ordinary uncommitted work.
   twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale
   lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate
   "don't touch" signal; the reaper honors it.
+
+## Counting references: `git grep`, never `grep -r` (moved from CLAUDE.md, 2026-10-07)
+`grep -r` over `.claude/` crawls dozens of full worktree checkouts in `.claude/worktrees/`. Patching it with `--exclude-dir` does not work: `grep` here may be **ugrep**, whose `--exclude-dir` semantics differ from GNU grep's. The same query returned 134, then 0, then 2 hits depending on the binary and on whether a file was mixed in with the directory arguments, and the "0" nearly archived five live docs. `git grep` searches tracked files only and never enters a worktree.

@@ -116,6 +116,11 @@ const E5_CENTROID = [
 ];
 const E5_CENTROID_NORM = Math.sqrt(E5_CENTROID.reduce((s, x) => s + x * x, 0));
 
+/** The e5 centroid as a pgvector literal, for scanning server-side: `embedding <=> $1::vector`. */
+export function e5CentroidLiteral() { return JSON.stringify(E5_CENTROID); }
+/** Cosine DISTANCE below which a row is e5-shaped (pgvector `<=>` is 1 − cosine). */
+export const E5_SIGNATURE_MAX_DISTANCE = 1 - E5_SIGNATURE_THRESHOLD;
+
 export function cosine(a, b) {
   let d = 0, x = 0, y = 0;
   for (let i = 0; i < a.length; i++) { d += a[i] * b[i]; x += a[i] * a[i]; y += b[i] * b[i]; }
@@ -143,7 +148,7 @@ export function e5Signature(v) {
  * only a fresh embed can say that).
  */
 export function vectorShapeProblems(v, { dims = 768 } = {}) {
-  if (!Array.isArray(v)) return ['unparseable'];
+  if (!Array.isArray(v) && !ArrayBuffer.isView(v)) return ['unparseable'];
   const out = [];
   if (v.length !== dims) out.push(`dims:${v.length}`);
   let n = 0;
