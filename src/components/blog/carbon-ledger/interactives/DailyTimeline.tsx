@@ -55,7 +55,7 @@ export function DailyTimeline() {
   return (
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-6">
       <figcaption className="mb-1 text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-        Interactive — Pipeline activity, day by day
+        Interactive: Pipeline activity, day by day
       </figcaption>
       <div className="mb-4 text-stone-700 dark:text-stone-300 text-sm">
         Each bar is one day in the tracking window. Toggle the metric.
