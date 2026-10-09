@@ -1,0 +1,455 @@
+[
+  {
+    "book_id": "6a14e17a311a9edd4622193f",
+    "slot": 21,
+    "title": "Thor bu Bla ma nor rgyam chos skor (EAP310-4-2-12)",
+    "tradition": "bl-other-tshamdrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Loose-leaf Nyingma gter ma cycle from the Tshamdrak Monastery EAP310 collection; p.221 names the cycle 'bla ma nor bu rgya mtsho', matching the title (nor rgyam = nor bu rgya mtsho).",
+    "rights_flag": null,
+    "structure_note": "Each image is a board of three loose leaves (I5); the text carries <leaf-break/> markers and the translator keeps the leaves apart, so neighbouring leaves on a board are not continuous text (p.30 leaf 1 ends mid-sentence, leaf 2 starts elsewhere). printed_backsteps 3 / repeats 6 out of only 9 printed numbers are most likely marginal folio letters misread on boards, not a splice. pages_ocr field 212 vs 236 pages with OCR: counter drift.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཇིང་ནང་གྲུམ་ནས་སྨན་ཚེ་མངའ་ཐང་སྡུད",
+            "english": "After the internal ruin of the Jing <note>local clan</note>, the power of the 'Medicine Lifespan' <note>Mentsekhang/local power</note> will be gathered",
+            "problem": "speculative glosses; 'Mentsekhang' (the 1916 Lhasa medical institute) is an anachronistic identification presented as a note",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མཐོང་༔ ཆེན་པོ་ལགས༔",
+            "image": "ཨོཾ༔ ༔ཆེན་པོ་ལགས༔ (leaf 2 opens with the oṃ invocation)",
+            "problem": "spurious word at the head of leaf 2, carried into the English as '...saw.'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "marginal folio labels at the left of each leaf",
+            "problem": "folio labels dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འོན་ཀྱང་དབུགས་གྲོལ་ཐོག་མེད་འགྱུར",
+            "english": "However, the liberation of breath will be unobstructed",
+            "problem": "literal rendering of 'liberation at the cessation of breath (death)'; obscures the sense",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 178,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 221,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དབུ་མ་ལ་བྱིན་རླབས་ཆོ་འཕྲུལ་གྱི་རྩོལ་སྒོམ་ཡོད",
+            "image": "ཡོ་ག་ལ་བྱིན་རླབས་ཆེ་འཕྲུལ་གྱི་རྩོལ་སྒོམ་ཡོད",
+            "problem": "Yoga tantra misread as Madhyamaka in the nine-vehicle list; English then says 'Madhyamaka' with a hedging note",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ཨ་ཏི་བ་དེ་སྟོང་གི་རོ་སྙོམས",
+            "image": "ཨ་ཏི་བདེ་སྟོང་གི་རོ་སྙོམས",
+            "problem": "bde stong (bliss-emptiness) split into 'ba de'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "མཚོ་རྒྱལ་གྱི་ཡི་གེར་བཏབ་ནས་ཨན་གྱི་ཕྱག་ཏུ་ཕུལ",
+            "english": "Yeshe Tsogyal committed it to writing and placed it in the hands of the king",
+            "problem": "ཨུ་རྒྱན (Orgyen/Padmasambhava, image reads ཨུན) rendered 'the king'; the transmission chain of the treasure is altered",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཨ་ཏི་བ་དེ་སྟོང་གི་རོ་སྙོམས་ཡིན",
+            "english": "is the equal taste of the Ati practitioners",
+            "problem": "bliss-emptiness rendered as 'practitioners'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "དབུ་མ་ལ་བྱིན་རླབས...",
+            "english": "The Madhyamaka <note>here likely referring to Yoga Tantra context</note>",
+            "problem": "carries the OCR misread with a 'likely' note instead of the reading on the leaf",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      178,
+      95
+    ],
+    "reader_summary": "A Nyingma treasure cycle attributed to Padmasambhava: prophecies of treasure-revealers, Great Perfection instruction and guidance on students and prostration. The transcription is of the leaves shown and is close to word-perfect in this clear dbu can hand. The English is mostly reliable but has slips on names and roles, such as Orgyen turned into 'the king' and Yoga tantra into Madhyamaka, plus some speculative notes.",
+    "book_verdict": "Sound transcription and a largely faithful translation of a gter ma cycle; a few moderate misreadings of names and terms on p.221 and an anachronistic gloss on p.30."
+  },
+  {
+    "book_id": "6a14e1cf311a9edd46224259",
+    "slot": 22,
+    "title": "Thor bu Dus bstan pa'I me long sogs",
+    "tradition": "bl-other-tshamdrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Miscellany (thor bu ... sogs) from the Tshamdrak collection: an astrological omen text (planets and lunar mansions, which fits 'dus bstan pa'i me long'), a Cakrasaṃvara empowerment and an Abhisamayālaṃkāra commentary.",
+    "rights_flag": null,
+    "structure_note": "Multi-leaf boards (3–4 leaves per image, I5) with <leaf-break/> markers that match the leaf count on every page checked. The volume mixes several unrelated works under one title, which is expected for a thor bu bundle. 15 printed numbers, with 2 backsteps and 11 repeats, are consistent with each work restarting its folio numbering. Only 81 of 168 pages are translated. pages_ocr field 92 vs 164 pages with OCR: counter drift.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "མེ་བཞི་ལ࿒ ཡུལ་དུ་ར་པར་ངན་ཅིང་࿒ འདབ་ཆགས་ཀུན་ལ་ངན་ནོ",
+            "english": "In Purvaphalguni, it is bad in the land of Ura and bad for all winged creatures",
+            "problem": "me bzhi is Hasta, not Pūrvaphalgunī; the lunar mansion, the key datum of each omen, is wrong",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "གྲོ་ཞུན་ལ། རྐུན་མ་བཏང་སྙོམ་གྱི་འབྲས་བུ་གཏེར་རོ",
+            "english": "In Ashlesha, it bestows the result of indifference toward thieves",
+            "problem": "gro bzhin is Śravaṇa, not Āśleṣā",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "སྣྲུབ་ལ་སྤྱོད་ན༴ མུ་གེ་དང་༴ འཐབ་རྩོད་འོང་",
+            "english": "If it moves through Krittika, famine and strife will come",
+            "problem": "snrubs is Mūla, not Kṛttikā",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "མོན་གྲུ་ནུབ་ཕྱོགས་པ་རྣཾས་ལ་ངན࿒ མོན་བྲེ་རྒྱལ་པོ་ལ་ངན་ནོ",
+            "english": "In Dhanishta, it is bad for westerners. In Shravana, it is bad for the king",
+            "problem": "mon gru is Śatabhiṣaj and mon gre is Dhaniṣṭhā; both shifted",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "བྲེ་ལ། ཆང་དང་། མར་དང་...",
+            "english": "In Krittika, it harms beer, butter...",
+            "problem": "gre (Pūrvaphalgunī) rendered Krittika, here and again on leaf 4",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བཤང་གཅི་སྟོབས་དང་དྲི་ཆེན་སོགས",
+            "english": "feces, urine, blood, human flesh, and so forth",
+            "problem": "the coded samaya-substance list is normalised to a standard list rather than rendered as written",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཀུན་ཤེས་པ་མེད་པར་ཆོས་ཉིད་ཀྱི་རྣམ་པར་རྟོགས་པ",
+            "english": "Without an absence of complete knowledge, the conceptualization of the nature of phenomena",
+            "problem": "garbled clause",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      95,
+      104
+    ],
+    "reader_summary": "A bundle of separate texts: an Indian-derived astrological omen manual in dbu med, a Cakrasaṃvara empowerment ritual and a scholastic commentary on the Abhisamayālaṃkāra. The transcriptions match the leaves. The doctrinal English can be trusted, but in the astrological chapter the English assigns several lunar mansions to the wrong Sanskrit names, so its omens cannot be relied on.",
+    "book_verdict": "Good transcription across three hands; the Abhisamayālaṃkāra and empowerment pages read well, but the astrology page systematically mislabels lunar mansions, a serious error for anyone using it."
+  },
+  {
+    "book_id": "6a14e1c1311a9edd46223bcd",
+    "slot": 23,
+    "title": "Thor bu rTa mgrin dpa' bo gcig pa'i sgrub thabs sogs",
+    "tradition": "bl-other-tshamdrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Ritual miscellany from the Tshamdrak collection: guru yoga and refuge liturgy, mind instructions with a Ratnakūṭa citation, a Sixteen Arhats offering rite and an autobiographical fragment.",
+    "rights_flag": null,
+    "structure_note": "Three-leaf boards (I5) with markers matching the leaf count. 11 backsteps and 13 repeats out of only 26 printed numbers reflect separate short works, each restarting its foliation, plus misread folio numerals; not a splice. Only 42 of 190 pages are translated, and pages_ocr field 45 vs 188 pages with OCR is badly out of date.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བླ་མ་རིནོེ་ལ",
+            "image": "བླ་མ་རིན་པོ་ཆེ་ལ (abbreviated)",
+            "problem": "abbreviation rendered as a malformed stack",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཕྱགས་གཡས་རྡོེ་ཐུཌ་ཁར་འཛིན",
+            "english": "His right hand holds a swastika <note>original: rdo-rje/vajra</note> at his heart",
+            "problem": "Vajrasattva's vajra rendered 'swastika'; the image clearly reads rdo rje and the note contradicts the text",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 130,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཤར་ཕྱོགསུ་སྒྲ་བཅན་འཛིན་ ལམ་ཕྲན་བསྟན་ བྷ་ར་དྷ་ཛ་བསོད་སྙོམས་ལེན་ ལཾ་བསྟན་པ་ ལྷོ་ཕྱོགསུ་ཀླུའི་སྡེ...",
+            "english": "In the East are Rahula, Cudapanthaka, and Bharadhvaja the Alms-gatherer. In the South are Pantaka, Nagasena...",
+            "problem": "Panthaka moved from the East to the South (the next leaf of the same page correctly puts him on the eastern petals)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "སངས་དྱས་སྣང་བ་མཐའ་ཡས་བཞུགས་པ་ ... དུས་མོ་གཡས་པ་ལས། སྟག་གི་ཚོགས་སྤྲུལ་བ་ དགེ་བསྙེན་གྱི་ཚོགས",
+            "english": "the Buddha Amitabha resides... From his right side, he emanates a host of tigers",
+            "problem": "tigers emanating from the right knee belong to the upāsaka (Dharmatāla) of the arhat rite, not to Amitābha; 'dus mo' (= pus mo, knee) not resolved. I could not verify the leaf in this cursive.",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 147,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མ་དེ་དྲན་པའི་གྲུ་མང་པོ",
+            "image": "dbu med, not verified at this resolution",
+            "problem": "probably གླུ (songs) misread as གྲུ; English then has 'many boats of yearning'",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གང་ལ་འང་མ་ཞེན་(པ)སེན་པའི་རི་ཁྲོད་དུ",
+            "english": "I shall dwell in the mountain retreats of the fingernail <note>perhaps referring to a small, remote hermitage</note>",
+            "problem": "a garbled reading explained by a guessing note",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      95,
+      37
+    ],
+    "reader_summary": "A bundle of practice texts: a guru-yoga and refuge liturgy, verse instructions on resting the mind, a Sixteen Arhats offering rite and a vivid first-person memoir of a childhood longing for absent parents. The transcriptions follow the leaves, though two of the four pages are in a cursive hand I could only partly check. The English is readable and mostly faithful, with some misattributed iconography in the ritual pages.",
+    "book_verdict": "Usable ritual and devotional miscellany; translation slips are moderate (iconographic attributes, an arhat's direction), none reverses doctrine, but only about a fifth of the volume is translated."
+  },
+  {
+    "book_id": "6a14e199311a9edd46222858",
+    "slot": 24,
+    "title": "Thor bu mNgon rtogs rgyan 'grel don gsal rnam bshad",
+    "tradition": "bl-other-tshamdrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Tshamdrak collection Mahāyāna scholastic text; it belongs on the shelf, but see the title problem in structure_note.",
+    "rights_flag": null,
+    "structure_note": "Wrong work under the title (I7): all four sampled pages (10, 15, 17, 22) are the Ratnagotravibhāga with Asaṅga's commentary (theg pa chen po rgyud bla ma'i bstan bcos: the nine similes, the four errors, the colophons to chapters 2 and 3). None is an Abhisamayālaṃkāra commentary ('mNgon rtogs rgyan 'grel don gsal'), while book 6a14e1cf…224259 in this same draw does carry AA commentary leaves. Either the title is wrong or bundles were mixed. p.22 has no <leaf-break/> markers on a four-leaf board, which is the hidden-seam I5 variant. p.10 has only three marked sections for four leaves, so two leaves are joined unmarked. Only 9 of 26 pages are translated; pages_ocr field 10 vs 26 with OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "...ལོག་སྲེད་ཅན་ཡོངས་སུ་མྱང་ངན་ངན་ལས་མྱི་འདའ་བའི་ཆོས་ཅན་ཞེས་ / མཐུ་བསམ་གྱིས་མྱི་ཁྱབ་པ་དང་ལྡན་བའི་ཕྱིར་རོ",
+            "image": "four leaves on the board; the transcription marks only three sections, joining two leaves with no marker",
+            "problem": "an unmarked seam between two leaves, so the text jumps mid-sentence",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "...མྱི་འདའ་བའི་ཆོས་ཅན་ཞེས་ / མཐུ་བསམ་གྱིས་མྱི་ཁྱབ་པ་དང་ལྡན་བའི་ཕྱིར་རོ",
+            "english": "As it was said: 'Those with severed roots of virtue do not pass beyond suffering' because of their inconceivable power.",
+            "problem": "the translation bridges the unmarked seam into one invented sentence",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "other": [
+          {
+            "note": "the page is the Ratnagotravibhāga commentary, not the Abhisamayālaṃkāra commentary named in the title",
+            "severity": "serious",
+            "class": "I7"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "དེ་བཞིན་གཤེགས་པ་མདར་མྱེད་གནས་རྣམས་ལ་ཡང་",
+            "english": "even in beings dwelling in the stainless <note>meaning: potentially stainless</note> state",
+            "problem": "mtha' med (the Avīci hell) misread as 'stainless'; small sense slip, patched by a note",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(one block of 23 lines, no <leaf-break/>)",
+            "image": "four leaves of about 8–9 lines each",
+            "problem": "no leaf markers on a four-leaf board; the line count suggests lines are missing, but I could not confirm which",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ད་ནི་དེའི་ལས་རྒྱལ་བའི་མཛད་པ་བརྗོད་པར་བྱའོ། །དེ་ཡང་མདོར་བསྡུ་ན་ལྷུན་གྱིས་གྲུབ་པ་དང་... (about 7 transcribed lines, through the Indra simile)",
+            "english": "(not translated; the English ends at the chapter 3 colophon)",
+            "problem": "the whole opening of chapter 4 (Buddha activity) on this page is missing from the English",
+            "severity": "serious",
+            "class": "T1"
+          },
+          {
+            "source": "བག་ཆགས་བཅས་པ་ཀུན་དགའ་ལ་བས།",
+            "english": "Because of having abandoned all tendencies together with Ananda <note>original: kun dga' la bas</note>",
+            "problem": "fluent rendering of a garbled verse line, with 'Ananda' invented; similar in 'skill to emerge from the flesh'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      15,
+      17
+    ],
+    "reader_summary": "Under an Abhisamayālaṃkāra-commentary title, the reader actually finds the Ratnagotravibhāga with Asaṅga's commentary on buddha-nature: the nine similes, the four perfections and the three bodies. The transcription is of the right leaves, but two pages join leaves without marking the seam. The English of pp.15 and 17 is careful and can be trusted. On p.22 the English stops at the chapter 3 colophon, leaving the opening of chapter 4 untranslated, and fills garbled verse with fluent invention.",
+    "book_verdict": "Catalogue title names a different work than the pages hold; the translation is good where leaves are marked but truncated and over-fluent on the unmarked p.22."
+  }
+]
