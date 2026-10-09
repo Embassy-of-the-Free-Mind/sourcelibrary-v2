@@ -17,13 +17,19 @@ cd /root/sourcelibrary || { echo "[auto-pull] /root/sourcelibrary missing"; exit
 
 # Pulling moves the CHECKOUT; it does not move a process that loaded the old one. On every exit
 # path, ask which running workers are now older than main (#5442) — a `--loop` worker kept code
-# eight hours stale on 2026-10-01 while this script reported "Already up to date". The audit
-# alerts via ntfy (deduplicated) and never restarts anything. Its exit code is reported, not
-# propagated: auto-pull's own exit status means "did the pull work".
+# eight hours stale on 2026-10-01 while this script reported "Already up to date".
+# stale-worker-restart.mjs (#6360) restarts a stale systemd worker that holds no lock and owns no
+# open batch run, verifies it came back on the new code, and pages (ntfy, deduplicated) only the
+# ones it could not restart. Its exit code is reported, not propagated: auto-pull's own exit
+# status means "did the pull work".
 worker_drift() {
-  [ -f scripts/audit/worker-code-drift.mjs ] || return 0
-  node --env-file=/root/sourcelibrary/.env.production.local scripts/audit/worker-code-drift.mjs \
-    --repo /root/sourcelibrary --alert 2>&1 | sed 's/^/[auto-pull] drift: /'
+  if [ -f scripts/maintenance/stale-worker-restart.mjs ]; then
+    node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/stale-worker-restart.mjs \
+      --repo /root/sourcelibrary --apply --alert 2>&1 | sed 's/^/[auto-pull] stale-worker: /'
+  elif [ -f scripts/audit/worker-code-drift.mjs ]; then
+    node --env-file=/root/sourcelibrary/.env.production.local scripts/audit/worker-code-drift.mjs \
+      --repo /root/sourcelibrary --alert 2>&1 | sed 's/^/[auto-pull] drift: /'
+  fi
 }
 # The job wrapper lives in the repo (#6358); /root/bin/claude-job.sh is a copy of it. Refresh the copy on
 # every exit path too: it is a no-op when nothing changed, and it refuses a file that is not committed.
