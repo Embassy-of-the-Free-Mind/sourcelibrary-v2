@@ -41,6 +41,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/import/oraec-paginate-translate.mjs': 'repaginates text already imported from ORAEC',
   'scripts/import/fetch-wikisource-javanese.mjs': 'Wikisource text, not a model read',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',
+  'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
   'scripts/lib/same-language.mjs': 'copies an English page\'s transcription through verbatim (#5154) — no model; its own engine block (same-language-copy/1)',
   'scripts/maintenance/backfill-leaf-break-markers.mjs': 'inserts the <leaf-break/> marker between the stored leaf reads (#5260); the text stays the BDRC read apply-reocr-verdicts.mjs stamped, and the seam is recorded inside that engine block (leaf_seams)',

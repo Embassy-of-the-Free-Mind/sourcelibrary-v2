@@ -43,6 +43,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/import/oraec-paginate-translate.mjs': 'repaginates text already imported from ORAEC',
   'scripts/import/fetch-wikisource-javanese.mjs': 'Wikisource text, not a model read',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',
+  'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
   'scripts/maintenance/repair-ia-ocr-leaf-offset.mjs': 'moves stored text between pages (#3368); introduces no new text',
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
