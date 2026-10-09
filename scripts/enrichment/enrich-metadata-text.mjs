@@ -213,14 +213,14 @@ async function main() {
   const dryRun = !args.includes('--apply');
   const unknownOnly = args.includes('--unknown-only');
   const datelessOnly = args.includes('--dateless');
-  const useWarehouse = args.includes('--warehouse');
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : 500;
   const pagesPerBook = args.includes('--pages') ? parseInt(args[args.indexOf('--pages') + 1]) : PAGES_PER_BOOK;
   const specificBook = args.includes('--book') ? args[args.indexOf('--book') + 1] : null;
   const ocrOnly = args.includes('--ocr-only'); // Only process books that have OCR
 
-  const booksCollectionName = useWarehouse ? 'books_warehouse' : 'books';
-  const pagesCollectionName = useWarehouse ? 'pages_warehouse' : 'pages';
+  // --warehouse was dropped when the warehouse was retired 2026-10 (#5470).
+  const booksCollectionName = 'books';
+  const pagesCollectionName = 'pages';
 
   console.log(`=== Book Metadata Enrichment via OCR Text ===`);
   console.log(`Mode: ${dryRun ? 'DRY RUN (use --apply to write)' : 'APPLYING CHANGES'}`);

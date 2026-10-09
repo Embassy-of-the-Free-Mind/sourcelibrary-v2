@@ -372,7 +372,7 @@ export default function EmailAdminPage() {
                       format="html"
                       value={manualHtml}
                       onChange={setManualHtml}
-                      help="Wrapped in the Source Library template — leave out the header, logo and footer."
+                      help="Wrapped in the Source Library template. Leave out the header, logo and footer."
                     >
                       <RichEmailEditor
                         value={manualHtml}

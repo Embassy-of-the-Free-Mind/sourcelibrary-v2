@@ -17,7 +17,13 @@ arg = lambda k, d: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.arg
 ROUND = int(arg("round", "1"))
 BASE = "scripts/eval/results/tengyur-models-6121" if "--models" in sys.argv else "scripts/eval/results/tengyur-levers-6121"  # --models: #6121 round 2
 OUT = f"{BASE}/r{ROUND}"
+PARETO = "--pareto" in sys.argv  # #6182: the fresh 100-page sample; FP (production rerun) plays round 1's A
+if PARETO:
+    BASE = OUT = "scripts/eval/results/pareto-6182/tib-rev"
 key = json.load(open(f"{OUT}/key.json"))
+if PARETO:
+    for k in key.values():
+        if k.get("arm") == "FP": k["arm"] = "A"
 rev = {"A": {}, "B": {}}
 for f in sorted(glob.glob(f"{OUT}/reviews/*.json")):
     for x in json.load(open(f)):
@@ -26,7 +32,7 @@ missing = {r: [i for i in key if i not in rev[r]] for r in rev}
 assert not any(missing.values()), missing
 RA = {"reversal", "agent"}
 ALL = {"reversal", "agent", "term", "omission", "addition", "structure", "gloss"}
-SEED = 6121
+SEED = 6182 if PARETO else 6121
 
 
 def norm(s):
@@ -172,6 +178,9 @@ def stats(ps, label):
 res = {"round": ROUND, "gate": gate, "pool": stats(pages, "pool (all 60)"), "by_section": {}}
 for s in sorted(set(section.values())):
     res["by_section"][s] = stats([p for p in pages if section[p] == s], s)
+if PARETO:  # #6182 rule A: the preregistered pool of the two sections a re-translation would buy first
+    res["by_section"]["Pramāṇa + Madhyamaka"] = stats([p for p in pages if section[p] in ("Pramāṇa", "Madhyamaka")], "Pramāṇa + Madhyamaka")
+    res["gate_replant"] = json.load(open(f"{OUT}/calib-2/gate.json"))
 
 # verse vs prose (descriptive)
 vs = {p: next(iter(by[p].values())).get("verse_share") or 0 for p in pages}
@@ -197,7 +206,7 @@ for f in sorted(glob.glob(f"{BASE}/arms/*.jsonl")):
     cost[name] = {"pages": len(xs), "usd": round(usd, 4), "per_1000_realtime": round(1000 * usd / len(xs), 2), "per_1000_batch_equiv": round(500 * usd / len(xs), 2),
                   "thinking_tokens_mean": round(sum(th) / len(th)), "thinking_pages": sum(1 for t in th if t)}
 res["cost"] = cost
-led = [json.loads(l) for l in open(f"{BASE}/arms/ledger.jsonl") if l.strip()]
+led = [json.loads(l) for l in open("/root/pareto-6182/ledger.jsonl" if PARETO else f"{BASE}/arms/ledger.jsonl") if l.strip()]
 res["spend_total_usd"] = round(sum(x["usd"] for x in led), 4)
 json.dump(res, open(f"{OUT}/analysis.json", "w"), indent=1, ensure_ascii=False)
 

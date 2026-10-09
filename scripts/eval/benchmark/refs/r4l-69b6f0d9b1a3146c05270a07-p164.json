@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/Weitenauer_carmina",
+  "edition": "Carmina selecta, quorum liber I Heroica, liber II Lyrica, appendix elegias aliquot complectitur. — Augsburg; Freiburg [Breisgau]: Ignaz Wagner; Anton Wagner, 1757.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6f0d9b1a3146c05270a07",
+  "page_number": 164,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 138600,
+    "to_char": 139893,
+    "overlap": 0.497,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-4)",
+    "at": "2026-10-06T10:11:18.118606+00:00",
+    "note": "Lyrica p.151; the body window (after the blank line) matches the whole page. The pre-window pad has 2 lines of the previous page, and footnotes (a),(b) are set inline.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1700s",
+    "pages": [
+      164,
+      165,
+      166
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.735Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "c60a0aa55a6aa5a9e5111378574e367eb18f4a2e727b341768ee84fc752e1c43",
+  "unit": {
+    "chars": 1293
+  }
+}

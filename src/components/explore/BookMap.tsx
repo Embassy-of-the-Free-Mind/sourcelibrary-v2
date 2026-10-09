@@ -167,7 +167,7 @@ export default function BookMap({ locations }: BookMapProps) {
     // page. If this host ever does the same, the tell is a uniform tile image
     // across zoom levels; curl one tile and look at it.
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a>. Sources: Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
       maxNativeZoom: 16, maxZoom: 18,
     }).addTo(map);
     mapRef.current = map;

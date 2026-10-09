@@ -5,13 +5,15 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
-import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
+import { withAdminAuth, withCuratorAuth, isAdmin } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+import { auth } from '@/lib/auth';
+import { resolvePageWindow, countPagesForWindow, type PagesWindow } from '@/lib/page-window';
 
 export const preferredRegion = 'fra1';
 
@@ -33,7 +35,12 @@ export async function GET(
   try {
     const { tenant, id } = await params;
     const { searchParams } = new URL(request.url);
-    const includeFull = searchParams.get('full') === 'true';
+    // `?full=true` returns every page field, text included. It is honoured for
+    // admins only; anyone else asking for it gets the default (no-text) shape,
+    // so one anonymous request can no longer carry a whole book's OCR and
+    // translation past the /text page budget.
+    const wantsFull = searchParams.get('full') === 'true';
+    const includeFull = wantsFull && await isAdmin();
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
     const tenantId = await resolveTenantId(tenant);
     
@@ -91,23 +98,43 @@ export async function GET(
         'translation.updated_at': 1,
         'summary.updated_at': 1,
         'detected_images.type': 1,
+        page_type: 1,
       };
     }
 
     const bookId = (book.id || book._id?.toString()) as string;
-    const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
-    const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
+    // Page-list windows (#6281), as in /api/books/[id]. This route is not
+    // wrapped in withApiAuth, so the caller's kind is just "signed in or not":
+    // no session = capped. API keys are not honoured here (they never were),
+    // so a keyed client gets the anonymous window.
+    const session = await auth().catch(() => null);
+    const windowed = !session?.user?.id;
+    const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
+    const pageFilter = { book_id: bookId, tenantId };
     let cursor = db.collection('pages')
-      .find({ book_id: bookId, tenantId })
+      .find(pageFilter)
       .project(projection)
       .sort({ page_number: 1 });
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);
     if (pageLimit > 0) cursor = cursor.limit(pageLimit);
     const pages = await cursor.toArray();
+    const pagesWindow: PagesWindow = {
+      offset: pageOffset,
+      limit: pageLimit,
+      returned: pages.length,
+      total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
+        () => db.collection('pages').countDocuments(pageFilter)),
+    };
 
-    const cacheControl = includeFull
+    // Keyed on wantsFull, not includeFull: the same URL answers differently for
+    // an admin, so neither answer may be stored by a shared cache. An uncapped
+    // (signed-in) answer is private; the capped one varies on Cookie — see
+    // /api/books/[id].
+    const cacheControl = wantsFull
       ? 'private, no-cache'
-      : 'public, max-age=60, stale-while-revalidate=300';
+      : windowed
+        ? 'public, max-age=60, stale-while-revalidate=300'
+        : 'private, max-age=60, stale-while-revalidate=300';
 
     // Merge index data from the dedicated collection (heavy fields moved out
     // of book docs). Same per-mode field lists as /api/books/[id] (#5184).
@@ -121,8 +148,8 @@ export async function GET(
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }
 
-    return NextResponse.json({ ...book, pages }, {
-      headers: { 'Cache-Control': cacheControl }
+    return NextResponse.json({ ...book, pages, pages_window: pagesWindow }, {
+      headers: { 'Cache-Control': cacheControl, Vary: 'Cookie' }
     });
   } catch (error) {
     console.error('Error fetching book:', error);

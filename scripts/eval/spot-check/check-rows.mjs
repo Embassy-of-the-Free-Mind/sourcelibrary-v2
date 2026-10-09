@@ -8,6 +8,8 @@
  *   seriousPage / seriousClasses   overview-score.mjs's definition of a serious page, and the classes on it
  *   FIT                            shelf-overview's fit_to_show → show | caveat | fix
  *   derivedFortnightly             the fortnightly rule (scripts/eval/methods/fortnightly-spot-check.md)
+ *   pageFindings                   the serious findings per page, for book_checks.page_findings: what a reader's
+ *                                  page-level warning is built from (#6199)
  *   pageRecords / packetProvenance the text a run read: the packet's model ids; the packet's TEXT is compared with the
  *                                  page's text now, so a page rewritten after the draw (before or after the review) is
  *                                  changed_since_check, and only an unchanged page gets the page's *_updated_at stamps
@@ -23,6 +25,30 @@ import { execFileSync } from 'node:child_process';
 const allErrors = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e && typeof e === 'object');
 export const seriousPage = (p) => allErrors(p).some((e) => e.severity === 'serious') || p.right_page === 'no';
 export const seriousClasses = (pages) => [...new Set(pages.flatMap((p) => allErrors(p).filter((e) => e.severity === 'serious' && e.class).map((e) => String(e.class))))];
+
+const STAGE = { ocr_errors: 'ocr', tr_errors: 'translation', other: 'other' };
+const PROBLEM_MAX = 600;
+/**
+ * One entry per page that has a serious finding (a serious error, or right_page 'no'); a page read and found clean
+ * has no entry, so `[]` means "every page read was free of serious errors". `problem` is the reviewer's own sentence.
+ * Pass { withProblem: false } when the evidence file is private (ops:) — the class travels, the sentence does not.
+ */
+export function pageFindings(pages, { withProblem = true } = {}) {
+  const out = [];
+  for (const p of pages) {
+    const errors = [];
+    for (const [key, stage] of Object.entries(STAGE)) {
+      for (const e of (p[key] || [])) {
+        if (!e || typeof e !== 'object' || e.severity !== 'serious') continue;
+        const problem = withProblem && typeof e.problem === 'string' && e.problem.trim() ? e.problem.trim().slice(0, PROBLEM_MAX) : null;
+        errors.push({ stage, ...(e.class ? { class: String(e.class) } : {}), ...(problem ? { problem } : {}) });
+      }
+    }
+    const wrongPage = p.right_page === 'no';
+    if (errors.length || wrongPage) out.push({ page_number: Number(p.page_number), ...(wrongPage ? { wrong_page: true } : {}), errors });
+  }
+  return out;
+}
 export const FIT = { show: 'show', show_with_caveat: 'caveat', do_not_show: 'fix' };
 
 /** The fortnightly rule: stricter than a reviewer's own book verdict. Month 0 predates on_sight_defect. */

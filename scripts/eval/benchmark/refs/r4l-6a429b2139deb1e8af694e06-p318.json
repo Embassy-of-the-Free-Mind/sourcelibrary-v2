@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/Pantaleon_res_memorabiles_2",
+  "edition": "Militaris Ordinis Johannitarum, Rhodiorum, Aut Melitensium Equitum Rerum Memorabilium Terra Marique, A Sexcentis fere annis pro republica Christiana, in Asia, Africa, &amp; Europa contra Barbaros, Saracenos, Arabes &amp; Turcas fortiter gestarum, ad praesentem usque 1581 annum, Historia Nova : libri",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a429b2139deb1e8af694e06",
+  "page_number": 318,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 448230,
+    "to_char": 452347,
+    "overlap": 0.524,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "ref matches full page from 'ad spem regni euocat' to 'quum autem', plus a few words of next page; marginal notes inlined",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      316,
+      317,
+      318
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.527Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "19b0609ccd39b35596fd76d505dcde65a7471dfbfd2323e940b282c54ae52c52",
+  "unit": {
+    "chars": 4117
+  }
+}

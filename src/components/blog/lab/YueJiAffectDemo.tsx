@@ -130,7 +130,7 @@ export default function YueJiAffectDemo() {
 
   return (
     <LabCard
-      title="Station IX — Name the state of mind"
+      title="Station IX: Name the state of mind"
       headerRight={
         <button
           onClick={start}
@@ -139,13 +139,13 @@ export default function YueJiAffectDemo() {
           {order === null ? 'Begin' : 'Restart'}
         </button>
       }
-      caption="Six phrases, each built strictly to one of the Record of Music's six descriptions — register, pace and touch follow the text's adjectives and nothing else. Hear each one blind and name the state of mind. Chance is one in six."
+      caption="Six phrases, each built strictly to one of the Record of Music's six descriptions: register, pace and touch follow the text's adjectives and nothing else. Hear each one blind and name the state of mind. Chance is one in six."
       sourceHref="/book/the-sacred-books-of-china-li-ki-part-2-sbe-vol-28-trans?page=107"
       sourceLabel="Record of Music (Yo Kî), in Legge's Li Ki (1885)"
     >
       {order === null && (
         <p className="text-sm text-secondary">
-          The Record lists six: sorrow, pleasure, joy, anger, reverence, love — each with its own
+          The Record lists six: sorrow, pleasure, joy, anger, reverence, love, each with its own
           sound-signature, and none of them, it insists, natural: they are the mark of what has
           moved the mind.
         </p>

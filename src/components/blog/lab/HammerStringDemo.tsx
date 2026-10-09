@@ -132,9 +132,9 @@ export default function HammerStringDemo() {
 
   return (
     <LabCard
-      title="Station I — Weigh the hammers"
+      title="Station I: Weigh the hammers"
       headerRight={<PlayToggle playing={playing} onClick={togglePair} label="Play both strings" />}
-      caption="A fixed string sounds 220 Hz. Change the second one by shortening it, or by hanging weight on it — and watch which rule actually delivers the octave. The legend's 2:1 weight lands on the tritone."
+      caption="A fixed string sounds 220 Hz. Change the second one by shortening it, or by hanging weight on it, and watch which rule actually delivers the octave. The legend's 2:1 weight lands on the tritone."
       sourceHref="/book/dialogo-della-musica-antica-et-della-moderna-galilei"
       sourceLabel="Vincenzo Galilei, Dialogo (1581)"
     >
@@ -173,11 +173,11 @@ export default function HammerStringDemo() {
 
       <div className="mt-4 grid grid-cols-3 gap-3">
         <Readout label="Second string" value={`${freq.toFixed(1)} Hz`} note="first stays 220.0 Hz" />
-        <Readout label="Interval" value={`${cents} ¢`} note={isOctave ? '✓ OCTAVE' : isTritone ? 'tritone — the legend fails' : ' '} />
+        <Readout label="Interval" value={`${cents} ¢`} note={isOctave ? '✓ OCTAVE' : isTritone ? 'tritone: the legend fails' : ' '} />
         <Readout
           label="The law"
           value={mode === 'weight' ? 'f ∝ √tension' : 'f ∝ 1 / length'}
-          note={mode === 'weight' ? 'octave needs 4:1' : 'octave at 1/2 — as told'}
+          note={mode === 'weight' ? 'octave needs 4:1' : 'octave at 1/2, as told'}
         />
       </div>
 
@@ -190,7 +190,7 @@ export default function HammerStringDemo() {
 
       <div className="mt-5 pt-4 border-t border-border-light">
         <p className="text-[11px] uppercase tracking-wider text-muted mb-2">
-          The picture under test — press its numbers
+          The picture under test: press its numbers
         </p>
         <div className="md:flex md:gap-4">
           <Link
@@ -206,10 +206,10 @@ export default function HammerStringDemo() {
           </Link>
           <div className="mt-3 md:mt-0 min-w-0">
             <p className="text-xs text-secondary mb-2">
-              Gaffurius&apos;s woodcut numbers six hammers — IIII, VI, VIII, VIIII, XII, XVI — and
+              Gaffurius&apos;s woodcut numbers six hammers (IIII, VI, VIII, VIIII, XII, XVI), and
               the page itself works through every pairing (an early reader re-inks them in the margins of{' '}
               <Link href="/book/theorica-musicae-gaffurius?page=46" className="text-accent-rust underline">our copy</Link>).
-              Tap two hammers to hang exactly that weight ratio — and try VIIII : IIII, the one
+              Tap two hammers to hang exactly that weight ratio, and try VIIII : IIII, the one
               pair that keeps its promise even under the real law:
             </p>
             <div className="flex flex-wrap gap-1.5 mb-2">
@@ -219,7 +219,7 @@ export default function HammerStringDemo() {
             </div>
             {pairRatio !== null && (
               <p className="text-xs text-muted mb-3">
-                {pickedLabel} — the legend promises a {legendPromise}; the weights deliver a {physicsDelivers}.
+                {pickedLabel}: the legend promises a {legendPromise}; the weights deliver a {physicsDelivers}.
               </p>
             )}
             <p className="text-xs text-secondary mb-2">
@@ -233,7 +233,7 @@ export default function HammerStringDemo() {
             </div>
             <p className="text-xs text-muted mt-2">
               {law === 'legend'
-                ? 'Ratios straight through: 4 : 6 : 8 : 9 : 12 : 16 rings as octaves, fifths, fourths and a tone — the miracle as told.'
+                ? 'Ratios straight through: 4 : 6 : 8 : 9 : 12 : 16 rings as octaves, fifths, fourths and a tone, the miracle as told.'
                 : 'Frequency follows √weight: the same numbers smear into a cluster nothing in music theory can name.'}
             </p>
           </div>

@@ -104,7 +104,7 @@ function drawChladni(x: CanvasRenderingContext2D, W: number, H: number) {
     }
   }
   x.fillStyle = '#8A8E93'; x.font = '10px ui-monospace,Menlo,monospace'; x.textAlign = 'left';
-  x.fillText('vibrating plate — mode 4 : 3', ox + 2, oy + m + 15);
+  x.fillText('vibrating plate, mode 4 : 3', ox + 2, oy + m + 15);
 }
 
 /* ---- Arnold tongues (mode-locking of coupled oscillators at rational ratios) ---- */
@@ -141,7 +141,7 @@ export function BalmerSpectrum() {
       render={drawBalmer}
       caption={
         <>
-          <b className="not-italic text-secondary">Matter&apos;s discrete tones.</b> The hydrogen Balmer series — the only
+          <b className="not-italic text-secondary">Matter&apos;s discrete tones.</b> The hydrogen Balmer series: the only
           visible wavelengths a hydrogen atom is permitted to emit, fixed by whole-number quantum states. Integer arithmetic,
           made visible in light.
         </>
@@ -160,7 +160,7 @@ export function ChladniFigure() {
         <>
           <b className="not-italic text-secondary">Sand finds the nodes.</b> A Chladni figure: a bounded plate rings only in
           whole-number modes, and scattered sand collects where the plate holds still. Confinement turns a continuous medium
-          into integer harmonics — the same reason the atom has discrete tones.
+          into integer harmonics, the same reason the atom has discrete tones.
         </>
       }
     />
@@ -177,7 +177,7 @@ export function ArnoldTongues() {
         <>
           <b className="not-italic text-secondary">Where a law could live.</b> Arnold tongues: two coupled oscillators lock
           together only at simple rational ratios, and the simplest ratios lock over the widest range of conditions. If
-          human–AI coupling has a law of harmony, this is the shape it would take — and, unlike a metaphor, the tongue is
+          human–AI coupling has a law of harmony, this is the shape it would take, and, unlike a metaphor, the tongue is
           measurable.
         </>
       }

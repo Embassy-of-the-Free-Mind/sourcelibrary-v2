@@ -13,7 +13,7 @@ import { search as searchApi } from '@/lib/api-client';
 import type { SearchResult, IndexSearchResult } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { bookUrl } from '@/lib/slugify';
-import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals } from '@/lib/embassy/citation-fixes';
 import HighlightedText from '@/components/search/HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -173,6 +173,10 @@ export default function SearchV2Page() {
                   break;
                 case 'citation_fixes':
                   contentAccum = applyCitationFixes(contentAccum, event.fixes || []);
+                  setLibrarianContent(contentAccum);
+                  break;
+                case 'grounding_edits':
+                  contentAccum = applyGroundingEdits(contentAccum, event.edits || []);
                   setLibrarianContent(contentAccum);
                   break;
                 case 'image_removals':
@@ -370,7 +374,7 @@ export default function SearchV2Page() {
                         {TOOL_LABELS[step.name] || step.name}
                         {step.query && <span className="text-[#b0a89c]"> &ldquo;{step.query.slice(0, 50)}{step.query.length > 50 ? '...' : ''}&rdquo;</span>}
                         {step.status === 'done' && step.summary && (
-                          <span className="text-[#6b6560]"> &mdash; {step.summary}</span>
+                          <span className="text-[#6b6560]">: {step.summary}</span>
                         )}
                       </span>
                     </div>

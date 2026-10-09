@@ -196,7 +196,7 @@ export default function DissonanceDemo({
 
           <label className="block">
             <span className="flex items-baseline justify-between text-sm text-secondary mb-1">
-              <span>Second tone — slide it across the octave</span>
+              <span>Second tone: slide it across the octave</span>
               <span className="font-mono text-primary">{freq2.toFixed(1)} Hz</span>
             </span>
             <input

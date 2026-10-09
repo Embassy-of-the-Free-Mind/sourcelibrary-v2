@@ -7,18 +7,19 @@ import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { IMPROVEMENTS } from './improvements';
 import FolioPipeline, { type CritiqueGate, type FolioSnapshot } from './FolioPipeline';
+import { LanguageFunnel } from './LanguageFunnel';
 import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, QualityLoop, short, type CanonBar, type TraditionProgressRow } from './diagrams';
 
-// Built for the Eternity Foundation working session (#5513): read once, seated, as a
-// table with a short argument. Sizes, licences, English shares and draft costs come from
+// First built for the Eternity Foundation working session (#5513), widened to every open canon
+// (#6220): read once, seated, as a table with a short argument. Sizes, licences, English shares and draft costs come from
 // canon-gap-map.mjs; where each canon stands comes from canon-gap-status.mjs. Re-run
 // those scripts (not this page) when a canon moves.
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'The Open Canons — Source Library Research',
+  title: 'The Open Canons | Source Library Research',
   description:
-    'Which Buddhist, Hindu, Jewish, Islamic and Chinese canons are already typed in openly, how much of each has any English, and what a draft English translation would cost.',
+    'Which Buddhist, Hindu, Jewish, Islamic, Chinese, Latin and Greek canons are already typed in openly, how much of each has any English, and what a draft English translation would cost.',
   alternates: { canonical: '/research/canon-gap' },
   robots: { index: false, follow: true },
 };
@@ -61,6 +62,11 @@ const SHORT_NAME: Record<string, string> = {
   'mongolian-kanjur': 'Mongolian Kanjur',
   'tripitaka-koreana': 'Tripitaka Koreana',
   kanripo: 'Kanripo (Chinese classics)',
+  'patrologia-latina': 'Patrologia Latina',
+  'camena-poemata': 'CAMENA Neo-Latin poetry',
+  'perseus-latin': 'Perseus classical Latin',
+  'perseus-greek': 'Perseus classical Greek',
+  'first1k-greek': 'First1KGreek',
 };
 const nameOf = (id: string, fallback: string) => SHORT_NAME[id] ?? fallback;
 
@@ -107,6 +113,11 @@ const LICENCE_LABEL: Record<string, string> = {
 
 const STATUS = new Map((gapStatus.corpora as StatusRow[]).map((s) => [s.id, s]));
 const fmt = (n: number) => n.toLocaleString('en-US');
+const pctEnglish = (f: number | null) => (f == null ? 'unknown' : f >= 0.995 ? (f === 1 ? '100%' : '>99%') : `${Math.round(f * 100)}%`);
+
+// Canons with a complete or nearly complete English translation: listed, never priced (#6220).
+const ALREADY = gapMap.already_in_english;
+const LATIN_BOOKS_ALL = gapStatus.latin_books_all;
 
 const rows = [...gapMap.rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
 const inTotal = gapMap.rows.filter((r) => !OUT_OF_TOTAL.has(r.id));
@@ -133,6 +144,8 @@ const LANG_PAGE: Record<string, string> = {
   hebrew: '/languages/hebrew',
   arabic: '/languages/arabic',
   persian: '/languages/persian',
+  latin: '/languages/latin',
+  greek: '/languages/greek',
 };
 const TRADITION_LANG: Record<string, string> = {
   tibetan: 'tibetan',
@@ -143,9 +156,12 @@ const TRADITION_LANG: Record<string, string> = {
   kabbalah: 'hebrew',
   sufi: 'arabic',
   'persian-poetry': 'persian',
+  latin: 'latin',
+  greek: 'greek',
 };
 const LANG_NAME: Record<string, string> = {
   tibetan: 'Tibetan', chinese: 'Chinese', pali: 'Pali', sanskrit: 'Sanskrit', hebrew: 'Hebrew', arabic: 'Arabic', persian: 'Persian',
+  latin: 'Latin', greek: 'Greek',
 };
 // The Mongolian Kanjur row carries lang "tibetan" (its BDRC catalogue language); our books are Mongolian.
 const rowLang = (r: Row) => (r.id === 'mongolian-kanjur' ? null : r.lang);
@@ -173,11 +189,13 @@ const TRADITIONS = ([...gapStatus.traditions] as unknown as TraditionProgressRow
 const CONTENTS = [
   ['library', 'What we already hold'],
   ['canons', 'Each canon, and what is next'],
+  ['english', 'Canons already in English'],
   ['eternity', 'The Eternity reading list'],
   ['quality', 'How we check quality'],
   ['gap', 'How much is in English'],
   ['cost', 'Why typed text matters'],
   ['tengyur', 'The Derge Tengyur'],
+  ['languages', 'The whole written record'],
   ['method', 'Method and caveats'],
 ] as const;
 
@@ -258,7 +276,7 @@ function CorpusRow({ r }: { r: Row }) {
         <div>
           <dt className="md:hidden text-[11px] uppercase tracking-wider text-stone-400">Typed text</dt>
           <dd className="text-stone-800">
-            {r.size.base_chars ? `${short(r.size.base_chars)} chars` : '—'}
+            {r.size.base_chars ? `${short(r.size.base_chars)} chars` : '–'}
             {r.size.texts != null && <span className="block text-[11px] text-stone-400">{fmt(r.size.texts)} texts</span>}
           </dd>
         </div>
@@ -303,14 +321,12 @@ export default function CanonGapPage() {
       header={
         <ContentHeader
           title="The Open Canons"
-          subtitle="Buddhist, Hindu, Jewish, Islamic and Chinese canons that other projects have already typed in and released openly: how much of each is in English, what a first English draft would cost, and where our work on each stands."
+          subtitle="The religious and philosophical canons that other projects have already typed in and released openly: how much of each is in English, what a first English draft would cost, and where our work on each stands."
         />
       }
     >
       <div className="max-w-5xl mx-auto font-body text-stone-700 text-lg leading-relaxed">
-        <p className="text-sm text-stone-500 mt-8">
-          Prepared for the Eternity Foundation working session, October 2026. Figures measured {asOf}.
-        </p>
+        <p className="text-sm text-stone-500 mt-8">Figures measured {asOf}.</p>
 
         <nav aria-label="Contents" className="mt-10 mb-4">
           <div className="font-body text-xs tracking-[0.16em] uppercase text-stone-400 mb-3">Contents</div>
@@ -332,6 +348,11 @@ export default function CanonGapPage() {
             Tibetan figure includes the Derge Tengyur and Kangyur imported this month; the Mongolian Kanjur is scans
             only so far. Each square opens a book; each tradition&rsquo;s name opens its shelf.
           </p>
+          <p className="mt-4 text-base text-stone-600">
+            Latin is our largest language, about {fmt(LATIN_BOOKS_ALL)} books, so the Latin row counts only the
+            books in four of our collections: Hermetica, alchemy, Kabbalah and natural philosophy. Latin books on
+            Kabbalah are counted in the Kabbalah row too. The Greek row counts every book in Greek.
+          </p>
           <TraditionProgress n={1} rows={TRADITIONS} />
         </Section>
 
@@ -352,6 +373,35 @@ export default function CanonGapPage() {
           {rows.map((r) => (
             <CorpusRow key={r.id} r={r} />
           ))}
+        </Section>
+
+        <Section id="english" title="Canons already in English">
+          <p className="mb-6">
+            These canons have complete or nearly complete English translations, so they are not priced as gaps. The
+            share is measured where a catalogue publishes it; the source is linked on each line.
+          </p>
+          <ul className="divide-y divide-stone-200 border-y border-stone-200 text-base">
+            {ALREADY.map((a) => (
+              <li key={a.id} className="py-3 md:grid md:grid-cols-[minmax(0,1.6fr)_6rem_minmax(0,2.4fr)] md:gap-4">
+                <div>
+                  <span className="font-serif text-lg text-stone-900">{a.corpus}</span>
+                  <span className="block text-sm text-stone-500">{a.tradition}</span>
+                </div>
+                <div className="tabular-nums text-stone-900 font-semibold">{pctEnglish(a.english.fraction)}</div>
+                <div className="text-sm text-stone-600">
+                  {a.english.note} <A href={a.url}>source</A>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">Canons we looked at and left out</h3>
+          <ul className="list-disc pl-5 space-y-3 text-base">
+            {gapMap.left_out.map((o) => (
+              <li key={o.corpus}>
+                <strong>{o.corpus}.</strong> {o.reason} <A href={o.source}>source</A>
+              </li>
+            ))}
+          </ul>
         </Section>
 
         <Section id="eternity" title="The Eternity reading list">
@@ -402,8 +452,9 @@ export default function CanonGapPage() {
           <p>
             Three catalogues publish how much of their canon has been translated: <A href={L.k84000}>84000</A> for the
             Tibetan canon, <A href={L.suttacentral}>SuttaCentral</A> for the Pali, and <A href={L.sefaria}>Sefaria</A>{' '}
-            for the Hebrew. Nobody has measured it for the Chinese and Arabic canons, the two largest, so their draft
-            cost assumes none of it is in English. Click a canon to see its row in{' '}
+            for the Hebrew. For classical Latin and Greek we count the English translations that Perseus and
+            First1KGreek keep beside their texts. Nobody has measured it for the Chinese and Arabic canons or the
+            Patrologia Latina, so their draft cost assumes none of it is in English. Click a canon to see its row in{' '}
             <a href="#canons" className="text-amber-800 underline underline-offset-2">the table</a>.
           </p>
           <CanonBars n={4} rows={bars} />
@@ -418,9 +469,9 @@ export default function CanonGapPage() {
           </p>
           <p>
             A draft English translation of every canon here would cost about ${fmt(gapMap.total_draft_usd)} in model
-            fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
-            does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
-            with scans, and have little English.
+            fees. Scholarly review costs far more. With a draft, a reader can search a text and follow its outline,
+            but a translator is still needed. Review is cheapest to start on canons that are openly licensed, typed,
+            paired with scans, and have little English.
           </p>
           <RoutesDiagram n={5} />
         </Section>
@@ -429,9 +480,9 @@ export default function CanonGapPage() {
           <p>
             The Tengyur is the Tibetan canon of Indian commentaries and treatises. <A href={L.esukhia}>Esukhia&rsquo;s
             typed text</A> is in the public domain, <A href={L.bdrcTengyur}>BDRC holds open scans</A> of the same
-            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. So we
-            started there: all 213 volumes are imported, each typed folio is paired with its page image, and every
-            page is being drafted in English for scholars to review beside the woodblock.{' '}
+            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. We
+            started there. All 213 volumes are imported, each typed folio is paired with its page image, and every
+            page has a draft English translation, public and labelled as not yet reviewed by a scholar.{' '}
             <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
           </p>
           <TengyurProgress
@@ -455,6 +506,17 @@ export default function CanonGapPage() {
               scored about the same but put English for the wrong passage beside the woodblock 15 times, against once.
             </li>
           </ul>
+        </Section>
+
+        <Section id="languages" title="The whole written record, language by language">
+          <p>
+            The canons above are the part of each tradition that someone has already typed in. Behind them is
+            everything else that survives in the same languages. For each language the figure below shows four
+            numbers, each from a source you can open: how much is estimated to survive, how much has been catalogued,
+            how much has been scanned, and how much can be read in English. Where a bar is missing, we found no
+            figure we could cite.
+          </p>
+          <LanguageFunnel n={7} />
         </Section>
 
         <Section id="method" title="Method and caveats">
@@ -487,7 +549,7 @@ export default function CanonGapPage() {
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>English coverage is unknown for most canons.</strong> Only 84000, SuttaCentral and Sefaria publish
-              a measurable share. SuttaCentral&rsquo;s figure leaves out the Pali Text Society&rsquo;s printed
+              a measurable share, and Perseus and First1KGreek keep English beside some of their texts. SuttaCentral&rsquo;s figure leaves out the Pali Text Society&rsquo;s printed
               translations, so it undercounts.
             </li>
             <li>
@@ -499,7 +561,7 @@ export default function CanonGapPage() {
               estimates differ by about 25%.
             </li>
             <li>
-              <strong>Licences are quoted, not assumed.</strong> GRETIL&rsquo;s files say they are for reference only,
+              <strong>We quote each licence.</strong> GRETIL&rsquo;s files say they are for reference only,
               so we do not publish their text; we read our own scans of the printed editions instead. Ganjoor and the
               K-Tripitaka state no licence we could find. Sefaria&rsquo;s main Zohar Hebrew text is marked
               &ldquo;unknown&rdquo;.
@@ -507,6 +569,14 @@ export default function CanonGapPage() {
             <li>
               <strong>&ldquo;We hold&rdquo; is a floor.</strong> It counts books matched by title and collection; we
               may hold more.
+            </li>
+            <li>
+              <strong>Latin and Greek.</strong> The Patrologia Latina&rsquo;s size is Corpus Corporum&rsquo;s word
+              count converted to characters on a sample of its texts. CAMENA&rsquo;s is its own count of 60,000
+              typed pages at our average Latin page length, an estimate. Corpus Corporum allows non-commercial
+              reuse and says its texts come from various sources, so each needs checking before we publish it.
+              Perseus and First1KGreek count only the English in their own repositories; printed translations such
+              as the Loeb volumes are left out, so the English share is understated.
             </li>
           </ul>
 

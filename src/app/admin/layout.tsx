@@ -14,7 +14,7 @@ export default async function AdminLayout({
 
   return (
     <>
-      <AdminNav extraLinks={spend ? [{ href: '/admin/spend', label: 'Spend' }] : []} />
+      <AdminNav role={(session?.user as { role?: string } | undefined)?.role} canSeeSpend={Boolean(spend)} />
       {children}
     </>
   );

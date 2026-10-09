@@ -38,11 +38,31 @@
  * Status is never written: a book here is already past Phase 6/7's statuses, or not selected.
  */
 import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
+import { isPaused } from '../../lib/pause.mjs';
+import { shouldBypassPause } from './selective-unpause.mjs';
 import { createThenDeleteInput, uploadBatchInputFile } from '../../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost, outputTokensFrom } from './supabase-usage-logger.mjs';
 
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 const ENDPOINT = 'worker/hetzner-enrich-batch';
+/**
+ * What a pause means for one enrich-worker run (#5492, #5496 review B2).
+ *
+ * A pause stops SUBMISSION, never collection. Jobs in `enrich_batch_jobs` with status
+ * `submitted` are already paid; if a pause stopped the `--batch` run before its collect step,
+ * Gemini would expire them at 48 h and the money would buy nothing. So under a pause the batch
+ * lane still runs, collect-only; the realtime path (every call of which is new spend) skips.
+ *
+ * @returns {{ mode: 'run' | 'collect-only' | 'skip', reason: string | null }}
+ */
+export function enrichPauseMode(control, { batchMode }) {
+  const reason = isPaused(control, 'enrich') ? 'enrich step paused'
+    : !shouldBypassPause(control) ? 'pipeline paused'
+    : null;
+  if (!reason) return { mode: 'run', reason: null };
+  return { mode: batchMode ? 'collect-only' : 'skip', reason };
+}
+
 export const BOOKS_COLL = 'enrich_batch_books';
 export const JOBS_COLL = 'enrich_batch_jobs';
 
