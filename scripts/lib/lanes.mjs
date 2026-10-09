@@ -204,6 +204,7 @@ export const EXEMPT = [
   { file: 'scripts/workers/backfill-hires-gallery.mjs', reason: 'display: gallery hi-res fields' },
   { file: 'scripts/workers/generate-thumbnails.mjs', reason: 'display: page thumbnails' },
   { file: 'scripts/audit/pipeline-hold-drift.mjs', reason: 'read-only audit; imports hold/chained constants whose modules also export writers' },
+  { file: 'scripts/workers/sync-books-catalog.mjs', reason: 'mirror: reads books, writes only the Supabase books_catalog mirror (#5288); imports catalogTranslationColumns() from page-counts.mjs, whose module also exports writers' },
   { file: 'scripts/maintenance/daily-digest.mjs', reason: 'read-only digest (#5441): reads usage stores, runs and logs, sends one message; imports RUNS_COLLECTION from translate-batch-seam.mjs, whose module also exports writers' },
   { file: 'scripts/audit/pipeline-next-step-audit.mjs', reason: 'read-only audit of books.pipeline_next (#5478); writes only its ops_reports row; imports nextStep() from pipeline-next-step.mjs, whose module also exports writers' },
   { file: 'scripts/audit/routing-drift.mjs', reason: 'read-only audit of DECISIONS.md against the routers (#5871); opens no database; imports the translation router from translate-core.mjs, whose module also exports writers' },
