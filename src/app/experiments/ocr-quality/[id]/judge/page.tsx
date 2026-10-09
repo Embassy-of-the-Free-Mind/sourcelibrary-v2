@@ -257,7 +257,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           <textarea
             value={reasoning}
             onChange={e => setReasoning(e.target.value)}
-            placeholder="Notes on your judgment (optional) — what made one better?"
+            placeholder="Notes on your judgment (optional): what made one better?"
             rows={2}
             className="w-full px-3 py-2.5 text-base border border-border-medium rounded-lg bg-white resize-y leading-relaxed placeholder:text-muted"
           />

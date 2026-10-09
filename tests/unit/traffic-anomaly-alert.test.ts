@@ -20,8 +20,12 @@ import {
   SHOULD_BE_BLOCKED,
   looksLikeSharedFingerprint,
   UA_FANOUT_ADDRESSES,
+  looksLikeWalker,
+  WALKER_MIN_BOOKS,
+  TRIPWIRE_COLLECTION as WORKER_TRIPWIRE_COLLECTION,
 } from '../../scripts/workers/traffic-anomaly-alert.mjs';
 import { BLOCKED_CIDR_LIST, isBlockedNetwork } from '@/lib/blocked-networks';
+import { TRIPWIRE_COLLECTION } from '@/lib/tripwire';
 
 describe('unexpected-host detection', () => {
   it('accepts only the hosts we deliberately serve readers from', () => {
@@ -241,5 +245,27 @@ describe('shared-fingerprint (proxy pool) detection', () => {
     // reads once per address" flags readers and clears the pool. A pool
     // reading three pages per address must still fire.
     expect(looksLikeSharedFingerprint(10000, 30000, 0.5)).toBe(true);
+  });
+});
+
+// #5995 — breadth per (UA, /24). Cases are measured rows from 2026-09-22..10-06.
+describe('wide-shallow walker', () => {
+  it('flags the AS401560 fleet shape (151 books, 181 reads in a day)', () => {
+    expect(looksLikeWalker(181, 151)).toBe(true);
+  });
+  it('flags the WARP walker (193 books, 221 reads)', () => {
+    expect(looksLikeWalker(221, 193)).toBe(true);
+  });
+  // Wide AND deep is a reader working through a shelf, not a walker.
+  it('does not flag a wide deep reader (68 books, 305 reads; 60 books, 920 reads)', () => {
+    expect(looksLikeWalker(305, 68)).toBe(false);
+    expect(looksLikeWalker(920, 60)).toBe(false);
+  });
+  // The reader p99.9 is 26 books/day: below the floor, shape is not judged at all.
+  it('does not judge breadth below the floor, however shallow', () => {
+    expect(looksLikeWalker(WALKER_MIN_BOOKS - 1, WALKER_MIN_BOOKS - 1)).toBe(false);
+  });
+  it('reads the same tripwire collection the route writes', () => {
+    expect(WORKER_TRIPWIRE_COLLECTION).toBe(TRIPWIRE_COLLECTION);
   });
 });

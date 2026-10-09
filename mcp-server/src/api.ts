@@ -114,14 +114,17 @@ export async function shareFindings(args: {
 }
 
 export async function checkDuplicate(args: {
-  title: string;
+  title?: string;
+  url?: string;
   author?: string;
   year?: string;
   language?: string;
   ia_id?: string;
   manifest?: string;
 }) {
-  const params = new URLSearchParams({ title: args.title });
+  const params = new URLSearchParams();
+  if (args.title) params.set("title", args.title);
+  if (args.url) params.set("url", args.url);
   if (args.author) params.set("author", args.author);
   if (args.year) params.set("year", args.year);
   if (args.language) params.set("language", args.language);
@@ -133,7 +136,10 @@ export async function checkDuplicate(args: {
   return {
     isDuplicate: result.isDuplicate,
     confidence: result.confidence,
+    verdict: result.verdict,
     suggestion: result.suggestion,
+    held_not_public: result.held_not_public,
+    limits: result.limits,
     matches: (result.matches as Array<Record<string, unknown>>)?.map((m) => ({
       book_id: m.book_id,
       title: m.title,
@@ -142,6 +148,7 @@ export async function checkDuplicate(args: {
       language: m.language,
       year: m.year,
       match_type: m.match_type,
+      reason: m.reason,
       confidence: m.confidence,
       similarity: m.similarity,
       url: m.url,

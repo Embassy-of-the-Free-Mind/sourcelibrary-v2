@@ -25,7 +25,7 @@ const ROOT = path.resolve(__dirname, '../..');
  * cannot grow silently — a new entry here is a decision, not an accident.
  *
  * They do not agree with each other today, which is the whole point:
- *   0.075 / 0.30  enrich-worker (OCR),  src/lib/ai.ts
+ *   0.075 / 0.30  src/lib/ai.ts  (enrich-worker moved to the logger's table, #2141)
  *   0.25  / 1.50  translate-worker,     src/lib/gemini-logger.ts,
  *                 batch-collector, supabase-usage-logger,
  *                 reconcile-batch-usage, backfill-batch-costs
@@ -39,7 +39,6 @@ const ALLOWED = new Set([
   'scripts/workers/lib/supabase-usage-logger.mjs',
   'scripts/maintenance/reconcile-batch-usage.mjs',
   'scripts/maintenance/backfill-batch-costs.mjs',
-  'scripts/workers/enrich-worker.mjs',
   'scripts/workers/translate-worker.mjs',
   'src/lib/ai.ts',
   'src/lib/gemini-logger.ts',

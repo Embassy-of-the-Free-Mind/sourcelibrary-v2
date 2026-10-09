@@ -1,0 +1,6608 @@
+{
+ "fallbacks": 128,
+ "scored": 1008,
+ "cost_usd": 2.1348254999999985,
+ "calls": 390,
+ "by_arm_calls": {
+  "F0": 30,
+  "F1": 150,
+  "L1": 150,
+  "P1": 60
+ },
+ "tables": {
+  "F0 (served config) wrong → F1 samples": {
+   "conf": 3,
+   "unc": 10,
+   "rightAll": 4,
+   "n": 17
+  },
+  "stored served Flash wrong → F1 samples": {
+   "conf": 3,
+   "unc": 18,
+   "rightAll": 3,
+   "n": 24
+  },
+  "L1 majority wrong → L1 samples": {
+   "conf": 3,
+   "unc": 16,
+   "rightAll": 0,
+   "n": 19
+  },
+  "Pro majority wrong → Pro reads": {
+   "conf": 1,
+   "unc": 3,
+   "rightAll": 0,
+   "n": 4
+  },
+  "F1 disagreement → F0 wrong [all]": {
+   "tp": 10,
+   "fp": 20,
+   "pos": 17,
+   "n": 63,
+   "auc": 0.5671355498721228
+  },
+  "F1 disagreement → F0 wrong [control]": {
+   "tp": 2,
+   "fp": 4,
+   "pos": 2,
+   "n": 27,
+   "auc": 0.92
+  },
+  "F1 disagreement → stored served Flash wrong [all]": {
+   "tp": 18,
+   "fp": 12,
+   "pos": 24,
+   "n": 63,
+   "auc": 0.7382478632478633
+  },
+  "F1 disagreement → stored served Flash wrong [control]": {
+   "tp": 2,
+   "fp": 4,
+   "pos": 2,
+   "n": 27,
+   "auc": 0.92
+  },
+  "F1 disagreement → F1 majority wrong [all]": {
+   "tp": 18,
+   "fp": 12,
+   "pos": 22,
+   "n": 63,
+   "auc": 0.8309312638580931
+  },
+  "F1 disagreement → F1 majority wrong [control]": {
+   "tp": 2,
+   "fp": 4,
+   "pos": 2,
+   "n": 27,
+   "auc": 0.92
+  },
+  "L1 disagreement → L1 majority wrong [all]": {
+   "tp": 16,
+   "fp": 11,
+   "pos": 19,
+   "n": 63,
+   "auc": 0.8642344497607656
+  },
+  "L1 disagreement → L1 majority wrong [control]": {
+   "tp": 1,
+   "fp": 4,
+   "pos": 2,
+   "n": 27,
+   "auc": 0.71
+  },
+  "Pro (3 reads) disagreement → stored served Flash wrong [all]": {
+   "tp": 6,
+   "fp": 6,
+   "pos": 24,
+   "n": 63,
+   "auc": 0.5480769230769231
+  },
+  "Pro (3 reads) disagreement → stored served Flash wrong [control]": {
+   "tp": 0,
+   "fp": 0,
+   "pos": 2,
+   "n": 27,
+   "auc": 0.5
+  },
+  "phi Flash T1 sample i vs j": {
+   "all": {
+    "phi": 0.5470048288235942,
+    "cond": 0.6399942163100059,
+    "pairs": 10
+   },
+   "control": {
+    "phi": 0.4210449197383041,
+    "cond": 0.4666666666666667,
+    "pairs": 10
+   }
+  },
+  "phi lite T1 sample i vs j": {
+   "all": {
+    "phi": 0.6124529020503843,
+    "cond": 0.7400793650793651,
+    "pairs": 10
+   },
+   "control": {
+    "phi": 0.5511375548879434,
+    "cond": 0.6833333333333333,
+    "pairs": 10
+   }
+  },
+  "phi Pro read i vs j": {
+   "all": {
+    "phi": 0.26365051381505483,
+    "cond": 0.2936507936507936,
+    "pairs": 3
+   },
+   "control": {
+    "phi": null,
+    "cond": null,
+    "pairs": 3
+   }
+  },
+  "phi Flash vs lite (T1, sample i vs i)": {
+   "all": {
+    "phi": 0.2251821956294787,
+    "cond": 0.46882591093117404,
+    "pairs": 5
+   },
+   "control": {
+    "phi": 0.3181615492385551,
+    "cond": 0.3833333333333333,
+    "pairs": 5
+   }
+  },
+  "phi Flash vs Pro": {
+   "all": {
+    "phi": 0.08604983776389144,
+    "cond": 0.12950485187327293,
+    "pairs": 15
+   },
+   "control": {
+    "phi": null,
+    "cond": 0,
+    "pairs": 15
+   }
+  },
+  "phi lite vs Pro": {
+   "all": {
+    "phi": 0.2316619851219244,
+    "cond": 0.19650793650793652,
+    "pairs": 15
+   },
+   "control": {
+    "phi": null,
+    "cond": 0,
+    "pairs": 15
+   }
+  }
+ },
+ "per_slot": [
+  {
+   "id": "d00",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 760,
+   "print": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तदेतदस्मरणमकारणमननुभूताभावसिद्धये",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तदेतदस्मरणकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदेतदस्मरणमकारणमनुभूताभावसिद्धये",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d01",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 300,
+   "print": "तदयुक्तम्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तद्युक्तम्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तदयुक्तम्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d02",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 300,
+   "print": "कारणभेदप्रतिनियमोऽस्ति",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "कारणभेदप्रतिनियमोऽस्ति",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "कारणभेदाप्रतिनियमोऽस्ति",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "कारणभेदप्रतिनियमोऽस्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदप्रतिनियमोऽस्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदप्रतिनियमोऽस्ति",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "कारणभेदनिययमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रनिनियमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदाप्रतिनियमोऽस्ति",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनिचयोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनिियमोऽस्ति",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "कारणभेदाप्रतियमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनयमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनयमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदाप्रतियमोऽस्ति",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतियनमोऽस्ति",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "कारणभेदप्रतिनियमोऽस्ति",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d03",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 206,
+   "print": "अतश्चानुपलम्भादाकरे",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादकरे",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादाधकरे",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "अतश्चानुपलम्भादाकरे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अतश्चानुपलम्भादपरे",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d04",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 432,
+   "print": "प्रासादमालादिषु",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "प्रासाद्मालादिषु",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "प्रासाद्मालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रासादमालादिषु",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रासादालादिषु",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "प्रासादालादिषु",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d05",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 432,
+   "print": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "महदादिप्रत्ययप्रसूतिर्नुभूयते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "महत्त्वादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "महदादिप्रत्ययप्रसूतिःनुभूयते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "महत्त्वादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "महत्त्वादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "महद्रादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "महत्त्वादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "महदादिप्रत्ययप्रसक्तिरनुभूयते",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादिप्रत्ययप्रसूतिरनुभूयते",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d06",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 601,
+   "print": "हेतोरभिव्यनक्ति",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "हेतोरभिव्यक्ति",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "हेतोरभिधत्ते",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतोरभिव्यनक्ति",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d08",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 91,
+   "print": "सकल्पनत्वाच्च",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "सकल्पनत्वाच्च",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "सकल्पत्वाच्च",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "सकल्पनत्वाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सकल्पनत्वाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सकल्पनत्वाच्च",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "सकल्पनत्वाच्च",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "सकल्पनात्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पनात्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पनात्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पनात्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पनात्वाच्च",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "सकल्पतत्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पतत्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पत्वाच्च",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सकलपत्वाच्च",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सकल्पत्वाच्च",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d09",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 194,
+   "print": "प्रमाणान्तरापेक्षायामनवस्था",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "प्रमाणान्तरपेक्षायामनवस्था",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "प्रमाणान्तरपेक्षायामनवस्था",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "प्रमाणान्तरपेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रमाणान्तरपेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रमाणान्तरपेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणान्तरापेक्षायामनवस्था",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d10",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 194,
+   "print": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "प्रतिषिद्धत्वाद्यथाभूतसाधनम्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "प्रतिषिद्धत्वाद्यथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रतिषिद्धत्वाद्यथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतिषिद्धत्वादयथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रतिषिद्धत्वाद्यथाभूतसाधनम्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "प्रतिषिद्धत्वाद्यथाभूतसाधनम्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d11",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 259,
+   "print": "ज्ञानमप्रतिघं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिघं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञानमप्रतिघं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिधं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिघं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ज्ञानप्रतिघं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d12",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 155,
+   "print": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+   "conf": "likely",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यास्मिन्संस्कृते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यास्मिन्नसस्कृते",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्याप्यस्मिन्नसस्कृते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यासिमन्नसस्कृते",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यासिमसंस्कृते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यासिमसंस्कृत",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यास्मिन्संस्कृते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यास्मिन्संस्कृते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "निरोधसत्यस्यासिमसंस्कृते",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "निरोधसत्यस्यास्मिन्नसंस्कृते",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d13",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 154,
+   "print": "अवस्थातुरव्यतिरेकात्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "अवस्थातुर्व्यतिरेकात्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "े",
+      "fallback": true
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "े",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "े",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "े",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "े",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "अवस्थातरव्यतिरेकात्",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ुव्य",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "अवस्थातुरव्यतिरेकात्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d14",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 166,
+   "print": "सत्यार्थं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "सत्यर्थं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "सत्यर्थं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सत्यं",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "सत्यार्थं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "सत्यर्थं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सत्यर्थं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सत्यर्थं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सतार्यं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सतार्यं",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d15",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 724,
+   "print": "नचैवमिह",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नचैवामिह",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नचैवमिह",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d16",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 446,
+   "print": "कार्यत्वान्यत्वलेशे",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "कार्यत्वानन्यत्वलेशे",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "कार्यत्वान्यत्वलेशे",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "कार्यत्वान्यत्वलेशे",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भारत",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यत्वानत्वलेशो",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यत्वान्त्यत्वलेशे",
+      "fallback": true
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "कार्यत्वान्त्वलेशे",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यत्वानन्त्यलेशो",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यादीनामभाश",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "कार्यत्वान्त्वलेशे",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d17",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 193,
+   "print": "पूर्वस्वभावात्यागेन",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "पूर्वस्वभावत्यागेन",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "पूर्वस्वभावत्यागेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "पूर्वस्वभावत्यागेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "पूर्वस्वभावत्यागेन",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "पूर्वस्वभावात्त्वगेन",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "पूर्वस्वभावात्ययेन",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "पूर्वस्वभावात्ययेन",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "पूर्वस्वभावात्यागेन",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d18",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 430,
+   "print": "ज्ञातरि",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "ज्ञातारि",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "ज्ञातारि",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "ज्ञातरी",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ज्ञातारि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ज्ञातारि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ज्ञातरि",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d19",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 766,
+   "print": "भावाभावाविपर्ययस्तत्तस्य",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भावाभावाविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भावाभावविपर्ययस्तत्तस्य",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d20",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 133,
+   "print": "शक्तिरवस्थिता",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "शक्तिरवास्थिता",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "शक्तिर्व्यवस्था",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "शक्तिर्व्यवस्था",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "शक्तिरत्रस्थिता",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "शक्तिरत्रस्थिता",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "शक्तिरवस्थिता",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "शक्तिरबस्थिता",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d21",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 648,
+   "print": "लिङ्गमिष्टं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "लिङ्गममिष्टं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "लिङ्गमष्टं",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "लिङ्गममिष्टं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "लिङ्गमिष्टं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d22",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 259,
+   "print": "घतोच्यते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "घातोच्यते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "घातोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "घतोच्यते",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d23",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 234,
+   "print": "सक्रियमनेकमाश्रितं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "सक्रियमनेकमाश्रितं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "सक्रियमनेकमाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सक्रियमनेकमाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमनेमाश्रितं",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "सक्रियमनेकमनाश्रितं",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "सकियमनेकमाश्रितं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "सक्रियमेकमाश्रितं",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "सक्रियमनेकमाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमेकमाश्रितं",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "सक्रियमनेकमाश्रितं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "सक्रियमनेकाश्रितं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d24",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 344,
+   "print": "नाथानां",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "नाथां",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नाथां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाथानां",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d25",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 243,
+   "print": "व्यापकानुपलब्धिः",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "व्यापकनुपलब्धिः",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "व्यापकानुपलब्धिः",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d26",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 391,
+   "print": "तानुपाश्रित्य",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "तानुपश्रित्य",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नुपाश्रित्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "तानुपाम्रित्य",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "तानुप्राश्रित्य",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "तानुपाम्रित्य",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तानुपाम्रित्य",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तातुपाश्रिलय",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "तातुपाश्रिलय",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "तानुपाश्रित्य",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d27",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 204,
+   "print": "दाहपाकनिर्भासि",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "दाहपाकिनिर्भासि",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "दाहपाकानिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "दाहपाकिनिर्भासि",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "दाहपाकनिर्भासि",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d28",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 403,
+   "print": "नोचेदणूत्पादकमिष्यते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नोचेदणूत्पादकमिष्यते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नोचेदणूत्पादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोचेदणूत्पादकमिष्यते",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "नोचेदणूपपादकमिष्यते",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "नोचेदणूत्पादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूतपादकमिष्यते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूपपादकमिष्यते",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "नोचेदणूपपादकमिष्यते",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d29",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 167,
+   "print": "नानाकारावभासा",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "नानाकारवभासा",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नानाकारवभासा",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नानाकरावभासा",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "नानाकारविभासा",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नानाकारावभासा",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d31",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 174,
+   "print": "ब्रह्मानेकं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "ब्रह्मनेकं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "ब्रह्लानेकं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ब्रह्मनेकं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ब्रह्मनेकं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "ब्रह्मानेकं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "ब्रह्मणैकं",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "ब्रह्मानैकं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ब्रह्यानैकं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ब्रह्मानैकं",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ब्रह्मानें",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "ब्रह्वानैकं",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "d32",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 284,
+   "print": "नाशोत्पादासमालीढं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "नाशोत्पादसमालीढं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नाशोत्पादासमालीढं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "न्येऽपीतिसाध्यार्थविषयज्ञानव्यतिरेकिणोराजीवकेसरादयःनियतजन्मतइतिनियतपदार्थसन्निधानेसतीतिशेषःप्रयोगःयेनियतपदार्थसन्निधानेसतिनियतजन्मानस्तेसहेतुकाःयथाभवत्साधनसन्निधानभाविसाध्यार्थविषयंज्ञानम्तथाचराजीवादयोभावाइतिस्वभावहेतुःइतिस्वाभाविकवादपरीक्षानाशोत्पादेत्यादिनाशब्दब्रह्मवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "न्येऽपीतिसाध्यार्थविषयज्ञानव्यतिरेकिणोराजीबकेसरादयःनियतजन्मतइतिनियतपदार्थसन्निधानेसतीतिशेषःप्रयोगःयेनियतपदार्थसन्निधानेसतिनियतजन्मानस्तेसहेतुकाःयथाभवरसाधनसन्निधानभाविभाव्यार्थविषयंज्ञानम्तथाचराजीवादयोभावाइतिस्वभावहेतुःइतिस्वाभाविकवादपरीक्षानाशोत्पादेत्यादिनाशब्दब्रह्मवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "न्येऽपीतिसाध्यार्थविषयज्ञानव्यतिरेकिणोराजीवकेसरादयःनियतजन्मतइतिनियतपदार्थसन्निधानेसतीतिशेषःप्रयोगःयेनियतपदार्थसन्निधानेसतिनियतजन्मानस्तेसहेतुकाःयथाभवत्साधनसन्निधानभाविसाध्यार्थविषयंज्ञानम्तथाचराजीवादयोभावाइतिस्वभावहेतुःइतिस्वाभाविकवादपरीक्षानाशोत्पादेत्यादिनाशब्दब्रह्मवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नाइोत्पादासमालीढं",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "नाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नाशोत्पादसमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाशोत्पादासमालीढं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नियतजन्मतइतिनियतपदार्थसन्निधानेसतीतिशेषःप्रयोगःयेनियतपदार्थसन्निधानेसतिनियतजन्मानस्तेसहेतुकाःयथाभवत्साधनसन्निधानभाविसाध्यार्थविषयंज्ञानम्तथाचराजीवदयोभावाइतिस्वभावहेतुःइतिस्वाभाविकवादपरीक्षानाशोत्पादादिनाशब्दमयलवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाशोत्पादादिनाशब्दमपिवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियतजन्मतइतिनियतपदार्थसन्निधानेसतीतिशेषःप्रयोगःयेनियतपदार्थसन्निधानेसतिनियतजन्मानस्तेसहेतुकाःयथाभवत्साधनसन्निधानभाविमाप्यार्थविषयंज्ञानम्तथाचराजीवदयोभावाइतिस्वभावहेतुःइतिस्वाभाविकवादपरीक्षानाशोत्पादादिनाशब्दमव्यवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाशोत्पादादिनाशब्दब्रह्मवादिनोश्रूयतेनाशोत्पादासमालीढं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नाशोत्पादादीनाशब्दमद्यवादिनोब्रुवतेनाशोत्पादासमालीढं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नाशोत्पादासमालीढं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d33",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 521,
+   "print": "भवन्मतेन",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "भवन्मतेन",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "भवन्मतेन",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "भवन्मतेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भवन्मतेन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "भवन्मतेन",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "भवनमेतेन",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भवनमेतेन",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "भवनमतेन",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d34",
+   "kind": "disputed",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 752,
+   "print": "नियोगाभावप्रसङ्गाच्च",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "नियोगभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": false,
+      "span": "नियोगभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नियोगभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "नियोगभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नियोगाभावप्रसङ्गात्",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "नियोगभावप्रसङ्गात्",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "नियोगाभावप्रसङ्गाच्च",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d35",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 284,
+   "print": "सन्दिग्धासिद्धतेति",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "सन्दिग्धसिद्धतेति",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "सन्दिग्धसिद्धतेति",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सन्दिग्धासिद्धतेति",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d36",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 284,
+   "print": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "संभाव्यमानत्वात्सन्दिग्धसिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "संभाव्यमानत्वात्सन्दिग्धसिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सम्भाव्यमानत्वासन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादिलस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सम्भाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "संभाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सम्भाव्यमानत्वात्सन्दिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c37",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 154,
+   "print": "यदेकयोगक्षेमं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "यदेकयोगक्षेमं",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "c38",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 166,
+   "print": "स्यादन्योऽप्यागमोऽकृतः",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "स्यादन्योऽप्यागमोरकृतः",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "स्यादन्योऽप्यागमौऽकृतः",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "स्यादन्योऽप्यागमोऽकृतः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "स्यादन्योऽप्यागमोग्नतःतथापौरुषेयत्वमस्यसाधयितुमतच्चनसिद्धम्किंतर्हिअनादित्वमात्रमनिष्टमेवसिद्ध्यतिस्यादेतत्अनादित्वेसिद्धेसामर्थ्यादकृतक",
+      "fallback": true
+     },
+     {
+      "right": false,
+      "span": "स्यादन्योऽप्यागमोऽकृत",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "c40",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 430,
+   "print": "चैत्रज्ञानं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "चैत्रज्ञानं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c41",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 133,
+   "print": "एकस्यैव",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "एकस्यैव",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c42",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 259,
+   "print": "तत्सर्वार्थगोचरम्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तत्सर्वार्थगोचरम्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c43",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 344,
+   "print": "बुद्धानामुपदेशनम्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्धानामुपदेशनम्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c44",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 391,
+   "print": "तादृगेव",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "ृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तादृगेव",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c46",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 300,
+   "print": "मार्गदोषयोः",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "मार्गदोषयोः",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c47",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 91,
+   "print": "मिथ्यात्वहेतुरज्ञात",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मिथ्यात्वहेतुरज्ञात",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "मिथ्यात्वहेतुर्ज्ञात",
+      "fallback": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "c48",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 194,
+   "print": "प्रमाणमिथ्यात्वं",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रमाणमिथ्यात्वं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c49",
+   "kind": "control",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 284,
+   "print": "हेतुर्नापि",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "हेतुर्नापि",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c50",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 724,
+   "print": "मन्तव्यमध्वभेदः",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "मन्तव्यमध्यभेदः",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "मन्तव्यमध्वभेदः",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c51",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 193,
+   "print": "कारित्रस्येव",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "कारित्रस्येव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारित्रस्येव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारित्रस्येव",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारित्रस्येव",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारित्रस्यैव",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c53",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 648,
+   "print": "तल्लौकिकाभ्यनुज्ञाते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "तल्लोकिकाम्यनुज्ञाते",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तल्लौकिकाभ्यनुज्ञाते",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c54",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 234,
+   "print": "महदादयः",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": false,
+      "span": "महदादय",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "महदादय",
+      "fallback": true
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "महदादयः",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c55",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 243,
+   "print": "नास्तीति",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नास्तीति",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c56",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 403,
+   "print": "गुणावयवभेदवान्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "गुणाद्यवयवभेदवान्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": false,
+      "span": "गुणाद्यवयवभेदवान्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "गुणाचवयवभेदवान्",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "गुणावयवभेदवान्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c57",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 167,
+   "print": "माध्यमिकवादिन",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिनं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिनं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "माध्यमिकवादिनं",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c59",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 760,
+   "print": "सत्यप्यनुभवे",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "सत्यप्यनुभवे",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c60",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 206,
+   "print": "कुमारिलस्यैव",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कुमारिलस्यैव",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c61",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 432,
+   "print": "नोपचारस्य",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "नोपचारस्य",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c62",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 601,
+   "print": "बुद्ध्या",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "बुद्ध्याऽ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्याऽ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्याऽ",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "बुद्ध्याऽ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "बुद्ध्या",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c63",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 155,
+   "print": "यद्यप्यय",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "यद्यप्यथ",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "यद्यप्यस्य",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "यद्यप्यय",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c64",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 174,
+   "print": "यदीष्यते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "यदीष्यते",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c65",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 284,
+   "print": "प्रतीयते",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "प्रतीयते",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "प्रतीयतेस्वाभाविकजगद्वादस्वाभाविकवादशब्दब्रह्मवादअनुमानहेतुज्ञापककारकनाशउत्पादअनादिनिधनब्रह्म",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रतीयतेपूर्वापरविभागराहितमनुत्पन्नमविनाशियच्छब्दमयंब्रह्मतस्यायंरूपादिभावग्रामःपरिणामइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्त्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतितत्रआदिःउत्पादःनिधनम्नाशःतदभावादनादिनिधनम्अक्षरमितिअकाराद्यक्षरस्यनिमित्तत्वात्एतेनाभिधानरूपेणविवर्तोदर्शितःअर्थभावेनेत्यादिनापुनरभिधेयविवर्तःप्रक्रियेतिभेदाःब्रह्मेतिनामसंकीर्तनम्अस्यैवश्लोकस्यार्थंनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादग्रहणमुपलक्षणम्इदमप्यत्रबोद्धव्यम्पूर्वापरदेशविभागराहितमितितथाहिअनादिनिधनत्वंपूर्वापरदेशविभागराहित्यादवगतीएवनिर्दिष्टम्शब्दमयमितिशब्दस्वभावम्अतएवशब्दतत्त्वमस्यशब्दतत्त्वं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेपूर्वापरविभागरहितमनुत्पन्नमविनाशियच्छब्दमयंब्रह्मतस्यायंरूपादिर्भावग्रामःपरिणामइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्त्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतितत्रआदिःउत्पादःनिधनम्नाशःतदभावादनादिनिधनम्अक्षरमितिअकाराद्यक्षरस्यनिमित्तत्वात्एतेनानिपातरूपेणविवर्तीदर्शितःअर्थभावेनेत्यादिनापुनरभिधेयविवर्तःप्रक्रियेतिभेदाःब्रह्मेतिनामसङ्कीर्तनम्अस्यैवश्लोकस्यार्थनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादग्रहणमुपलक्षणम्इदमप्यत्रबोद्धव्यम्पूर्वापरदेशविभागरहितमितितथाहिअनादिनिधनत्वंपूर्वापरदेशविभागरहितत्वसतीएवनिर्दिश्यतेशब्दमयमितिशब्दस्वभावम्अतएवशब्दान्वयमात्रंशब्दान्तं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेपूर्वापरविभागराहतमनुत्पन्नमविनाशियच्छब्दमयंब्रह्मतस्यायंरूपादिभावग्रामःपरिणामइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्त्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतितत्रआदिःउत्पादःनिधनम्नाशःतदभावादनादिनिधनम्अक्षरमितिअकाराद्यक्षरस्यनिमित्तत्वात्एतेनानिपातरूपेणविवक्षादर्शिताअर्थभावेनेत्यादिनापुनरभिधेयविवक्षाप्रक्रियेतिभेदाःब्रह्मेतिनामसंकीर्तनम्अस्यैवश्लोकस्यार्थंनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादग्रहणमुपलक्षणम्इदमन्यत्रबोद्धव्यम्पूर्वापरदेशविभागराहतमितितथािहअनादिनिधनत्वंपूर्वापरदेशविभागराहतत्वमपीएवनिर्दिश्यशब्दमयमितिशब्दस्वभावम्अतएवशब्दतत्त्वमन्यशब्दतत्त्वं",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "प्रतीयतेकारकज्ञापकहेतुअनुमानस्वाभाविकजगद्वादपरीक्षाशब्दब्रह्मवादिविवर्त्तअनादिनिधनम्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेकारकसहेतुकव्याप्तिस्वभावहेतुशब्दब्रह्मपरिणामअनादिनिधनविवर्त्त",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेसहेतुकप्रतिज्ञास्वभावहेतुशब्दब्रह्मपरिणामअनादिनिधनविवर्त्त",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेसहेतुकस्वाभाविकजगद्वादपरीक्षाशब्दब्रह्मवादिविवर्त्तपरिणाम",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेसहेतुकस्वभावहेतुशब्दब्रह्मवादपरिणामअनादिनिधनशब्दतत्त्व",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "प्रतीयतेपूर्वापरविभागरहितमनुत्पन्नविनाशियच्छब्दमयंब्रह्मतस्यायंरूपादिभाग्रामःपरिणामइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्त्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतिअत्रआदिःउत्पादःनिधनम्नाशःतदभावादनादिनिधनम्अक्षरमितिअकाराक्षरस्यनिमित्तत्वात्एतेनानिपातत्वेनविवर्तोदर्शितःअर्थभावेनेत्यनादिनापुनरनिषेधविशेषःप्रतिपत्तिभेदाःअत्रेतिनामसङ्कीर्तनम्अथैवश्लोकार्थंनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादमननुभवन्इत्यस्यबोधयन्पूर्वापरैरित्यादिपदार्यैरितितदादिअनादिनिधनंपूर्वार्धेनविभागादिरूपमपिएवनिर्दिष्टम्शब्दमयमितिशब्दमात्रम्अतएवशब्दब्रह्मणःशब्दमयंस्वाभाविकजगद्वादस्वाभाविकवादशब्दब्रह्मकारकज्ञापकअनुमानप्रत्यक्षादिबाधितशब्दमयलवाद",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रनीयतेपूर्वापरविभागरहितमनुत्पन्नविनाशियत्शब्दमयंब्रह्मतस्यायंरूपादिभावग्रामःपरिणामइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतिअत्रआदिःउत्पादःनिधनम्नाशःतदभावादनारिनिधनम्अक्षरमितिअकाराक्षरस्यनिमित्तत्वात्एतेनानिपातरूपेणविवक्षोदर्शितःअर्थभावेनेत्यत्रपुनर्निययविशेषःप्रतिदेतिभेदाःश्लेषेतिनामसंकीर्तनम्अथैषश्रोरुपाद्यंनिर्दिशतिनाशोत्पादासमाढीदमितिनाशोत्पादभटितमतुत्पन्नम्इत्येतच्चबौद्रपम्पूर्वपदेरितामत्त्येतितथादिअनादिनिधनंपूर्वोक्तैरनादिनिधनवन्तमौएवनित्यम्शब्दमदतिशब्दमात्रम्अतएवशब्दब्रह्मणःशब्दमयं",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रनीयतेपूर्वापरविभागरहितमनुत्पन्नमविनाशियष्टव्यमयंब्रह्मतत्पयंरूपादिमावग्रामःपरिज्ञानइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतिअत्रआदिःउत्पादःनिधनंनाशःतस्मादनादिनिधनम्अक्षरमितिअकाराक्षरस्यनिवृत्तिराम्एतेननिपातत्वेनविवर्त्तौदर्शितःअर्थभावेनेत्यनादिनापुनरनिषेधविशेषःप्रतिदेतिभेदाःप्रदेतिनामगर्भीजनम्अत्रैवश्रोरत्थंनिर्दिशतिनाशोत्पादासमालीढमितिनाशोन्मादमनुत्पन्नमनम्इममत्रबोद्धव्यम्पूर्वपरैरविभागादित्वमितितथादिअनादिनिधनंपूर्वैरविभागादित्वमपिएवनिर्दिश्यशब्दमयमितिशब्दमात्रम्अतएवशब्दमयमयशब्दत्वंस्वाभाविकजगद्वापरीक्षास्वाभाविकवादपरीक्षाशब्दब्रह्मनाशोत्पादअनादिनिधनअनुमानसाधन",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीयतेपूर्वापरविभागरहितमनुत्पन्नमविनाशियत्शब्दमयंब्रह्मतत्पार्थंरूपादिभावग्रामःपरिज्ञानइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतिअत्रआदिःउत्पादःनिधनंनाशःतदभावादनादिनिधनम्अक्षरमितिअकारान्तास्यनिधिसराम्एतेनानिपातरूपेणविवत्तौदर्शितःअर्थभावेनेत्यर्थादिनापुनरपिधेयविशेषःप्रतिदेतिभेदाःअत्रेतिनाममर्थनम्अत्रैवश्रोरत्पार्थंनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादमननुभवन्तमम्इत्यमत्रबोद्धव्यम्पूर्वपरोत्तरविभागरहितमितितदादिअनादिनिधनंपूर्वोपरविभागरहितमपीत्यविरिरिम्शब्दमदमितिशब्दमात्त्रम्अतएवशब्दममयमशब्दगतंस्वाभाविकजगद्वादस्वाभाविकवादशब्दब्रह्मअनुमानहेतुकारकज्ञापक",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीपतेपूर्वापरविभागाहितमनुत्पन्नमविनाशिषष्ट्यन्तमयंप्रज्ञसत्यांरूपदिभावग्रामःपरिज्ञानइतिप्रतीयतेयथोक्तम्अनादिनिधनंब्रह्मशब्दतत्वंयदक्षरम्विवर्ततेऽर्थभावेनप्रक्रियाजगतोयतःइतिअत्रआदिःउत्पादःनिधनंनाशःयस्मादादिरनादिनिधनम्अक्षरमितिअकारप्रभृत्यविनिश्चितम्एतेनानिपातत्वेनविषयोदर्शितःअर्थभावेनेतिसनास्तिपुनरपिधयविशेषःप्रतिदेतिभेदाःअत्रेतिनामसङ्कीर्तनम्अत्रैवश्लोकमेवनिर्दिशतिनाशोत्पादासमालीढमितिनाशोत्पादाभ्यामनुपलक्षितम्इत्यत्रैवबौद्धम्पूर्वपदेरिताभ्यादरतीतितथादिअनादिनिधनंपूर्वापरैदवमागतदेहादादीएवनिर्दिश्यशब्दमदमितिशब्दमात्रम्अतएवशब्दब्रह्मणःशब्दमयंस्वाभाविकजगद्वादस्वाभाविकवादशब्दब्रह्मनाशउत्पादहेतुज्ञापककारक",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "प्रतीयतेकारकज्ञापकसहेतुकस्वाभाविकजगद्वादपरीक्षाशब्दब्रह्मपरिणामविवर्तअनादिनिधन",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c66",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 521,
+   "print": "तस्याभावस्यासिद्धौ",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "",
+      "fallback": true
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "तस्याभावस्यासिद्धौ",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "c67",
+   "kind": "control",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page": 752,
+   "print": "प्रतीतिप्रसङ्गात्",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "प्रतीतिप्रसङ्गात्",
+      "fallback": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "d68",
+   "kind": "disputed",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page": 300,
+   "print": "कारणभेदाप्रतिनियमान्न",
+   "conf": "sure",
+   "reads": {
+    "Fs": [
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनियमान्न",
+      "fallback": false
+     }
+    ],
+    "Ls": [
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     }
+    ],
+    "P": [
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     }
+    ],
+    "F1": [
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनिियमान्न",
+      "fallback": true
+     }
+    ],
+    "L1": [
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     },
+     {
+      "right": false,
+      "span": "कारणभेदात्प्रतियमानं",
+      "fallback": true
+     }
+    ],
+    "F0": [
+     {
+      "right": true,
+      "span": "कारणभेदाप्रतिनियमान्न",
+      "fallback": false
+     }
+    ]
+   }
+  }
+ ]
+}

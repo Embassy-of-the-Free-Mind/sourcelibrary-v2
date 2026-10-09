@@ -140,7 +140,7 @@ export function ReviewClient({ initialItems, counts }: { initialItems: ReviewIte
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto', color: C.text }}>
-      <h1 style={{ fontSize: 24, margin: '0 0 6px' }}>About This Book — summary review</h1>
+      <h1 style={{ fontSize: 24, margin: '0 0 6px' }}>About This Book: summary review</h1>
       <div style={{ color: C.dim, fontSize: 14, marginBottom: 20 }}>
         Live text (left) vs re-synthesized candidate (right, editable). Approve promotes to live and revalidates the page; reject discards.
         {' '}Queue: <strong style={{ color: C.text }}>{counts.pending ?? 0}</strong> pending

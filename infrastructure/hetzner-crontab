@@ -88,6 +88,11 @@
 
 # ── Maintenance ──
 
+# Decision queue drainer (#6258): acts on PR answers from /platform/admin/decisions
+# (every 5 min). Default → safe-merge.sh (one merge per run, main tip ≥ 8 min old);
+# Other → PR comment + `blocked`. Uses this box's gh auth; reads/writes decision_answers.
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-decisions.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/decision-answers-drain.mjs" >> /var/log/sourcelibrary/decisions-drain.log 2>&1
+
 # Pipeline health alert: every 4h (catches translation stalls, orphan states)
 0 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
@@ -143,13 +148,15 @@
 # scripts/maintenance/clip-index-repair.mjs). READ-ONLY.
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
 
-# Site search index (#1180, weekly Sunday 00:20): re-embed the blog, collection intros,
-# editorial pages and the tool registry (src/lib/site-features.json) into site_pages.
-# Hash-diffed, so a week's edits cost fractions of a cent. Asks the dial; scheduled just
+# Site search index (#1180, #5945; daily 00:20): re-index every public page — the static
+# routes in src/app, the sitemap's pages, collections, author pages and the tool registry
+# (src/lib/site-features.json) — into site_pages, with the names each answers to. Daily,
+# not weekly: a collection published on a Monday was unfindable by name until Sunday.
+# Hash-diffed, so a day's edits cost fractions of a cent. Asks the dial; scheduled just
 # after the daily meter resets because OCR/translation spend the dial before morning and
 # an embedder that runs later is refused every day (#4865). Tell it has regressed: the
-# log says "CEILING REACHED" or site_pages' newest indexed_at is more than a week old.
-20 0 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
+# log says "CEILING REACHED" or site_pages' newest indexed_at is more than two days old.
+20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
 
 # warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 
@@ -169,3 +176,8 @@
 
 # Catalog CSV snapshot: weekly static export to R2 (Sunday 4am)
 0 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-catalog-csv.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/catalog-csv-snapshot.mjs" >> /var/log/sourcelibrary/catalog-csv.log 2>&1
+
+# Daily digest (#5441): ONE message a day to Derek — yesterday's spend vs the dial by lane, jobs on the box,
+# DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
+# GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
+30 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/daily-digest.mjs ] && flock -n /tmp/sl-daily-digest.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/daily-digest.mjs" >> /var/log/sourcelibrary/daily-digest.log 2>&1

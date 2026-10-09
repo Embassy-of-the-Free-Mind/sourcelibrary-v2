@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
-import { generateApiKey } from '@/lib/dataset/api-keys';
-import { DatasetTier, DATASET_TIERS } from '@/lib/dataset/types';
-import { sendApiKeyEmail } from '@/lib/membership-email';
+import { reviewKeyRequest } from '@/lib/dataset/api-key-review';
 import { getDb } from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
 
 /**
  * GET /api/admin/api-key-requests — List key requests
@@ -55,91 +52,20 @@ export const POST = withAdminAuth(async (request: NextRequest, session) => {
     );
   }
 
-  let objectId: ObjectId;
-  try {
-    objectId = new ObjectId(request_id);
-  } catch {
-    return NextResponse.json({ error: 'Invalid request_id' }, { status: 400 });
-  }
-
-  const keyRequest = await db.collection('api_key_requests').findOne({
-    _id: objectId,
-    status: 'pending',
-  });
-
-  if (!keyRequest) {
-    return NextResponse.json(
-      { error: 'Request not found or already reviewed' },
-      { status: 404 },
-    );
-  }
-
-  const reviewedBy = session.user?.email || 'admin';
-
-  if (action === 'deny') {
-    await db.collection('api_key_requests').updateOne(
-      { _id: objectId },
-      {
-        $set: {
-          status: 'denied',
-          reviewed_at: new Date(),
-          reviewed_by: reviewedBy,
-          notes: notes || null,
-        },
-      },
-    );
-    return NextResponse.json({ status: 'denied', request_id });
-  }
-
-  // Approve — mint the key
-  const selectedTier: DatasetTier = tier || keyRequest.requested_tier || 'full';
-  if (!DATASET_TIERS[selectedTier]) {
-    return NextResponse.json(
-      { error: `Invalid tier: ${selectedTier}` },
-      { status: 400 },
-    );
-  }
-
-  const keyName = keyRequest.organization
-    ? `${keyRequest.name} — ${keyRequest.organization}`
-    : keyRequest.name;
-
-  const { key, doc } = await generateApiKey(
-    keyRequest.email,
-    selectedTier,
-    keyName,
-  );
-
-  await db.collection('api_key_requests').updateOne(
-    { _id: objectId },
-    {
-      $set: {
-        status: 'approved',
-        reviewed_at: new Date(),
-        reviewed_by: reviewedBy,
-        approved_tier: selectedTier,
-        api_key_prefix: doc.key_prefix,
-        notes: notes || null,
-      },
-    },
-  );
-
-  // Email the key to the requester (fire-and-forget)
-  sendApiKeyEmail(
-    keyRequest.email,
-    keyRequest.name,
-    key,
-    DATASET_TIERS[selectedTier].name,
-  ).catch(err => console.error('[api-keys] Failed to send key email:', err));
+  const result = await reviewKeyRequest(db, request_id, action, session.user?.email || 'admin', { tier, notes });
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: result.code });
+  if (result.status === 'denied') return NextResponse.json({ status: 'denied', request_id });
 
   return NextResponse.json({
     status: 'approved',
     request_id,
-    key,
-    prefix: doc.key_prefix,
-    tier: selectedTier,
-    name: keyName,
-    email: keyRequest.email,
-    message: 'Key minted and emailed to the requester.',
+    key: result.key,
+    prefix: result.prefix,
+    tier: result.tier,
+    name: result.name,
+    email: result.email,
+    message: result.emailed
+      ? 'Key minted and emailed to the requester.'
+      : 'Key minted. The email was NOT sent: copy the key to the requester yourself.',
   });
 });

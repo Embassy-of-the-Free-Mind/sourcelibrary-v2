@@ -65,7 +65,7 @@ const VIEW_MODE_INIT_SCRIPT = `(function(){var d=document,c=d.cookie,h=location.
 const TRANSLATION_DOM_GUARD_SCRIPT = `(function(){if(typeof Node!=='function'||!Node.prototype)return;window.__slTranslateGuardHits=0;var r=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this){window.__slTranslateGuardHits++;return c;}return r.apply(this,arguments);};var i=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,ref){if(ref&&ref.parentNode!==this){window.__slTranslateGuardHits++;return n;}return i.apply(this,arguments);};})();(function(){window.__slStreamGuardHits=0;var K=['$RS','$RC','$RM','$RX','$RB','$RT'];for(var j=0;j<K.length;j++){(function(k){var v;try{Object.defineProperty(window,k,{configurable:true,get:function(){return v;},set:function(f){v=(typeof f==='function')?function(){try{return f.apply(this,arguments);}catch(e){window.__slStreamGuardHits++;}}:f;}});}catch(e){}})(K[j]);}})();`;
 
 export const metadata: Metadata = {
-  title: "Source Library — Ancient Texts Translated to English",
+  title: "Source Library: Ancient Texts Translated to English",
   description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
@@ -110,7 +110,7 @@ export const metadata: Metadata = {
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Digitizing and translating ancient texts',
+      alt: 'Source Library: Digitizing and translating ancient texts',
     }],
   },
   twitter: {
@@ -120,7 +120,7 @@ export const metadata: Metadata = {
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'Source Library — Digitizing and translating ancient texts',
+      alt: 'Source Library: Digitizing and translating ancient texts',
     }],
   },
 };

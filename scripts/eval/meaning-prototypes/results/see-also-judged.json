@@ -1,0 +1,2537 @@
+{
+ "note": "Blind by-eye grades (an AI reader, arm hidden) of see-also proposals for 25 seed pages, one per idea, drawn with seed 6201. 2 = states or develops the idea, 1 = touches it, 0 = not about it.",
+ "tally": {
+  "page": {
+   "grade0": 49,
+   "grade1": 17,
+   "grade2": 9
+  },
+  "concept": {
+   "grade0": 36,
+   "grade1": 26,
+   "grade2": 13
+  }
+ },
+ "proposals": [
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 2438,
+   "proposed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=58",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.7
+   },
+   "grade": 1,
+   "why": "Imagination receives from Active Intellect in waking as in sleep; dreams not stated"
+  },
+  {
+   "qid": "c23",
+   "idea": "fasting and bodily austerity as purification",
+   "seed_i": 6461,
+   "seed_url": "https://sourcelibrary.org/book/699259118812793469fe177f?page=345",
+   "proposed_i": 2005,
+   "proposed_url": "https://sourcelibrary.org/book/699067e68da6face82f779a6?page=192",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page",
+    "concept"
+   ],
+   "sim": {
+    "page": 0.721,
+    "concept": 0.822
+   },
+   "grade": 2,
+   "why": "Prescribes twelve-day graduated fast and washing to cleanse the body before the work"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 805,
+   "proposed_url": "https://sourcelibrary.org/book/6952d08677f38f6761bc5477?page=163",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.847
+   },
+   "grade": 1,
+   "why": "Ladder of knowledge and union with God; no annihilation of self"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 7463,
+   "proposed_url": "https://sourcelibrary.org/book/69e13a120dae29249d20b73f?page=70",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.828
+   },
+   "grade": 0,
+   "why": "Yogi sees Self in all beings; restless mind restrained by practice"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 44,
+   "proposed_url": "https://sourcelibrary.org/book/6985ca745eb811b263caf4d7?page=54",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.852
+   },
+   "grade": 0,
+   "why": "List of theosophical questions on angels, creation, evil, elements"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 8329,
+   "proposed_url": "https://sourcelibrary.org/book/6a26c2b0aad44c98627c5c12?page=164",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.83
+   },
+   "grade": 0,
+   "why": "Self-will separates man from God and leads to unrest and anxiety"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 4337,
+   "proposed_url": "https://sourcelibrary.org/book/69592bc6b89ab99ff513c08b?page=108",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.723
+   },
+   "grade": 2,
+   "why": "Preserving the received Principle is perfect virtue and fills a man with joy"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 7041,
+   "proposed_url": "https://sourcelibrary.org/book/6953e2ff77f38f6761beb2fa?page=136",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.691
+   },
+   "grade": 2,
+   "why": "Knowledge established in the Light (prakasha) of one's own Self"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 2350,
+   "proposed_url": "https://sourcelibrary.org/book/6953c90c77f38f6761bde04b?page=130",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.802
+   },
+   "grade": 1,
+   "why": "Quotes 'cup of Jamshid is the heart of the knower'; rest is pond anecdote"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 8129,
+   "proposed_url": "https://sourcelibrary.org/book/697e23cb32e94c72715dd0cf?page=87",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.821
+   },
+   "grade": 0,
+   "why": "Contemplating eternal Being with the soul's eye leads to union"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 9105,
+   "proposed_url": "https://sourcelibrary.org/book/6953a54c77f38f6761bcf531?page=154",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.821
+   },
+   "grade": 0,
+   "why": "Spiritual sensation divided by Adam's fall; self-control frees the mind"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 3242,
+   "proposed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=50",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.831
+   },
+   "grade": 1,
+   "why": "Things have no names; dissolve heart, each returns to root; not emptiness doctrine"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 92,
+   "proposed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=30",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.714
+   },
+   "grade": 2,
+   "why": "God is the most perfect light; man must become light"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 212,
+   "proposed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=103",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.822
+   },
+   "grade": 0,
+   "why": "Spirit of God conceived in chaos becomes universal salt body"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 3562,
+   "proposed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=47",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.838
+   },
+   "grade": 1,
+   "why": "Self-knowledge lost, inner and outer blended into unity; no divine union"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 10409,
+   "proposed_url": "https://sourcelibrary.org/book/69c4ec33a3a4a7c546ee610f?page=76",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.687
+   },
+   "grade": 0,
+   "why": "Praise of the ternary point; address to Maximilian"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 5119,
+   "proposed_url": "https://sourcelibrary.org/book/69925817ad311253224cc55e?page=200",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.824
+   },
+   "grade": 0,
+   "why": "Akasha as substratum of hearing and sound"
+  },
+  {
+   "qid": "c01",
+   "idea": "the soul's ascent through the heavens to the divine",
+   "seed_i": 2615,
+   "seed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=23",
+   "proposed_i": 1762,
+   "proposed_url": "https://sourcelibrary.org/book/69c1bb688522835be845f7d9?page=67",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.666
+   },
+   "grade": 0,
+   "why": "Prayer for mercy and praise of God"
+  },
+  {
+   "qid": "c23",
+   "idea": "fasting and bodily austerity as purification",
+   "seed_i": 6461,
+   "seed_url": "https://sourcelibrary.org/book/699259118812793469fe177f?page=345",
+   "proposed_i": 4810,
+   "proposed_url": "https://sourcelibrary.org/book/69e77ac40fc6fc955e361fcb?page=87",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.812
+   },
+   "grade": 0,
+   "why": "List of wrathful deities in a mandala"
+  },
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 5824,
+   "proposed_url": "https://sourcelibrary.org/book/6a3c5fcd879008ba7e157eb9?page=74",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.718
+   },
+   "grade": 0,
+   "why": "Zibo's death is not true death; Dharma-body eternal"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 5045,
+   "proposed_url": "https://sourcelibrary.org/book/69e7ab975f1a22ab19a9a872?page=66",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.737
+   },
+   "grade": 0,
+   "why": "Five winds and channels of the subtle body"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 1888,
+   "proposed_url": "https://sourcelibrary.org/book/69e7299ba409200ea79f0b56?page=175",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.824
+   },
+   "grade": 0,
+   "why": "Ali anecdote; embryo receives soul under stars and sun"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 518,
+   "proposed_url": "https://sourcelibrary.org/book/6a267d856c1f37c9c4f3a2c6?page=50",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.736
+   },
+   "grade": 0,
+   "why": "Three grades of prophecy: prophecy, holy spirit, bat qol"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 8737,
+   "proposed_url": "https://sourcelibrary.org/book/69942f5cb2f6748db4ac0889?page=193",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.669
+   },
+   "grade": 0,
+   "why": "Garbled Christological text on union of natures"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 10406,
+   "proposed_url": "https://sourcelibrary.org/book/69c4ec33a3a4a7c546ee610f?page=73",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.765
+   },
+   "grade": 0,
+   "why": "Point and binary constituting the ternary in the Monad"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 4861,
+   "proposed_url": "https://sourcelibrary.org/book/69b9a27576b9bab2de21b86c?page=125",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.776
+   },
+   "grade": 0,
+   "why": "Mencius on innate goodness of human nature; child at the well"
+  },
+  {
+   "qid": "c01",
+   "idea": "the soul's ascent through the heavens to the divine",
+   "seed_i": 2615,
+   "seed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=23",
+   "proposed_i": 8905,
+   "proposed_url": "https://sourcelibrary.org/book/69dbca1d1040d1d5e20a974d?page=308",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page",
+    "concept"
+   ],
+   "sim": {
+    "page": 0.643,
+    "concept": 0.842
+   },
+   "grade": 0,
+   "why": "Devils threaten a soul with hell and Lucifer"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 4879,
+   "proposed_url": "https://sourcelibrary.org/book/69b9a27576b9bab2de21b86c?page=143",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.778
+   },
+   "grade": 1,
+   "why": "Man has Buddha-nature; Universal Spirit awakens within; then unrelated parable"
+  },
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 5704,
+   "proposed_url": "https://sourcelibrary.org/book/69e788424a6785cfd60d00dc?page=105",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.825
+   },
+   "grade": 0,
+   "why": "Completion-stage illusion practice; phenomena like dreams, visions in sky"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 2974,
+   "proposed_url": "https://sourcelibrary.org/book/69935b348e28d8f4c5d3cb86?page=22",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.671
+   },
+   "grade": 0,
+   "why": "Hadith warnings against religious innovation"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 1928,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=71",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.846
+   },
+   "grade": 0,
+   "why": "Index of propositions with page references"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 75,
+   "proposed_url": "https://sourcelibrary.org/book/6985ca745eb811b263caf4d7?page=85",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.734
+   },
+   "grade": 1,
+   "why": "Four elements originate from properties of eternal nature; no mutual change"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 6720,
+   "proposed_url": "https://sourcelibrary.org/book/69906821249ce014347d5660?page=111",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.84
+   },
+   "grade": 2,
+   "why": "Brahmin dies, passes through wombs, returns to earth; previous births recounted"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 1279,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=105",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.822
+   },
+   "grade": 1,
+   "why": "Light and divine image in the mind, clouded by phantasms; mind not heart"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 7166,
+   "proposed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=21",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.697
+   },
+   "grade": 0,
+   "why": "Krishna's eightfold nature; he is source of creation"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 12097,
+   "proposed_url": "https://sourcelibrary.org/book/6993831850654cbbe2916010?page=295",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.696
+   },
+   "grade": 0,
+   "why": "Golden Verses: moral precepts on gods, parents, self-control"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 2621,
+   "proposed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=29",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.835
+   },
+   "grade": 2,
+   "why": "Where souls dwell after death: Illiyyin, Sijjin, bliss or punishment"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 8811,
+   "proposed_url": "https://sourcelibrary.org/book/6975158aa88d83c830d99e20?page=33",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.794
+   },
+   "grade": 1,
+   "why": "Man's inclinations come from internal Heaven, not external heaven or Macrocosm"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 8888,
+   "proposed_url": "https://sourcelibrary.org/book/69dbca1d1040d1d5e20a974d?page=291",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.816
+   },
+   "grade": 0,
+   "why": "Tundale's soul tortured inside a beast, then sees its angel"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 7388,
+   "proposed_url": "https://sourcelibrary.org/book/6953e30277f38f6761beb46f?page=145",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.824
+   },
+   "grade": 0,
+   "why": "Formless infinite light as Brahman-knowledge; definitions of yogi and samadhi"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 8417,
+   "proposed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=175",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.712
+   },
+   "grade": 1,
+   "why": "Heaven and earth are fire and water, so creatures are; inner fire like sun"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 8120,
+   "proposed_url": "https://sourcelibrary.org/book/697e23cb32e94c72715dd0cf?page=78",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.818
+   },
+   "grade": 1,
+   "why": "Visible world from invisible fire; four elements set in place at creation"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 6972,
+   "proposed_url": "https://sourcelibrary.org/book/69dfee8dce6bb8619e07ff55?page=115",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.841
+   },
+   "grade": 0,
+   "why": "Naropa's trials and beatings under Tilopa"
+  },
+  {
+   "qid": "c23",
+   "idea": "fasting and bodily austerity as purification",
+   "seed_i": 6461,
+   "seed_url": "https://sourcelibrary.org/book/699259118812793469fe177f?page=345",
+   "proposed_i": 5379,
+   "proposed_url": "https://sourcelibrary.org/book/69e78a8a4a6785cfd60d3a96?page=1313",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.725
+   },
+   "grade": 1,
+   "why": "Guarding periodic vows on set days brings good rebirth; garlic forbidden"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 7329,
+   "proposed_url": "https://sourcelibrary.org/book/6992d66346b85e738a0c3add?page=592",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.808
+   },
+   "grade": 2,
+   "why": "Jiva leaves body, karma is seen, goes to Yama's realm or rebirth; fragmentary"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 8877,
+   "proposed_url": "https://sourcelibrary.org/book/69dbca1d1040d1d5e20a974d?page=280",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.679
+   },
+   "grade": 1,
+   "why": "Forgive the neighbour from the heart and show mercy; colophon"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 3335,
+   "proposed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=158",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.842
+   },
+   "grade": 2,
+   "why": "One Divine Principle pervades all alike and is the soul of each"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 6031,
+   "proposed_url": "https://sourcelibrary.org/book/699258f18812793469fde889?page=183",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.71
+   },
+   "grade": 0,
+   "why": "Philological notes on Sanskrit words in a Buddha biography"
+  },
+  {
+   "qid": "c01",
+   "idea": "the soul's ascent through the heavens to the divine",
+   "seed_i": 2615,
+   "seed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=23",
+   "proposed_i": 7319,
+   "proposed_url": "https://sourcelibrary.org/book/6992d66346b85e738a0c3add?page=582",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.793
+   },
+   "grade": 0,
+   "why": "Catalogue of hells and punishments by Yama's servants"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 5800,
+   "proposed_url": "https://sourcelibrary.org/book/6a3c5fcd879008ba7e157eb9?page=50",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.733
+   },
+   "grade": 1,
+   "why": "Restraint and nurturing faculties instead of exhausting them; not non-action"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 10185,
+   "proposed_url": "https://sourcelibrary.org/book/69592fbba41e40e9146a49a7?page=169",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.715
+   },
+   "grade": 0,
+   "why": "Preface on applying quintessence to cure diseases"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 8806,
+   "proposed_url": "https://sourcelibrary.org/book/6975158aa88d83c830d99e20?page=28",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.857
+   },
+   "grade": 2,
+   "why": "Man the Microcosm made from quintessence of the whole greater world"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 4706,
+   "proposed_url": "https://sourcelibrary.org/book/69a5538cbab4924e15759ef8?page=229",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.828
+   },
+   "grade": 2,
+   "why": "Liberation is the soul's state of pure happiness and infinite knowledge"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 12073,
+   "proposed_url": "https://sourcelibrary.org/book/6952ca2e77f38f6761bc34d9?page=142",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.846
+   },
+   "grade": 0,
+   "why": "Socrates' theological types: gods cause good only and are immutable"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 1949,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=92",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.694
+   },
+   "grade": 0,
+   "why": "Distinguishing intellect from sense; God author of both"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 355,
+   "proposed_url": "https://sourcelibrary.org/book/69528662ab34727b1f04c6f8?page=863",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.701
+   },
+   "grade": 0,
+   "why": "God as Arch-Musician drawing songs toward eternity"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 3341,
+   "proposed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=164",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.819
+   },
+   "grade": 1,
+   "why": "God as soul of Chaos and of arranged Kosmos; names of God"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 1190,
+   "proposed_url": "https://sourcelibrary.org/book/69482afb914d007380634d28?page=101",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.733
+   },
+   "grade": 0,
+   "why": "Trinity compared to sun, ray, light; soul as mind, reason, sense"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 12100,
+   "proposed_url": "https://sourcelibrary.org/book/6993831850654cbbe2916010?page=298",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.814
+   },
+   "grade": 1,
+   "why": "Golden Verses end: purify, let understanding steer, become immortal god"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 8911,
+   "proposed_url": "https://sourcelibrary.org/book/69dbca1d1040d1d5e20a974d?page=314",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.815
+   },
+   "grade": 2,
+   "why": "Souls punished for a time, then led to rest; joyful field of the blessed"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 5626,
+   "proposed_url": "https://sourcelibrary.org/book/6abedf2d0f33d7676e25f375?page=36",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.862
+   },
+   "grade": 0,
+   "why": "Zen master-monk exchanges of koan phrases"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 1987,
+   "proposed_url": "https://sourcelibrary.org/book/69b6362a8ab57a1de53a73e8?page=90",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.772
+   },
+   "grade": 0,
+   "why": "Soul as invisible substance acting on the body, against deniers"
+  },
+  {
+   "qid": "c23",
+   "idea": "fasting and bodily austerity as purification",
+   "seed_i": 6461,
+   "seed_url": "https://sourcelibrary.org/book/699259118812793469fe177f?page=345",
+   "proposed_i": 4264,
+   "proposed_url": "https://sourcelibrary.org/book/6953e28477f38f6761be9922?page=325",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.706
+   },
+   "grade": 0,
+   "why": "Confucius's fastidious rules about food and wine"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 610,
+   "proposed_url": "https://sourcelibrary.org/book/69593274b91a6184ea943873?page=240",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.714
+   },
+   "grade": 0,
+   "why": "Tarot card packets matched to sefirot and divine name"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 6990,
+   "proposed_url": "https://sourcelibrary.org/book/69dfee8dce6bb8619e07ff55?page=136",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.739
+   },
+   "grade": 0,
+   "why": "Non-thought arises of itself; no effortful meditation needed"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 327,
+   "proposed_url": "https://sourcelibrary.org/book/69528662ab34727b1f04c6f8?page=835",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.719
+   },
+   "grade": 1,
+   "why": "Man united to God by love and ecstatic transformation; no annihilation stated"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 682,
+   "proposed_url": "https://sourcelibrary.org/book/6a26bf4e0e247ebad6debeb4?page=147",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.775
+   },
+   "grade": 0,
+   "why": "Polemic on whether soul is created before body; angel strikes mouth"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 2235,
+   "proposed_url": "https://sourcelibrary.org/book/69c1bb638522835be845f5c7?page=75",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.757
+   },
+   "grade": 0,
+   "why": "Garbled account of vegetative, animal, human soul 'templates'"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 9307,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e1eefd8df28f2db1045?page=69",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.797
+   },
+   "grade": 1,
+   "why": "Alchemists told to seek roots within themselves; knowledge of one's origin"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 2427,
+   "proposed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=47",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.736
+   },
+   "grade": 2,
+   "why": "Active Intellect mediates between God and the human who receives revelation"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 1914,
+   "proposed_url": "https://sourcelibrary.org/book/69e7299ba409200ea79f0b56?page=205",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.83
+   },
+   "grade": 0,
+   "why": "Fragmentary verse lines about a Sheikh, a child, a tray"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 1959,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=102",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.757
+   },
+   "grade": 0,
+   "why": "Whether the soul is divisible with the body"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 10074,
+   "proposed_url": "https://sourcelibrary.org/book/699ef9ff56e1710c66738155?page=47",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.858
+   },
+   "grade": 0,
+   "why": "Watery and oily properties in metals and plants"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 5552,
+   "proposed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=52",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.855
+   },
+   "grade": 1,
+   "why": "Buddhist calm, unmoved, free of desire; stillness as result, not way"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 919,
+   "proposed_url": "https://sourcelibrary.org/book/69b3e5b8304c1c6b39509cc0?page=235",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.715
+   },
+   "grade": 0,
+   "why": "Garbled kabbalistic text on souls, sefirot, Sabbath"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 2925,
+   "proposed_url": "https://sourcelibrary.org/book/6953dd6477f38f6761be77ad?page=299",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.827
+   },
+   "grade": 2,
+   "why": "Human perfection through virtue and rebirth leading to essential unity with God"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 6606,
+   "proposed_url": "https://sourcelibrary.org/book/6953e36477f38f6761becadf?page=112",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.727
+   },
+   "grade": 1,
+   "why": "Dangers and experiences of ascent to higher worlds; no stages laid out"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 3052,
+   "proposed_url": "https://sourcelibrary.org/book/6a1d684e013dfd9d9e18ed06?page=63",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.813
+   },
+   "grade": 1,
+   "why": "Perfected beings and their ranks, unified with the Void; not mediators explicitly"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 1265,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=91",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.869
+   },
+   "grade": 2,
+   "why": "God incomprehensible; all names denote only participations, per Dionysius"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 9242,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e18cf111105c4296fba?page=103",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.86
+   },
+   "grade": 0,
+   "why": "Job on stars as fires and waters; universe of hot and cold"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 1171,
+   "proposed_url": "https://sourcelibrary.org/book/69482afb914d007380634d28?page=82",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.739
+   },
+   "grade": 1,
+   "why": "Fourfold divisions of elements, heavens, air, earth, divinity, humanity"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 4866,
+   "proposed_url": "https://sourcelibrary.org/book/69b9a27576b9bab2de21b86c?page=130",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.742
+   },
+   "grade": 0,
+   "why": "No one is wholly sinless or wholly immoral"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 5053,
+   "proposed_url": "https://sourcelibrary.org/book/69e7ab975f1a22ab19a9a872?page=74",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.737
+   },
+   "grade": 1,
+   "why": "Five elements and how many qualities each has; mapped to lunar steps"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 1938,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=81",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.83
+   },
+   "grade": 0,
+   "why": "Index of propositions on intellect and soul"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 1949,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=92",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.73
+   },
+   "grade": 1,
+   "why": "God effector of worlds; world of matter and form; no account of origin"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 5241,
+   "proposed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=50",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.714
+   },
+   "grade": 0,
+   "why": "Karma bondage ended by renouncing desires; rebirth not mentioned"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 12101,
+   "proposed_url": "https://sourcelibrary.org/book/6993831850654cbbe2916010?page=299",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.794
+   },
+   "grade": 1,
+   "why": "Phocylides' precepts: no bloodshed, justice, honesty; not compassion or reciprocity"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 1957,
+   "proposed_url": "https://sourcelibrary.org/book/69ae67404b74f168e0c1563a?page=100",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.679
+   },
+   "grade": 1,
+   "why": "Intellect is ignorant of its first Author; ignorance nobler than knowledge"
+  },
+  {
+   "qid": "c08",
+   "idea": "the divine is beyond every name and description",
+   "seed_i": 8284,
+   "seed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=356",
+   "proposed_i": 1768,
+   "proposed_url": "https://sourcelibrary.org/book/69c1bb688522835be845f7d9?page=73",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.869
+   },
+   "grade": 1,
+   "why": "God is one, unchanging, uncontained by place; praise, not namelessness"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 4621,
+   "proposed_url": "https://sourcelibrary.org/book/69e78aab4a6785cfd60d4abf?page=53",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.78
+   },
+   "grade": 0,
+   "why": "Hidden treasure texts and their revealers"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 1267,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=93",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.776
+   },
+   "grade": 0,
+   "why": "God seen in all creatures; every man can know God"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 12024,
+   "proposed_url": "https://sourcelibrary.org/book/69d66bc14da4f8dce52f197e?page=431",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.872
+   },
+   "grade": 1,
+   "why": "Garbled Proclus: monads and return of things to their beginning"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 1068,
+   "proposed_url": "https://sourcelibrary.org/book/6953e33f77f38f6761bec67d?page=189",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.719
+   },
+   "grade": 0,
+   "why": "Glossary entries on the letter M and goddess Mut"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 1380,
+   "proposed_url": "https://sourcelibrary.org/book/6956eb52f23ebf30578dbb85?page=199",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.83
+   },
+   "grade": 0,
+   "why": "Garbled text on vision, light, and the pious"
+  },
+  {
+   "qid": "c03",
+   "idea": "emptiness: things have no fixed nature of their own",
+   "seed_i": 1873,
+   "seed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=39",
+   "proposed_i": 4404,
+   "proposed_url": "https://sourcelibrary.org/book/695924fa1cac2ce31a4a8a33?page=184",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.706
+   },
+   "grade": 0,
+   "why": "Daoist salvation rite erasing ledgers of sin"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 5077,
+   "proposed_url": "https://sourcelibrary.org/book/69e7ab975f1a22ab19a9a872?page=100",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.812
+   },
+   "grade": 0,
+   "why": "Dakinis located at body sites and channels"
+  },
+  {
+   "qid": "c01",
+   "idea": "the soul's ascent through the heavens to the divine",
+   "seed_i": 2615,
+   "seed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=23",
+   "proposed_i": 11131,
+   "proposed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=478",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.816
+   },
+   "grade": 0,
+   "why": "Socrates introduces rewards awaiting the just after death"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 2442,
+   "proposed_url": "https://sourcelibrary.org/book/6953c86b77f38f6761bdc210?page=21",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.703
+   },
+   "grade": 2,
+   "why": "Souls bound by karma are reborn repeatedly, finally absorbed into Brahman"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 5404,
+   "proposed_url": "https://sourcelibrary.org/book/69e77a800fc6fc955e36043d?page=41",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.729
+   },
+   "grade": 0,
+   "why": "Garuda deity emanating protectors and Mamos"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 3398,
+   "proposed_url": "https://sourcelibrary.org/book/6993569a83378b7aed7ce5b7?page=395",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.716
+   },
+   "grade": 1,
+   "why": "Ranks of men: divine man, sage, virtuous, superior, common; not a path"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 1279,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=105",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.837
+   },
+   "grade": 1,
+   "why": "Light inscribed on the mind from the fountain of truth, clouded by phantasms"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 92,
+   "proposed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=30",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.773
+   },
+   "grade": 0,
+   "why": "God is the most perfect light; heart not mentioned"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 752,
+   "proposed_url": "https://sourcelibrary.org/book/69593225b91a6184ea943475?page=102",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.696
+   },
+   "grade": 0,
+   "why": "Qualities and proportions of the four elements"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 682,
+   "proposed_url": "https://sourcelibrary.org/book/6a26bf4e0e247ebad6debeb4?page=147",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.805
+   },
+   "grade": 0,
+   "why": "Polemic on whether soul is created before body"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 3351,
+   "proposed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=174",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.875
+   },
+   "grade": 1,
+   "why": "God's mind fills the world as mind fills human body; cosmic egg"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 8127,
+   "proposed_url": "https://sourcelibrary.org/book/697e23cb32e94c72715dd0cf?page=85",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.742
+   },
+   "grade": 0,
+   "why": "Theses: creature reveals Creator, God is light, three heavens"
+  },
+  {
+   "qid": "c24",
+   "idea": "the elements and how they change into one another",
+   "seed_i": 6563,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=27",
+   "proposed_i": 3324,
+   "proposed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=147",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.721
+   },
+   "grade": 1,
+   "why": "Yin and Yang generate the Five Elements; no change into one another"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 4358,
+   "proposed_url": "https://sourcelibrary.org/book/69592bc6b89ab99ff513c08b?page=129",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.734
+   },
+   "grade": 2,
+   "why": "Empress reborn as python, debtor as cow; return in another shape after death"
+  },
+  {
+   "qid": "c01",
+   "idea": "the soul's ascent through the heavens to the divine",
+   "seed_i": 2615,
+   "seed_url": "https://sourcelibrary.org/book/6a2032a118654bf8e19032fc?page=23",
+   "proposed_i": 5458,
+   "proposed_url": "https://sourcelibrary.org/book/69e763a0cc48e59ad74f391f?page=98",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.658
+   },
+   "grade": 0,
+   "why": "Wrathful mantra to subdue spirits"
+  },
+  {
+   "qid": "c14",
+   "idea": "the heart as the organ of spiritual knowledge",
+   "seed_i": 8425,
+   "seed_url": "https://sourcelibrary.org/book/69bda10bf6d63c919748cb55?page=183",
+   "proposed_i": 205,
+   "proposed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=96",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.785
+   },
+   "grade": 0,
+   "why": "Light of Nature as soul of the world shining in darkness"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 322,
+   "proposed_url": "https://sourcelibrary.org/book/69528662ab34727b1f04c6f8?page=830",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.712
+   },
+   "grade": 0,
+   "why": "Sweetness of God's words and law; scripture makes blessed"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 1106,
+   "proposed_url": "https://sourcelibrary.org/book/6984e8498a2f054f912420bd?page=94",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.88
+   },
+   "grade": 2,
+   "why": "All things full of rays from one uncreated Sun, the first emanation"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 5830,
+   "proposed_url": "https://sourcelibrary.org/book/6a3c5fcd879008ba7e157eb9?page=80",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.817
+   },
+   "grade": 0,
+   "why": "Lotus Sutra, Buddha's light illuminating all; nondual realm"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 3562,
+   "proposed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=47",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.834
+   },
+   "grade": 1,
+   "why": "Culminating state of blended unity; rebuke for impatience; stages not given here"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 1914,
+   "proposed_url": "https://sourcelibrary.org/book/69e7299ba409200ea79f0b56?page=205",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.86
+   },
+   "grade": 0,
+   "why": "Fragmentary verse lines about a Sheikh, a child, a tray"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 9056,
+   "proposed_url": "https://sourcelibrary.org/book/6a26c39daad44c98627cab78?page=76",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.776
+   },
+   "grade": 0,
+   "why": "Soul created from all three principles; spirit desires a body"
+  },
+  {
+   "qid": "c23",
+   "idea": "fasting and bodily austerity as purification",
+   "seed_i": 6461,
+   "seed_url": "https://sourcelibrary.org/book/699259118812793469fe177f?page=345",
+   "proposed_i": 3543,
+   "proposed_url": "https://sourcelibrary.org/book/6992c9ffd4d545ae73fed67f?page=150",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.839
+   },
+   "grade": 1,
+   "why": "Catalogue listing Daoist fasting days; gloss calls fasting purification"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 12003,
+   "proposed_url": "https://sourcelibrary.org/book/69d66bc14da4f8dce52f197e?page=410",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.827
+   },
+   "grade": 1,
+   "why": "Garbled Proclus: divine orders connected through mediators; not spirits and humans"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 4350,
+   "proposed_url": "https://sourcelibrary.org/book/69592bc6b89ab99ff513c08b?page=121",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.695
+   },
+   "grade": 0,
+   "why": "Proverbs on statecraft: weak supports ruin the state"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 1766,
+   "proposed_url": "https://sourcelibrary.org/book/69c1bb688522835be845f7d9?page=71",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.838
+   },
+   "grade": 1,
+   "why": "God's word reaches people through prophets, angels, sounds, visions"
+  },
+  {
+   "qid": "c15",
+   "idea": "the creative power of the divine word, name, letters or sound",
+   "seed_i": 6644,
+   "seed_url": "https://sourcelibrary.org/book/69e13a960dae29249d20bb00?page=39",
+   "proposed_i": 9921,
+   "proposed_url": "https://sourcelibrary.org/book/6991bd07879c23a0fef520e6?page=50",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.84
+   },
+   "grade": 0,
+   "why": "Cosmos evolved from Cosmic Will; the 'I' is a centre of Will"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 6367,
+   "proposed_url": "https://sourcelibrary.org/book/6991bd1e70254d38471e250c?page=101",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.723
+   },
+   "grade": 2,
+   "why": "All things flowed out, emanated, from the One Reality, not made"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 1182,
+   "proposed_url": "https://sourcelibrary.org/book/69482afb914d007380634d28?page=93",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.747
+   },
+   "grade": 0,
+   "why": "Son as Word of the Father, announcing God"
+  },
+  {
+   "qid": "c29",
+   "idea": "compassion for all living beings; do to others as you would have done to you",
+   "seed_i": 5268,
+   "seed_url": "https://sourcelibrary.org/book/699257be0e2e0521792314ea?page=80",
+   "proposed_i": 3541,
+   "proposed_url": "https://sourcelibrary.org/book/6992c9ffd4d545ae73fed67f?page=148",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.769
+   },
+   "grade": 0,
+   "why": "Catalogue of Daoist precept scriptures"
+  },
+  {
+   "qid": "c26",
+   "idea": "what happens to the soul after death; judgment of the dead",
+   "seed_i": 11132,
+   "seed_url": "https://sourcelibrary.org/book/69937706b0a84a57639627bb?page=479",
+   "proposed_i": 7955,
+   "proposed_url": "https://sourcelibrary.org/book/c4aa9f54-cf66-4065-a310-9b786b4d9954?page=217",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.729
+   },
+   "grade": 0,
+   "why": "Mind rises beyond the outermost heaven to the Lord; not after death"
+  },
+  {
+   "qid": "c07",
+   "idea": "the human being as a small copy of the whole universe",
+   "seed_i": 3354,
+   "seed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=177",
+   "proposed_i": 295,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e5eff09e4fe943ad5a3?page=144",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.844
+   },
+   "grade": 0,
+   "why": "Garbled Zohar: lights of firmament, river from Eden, moon"
+  },
+  {
+   "qid": "c04",
+   "idea": "what makes a human life go well; the highest good and true flourishing for a person",
+   "seed_i": 2419,
+   "seed_url": "https://sourcelibrary.org/book/69b636242831a80d67f3ad98?page=39",
+   "proposed_i": 10440,
+   "proposed_url": "https://sourcelibrary.org/book/69b3f736a107e55a0ee1c0b0?page=332",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.748
+   },
+   "grade": 1,
+   "why": "Unmoving versus moving things; the perfect man must know both"
+  },
+  {
+   "qid": "c12",
+   "idea": "the soul is reborn in another body after death",
+   "seed_i": 5542,
+   "seed_url": "https://sourcelibrary.org/book/6a3538b4c8ce407afbe053e4?page=42",
+   "proposed_i": 1048,
+   "proposed_url": "https://sourcelibrary.org/book/6953e33f77f38f6761bec67d?page=169",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.81
+   },
+   "grade": 1,
+   "why": "Glossary entries; causal body as cause of reincarnation; Kardecists teach it"
+  },
+  {
+   "qid": "c22",
+   "idea": "know yourself and you will know the divine",
+   "seed_i": 3108,
+   "seed_url": "https://sourcelibrary.org/book/6953e27b77f38f6761be90fa?page=938",
+   "proposed_i": 8129,
+   "proposed_url": "https://sourcelibrary.org/book/697e23cb32e94c72715dd0cf?page=87",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.762
+   },
+   "grade": 1,
+   "why": "Truth lies within; inner eye contemplates eternal Being and unites; not self-knowledge"
+  },
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 6604,
+   "proposed_url": "https://sourcelibrary.org/book/6953e36477f38f6761becadf?page=110",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.823
+   },
+   "grade": 2,
+   "why": "Pictorial dream shows soul active in sleep; trained sleep-life yields perception"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 8312,
+   "proposed_url": "https://sourcelibrary.org/book/695594b67bd6d2cd1d61dcec?page=384",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.833
+   },
+   "grade": 0,
+   "why": "Turn attention to yourself then to God; clear the mind of other images"
+  },
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 616,
+   "proposed_url": "https://sourcelibrary.org/book/69593274b91a6184ea943873?page=246",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.717
+   },
+   "grade": 0,
+   "why": "Adepts must be free of passions to command the astral light"
+  },
+  {
+   "qid": "c09",
+   "idea": "light as the nature of the divine or of the mind",
+   "seed_i": 8662,
+   "seed_url": "https://sourcelibrary.org/book/697a36a1e1d81a84b06d2d6d?page=304",
+   "proposed_i": 6597,
+   "proposed_url": "https://sourcelibrary.org/book/6953e36477f38f6761becadf?page=103",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.706
+   },
+   "grade": 0,
+   "why": "Meditation develops soul-organs of perception, like an embryo"
+  },
+  {
+   "qid": "c06",
+   "idea": "spirits that stand between gods and humans",
+   "seed_i": 2777,
+   "seed_url": "https://sourcelibrary.org/book/69aea7eed9729ce38747eab5?page=475",
+   "proposed_i": 1264,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=90",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.753
+   },
+   "grade": 2,
+   "why": "Prophets instructed through angels; divine vision by mediation of heavenly powers"
+  },
+  {
+   "qid": "c25",
+   "idea": "dreams as a source of knowledge or revelation",
+   "seed_i": 3584,
+   "seed_url": "https://sourcelibrary.org/book/69dea81451267905f92aaf01?page=69",
+   "proposed_i": 2449,
+   "proposed_url": "https://sourcelibrary.org/book/6953c86b77f38f6761bdc210?page=28",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.818
+   },
+   "grade": 0,
+   "why": "Delusions from latent desires destroyed by knowledge of world's unreality"
+  },
+  {
+   "qid": "c02",
+   "idea": "prima materia: the first matter from which all things are made",
+   "seed_i": 10998,
+   "seed_url": "https://sourcelibrary.org/book/69942ea1d607f8e57e4b9af3?page=146",
+   "proposed_i": 1311,
+   "proposed_url": "https://sourcelibrary.org/book/69528570ab34727b1f04b8a1?page=200",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.836
+   },
+   "grade": 0,
+   "why": "Critique of Scholastics on spirit, penetrability, form and matter"
+  },
+  {
+   "qid": "c33",
+   "idea": "how the world first came into being",
+   "seed_i": 6562,
+   "seed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=26",
+   "proposed_i": 3348,
+   "proposed_url": "https://sourcelibrary.org/book/695580ac57e3b773024f5c37?page=171",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.709
+   },
+   "grade": 0,
+   "why": "Diagram list of twelve Earthly Branches and cycle lengths"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 4268,
+   "proposed_url": "https://sourcelibrary.org/book/6953e28477f38f6761be9922?page=329",
+   "proposed_tradition": "chinese-daoist-confucian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.731
+   },
+   "grade": 0,
+   "why": "Confucius and the wild hen knowing its time"
+  },
+  {
+   "qid": "c28",
+   "idea": "the divine dwells within every being",
+   "seed_i": 206,
+   "seed_url": "https://sourcelibrary.org/book/69b501241e6119e2dd8fae43?page=97",
+   "proposed_i": 83,
+   "proposed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=21",
+   "proposed_tradition": "jewish-kabbalistic",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.876
+   },
+   "grade": 2,
+   "why": "Hidden God's ray penetrates all; Spirit as Life of Lives animates everything"
+  },
+  {
+   "qid": "c05",
+   "idea": "the annihilation of the self in union with the divine",
+   "seed_i": 8211,
+   "seed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=114",
+   "proposed_i": 1971,
+   "proposed_url": "https://sourcelibrary.org/book/69b6362a8ab57a1de53a73e8?page=74",
+   "proposed_tradition": "islamic-sufi",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.707
+   },
+   "grade": 0,
+   "why": "Celestial bodies' rotation; resurrection as soul separating from body"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 2649,
+   "proposed_url": "https://sourcelibrary.org/book/6991e1aa339ebc850994a92a?page=387",
+   "proposed_tradition": "greek-roman",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.677
+   },
+   "grade": 0,
+   "why": "Moral virtue differs for ruler and ruled, man and woman"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 1859,
+   "proposed_url": "https://sourcelibrary.org/book/699356cb8ed86e583b7b86cc?page=25",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.719
+   },
+   "grade": 1,
+   "why": "Silent accord with Nagarjuna; Dharma neither through sound nor form"
+  },
+  {
+   "qid": "c10",
+   "idea": "how the many things come forth from the One",
+   "seed_i": 87,
+   "seed_url": "https://sourcelibrary.org/book/698255f1da76f23a1bf0a2e0?page=25",
+   "proposed_i": 8140,
+   "proposed_url": "https://sourcelibrary.org/book/697e23cb32e94c72715dd0cf?page=98",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.86
+   },
+   "grade": 1,
+   "why": "God alone before creation turned to Himself and bore from Himself; cut off"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 8215,
+   "proposed_url": "https://sourcelibrary.org/book/697779c04d686b5ceb28357c?page=118",
+   "proposed_tradition": "christian",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.712
+   },
+   "grade": 0,
+   "why": "Resigning one's will wholly to God after Christ's example; not stillness"
+  },
+  {
+   "qid": "c17",
+   "idea": "the stages of the spiritual path",
+   "seed_i": 5853,
+   "seed_url": "https://sourcelibrary.org/book/6953c81f77f38f6761bdbe34?page=148",
+   "proposed_i": 5153,
+   "proposed_url": "https://sourcelibrary.org/book/69e78328d93c1f60075061d1?page=118",
+   "proposed_tradition": "buddhist",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.849
+   },
+   "grade": 1,
+   "why": "Third phase of a yogini's life: letting go of self-grasping; no scheme of stages"
+  },
+  {
+   "qid": "c13",
+   "idea": "acting without striving; letting go of one's own will",
+   "seed_i": 3250,
+   "seed_url": "https://sourcelibrary.org/book/69e72c65a409200ea79f47bd?page=59",
+   "proposed_i": 6566,
+   "proposed_url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=30",
+   "proposed_tradition": "hindu-indic",
+   "arms": [
+    "page"
+   ],
+   "sim": {
+    "page": 0.715
+   },
+   "grade": 0,
+   "why": "Cosmic body of the Lord; all beings born of and pervaded by him"
+  },
+  {
+   "qid": "c32",
+   "idea": "silence and stillness of mind as the way to truth",
+   "seed_i": 7164,
+   "seed_url": "https://sourcelibrary.org/book/6993571783378b7aed7ce8f6?page=19",
+   "proposed_i": 2934,
+   "proposed_url": "https://sourcelibrary.org/book/6953dd6477f38f6761be77ad?page=308",
+   "proposed_tradition": "christian",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.88
+   },
+   "grade": 1,
+   "why": "Inner solitude and constant thought of God, not outward flight"
+  },
+  {
+   "qid": "c31",
+   "idea": "correspondence between the heavens and things on earth",
+   "seed_i": 11827,
+   "seed_url": "https://sourcelibrary.org/book/699060b2322e01b1349a3020?page=151",
+   "proposed_i": 1266,
+   "proposed_url": "https://sourcelibrary.org/book/69b51e10261c58d63664ec06?page=92",
+   "proposed_tradition": "hermetic-esoteric",
+   "arms": [
+    "concept"
+   ],
+   "sim": {
+    "concept": 0.861
+   },
+   "grade": 0,
+   "why": "God discerned through sun, moon, stars and all his works"
+  }
+ ]
+}

@@ -151,19 +151,19 @@ describe('safe-merge.sh', () => {
     mergeStateStatus: 'UNSTABLE',
     statusCheckRollup: [
       { __typename: 'CheckRun', name: 'test', status: 'COMPLETED', conclusion: 'SUCCESS' },
-      { __typename: 'StatusContext', context: 'Vercel', state: 'FAILURE' },
+      { __typename: 'CheckRun', name: 'next-build', status: 'COMPLETED', conclusion: 'FAILURE' },
     ],
   });
 
   it('refuses a failing check that is not named with --allow-check', () => {
     const r = run(['10'], { views: { 10: [unstable] } });
     expect(r.code).toBe(1);
-    expect(r.out).toMatch(/failing: Vercel/);
+    expect(r.out).toMatch(/failing: next-build/);
     expect(merges(r.calls)).toEqual([]);
   });
 
   it('merges when the only failures are named with --allow-check', () => {
-    const r = run(['--allow-check', 'Vercel', '10'], { views: { 10: [unstable] } });
+    const r = run(['--allow-check', 'next-build', '10'], { views: { 10: [unstable] } });
     expect(r.code).toBe(0);
     expect(merges(r.calls)).toHaveLength(1);
   });
@@ -172,13 +172,44 @@ describe('safe-merge.sh', () => {
     const view = clean(10, {
       mergeStateStatus: 'UNSTABLE',
       statusCheckRollup: [
-        { __typename: 'StatusContext', context: 'Vercel', state: 'FAILURE' },
+        { __typename: 'CheckRun', name: 'next-build', status: 'COMPLETED', conclusion: 'FAILURE' },
         { __typename: 'CheckRun', name: 'test', status: 'IN_PROGRESS', conclusion: '' },
       ],
     });
-    const r = run(['--allow-check', 'Vercel', '10'], { views: { 10: [view] } });
+    const r = run(['--allow-check', 'next-build', '10'], { views: { 10: [view] } });
     expect(r.code).toBe(1);
     expect(r.out).toMatch(/checks still running: test/);
+  });
+
+  // Previews are opt-in (#5980): a skipped one leaves the Vercel status PENDING
+  // forever, and GitHub then reports UNSTABLE. Vercel is not gating (#5990).
+  it('merges when the only thing not passing is the Vercel status', () => {
+    for (const state of ['PENDING', 'FAILURE']) {
+      const view = clean(10, {
+        mergeStateStatus: 'UNSTABLE',
+        statusCheckRollup: [
+          { __typename: 'CheckRun', name: 'test', status: 'COMPLETED', conclusion: 'SUCCESS' },
+          { __typename: 'CheckRun', name: 'next-build', status: 'COMPLETED', conclusion: 'SUCCESS' },
+          { __typename: 'StatusContext', context: 'Vercel', state },
+        ],
+      });
+      const r = run(['10'], { views: { 10: [view] } });
+      expect(r.code).toBe(0);
+      expect(merges(r.calls)).toHaveLength(1);
+    }
+  });
+
+  it('still refuses a running next-build next to a pending Vercel status', () => {
+    const view = clean(10, {
+      mergeStateStatus: 'UNSTABLE',
+      statusCheckRollup: [
+        { __typename: 'StatusContext', context: 'Vercel', state: 'PENDING' },
+        { __typename: 'CheckRun', name: 'next-build', status: 'IN_PROGRESS', conclusion: '' },
+      ],
+    });
+    const r = run(['10'], { views: { 10: [view] } });
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/checks still running: next-build/);
   });
 
   it('waits out UNKNOWN mergeability, then merges', () => {

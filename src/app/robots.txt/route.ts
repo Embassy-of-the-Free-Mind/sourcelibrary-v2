@@ -28,6 +28,8 @@
  * (src/lib/bot-gate.ts) is the enforcement layer.
  */
 
+import { TRIPWIRE_PATH } from '@/lib/tripwire';
+
 const BASE_URL = 'https://sourcelibrary.org';
 
 // Our content signals: discovery and assistant reading are welcome; training
@@ -98,6 +100,9 @@ const DEFAULT_DISALLOW = [
   '/reading-history',
   '/highlights',
   '/favorites',
+  // Tripwire (#5995): disallowed for EVERY group, so a fetch of it means the
+  // client ignored robots.txt. Groups ending in `Disallow: /` cover it already.
+  TRIPWIRE_PATH,
 ];
 
 type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
@@ -111,8 +116,8 @@ type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 // scraping); the rest get the public docs + blog only. None get the full text.
 const GROUPS: Group[] = [
   { userAgent: '*', allow: ['/'], disallow: DEFAULT_DISALLOW },
-  { userAgent: 'Claude-SearchBot', allow: ['/'] },
-  { userAgent: 'OAI-SearchBot', allow: ['/'] },
+  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
+  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'Claude-Web', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'ClaudeBot', allow: DOCS_ONLY, disallow: ['/'] },

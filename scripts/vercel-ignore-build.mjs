@@ -49,7 +49,45 @@ export function buildInputs(repo = process.cwd()) {
   return [...BASE_INPUTS, ...[...seen].sort()];
 }
 
+/**
+ * Previews are opt-in (Derek, 2026-10-06: "minimize vercel costs everywhere"; #5976). The project
+ * builds one deployment at a time and production goes first, so ~20 previews per 3 h, mostly from
+ * headless job branches nobody opens, queued for an hour and held up hand merges. A preview builds
+ * only when the commit message contains [preview] or the branch starts with preview/. Since #5976's
+ * follow-up, vercel.json `git.deploymentEnabled` stops every branch except main and preview/** from
+ * creating a deployment at all (a skip here still waited in the one-slot queue), so in practice a
+ * preview means pushing to preview/<name>; this check stays as the second line. To check a page
+ * without one, run `next dev --webpack` locally (Turbopack rejects the worktree's symlinked
+ * node_modules).
+ */
+export function previewWanted({ ref = '', message = '' } = {}) {
+  return /\[preview\]/i.test(message) || ref.startsWith('preview/');
+}
+
+/** Build inputs changed between the merge base of `base` and HEAD (next-build.yml). */
+export function changedBuildInputs(base, repo = process.cwd()) {
+  const git = (...args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim();
+  const from = git('merge-base', base, 'HEAD');
+  return git('diff', '--name-only', from, 'HEAD', '--', ...buildInputs(repo)).split('\n').filter(Boolean);
+}
+
 function main() {
+  // `--changed-since <sha>`: the PR build check asks the same question for a whole PR.
+  // Prints the changed inputs and `build=yes|no`; always exits 0.
+  const since = process.argv.indexOf('--changed-since');
+  if (since > 0) {
+    const changed = changedBuildInputs(process.argv[since + 1]);
+    console.log(changed.length ? `Build inputs changed:\n${changed.join('\n')}` : 'No build inputs changed');
+    console.log(`build=${changed.length ? 'yes' : 'no'}`);
+    return;
+  }
+  // Only git-triggered previews: a CLI `vercel` deploy has no VERCEL_GIT_COMMIT_REF and is always wanted.
+  if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF && !previewWanted({
+    ref: process.env.VERCEL_GIT_COMMIT_REF, message: process.env.VERCEL_GIT_COMMIT_MESSAGE,
+  })) {
+    console.log('Skip: previews are opt-in — add [preview] to the commit message or push a preview/ branch (#5976)');
+    process.exit(0);
+  }
   const prev = process.env.VERCEL_GIT_PREVIOUS_SHA || 'HEAD^';
   try {
     execFileSync('git', ['cat-file', '-e', `${prev}^{commit}`]);

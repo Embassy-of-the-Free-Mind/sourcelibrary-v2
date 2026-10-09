@@ -49,6 +49,13 @@
  *                              stamped image_resolution_upgraded_at, so a later
  *                              full run still takes it; reruns skip pages already
  *                              at master via the per-page held check.
+ *   --max-held-width N         only pages whose recorded `image_width` is at most N px, and judge
+ *                              the book's eligibility on those pages alone. For a MIXED book:
+ *                              the book-level decision is the median of three interior pages, so
+ *                              a book with 303 pages at master and 61 at 1000 px reads as
+ *                              "not-low-res" and is skipped whole (Aldine 1516 Iamblichus,
+ *                              2026-10-08; one of its 1000 px pages was flagged full_res: true).
+ *                              Like --pages-with-images, the book is not stamped upgraded.
  *   --random                   (--audit) draw --limit books at random instead of the
  *                              first N in natural order — the first N are the oldest
  *                              imports, and 200 of them audited 0 low-res while a
@@ -137,6 +144,7 @@ const IA_ONLY = FLAG('--ia-only');
 const TRANSLATED = FLAG('--translated');
 const RANDOM = FLAG('--random');
 const PAGES_WITH_IMAGES = FLAG('--pages-with-images');
+const MAX_HELD_WIDTH = parseInt(ARG('--max-held-width', '0'));
 const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
@@ -329,7 +337,7 @@ function checkAlignment(pages) {
  * Process one source URL: upgrade, fetch, resize-cap, return buffer + dims.
  * Skips if the URL doesn't appear to be IIIF or upgrade is a no-op.
  */
-async function fetchUpgraded(url) {
+async function fetchUpgraded(url, { evenIfUrlIsFull = false } = {}) {
   if (!isIiifUrl(url)) return { skipped: 'not-iiif', url };
   const ia = isIaBookReaderUrl(url);
   const upgraded = ia ? url : upgradeToFullRes(url);
@@ -356,12 +364,17 @@ async function fetchUpgraded(url) {
         // on any short tile, so the failure is a skipped page, not a gapped one.
         const maxChunk = Math.min(pageInfo.maxWidth || MAX_CHUNK, pageInfo.maxHeight || MAX_CHUNK, MAX_CHUNK);
         ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
-      } else if (upgraded === url) {
+      } else if (upgraded === url && !evenIfUrlIsFull) {
         // Nothing to gain: the URL already requests native AND this host honours
         // it. (Checked AFTER the tile-stitch branch, not before — on a silent-cap
         // host a `/full/full/` URL is already "upgraded" textually while the bytes
         // come back at 1200px, and bailing here skipped every page of the EAP310
         // cohort whose masters are 3888-4752px. #4523.)
+        //
+        // That reasoning assumes the archive was MADE from this URL. With --max-held-width
+        // the operator is saying it was not: Aldine 1516 p.268 has photo_original at
+        // /full/full/ (2338 px) and an archive made from `photo` at /full/1000,/. Then the
+        // URL is fetched as it stands and the per-page held check decides.
         return { skipped: 'no-upgrade-pattern', url };
       } else {
         raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
@@ -483,12 +496,13 @@ async function refetchOne(book) {
     // it arrives undefined and every regenerated display/thumb is written
     // WITHOUT the keyed watermark — unattributable in the wild (#2651). The
     // function logs that as a warning, so the only symptom was a line in a log.
-    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1, detected_images: { $slice: 1 }, ...(PAGES_WITH_IMAGES ? { 'ocr.data': 1 } : {}) } },
+    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, image_width: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1, detected_images: { $slice: 1 }, ...(PAGES_WITH_IMAGES ? { 'ocr.data': 1 } : {}) } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
   let toWrite = PAGES_WITH_IMAGES ? pages.filter(showsAnImage) : pages;
   if (SKIP_UPGRADED_PAGES) toWrite = toWrite.filter(p => !p.image_metadata?.upgraded_at);
+  if (MAX_HELD_WIDTH) toWrite = toWrite.filter(p => p.image_width && p.image_width <= MAX_HELD_WIDTH);
   if (!toWrite.length) return { skipped: 'no-image-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split (use --recover-split)' };
 
@@ -498,7 +512,7 @@ async function refetchOne(book) {
   // minutes and wrote nothing (MS. Barocci 50.2, 2026-10-05).
   const remaining = toWrite.filter(p => !pageAtRecordedMaster(p));
   if (!remaining.length) {
-    if (!DRY_RUN && !PAGES_WITH_IMAGES && !book.image_resolution_upgraded_at) {
+    if (!DRY_RUN && !PAGES_WITH_IMAGES && !MAX_HELD_WIDTH && !book.image_resolution_upgraded_at) {
       // Every page reached its master across earlier runs, but none of them
       // finished clean, so the book was never stamped and has no provenance event.
       const master = Math.max(...toWrite.map(p => p.image_metadata.source_max_width));
@@ -519,7 +533,7 @@ async function refetchOne(book) {
   // Decide once per book, from the median of three interior pages (measureBook).
   // On a gap pass or a resume, judge eligibility on the pages still to do:
   // measured on the already-upgraded ones, a mostly-done book reads as "not low-res".
-  const iiifPages = (SKIP_UPGRADED_PAGES || resumed ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
+  const iiifPages = (SKIP_UPGRADED_PAGES || resumed || MAX_HELD_WIDTH ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
   if (!iiifPages.length) return { skipped: 'no-iiif-source' };
   const sourceUrl = iiifPages[0].photo_original || iiifPages[0].photo;
   const cap = getIiifSizeCap(sourceUrl);
@@ -556,10 +570,11 @@ async function refetchOne(book) {
   console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${toWrite.length} pages)`);
 
   let updated = 0, skipped = 0, failed = 0;
+  const updatedPages = [];
   await parallelMap(toWrite, async (page) => {
     const url = page.photo_original || page.photo;
     if (!isIiifUrl(url)) { skipped++; return; }
-    const result = await fetchUpgraded(url);
+    const result = await fetchUpgraded(url, { evenIfUrlIsFull: MAX_HELD_WIDTH > 0 });
     // A page we could not fetch is a FAILURE, not a skip: counted as a skip, the
     // book was stamped upgraded with that page still low-res, and --skip-upgraded
     // never came back for it (Pali MS 53, 6 pages, 2026-10-04).
@@ -603,6 +618,7 @@ async function refetchOne(book) {
         } },
       );
       updated++;
+      updatedPages.push(page.page_number);
     } catch (e) {
       console.error(`    page ${page.page_number} fail: ${e.message?.substring(0, 80)}`);
       failed++;
@@ -611,7 +627,7 @@ async function refetchOne(book) {
 
   // Stamp only fully-clean books: a partial failure (e.g. laptop sleep killed
   // in-flight fetches) must not look "done" to --skip-upgraded re-runs.
-  if (!DRY_RUN && !PAGES_WITH_IMAGES && updated > 0 && failed === 0) {
+  if (!DRY_RUN && !PAGES_WITH_IMAGES && !MAX_HELD_WIDTH && updated > 0 && failed === 0) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
@@ -624,6 +640,13 @@ async function refetchOne(book) {
     // width the existing OCR actually read. The URL cap is null on silent-cap
     // hosts, which would record null provenance and an Infinity upgrade_ratio.
     await recordUpgradeEvent(book, { fromWidthCap: held, toMasterWidth: info.width, pagesUpdated: updated });
+  } else if (!DRY_RUN && MAX_HELD_WIDTH && updated > 0) {
+    // A partial pass does not stamp the book, but it still replaced page images, and the OCR
+    // those pages carry read the old ones. Leave the record of which pages, and from what.
+    await db.collection('book_events').insertOne({
+      book_id: book.id, type: 'image_resolution_upgrade', at: new Date(), source: 'rearchive-iiif-fullres',
+      details: { partial: true, max_held_width: MAX_HELD_WIDTH, from_width_cap: held, to_master_width: info.width, pages_updated: updated, pages_failed: failed, page_numbers: updatedPages.sort((a, b) => a - b) },
+    });
   }
 
   return { updated, skipped, failed };
@@ -683,6 +706,11 @@ async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpda
 // ── Recovery mode (already-split books) ──
 
 async function recoverOne(book) {
+  // Recovery resets the book to archive_complete with pages_ocr 0 — a full paid re-OCR. A held
+  // book (scripts/lib/pipeline-hold.mjs) is one a human said not to spend on: skip it (#6122).
+  if (await db.collection('books').countDocuments({ id: book.id, 'pipeline_auto.hold': { $exists: true } })) {
+    return { skipped: 'held (pipeline_auto.hold) — release it first' };
+  }
   const pages = await db.collection('pages').find(
     { book_id: book.id },
     { projection: { id: 1, _id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, split_from: 1 } },
@@ -879,6 +907,9 @@ async function main() {
         console.log(`  skip: ${(book.title || '').substring(0, 55)} — ${result.skipped}`);
       } else {
         processed++;
+        // Always say what was written. "Processed: 1" over a book where every page was skipped
+        // read as success on 2026-10-08 and had written nothing.
+        if (!result.completed) console.log(`    ${DRY_RUN ? 'would update' : 'updated'} ${result.updated}, skipped ${result.skipped}, failed ${result.failed}`);
         if (result.completed) console.log(`  COMPLETED ${(book.title || '').substring(0, 50)} — every page already at master; stamped`);
         if (result.failed) console.log(`  PARTIAL ${(book.title || '').substring(0, 50)} — ${result.updated} updated, ${result.failed} failed (not stamped; a re-run retries it)`);
       }
