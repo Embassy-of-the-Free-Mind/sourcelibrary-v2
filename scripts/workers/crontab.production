@@ -216,7 +216,7 @@
 # page-vector-truth weekly (#6175): is each stored page vector the Gemini embedding of its page's text? 200 seeded
 # live translated books x 3 rows: model-free checks (e5 signature, shape, wrong book, removed translation still served,
 # AI summary in the snippet, duplicates) + one realtime embed per row (~$0.06/run) + a --plant positive control
-# (exit 2 unless all 9 planted defects are caught). Exit 1 files/updates "Page vector truth: " (label search);
+# (exit 2 unless every planted defect is caught). Exit 1 files/updates "Page vector truth: " (label search);
 # a clean run closes it. Exit 2 never files. Guarded by [ -f ] until the script is on main.
 15 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/page-vector-truth.mjs ] && flock -n /tmp/sl-page-vector-truth.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/page-vector-truth.mjs --books 200 --seed \$(date +\%G\%V) --plant --dup-probe 50 --file-issue --json /var/log/sourcelibrary/page-vector-truth-last.json" >> /var/log/sourcelibrary/page-vector-truth.log 2>&1
 # installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
