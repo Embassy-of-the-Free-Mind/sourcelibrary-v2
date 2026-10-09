@@ -15,7 +15,7 @@ export const GET = withAdminAuth(async () => {
       .findOne({ _id: 'storage_stats' } as object);
     if (!stats) {
       return NextResponse.json(
-        { error: 'No snapshot yet — run /api/cron/storage-stats once' },
+        { error: 'No snapshot yet. Run /api/cron/storage-stats once' },
         { status: 404 },
       );
     }

@@ -65,7 +65,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
   }
 
   const note = res.basis === 'nearest'
-    ? 'No leaf carries this number; this is the nearest leaf before it — read forward a page.'
+    ? 'No leaf carries this number; this is the nearest leaf before it, so read forward a page.'
     : res.basis === 'frame'
       ? 'This leaf sits between two printed neighbours agreeing on the offset; its own number was not read.'
       : 'The number was read off this leaf.';

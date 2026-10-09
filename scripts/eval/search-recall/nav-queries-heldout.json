@@ -1,0 +1,212 @@
+{
+ "_prior_art": "PRIOR ART: nav-queries.json beside this file — the 42 fixed queries the name match was built against. These 25 were written AFTER the match existed and before it was run on them, as a check that the rule is not fitted to the first list.",
+ "issue": 5945,
+ "queries": [
+  {
+   "id": "page-sources",
+   "query": "sources",
+   "kind": "page",
+   "expect": [
+    "/about/sources"
+   ]
+  },
+  {
+   "id": "page-progress",
+   "query": "progress",
+   "kind": "page",
+   "expect": [
+    "/about/progress"
+   ]
+  },
+  {
+   "id": "page-dataset",
+   "query": "dataset",
+   "kind": "page",
+   "expect": [
+    "/dataset"
+   ]
+  },
+  {
+   "id": "page-terms",
+   "query": "terms",
+   "kind": "page",
+   "expect": [
+    "/terms"
+   ]
+  },
+  {
+   "id": "page-tablets",
+   "query": "tablets",
+   "kind": "page",
+   "expect": [
+    "/tablets"
+   ]
+  },
+  {
+   "id": "page-browse-authors",
+   "query": "browse authors",
+   "kind": "page",
+   "expect": [
+    "/browse/authors"
+   ]
+  },
+  {
+   "id": "page-learn",
+   "query": "learn",
+   "kind": "page",
+   "expect": [
+    "/learn"
+   ]
+  },
+  {
+   "id": "page-contribute",
+   "query": "contribute",
+   "kind": "page",
+   "expect": [
+    "/contribute"
+   ]
+  },
+  {
+   "id": "page-blog",
+   "query": "blog",
+   "kind": "page",
+   "expect": [
+    "/blog"
+   ]
+  },
+  {
+   "id": "page-catalog",
+   "query": "catalog",
+   "kind": "page",
+   "expect": [
+    "/catalog"
+   ]
+  },
+  {
+   "id": "page-topics",
+   "query": "topics",
+   "kind": "page",
+   "expect": [
+    "/topics"
+   ]
+  },
+  {
+   "id": "page-status",
+   "query": "status",
+   "kind": "page",
+   "expect": [
+    "/status"
+   ]
+  },
+  {
+   "id": "page-rithmomachia-guide",
+   "query": "rithmomachia guide",
+   "kind": "page",
+   "expect": [
+    "/rithmomachia/guide"
+   ]
+  },
+  {
+   "id": "page-gilgamesh",
+   "query": "gilgamesh",
+   "kind": "page",
+   "expect": [
+    "/read/gilgamesh"
+   ]
+  },
+  {
+   "id": "page-in-memoriam",
+   "query": "in memoriam",
+   "kind": "page",
+   "expect": [
+    "/in-memoriam"
+   ]
+  },
+  {
+   "id": "page-bhutan",
+   "query": "bhutan",
+   "kind": "page",
+   "expect": [
+    "/bhutan-library"
+   ]
+  },
+  {
+   "id": "page-founder-letter",
+   "query": "founder letter",
+   "kind": "page",
+   "expect": [
+    "/vision"
+   ]
+  },
+  {
+   "id": "page-how-can-i-help",
+   "query": "how can i help",
+   "kind": "page",
+   "expect": [
+    "/contribute",
+    "/volunteers",
+    "/support",
+    "/contribute/volunteer"
+   ]
+  },
+  {
+   "id": "author-john-dee",
+   "query": "john dee",
+   "kind": "author",
+   "expect": [
+    "/author/john-dee"
+   ]
+  },
+  {
+   "id": "author-fludd",
+   "query": "fludd",
+   "kind": "author",
+   "expect": [
+    "/author/robert-fludd"
+   ]
+  },
+  {
+   "id": "author-böhme",
+   "query": "böhme",
+   "kind": "author",
+   "expect": [
+    "/author/jacob-boehme"
+   ]
+  },
+  {
+   "id": "browse-astrology",
+   "query": "astrology",
+   "kind": "browse",
+   "expect": [
+    "/collections/astrology",
+    "/categories/astrology"
+   ]
+  },
+  {
+   "id": "browse-demonology",
+   "query": "demonology",
+   "kind": "browse",
+   "expect": [
+    "/blog/demonology",
+    "/collections/demonology"
+   ]
+  },
+  {
+   "id": "browse-sanskrit",
+   "query": "sanskrit",
+   "kind": "browse",
+   "expect": [
+    "/languages/sanskrit"
+   ]
+  },
+  {
+   "id": "browse-ars-notoria",
+   "query": "ars notoria",
+   "kind": "browse",
+   "expect": [
+    "/categories/ars-notoria",
+    "/collections/ars-notoria"
+   ]
+  }
+ ]
+}

@@ -4,12 +4,20 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import PageEditMode from '@/components/PageEditMode';
 import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
 import { IMPROVEMENTS } from '../canon-gap/improvements';
+import { getDb } from '@/lib/mongodb';
+import { READER_UI_STRINGS } from '@/lib/reader-strings';
+import { TENGYUR_QUALITY, namedKinds } from '@/lib/tengyur-quality';
+// A copy, not an import from scripts/eval/results: .vercelignore drops that folder from the production build.
+import tengyurVolumes from '@/lib/tengyur-volume-ids.json';
 
 // Built for the Eternity Foundation working session (#5513, #5864): how each core canon's text and
 // English are checked, and where a scholar's time would go. No new numbers: every figure is copied
 // from a merged experiment file or results file (pinned to the commit it was read at) or from the
 // issue comment that reports it, and each one carries its link. Re-measure in those files, not here.
-export const revalidate = false;
+// The Tengyur section table (#6120) reads src/data/tengyur-section-quality.json, which is generated from
+// those results files. The one live figure is the count of reader corrections, so the page revalidates
+// hourly; a failed count throws and ISR keeps the last good page (rendering-and-seo.md).
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'How We Check Each Canon | Source Library Research',
@@ -43,6 +51,8 @@ const SRC = {
   kangyurEye: `${ISSUE}5665#issuecomment-5975802250`,
   chineseOcr: `${ISSUE}4743`,
   scholar: `${ISSUE}5800`,
+  tengyurResidue: `${BLOB}scripts/eval/results/tengyur-check-2026-10/README.md`,
+  release: `${ISSUE}6120`,
 };
 
 function A({ href, children }: { href: string; children: ReactNode }) {
@@ -629,6 +639,7 @@ const CONTENTS = [
   ['layers', 'Two layers of human expertise'],
   ['strip', 'What has been checked'],
   ['canons', 'Canon by canon'],
+  ['tengyur-sections', 'The Tengyur, section by section'],
   ['ask', 'What we would ask of a scholar'],
   ['changes', 'What each measured change did'],
   ['method', 'How to read these numbers'],
@@ -674,7 +685,211 @@ function CanonCard({ c }: { c: Canon }) {
   );
 }
 
-export default function CanonQualityPage() {
+/* ---------- The Tengyur by section (#6120) ---------- */
+
+const TQ = TENGYUR_QUALITY;
+const KIND_WORDS = READER_UI_STRINGS.en.tengyurNote.kinds;
+const fmtDate = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const n0 = (x: number) => x.toLocaleString('en-US');
+const ci = (c?: number[]) => (c ? ` [${Math.round(c[0])}–${Math.round(c[1])}]` : '');
+
+/**
+ * Readers' "the English is wrong here" reports on Tengyur pages (#6120), and how many a person has
+ * dealt with (`addressed`, the feedback lifecycle). Applied corrections show in each page's revision
+ * history; the feedback row does not record whether the change was made, so this does not claim it.
+ */
+async function tengyurCorrections(): Promise<{ received: number; reviewed: number }> {
+  const ids = tengyurVolumes.book_ids;
+  const q = { 'page_report.kind': 'translation_error', 'page_report.book_id': { $in: ids } };
+  const feedback = (await getDb()).collection('feedback');
+  const [received, reviewed] = await Promise.all([
+    feedback.countDocuments(q),
+    feedback.countDocuments({ ...q, addressed: true }),
+  ]);
+  return { received, reviewed };
+}
+
+function TengyurSectionTable() {
+  const rows = Object.entries(TQ.sections)
+    .filter(([, q]) => q.n > 0)
+    .sort((a, b) => b[1].n - a[1].n);
+  const unsampled = Object.entries(TQ.sections).filter(([, q]) => q.n === 0).map(([name]) => name);
+  const th = 'text-left font-body text-[11px] uppercase tracking-wider text-stone-500 font-normal py-2 pr-4 align-bottom';
+  const td = 'py-2.5 pr-4 align-top border-t border-stone-100';
+  const rate = (q: (typeof rows)[number][1]) =>
+    q.rated
+      ? `${Math.round(q.light!)}% / ${Math.round(q.work!)}% / ${Math.round(q.specialist!)}% · ${Math.round(q.rev_agent_per100!)} per 100${ci(q.rev_agent_ci)}`
+      : 'Too few pages measured to give a rate.';
+  return (
+    <>
+    {/* Phones: one block per section; five columns do not fit in 390px. */}
+    <dl className="md:hidden text-base text-stone-700 tabular-nums">
+      {rows.map(([name, q]) => (
+        <div key={name} className="py-2.5 border-t border-stone-100">
+          <dt className="text-stone-900">
+            {name} <span className="text-xs text-stone-500">· {q.n} pages read of {n0(q.corpus_pages)}</span>
+          </dt>
+          <dd className={q.rated ? '' : 'text-stone-500'}>{rate(q)}</dd>
+          {q.rated && <dd className="text-sm text-stone-500">{namedKinds(q).map((k) => KIND_WORDS[k]).join(', ')}</dd>}
+        </div>
+      ))}
+      <div className="py-2.5 border-t border-stone-100">
+        <dt className="font-semibold text-stone-900">All sections <span className="text-xs text-stone-500 font-normal">· {TQ.sample.n} pages read</span></dt>
+        <dd>
+          {Math.round(TQ.sample.light)}% / {Math.round(TQ.sample.work)}% / {Math.round(TQ.sample.specialist)}% ·{' '}
+          {Math.round(TQ.sample.rev_agent_per100_adjusted)} per 100{ci(TQ.sample.rev_agent_ci_adjusted)}, adjusted for
+          findings that did not hold up
+        </dd>
+      </div>
+      <p className="text-sm text-stone-500 pt-2">
+        Read as: light / work / specialist · reversed statements or wrong speakers per 100 pages [95% interval].
+      </p>
+    </dl>
+    <div className="hidden md:block">
+      <table className="w-full text-base text-stone-700 tabular-nums">
+        <thead>
+          <tr>
+            <th className={th}>Section</th>
+            <th className={th}>Pages read</th>
+            <th className={th}>Light / work / specialist</th>
+            <th className={th}>Reversed or wrong speaker, per 100 pages</th>
+            <th className={th}>Commonest other errors</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([name, q]) => (
+            <tr key={name}>
+              <td className={td}>
+                <span className="text-stone-900">{name}</span>
+                <span className="block text-xs text-stone-500">{n0(q.corpus_pages)} pages in the draft</span>
+              </td>
+              <td className={td}>{q.n}</td>
+              {q.rated ? (
+                <>
+                  <td className={td}>
+                    {Math.round(q.light!)}% / {Math.round(q.work!)}% / {Math.round(q.specialist!)}%
+                  </td>
+                  <td className={td}>
+                    {Math.round(q.rev_agent_per100!)}
+                    <span className="text-stone-500">{ci(q.rev_agent_ci)}</span>
+                  </td>
+                  <td className={td}>{namedKinds(q).map((k) => KIND_WORDS[k]).join(', ')}</td>
+                </>
+              ) : (
+                <td className={`${td} text-stone-500`} colSpan={3}>
+                  Too few pages measured to give a rate.
+                </td>
+              )}
+            </tr>
+          ))}
+          <tr>
+            <td className={`${td} font-semibold text-stone-900`}>All sections</td>
+            <td className={td}>{TQ.sample.n}</td>
+            <td className={td}>
+              {Math.round(TQ.sample.light)}% / {Math.round(TQ.sample.work)}% / {Math.round(TQ.sample.specialist)}%
+            </td>
+            <td className={td}>
+              {Math.round(TQ.sample.rev_agent_per100_adjusted)}
+              <span className="text-stone-500">{ci(TQ.sample.rev_agent_ci_adjusted)}</span>
+              <span className="block text-xs text-stone-500">adjusted for findings that did not hold up</span>
+            </td>
+            <td className={td} />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      {unsampled.length > 0 && (
+        <p className="text-sm text-stone-500 mt-2">No sample page fell in: {unsampled.join(', ')}.</p>
+      )}
+    </>
+  );
+}
+
+function TengyurSections({ corrections }: { corrections: { received: number; reviewed: number } }) {
+  const d = TQ.defects;
+  return (
+    <>
+      <p>
+        The draft puts every drafted page of the Derge Tengyur into English beside the woodblock and the Tibetan text.
+        In a random sample, reviewers judged that {Math.round(TQ.sample.light)}% of pages need only light edits. The
+        errors are concentrated in some sections and in verse; the figures below say where.
+      </p>
+      <p className="mt-4">
+        Every translated page of the Derge Tengyur says, under its draft label, how its section measured here. The
+        figures are from {TQ.sample.n} pages drawn at random from all {n0(TQ.sample.population)} drafted pages and read
+        against the Tibetan on {fmtDate(TQ.measured)}.
+        <S href={SRC.tengyurRandom} />
+      </p>
+      <p className="mt-4 text-base border-l-2 border-amber-700/40 pl-3">
+        <strong>The reviewers are AI, not scholars.</strong> Two Claude Opus reviewers, each blind to the other, read
+        every page. When their findings were checked by eye, {TQ.reviewers.precision_pct}% held up
+        {ci(TQ.reviewers.precision_ci)}; they found {TQ.reviewers.planted_recall_pct}% of errors we planted; their page
+        verdicts agreed with a κ of {TQ.reviewers.kappa.toFixed(2)}. No person who reads Tibetan has reviewed these
+        pages yet (<A href={SRC.scholar}>#5800</A>). A section with fewer than {TQ.min_pages} pages read gets no rate of
+        its own.
+      </p>
+      <div className="mt-6">
+        <TengyurSectionTable />
+      </div>
+      <p className="text-sm text-stone-500 mt-3">
+        Light, work and specialist are each reviewer&rsquo;s verdict on whether a Tibetologist could fix the page with
+        light edits, would need real work, or would need a specialist. Reversed or wrong speaker counts what either
+        reviewer flagged, per 100 pages, with a 95% interval; the section rates are not adjusted, the total is.
+        Pages in the draft: {fmtDate(TQ.measured)}.
+      </p>
+
+      <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">Known issues</h3>
+      <ul className="list-disc pl-5 space-y-2 text-base">
+        <li>
+          <strong>Pramāṇa:</strong> an opponent&rsquo;s objection is sometimes given as the author&rsquo;s own view,
+          and named reason-types are mistranslated. It has the highest error rates of any section.
+          <S href={SRC.tengyurRandom} />
+        </li>
+        <li>
+          <strong>Vinaya:</strong> {n0(d.vinaya_pali_pages)} pages ({d.vinaya_pali_pct}% of the section) use Pali
+          names for the offence classes of a Mūlasarvāstivāda text, such as <em>saṅghādisesa</em> for{' '}
+          <em>saṅghāvaśeṣa</em>. Measured {fmtDate(TQ.measured)}.
+          <S href={SRC.tengyurRandom} />
+        </li>
+        <li>
+          <strong>{n0(d.unclear_guess_tags)}</strong> words at the end of a page are marked unclear, and the English
+          inside the mark is a guess at a word broken across the page.
+          <S href={SRC.tengyurResidue} />
+        </li>
+        <li>
+          <strong>{n0(d.colophon_missing_ending)}</strong> colophons are missing their ending in the English.
+          <S href={SRC.tengyurResidue} />
+        </li>
+        <li>
+          <strong>{n0(d.body_text_in_note)}</strong> pages have body text inside a translator&rsquo;s note, and{' '}
+          {n0(d.tibetan_outside_notes)} have Tibetan left in the English. Listed {fmtDate(d.measured)}, not yet
+          repaired.
+          <S href={SRC.tengyurResidue} />
+        </li>
+        <li>
+          <strong>Verse</strong> has more errors than prose: {Math.round(TQ.verse.mostly_verse.rev_agent_per100)} reversed
+          statements or wrong speakers per 100 pages on pages that are half verse or more (n ={' '}
+          {TQ.verse.mostly_verse.n}), against {Math.round(TQ.verse.prose.rev_agent_per100)} on prose (n ={' '}
+          {TQ.verse.prose.n}).
+          <S href={SRC.tengyurRandom} />
+        </li>
+      </ul>
+
+      <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">Corrections from readers</h3>
+      <p className="text-base">
+        Any page can be reported with &ldquo;The English is wrong here&rdquo;, giving the passage, the correction and,
+        if you like, the Tibetan. A person reads every report against the Tibetan before anything changes; nothing is
+        applied automatically, and a correction we make is kept as a recorded revision of the page. Received so far on
+        Tengyur pages: <strong>{n0(corrections.received)}</strong>; reviewed: <strong>{n0(corrections.reviewed)}</strong>.
+        <S href={SRC.release} />
+      </p>
+    </>
+  );
+}
+
+export default async function CanonQualityPage() {
+  const corrections = await tengyurCorrections();
   return (
     <ContentPageLayout
       header={
@@ -743,6 +958,10 @@ export default function CanonQualityPage() {
           {CANONS.map((c) => (
             <CanonCard key={c.id} c={c} />
           ))}
+        </Section>
+
+        <Section id="tengyur-sections" title="The Tengyur, section by section">
+          <TengyurSections corrections={corrections} />
         </Section>
 
         <Section id="ask" title="What we would ask of a scholar">

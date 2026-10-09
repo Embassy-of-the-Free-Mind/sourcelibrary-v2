@@ -234,17 +234,17 @@ function buildNote(o: {
   }
   if (!o.count) {
     parts.push(
-      'No witness holds an anchor at this reference. That means this library has no leaf on which the number is printed — not that the reference is invalid. editions_searched lists what was consulted and the reference range each covers.',
+      'No witness holds an anchor at this reference. That means this library has no leaf on which the number is printed, not that the reference is invalid. editions_searched lists what was consulted and the reference range each covers.',
     );
   }
   if (o.otherWorks) {
     parts.push(
-      `${o.otherWorks} leaf/leaves carry this number under a different work — see other_works_at_this_reference. At a work boundary the running head can lag by a leaf, so if the reference is near the start of the work you asked for, one of those is probably it.`,
+      `${o.otherWorks} leaf/leaves carry this number under a different work; see other_works_at_this_reference. At a work boundary the running head can lag by a leaf, so if the reference is near the start of the work you asked for, one of those is probably it.`,
     );
   }
   if (o.sectionAsked && o.sectionsFound.some((r) => !r.endsWith(o.sectionAsked as string))) {
     parts.push(
-      `Matching is by page, not section: you asked for ${o.sectionAsked} and the anchors printed on these leaves read ${o.sectionsFound.join(', ')}. A leaf carries a run of sections and the margin records only one of them, so this is the right leaf — read the section off it.`,
+      `Matching is by page, not section: you asked for ${o.sectionAsked} and the anchors printed on these leaves read ${o.sectionsFound.join(', ')}. A leaf carries a run of sections and the margin records only one of them, so this is the right leaf. Read the section off it.`,
     );
   }
   if (o.ambiguous) {
@@ -259,7 +259,7 @@ function buildNote(o: {
   }
   if (o.count) {
     parts.push(
-      'Every witness is a leaf on which this reference was printed, except where basis is "frame" — those sit between two printed neighbours under a verified constant offset. Nothing is interpolated.',
+      'Every witness is a leaf on which this reference was printed, except where basis is "frame": those sit between two printed neighbours under a verified constant offset. Nothing is interpolated.',
     );
   }
   return parts.join(' ');

@@ -90,7 +90,7 @@ export default function DidTheAIReadThisPage() {
         <h2 id="two-questions" className="font-serif text-2xl md:text-3xl text-primary">1. Two questions, not one</h2>
 
         <p>
-          Asking &ldquo;is this book in training&rdquo; quietly conflates two different questions. The first is whether the AI has seen the specific scan, transcription, or printing we hold &mdash; the file. The second is whether the AI has encountered the <em>work</em> through some channel: a modern translation, a critical edition, a Wikipedia summary, a scholarly citation. For most pre-modern multilingual books, the answer to the second is what people actually want to know &mdash; whether the AI ecosystem already &ldquo;has&rdquo; the work in some form &mdash; and the answer to the first is approximately unanswerable with black-box probes.
+          Asking &ldquo;is this book in training&rdquo; quietly conflates two different questions. The first is whether the AI has seen the specific scan, transcription, or printing we hold: the file. The second is whether the AI has encountered the <em>work</em> through some channel: a modern translation, a critical edition, a Wikipedia summary, a scholarly citation. For most pre-modern multilingual books, the answer to the second is what people actually want to know (whether the AI ecosystem already &ldquo;has&rdquo; the work in some form), and the answer to the first is approximately unanswerable with black-box probes.
         </p>
 
         <p>
@@ -104,7 +104,7 @@ export default function DidTheAIReadThisPage() {
         </p>
 
         <p>
-          That disposition turns out to be almost exactly what we need as a Bayesian prior for &ldquo;has this work been propagated through derived editions an AI is likely to have seen.&rdquo; A work with no English translation cannot have been encountered in English; a work with Loeb, Penguin, and Oxford translations almost certainly was. We convert the disposition, the translator/publisher list, the IA-scan presence, and the year of the oldest translation into a log-odds prior. On its own, this bibliographic prior agrees with the full Bayesian detector on 88% of books &mdash; the rare-book infrastructure we already had is doing most of the work.
+          That disposition turns out to be almost exactly what we need as a Bayesian prior for &ldquo;has this work been propagated through derived editions an AI is likely to have seen.&rdquo; A work with no English translation cannot have been encountered in English; a work with Loeb, Penguin, and Oxford translations almost certainly was. We convert the disposition, the translator/publisher list, the IA-scan presence, and the year of the oldest translation into a log-odds prior. On its own, this bibliographic prior agrees with the full Bayesian detector on 88% of books; the rare-book infrastructure we already had is doing most of the work.
         </p>
 
         <h2 id="probe" className="font-serif text-2xl md:text-3xl text-primary">3. The behavioural probe</h2>
@@ -119,7 +119,7 @@ export default function DidTheAIReadThisPage() {
         </ul>
 
         <p>
-          We probe two models in parallel: Claude Haiku 4.5 and Gemini 3.1 Flash Lite Preview. The interesting empirical finding is that <strong>Haiku is unusually well-calibrated</strong> at the long-tail boundary &mdash; it says &ldquo;no&rdquo; with high reliability on books we know are obscure, and &ldquo;unsure&rdquo; rather than confabulating when it doesn&rsquo;t know. Gemini 3.1 Flash Lite, by contrast, says &ldquo;yes&rdquo; to almost everything and produces confident plausible-fabricated text. (That&rsquo;s the Drebbel story above: Gemini Flash Lite confidently invented Latin; Haiku said it didn&rsquo;t know.) We treat Haiku&rsquo;s response as the stronger likelihood signal and Gemini&rsquo;s only as weak corroboration.
+          We probe two models in parallel: Claude Haiku 4.5 and Gemini 3.1 Flash Lite Preview. The interesting empirical finding is that <strong>Haiku is unusually well-calibrated</strong> at the long-tail boundary: it says &ldquo;no&rdquo; with high reliability on books we know are obscure, and &ldquo;unsure&rdquo; rather than confabulating when it doesn&rsquo;t know. Gemini 3.1 Flash Lite, by contrast, says &ldquo;yes&rdquo; to almost everything and produces confident plausible-fabricated text. (That&rsquo;s the Drebbel story above: Gemini Flash Lite confidently invented Latin; Haiku said it didn&rsquo;t know.) We treat Haiku&rsquo;s response as the stronger likelihood signal and Gemini&rsquo;s only as weak corroboration.
         </p>
 
         <p>
@@ -129,7 +129,7 @@ export default function DidTheAIReadThisPage() {
         <h2 id="numbers" className="font-serif text-2xl md:text-3xl text-primary">4. The catalogue numbers</h2>
 
         <p>
-          Random sample of 1,000 books drawn uniformly from the 16,871 books in the library with at least one OCR&rsquo;d page (the &ldquo;probe-able&rdquo; population &mdash; books for which any text exists for a model to potentially have seen):
+          Random sample of 1,000 books drawn uniformly from the 16,871 books in the library with at least one OCR&rsquo;d page (the &ldquo;probe-able&rdquo; population, books for which any text exists for a model to potentially have seen):
         </p>
 
         <div className="bg-warm/50 border border-light rounded-lg p-6 my-6">
@@ -160,7 +160,7 @@ export default function DidTheAIReadThisPage() {
         <h2 id="what-it-doesnt-measure" className="font-serif text-2xl md:text-3xl text-primary">5. What this doesn&rsquo;t measure</h2>
 
         <p>
-          The honest qualifier: this method measures whether the AI <em>recognises</em> the work as a scholarly object &mdash; whether some channel of derived editions has reached it &mdash; not whether the model has seen our specific scan. We tested the distinction directly. For ten books our detector classified as &ldquo;in training&rdquo; and ten classified as &ldquo;not in training,&rdquo; we provided eighty characters of the actual OCR as a prefix and asked the model to continue. ROUGE-L of the continuation against the next 300 characters averaged 0.099 for &ldquo;in training&rdquo; books and 0.084 for &ldquo;not in training&rdquo; books &mdash; a ratio of 1.17&times;, well below any meaningful discrimination threshold. <strong>Even on books the model recognises, it cannot reproduce our specific OCR.</strong> Recognition is not file exposure, and we make no claim to the second.
+          The honest qualifier: this method measures whether the AI <em>recognises</em> the work as a scholarly object (whether some channel of derived editions has reached it), not whether the model has seen our specific scan. We tested the distinction directly. For ten books our detector classified as &ldquo;in training&rdquo; and ten classified as &ldquo;not in training,&rdquo; we provided eighty characters of the actual OCR as a prefix and asked the model to continue. ROUGE-L of the continuation against the next 300 characters averaged 0.099 for &ldquo;in training&rdquo; books and 0.084 for &ldquo;not in training&rdquo; books, a ratio of 1.17&times;, well below any meaningful discrimination threshold. <strong>Even on books the model recognises, it cannot reproduce our specific OCR.</strong> Recognition is not file exposure, and we make no claim to the second.
         </p>
 
         <p>
@@ -174,7 +174,7 @@ export default function DidTheAIReadThisPage() {
         </p>
 
         <p>
-          For the broader question of AI training-data coverage of long-tail scholarly material, this is a small datapoint with a perhaps-unsurprising conclusion: frontier models cover the canon and miss the periphery, and the periphery is enormous &mdash; thousands of works per specialist collection. The unsurprising part is the rate. The surprising part is how cheap it is to measure: thirty hundredths of a US cent per book, no logprob access, no fine-tuned probes, just a calibrated language model answering a direct question well enough to be useful when fused with a good prior.
+          For the broader question of AI training-data coverage of long-tail scholarly material, this is a small datapoint with a perhaps-unsurprising conclusion: frontier models cover the canon and miss the periphery, and the periphery is enormous: thousands of works per specialist collection. The unsurprising part is the rate. The surprising part is how cheap it is to measure: thirty hundredths of a US cent per book, no logprob access, no fine-tuned probes, just a calibrated language model answering a direct question well enough to be useful when fused with a good prior.
         </p>
 
         <p className="mt-8 text-secondary">

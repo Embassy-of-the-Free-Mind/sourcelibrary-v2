@@ -38,7 +38,7 @@ async function pushNtfy(title, message) {
       method: 'POST',
       headers: {
         'Title': title,
-        'Priority': 'default',
+        'Priority': 'low', // silent tier (#6181): routine; the 06:00Z morning digest is the one default-priority message
         'Tags': 'chart_with_upwards_trend',
       },
       body: message,

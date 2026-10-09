@@ -516,13 +516,38 @@ export interface ReaderStrings {
       invented_text: string;
       wrong_image: string;
       wrong_language: string;
+      translation_error: string;
     };
     commentPlaceholder: string;
+    /** The three fields a `translation_error` report adds (#6120). */
+    passageLabel: string;
+    correctionLabel: string;
+    sourceLabel: string;
     send: string;
     sending: string;
     cancel: string;
     thanks: string;
     failed: string;
+  };
+
+  /**
+   * The Derge Tengyur section note under the machine-draft line (#6120). Every number comes from
+   * src/data/tengyur-section-quality.json; these are only the sentences around them.
+   */
+  tengyurNote: {
+    /** How good: the section's measured light/work/specialist split, who judged it and when. */
+    rated: (a: { section: string; n: number; date: string; light: number; work: number; specialist: number }) => string;
+    /** What goes wrong: the commonest kinds, then reversal/agent findings per 100 pages. */
+    faults: (a: { kinds: string[]; revAgent: number; voice: boolean }) => string;
+    /** n below the threshold: no rate of its own, the whole-Tengyur figures instead. */
+    tooFew: (a: { section: string; n: number; of: number; date: string; light: number; revAgent: number }) => string;
+    kinds: { term: string; structure: string; gloss: string; omission: string; addition: string; reversal: string; agent: string };
+    /** Section-specific failure the reviewers named (#5829 Result 2, Result 5). */
+    /** The Vinaya's term kind, naming the Pali offence-class names (#5829 Result 6). */
+    vinayaTerms: (pct: number) => string;
+    methodLink: string;
+    /** Section names as a reader of this locale says them; Sanskrit names stay. */
+    sectionNames: Record<string, string>;
   };
 
   /** Revision history panel (public; the Restore action itself stays
@@ -616,6 +641,38 @@ export interface ReaderStrings {
     viewCurrentEdition: string;
   };
 }
+
+/** The Tengyur quality note in English (#6120). Hoisted so the Latin block can reuse it:
+ * a `/la` reader page exists only for a book written in Latin, so a Tibetan canon volume
+ *  never renders there and the note needs no Latin wording. */
+const TENGYUR_NOTE_EN: ReaderStrings['tengyurNote'] = {
+    rated: ({ section, n, date, light, work, specialist }) =>
+      `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+    faults: ({ kinds, revAgent, voice }) =>
+      `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
+    tooFew: ({ section, n, of, date, light, revAgent }) =>
+      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
+    kinds: {
+      term: 'mistranslated technical terms',
+      structure: 'misread sentence structure',
+      gloss: 'inaccurate notes',
+      omission: 'omitted phrases',
+      addition: 'added words',
+      reversal: 'reversed statements',
+      agent: 'misattributed speakers',
+    },
+    vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
+    methodLink: 'How this was measured',
+    sectionNames: {
+      'Tantra commentary': 'tantra commentary',
+      'Sūtra commentary': 'sūtra commentary',
+      'Grammar & sciences': 'grammar and sciences',
+      Praises: 'praises',
+      Letters: 'letters',
+      Miscellaneous: 'miscellaneous',
+      Catalogue: 'catalogue',
+    },
+};
 
 export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
   en: {
@@ -1000,14 +1057,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Translation adds things',
         wrong_image: 'Wrong page image',
         wrong_language: 'Wrong language',
+        translation_error: 'The English is wrong here',
       },
       commentPlaceholder: 'Anything else? (optional)',
+      passageLabel: 'The English as it reads now',
+      correctionLabel: 'What it should say',
+      sourceLabel: 'The original words (optional)',
       send: 'Send report',
       sending: 'Sending…',
       cancel: 'Cancel',
       thanks: 'Thank you. We will look at this page.',
       failed: 'That did not send. Try again in a moment.',
     },
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -1471,13 +1533,45 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'La traducción añade cosas',
         wrong_image: 'Imagen de página equivocada',
         wrong_language: 'Idioma equivocado',
+        translation_error: 'La traducción está mal aquí',
       },
       commentPlaceholder: '¿Algo más? (opcional)',
+      passageLabel: 'La traducción tal como se lee ahora',
+      correctionLabel: 'Lo que debería decir',
+      sourceLabel: 'Las palabras del original (opcional)',
       send: 'Enviar',
       sending: 'Enviando…',
       cancel: 'Cancelar',
       thanks: 'Gracias. Revisaremos esta página.',
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
+    },
+    tengyurNote: {
+      rated: ({ section, n, date, light, work, specialist }) =>
+        `De ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión sustancial` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
+      faults: ({ kinds, revAgent, voice }) =>
+        `Errores medidos: unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}${kinds.length ? `. También frecuentes: ${kinds.join(', ')}` : ''}.`,
+      tooFew: ({ section, n, of, date, light, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, y unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
+      kinds: {
+        term: 'términos técnicos mal traducidos',
+        structure: 'estructura de la frase mal leída',
+        gloss: 'notas inexactas',
+        omission: 'frases omitidas',
+        addition: 'palabras añadidas',
+        reversal: 'afirmaciones invertidas',
+        agent: 'hablantes mal atribuidos',
+      },
+      vinayaTerms: (pct) => `términos técnicos mal traducidos (nombres pali para las clases de faltas en el ${pct} % de las páginas del Vinaya)`,
+      methodLink: 'Cómo se midió',
+      sectionNames: {
+        'Tantra commentary': 'comentario tántrico',
+        'Sūtra commentary': 'comentario de sūtras',
+        'Grammar & sciences': 'gramática y ciencias',
+        Praises: 'himnos de alabanza',
+        Letters: 'cartas',
+        Miscellaneous: 'miscelánea',
+        Catalogue: 'catálogo',
+      },
     },
     history: {
       title: 'Historial de revisiones',
@@ -1943,14 +2037,20 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Conversio aliquid addit',
         wrong_image: 'Imago alienae paginae',
         wrong_language: 'Lingua falsa',
+        translation_error: 'Conversio Anglica hic errat',
       },
       commentPlaceholder: 'Aliquid aliud? (si vis)',
+      passageLabel: 'Conversio ut nunc legitur',
+      correctionLabel: 'Quid dicere debeat',
+      sourceLabel: 'Verba fontis (si vis)',
       send: 'Relationem mitte',
       sending: 'Mittitur…',
       cancel: 'Omitte',
       thanks: 'Gratias agimus. Hanc paginam inspiciemus.',
       failed: 'Mitti non potuit. Paulo post iterum tempta.',
     },
+    // Unreachable on /la (Latin-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Historia recensionum',
       loading: 'Historia recensionum arcessitur…',

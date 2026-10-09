@@ -7,14 +7,14 @@ export const metadata: Metadata = {
   description:
     'We measured the rate of new Latin translations and counted what is left. At the current pace, finishing the Latin Renaissance alone would take roughly ten thousand years.',
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'How Long Would It Take to Translate the Renaissance?',
     description:
       'We did the division. At the current rate of scholarly translation, the Latin Renaissance alone would take about ten thousand years to finish.',
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/how-long-to-translate',
@@ -90,7 +90,7 @@ export default function HowLongToTranslatePage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           This is where you have to be careful, and we have learned to be. If you flag every Latin edition written by an author who has <em>any</em> translation to his name, about 13 per cent of editions light up. But a{' '}
           <Link href="/blog/untranslated-renaissance" className="text-accent-rust hover:underline">hand-audit</Link>{' '}
-          shows that flag is only about 70 per cent precise at the level of the individual work, and badly unit-sensitive: a translated author drags along his untranslated minor works (Grotius&rsquo;s wedding poems, Erasmus&rsquo;s school grammar), and prolific famous authors have far more editions than obscure ones, so counting by edition over-represents the translated. Count by <em>work</em> instead, and the figure collapses to <strong className="text-stone-800">one to two per cent</strong>. About 98 per cent of the Latin works of the early modern period — on the order of <strong className="text-stone-800">355,000 of them</strong> — have never been translated into English at all.
+          shows that flag is only about 70 per cent precise at the level of the individual work, and badly unit-sensitive: a translated author drags along his untranslated minor works (Grotius&rsquo;s wedding poems, Erasmus&rsquo;s school grammar), and prolific famous authors have far more editions than obscure ones, so counting by edition over-represents the translated. Count by <em>work</em> instead, and the figure collapses to <strong className="text-stone-800">one to two per cent</strong>. About 98 per cent of the Latin works of the early modern period (on the order of <strong className="text-stone-800">355,000 of them</strong>) have never been translated into English at all.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">

@@ -1,0 +1,33 @@
+{
+ "packet": 15,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "6970e3689b09d309d780a282",
+  "6992ca96d4d545ae73fee5c3",
+  "69b3e5fe304c1c6b3950aad6",
+  "69f325c852a77bb28fdb5cd7",
+  "69e748da49abba5e98281b25",
+  "69c1b97e8522835be8451b41",
+  "6a424e7d80ec989e1e67d7a9",
+  "6a2032d818654bf8e19038c3",
+  "6a3c6c3a39b4508b04e478ba",
+  "69c656165fd2dc1d93b44406",
+  "69e7abfc5f1a22ab19aa1917",
+  "6a94345d7e41ac27631833a0",
+  "699062feef12272ffdc8ef20",
+  "69e77aa10fc6fc955e36105e",
+  "69e7518610ee9075bcdcde12",
+  "decoy-29",
+  "69c1bae78522835be845b5cc",
+  "6a3cc169ec254ff6cae0c07b",
+  "6a94a910bf723b215d8c0985",
+  "decoy-30",
+  "69e74eeb5cf1eaf3ad80ddc1",
+  "69c1b8928522835be844ad59",
+  "69e72c7da409200ea79f4a01",
+  "69d6659cdaca889caf9273c3",
+  "6a44dec7e46c70aa65d3e470",
+  "6985ca71baced3616f202e2d"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Alkoran | Author: Muhammad | Year: 1707 | Language: Dutch\n2. Title: 針灸大成 (Zhenjiu Dacheng: Great Compendium of Acupuncture) Vol 2 | Author: Yang Jizhou | Year: 1601 | Language: Chinese\n3. Title: Collection of philosophical works by Averroes | Author: Averroes | Year: 1450 | Language: Hebrew\n4. Title: Kitāb al-Tabṣirah fī ʻilm al-hayʼah | Author: Kharaqī, ʻAbd al-Jabbār ibn ʻAbd al-Jabbār, 1084-1158 | Year: 1200 | Language: Arabic\n5. Title: هفت پیکر (Haft Paykar) | Author: Nizami Ganjavi | Year: 1197 | Language: Persian\n6. Title: The Tuḥfah-ʼi Sāmī (Gift of Sām), composed by Prince Sām Mīrzā (1517–1567). | Year: 1550 | Language: Persian\n7. Title: Prognosis medica, ad usum praxeos facili methodo digesta. A Sylvestro Rattræo, Med. Doct. Glasguensi Scoto. | Author: Rattray, Sylvester | Language: Latin\n8. Title: [Juzʾ (part) of Qurʿān; from Java] Or. 7182 | Year: 1750 | Language: Arabic\n9. Title: 日知錄·卷五~卷六 (vol 4) | Author: 顧炎武 | Language: Chinese\n10. Title: Wan wu zhen yuan (萬物真原) — True Origin of All Things | Author: Giulio Aleni; Francisco Furtado; Nicolas Longobardi | Year: 1628 | Language: Chinese\n11. Title: Kanjur 'Dul ba Ja | Author: Neyphug Monastery | Year: 1700 | Language: Tibetan\n12. Title: 4063 Kashmiri Devotional Poems Pandit Nilakanth Sharma UPSS | Language: Sanskrit\n13. Title: In Cl. Ptolemaei de Astrorum Iudiciis Commentaria | Author: Girolamo Cardano | Year: 1554 | Language: Latin\n14. Title: gZa' rgod dug gi spu gri skor | Author: Gangtey Monastery Collection | Year: 1700 | Language: Tibetan\n15. Title: ספר תהלים (Sepher Tehillim / Psalms) | Author: David (trad.) | Year: 1685 | Language: Hebrew\n16. Title: ספר מאור הגנוז | Author: ר׳ יהודה בן שמואל מקרקא | Year: 1612 | Language: Hebrew\n17. Title: Miscellaneous fragments from different manuscripts | Year: 1650 | Language: Hebrew and Judeo-Arabic\n18. Title: 居易錄·卷二十五~卷二十七 (vol 9) | Author: 王士禛 | Language: Chinese\n19. Title: Vajra Suchi Upanishad Devanagari Manuscript Resident Of Anant Nag Courtesy Dwark Nath Ji | Language: Sanskrit\n20. Title: שער הסודות הנעלמים | Author: ר׳ אברהם חיים מליוורנו | Year: 1685 | Language: Hebrew\n21. Title: دیوان حافظ (Dīvān-e Hāfez) | Author: Hafez | Year: 1957 | Language: Persian\n22. Title: Composite manuscript containing a treatise on music and an astrological work. | Year: 1908 | Language: Arabic\n23. Title: 列子沖虛真經 (Liezi), Vol. 1 | Author: 列禦寇 (Liezi) | Year: 1615 | Language: Chinese\n24. Title: Alchemical Compilation | Year: 1496 | Language: Arabic\n25. Title: Dissertatio Medica Inauguralis De Hydrope Ovarii Muliebris, QuamConsentiente Excellentißimo & Gratiosißimo Medicorum Ordine In Illustri Basileensium Academia Pro Licentia Summos in Medicina Honores, Insignia ac Privilegi | Author: Schorkopff, Justus Theodor | Language: Latin\n26. Title: Quaestiones selectiores controversae, ex 7. & 8. pandectarum libris | Author: Pfaud, Vitus Philippus | Year: 1615 | Language: Latin\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}
