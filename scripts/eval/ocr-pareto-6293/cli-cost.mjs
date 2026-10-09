@@ -14,7 +14,7 @@
  *          (lite's stored output from the bench; tokens per character assumed equal); thinking unknown and not counted
  *
  *   node scripts/eval/ocr-pareto-6293/cli-cost.mjs --bench <bench> --engine gemini-3.8-flash+antigravity-cli --model gemini-3.8-flash
- * Writes scripts/eval/results/ocr-pareto-6293/cli-cost.json.
+ * Writes scripts/eval/results/ocr-pareto-6293/cli-cost.json, or --out=<file> for another tier (cli-cost-<model>.json).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -52,6 +52,6 @@ const out = {
   all: { pages_both_text: allN, r_out: r3(allCli / allLite), usd_per_1k_batch: price(allCli / allLite) },
   charts,
 };
-const OUT = path.join(__dirname, '..', 'results', 'ocr-pareto-6293', 'cli-cost.json');
+const OUT = argOf('out') ? path.resolve(argOf('out')) : path.join(__dirname, '..', 'results', 'ocr-pareto-6293', 'cli-cost.json');
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 console.log(JSON.stringify(out.all), Object.entries(charts).map(([k, v]) => `${k} ${v.usd_per_1k_batch}`).join(', '), '→', path.relative(process.cwd(), OUT));

@@ -45,7 +45,7 @@
         "invention": {
           "median": 0.026,
           "mean": 0.037,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.145,
           "ref_mean": 0.155
         },
@@ -169,7 +169,7 @@
         "invention": {
           "median": 0.016,
           "mean": 0.021,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.127,
           "ref_mean": 0.13
         },
@@ -287,7 +287,7 @@
         "invention": {
           "median": 0.017,
           "mean": 0.029,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.125,
           "ref_mean": 0.139
         },
@@ -309,7 +309,7 @@
             "year": null,
             "cer": 0.466,
             "gap": 0.098,
-            "invention": 0.035,
+            "invention": 0.03,
             "has_ref": true,
             "unsupported": [
               "巻上呪",
@@ -317,9 +317,9 @@
               "呪故但",
               "性海湛",
               "海湛然",
-              "念四文",
               "四文初",
-              "之得三"
+              "之得三",
+              "得三擧"
             ]
           },
           {
@@ -402,8 +402,8 @@
         },
         "invention": {
           "median": 0.116,
-          "mean": 0.169,
-          "n_engines": 11,
+          "mean": 0.168,
+          "n_engines": 13,
           "ref_median": 0.239,
           "ref_mean": 0.262
         },
@@ -463,7 +463,7 @@
             "year": null,
             "cer": 19.07,
             "gap": 0.018,
-            "invention": 0.561,
+            "invention": 0.53,
             "has_ref": true,
             "unsupported": [
               "有董桃",
@@ -548,9 +548,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.004,
-          "mean": 0.018,
-          "n_engines": 11,
+          "median": 0,
+          "mean": 0.017,
+          "n_engines": 13,
           "ref_median": 0.126,
           "ref_mean": 0.13
         },
@@ -572,12 +572,9 @@
             "year": null,
             "cer": 0.461,
             "gap": 0.092,
-            "invention": 0.011,
+            "invention": 0.005,
             "has_ref": true,
             "unsupported": [
-              "巻上巽",
-              "上巽故",
-              "巽故但",
               "巻上季",
               "上季牒",
               "季牒上"
@@ -659,7 +656,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.164,
           "ref_mean": 0.174
         },
@@ -753,7 +750,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.165,
           "ref_mean": 0.175
         },
@@ -828,6 +825,251 @@
           }
         ]
       },
+      "gemini-3.6-flash+antigravity-cli": {
+        "pages_run": 13,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 13,
+          "median_cer": 0.287,
+          "mean_cer": 0.359,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_seq": 0.811,
+          "refused": 0,
+          "n_answered": 13,
+          "median_cer_answered": 0.287,
+          "mean_cer_answered": 0.359,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.034,
+          "mean": 0.034,
+          "n_engines": 13,
+          "ref_median": 0.128,
+          "ref_mean": 0.143
+        },
+        "paired_vs_ref": {
+          "n": 13,
+          "excluded_refused": 0,
+          "wins": 5,
+          "losses": 5,
+          "ties": 3,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 8,
+          "invention_losses": 3
+        },
+        "worst": [
+          {
+            "slug": "chinese-8f0639-p59",
+            "title": "周易禪解(一) (vol 1)",
+            "year": null,
+            "cer": 0.995,
+            "gap": 0.038,
+            "invention": 0.052,
+            "has_ref": true,
+            "unsupported": [
+              "問斯日",
+              "斯日隕",
+              "日隕霜",
+              "冬無水",
+              "無水春",
+              "為至至",
+              "至至而",
+              "乾日故"
+            ]
+          },
+          {
+            "slug": "chinese-0db3cb-p118",
+            "title": "玉海·卷一百十八~卷一百十九 (vol 64)",
+            "year": null,
+            "cer": 0.974,
+            "gap": 0.027,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.476,
+            "gap": 0.1,
+            "invention": 0.041,
+            "has_ref": true,
+            "unsupported": [
+              "四生覚",
+              "生覚者",
+              "之得如",
+              "得如菩",
+              "知離根",
+              "離根本",
+              "根本覚",
+              "中最新"
+            ]
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.382,
+            "gap": 0.03,
+            "invention": 0.012,
+            "has_ref": true,
+            "unsupported": [
+              "弥帝唎",
+              "帝唎夜",
+              "唎夜那"
+            ]
+          },
+          {
+            "slug": "chinese-15f73d-p10",
+            "title": "佛說阿彌陀經 (vol 2)",
+            "year": null,
+            "cer": 0.352,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.7-flash+antigravity-cli": {
+        "pages_run": 13,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 13,
+          "median_cer": 0.18,
+          "mean_cer": 0.226,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.882,
+          "refused": 0,
+          "n_answered": 13,
+          "median_cer_answered": 0.18,
+          "mean_cer_answered": 0.226,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.012,
+          "mean": 0.021,
+          "n_engines": 13,
+          "ref_median": 0.128,
+          "ref_mean": 0.13
+        },
+        "paired_vs_ref": {
+          "n": 13,
+          "excluded_refused": 0,
+          "wins": 6,
+          "losses": 4,
+          "ties": 3,
+          "median_delta_cer": 0,
+          "p_sign": 0.754,
+          "invention_wins": 9,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.469,
+            "gap": 0.098,
+            "invention": 0.009,
+            "has_ref": true,
+            "unsupported": [
+              "上契故",
+              "契故但",
+              "巻上羋",
+              "上羋牒",
+              "羋牒上"
+            ]
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.377,
+            "gap": 0.028,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-15f73d-p10",
+            "title": "佛說阿彌陀經 (vol 2)",
+            "year": null,
+            "cer": 0.352,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-1ba275-p97",
+            "title": "禮記纂言·卷四~卷五 (vol 4)",
+            "year": null,
+            "cer": 0.329,
+            "gap": 0.069,
+            "invention": 0.091,
+            "has_ref": true,
+            "unsupported": [
+              "夫不葷",
+              "不葷許",
+              "去上親",
+              "上親拝",
+              "鄭氏日",
+              "氏日再",
+              "日再拝",
+              "送之邪"
+            ]
+          },
+          {
+            "slug": "chinese-16099d-p117",
+            "title": "藥師琉璃光如來本願功德經 (vol 3)",
+            "year": null,
+            "cer": 0.28,
+            "gap": 0.008,
+            "invention": 0.015,
+            "has_ref": true,
+            "unsupported": [
+              "若取得",
+              "取得経",
+              "得経巻"
+            ]
+          }
+        ]
+      },
       "gemini-3.8-flash+antigravity-cli": {
         "pages_run": 28,
         "empty": 2,
@@ -836,14 +1078,14 @@
         "loop": 0,
         "ref": {
           "n": 28,
-          "median_cer": 0.173,
+          "median_cer": 0.171,
           "mean_cer": 0.26,
           "catastrophic": 2,
           "median_gap": 0,
           "median_seq": 0.876,
           "refused": 0,
           "n_answered": 28,
-          "median_cer_answered": 0.173,
+          "median_cer_answered": 0.171,
           "mean_cer_answered": 0.26,
           "catastrophic_answered": 2
         },
@@ -860,22 +1102,22 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.026,
-          "mean": 0.036,
-          "n_engines": 11,
-          "ref_median": 0.133,
+          "median": 0.024,
+          "mean": 0.033,
+          "n_engines": 13,
+          "ref_median": 0.127,
           "ref_mean": 0.154
         },
         "paired_vs_ref": {
           "n": 28,
           "excluded_refused": 0,
-          "wins": 15,
+          "wins": 16,
           "losses": 10,
-          "ties": 3,
-          "median_delta_cer": 0.003,
-          "p_sign": 0.424,
-          "invention_wins": 18,
-          "invention_losses": 9
+          "ties": 2,
+          "median_delta_cer": 0.006,
+          "p_sign": 0.327,
+          "invention_wins": 20,
+          "invention_losses": 8
         },
         "worst": [
           {
@@ -908,34 +1150,30 @@
             "slug": "chinese-15291d-p29",
             "title": "大乘起信論疏",
             "year": null,
-            "cer": 0.472,
+            "cer": 0.468,
             "gap": 0.097,
-            "invention": 0.012,
+            "invention": 0.016,
             "has_ref": true,
             "unsupported": [
-              "巻上廿",
-              "上廿四",
-              "廿四故",
-              "四故但",
-              "上廿五",
-              "廿五牒",
-              "五牒上"
+              "上契二",
+              "契二引",
+              "無念初",
+              "念初引",
+              "之得文",
+              "得文三",
+              "巻上率",
+              "上率牒"
             ]
           },
           {
             "slug": "chinese-153836-p35",
             "title": "金剛般若波羅蜜經 (vol 1)",
             "year": null,
-            "cer": 0.382,
+            "cer": 0.377,
             "gap": 0.028,
-            "invention": 0.016,
+            "invention": 0,
             "has_ref": true,
-            "unsupported": [
-              "盧罰閣",
-              "罰閣耶",
-              "閣耶帝",
-              "訶罰閣"
-            ]
+            "unsupported": []
           },
           {
             "slug": "chinese-48e6c5-p77",
@@ -992,7 +1230,7 @@
         "invention": {
           "median": 0.155,
           "mean": 0.149,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.236,
           "ref_mean": 0.25
         },
@@ -1139,7 +1377,7 @@
         "invention": {
           "median": 0,
           "mean": 0.016,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.093,
           "ref_mean": 0.11
         },
@@ -1161,11 +1399,9 @@
             "year": null,
             "cer": 0.451,
             "gap": 0.093,
-            "invention": 0.007,
+            "invention": 0.004,
             "has_ref": true,
             "unsupported": [
-              "竟覚起",
-              "覚起信",
               "巻上二",
               "上二引"
             ]
@@ -1176,7 +1412,7 @@
             "year": null,
             "cer": 0.393,
             "gap": 0.033,
-            "invention": 0.043,
+            "invention": 0.054,
             "has_ref": true,
             "unsupported": [
               "囉楞駄",
@@ -1185,8 +1421,8 @@
               "特豆惮",
               "豆惮侄",
               "惮侄他",
-              "阿囉嘰",
-              "囉嘰仏"
+              "醯唎駄",
+              "唎駄孕"
             ]
           },
           {
@@ -1261,7 +1497,7 @@
         "invention": {
           "median": 0.909,
           "mean": 0.852,
-          "n_engines": 11,
+          "n_engines": 13,
           "ref_median": 0.918,
           "ref_mean": 0.863
         },
@@ -1442,6 +1678,24 @@
             "catastrophic": 0,
             "median_unsupported": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "n": 0,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "n": 0,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "n": 1,
             "empty": 0,
@@ -1526,7 +1780,7 @@
             "loop": 0,
             "median_cer": 0.151,
             "catastrophic": 0,
-            "median_unsupported": 0.014
+            "median_unsupported": 0.004
           },
           "gemini-3.1-flash-lite": {
             "n": 20,
@@ -1546,6 +1800,24 @@
             "catastrophic": 2,
             "median_unsupported": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "n": 6,
+            "empty": 0,
+            "refused": 0,
+            "loop": 1,
+            "median_cer": 0.179,
+            "catastrophic": 1,
+            "median_unsupported": 0.05
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "n": 6,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.137,
+            "catastrophic": 0,
+            "median_unsupported": 0.032
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "n": 20,
             "empty": 2,
@@ -1553,7 +1825,7 @@
             "loop": 0,
             "median_cer": 0.154,
             "catastrophic": 2,
-            "median_unsupported": 0.039
+            "median_unsupported": 0.036
           },
           "mistral-ocr-4-1": {
             "n": 20,
@@ -1650,6 +1922,24 @@
             "catastrophic": 0,
             "median_unsupported": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "n": 5,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.352,
+            "catastrophic": 0,
+            "median_unsupported": 0.012
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "n": 5,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.352,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "n": 5,
             "empty": 0,
@@ -1657,7 +1947,7 @@
             "loop": 0,
             "median_cer": 0.354,
             "catastrophic": 0,
-            "median_unsupported": 0.012
+            "median_unsupported": 0.005
           },
           "mistral-ocr-4-1": {
             "n": 5,
@@ -1725,7 +2015,7 @@
             "loop": 0,
             "median_cer": 0.176,
             "catastrophic": 0,
-            "median_unsupported": 0.117
+            "median_unsupported": 0.114
           },
           "gemini-3-flash-preview": {
             "n": 2,
@@ -1734,7 +2024,7 @@
             "loop": 0,
             "median_cer": 0.094,
             "catastrophic": 0,
-            "median_unsupported": 0.009
+            "median_unsupported": 0
           },
           "gemini-3.1-flash-lite": {
             "n": 2,
@@ -1754,14 +2044,32 @@
             "catastrophic": 0,
             "median_unsupported": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "n": 2,
+            "empty": 0,
+            "refused": 0,
+            "loop": 1,
+            "median_cer": 0.546,
+            "catastrophic": 1,
+            "median_unsupported": 0.033
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "n": 2,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.111,
+            "catastrophic": 0,
+            "median_unsupported": 0.025
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "n": 2,
             "empty": 0,
             "refused": 0,
             "loop": 0,
-            "median_cer": 0.098,
+            "median_cer": 0.101,
             "catastrophic": 0,
-            "median_unsupported": 0.015
+            "median_unsupported": 0.009
           },
           "mistral-ocr-4-1": {
             "n": 2,
@@ -1842,6 +2150,8 @@
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite": 0.973,
             "gemini-3.1-flash-lite-b": 0.973,
+            "gemini-3.6-flash+antigravity-cli": 0.688,
+            "gemini-3.7-flash+antigravity-cli": 0.97,
             "gemini-3.8-flash+antigravity-cli": 0.974,
             "mistral-ocr-4-1": 0.941,
             "qwen3-vl-8b": 0.959,
@@ -1887,6 +2197,8 @@
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite": 0.969,
             "gemini-3.1-flash-lite-b": 0.969,
+            "gemini-3.6-flash+antigravity-cli": 0.667,
+            "gemini-3.7-flash+antigravity-cli": 0.967,
             "gemini-3.8-flash+antigravity-cli": 0.964,
             "mistral-ocr-4-1": 0.944,
             "qwen3-vl-8b": 0.962,
@@ -1905,13 +2217,10 @@
           "bow": 0.924,
           "gap": 0,
           "len_ratio": 0.929,
-          "invention": 0.014,
-          "invention_indep": 0.014,
+          "invention": 0,
+          "invention_indep": 0,
           "invention_ref": 0.058,
-          "unsupported_sample": [
-            "十一巻",
-            "一巻一"
-          ],
+          "unsupported_sample": [],
           "invention_ref_sample": [
             "紀天宝",
             "天宝十",
@@ -1929,6 +2238,8 @@
             "gemini-3-flash-preview": 0.993,
             "gemini-3.1-flash-lite": 0.99,
             "gemini-3.1-flash-lite-b": 0.99,
+            "gemini-3.6-flash+antigravity-cli": 0.667,
+            "gemini-3.7-flash+antigravity-cli": 0.98,
             "gemini-3.8-flash+antigravity-cli": 0.976,
             "mistral-ocr-4-1": 0.957,
             "qwen3-vl-8b": 0.982,
@@ -1976,6 +2287,8 @@
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 0.979,
             "gemini-3.1-flash-lite-b": 0.979,
+            "gemini-3.6-flash+antigravity-cli": 0.651,
+            "gemini-3.7-flash+antigravity-cli": 0.962,
             "gemini-3.8-flash+antigravity-cli": 0.959,
             "mistral-ocr-4-1": 0.939,
             "qwen3-vl-8b": 0.993,
@@ -2018,6 +2331,8 @@
             "deepseek-ocr": 0.975,
             "gemini-3.1-flash-lite": 0.983,
             "gemini-3.1-flash-lite-b": 0.983,
+            "gemini-3.6-flash+antigravity-cli": 0.662,
+            "gemini-3.7-flash+antigravity-cli": 0.973,
             "gemini-3.8-flash+antigravity-cli": 0.97,
             "mistral-ocr-4-1": 0.95,
             "qwen3-vl-8b": 0.975,
@@ -2036,7 +2351,7 @@
           "gap": 0.007,
           "len_ratio": 0.923,
           "invention": 0,
-          "invention_indep": 0.036,
+          "invention_indep": 0.015,
           "invention_ref": 0.109,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2056,6 +2371,8 @@
             "deepseek-ocr": 0.979,
             "gemini-3-flash-preview": 0.983,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.664,
+            "gemini-3.7-flash+antigravity-cli": 0.969,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.946,
             "qwen3-vl-8b": 0.972,
@@ -2074,7 +2391,7 @@
           "gap": 0.007,
           "len_ratio": 0.923,
           "invention": 0,
-          "invention_indep": 0.036,
+          "invention_indep": 0.015,
           "invention_ref": 0.109,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2094,10 +2411,98 @@
             "deepseek-ocr": 0.979,
             "gemini-3-flash-preview": 0.983,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.664,
+            "gemini-3.7-flash+antigravity-cli": 0.969,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.946,
             "qwen3-vl-8b": 0.972,
             "tesseract-chi_tra_vert": 0.581
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 290,
+          "empty": false,
+          "refused": false,
+          "loop": true,
+          "cer": 0.974,
+          "acc": 0.026,
+          "seq": 0.632,
+          "bow": 0.659,
+          "gap": 0.027,
+          "len_ratio": 1.859,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.093,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "巻一百",
+            "一百十",
+            "百十九",
+            "十九学",
+            "九学士",
+            "万四十",
+            "四十七",
+            "十七百"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.688,
+            "claude-opus-5-5": 0.667,
+            "claude-sonnet-5-5": 0.667,
+            "deepseek-ocr": 0.651,
+            "gemini-3-flash-preview": 0.662,
+            "gemini-3.1-flash-lite": 0.664,
+            "gemini-3.1-flash-lite-b": 0.664,
+            "gemini-3.7-flash+antigravity-cli": 0.685,
+            "gemini-3.8-flash+antigravity-cli": 0.688,
+            "mistral-ocr-4-1": 0.68,
+            "qwen3-vl-8b": 0.651,
+            "tesseract-chi_tra_vert": 0.401
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 151,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.128,
+          "acc": 0.872,
+          "seq": 0.906,
+          "bow": 0.906,
+          "gap": 0,
+          "len_ratio": 0.968,
+          "invention": 0.035,
+          "invention_indep": 0.035,
+          "invention_ref": 0.097,
+          "unsupported_sample": [
+            "一一四",
+            "一四八",
+            "四八二",
+            "八二二",
+            "二二巻"
+          ],
+          "invention_ref_sample": [
+            "一一四",
+            "一四八",
+            "四八二",
+            "八二二",
+            "二二巻",
+            "二巻一",
+            "巻一百",
+            "一百十"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.97,
+            "claude-opus-5-5": 0.967,
+            "claude-sonnet-5-5": 0.98,
+            "deepseek-ocr": 0.962,
+            "gemini-3-flash-preview": 0.973,
+            "gemini-3.1-flash-lite": 0.969,
+            "gemini-3.1-flash-lite-b": 0.969,
+            "gemini-3.6-flash+antigravity-cli": 0.685,
+            "gemini-3.8-flash+antigravity-cli": 0.983,
+            "mistral-ocr-4-1": 0.964,
+            "qwen3-vl-8b": 0.962,
+            "tesseract-chi_tra_vert": 0.596
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -2111,16 +2516,15 @@
           "bow": 0.903,
           "gap": 0,
           "len_ratio": 0.974,
-          "invention": 0.042,
-          "invention_indep": 0.042,
+          "invention": 0.035,
+          "invention_indep": 0.035,
           "invention_ref": 0.097,
           "unsupported_sample": [
             "一千四",
             "千四百",
             "四百八",
             "八十二",
-            "十二巻",
-            "二巻一"
+            "十二巻"
           ],
           "invention_ref_sample": [
             "一千四",
@@ -2140,6 +2544,8 @@
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite": 0.973,
             "gemini-3.1-flash-lite-b": 0.973,
+            "gemini-3.6-flash+antigravity-cli": 0.688,
+            "gemini-3.7-flash+antigravity-cli": 0.983,
             "mistral-ocr-4-1": 0.961,
             "qwen3-vl-8b": 0.959,
             "tesseract-chi_tra_vert": 0.579
@@ -2187,6 +2593,8 @@
             "gemini-3-flash-preview": 0.95,
             "gemini-3.1-flash-lite": 0.946,
             "gemini-3.1-flash-lite-b": 0.946,
+            "gemini-3.6-flash+antigravity-cli": 0.68,
+            "gemini-3.7-flash+antigravity-cli": 0.964,
             "gemini-3.8-flash+antigravity-cli": 0.961,
             "qwen3-vl-8b": 0.939,
             "tesseract-chi_tra_vert": 0.567
@@ -2220,6 +2628,8 @@
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 0.972,
             "gemini-3.1-flash-lite-b": 0.972,
+            "gemini-3.6-flash+antigravity-cli": 0.651,
+            "gemini-3.7-flash+antigravity-cli": 0.962,
             "gemini-3.8-flash+antigravity-cli": 0.959,
             "mistral-ocr-4-1": 0.939,
             "tesseract-chi_tra_vert": 0.583
@@ -2267,6 +2677,8 @@
             "gemini-3-flash-preview": 0.579,
             "gemini-3.1-flash-lite": 0.581,
             "gemini-3.1-flash-lite-b": 0.581,
+            "gemini-3.6-flash+antigravity-cli": 0.401,
+            "gemini-3.7-flash+antigravity-cli": 0.596,
             "gemini-3.8-flash+antigravity-cli": 0.579,
             "mistral-ocr-4-1": 0.567,
             "qwen3-vl-8b": 0.583
@@ -2319,7 +2731,9 @@
             "gemini-3-flash-preview": 0.978,
             "gemini-3.1-flash-lite": 0.98,
             "gemini-3.1-flash-lite-b": 0.968,
-            "gemini-3.8-flash+antigravity-cli": 0.993,
+            "gemini-3.6-flash+antigravity-cli": 0.978,
+            "gemini-3.7-flash+antigravity-cli": 0.995,
+            "gemini-3.8-flash+antigravity-cli": 0.995,
             "mistral-ocr-4-1": 0.977,
             "qwen3-vl-8b": 0.975,
             "tesseract-chi_tra_vert": 0.642
@@ -2366,7 +2780,9 @@
             "gemini-3-flash-preview": 0.968,
             "gemini-3.1-flash-lite": 0.97,
             "gemini-3.1-flash-lite-b": 0.957,
-            "gemini-3.8-flash+antigravity-cli": 0.988,
+            "gemini-3.6-flash+antigravity-cli": 0.973,
+            "gemini-3.7-flash+antigravity-cli": 0.985,
+            "gemini-3.8-flash+antigravity-cli": 0.985,
             "mistral-ocr-4-1": 0.968,
             "qwen3-vl-8b": 0.965,
             "tesseract-chi_tra_vert": 0.638
@@ -2384,8 +2800,8 @@
           "bow": 0.912,
           "gap": 0.098,
           "len_ratio": 0.743,
-          "invention": 0.035,
-          "invention_indep": 0.035,
+          "invention": 0.03,
+          "invention_indep": 0.03,
           "invention_ref": 0.179,
           "unsupported_sample": [
             "巻上呪",
@@ -2393,9 +2809,9 @@
             "呪故但",
             "性海湛",
             "海湛然",
-            "念四文",
             "四文初",
-            "之得三"
+            "之得三",
+            "得三擧"
           ],
           "invention_ref_sample": [
             "地尽満",
@@ -2414,7 +2830,9 @@
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 0.975,
             "gemini-3.1-flash-lite-b": 0.963,
-            "gemini-3.8-flash+antigravity-cli": 0.973,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.977,
+            "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.973,
             "qwen3-vl-8b": 0.982,
             "tesseract-chi_tra_vert": 0.638
@@ -2461,7 +2879,9 @@
             "gemini-3-flash-preview": 0.903,
             "gemini-3.1-flash-lite": 0.907,
             "gemini-3.1-flash-lite-b": 0.907,
-            "gemini-3.8-flash+antigravity-cli": 0.895,
+            "gemini-3.6-flash+antigravity-cli": 0.885,
+            "gemini-3.7-flash+antigravity-cli": 0.898,
+            "gemini-3.8-flash+antigravity-cli": 0.9,
             "mistral-ocr-4-1": 0.898,
             "qwen3-vl-8b": 0.917,
             "tesseract-chi_tra_vert": 0.602
@@ -2478,13 +2898,10 @@
           "bow": 0.908,
           "gap": 0.092,
           "len_ratio": 0.734,
-          "invention": 0.011,
-          "invention_indep": 0.011,
+          "invention": 0.005,
+          "invention_indep": 0.005,
           "invention_ref": 0.168,
           "unsupported_sample": [
-            "巻上巽",
-            "上巽故",
-            "巽故但",
             "巻上季",
             "上季牒",
             "季牒上"
@@ -2506,7 +2923,9 @@
             "deepseek-ocr": 0.903,
             "gemini-3.1-flash-lite": 0.99,
             "gemini-3.1-flash-lite-b": 0.978,
-            "gemini-3.8-flash+antigravity-cli": 0.975,
+            "gemini-3.6-flash+antigravity-cli": 0.968,
+            "gemini-3.7-flash+antigravity-cli": 0.978,
+            "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.98,
             "qwen3-vl-8b": 0.985,
             "tesseract-chi_tra_vert": 0.64
@@ -2547,7 +2966,9 @@
             "deepseek-ocr": 0.907,
             "gemini-3-flash-preview": 0.99,
             "gemini-3.1-flash-lite-b": 0.983,
-            "gemini-3.8-flash+antigravity-cli": 0.975,
+            "gemini-3.6-flash+antigravity-cli": 0.963,
+            "gemini-3.7-flash+antigravity-cli": 0.978,
+            "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.978,
             "qwen3-vl-8b": 0.985,
             "tesseract-chi_tra_vert": 0.64
@@ -2592,34 +3013,83 @@
             "deepseek-ocr": 0.907,
             "gemini-3-flash-preview": 0.978,
             "gemini-3.1-flash-lite": 0.983,
-            "gemini-3.8-flash+antigravity-cli": 0.965,
+            "gemini-3.6-flash+antigravity-cli": 0.953,
+            "gemini-3.7-flash+antigravity-cli": 0.968,
+            "gemini-3.8-flash+antigravity-cli": 0.968,
             "mistral-ocr-4-1": 0.963,
             "qwen3-vl-8b": 0.977,
             "tesseract-chi_tra_vert": 0.637
           }
         },
-        "gemini-3.8-flash+antigravity-cli": {
-          "n_content": 643,
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 648,
           "empty": false,
           "refused": false,
           "loop": false,
-          "cer": 0.472,
-          "acc": 0.528,
-          "seq": 0.813,
-          "bow": 0.91,
-          "gap": 0.097,
-          "len_ratio": 0.747,
-          "invention": 0.012,
-          "invention_indep": 0.012,
-          "invention_ref": 0.167,
+          "cer": 0.476,
+          "acc": 0.524,
+          "seq": 0.805,
+          "bow": 0.905,
+          "gap": 0.1,
+          "len_ratio": 0.753,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": 0.2,
           "unsupported_sample": [
-            "巻上廿",
-            "上廿四",
-            "廿四故",
-            "四故但",
-            "上廿五",
-            "廿五牒",
-            "五牒上"
+            "四生覚",
+            "生覚者",
+            "之得如",
+            "得如菩",
+            "知離根",
+            "離根本",
+            "根本覚",
+            "中最新"
+          ],
+          "invention_ref_sample": [
+            "四生覚",
+            "生覚者",
+            "之得如",
+            "得如菩",
+            "地尽満",
+            "尽満足",
+            "方便一",
+            "便一念"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.978,
+            "claude-opus-5-5": 0.973,
+            "claude-sonnet-5-5": 0.96,
+            "deepseek-ocr": 0.885,
+            "gemini-3-flash-preview": 0.968,
+            "gemini-3.1-flash-lite": 0.963,
+            "gemini-3.1-flash-lite-b": 0.953,
+            "gemini-3.7-flash+antigravity-cli": 0.977,
+            "gemini-3.8-flash+antigravity-cli": 0.977,
+            "mistral-ocr-4-1": 0.963,
+            "qwen3-vl-8b": 0.958,
+            "tesseract-chi_tra_vert": 0.643
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 641,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.469,
+          "acc": 0.531,
+          "seq": 0.813,
+          "bow": 0.912,
+          "gap": 0.098,
+          "len_ratio": 0.744,
+          "invention": 0.009,
+          "invention_indep": 0.009,
+          "invention_ref": 0.165,
+          "unsupported_sample": [
+            "上契故",
+            "契故但",
+            "巻上羋",
+            "上羋牒",
+            "羋牒上"
           ],
           "invention_ref_sample": [
             "薩地満",
@@ -2632,16 +3102,67 @@
             "相以遠"
           ],
           "agree": {
-            "chandra-ocr-2": 0.993,
-            "claude-opus-5-5": 0.988,
-            "claude-sonnet-5-5": 0.973,
-            "deepseek-ocr": 0.895,
-            "gemini-3-flash-preview": 0.975,
-            "gemini-3.1-flash-lite": 0.975,
-            "gemini-3.1-flash-lite-b": 0.965,
-            "mistral-ocr-4-1": 0.973,
-            "qwen3-vl-8b": 0.972,
+            "chandra-ocr-2": 0.995,
+            "claude-opus-5-5": 0.985,
+            "claude-sonnet-5-5": 0.977,
+            "deepseek-ocr": 0.898,
+            "gemini-3-flash-preview": 0.978,
+            "gemini-3.1-flash-lite": 0.978,
+            "gemini-3.1-flash-lite-b": 0.968,
+            "gemini-3.6-flash+antigravity-cli": 0.977,
+            "gemini-3.8-flash+antigravity-cli": 0.997,
+            "mistral-ocr-4-1": 0.977,
+            "qwen3-vl-8b": 0.975,
             "tesseract-chi_tra_vert": 0.642
+          }
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "n_content": 641,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.468,
+          "acc": 0.532,
+          "seq": 0.813,
+          "bow": 0.91,
+          "gap": 0.097,
+          "len_ratio": 0.744,
+          "invention": 0.016,
+          "invention_indep": 0.016,
+          "invention_ref": 0.171,
+          "unsupported_sample": [
+            "上契二",
+            "契二引",
+            "無念初",
+            "念初引",
+            "之得文",
+            "得文三",
+            "巻上率",
+            "上率牒"
+          ],
+          "invention_ref_sample": [
+            "地尽満",
+            "尽満足",
+            "方便一",
+            "便一念",
+            "相応覚",
+            "応覚心",
+            "初相以",
+            "相以遠"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.995,
+            "claude-opus-5-5": 0.985,
+            "claude-sonnet-5-5": 0.977,
+            "deepseek-ocr": 0.9,
+            "gemini-3-flash-preview": 0.98,
+            "gemini-3.1-flash-lite": 0.98,
+            "gemini-3.1-flash-lite-b": 0.968,
+            "gemini-3.6-flash+antigravity-cli": 0.977,
+            "gemini-3.7-flash+antigravity-cli": 0.997,
+            "mistral-ocr-4-1": 0.978,
+            "qwen3-vl-8b": 0.977,
+            "tesseract-chi_tra_vert": 0.64
           }
         },
         "mistral-ocr-4-1": {
@@ -2686,7 +3207,9 @@
             "gemini-3-flash-preview": 0.98,
             "gemini-3.1-flash-lite": 0.978,
             "gemini-3.1-flash-lite-b": 0.963,
-            "gemini-3.8-flash+antigravity-cli": 0.973,
+            "gemini-3.6-flash+antigravity-cli": 0.963,
+            "gemini-3.7-flash+antigravity-cli": 0.977,
+            "gemini-3.8-flash+antigravity-cli": 0.978,
             "qwen3-vl-8b": 0.977,
             "tesseract-chi_tra_vert": 0.642
           }
@@ -2702,12 +3225,10 @@
           "bow": 0.92,
           "gap": 0.093,
           "len_ratio": 0.726,
-          "invention": 0.007,
-          "invention_indep": 0.007,
+          "invention": 0.004,
+          "invention_indep": 0.004,
           "invention_ref": 0.157,
           "unsupported_sample": [
-            "竟覚起",
-            "覚起信",
             "巻上二",
             "上二引"
           ],
@@ -2729,7 +3250,9 @@
             "gemini-3-flash-preview": 0.985,
             "gemini-3.1-flash-lite": 0.985,
             "gemini-3.1-flash-lite-b": 0.977,
-            "gemini-3.8-flash+antigravity-cli": 0.972,
+            "gemini-3.6-flash+antigravity-cli": 0.958,
+            "gemini-3.7-flash+antigravity-cli": 0.975,
+            "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.977,
             "tesseract-chi_tra_vert": 0.638
           }
@@ -2776,7 +3299,9 @@
             "gemini-3-flash-preview": 0.64,
             "gemini-3.1-flash-lite": 0.64,
             "gemini-3.1-flash-lite-b": 0.637,
-            "gemini-3.8-flash+antigravity-cli": 0.642,
+            "gemini-3.6-flash+antigravity-cli": 0.643,
+            "gemini-3.7-flash+antigravity-cli": 0.642,
+            "gemini-3.8-flash+antigravity-cli": 0.64,
             "mistral-ocr-4-1": 0.642,
             "qwen3-vl-8b": 0.638
           }
@@ -2833,7 +3358,9 @@
             "gemini-3-flash-preview": 0.986,
             "gemini-3.1-flash-lite": 0.962,
             "gemini-3.1-flash-lite-b": 0.962,
-            "gemini-3.8-flash+antigravity-cli": 0.966,
+            "gemini-3.6-flash+antigravity-cli": 0.973,
+            "gemini-3.7-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
             "mistral-ocr-4-1": 0.986,
             "qwen3-vl-8b": 0.952,
             "tesseract-chi_tra_vert": 0.28
@@ -2871,7 +3398,9 @@
             "gemini-3-flash-preview": 0.993,
             "gemini-3.1-flash-lite": 0.969,
             "gemini-3.1-flash-lite-b": 0.969,
-            "gemini-3.8-flash+antigravity-cli": 0.979,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.7-flash+antigravity-cli": 0.993,
+            "gemini-3.8-flash+antigravity-cli": 0.993,
             "mistral-ocr-4-1": 0.986,
             "qwen3-vl-8b": 0.959,
             "tesseract-chi_tra_vert": 0.28
@@ -2910,7 +3439,9 @@
             "gemini-3-flash-preview": 0.993,
             "gemini-3.1-flash-lite": 0.969,
             "gemini-3.1-flash-lite-b": 0.969,
-            "gemini-3.8-flash+antigravity-cli": 0.979,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.7-flash+antigravity-cli": 0.993,
+            "gemini-3.8-flash+antigravity-cli": 0.993,
             "mistral-ocr-4-1": 0.986,
             "qwen3-vl-8b": 0.959,
             "tesseract-chi_tra_vert": 0.28
@@ -2957,7 +3488,9 @@
             "gemini-3-flash-preview": 0.935,
             "gemini-3.1-flash-lite": 0.911,
             "gemini-3.1-flash-lite-b": 0.911,
-            "gemini-3.8-flash+antigravity-cli": 0.925,
+            "gemini-3.6-flash+antigravity-cli": 0.928,
+            "gemini-3.7-flash+antigravity-cli": 0.935,
+            "gemini-3.8-flash+antigravity-cli": 0.935,
             "mistral-ocr-4-1": 0.935,
             "qwen3-vl-8b": 0.949,
             "tesseract-chi_tra_vert": 0.284
@@ -2995,7 +3528,9 @@
             "deepseek-ocr": 0.935,
             "gemini-3.1-flash-lite": 0.976,
             "gemini-3.1-flash-lite-b": 0.976,
-            "gemini-3.8-flash+antigravity-cli": 0.973,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.7-flash+antigravity-cli": 1,
+            "gemini-3.8-flash+antigravity-cli": 1,
             "mistral-ocr-4-1": 0.986,
             "qwen3-vl-8b": 0.959,
             "tesseract-chi_tra_vert": 0.28
@@ -3033,7 +3568,9 @@
             "deepseek-ocr": 0.911,
             "gemini-3-flash-preview": 0.976,
             "gemini-3.1-flash-lite-b": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.955,
+            "gemini-3.6-flash+antigravity-cli": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.976,
+            "gemini-3.8-flash+antigravity-cli": 0.976,
             "mistral-ocr-4-1": 0.962,
             "qwen3-vl-8b": 0.935,
             "tesseract-chi_tra_vert": 0.28
@@ -3071,13 +3608,15 @@
             "deepseek-ocr": 0.911,
             "gemini-3-flash-preview": 0.976,
             "gemini-3.1-flash-lite": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.955,
+            "gemini-3.6-flash+antigravity-cli": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.976,
+            "gemini-3.8-flash+antigravity-cli": 0.976,
             "mistral-ocr-4-1": 0.962,
             "qwen3-vl-8b": 0.935,
             "tesseract-chi_tra_vert": 0.28
           }
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "n_content": 292,
           "empty": false,
           "refused": false,
@@ -3085,17 +3624,16 @@
           "cer": 0.382,
           "acc": 0.618,
           "seq": 0.754,
-          "bow": 0.781,
-          "gap": 0.028,
+          "bow": 0.784,
+          "gap": 0.03,
           "len_ratio": 0.671,
-          "invention": 0.016,
-          "invention_indep": 0.016,
-          "invention_ref": 0.14,
+          "invention": 0.012,
+          "invention_indep": 0.012,
+          "invention_ref": 0.144,
           "unsupported_sample": [
-            "盧罰閣",
-            "罰閣耶",
-            "閣耶帝",
-            "訶罰閣"
+            "弥帝唎",
+            "帝唎夜",
+            "唎夜那"
           ],
           "invention_ref_sample": [
             "大悲呪",
@@ -3108,14 +3646,96 @@
             "悉吉利"
           ],
           "agree": {
-            "chandra-ocr-2": 0.966,
+            "chandra-ocr-2": 0.973,
             "claude-opus-5-5": 0.979,
             "claude-sonnet-5-5": 0.979,
-            "deepseek-ocr": 0.925,
-            "gemini-3-flash-preview": 0.973,
-            "gemini-3.1-flash-lite": 0.955,
-            "gemini-3.1-flash-lite-b": 0.955,
-            "mistral-ocr-4-1": 0.966,
+            "deepseek-ocr": 0.928,
+            "gemini-3-flash-preview": 0.986,
+            "gemini-3.1-flash-lite": 0.969,
+            "gemini-3.1-flash-lite-b": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
+            "mistral-ocr-4-1": 0.973,
+            "qwen3-vl-8b": 0.959,
+            "tesseract-chi_tra_vert": 0.28
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 292,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.377,
+          "acc": 0.623,
+          "seq": 0.759,
+          "bow": 0.787,
+          "gap": 0.028,
+          "len_ratio": 0.671,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.128,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "大悲呪",
+            "悲呪南",
+            "呪南無",
+            "羯帝爍",
+            "帝爍鉢",
+            "爍鉢囉",
+            "鉢囉耶",
+            "悉吉利"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.986,
+            "claude-opus-5-5": 0.993,
+            "claude-sonnet-5-5": 0.993,
+            "deepseek-ocr": 0.935,
+            "gemini-3-flash-preview": 1,
+            "gemini-3.1-flash-lite": 0.976,
+            "gemini-3.1-flash-lite-b": 0.976,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 1,
+            "mistral-ocr-4-1": 0.986,
+            "qwen3-vl-8b": 0.959,
+            "tesseract-chi_tra_vert": 0.28
+          }
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "n_content": 292,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.377,
+          "acc": 0.623,
+          "seq": 0.759,
+          "bow": 0.787,
+          "gap": 0.028,
+          "len_ratio": 0.671,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.128,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "大悲呪",
+            "悲呪南",
+            "呪南無",
+            "羯帝爍",
+            "帝爍鉢",
+            "爍鉢囉",
+            "鉢囉耶",
+            "悉吉利"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.986,
+            "claude-opus-5-5": 0.993,
+            "claude-sonnet-5-5": 0.993,
+            "deepseek-ocr": 0.935,
+            "gemini-3-flash-preview": 1,
+            "gemini-3.1-flash-lite": 0.976,
+            "gemini-3.1-flash-lite-b": 0.976,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.7-flash+antigravity-cli": 1,
+            "mistral-ocr-4-1": 0.986,
             "qwen3-vl-8b": 0.959,
             "tesseract-chi_tra_vert": 0.28
           }
@@ -3162,7 +3782,9 @@
             "gemini-3-flash-preview": 0.986,
             "gemini-3.1-flash-lite": 0.962,
             "gemini-3.1-flash-lite-b": 0.962,
-            "gemini-3.8-flash+antigravity-cli": 0.966,
+            "gemini-3.6-flash+antigravity-cli": 0.973,
+            "gemini-3.7-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
             "qwen3-vl-8b": 0.952,
             "tesseract-chi_tra_vert": 0.28
           }
@@ -3178,8 +3800,8 @@
           "bow": 0.773,
           "gap": 0.033,
           "len_ratio": 0.671,
-          "invention": 0.043,
-          "invention_indep": 0.043,
+          "invention": 0.054,
+          "invention_indep": 0.054,
           "invention_ref": 0.202,
           "unsupported_sample": [
             "囉楞駄",
@@ -3188,8 +3810,8 @@
             "特豆惮",
             "豆惮侄",
             "惮侄他",
-            "阿囉嘰",
-            "囉嘰仏"
+            "醯唎駄",
+            "唎駄孕"
           ],
           "invention_ref_sample": [
             "大悲呪",
@@ -3209,6 +3831,8 @@
             "gemini-3-flash-preview": 0.959,
             "gemini-3.1-flash-lite": 0.935,
             "gemini-3.1-flash-lite-b": 0.935,
+            "gemini-3.6-flash+antigravity-cli": 0.959,
+            "gemini-3.7-flash+antigravity-cli": 0.959,
             "gemini-3.8-flash+antigravity-cli": 0.959,
             "mistral-ocr-4-1": 0.952,
             "tesseract-chi_tra_vert": 0.28
@@ -3256,6 +3880,8 @@
             "gemini-3-flash-preview": 0.28,
             "gemini-3.1-flash-lite": 0.28,
             "gemini-3.1-flash-lite-b": 0.28,
+            "gemini-3.6-flash+antigravity-cli": 0.28,
+            "gemini-3.7-flash+antigravity-cli": 0.28,
             "gemini-3.8-flash+antigravity-cli": 0.28,
             "mistral-ocr-4-1": 0.28,
             "qwen3-vl-8b": 0.28
@@ -3557,6 +4183,12 @@
             "tesseract-chi_tra_vert": 0.486
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 101,
           "empty": false,
@@ -3771,6 +4403,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -3809,6 +4443,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -3848,6 +4484,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -3886,6 +4524,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -3924,6 +4564,8 @@
             "deepseek-ocr": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -3962,6 +4604,8 @@
             "deepseek-ocr": 1,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -4000,6 +4644,88 @@
             "deepseek-ocr": 1,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
+            "gemini-3.8-flash+antigravity-cli": 0.998,
+            "mistral-ocr-4-1": 1,
+            "qwen3-vl-8b": 1,
+            "tesseract-chi_tra_vert": 0.79
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 323,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.352,
+          "acc": 0.648,
+          "seq": 0.781,
+          "bow": 0.781,
+          "gap": 0,
+          "len_ratio": 0.661,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "仏大焰",
+            "大焰肩",
+            "焰肩仏",
+            "舌相遍",
+            "相遍覆",
+            "遍覆三",
+            "界有焰",
+            "有焰肩"
+          ],
+          "agree": {
+            "chandra-ocr-2": 1,
+            "claude-opus-5-5": 1,
+            "claude-sonnet-5-5": 1,
+            "deepseek-ocr": 1,
+            "gemini-3-flash-preview": 1,
+            "gemini-3.1-flash-lite": 1,
+            "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
+            "gemini-3.8-flash+antigravity-cli": 0.998,
+            "mistral-ocr-4-1": 1,
+            "qwen3-vl-8b": 1,
+            "tesseract-chi_tra_vert": 0.79
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 323,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.352,
+          "acc": 0.648,
+          "seq": 0.781,
+          "bow": 0.781,
+          "gap": 0,
+          "len_ratio": 0.661,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.068,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "仏大焰",
+            "大焰肩",
+            "焰肩仏",
+            "舌相遍",
+            "相遍覆",
+            "遍覆三",
+            "界有焰",
+            "有焰肩"
+          ],
+          "agree": {
+            "chandra-ocr-2": 1,
+            "claude-opus-5-5": 1,
+            "claude-sonnet-5-5": 1,
+            "deepseek-ocr": 1,
+            "gemini-3-flash-preview": 1,
+            "gemini-3.1-flash-lite": 1,
+            "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "qwen3-vl-8b": 1,
@@ -4042,6 +4768,8 @@
             "gemini-3-flash-preview": 0.998,
             "gemini-3.1-flash-lite": 0.998,
             "gemini-3.1-flash-lite-b": 0.998,
+            "gemini-3.6-flash+antigravity-cli": 0.998,
+            "gemini-3.7-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 0.998,
             "qwen3-vl-8b": 0.998,
             "tesseract-chi_tra_vert": 0.788
@@ -4080,6 +4808,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "qwen3-vl-8b": 1,
             "tesseract-chi_tra_vert": 0.79
@@ -4118,6 +4848,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.998,
             "mistral-ocr-4-1": 1,
             "tesseract-chi_tra_vert": 0.79
@@ -4165,6 +4897,8 @@
             "gemini-3-flash-preview": 0.79,
             "gemini-3.1-flash-lite": 0.79,
             "gemini-3.1-flash-lite-b": 0.79,
+            "gemini-3.6-flash+antigravity-cli": 0.79,
+            "gemini-3.7-flash+antigravity-cli": 0.79,
             "gemini-3.8-flash+antigravity-cli": 0.788,
             "mistral-ocr-4-1": 0.79,
             "qwen3-vl-8b": 0.79
@@ -4457,6 +5191,12 @@
             "tesseract-chi_tra_vert": 0.486
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 89,
           "empty": false,
@@ -4664,7 +5404,9 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.996,
             "gemini-3.1-flash-lite-b": 0.996,
-            "gemini-3.8-flash+antigravity-cli": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.996,
+            "gemini-3.7-flash+antigravity-cli": 0.996,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.996,
             "qwen3-vl-8b": 0.996,
             "tesseract-chi_tra_vert": 0.874
@@ -4701,7 +5443,9 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.996,
             "gemini-3.1-flash-lite-b": 0.996,
-            "gemini-3.8-flash+antigravity-cli": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.996,
+            "gemini-3.7-flash+antigravity-cli": 0.996,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.996,
             "qwen3-vl-8b": 0.996,
             "tesseract-chi_tra_vert": 0.874
@@ -4739,7 +5483,9 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.996,
             "gemini-3.1-flash-lite-b": 0.996,
-            "gemini-3.8-flash+antigravity-cli": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.996,
+            "gemini-3.7-flash+antigravity-cli": 0.996,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.996,
             "qwen3-vl-8b": 0.996,
             "tesseract-chi_tra_vert": 0.874
@@ -4776,6 +5522,8 @@
             "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.992,
             "qwen3-vl-8b": 0.992,
@@ -4813,7 +5561,9 @@
             "deepseek-ocr": 0.996,
             "gemini-3.1-flash-lite": 0.996,
             "gemini-3.1-flash-lite-b": 0.996,
-            "gemini-3.8-flash+antigravity-cli": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.996,
+            "gemini-3.7-flash+antigravity-cli": 0.996,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.996,
             "qwen3-vl-8b": 0.996,
             "tesseract-chi_tra_vert": 0.874
@@ -4850,6 +5600,8 @@
             "deepseek-ocr": 1,
             "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.992,
             "qwen3-vl-8b": 0.992,
@@ -4887,13 +5639,15 @@
             "deepseek-ocr": 1,
             "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
             "gemini-3.8-flash+antigravity-cli": 0.996,
             "mistral-ocr-4-1": 0.992,
             "qwen3-vl-8b": 0.992,
             "tesseract-chi_tra_vert": 0.874
           }
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "n_content": 249,
           "empty": false,
           "refused": false,
@@ -4909,7 +5663,7 @@
           "invention_ref": 0.03,
           "unsupported_sample": [],
           "invention_ref_sample": [
-            "徧照是",
+            "偏照是",
             "善悪唯",
             "悪唯懐",
             "唯懐貪",
@@ -4918,15 +5672,94 @@
             "傍生趣"
           ],
           "agree": {
-            "chandra-ocr-2": 1,
-            "claude-opus-5-5": 1,
-            "claude-sonnet-5-5": 1,
+            "chandra-ocr-2": 0.996,
+            "claude-opus-5-5": 0.996,
+            "claude-sonnet-5-5": 0.996,
+            "deepseek-ocr": 1,
+            "gemini-3-flash-preview": 0.996,
+            "gemini-3.1-flash-lite": 1,
+            "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.7-flash+antigravity-cli": 1,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
+            "mistral-ocr-4-1": 0.992,
+            "qwen3-vl-8b": 0.992,
+            "tesseract-chi_tra_vert": 0.874
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 249,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.18,
+          "acc": 0.82,
+          "seq": 0.896,
+          "bow": 0.896,
+          "gap": 0,
+          "len_ratio": 0.83,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.03,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "偏照是",
+            "善悪唯",
+            "悪唯懐",
+            "唯懐貪",
+            "界或傍",
+            "或傍生",
+            "傍生趣"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.996,
+            "claude-opus-5-5": 0.996,
+            "claude-sonnet-5-5": 0.996,
+            "deepseek-ocr": 1,
+            "gemini-3-flash-preview": 0.996,
+            "gemini-3.1-flash-lite": 1,
+            "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 1,
+            "gemini-3.8-flash+antigravity-cli": 0.996,
+            "mistral-ocr-4-1": 0.992,
+            "qwen3-vl-8b": 0.992,
+            "tesseract-chi_tra_vert": 0.874
+          }
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "n_content": 249,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.177,
+          "acc": 0.823,
+          "seq": 0.9,
+          "bow": 0.9,
+          "gap": 0,
+          "len_ratio": 0.83,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.025,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "善悪唯",
+            "悪唯懐",
+            "唯懐貪",
+            "界或傍",
+            "或傍生",
+            "傍生趣"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.996,
+            "claude-opus-5-5": 0.996,
+            "claude-sonnet-5-5": 0.996,
             "deepseek-ocr": 0.996,
-            "gemini-3-flash-preview": 1,
+            "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite": 0.996,
             "gemini-3.1-flash-lite-b": 0.996,
-            "mistral-ocr-4-1": 0.996,
-            "qwen3-vl-8b": 0.996,
+            "gemini-3.6-flash+antigravity-cli": 0.996,
+            "gemini-3.7-flash+antigravity-cli": 0.996,
+            "mistral-ocr-4-1": 0.992,
+            "qwen3-vl-8b": 0.992,
             "tesseract-chi_tra_vert": 0.874
           }
         },
@@ -4963,7 +5796,9 @@
             "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite": 0.992,
             "gemini-3.1-flash-lite-b": 0.992,
-            "gemini-3.8-flash+antigravity-cli": 0.996,
+            "gemini-3.6-flash+antigravity-cli": 0.992,
+            "gemini-3.7-flash+antigravity-cli": 0.992,
+            "gemini-3.8-flash+antigravity-cli": 0.992,
             "qwen3-vl-8b": 1,
             "tesseract-chi_tra_vert": 0.878
           }
@@ -5001,7 +5836,9 @@
             "gemini-3-flash-preview": 0.996,
             "gemini-3.1-flash-lite": 0.992,
             "gemini-3.1-flash-lite-b": 0.992,
-            "gemini-3.8-flash+antigravity-cli": 0.996,
+            "gemini-3.6-flash+antigravity-cli": 0.992,
+            "gemini-3.7-flash+antigravity-cli": 0.992,
+            "gemini-3.8-flash+antigravity-cli": 0.992,
             "mistral-ocr-4-1": 1,
             "tesseract-chi_tra_vert": 0.878
           }
@@ -5048,6 +5885,8 @@
             "gemini-3-flash-preview": 0.874,
             "gemini-3.1-flash-lite": 0.874,
             "gemini-3.1-flash-lite-b": 0.874,
+            "gemini-3.6-flash+antigravity-cli": 0.874,
+            "gemini-3.7-flash+antigravity-cli": 0.874,
             "gemini-3.8-flash+antigravity-cli": 0.874,
             "mistral-ocr-4-1": 0.878,
             "qwen3-vl-8b": 0.878
@@ -5098,7 +5937,9 @@
             "gemini-3-flash-preview": 0.995,
             "gemini-3.1-flash-lite": 0.993,
             "gemini-3.1-flash-lite-b": 0.993,
-            "gemini-3.8-flash+antigravity-cli": 0.99,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.988,
+            "gemini-3.8-flash+antigravity-cli": 0.995,
             "mistral-ocr-4-1": 0.981,
             "qwen3-vl-8b": 0.968,
             "tesseract-chi_tra_vert": 0.891
@@ -5136,6 +5977,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.998,
             "gemini-3.1-flash-lite-b": 0.998,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.7-flash+antigravity-cli": 0.993,
             "gemini-3.8-flash+antigravity-cli": 0.995,
             "mistral-ocr-4-1": 0.985,
             "qwen3-vl-8b": 0.973,
@@ -5178,6 +6021,8 @@
             "gemini-3-flash-preview": 0.998,
             "gemini-3.1-flash-lite": 0.995,
             "gemini-3.1-flash-lite-b": 0.995,
+            "gemini-3.6-flash+antigravity-cli": 0.983,
+            "gemini-3.7-flash+antigravity-cli": 0.99,
             "gemini-3.8-flash+antigravity-cli": 0.993,
             "mistral-ocr-4-1": 0.983,
             "qwen3-vl-8b": 0.97,
@@ -5225,7 +6070,9 @@
             "gemini-3-flash-preview": 0.926,
             "gemini-3.1-flash-lite": 0.923,
             "gemini-3.1-flash-lite-b": 0.923,
-            "gemini-3.8-flash+antigravity-cli": 0.921,
+            "gemini-3.6-flash+antigravity-cli": 0.916,
+            "gemini-3.7-flash+antigravity-cli": 0.918,
+            "gemini-3.8-flash+antigravity-cli": 0.926,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 0.916,
             "tesseract-chi_tra_vert": 0.852
@@ -5263,6 +6110,8 @@
             "deepseek-ocr": 0.926,
             "gemini-3.1-flash-lite": 0.998,
             "gemini-3.1-flash-lite-b": 0.998,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.7-flash+antigravity-cli": 0.993,
             "gemini-3.8-flash+antigravity-cli": 0.995,
             "mistral-ocr-4-1": 0.985,
             "qwen3-vl-8b": 0.973,
@@ -5301,6 +6150,8 @@
             "deepseek-ocr": 0.923,
             "gemini-3-flash-preview": 0.998,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.983,
+            "gemini-3.7-flash+antigravity-cli": 0.99,
             "gemini-3.8-flash+antigravity-cli": 0.993,
             "mistral-ocr-4-1": 0.983,
             "qwen3-vl-8b": 0.97,
@@ -5339,10 +6190,105 @@
             "deepseek-ocr": 0.923,
             "gemini-3-flash-preview": 0.998,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.983,
+            "gemini-3.7-flash+antigravity-cli": 0.99,
             "gemini-3.8-flash+antigravity-cli": 0.993,
             "mistral-ocr-4-1": 0.983,
             "qwen3-vl-8b": 0.97,
             "tesseract-chi_tra_vert": 0.888
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 208,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.287,
+          "acc": 0.713,
+          "seq": 0.82,
+          "bow": 0.824,
+          "gap": 0.004,
+          "len_ratio": 0.756,
+          "invention": 0.044,
+          "invention_indep": 0.044,
+          "invention_ref": 0.113,
+          "unsupported_sample": [
+            "由他衆",
+            "他衆生",
+            "衆生於",
+            "至睡眠",
+            "睡眠中",
+            "眠中亦",
+            "灑掃除",
+            "掃除浄"
+          ],
+          "invention_ref_sample": [
+            "由他衆",
+            "他衆生",
+            "衆生於",
+            "至睡眠",
+            "睡眠中",
+            "眠中亦",
+            "以盛裏",
+            "盛裏之"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.981,
+            "claude-opus-5-5": 0.986,
+            "claude-sonnet-5-5": 0.983,
+            "deepseek-ocr": 0.916,
+            "gemini-3-flash-preview": 0.986,
+            "gemini-3.1-flash-lite": 0.983,
+            "gemini-3.1-flash-lite-b": 0.983,
+            "gemini-3.7-flash+antigravity-cli": 0.988,
+            "gemini-3.8-flash+antigravity-cli": 0.981,
+            "mistral-ocr-4-1": 0.981,
+            "qwen3-vl-8b": 0.958,
+            "tesseract-chi_tra_vert": 0.887
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 207,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.28,
+          "acc": 0.72,
+          "seq": 0.826,
+          "bow": 0.834,
+          "gap": 0.008,
+          "len_ratio": 0.753,
+          "invention": 0.015,
+          "invention_indep": 0.015,
+          "invention_ref": 0.084,
+          "unsupported_sample": [
+            "若取得",
+            "取得経",
+            "得経巻"
+          ],
+          "invention_ref_sample": [
+            "若取得",
+            "取得経",
+            "得経巻",
+            "以盛裏",
+            "盛裏之",
+            "裏之灑",
+            "華鬘仏",
+            "鬘仏説"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.988,
+            "claude-opus-5-5": 0.993,
+            "claude-sonnet-5-5": 0.99,
+            "deepseek-ocr": 0.918,
+            "gemini-3-flash-preview": 0.993,
+            "gemini-3.1-flash-lite": 0.99,
+            "gemini-3.1-flash-lite-b": 0.99,
+            "gemini-3.6-flash+antigravity-cli": 0.988,
+            "gemini-3.8-flash+antigravity-cli": 0.988,
+            "mistral-ocr-4-1": 0.988,
+            "qwen3-vl-8b": 0.965,
+            "tesseract-chi_tra_vert": 0.894
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5356,31 +6302,35 @@
           "bow": 0.832,
           "gap": 0.004,
           "len_ratio": 0.749,
-          "invention": 0,
-          "invention_indep": 0,
-          "invention_ref": 0.07,
-          "unsupported_sample": [],
+          "invention": 0.005,
+          "invention_indep": 0.005,
+          "invention_ref": 0.06,
+          "unsupported_sample": [
+            "祇那由"
+          ],
           "invention_ref_sample": [
-            "以盛裏",
-            "盛裏之",
-            "裏之灑",
+            "祇那由",
             "華鬘仏",
             "鬘仏説",
             "仏説薬",
             "説薬師",
-            "薬師如"
+            "薬師如",
+            "師如来",
+            "如来本"
           ],
           "agree": {
-            "chandra-ocr-2": 0.99,
+            "chandra-ocr-2": 0.995,
             "claude-opus-5-5": 0.995,
             "claude-sonnet-5-5": 0.993,
-            "deepseek-ocr": 0.921,
+            "deepseek-ocr": 0.926,
             "gemini-3-flash-preview": 0.995,
             "gemini-3.1-flash-lite": 0.993,
             "gemini-3.1-flash-lite-b": 0.993,
-            "mistral-ocr-4-1": 0.99,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.988,
+            "mistral-ocr-4-1": 0.981,
             "qwen3-vl-8b": 0.968,
-            "tesseract-chi_tra_vert": 0.896
+            "tesseract-chi_tra_vert": 0.891
           }
         },
         "mistral-ocr-4-1": {
@@ -5423,7 +6373,9 @@
             "gemini-3-flash-preview": 0.985,
             "gemini-3.1-flash-lite": 0.983,
             "gemini-3.1-flash-lite-b": 0.983,
-            "gemini-3.8-flash+antigravity-cli": 0.99,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.988,
+            "gemini-3.8-flash+antigravity-cli": 0.981,
             "qwen3-vl-8b": 0.958,
             "tesseract-chi_tra_vert": 0.896
           }
@@ -5452,6 +6404,8 @@
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite": 0.97,
             "gemini-3.1-flash-lite-b": 0.97,
+            "gemini-3.6-flash+antigravity-cli": 0.958,
+            "gemini-3.7-flash+antigravity-cli": 0.965,
             "gemini-3.8-flash+antigravity-cli": 0.968,
             "mistral-ocr-4-1": 0.958,
             "tesseract-chi_tra_vert": 0.866
@@ -5499,7 +6453,9 @@
             "gemini-3-flash-preview": 0.891,
             "gemini-3.1-flash-lite": 0.888,
             "gemini-3.1-flash-lite-b": 0.888,
-            "gemini-3.8-flash+antigravity-cli": 0.896,
+            "gemini-3.6-flash+antigravity-cli": 0.887,
+            "gemini-3.7-flash+antigravity-cli": 0.894,
+            "gemini-3.8-flash+antigravity-cli": 0.891,
             "mistral-ocr-4-1": 0.896,
             "qwen3-vl-8b": 0.866
           }
@@ -5798,6 +6754,12 @@
             "tesseract-chi_tra_vert": 0.239
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 145,
           "empty": false,
@@ -5993,7 +6955,9 @@
             "gemini-3-flash-preview": 0.986,
             "gemini-3.1-flash-lite": 0.964,
             "gemini-3.1-flash-lite-b": 0.964,
-            "gemini-3.8-flash+antigravity-cli": 0.991,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.983,
+            "gemini-3.8-flash+antigravity-cli": 1,
             "mistral-ocr-4-1": 0.938,
             "qwen3-vl-8b": 0.986,
             "tesseract-chi_tra_vert": 0.614
@@ -6035,7 +6999,9 @@
             "gemini-3-flash-preview": 0.981,
             "gemini-3.1-flash-lite": 0.964,
             "gemini-3.1-flash-lite-b": 0.964,
-            "gemini-3.8-flash+antigravity-cli": 0.981,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.974,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
             "mistral-ocr-4-1": 0.938,
             "qwen3-vl-8b": 0.991,
             "tesseract-chi_tra_vert": 0.614
@@ -6074,7 +7040,9 @@
             "gemini-3-flash-preview": 0.981,
             "gemini-3.1-flash-lite": 0.969,
             "gemini-3.1-flash-lite-b": 0.969,
-            "gemini-3.8-flash+antigravity-cli": 0.986,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.979,
+            "gemini-3.8-flash+antigravity-cli": 0.995,
             "mistral-ocr-4-1": 0.943,
             "qwen3-vl-8b": 0.986,
             "tesseract-chi_tra_vert": 0.614
@@ -6121,7 +7089,9 @@
             "gemini-3-flash-preview": 0.896,
             "gemini-3.1-flash-lite": 0.883,
             "gemini-3.1-flash-lite-b": 0.883,
-            "gemini-3.8-flash+antigravity-cli": 0.891,
+            "gemini-3.6-flash+antigravity-cli": 0.886,
+            "gemini-3.7-flash+antigravity-cli": 0.884,
+            "gemini-3.8-flash+antigravity-cli": 0.896,
             "mistral-ocr-4-1": 0.872,
             "qwen3-vl-8b": 0.891,
             "tesseract-chi_tra_vert": 0.596
@@ -6154,7 +7124,9 @@
             "deepseek-ocr": 0.896,
             "gemini-3.1-flash-lite": 0.978,
             "gemini-3.1-flash-lite-b": 0.978,
-            "gemini-3.8-flash+antigravity-cli": 0.981,
+            "gemini-3.6-flash+antigravity-cli": 0.976,
+            "gemini-3.7-flash+antigravity-cli": 0.974,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
             "mistral-ocr-4-1": 0.929,
             "qwen3-vl-8b": 0.981,
             "tesseract-chi_tra_vert": 0.614
@@ -6172,7 +7144,7 @@
           "gap": 0,
           "len_ratio": 0.907,
           "invention": 0,
-          "invention_indep": 0.064,
+          "invention_indep": 0.05,
           "invention_ref": 0.094,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -6192,7 +7164,9 @@
             "deepseek-ocr": 0.883,
             "gemini-3-flash-preview": 0.978,
             "gemini-3.1-flash-lite-b": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.959,
+            "gemini-3.6-flash+antigravity-cli": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.952,
+            "gemini-3.8-flash+antigravity-cli": 0.964,
             "mistral-ocr-4-1": 0.916,
             "qwen3-vl-8b": 0.964,
             "tesseract-chi_tra_vert": 0.607
@@ -6210,7 +7184,7 @@
           "gap": 0,
           "len_ratio": 0.907,
           "invention": 0,
-          "invention_indep": 0.064,
+          "invention_indep": 0.05,
           "invention_ref": 0.094,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -6230,30 +7204,78 @@
             "deepseek-ocr": 0.883,
             "gemini-3-flash-preview": 0.978,
             "gemini-3.1-flash-lite": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.959,
+            "gemini-3.6-flash+antigravity-cli": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.952,
+            "gemini-3.8-flash+antigravity-cli": 0.964,
             "mistral-ocr-4-1": 0.916,
             "qwen3-vl-8b": 0.964,
             "tesseract-chi_tra_vert": 0.607
           }
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "n_content": 211,
           "empty": false,
           "refused": false,
           "loop": false,
-          "cer": 0.088,
-          "acc": 0.912,
-          "seq": 0.945,
-          "bow": 0.945,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.936,
+          "bow": 0.936,
           "gap": 0,
           "len_ratio": 0.93,
-          "invention": 0.029,
-          "invention_indep": 0.029,
-          "invention_ref": 0.053,
+          "invention": 0.014,
+          "invention_indep": 0.014,
+          "invention_ref": 0.082,
+          "unsupported_sample": [
+            "心虛櫟",
+            "虛櫟日",
+            "櫟日光"
+          ],
+          "invention_ref_sample": [
+            "帰山地",
+            "山地微",
+            "地微細",
+            "心虛櫟",
+            "虛櫟日",
+            "櫟日光",
+            "者諸菩",
+            "諸菩知"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.981,
+            "claude-opus-5-5": 0.981,
+            "claude-sonnet-5-5": 0.981,
+            "deepseek-ocr": 0.886,
+            "gemini-3-flash-preview": 0.976,
+            "gemini-3.1-flash-lite": 0.969,
+            "gemini-3.1-flash-lite-b": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.979,
+            "gemini-3.8-flash+antigravity-cli": 0.981,
+            "mistral-ocr-4-1": 0.929,
+            "qwen3-vl-8b": 0.981,
+            "tesseract-chi_tra_vert": 0.614
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 212,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.938,
+          "bow": 0.938,
+          "gap": 0,
+          "len_ratio": 0.934,
+          "invention": 0.038,
+          "invention_indep": 0.038,
+          "invention_ref": 0.077,
           "unsupported_sample": [
             "空心虚",
             "心虚隙",
             "虚隙日",
+            "義教教",
+            "教教也",
             "衆則莽",
             "則莽蕩",
             "莽蕩難"
@@ -6262,23 +7284,65 @@
             "空心虚",
             "心虚隙",
             "虚隙日",
+            "義教教",
+            "教教也",
+            "者諸菩",
+            "諸菩知",
+            "菩知識"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.983,
+            "claude-opus-5-5": 0.974,
+            "claude-sonnet-5-5": 0.979,
+            "deepseek-ocr": 0.884,
+            "gemini-3-flash-preview": 0.974,
+            "gemini-3.1-flash-lite": 0.952,
+            "gemini-3.1-flash-lite-b": 0.952,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.8-flash+antigravity-cli": 0.983,
+            "mistral-ocr-4-1": 0.927,
+            "qwen3-vl-8b": 0.974,
+            "tesseract-chi_tra_vert": 0.608
+          }
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "n_content": 211,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.084,
+          "acc": 0.916,
+          "seq": 0.95,
+          "bow": 0.95,
+          "gap": 0,
+          "len_ratio": 0.93,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.039,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
             "部之衆",
             "之衆禅",
             "衆禅偈",
             "機羅衆",
-            "羅衆則"
+            "羅衆則",
+            "衆則滂",
+            "則滂蕩",
+            "滂蕩難"
           ],
           "agree": {
-            "chandra-ocr-2": 0.991,
-            "claude-opus-5-5": 0.981,
-            "claude-sonnet-5-5": 0.986,
-            "deepseek-ocr": 0.891,
-            "gemini-3-flash-preview": 0.981,
-            "gemini-3.1-flash-lite": 0.959,
-            "gemini-3.1-flash-lite-b": 0.959,
-            "mistral-ocr-4-1": 0.934,
-            "qwen3-vl-8b": 0.981,
-            "tesseract-chi_tra_vert": 0.609
+            "chandra-ocr-2": 1,
+            "claude-opus-5-5": 0.986,
+            "claude-sonnet-5-5": 0.995,
+            "deepseek-ocr": 0.896,
+            "gemini-3-flash-preview": 0.986,
+            "gemini-3.1-flash-lite": 0.964,
+            "gemini-3.1-flash-lite-b": 0.964,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.983,
+            "mistral-ocr-4-1": 0.938,
+            "qwen3-vl-8b": 0.986,
+            "tesseract-chi_tra_vert": 0.614
           }
         },
         "mistral-ocr-4-1": {
@@ -6323,7 +7387,9 @@
             "gemini-3-flash-preview": 0.929,
             "gemini-3.1-flash-lite": 0.916,
             "gemini-3.1-flash-lite-b": 0.916,
-            "gemini-3.8-flash+antigravity-cli": 0.934,
+            "gemini-3.6-flash+antigravity-cli": 0.929,
+            "gemini-3.7-flash+antigravity-cli": 0.927,
+            "gemini-3.8-flash+antigravity-cli": 0.938,
             "qwen3-vl-8b": 0.938,
             "tesseract-chi_tra_vert": 0.619
           }
@@ -6365,7 +7431,9 @@
             "gemini-3-flash-preview": 0.981,
             "gemini-3.1-flash-lite": 0.964,
             "gemini-3.1-flash-lite-b": 0.964,
-            "gemini-3.8-flash+antigravity-cli": 0.981,
+            "gemini-3.6-flash+antigravity-cli": 0.981,
+            "gemini-3.7-flash+antigravity-cli": 0.974,
+            "gemini-3.8-flash+antigravity-cli": 0.986,
             "mistral-ocr-4-1": 0.938,
             "tesseract-chi_tra_vert": 0.614
           }
@@ -6412,7 +7480,9 @@
             "gemini-3-flash-preview": 0.614,
             "gemini-3.1-flash-lite": 0.607,
             "gemini-3.1-flash-lite-b": 0.607,
-            "gemini-3.8-flash+antigravity-cli": 0.609,
+            "gemini-3.6-flash+antigravity-cli": 0.614,
+            "gemini-3.7-flash+antigravity-cli": 0.608,
+            "gemini-3.8-flash+antigravity-cli": 0.614,
             "mistral-ocr-4-1": 0.619,
             "qwen3-vl-8b": 0.614
           }
@@ -6469,6 +7539,8 @@
             "gemini-3-flash-preview": 0.972,
             "gemini-3.1-flash-lite": 0.899,
             "gemini-3.1-flash-lite-b": 0.899,
+            "gemini-3.6-flash+antigravity-cli": 0.947,
+            "gemini-3.7-flash+antigravity-cli": 0.955,
             "gemini-3.8-flash+antigravity-cli": 0.966,
             "mistral-ocr-4-1": 0.894,
             "qwen3-vl-8b": 0.936,
@@ -6516,6 +7588,8 @@
             "gemini-3-flash-preview": 0.961,
             "gemini-3.1-flash-lite": 0.876,
             "gemini-3.1-flash-lite-b": 0.876,
+            "gemini-3.6-flash+antigravity-cli": 0.933,
+            "gemini-3.7-flash+antigravity-cli": 0.94,
             "gemini-3.8-flash+antigravity-cli": 0.958,
             "mistral-ocr-4-1": 0.884,
             "qwen3-vl-8b": 0.918,
@@ -6562,6 +7636,8 @@
             "gemini-3-flash-preview": 0.983,
             "gemini-3.1-flash-lite": 0.895,
             "gemini-3.1-flash-lite-b": 0.895,
+            "gemini-3.6-flash+antigravity-cli": 0.955,
+            "gemini-3.7-flash+antigravity-cli": 0.958,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.902,
             "qwen3-vl-8b": 0.944,
@@ -6579,8 +7655,8 @@
           "bow": 0.16,
           "gap": 0.018,
           "len_ratio": 19.169,
-          "invention": 0.561,
-          "invention_indep": 0.561,
+          "invention": 0.53,
+          "invention_indep": 0.53,
           "invention_ref": 0.591,
           "unsupported_sample": [
             "有董桃",
@@ -6609,6 +7685,8 @@
             "gemini-3-flash-preview": 0.174,
             "gemini-3.1-flash-lite": 0.175,
             "gemini-3.1-flash-lite-b": 0.175,
+            "gemini-3.6-flash+antigravity-cli": 0.173,
+            "gemini-3.7-flash+antigravity-cli": 0.166,
             "gemini-3.8-flash+antigravity-cli": 0.174,
             "mistral-ocr-4-1": 0.166,
             "qwen3-vl-8b": 0.166,
@@ -6626,17 +7704,10 @@
           "bow": 0.87,
           "gap": 0.007,
           "len_ratio": 0.843,
-          "invention": 0.024,
-          "invention_indep": 0.024,
+          "invention": 0,
+          "invention_indep": 0,
           "invention_ref": 0.12,
-          "unsupported_sample": [
-            "祿也〇",
-            "也〇凡",
-            "〇凡献",
-            "也茢茨",
-            "茢茨帚",
-            "茨帚也"
-          ],
+          "unsupported_sample": [],
           "invention_ref_sample": [
             "注平穩",
             "平穩此",
@@ -6654,6 +7725,8 @@
             "deepseek-ocr": 0.174,
             "gemini-3.1-flash-lite": 0.893,
             "gemini-3.1-flash-lite-b": 0.893,
+            "gemini-3.6-flash+antigravity-cli": 0.968,
+            "gemini-3.7-flash+antigravity-cli": 0.972,
             "gemini-3.8-flash+antigravity-cli": 0.983,
             "mistral-ocr-4-1": 0.892,
             "qwen3-vl-8b": 0.942,
@@ -6692,6 +7765,8 @@
             "deepseek-ocr": 0.175,
             "gemini-3-flash-preview": 0.893,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.876,
+            "gemini-3.7-flash+antigravity-cli": 0.88,
             "gemini-3.8-flash+antigravity-cli": 0.895,
             "mistral-ocr-4-1": 0.847,
             "qwen3-vl-8b": 0.863,
@@ -6730,10 +7805,110 @@
             "deepseek-ocr": 0.175,
             "gemini-3-flash-preview": 0.893,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.876,
+            "gemini-3.7-flash+antigravity-cli": 0.88,
             "gemini-3.8-flash+antigravity-cli": 0.895,
             "mistral-ocr-4-1": 0.847,
             "qwen3-vl-8b": 0.863,
             "tesseract-chi_tra_vert": 0.378
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 269,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.3,
+          "acc": 0.7,
+          "seq": 0.811,
+          "bow": 0.863,
+          "gap": 0.052,
+          "len_ratio": 0.859,
+          "invention": 0.065,
+          "invention_indep": 0.065,
+          "invention_ref": 0.185,
+          "unsupported_sample": [
+            "曰不如",
+            "不如旧",
+            "如旧注",
+            "偽切葷",
+            "切葷許",
+            "菜也桃",
+            "也桃茢",
+            "邪也造"
+          ],
+          "invention_ref_sample": [
+            "曰不如",
+            "不如旧",
+            "如旧注",
+            "注平穩",
+            "平穩此",
+            "穩此所",
+            "謂賜蓋",
+            "賜蓋謂"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.947,
+            "claude-opus-5-5": 0.933,
+            "claude-sonnet-5-5": 0.955,
+            "deepseek-ocr": 0.173,
+            "gemini-3-flash-preview": 0.968,
+            "gemini-3.1-flash-lite": 0.876,
+            "gemini-3.1-flash-lite-b": 0.876,
+            "gemini-3.7-flash+antigravity-cli": 0.948,
+            "gemini-3.8-flash+antigravity-cli": 0.955,
+            "mistral-ocr-4-1": 0.869,
+            "qwen3-vl-8b": 0.918,
+            "tesseract-chi_tra_vert": 0.386
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 265,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.329,
+          "acc": 0.671,
+          "seq": 0.789,
+          "bow": 0.858,
+          "gap": 0.069,
+          "len_ratio": 0.847,
+          "invention": 0.091,
+          "invention_indep": 0.091,
+          "invention_ref": 0.205,
+          "unsupported_sample": [
+            "夫不葷",
+            "不葷許",
+            "去上親",
+            "上親拝",
+            "鄭氏日",
+            "氏日再",
+            "日再拝",
+            "送之邪"
+          ],
+          "invention_ref_sample": [
+            "何澄日",
+            "澄日不",
+            "日不若",
+            "注平穩",
+            "平穩此",
+            "穩此所",
+            "謂賜蓋",
+            "賜蓋謂"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.955,
+            "claude-opus-5-5": 0.94,
+            "claude-sonnet-5-5": 0.958,
+            "deepseek-ocr": 0.166,
+            "gemini-3-flash-preview": 0.972,
+            "gemini-3.1-flash-lite": 0.88,
+            "gemini-3.1-flash-lite-b": 0.88,
+            "gemini-3.6-flash+antigravity-cli": 0.948,
+            "gemini-3.8-flash+antigravity-cli": 0.958,
+            "mistral-ocr-4-1": 0.879,
+            "qwen3-vl-8b": 0.929,
+            "tesseract-chi_tra_vert": 0.393
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6777,6 +7952,8 @@
             "gemini-3-flash-preview": 0.983,
             "gemini-3.1-flash-lite": 0.895,
             "gemini-3.1-flash-lite-b": 0.895,
+            "gemini-3.6-flash+antigravity-cli": 0.955,
+            "gemini-3.7-flash+antigravity-cli": 0.958,
             "mistral-ocr-4-1": 0.89,
             "qwen3-vl-8b": 0.94,
             "tesseract-chi_tra_vert": 0.392
@@ -6824,6 +8001,8 @@
             "gemini-3-flash-preview": 0.892,
             "gemini-3.1-flash-lite": 0.847,
             "gemini-3.1-flash-lite-b": 0.847,
+            "gemini-3.6-flash+antigravity-cli": 0.869,
+            "gemini-3.7-flash+antigravity-cli": 0.879,
             "gemini-3.8-flash+antigravity-cli": 0.89,
             "qwen3-vl-8b": 0.875,
             "tesseract-chi_tra_vert": 0.393
@@ -6840,18 +8019,18 @@
           "bow": 0.851,
           "gap": 0.007,
           "len_ratio": 0.818,
-          "invention": 0.107,
-          "invention_indep": 0.107,
+          "invention": 0.095,
+          "invention_indep": 0.095,
           "invention_ref": 0.182,
           "unsupported_sample": [
-            "何澄日",
-            "澄日不",
-            "日不若",
             "君有葯",
             "有葯桃",
             "葯桃茢",
             "士去葯",
-            "去葯皆"
+            "去葯皆",
+            "葯皆造",
+            "已也葯",
+            "也葯許"
           ],
           "invention_ref_sample": [
             "何澄日",
@@ -6871,6 +8050,8 @@
             "gemini-3-flash-preview": 0.942,
             "gemini-3.1-flash-lite": 0.863,
             "gemini-3.1-flash-lite-b": 0.863,
+            "gemini-3.6-flash+antigravity-cli": 0.918,
+            "gemini-3.7-flash+antigravity-cli": 0.929,
             "gemini-3.8-flash+antigravity-cli": 0.94,
             "mistral-ocr-4-1": 0.875,
             "tesseract-chi_tra_vert": 0.388
@@ -6918,6 +8099,8 @@
             "gemini-3-flash-preview": 0.39,
             "gemini-3.1-flash-lite": 0.378,
             "gemini-3.1-flash-lite-b": 0.378,
+            "gemini-3.6-flash+antigravity-cli": 0.386,
+            "gemini-3.7-flash+antigravity-cli": 0.393,
             "gemini-3.8-flash+antigravity-cli": 0.392,
             "mistral-ocr-4-1": 0.393,
             "qwen3-vl-8b": 0.388
@@ -7230,6 +8413,12 @@
             "qwen3-vl-8b": 0.969,
             "tesseract-chi_tra_vert": 0.556
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 129,
@@ -7711,6 +8900,12 @@
             "qwen3-vl-8b": 0.967,
             "tesseract-chi_tra_vert": 0.569
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 156,
@@ -8210,6 +9405,12 @@
             "tesseract-chi_tra_vert": 0.472
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 14,
           "empty": true,
@@ -8682,6 +9883,12 @@
             "qwen3-vl-8b": 0.988,
             "tesseract-chi_tra_vert": 0.481
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 135,
@@ -9165,6 +10372,12 @@
             "qwen3-vl-8b": 0.96,
             "tesseract-chi_tra_vert": 0.405
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 153,
@@ -9659,6 +10872,12 @@
             "tesseract-chi_tra_vert": 0.37
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 168,
           "empty": false,
@@ -9884,6 +11103,8 @@
             "gemini-3-flash-preview": 0.987,
             "gemini-3.1-flash-lite": 0.974,
             "gemini-3.1-flash-lite-b": 0.974,
+            "gemini-3.6-flash+antigravity-cli": 0.954,
+            "gemini-3.7-flash+antigravity-cli": 0.967,
             "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 0.987,
@@ -9919,6 +11140,8 @@
             "gemini-3-flash-preview": 0.987,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.98,
+            "gemini-3.7-flash+antigravity-cli": 0.98,
             "gemini-3.8-flash+antigravity-cli": 0.967,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 0.987,
@@ -9955,6 +11178,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.967,
+            "gemini-3.7-flash+antigravity-cli": 0.98,
             "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 1,
@@ -10002,6 +11227,8 @@
             "gemini-3-flash-preview": 0.927,
             "gemini-3.1-flash-lite": 0.94,
             "gemini-3.1-flash-lite-b": 0.94,
+            "gemini-3.6-flash+antigravity-cli": 0.914,
+            "gemini-3.7-flash+antigravity-cli": 0.921,
             "gemini-3.8-flash+antigravity-cli": 0.934,
             "mistral-ocr-4-1": 0.914,
             "qwen3-vl-8b": 0.927,
@@ -10037,6 +11264,8 @@
             "deepseek-ocr": 0.927,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.967,
+            "gemini-3.7-flash+antigravity-cli": 0.98,
             "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 1,
@@ -10075,6 +11304,8 @@
             "deepseek-ocr": 0.94,
             "gemini-3-flash-preview": 0.967,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.967,
             "gemini-3.8-flash+antigravity-cli": 0.967,
             "mistral-ocr-4-1": 0.927,
             "qwen3-vl-8b": 0.967,
@@ -10113,9 +11344,104 @@
             "deepseek-ocr": 0.94,
             "gemini-3-flash-preview": 0.967,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.967,
             "gemini-3.8-flash+antigravity-cli": 0.967,
             "mistral-ocr-4-1": 0.927,
             "qwen3-vl-8b": 0.967,
+            "tesseract-chi_tra_vert": 0.24
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 151,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.927,
+          "bow": 0.927,
+          "gap": 0,
+          "len_ratio": 0.91,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": 0.087,
+          "unsupported_sample": [
+            "与同窗",
+            "同窗戲",
+            "窗戲諢",
+            "戲諢以",
+            "諢以硯"
+          ],
+          "invention_ref_sample": [
+            "一夏騰",
+            "夏騰四",
+            "騰四十",
+            "十三是",
+            "三是年",
+            "与同窗",
+            "同窗戲",
+            "窗戲諢"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.954,
+            "claude-opus-5-5": 0.98,
+            "claude-sonnet-5-5": 0.967,
+            "deepseek-ocr": 0.914,
+            "gemini-3-flash-preview": 0.967,
+            "gemini-3.1-flash-lite": 0.96,
+            "gemini-3.1-flash-lite-b": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.974,
+            "gemini-3.8-flash+antigravity-cli": 0.96,
+            "mistral-ocr-4-1": 0.907,
+            "qwen3-vl-8b": 0.967,
+            "tesseract-chi_tra_vert": 0.249
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 151,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.927,
+          "bow": 0.927,
+          "gap": 0,
+          "len_ratio": 0.91,
+          "invention": 0.04,
+          "invention_indep": 0.04,
+          "invention_ref": 0.094,
+          "unsupported_sample": [
+            "一夏鵬",
+            "夏鵬四",
+            "鵬四十",
+            "与同窻",
+            "同窻戲",
+            "窻戲謔"
+          ],
+          "invention_ref_sample": [
+            "一夏鵬",
+            "夏鵬四",
+            "鵬四十",
+            "十三是",
+            "三是年",
+            "与同窻",
+            "同窻戲",
+            "窻戲謔"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.967,
+            "claude-opus-5-5": 0.98,
+            "claude-sonnet-5-5": 0.98,
+            "deepseek-ocr": 0.921,
+            "gemini-3-flash-preview": 0.98,
+            "gemini-3.1-flash-lite": 0.967,
+            "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.974,
+            "gemini-3.8-flash+antigravity-cli": 0.974,
+            "mistral-ocr-4-1": 0.921,
+            "qwen3-vl-8b": 0.98,
             "tesseract-chi_tra_vert": 0.24
           }
         },
@@ -10159,6 +11485,8 @@
             "gemini-3-flash-preview": 0.98,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.974,
             "mistral-ocr-4-1": 0.921,
             "qwen3-vl-8b": 0.98,
             "tesseract-chi_tra_vert": 0.24
@@ -10206,6 +11534,8 @@
             "gemini-3-flash-preview": 0.921,
             "gemini-3.1-flash-lite": 0.927,
             "gemini-3.1-flash-lite-b": 0.927,
+            "gemini-3.6-flash+antigravity-cli": 0.907,
+            "gemini-3.7-flash+antigravity-cli": 0.921,
             "gemini-3.8-flash+antigravity-cli": 0.921,
             "qwen3-vl-8b": 0.921,
             "tesseract-chi_tra_vert": 0.24
@@ -10241,6 +11571,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.967,
+            "gemini-3.7-flash+antigravity-cli": 0.98,
             "gemini-3.8-flash+antigravity-cli": 0.98,
             "mistral-ocr-4-1": 0.921,
             "tesseract-chi_tra_vert": 0.24
@@ -10288,6 +11620,8 @@
             "gemini-3-flash-preview": 0.24,
             "gemini-3.1-flash-lite": 0.24,
             "gemini-3.1-flash-lite-b": 0.24,
+            "gemini-3.6-flash+antigravity-cli": 0.249,
+            "gemini-3.7-flash+antigravity-cli": 0.24,
             "gemini-3.8-flash+antigravity-cli": 0.24,
             "mistral-ocr-4-1": 0.24,
             "qwen3-vl-8b": 0.24
@@ -10345,6 +11679,8 @@
             "gemini-3-flash-preview": 0.943,
             "gemini-3.1-flash-lite": 0.91,
             "gemini-3.1-flash-lite-b": 0.91,
+            "gemini-3.6-flash+antigravity-cli": 0.934,
+            "gemini-3.7-flash+antigravity-cli": 0.943,
             "gemini-3.8-flash+antigravity-cli": 0.92,
             "mistral-ocr-4-1": 0.882,
             "qwen3-vl-8b": 0.884,
@@ -10388,6 +11724,8 @@
             "gemini-3-flash-preview": 0.962,
             "gemini-3.1-flash-lite": 0.967,
             "gemini-3.1-flash-lite-b": 0.967,
+            "gemini-3.6-flash+antigravity-cli": 0.934,
+            "gemini-3.7-flash+antigravity-cli": 0.953,
             "gemini-3.8-flash+antigravity-cli": 0.958,
             "mistral-ocr-4-1": 0.863,
             "qwen3-vl-8b": 0.884,
@@ -10427,6 +11765,8 @@
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.948,
             "gemini-3.1-flash-lite-b": 0.948,
+            "gemini-3.6-flash+antigravity-cli": 0.962,
+            "gemini-3.7-flash+antigravity-cli": 0.991,
             "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.891,
             "qwen3-vl-8b": 0.925,
@@ -10474,6 +11814,8 @@
             "gemini-3-flash-preview": 0.887,
             "gemini-3.1-flash-lite": 0.861,
             "gemini-3.1-flash-lite-b": 0.861,
+            "gemini-3.6-flash+antigravity-cli": 0.877,
+            "gemini-3.7-flash+antigravity-cli": 0.887,
             "gemini-3.8-flash+antigravity-cli": 0.873,
             "mistral-ocr-4-1": 0.871,
             "qwen3-vl-8b": 0.905,
@@ -10512,6 +11854,8 @@
             "deepseek-ocr": 0.887,
             "gemini-3.1-flash-lite": 0.948,
             "gemini-3.1-flash-lite-b": 0.948,
+            "gemini-3.6-flash+antigravity-cli": 0.962,
+            "gemini-3.7-flash+antigravity-cli": 0.991,
             "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.891,
             "qwen3-vl-8b": 0.925,
@@ -10550,6 +11894,8 @@
             "deepseek-ocr": 0.861,
             "gemini-3-flash-preview": 0.948,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.919,
+            "gemini-3.7-flash+antigravity-cli": 0.938,
             "gemini-3.8-flash+antigravity-cli": 0.943,
             "mistral-ocr-4-1": 0.867,
             "qwen3-vl-8b": 0.889,
@@ -10588,10 +11934,105 @@
             "deepseek-ocr": 0.861,
             "gemini-3-flash-preview": 0.948,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.919,
+            "gemini-3.7-flash+antigravity-cli": 0.938,
             "gemini-3.8-flash+antigravity-cli": 0.943,
             "mistral-ocr-4-1": 0.867,
             "qwen3-vl-8b": 0.889,
             "tesseract-chi_tra_vert": 0.33
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 106,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.202,
+          "acc": 0.798,
+          "seq": 0.809,
+          "bow": 0.809,
+          "gap": 0,
+          "len_ratio": 0.972,
+          "invention": 0.096,
+          "invention_indep": 0.096,
+          "invention_ref": 0.269,
+          "unsupported_sample": [
+            "詁曰鸛",
+            "曰鸛翠",
+            "鸛翠別",
+            "騒曰翱",
+            "曰翱翔",
+            "翱翔兮",
+            "翔兮翠",
+            "帷翠帳"
+          ],
+          "invention_ref_sample": [
+            "欽定四",
+            "定四庫",
+            "四庫全",
+            "庫全書",
+            "全書爾",
+            "書爾雅",
+            "詁曰鸛",
+            "曰鸛翠"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.934,
+            "claude-opus-5-5": 0.934,
+            "claude-sonnet-5-5": 0.962,
+            "deepseek-ocr": 0.877,
+            "gemini-3-flash-preview": 0.962,
+            "gemini-3.1-flash-lite": 0.919,
+            "gemini-3.1-flash-lite-b": 0.919,
+            "gemini-3.7-flash+antigravity-cli": 0.962,
+            "gemini-3.8-flash+antigravity-cli": 0.939,
+            "mistral-ocr-4-1": 0.891,
+            "qwen3-vl-8b": 0.894,
+            "tesseract-chi_tra_vert": 0.328
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 106,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.22,
+          "acc": 0.78,
+          "seq": 0.837,
+          "bow": 0.837,
+          "gap": 0,
+          "len_ratio": 0.972,
+          "invention": 0.029,
+          "invention_indep": 0.029,
+          "invention_ref": 0.212,
+          "unsupported_sample": [
+            "帷翠帱",
+            "翠帱漢",
+            "帱漢書"
+          ],
+          "invention_ref_sample": [
+            "鷸翠別",
+            "翠別名",
+            "別名也",
+            "帷翠帱",
+            "翠帱漢",
+            "帱漢書",
+            "貂羽黃",
+            "羽黃金"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.943,
+            "claude-opus-5-5": 0.953,
+            "claude-sonnet-5-5": 0.991,
+            "deepseek-ocr": 0.887,
+            "gemini-3-flash-preview": 0.991,
+            "gemini-3.1-flash-lite": 0.938,
+            "gemini-3.1-flash-lite-b": 0.938,
+            "gemini-3.6-flash+antigravity-cli": 0.962,
+            "gemini-3.8-flash+antigravity-cli": 0.967,
+            "mistral-ocr-4-1": 0.891,
+            "qwen3-vl-8b": 0.915,
+            "tesseract-chi_tra_vert": 0.328
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -10632,6 +12073,8 @@
             "gemini-3-flash-preview": 0.977,
             "gemini-3.1-flash-lite": 0.943,
             "gemini-3.1-flash-lite-b": 0.943,
+            "gemini-3.6-flash+antigravity-cli": 0.939,
+            "gemini-3.7-flash+antigravity-cli": 0.967,
             "mistral-ocr-4-1": 0.868,
             "qwen3-vl-8b": 0.91,
             "tesseract-chi_tra_vert": 0.317
@@ -10679,6 +12122,8 @@
             "gemini-3-flash-preview": 0.891,
             "gemini-3.1-flash-lite": 0.867,
             "gemini-3.1-flash-lite-b": 0.867,
+            "gemini-3.6-flash+antigravity-cli": 0.891,
+            "gemini-3.7-flash+antigravity-cli": 0.891,
             "gemini-3.8-flash+antigravity-cli": 0.868,
             "qwen3-vl-8b": 0.879,
             "tesseract-chi_tra_vert": 0.32
@@ -10721,6 +12166,8 @@
             "gemini-3-flash-preview": 0.925,
             "gemini-3.1-flash-lite": 0.889,
             "gemini-3.1-flash-lite-b": 0.889,
+            "gemini-3.6-flash+antigravity-cli": 0.894,
+            "gemini-3.7-flash+antigravity-cli": 0.915,
             "gemini-3.8-flash+antigravity-cli": 0.91,
             "mistral-ocr-4-1": 0.879,
             "tesseract-chi_tra_vert": 0.351
@@ -10768,6 +12215,8 @@
             "gemini-3-flash-preview": 0.328,
             "gemini-3.1-flash-lite": 0.33,
             "gemini-3.1-flash-lite-b": 0.33,
+            "gemini-3.6-flash+antigravity-cli": 0.328,
+            "gemini-3.7-flash+antigravity-cli": 0.328,
             "gemini-3.8-flash+antigravity-cli": 0.317,
             "mistral-ocr-4-1": 0.32,
             "qwen3-vl-8b": 0.351
@@ -11085,6 +12534,12 @@
             "qwen3-vl-8b": 0.935,
             "tesseract-chi_tra_vert": 0.353
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 168,
@@ -11564,6 +13019,12 @@
             "tesseract-chi_tra_vert": 0.327
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 125,
           "empty": false,
@@ -12031,6 +13492,12 @@
             "tesseract-chi_tra_vert": 0.274
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 169,
           "empty": false,
@@ -12263,6 +13730,8 @@
             "gemini-3-flash-preview": 0.955,
             "gemini-3.1-flash-lite": 0.93,
             "gemini-3.1-flash-lite-b": 0.93,
+            "gemini-3.6-flash+antigravity-cli": 0.924,
+            "gemini-3.7-flash+antigravity-cli": 0.938,
             "gemini-3.8-flash+antigravity-cli": 0.929,
             "mistral-ocr-4-1": 0.938,
             "qwen3-vl-8b": 0.916,
@@ -12301,6 +13770,8 @@
             "gemini-3-flash-preview": 0.991,
             "gemini-3.1-flash-lite": 0.921,
             "gemini-3.1-flash-lite-b": 0.921,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.982,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.911,
             "qwen3-vl-8b": 0.897,
@@ -12343,6 +13814,8 @@
             "gemini-3-flash-preview": 0.991,
             "gemini-3.1-flash-lite": 0.921,
             "gemini-3.1-flash-lite-b": 0.921,
+            "gemini-3.6-flash+antigravity-cli": 0.96,
+            "gemini-3.7-flash+antigravity-cli": 0.982,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.911,
             "qwen3-vl-8b": 0.897,
@@ -12390,6 +13863,8 @@
             "gemini-3-flash-preview": 0.888,
             "gemini-3.1-flash-lite": 0.829,
             "gemini-3.1-flash-lite-b": 0.829,
+            "gemini-3.6-flash+antigravity-cli": 0.856,
+            "gemini-3.7-flash+antigravity-cli": 0.869,
             "gemini-3.8-flash+antigravity-cli": 0.86,
             "mistral-ocr-4-1": 0.86,
             "qwen3-vl-8b": 0.912,
@@ -12428,6 +13903,8 @@
             "deepseek-ocr": 0.888,
             "gemini-3.1-flash-lite": 0.912,
             "gemini-3.1-flash-lite-b": 0.912,
+            "gemini-3.6-flash+antigravity-cli": 0.969,
+            "gemini-3.7-flash+antigravity-cli": 0.982,
             "gemini-3.8-flash+antigravity-cli": 0.973,
             "mistral-ocr-4-1": 0.902,
             "qwen3-vl-8b": 0.888,
@@ -12466,6 +13943,8 @@
             "deepseek-ocr": 0.829,
             "gemini-3-flash-preview": 0.912,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.898,
+            "gemini-3.7-flash+antigravity-cli": 0.902,
             "gemini-3.8-flash+antigravity-cli": 0.893,
             "mistral-ocr-4-1": 0.893,
             "qwen3-vl-8b": 0.898,
@@ -12504,10 +13983,101 @@
             "deepseek-ocr": 0.829,
             "gemini-3-flash-preview": 0.912,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.898,
+            "gemini-3.7-flash+antigravity-cli": 0.902,
             "gemini-3.8-flash+antigravity-cli": 0.893,
             "mistral-ocr-4-1": 0.893,
             "qwen3-vl-8b": 0.898,
             "tesseract-chi_tra_vert": 0.388
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 113,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.156,
+          "acc": 0.844,
+          "seq": 0.865,
+          "bow": 0.865,
+          "gap": 0,
+          "len_ratio": 1.037,
+          "invention": 0.082,
+          "invention_indep": 0.082,
+          "invention_ref": 0.255,
+          "unsupported_sample": [
+            "下風蛙",
+            "風蛙牙",
+            "蛙牙痛",
+            "更用蔥",
+            "用蔥茶",
+            "蔥茶嚼",
+            "頂散噴",
+            "散噴嚏"
+          ],
+          "invention_ref_sample": [
+            "欽定四",
+            "定四庫",
+            "四庫全",
+            "庫全書",
+            "全書巻",
+            "書巻四",
+            "巻四十",
+            "四十五"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.924,
+            "claude-opus-5-5": 0.96,
+            "claude-sonnet-5-5": 0.96,
+            "deepseek-ocr": 0.856,
+            "gemini-3-flash-preview": 0.969,
+            "gemini-3.1-flash-lite": 0.898,
+            "gemini-3.1-flash-lite-b": 0.898,
+            "gemini-3.7-flash+antigravity-cli": 0.951,
+            "gemini-3.8-flash+antigravity-cli": 0.942,
+            "mistral-ocr-4-1": 0.871,
+            "qwen3-vl-8b": 0.874,
+            "tesseract-chi_tra_vert": 0.414
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 112,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.128,
+          "acc": 0.872,
+          "seq": 0.887,
+          "bow": 0.887,
+          "gap": 0,
+          "len_ratio": 1.028,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.183,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "欽定四",
+            "定四庫",
+            "四庫全",
+            "庫全書",
+            "全書巻",
+            "書巻四",
+            "巻四十",
+            "四十五"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.938,
+            "claude-opus-5-5": 0.982,
+            "claude-sonnet-5-5": 0.982,
+            "deepseek-ocr": 0.869,
+            "gemini-3-flash-preview": 0.982,
+            "gemini-3.1-flash-lite": 0.902,
+            "gemini-3.1-flash-lite-b": 0.902,
+            "gemini-3.6-flash+antigravity-cli": 0.951,
+            "gemini-3.8-flash+antigravity-cli": 0.991,
+            "mistral-ocr-4-1": 0.893,
+            "qwen3-vl-8b": 0.879,
+            "tesseract-chi_tra_vert": 0.415
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -12521,18 +14091,13 @@
           "bow": 0.878,
           "gap": 0,
           "len_ratio": 1.028,
-          "invention": 0.083,
-          "invention_indep": 0.083,
+          "invention": 0.028,
+          "invention_indep": 0.028,
           "invention_ref": 0.211,
           "unsupported_sample": [
             "薬四两",
             "四两入",
-            "两入煅",
-            "毎一两",
-            "一两作",
-            "两作八",
-            "服乾搯",
-            "乾搯後"
+            "两入煅"
           ],
           "invention_ref_sample": [
             "欽定四",
@@ -12552,6 +14117,8 @@
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite": 0.893,
             "gemini-3.1-flash-lite-b": 0.893,
+            "gemini-3.6-flash+antigravity-cli": 0.942,
+            "gemini-3.7-flash+antigravity-cli": 0.991,
             "mistral-ocr-4-1": 0.884,
             "qwen3-vl-8b": 0.869,
             "tesseract-chi_tra_vert": 0.407
@@ -12599,6 +14166,8 @@
             "gemini-3-flash-preview": 0.902,
             "gemini-3.1-flash-lite": 0.893,
             "gemini-3.1-flash-lite-b": 0.893,
+            "gemini-3.6-flash+antigravity-cli": 0.871,
+            "gemini-3.7-flash+antigravity-cli": 0.893,
             "gemini-3.8-flash+antigravity-cli": 0.884,
             "qwen3-vl-8b": 0.907,
             "tesseract-chi_tra_vert": 0.415
@@ -12641,6 +14210,8 @@
             "gemini-3-flash-preview": 0.888,
             "gemini-3.1-flash-lite": 0.898,
             "gemini-3.1-flash-lite-b": 0.898,
+            "gemini-3.6-flash+antigravity-cli": 0.874,
+            "gemini-3.7-flash+antigravity-cli": 0.879,
             "gemini-3.8-flash+antigravity-cli": 0.869,
             "mistral-ocr-4-1": 0.907,
             "tesseract-chi_tra_vert": 0.416
@@ -12688,6 +14259,8 @@
             "gemini-3-flash-preview": 0.415,
             "gemini-3.1-flash-lite": 0.388,
             "gemini-3.1-flash-lite-b": 0.388,
+            "gemini-3.6-flash+antigravity-cli": 0.414,
+            "gemini-3.7-flash+antigravity-cli": 0.415,
             "gemini-3.8-flash+antigravity-cli": 0.407,
             "mistral-ocr-4-1": 0.415,
             "qwen3-vl-8b": 0.416
@@ -13014,6 +14587,12 @@
             "tesseract-chi_tra_vert": 0.492
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 21,
           "empty": true,
@@ -13234,7 +14813,9 @@
             "gemini-3-flash-preview": 0.982,
             "gemini-3.1-flash-lite": 0.942,
             "gemini-3.1-flash-lite-b": 0.942,
-            "gemini-3.8-flash+antigravity-cli": 0.988,
+            "gemini-3.6-flash+antigravity-cli": 0.649,
+            "gemini-3.7-flash+antigravity-cli": 0.971,
+            "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.977,
             "qwen3-vl-8b": 0.994,
             "tesseract-chi_tra_vert": 0.574
@@ -13276,7 +14857,9 @@
             "gemini-3-flash-preview": 0.982,
             "gemini-3.1-flash-lite": 0.942,
             "gemini-3.1-flash-lite-b": 0.942,
-            "gemini-3.8-flash+antigravity-cli": 0.982,
+            "gemini-3.6-flash+antigravity-cli": 0.649,
+            "gemini-3.7-flash+antigravity-cli": 0.971,
+            "gemini-3.8-flash+antigravity-cli": 0.977,
             "mistral-ocr-4-1": 0.977,
             "qwen3-vl-8b": 0.988,
             "tesseract-chi_tra_vert": 0.574
@@ -13324,7 +14907,9 @@
             "gemini-3-flash-preview": 0.965,
             "gemini-3.1-flash-lite": 0.93,
             "gemini-3.1-flash-lite-b": 0.93,
-            "gemini-3.8-flash+antigravity-cli": 0.953,
+            "gemini-3.6-flash+antigravity-cli": 0.641,
+            "gemini-3.7-flash+antigravity-cli": 0.953,
+            "gemini-3.8-flash+antigravity-cli": 0.959,
             "mistral-ocr-4-1": 0.953,
             "qwen3-vl-8b": 0.965,
             "tesseract-chi_tra_vert": 0.568
@@ -13341,8 +14926,8 @@
           "bow": 0.891,
           "gap": 0,
           "len_ratio": 0.919,
-          "invention": 0.118,
-          "invention_indep": 0.118,
+          "invention": 0.112,
+          "invention_indep": 0.112,
           "invention_ref": 0.189,
           "unsupported_sample": [
             "霜余度",
@@ -13371,6 +14956,8 @@
             "gemini-3-flash-preview": 0.942,
             "gemini-3.1-flash-lite": 0.924,
             "gemini-3.1-flash-lite-b": 0.924,
+            "gemini-3.6-flash+antigravity-cli": 0.641,
+            "gemini-3.7-flash+antigravity-cli": 0.953,
             "gemini-3.8-flash+antigravity-cli": 0.953,
             "mistral-ocr-4-1": 0.947,
             "qwen3-vl-8b": 0.942,
@@ -13388,14 +14975,10 @@
           "bow": 0.924,
           "gap": 0,
           "len_ratio": 0.919,
-          "invention": 0.018,
-          "invention_indep": 0.018,
+          "invention": 0,
+          "invention_indep": 0,
           "invention_ref": 0.095,
-          "unsupported_sample": [
-            "気外冱",
-            "外冱而",
-            "冱而為"
-          ],
+          "unsupported_sample": [],
           "invention_ref_sample": [
             "剛為无",
             "為无邪",
@@ -13413,6 +14996,8 @@
             "deepseek-ocr": 0.942,
             "gemini-3.1-flash-lite": 0.947,
             "gemini-3.1-flash-lite-b": 0.947,
+            "gemini-3.6-flash+antigravity-cli": 0.656,
+            "gemini-3.7-flash+antigravity-cli": 0.977,
             "gemini-3.8-flash+antigravity-cli": 0.971,
             "mistral-ocr-4-1": 0.982,
             "qwen3-vl-8b": 0.977,
@@ -13451,7 +15036,9 @@
             "deepseek-ocr": 0.924,
             "gemini-3-flash-preview": 0.947,
             "gemini-3.1-flash-lite-b": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.953,
+            "gemini-3.6-flash+antigravity-cli": 0.645,
+            "gemini-3.7-flash+antigravity-cli": 0.947,
+            "gemini-3.8-flash+antigravity-cli": 0.947,
             "mistral-ocr-4-1": 0.947,
             "qwen3-vl-8b": 0.942,
             "tesseract-chi_tra_vert": 0.602
@@ -13489,10 +15076,104 @@
             "deepseek-ocr": 0.924,
             "gemini-3-flash-preview": 0.947,
             "gemini-3.1-flash-lite": 1,
-            "gemini-3.8-flash+antigravity-cli": 0.953,
+            "gemini-3.6-flash+antigravity-cli": 0.645,
+            "gemini-3.7-flash+antigravity-cli": 0.947,
+            "gemini-3.8-flash+antigravity-cli": 0.947,
             "mistral-ocr-4-1": 0.947,
             "qwen3-vl-8b": 0.942,
             "tesseract-chi_tra_vert": 0.602
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 344,
+          "empty": false,
+          "refused": false,
+          "loop": true,
+          "cer": 0.995,
+          "acc": 0.005,
+          "seq": 0.63,
+          "bow": 0.668,
+          "gap": 0.038,
+          "len_ratio": 1.849,
+          "invention": 0.052,
+          "invention_indep": 0.052,
+          "invention_ref": 0.128,
+          "unsupported_sample": [
+            "問斯日",
+            "斯日隕",
+            "日隕霜",
+            "冬無水",
+            "無水春",
+            "為至至",
+            "至至而",
+            "乾日故"
+          ],
+          "invention_ref_sample": [
+            "象孫問",
+            "孫問斯",
+            "問斯日",
+            "斯日隕",
+            "日隕霜",
+            "隕霜不",
+            "冬無水",
+            "無水春"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.649,
+            "claude-opus-5-5": 0.649,
+            "claude-sonnet-5-5": 0.641,
+            "deepseek-ocr": 0.641,
+            "gemini-3-flash-preview": 0.656,
+            "gemini-3.1-flash-lite": 0.645,
+            "gemini-3.1-flash-lite-b": 0.645,
+            "gemini-3.7-flash+antigravity-cli": 0.652,
+            "gemini-3.8-flash+antigravity-cli": 0.649,
+            "mistral-ocr-4-1": 0.649,
+            "qwen3-vl-8b": 0.645,
+            "tesseract-chi_tra_vert": 0.415
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 171,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.124,
+          "acc": 0.876,
+          "seq": 0.913,
+          "bow": 0.913,
+          "gap": 0,
+          "len_ratio": 0.919,
+          "invention": 0.012,
+          "invention_indep": 0.012,
+          "invention_ref": 0.13,
+          "unsupported_sample": [
+            "故决之",
+            "决之積"
+          ],
+          "invention_ref_sample": [
+            "故决之",
+            "决之積",
+            "剛為无",
+            "為无邪",
+            "无邪気",
+            "象孫問",
+            "孫問斯",
+            "問斯曰"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.971,
+            "claude-opus-5-5": 0.971,
+            "claude-sonnet-5-5": 0.953,
+            "deepseek-ocr": 0.953,
+            "gemini-3-flash-preview": 0.977,
+            "gemini-3.1-flash-lite": 0.947,
+            "gemini-3.1-flash-lite-b": 0.947,
+            "gemini-3.6-flash+antigravity-cli": 0.652,
+            "gemini-3.8-flash+antigravity-cli": 0.982,
+            "mistral-ocr-4-1": 0.971,
+            "qwen3-vl-8b": 0.965,
+            "tesseract-chi_tra_vert": 0.58
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -13500,37 +15181,43 @@
           "empty": false,
           "refused": false,
           "loop": false,
-          "cer": 0.108,
-          "acc": 0.892,
-          "seq": 0.93,
-          "bow": 0.93,
+          "cer": 0.118,
+          "acc": 0.882,
+          "seq": 0.919,
+          "bow": 0.919,
           "gap": 0,
           "len_ratio": 0.919,
-          "invention": 0,
-          "invention_indep": 0,
-          "invention_ref": 0.083,
-          "unsupported_sample": [],
+          "invention": 0.018,
+          "invention_indep": 0.018,
+          "invention_ref": 0.118,
+          "unsupported_sample": [
+            "順冰毕",
+            "冰毕竟",
+            "毕竟是"
+          ],
           "invention_ref_sample": [
             "剛為无",
             "為无邪",
             "无邪気",
+            "象孫問",
+            "孫問斯",
+            "問斯曰",
             "斯曰隕",
-            "曰隕霜",
-            "隕霜不",
-            "菽冬无",
-            "冬无冰"
+            "曰隕霜"
           ],
           "agree": {
-            "chandra-ocr-2": 0.988,
-            "claude-opus-5-5": 0.982,
-            "claude-sonnet-5-5": 0.953,
+            "chandra-ocr-2": 0.977,
+            "claude-opus-5-5": 0.977,
+            "claude-sonnet-5-5": 0.959,
             "deepseek-ocr": 0.953,
             "gemini-3-flash-preview": 0.971,
-            "gemini-3.1-flash-lite": 0.953,
-            "gemini-3.1-flash-lite-b": 0.953,
+            "gemini-3.1-flash-lite": 0.947,
+            "gemini-3.1-flash-lite-b": 0.947,
+            "gemini-3.6-flash+antigravity-cli": 0.649,
+            "gemini-3.7-flash+antigravity-cli": 0.982,
             "mistral-ocr-4-1": 0.977,
-            "qwen3-vl-8b": 0.982,
-            "tesseract-chi_tra_vert": 0.585
+            "qwen3-vl-8b": 0.971,
+            "tesseract-chi_tra_vert": 0.58
           }
         },
         "mistral-ocr-4-1": {
@@ -13573,6 +15260,8 @@
             "gemini-3-flash-preview": 0.982,
             "gemini-3.1-flash-lite": 0.947,
             "gemini-3.1-flash-lite-b": 0.947,
+            "gemini-3.6-flash+antigravity-cli": 0.649,
+            "gemini-3.7-flash+antigravity-cli": 0.971,
             "gemini-3.8-flash+antigravity-cli": 0.977,
             "qwen3-vl-8b": 0.971,
             "tesseract-chi_tra_vert": 0.585
@@ -13609,7 +15298,9 @@
             "gemini-3-flash-preview": 0.977,
             "gemini-3.1-flash-lite": 0.942,
             "gemini-3.1-flash-lite-b": 0.942,
-            "gemini-3.8-flash+antigravity-cli": 0.982,
+            "gemini-3.6-flash+antigravity-cli": 0.645,
+            "gemini-3.7-flash+antigravity-cli": 0.965,
+            "gemini-3.8-flash+antigravity-cli": 0.971,
             "mistral-ocr-4-1": 0.971,
             "tesseract-chi_tra_vert": 0.574
           }
@@ -13656,7 +15347,9 @@
             "gemini-3-flash-preview": 0.58,
             "gemini-3.1-flash-lite": 0.602,
             "gemini-3.1-flash-lite-b": 0.602,
-            "gemini-3.8-flash+antigravity-cli": 0.585,
+            "gemini-3.6-flash+antigravity-cli": 0.415,
+            "gemini-3.7-flash+antigravity-cli": 0.58,
+            "gemini-3.8-flash+antigravity-cli": 0.58,
             "mistral-ocr-4-1": 0.585,
             "qwen3-vl-8b": 0.574
           }
@@ -13956,6 +15649,12 @@
             "qwen3-vl-8b": 0.983,
             "tesseract-chi_tra_vert": 0.387
           }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 151,
@@ -14428,6 +16127,12 @@
             "tesseract-chi_tra_vert": 0.434
           }
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "n_content": 134,
           "empty": false,
@@ -14651,6 +16356,8 @@
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 0.975,
             "gemini-3.1-flash-lite-b": 0.975,
+            "gemini-3.6-flash+antigravity-cli": 0.954,
+            "gemini-3.7-flash+antigravity-cli": 0.954,
             "gemini-3.8-flash+antigravity-cli": 0.968,
             "mistral-ocr-4-1": 0.891,
             "qwen3-vl-8b": 0.971,
@@ -14693,6 +16400,8 @@
             "gemini-3-flash-preview": 0.986,
             "gemini-3.1-flash-lite": 0.944,
             "gemini-3.1-flash-lite-b": 0.944,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.7-flash+antigravity-cli": 0.979,
             "gemini-3.8-flash+antigravity-cli": 0.951,
             "mistral-ocr-4-1": 0.875,
             "qwen3-vl-8b": 0.953,
@@ -14741,6 +16450,8 @@
             "gemini-3-flash-preview": 0.972,
             "gemini-3.1-flash-lite": 0.944,
             "gemini-3.1-flash-lite-b": 0.944,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.7-flash+antigravity-cli": 0.979,
             "gemini-3.8-flash+antigravity-cli": 0.938,
             "mistral-ocr-4-1": 0.875,
             "qwen3-vl-8b": 0.953,
@@ -14788,6 +16499,8 @@
             "gemini-3-flash-preview": 0.861,
             "gemini-3.1-flash-lite": 0.859,
             "gemini-3.1-flash-lite-b": 0.859,
+            "gemini-3.6-flash+antigravity-cli": 0.854,
+            "gemini-3.7-flash+antigravity-cli": 0.869,
             "gemini-3.8-flash+antigravity-cli": 0.854,
             "mistral-ocr-4-1": 0.816,
             "qwen3-vl-8b": 0.86,
@@ -14828,6 +16541,8 @@
             "deepseek-ocr": 0.861,
             "gemini-3.1-flash-lite": 0.958,
             "gemini-3.1-flash-lite-b": 0.958,
+            "gemini-3.6-flash+antigravity-cli": 0.979,
+            "gemini-3.7-flash+antigravity-cli": 0.979,
             "gemini-3.8-flash+antigravity-cli": 0.965,
             "mistral-ocr-4-1": 0.882,
             "qwen3-vl-8b": 0.961,
@@ -14866,6 +16581,8 @@
             "deepseek-ocr": 0.859,
             "gemini-3-flash-preview": 0.958,
             "gemini-3.1-flash-lite-b": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.951,
+            "gemini-3.7-flash+antigravity-cli": 0.951,
             "gemini-3.8-flash+antigravity-cli": 0.951,
             "mistral-ocr-4-1": 0.887,
             "qwen3-vl-8b": 0.975,
@@ -14904,10 +16621,94 @@
             "deepseek-ocr": 0.859,
             "gemini-3-flash-preview": 0.958,
             "gemini-3.1-flash-lite": 1,
+            "gemini-3.6-flash+antigravity-cli": 0.951,
+            "gemini-3.7-flash+antigravity-cli": 0.951,
             "gemini-3.8-flash+antigravity-cli": 0.951,
             "mistral-ocr-4-1": 0.887,
             "qwen3-vl-8b": 0.975,
             "tesseract-chi_tra_vert": 0.386
+          }
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "n_content": 144,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.146,
+          "acc": 0.854,
+          "seq": 0.882,
+          "bow": 0.882,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.007,
+          "invention_indep": 0.007,
+          "invention_ref": 0.211,
+          "unsupported_sample": [
+            "莫測美"
+          ],
+          "invention_ref_sample": [
+            "欽定四",
+            "定四庫",
+            "四庫全",
+            "庫全書",
+            "全書巻",
+            "書巻十",
+            "巻十二",
+            "十二人"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.954,
+            "claude-opus-5-5": 0.979,
+            "claude-sonnet-5-5": 0.979,
+            "deepseek-ocr": 0.854,
+            "gemini-3-flash-preview": 0.979,
+            "gemini-3.1-flash-lite": 0.951,
+            "gemini-3.1-flash-lite-b": 0.951,
+            "gemini-3.7-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 0.944,
+            "mistral-ocr-4-1": 0.875,
+            "qwen3-vl-8b": 0.961,
+            "tesseract-chi_tra_vert": 0.388
+          }
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "n_content": 144,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.146,
+          "acc": 0.854,
+          "seq": 0.882,
+          "bow": 0.882,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.218,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "欽定四",
+            "定四庫",
+            "四庫全",
+            "庫全書",
+            "全書巻",
+            "書巻十",
+            "巻十二",
+            "十二人"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.954,
+            "claude-opus-5-5": 0.979,
+            "claude-sonnet-5-5": 0.979,
+            "deepseek-ocr": 0.869,
+            "gemini-3-flash-preview": 0.979,
+            "gemini-3.1-flash-lite": 0.951,
+            "gemini-3.1-flash-lite-b": 0.951,
+            "gemini-3.6-flash+antigravity-cli": 0.986,
+            "gemini-3.8-flash+antigravity-cli": 0.944,
+            "mistral-ocr-4-1": 0.889,
+            "qwen3-vl-8b": 0.961,
+            "tesseract-chi_tra_vert": 0.38
           }
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -14952,6 +16753,8 @@
             "gemini-3-flash-preview": 0.965,
             "gemini-3.1-flash-lite": 0.951,
             "gemini-3.1-flash-lite-b": 0.951,
+            "gemini-3.6-flash+antigravity-cli": 0.944,
+            "gemini-3.7-flash+antigravity-cli": 0.944,
             "mistral-ocr-4-1": 0.875,
             "qwen3-vl-8b": 0.953,
             "tesseract-chi_tra_vert": 0.38
@@ -14999,6 +16802,8 @@
             "gemini-3-flash-preview": 0.882,
             "gemini-3.1-flash-lite": 0.887,
             "gemini-3.1-flash-lite-b": 0.887,
+            "gemini-3.6-flash+antigravity-cli": 0.875,
+            "gemini-3.7-flash+antigravity-cli": 0.889,
             "gemini-3.8-flash+antigravity-cli": 0.875,
             "qwen3-vl-8b": 0.889,
             "tesseract-chi_tra_vert": 0.38
@@ -15037,6 +16842,8 @@
             "gemini-3-flash-preview": 0.961,
             "gemini-3.1-flash-lite": 0.975,
             "gemini-3.1-flash-lite-b": 0.975,
+            "gemini-3.6-flash+antigravity-cli": 0.961,
+            "gemini-3.7-flash+antigravity-cli": 0.961,
             "gemini-3.8-flash+antigravity-cli": 0.953,
             "mistral-ocr-4-1": 0.889,
             "tesseract-chi_tra_vert": 0.386
@@ -15084,6 +16891,8 @@
             "gemini-3-flash-preview": 0.38,
             "gemini-3.1-flash-lite": 0.386,
             "gemini-3.1-flash-lite-b": 0.386,
+            "gemini-3.6-flash+antigravity-cli": 0.388,
+            "gemini-3.7-flash+antigravity-cli": 0.38,
             "gemini-3.8-flash+antigravity-cli": 0.38,
             "mistral-ocr-4-1": 0.38,
             "qwen3-vl-8b": 0.386

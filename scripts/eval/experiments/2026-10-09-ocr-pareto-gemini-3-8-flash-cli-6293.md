@@ -4,6 +4,11 @@ Preregistration: `scripts/eval/PREREGISTRATION-ocr-pareto-6293.md`, committed be
 `cli-queue-6293`, $0. This run is ONE arm only: `gemini-3.8-flash-low` through the Gemini CLI (`agy -p`, Google
 subscription). No other tier was run on these pages by this job.
 
+> **Superseded in part (2026-10-09, `2026-10-09-ocr-pareto-gemini-3-7-3-6-flash-cli-6293.md`):** the 41 pre-fix
+> reads were re-read under plan mode and replace them on the charts, which moves the Chinese print, other
+> Latin-script and Armenian points. The Latin and Early English "vs 3 Flash" cells below were computed on the wrong
+> pages; the corrected values are in that file.
+
 ### What ran, and how it differs from the preregistration
 
 - **Pages:** the frozen 908 (`results/ocr-pareto-6293/pages.json`): each chart's most-pages panel on `0a3a4ab3a`.

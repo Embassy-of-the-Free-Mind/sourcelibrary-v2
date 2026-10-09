@@ -149,27 +149,77 @@
             "catastrophic": 0,
             "catastrophic_answered": 0
           },
-          "gemini-3.8-flash+antigravity-cli": {
+          "gemini-3.6-flash+antigravity-cli": {
             "pages_run": 5,
-            "aligned": 3,
+            "aligned": 4,
             "refused": 0,
             "refused_inferred": 0,
-            "median_cer_windowed": 0.039,
-            "mean_cer_windowed": 0.035,
-            "mean_acc_windowed": 0.965,
-            "mean_acc_upper": 0.968,
-            "median_cer_refusals_as_1": 0.039,
-            "mean_cer_refusals_as_1": 0.035,
-            "catastrophic": 2,
-            "catastrophic_answered": 2,
+            "median_cer_windowed": 0.021,
+            "mean_cer_windowed": 0.026,
+            "mean_acc_windowed": 0.974,
+            "mean_acc_upper": 0.978,
+            "median_cer_refusals_as_1": 0.021,
+            "mean_cer_refusals_as_1": 0.026,
+            "catastrophic": 1,
+            "catastrophic_answered": 1,
             "paired_vs_ref": {
-              "n": 3,
+              "n": 4,
               "excluded_refused": 0,
-              "wins": 2,
+              "wins": 3,
               "losses": 1,
               "ties": 0,
-              "median_delta_cer": 0.003,
-              "p_sign": 1,
+              "median_delta_cer": 0.004,
+              "p_sign": 0.625,
+              "ref_engine_aligned": 5,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 5,
+            "aligned": 4,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.017,
+            "mean_cer_windowed": 0.022,
+            "mean_acc_windowed": 0.978,
+            "mean_acc_upper": 0.981,
+            "median_cer_refusals_as_1": 0.017,
+            "mean_cer_refusals_as_1": 0.022,
+            "catastrophic": 1,
+            "catastrophic_answered": 1,
+            "paired_vs_ref": {
+              "n": 4,
+              "excluded_refused": 0,
+              "wins": 3,
+              "losses": 1,
+              "ties": 0,
+              "median_delta_cer": 0.008,
+              "p_sign": 0.625,
+              "ref_engine_aligned": 5,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.8-flash+antigravity-cli": {
+            "pages_run": 5,
+            "aligned": 4,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.018,
+            "mean_cer_windowed": 0.021,
+            "mean_acc_windowed": 0.979,
+            "mean_acc_upper": 0.982,
+            "median_cer_refusals_as_1": 0.025,
+            "mean_cer_refusals_as_1": 0.217,
+            "catastrophic": 1,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 4,
+              "excluded_refused": 1,
+              "wins": 3,
+              "losses": 1,
+              "ties": 0,
+              "median_delta_cer": 0.004,
+              "p_sign": 0.625,
               "ref_engine_aligned": 5,
               "both_unaligned": 0
             }
@@ -692,6 +742,56 @@
             "mean_cer_refusals_as_1": null,
             "catastrophic": 0,
             "catastrophic_answered": 0
+          },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
           },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 0,
@@ -1237,6 +1337,56 @@
             "catastrophic": 0,
             "catastrophic_answered": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 0,
             "aligned": 0,
@@ -1780,6 +1930,56 @@
             "mean_cer_refusals_as_1": null,
             "catastrophic": 0,
             "catastrophic_answered": 0
+          },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
           },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 0,
@@ -2325,6 +2525,56 @@
             "catastrophic": 0,
             "catastrophic_answered": 0
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 0,
             "aligned": 0,
@@ -2869,6 +3119,56 @@
             "catastrophic": 1,
             "catastrophic_answered": 1
           },
+          "gemini-3.6-flash+antigravity-cli": {
+            "pages_run": 6,
+            "aligned": 6,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.027,
+            "mean_cer_windowed": 0.046,
+            "mean_acc_windowed": 0.954,
+            "mean_acc_upper": 0.985,
+            "median_cer_refusals_as_1": 0.027,
+            "mean_cer_refusals_as_1": 0.046,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 6,
+              "excluded_refused": 0,
+              "wins": 4,
+              "losses": 2,
+              "ties": 0,
+              "median_delta_cer": 0.009,
+              "p_sign": 0.688,
+              "ref_engine_aligned": 6,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.7-flash+antigravity-cli": {
+            "pages_run": 6,
+            "aligned": 6,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.023,
+            "mean_cer_windowed": 0.043,
+            "mean_acc_windowed": 0.957,
+            "mean_acc_upper": 0.989,
+            "median_cer_refusals_as_1": 0.023,
+            "mean_cer_refusals_as_1": 0.043,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 6,
+              "excluded_refused": 0,
+              "wins": 5,
+              "losses": 0,
+              "ties": 1,
+              "median_delta_cer": 0.008,
+              "p_sign": 0.063,
+              "ref_engine_aligned": 6,
+              "both_unaligned": 0
+            }
+          },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 6,
             "aligned": 4,
@@ -3335,15 +3635,35 @@
           "span_dispersion": 1,
           "chars": 783
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.14,
+          "acc_upper": 0.956,
+          "acc_windowed": 0.951,
+          "cer": 0.049,
+          "span_dispersion": 1,
+          "chars": 1103
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.132,
+          "acc_upper": 0.961,
+          "acc_windowed": 0.956,
+          "cer": 0.044,
+          "span_dispersion": 1,
+          "chars": 801
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.123,
-          "acc_upper": 0.965,
-          "acc_windowed": 0.961,
-          "cer": 0.039,
+          "guard": 0.175,
+          "acc_upper": 0.958,
+          "acc_windowed": 0.955,
+          "cer": 0.045,
           "span_dispersion": 1,
-          "chars": 782
+          "chars": 786
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3481,6 +3801,26 @@
           "span_dispersion": 1,
           "chars": 745
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.167,
+          "acc_upper": 0.975,
+          "acc_windowed": 0.971,
+          "cer": 0.029,
+          "span_dispersion": 1,
+          "chars": 757
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.096,
+          "acc_upper": 0.978,
+          "acc_windowed": 0.975,
+          "cer": 0.025,
+          "span_dispersion": 1,
+          "chars": 782
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -3489,7 +3829,7 @@
           "acc_windowed": 0.975,
           "cer": 0.025,
           "span_dispersion": 1,
-          "chars": 767
+          "chars": 781
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3592,6 +3932,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -3666,6 +4012,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -3779,15 +4131,32 @@
           "span_dispersion": null,
           "chars": 2460
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.063,
-          "acc_upper": 0.961,
-          "acc_windowed": 0.959,
-          "cer": 0.041,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
           "span_dispersion": 1,
-          "chars": 914
+          "chars": 2484
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.048,
+          "acc_upper": 0.993,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 16.444,
+          "chars": 2468
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "SAFETY",
+          "chars": 0
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -3925,15 +4294,35 @@
           "span_dispersion": 1,
           "chars": 2192
         },
-        "gemini-3.8-flash+antigravity-cli": {
+        "gemini-3.6-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
-          "guard": 0.663,
-          "acc_upper": 0.362,
-          "acc_windowed": 0.361,
-          "cer": 0.639,
+          "guard": 1,
+          "acc_upper": 0,
+          "acc_windowed": 0,
+          "cer": 1,
+          "span_dispersion": null,
+          "chars": 7
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.669,
+          "acc_upper": 0.359,
+          "acc_windowed": 0.358,
+          "cer": 0.642,
           "span_dispersion": 1,
-          "chars": 838
+          "chars": 810
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.031,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.996,
+          "cer": 0.004,
+          "span_dispersion": 1,
+          "chars": 2195
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4071,15 +4460,35 @@
           "span_dispersion": 1,
           "chars": 2563
         },
-        "gemini-3.8-flash+antigravity-cli": {
-          "aligned": false,
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
           "refused": false,
-          "guard": 0.535,
-          "acc_upper": 0.477,
-          "acc_windowed": 0.477,
-          "cer": 0.523,
+          "guard": 0.076,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.987,
+          "cer": 0.013,
           "span_dispersion": 1,
-          "chars": 606
+          "chars": 2457
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.047,
+          "acc_upper": 0.992,
+          "acc_windowed": 0.991,
+          "cer": 0.009,
+          "span_dispersion": 1,
+          "chars": 2470
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.053,
+          "acc_upper": 0.991,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1,
+          "chars": 3620
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4182,6 +4591,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -4256,6 +4671,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4334,6 +4755,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -4408,6 +4835,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4486,6 +4919,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -4560,6 +4999,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4638,6 +5083,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -4712,6 +5163,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4790,6 +5247,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -4864,6 +5327,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -4942,6 +5411,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5016,6 +5491,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5094,6 +5575,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5168,6 +5655,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5246,6 +5739,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5320,6 +5819,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5398,6 +5903,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5472,6 +5983,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5550,6 +6067,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5624,6 +6147,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5702,6 +6231,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5776,6 +6311,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -5854,6 +6395,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -5928,6 +6475,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6006,6 +6559,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6080,6 +6639,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6158,6 +6723,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6232,6 +6803,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6310,6 +6887,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6384,6 +6967,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6462,6 +7051,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6536,6 +7131,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6614,6 +7215,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6688,6 +7295,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6766,6 +7379,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -6840,6 +7459,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -6953,6 +7578,26 @@
           "span_dispersion": 1,
           "chars": 2282
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.107,
+          "acc_upper": 0.979,
+          "acc_windowed": 0.868,
+          "cer": 0.132,
+          "span_dispersion": 1,
+          "chars": 2286
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.107,
+          "acc_upper": 0.979,
+          "acc_windowed": 0.868,
+          "cer": 0.132,
+          "span_dispersion": 1,
+          "chars": 2359
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
           "refused": false,
@@ -7057,6 +7702,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7131,6 +7782,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -7243,6 +7900,26 @@
           "cer": 0.029,
           "span_dispersion": 9.5,
           "chars": 5381
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.071,
+          "acc_upper": 0.988,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 5330
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.173,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.983,
+          "cer": 0.017,
+          "span_dispersion": 1,
+          "chars": 5349
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": false,
@@ -7383,6 +8060,26 @@
           "span_dispersion": 1.158,
           "chars": 1656
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.034,
+          "acc_upper": 0.994,
+          "acc_windowed": 0.994,
+          "cer": 0.006,
+          "span_dispersion": 1.75,
+          "chars": 1650
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1.035,
+          "chars": 1658
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -7485,6 +8182,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -7598,6 +8301,26 @@
           "span_dispersion": 1,
           "chars": 3755
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.156,
+          "acc_upper": 0.976,
+          "acc_windowed": 0.969,
+          "cer": 0.031,
+          "span_dispersion": 1,
+          "chars": 3717
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1,
+          "chars": 3807
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
@@ -7702,6 +8425,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7778,6 +8507,12 @@
         "gemini-3.1-flash-lite": {
           "missing": true
         },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "missing": true
+        },
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
@@ -7852,6 +8587,12 @@
           "missing": true
         },
         "gemini-3.1-flash-lite": {
+          "missing": true
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.7-flash+antigravity-cli": {
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
@@ -7964,6 +8705,26 @@
           "cer": 0.074,
           "span_dispersion": 1,
           "chars": 1991
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.105,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.929,
+          "cer": 0.071,
+          "span_dispersion": 8.176,
+          "chars": 2661
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.123,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.926,
+          "cer": 0.074,
+          "span_dispersion": 5.176,
+          "chars": 2160
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -8103,6 +8864,26 @@
           "cer": 0.632,
           "span_dispersion": 86,
           "chars": 3897
+        },
+        "gemini-3.6-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.059,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.977,
+          "cer": 0.023,
+          "span_dispersion": 72,
+          "chars": 4358
+        },
+        "gemini-3.7-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.07,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.972,
+          "cer": 0.028,
+          "span_dispersion": 74.5,
+          "chars": 4099
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
