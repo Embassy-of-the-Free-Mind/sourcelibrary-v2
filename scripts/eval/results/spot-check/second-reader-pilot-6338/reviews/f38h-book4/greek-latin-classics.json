@@ -1,0 +1,243 @@
+[
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "slot": 8,
+  "title": "Vitruvii de architectura libri X",
+  "tradition": "greek-latin-classics",
+  "shelf_fit": "fits",
+  "shelf_note": "Vitruvius' De architectura is the foundational classical Roman treatise on architecture, perfectly placed in the greek-latin-classics tradition despite this digitized copy being a 13th-century manuscript witness.",
+  "rights_flag": null,
+  "structure_note": "The manuscript contains 116 page records. The recorded 18 printed backsteps and 14 repeats are artifacts of medieval foliation and marginal notes being misinterpreted by the pipeline as printed page numbers. A critical structural defect occurs on page 115, where an unrelated 19th-century Arabic manuscript flyleaf (dated 1287 AH / 1870 CE) has been spliced into this Latin manuscript.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 24,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "s̃i uiuo se pitinũ",
+      "image": "sine vitio sempiternum",
+      "problem": "Latin phrase left as unexpanded, corrupted abbreviation sequence",
+      "severity": "moderate",
+      "class": "O13"
+     },
+     {
+      "ocr": "casgra",
+      "image": "caesa",
+      "problem": "Participle caesa misread as non-word casgra",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "isinmã uirtutẽ",
+      "image": "insignem virtutem",
+      "problem": "insignem misread as isinmã",
+      "severity": "moderate",
+      "class": "O4"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "dissoluunt. Itẽ saxa maritima ab salsugine ex ea desluunt... si si ppe urbẽ eẽnt dignũ d̃ uer̃ h̃m̃ officiũ oĩa opa p̃ficer̃.",
+      "english": "[omitted]",
+      "problem": "Entire first 15 lines of the page discussing marine stone, travertine, fire resistance, Anician quarries, and Ferentum monuments are completely omitted from translation",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "i h̃ieme s̃ estate",
+      "english": "whether in winter or summer",
+      "problem": "Vitruvius' rule that stone must be quarried in winter and not in summer ('hieme non aestate') is translated as 'whether in winter or summer', reversing the prescription",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "s̃i uiuo se pitinũ",
+      "english": "a living fortification",
+      "problem": "Garbled OCR for 'sine vitio sempiternum' (everlasting without defect) hallucinated as 'a living fortification'",
+      "severity": "serious",
+      "class": "T9"
+     }
+    ],
+    "other": [
+     {
+      "note": "Scaffolding XML tags (<language>, <page-type>, <page-num>, <meta>, <vocab>) present in OCR output",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "socerem",
+      "image": "Socratem",
+      "problem": "Philosopher Socrates misread as socerem (father-in-law)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Olarius",
+      "image": "Larix / Oleum",
+      "problem": "Botanical/resinous substance term misread as proper name Olarius (potter)",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "qui omnes operantur omnium pectora fieri fuerit sapientia et ut in occultos haberent sensus: si pa-",
+      "image": "optavisse ait ut hominum pectora fenestrata et aperta essent...",
+      "problem": "Famous passage on Socrates wishing human chests had windows to reveal their thoughts is garbled into incoherence",
+      "severity": "serious",
+      "class": "O4"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "Delphis Apollo socerem omnium sapientissimum pythie responsis est professus.",
+      "english": "Delphis, Apollo declared the father-in-law of all as the wisest by the Pythian responses.",
+      "problem": "Socrates mistranslated as 'the father-in-law of all' following OCR misreading of Socratem as socerem",
+      "severity": "serious",
+      "class": "T5"
+     },
+     {
+      "source": "Olarius vero plura tractavit ad res cum opitimum a sapina",
+      "english": "The potter, however, treated more [things] regarding [the] matter [concerning] the best [wood] from the fir",
+      "problem": "Timber properties of fir/larch translated as the activities of 'the potter' following OCR misreading",
+      "severity": "moderate",
+      "class": "T4"
+     },
+     {
+      "source": "Is autem memorat prudentem ita doctissimum qui omnes operantur omnium pectora fieri fuerit sapientia et ut in occultos haberent sensus",
+      "english": "He, however, remembers the prudent [man] as so learned, who acts [so that] all [may] become the hearts of all, [as if it had been] wisdom, and so that they might have senses in the hidden [things]",
+      "problem": "Book III preface rendered as unintelligible nonsense",
+      "severity": "serious",
+      "class": "T15"
+     }
+    ],
+    "other": [
+     {
+      "note": "Descriptive tag '[Large blue Lombardic initial D]' leaked into reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Markup tags (<language>, <page-type>, <warning>, <insert>, <image-desc>, <vocab>) present in OCR output",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 60,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ĩndianaq;",
+      "image": "meridianamque",
+      "problem": "meridianamque (southern) misread as ĩndianaq; (Indian)",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "at̃stilon",
+      "image": "tetrastylon",
+      "problem": "Architectural term tetrastylon (tetrastyle atrium) misread as at̃stilon",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener.",
+      "image": "Ideoque gentes quae proximae sunt...",
+      "problem": "Latin text corrupted into meaningless non-words and gibberish syllables",
+      "severity": "serious",
+      "class": "O4"
+     },
+     {
+      "ocr": "s latm̃",
+      "image": "Saturni",
+      "problem": "Planet Saturn misread as s latm̃",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "ead rõe italia ĩtr̃ septrẽonalẽ ĩndianaq; ab utraq; pre mixtiõibꝰ tẽparatis ĩuictas h̃et au des staq; gsilijs refrigit barbaroꝝ iteneres: forti manu gsilijs ĩndianoꝝ cogitationes.",
+      "english": "by the same reason Italy, between the northern and the Indian [nations], by mixtures tempered from both sides, holds invincible [lands], and cools the itineraries of the barbarians by its counsel, and the thoughts of the Indians by a strong hand and by counsels.",
+      "problem": "Vitruvius' famous climate theory placing Italy between northern and southern peoples corrupted into Italy between northern and Indian nations, inventing Roman suppression of Indians",
+      "severity": "serious",
+      "class": "T4"
+     },
+     {
+      "source": "at̃stilon",
+      "english": "Atstilate",
+      "problem": "Tetrastyle atrium (tetrastylon) translated as invented term 'Atstilate'",
+      "severity": "moderate",
+      "class": "T11"
+     },
+     {
+      "source": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener.",
+      "english": "I have said that the itinerary of the minds from the sun erupts from these.",
+      "problem": "Gibberish OCR rendered as bizarre hallucination about itineraries of minds erupting from the sun",
+      "severity": "serious",
+      "class": "T9"
+     }
+    ],
+    "other": [
+     {
+      "note": "Scaffolding XML tags (<language>, <page-type>, <page-num>, <vocab>) present in OCR output",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 115,
+    "right_page": "no",
+    "ocr_score": 1,
+    "ocr_errors": [
+     {
+      "ocr": "<language>Arabic</language>\n<margin>\n<unclear>يا كببيج</unclear> <unclear>يا كببيج</unclear>\n<unclear>احفظ</unclear> <unclear>الورق</unclear>\n١٢٨٧\n</margin>",
+      "image": "[Arabic manuscript flyleaf]",
+      "problem": "Leaf is an unrelated late 19th-century Arabic manuscript flyleaf with a Kabīkaj insect-warding formula dated 1287 AH (1870 CE), completely alien to Latin Vitruvius",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "tr_score": 1,
+    "tr_errors": [
+     {
+      "source": "[End of Vitruvius De architectura]",
+      "english": "[Blank page — no translatable content]",
+      "problem": "Expected concluding Latin text of Vitruvius Book X replaced by system message for a blank page due to spliced foreign flyleaf",
+      "severity": "serious",
+      "class": "T1"
+     }
+    ],
+    "other": [
+     {
+      "note": "Foreign leaf from another book: a 19th-century Arabic manuscript flyleaf bearing a Kabīkaj invocation dated 1287 AH is spliced into this 13th-century Latin Vitruvius manuscript",
+      "severity": "serious",
+      "class": "I1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A 13th-century manuscript witness of Vitruvius that belongs in the classics tradition, but is ruined by severe OCR failures on scribal abbreviations, disastrous translation errors (such as dropping half a page, turning southern peoples into Indians, and translating Socrates as 'the father-in-law of all'), and a foreign Arabic leaf spliced into the scan at page 115.",
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "A reader opening this book finds a 13th-century manuscript of Vitruvius' De architectura whose final leaf is an unrelated 19th-century Arabic manuscript flyleaf. The transcription captures the Latin text for the genuine pages but repeatedly mangles medieval abbreviations and key terms. The English translation cannot be trusted, as it drops substantial passages, reverses architectural guidance, and introduces comical corruptions such as Socrates rendered as 'the father-in-law of all' and southern nations turned into 'Indians'."
+ }
+]
