@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 21411
+n_pages: 21411
+verdict: "A deterministic $0 cleanup (A2) would touch about 479K served pages (9.8%); off-page original: notes about 173K; reader-visible markup leaks about 22K."
+status: informational
+decision: "A2 cleanup approved by Derek 2026-10-04 and applied (2026-10-04-a2-cleanup-applied-5700.md)"
+superseded_by: null
+issue: 5700
+---
 ## 2026-10-03 — How many served translated pages would each text-quality backfill touch? A1 census, $0 (#5700)
 
 PRIOR ART: 2026-09-30 monthly translation corpus audit (`_series-monthly-translation-corpus-audit.md`) judges translation fidelity on ~100 pages with a model. This census uses no model: it sizes deterministic defect CLASSES on every live translated book. The (b) verifier is `scripts/lib/page-terms-parse.mjs` `verifyQuote()` (#3825/#4777), reused unchanged. The (c) "what the reader sees" check imports the reader's own `NotesRenderer`.

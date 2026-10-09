@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: none
+languages: [lzh, bo]
+scripts: [Hani, Tibt]
+canons: []
+n_books: null
+n_pages: 80
+verdict: "Paddle invents on table pages, so the Chinese lane stopped; a $0 first-OCR guard cuts served Yigdzin invention from 28% to 3% of a random one-per-book draw (by eye)."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5660]
+---
 ## 2026-10-06 · After gate 0: do Paddle (SKQS Chinese) and Yigdzin (Tibetan) invent text on the page TYPES a random gate under-samples, and can a $0 rule screen catch it? (#5660, job gpu-resume-5660)
 
 PRIOR ART: gate 0 of the same job (`2026-10-06-gpu-ocr-backlog-engine-comparison-and-gate-0-5660.md`) is the run this continues. The write-time guards `scripts/lib/ocr-loop-guard.mjs` (#4850) and `scripts/lib/blank-page-guard.mjs` (#4149) are reused inside the new screen, `scripts/lib/first-ocr-guard.mjs`; the PRIOR ART line there explains why neither fits on its own.

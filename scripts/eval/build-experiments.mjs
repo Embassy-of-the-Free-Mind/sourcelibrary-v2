@@ -25,6 +25,11 @@
  *                             — rendered newest first
  *   _note-<slug>.md           notes about the log itself — rendered last
  *
+ * A dated entry may open with YAML front matter (status, verdict, measure … —
+ * the schema is in experiments/README.md, the reader in lib/experiment-header.mjs,
+ * the gate in experiments-lint.mjs; #5939). It is data for the index and the
+ * public pages, not prose: it is dropped here, so EXPERIMENTS.md reads as before.
+ *
  *   node scripts/eval/build-experiments.mjs           # write EXPERIMENTS.md (on main, or with --force)
  *   node scripts/eval/build-experiments.mjs --check   # exit 1 if EXPERIMENTS.md is stale or a file is malformed
  *   node scripts/eval/build-experiments.mjs --print   # the generated text on stdout, write nothing
@@ -40,6 +45,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { splitHeader } from './lib/experiment-header.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(DIR, 'experiments');
@@ -76,7 +82,7 @@ export function buildExperiments(srcDir = SRC) {
 
   const sections = [];
   for (const n of [...series, ...dated, ...notes]) {
-    const text = stripPriorArt(read(n));
+    const text = stripPriorArt(splitHeader(read(n)).body);
     const first = text.split('\n')[0];
     if (!/^## /.test(first)) problems.push(`${n}: must start with a '## ' heading, starts with: ${first.slice(0, 60)}`);
     const m = n.match(DATED);
@@ -116,7 +122,7 @@ export function adoptOrphans(outPath = OUT, srcDir = SRC) {
   const known = new Set();
   for (const n of fs.readdirSync(srcDir)) {
     if (!n.endsWith('.md') || n === 'README.md') continue;
-    known.add(stripPriorArt(fs.readFileSync(path.join(srcDir, n), 'utf8')).split('\n')[0].trim());
+    known.add(stripPriorArt(splitHeader(fs.readFileSync(path.join(srcDir, n), 'utf8')).body).split('\n')[0].trim());
   }
   const lines = text.split('\n');
   const starts = lines.flatMap((l, i) => (/^## /.test(l) ? [i] : []));

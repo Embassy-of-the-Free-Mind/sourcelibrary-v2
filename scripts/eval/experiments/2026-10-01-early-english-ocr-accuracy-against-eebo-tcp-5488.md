@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 52
+n_pages: 52
+verdict: "English 1600-1699 vs same-edition EEBO-TCP: flash-lite median CER 0.053, 0/52 catastrophic; flash 0.038 but 5/52 RECITATION refusals."
+status: informational
+decision: null
+superseded_by: null
+issue: 5488
+---
 ## 2026-10-01 — How accurate is production OCR on English print of the 1600s? 5.3% median CER against same-edition EEBO-TCP; flash reads better but refuses more (#5488)
 
 PRIOR ART: 2026-09-28-is-flash-lite-adequate-on-modern-english-print-or-5216.md — modern (1800s+) English against Wikisource/Gutenberg, not early print; 2026-10-01-does-a-long-s-prompt-line-fix-early-english-ocr-5488.md — same TCP references, but it tests a prompt line, not engine accuracy per cell.

@@ -1,0 +1,32 @@
+{
+ "packet": 23,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+  "6a3ced984701a906f10e1bb0",
+  "6a94a8c1bf723b215d8c0699",
+  "6a370235e7c320dda4b1015c",
+  "69e787c24a6785cfd60cd4ca",
+  "69c423532de785d8a2265f1e",
+  "69e7ac045f1a22ab19aa24b0",
+  "6a20331018654bf8e19040d0",
+  "6ab22ab1277b509c83e90fe4",
+  "69e78aa74a6785cfd60d4a6b",
+  "69b90579cdb14f317fb522b7",
+  "6a94a731bf723b215d8beadd",
+  "6a9529e7d5f269de866d57cf",
+  "69c1ba298522835be8456d17",
+  "69c1bae58522835be845b540",
+  "6a425c09dfbbb4d07aa5d259",
+  "6a14e1bb311a9edd46223963",
+  "6a267b646c1f37c9c4f319c1",
+  "6a94c1d656cac2f882c832df",
+  "decoy-06",
+  "6a3c77a401fe4f593c203a97",
+  "6a94cd898e2a2ffc91d26cf4",
+  "69af0c80067c0c26ee26b6d9",
+  "6a08c5f7e4e4b7b8793e9770",
+  "decoy-05"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Philosophiae Naturalis Principia Mathematica | Author: Isaac Newton | Year: 1687 | Language: Latin\n2. Title: 數度衍·卷十八~卷二十 (vol 8) | Author: 方中通 | Language: Chinese\n3. Title: Uri 10 Shri Ganga Mahatmya – Shri Saraswati Stotram Shri Saraswati Kavacha | Language: Sanskrit\n4. Title: gsang ba ye shes mkha’ ‘gro’i bskang bshags | Author: Drametse & Ogyen Choling Collection | Language: Tibetan\n5. Title: sangs rgyas gling pa'i gter ma 'bod lugs sher phyin dgongs pa | Author: Drametse Monastery Collection | Year: 1700 | Language: Tibetan\n6. Title: Ch/So 14731 | Language: Chinese (script); Sogdian (script); Chinese; Sogdian\n7. Title: Kanjur 'Bum Ka | Author: Neyphug Monastery | Year: 1700 | Language: Tibetan\n8. Title: Duʿāʾ : prayer Or. 8202 | Year: 1850 | Language: Arabic\n9. Title: An English translation of the Hermetic Arcanum of Penes Nos Unda Tagi [pseud.] 1623 | Author: Jean d' active 17th century Espagnet | Year: 1893 | Language: English\n10. Title: ma mo’i skor tshogs | Author: Ogyen Choling Collection | Year: 1700 | Language: Tibetan\n11. Title: كتاب العالم رقعة شطرنج (The World is a Chessboard) | Year: 1200 | Language: Arabic\n12. Title: Siddhanta Sudha Nidhi ( Vyakarana By Vishveshwara Suri – Adhyaya 2) | Language: Sanskrit\n13. Title: Abrégé des éléments d'Euclide en arabe | Year: 1401 | Language: Arabic\n14. Title: Humāyūnʹnāmah | Year: 1757 | Language: Persian\n15. Title: Incantations and amulets | Year: 1650 | Language: Hebrew and Judeo-Arabic\n16. Title: Praxis Medica Experimentalis, Sive Opuscula Universa: Quotquot hactenus ab Autore ipso ultimum revisa & aucta in lucem prodierunt ; Nunc primum in unum collecta volumen Exornatum | Author: Sydenham, Thomas | Language: Latin\n17. Title: Thor bu Bla ma'i thugs sgrub sogs | Author: Tshamdrak Monastery | Year: 1700 | Language: Tibetan\n18. Title: Laboratorium Chymicorum Vulgarium | Year: 1686 | Language: Latin\n19. Title: Fragments Of A Manuscript Initialed Vi Pu Sharada Manuscript Tej K Zadoo Collection | Language: Sanskrit\n20. Title: Commentarius in Psalmum centesimum decimum nonum | Author: Ioannes Caspar Rötelius | Year: 1671 | Language: Latin\n21. Title: 孫氏唐韻考·卷五 (vol 4) | Author: 紀容舒 | Language: Chinese\n22. Title: Manuscript 20 – Asya Vamasya Palitasya Suktam ( Manuscript In Sharada) | Language: Sanskrit\n23. Title: Charaka Samhita: Chikitsa Sthanam Vol. 3 (Sanskrit Medical Text) | Author: Agnivesha; Charaka; Viswanadha Sastry | Year: 1939 | Language: Sanskrit\n24. Title: Qānūn-i ʻishrat (قانون عشرت) — Persian erotic manual adapted from Sanskrit, 15 chapters (Ivanow collection, McGill, c. 1838) | Year: 1838 | Language: Persian\n25. Title: Clavis sapientiae Salomonis restituta | Author: Andreas Wolfhardus | Year: 1598 | Language: Latin\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

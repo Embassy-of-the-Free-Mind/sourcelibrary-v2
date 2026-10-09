@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [grc]
+scripts: [Grek]
+canons: []
+n_books: 5
+n_pages: 2600
+verdict: "Full Kraken reads carry both Proclus In Timaeum codices past the 80% bar (97.7% and 98.7% located against Schneider); the alchemical codices plateau near 48%, limited by the edition."
+status: undecided
+decision: null
+superseded_by: null
+issue: 5619
+---
 ## 2026-10-06 · Greek manuscripts: full Kraken read + edition fit on the five public-domain-edition codices (#5619)
 <!-- PRIOR ART: 2026-10-02-greek-manuscripts-fit-open-edition-5619.md (#5635) is the pilot this completes — same scripts, same fold, same edition files; sefaria-fit (#5560, FIT_RULES v2 since #5637) is the fitting code. -->
 

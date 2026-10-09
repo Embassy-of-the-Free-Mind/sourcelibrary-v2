@@ -1,0 +1,16 @@
+{
+ "seed": 6038,
+ "works_total": 86461,
+ "books_with_pages": 109004,
+ "works_walked": 4346,
+ "works_with_text": 2369,
+ "quotas": {
+  "main": 2000,
+  "nalanda": 150,
+  "hermetica": 150,
+  "chinese": 150,
+  "arabic_persian": 150,
+  "hebrew": 150
+ },
+ "visible_in_main": 1022
+}

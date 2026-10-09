@@ -1,3 +1,17 @@
+---
+stage: image
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 41096
+n_pages: 41096
+verdict: "151 of 41,096 visible books (0.37%) show a clean one-page text/image shift on the sampled page; 86 are e-rara PDF archives (10.7% of e-rara screened)."
+status: informational
+decision: null
+superseded_by: null
+issue: 5803
+---
 ## 2026-10-04 · Across the whole visible corpus, how many books carry another page's text beside an image? (#5803) — RESULT
 
 PRIOR ART: scripts/eval/experiments/2026-10-04-clef-page-image-screens.md — the 1,497-book random subset that measured the ~0.8% lower bound; this runs the same check on every visible book.

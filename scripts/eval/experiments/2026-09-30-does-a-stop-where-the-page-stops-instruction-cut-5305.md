@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 95
+n_pages: 95
+verdict: "A restraint block has no measurable effect on judged invention (risk stratum 18.3% to 21.1%, p 0.80, floor 2.8 pp), though it cuts unmarked open ends 22.5% to 8.5%."
+status: rejected
+decision: "Restraint block left out of v16 by the preregistered rule (DECISIONS.md, 2026-09-30)"
+superseded_by: null
+issue: 5305
+---
 ## 2026-09-30 — Does a "stop where the page stops" instruction cut invention? Restraint A/B on the audit's own pages (#5305)
 
 **Headline: NO measurable effect on judged invention; the pre-registered rule says the block stays out of v16.**

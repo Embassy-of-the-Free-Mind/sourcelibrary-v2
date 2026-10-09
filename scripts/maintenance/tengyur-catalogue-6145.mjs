@@ -171,7 +171,7 @@ function roleLabel(rid) {
 }
 
 // ── catalogue join ───────────────────────────────────────────────────────────────────────────────
-function catalogue(outline, authorIndex) {
+function catalogue(outline, authorIndex, byBdrc = new Map()) {
   const people = new Map();
   const person = (rid) => {
     if (!people.has(rid)) {
@@ -181,7 +181,12 @@ function catalogue(outline, authorIndex) {
       // is safe to match on only if it is specific — Samantabhadra the Jain author is not the tantric one).
       const reviewed = REVIEWED_AUTHOR_LINKS[rid];
       const ok = reviewed && reviewed === m.author_id;
-      people.set(rid, { bdrc: rid, name: p?.iast || null, name_ewts: ewtsName(p?.ewts), author_id: ok ? m.author_id : null,
+      // A doc that carries this BDRC id (minted or linked by tengyur-authors-6145.mjs through the
+      // additive mint path) IS this person — the id decides, not the name.
+      const minted = byBdrc.get(rid);
+      if (minted && ok && minted.id !== m.author_id) throw new Error(`${rid}: reviewed link ${m.author_id} but bdrc_ids on ${minted.id}`);
+      people.set(rid, { bdrc: rid, name: p?.iast || null, name_ewts: ewtsName(p?.ewts), author_id: minted?.id || (ok ? m.author_id : null),
+        canonical_name: minted?.canonical_name,
         candidate: m.author_id && !ok ? m.author_id : undefined,
         match: m.author_id ? `folded name = ${m.via.join(', ')}${ok ? ' (reviewed)' : REJECTED_AUTHOR_LINKS[rid] ? ` — rejected: ${REJECTED_AUTHOR_LINKS[rid]}` : ' — unreviewed, not written'}` : m.reason });
     }
@@ -256,8 +261,16 @@ async function main() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
   const books = db.collection('books');
-  const authorDocs = await db.collection('authors').find({}, { projection: { canonical_name: 1, variants: 1, aliases: 1, merged_into: 1, is_person: 1 } }).toArray();
-  const { byToh, people } = catalogue(outline, buildAuthorIndex(authorDocs));
+  const authorDocs = await db.collection('authors').find({}, { projection: { canonical_name: 1, variants: 1, aliases: 1, merged_into: 1, is_person: 1, bdrc_ids: 1 } }).toArray();
+  const byBdrc = new Map();
+  for (const d of authorDocs) {
+    if (d.merged_into) continue;
+    for (const rid of d.bdrc_ids || []) {
+      if (byBdrc.has(rid)) throw new Error(`BDRC ${rid} is on two author docs: ${byBdrc.get(rid).id}, ${d._id}`);
+      byBdrc.set(rid, { id: d._id, canonical_name: d.canonical_name });
+    }
+  }
+  const { byToh, people } = catalogue(outline, buildAuthorIndex(authorDocs), byBdrc);
   const held = {};
   for (const [toh, h] of Object.entries(SANSKRIT_HELD)) {
     const b = await books.findOne({ id: h.book }, { projection: { id: 1, title: 1, work_id: 1, visible: 1 } });
@@ -333,8 +346,8 @@ async function main() {
           ...(t.opening_side_not_held ? { title_side_not_held: true } : {}),
           title_bo: open.bo, title_sa_as_written: open.sa_bo,
           title_ewts: cat?.title_ewts?.replace(/[\s/]+$/, '') || null, title_sa: cat?.title_sa || null,
-          authors: (cat?.authors || []).map(({ role, match, candidate, ...a }) => a),
-          translators: (cat?.translators || []).map(({ role, match, candidate, ...a }) => a),
+          authors: (cat?.authors || []).map(({ role, match, candidate, canonical_name, ...a }) => a),
+          translators: (cat?.translators || []).map(({ role, match, candidate, canonical_name, ...a }) => a),
           work_id: workId,
           bdrc: { part: cat?.part || null, work: cat?.work || null, indic_work: cat?.indic_work || null, rkts: cat?.rkts || null },
           ...(heldLink ? { sanskrit_held: heldLink.book } : {}),

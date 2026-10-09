@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [agreement, judged]
+languages: [he, arc]
+scripts: [Hebr]
+canons: [kabbalah]
+n_books: 6
+n_pages: 808
+verdict: "Open Sefaria text fitted and verified on only 43 of 808 OCR-failed Hebrew pages; licence, edition layout and unreadable edges refuse the other 765."
+status: informational
+decision: "43 pages written from Sefaria; the 765 refused pages go to a loop-guarded re-read (#3878)"
+superseded_by: null
+issue: 5560
+---
 ## 2026-10-02 — Can open Sefaria text be fitted to Hebrew pages whose OCR failed? For 43 of 808 pages, verified page by page. Licence, edition layout and edges refuse the rest (#5560)
 
 **Question.** The #5513 OCR pass left 808 pages without text across six Hebrew books: Zohar on Genesis–Exodus MS, Luria's Zohar commentary MS, Zohar Chadash 1701/2, Tikkunei 1706, Pardes Rimmonim 1786, and Talmud Yerushalmi 1922. Sefaria holds these texts in typed form. Can an openly licensed version be cut to each page and verified against the image?

@@ -137,7 +137,7 @@ export interface SearchStrings {
   searchingPageContent: string;
   catalogMatches: string;
   fromTheSite: string;
-  sitePageType: (type: 'blog' | 'collection' | 'page' | 'feature') => string;
+  sitePageType: (type: 'blog' | 'collection' | 'page' | 'feature' | 'author') => string;
   works: (n: number) => string;
   searchingCatalog: string;
   openAllCatalogueMatches: (n: string) => string;
@@ -309,7 +309,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     searchingPageContent: 'Searching page content...',
     catalogMatches: 'Catalog matches',
     fromTheSite: 'From the site',
-    sitePageType: (type) => (type === 'blog' ? 'Essay' : type === 'collection' ? 'Collection' : type === 'feature' ? 'Tool' : 'Page'),
+    sitePageType: (type) => (type === 'blog' ? 'Essay' : type === 'collection' ? 'Collection' : type === 'feature' ? 'Tool' : type === 'author' ? 'Author' : 'Page'),
     works: (n) => (n === 1 ? 'work' : 'works'),
     searchingCatalog: 'Searching catalog...',
     openAllCatalogueMatches: (n) => `Open all ${n} catalogue matches`,
@@ -448,7 +448,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     searchingPageContent: 'Buscando en el texto de las páginas...',
     catalogMatches: 'Coincidencias en el catálogo',
     fromTheSite: 'En el sitio',
-    sitePageType: (type) => (type === 'blog' ? 'Ensayo' : type === 'collection' ? 'Colección' : type === 'feature' ? 'Herramienta' : 'Página'),
+    sitePageType: (type) => (type === 'blog' ? 'Ensayo' : type === 'collection' ? 'Colección' : type === 'feature' ? 'Herramienta' : type === 'author' ? 'Autor' : 'Página'),
     works: (n) => (n === 1 ? 'obra' : 'obras'),
     searchingCatalog: 'Buscando en el catálogo...',
     openAllCatalogueMatches: (n) => `Ver las ${n} coincidencias del catálogo`,

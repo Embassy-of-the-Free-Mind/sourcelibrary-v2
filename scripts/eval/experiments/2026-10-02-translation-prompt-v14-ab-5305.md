@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 107
+verdict: "v14 prompt fails its rule: judged invention 38.3% vs 47.7% (p 0.13, needs <0.10) and controls breach +12 pp; it halves page-boundary invention; Tibetan leaf lines unsupported."
+status: rejected
+decision: "Not flipped: v14 failed its rule; its seam items re-tested alone also failed (2026-10-03-translation-seam-confirm-5305.md)"
+superseded_by: null
+issue: [5305, 4523]
+---
 ## 2026-10-02 · Does the v14 candidate translation prompt cut invention, cross-page bridging and seam duplication without raising omission? With a Tibetan multi-leaf stratum (#5305, #4523)
 
 **Question.** The #5305 v14 candidate list (items 1, 3–7 of the 2026-10-02T11:21Z comment, plus the bare continuity

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 120
+n_pages: 240
+verdict: "Folio markers on Lite cut seam defects 26 to 19 per 100 breaks (p 0.105, misses the 0.10 bar; omissions rise); the defect is the model: Flash 16, Flash + markers 11."
+status: rejected
+decision: "TRANSLATE_FOLIO_MARKERS stays OFF by the registered rule; result used as evidence for Flash routing of the chained lane (#5678)"
+superseded_by: null
+issue: 5678
+---
 ## 2026-10-04 · Do folio markers go on in the chained translation lane, and is the page-break defect the model or the markers? (#5678)
 
 PRIOR ART: `2026-10-03-seam-ab-markers-5678.md` (#5701: unresolved by its registered rule; read by position, post

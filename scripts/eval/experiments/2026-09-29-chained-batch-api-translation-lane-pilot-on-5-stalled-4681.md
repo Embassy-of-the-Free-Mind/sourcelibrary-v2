@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: none
+languages: [la, he, fr, grc]
+scripts: [Latn, Hebr, Grek]
+canons: []
+n_books: 5
+n_pages: 847
+verdict: "Chained Batch lane wrote 847 pages of 5 stalled books at $0.00056/page (4.3x under realtime), median round 2.7 min; 16% of rounds cancelled, all recovered."
+status: adopted
+decision: "Chained Batch lane merged (PR #5267) and runs from the production crontab; seam-repair design (#4912/#4973 arm Et) retired"
+superseded_by: null
+issue: 4681
+---
 ## 2026-09-29 — Chained Batch API translation lane, pilot on 5 stalled books (#4681): production's prompt one block per round, 847 pages written at $0.00056/pg (4.3× under realtime), median round 2.7 min, 16% of rounds cancelled and all recovered
 
 **Question.** Can the Batch API run production's translation loop — the chained seed, the

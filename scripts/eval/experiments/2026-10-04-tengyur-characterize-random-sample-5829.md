@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 150
+verdict: "On 150 random Tengyur draft pages, 75% need only light edits; reversal or wrong-agent errors run about 38 per 100 pages (spot-check adjusted), worst in Pramana and verse."
+status: informational
+decision: "Recommended label sentence not applied; #5788 and #5806 decide; 180 reviewer fixes listed, not applied"
+superseded_by: null
+issue: 5829
+---
 ## 2026-10-04 · Tengyur draft on an unbiased random sample: two blind reviewers, three kinds of control, corpus detectors and a by-eye check (#5829)
 <!-- PRIOR ART: 2026-10-04-tengyur-stored-draft-vs-84000-5797.md (#5797: reference-based judges, 354 sides of 8 texts, no Madhyamaka or Pramāṇa); the #5800 simulated specialist review (25 hand-picked pages, one reviewer, no controls). This run uses #5800's rubric on a uniform draw over the whole drafted canon, with two reviewers, blind controls and a spot check. -->
 

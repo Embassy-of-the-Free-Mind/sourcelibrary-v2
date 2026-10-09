@@ -21,6 +21,9 @@
  *     A row whose output was already collected (results_collected: true) is not paid work at
  *     risk and may be ended without asking.
  *
+ * A FINISHED job whose output is refused on purpose is a fourth ending, with its own guard:
+ * discardBatchJob() below (#6333).
+ *
  * tests/unit/end-batch-job.test.ts drives every branch; tests/unit/batch-job-terminal-writes.test.ts
  * fails on any new direct write of these statuses to batch_jobs outside this file.
  */
@@ -179,6 +182,88 @@ export async function markRecovered(db, job, { gemini, by, recovery, dryRun = fa
     { $set: { results_collected: true, gemini_state: state, recovery: { ...recovery, by, at: now }, updated_at: now } },
   );
   return { action: 'marked', why: `Gemini state ${state}; result held`, modified: res?.modifiedCount ?? 0 };
+}
+
+/**
+ * batch_jobs status of a job whose finished output was refused on purpose. The status the
+ * generation guard (batch-collector) and reset-book-ocr already write for the same thing, so
+ * every reader that knows a deliberate discard knows this one; the `discard` record beside it
+ * says who, why, and where the saved result is. Terminal; no worker selects it.
+ */
+export const DISCARDED_STATUS = 'superseded';
+/** Row statuses that already say the output was read: never discarded. */
+const READ_STATUSES = new Set(['saved', 'completed', 'completed_with_errors', 'collected']);
+
+/**
+ * Pure decision for discardBatchJob(). `gemini` is { verdict, state, requests, ok } — Gemini's
+ * answer about THIS job, with its own request tally (readBatchStats in gemini-batch-ledger.mjs).
+ *   → { action: 'discard' | 'refuse', why, state }
+ */
+export function decideDiscard(row, { reason, gemini = null, result = null }) {
+  if (!String(reason || '').trim()) return { action: 'refuse', why: 'no reason given', state: null };
+  if (row && (row.results_collected === true || READ_STATUSES.has(row.status))) return { action: 'refuse', why: `already collected (${row.status})`, state: null };
+  if (row && COLLECTABLE_BATCH_STATUSES.includes(row.status)) return { action: 'refuse', why: `row is '${row.status}' — the collector still owns it`, state: null };
+  if (!gemini) return { action: 'refuse', why: 'Gemini was not asked about this job', state: null };
+  if (gemini.verdict === 'not_found') return { action: 'discard', why: 'Gemini no longer holds the job — nothing left to collect', state: 'NOT_FOUND' };
+  if (gemini.verdict !== 'exists') return { action: 'refuse', why: `Gemini verdict '${gemini.verdict}' — a key could not answer`, state: null };
+  const state = normalizeGeminiState(gemini.state);
+  if (GEMINI_DEAD_STATES.has(state)) return { action: 'discard', why: `Gemini state ${state}`, state };
+  if (state !== GEMINI_SUCCEEDED) return { action: 'refuse', why: `Gemini state ${state} — the job is alive or unknown`, state };
+  if (gemini.requests > 0 && gemini.ok === 0) return { action: 'discard', why: `every request failed (0/${gemini.requests} succeeded) — nothing was billed`, state };
+  if (!/^[0-9a-f]{64}$/.test(result?.sha256 || '') || !(result?.bytes > 0) || !result?.path) {
+    return { action: 'refuse', why: 'paid output not held: a discard needs the downloaded result (path + sha256 + bytes)', state };
+  }
+  return { action: 'discard', why: `Gemini state ${state}; result held at ${result.path}`, state };
+}
+
+/**
+ * The ONE way to say "Gemini finished this job, we looked at its output, and we are not writing
+ * it" (#6333). Until this existed there was no such record: a stopped experiment or a superseded
+ * re-submission stayed a "paid output never collected" finding until it aged out of the audit.
+ *
+ * Refused unless: a reason is given; no store row says the output was read or is still to be read
+ * by the collector; and Gemini, asked about this job, says it is over. For a job with paid
+ * responses the caller must also hold the downloaded result — a discard records where the bytes
+ * are, it never stands in for them.
+ *
+ * Writes `status: 'superseded'` (DISCARDED_STATUS) and a `discard` record on the job's batch_jobs row, or inserts
+ * such a row when no batch_jobs row names the job (lanes that keep their jobs elsewhere, scripts
+ * that never registered). scripts/lib/gemini-batch-ledger.mjs counts that row as "discarded on
+ * purpose"; scripts/audit/paid-vs-got.mjs treats the status as terminal.
+ * @param {any} db
+ * @param {{ name: string, displayName?: string, reason: string, by: string, gemini: any, result?: { path: string, sha256: string, bytes: number } | null,
+ *   issue?: number | null, model?: string | null, pages?: number, createdAt?: Date | string | null, dryRun?: boolean, now?: Date }} opts
+ * Returns { action: 'discarded' | 'refused', why, state, modified, inserted }.
+ */
+export async function discardBatchJob(db, opts) {
+  const { name, displayName = null, reason, by, gemini = null, result = null, issue = null, model = null, pages = 0, createdAt = null, dryRun = false, now = new Date() } = opts || /** @type {any} */ ({});
+  if (!name) throw new Error('discardBatchJob: name (the Gemini batches/… name) is required');
+  if (!by) throw new Error('discardBatchJob: by is required');
+  const coll = db.collection('batch_jobs');
+  const rows = await coll.find({ $or: [{ job_name: name }, { gemini_job_name: name }] }).toArray();
+  if (rows.length > 1) return { action: 'refused', why: `${rows.length} batch_jobs rows name this job`, state: null, modified: 0, inserted: 0 };
+  const [row] = rows;
+  const d = decideDiscard(row, { reason, gemini, result });
+  if (d.action === 'refuse') return { action: 'refused', why: d.why, state: d.state, modified: 0, inserted: 0 };
+  const discard = {
+    reason: String(reason).trim(), by, at: now, why: d.why, gemini_state: d.state, issue: issue == null ? null : Number(issue),
+    requests: gemini?.requests ?? null, requests_ok: gemini?.ok ?? null,
+    result_path: result?.path || null, result_sha256: result?.sha256 || null, result_bytes: result?.bytes || null,
+  };
+  if (dryRun) return { action: 'discarded', why: `dry run: ${d.why}`, state: d.state, modified: 0, inserted: 0 };
+  if (row) {
+    // Filtered on the status it was decided on, so a collector that got there first wins.
+    const res = await coll.updateOne({ _id: row._id, status: row.status, results_collected: { $ne: true } },
+      { $set: { status: DISCARDED_STATUS, status_before_discard: row.status, discard, updated_at: now } });
+    return { action: 'discarded', why: d.why, state: d.state, modified: res?.modifiedCount ?? 0, inserted: 0 };
+  }
+  const res = await coll.updateOne({ gemini_job_name: name }, { $setOnInsert: {
+    id: `discard-${name.replace(/^batches\//, '')}`, job_name: name, gemini_job_name: name, display_name: displayName,
+    status: DISCARDED_STATUS, type: 'discard_record', model, page_count: pages || 0,
+    created_at: createdAt ? new Date(createdAt) : now, updated_at: now, discard,
+    note: 'no batch_jobs row named this job; this row records that its finished output was refused on purpose',
+  } }, { upsert: true });
+  return { action: 'discarded', why: d.why, state: d.state, modified: 0, inserted: res?.upsertedCount ?? 0 };
 }
 
 /**

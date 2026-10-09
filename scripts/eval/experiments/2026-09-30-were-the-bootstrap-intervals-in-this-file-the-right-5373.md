@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "The paired-stats bootstrap generator cycled; of 31 quoted intervals 22 moved, two were a quarter to a third too narrow, and no routing or adoption decision changes."
+status: informational
+decision: "paired-stats.mjs and three copies moved to mulberry32, pinned by tests/unit/paired-stats-prng.test.ts (#5373)"
+superseded_by: null
+issue: 5373
+---
 ## 2026-09-30 — Were the bootstrap intervals in this file the right width? The generator cycled; 31 quoted intervals recomputed, no decision changes (#5373)
 
 **Headline: no routing or adoption decision changes. 22 of the 31 quoted intervals moved, most by a few percent of

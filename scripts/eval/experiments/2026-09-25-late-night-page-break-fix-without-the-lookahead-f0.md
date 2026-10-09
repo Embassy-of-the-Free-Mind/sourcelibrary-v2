@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [la, de]
+scripts: [Latn]
+canons: []
+n_books: 9
+n_pages: 63
+verdict: "Page-break fix without lookahead (F0) cuts device breaks carrying a defect from 71% to 42% (15-5, p=0.04) with no duplication penalty; any lookahead adds duplication"
+status: adopted
+decision: "PAGE_BREAK_SCOPED (F0) is on in translate-worker since 2026-09-25 (#5103, code PR #5111)"
+superseded_by: null
+issue: 5103
+---
 ## 2026-09-25 (late night) — Page-break fix without the lookahead (F0) and with a clause-length one (FC), same 63 seams, same judge — F0 halves the defect rate on device breaks with no duplication penalty; any lookahead is where the duplication comes from
 
 Follow-up to the entry above, $0.37 more ($0.94 total of the $3 cap). Two new arms, B and B2 reused

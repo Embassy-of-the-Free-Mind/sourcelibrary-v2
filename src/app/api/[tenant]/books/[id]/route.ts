@@ -214,7 +214,7 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
         message: `Archived "${book.title}" with ${pagesArchived} pages`,
         bookId,
         recoverable: true,
-        hint: 'POST /api/books/restore/{id} to recover — a restored book needs re-embedding before it surfaces in semantic search'
+        hint: 'POST /api/books/restore/{id} to recover. A restored book needs re-embedding before it surfaces in semantic search'
       });
     }
 

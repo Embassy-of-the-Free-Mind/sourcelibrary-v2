@@ -33,7 +33,7 @@ const STOPPED_BY = 'emergency-stop';
 const validKeysError = (unknown: unknown[]) =>
   NextResponse.json(
     {
-      error: `Unknown pause key(s): ${unknown.map((u) => JSON.stringify(u)).join(', ')} — no worker reads them, so they would pause nothing.`,
+      error: `Unknown pause key(s): ${unknown.map((u) => JSON.stringify(u)).join(', ')}; no worker reads them, so they would pause nothing.`,
       valid_keys: PAUSE_KEYS,
       legacy_aliases: PAUSE_ALIASES,
     },
@@ -292,7 +292,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     paused_phases: pausedPhases ?? [...PAUSE_KEYS],
     global_pause: fullStop,
     message: dryRun
-      ? 'Dry run — no changes made'
+      ? 'Dry run: no changes made'
       : `Emergency stop activated${fullStop ? '' : ` for ${pausedPhases!.join(', ')}`}. ${activeJobCount} jobs + ${activeBatchCount} unsubmitted batch jobs cancelled; ${result.batch_jobs_left_for_collector} submitted batch jobs left for the collector; ${result.translate_batch_runs_parked} batch translation runs parked.${queuesPurged ? ` Queues purged: ${queuesPurged.purged.join(', ') || 'none'}.` : ''} Call with ?resume=true (or ?resume=true&key=<key>) to re-enable.`,
   });
 });

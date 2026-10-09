@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [la, he, hy, lzh, grc]
+scripts: [Latn, Hebr, Armn, Hani, Grek]
+canons: []
+n_books: 9
+n_pages: 9
+verdict: "Read on the scan, most of a low or middle measured CER is the reference's own spellings, edition variants and window spill, not engine misreads."
+status: informational
+decision: "Error ladder published on /research/quality (ErrorLadder.tsx, #5576)"
+superseded_by: null
+issue: 5576
+---
 ## 2026-10-01 · What does a given character error rate or judge rating look like on a real page? (#5576)
 
 PRIOR ART: `src/app/research/quality/page.tsx` SPECIMENS (one crop per defect TYPE, not per level); `scripts/eval/results/benchmark/*.json` (per-page CER, no excerpts); the 2026-09-30 translation corpus audit (`results/translation-corpus-audit-2026-09-30/`, verdicts and items). None shows a level side by side with the scan. No new measurement here; every number is from those runs.

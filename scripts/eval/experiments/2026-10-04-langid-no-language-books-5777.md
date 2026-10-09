@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 1670
+n_pages: null
+verdict: "The 1,670 no-language books are 892 Latin-script, 211 Arabic, 110 Turfan, 79 Hebrew, 72 Armenian...; script label held 28/30 by eye outside Turfan; 14 scripts lack a lane."
+status: informational
+decision: null
+superseded_by: null
+issue: 5777
+---
 ## 2026-10-04 · What script and language are the 1,670 books with no language? (#5777)
 <!-- PRIOR ART: scripts/maintenance/detect-language-from-pages.mjs (#4696) and scripts/audit/detect-book-languages.mjs (#4117) — both read the `<language>` tag out of OCR text, so they cannot see books that were never transcribed (95% of these pages), and neither names a script. Small-script probes #4746 (Syriac, Armenian) and #5664 (Mongolian) cover single scripts, not the unlabelled set. -->
 

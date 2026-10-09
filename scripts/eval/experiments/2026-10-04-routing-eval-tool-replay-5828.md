@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [judged, agreement]
+languages: [fa, sa, pi, ar, gez]
+scripts: [Arab, Deva, Ethi]
+canons: []
+n_books: 117
+n_pages: 117
+verdict: "Replayed #5795: the registered rule reproduces every stored verdict; with margin-v1 Persian flips to route to flash (1 discordant page in 30), nothing else changes."
+status: informational
+decision: "No routing change; supports Derek's Persian override (#5812); margin-v1 is the default rule file for new routing evals"
+superseded_by: null
+issue: [5828, 5795]
+---
 ## 2026-10-04 · Does #5795's Persian verdict survive a rule with a margin? (replay through the routing-eval tool, #5828)
 <!-- PRIOR ART: 2026-10-04-hidden-flash-5795.md — the run whose stored pages are replayed here; it applied one rule, "flash catastrophic ≤ lite", with no margin. benchmark-cost-lane.mjs has a margin rule but on reference CER, which this run does not have. -->
 

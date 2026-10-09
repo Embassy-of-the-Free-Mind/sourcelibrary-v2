@@ -202,24 +202,36 @@ describe('Gemini-side ledger: the three classes fire, and a clean listing passes
 
   it('classifies each shape (positive control)', () => {
     const r = G.classifyLedger({ jobs: listing, records, now: NOW });
-    const by = Object.fromEntries(r.findings.map((f: { name: string; class: string; actionable: boolean }) => [f.name, `${f.class}${f.actionable ? '' : ' (old)'}`]));
+    const by = Object.fromEntries(r.findings.map((f: { name: string; class: string }) => [f.name, f.class]));
     expect(by).toEqual({
       'batches/cancelled-row': 'succeeded_uncollected',
       'batches/stale-open': 'succeeded_uncollected', // open, but 9 h since Gemini finished > 3 h grace
       'batches/nobody': 'unknown_to_db',
       'batches/running-failed': 'terminal_while_alive',
-      'batches/old-cancelled': 'succeeded_uncollected (old)',
+      'batches/old-cancelled': 'succeeded_uncollected', // 299 h old: still a finding (#6333)
     });
-    expect(r.counts.succeeded_uncollected).toMatchObject({ jobs: 3, actionable: 2, actionable_pages: 10 });
+    expect(r.counts.succeeded_uncollected).toMatchObject({ jobs: 3, pages: 15 });
     expect(r.ok_counts).toMatchObject({ collected: 1, in_flight: 1, alive_tracked: 1, dead: 1 });
   });
 
-  it('FAILs the verdict on actionable findings only; old ones are a WARN', () => {
+  // #6333: a finding used to drop to WARN 48 h after Gemini ended the job, so an unfixed loss
+  // stopped paging without anyone having collected or discarded it.
+  it('FAILs the verdict on every finding, however old', () => {
     const r = G.classifyLedger({ jobs: listing, records, now: NOW });
     const v = L.verdict({ collection: { fail: 0, warn: 0 }, gemini: { counts: r.counts } });
     expect(v.status).toBe('FAIL');
-    expect(v.fails.join('\n')).toMatch(/2 batch job\(s\): Gemini SUCCEEDED, our record never collected it/);
-    expect(v.warns.join('\n')).toMatch(/1 older/);
+    expect(v.fails.join('\n')).toMatch(/3 batch job\(s\): Gemini SUCCEEDED, our record never collected it/);
+    expect(v.warns).toEqual([]);
+  });
+
+  it('an old finding alone is still a FAIL, and a discard record clears it', () => {
+    const old = new Map([['batches/old-cancelled', listing.get('batches/old-cancelled')!]]);
+    const r = G.classifyLedger({ jobs: old, records, now: NOW });
+    expect(L.verdict({ collection: { fail: 0, warn: 0 }, gemini: { counts: r.counts } }).status).toBe('FAIL');
+    const discarded = new Map([['batches/old-cancelled', [G.recordFromBatchJob({ id: 'd1', status: 'superseded', discard: { reason: 'stopped experiment' } })]]]);
+    const r2 = G.classifyLedger({ jobs: old, records: discarded, now: NOW });
+    expect(r2.findings).toEqual([]);
+    expect(r2.ok_counts.discarded).toBe(1);
   });
 
   it('a clean listing passes (negative control)', () => {
@@ -333,5 +345,70 @@ describe('Gemini-side ledger: usage rows metered one per book', () => {
     const byKey = new Map([['ep-plain-0-abc', 'batches/read']]);
     expect(G.jobForUsageId(rows[0].batch_job_id, byKey)).toBe('batches/read');
     expect(G.jobForUsageId('ep-plain-0-abcd:6a3c', byKey)).toBeUndefined();
+  });
+});
+
+describe('Gemini-side ledger: a job whose every request failed is not paid work lost (#6333)', () => {
+  const stats = (o: Record<string, unknown>) => ({ ok: true, status: 200, json: async () => ({ metadata: { state: 'BATCH_STATE_SUCCEEDED', displayName: 'x', ...o } }) });
+  const fetchFor = (byName: Record<string, unknown>) => (async (url: string) => {
+    const name = url.split('/v1beta/')[1];
+    const v = byName[name];
+    if (v === 404) return { ok: false, status: 404, json: async () => ({}) };
+    if (v === undefined) throw new Error('network');
+    return stats(v as Record<string, unknown>);
+  }) as unknown as typeof fetch;
+  const finding = (name: string, o: Record<string, unknown> = {}) => ({ name, class: 'succeeded_uncollected', actionable: true, pages: 0, key_index: 0, ...o });
+
+  it('takes an all-cancelled job out of the findings and leaves a partly answered or unreadable one in', async () => {
+    const res = { findings: [finding('batches/all-cancelled'), finding('batches/partial'), finding('batches/unreadable')], ok_counts: { empty: 0 } };
+    const out = await G.settleFindings(res, ['k'], { fetchImpl: fetchFor({
+      'batches/all-cancelled': { batchStats: { requestCount: '20000', failedRequestCount: '20000' } },
+      'batches/partial': { batchStats: { requestCount: '17', successfulRequestCount: '15', failedRequestCount: '2' } },
+    }) });
+    expect(res.findings.map((f) => f.name)).toEqual(['batches/partial', 'batches/unreadable']);
+    expect(res.ok_counts.empty).toBe(1);
+    expect(out.empty).toEqual([{ name: 'batches/all-cancelled', display_name: undefined, requests: 20000 }]);
+    expect(res.findings[0]).toMatchObject({ pages: 17, requests_ok: 15 });
+  });
+
+  it('never calls a job empty on a missing tally or a state other than SUCCEEDED', () => {
+    expect(G.isEmptyJob({ has_stats: false, state: 'JOB_STATE_SUCCEEDED', requests: 0, ok: 0, failed: 0 })).toBe(false);
+    expect(G.isEmptyJob({ has_stats: true, state: 'JOB_STATE_RUNNING', requests: 5, ok: 0, failed: 5 })).toBe(false);
+    expect(G.isEmptyJob({ has_stats: true, state: 'JOB_STATE_SUCCEEDED', requests: 5, ok: 0, failed: 4 })).toBe(false); // one still unaccounted for
+    expect(G.isEmptyJob({ has_stats: true, state: 'JOB_STATE_SUCCEEDED', requests: 5, ok: 0, failed: 5 })).toBe(true);
+    expect(G.isEmptyJob(null)).toBe(false);
+  });
+
+  it('carries a finding forward once its job has left the listing window', async () => {
+    const prev = [
+      { name: 'batches/still-there', class: 'unknown_to_db', display_name: 'tattva-6184-2', created: iso(100), ended: iso(99), key_index: 0 },
+      { name: 'batches/aged-out', class: 'succeeded_uncollected', display_name: 'ep-plain-0', created: iso(100), ended: iso(99), key_index: 0 },
+      { name: 'batches/unaskable', class: 'unknown_to_db', display_name: 'probe', created: iso(100), ended: iso(99), key_index: 0 },
+      { name: 'batches/in-window', class: 'unknown_to_db', created: iso(10), ended: iso(9), key_index: 0 },
+      { name: 'batches/ancient', class: 'unknown_to_db', created: iso(24 * 60), ended: iso(24 * 60), key_index: 0 },
+    ];
+    const jobs = new Map<string, Record<string, unknown>>([['batches/in-window', job('batches/in-window', 'JOB_STATE_SUCCEEDED', 10, 9)]]);
+    const n = await G.carryForwardFindings(prev, jobs, ['k'], { now: NOW, fetchImpl: fetchFor({
+      'batches/still-there': { displayName: 'tattva-6184-2', createTime: iso(100), endTime: iso(99) }, 'batches/aged-out': 404,
+    }) });
+    expect(n).toBe(3);
+    expect(jobs.get('batches/still-there')).toMatchObject({ state: 'JOB_STATE_SUCCEEDED', carried: true });
+    expect(jobs.get('batches/aged-out')).toMatchObject({ carried: true, output_gone: true });
+    expect(jobs.get('batches/unaskable')).toMatchObject({ carried: true });
+    expect(jobs.has('batches/ancient')).toBe(false);
+    // Carried jobs are classified like any other: still findings with no record, clear with one.
+    const r = G.classifyLedger({ jobs, records: new Map([['batches/aged-out', [rec({ status: 'superseded', discarded: true })]]]), now: NOW });
+    expect(r.findings.map((f: { name: string }) => f.name).sort()).toEqual(['batches/in-window', 'batches/still-there', 'batches/unaskable']);
+    expect(r.findings.find((f: { name: string }) => f.name === 'batches/still-there')).toMatchObject({ carried: true });
+  });
+
+  it('finds a lane row written before the job was created, by the display name it gave the job', async () => {
+    const jobs = new Map([['batches/orphan', job('batches/orphan', 'JOB_STATE_SUCCEEDED', 10, 9, 'enrich-index-muy4a57p-qf1e')]]);
+    const db = { collection: (name: string) => ({ find: (q: Record<string, { $in?: string[] }>) => ({ toArray: async () =>
+      (name === 'enrich_batch_jobs' && q._id?.$in?.includes('enrich-index-muy4a57p-qf1e') ? [{ _id: 'enrich-index-muy4a57p-qf1e', gemini_name: null, status: 'submitting' }] : []) }) }) };
+    const records = await G.readLedgerRecords(db, jobs);
+    expect(records.get('batches/orphan')).toMatchObject([{ store: 'enrich_batch_jobs', status: 'submitting', collected: false, open: false }]);
+    const r = G.classifyLedger({ jobs, records, now: NOW });
+    expect(r.findings[0]).toMatchObject({ class: 'succeeded_uncollected', records: ['enrich_batch_jobs:submitting'] });
   });
 });

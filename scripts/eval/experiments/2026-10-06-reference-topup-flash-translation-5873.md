@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [he, ar, fa, sa, pi, lzh]
+scripts: [Hebr, Arab, Deva, Hani]
+canons: []
+n_books: 183
+n_pages: 183
+verdict: "No language reverses: with 30 referenced books each, Flash beats Lite by +0.33 to +0.57; Hebrew, Arabic, Sanskrit, Pali meet the card; Persian stops at a census of 28."
+status: adopted
+decision: "Flash translation routing (PR #5740) kept; Persian census and Chinese as provisional pending Derek (#5873)"
+superseded_by: null
+issue: [5873, 5740]
+---
 ## 2026-10-06 · With 30 referenced books a language, does the Flash translation routing (#5740) keep its place under the routing card? (#5873 top-up)
 <!-- PRIOR ART: 2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md and 2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md (the first runs: 12–28 books a language, no rule registered); 2026-10-05-decision-cards-audit-5873.md (which found them short). This run adds books under a rule fixed first; it builds no new judge. -->
 

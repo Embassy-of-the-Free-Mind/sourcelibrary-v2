@@ -1,3 +1,16 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la, grc, de, hy, zh, bo]
+scripts: [Latn, Grek, Armn, Hani, Tibt]
+canons: []
+n_books: null
+n_pages: 55
+verdict: "Cloud Vision aligns 37/55 pages vs lite's 52/55, loses where both align, and is the worst Tibetan engine tested; garbles but does not invent."
+status: rejected
+decision: "No routing change; Vision is not a lane for any language"
+superseded_by: null
+---
 ## 2026-09-11 — Google Cloud Vision as a cheaper OCR lane?
 
 **Headline: no lane. Parity on the pages it reads, but it reads fewer of them —
