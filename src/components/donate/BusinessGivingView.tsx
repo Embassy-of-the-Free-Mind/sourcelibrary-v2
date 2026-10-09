@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import OutboundLink from '@/components/analytics/OutboundLink';
-import type { Locale } from '@/lib/i18n';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 /**
  * Giving through your company — the acquisition surface for Dutch BV owners and
@@ -95,7 +95,9 @@ interface BusinessStrings {
   whereCta: string;
 }
 
-const STRINGS: Record<Locale, BusinessStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+const STRINGS: Record<Locale, BusinessStrings> = withEnglishFallback({
   en: {
     eyebrow: 'For business owners',
     heroTitle: 'Giving through your company.',
@@ -253,7 +255,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
       'A digitalizar manuscritos frágiles y libros impresos raros, a la traducción asistida por IA con revisión académica, y a una plataforma de lectura gratuita donde el original y la traducción aparecen uno junto al otro. Todo lo que producimos se publica abiertamente bajo CC BY-SA y es gratis de leer.',
     whereCta: 'Ver todas las formas de donar',
   },
-};
+});
 
 export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale }) {
   const s = STRINGS[locale];

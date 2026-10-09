@@ -133,7 +133,7 @@ export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
       caption={
         <>
           Bars are to scale across canons. Left: characters of typed source text, split by the share a catalogue
-          reports as published in English (84000, SuttaCentral, Sefaria). Right: the cost of a first AI draft of what
+          reports as published in English (84000, SuttaCentral, Sefaria, Perseus, First1KGreek). Right: the cost of a first AI draft of what
           has no English, at the rate we measure on our own translation runs. Hatched cost bars price the whole corpus
           because nobody publishes its English coverage, so they are upper bounds. Hover a bar for exact figures.
         </>
@@ -297,7 +297,7 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           const total = squares(t.pages_scanned);
           const tr = Math.min(squares(t.pages_translated), total);
           const tx = Math.min(Math.max(squares(t.pages_transcribed) - tr, 0), total - tr);
-          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '—');
+          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '–');
           return (
             <div key={t.id} className="py-5 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-6">
               <div className="font-body text-sm mb-3 md:mb-0">

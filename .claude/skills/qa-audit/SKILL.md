@@ -304,6 +304,7 @@ Append all audit reports to `QAreport.md`:
 ---
 
 ## Rules (CRITICAL)
+- **Invented or wrong-leaf text found with the image open is contained in this run** (hold, withhold those pages, label the issue `contained`), no sign-off: `.claude/docs/invariants/containment-on-finding.md`.
 
 ### DO
 - Read title pages carefully (usually pages 1-5)

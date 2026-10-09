@@ -9,7 +9,7 @@ import { isInAppBrowser, preferredBrowser, inAppBrowserName } from '@/lib/in-app
 import { trackEvent } from '@/lib/track-event';
 import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
 import { suggestEmailFix } from '@/lib/email-typo';
-import type { Locale } from '@/lib/i18n';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 // Page-specific copy. Funnel pages (sign-in, support) get native Spanish so the
 // acquisition front door reads in the visitor's language — Instagram/webview
@@ -44,7 +44,9 @@ interface SignInStrings {
   privacy: string;
 }
 
-const STRINGS: Record<Locale, SignInStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+const STRINGS: Record<Locale, SignInStrings> = withEnglishFallback({
   en: {
     checkEmail: 'Check your email',
     sentLinkTo: () => 'We sent a sign-in link to',
@@ -103,7 +105,7 @@ const STRINGS: Record<Locale, SignInStrings> = {
     and: 'y',
     privacy: 'política de privacidad',
   },
-};
+});
 
 function SignInContent({ locale }: { locale: Locale }) {
   const s = STRINGS[locale];

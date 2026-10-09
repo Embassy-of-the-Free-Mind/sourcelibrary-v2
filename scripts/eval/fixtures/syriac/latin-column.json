@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "latin-column",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "Liber ܟܬܒܐ generationis ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ Jesu ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ 12",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "why": "a bilingual page: the Latin words and the page number are word breaks, not errors"
+}

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/pont1",
+  "edition": "FLORIDORUM LIBRI OCTO. — Ingolstadt: Adam Sartorius, 1602.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b673ddb3f4fc04415af91d",
+  "page_number": 184,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 114926,
+    "to_char": 115653,
+    "overlap": 0.426,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-1)",
+    "at": "2026-10-06T10:13:11.615684+00:00",
+    "note": "Ref starts with ~1.5 verse lines of p.146 ('me tuam puerperam? Ut famula sim...'), then heading VISITATIO and verse match through 'compararunt?'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      182,
+      183,
+      184
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.775Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "fa00554cd281bb4f5e52d3db284342740a53f95438d8bf899dcdd2f02122c70d",
+  "unit": {
+    "chars": 727
+  }
+}

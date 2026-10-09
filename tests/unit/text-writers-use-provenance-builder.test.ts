@@ -28,6 +28,8 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 const ALLOWED: Record<string, string> = {
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
+  'scripts/batch/greek-reocr-5813/restore-truncated.mjs': "a move of the page's own earlier text back from its page_revisions snapshot, with the engine block and content_hash that snapshot carries (#5813); nothing is read from a model",
+  'scripts/batch/greek-reocr-5813/restore-pages.mjs': "a move of the page's own earlier transcription and translation back from their page_revisions snapshots, with the provenance those snapshots carry (#5813); nothing is read from a model",
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'Kraken (specialist, not Gemini) — its own engine block, checked by missingProvenance',
   'scripts/workers/syriac-kraken-lane.mjs': 'Kraken lane worker; the $set is built in scripts/lib/syriac-kraken-lane.mjs',

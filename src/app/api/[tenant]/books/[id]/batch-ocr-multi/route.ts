@@ -210,7 +210,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     if (submittedChildren.length === 0) {
       return NextResponse.json(
-        { error: 'All Gemini batch submissions failed — no DB records created' },
+        { error: 'All Gemini batch submissions failed; no DB records created' },
         { status: 500 }
       );
     }
@@ -223,6 +223,7 @@ export const POST = withAuth(async (request, session, context) => {
       childJobIds.push(child.childJobId);
 
       const childJob: BatchJob = {
+        submitted_by: 'src/app/api/[tenant]/books/[id]/batch-ocr-multi/route.ts',
         id: child.childJobId,
         parent_job_id: parentJobId,
         job_name: child.batchJobName,
@@ -267,6 +268,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     // Create parent record last (all children already exist)
     const parentJob: BatchJob = {
+      submitted_by: 'src/app/api/[tenant]/books/[id]/batch-ocr-multi/route.ts',
       id: parentJobId,
       type: jobType,
       book_id: bookId,

@@ -128,7 +128,8 @@ bytes from the source institution. Three hosts blocked us inside 48 hours in Aug
 
 | store | covered by | where | frequency |
 |---|---|---|---|
-| `books`, `books_warehouse`, `deleted_books` | `backup-books.sh` → restic | Hetzner Object Storage nbg1, encrypted | daily 04:00 |
+| `books`, `deleted_books` | `backup-books.sh` → restic | Hetzner Object Storage nbg1, encrypted | daily 04:00 |
+| `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | one restic snapshot at retirement (#5470); not backed up daily — no code writes them | same repo | once |
 | `pages`, `page_revisions`, `chapter_texts`, `entities`, `first_translation_attempts`, `gallery_images` | `backup-corpus-text.sh` → restic | same repo, streamed (never lands on disk) | weekly, Sun 06:00 |
 | `bph_works` | 4 layers incl. revisions + JSON export | `bph-catalogue-disaster-recovery.md` | daily |
 | Supabase (`page_translations`, embeddings) | Supabase managed backups | Supabase | daily, 8 retained, **PITR off** |

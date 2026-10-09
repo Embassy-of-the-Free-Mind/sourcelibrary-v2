@@ -9,7 +9,8 @@ import xlate from '@/data/translation-pareto.json';
  *  1. the committed src/data/translation-pareto.json is what the generator gives from the write-ups' rows;
  *  2. the frontier is exactly the non-dominated set, drawn only with ≥ 3 placed engines;
  *  3. every placed engine has a metered cost whose write-up exists; an engine without one is never placed;
- *  4. the generator reproduces the write-ups' own paired Flash − Lite differences (#5695 synthesis);
+ *  4. the generator reproduces the write-ups' own paired Flash − Lite differences (#5695 synthesis), on the
+ *     full sample (--keep-dropped: the committed charts leave out the pages #6304 found unfit);
  *  5. every figure says "Model-judged, not human-scored" on its face, and the sentence names an
  *     off-plot engine that beats production on its own pages.
  *  6. the Tibetan #6121 packets are their own panels (never pooled with #5497), reproduce each packet's
@@ -84,9 +85,15 @@ describe('translation-pareto.json', () => {
   it("reproduces the #5695 synthesis' Flash − Lite differences", () => {
     const summary = JSON.parse(fs.readFileSync('scripts/eval/results/xlref-synthesis-2026-10/summary.json', 'utf8')) as
       { languages: { lang: string; flash_minus_lite: { delta?: number } }[] };
+    // The synthesis read every page; the committed charts leave out the pages #6304 found unfit, so this
+    // compares against a build with those pages put back.
+    const tmp = path.join(fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'xlate-')), 'all.json');
+    fs.writeFileSync(path.join(path.dirname(tmp), 'none.json'), '[]');
+    execFileSync('node', ['scripts/eval/build-translation-pareto.mjs', '--keep-dropped', `--exclude=${path.join(path.dirname(tmp), 'none.json')}`, `--out=${tmp}`]);
+    const full = Object.fromEntries((JSON.parse(fs.readFileSync(tmp, 'utf8')).charts as { id: string; panels: Panel[] }[]).map(c => [c.id, c.panels[0]]));
     let checked = 0;
     for (const l of summary.languages) {
-      const p = byId[l.lang.toLowerCase()];
+      const p = full[l.lang.toLowerCase()];
       if (!p || l.flash_minus_lite.delta == null) continue;
       const f = (e: string) => p.placed.find(x => x.engine === e)?.fidelity;
       const d = f('gemini-3-flash-preview')! - f('gemini-3.1-flash-lite')!;

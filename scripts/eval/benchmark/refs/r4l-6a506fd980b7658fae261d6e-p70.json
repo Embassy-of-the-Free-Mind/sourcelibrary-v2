@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A14289",
+  "edition": "Cambrensium Caroleia Quibus pr[a]ecepta necessaria ad rempublicam nostram fœliciter administrandum interxuntur [sic]: opera & studio Gulielmi Vaughanni militis. — STC 24605; ESTC S111687 (1630)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A14289",
+  "origin": "library",
+  "book_id": "6a506fd980b7658fae261d6e",
+  "page_number": 70,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 75009,
+    "to_char": 76144,
+    "overlap": 0.368,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Microfilm, elegiac verse in italic/roman with headings; ref ends half a line short at 'Amisit'; ref has OCR-like gaps.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      70,
+      71,
+      72
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.744Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "5c8a0c934291b5b5429f3afd227a14e506583df2e74d993b1cf482f3ddb75940",
+  "unit": {
+    "chars": 1135
+  }
+}

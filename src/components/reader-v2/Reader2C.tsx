@@ -3,7 +3,8 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { localeHref, useLocale } from '@/lib/i18n';
+import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
+import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
 import { useSession, signOut } from 'next-auth/react';
@@ -46,10 +47,11 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine,
 } from './ReaderV2Bits';
-import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
+import type { QualityWarnings } from '@/lib/book-warnings';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -166,6 +168,8 @@ interface Reader2CProps {
   initialBook: Book;
   initialPage: Page;
   initialPageList: Page[];
+  /** Warnings from stored quality checks of this book (#6199); the whole book's, so client page turns need no refetch. */
+  qualityWarnings?: QualityWarnings;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -829,16 +833,26 @@ function SearchHighlighter() {
  * collapsing address bar cannot push the last row under the fold, and only
  * the middle column scrolls.
  */
-function ReaderSiteMenu({ onClose, spanishAvailable }: {
+/** Each language's own name for itself, for the reader menu's site-language links. */
+const SITE_LANGUAGE_LABEL: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine' };
+
+function ReaderSiteMenu({ onClose, spanishAvailable, latinAvailable = false }: {
   onClose: () => void;
   /** Whether THIS page has Spanish text, not merely a Spanish interface. */
   spanishAvailable: boolean;
+  /** The book is written in Latin, so its `/la` page exists (#6254). */
+  latinAvailable?: boolean;
 }) {
   const { data: session } = useSession();
   const pathname = usePathname();
   const strings = getReaderStrings(useLocale());
   const t = strings.accountMenu;
-  const isSpanishSite = !!pathname?.startsWith('/es');
+  const siteLocale = localeFromPathname(pathname);
+  // A language is offered only where this page exists in it, or when it is the
+  // one being read; nothing is offered that the route would 307 away from.
+  const siteLanguages: Locale[] = ['en'];
+  if (spanishAvailable || siteLocale === 'es') siteLanguages.push('es');
+  if (latinAvailable || siteLocale === 'la') siteLanguages.push('la');
   const signedIn = !!session?.user;
   const [imgError, setImgError] = useState(false);
 
@@ -864,7 +878,7 @@ function ReaderSiteMenu({ onClose, spanishAvailable }: {
   // Every link is written through localeHref, so the menu keeps you on the
   // language you are reading in. Hard-coding '/collections' here is how a
   // Spanish reader gets silently dropped back onto the English site.
-  const href = (path: string) => localeHref(isSpanishSite ? 'es' : 'en', path);
+  const href = (path: string) => localeHref(siteLocale, path);
 
   const initials = session?.user?.name
     ?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -1008,12 +1022,14 @@ function ReaderSiteMenu({ onClose, spanishAvailable }: {
               nothing bounces, because nothing is offered that cannot be kept.
               109 books of 22,073 have Spanish text today; the control appears
               on those, and on the rest the site stays in one language. */}
-          {(spanishAvailable || isSpanishSite) && (
+          {siteLanguages.length > 1 && (
           <div className="rv2-menu-item pt-7" style={{ animationDelay: '290ms' }}>
             <CapsLabel className="block pb-2.5" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
             <div className="flex gap-2">
-              {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, target]) => {
-                const active = (label === 'Español') === isSpanishSite;
+              {siteLanguages.map((code) => {
+                const label = SITE_LANGUAGE_LABEL[code];
+                const target = localeHref(code, pathname);
+                const active = code === siteLocale;
                 return (
                   <Link
                     key={target}
@@ -1568,6 +1584,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
         const trCorpus = translationCorpus(page);
         const prov = transcriptProvenance(page);
         const witnessCount = (book.cdli_witnesses || []).length;
+        // Syriac pages read by the Kraken lane (#4883) carry their own notice: the
+        // model's measured accuracy, not the generic machine-transcription line.
+        const krakenRoute = prov?.kind === 'kraken' ? prov.route : null;
         return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
@@ -1609,7 +1628,16 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : krakenRoute ? t.krakenNotice(krakenRoute) : t.machineNotice}
+            {/* The notice cites a by-eye check; the reader can open it (#4883). */}
+            {!trCorpus && !ocrCorpus && krakenRoute && (
+              <>
+                {' '}
+                <a href={KRAKEN_EVIDENCE_URL} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                  {t.krakenEvidenceLink}
+                </a>
+              </>
+            )}
           </p>
         </>
         );
@@ -2470,10 +2498,19 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
-  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true, translit: false });
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings }: Reader2CProps) {
+  const siteLocale = useLocale();
+  // On the Latin site the Latin text is what the reader came for: open on the
+  // scan and the transcription, with the English translation off until asked
+  // for (#6254). Everywhere else all three panes start on.
+  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: siteLocale !== 'la', translit: false });
   const browserTranslated = useBrowserTranslation();
-  const t = getReaderStrings(useLocale());
+  const t = getReaderStrings(siteLocale);
+  // The title in the reader's bar follows the page's language, as it does on
+  // the book page: English shows the English gloss, a localized reader shows
+  // that language's gloss or else the ORIGINAL title, never an English title
+  // over Spanish or Latin chrome (.claude/docs/i18n.md rule 4).
+  const headerTitle = localizedTitle(r.book, siteLocale);
 
   const [leftPanel, setLeftPanel] = useState<LeftPanel>(null);
   const togglePanel = useCallback((p: Exclude<LeftPanel, null>) => {
@@ -3444,6 +3481,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <ReaderSiteMenu
           onClose={() => setSiteMenuOpen(false)}
           spanishAvailable={spanishEligible(r.currentPage)}
+          latinAvailable={isNativeEdition(r.book as unknown as Record<string, unknown>, 'la')}
         />
       )}
       <Suspense fallback={null}>
@@ -3496,7 +3534,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
                 style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
               >
-                {r.book.display_title || r.book.title}
+                {headerTitle}
               </span>
               {/* Hidden below xl rather than truncated: at 1024 a long title
                   left it exactly one character wide, which reads as a bug. */}
@@ -3761,7 +3799,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               ) : undefined}>
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
+                  {paired ? 'Greek · Berthelot' : t.panes.ocrPaneHeader(r.book.language || t.panes.originalFallback)}
                 </CapsLabel>
                 {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
@@ -3865,6 +3903,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
@@ -4013,7 +4052,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {/* Title only: the author lives on the book page, and the phone
                   bar has no room to stack two lines */}
               <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
-                {r.book.display_title || r.book.title}
+                {headerTitle}
               </div>
             </BackToBook>
             {/* One button rather than a bare avatar: the account, Support and
@@ -4034,7 +4073,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <PhonePanePicker
             views={r.views}
             onPick={pickPane}
-            language={r.book.language || t.panes.originalFallback}
+            // On the Latin site the stored value is the English word "Latin";
+            // name the pane as the desktop toggle does (#6254).
+            language={siteLocale === 'la' ? t.panes.viewOcr : (r.book.language || t.panes.originalFallback)}
             hasScan={!!(scan.display || witness)}
             showTranslit={translitEligible}
             translationLabel={showingSpanish ? 'Español' : t.panes.viewEnglish}
@@ -4150,7 +4191,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="ocr" className="relative border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
+                  {paired ? 'Greek · Berthelot' : t.panes.ocrPaneHeader(r.book.language || t.panes.originalFallback)}
                 </CapsLabel>
                 {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 <div className="flex items-center gap-1">
@@ -4235,6 +4276,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired

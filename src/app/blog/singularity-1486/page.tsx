@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'The Singularity Was Published in 1486 - Research Notes - Source Library',
-  description: 'Everything the techno-optimist movement thinks it invented — unfixed human nature, panpsychism, the planetary mind, immortality as an engineering problem — was already written down centuries ago. Here are the original passages.',
+  description: 'Everything the techno-optimist movement thinks it invented (unfixed human nature, panpsychism, the planetary mind, immortality as an engineering problem) was already written down centuries ago. Here are the original passages.',
   openGraph: {
     title: 'The Singularity Was Published in 1486',
     description: 'Pico della Mirandola, Gustav Fechner, and Johannes Kepler wrote the source code for transhumanism, panpsychism, and the cosmic mind. The original texts, newly translated.',
@@ -27,7 +27,7 @@ export default function Singularity1486Page() {
       header={
         <ContentHeader
           title="The Singularity Was Published in 1486"
-          subtitle="Transhumanism, panpsychism, and the planetary mind &mdash; in the original Latin and German"
+          subtitle="Transhumanism, panpsychism, and the planetary mind, in the original Latin and German"
           image="https://images.sourcelibrary.org/archived/695201a9ab34727b1f041826/250.jpg"
           imageAlt="Cosmological diagram of human figure with musical proportions from Fludd's History of the Microcosm, 1619"
         >
@@ -60,7 +60,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          That speech was written in 1486. The speaker was a 23-year-old Italian nobleman named Giovanni Pico della Mirandola. It was never delivered &mdash; the Pope banned the conference where Pico planned to present it. But the text survived, and five centuries later, it is still the most radical statement about human potential ever committed to paper. Everything that followed &mdash; from Francis Bacon&rsquo;s <em>Novum Organum</em> to Ray Kurzweil&rsquo;s <em>The Singularity Is Near</em> &mdash; is a footnote to what Pico said on his second page.
+          That speech was written in 1486. The speaker was a 23-year-old Italian nobleman named Giovanni Pico della Mirandola. It was never delivered: the Pope banned the conference where Pico planned to present it. But the text survived, and five centuries later, it is still the most radical statement about human potential ever committed to paper. Everything that followed, from Francis Bacon&rsquo;s <em>Novum Organum</em> to Ray Kurzweil&rsquo;s <em>The Singularity Is Near</em>, is a footnote to what Pico said on his second page.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -78,7 +78,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          In Pico&rsquo;s telling, God has finished creating the universe. Every angel, animal, and element has received its nature. There is nothing left to give. So when God creates the last being &mdash; the human &mdash; He does something unprecedented. He gives it no nature at all. Instead, He speaks:
+          In Pico&rsquo;s telling, God has finished creating the universe. Every angel, animal, and element has received its nature. There is nothing left to give. So when God creates the last being, the human, He does something unprecedented. He gives it no nature at all. Instead, He speaks:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -97,11 +97,11 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Read that again. <em>Neither mortal nor immortal.</em> Not fixed but self-determining. A creature whose nature is to have no nature &mdash; only the freedom to choose one.
+          Read that again. <em>Neither mortal nor immortal.</em> Not fixed but self-determining. A creature whose nature is to have no nature, only the freedom to choose one.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Pico was 23 when he wrote this. He had memorised large portions of the Hebrew, Arabic, Latin, and Greek intellectual traditions. He believed that all of them &mdash; Plato, the Kabbalah, the Hermetic writings, Aristotle, the Chaldean Oracles &mdash; were describing the same truth from different angles. The <em>Oration</em> was meant to introduce 900 theses synthesising all of it. The Pope condemned 13 of the theses as heretical. The conference was cancelled. Pico spent the rest of his short life (he died at 31, likely poisoned) defending the proposition that the human mind has no inherent ceiling.
+          Pico was 23 when he wrote this. He had memorised large portions of the Hebrew, Arabic, Latin, and Greek intellectual traditions. He believed that all of them (Plato, the Kabbalah, the Hermetic writings, Aristotle, the Chaldean Oracles) were describing the same truth from different angles. The <em>Oration</em> was meant to introduce 900 theses synthesising all of it. The Pope condemned 13 of the theses as heretical. The conference was cancelled. Pico spent the rest of his short life (he died at 31, likely poisoned) defending the proposition that the human mind has no inherent ceiling.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -134,7 +134,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Fechner is one of the strangest figures in the history of science. He founded experimental psychology &mdash; the Weber-Fechner law, which quantifies the relationship between physical stimuli and perceived intensity, is taught in every introductory course. But his real goal was not to measure sensation. It was to prove that the entire universe is conscious. He went blind from staring at the sun during experiments on afterimages, spent three years in darkness, and emerged with the unshakeable conviction that everything &mdash; plants, planets, stars &mdash; possesses inner experience. He spent the next forty years trying to articulate that conviction in rigorous philosophical terms. (We wrote about his full intellectual trajectory in <Link href="/blog/fechner-bohme" className="text-accent-rust hover:underline">&ldquo;The Mystic Who Invented Psychophysics.&rdquo;</Link>)
+          Fechner is one of the strangest figures in the history of science. He founded experimental psychology; the Weber-Fechner law, which quantifies the relationship between physical stimuli and perceived intensity, is taught in every introductory course. But his real goal was not to measure sensation. It was to prove that the entire universe is conscious. He went blind from staring at the sun during experiments on afterimages, spent three years in darkness, and emerged with the unshakeable conviction that everything (plants, planets, stars) possesses inner experience. He spent the next forty years trying to articulate that conviction in rigorous philosophical terms. (We wrote about his full intellectual trajectory in <Link href="/blog/fechner-bohme" className="text-accent-rust hover:underline">&ldquo;The Mystic Who Invented Psychophysics.&rdquo;</Link>)
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -157,11 +157,11 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Sleep, waking, eternal waking. The womb, the world, and then &mdash; something else. A state where individual consciousness doesn&rsquo;t dissolve but <em>intertwines</em> with other minds.
+          Sleep, waking, eternal waking. The womb, the world, and then: something else. A state where individual consciousness doesn&rsquo;t dissolve but <em>intertwines</em> with other minds.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          This is not metaphor for Fechner. Later in the same text, he argues that death is literally a second birth &mdash; and that everything you do in life becomes the material of your post-mortem body:
+          This is not metaphor for Fechner. Later in the same text, he argues that death is literally a second birth, and that everything you do in life becomes the material of your post-mortem body:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -180,7 +180,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Your actions are not metaphorically shaping your future. They are <em>literally building</em> the organism you will inhabit after death. The reach of your mind during life determines the reach of your being after it. This is immortality as engineering &mdash; not through technology, but through the scope and intensity of what you do while alive.
+          Your actions are not metaphorically shaping your future. They are <em>literally building</em> the organism you will inhabit after death. The reach of your mind during life determines the reach of your being after it. This is immortality as engineering, not through technology, but through the scope and intensity of what you do while alive.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -200,7 +200,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Fifteen years later, Fechner scaled the argument up. If plants have souls and humans have souls, what about the thing that contains all of them? In <em>Zend-Avesta</em> &mdash; his most ambitious work, borrowing its title from the Zoroastrian scriptures &mdash; he argued that the Earth itself is a conscious being. Not poetically. Literally. And that its consciousness is to ours as ours is to our individual cells.
+          Fifteen years later, Fechner scaled the argument up. If plants have souls and humans have souls, what about the thing that contains all of them? In <em>Zend-Avesta</em>, his most ambitious work, borrowing its title from the Zoroastrian scriptures, he argued that the Earth itself is a conscious being. Not poetically. Literally. And that its consciousness is to ours as ours is to our individual cells.
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -213,7 +213,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Fechner then does something remarkable. He anticipates the obvious objection &mdash; that this is pantheist heresy, incompatible with religion &mdash; and turns it around:
+          Fechner then does something remarkable. He anticipates the obvious objection (that this is pantheist heresy, incompatible with religion) and turns it around:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -232,7 +232,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The argument is simple and devastating. You already believe God created consciousness. You already believe God contains everything. Fechner is just asking you to take your own beliefs seriously: if God contains minds the way we contain thoughts, then the entire hierarchy &mdash; cells within bodies, bodies within the Earth, Earth within the cosmos &mdash; is a hierarchy of nested consciousness. A planetary mind. A noosphere.
+          The argument is simple and devastating. You already believe God created consciousness. You already believe God contains everything. Fechner is just asking you to take your own beliefs seriously: if God contains minds the way we contain thoughts, then the entire hierarchy (cells within bodies, bodies within the Earth, Earth within the cosmos) is a hierarchy of nested consciousness. A planetary mind. A noosphere.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -256,7 +256,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The idea that the cosmos is structured like music &mdash; that reality has an underlying harmonic pattern &mdash; goes back to Pythagoras. But it was Kepler who made it scientific. His <em>Harmonices Mundi</em> (1619) is the book where he announced his Third Law of planetary motion, the relationship between a planet&rsquo;s orbital period and its distance from the sun. But the Third Law was not the point of the book. It was a by-product. The point was to demonstrate that the planets sing.
+          The idea that the cosmos is structured like music (that reality has an underlying harmonic pattern) goes back to Pythagoras. But it was Kepler who made it scientific. His <em>Harmonices Mundi</em> (1619) is the book where he announced his Third Law of planetary motion, the relationship between a planet&rsquo;s orbital period and its distance from the sun. But the Third Law was not the point of the book. It was a by-product. The point was to demonstrate that the planets sing.
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -269,7 +269,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Six planets, six voices, all singing simultaneously in what Kepler calculated to be specific musical intervals. Saturn and Jupiter hold the bass, Mars the tenor, Earth and Venus the middle voices, Mercury the soprano. And when the fastest planet crosses the slowest &mdash; when all six briefly harmonise &mdash; Kepler speculates that these moments of total consonance may mark the great turning points of cosmic history.
+          Six planets, six voices, all singing simultaneously in what Kepler calculated to be specific musical intervals. Saturn and Jupiter hold the bass, Mars the tenor, Earth and Venus the middle voices, Mercury the soprano. And when the fastest planet crosses the slowest, when all six briefly harmonise, Kepler speculates that these moments of total consonance may mark the great turning points of cosmic history.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -290,7 +290,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          But Kepler doesn&rsquo;t end in despair. He ends with the observation that humans have independently invented the same thing the cosmos is doing &mdash; multi-part harmony, something the ancients never achieved:
+          But Kepler doesn&rsquo;t end in despair. He ends with the observation that humans have independently invented the same thing the cosmos is doing: multi-part harmony, something the ancients never achieved:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -303,7 +303,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Man, the ape of his Creator. We build what the cosmos builds, at smaller scale, because we cannot help it. This is not a metaphor. For Kepler, polyphonic music &mdash; invented in the late Middle Ages &mdash; is evidence that the human mind mirrors the structure of reality itself.
+          Man, the ape of his Creator. We build what the cosmos builds, at smaller scale, because we cannot help it. This is not a metaphor. For Kepler, polyphonic music (invented in the late Middle Ages) is evidence that the human mind mirrors the structure of reality itself.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -323,7 +323,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Kircher was the 17th century&rsquo;s most ambitious synthesiser &mdash; a Jesuit polymath who wrote major treatises on magnetism, music, optics, China, Egyptian hieroglyphs, volcanoes, and plague. His <em>Great Art of Light and Shadow</em> is ostensibly an optics textbook. It covers lenses, sundials, mirror tricks, and the projection of images. But Kircher, being Kircher, structures the whole thing as an ascent from physical light to divine light, mapping his ten &ldquo;books&rdquo; onto the Kabbalistic Sephirotic Tree and crowning the edifice with what he calls <em>Orensuph</em> &mdash; infinite light:
+          Kircher was the 17th century&rsquo;s most ambitious synthesiser, a Jesuit polymath who wrote major treatises on magnetism, music, optics, China, Egyptian hieroglyphs, volcanoes, and plague. His <em>Great Art of Light and Shadow</em> is ostensibly an optics textbook. It covers lenses, sundials, mirror tricks, and the projection of images. But Kircher, being Kircher, structures the whole thing as an ascent from physical light to divine light, mapping his ten &ldquo;books&rdquo; onto the Kabbalistic Sephirotic Tree and crowning the edifice with what he calls <em>Orensuph</em>, infinite light:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -356,7 +356,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Before Pico, there was Ficino. Marsilio Ficino was the man Cosimo de&rsquo; Medici tasked with translating the entire works of Plato into Latin for the first time &mdash; a project that essentially rebooted Western philosophy. But Ficino&rsquo;s own masterwork, the <em>Platonic Theology</em>, goes further than translation. It is an 18-book argument that the human soul is immortal, and that it occupies a unique position in the cosmos: the exact middle, the &ldquo;knot&rdquo; that ties matter to the divine.
+          Before Pico, there was Ficino. Marsilio Ficino was the man Cosimo de&rsquo; Medici tasked with translating the entire works of Plato into Latin for the first time, a project that essentially rebooted Western philosophy. But Ficino&rsquo;s own masterwork, the <em>Platonic Theology</em>, goes further than translation. It is an 18-book argument that the human soul is immortal, and that it occupies a unique position in the cosmos: the exact middle, the &ldquo;knot&rdquo; that ties matter to the divine.
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -378,7 +378,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The soul is not localised. It is not in the brain, or the heart, or any organ. It is present as a whole in every part of the body simultaneously. And it is established <em>between</em> eternity and time &mdash; not fully in either, but bridging both. This is the philosophical architecture that Pico&rsquo;s Oration is built on: humans can &ldquo;shape themselves into whatever form they prefer&rdquo; because the soul, their essential nature, is the one thing in the cosmos that is genuinely unfixed.
+          The soul is not localised. It is not in the brain, or the heart, or any organ. It is present as a whole in every part of the body simultaneously. And it is established <em>between</em> eternity and time, not fully in either, but bridging both. This is the philosophical architecture that Pico&rsquo;s Oration is built on: humans can &ldquo;shape themselves into whatever form they prefer&rdquo; because the soul, their essential nature, is the one thing in the cosmos that is genuinely unfixed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -398,7 +398,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          If Pico wrote the philosophical permission slip for human self-transformation, Bacon wrote the engineering manual. The <em>Novum Organum</em> &mdash; the &ldquo;New Instrument&rdquo; &mdash; is a systematic attack on every obstacle between the human mind and knowledge of nature. Bacon names four kinds of cognitive distortion he calls &ldquo;Idols&rdquo;: biases of the species, the individual, the marketplace, and the academy. Then he proposes a method for overcoming them: induction from careful observation, ascending from particulars to axioms, testing each step.
+          If Pico wrote the philosophical permission slip for human self-transformation, Bacon wrote the engineering manual. The <em>Novum Organum</em> (the &ldquo;New Instrument&rdquo;) is a systematic attack on every obstacle between the human mind and knowledge of nature. Bacon names four kinds of cognitive distortion he calls &ldquo;Idols&rdquo;: biases of the species, the individual, the marketplace, and the academy. Then he proposes a method for overcoming them: induction from careful observation, ascending from particulars to axioms, testing each step.
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -411,7 +411,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The mind is a crooked mirror. You cannot straighten it by thinking harder. You need a <em>method</em> &mdash; a systematic discipline that corrects for the mirror&rsquo;s distortion. This is the birth of the scientific method as a <em>technology of the self</em>: a tool not just for understanding nature, but for overcoming the limitations of the instrument doing the understanding.
+          The mind is a crooked mirror. You cannot straighten it by thinking harder. You need a <em>method</em>: a systematic discipline that corrects for the mirror&rsquo;s distortion. This is the birth of the scientific method as a <em>technology of the self</em>: a tool not just for understanding nature, but for overcoming the limitations of the instrument doing the understanding.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -444,7 +444,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Finally, the question beneath all of it. If consciousness is fundamental &mdash; if Fechner is right that it pervades nature, if Ficino is right that the soul is present in its entirety in every part &mdash; how do we know that anything <em>else</em> is conscious? Fechner addresses this directly in <em>Nanna</em>, his book on the soul-life of plants:
+          Finally, the question beneath all of it. If consciousness is fundamental (if Fechner is right that it pervades nature, if Ficino is right that the soul is present in its entirety in every part), how do we know that anything <em>else</em> is conscious? Fechner addresses this directly in <em>Nanna</em>, his book on the soul-life of plants:
         </p>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
@@ -486,7 +486,7 @@ export default function Singularity1486Page() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Every one of these ideas circulates today &mdash; in transhumanist manifestos, in consciousness research, in podcasts about flow states, in keynotes about exponential technology. They are treated as modern insights. They are not. They are Renaissance and 19th-century insights that were written in Latin and German and have been sitting, mostly untranslated, in European libraries for centuries.
+          Every one of these ideas circulates today: in transhumanist manifestos, in consciousness research, in podcasts about flow states, in keynotes about exponential technology. They are treated as modern insights. They are not. They are Renaissance and 19th-century insights that were written in Latin and German and have been sitting, mostly untranslated, in European libraries for centuries.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -510,51 +510,51 @@ export default function Singularity1486Page() {
         <ul className="space-y-3 mb-12">
           <li className="text-secondary font-body">
             <Link href="/book/ioannis-pici-mirandulae-omnia-opera-mirandola" className="text-accent-rust hover:underline">
-              Pico della Mirandola, <em>Omnia Opera</em> (1519) &mdash; containing the <em>Oration</em>
+              Pico della Mirandola, <em>Omnia Opera</em> (1519), containing the <em>Oration</em>
             </Link>
-            {' '}&mdash; the founding text of Renaissance humanism
+            : the founding text of Renaissance humanism
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/platonic-theology-on-the-immortality-of-souls-1525-edition-ficino" className="text-accent-rust hover:underline">
               Ficino, <em>Platonic Theology on the Immortality of Souls</em> (1482)
             </Link>
-            {' '}&mdash; 18 books on the soul as the knot of the universe
+            : 18 books on the soul as the knot of the universe
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/the-little-book-of-life-after-death-fechner" className="text-accent-rust hover:underline">
               Fechner, <em>The Little Book of Life After Death</em> (1836)
             </Link>
-            {' '}&mdash; three stages of consciousness, immortality through work
+            : three stages of consciousness, immortality through work
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/nanna-oder-uber-das-seelenleben-der-pflanzen-fechner" className="text-accent-rust hover:underline">
               Fechner, <em>Nanna, or On the Soul-Life of Plants</em> (1848)
             </Link>
-            {' '}&mdash; the case for plant consciousness, rigorously argued
+            : the case for plant consciousness, rigorously argued
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/zend-avesta-fechner" className="text-accent-rust hover:underline">
               Fechner, <em>Zend-Avesta, or On the Things of Heaven</em> (1851)
             </Link>
-            {' '}&mdash; the Earth as a conscious being, the noosphere a century early
+            : the Earth as a conscious being, the noosphere a century early
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/harmonices-mundi-1619-first-edition-kepler" className="text-accent-rust hover:underline">
               Kepler, <em>Harmonices Mundi</em> (1619)
             </Link>
-            {' '}&mdash; planetary motion as polyphonic music
+            : planetary motion as polyphonic music
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/the-great-art-of-light-and-shadow-kircher" className="text-accent-rust hover:underline">
               Kircher, <em>Ars Magna Lucis et Umbrae</em> (1646)
             </Link>
-            {' '}&mdash; optics as a path to infinite light
+            : optics as a path to infinite light
           </li>
           <li className="text-secondary font-body">
             <Link href="/book/novum-organum-bacon" className="text-accent-rust hover:underline">
               Bacon, <em>Novum Organum</em> (1620)
             </Link>
-            {' '}&mdash; the scientific method as a technology of self-correction
+            : the scientific method as a technology of self-correction
           </li>
         </ul>
 

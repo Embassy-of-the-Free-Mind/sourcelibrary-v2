@@ -64,17 +64,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!area) return { title: 'Area Not Found' };
 
     return {
-        title: `${area.name} — Source Library`,
+        title: `${area.name} | Source Library`,
         description: `Browse ${area.description.toLowerCase()} in Source Library's collection of rare historical texts.`,
         alternates: { canonical: `/collection-areas/${id}` },
         openGraph: {
-            images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-            title: `${area.name} — Source Library`,
+            images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+            title: `${area.name} | Source Library`,
             description: area.description,
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${area.name} — Source Library`,
+            title: `${area.name} | Source Library`,
             description: area.description,
         },
     };

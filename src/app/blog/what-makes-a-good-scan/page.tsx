@@ -50,11 +50,11 @@ export default function WhatMakesAGoodScanPage() {
 
         {/* Lead */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library holds roughly 17,000 rare books and over 100,000 extracted illustrations &mdash; emblems, woodcuts, engravings, manuscript figures, maps. The text in those books is recoverable: OCR fails, we re-OCR, eventually we get it right. The pictures are not. A faded engraving, a smeared woodcut, a microfilmed map &mdash; those are permanent losses, frozen in whatever quality the digitization captured. So a question we kept dodging: <em>which of our scans are good enough, and which need to be re-sourced?</em>
+          Source Library holds roughly 17,000 rare books and over 100,000 extracted illustrations: emblems, woodcuts, engravings, manuscript figures, maps. The text in those books is recoverable: OCR fails, we re-OCR, eventually we get it right. The pictures are not. A faded engraving, a smeared woodcut, a microfilmed map: those are permanent losses, frozen in whatever quality the digitization captured. So a question we kept dodging: <em>which of our scans are good enough, and which need to be re-sourced?</em>
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The honest answer used to be &ldquo;we don&rsquo;t really know.&rdquo; A legacy script (<code>audit-scan-quality.mjs</code>) had assigned a quality score to about 4% of the visible library &mdash; pixel statistics over two sampled pages per book, condensed into a single 0&ndash;100 number. The number was easy to query. It was also wrong, often by 30 or 40 points, in ways we only noticed when we started spot-checking it. This note is about what happens when you do.
+          The honest answer used to be &ldquo;we don&rsquo;t really know.&rdquo; A legacy script (<code>audit-scan-quality.mjs</code>) had assigned a quality score to about 4% of the visible library: pixel statistics over two sampled pages per book, condensed into a single 0&ndash;100 number. The number was easy to query. It was also wrong, often by 30 or 40 points, in ways we only noticed when we started spot-checking it. This note is about what happens when you do.
         </p>
 
         {/* Table of contents */}
@@ -106,7 +106,7 @@ export default function WhatMakesAGoodScanPage() {
         </ul>
 
         <p className="text-secondary leading-relaxed mb-6">
-          This is roughly the right vocabulary. A high-resolution color photograph with strong dynamic range is almost always a great scan. A 1-megapixel bitonal page with a brightness range of 80 is almost always a terrible one. In the middle of the distribution &mdash; where most books actually live &mdash; pixel statistics work fine.
+          This is roughly the right vocabulary. A high-resolution color photograph with strong dynamic range is almost always a great scan. A 1-megapixel bitonal page with a brightness range of 80 is almost always a terrible one. In the middle of the distribution (where most books actually live), pixel statistics work fine.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -119,7 +119,7 @@ export default function WhatMakesAGoodScanPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We pulled a stratified sample &mdash; eighteen books, spread across the score range &mdash; and looked at each one. Three failure modes were obvious within minutes.
+          We pulled a stratified sample (eighteen books, spread across the score range) and looked at each one. Three failure modes were obvious within minutes.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-3">Failure 1: a blank page scored 30/100</h3>
@@ -159,13 +159,13 @@ export default function WhatMakesAGoodScanPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The page is white. Not faded. Not light. <em>White.</em> But the formula handed it 25 points for being 14.8 megapixels and 5 more points for some residual scoring floor, and gave it a 30 &mdash; a score that put it in roughly the same bucket as a perfectly readable bitonal woodcut from 1515. The pixel statistics flagged that the image was degenerate (dynamic range 0, contrast 0) but the formula didn&rsquo;t know what to do with the flag.
+          The page is white. Not faded. Not light. <em>White.</em> But the formula handed it 25 points for being 14.8 megapixels and 5 more points for some residual scoring floor, and gave it a 30, a score that put it in roughly the same bucket as a perfectly readable bitonal woodcut from 1515. The pixel statistics flagged that the image was degenerate (dynamic range 0, contrast 0) but the formula didn&rsquo;t know what to do with the flag.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-3">Failure 2: a beautiful map scored 74/100</h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A 19th-century fold-out map from the e-rara collection &mdash; <em>Die Schlacht bei Austerlitz</em> &mdash; scored 74. It is, plainly, an excellent scan: sharp color, every village name legible, the paper&rsquo;s creases preserved as natural texture.
+          A 19th-century fold-out map from the e-rara collection, <em>Die Schlacht bei Austerlitz</em>, scored 74. It is, plainly, an excellent scan: sharp color, every village name legible, the paper&rsquo;s creases preserved as natural texture.
         </p>
 
         <figure className="text-center my-8">
@@ -183,17 +183,17 @@ export default function WhatMakesAGoodScanPage() {
         </figure>
 
         <p className="text-secondary leading-relaxed mb-6">
-          What dragged the number down was resolution &mdash; the map is only 1.3 megapixels. The formula penalized it 15 points for being small. But the map is also sharp enough that every line and label is crisp at native size; the resolution doesn&rsquo;t hurt the image, it just isn&rsquo;t enormous. Sharpness, not megapixel count, is what matters for a well-rendered illustration. The formula didn&rsquo;t measure sharpness.
+          What dragged the number down was resolution: the map is only 1.3 megapixels. The formula penalized it 15 points for being small. But the map is also sharp enough that every line and label is crisp at native size; the resolution doesn&rsquo;t hurt the image, it just isn&rsquo;t enormous. Sharpness, not megapixel count, is what matters for a well-rendered illustration. The formula didn&rsquo;t measure sharpness.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-3">Failure 3: microfilm scored 84/100</h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The opposite failure: a 17-megapixel scan of George of Trebizond&rsquo;s <em>De Platonicae atque Aristotelicae Philosophiae Differentia</em> earned 84 points and looked, statistically, like a high-quality archival capture. It wasn&rsquo;t. The pixel count was real, but the underlying source was microfilm &mdash; what you see when you zoom in is the signature pepper noise and jagged character edges of a high-resolution scan of an old microfilm reel. The illustrations had been destroyed long before the JPEG existed.
+          The opposite failure: a 17-megapixel scan of George of Trebizond&rsquo;s <em>De Platonicae atque Aristotelicae Philosophiae Differentia</em> earned 84 points and looked, statistically, like a high-quality archival capture. It wasn&rsquo;t. The pixel count was real, but the underlying source was microfilm. What you see when you zoom in is the signature pepper noise and jagged character edges of a high-resolution scan of an old microfilm reel. The illustrations had been destroyed long before the JPEG existed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Pixel statistics cannot detect this. A microfilm scan at 17 MP has the same megapixel count, the same dynamic range (the whites are still bright and the blacks are still dark), and the same contrast (high, because everything is one or the other) as a pristine archival photograph. The difference is in the texture &mdash; in what fills the spaces between the characters &mdash; and that&rsquo;s a perceptual judgment, not a numeric one.
+          Pixel statistics cannot detect this. A microfilm scan at 17 MP has the same megapixel count, the same dynamic range (the whites are still bright and the blacks are still dark), and the same contrast (high, because everything is one or the other) as a pristine archival photograph. The difference is in the texture (in what fills the spaces between the characters), and that&rsquo;s a perceptual judgment, not a numeric one.
         </p>
 
         {/* ── 4 ── */}
@@ -202,11 +202,11 @@ export default function WhatMakesAGoodScanPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          So we did the obvious thing: asked an AI to look at the images. The right tool here is Gemini Flash &mdash; the same vision model we already use for OCR and illustration extraction. We ran the eleven sample pages through Flash with a blind prompt asking it to rate scan quality, and the results were a clear improvement. The microfilm scan dropped from 84 to 58 (&ldquo;heavy bleed-through, low resolution, scan-of-scan artifacts&rdquo;). The Austerlitz map climbed from 74 to 95 (&ldquo;outstanding high-resolution scan with sharp detail&rdquo;). The blank page got a clean 0.
+          So we did the obvious thing: asked an AI to look at the images. The right tool here is Gemini Flash, the same vision model we already use for OCR and illustration extraction. We ran the eleven sample pages through Flash with a blind prompt asking it to rate scan quality, and the results were a clear improvement. The microfilm scan dropped from 84 to 58 (&ldquo;heavy bleed-through, low resolution, scan-of-scan artifacts&rdquo;). The Austerlitz map climbed from 74 to 95 (&ldquo;outstanding high-resolution scan with sharp detail&rdquo;). The blank page got a clean 0.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Then we tried the cheaper sibling, Flash Lite, which costs roughly half as much per call. Because we&rsquo;d be running this at corpus scale &mdash; 100,000 illustrations &mdash; a 50% cost difference matters. We expected slightly worse judgments but a similar shape of answer.
+          Then we tried the cheaper sibling, Flash Lite, which costs roughly half as much per call. Because we&rsquo;d be running this at corpus scale (100,000 illustrations), a 50% cost difference matters. We expected slightly worse judgments but a similar shape of answer.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -221,11 +221,11 @@ export default function WhatMakesAGoodScanPage() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6">
-          There is no text in the image. There is nothing in the image. It is white. Flash Lite read the file&rsquo;s metadata, decided what a high-resolution archival scan should look like, and wrote a confident description of one. The hallucination wasn&rsquo;t subtle &mdash; it was a complete fabrication, marked &ldquo;readable: true,&rdquo; of content that did not exist.
+          There is no text in the image. There is nothing in the image. It is white. Flash Lite read the file&rsquo;s metadata, decided what a high-resolution archival scan should look like, and wrote a confident description of one. The hallucination wasn&rsquo;t subtle; it was a complete fabrication, marked &ldquo;readable: true,&rdquo; of content that did not exist.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          That single failure mode is disqualifying for production use. We need this system specifically to <em>catch</em> blank pages, broken scans, scanner-bed artifacts &mdash; the cases at the bottom of the quality distribution. A model that rubber-stamps those as &ldquo;excellent&rdquo; doesn&rsquo;t reduce error, it adds an extra layer of false confidence. Flash, at twice the price, doesn&rsquo;t do that. We&rsquo;ll pay the extra.
+          That single failure mode is disqualifying for production use. We need this system specifically to <em>catch</em> blank pages, broken scans, scanner-bed artifacts: the cases at the bottom of the quality distribution. A model that rubber-stamps those as &ldquo;excellent&rdquo; doesn&rsquo;t reduce error, it adds an extra layer of false confidence. Flash, at twice the price, doesn&rsquo;t do that. We&rsquo;ll pay the extra.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -238,7 +238,7 @@ export default function WhatMakesAGoodScanPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The synthesis is to use both signals together. Pixel statistics are cheap, deterministic, and reliable at the obvious cases &mdash; a dynamic range of zero <em>is</em> a blank page, every time. AI judgment is expensive, fuzzier, but able to make the perceptual distinctions that numbers can&rsquo;t &mdash; bitonal-from-microfilm versus bitonal-from-woodcut, fragment-versus-full-page, scanner-bed-versus-page-content. Neither alone is sufficient. Both together cover the failure modes of either.
+          The synthesis is to use both signals together. Pixel statistics are cheap, deterministic, and reliable at the obvious cases: a dynamic range of zero <em>is</em> a blank page, every time. AI judgment is expensive, fuzzier, but able to make the perceptual distinctions that numbers can&rsquo;t: bitonal-from-microfilm versus bitonal-from-woodcut, fragment-versus-full-page, scanner-bed-versus-page-content. Neither alone is sufficient. Both together cover the failure modes of either.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -247,7 +247,7 @@ export default function WhatMakesAGoodScanPage() {
 
         <div className="bg-warm/50 border border-light rounded-lg p-6 my-8 font-mono text-sm text-secondary">
           <div className="mb-4">
-            <strong className="text-primary">Layer 1 &mdash; Deterministic characteristics</strong> (free, every page)
+            <strong className="text-primary">Layer 1: Deterministic characteristics</strong> (free, every page)
             <p className="font-sans text-sm mt-1">
               sharp pixel-stats + Laplacian-variance sharpness + histogram entropy + bimodality + chroma spread.
               Catches blanks, low resolution, over-compression, and bitonal/photographic discrimination.
@@ -255,7 +255,7 @@ export default function WhatMakesAGoodScanPage() {
             </p>
           </div>
           <div className="mb-4">
-            <strong className="text-primary">Layer 2 &mdash; Gemini scan-quality assessment</strong> (embedded in extraction)
+            <strong className="text-primary">Layer 2: Gemini scan-quality assessment</strong> (embedded in extraction)
             <p className="font-sans text-sm mt-1">
               Augments the existing illustration-extraction prompt with technical-quality fields:
               scan_score, scan_class, readable_text, illustration_fidelity, page_completeness,
@@ -265,10 +265,10 @@ export default function WhatMakesAGoodScanPage() {
             </p>
           </div>
           <div>
-            <strong className="text-primary">Layer 3 &mdash; ML distillation</strong> (future)
+            <strong className="text-primary">Layer 3: ML distillation</strong> (future)
             <p className="font-sans text-sm mt-1">
               Once L1+L2 has scored ~50K illustrations, the (features &rarr; labels) corpus
-              becomes training data for a small classifier &mdash; goal ~95% agreement with Gemini
+              becomes training data for a small classifier: goal ~95% agreement with Gemini
               at zero per-call cost. Not part of v1; mentioned here to show the path.
             </p>
           </div>
@@ -279,7 +279,7 @@ export default function WhatMakesAGoodScanPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The result is two parallel signals per illustration. The existing <code>gallery_quality</code> field answers <em>&ldquo;is this image worth showing?&rdquo;</em> &mdash; an emblem with figures scores higher than a marbled endpaper. The new <code>scan_quality</code> field answers <em>&ldquo;how cleanly is this image digitized?&rdquo;</em> &mdash; orthogonal questions that we&rsquo;d been muddling together. A famous Kircher diagram has a <code>gallery_quality</code> of 0.9 whether the scan is pristine or microfilmed. Now we can say so.
+          The result is two parallel signals per illustration. The existing <code>gallery_quality</code> field answers <em>&ldquo;is this image worth showing?&rdquo;</em> An emblem with figures scores higher than a marbled endpaper. The new <code>scan_quality</code> field answers <em>&ldquo;how cleanly is this image digitized?&rdquo;</em> These are orthogonal questions that we&rsquo;d been muddling together. A famous Kircher diagram has a <code>gallery_quality</code> of 0.9 whether the scan is pristine or microfilmed. Now we can say so.
         </p>
 
         {/* ── 6 ── */}
@@ -288,11 +288,11 @@ export default function WhatMakesAGoodScanPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The hardest distinction the system has to make is between a pristine bitonal scan of a woodcut &mdash; sharp, intentional, no information loss &mdash; and a bitonal scan from a microfilm reel, which looks superficially similar but has lost the original&rsquo;s fine detail. Both are pure black-and-white. Both can be high-resolution. Pixel statistics see them as equivalent.
+          The hardest distinction the system has to make is between a pristine bitonal scan of a woodcut (sharp, intentional, no information loss) and a bitonal scan from a microfilm reel, which looks superficially similar but has lost the original&rsquo;s fine detail. Both are pure black-and-white. Both can be high-resolution. Pixel statistics see them as equivalent.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Two examples from the test set. On the left, a clean 1515 woodcut of Ramon Llull and his disciples at the shore; on the right, a microfilm scan of an early printed page from Steganographia. Both are bitonal. Both score similarly on pixel statistics (bimodality 0.52 vs 0.73, histogram entropy 4.82 vs 2.68 &mdash; close, but no firm threshold). Visually, only one of them is preserved.
+          Two examples from the test set. On the left, a clean 1515 woodcut of Ramon Llull and his disciples at the shore; on the right, a microfilm scan of an early printed page from Steganographia. Both are bitonal. Both score similarly on pixel statistics (bimodality 0.52 vs 0.73, histogram entropy 4.82 vs 2.68: close, but no firm threshold). Visually, only one of them is preserved.
         </p>
 
         <div className="my-8 grid md:grid-cols-2 gap-6">
@@ -326,7 +326,7 @@ export default function WhatMakesAGoodScanPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Gemini handles this. In the validation set it correctly tagged the Steganographia scan as <code>bitonal_microfilm</code> with concerns &ldquo;pepper_noise, scan_of_scan, low_resolution, compression_artifacts&rdquo; &mdash; the exact technical vocabulary an archivist would use. The Llull woodcut was tagged <code>bitonal_clean</code> with concerns just &ldquo;binding gutter shadow.&rdquo; The distinction the pixel formula couldn&rsquo;t make, the model made cleanly.
+          Gemini handles this. In the validation set it correctly tagged the Steganographia scan as <code>bitonal_microfilm</code> with concerns &ldquo;pepper_noise, scan_of_scan, low_resolution, compression_artifacts&rdquo;, the exact technical vocabulary an archivist would use. The Llull woodcut was tagged <code>bitonal_clean</code> with concerns just &ldquo;binding gutter shadow.&rdquo; The distinction the pixel formula couldn&rsquo;t make, the model made cleanly.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -343,11 +343,11 @@ export default function WhatMakesAGoodScanPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Best-copy duplicate picking.</strong> Source Library frequently holds two or three editions of the same work, sometimes from different providers. When dedupe runs, the question is which copy to keep canonical and which to hide. Until now the tiebreaker was OCR completeness &mdash; how much text was processed. That&rsquo;s a text-availability heuristic, not a quality one. With per-illustration scan_quality, we can compare specific images across editions: of the two copies of <em>Musaeum hermeticum</em>, which one renders the Mercurius engraving sharply? Pick that edition. The other is the duplicate.
+          <strong>Best-copy duplicate picking.</strong> Source Library frequently holds two or three editions of the same work, sometimes from different providers. When dedupe runs, the question is which copy to keep canonical and which to hide. Until now the tiebreaker was OCR completeness: how much text was processed. That&rsquo;s a text-availability heuristic, not a quality one. With per-illustration scan_quality, we can compare specific images across editions: of the two copies of <em>Musaeum hermeticum</em>, which one renders the Mercurius engraving sharply? Pick that edition. The other is the duplicate.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Concern flagging.</strong> An admin queue filtered by <code>scan_quality.has_blank_pages</code>, <code>scan_quality.page_completeness_issues</code>, and the high-curatorial-value / low-scan-quality combination (the worst-case: important illustrations badly digitized). These are actionable rows &mdash; each one corresponds to a specific intervention. Re-source. Re-archive. Manual inspection.
+          <strong>Concern flagging.</strong> An admin queue filtered by <code>scan_quality.has_blank_pages</code>, <code>scan_quality.page_completeness_issues</code>, and the high-curatorial-value / low-scan-quality combination (the worst-case: important illustrations badly digitized). These are actionable rows: each one corresponds to a specific intervention. Re-source. Re-archive. Manual inspection.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -364,15 +364,15 @@ export default function WhatMakesAGoodScanPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Granularity.</strong> The current design rates quality at the page level and inherits to each illustration on that page. But pages aren&rsquo;t uniform &mdash; you can have a beautiful color frontispiece bound facing a faded text page, and they&rsquo;ll get the same score. For high-value books we may want per-illustration Gemini calls; for everything else, page-level is fine. The right policy is probably tier-based, but we don&rsquo;t know yet where the threshold should sit.
+          <strong>Granularity.</strong> The current design rates quality at the page level and inherits to each illustration on that page. But pages aren&rsquo;t uniform: you can have a beautiful color frontispiece bound facing a faded text page, and they&rsquo;ll get the same score. For high-value books we may want per-illustration Gemini calls; for everything else, page-level is fine. The right policy is probably tier-based, but we don&rsquo;t know yet where the threshold should sit.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>The microfilm threshold.</strong> Gemini occasionally classifies a clean modern bitonal scan as <code>bitonal_microfilm</code> when the source is, in fact, a sharp woodcut printed on yellowed paper. The model is being slightly conservative &mdash; treating any jagged edge as a microfilm signature. We could tune the prompt to be less aggressive, but the cost of getting it wrong in the other direction (silently labeling actual microfilm as &ldquo;clean&rdquo;) is much higher than a few false positives. For now we&rsquo;re accepting the conservative behavior and reviewing the borderline cases manually.
+          <strong>The microfilm threshold.</strong> Gemini occasionally classifies a clean modern bitonal scan as <code>bitonal_microfilm</code> when the source is, in fact, a sharp woodcut printed on yellowed paper. The model is being slightly conservative, treating any jagged edge as a microfilm signature. We could tune the prompt to be less aggressive, but the cost of getting it wrong in the other direction (silently labeling actual microfilm as &ldquo;clean&rdquo;) is much higher than a few false positives. For now we&rsquo;re accepting the conservative behavior and reviewing the borderline cases manually.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The longer-term question is whether any of this is necessary. If we end up with a clean labeled corpus of 50,000 illustrations &mdash; pixel characteristics on one side, Gemini judgments on the other &mdash; that corpus is itself a small ML training set. A distilled classifier that runs on the deterministic features alone, calibrated against the Gemini labels, would let us re-score the entire library in minutes at no per-call cost. We&rsquo;re not there yet. But it&rsquo;s the kind of thing that becomes easy once you have the data, and that&rsquo;s the most under-appreciated outcome of building a system like this. The schema and the corpus are the durable artifacts. The current scoring algorithm is just a placeholder.
+          The longer-term question is whether any of this is necessary. If we end up with a clean labeled corpus of 50,000 illustrations (pixel characteristics on one side, Gemini judgments on the other), that corpus is itself a small ML training set. A distilled classifier that runs on the deterministic features alone, calibrated against the Gemini labels, would let us re-score the entire library in minutes at no per-call cost. We&rsquo;re not there yet. But it&rsquo;s the kind of thing that becomes easy once you have the data, and that&rsquo;s the most under-appreciated outcome of building a system like this. The schema and the corpus are the durable artifacts. The current scoring algorithm is just a placeholder.
         </p>
 
         {/* End */}

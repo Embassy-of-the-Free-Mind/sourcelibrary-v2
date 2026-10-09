@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'What Does a Library of 3,400 Rare Books Look Like? - Research Notes - Source Library',
-  description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions — from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
+  description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions, from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg', alt: 'Integra Naturae Speculum by Robert Fludd, 1617' }],
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
@@ -50,11 +50,11 @@ export default function ClusteringPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library holds over 5,000 digitized rare books &mdash; alchemy, Hermetica, natural philosophy, Kabbalah, Chinese medicine, Sanskrit astrology, early modern theology. The collection grew organically over months of curation. What structure does it actually have? We embedded 3,424 book summaries with a neural language model, projected them into a shared vector space, and let a density-based clustering algorithm find the answer.
+          Source Library holds over 5,000 digitized rare books: alchemy, Hermetica, natural philosophy, Kabbalah, Chinese medicine, Sanskrit astrology, early modern theology. The collection grew organically over months of curation. What structure does it actually have? We embedded 3,424 book summaries with a neural language model, projected them into a shared vector space, and let a density-based clustering algorithm find the answer.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          The algorithm found 48 raw clusters. After editorial review &mdash; merging redundant splits, renaming opaque labels, and organizing into macro-domains &mdash; we arrived at <strong>34 curated clusters across seven intellectual traditions</strong>. Not the categories we assigned &mdash; the categories the books assigned themselves, refined by human judgment.
+          The algorithm found 48 raw clusters. After editorial review (merging redundant splits, renaming opaque labels, and organizing into macro-domains), we arrived at <strong>34 curated clusters across seven intellectual traditions</strong>. Not the categories we assigned; the categories the books assigned themselves, refined by human judgment.
         </p>
 
         {/* --- Interactive visualization --- */}
@@ -63,7 +63,7 @@ export default function ClusteringPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Each dot is a book. Position reflects semantic similarity &mdash; books near each other have similar content. Colors are grouped by macro-domain: warm reds for Western esotericism, purples for Christian traditions, blues for classical &amp; Renaissance, greens for natural philosophy, ambers for Chinese traditions, teals for South Asian traditions. Hover to see the title, author, year, and cluster name. Use the search box to find specific books or clusters.
+          Each dot is a book. Position reflects semantic similarity: books near each other have similar content. Colors are grouped by macro-domain: warm reds for Western esotericism, purples for Christian traditions, blues for classical &amp; Renaissance, greens for natural philosophy, ambers for Chinese traditions, teals for South Asian traditions. Hover to see the title, author, year, and cluster name. Use the search box to find specific books or clusters.
         </p>
 
         <div className="mb-8 -mx-4 md:-mx-8 lg:-mx-12">
@@ -77,7 +77,7 @@ export default function ClusteringPage() {
         </div>
 
         <p className="text-muted text-sm mb-12">
-          2D UMAP projection of 768-dimensional sentence embeddings. Spatial proximity &asymp; semantic similarity. The projection preserves local neighborhoods but distorts global distances &mdash; clusters that appear far apart on screen may be closer in the original embedding space.
+          2D UMAP projection of 768-dimensional sentence embeddings. Spatial proximity &asymp; semantic similarity. The projection preserves local neighborhoods but distorts global distances: clusters that appear far apart on screen may be closer in the original embedding space.
         </p>
 
         {/* --- What we did --- */}
@@ -102,11 +102,11 @@ Themes: music theory, Pythagorean harmony, acoustics
 Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We embedded these using <strong>all-mpnet-base-v2</strong>, a 768-dimensional sentence transformer trained on over 1 billion text pairs. This runs locally &mdash; no API calls, fully reproducible. The model produces normalized vectors where cosine similarity reflects semantic relatedness.
+          We embedded these using <strong>all-mpnet-base-v2</strong>, a 768-dimensional sentence transformer trained on over 1 billion text pairs. This runs locally: no API calls, fully reproducible. The model produces normalized vectors where cosine similarity reflects semantic relatedness.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For clustering, we used <strong>UMAP</strong> (Uniform Manifold Approximation and Projection) to reduce the 768-dimensional embeddings to 10 dimensions, preserving local structure while making the space tractable for density estimation. Then <strong>HDBSCAN</strong> (Hierarchical Density-Based Spatial Clustering of Applications with Noise) identified clusters of varying density without requiring a pre-specified number of clusters. Unlike k-means, HDBSCAN doesn&rsquo;t force every point into a cluster &mdash; books that don&rsquo;t fit any group cleanly are classified as noise.
+          For clustering, we used <strong>UMAP</strong> (Uniform Manifold Approximation and Projection) to reduce the 768-dimensional embeddings to 10 dimensions, preserving local structure while making the space tractable for density estimation. Then <strong>HDBSCAN</strong> (Hierarchical Density-Based Spatial Clustering of Applications with Noise) identified clusters of varying density without requiring a pre-specified number of clusters. Unlike k-means, HDBSCAN doesn&rsquo;t force every point into a cluster; books that don&rsquo;t fit any group cleanly are classified as noise.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -139,7 +139,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The curated clusters organize into seven macro-domains. This isn&rsquo;t a classification we designed &mdash; it&rsquo;s what the embedding space reveals about the collection&rsquo;s actual content, refined by editorial judgment.
+          The curated clusters organize into seven macro-domains. This isn&rsquo;t a classification we designed; it&rsquo;s what the embedding space reveals about the collection&rsquo;s actual content, refined by editorial judgment.
         </p>
 
         {/* Macro-domain 1 */}
@@ -147,7 +147,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Western Esotericism
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          The largest domain, spanning 8 clusters and over 750 books. <strong>Western Alchemy</strong> is the single biggest cluster (350 books) &mdash; Latin and German texts on transmutation, Paracelsian medicine, and spagyric chemistry. It&rsquo;s arguably too broad, mixing 16th-century Paracelsians with 18th-century chrysopoeia. Nearby: <strong>Hermeticism &amp; Theurgy</strong> (79), <strong>Grimoires &amp; Ritual Magic</strong> (78, merged from two raw clusters), <strong>Rosicrucianism</strong> (63, merged from two), <strong>Mesmerism &amp; New Thought</strong> (58, merged from animal magnetism and self-improvement), <strong>Christian Kabbalah</strong> (47), <strong>Freemasonry &amp; Secret Societies</strong> (47), and <strong>Demonology &amp; Witchcraft</strong> (74).
+          The largest domain, spanning 8 clusters and over 750 books. <strong>Western Alchemy</strong> is the single biggest cluster (350 books): Latin and German texts on transmutation, Paracelsian medicine, and spagyric chemistry. It&rsquo;s arguably too broad, mixing 16th-century Paracelsians with 18th-century chrysopoeia. Nearby: <strong>Hermeticism &amp; Theurgy</strong> (79), <strong>Grimoires &amp; Ritual Magic</strong> (78, merged from two raw clusters), <strong>Rosicrucianism</strong> (63, merged from two), <strong>Mesmerism &amp; New Thought</strong> (58, merged from animal magnetism and self-improvement), <strong>Christian Kabbalah</strong> (47), <strong>Freemasonry &amp; Secret Societies</strong> (47), and <strong>Demonology &amp; Witchcraft</strong> (74).
         </p>
 
         {/* Macro-domain 2 */}
@@ -155,7 +155,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Christian Traditions
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Six clusters, ~430 books. <strong>Continental Christian Mysticism</strong> (185) is the second-largest cluster overall &mdash; German and Latin texts from Bohme, Tauler, Eckhart, and their successors. <strong>Biblical Scholarship</strong> (85), <strong>Patristic &amp; Eastern Christianity</strong> (68, merged from Syriac/Armenian and early apologetics), <strong>Swedenborgian Theology</strong> (18, a single-author cluster), <strong>Religious Persecution &amp; Toleration</strong> (30), and <strong>Apocalypticism &amp; Prophecy</strong> (24). The mystical tradition sits close to the Hermetic cluster in embedding space &mdash; correctly reflecting the historical intertwining of these traditions.
+          Six clusters, ~430 books. <strong>Continental Christian Mysticism</strong> (185) is the second-largest cluster overall: German and Latin texts from Bohme, Tauler, Eckhart, and their successors. <strong>Biblical Scholarship</strong> (85), <strong>Patristic &amp; Eastern Christianity</strong> (68, merged from Syriac/Armenian and early apologetics), <strong>Swedenborgian Theology</strong> (18, a single-author cluster), <strong>Religious Persecution &amp; Toleration</strong> (30), and <strong>Apocalypticism &amp; Prophecy</strong> (24). The mystical tradition sits close to the Hermetic cluster in embedding space, correctly reflecting the historical intertwining of these traditions.
         </p>
 
         {/* Macro-domain 3 */}
@@ -163,7 +163,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Classical &amp; Renaissance
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Three clusters. <strong>Classical Texts &amp; Philology</strong> (187 books) is very broad &mdash; Aristotle, Plato, Cicero, Plotinus, plus philological editions. It could arguably be split by period or language. <strong>Renaissance Philosophy</strong> (110) captures the Ficino-Pico-Bruno axis. <strong>German &amp; Dutch Mysticism</strong> (47) is a language-specific subset of late-medieval mysticism that the algorithm correctly separated from the broader Christian mysticism cluster.
+          Three clusters. <strong>Classical Texts &amp; Philology</strong> (187 books) is very broad: Aristotle, Plato, Cicero, Plotinus, plus philological editions. It could arguably be split by period or language. <strong>Renaissance Philosophy</strong> (110) captures the Ficino-Pico-Bruno axis. <strong>German &amp; Dutch Mysticism</strong> (47) is a language-specific subset of late-medieval mysticism that the algorithm correctly separated from the broader Christian mysticism cluster.
         </p>
 
         {/* Macro-domain 4 */}
@@ -179,7 +179,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           Chinese Traditions
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Four clusters, ~350 books. <strong>Chinese Religion &amp; Cosmology</strong> (152) covers Buddhism, Daoism, and folk religion. <strong>Chinese Military &amp; Strategic Texts</strong> (119, merged from Wubei Zhi, coastal defense, and Hai Guo Tu Zhi) &mdash; though note this merges multi-volume encyclopedias with independent strategic works. <strong>Chinese Medicine</strong> (86, merged from materia medica and medical anatomy), and <strong>Chinese Celestial &amp; Terrestrial Lore</strong> (31). These clusters sit in a completely separate region of the embedding space &mdash; Chinese-language content clusters by linguistic distance as much as by subject.
+          Four clusters, ~350 books. <strong>Chinese Religion &amp; Cosmology</strong> (152) covers Buddhism, Daoism, and folk religion. <strong>Chinese Military &amp; Strategic Texts</strong> (119, merged from Wubei Zhi, coastal defense, and Hai Guo Tu Zhi), though note this merges multi-volume encyclopedias with independent strategic works. <strong>Chinese Medicine</strong> (86, merged from materia medica and medical anatomy), and <strong>Chinese Celestial &amp; Terrestrial Lore</strong> (31). These clusters sit in a completely separate region of the embedding space: Chinese-language content clusters by linguistic distance as much as by subject.
         </p>
 
         {/* Macro-domain 6 */}
@@ -187,7 +187,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
           South &amp; Central Asian Traditions
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Three clusters. <strong>Sanskrit Astrology &amp; Astronomy</strong> (182, merged from three raw clusters covering Jyotisha, astronomical treatises, and divinatory texts), <strong>Hindu Philosophy &amp; Indology</strong> (68), and <strong>Islamic Mysticism &amp; Philosophy</strong> (41). As with the Chinese clusters, Sanskrit content forms its own island in embedding space &mdash; a genuine structural feature, but one driven partly by linguistic distance rather than pure subject matter.
+          Three clusters. <strong>Sanskrit Astrology &amp; Astronomy</strong> (182, merged from three raw clusters covering Jyotisha, astronomical treatises, and divinatory texts), <strong>Hindu Philosophy &amp; Indology</strong> (68), and <strong>Islamic Mysticism &amp; Philosophy</strong> (41). As with the Chinese clusters, Sanskrit content forms its own island in embedding space, a genuine structural feature, but one driven partly by linguistic distance rather than pure subject matter.
         </p>
 
         {/* Macro-domain 7 */}
@@ -204,7 +204,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          HDBSCAN classified 564 books (16%) as noise &mdash; points that don&rsquo;t belong to any cluster with sufficient density. These aren&rsquo;t bad data. They&rsquo;re the most <em>interdisciplinary</em> books in the collection: texts that draw on multiple traditions simultaneously and resist placement in any single cluster.
+          HDBSCAN classified 564 books (16%) as noise: points that don&rsquo;t belong to any cluster with sufficient density. These aren&rsquo;t bad data. They&rsquo;re the most <em>interdisciplinary</em> books in the collection: texts that draw on multiple traditions simultaneously and resist placement in any single cluster.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -338,7 +338,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
               <tr className="border-b border-border-medium bg-warm">
                 <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Western Esotericism</td>
               </tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Western Alchemy</td><td className="py-2 pr-4 text-right font-mono">350</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad &mdash; mixes Paracelsians with chrysopoeia</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Western Alchemy</td><td className="py-2 pr-4 text-right font-mono">350</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad: mixes Paracelsians with chrysopoeia</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Hermeticism &amp; Theurgy</td><td className="py-2 pr-4 text-right font-mono">79</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Grimoires &amp; Ritual Magic</td><td className="py-2 pr-4 text-right font-mono">78</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: ceremonial + Solomonic</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Demonology &amp; Witchcraft</td><td className="py-2 pr-4 text-right font-mono">74</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
@@ -362,7 +362,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
               <tr className="border-b border-border-medium bg-warm">
                 <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Classical &amp; Renaissance</td>
               </tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Classical Texts &amp; Philology</td><td className="py-2 pr-4 text-right font-mono">187</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad &mdash; Aristotle to Proclus in one bucket</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Classical Texts &amp; Philology</td><td className="py-2 pr-4 text-right font-mono">187</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Too broad: Aristotle to Proclus in one bucket</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Renaissance Philosophy</td><td className="py-2 pr-4 text-right font-mono">110</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">German &amp; Dutch Mysticism</td><td className="py-2 pr-4 text-right font-mono">47</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Language-specific split from Christian mysticism</td></tr>
 
@@ -381,7 +381,7 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
               <tr className="border-b border-border-medium bg-warm">
                 <td className="py-2 pr-4 font-semibold text-primary" colSpan={4}>Chinese Traditions</td>
               </tr>
-              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Religion &amp; Cosmology</td><td className="py-2 pr-4 text-right font-mono">152</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Very broad &mdash; Buddhism, Daoism, folk religion</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Religion &amp; Cosmology</td><td className="py-2 pr-4 text-right font-mono">152</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs">Very broad: Buddhism, Daoism, folk religion</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Military &amp; Strategic Texts</td><td className="py-2 pr-4 text-right font-mono">119</td><td className="py-2 pr-4 text-right font-mono">3</td><td className="py-2 text-muted text-xs">Merged: Wubei Zhi + coastal defense + Hai Guo Tu Zhi. Includes single-work volumes.</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Medicine</td><td className="py-2 pr-4 text-right font-mono">86</td><td className="py-2 pr-4 text-right font-mono">2</td><td className="py-2 text-muted text-xs">Merged: materia medica + anatomy. Includes Bencao Gangmu volumes.</td></tr>
               <tr className="border-b border-border-light"><td className="py-2 pr-4">Chinese Celestial &amp; Terrestrial Lore</td><td className="py-2 pr-4 text-right font-mono">31</td><td className="py-2 pr-4 text-right font-mono">1</td><td className="py-2 text-muted text-xs"></td></tr>
@@ -412,19 +412,19 @@ Key terms: harmonie, consonance, intervalles, proportion...`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library currently uses 29 hand-coded categories, mostly focused on Western esotericism (Alchemy, Hermeticism, Kabbalah, Rosicrucianism). The clustering reveals that these categories cover only about a third of the collection. The remaining two-thirds &mdash; Chinese traditions, Sanskrit literature, natural philosophy, biblical scholarship, political economy &mdash; are invisible to the current taxonomy.
+          Source Library currently uses 29 hand-coded categories, mostly focused on Western esotericism (Alchemy, Hermeticism, Kabbalah, Rosicrucianism). The clustering reveals that these categories cover only about a third of the collection. The remaining two-thirds (Chinese traditions, Sanskrit literature, natural philosophy, biblical scholarship, political economy) are invisible to the current taxonomy.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Worse, the current categories are flat and mutually exclusive. A book tagged &ldquo;Alchemy&rdquo; can&rsquo;t also be tagged &ldquo;Medicine&rdquo; or &ldquo;Natural Philosophy&rdquo; &mdash; but the clustering shows that these categories overlap heavily. The &ldquo;Medical Philosophy&rdquo; cluster (52 books) sits at the intersection of medicine, natural philosophy, and Neoplatonism. &ldquo;Christian Kabbalah&rdquo; bridges three traditions. Forcing these into a single category loses information.
+          Worse, the current categories are flat and mutually exclusive. A book tagged &ldquo;Alchemy&rdquo; can&rsquo;t also be tagged &ldquo;Medicine&rdquo; or &ldquo;Natural Philosophy,&rdquo; but the clustering shows that these categories overlap heavily. The &ldquo;Medical Philosophy&rdquo; cluster (52 books) sits at the intersection of medicine, natural philosophy, and Neoplatonism. &ldquo;Christian Kabbalah&rdquo; bridges three traditions. Forcing these into a single category loses information.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The next step is to replace the flat categories with a <strong>faceted taxonomy</strong> &mdash; orthogonal dimensions like tradition, period, language, and form that can be combined freely. A book on Paracelsian medicine could be tagged as Western Alchemy + Medicine + Early Modern + German, allowing it to appear in any of those facets without forcing a single classification.
+          The next step is to replace the flat categories with a <strong>faceted taxonomy</strong>: orthogonal dimensions like tradition, period, language, and form that can be combined freely. A book on Paracelsian medicine could be tagged as Western Alchemy + Medicine + Early Modern + German, allowing it to appear in any of those facets without forcing a single classification.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The 34 curated clusters and their macro-domains are the starting point for designing that taxonomy. They represent what the collection actually contains &mdash; discovered from the data, refined by judgment, and honest about where the algorithm sees structure that isn&rsquo;t really there.
+          The 34 curated clusters and their macro-domains are the starting point for designing that taxonomy. They represent what the collection actually contains, discovered from the data, refined by judgment, and honest about where the algorithm sees structure that isn&rsquo;t really there.
         </p>
 
         <hr className="border-light my-12" />

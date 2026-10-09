@@ -30,7 +30,7 @@ The Renaissance dictionaries in our corpus preserve the etymology with almost
 pedantic care. Reuchlin's *Vocabularius breviloquus* (1478) glosses it directly:
 "Gymnos in Greek is translated in Latin as naked… Gymnosophista… doctor or
 teacher in the gymnasium. And… the same gymnosophistae are said to be certain
-philosophe[rs]" ([short_url](https://sourcelibrary.org/q/BhPS2Tp6l4XUxVQ1H0Y)).
+philosophe[rs]" ([short_url](https://sourcelibrary.org/q/BiPwY7Ut6bhY5HrDBRR)).
 Perotti's *Cornucopia* (1492) ties the word to the gymnasium where Greeks
 exercised naked, then to "the wise men of the Indians, who used to walk naked"
 ([short_url](https://sourcelibrary.org/q/BiPwM24PSQTjmEtlp2T)).
