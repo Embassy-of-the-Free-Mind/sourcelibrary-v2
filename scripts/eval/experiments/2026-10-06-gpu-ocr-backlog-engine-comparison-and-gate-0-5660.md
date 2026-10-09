@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh, bo]
+scripts: [Hani, Tibt]
+canons: []
+n_books: 48
+n_pages: 48
+verdict: "Paddle reads SKQS manuscript pages best (median CER 0.132 vs Qwen3-VL 0.205, flash 0.304, lite 0.372); the Tibetan woodblock canary passed, and gate 0 stopped both backlog lanes."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5660]
+---
 ## 2026-10-06 · Can the GPU OCR backlog (SKQS Chinese on Paddle, Tibetan on Yigdzin, Japanese on NDL) be run with quality gates, and which engine should read the SKQS manuscripts? (#5660)
 
 PRIOR ART: the #5600 Paddle fleet (`scripts/gpu/paddle-zh-fleet.mjs`, `scripts/workers/paddle-zh-lane.mjs`, PR #5607) and the yigdzin-527 recipe (`scripts/eval/tibetan-lite-vs-yigdzin/`) are the lanes, reused here. `paddle-zh-5600-optimize.mjs` compared Paddle *configurations*; this compares *engines*, and adds per-gate checks (`scripts/eval/gpu-backlog-5660-gate.mjs`, `scripts/eval/gpu-backlog-5660/tibgate.py`).
