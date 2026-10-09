@@ -59,6 +59,7 @@ infer() {
   local t0; t0=$(date +%s)
   local deadline=$(( t0 + INFER_HOURS * 3600 ))
   log "infer start: $(basename "$M") backend=$BACKEND runners=$WORKERS max_side=${MAX_SIDE:-0} layout=${LAYOUT:-1} prefetch=${PREFETCH:-4}, deadline $(date -u -d @$deadline +%FT%TZ), $(wc -l < "$M") rows"
+  local pids=()
   for i in $(seq 0 $((WORKERS - 1))); do
     ( while [ "$(date +%s)" -lt "$deadline" ]; do
         "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$M" --root "$W" --worker "$i" --workers "$WORKERS" \
@@ -66,8 +67,11 @@ infer() {
           --backend "$BACKEND" --prefetch "${PREFETCH:-4}" >> "$W/worker-$i.log" 2>&1 && break
         echo "$(date -u +%FT%TZ) worker $i exited $? — restarting" >> "$W/box.log"
       done ) &
+    pids+=($!)
   done
-  wait || true
+  # wait for the RUNNERS only: a bare `wait` also waits on the genai server when serve() started it from this shell,
+  # and never returns (g01, #5660, 2026-10-06: the queue loop sat on chunk 1 for an hour)
+  wait "${pids[@]}" || true
   echo $(( $(date +%s) - t0 )) > "$W/infer-secs"
   log "infer done in $(cat "$W/infer-secs") s"
 }

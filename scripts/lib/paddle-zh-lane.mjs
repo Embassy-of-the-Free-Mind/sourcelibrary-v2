@@ -42,14 +42,17 @@ export { isHumanEdited, hasRealTranslation, STALE_OCR_FIELDS, markTranslationsSt
 
 /** `ocr.pipeline` value, `sweep_log.sweep` name and `translation_stale.lane` — one id for the lane. */
 export const LANE = 'paddle-zh-2026-10';
-export const LANE_ISSUE = 5600;
+// A later run of the SAME lane (same engine, writer and guards) names its own issue, hold and revision reason
+// through PADDLE_ZH_ISSUE / PADDLE_ZH_HOLD / PADDLE_ZH_HOLD_RELEASE (#5660 job gpu-backlog-5660: the ≈ 5K SKQS
+// volumes outside the #4719 cohort). Unset, every value is the #5600 run's.
+export const LANE_ISSUE = Number(process.env.PADDLE_ZH_ISSUE || 5600);
 /** `page_revisions.reason` for the reading this lane supersedes. */
-export const REVISION_REASON = 'reocr_paddle_zh_5600';
+export const REVISION_REASON = `reocr_paddle_zh_${LANE_ISSUE}`;
 /** `book_events.type` — one row per book, advanced in place. */
 export const BOOK_EVENT = 'paddle_zh_reocr';
 /** `pipeline_auto.hold.reason` for every book the lane touches. */
-export const HOLD_REASON = 'paddle-zh-5600-ocr-only';
-export const HOLD_RELEASE = 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
+export const HOLD_REASON = process.env.PADDLE_ZH_HOLD || 'paddle-zh-5600-ocr-only';
+export const HOLD_RELEASE = process.env.PADDLE_ZH_HOLD_RELEASE || 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
 /** Below this many Han characters a Paddle read is textless: it replaces a loop, never a reading. */
 export const MIN_HAN = 8;
 
