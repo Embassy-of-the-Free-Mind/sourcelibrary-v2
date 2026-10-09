@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/vossius1",
+  "edition": "Gerardi Joan. Vossii Et Clarorum Virorum Ad Eum Epistolae / collectore Paulo Colomesio [Paul Colomi�s, 1638-1692). - Lon — Augsburg: Laurentius Kroniger; G�bels Erben; Sch�nig, 1691",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/11",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "6a509b82ad1859a71f41b8d6",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 13970,
+    "to_char": 17187,
+    "overlap": 0.993,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'aliosque multos, judicium tale fuit'; ends 'nisi prius' with catchword 'ab'. Greek words and a centred Greek verse line are not reproduced by the ref ('Quinimo cum sciret illud:' followed by nothing); page is the Vita G.J. Vossii.",
+    "leaf_language": "mixed (Latin with a Greek words)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:01.847Z",
+  "text_location": "repo",
+  "text_sha256": "c69569396a24f7983b8d68ea1cb6a5dd9cf5c5023de5068bd98efe81f90fd8e0",
+  "unit": {
+    "chars": 3217
+  },
+  "stratum": "latin-period-5126"
+}

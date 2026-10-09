@@ -1,0 +1,87 @@
+[
+{"id": "P2P4K", "score": 4, "verdict": "light",
+ "errors": [],
+ "note": "Sound rendering of a dense apauruṣeya/intention-to-speak argument; some commentary lines are set as verse and the opening 'dbang du ma byas pa' is paraphrased, but the argument is reproduced correctly."},
+{"id": "PDXW6", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "gloss", "confidence": "high",
+   "tibetan": "ཁ་ཅིག་ང་ཡི་རིགས་སུ་གཏོགས་པ་སྟེ།",
+   "english": "Some belong to my family [note: the Tathagata family]",
+   "why": "The speaker of this passage is Vajrapāṇi (the next side has 'ང་ནི་རྡོ་རྗེ་རིགས་ཞེས་རབ་ཏུ་བསྟན'), so 'my family' is the Vajra family, not the Tathāgata family.",
+   "fix": {"find": "[note: the Tathagata family]", "replace": "[note: the Vajra family; the speaker is Vajrapāṇi]"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ངས་ནི་གསང་བ་པ་རྣམས་གཞོམ་པ་དང་།",
+   "english": "To subdue the secretive ones [note: likely referring to certain classes of spirits or obstacles]",
+   "why": "gsang ba pa is the proper class name Guhyaka (the yakṣa retinue of Vajrapāṇi), not a description 'secretive ones'."}
+ ],
+ "note": "Accurate account of the mantra counts by family, but the closing note misidentifies whose family 'my family' is."},
+{"id": "PBCYQ", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "ད་དྷ་ཌ་ཌྷ་ཡ་ལ་དང་བཅས",
+   "english": "including the dental and cerebral letters",
+   "why": "The Tibetan names the added letters da dha ḍa ḍha ya la; the English drops ya and la and reduces the specific list to a category."}
+ ],
+ "note": "Faithful sādhana translation of the Vairocana visualization; only the list of added letters for the eighty minor marks is blurred."},
+{"id": "P50HQ", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ལྟུང་བྱེད་ཀྱི་དངོས་གཞིར་འགྱུར་རོ",
+   "english": "(pāpayattika)",
+   "why": "ltung byed is pātayantika (Mūlasarvāstivāda; Pali pācittiya); 'pāpayattika' is not an attested form.",
+   "fix": {"find": "(pāpayattika)", "replace": "(pātayantika)"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "མཚན་དང་ལྟ་བ་མཐུན་པ",
+   "english": "who shares the same symbols and views",
+   "why": "mtshan here is the sex/gender marks (liṅga): the struck monk must be of the same sex and views, not share 'symbols'."}
+ ],
+ "note": "Careful, complete rendering of the striking offence and its weapon lists; one garbled Sanskrit term and mtshan misread."},
+{"id": "P672E", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཟན་ལ་བལྟས་#པ་ཙམ་གྱིས་གནས་པར་བྱ་སྟེ",
+   "english": "they should remain simply by looking at the food; thus it is for both the work and the acquisitions.",
+   "why": "zan la bltas pa means relying on food alone; the Buddha says those who do not do the assigned work live on food only, with neither duty nor share of gains, not 'by looking at the food'."}
+ ],
+ "note": "Generally correct on duties, food shares and the no-offence cases; the quoted ruling on those who decline work is rendered too literally to make sense."},
+{"id": "PEAH2", "score": 4, "verdict": "light",
+ "errors": [],
+ "note": "Accurate word-commentary on pātayantikas 27-29 and the lower-garment story; some boat terms are uncertain but defensibly rendered."},
+{"id": "PON55", "score": 3, "verdict": "light",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "པ་དེ་ནི་རིངས་པས་འཁྲུགས།",
+   "english": "and sent him off, though she was agitated by the haste of his departure",
+   "why": "It is the prince who, sent off by his mother, is flustered with haste (Skt. sa visṛṣṭas tvarākulaḥ), not the mother.",
+   "fix": {"find": "and sent him off, though she was agitated by the haste of his departure", "replace": "and sent him off, and he set out flustered with haste"}},
+  {"type": "addition", "confidence": "high",
+   "tibetan": "རྒྱལ་པོའི་བུ་དེ་གསད་ནས་ནི། །བོས་པ་འདི་ཉིད་མ་ཡིན་ནམ།",
+   "english": "escaping in secret after he was ordered to be killed",
+   "why": "The minister says only 'surely this is the prince fleeing in secret' (Skt. gūḍhaṃ palāyate; gsad is a corruption of gsang); 'after he was ordered to be killed' is not in the text.",
+   "fix": {"find": "escaping in secret after he was ordered to be killed", "replace": "escaping in secret"}}
+ ],
+ "note": "Narrative is followed correctly, but the subject of 'agitated by haste' is shifted to the mother and the minister's words carry an added clause."},
+{"id": "PQGFQ", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ལུས་རྣམ་པར་དག་པ་བྱེད་པ་ཙམ་གྱིས་ཚངས་པའི་སྐུད་པ་རེ་ཞིག་གཞག་སྟེ",
+   "english": "By merely purifying the body, the Brahmanical sacred thread is temporarily set aside",
+   "why": "The Tibetan says the brahmanical thread, since it merely purifies the body, is set aside; the English makes purifying the body the means of setting it aside."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "དཀའ་འགྲེལ་རིན་པོ་ཆེའི་ཚོགས",
+   "english": "[note: original: Shri Chakrasamvara Panjika Ratnamala]",
+   "why": "rin po che'i tshogs is 'collection/mass of jewels' (ratna-gaṇa/-rāśi), not ratnamālā (which would be phreng ba); the note presents an unsupported Sanskrit title as the original."}
+ ],
+ "note": "Good reading of the Heruka etymology, the five mudrās and the three purities; the opening clause and the colophon note are off."},
+{"id": "PU8HF", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "མྱ་ངན་ལས་འདས་པའི་ངོ་བོ་ཉིད་ཡིན་པའི་ཕྱིར་རོ",
+   "english": "means that these three joys are, in their proper manner, the very essence of both cyclic existence and the state beyond suffering",
+   "why": "The Tibetan gives a reason (phyir): the innate is neither existence nor nirvāṇa because those three joys are of the nature of existence and nirvāṇa; dropping 'because' makes 'neither' appear to mean that they are both."}
+ ],
+ "note": "Accurate treatment of the joys, the initiations and the lalanā/rasanā glosses; one explanatory sentence loses its causal link."},
+{"id": "P7ZXH", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "Faithful rendering of Yaśomitra's discussion of the results of śaikṣa/aśaikṣa and the 'in order' (yathākramam) principle."}
+]

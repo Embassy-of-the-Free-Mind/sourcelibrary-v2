@@ -93,7 +93,7 @@ export default function NotFoundContent() {
         </h2>
         <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
           <span>&ldquo;{quote.text}&rdquo;</span>
-          <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">&mdash; {quote.source}</span>
+          <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">{quote.source}</span>
         </Link>
 
         <div className="bg-white rounded-xl border border-light p-6 mb-6">

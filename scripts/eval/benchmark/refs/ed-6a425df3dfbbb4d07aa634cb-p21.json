@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/bd1",
+  "edition": "Homo Et Eius Partes Figuratus & Symbolicus, Anatomicus, Rationalis, Moralis, Mysticus, Politicus, & Legalis: Opus Utile  — Augsburg; Dillingen: Johann Caspar Bencard, 1695.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/13",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6a425df3dfbbb4d07aa634cb",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 17682,
+    "to_char": 21006,
+    "overlap": 0.895,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'SCARLATINUS noster, prout debebat'; ends 'quisquis tam illustre opus, tam' + catchword 'elegan-'; header TRANSLATOR AD LECTOREM, signature b 3; ref has 'adeo Tomos pro dignitate rei perficiendos.' padding before and 'tamque nobiliem' after.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:32.676Z",
+  "text_location": "repo",
+  "text_sha256": "4633865defb5892186e55f89333af169035ca716fbae8e4cd5daaf7ca34879cb",
+  "unit": {
+    "chars": 3324
+  },
+  "stratum": "latin-period-5126"
+}

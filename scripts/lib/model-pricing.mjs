@@ -40,6 +40,10 @@
 /** Verified against the Cloud Billing SKU catalogue, standard tier, text. */
 export const MODEL_PRICING = {
   'gemini-3-flash-preview':  { input: 0.50, output: 3.00 },
+  // Claude 5.5 (#6011): Anthropic list prices, platform.claude.com/docs/en/about-claude/pricing, read
+  // 2026-10-06; OpenRouter lists the same per-token rates for anthropic/claude-*-5.5 the same day.
+  'claude-opus-5-5':         { input: 4.00, output: 20.00 },
+  'claude-sonnet-5-5':       { input: 2.00, output: 10.00 },
   'gemini-3.1-flash-lite':   { input: 0.25, output: 1.50 },  // was 0.075/0.30 — see RESOLVED above
   'gemini-3.5-flash-lite':   { input: 0.30, output: 2.50 },
   'gemini-3.5-flash':        { input: 1.50, output: 9.00 },

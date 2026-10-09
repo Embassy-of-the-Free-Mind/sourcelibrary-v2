@@ -1,0 +1,94 @@
+{
+  "frame_books": 42061,
+  "sampled_books": 1000,
+  "seed": 6056,
+  "classes": {
+    "refusal_empty": {
+      "books": 27,
+      "pages": 228,
+      "rate": 0.027,
+      "ci95": [
+        0.018621256649289826,
+        0.03899898941343562
+      ],
+      "projected_books": [
+        783,
+        1640
+      ],
+      "examples": [
+        "https://sourcelibrary.org/book/69b51e10768235dc6598b999?page=39",
+        "https://sourcelibrary.org/book/69de1c99d10d4b0d3f6f3175?page=332",
+        "https://sourcelibrary.org/book/6a4a3e43f0f4a3b75e909c54?page=16",
+        "https://sourcelibrary.org/book/6a090c5644b481aa5a37ddef?page=33",
+        "https://sourcelibrary.org/book/6a0974dcf14f992996682c1c?page=9",
+        "https://sourcelibrary.org/book/6a4a19333a9243f77368dc44?page=20",
+        "https://sourcelibrary.org/book/69592fbea41e40e9146a4a14?page=38",
+        "https://sourcelibrary.org/book/6a0852bb15c643eb1af4dc5b?page=126",
+        "https://sourcelibrary.org/book/69dbccd80f8c5edf20f4eb5b?page=389",
+        "https://sourcelibrary.org/book/6a08537c15c643eb1af50033?page=80"
+      ]
+    },
+    "tr_placeholder": {
+      "books": 6,
+      "pages": 30,
+      "rate": 0.006,
+      "ci95": [
+        0.0027526315709082315,
+        0.013028344232445605
+      ],
+      "projected_books": [
+        116,
+        548
+      ],
+      "examples": [
+        "https://sourcelibrary.org/book/6a0974dcf14f992996682c1c?page=140",
+        "https://sourcelibrary.org/book/6a16aca6410dd8afcae61a4c?page=496",
+        "https://sourcelibrary.org/book/69e01064c47b5c9f88212e61?page=80",
+        "https://sourcelibrary.org/book/6993899ace15387065947aca?page=150",
+        "https://sourcelibrary.org/book/69a5eda496d6dd816a56ae46?page=544",
+        "https://sourcelibrary.org/book/69a5eae5d507939f0352d3c8?page=295"
+      ]
+    },
+    "dup_text": {
+      "books": 1,
+      "pages": 1,
+      "rate": 0.001,
+      "ci95": [
+        0.0001765418290572713,
+        0.0056427029601604705
+      ],
+      "projected_books": [
+        7,
+        237
+      ],
+      "examples": [
+        "https://sourcelibrary.org/book/6a426eac28e9db2e39c08a83?page=30"
+      ]
+    },
+    "nonpositive_page": {
+      "books": 53,
+      "pages": 7162,
+      "rate": 0.053,
+      "ci95": [
+        0.040746308422339304,
+        0.06867493891389383
+      ],
+      "projected_books": [
+        1714,
+        2889
+      ],
+      "examples": [
+        "https://sourcelibrary.org/book/697c8e0f150e68b9f40701f8?page=-239",
+        "https://sourcelibrary.org/book/6a4a3e5cf0f4a3b75e90adf0?page=-1",
+        "https://sourcelibrary.org/book/698255f31193d0a53f503c46?page=-839",
+        "https://sourcelibrary.org/book/6a4a3e43f0f4a3b75e909c54?page=-1",
+        "https://sourcelibrary.org/book/69c882d86c6f3cc53c859611?page=-172",
+        "https://sourcelibrary.org/book/69a027816a20ac4e1fc40520?page=-801",
+        "https://sourcelibrary.org/book/69906d8764d44bd0a0ef5b19?page=-310",
+        "https://sourcelibrary.org/book/697c8e0fbaa544415f85b6c2?page=-123",
+        "https://sourcelibrary.org/book/6a4ad94dd6371d99e766883a?page=-1",
+        "https://sourcelibrary.org/book/697a30536dc6ae6bd18cd1e1?page=-483"
+      ]
+    }
+  }
+}

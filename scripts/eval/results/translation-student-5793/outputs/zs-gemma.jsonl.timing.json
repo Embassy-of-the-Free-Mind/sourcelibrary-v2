@@ -1,0 +1,13 @@
+{
+ "model": "unsloth/gemma-3-12b-it",
+ "lora": false,
+ "quant": null,
+ "pages": 91,
+ "wall_s": 28.3,
+ "prompt_tokens": 76618,
+ "completion_tokens": 46006,
+ "out_tok_per_s": 1623.6,
+ "pages_per_hour": 11561.1,
+ "max_model_len": 24576,
+ "gpu": "NVIDIA H100 80GB HBM3"
+}

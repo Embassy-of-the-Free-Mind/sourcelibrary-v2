@@ -31,6 +31,16 @@ function page(ocr: Record<string, unknown> | undefined): Pick<Page, 'ocr'> {
 }
 
 describe('transcriptProvenance', () => {
+  it('Kraken lane (#4883): names the Syriac model by route, never the bare model id', () => {
+    const ms = transcriptProvenance(page({ model: 'sophro-mhiro', data: 'x', engine: { name: 'kraken', model: 'sophro-mhiro', route: 'manuscript' } }));
+    expect(ms).toEqual({ kind: 'kraken', route: 'manuscript' });
+    expect(transcriptProvenanceLabel(ms!, en, 'full')).toContain('Sophro Mhiro');
+    const pr = transcriptProvenance(page({ model: 'omnisyr', data: 'x', engine: { name: 'kraken', model: 'omnisyr', route: 'print' } }));
+    expect(pr).toEqual({ kind: 'kraken', route: 'print' });
+    expect(transcriptProvenanceLabel(pr!, en, 'short')).toBe('omnisyr (Kraken)');
+    expect(transcriptProvenanceLabel(pr!, es, 'full')).toContain('siríaco impreso');
+  });
+
   it('returns null when nothing says how the page was read', () => {
     expect(transcriptProvenance(page(undefined))).toBeNull();
     expect(transcriptProvenance(page({ data: 'text', language: 'Latin' }))).toBeNull();

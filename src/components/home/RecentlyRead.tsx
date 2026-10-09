@@ -16,6 +16,7 @@ import { localePath, type Locale } from '@/lib/locale-path';
 const STRINGS: Record<Locale, { heading: string; subtitle: string; seeAll: string }> = {
   en: { heading: 'Recently looked at', subtitle: 'Pick up where you left off.', seeAll: 'See all' },
   es: { heading: 'Vistos recientemente', subtitle: 'Retoma donde lo dejaste.', seeAll: 'Ver todo' },
+  la: { heading: 'Nuper inspecta', subtitle: 'Perge unde destitisti.', seeAll: 'Omnia specta' },
 };
 
 /**

@@ -40,6 +40,8 @@ import {
 import {
   getOcrModelForBook as ocrMjs,
   GREEK_FLASH_FROM,
+  FLASH_OCR_FROM,
+  isGreekFlashOcrBook,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/ocr-routing.mjs';
@@ -244,13 +246,56 @@ describe('OCR_LITE_ONLY Greek exception (#5575, Derek 2026-10-02): visible and n
     }
   });
 
-  it('is Greek only: Chinese, Tibetan and Syriac stay on lite under OCR_LITE_ONLY', () => {
-    for (const language of ['Chinese', 'Classical Chinese', 'Tibetan', 'Syriac', 'Arabic']) {
+  it('Chinese, Tibetan, Syriac, Hebrew and Japanese stay on lite under OCR_LITE_ONLY', () => {
+    for (const language of ['Chinese', 'Classical Chinese', 'Tibetan', 'Syriac', 'Hebrew', 'Japanese', 'Judeo-Arabic']) {
       expect(ocrMjs({ language, visible: true, created_at: after }, liteOnly)).toBe(MODEL_LITE);
     }
   });
 
   it('leaves script-aware routing (OCR_LITE_ONLY off) unchanged: Greek was already flash there', () => {
     expect(ocrMjs({ language: 'Greek', visible: false, created_at: before }, { liteOnly: false })).toBe(MODEL_FLASH);
+  });
+});
+
+describe('OCR_LITE_ONLY measured-script exception (#5700 A5, 2026-10-04): Persian, Sanskrit, Pali, Arabic, Ge\'ez read on flash', () => {
+  const liteOnly = { liteOnly: true };
+  const from = FLASH_OCR_FROM.san as Date;
+  const before = new Date(from.getTime() - 86_400_000);
+  const after = new Date(from.getTime() + 86_400_000);
+  const MEASURED = ['Persian', 'Farsi', 'Sanskrit', 'Sanskrit, Tibetan', 'Pali', 'Arabic', "Ge'ez", 'Ethiopic'];
+
+  it('sends visible books and new hidden books to flash', () => {
+    for (const language of MEASURED) {
+      expect(ocrMjs({ language, visible: true, created_at: before }, liteOnly)).toBe(MODEL_FLASH);
+      expect(ocrMjs({ language, visible: false, created_at: after }, liteOnly)).toBe(MODEL_FLASH);
+    }
+  });
+
+  it('keeps the hidden backlog on lite, except Persian (#5795, Derek 2026-10-04)', () => {
+    for (const language of MEASURED.filter((l) => !['Persian', 'Farsi'].includes(l))) {
+      expect(ocrMjs({ language, visible: false, created_at: before }, liteOnly)).toBe(MODEL_LITE);
+      expect(ocrMjs({ language }, liteOnly)).toBe(MODEL_LITE);
+    }
+    for (const language of ['Persian', 'Farsi']) {
+      expect(ocrMjs({ language, visible: false, created_at: before }, liteOnly)).toBe(MODEL_FLASH);
+      expect(ocrMjs({ language }, liteOnly)).toBe(MODEL_FLASH);
+    }
+  });
+
+  it('dates each family by its own decision: a Sanskrit book created between the Greek and the 10-04 decision stays lite when hidden', () => {
+    const between = new Date('2026-10-03T00:00:00Z');
+    expect(ocrMjs({ language: 'Sanskrit', visible: false, created_at: between }, liteOnly)).toBe(MODEL_LITE);
+    expect(ocrMjs({ language: 'Greek', visible: false, created_at: between }, liteOnly)).toBe(MODEL_FLASH);
+  });
+
+  it('does not fire when the script is not the first language', () => {
+    for (const language of ['Latin, Arabic', 'Latin, Sanskrit', 'Ottoman Turkish', 'Urdu', 'Malay']) {
+      expect(ocrMjs({ language, visible: true, created_at: after }, liteOnly)).toBe(MODEL_LITE);
+    }
+  });
+
+  it('isGreekFlashOcrBook stays Greek-only', () => {
+    expect(isGreekFlashOcrBook({ language: 'Arabic', visible: true })).toBe(false);
+    expect(isGreekFlashOcrBook({ language: 'Greek', visible: true })).toBe(true);
   });
 });

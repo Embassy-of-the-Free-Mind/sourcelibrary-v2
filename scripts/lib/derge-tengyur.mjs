@@ -275,13 +275,86 @@ export function locateRead(readText, pages) {
  * v3 near-verbatim allowance) must give the SAME offset — a missing or extra image part-way through
  * the volume would split them, and an index mapping across such a break would be wrong after it.
  */
+export const isConfidentLocation = (loc, rules = ALIGN_RULES) => loc.read_syllables >= rules.minReadSyllables && loc.identity >= rules.informativeFloor
+  && (loc.identity - loc.control >= rules.minMargin || (loc.identity >= rules.verbatimIdentity && loc.identity - loc.control >= rules.verbatimMargin));
+
 export function agreedOffset(located, rules = ALIGN_RULES) {
-  const ok = located.filter(({ loc }) => loc.read_syllables >= rules.minReadSyllables && loc.identity >= rules.informativeFloor
-    && (loc.identity - loc.control >= rules.minMargin || (loc.identity >= rules.verbatimIdentity && loc.identity - loc.control >= rules.verbatimMargin)));
+  const ok = located.filter(({ loc }) => isConfidentLocation(loc, rules));
   if (ok.length < rules.minScored - 1) return { offset: null, reason: `only ${ok.length} reads located with confidence (need ${rules.minScored - 1})` };
   const offs = [...new Set(ok.map(({ canvas, loc }) => loc.index - canvas))];
   if (offs.length !== 1) return { offset: null, reason: `located reads disagree on the offset: ${offs.join(', ')}` };
   return { offset: offs[0], reason: null, located: ok.length };
+}
+
+/**
+ * Per-segment offsets (#5665, C.segmentOffsets). A Kangyur scan volume can skip or repeat a leaf
+ * part-way through (README: "vol. 100, page 57 was skipped"; measured on vols 12, 31, 41, 57, 58, 100:
+ * −1/−2/+1 against the e-text), so one offset per volume puts the wrong text on everything after the
+ * break. Instead the offset is a step function of the canvas index, MEASURED from confident located
+ * reads (isConfidentLocation — the agreedOffset filter, unchanged):
+ *   1. offsetRuns: confident reads in canvas order, grouped into runs of equal offset; between two
+ *      runs lies a GAP (lo, hi) — the break is at some canvas in lo+1..hi.
+ *   2. gapProbes: read canvases inside each gap and locate them; repeat until every gap is one canvas
+ *      wide (the break is exact) or the probe budget is spent.
+ *   3. segmentsFromRuns: each run becomes a segment reaching to its breaks; canvases inside a gap that
+ *      could not be narrowed are claimed by NO segment (no text), never by a guessed one.
+ * Each segment is then verified on its own independent reads (≥ SEGMENT_RULES.minSegmentAligned
+ * aligned, none misaligned, under ALIGN_RULES) and text is written only for segments that pass.
+ * Limits: two breaks that cancel between two reads of the same offset are not seen by the runs —
+ * the per-segment verification reads are what would catch them (a misaligned read refuses).
+ */
+export const SEGMENT_RULES = Object.freeze({ version: 1, coarse: 14, edge: 0.01, probesPerGap: 3, maxRefineRounds: 6, maxIterations: 3, minSegmentAligned: 2, verifyPerRound: 3 });
+
+/** @param located [{ canvas, loc }] in any order → { runs: [{ offset, first, last, reads }], gaps: [{ lo, hi }] } */
+export function offsetRuns(located, rules = ALIGN_RULES) {
+  const ok = located.filter(({ loc }) => isConfidentLocation(loc, rules))
+    .map(({ canvas, loc }) => ({ canvas, offset: loc.index - canvas }))
+    .sort((a, b) => a.canvas - b.canvas);
+  const runs = [];
+  for (const r of ok) {
+    const last = runs[runs.length - 1];
+    if (last && last.offset === r.offset) { last.last = r.canvas; last.reads.push(r.canvas); }
+    else runs.push({ offset: r.offset, first: r.canvas, last: r.canvas, reads: [r.canvas] });
+  }
+  return { runs, gaps: runs.slice(1).map((r, k) => ({ lo: runs[k].last, hi: r.first })) };
+}
+
+/** Up to n evenly spaced canvases strictly inside every gap wider than one canvas, not read yet. */
+export function gapProbes(gaps, alreadyRead, n = SEGMENT_RULES.probesPerGap) {
+  const out = [];
+  for (const { lo, hi } of gaps) {
+    const inside = [];
+    for (let c = lo + 1; c < hi; c++) if (!alreadyRead.has(c)) inside.push(c);
+    if (!inside.length) continue;
+    const picks = new Set(Array.from({ length: Math.min(n, inside.length) }, (_, k) => inside[Math.floor(((k + 1) / (Math.min(n, inside.length) + 1)) * inside.length)]));
+    out.push(...picks);
+  }
+  return [...new Set(out)];
+}
+
+/**
+ * Runs → segments [{ from, to, offset, reads }] (inclusive canvas ranges). Inside the volume a segment
+ * spans its own first..last confident read: where the break was narrowed to one canvas the segments
+ * meet, and an unnarrowed gap's interior stays unclaimed. The first segment reaches canvas 0 and the
+ * last the final canvas (the coarse round reads near both edges; the segment's verification reads
+ * test that stretch like any other).
+ */
+export function segmentsFromRuns(runs, nCanvases) {
+  return runs.map((r, k) => ({
+    from: k === 0 ? 0 : r.first,
+    to: k === runs.length - 1 ? nCanvases - 1 : r.last,
+    offset: r.offset, reads: [...r.reads],
+  }));
+}
+
+/** Per-canvas side index from segments that passed (null elsewhere, or off the end of the text). */
+export function claimFromSegments(segments, nCanvases, nSides) {
+  const claim = new Array(nCanvases).fill(null);
+  for (const s of segments) {
+    if (!s.pass) continue;
+    for (let i = s.from; i <= s.to; i++) { const k = i + s.offset; if (k >= 0 && k < nSides) claim[i] = k; }
+  }
+  return claim;
 }
 
 // ── Per-canon constants (#5665 generalised the Tengyur importer rather than copying it) ──────────
@@ -313,7 +386,7 @@ export const CANONS = Object.freeze({
     scanVolumeFor: (vol) => vol,
     measureVolumeMap: false,
     eighty4000: false,
-    claimMode: 'label', readSize: '1600,', redInk: false,
+    claimMode: 'label', readSize: '1600,', redInk: false, segmentOffsets: false,
   }),
   kangyur: Object.freeze({
     key: 'kangyur', issue: 5665, nVolumes: 103, etext: '/mnt/HC_Volume_105839809/esukhia-derge-kangyur', work: '/mnt/HC_Volume_105839809/kangyur-5665',
@@ -344,7 +417,10 @@ export const CANONS = Object.freeze({
     // canvas INDEX with a per-volume measured offset, never by label; and the reader's page label
     // comes from the e-text side. The LoC copy is printed in RED ink: at 1600 px Yigdzin read 0–17
     // syllables a page; the full-size green channel, contrast-stretched, reads ~380.
-    claimMode: 'index', readSize: 'max', redInk: true,
+    // Measured 2026-10-03 (#5665 repair): one offset per volume refused 49 volumes — a skipped or
+    // repeated leaf moves it part-way (vol. 9 reads 0 then +1, vol. 62 0/+4/+5), so the offset is
+    // measured per SEGMENT (segmentOffsets; see SEGMENT_RULES).
+    claimMode: 'index', readSize: 'max', redInk: true, segmentOffsets: true,
   }),
 });
 

@@ -1,0 +1,62 @@
+{
+ "job": "yigdzin-527",
+ "issue": 4523,
+ "run": "yigdzin-leaf-2026-10-03",
+ "scope": {
+  "books_in_scope": 527,
+  "pages_in_scope": 429186,
+  "books_excluded_non_tibetan": 19,
+  "pages_skipped_type_blank_or_spread": 357,
+  "pages_gated_gemini_latin_or_cjk": 1587,
+  "pages_queued": 406512
+ },
+ "read": {
+  "pages_read_and_judged": 401099,
+  "worker_guttered_skip": 10331,
+  "worker_small_or_bad_image": 277,
+  "worker_fetch_error": 2,
+  "worker_textless": 2
+ },
+ "judge_rule": "leaf_v4.judge_one against an EMPTY reference (absolute checks only)",
+ "judge": {
+  "serve": 392888,
+  "reject": 8211,
+  "reject_reasons": {
+   "validity-drop": 5604,
+   "duplication": 2602,
+   "loop": 5
+  }
+ },
+ "apply": {
+  "served": 391816,
+  "serve_too_short_under_20_syl": 1072,
+  "seam_marker_failed_leaf_empty": 1463,
+  "seam_marker_failed_ledger_mismatch": 5,
+  "single_leaf_or_fallback_geometry_no_seam_needed": 376803,
+  "human_edited": 0,
+  "raced": 0,
+  "page_revisions_snapshots_of_gemini_reads": 8906
+ },
+ "geometry": {
+  "detected_1_leaf": 276131,
+  "fallback_whole": 82906,
+  "fallback_halves_1_crop": 25186,
+  "detected_2plus_leaves": 16876
+ },
+ "after": {
+  "books_hold_unchanged": 527,
+  "visible_unchanged": 527,
+  "yigdzin_pages_with_translation": 0,
+  "excluded_books_touched": 0
+ },
+ "spend": {
+  "sl-yig527-0 (L4-1-24G, fr-par-1) h": 12.376,
+  "sl-yig527-1 (L4-4-24G, pl-waw-2) h": 12.842,
+  "failed first sl-yig527-0 h": 0.236,
+  "gpu_hours": 63.98,
+  "eur": 50.39,
+  "cap_eur": 120,
+  "estimate_eur": 105
+ },
+ "boxes": "both powered off via Scaleway API, state 'stopped' confirmed (10-04 09:00:38Z, 10:00:48Z), then deleted with their volumes 10:10Z"
+}

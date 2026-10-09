@@ -1,0 +1,857 @@
+[
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "slot": 5,
+  "tradition": "greek-latin-classics",
+  "title": "Sophocles, Hesiod, Euripides (18 tragedies), and Aeschylus",
+  "shelf_fit": "fits",
+  "shelf_note": "A 14th-century manuscript containing works of major Greek tragedians and Hesiod perfectly matches the greek-latin-classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The high number of printed repeats (143) and backsteps (33) likely reflects misread manuscript foliation numbers rather than actual structural defects. There is also a small discrepancy between pages with OCR (507) and pages translated (503).",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "A reader of this tradition will find a 14th-century manuscript containing classical Greek tragedies and poetry. However, the Greek transcription is severely corrupted by hallucinations that replace the actual text, as well as rampant XML tag leakage. Consequently, the English translation reflects these errors and missing passages, making the text completely untrustworthy.",
+  "book_verdict": "The pipeline fails on this manuscript, with the transcription model hallucinating Greek text, dropping passages, and leaking XML tags and English image descriptions into the reader pane. These severe errors cascade into the translation, rendering the book unreadable.",
+  "pages": [
+   {
+    "page_number": 40,
+    "right_page": "unsure",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<warning>The manuscript shows significant water damage and staining in the center and lower portions of the page, affecting legibility of some interlinear glosses.</warning>",
+      "image": "unclear",
+      "problem": "Model reasoning and warnings leaked into the transcription text.",
+      "severity": "serious",
+      "class": "other:reasoning"
+     },
+     {
+      "ocr": "αἰ' φίλος ὁ πίσις ἠδ' ὑποδύσεται",
+      "image": "unclear",
+      "problem": "Transcription appears to contain heavily hallucinated or misread Greek tragedy fragments.",
+      "severity": "serious",
+      "class": "other:hallucination"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "αἰ' φίλος ὁ πίσις ἠδ' ὑποδύσεται",
+      "english": "al' the friend, the trust, and he will enter",
+      "problem": "Literal translation of corrupted or hallucinated Greek resulting in nonsensical English.",
+      "severity": "serious",
+      "class": "other:nonsense"
+     }
+    ],
+    "other": [
+     {
+      "note": "Metadata and XML tags (<language>, <page-type>, <columns>, <warning>, <vocab>, <summary>, <keywords>) leaked into the reader text.",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "low"
+   },
+   {
+    "page_number": 173,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "ὅτι Χο: πῦρ οὐλοίσ’ γ’ ἐπὶ γαῖ’ ἔχ’",
+      "image": "Χο / πῦρ οὐ λεύσσεις",
+      "problem": "heavily misread line",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "ἀναίμε’ καίετ’ οἶον.",
+      "image": "τίς ὅδε τίς πόθεν",
+      "problem": "completely hallucinated text substituting actual words",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<margin> and <insert> tags leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 363,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "φράσουσα νῦν ξυμφοράν. ἀπωλόμην",
+      "image": "φράσον δ' ὅπως ὤλοντο· δὶς τόσον γὰρ ἂν",
+      "problem": "completely hallucinated text replacing the actual line",
+      "severity": "serious",
+      "class": "other:hallucination"
+     },
+     {
+      "ocr": "τί πλοῖον εἶποι σῶν τέκνων οὐκ ὄμματα,",
+      "image": "θαυμαστὸν ἵει νᾶμα παμφάγου πυρός·",
+      "problem": "completely hallucinated text replacing the actual line",
+      "severity": "serious",
+      "class": "other:hallucination"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "σέθεν τύχης μοι σὺν ἐκείνην δὲ καὶ κακῶν",
+      "english": "",
+      "problem": "translation abruptly ends, dropping the entire second column of the transcription",
+      "severity": "serious",
+      "class": "other:omission"
+     }
+    ],
+    "other": [
+     {
+      "note": "<note> tag shown in the translation reader text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "model reasoning and XML tags (<meta>, <vocab>) leaked into the transcription reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 524,
+    "right_page": "yes",
+    "ocr_score": 1,
+    "ocr_errors": [
+     {
+      "ocr": "<language>None</language>\n<page-type>blank</page-type>\n<meta>This is a blank flyleaf or endpaper from a bound manuscript. The page contains no text or markings other than minor foxing and red staining along the top and left edges, likely from the adhesive or dye used in the binding process.</meta>\n\n<vocab>blank page, flyleaf, endpaper, binding</vocab>",
+      "image": "[blank page]",
+      "problem": "transcription consists of XML metadata and an English description of the image rather than being empty",
+      "severity": "serious",
+      "class": "other:metadata"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "XML markup tags (<language>, <page-type>, <meta>, <vocab>) and an English image description leaked into the reader text",
+      "severity": "serious",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "slot": 6,
+  "tradition": "greek-latin-classics",
+  "title": "Procli In Platonis Alcibiadem Commentarius (Barocci 140)",
+  "shelf_fit": "fits",
+  "shelf_note": "The book is a Greek manuscript of a philosophical commentary, which correctly belongs in the classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The backsteps and repeats in the printed page counts are likely due to OCR misreadings of manuscript foliation.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "The reader will find the correct Greek manuscript of Proclus' Commentary on Plato's Alcibiades. However, the transcription is fundamentally broken by hallucinated XML tags and severe misreadings that alter the philosophical meaning. The English translation cannot be trusted because it routinely incorporates the transcription's errors and translates the fabricated tags.",
+  "book_verdict": "The text is severely defective on sight due to rampant XML tag leakage and serious OCR misreadings that corrupt the text's meaning. The translation compounds these issues by attempting to translate the OCR hallucinations, rendering the book unusable.",
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<gloss>μεταξύ</gloss>",
+      "image": "ἐκείνη",
+      "problem": "word replaced by a hallucinated gloss tag and wrong word",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "ἀκινήτου",
+      "image": "ἀνοῦς",
+      "problem": "word misread, changing philosophical meaning",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "περιάουτον ἀσυν- / δως <gloss>τε</gloss> πρῶτον",
+      "image": "περὶ αὐτὸν ἀσυν- / ήθη",
+      "problem": "phrase garbled and tags inserted",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "XML tags like <language>, <page-type>, <gloss>, <note>, and <vocab> leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 124,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "συνδέσμου, πρὸς τὴν",
+      "image": "συνδέσμου τινὸς εἰς τὴν",
+      "problem": "words misread and missed",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "τὸ ὅσιον",
+      "image": "τὸ ὅμοιον",
+      "problem": "word misread, changing meaning from 'the similar' to 'the holy'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "πᾶσι μετεχομένοις",
+      "image": "πᾶσι μετέχουσι",
+      "problem": "active participle misread as passive, altering philosophical sense",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "οὗ δὲ ποτὲ",
+      "image": "ὁ δὲ ποτὲ",
+      "problem": "word misread, changing meaning to 'where'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἐπιστρέφει με",
+      "image": "ἐπιστρέφει μὲν",
+      "problem": "particle misread as pronoun, changing syntax to 'turns me'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "οἱ ᾄδοντες",
+      "image": "οἱ ᾠδοὶ",
+      "problem": "noun misread as participle",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "πᾶσι μετεχομένοις",
+      "english": "to all that participate",
+      "problem": "translates passive participle as active, hiding the OCR error but reversing the source's voice",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ὁ δὲ με-τεχόμενος ἰδίως",
+      "english": "the other participating in its own way",
+      "problem": "translates passive participle as active",
+      "severity": "serious",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "<insert> tags translated literally as 'beautiful A' and 'all B', bringing scribal insertion marks into the text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<note> and <gloss> tags leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<summary> and <keywords> tags leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 236,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "προε- / χεῖσθαι",
+      "image": "προη- / γεῖσθαι",
+      "problem": "word misread and split across line break",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "καὶ ἀπορούμενος",
+      "image": "κατανοούμενος",
+      "problem": "meaning-changing misreading",
+      "severity": "serious",
+      "class": "other:misread"
+     },
+     {
+      "ocr": "δι’ α-",
+      "image": "ὅταν",
+      "problem": "word misread as broken text fragment",
+      "severity": "serious",
+      "class": "other:misread"
+     },
+     {
+      "ocr": "νοῦν",
+      "image": "θ~ν~ (θεὸν)",
+      "problem": "nomen sacrum misread as a different noun",
+      "severity": "serious",
+      "class": "other:misread"
+     },
+     {
+      "ocr": "ἐφιέμενος",
+      "image": "ὀρεγόμενος",
+      "problem": "word replaced with a synonym",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ἀλλ’ <unclear>ὡς ἀγνοοῦντα</unclear>",
+      "image": "ἀλλὰ συναπατῶν",
+      "problem": "phrase hallucinated with tags",
+      "severity": "serious",
+      "class": "other:hallucination"
+     },
+     {
+      "ocr": "οὐδ’ ἐνεργοῦσιν",
+      "image": "οὐ κινεῖ νοῦν",
+      "problem": "entire phrase hallucinated/replaced",
+      "severity": "serious",
+      "class": "other:hallucination"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "δι’ α-",
+      "english": "[in perplexity]",
+      "problem": "invented meaning to cover broken OCR",
+      "severity": "moderate"
+     },
+     {
+      "source": "καὶ ἐσχάτην",
+      "english": "and as one",
+      "problem": "dropped word in translation",
+      "severity": "minor"
+     },
+     {
+      "source": "τὸ ἐμμελὲς τοῦ Σωκράτους θαύματος ἄξιον",
+      "english": "the appropriateness of Socrates' wonder is worthy of note",
+      "problem": "misconstrued grammar, attaching wonder to Socrates instead of making it the predicate",
+      "severity": "moderate"
+     }
+    ],
+    "other": [
+     {
+      "note": "AI metadata tags (<language>, <page-type>, <unclear>, <gloss>, <vocab>) leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 270,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "διάλογος δῆλον",
+      "image": "δαιμόνιος δήπου",
+      "problem": "words misread, changing meaning",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "εὐθὺν φυσαμᾶς",
+      "image": "εὐθύς, φύσει γάρ",
+      "problem": "nonsense word fabricated from real text",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "οὕτω τὴν ἑαυτῆς κίνησιν λαμβάνει ζῴην· οὐδ’ ἡ",
+      "image": "τοσούτῳ τὴν αὐτοκίνητον λαμβάνει ζωὴν, ἅτε δὴ",
+      "problem": "several words misread and negative invented",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "πάλιν σωματικῶν συναφθεισῶν",
+      "image": "παθῶν σωματικῶν συναφθέντων",
+      "problem": "noun misread as adverb",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "μὴ ἀκάθαρτον",
+      "image": "καὶ ἀκάθαρτον",
+      "problem": "negative invented",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἐκάμα ἐναλῆ",
+      "image": "ἐκεῖνα ἐναργῆ",
+      "problem": "nonsense words fabricated",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "οὐ καθαιρόμενος",
+      "image": "ὁ δὲ καθαιρόμενος",
+      "problem": "article and particle misread as negative",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "σῶμα",
+      "image": "ὄμμα",
+      "problem": "misread 'eye' as 'body'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ὃν ὁ ἔλεγχος ἀφίγμαι· οὐδὲ πρὸς τὴν κάθαρσιν",
+      "image": "τοὺς ἐλέγχους ἀφίγμαι, οὐδὲ πρὸς τὰς καθάρσεις",
+      "problem": "plurals misread as singulars and relative pronoun invented",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "φυσαμᾶς",
+      "english": "<term>physemas</term> <gloss>a natural quality</gloss>",
+      "problem": "invented meaning and gloss tags for OCR hallucination",
+      "severity": "serious",
+      "class": "other:hallucination"
+     },
+     {
+      "source": "σῶμα",
+      "english": "body",
+      "problem": "failed to correct OCR error ('body' instead of 'eye')",
+      "severity": "serious",
+      "class": "other:uncorrected"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML-style metadata tags (<language>, <script>, <page-type>, <warning>) leaked into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Model-generated vocabulary list enclosed in <vocab> tags appended to the Greek text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<term> and <gloss> tags leaked into the English translation text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "slot": 7,
+  "tradition": "greek-latin-classics",
+  "title": "Quaestiones de Primis Principiis",
+  "shelf_fit": "fits",
+  "shelf_note": "This 1826 edition of Damascius is a classical text that correctly belongs in the greek-latin-classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The 14 printed backsteps and 10 repeats likely result from misread leaf numerals or transitions in front-matter pagination, rather than structural splices, as there are no duplicate records.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "This is an 1826 edition of a philosophical work by Damascius. The transcription captures the right text but is cluttered with leaked structural XML tags and invented vocabulary lists. The English translation cannot be trusted because it systematically drops footnotes, critical apparatus, and occasionally entire clauses from the source.",
+  "book_verdict": "The reading experience is severely compromised by raw markup tags leaking into the text. The translation is unacceptable for scholarly use due to its frequent omission of critical apparatus and main text.",
+  "pages": [
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "> 2) Mox μίαν ἀρχὴν εἶναι δεικν. β. — Unum pariterne et aequaliter est Omnia? ... (through end of footnote 3)",
+      "english": "",
+      "problem": "The entire Latin commentary apparatus (footnotes 2 and 3) was omitted from the translation.",
+      "severity": "serious",
+      "class": "other:omission"
+     }
+    ],
+    "other": [
+     {
+      "note": "Markup tags and a generated vocabulary list leaked into the reader text (<scan-quality>, <language>, <script>, <page-type>, <page-num>, <margin>, <vocab>).",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 127,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "At qui fit ... hic",
+      "image": "At quî fit ... hîc",
+      "problem": "circumflexes dropped on Latin words",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<gloss>μ</gloss>",
+      "image": "μ (written above the line)",
+      "problem": "transcribed with an artificial XML tag",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "τῶν μετ’ αὐτὸ, ἐπεὶ οὐδὲ ἑνούμεθα ἐκείνῳ 10); ἀλλὰ τῷ ἑνὶ,",
+      "english": "",
+      "problem": "opening clauses dropped entirely",
+      "severity": "serious",
+      "class": "other:omission"
+     },
+     {
+      "source": "10) idem ἐκείνου. — 11) Mon. οὕτως.\n1) Hamb. συνάπτειν τῷ ἀπ’ ἐκείνου... 5) Mon. ἄμεινον, ἔτι δὲ ὑπ.",
+      "english": "",
+      "problem": "footnotes / critical apparatus completely dropped",
+      "severity": "serious",
+      "class": "other:omission"
+     },
+     {
+      "source": "ἀλλὰ ὑπὲρ τοῦτο πάντα ἑνὶ προσαρμόζειν φιλονεικοῦντες.",
+      "english": "but above all these—striving to adapt to the One.",
+      "problem": "πάντα (all things) incorrectly construed with ὑπὲρ τοῦτο instead of as the object of προσαρμόζειν",
+      "severity": "moderate"
+     }
+    ],
+    "other": [
+     {
+      "note": "OCR generated structural XML tags (<scan-quality>, <language>, <page-type>) in the text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "OCR invented a <vocab> list at the end of the page",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Translation contains leaked <note> tags in the text, and <summary>/<keywords> blocks at the end",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 232,
+    "right_page": "unsure",
+    "ocr_score": null,
+    "ocr_errors": [],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἔχει τὴν τριπλῆν σχέσιν καὶ πρὸς τὸ ὂν κατὰ τὴν ἀπ’ ἐκείνου γένεσιν. Ἀλλὰ περὶ μὲν τούτων καὶ αὖθις.",
+      "english": "",
+      "problem": "opening sentences dropped entirely from translation",
+      "severity": "serious",
+      "class": "other:omission"
+     },
+     {
+      "source": "Εἰ δὲ καὶ μέθεξιν ἐν ἑκάστῃ",
+      "english": "",
+      "problem": "final phrase dropped from translation",
+      "severity": "minor"
+     },
+     {
+      "source": "2) Hamb. in textu παράλογον ad marg. γρ. παράγον. Infra ἐν τοῖς παράγουσι Mon. — 3) Mon. καὶ οὐ μένει . . . . εἰ δὲ ἐν τῷ προεληλυθέναι τὴν τοιαύτην μονὴν media desunt. Hamb. τὴν διῃρημ.",
+      "english": "",
+      "problem": "footnotes dropped entirely from translation",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<scan-quality>, <language>, <script>, <page-type>, <page-num> tags leaking into the transcription",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<term> and <gloss> tags leaking into the translation",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<vocab> tag leaking into the transcription",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "low"
+   },
+   {
+    "page_number": 358,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ἢ ἀέρων",
+      "image": "ἢ ἄκρων",
+      "problem": "word misread, changing sense in a philosophical context ('airs' instead of 'extremes')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἐξῃμμένον",
+      "image": "ἐξημμένον",
+      "problem": "iota subscript added incorrectly",
+      "severity": "minor"
+     },
+     {
+      "ocr": "μόνων τῶν οὐσιῶν",
+      "image": "μόνον τῶν οὐσιῶν",
+      "problem": "word misread in footnote",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἡ μὲν οὐσία ἐστὶ σύνθετος, ἡ δὲ ἁπλῆ",
+      "english": "essence is compound, while the simple [is not]",
+      "problem": "misinterprets 'ἡ μὲν ... ἡ δὲ' (the one ... the other) as a single essence opposed to 'the simple'",
+      "severity": "moderate"
+     },
+     {
+      "source": "<gloss>2) Hamb. γεννήσῃ... </gloss>",
+      "english": "",
+      "problem": "footnotes present in the transcription were completely dropped",
+      "severity": "moderate"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML metadata tags and <gloss> tags leaked into the reader transcription text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<term> tags leaked into the English translation text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "invented <vocab> block added at the end of the transcription",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "slot": 8,
+  "tradition": "greek-latin-classics",
+  "title": "Vitruvii de architectura libri X",
+  "shelf_fit": "fits",
+  "shelf_note": "A 13th-century Latin manuscript of Vitruvius fits the Greek and Latin classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The 18 printed backsteps and 14 repeats out of 116 pages likely reflect misread folio numerals or unnumbered versos typical of manuscript foliation.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "This is a scan of a 13th-century Latin manuscript of Vitruvius. The transcription is heavily polluted with leaked XML tags, English image descriptions, and model reasoning masquerading as text. The English translation is untrustworthy, dropping large sections, hallucinating sentences from garbled OCR, and substituting Arabic flyleaf text with invented editorial notes.",
+  "book_verdict": "While the manuscript fits the collection, the extraction pipeline has failed catastrophically on it. Rampant XML tag leakage, model reasoning printed as source text, and highly defective translations render the presentation unusable.",
+  "pages": [
+   {
+    "page_number": 24,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ex ea desluunt",
+      "image": "exesa difluunt",
+      "problem": "words misread",
+      "severity": "moderate",
+      "class": "other:misread"
+     },
+     {
+      "ocr": "casgra",
+      "image": "saxa",
+      "problem": "key noun misread",
+      "severity": "serious",
+      "class": "other:misread"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "dissoluunt. Itẽ saxa maritima... (first 22 lines) ... oĩa opa p̃ficer̃.",
+      "english": "",
+      "problem": "The first half of the page is entirely omitted from the translation.",
+      "severity": "serious",
+      "class": "other:omission"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML tags (<language>, <page-num>, etc.) and model reasoning ('Carolingian minuscule... High quality image...') are present in the text.",
+      "severity": "serious",
+      "class": "other:model_reasoning"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "unsure",
+    "ocr_score": null,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Raw XML tags (<language>, <page-type>, <warning>, <insert>, <unclear>, <image-desc>, <vocab>) left visible in the transcription",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Image description '[Large blue Lombardic initial D]' printed in the English reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "low"
+   },
+   {
+    "page_number": 60,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "aĩoꝝ itener",
+      "image": "a(n)i(m)o(rum) uirtutes",
+      "problem": "'uirtutes' is misread as 'itener', changing the meaning entirely",
+      "severity": "serious",
+      "class": "other:misread"
+     },
+     {
+      "ocr": "ppt̃ r̃e possidet sinet",
+      "image": "p(o)p(u)l(us) R(omanus) possidet fi(n)es",
+      "problem": "The abbreviation for 'populus Romanus' is misread as 'propter rem' (ppt~ r~e), and 'fines' as 'sinet', losing the subject of the sentence",
+      "severity": "serious",
+      "class": "other:abbreviation_misread"
+     },
+     {
+      "ocr": "scorp̃ figil̃",
+      "image": "(et) corporu(m) figuris",
+      "problem": "Text is completely garbled",
+      "severity": "serious",
+      "class": "other:garbled"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener.",
+      "english": "I have said that the itinerary of the minds from the sun erupts from these.",
+      "problem": "The translation invents 'I have said' for garbled text and translates the OCR error 'itener' as 'itinerary' rather than correcting it from context or the image",
+      "severity": "serious",
+      "class": "other:hallucination"
+     },
+     {
+      "source": "ppt̃ r̃e",
+      "english": "by the reason of things",
+      "problem": "Faithfully translates the OCR error 'propter rem' instead of 'populus Romanus', obscuring the subject of the entire passage",
+      "severity": "serious",
+      "class": "other:inherited_error"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML tags like <language>, <page-type>, <page-num>, and <vocab> are leaking into the reader text.",
+      "severity": "moderate",
+      "class": "other:markup_leak"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<warning>The page is heavily stained, foxed, and contains significant bleed-through from the reverse side. The paper is damaged with a small hole/patch in the center and some tearing at the bottom right edge.</warning>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">A small, irregular patch or repair of lighter-colored paper is located near the center of the page, possibly covering a hole or structural weakness in the parchment/paper.</image-desc>\n\n<note>The page is a flyleaf or endpaper. Most of the visible text is bleed-through from the following page. There are some faint, vertical Arabic inscriptions in the right margin, likely a \"Kabīkaj\" invocation (a traditional formula used to protect manuscripts from insects) and a date, possibly 1287 AH.</note>\n\n<vocab>يا كببيج, manuscript protection, flyleaf</vocab>",
+      "image": "[stains, a hole, and faint vertical Arabic text; no English text]",
+      "problem": "extensive English model reasoning and descriptions invented as text",
+      "severity": "serious",
+      "class": "other:invention"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "<unclear>يا كببيج</unclear> <unclear>يا كببيج</unclear>\n<unclear>احفظ</unclear> <unclear>الورق</unclear>\n١٢٨٧",
+      "english": "[Blank page — no translatable content]",
+      "problem": "Arabic text dropped and replaced with an invented editorial note",
+      "severity": "serious",
+      "class": "other:dropped"
+     }
+    ],
+    "other": [
+     {
+      "note": "Extensive XML tags (<language>, <page-type>, <warning>, <image-desc>, <margin>, <unclear>, <note>, <vocab>) and English model reasoning leaked into the reader text.",
+      "severity": "serious",
+      "class": "D1"
+     },
+     {
+      "note": "Translation consists entirely of an invented editorial note: [Blank page — no translatable content]",
+      "severity": "moderate",
+      "class": "other:apparatus"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ }
+]

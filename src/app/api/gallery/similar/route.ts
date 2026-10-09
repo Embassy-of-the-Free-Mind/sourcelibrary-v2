@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { cosineSimilarity } from '@/lib/embeddings';
 import { supabase } from '@/lib/supabase';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
+import { resolveSearchScope, matchClip, matchGalleryText, type SearchScope } from '@/lib/tenant-search-scope';
 
 export const preferredRegion = 'fra1';
 
@@ -33,10 +34,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'id parameter required' }, { status: 400 });
     }
 
+    // The book set the neighbour search ranks inside (#4330). The Mongo
+    // resolution below still filters by tenant; this keeps a partner's
+    // neighbours from being whatever of its shelf sat in the global top-N.
+    const scope = await resolveSearchScope(request);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({ items: [], total: 0, method: 'none' }, { headers: { 'Cache-Control': 'private, no-store' } });
+    }
+
     const db = await getDb();
 
     // Strategy 1: CLIP visual similarity via Supabase pgvector
-    const clipResults = await clipSimilarity(id, limit);
+    const clipResults = await clipSimilarity(id, limit, scope);
     if (clipResults && clipResults.length > 0) {
       const resolved = await resolveGalleryItems(
         db,
@@ -62,6 +71,7 @@ export async function GET(request: NextRequest) {
         db,
         targetEmb as unknown as { id: string; book_id: string; embedding: number[] },
         limit,
+        scope,
         tenantId || undefined
       );
       method = 'embedding';
@@ -93,7 +103,7 @@ export async function GET(request: NextRequest) {
  * CLIP visual similarity via Supabase pgvector.
  * Finds the target image's CLIP embedding, then queries for nearest neighbors.
  */
-async function clipSimilarity(galleryId: string, limit: number) {
+async function clipSimilarity(galleryId: string, limit: number, scope: SearchScope) {
   try {
     // Look up the target image's CLIP embedding
     const { data: target } = await supabase
@@ -105,13 +115,13 @@ async function clipSimilarity(galleryId: string, limit: number) {
     if (!target?.embedding) return null;
 
     // Query nearest neighbors via pgvector, excluding same book for diversity
-    const { data: matches } = await supabase.rpc('match_clip_images', {
-      query_embedding: target.embedding,
-      match_threshold: 0.2,
-      match_count: limit * 3, // fetch extra for diversity filtering
+    const { rows: matches } = await matchClip(target.embedding, {
+      scope,
+      threshold: 0.2,
+      count: limit * 3, // fetch extra for diversity filtering
     });
 
-    if (!matches || matches.length === 0) return null;
+    if (matches.length === 0) return null;
 
     // Filter: only gallery images, exclude same book, max 2 per book
     const byBook = new Map<string, number>();
@@ -147,21 +157,22 @@ async function embeddingSimilarity(
   db: Db,
   targetEmb: { id: string; book_id: string; embedding: number[] },
   limit: number,
+  scope: SearchScope,
   tenantId?: string
 ) {
   // Try Supabase pgvector first
   try {
-    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
-      query_embedding: JSON.stringify(targetEmb.embedding),
-      match_threshold: 0.2,
-      match_count: limit * 3,
-      exclude_book_id: targetEmb.book_id,
+    const { rows: matches, error } = await matchGalleryText(targetEmb.embedding, {
+      scope,
+      threshold: 0.2,
+      count: limit * 3,
+      excludeBookId: targetEmb.book_id,
     });
 
-    if (!error && matches && matches.length > 0) {
+    if (!error && matches.length > 0) {
       const byBook = new Map<string, number>();
       const topIds: string[] = [];
-      const scored = matches.map((m: { id: string; page_id: string; book_id: string; detection_index: number; similarity: number }) => ({
+      const scored = matches.map((m) => ({
         id: m.id,
         pageId: m.page_id,
         bookId: m.book_id,
@@ -190,7 +201,12 @@ async function embeddingSimilarity(
   const candidates = await db
     .collection('gallery_embeddings')
     .find(
-      { id: { $ne: targetEmb.id }, book_id: { $ne: targetEmb.book_id } },
+      {
+        id: { $ne: targetEmb.id },
+        book_id: scope.kind === 'tenant'
+          ? { $in: scope.bookIds.filter((b) => b !== targetEmb.book_id) }
+          : { $ne: targetEmb.book_id },
+      },
       { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } }
     )
     .limit(500)

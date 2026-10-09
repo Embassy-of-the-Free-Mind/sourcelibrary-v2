@@ -4,11 +4,13 @@ import {
   ago, buildBoard, getWorkBoardDocs, DEAD_WINDOW_H, FINISHED_WINDOW_H, STALE_MIN,
   type Board, type PrRef,
 } from '@/lib/work-board';
+import { getSpendLine, type SpendLine } from '@/lib/spend-check';
 
 /**
  * /admin/work — work in flight (#5705). Opened for ~30 seconds, often on a phone, to answer one
  * question: is anything waiting on me, and is anything dead? So, top to bottom: decisions waiting on
- * Derek, dead or stuck jobs, running jobs, finished recently. Nothing else.
+ * Derek, dead or stuck jobs, running jobs, finished recently. Nothing else, apart from one line on top:
+ * the daily spend check (src/lib/spend-check.ts, #5743).
  *
  * Renderer only: the boxes push one ops_reports document each (scripts/maintenance/work-board-push.mjs,
  * cron every 10 min) and src/lib/work-board.ts sorts them into the four sections. Each source shows
@@ -52,8 +54,8 @@ function Item({ head, meta, text, href, tone }: { head: string; meta: ReactNode;
         <span className="text-xs text-stone-500 whitespace-nowrap ml-auto shrink-0 tabular-nums">{meta}</span>
       </div>
       {href
-        ? <a href={href} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{text || '—'}</a>
-        : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{text || '—'}</p>}
+        ? <a href={href} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{text || '–'}</a>
+        : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{text || '–'}</p>}
     </li>
   );
 }
@@ -91,13 +93,13 @@ function Sections({ b, now }: { b: Board; now: Date }) {
       </Section>
 
       <Section title="Dead or stuck" count={b.dead.length}>
-        {infraEur > 0 && <p className="text-xs text-red-700">Flagged servers: ≈ €{Math.round(infraEur)}/month. Nothing is stopped automatically — lease, label role=permanent, or delete.</p>}
+        {infraEur > 0 && <p className="text-xs text-red-700">Flagged servers: ≈ €{Math.round(infraEur)}/month. Nothing is stopped automatically: lease, label role=permanent, or delete.</p>}
         {b.dead.length === 0 ? <Empty>Nothing dead.</Empty> : (
           <List>
             {b.dead.map(d => (
               <Item key={`${d.box}:${d.kind}:${d.name}`} head={d.name} tone={d.state === 'stuck' ? 'amber' : 'red'}
                 meta={<>{d.box} · {ago(d.at, now)}</>}
-                text={`${d.why}${d.issue ? ` — #${d.issue.number} ${d.issue.title ?? ''}` : ''}`}
+                text={`${d.why}${d.issue ? ` · #${d.issue.number} ${d.issue.title ?? ''}` : ''}`}
                 href={d.issue?.url ?? null} />
             ))}
           </List>
@@ -128,7 +130,7 @@ function Sections({ b, now }: { b: Board; now: Date }) {
                 </div>
                 {f.verdict_url || f.issue
                   ? <a href={f.verdict_url ?? f.issue!.url} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{f.verdict || `#${f.issue!.number}`}</a>
-                  : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{f.verdict || '—'}</p>}
+                  : <p className="text-sm leading-snug line-clamp-2 break-words text-stone-700">{f.verdict || '–'}</p>}
                 {f.pr && (
                   <a href={f.pr.url} className={`text-xs ${f.pr.checks === 'red' && f.pr.state === 'OPEN' ? 'text-red-700 hover:underline' : 'text-stone-500 hover:underline'}`}>
                     {prWords(f.pr)}
@@ -144,14 +146,40 @@ function Sections({ b, now }: { b: Board; now: Date }) {
   );
 }
 
+/** The daily spend check (#5743): one line; the four checks behind it on tap. */
+function Spend({ s }: { s: SpendLine }) {
+  const tone = s.status === 'PASS' ? 'text-stone-700' : s.status === 'WARN' ? 'text-amber-700' : 'text-red-700 font-medium';
+  if (!s.sections.length) return <p className={`text-sm ${tone}`}>{s.line}</p>;
+  return (
+    <details className="text-sm">
+      <summary className={`cursor-pointer ${tone}`}>{s.line}</summary>
+      <div className="mt-1 grid gap-1 text-xs text-stone-600">
+        {s.sections.map(x => (
+          <div key={x.title}>
+            <span className="font-medium text-stone-800">{x.title}: {x.status}</span>
+            <ul className="pl-3">{x.lines.map((l, i) => <li key={i} className="break-words">{l}</li>)}</ul>
+          </div>
+        ))}
+        <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5743" className={LINK}>Weekly cut list: #5743</a>
+      </div>
+    </details>
+  );
+}
+
 export default async function WorkPage() {
   const now = new Date();
   let board: Board | null = null;
+  let spend: SpendLine | null = null;
   let error: string | null = null;
   try {
     board = buildBoard(await getWorkBoardDocs(), now);
   } catch (e) {
     error = e instanceof Error ? e.message : String(e);
+  }
+  try {
+    spend = await getSpendLine(now);
+  } catch (e) {
+    spend = { status: 'MISSING', line: `spend check: could not read (${e instanceof Error ? e.message : String(e)})`, day: null, sections: [] };
   }
   return (
     <main className="px-4 py-5 sm:px-6 max-w-3xl mx-auto grid gap-6">
@@ -172,7 +200,8 @@ export default async function WorkPage() {
           </p>
         )}
       </header>
-      {error && <p className="text-sm text-red-700">Could not read the work board: {error}</p>}
+      {spend && <Spend s={spend} />}
+      {error &&<p className="text-sm text-red-700">Could not read the work board: {error}</p>}
       {board && <Sections b={board} now={now} />}
       {board && board.errors.length > 0 && (
         <p className="text-xs text-stone-500">GitHub read errors: {board.errors.join('; ')}</p>

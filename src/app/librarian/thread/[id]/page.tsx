@@ -465,7 +465,7 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
       <div className="p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
         <div className="flex items-center justify-between mb-3">
           <p className="text-sm font-sans font-medium text-[#1a1612]">
-            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label} — {activePodcast.topic}
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label}: {activePodcast.topic}
           </p>
           {isOwner && activePodcast.published && (
             <button

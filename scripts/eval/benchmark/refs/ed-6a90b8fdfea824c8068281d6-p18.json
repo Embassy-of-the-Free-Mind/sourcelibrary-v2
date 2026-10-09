@@ -1,0 +1,46 @@
+{
+  "source": "la.wikisource Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu",
+  "edition": "Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu — {{IA",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3APRAETORIUS%2C_Michael_-_Syntagma_musicum_1.djvu",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "12/12",
+    "pb_aligned_pages": "12/12"
+  },
+  "origin": "library",
+  "book_id": "6a90b8fdfea824c8068281d6",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15886,
+    "to_char": 17413,
+    "overlap": 0.925,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'proficit, pro Lege esse habendam'; ends '...numeris inclusas,' + catchword 'ordine'; header EPISTOLA DEDICATORIA, italic for citations/Latin names; ref has padding at both ends.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:30.341Z",
+  "text_location": "repo",
+  "text_sha256": "2f4196641956a0bd9757502bc45ebcbe45870af1cb29452212c437c575cd3347",
+  "unit": {
+    "chars": 1527
+  },
+  "stratum": "latin-period-5126"
+}

@@ -14,7 +14,12 @@ const PROJ = {
     translation_state: 1, 'pipeline_auto.hold.reason': 1, acquisition_campaign: 1,
   },
 };
-const LANGS = ['Tibetan', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)', 'Sanskrit', 'Pali', 'Hebrew', 'Aramaic', 'Arabic', 'Persian', 'Mongolian', 'Korean'];
+// Latin and Greek (#6220): Latin is our largest language (≈52K books), so it is loaded by the four
+// collections Figure 1 counts plus the title/source terms the canon rows need, never wholesale.
+const LATIN_COLLS = ['hermetica', 'alchemy', 'kabbalah', 'natural-philosophy'];
+const LATIN_CLASSICAL_COLLS = ['classical-philosophy', 'literature', 'stoicism', 'ancient-historiography', 'ancient-epic-drama', 'school-of-athens'];
+const GREEK_LANGS = ['Greek', 'Ancient Greek'];
+const LANGS = ['Tibetan', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)', 'Sanskrit', 'Pali', 'Hebrew', 'Aramaic', 'Arabic', 'Persian', 'Mongolian', 'Korean', ...GREEK_LANGS];
 const COLLS = ['tibetan-canon', 'buddhist-canon', 'chinese-buddhist-texts', 'zen-chan', 'kabbalah', 'jewish-kabbalistic-mysticism', 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism', 'vedanta-darshana', 'persian-literary-tradition', 'daoist-classics', 'buddhism'];
 
 /**
@@ -27,19 +32,24 @@ export async function loadHoldingCandidates(db, pgc) {
   const B = db.collection('books');
   const byLang = await B.find({ language: { $in: LANGS } }, PROJ).toArray();
   const byColl = await B.find({ collections: { $in: COLLS } }, PROJ).toArray();
+  const byLatin = await B.find({ language: 'Latin', $or: [
+    { collections: { $in: [...LATIN_COLLS, ...LATIN_CLASSICAL_COLLS] } },
+    { title: /patrolog|migne/i },
+    { source_url: /camena|mateo\.uni-mannheim/i }, { 'image_source.source_url': /camena|mateo\.uni-mannheim/i },
+  ] }, PROJ).toArray();
   const wh = (await pgc.query(`select distinct w.source_catalog, h.book_id from work_holdings h join works w on w.id=h.work_id where w.source_catalog in ('kanripo','cbeta','openiti','gretil','sefaria','bdrc')`)).rows;
   const whBooks = await B.find({ id: { $in: [...new Set(wh.map((r) => r.book_id))] } }, PROJ).toArray();
   const all = new Map();
-  for (const b of [...byLang, ...byColl, ...whBooks]) all.set(b.id, b);
+  for (const b of [...byLang, ...byColl, ...byLatin, ...whBooks]) all.set(b.id, b);
   const whBy = {};
   for (const r of wh) (whBy[r.source_catalog] ||= new Set()).add(r.book_id);
-  return { books: [...all.values()], whBy, counts: { lang: byLang.length, collections: byColl.length, work_holdings: whBooks.length } };
+  return { books: [...all.values()], whBy, counts: { lang: byLang.length, collections: byColl.length, latin: byLatin.length, work_holdings: whBooks.length } };
 }
 
 /**
  * Book sets per corpus key. Keys are the gap map's internal ones (tengyur, kangyur, cbeta, cbeta_chan,
  * pali, gretil*, kabbalah, zohar, lurianic, cordovero, openiti_sufi, ganjoor, mongolian_kanjur,
- * tripitaka_koreana, kanripo); `other_editions` sets ride along for the two Derge canons.
+ * tripitaka_koreana, kanripo, and since #6220 latin, patrologia_latina, camena, latin_classical, greek); `other_editions` sets ride along for the two Derge canons.
  * @returns {Record<string, { books: object[], method: string }>}
  */
 export function corpusBookSets(books, whBy = {}) {
@@ -81,6 +91,12 @@ export function corpusBookSets(books, whBy = {}) {
     'Persian books in persian-literary-tradition or with classical poetry title terms (any edition)');
   R.mongolian_kanjur = set(books.filter((b) => b.language === 'Mongolian' || /W4CZ5370|mongolian (kanjur|kangyur)|ganjuur/i.test(hay(b))), 'language=Mongolian or Mongolian Kanjur by title/source');
   R.tripitaka_koreana = set(books.filter((b) => (/Korean|Chinese/.test(b.language || '')) && /高麗|高丽|tripitaka koreana|koryo|goryeo|海印寺|再雕/i.test(hay(b))), 'Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms');
+  const lat = books.filter((b) => b.language === 'Latin');
+  R.latin = set(lat.filter((b) => has(b, ...LATIN_COLLS)), `language=Latin and in one of our collections ${LATIN_COLLS.join(', ')} (any edition)`);
+  R.patrologia_latina = set(lat.filter((b) => /patrolog|migne/i.test(hay(b))), "language=Latin with Patrologia / Migne in the title or source (any volume; not matched to Corpus Corporum's texts)");
+  R.camena = set(lat.filter((b) => /camena|mateo\.uni-mannheim/i.test(hay(b))), 'language=Latin with a CAMENA / MATEO (Mannheim) source URL');
+  R.latin_classical = set(lat.filter((b) => has(b, ...LATIN_CLASSICAL_COLLS)), `language=Latin in ${LATIN_CLASSICAL_COLLS.join(', ')} (any edition; not matched to Perseus works)`);
+  R.greek = set(books.filter((b) => GREEK_LANGS.includes(b.language)), `language=${GREEK_LANGS.join(' or ')} (any edition; not matched to Perseus or First1KGreek works)`);
   const krSet = whBy.kanripo || new Set();
   R.kanripo = set(books.filter((b) => krSet.has(b.id)), 'works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)');
   return R;
@@ -107,4 +123,6 @@ export const ROW_SET = Object.freeze({
   'sefaria-zohar': 'zohar', 'sefaria-lurianic': 'lurianic', 'sefaria-cordovero': 'cordovero',
   'openiti-sufi': 'openiti_sufi', ganjoor: 'ganjoor', 'mongolian-kanjur': 'mongolian_kanjur',
   'tripitaka-koreana': 'tripitaka_koreana', kanripo: 'kanripo',
+  'patrologia-latina': 'patrologia_latina', 'camena-poemata': 'camena', 'perseus-latin': 'latin_classical',
+  'perseus-greek': 'greek', 'first1k-greek': 'greek',
 });

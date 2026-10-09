@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA poemata/camer3",
+  "edition": "Praecepta vitae puerilis, cum parte paraenetici Isocratis ad Daemonicum in latinum conversa. Vitae, morumque honestatis atque decori praecepta exposita versibus. De gymnasiis dialogus. — Basel: Hervagius, 1536.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b64c9618b87551bfc76fcf",
+  "page_number": 20,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 17,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.908Z",
+  "text_location": "repo",
+  "text_sha256": "529cdbcab4f4a027fa4403a6fee2d75a3fd0855c907a0834752c1559911dd8e1",
+  "unit": {
+    "chars": 1528
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'atque hoc de praeceptiunculis' (first line of body under running head PRAECEPTA, printed page 16), ends 'neque gibbosum' (last body line; catchword 'tergum' not transcribed). Exact boundary match, all lines present, same content order: strong same-edition evidence (Basel: Hervagius 1536). Offset +3 (page 22 = pb 19). Not transcribed: running head, folio '16', and contemporary manuscript marginalia (top-of-page note 'Salu. Nam et primis incipias...' and left-margin notes), which are additions by an owner, not print. No printed marginal notes. Single page.",
+    "leaf_language": "la",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

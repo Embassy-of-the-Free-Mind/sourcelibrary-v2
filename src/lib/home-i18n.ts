@@ -82,10 +82,21 @@ export interface HomeStrings {
   recentlyTranslatedHeading: string;
   recentlyTranslatedSubtitle: string;
 
+  // Most liked slider
+  mostLikedHeading: string;
+  mostLikedSubtitle: string;
+
   // "Read in Spanish" slider — rendered on /es only (HomeData.spanishBooks is
   // empty on the English homepage), but the strings live in both dictionaries
   // so the two editions keep one shape.
   spanishHeading: string;
+  /** The shelf of books WRITTEN in the page's language. Rendered on `/la` only (#6254). */
+  nativeShelfHeading: string;
+  nativeShelfSubtitle: string;
+  nativeShelfAll: string;
+  /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
+  beginnerShelfHeading: string;
+  beginnerShelfSubtitle: string;
   spanishSubtitle: string;
 
   // Gallery masonry (homepage)
@@ -196,7 +207,14 @@ const en: HomeStrings = {
 
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  mostLikedHeading: 'Readers’ favorites',
+  mostLikedSubtitle: 'The books readers have liked most. Found one you love? Tap the ♥ on its page to add your vote.',
   spanishHeading: 'Read in Spanish',
+  nativeShelfHeading: 'Latin books',
+  nativeShelfSubtitle: 'Books written in Latin, read here in the original.',
+  nativeShelfAll: 'All Latin books',
+  beginnerShelfHeading: 'For beginners',
+  beginnerShelfSubtitle: 'Easier Latin: the schoolbooks, dialogues, fables and short histories that generations of pupils learned from.',
   spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
@@ -307,7 +325,14 @@ const es: HomeStrings = {
 
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  mostLikedHeading: 'Las favoritas de los lectores',
+  mostLikedSubtitle: 'Los libros que más les han gustado a los lectores. ¿Encontraste uno que te encanta? Pulsa el ♥ en su página para sumar tu voto.',
   spanishHeading: 'Leer en español',
+  nativeShelfHeading: 'Libros en latín',
+  nativeShelfSubtitle: 'Libros escritos en latín, para leer aquí en el original.',
+  nativeShelfAll: 'Todos los libros en latín',
+  beginnerShelfHeading: 'Para principiantes',
+  beginnerShelfSubtitle: 'Latín más fácil: los manuales, diálogos, fábulas e historias breves con que aprendieron generaciones de alumnos.',
   spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
@@ -367,7 +392,134 @@ const es: HomeStrings = {
     ' Traducir la sabiduría antigua y compartirla libremente tiene el poder de transformar la civilización. Siglos después de Ficino, miles de textos siguen sin traducir y sin leer, incluidas muchas de las propias obras de Ficino. Las estamos recuperando, para estudiosos, para buscadores y para los sistemas de IA que darán forma al pensamiento de las generaciones futuras.',
 };
 
-export const HOME_STRINGS: Record<HomeLang, HomeStrings> = { en, es };
+// Latin (#6254). The corpus is the reverse of the Spanish case: nothing is
+// translated INTO Latin, but Latin is the largest ORIGINAL language we hold, so
+// `/la` is a Latin front door onto books that are already Latin. Draft copy —
+// read by a Latinist before launch (see the issue); corrections go here.
+const la: HomeStrings = {
+  // Number formatting only. There is no dependable `la` data in ICU, and an
+  // unknown tag falls back to the RUNTIME default, which differs between the
+  // server and a reader's browser: a hydration mismatch. Pin it.
+  locale: 'en-US',
+
+  heroTitle: 'Nova Antiquae Sapientiae Renascentia',
+  heroSubtitleLine1: 'Intrate maximam orbis terrarum bibliothecam',
+  heroSubtitleLine2: 'fontium antiquorum intellegentia artificiali conversorum.',
+  emailPlaceholder: 'Inscriptio electronica tua',
+  join: 'Nomen da',
+  sending: 'Mittitur…',
+  checkEmail: 'Epistulas tuas inspice: nexum ad intrandum misimus ad',
+  differentEmail: 'Alia inscriptione utere',
+  google: 'Vel per Google perge',
+  googleBlockedNote: 'Aditus per Google in navigatris intra applicationes plerumque impeditur: inscriptione electronica supra utere, vel hanc paginam in Safari aut Chrome aperi.',
+  emailError: 'Nexus mitti non potuit. Iterum tempta, quaeso.',
+  didYouMean: (suggestion) => `Num ${suggestion} voluisti?`,
+  haveAccount: 'Iam rationem habes?',
+  explore: 'Bibliothecam perlustra',
+  langEnglish: 'English',
+  langSpanish: 'Español',
+  suggestSpanish: 'Ver esta página en español',
+  dismiss: 'Dimitte',
+  librarianPlaceholder: 'Fontes quidlibet roga…',
+  librarianHint: 'exempli gratia: «Quid Newtonus de prophetiis scripsit?»',
+  librarianAsk: 'Roga',
+  heroSignupLead: 'Novus hic es? Nomen da, ut lecta serves.',
+  heroSignupCta: 'Nomen da, ut lecta serves →',
+  heroSearchInstead: 'Vel in bibliotheca quaere →',
+  askSourceEyebrow: 'Bibliothecarius',
+  askSourceHeading: 'Fontes interroga',
+  askSourceSubtitle: 'Quaestionem milibus fontium primariorum propone et responsum accipe, locis ex ipsis libris allatis quos tute legere potes.',
+
+  collectionsHeading: 'Collectiones',
+  translationsLabel: 'Anglice legibiles',
+  firstTimeLabel: 'nunc primum',
+  artworksLabel: 'opera artis',
+  illustrationsLabel: 'imagines',
+  browseCatalog: 'Catalogum perlustra',
+  booksLabel: 'libri',
+  inThisLanguage: 'Latine',
+  seeMore: (n) => `Plura ostende (${n})`,
+  collectionsWord: 'collectiones',
+  curatedExhibitions: 'Expositiones curatas perlustra',
+  allCollections: 'Omnes collectiones',
+  showcaseEyebrow: 'Expositiones curatae',
+  showcaseSubtitle: 'Delectus parvi, quisque cum suo argumento: libri pauci a curatore electi et praefatione instructi.',
+  allExhibitions: (n) => `Omnes expositiones (${n})`,
+  bySubjectHeading: 'Per argumenta perlustra',
+  bySubjectLead: 'Tota bibliotheca:',
+
+  recentlyTranslatedHeading: 'Nuper conversa',
+  recentlyTranslatedSubtitle: 'Opera quae Source Library novissime in sermonem hodiernum convertit.',
+  mostLikedHeading: 'Lectoribus gratissima',
+  mostLikedSubtitle: 'Libri quos lectores maxime probaverunt. Si quem amas, signum ♥ in eius pagina tange, ut suffragium addas.',
+  spanishHeading: 'Hispanice lege',
+  nativeShelfHeading: 'Libri Latini',
+  nativeShelfSubtitle: 'Libri Latine scripti, quos hic in ipso textu Latino legere potes.',
+  nativeShelfAll: 'Omnes libri Latini',
+  beginnerShelfHeading: 'Tironibus',
+  beginnerShelfSubtitle: 'Libri faciliores, e quibus discipuli olim linguam Latinam discebant: libelli scholastici, colloquia, fabulae, historiae breves.',
+  spanishSubtitle: 'Opera quae iam editionem Hispanicam habent, paginatim iuxta textum primigenium.',
+  galleryHeading: 'Pinacotheca',
+  gallerySubtitle: 'Tabulae, figurae, imagines aere incisae ex libris raris totius bibliothecae.',
+  galleryViewAll: (n) => `Omnes ${n.toLocaleString('en-US')} imagines specta`,
+  discoverHeading: 'Inveni',
+  discoverSubtitle: 'Fontes primarii conversi ex bibliotheca.',
+  discoverEmpty: 'Bibliothecam perlustra, ut fontes primarios conversos invenias.',
+
+  // The posts themselves are English, so the heading says so (i18n.md rule 4:
+  // what is not in the page's language is labelled, never passed off).
+  blogHeading: 'Commentarii (Anglice)',
+  blogSubtitle: 'Investigationes de bibliotheca eiusque historia, intellegentia artificiali adiuvante',
+  blogAllPosts: 'Omnes commentarii',
+  tagDeepDive: 'Disquisitio',
+  tagCollection: 'Collectio',
+
+  aboutHeading:
+    'Sapientia antiqua denuo reperta Renascentiam accendit. Tempus est alterius.',
+  aboutP1:
+    'Saecula altissimae hominum cogitationis in lingua Latina aliisque linguis paucis notis clausa iacent. Neque hominibus tantum inaccessa sunt: systemata intellegentiae artificialis nostrae aetatis e Reddit didicerunt, non e Renascentia. Decies centena milia librorum et codicum manu scriptorum nondum photographice descripta neque conversa sunt. Haec non sunt obscurae adnotatiunculae: radices sunt scientiae recentioris, psychologiae, philosophiae mentis, et quaestionum perennium de eo quid sit hominem esse.',
+  aboutP2:
+    'Source Library eruditione et intellegentia artificiali utitur, ut haec scientia recuperetur et omnibus pateat. Maximam orbis terrarum collectionem fontium primariorum conversorum, omnibus libere patentem, condimus, ut docti, quaerentes, et systemata intellegentiae artificialis ex tota traditionis humanae altitudine haurire possint. Hoc opus ab iis sustentatur qui eo utuntur idque magni aestimant.',
+  aboutP3Before: 'Source Library inceptum est domus cui nomen ',
+  efmLinkText: 'Embassy of the Free Mind',
+  aboutP3After:
+    ' Amstelodami, ubi Bibliotheca Philosophica Hermetica servatur: una ex praestantissimis orbis terrarum collectionibus librorum Hermeticorum, alchemicorum, esotericorum.',
+
+  bePartEyebrow: 'Particeps esto',
+  bePartHeading: 'Adiuva ut hereditas ingenii humani amissa recuperetur.',
+  supportTitle: 'Bibliothecam sustenta',
+  supportBody:
+    'Milia textuum antiquae et recentioris aetatis nondum conversa neque lecta manent. Liberalitate tua haec opera photographice describuntur, machina leguntur, intellegentia artificiali adiuvante convertuntur, ut doctis, quaerentibus, omnibus gratis nunc primum pateant.',
+  howToSupport: 'Quomodo sustentem?',
+  createAccount: 'Rationem gratuitam crea',
+  contribute: 'Operam confer',
+  contributeDesc: 'Adiuva in convertendo, recensendo, bibliotheca emendanda',
+  developers: 'Programmatores',
+  developersDesc: 'Servus MCP, CLI, API ad instrumenta investigationis',
+
+  searchHeading: 'In bibliotheca quaere',
+  searchStats: (books, authors, langs) => `${books} libri · ${authors}+ auctores · ${langs}+ linguae`,
+  searchPlaceholder: 'Tempta “Hermes Trismegistus” vel “prima materia”...',
+  browseBy: 'vel perlustra per',
+  byTitle: 'titulos',
+  byAuthor: 'auctores',
+  byYear: 'annos',
+  byImages: 'imagines',
+
+
+  inSpiritOf: 'Eorum exemplo',
+  ficinoRole: '1433–1499 · Philosophus et interpres',
+  ficinoBio:
+    'Ficinus opera omnia Platonis et Plotini, scripta Procli et Iamblichi, libros Hermeticos Latine vertit, ut tum primum toti Europae paterent. Opere eius accensum est Renascentiae studium Platonicorum recentiorum, Hermeticorum, et priscae theologiae: opinionis scilicet antiquam sapientiae traditionem omnes veri quaesitores coniungere.',
+  cosimoRole: '1389–1464 · Florentia',
+  cosimoBio:
+    'Cosmus Medices, argentariae recentioris inventor, divitiis suis Renascentiam aluit. Non solum opera artis facienda locavit, sed etiam Ficino sumptus praebuit, ut Platonem aliaque opera amissa Latine verteret, quo legi possent. Circa annum 1460 codex Graecus Corporis Hermetici Florentiam pervenit, e Macedonia a monacho Leonardo Pistoriensi allatus. Cosmus iam moriturus Ficinum rogavit ut Platonem vertendum intermitteret, quo ipse eum codicem legere posset: sentiebat enim Hermetem clavem antiquissimae sapientiae tenere.',
+  closingStrong: 'Source Library eorum operis vestigia sequitur.',
+  closingRest:
+    ' Sapientia antiqua conversa et libere communicata civitatem humanam mutare potest. Saeculis post Ficinum milia textuum nondum conversa neque lecta manent, in iis multa ipsius Ficini opera. Ea recuperamus: doctis, quaerentibus, et systematis intellegentiae artificialis quae cogitationem posterorum formabunt.',
+};
+
+export const HOME_STRINGS: Record<HomeLang, HomeStrings> = { en, es, la };
 
 // Spanish display names for the known top-level collections. Unknown slugs fall
 // back to the stored English name.
@@ -396,7 +548,111 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   'en-espanol': 'Libros en español',
 };
 
+// Latin display names, hand-written (#6278). Two groups: the top-level
+// collections of the subject index, then the curated exhibitions the showcase
+// draws from. Where a traditional Latin name exists it is used (Theatra
+// machinarum, Antiquitates Septentrionales, Philosophia perennis). On `/la` the
+// showcase draws only from exhibitions named here, so adding a curated
+// exhibition without a Latin name keeps it off the Latin homepage instead of
+// showing it in English.
+export const LA_COLLECTION_NAMES: Record<string, string> = {
+  'natural-philosophy': 'Philosophia naturalis et scientiae',
+  theology: 'Theologia Christiana',
+  literature: 'Litterae et poesis',
+  'classical-philosophy': 'Philosophia antiqua',
+  astrology: 'Astrologia et divinatio',
+  'sacred-texts': 'Libri sacri',
+  medicine: 'Medicina et historia naturalis',
+  alchemy: 'Alchemia',
+  mysticism: 'Theologia mystica',
+  hermetica: 'Hermetica',
+  'renaissance-philosophy': 'Philosophia Renascentiae',
+  'east-asia': 'Asia orientalis',
+  magic: 'Magia et artes occultae',
+  'art-illustrated': 'Ars et libri imaginibus ornati',
+  'south-asia': 'Asia meridiana',
+  'secret-societies': 'Sodalitates arcanae',
+  'history-political-thought': 'Historia et doctrina civilis',
+  psychology: 'Psychologia',
+  demonology: 'Daemonologia et maleficia',
+  'cannabis-western-record': 'Cannabis: plantae historia',
+  'american-founding': 'Origines rei publicae Americanae',
+  'signs-in-the-sky': 'Signa in caelo',
+  'gardens-festivals-ephemeral': 'Horti, festa, artes caducae',
+  'druids-megaliths': 'Druidae et monumenta megalithica',
+  'sacred-plants': 'Herbae sacrae et ebrietas ritualis',
+  'norse-antiquities': 'Antiquitates Septentrionales',
+  'the-human-condition': 'Condicio humana',
+  'book-of-the-dead': 'Liber mortuorum',
+  sibyls: 'Sibyllae',
+  nalanda: 'Nālandā: fontes Sanscritici canonis Tibetani',
+  'alchemists-studio': 'Officina alchemistae',
+  'venetian-mystery': 'Mysterium Venetum',
+  'art-of-altdorfer-baldung': 'Maleficae et res mirae',
+  'leonardo-drawings': 'Leonardi Vincii codices',
+
+  // Curated exhibitions (the showcase pool).
+  manichaeism: 'Manichaeorum religio',
+  'ancient-egyptian': 'Aegyptus antiqua',
+  'indigenous-traditions': 'Traditiones gentium indigenarum',
+  'music-of-the-spheres': 'Musica sphaerarum',
+  'sympathy-of-all-things': 'Sympathia rerum',
+  'perennial-philosophy': 'Philosophia perennis',
+  'art-of-memory': 'Ars memoriae',
+  'forbidden-books': 'Libri prohibiti',
+  'star-science': 'Scientia astrorum',
+  'making-things-visible': 'Invisibilia detecta',
+  'invention-of-method': 'Methodus inventa',
+  'letters-from-the-desert': 'Scripta e deserto',
+  'kepler-fludd-debate': 'Kepleri et Fluddi controversia',
+  'newtons-other-science': 'Altera Newtoni scientia',
+  'courts-of-wonder': 'Aulae mirabilium',
+  'agrippas-world': 'Orbis Agrippae',
+  'behmenist-underground': 'Boehmii sectatores',
+  'robert-hooke-polymath': 'Robertus Hooke polyhistor',
+  encyclopedists: 'Encyclopaedici',
+  'women-of-the-secret-tradition': 'Feminae traditionis arcanae',
+  'theatres-of-machines': 'Theatra machinarum',
+  'bestiary-tradition': 'Bestiaria',
+  'alchemical-emblem': 'Emblemata alchemica',
+  'maps-of-the-invisible': 'Tabulae rerum invisibilium',
+  'byzantine-bridge': 'Pons Byzantinus',
+  'rhineland-mystics': 'Mystici Rhenani',
+  'syriac-church': 'Ecclesia Syriaca',
+  'armenian-golden-age': 'Aetas aurea Armeniorum',
+  'islamic-philosophy-meets-christian-mysticism': 'Philosophia Islamica et theologia mystica Christiana',
+  'sacred-objects': 'Res sacrae',
+  'indigenous-sacred-narratives': 'Narrationes sacrae gentium indigenarum',
+  apocrypha: 'Apocrypha',
+  'sacred-books-of-the-east': 'Libri sacri Orientis',
+  'dutch-golden-age-of-science': 'Aetas aurea scientiae Batavae',
+  'anatomical-revolution': 'Anatomia renovata',
+  'mining-metals-and-fire': 'Metalla, fodinae, ignis',
+  'canon-of-avicenna': 'Canon Avicennae',
+  'nova-reperta': 'Nova Reperta',
+  'herculaneum-papyri': 'Papyri Herculanenses',
+  'rosicrucian-moment': 'Fraternitas Rosae Crucis',
+  'global-demonology': 'Daemonologia omnium gentium',
+  'printing-press-revolution': 'Ars typographica',
+  ayurveda: 'Ayurveda: scientia vitae',
+  'grimoire-tradition': 'Libri magici',
+  'ancient-engineering': 'Ars machinalis antiquorum',
+  'renaissance-literary-imagination': 'Litterae Renascentiae',
+  'ancient-papyri': 'Papyri antiquae',
+  'great-manuscripts': 'Codices insignes',
+  'theosophical-society': 'Societates theosophicae et occultae',
+  'blavatsky-mahatmas': 'Blavatsky et Mahatmae',
+  'index-librorum-prohibitorum': 'Index Librorum Prohibitorum',
+  'hogwarts-library': 'Bibliotheca Hogvartensis',
+  yoga: 'Yoga',
+  'javanese-kraton': 'Aula Iavanica',
+  'indonesian-manuscripts': 'Codices Indonesici',
+  'baltic-paganism': 'Religio pagana Baltica',
+  seafaring: 'Navigatio et ars navium aedificandarum',
+};
+
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {
   if (lang === 'es') return ES_COLLECTION_NAMES[slug] ?? fallback;
+  if (lang === 'la') return LA_COLLECTION_NAMES[slug] ?? fallback;
   return fallback;
 }

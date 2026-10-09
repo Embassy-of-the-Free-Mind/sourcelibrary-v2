@@ -18,6 +18,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 // ── Configuration ──────────────────────────────────────────────────────
 
@@ -189,6 +190,13 @@ async function main() {
 
     if (untranslated.length === 0) {
       console.log(`SKIP "${book.title}": all pages translated`);
+      continue;
+    }
+
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    const trust = await ocrTrustGate(db, book, { lane: 'queue-translations', record: !DRY_RUN });
+    if (!trust.ok) {
+      console.log(`REFUSED "${book.title}": ${trust.reason}`);
       continue;
     }
 

@@ -6,10 +6,12 @@ import {
   isTruncatedCandidate,
   truncationFailReason,
   TRUNCATING_FINISH_REASONS,
+  candidateText,
 } from '../../scripts/lib/truncated-response.mjs';
 import {
   isTruncatedCandidate as isTruncatedTs,
   TRUNCATING_FINISH_REASONS as REASONS_TS,
+  candidateText as candidateTextTs,
 } from '../../src/lib/truncated-response';
 
 /**
@@ -149,5 +151,75 @@ describe('every writer that reads a model candidate checks whether it finished (
     const src = readFileSync(path.join(REPO, 'scripts/batch/realtime-translate.mjs'), 'utf8');
     expect(src).toMatch(/truncated-response/);
     expect(src).toMatch(/isTruncatedCandidate\(/);
+  });
+});
+
+/**
+ * A candidate's text is ALL of its text parts (#5813).
+ *
+ * Gemini 3 answered 160 of 2,929 finished Batch OCR requests in two text parts, every one
+ * with finishReason STOP. Both collectors stored `parts[0].text`, so those pages were written
+ * cut off over a complete older transcription — one of them as 59 characters ending
+ * `<language>Ancient Greek</`. The fixture below is that response's shape.
+ */
+describe('candidateText', () => {
+  const twoParts = {
+    finishReason: 'STOP',
+    content: { parts: [
+      { text: '<scan-quality>good</scan-quality>\n<language>Ancient Greek</' },
+      { text: 'language>\n<page-num>134</page-num>\n\n6 ἵνα μὴ φαίνηται σοφὸς παρ’ ἑαυτῷ.', thoughtSignature: 'abc' },
+    ] },
+  };
+
+  it('joins every text part in order — the page that was stored as 59 characters', () => {
+    const text = candidateText(twoParts);
+    expect(text).toBe(twoParts.content.parts[0].text + twoParts.content.parts[1].text);
+    expect(text).toContain('<language>Ancient Greek</language>');
+  });
+
+  it('negative control: reading the first part alone loses the page', () => {
+    expect(twoParts.content.parts[0].text).not.toContain('σοφὸς');
+    expect(candidateText(twoParts)).toContain('σοφὸς');
+  });
+
+  it('a one-part answer is unchanged, and thought parts are never the answer', () => {
+    expect(candidateText({ content: { parts: [{ text: 'abc' }] } })).toBe('abc');
+    expect(candidateText({ content: { parts: [{ text: 'reasoning', thought: true }, { text: 'abc' }] } })).toBe('abc');
+  });
+
+  it("returns '' for a refusal or a malformed candidate, so `if (!text)` still fires", () => {
+    expect(candidateText({ finishReason: 'RECITATION' })).toBe('');
+    expect(candidateText({ content: { parts: [] } })).toBe('');
+    expect(candidateText({ content: { parts: [{ inlineData: {} }] } } as never)).toBe('');
+    expect(candidateText(undefined)).toBe('');
+    expect(candidateText(null)).toBe('');
+  });
+
+  it('the .mjs and .ts twins agree', () => {
+    for (const c of [twoParts, { content: { parts: [{ text: 'x' }] } }, {}, null]) {
+      expect(candidateTextTs(c as never)).toBe(candidateText(c as never));
+    }
+  });
+});
+
+describe('no page-text writer reads only the first part of a candidate (#5813)', () => {
+  const FIRST_PART = /parts\??\.?\[0\]\??\.text/;
+
+  it('every candidate-reading text writer takes the text through candidateText()', () => {
+    const firstPartOnly = textWriters().filter((f) => FIRST_PART.test(readFileSync(path.join(REPO, f), 'utf8')));
+    expect(
+      firstPartOnly,
+      [
+        'These files store page text read from `parts[0].text`. Gemini can split one answer',
+        'across several text parts, and the first alone is a cut-off page (#5813).',
+        'Use candidateText(candidate) from truncated-response.',
+      ].join(' '),
+    ).toEqual([]);
+  });
+
+  it('the probe still matches the pattern it forbids', () => {
+    expect(FIRST_PART.test('const text = candidate?.content?.parts?.[0]?.text;')).toBe(true);
+    expect(FIRST_PART.test('const text = data.candidates[0].content.parts[0].text')).toBe(true);
+    expect(FIRST_PART.test('const text = candidateText(candidate);')).toBe(false);
   });
 });

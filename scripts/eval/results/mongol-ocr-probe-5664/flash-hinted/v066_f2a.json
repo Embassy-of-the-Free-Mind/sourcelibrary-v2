@@ -1,0 +1,45 @@
+{
+ "key": "v066_f2a",
+ "arm": "hinted",
+ "page": {
+  "key": "v066_f2a",
+  "vol": 66,
+  "book_id": "6ac02a169a86d56c1aa22937",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "bdrc_canvas": "I1PD1103340006.jpg",
+  "ligeti": "Mng1.868",
+  "mng_span": "Ja Eldeb 1b–234a",
+  "toh": "D113",
+  "skt": "Saddharmapuṇḍarīka",
+  "derge_vol": 51,
+  "derge_file": "051_མདོ་སྡེ།_ཇ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>21</columns>\n<page-num>2</page-num>\n<header>諸品經 第七卷上 二</header>\n<meta>Beijing Kanjur edition, red ink woodblock print. Marginal Chinese text: 諸品經 (Zhu pin jing), 第七卷上 (Volume 7, Part 1), 二 (Page 2). Left margin contains Mongolian folio information: ᠭᠠ ᠳᠣᠯᠣᠭᠠ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ (Ga, seven, upper, two).</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">The text is enclosed within a rectangular border featuring a repeating floral/scrollwork pattern (panchang/endless knot style motifs) printed in red ink.</image-desc>\n\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤᠨ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂ ᠳᠡᠭᠡᠳᠦ\nᠠᠮᠤᠭᠤᠯᠠᠩ ᠢ ᠡᠷᠢᠬᠦᠢ ᠳᠦᠷ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂\nᠪᠠᠷᠠᠳ ᠤ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠲᠡᠭᠦᠨ ᠦ ᠪᠡᠶ᠎ᠡ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂ ᠭᠡᠭᠡᠨ\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠭᠡᠷᠡᠯ ᠦᠨ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂\nᠠᠮᠤᠷ ᠵᠢᠷᠭᠠᠯᠠᠩ ᠤᠨ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠮᠥᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠪᠠᠭᠠᠳᠤᠷ ᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤᠨ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂ ᠪᠠᠷᠠᠳ\nᠪᠠᠭᠠᠳᠤᠷ ᠤᠨ ᠮᠥᠷ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠮᠥᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠥᠭᠡᠳ ᠂\nᠮᠥᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂ ᠄\nᠮᠥᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠦᠪ ᠤ ᠪᠡᠶ᠎ᠡ ᠪᠥᠭᠡᠳ ᠂ ᠄\n\n<vocab>ᠪᠣᠳᠢᠰᠠᠳᠦᠪ (Bodhisattva), ᠮᠥᠷ (path), ᠪᠡᠶ᠎ᠡ (body), ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ (shown/manifested), ᠠᠮᠤᠭᠤᠯᠠᠩ (peace/happiness)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 1680,
+  "cost_usd": 0.0072105
+ },
+ "translation": {
+  "text": "<meta>This page is from the Beijing Kanjur, specifically the Collection of Various Sutras. It consists of a repetitive liturgical or invocational structure focusing on the path and physical manifestation of a Bodhisattva.</meta>\n\n<note>The text is enclosed within a large rectangular border featuring a repeating floral scrollwork pattern, similar to the endless knot motif, printed in red ink.</note>\n\nThe path of the <term>Bodhisattva</term> <gloss>an enlightened being who seeks to aid others</gloss>, and the path of seeking supreme peace.\nHis body was shown as a <term>parata</term> <gloss>a transliterated term likely referring to a specific manifestation or stage</gloss>.\nThe path of the Bodhisattva, and the path of the bright light of the Bodhisattva.\nThe path of peaceful joy, and the path that was shown.\nThe path of the hero Bodhisattva, and the path of the Bodhisattva.\nThe path of the <term>parata</term> hero, and the body of the Bodhisattva.\nThe body of the Bodhisattva, and the body of the Bodhisattva.\nThe body of the Bodhisattva, and the path that was shown.\nThe path that was shown, and the body of the Bodhisattva.\nThe body of the Bodhisattva, and the path that was shown.\nThe body of the Bodhisattva, and the body of the Bodhisattva.\n\n<summary>This page contains a repetitive series of phrases describing the various paths and bodily forms of a Bodhisattva, emphasizing themes of peace, light, and heroism. It appears to be part of a larger ritual chant or catalog of spiritual manifestations.</summary>\n<keywords>Bodhisattva, spiritual path, enlightenment, Buddhist liturgy, Kanjur, peaceful joy</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 3410,
+  "outputTokens": 392,
+  "cost_usd": 0.002881
+ }
+}

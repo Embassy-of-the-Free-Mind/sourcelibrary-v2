@@ -1,0 +1,172 @@
+{
+ "source": "bookstore.pages, read 2026-10-06 for #5915; ocr.data verbatim",
+ "cases": {
+  "scroll_strip": {
+   "note": "Da jiao wang jing p.1 (#5915): a whole scroll in a 2000×121 px frame, \"read\" as a sutra",
+   "id": "69f1344a365e3fcae574e0d2",
+   "book_id": "69f1344a365e3fcae574e0d1",
+   "page_number": 1,
+   "ocr": {
+    "data": "<scan-quality>fair</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<warning>Extremely wide panoramic image of a Chinese Buddhist sutra scroll; text is organized in vertical columns across approximately 28 folded panels. The script is an early woodblock print style.</warning>\n\n# 大方廣佛華嚴經卷第四十一\n\n## 十地品第二十六之八\n\n->于闐國三藏實叉難陀奉　制譯<-\n\n> 佛子。菩薩摩訶薩。已修第七地。欲入第八地。當以十種妙方便智觀察。何等為十。所謂善觀察一切法。無生無相。無成無壞。無盡無轉。無性為性。初中後平等。入如來智。無分別一切法。如是觀察一切法如實相。如是菩薩得無生法忍。入第八不動地。為深行菩薩。難可知。無差別。離一切相。一切想。一切執。無量無邊。一切聲聞辟支佛所不能及。離一切諍。寂滅現前。\n> \n> 佛子。菩薩成就此不動地。一切心。意。識。不行。乃至不作佛意。何況世間心意意識。亦不作菩薩心。亦不作涅槃意。何以故。已過一切想一切戲論故。譬如比丘入滅盡定。一切動轉心。意。識。等。悉皆滅盡。此菩薩摩訶薩。住不動地。亦復如是。一切功用行悉皆息。不復功用行。不復現前心。意。識。\n> \n> 佛子。菩薩成就此地。入於佛所住處。入佛自性處。入佛如實處。入佛智處。入佛法處。入佛道處。入佛事處。入佛力處。入佛法界處。佛子。菩薩得如是寂滅。入無功用行。佛即現前。與其如來智。如是菩薩。如如入不動地。離一切功用。得法界入。自然成就大方便。\n> \n> 佛子。爾時諸佛。為此菩薩。與如來智。令其起於智門。作如是言。善哉善哉。善男子。此是隨順一切佛法第一忍。然善男子。我等所有十力無畏。十八不共。種種佛法。汝今未得。汝應勤求。莫捨此忍。又善男子。汝雖得此寂滅解脫。然諸凡夫。未得寂滅。為種種煩惱。種種覺觀。所共惱亂。汝應愍念。又善男子。汝應憶念。汝本所願。利益眾生。入不可思議智門。\n\n---\n\n[The scroll continues with detailed descriptions of the Bodhisattva's transformation in the Eighth Ground, where they attain effortless action, the \"Body of Wisdom,\" and begin to manifest in countless worlds to teach sentient beings.]\n\n---\n\n<margin>\n長興元年庚寅歲\n</margin>\n\n大方廣佛華嚴經卷第四十一\n弟子<unclear>郭</unclear> <unclear>奉</unclear> <unclear>舍</unclear> <unclear>供養</unclear>\n\n<vocab>大方廣佛華嚴經, 十地品, 不動地, 實叉難陀, 長興元年, 菩薩摩訶薩, 無生法忍, 阿毗達磨, 寂滅, 如來智</vocab>"
+   },
+   "page_type": "text",
+   "archive_metadata": {
+    "bytes": 48514
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/69f1344a365e3fcae574e0d1/1.jpg",
+   "image_height": 121,
+   "image_width": 2000
+  },
+  "scroll_section": {
+   "note": "same book p.3: one section of the scroll at 2000×1020 px — negative control",
+   "id": "69f1344a365e3fcae574e0d4",
+   "book_id": "69f1344a365e3fcae574e0d1",
+   "page_number": 3,
+   "ocr": {
+    "data": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<vocab>唵, 曼拏羅, 怛他誡多, 囉怛那, 鉢訥摩, 標幟, 大士</vocab>\n\n及畫大士依本像 <gloss>臣奉戶詰汝</gloss>\n\n### 此等大明日\n\n唵<gloss>引</gloss>薩哩嚩<gloss>二合</gloss>怛他<gloss>引</gloss>誡多悉提鉢羅<gloss>二合</gloss>抳\n\n唵<gloss>引</gloss>噐哩<gloss>二合</gloss>摩尼唧恨那<gloss>二合引</gloss> 哥<gloss>引</gloss>舍誡哩婆<gloss>二合</gloss>誐嚩悉赧悉赧吽<gloss>引一</gloss>\n\n唵<gloss>引</gloss>囉怛曩<gloss>二合</gloss>酷舍<gloss>引</gloss>葛哩沙<gloss>二合</gloss>野<gloss>一句</gloss>薩哩嚩<gloss>二合</gloss>栗湯<gloss>引二合</gloss>阿<gloss>引</gloss>那野尸<gloss>引</gloss>毘覽<gloss>二合三</gloss>\n\n薩哩嚩<gloss>二合</gloss>怛他<gloss>引</gloss>誡多摩參摩耨三摩\n\n唵<gloss>引</gloss>摩尼囉<gloss>引</gloss>誡嚩尸酷<gloss>二合</gloss>嚕<gloss>句引一</gloss>薩哩嚩<gloss>二合</gloss>栗湯<gloss>引二合</gloss>阿<gloss>引</gloss>那野阿<gloss>引</gloss>哥<gloss>引</gloss>舍誡哩婆<gloss>二合</gloss>吽<gloss>引二</gloss>\n\n唵<gloss>引</gloss>囉怛那<gloss>二合</gloss>目瑟致<gloss>二合</gloss>吽<gloss>引一</gloss>\n\n---\n\n以金剛步而漸進　　南布寶鬘曼拏羅\n彼中依法當正畫　　執持最上寶鬘尊\n是尊周帀諸分位　　如教所說依次第\n畫諸大士悉莊嚴　　各各執寶為標幟\n\n### 此等大明日\n\n唵<gloss>引</gloss>囉怛那<gloss>二合</gloss>沒哩<gloss>二合</gloss>瑟致<gloss>二合二</gloss> 怛羅<gloss>二合</gloss>合<gloss>一</gloss>\n\n唵<gloss>引</gloss>薩哩嚩<gloss>二合</gloss>怛他<gloss>引</gloss>誡多毗<gloss>引</gloss>囉怛那<gloss>二合</gloss>摩<gloss>引</gloss>哩野<gloss>二合</gloss>\n\n唵<gloss>引</gloss>薩哩嚩<gloss>二合</gloss>怛他<gloss>引</gloss>誡多惹<gloss>引</gloss>舍<gloss>引</gloss>波哩布<gloss>引</gloss>囉葛<gloss>二合</gloss>阿<gloss>引</gloss>哥<gloss>引</gloss>舍誡哩婆\n\n唵<gloss>引</gloss>囉怛那<gloss>二合</gloss>吒<gloss>引</gloss>賀<gloss>引</gloss>娑<gloss>句</gloss>喝喝喝喝吽<gloss>引二</gloss>\n\n---\n\n以金剛步西漸布　　妙寶蓮華曼拏羅\n彼中依法應徧畫　　執持妙寶蓮華尊\n是尊周帀諸分位　　畫諸大士悉莊嚴\n執寶標幟隨本儀　　如其所說依次第\n\n### 此等大明日\n\n唵<gloss>引</gloss>囉怛那<gloss>二合</gloss>鉢訥摩<gloss>二合</gloss>吽<gloss>引一</gloss>\n\n唵<gloss>引</gloss>囉怛那<gloss>二合</gloss>酷舍<gloss>引</gloss>屹囉<gloss>二合</gloss>那誡哩婆<gloss>二合</gloss>吽<gloss>引二</gloss>\n\n唵<gloss>引</gloss>參<gloss>引</gloss>誡三摩<gloss>引</gloss>提倪也<gloss>引二合</gloss>那誡哩婆<gloss>二合</gloss>吽<gloss>引二</gloss>\n\n唵<gloss>引</gloss>摩尼作訖囉<gloss>二合</gloss>鉢囉<gloss>二合</gloss>嚩栗多<gloss>二合</gloss>野吽<gloss>引一</gloss>"
+   },
+   "page_type": "text",
+   "archive_metadata": {
+    "bytes": 362418
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/69f1344a365e3fcae574e0d1/3.jpg",
+   "image_height": 1020,
+   "image_width": 2000
+  },
+  "syllable_soup": {
+   "note": "Strijataka p.13 (#5915): a manuscript read one syllable at a time",
+   "id": "69906559726f64800c10be84",
+   "book_id": "69906559726f64800c10be77",
+   "page_number": 13,
+   "ocr": {
+    "data": "<lang>Sanskrit</lang>\n<page-num>12</page-num>\n<warning>Ink is slightly faded in some areas; paper edges are worn and frayed.</warning>\n\n<margin>स्वजा</margin>\nशोगका मानुगे गे पुत्र रित्ना सट्टगम्पग ए २१॥ श्र्व जी ॥॥ गुणा नि ते श्वर्य ता गुण बता\nसाधी पुरं ध्र्य्द तिथि शजी व जे ॥ मो मा दि भागे च शशांक लग्न योः सदृत्त्ताण व्येव म\n<margin>१२</margin> द्वो विशेषतः ॥ २१ ॥ दासी दुष्टत्मा पति त्र काय ध्यानी चर ता यमरा शे त्रिशा शेतु कुजा दि\nखगाना मुक्त्त मिदं ब लं तु समीरणा ॥ २२ ॥ अन्यो न्य रागे शिति दर्शनो चे स्याता मशंशे\nशव सौत शस्त्री ॥ उ द्वेर्ने रा चार रता म म ॥ दाधि सुयोग मुक्ता राम पत्नज त्र ॥ २२ ॥ यदा थवा\nमार्ग वरशिल लग्ने कुं बांश के भास्कर नक वी ली ॥ दिले शब्दरो स्थित काम जा जावान लो बणा\nशास्त्र ति योग नीत्या ॥ २२ ॥ कामे सितो म्मय ह योग दर्शनै व जो डु ने का पुरुषो धवा नृवत\nह्ली बो द्विदा को मिति वाच रो दिनी स्थिति रय ह दि प्रस्तौ द्विका वज न ॥ २३ ॥ सपाप र ए पि\nचपाप दृश्हे मदे रेखात्यकधरा वशा स्यात् ॥ एवं धरा जे वि धनाच वाच्य क न्ये व मदे विज\nरावत सा ॥ २४ ॥ वै धम्ये मतिमरणे गुरु व ले षु बामा सो प्या सु जे धिक मदे षु भवेत्पुन र्न\nपाये रे मदे परिह ता सबले क मित्र सो म्ये स्थि ते नर र ति व्यवहार शा च ॥ २५ ॥ अन्योन्य\nभाव गत योर वनी ज का व्यो स्पा है ध- की : रि ए षु धिस ह से सदृशो वशि ॥ सो माद रेत्पु गुरु\n\n---\n\nबो यदि काम गावे मुक्ता न या चर ति पाप व शो विशे षात् ॥ २६ ॥ कु ने नि जे मे नक वी दु का\nपे त ह वै मात्रा कुल यें कु दृ छे ॥ के अंश के स्वच य मे द्वितै स्त्री रुग यो निरें वे सुरा सु ह ए\n२७ ॥ म् दु र ति म दें शें ना स्त्र तो नी व राशो न व ति जनन काले कुर्म क तचिन्न ती ॥ राशि\nज व न ति का मास क्त एवं स को पो मदुर ति कु चु वो सो स्त्री बु जो लः प्रदिष्टा ॥ २८ ॥ बोधे\nय दि रा श्व तुरो नु जै व नास कुलः नागत मति श्वशा क्के गसो नाग्ने यु को निय र्थशा व मां दे म वो\nतित्व दो म सिन स्त ये व ॥ २९ ॥ स व्या क वी ते रु द ये सुखा न्ति ता व शा दु धं ते दो शक लो २१\nस द्रु एगा: काम ज्ञ यो म्या रु त तुः पति प्रिया न्नी व योजा व कला र्ध संयु ता ॥ ३० ॥ सितै\nदु वि म्र् व्य गे षु यो षा ससा रव्य सारा गुण श्री ज यु क्ता ॥ सो म्य ग्र हे व प्य खिला षु लगो मि\nसान्न पाना बर सा र नो गा ॥ ३१ ॥ लग्ने मगं के ह दि मो लि कं न्याशि ले व्य पुत्रा शि ति ने\nन पत्न्या सित कु जे स्या त्तु स न्ततीति योगे सि ता र्क योः स्त्री स्मर ने न त घा ॥ ३२ ॥ पा पे म्\nति स्त्रे विध वा वशास्साध मा रा के न्तु प तिः सके च ॥ तस्ये यस च्च यनि के त ने ता स्व\nयं मतिः स धु चरे षु सम्पक ॥ ३३ ॥ उत्तर वीर्ये बुध सो म्प्यु क्रेः समा श्रिते मध्य बल रा\n\n<vocab>ज्योतिष (Jyotisha), त्रिशांश (Trimsamsa), सप्तम (Saptama), योग (Yoga), लग्न (Lagna), स्त्रीजातक (Stree-jataka), कुज (Kuja), भास्कर (Bhaskara)</vocab>"
+   },
+   "archive_metadata": {
+    "bytes": 8671335
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/69906559726f64800c10be77/13.jpg",
+   "image_height": 8100,
+   "image_width": 10800
+  },
+  "sanskrit_read": {
+   "note": "same book p.3: read in words — negative control",
+   "id": "69906559726f64800c10be7a",
+   "book_id": "69906559726f64800c10be77",
+   "page_number": 3,
+   "ocr": {
+    "data": "<lang>Sanskrit</lang>\n<meta>Horizontal pothi-style manuscript folio. The text appears to be from a Jyotisha (astrological) work, specifically related to the effects (phalam) of planets (the Sun/Surya) in different houses of a woman's horoscope (Strijataka).</meta>\n\nदशनोदरपीडिता भवति मिन्न बिलग्न जवांगगा ॥ २२ ॥ इति लय फलं ॥ अथ ध्याय\nहाणां प्रत्येकांयकाध्याय फलं ॥ १ ॥ मूर्त्तेरविः श्रीविद्युतं प्रसते नारी तथा जन रुजां स\nमेतां ॥ दुष्ट स्वभावां सुरुशंरुतः क्रोधिनी च हीनां ॥ २ ॥ धनान्वितोः क्रोध\nमधान्यहीना नारी प्रसते गत सो हूदैवे ॥ कमेर आपणौ नीगत शक्ति नाना सुधप्रियं धे धर\nतारं बत्ता च ॥ ३ ॥ तृत्तीयगस्त्री शत करः प्रसूते नारीं सा रान बा समेत्ता ॥ नीरोग दे\nहा विनियंत्रधानो सुसेमती वाक्य विशारदा च ॥ ४ ॥ चतुर्थगस्तीक्षण करः प्रसते नारी\nसरोगगुल्द रोगश्च देश गत बंधुशोकं धनधान्य हीनां ॥ ६ ॥ सुम्मया जा मती व र्जितां च\n१ सुत स्थितः स्वल्प सतो प्रसूते नारी प्र धंना सुत संयुता च ॥ स्थूलाथदंतापि तु\nमातृ भक्ता प्रियंवदा बलण समेत्ता च ॥ ५ ॥ षष्ठे दिने शत्रुकुरुते प्रगल्भो हतारि पक्ष\nवनिता विदग्धी ॥ यथा तया श्रीयकर्म रत्या धर्मानुरूपा सुत जे सुरूपो ॥ ६ ॥ सूर्यो\nस्त संस्थः पतिना विमुक्ता नारी तथा सर्व सुरे विमुक्ता ॥ सदै व रो ज्ञ प्रणयै न ही नांक\n\n<vocab>Sanskrit, Devanagari, Jyotisha, Phalam, Surya, Nari, Strijataka, Bhava, Astrological results</vocab>"
+   },
+   "archive_metadata": {
+    "bytes": 7359432
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/69906559726f64800c10be77/3.jpg",
+   "image_height": 8100,
+   "image_width": 10800
+  },
+  "negative_number": {
+   "note": "Shiva Svarodaya (#5915): a page numbered -145",
+   "id": "699066542ec9f7db5717a0a3",
+   "book_id": "699066532ec9f7db5717a012",
+   "page_number": -145,
+   "ocr": {
+    "data": "<lang>sa</lang>\n<meta>Red cloth book cover with a damaged rectangular paper label pasted in the center.</meta>\n<warning>The paper label is torn and stained on the left side, partially obscuring the first character of the second line.</warning>\n\n<insert>\n\n# शिवस्वरोदय ।\n## <unclear>भा</unclear>षाटीका ।\n\n</insert>\n\n<vocab>शिवस्वरोदय, Shivasvarodaya, भाषाटीका, Bhashatika, Swara Yoga</vocab>\n\n<detected-images>\n[{\"description\": \"Rectangular paper label with a decorative woodcut-style floral vine border, containing the title of the work in Devanagari script.\", \"type\": \"decorative\", \"bbox\": {\"x\": 0.237, \"y\": 0.407, \"width\": 0.520, \"height\": 0.173}, \"gallery_quality\": 0.6, \"museum_rationale\": \"A typical example of early modern Indian book packaging, showing the transition from manuscript culture to printed labels on Western-style bindings.\"}]\n</detected-images>"
+   },
+   "archive_metadata": {
+    "bytes": 1405893
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/699066532ec9f7db5717a012/145.jpg",
+   "image_height": 5290,
+   "image_width": 2949
+  },
+  "duplicate_first": {
+   "note": "Prashna Deepakam p.19: the first of three pages carrying one image",
+   "id": "699066672ec9f7db5717a283",
+   "book_id": "699066672ec9f7db5717a270",
+   "page_number": 19,
+   "ocr": {
+    "data": "<lang>Sanskrit</lang>\n<meta>Library catalogue slip from Shri Raghunatha Temple MSS. Library, Jammu; handwritten entries on a printed form</meta>\n\n->Shri Raghunatha Temple MSS. Library,<-\n->JAMMU<-\n\n---\n\nNo. **१२८७ घ**\n\nTitle **प्रश्नदीपकम्**\n\nAuthor **मलानीनाथः**\n\nExtent **६ पत्राणि** Age \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\n\nSubject **ज्योतिषम्**\n\n---\n\n<vocab>प्रश्नदीपकम्, Prashnadīpakam, मलानीनाथः, Malanīnātha, ज्योतिषम्, Jyotiṣam, astrology, Jammu, manuscript</vocab>"
+   },
+   "archive_metadata": {
+    "bytes": 1836193
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/699066672ec9f7db5717a270/19.jpg",
+   "image_height": 3579,
+   "image_width": 6157
+  },
+  "duplicate_second": {
+   "note": "Prashna Deepakam p.20: the same image as p.19",
+   "id": "699066672ec9f7db5717a284",
+   "book_id": "699066672ec9f7db5717a270",
+   "page_number": 20,
+   "ocr": {
+    "data": "<lang>Sanskrit</lang>\n<warning>The manuscript label is a physical tag pasted on a red cloth background; it shows some wear and minor fraying at the edges, but the text remains clear and legible.</warning>\n\n### Shri Raghunatha Temple MSS. Library,\n### JAMMU\n\n---\n\n| | |\n| :--- | :--- |\n| **No.** | १२८७ घ |\n| **Title** | प्रश्नदीपकम् |\n| **Author** | मलानी नाथः |\n| **Extent** | ६ पत्राणि |\n| **Age** | |\n| **Subject** | ज्योतिषम् |\n\n<meta>Footer: CC-0 Dharmartha Trust J&K. An eGangotri-Vaidika Bharata Initiative</meta>\n\n<vocab>प्रश्नदीपकम् (Prashnadipakam), ज्योतिषम् (Jyotisham), पत्राणि (Patrani), मलानी नाथः (Malani Nathah)</vocab>"
+   },
+   "archive_metadata": {
+    "bytes": 1836193
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/699066672ec9f7db5717a270/20.jpg",
+   "image_height": 3579,
+   "image_width": 6157
+  },
+  "dense_latin": {
+   "note": "the densest legible page of the draw: 9,391 letters on 1000×1558 px (166 px² a letter) — negative control",
+   "page_number": 883,
+   "book_id": "69b62f861c1c21a3737f6a83",
+   "archive_metadata": {
+    "bytes": 303744
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/69b62f861c1c21a3737f6a83/883.jpg",
+   "id": "69b62f861c1c21a3737f6df6",
+   "ocr": {
+    "data": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>141</page-num>\n<header>IN I. EPIST. AD COR. CAP. XII.</header>\n<sig>K</sig>\n\nne contemnatis vnum ex pusillis iis qui in me credut, addens gratem poenam cotemptoribus, Matt. 18. b. 10. SED INVICEM ALIA PRO AL. Haec fecunda caufa eft, qua minoribus plus honoris ha beri declarat. Sic enim Deus Pater curavit vt cuiufque membri propria falus in alterius membri falute fita fit, quo maior effet in-ter ipfa charitas atque concordia. Si enim aeque falus maioris in fa-lite minoris confiftit, atq; e contra, eque minora atq; maiora cura-da funt: &, fi fumma intereffe infirmis abreptis: pari ergo ftudio & folicitudine fumma & infirma conferuanda.\n\n<margin>Alijs fag p.u.m. honore affi cium fine doles</margin> 26 Et fie patitur vnum membrū, fimul patiūtur omnia membra: fiue glorificatur vnum membrum, fi-mul gaudent omnia membra.\n\nET SIVE PAT. Faciunt haec ad expofitionem fuperiorū, & ad euidentiam rei praefentis. Dei nanque prouidentia in tanta mem-brorum diuerfitate fummam coniunctionem adornauit, vt omnia cōmunia deut, fine aduerfa, fiue fecunda, triftia, fiue laeta accide-rint. Sic videmus aquē fumma infirmis accurrere, inclinari, profpi-cere, arque infima fupremis. Verbi gratia, Calcaneo infigitur fpina fentit totum corpus ac dolet, inflectit fe caput, oculis diligenter in-fpiciunt, manus adfunt, infixam fpinam retrabūt: malagma vulneri imponunt, ac ligaturis circundant. Ad hec, fi forte quis calcet pede ruum, is non clamat (qui non poteft) fed lingua ftatim pro eo cla-mat, & dicit, Quid me calcaftum tamen ipfa non conculcetur. MVtinam in Ecclefia ita fieret, vt quilibet & fentiret & clamaret feipfum algere, fitire & efurire in pauperibus. Effet autem in Ec-clefia haec <term>συμπάθεια</term>, fi cogitaremus noftram falutem requirere vt falutem fratrum curemus. Nam fe mutuo comitatur noftra falus & falutis proximorum cura quōd fi cōmunis eft falus & nobis & proximis, confentaneum eft vt ignominia & gloria figt etia com-munia. Ergo nec inuidiae locus effe debet nec contemptui. SIVE GLORIFICATVR VNVM M. Glorificare hic late capitur pro be ne habere & feliciter. M q.d. Si externo aliquo honore vel orna-mento afficiatur: fi bene habeat: veluti, <term>caput</term> fi coronetur, & reli quis membris gloria inerit & hilaritas quaedā: fi pulchri fint oculi, & totū corpus decorent neceffe eft. Hic videas Paulum tria con-iunxiffe. primum, ne fchifma fiat in corpore: alterum, vt membra eadem folicitudine pro fe mutuo laborent: tertio, vt inter ea fit mutua <term>συμπάθεια</term>: vt rerum fit illud. Cordate latante vultus floret, Prou. 15. b. 13. Hinc manifeftiffimē concluditur, eos qui non curant proximorum falutem, mortuos effe in Chrifto, neque pro mēbris corporis eius haberi poffe. Et quemadmodum fi videremus quem piam fibiipfi effodere oculum, illam vt amentem & phreneticum deploraremus: &, fi cōtingeret vt fuipfius manus dilaceraret & co mederet, totū id furori & infaniae adfcriberemus: fic illi putādi fūt & furere & infanire qui fratres & proximos perfequutionibus ex-trudunt ac deturbant ex fuis fortunis vel eos maledica lingua lace rant vel infamant. Quae omnia idcirco eueniunt quōd non exifti-metur communis & eadem fors omnium membrorum Chrifti.\n\n27 Vos autem eftis corpus Chrifti & membra ex parte.\n\nVOS AVTEM ESTIS e. Poftquā Apoftolus fufe fimilitudinem tractauit, nunc illam paucis fuo applicat inftituto, & argūmetatur à minori, in hunc modum. Si natura tātam membrorum in corpo-re concordiam curauit, nec finit corpus effe feditiofum, quāto ma-gis gratia Dei (quae natura potentior eft) huiufmodi animorum concordiam in corpore Chrifti efficere debet, neque ferre vt cor-pus Chrifti fit feditiofum:tidē curant fumma vigilantia magiftra tus, imperator exercitus, nauclerus. CQuicquid igitur quifque no-ftrum habet, fibi in communem fratrum edificationem dati fciat: adeóque cōferat in medium, neque intus veluti fepultum premat, aut quafi proprio fruatur. Qui excellit maioribus gratis, no faftu elatus alios defpiciat, fed cogitet nullum effe tam pufillum qui nō fit vfi. Sicuti reuera infimus etiam piurō pro fua tenuitate fructi-ficat, nequod fit inutile in Ecclefia membrum. Qui non pollent tanto honore, non inuideant maioribus, neque fuum illis obfe-quium detrectent: fed teneant ftationem in qua funt collocati. Si pes in puluere, in coeno & terra immunditia verfatur, id fert pa-tienter, neque propterea ita degere detrectat quōd manus aut ge-nua idem non patiantur. M ita in Ecclefia quilibet debet effe pa-tientiffimē attentus ad fuum officium exercendum, quāquam pau cos aut nullos in eo videat occupari. Caeterum Paulus Ecclefiam ideo corpus Chrifti appellat quōd illum habeat caput, & quo lu-mē agnitionis & motus bonarum operationum illi fuppeditatur. Impij non funt de Ecclefia: quia Chriftum caput non habent, nec ab illo viuificantur. ET MEMBRA EX PART. CQuidam hanc particulam additam putant quia non effent Corinthij vniuerfalis Ecclefia, fed tantum pars effe Ecclefiae vniuerfalis: que vbique toto terrarum orbe extat. CQui fenfus videtur effe coactior. hoc igitur potius referendum eft ad illam mēbrorum diuifionem cuius me-minerat. Membra igitur ex parte funt, fic vt cuiq; attributa eft ftu-portio & foitium officium. Ad hunc fenfum cōtextus ipfe nos du-cit. Alij tamen legunt, Membra ex mēbro. hoc fenfu, quōd quem-admodum in membris corporis vnum videtur ex altero nafci, at-que per illud influxus & inftillationes à fummis & praecipuis mē-bris recipit: ita in Ecclefia infimi per medios, & medij permiffus <margin>Al. Dein-de [confi-tuit] pote-ftates. p.d.</margin> inftaurantur, atque functiones Ecclefiafticae & inter fefe debent effe connexae, & à fe inuicem pendere.\n\n28 Et alios quidem conftituit Deus in Ecclefia, pri-mū Apoftolus, deinde Prophetas, tertio doctores: deinde poteftates, deindedona fanationum, fubfidia, gobernationes, genera linguarum,\n\n<column-break/>\n\nET ALIOS QVIDEM. MSuprā meminit facultatum, feu viriſi ac donorum fpiritualium: Cnunc incipit de officijs differere, & de iis agere qui donis huius generis ornantur. M Et quod proponi-tur explicatio eft fententiae iam probatae, Vos eftis corpus Chri-fti & membra ex parte. Recenfet enim fingulatim quas partes habeat hoc corpus. CQuem ordinem diligenter notare conuenit: Neque enim dominus miniftros inftituit, nifi prius inftruxerit neceffariis donis, aptófque reddiderit ad munus fuum exequendū, Vnde colligendum eft.fanaticos effe, malóque fpiritu impelli, qui facultate deftituti irrumpunt in Ecclefiam. quemadmodum multi impulfum Spiritus iactant, & arcana Dei vocatione gloriantur: interea funt indocti & penitus rudes. Atqui hic eft ordo naturalis vt dona minifterium ipfum praecedant. Sicuti ergo fuperius do-cuit, quicquid fingulis darum effet à Deo in medium debere con-ferri: ita nunc fic diftributa effe officia commemorat, vt coniun-ctis ftudiis omnes Ecclefiam aedificent. PRIMVM APOSTOLOS: MNon fruftra in his refcendis minifteriis ordinem expreffit A-poftolus, dicendo primum, fecundo & tertio, &c. Nam hac diligē-tia expreffum voluit quo loco donum linguarum haberet, quod illi tantopere fufpiciebant. Ipfum poft alia omnia recenfet. Et quū ait Deum poiuiffe primum Apoftolos, &.declarat minifteria non effe omnibus promifcuē conceffa. Nequevacat confolatione quōd ifta teftatur à Deo effe pofita: quia per hoc intelligimus vocatio-nes non temere aut cafu euenire, verum ex Deivoluntate atque confilio. Ideo nobis ambigendum non eft, quando in minifterio laboramus, Deum nobis adfuturum, quum nos in ea ftatione col-locauerit. CNon recenfet aliam omnes fpecies, neque etiam opas fuit: tantum enim voluit exempla proponere, Alibi plenior eft e-numeratio munerum quae ad perpetuam Ecclefiae regimen requi-runtur. eph.4.b.11. MEx iis autem quae hic enumerat, aliqua mini-fteria perpetua funt in Ecclefia, nonnulla temporaria. CPetpetua funt quae Ecclefiae regimini funt neceffaria: temporaria verò quae initio ad fundandam Ecclefiam & erigendum Chrifti regnum deftinata, paulò poft defierunt. Paftores, doctores, guberna-tiones & alia huius generis neceffaria funt, & femper in Ecclefia oportet vt habeantur: verùm Apoftoli qui praedicunt futura, & qui miracula, ftim, ne funt neceffarij. Nam Apoftolos crea-uit Dominus vt Euangelium fpargerent per totum orbem: nec fingulis attribuit certos fines aut parochias: fed quocunque ve-niffent, fungi legatione voluit, apud omnes gentes & linguas. Vn-de quum in aliqua ciuitate vel prouincia fuo munere functi effeti aliò fe ftatim conferrent. Quod facere non licet paftoribus vel Epifcopis, quin certis locis & Ecclefiarum fedibus deputentur: nec mandatum habent praedicandi per orbem vniuerfum Euan-gelij, fed curandae Ecclefiae quae eorum fidei commiffa eft. DEIN-DE PROPHETAS. Ad Ephefios Cap.4.b.11. Euangeliftas fub iun-git Apoftolis: praeterit hoc loco. tranfit enim ftatim à primo gra-du ad Prophetas: quo nomine intelligit eos qui dono vatici-nandi pollerent. fed fingulari non modò interpretandz, fed e-tiam in praefentem vfum prudenter accommodandz Scripturae gratia pollerent. Nam Prophetiam praefert omnibus aliis donis: quia plus aedificationis afferat.quod elogium in rerum futurarum praedictionem minimè competeret. Deinde quum definit Pro-phetae munus (vel faltem tractat quid praecipue agere debeat) dicit eum incumbere in confolationem, exhortationem & doctrinam: haec autem à vaticiniis funt diftincta. Sint ergo nobis hoc loco Prophetae primum eximij fcripturae interpretes, deinde non vul-gari prudentia & dexteritate praediti ad circunfpiciendam praefen-tem Ecclefiae neceffitatem, vt appofite loquantur, & hac ratione quafi diuinae voluntatis internuntij. TERTIO DOCTORES. MHi fuerunt qui docendi munus in vnaquaque Ecclefia fufcipiebant. CHorum munus eft vt fana dogmata retineant ac propagent, quō maneat in Ecclefia religionis puritas. Quāquam variē accipi-tur hoc nomen: & hic forte paftorem magis fignificat. nifi forte malis generaliter accipere pro omnibus qui docēdi facultate funt inftructi: qualiter Act.13.c.15. vbi etiam Lucas ipfos Prophetis con iungit. Nam functionem hane Iudaei habuerunt in fuis fynagogis: M quae vtinam hodie in omnibus Ecclefiis ftudiofe retineretur. Nullas cathedras Ecclefias oporteret effe quae fchola adiunctam non haberent. Poffunt enim & hoc nomine puerorum magiftri & praeceptores intelligi. DEINDE POTESTATES. Hoc donum facultas eft Spiritus in fceleratos vindicandi, & caftigandi eos quae verbum fimplicis admonitionis contemnunt, quo ipfi caftigati re-fipifcant, & caeteri timorem habeant. DEINDE DONA SAN. De poteftatibus & fanationum dono diximus hoc ipfo capite, verfu 9. & 10. AMB Inter initia verò donum fanationum effe oportuit, vt fundamenta fidei acciperent firmitatem: nunc autem opus non eft: quia populus populum ducit ad fidem. quum videntur bona eorum opera & praedicatio fimplex. SVBSIDIA. MQuic donum feu munus olim fuit quod hodie eft incognitum, nifi ad diaco-mam referatur, hoc eft pauperum cura. Duas autem diaconiq fpe-cies ponit Rom. 12. b. 7.8 GUBERNATIONES. MQui hoc dono funt ornati, apti funt ad regendum, & politica recte prudenterque nouerunt tractare. Nam & Ecclefia Chrifti fuam habet politiam. Et quia vnus paftor omnia per feipfum obire non poteft, adiunge-bantur ei antiquitus ex populo aliqui feniores, periti & fcientes rerum fpiritualium. qui erant parochiae quodammodo fenatus, cqui & plebem in morum honeftate continerent. Quod indicat Paulus alibi, quum duplicem ordinem presbyterorum ponit, 1.Ti moth.5.c.17. M Hi vnà cum paftore deliberabant de Ecclefiae cu-ra atque inftautatione. Ergo gubernatio ex presbyteris confta-bat, qui grauitate, experientia, authoritate prae cxteris valebant. BQuales hodie habent difciplinae Ecclefiafticae praefecti & mo-rum cenfores. GENERA LINGVARVM, Sub generibus linguarū\n\n<vocab>Apostolus, Prophetae, Doctores, Poteftates, Dona sanationum, Subsidia, Gubernationes, Genera linguarum, Ecclesia, Ministerium, Charitas, Membra corporis, Spiritus Sanctus</vocab>"
+   },
+   "page_type": "text",
+   "image_height": 1558,
+   "image_width": 1000
+  },
+  "tibetan_pecha": {
+   "note": "a pecha leaf, 1956×308 px, aspect 6.4 — negative control for the strip rule",
+   "id": "6a37c29163d3f620b49ff98c",
+   "book_id": "6a37c29163d3f620b49ff93b",
+   "page_number": 81,
+   "archive_metadata": {
+    "bytes": 147287
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/6a37c29163d3f620b49ff93b/81.jpg",
+   "image_height": 308,
+   "image_width": 1956,
+   "ocr": {
+    "data": "༄༅། །ཐམས་ཅད་དང་བྲལ་བས་གནས་མེད། མཐར་འདིར་སོང་མེད་ཅིང་འཆར་སྒོ་མ་འགགས་པས་འགག་མེད། རྒྱུ་ལས་མ་བྱུང་བས་རྐྱེན་གྱིས་མི་འཇིག་པ། དུས་གློ་བུར་དུ་མ་བྱུང་བས་\n ་་་་་་་་་་་་་་་་་། །ཐམས་ཅད་དང་བྲལ་་་་་་་་་་་་་་་་དང་། །ཐམས་ཅད་དང་བ་ལ་་་་་་་་་་་་་་་ ་་་་་་་་་་་་་་་\n ་་་་་་་་་་་་་།་་་་་་་་་་་་་་་་བས་གནས་མེད། མཐར་་་་་་་་་་་་་་་་འཆར་སྒོ་མ་འགགས་པས་་་་་་་་་་་་་་་་ལས་མ་བྱུང་བས་རྐྱེན་གྱི་ས་མི་འཇིག་པ། དུས་གློ་་་་་་་་་་་་་་་\n<leaf-break/>\nདུས་ཐམས་ཅད་པ། སྐྱེ་འགག་གནས་གསུམ་དང་བྲལ་བས་རྒྱུན་ཆད་མེད་པ། རྟོགས་མ་རྟོགས་ཐམས་ཅད་ལ་བཟང་ངན་མེད་པར་གནས་པས་འཕེལ་འགྲིབ་མེད་པ། ངོ་ཤེས་མ་ཤེས་ཀུན་ལ་ཡོད་དུས་ཐམས་ཅད་པ། སྐྱེ་འགལ་གནས་གསུམ་དང་བྲལ་བའི་རྒྱུན་ཆད་མེད་པ། གནས་པས་འཕེལ་འགྲིབ། ངོ་ཤེས་མ་ཤེས་ཀུན་ལས་ཡོད་པ། ངོ་ཤེས་མ་རྟོགས་ཐམས་ཅད་པ། བདེ་བ་ལ་བརྟེན་པ་ཡིན་པས་འཕེལ་འགྲིབ་པ་ཡིན་པས་བདེ་བ་ལ་བརྟེན་པ། ངོ་ཤེས་མ་ཤེས་པ་ཡིན་པས་བདེ་བ་ལས་ཡོད་པ་ཡིན་པས་བདེ་བ་ལ། བདེ་བ་ལ་བརྟེན་པས་བདེ་བ་ལས་ཡོད། བདེ་བ་ལ་བརྟེན་པའི་ཕྱིར་རོ། །བདེ་བ་ལ་བརྟེན་པ་ཡིན། བདེ་བ་ལས་ཡོད་པས་བདེ་བ་ལས་ཡོད་དོ། །བདེ་བ་ལས་ཡོད་པས་འཕེལ་འགྲིབ་མ་ཡིན་པས་བདེ་བ་ལས་ཡོང་བ་ཡིན་པས་བདེ་བ་ལས་འཕེལ་འགྲིབ་མ་ཡིན། བདེ་བ་ལས་ཡོད། བདེ་བའི་ཕྱིར་རོ། །བདེ་བ་ལས་ཡོད། བདེ་བར་གནས་པས་འཕེལ་འགྲེལ་བ་ཡིན་པས་བདེ་བ་ལ་འཕེལ་འགྲིབ་མ་ཡིན་ཏེ། བདེ་བ་ལས་ཡོད། བདག་གིས་བདེ་བ་ལས་ཡོད་པས་གནས་པས་འཕེལ་འགྲིབ་མ་མིན་པས་བདེ་བ་ལས་ཡོད་དང་བྲལ་བའི་ཕྱིར་རོ། །བདེ་བའི་ཕྱིར་རོ། །བདག་གིས་བདེ་བ་ལས་འཕེལ་བ་ཡིན་པས་བདེ་བའི་ཕྱིར་རོ། །བདེ་པ་ལས་ཡོད། བདེ་བ་ལས་ཡོད། བཞི་པ་ལས་ཡོད། བདེ་བ་དང་བྲལ་བའི་ཕྱིར་རོ། བདེ་བ་ལས་ཡོད། བམ་པོ་ལས་ཡོད། བདག་གིས་འཕེལ་འགྲིབ་མ་ཡིན\nདུས་ཐམས་ཅད་པ། སྐྱེ་འགག་གནས་གསུམ་དང་བྲལ་བས་རྒྱུན་ཆད་མེད་པ། རྟོགས་མ་རྟོགས་ཐམས་ཅད་ལ་བཟང་ངན་མེད་པར་གནས་པས་འཕེལ་འགྲིབས་མེད་པ། ངོ་ཤེས་མ་ཤེས་ཀུན་ལ་ཡོད་པས་འཕེལ་འགྲིབ་མ་ཡིན་པས་འཕེལ་འགྲིབ་མ་ཉིད་པ། བདེ་བ་ལས་འཕེལ་འགྲིབ་མ་ཡིན། བདེ་བ་ལས་འཕེལ་བས་འཕེལ་འགྲིབ་མ་ཡིན\n<leaf-break/>\nཔས་ཐོབ་ཤོར་མེད་པ། དུས་ཀུན་ཏུ་འགྱུར་བ་མེད་པས་གང་བྲི་མེད་པ་ལ་སོགས་པ་སྐྱེ་མེད་ཀྱི་དོན་ལ་སོ་སོར་རྟོག་པའི་ཤེས་རབ་ཀྱིས་བརྟགས་ཤིང་དཔྱད་ནས་སེམས་ཉིད་ཀྱི་གཤིས་སམ། གཞི་རྩ་\nབས་ཐོབ་ཤོར་མེད་པ། དགེ་བ་བས་བས་བས་བས་བས་བ་བས་བས་བས་བ་བས་འཕགས་པ་བས་བས་བས་བས་བས་འཕགས་པ་བས་བ་བས་བས་བ་བས་བ་བས་བས་བས་འཕགས་\nཔས་ཐོབ་ཤོར་མེད་པ།\n<leaf-break/>\nཆོད་པའི་ཉམས་མྱོང་རྡོ་རུས་ཐུག་པར་དཔྱད་དོ། །དེ་ལྟར་དཔྱད་པས་སེམས་ཀྱི་གནས་ལུགས་བསམ་བརྗོད་ལས་འདས་པ་ཉམས་སུ་མྱོང་ཞིང་། མཐར་དཔྱོད་བྱེད་ཀྱི་སོ་སོར་རྟོག་པ་ཉིད་ཀྱང་རང་\nཞི་རང་ཐིམ་དུ་སོང་ནས། རྣམ་པར་མི་རྟོག་པའི་ཡེ་ཤེས་འཆར་བར་བཤད་དེ། གྲུབ་ཆེན་ས་ར་ཧས། གདོད་ནས་དག་པ་ནམ་མཁའི་རང་བཞིན་ལ། །ཁ་བལྟས་ཤིང་བལྟས་ཤིང་མཐོང་བ་འགགས་"
+   }
+  },
+  "hindi_prose": {
+   "note": "Hindi prose: many one-akshara words that are words — negative control for rule 2",
+   "id": "6a410c23d95727ee3e0ee8a9",
+   "book_id": "6a410c23d95727ee3e0ee847",
+   "page_number": 98,
+   "archived_photo": "https://images.sourcelibrary.org/archived/6a410c23d95727ee3e0ee847/98.jpg",
+   "ocr": {
+    "data": "<scan-quality>good</scan-quality>\n<language>Sanskrit, Hindi</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>१७८, १७९</page-num>\n<header>रसपद्धतिः | रसोैषधि योग-प्रकरण</header>\n\nस्वर्णभस्म १ भाग, रजतभस्म २ भाग, नागभस्म ३ भाग, वङ्गभस्म ३ भाग, लोहभस्म ३ भाग, अभ्रकभस्म ३ भाग, मुक्तापिष्टि ३ भाग, प्रवालपिष्टि ३ भाग और रससिन्दूर ४ भाग लें । सर्वप्रथम रससिन्दूर को एक खरल को मर्दन कर अन्य भस्मों को मिलाकर कमलपुष्पस्वरस, बिल्वपत्रस्वरस, वासापत्र स्वरस नागरमोथा क्वाथ, हरिद्रा स्वरस, शाल्मलीमूल स्वरस (सेमरमुशली स्वरस) से ७-७ भावना दें । पुनः चमेली पुष्पस्वरस, दुपहरियापुष्प (अम्लानपुष्प = दुपरिया फूल) के स्वरस की ७ भावना दें, कदलीपुष्प की ७ भावना तथा अन्त में कस्तूरी के जलीयद्रव की १ भावना या ७ भावना देकर अच्छी तरह छाया में सुखाकर शीशी में रख लें । इसे वसन्तकुसुमाकर रस कहते हैं । इस औषधि की २ वल्ल (६ रत्ती = ७५० मि. ग्रा.) की मात्रा में शहद से लेने पर रसायन गुणों में श्रेष्ठ है, शुक्र और आयु को बढ़ाता है । सभी स्त्रियों और पुरुषों के शुक्र-आर्तव (Sperm-Ovem) के दोषों को दूर करता है । क्षय-कास और बीज दोषजन्य विकारों को नाश करता है । अधुना १२५ मि. ग्रा. की मात्रा में दें ।\n\n### वसन्तराज रस-४४\n\n> सूतं गन्धकलोहमभ्रकनकं ताप्यं च ताम्रं मृतं\n> वङ्गं मौक्तिकविद्रुमं विमलकं कान्तं च नागं समम् ।\n> वाराहीद्रवभावितं मुनिदिनं कुप्यां न्यसेन्मुद्रितं\n> पाच्यं बालुकया सुपूर्णपिठरे घस्रं सुशीतं पुनः ॥ २१९ ॥\n> कस्तूरीघनसारकुङ्कुम रसैः श्रीखण्डलामज्जकै-\n> रम्लानस्य रसेन भावितमिदं त्रिस्त्रिः सुसिद्धो रसः ।\n> नाम्ना राजवसन्त एष कथितः पित्तामयिभ्यो हितः\n> क्षीणानां क्षतकासिनां मधुसितायुक्तो द्विवल्लोऽशितः ॥ २२० ॥\n\nशुद्ध पारद, शुद्ध गन्धक, लोहभस्म, अभ्रकभस्म, स्वर्णभस्म, स्वर्णमाक्षिकभस्म, ताम्रभस्म, वङ्गभस्म, मोतीभस्म, प्रवालभस्म, विमल (रौप्यमाक्षिक) भस्म, कान्तलोहभस्म, और नागभस्म प्रत्येक द्रव्य १-१ भाग लें । सर्वप्रथम पारद + गन्धक की कज्जली बनावें पुनः सभी भस्मों को मिलाकर उस कज्जली के साथ मर्दन करें और वाराहीकन्द क्वाथ की ७ भावना देकर ७ दिनों तक मर्दन करें । इसके बाद ७ वार कपड़मिट्टी की हुयी आतसी शीशी में उक्त भावित औषधि को रखकर बालुकायन्त्र में १ दिन तक पकावें । स्वाङ्गशीत होने पर औषधि को कुपी से निकाल कर चन्दनश्वेत-खस और दुपहरिया के फूल की ३-३ भावना दें, पुनः कस्तूरी-कर्पूर-केशर के जलीयघोल से ३-३ भावना दें ।\n\nसुखाकर शीशी में रख लें । वसन्तराज नामक यह रसोैषधि पित्तज व्याधिओं के लिये हितकर है । इस औषधि की २ वल्ल (७५० मि. ग्रा.) की मात्रा में मधु\n\n<column-break/>\n\nऔर चीनी मिलाकर खाने से क्षीण-क्षत-और कास (क्षय, उरःक्षत एवं कास) रोग नष्ट हो जाते हैं ।\n\n**विमर्श**—लामज्जक = खस, अम्लान = दुपहरिया, श्रीखण्ड = श्वेतचन्दन का बोधक है । अधुना १२५ मि. ग्रा. मात्रा में दें ।\n\n### कामदेवरस-४५\n\n> श्वेताङ्कोलत्वक्सेन पारदपलं सम्मर्द्य सप्ताहत-\n> स्तत्तुल्यं कनकं तयोः समतुलं गन्धं विशुद्धं पुनः ।\n> मर्द्यं श्वेतहयारिरक्तदहनैस्तालीरसैः सप्तधा\n> गोलं छागलमांसवेष्टितमथो माषैः प्रपिष्टैस्तथा ॥ २२१ ॥\n> तते तैलघृतेऽथवा विनिहितं सिन्दूरतुल्यं यदा\n> जातं तत्क्षणमुद्धरेन्मधुसितासर्पिर्युतं क्षीरपः ।\n> भोज्यं लड्डुकपायसं ह्यनुदिनं सेवेत वन्ध्यां स्त्रियं\n> भोगान् सर्वऋतूद्भवान् सकुसुमान् कन्दर्पकेलीप्रियान् ॥ २२२ ॥\n\nशुद्ध पारद ४ भाग, स्वर्णभस्म ४ भाग और शुद्ध गन्धक ८ भाग लें । सर्वप्रथम एक खरल में शुद्ध पारद रखकर श्वेत अङ्कोलवृक्षत्वक् के स्वरस से ७ दिनों तक मर्दन करें । पुनः धोकर पारद को साफ करें । ततः शुद्ध गन्धक देकर मर्दन कर कज्जली बनावें । इसके बाद उसमें स्वर्ण भस्म मिलाकर मर्दन करें और श्वेत कनेरमूलत्वक् रस की, रक्तचित्रकमूल स्वरस की और ताली = भूम्यामलकी स्वरस की ७-७ भावना देकर गोला बना लें । तत्पश्चात् बकरे का मांस उस औषधि गोलक पर लपेट दें पुनः उड़द के आटे को पानी में गूँथ कर मोटी रोटी जैसा चौड़ा कर मांस वेष्टित औषधि गोले पर आवृत कर (लिट्टी-वाटी जैसा करें) तिलतैल और गोघृत समभाग कड़ाही में प्रतप्त कर उसे सिन्दूर जैसा लाल तल लें तथा कड़ाही से निकाल कर रख लें । अब उस औषध को १ से २ रत्ती = २५० मि. ग्रा. तक की मात्रा में मधु, घी एवं चीनी मिलाकर सेवन करें ऊपर से चीनी मिला उष्ण दुग्ध पान करें । प्रतिदिन लड्डू-खीर आदि दुग्ध निर्मित मिष्ठान्न का भोजन करें । सभी ऋतुओं में उत्पन्न फूलों का आनन्द लेते हुये कन्दर्पकेली कला में निपुण वन्ध्या स्त्रियों का उपभोग (सम्भोग) करें ।\n\n**विमर्श**—औषधि गोलक पर लिप्त मांस और उड़द को हटाकर औषध को काच पात्र में रख लें ।\n\n### कामदेवरस (द्वितीय)-४६\n\n> सूतं गन्धकसम्मितं त्रिकटुकक्वाथेन सम्मिश्रितं\n> गोलं क्षीरविदारिकन्दविवरे न्यस्तं प्रलिप्तं पुनः ।\n\n<vocab>वसन्तकुसुमाकर रस, वसन्तराज रस, कामदेवरस, पारद, गन्धक, स्वर्णभस्म, भावना, बालुकायन्त्र, क्षय, कास</vocab>"
+   },
+   "page_type": "text",
+   "image_height": 1700,
+   "image_width": 2200
+  },
+  "mantra_seeds": {
+   "note": "a litany of seed syllables (ॐ श्रीं ह्रीं) — negative control for rule 2",
+   "id": "6a948a5731b41d9c57444918",
+   "book_id": "6a948a5731b41d9c57444901",
+   "page_number": 23,
+   "archive_metadata": {
+    "bytes": 1781245
+   },
+   "archived_photo": "https://images.sourcelibrary.org/archived/6a948a5731b41d9c57444901/23.jpg",
+   "image_height": 4585,
+   "image_width": 3333,
+   "ocr": {
+    "data": "<scan-quality>good</scan-quality>\n<language>Sanskrit</language>\n<script>handwritten</script>\n<warning>Handwritten Sharada script</warning>\n<page-type>text</page-type>\n\nॐ श्रीं ज्ञानप्रियायै नमः अदेकजयायै ऐं ह्रीं दयप्रियायै ॐ श्रीं प्रकाशरूपायै ॐ ह्रीं श्रीं ह्रीं क्लीं ह्रीं भुवनेश्वर्यै ॐ ह्रीं ह्रीं दुधिये ॐ श्रीं क्लीं भुवनेश्वर्यै ॐ श्रीं भवेसुदै ॐ ॐ श्रीं श्रीं भवेदै ॐ श्रीं ह्रीं कालिका ये ॐ श्रीं नमोः शुभप्रदायै ॐ श्रीं ह्रीं सचदै ॐ श्रीं क्लीं ॐ श्रीं क्लीं सचमसबुधिये ॐ श्रीं श्रीं श्रीं मन्ते ॐ श्रीं क्लीं मकिते ॐ क्लीं नमोः मीउमदै ॐ श्रीं क्लीं मग्रये ॐ श्रीं क्लीं मकिते ॐ ॐ श्रीं मकरभदे ॐ श्रीं क्लीं मिवुधये ॐ श्रीं क्लीं कममरिहै ॐ यं यं यं सुदेशना ॐ श्रीं भरयसुप्रियायै ऐं क्लीं यं यं सुधये ॐ श्रीं यं यं यं ये ॐ श्रीं यं त्रियेभ्यः ॐ यं यं सुकप्रियायै मूलप्रला श्रीं ह्रीं यं यं राभवनाप्रियेभ्यः ॐ ॐ ॥ ॐ भउतउत हउभदेयडभियी तउकेगपभयी भत्रुं भयी हउमनभयी तिक्रपडिभभयी उनहं भुवनमृंगेविरणयिनी पयाभियएयं विठैभुक ककविकभियभ्यः पिलंतुभभ्यः ॥ ॐ श्रीं यण्यै नमः वश्यै ॐ श्रीं वीवदकमते ।\n\n<vocab>Sharada, Sanskrit, Sahasra Nama, Bhavani, Mantra</vocab>"
+   },
+   "page_type": "text"
+  }
+ }
+}

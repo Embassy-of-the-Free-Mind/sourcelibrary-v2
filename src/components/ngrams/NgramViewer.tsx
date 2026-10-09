@@ -304,7 +304,7 @@ export default function NgramViewer() {
                 onClick={() => setMode(m)}
                 aria-pressed={mode === m}
                 title={m === 'docs'
-                  ? 'Share of each year’s books that mention the term at least once — robust to one wordy treatise dominating a thin year'
+                  ? 'Share of each year’s books that mention the term at least once. Robust to one wordy treatise dominating a thin year'
                   : 'Occurrences per million tokens of the corpus that year'}
                 className={`px-2 py-1.5 transition-colors ${mode === m
                   ? 'bg-[var(--accent-rust)] text-white'
@@ -512,10 +512,10 @@ export default function NgramViewer() {
       {data && (
         <p className="mt-1.5 text-xs text-[var(--text-faint)]">
           Gray backdrop: how much text each year contributes ({compactNumber(data.totals.reduce((s, t) => s + t.books, 0))} books
-          across this range). It has its own scale — the dashed line marks{' '}
+          across this range). It has its own scale: the dashed line marks{' '}
           {compactNumber(tokenBand.top)} tokens in a year
           {tokenBand.clipped > 0 && `, and ${tokenBand.clipped} outlier ${tokenBand.clipped === 1 ? 'year runs' : 'years run'} off the top of it`}
-          {' '}— so it says nothing about the y-axis on the left, which belongs to the curves.
+          . So it says nothing about the y-axis on the left, which belongs to the curves.
           Hover any point for that year&apos;s exact book and token counts.
         </p>
       )}

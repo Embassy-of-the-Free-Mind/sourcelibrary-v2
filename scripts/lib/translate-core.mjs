@@ -29,9 +29,13 @@ import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
+import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { guardTranslationText } from './translation-write-guard.mjs';
+export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
-import { echoedSource } from './page-integrity.mjs';
+import { echoedSource, refusableReasoningLeak, REASONING_LEAK_REASON } from './page-integrity.mjs';
+export { REASONING_LEAK_REASON };
 import { unwrapHiddenTranslation, hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS } from './hidden-translation.mjs';
 export { hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS };
 import { englishSource } from './same-language.mjs';
@@ -815,12 +819,23 @@ export const isExcess = (ocr, tr) => {
  * guards run PER LEAF (`leaf-drift` = the translation of one leaf absorbed the next leaf's
  * opening). A page without the marker takes exactly the path it took before.
  *
- * @returns {{healthy: boolean, reason: 'hidden-meta'|'collapsed'|'runaway'|'echo'|'leaf-seam'|'leaf-drift'|null}}
+ * `reasoning-leak` (#6117) also needs only the translation: the text is the model talking about its job
+ * ("Wait, the prompt says…", "Please provide the OCR transcription…"), by the same rule the corpus count
+ * and the withhold use (page-integrity `refusableReasoningLeak`).
+ *
+ * @returns {{healthy: boolean, reason: 'hidden-meta'|'reasoning-leak'|'collapsed'|'runaway'|'stray-script'|'echo'|'leaf-seam'|'leaf-drift'|null}}
  */
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (hidesPageInMeta(translationText)) return { healthy: false, reason: HIDDEN_META_REASON };
+  // #6117: the model's scratchpad or a chat reply in the page body. Asked before the length tiers so a
+  // 33,000-character scratchpad is filed as what it is, not as a runaway.
+  if (refusableReasoningLeak(translationText)) return { healthy: false, reason: REASONING_LEAK_REASON };
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
+  // #5734: a script in the English that is in neither the source nor the book's language, outside
+  // the tags that carry original-script words (Korean 그 for "that" in the Tibetan run). Judged only
+  // with the source in hand — without it a Greek quotation in a Latin page would read as stray.
+  if (ocrText && guardStray(translationText, { ocr: ocrText, language: lang }).length) return { healthy: false, reason: STRAY_SCRIPT_REASON };
   if (lang && !echoExempt(ocrText, lang)) {
     const e = echoedSource({ ocr: ocrText, tr: translationText, lang });
     if (e.judged && e.wholePage) return { healthy: false, reason: 'echo' };
@@ -1006,6 +1021,27 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
   await persistRefusedTranslation(db, page, text, reason, { jobId, model });
 }
 
+/**
+ * The stray-script gate for a writer that does not go through `writePageTranslation` (the batch
+ * collectors, #5734). Repairs the measured Korean 그-for-"that"; refuses (stamp + evidence, via
+ * `recordRefusedTranslation`) an English translation that still has a script belonging to neither
+ * the page's OCR nor the book's language outside the carrier tags. A page whose text has no
+ * non-Latin letter outside those tags costs nothing; otherwise the OCR is read from the page when
+ * the caller does not hold it. With no OCR at all the gate does not judge.
+ * @returns {Promise<{ text: string, refused: boolean, reason?: string }>}
+ */
+export { guardTranslationText };
+
+export async function strayScriptGate(db, page, text, { ocr, language, jobId, model, dryRun = false } = {}) {
+  if (!text || !guardStray(text).length) return { text, refused: false };
+  let source = ocr ?? page?.ocr?.data;
+  if (source == null && page?.id) source = (await db.collection('pages').findOne({ id: page.id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data;
+  const v = strayScriptVerdict(text, { ocr: source, language });
+  if (!v.refuse) return { text: v.text, refused: false };
+  if (!dryRun) await recordRefusedTranslation(db, page, v.text, STRAY_SCRIPT_REASON, { jobId, model });
+  return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -1125,7 +1161,11 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     response: call.response,
   });
   // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page.
-  const clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: sanitizeTranslationTags(text), type: page?.page_type }).text;
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  let clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: guardTranslationText(sanitizeTranslationTags(text)), type: page?.page_type }).text;
+  // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused below.
+  const stray = strayScriptVerdict(clean, { ocr: page?.ocr?.data, language: book?.language });
+  clean = stray.text;
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
   // or runaway translation to pages. The refused text IS kept as evidence in
@@ -1160,6 +1200,20 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   if (hidesPageInMeta(clean)) {
     await recordRefusedTranslation(db, page, clean, HIDDEN_META_REASON, { jobId, model: resolvedModel });
     return { written: false, protected: false, unhealthy: true, reason: HIDDEN_META_REASON, text: clean };
+  }
+
+  // Always on too (#6117): the model's reasoning or a chat reply is never stored as a page's English,
+  // whoever the caller is. Stamped and kept like the two refusals around it.
+  if (refusableReasoningLeak(clean)) {
+    await recordRefusedTranslation(db, page, clean, REASONING_LEAK_REASON, { jobId, model: resolvedModel });
+    return { written: false, protected: false, unhealthy: true, reason: REASONING_LEAK_REASON, text: clean };
+  }
+
+  // Always on too (#5734): an English translation with a script that belongs to neither the source
+  // nor the book's language, in running text, is refused, stamped and kept, like the hidden page.
+  if (stray.refuse) {
+    await recordRefusedTranslation(db, page, clean, STRAY_SCRIPT_REASON, { jobId, model: resolvedModel });
+    return { written: false, protected: false, unhealthy: true, reason: STRAY_SCRIPT_REASON, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

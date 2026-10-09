@@ -438,6 +438,72 @@ describe('guards at the write', () => {
   });
 });
 
+// ── The OCR trust gate (#5700, scripts/lib/ocr-trust-gate.mjs) ─────────────────
+describe('a book whose OCR is not trusted is refused at enrol and parked at its next round', () => {
+  const gateBook = () => { db.data.books[0].language = 'Persian'; };   // a gated stratum with no year or hand condition
+  const reread = () => { for (const p of db.data.pages) { p.ocr.model = 'gemini-3.1-pro-preview'; p.ocr.updated_at = new Date('2026-10-20T00:00:00Z'); } };
+
+  it('enrol refuses with the stratum in the reason, sends nothing, creates no run', async () => {
+    gateBook();
+    const gemini = makeGemini();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(res.ok).toBe(false);
+    expect(res.reason).toMatch(/^ocr-untrusted \(persian; re-read 0\/20 pages, #5700\)$/);
+    expect(gemini.submitted).toHaveLength(0);
+    expect(db.data[RUNS_COLLECTION] || []).toHaveLength(0);
+  });
+
+  it('negative control: the same book in an ungated language enrols', async () => {
+    db.data.books[0].language = 'Hebrew';
+    expect((await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+  });
+
+  it('a run enrolled before the gate parks at its next round, with the stratum; what it wrote stays', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 })).ok).toBe(true);
+    gateBook();
+    const sent = gemini.submitted.length;
+    // The round already in flight was paid for: it is collected and written. Nothing new is sent.
+    const notes = await tick(db, deps);
+    expect(notes[0].note).toMatch(/parked: ocr-untrusted \(persian/);
+    expect(gemini.submitted).toHaveLength(sent);
+    expect(await runOf(db)).toMatchObject({ phase: PHASE.PARKED, parked_for_ocr_trust: 'persian', round: null });
+    const written = db.data.pages.filter((p: Doc) => p.translation?.data).length;
+    expect(written).toBeGreaterThan(0);
+    expect(written).toBeLessThan(N_PAGES);
+    await tick(db, deps, 2);                                // terminal: later ticks leave it alone
+    expect(gemini.submitted).toHaveLength(sent);
+    expect(db.data.pages.filter((p: Doc) => p.translation?.data).length).toBe(written);
+  });
+
+  it('the way out: once the pages were re-read by a better reader after the gate date, the book enrols', async () => {
+    gateBook();
+    reread();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.ok).toBe(true);
+  });
+
+  it('the operator override enrols a gated book, is stamped on the run, and survives the per-round check', async () => {
+    gateBook();
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, allowUntrustedOcr: true });
+    expect(res.ok).toBe(true);
+    expect(res.run.ocr_trust_override).toBe('persian');
+    await tick(db, deps);                                   // round 1 collected; round 2 submitted, not parked
+    expect((await runOf(db)).phase).not.toBe(PHASE.PARKED);
+    expect(gemini.submitted.length).toBeGreaterThan(1);
+  });
+
+  it('enrolForPhase4 skips an untrusted book instead of handing it to the realtime lane', async () => {
+    gateBook();
+    const routed = await enrolForPhase4(db, db.data.books[0], { prompts: PROMPTS, pageCount: 20, deps: makeDeps(makeGemini()) });
+    expect(routed.lane).toBe('skip');
+    expect(routed.reason).toMatch(/^ocr-untrusted/);
+  });
+});
+
 // ── A hold placed AFTER enrol (#5424) ──────────────────────────────────────
 describe('a hold placed after enrol stops the run at the next step', () => {
   const HOLD = { reason: 'stranded-text-5309', issue: 5309, held_at: new Date('2026-10-01T00:00:00Z'), held_from_status: 'complete', release: 'OCR replaced' };
@@ -710,7 +776,7 @@ describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reade
     expect(await phase4ExcludedBookIds(d, { now: new Date('2026-10-01T00:00:00Z') })).toEqual(['x']);
     const [open, parked, recent] = q.$or;
     expect(open.phase.$nin).toEqual(expect.arrayContaining(['complete', 'parked', 'failed']));
-    expect(parked).toEqual({ mode: 'chained', phase: 'parked', parked_for_hold: { $exists: false } });
+    expect(parked).toEqual({ mode: 'chained', phase: 'parked', parked_for_hold: { $exists: false }, parked_for_ocr_trust: { $exists: false } });
     expect(recent.updated_at.$gte.toISOString()).toBe('2026-09-30T00:00:00.000Z');
     expect(JSON.stringify(recent.$expr)).toContain('counts.written');
   });
@@ -749,6 +815,65 @@ describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reade
     const again = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
     expect(again).toMatchObject({ lane: 'skip' });
     expect(again.reason).toMatch(/^open-run/);
+  });
+});
+
+// ── The pause reaches this lane (#5492) ────────────────────────────────────
+// Until #5492 the chained lane read no pause at all: only the dial stopped it. A ready run must
+// stay READY, with nothing sent, under a translate pause (any spelling of it) or a global pause;
+// a selective-unpause scope bypasses the global pause for its own books only, never a step pause.
+describe('the pause stops every submit', () => {
+  const control = (c: Doc) => ({ _id: 'processing_control', ...c });
+  const enrolled = async (d: any, gemini: any) => {
+    const res = await enrolChainedRun(d, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.ok).toBe(true);
+  };
+  const cases: Array<[string, Doc]> = [
+    ['translate step', { paused_phases: ['translate'] }],
+    ['legacy name', { paused_phases: ['translation'] }],
+    ['legacy number', { paused_phases: [4] }],
+    ['global pause, no scope', { paused: true }],
+    ['step pause with a scope that covers the book', { paused_phases: ['translate'], allow_scopes: { t: { book_ids: ['bk1'] } } }],
+    ['global pause, scope covers other books only', { paused: true, allow_scopes: { t: { book_ids: ['other'] } } }],
+  ];
+  for (const [label, c] of cases) {
+    it(`${label}: nothing is sent and the run waits READY`, async () => {
+      const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control(c)] });
+      const gemini = makeGemini();
+      await enrolled(d, gemini);
+      await tick(d, makeDeps(gemini), 2);
+      expect(gemini.submitted).toHaveLength(0);
+      expect((await runOf(d)).phase).toBe(PHASE.READY);
+    });
+  }
+
+  it('an unrelated step pause, or a global pause whose scope covers the book, lets it run', async () => {
+    for (const c of [{ paused_phases: ['ocr', 'images'] }, { paused: true, allow_scopes: { t: { book_ids: ['bk1'] } } }]) {
+      const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control(c)] });
+      const gemini = makeGemini();
+      await enrolled(d, gemini);
+      await tick(d, makeDeps(gemini));
+      expect(gemini.submitted).toHaveLength(1);
+    }
+  });
+
+  it('lifting the pause resumes the run on the next tick', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control({ paused_phases: ['translate'] })] });
+    const gemini = makeGemini();
+    await enrolled(d, gemini);
+    await tick(d, makeDeps(gemini));
+    expect(gemini.submitted).toHaveLength(0);
+    d.data.system_config[0].paused_phases = [];
+    await tick(d, makeDeps(gemini));
+    expect(gemini.submitted).toHaveLength(1);
+  });
+
+  it('enrolling with submit:true under a pause records the run and sends nothing', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [control({ paused_phases: ['translate'] })] });
+    const gemini = makeGemini();
+    await enrolChainedRun(d, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted).toHaveLength(0);
+    expect((await runOf(d)).phase).toBe(PHASE.READY);
   });
 });
 

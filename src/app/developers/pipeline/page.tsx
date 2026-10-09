@@ -494,10 +494,10 @@ export default async function PipelineArchitecturePage() {
         <div className="border-t border-border-light pt-8">
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/about/processing"
+              href="/how-it-works"
               className="px-5 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors"
             >
-              How Processing Works
+              How it works
             </Link>
             <Link
               href="/developers"

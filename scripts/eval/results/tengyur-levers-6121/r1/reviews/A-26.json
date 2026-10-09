@@ -1,0 +1,39 @@
+[
+{"id": "Q3HRP", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the Sadāprarudita citations with the abbreviation markers handled correctly."},
+{"id": "Q1JMT", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "omission", "confidence": "high", "tibetan": "དཀར་པོའི་ཆོས་མཐའ་དག་ལས་སྐྱེས་པ་རིགས་ཀྱི་བུ་དེ་བཞིན་གཤེགས་པའི་སྐུ་ནི་ཆོས་ཀྱི་སྐུ་སྟེ", "english": "the body of the (Tathagata) One Thus Gone is the (Dharmakaya) Truth Body", "why": "The Tibetan says the Tathāgata's body is born from all the pure (white) qualities; this qualifier is dropped.", "fix": {"find": "the body of the (Tathagata) One Thus Gone is the (Dharmakaya) Truth Body", "replace": "the body of the (Tathagata) One Thus Gone, born from all the pure qualities, is the (Dharmakaya) Truth Body"}},
+  {"type": "term", "confidence": "medium", "tibetan": "བྱ་བ་དང་བྱ་བ་མ་ཡིན་པའི་ངོ་བོ་ཉིད་ཡིན་པ་ལས་ཀྱང་ཡིན་ལ", "english": "what should and should not be done", "why": "The gloss explains 'karma' as being of the nature of doing and refraining (commission and omission), not of what ought or ought not to be done."}],
+ "note": "Sound rendering of the faith-stabilising instructions; one dropped qualifier on the Dharmakāya."},
+{"id": "QW66Q", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "ཡོན་བདག་གིས་བྱས་སམ་ཟིན་ནམ་བལྟའོ་ཞེས་མ་སྨྲས་པ་ལའོ", "english": "except for those where it was not said", "why": "The offense applies only to one who has NOT said 'I will check whether the donor has built or finished it'; the English excludes exactly those cases.", "fix": {"find": "except for those where it was not said", "replace": "only for one who has not said"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ལྟུང་བ་འདི་ལ་བྱེད་པ་པོ་ཉིད་གང་ཡིན་ཞེ་ན", "english": "who the actual agent is in this downfall", "why": "བྱེད་པ་པོ་ཉིད here is the factor or ground that makes the offense (the vihāra being built), not an 'agent' doing it; 'agent/agency' misleads throughout."}],
+ "note": "Generally follows the commentary, but the key exemption clause is inverted and the technical term for the offense's ground is calqued."},
+{"id": "QTP3V", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དུམ་བུ་འཛིན་པའི་མིང་གིས་མཚན་པའི", "english": "the name of the holder of the piece", "why": "དུམ་བུ་འཛིན་པ is a person's proper name (the rival who later conspires against Candra), rendered as a description."},
+  {"type": "term", "confidence": "medium", "tibetan": "གཞོན་ནུ་ཟླ་བ་དང་ལྷན་ཅིག", "english": "the youth Dawa Moon", "why": "The prince's name is Candra (Zla ba); a Tibetan transliteration plus a gloss is not the convention for a Sanskrit jātaka name."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "ཡོན་ཏན་སྐྱེས་པ་ལ་མེད་པ། །རྣམ་ལྡན་ལ་ཡང་འགའ་ཞིག་ཏུ། །མཆིང་བུ་ཨིནྡྲ་ནཱི་ལའི་མདོག །འཛིན་ཀྱང་དེ་ཡི་ཡོན་ཏན་ཡིན།", "english": "Those who have not generated qualities,", "why": "The verse says virtue does not lie in birth, and that even when glass takes the sapphire's colour that colour is the sapphire's quality; the English invents 'those who have not generated qualities' and turns the last line into a question."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཐབས་གང་གིས་ཀྱང་ཟླ་བ་ཡིད་འཕྲོག་དང་རྣམ་པར་བྲལ་", "english": "Dawa is captivating and separated from...", "why": "The plotter says Candra must by any means be separated from (what he has taken); the English makes it a description of Candra."}],
+ "note": "The narrative is followable, but the names are mishandled and the gnomic verses are poorly construed."},
+{"id": "QW2ZE", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "གཞན་གྱི་ཞེས་བྱ་བ་ནི། ཕ་རོལ་གྱིའོ། །བཞིན་ཞེས་བྱ་བ་ནི། དཔེས་ཉེ་བར་འཇལ་བའོ།", "english": "Like another refers to a comparison made through analogy.", "why": "Two separate lemma glosses ('of another' = of others; 'like' = comparison by example) are merged into one, losing the first gloss."}],
+ "note": "Accurate lemma-by-lemma rendering of the tigress commentary, apart from one merged gloss."},
+{"id": "QHLFD", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Follows the argument on 'ascertained' in the trairūpya definition and on anvaya/vyatireka faithfully."},
+{"id": "QIPI2", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "སྐྱོན་མེད་བྱེད་པོ་སོགས", "english": "an'erroneous creator", "why": "The Tibetan says a flawless author, not an erroneous one.", "fix": {"find": "an'erroneous creator", "replace": "a flawless author"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཤེས་རབ་སྙིང་རྗེ་#སོགས་ལྡན་པའི", "english": "wisdom, equanimity, and so forth", "why": "སྙིང་རྗེ is compassion, not equanimity.", "fix": {"find": "wisdom, equanimity, and so forth", "replace": "wisdom, compassion, and so forth"}},
+  {"type": "reversal", "confidence": "medium", "tibetan": "དེས་ན་དེ་ཉིད་རབ་སྤོང་ལ། །ཁོ་བོ་ལ་ནི་ཆེར་མོས་མེད།", "english": "Therefore, I utterly reject that, and I have no great interest in it.", "why": "The author says he has no great eagerness to refute that point thoroughly, not that he rejects it outright."},
+  {"type": "structure", "confidence": "medium", "tibetan": "བློ་ནི་མྱུར་དུ་སྐྱེད་པར་བྱེད། །སྐྱེས་བུ་རྣམས་ཀྱིས་འདོད་པ་ཡི། །", "english": "...It quickly generates intelligence. In regard to what men desire,", "why": "The entire side is verse, and it is rendered as running prose throughout."}],
+ "note": "Gets the anti-Mīmāṃsā argument broadly, but reverses 'flawless author' and mistranslates compassion."},
+{"id": "QJXR9", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the general and specific characteristics of the Truths and the two kinds of seekers of liberation."},
+{"id": "QA0OE", "score": 4, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Very literal but follows the commentary's argument on the body and transformations of consciousness without substantive error."},
+{"id": "QR172", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "ན་བ་རྣམས་ལ་ཞེས་བྱ་བ་ནི་ནད་ཀྱིས་བཏབ་པ་རྣམས་སོ", "english": "for those who are not ill", "why": "The lemma is 'for the sick', glossed as those struck by illness.", "fix": {"find": "for those who are not ill", "replace": "for the sick"}},
+  {"type": "gloss", "confidence": "high", "tibetan": "བདག་པོ་ཡོངས་སུ་ལོངས་སྤྱོད་པ་ནི་མི་སློབ་པ་རྣམས་ཀྱིའོ", "english": "Utilization by a master [note: of the teachings]", "why": "This is use as an owner (svāmiparibhoga), not use by a master of the teachings.", "fix": {"find": "Utilization by a master [note: of the teachings]", "replace": "Utilization as an owner"}},
+  {"type": "term", "confidence": "medium", "tibetan": "འགལ་ཚབས་ཅན་དུ་འགྱུར་རོ", "english": "grave offense (duskrita)", "why": "འགལ་ཚབས་ཅན is duṣkṛta, a minor wrongdoing; calling it a 'grave offense' misstates its gravity."},
+  {"type": "agent", "confidence": "medium", "tibetan": "སློབ་དཔོན་དང་མཁན་པོ་དག་གཅིག་པ་", "english": "as well as the teacher and the preceptor being as one", "why": "The Tibetan means fellow monks who share the same teacher or preceptor, who are among those who must nurse the sick."}],
+ "note": "The property-division rules are mostly right, but a lemma is negated and the five kinds of use are misglossed."}
+]

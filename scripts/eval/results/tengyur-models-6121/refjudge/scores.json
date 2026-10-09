@@ -1,0 +1,5667 @@
+{
+ "gate": {
+  "J1": {
+   "plant_caught": 6,
+   "plants": 6,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  },
+  "J2": {
+   "plant_caught": 6,
+   "plants": 6,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  }
+ },
+ "all": {
+  "sides": 58,
+  "S": {
+   "fidelity_mean": 4.27,
+   "inversion_sides_either": 8,
+   "inversion_sides_both": 4,
+   "inversions_per100_mean_of_judges": 11.2,
+   "omission_sides_either": 13,
+   "span_off_either": 4,
+   "mean_rank": 1.03
+  },
+  "A": {
+   "fidelity_mean": 4.27,
+   "inversion_sides_either": 7,
+   "inversion_sides_both": 4,
+   "inversions_per100_mean_of_judges": 9.5,
+   "omission_sides_either": 13,
+   "span_off_either": 3,
+   "mean_rank": 1.06
+  },
+  "G38": {
+   "fidelity_mean": 4.66,
+   "inversion_sides_either": 2,
+   "inversion_sides_both": 1,
+   "inversions_per100_mean_of_judges": 2.6,
+   "omission_sides_either": 2,
+   "span_off_either": 3,
+   "mean_rank": 0.41
+  },
+  "G35": {
+   "fidelity_mean": 4.26,
+   "inversion_sides_either": 8,
+   "inversion_sides_both": 4,
+   "inversions_per100_mean_of_judges": 10.3,
+   "omission_sides_either": 10,
+   "span_off_either": 3,
+   "mean_rank": 1.09
+  },
+  "O": {
+   "fidelity_mean": 4.91,
+   "inversion_sides_either": 1,
+   "inversion_sides_both": 1,
+   "inversions_per100_mean_of_judges": 1.7,
+   "omission_sides_either": 0,
+   "span_off_either": 0,
+   "mean_rank": 0.13
+  },
+  "A_vs_S": {
+   "fid_diff": 0.0,
+   "fid_diff_ci": [
+    -0.1,
+    0.11
+   ],
+   "sides_higher": 8,
+   "sides_lower": 11,
+   "inversions_fewer_per100": 1.7,
+   "fid_diff_raw": 0.0
+  },
+  "G38_vs_S": {
+   "fid_diff": 0.39,
+   "fid_diff_ci": [
+    0.25,
+    0.53
+   ],
+   "sides_higher": 29,
+   "sides_lower": 3,
+   "inversions_fewer_per100": 8.6
+  },
+  "G35_vs_S": {
+   "fid_diff": -0.01,
+   "fid_diff_ci": [
+    -0.13,
+    0.13
+   ],
+   "sides_higher": 11,
+   "sides_lower": 14,
+   "inversions_fewer_per100": 0.9
+  },
+  "O_vs_S": {
+   "fid_diff": 0.64,
+   "fid_diff_ci": [
+    0.49,
+    0.78
+   ],
+   "sides_higher": 42,
+   "sides_lower": 1,
+   "inversions_fewer_per100": 9.5
+  },
+  "G38_rule": {
+   "gain": 0.388,
+   "floor_abs_A": 0.0,
+   "p_one_sided": 0.0001,
+   "inversions_X": 3,
+   "inversions_S": 13,
+   "beats_floor": true,
+   "p_lt_0.10": true,
+   "inversions_ok": true,
+   "worth_priced_retranslation": true
+  },
+  "G35_rule": {
+   "gain": -0.009,
+   "floor_abs_A": 0.0,
+   "p_one_sided": 0.5888,
+   "inversions_X": 12,
+   "inversions_S": 13,
+   "beats_floor": false,
+   "p_lt_0.10": false,
+   "inversions_ok": true,
+   "worth_priced_retranslation": false
+  },
+  "O_rule": {
+   "gain": 0.638,
+   "floor_abs_A": 0.0,
+   "p_one_sided": 0.0001,
+   "inversions_X": 2,
+   "inversions_S": 13,
+   "beats_floor": true,
+   "p_lt_0.10": true,
+   "inversions_ok": true,
+   "worth_priced_retranslation": true
+  }
+ },
+ "by_text": {
+  "D3862": {
+   "sides": 30,
+   "S": {
+    "fidelity_mean": 4.35,
+    "inversion_sides_either": 4,
+    "inversion_sides_both": 3,
+    "inversions_per100_mean_of_judges": 13.3,
+    "omission_sides_either": 8,
+    "span_off_either": 2,
+    "mean_rank": 1.0
+   },
+   "A": {
+    "fidelity_mean": 4.28,
+    "inversion_sides_either": 3,
+    "inversion_sides_both": 2,
+    "inversions_per100_mean_of_judges": 8.3,
+    "omission_sides_either": 10,
+    "span_off_either": 2,
+    "mean_rank": 1.12
+   },
+   "G38": {
+    "fidelity_mean": 4.65,
+    "inversion_sides_either": 1,
+    "inversion_sides_both": 1,
+    "inversions_per100_mean_of_judges": 3.3,
+    "omission_sides_either": 2,
+    "span_off_either": 2,
+    "mean_rank": 0.5
+   },
+   "G35": {
+    "fidelity_mean": 4.25,
+    "inversion_sides_either": 3,
+    "inversion_sides_both": 2,
+    "inversions_per100_mean_of_judges": 8.3,
+    "omission_sides_either": 7,
+    "span_off_either": 3,
+    "mean_rank": 1.2
+   },
+   "O": {
+    "fidelity_mean": 4.85,
+    "inversion_sides_either": 0,
+    "inversion_sides_both": 0,
+    "inversions_per100_mean_of_judges": 0.0,
+    "omission_sides_either": 0,
+    "span_off_either": 0,
+    "mean_rank": 0.25
+   },
+   "A_vs_S": {
+    "fid_diff": -0.07,
+    "fid_diff_ci": [
+     -0.18,
+     0.07
+    ],
+    "sides_higher": 3,
+    "sides_lower": 7,
+    "inversions_fewer_per100": 5.0,
+    "fid_diff_raw": -0.06666666666666667
+   },
+   "G38_vs_S": {
+    "fid_diff": 0.3,
+    "fid_diff_ci": [
+     0.12,
+     0.5
+    ],
+    "sides_higher": 12,
+    "sides_lower": 2,
+    "inversions_fewer_per100": 10.0
+   },
+   "G35_vs_S": {
+    "fid_diff": -0.1,
+    "fid_diff_ci": [
+     -0.27,
+     0.08
+    ],
+    "sides_higher": 3,
+    "sides_lower": 9,
+    "inversions_fewer_per100": 5.0
+   },
+   "O_vs_S": {
+    "fid_diff": 0.5,
+    "fid_diff_ci": [
+     0.3,
+     0.7
+    ],
+    "sides_higher": 19,
+    "sides_lower": 1,
+    "inversions_fewer_per100": 13.3
+   },
+   "G38_rule": {
+    "gain": 0.3,
+    "floor_abs_A": 0.067,
+    "p_one_sided": 0.0046,
+    "inversions_X": 2,
+    "inversions_S": 8,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "inversions_ok": true,
+    "worth_priced_retranslation": true
+   },
+   "G35_rule": {
+    "gain": -0.1,
+    "floor_abs_A": 0.067,
+    "p_one_sided": 0.8975,
+    "inversions_X": 5,
+    "inversions_S": 8,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "inversions_ok": true,
+    "worth_priced_retranslation": false
+   },
+   "O_rule": {
+    "gain": 0.5,
+    "floor_abs_A": 0.067,
+    "p_one_sided": 0.0001,
+    "inversions_X": 0,
+    "inversions_S": 8,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "inversions_ok": true,
+    "worth_priced_retranslation": true
+   }
+  },
+  "D4231": {
+   "sides": 28,
+   "S": {
+    "fidelity_mean": 4.18,
+    "inversion_sides_either": 4,
+    "inversion_sides_both": 1,
+    "inversions_per100_mean_of_judges": 8.9,
+    "omission_sides_either": 5,
+    "span_off_either": 2,
+    "mean_rank": 1.05
+   },
+   "A": {
+    "fidelity_mean": 4.25,
+    "inversion_sides_either": 4,
+    "inversion_sides_both": 2,
+    "inversions_per100_mean_of_judges": 10.7,
+    "omission_sides_either": 3,
+    "span_off_either": 1,
+    "mean_rank": 1.0
+   },
+   "G38": {
+    "fidelity_mean": 4.66,
+    "inversion_sides_either": 1,
+    "inversion_sides_both": 0,
+    "inversions_per100_mean_of_judges": 1.8,
+    "omission_sides_either": 0,
+    "span_off_either": 1,
+    "mean_rank": 0.3
+   },
+   "G35": {
+    "fidelity_mean": 4.27,
+    "inversion_sides_either": 5,
+    "inversion_sides_both": 2,
+    "inversions_per100_mean_of_judges": 12.5,
+    "omission_sides_either": 3,
+    "span_off_either": 0,
+    "mean_rank": 0.98
+   },
+   "O": {
+    "fidelity_mean": 4.96,
+    "inversion_sides_either": 1,
+    "inversion_sides_both": 1,
+    "inversions_per100_mean_of_judges": 3.6,
+    "omission_sides_either": 0,
+    "span_off_either": 0,
+    "mean_rank": 0.0
+   },
+   "A_vs_S": {
+    "fid_diff": 0.07,
+    "fid_diff_ci": [
+     -0.09,
+     0.25
+    ],
+    "sides_higher": 5,
+    "sides_lower": 4,
+    "inversions_fewer_per100": -1.8,
+    "fid_diff_raw": 0.07142857142857142
+   },
+   "G38_vs_S": {
+    "fid_diff": 0.48,
+    "fid_diff_ci": [
+     0.29,
+     0.68
+    ],
+    "sides_higher": 17,
+    "sides_lower": 1,
+    "inversions_fewer_per100": 7.1
+   },
+   "G35_vs_S": {
+    "fid_diff": 0.09,
+    "fid_diff_ci": [
+     -0.09,
+     0.29
+    ],
+    "sides_higher": 8,
+    "sides_lower": 5,
+    "inversions_fewer_per100": -3.6
+   },
+   "O_vs_S": {
+    "fid_diff": 0.79,
+    "fid_diff_ci": [
+     0.59,
+     0.98
+    ],
+    "sides_higher": 23,
+    "sides_lower": 0,
+    "inversions_fewer_per100": 5.4
+   },
+   "G38_rule": {
+    "gain": 0.482,
+    "floor_abs_A": 0.071,
+    "p_one_sided": 0.0,
+    "inversions_X": 1,
+    "inversions_S": 5,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "inversions_ok": true,
+    "worth_priced_retranslation": true
+   },
+   "G35_rule": {
+    "gain": 0.089,
+    "floor_abs_A": 0.071,
+    "p_one_sided": 0.2402,
+    "inversions_X": 7,
+    "inversions_S": 5,
+    "beats_floor": true,
+    "p_lt_0.10": false,
+    "inversions_ok": false,
+    "worth_priced_retranslation": false
+   },
+   "O_rule": {
+    "gain": 0.786,
+    "floor_abs_A": 0.071,
+    "p_one_sided": 0.0001,
+    "inversions_X": 2,
+    "inversions_S": 5,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "inversions_ok": true,
+    "worth_priced_retranslation": true
+   }
+  }
+ },
+ "judge_fid_agree_within_1": 1.0,
+ "rows": [
+  {
+   "id": "R002",
+   "page_id": "6abed8d1896ea18127c8f7ab",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R003",
+   "page_id": "6abe825259b86b7d32a65b42",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R004",
+   "page_id": "6abed8d1896ea18127c8f7a9",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R006",
+   "page_id": "6abe825259b86b7d32a65b4a",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 3,
+      "inv": 2,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R007",
+   "page_id": "6abe825259b86b7d32a65b45",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 1,
+      "span_off": true,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R008",
+   "page_id": "6abe825259b86b7d32a65b3b",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R009",
+   "page_id": "6abe825259b86b7d32a65b3d",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R010",
+   "page_id": "6abed8d1896ea18127c8f7a8",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R011",
+   "page_id": "6abe825259b86b7d32a65b43",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R012",
+   "page_id": "6abe825259b86b7d32a65b49",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 3
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R013",
+   "page_id": "6abed8d1896ea18127c8f7ac",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "O": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "O": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R014",
+   "page_id": "6abed8d1896ea18127c8f7b1",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": true,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": true,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R015",
+   "page_id": "6abed8d1896ea18127c8f7ae",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R016",
+   "page_id": "6abed8d1896ea18127c8f7b0",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R018",
+   "page_id": "6abed8d1896ea18127c8f7af",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R019",
+   "page_id": "6abed8d1896ea18127c8f7ad",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R020",
+   "page_id": "6abed8d1896ea18127c8f7b9",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R021",
+   "page_id": "6abed8d1896ea18127c8f7c3",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": true,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R022",
+   "page_id": "6abed8d1896ea18127c8f7aa",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": true,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R023",
+   "page_id": "6abe825259b86b7d32a65b4c",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R024",
+   "page_id": "6abed8d1896ea18127c8f7c1",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R025",
+   "page_id": "6abed8d1896ea18127c8f7b8",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R026",
+   "page_id": "6abed8d1896ea18127c8f7bc",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R027",
+   "page_id": "6abed8d1896ea18127c8f7be",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R029",
+   "page_id": "6abe825259b86b7d32a65b35",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R031",
+   "page_id": "6abe825259b86b7d32a65b3f",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R032",
+   "page_id": "6abe825259b86b7d32a65b47",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R034",
+   "page_id": "6abe825259b86b7d32a65b4b",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R035",
+   "page_id": "6abed8d1896ea18127c8f7b6",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R036",
+   "page_id": "6abed8d1896ea18127c8f7c0",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R038",
+   "page_id": "6abe825259b86b7d32a65b36",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R039",
+   "page_id": "6abed8d1896ea18127c8f7b2",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R040",
+   "page_id": "6abed8d1896ea18127c8f7b5",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R041",
+   "page_id": "6abe825259b86b7d32a65b39",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 4
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R042",
+   "page_id": "6abe825259b86b7d32a65b46",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R043",
+   "page_id": "6abe825259b86b7d32a65b31",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R044",
+   "page_id": "6abe825259b86b7d32a65b32",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R045",
+   "page_id": "6abe825259b86b7d32a65b40",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R046",
+   "page_id": "6abe825259b86b7d32a65b38",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R048",
+   "page_id": "6abed8d1896ea18127c8f7bb",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R050",
+   "page_id": "6abe825259b86b7d32a65b41",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R051",
+   "page_id": "6abe825259b86b7d32a65b4d",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R053",
+   "page_id": "6abe825259b86b7d32a65b48",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R054",
+   "page_id": "6abed8d1896ea18127c8f7b7",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R055",
+   "page_id": "6abe825259b86b7d32a65b44",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R056",
+   "page_id": "6abe825259b86b7d32a65b37",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 1,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 0,
+      "om": 2,
+      "inven": 1,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R057",
+   "page_id": "6abed8d1896ea18127c8f7b3",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R058",
+   "page_id": "6abe825259b86b7d32a65b3a",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R059",
+   "page_id": "6abed8d1896ea18127c8f7bd",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R060",
+   "page_id": "6abe825259b86b7d32a65b34",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R061",
+   "page_id": "6abed8d1896ea18127c8f7c2",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R062",
+   "page_id": "6abe825259b86b7d32a65b3e",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R063",
+   "page_id": "6abe825259b86b7d32a65b4e",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "rank": 2
+     }
+    }
+   }
+  },
+  {
+   "id": "R064",
+   "page_id": "6abed8d1896ea18127c8f7b4",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R065",
+   "page_id": "6abe825259b86b7d32a65b33",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R066",
+   "page_id": "6abed8d1896ea18127c8f7bf",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R067",
+   "page_id": "6abe825259b86b7d32a65b3c",
+   "toh": "D3862",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 3,
+      "inven": 0,
+      "span_off": false,
+      "rank": 3
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 3,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R068",
+   "page_id": "6abed8d1896ea18127c8f7ba",
+   "toh": "D4231",
+   "J": {
+    "J1": {
+     "S": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "S": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "A": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "G35": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     },
+     "O": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "rank": 0
+     }
+    }
+   }
+  }
+ ]
+}

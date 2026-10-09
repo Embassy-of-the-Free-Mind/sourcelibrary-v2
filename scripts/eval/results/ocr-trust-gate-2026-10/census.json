@@ -1,0 +1,187 @@
+{
+ "generated_at": "2026-10-03T23:37:36.811Z",
+ "filter": "visible: true, pages_count > 0; pending = translatablePageFilter + no translation.data + not health_blocked (exact per-book page reads, no $sample)",
+ "strata": {
+  "greek-manuscript": {
+   "gated": true,
+   "books": 124,
+   "pages": 68349,
+   "pages_translated": 60272,
+   "books_with_pending": 85,
+   "pending_pages": 2242,
+   "auto_eligible_books": 3,
+   "auto_eligible_pending_pages": 584,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 36952,
+    "gemini-3.1-flash-lite-preview": 23511,
+    "gemini-3.1-flash-lite": 1986,
+    "gemini-2.5-flash": 1
+   }
+  },
+  "greek-print-1450-1599": {
+   "gated": true,
+   "books": 321,
+   "pages": 139513,
+   "pages_translated": 124028,
+   "books_with_pending": 110,
+   "pending_pages": 2393,
+   "auto_eligible_books": 3,
+   "auto_eligible_pending_pages": 1479,
+   "held_books": 2,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 96033,
+    "gemini-3.1-flash-lite-preview": 27907,
+    "gemini-3.1-flash-lite": 2391,
+    "gemini-2.5-flash": 2
+   }
+  },
+  "persian": {
+   "gated": true,
+   "books": 62,
+   "pages": 17741,
+   "pages_translated": 14996,
+   "books_with_pending": 15,
+   "pending_pages": 584,
+   "auto_eligible_books": 1,
+   "auto_eligible_pending_pages": 355,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 8109,
+    "gemini-3.1-flash-lite-preview": 4111,
+    "gemini-3.1-flash-lite": 2528,
+    "gemini-2.5-flash": 12
+   }
+  },
+  "latin-incunabula": {
+   "gated": true,
+   "books": 1233,
+   "pages": 284724,
+   "pages_translated": 259700,
+   "books_with_pending": 493,
+   "pending_pages": 4786,
+   "auto_eligible_books": 3,
+   "auto_eligible_pending_pages": 789,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3.1-flash-lite-preview": 204425,
+    "gemini-3-flash-preview": 60673,
+    "gemini-3.1-flash-lite": 2389,
+    "ia-ocr/0.0.14": 61,
+    "gemini-2.5-flash": 9,
+    "manual": 1
+   }
+  }
+ },
+ "controls": {
+  "greek-print-1600+": {
+   "books": 332,
+   "pages": 170863,
+   "pages_translated": 150105,
+   "books_with_pending": 73,
+   "pending_pages": 3096,
+   "auto_eligible_books": 4,
+   "auto_eligible_pending_pages": 1401,
+   "held_books": 0,
+   "open_runs": [
+    {
+     "run": "tbc_muomyde1_gj9jly",
+     "book_id": "69afed9fa698aa1b74191c5d",
+     "mode": "chained",
+     "phase": "round_ready",
+     "page_count": 300,
+     "written": 272
+    }
+   ],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 80587,
+    "gemini-3.1-flash-lite-preview": 61852,
+    "gemini-3.1-flash-lite": 11960,
+    "gemini-2.5-flash": 339,
+    "mineru-pipeline": 144,
+    "claude-opus-4-6": 3
+   }
+  },
+  "greek-hand-unknown": {
+   "books": 351,
+   "pages": 133779,
+   "pages_translated": 122997,
+   "books_with_pending": 85,
+   "pending_pages": 1516,
+   "auto_eligible_books": 1,
+   "auto_eligible_pending_pages": 1021,
+   "held_books": 3,
+   "open_runs": [
+    {
+     "run": "tbc_munp1u8r_y5f9ff",
+     "book_id": "6958ea4dd3a892833481514e",
+     "mode": "chained",
+     "phase": "round_ready",
+     "page_count": 300,
+     "written": 276
+    }
+   ],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 123432,
+    "gemini-2.5-flash": 301,
+    "gemini-3.1-flash-lite-preview": 13,
+    "claude-sonnet-4-6": 2,
+    "manual": 1,
+    "gemini-3.1-flash-lite": 1
+   }
+  },
+  "greek-print-year-unknown-or-pre-1450": {
+   "books": 12,
+   "pages": 942,
+   "pages_translated": 228,
+   "books_with_pending": 4,
+   "pending_pages": 27,
+   "auto_eligible_books": 0,
+   "auto_eligible_pending_pages": 0,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 276
+   }
+  },
+  "greek-hand-unknown-undated": {
+   "books": 22,
+   "pages": 1516,
+   "pages_translated": 4,
+   "books_with_pending": 16,
+   "pending_pages": 101,
+   "auto_eligible_books": 0,
+   "auto_eligible_pending_pages": 0,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 112
+   }
+  },
+  "latin-manuscript-1450-1500": {
+   "books": 132,
+   "pages": 30965,
+   "pages_translated": 26508,
+   "books_with_pending": 24,
+   "pending_pages": 297,
+   "auto_eligible_books": 0,
+   "auto_eligible_pending_pages": 0,
+   "held_books": 0,
+   "open_runs": [],
+   "ocr_readers": {
+    "gemini-3-flash-preview": 20763,
+    "gemini-3.1-flash-lite": 3924,
+    "gemini-3.1-flash-lite-preview": 3119
+   }
+  }
+ },
+ "open_runs_total": 68,
+ "not_read": {
+  "books": 14484,
+  "why": "table language, but outside every row's year window (Latin outside 1450–1500, or undated)"
+ }
+}
