@@ -1,0 +1,107 @@
+{
+ "key_env": "GEMINI_API_KEY_TIER3",
+ "estimate_usd": 5.5845,
+ "jobs": [
+  {
+   "arm": "lite",
+   "model": "gemini-3.1-flash-lite",
+   "engine": "gemini-3.1-flash-lite",
+   "job_name": "batches/yvp0gxqczc7gpubp6dgvng1jqgdz3nok4cjx",
+   "requests": 484,
+   "bytes": 487298685,
+   "submitted_at": "2026-10-06T10:20:12.035Z",
+   "collected_at": "2026-10-06T10:23:12.345Z",
+   "outcomes": {
+    "text": 476,
+    "truncated": 2,
+    "refusal": 2,
+    "empty": 4
+   },
+   "in_tokens": 542076,
+   "out_tokens": 359032,
+   "thinking_tokens": 0,
+   "cost_usd": 0.3370335,
+   "usage_logged": true
+  },
+  {
+   "arm": "lite-b",
+   "model": "gemini-3.1-flash-lite",
+   "engine": "gemini-3.1-flash-lite-b",
+   "job_name": "batches/xaltbfmrqqw73roben0d08lqmcd6faezh631",
+   "requests": 484,
+   "bytes": 487299653,
+   "submitted_at": "2026-10-06T10:21:04.547Z",
+   "collected_at": "2026-10-06T10:27:14.781Z",
+   "outcomes": {
+    "text": 476,
+    "truncated": 2,
+    "refusal": 2,
+    "empty": 4
+   },
+   "in_tokens": 542076,
+   "out_tokens": 359032,
+   "thinking_tokens": 0,
+   "cost_usd": 0.3370335,
+   "usage_logged": true
+  },
+  {
+   "arm": "flash",
+   "model": "gemini-3-flash-preview",
+   "engine": "gemini-3-flash-preview",
+   "job_name": "batches/q7qkhmd7g05u6gobpwjit7vtuekdfl2df55w",
+   "requests": 484,
+   "bytes": 487299169,
+   "submitted_at": "2026-10-06T10:21:46.928Z",
+   "collected_at": "2026-10-06T10:27:15.856Z",
+   "outcomes": {
+    "text": 481,
+    "refusal": 3
+   },
+   "in_tokens": 542076,
+   "out_tokens": 336751,
+   "thinking_tokens": 0,
+   "cost_usd": 0.6406455,
+   "usage_logged": true
+  },
+  {
+   "arm": "f38",
+   "model": "gemini-3.8-flash",
+   "engine": "gemini-3.8-flash",
+   "job_name": "batches/kzm3yqrxkge8sktso5er8d8lbmfn7tyq3xib",
+   "requests": 484,
+   "bytes": 487298201,
+   "submitted_at": "2026-10-06T10:22:18.440Z",
+   "collected_at": "2026-10-06T11:18:03.809Z",
+   "outcomes": {
+    "text": 472,
+    "empty": 8,
+    "refusal": 4
+   },
+   "in_tokens": 542076,
+   "out_tokens": 345664,
+   "thinking_tokens": 20496,
+   "cost_usd": 0.8898285,
+   "usage_logged": true
+  },
+  {
+   "arm": "pro",
+   "model": "gemini-3.1-pro-preview",
+   "engine": "gemini-3.1-pro-preview",
+   "job_name": "batches/0fifmndsiem0hjwz7ntisrtpk7wg0oc0fp63",
+   "requests": 111,
+   "bytes": 109977147,
+   "submitted_at": "2026-10-06T10:22:40.805Z",
+   "collected_at": "2026-10-06T11:18:05.196Z",
+   "outcomes": {
+    "text": 105,
+    "truncated": 5,
+    "empty": 1
+   },
+   "in_tokens": 124486,
+   "out_tokens": 84762,
+   "thinking_tokens": 1001078,
+   "cost_usd": 8.2994075,
+   "usage_logged": true
+  }
+ ]
+}

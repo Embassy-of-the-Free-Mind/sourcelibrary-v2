@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/Pantaleon_res_memorabiles_1",
+  "edition": "Militaris Ordinis Johannitarum, Rhodiorum, Aut Melitensium Equitum Rerum Memorabilium Terra Marique, A Sexcentis fere annis pro republica Christiana, in Asia, Africa, &amp; Europa contra Barbaros, Saracenos, Arabes &amp; Turcas fortiter gestarum, ad praesentem usque 1581 annum, Historia Nova : libri",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b65c3218b87551bfd12324",
+  "page_number": 118,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 384539,
+    "to_char": 388859,
+    "overlap": 0.377,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "p.101; ref matches 'Orchanes enim' to 'nonus prior electus fuit.'; marginal notes are inlined; MS note at the lower right.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      116,
+      117,
+      118
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.503Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "df8ac77c1f75625b172ea10c457192449e23911414dfd35a77c7559d11d4e093",
+  "unit": {
+    "chars": 4320
+  }
+}

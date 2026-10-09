@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a94341a7680120fac24d808",
+    "title": "Duellum poeticum. Contendentibus, Georgio Eglisemmio medico regio, & Georgio Buchanano regio præceptore. Pro dignitate paraphraseos Psalmi centisimi quarti. Adiectis prophylacticis aduersus Andreæ Meluini Cauillum iin aram Regiam, aliísq[ue]; epigrammatis.",
+    "published": "1618",
+    "source": "EEBO-TCP A21194",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9333,
+    "median_char_acc_windowed": 0.9318,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a94341a7680120fac24d808-p15",
+      "page": 15,
+      "overlap": 0.776,
+      "probe_words": 110,
+      "ref_chars": 1341,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.143,
+      "char_acc": 0.9333,
+      "char_acc_windowed": 0.9318
+    }
+  ]
+}

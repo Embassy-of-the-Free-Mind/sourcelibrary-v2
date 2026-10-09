@@ -3,7 +3,7 @@ import { hybridSearch } from '@/lib/search/librarian-search';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { logAiUsage } from '@/lib/log-ai-usage';
 
@@ -43,7 +43,7 @@ async function searchImages(query: string): Promise<GalleryImage[]> {
   try {
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });
