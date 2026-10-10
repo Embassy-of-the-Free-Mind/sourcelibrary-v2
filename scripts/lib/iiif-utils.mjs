@@ -480,6 +480,31 @@ export function tileFits(reqW, reqH, gotW, gotH) {
 }
 
 /**
+ * Did a single `/full/full/` response come back at the native size info.json
+ * advertises? Exact match only: unlike a tile, the whole master is at stake,
+ * and a capped response is usually far off (1.67x on e-rara) — but a 1px-short
+ * "native" would still be a derivative stored as the master (#6006).
+ */
+export function fullIsNative(nativeW, nativeH, gotW, gotH) {
+  if (!nativeW || !nativeH || !gotW || !gotH) return false;
+  return gotW === nativeW && gotH === nativeH;
+}
+
+/**
+ * Hosts in SILENT_CAP_HOSTS that cap only SOME pages, so fetchIiifNativeRes
+ * tries one `/full/full/` request before stitching (#6006).
+ *
+ * e-rara: ten pages sampled 2026-10-10 across the id range all served
+ * `/full/full/` at exactly info.json's size, while its `w,` region tiles come
+ * back a few pixels taller than asked at the right/bottom edge — so stitching
+ * was both unnecessary and impossible there. EAP is NOT here: it caps every
+ * page, and the extra request would be pure cost on ~89k pages.
+ */
+export const FULL_FIRST_HOSTS = [
+  'www.e-rara.ch',
+];
+
+/**
  * Fetch a IIIF image at native pixel resolution, stitching tiles when the
  * server caps single-request output below the master dimensions.
  *
@@ -514,6 +539,9 @@ export function tileFits(reqW, reqH, gotW, gotH) {
  * @param {object} [opts.info] Pre-fetched info.json (avoids a roundtrip).
  * @param {number} [opts.maxChunk=1024] Max per-request chunk dimension.
  * @param {Function} [opts.onProgress] (done, total) callback.
+ * @param {boolean} [opts.fullFirst] Try `/full/full/` before stitching; defaults
+ *                            to true on FULL_FIRST_HOSTS. `tiles: 0` in the
+ *                            result means the single image was native.
  * @returns {Promise<{buffer: Buffer, width: number, height: number, tiles: number}>}
  */
 export async function fetchIiifNativeRes(photoUrl, opts = {}) {
@@ -536,6 +564,22 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
   if (info.maxWidth) chunk = Math.min(chunk, info.maxWidth);
   if (info.maxHeight) chunk = Math.min(chunk, info.maxHeight);
   if (chunk < 256) chunk = 256;
+
+  // FULL FIRST on hosts that cap only SOME pages (#6006). One `/full/full/`
+  // request is cheaper than a grid, and on e-rara it is also the only route
+  // that works: its `w,` edge tiles come back mis-scaled (asked 138x1024, got
+  // 138x1031) and the extent check below rightly refuses them. Accept the
+  // single image only when it IS native per info.json; anything short falls
+  // through to the stitch, guard and all.
+  const fullFirst = opts.fullFirst
+    ?? FULL_FIRST_HOSTS.some(h => String(serviceBase).includes(h));
+  if (fullFirst) {
+    const full = await rateLimitedFetch(`${serviceBase}/full/full/0/default.jpg`, opts);
+    const meta = await sharp(full).metadata();
+    if (fullIsNative(W, H, meta.width, meta.height)) {
+      return { buffer: full, width: meta.width, height: meta.height, tiles: 0, chunk: null };
+    }
+  }
 
   // PROBE: ask for one full-size chunk and see what actually comes back. A host
   // that silently downscales returns a SMALLER image for the same region; if we
