@@ -45,7 +45,7 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
@@ -658,7 +658,9 @@ async function transliteratePage(db, page, sourceScript) {
   );
 
   // Log usage (fire-and-forget)
-  const costUsd = (inputTokens / 1_000_000) * 0.10 + (outputTokens / 1_000_000) * 0.40;
+  // Priced by the shared table. A hardcoded $0.10/$0.40 here recorded flash-lite at ~30% of
+  // the $0.25/$1.50 Google bills: $6.32 metered for $21.45 billed, 2026-09-27..10-03 (#5499).
+  const costUsd = calculateUsageCost(TRANSLITERATION_MODEL, inputTokens, outputTokens, false);
   logUsageAsync({
     type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
     book_id: page.book_id, page_ids: [page.id],
