@@ -1,12 +1,17 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import { FEED_TYPES } from '@/lib/feed-links';
 
 export const revalidate = 3600; // 1h ISR
 
 export const metadata = {
   title: 'Source Library Deep Dive: Podcast',
   description: 'AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition, grounded in primary sources.',
+  // Own canonical: without it the page inherited the root layout's '/' and
+  // read to search engines as a duplicate of the homepage. `types` restated
+  // because metadata merges shallowly per key.
+  alternates: { canonical: '/podcast', types: FEED_TYPES },
 };
 
 interface PodcastEpisode {
