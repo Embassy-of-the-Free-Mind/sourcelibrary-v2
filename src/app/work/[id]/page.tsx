@@ -111,11 +111,16 @@ function workTitleFromEditions(editions: TitledEdition[], workId: string): strin
   return mostCommon(editions.map(e => e.display_title || e.title)) || tail;
 }
 
-// The author most editions carry, for the title and JSON-LD. "Unknown" and
-// "Anonymous" are kept out of the title (they read as a missing value there).
+// An author for the title and JSON-LD, only when every edition that names one
+// names the same one. "Most common" was wrong: an anthology's contributor list
+// ("Hollandus; Llull; Ashmole; Ripley") outvoted the editions of the Corpus
+// Hermeticum and would have published a false attribution. Lists, "et al." and
+// "Unknown"/"Anonymous" never qualify.
 function workAuthorFromEditions(editions: { author?: string | null }[]): string | null {
-  const a = mostCommon(editions.map(e => e.author));
-  return a && !/^(unknown|anonymous)$/i.test(a) ? a : null;
+  const named = new Set(editions.map(e => (e.author || '').trim()).filter(Boolean));
+  if (named.size !== 1) return null;
+  const [a] = named;
+  return /;|\bet al\b|^(unknown|anonymous)$/i.test(a) ? null : a;
 }
 
 // Catalogue no-date markers. These are real values in `published` and must not
