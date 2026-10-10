@@ -235,6 +235,14 @@ export interface ReaderStrings {
     /** Placeholder on a page whose whole text is an AI description, with the
      *  Notes toggle off. Takes the page type, already labelled. */
     descriptionHidden: (pageTypeLabel: string) => string;
+    /** Heading over a translation written for a page with no source text (#5903):
+     *  the model described a plate or an endpaper, or wrote over a failed OCR.
+     *  Not the book's words. Says "little or no text was transcribed", not "no text":
+     *  the rule measures the transcription (< 30 characters), and a failed OCR
+     *  leaves text on the leaf. */
+    ungroundedLabel: string;
+    /** The same page with the Notes toggle off. */
+    ungroundedHidden: string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -417,6 +425,9 @@ export interface ReaderStrings {
     translationWithheld: string;
     translationWithheldBody: string;
     blankPage: string;
+    /** A non-blank page the pipeline marked "no translatable content" (#5903).
+     *  Takes the page type, already labelled. */
+    noTextPage: (pageTypeLabel: string) => string;
     readyToTranslate: string;
     readyToTranslateBody: string;
     /**
@@ -826,6 +837,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceUnavailable: 'Tracing is not available for this page.',
       traceEnglishOnly: 'Tracing compares the original with the English translation. Switch back to English to use it.',
       descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
+      ungroundedLabel: 'Little or no text was transcribed on this page · written by the model',
+      ungroundedHidden: 'Little or no text was transcribed on this page. Turn Notes on to read what the model wrote.',
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -984,6 +997,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translationWithheld: 'Translation withdrawn',
       translationWithheldBody: 'This page has just been re-transcribed, and the English we had was made from the older, less accurate reading. We have taken it down rather than leave a translation of text that is no longer here. A new one will follow.',
       blankPage: 'Blank page.',
+      noTextPage: (pageTypeLabel: string) => `${pageTypeLabel} page. No text to translate.`,
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
       englishReadingText: 'English edition',
@@ -1302,6 +1316,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceUnavailable: 'El cotejo no está disponible para esta página.',
       traceEnglishOnly: 'El cotejo compara el original con la traducción al inglés. Vuelve al inglés para usarlo.',
       descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
+      ungroundedLabel: 'Se transcribió poco o ningún texto en esta página · escrito por el modelo',
+      ungroundedHidden: 'Se transcribió poco o ningún texto en esta página. Activa las notas para leer lo que escribió el modelo.',
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
@@ -1460,6 +1476,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translationWithheld: 'Traducción retirada',
       translationWithheldBody: 'Acabamos de volver a transcribir esta página, y la traducción al inglés que teníamos se hizo a partir de la lectura anterior, menos exacta. La hemos retirado en lugar de dejar una traducción de un texto que ya no está aquí. Pronto habrá una nueva.',
       blankPage: 'Página en blanco.',
+      noTextPage: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. No hay texto que traducir.`,
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
       englishReadingText: 'Edición en inglés',
@@ -1804,6 +1821,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceUnavailable: 'Vestigatio huic paginae praesto non est.',
       traceEnglishOnly: 'Vestigatio textum primigenium cum conversione Anglica confert. Ad Anglicam redi, ut ea utaris.',
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
+      ungroundedLabel: 'Paulum aut nihil textus ex hac pagina transcriptum · a machina scriptum',
+      ungroundedHidden: 'Paulum aut nihil textus ex hac pagina transcriptum. Notas ostende, ut quae machina scripsit legas.',
       traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
       traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
 
@@ -1964,6 +1983,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translationWithheld: 'Conversio retracta',
       translationWithheldBody: 'Haec pagina modo denuo transcripta est, et conversio Anglica quam habebamus ex lectione priore, minus accurata, facta erat. Eam sustulimus, ne conversio textus qui iam non adest relinqueretur. Nova sequetur.',
       blankPage: 'Pagina vacua.',
+      noTextPage: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Nihil vertendum.`,
       readyToTranslate: 'Ad convertendum parata',
       readyToTranslateBody: 'Haec pagina iam machina lecta est. Anglice nondum conversa est.',
       englishReadingText: 'Editio Anglica',
@@ -2281,6 +2301,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceUnavailable: 'Traceren is voor deze pagina niet beschikbaar.',
       traceEnglishOnly: 'Traceren vergelijkt het origineel met de Engelse vertaling. Schakel terug naar Engels om het te gebruiken.',
       descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
+      ungroundedLabel: 'Weinig of geen tekst getranscribeerd op deze pagina · geschreven door het model',
+      ungroundedHidden: 'Weinig of geen tekst getranscribeerd op deze pagina. Zet Noten aan om te lezen wat het model schreef.',
       traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
       traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
 
@@ -2440,6 +2462,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translationWithheld: 'Vertaling ingetrokken',
       translationWithheldBody: 'Deze pagina is net opnieuw getranscribeerd, en het Engels dat we hadden was gemaakt op basis van de oudere, minder nauwkeurige lezing. We hebben het weggehaald in plaats van een vertaling te laten staan van tekst die er niet meer is. Er komt een nieuwe.',
       blankPage: 'Lege pagina.',
+      noTextPage: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Geen tekst om te vertalen.`,
       readyToTranslate: 'Klaar om te vertalen',
       readyToTranslateBody: 'De OCR van deze pagina is klaar. Ze is nog niet in het Engels vertaald.',
       englishReadingText: 'Engelse editie',
@@ -2759,6 +2782,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceUnavailable: '本页无法使用对照功能。',
       traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',
       descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
+      ungroundedLabel: '本页几乎未转录出文字 · 由模型撰写',
+      ungroundedHidden: '本页几乎未转录出文字。打开“注释”即可阅读模型撰写的内容。',
       traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
       traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
 
@@ -2917,6 +2942,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translationWithheld: '译文已撤下',
       translationWithheldBody: '本页刚刚重新转录，而原有的英文是根据较早、较不准确的读法译出的。我们把它撤了下来，以免留下一份所译文字已不存在的译文。新的译文随后会补上。',
       blankPage: '空白页。',
+      noTextPage: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。无可翻译的文字。`,
       readyToTranslate: '可以翻译',
       readyToTranslateBody: '本页已完成 OCR，尚未译成英文。',
       englishReadingText: '英文版',
