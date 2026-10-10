@@ -464,12 +464,9 @@ Unchanged from revision 1:
 New in revision 2. None of these binds before R7.
 
 6. **Lane budgets replace per-run envelopes for line work.**
-   - Default: the first month's lane budgets are **the unspent balance of the line envelopes already approved** (readable20k, translate300 and stubs4719, as of 2026-10-04).
-   - That is translate ≈ $1,183 and OCR ≈ $1,960, or ≈ $39/day and ≈ $65/day over 30 days.
-   - It grants **no new spending authority**.
-   - Alternative: set new per-day figures.
+   - **Decided 2026-10-10 (Derek): No** to the proposed default (fund the first month from the unspent balance of the readable20k, translate300 and stubs4719 envelopes, ≈ $39/day translate and ≈ $65/day OCR). **Each lane budget comes back to Derek as its own decision** when R8 is built (#5827). Until then every lane budget is 0, which is today's behaviour.
 7. **Queue rank order: asked for → mission core → reader demand → cheapest to finish → first translation.** This is the translate-next-5467 order. Alternative: cheapest to finish first, which maximises readers per dollar.
-8. **Quality gate every 300 books or 7 days, 10 books × 3 pages each. A NO-GO pauses enrolment until a human records a GO.**
+8. **Quality gate every 300 books or 7 days, 10 books × 3 pages each. A NO-GO pauses enrolment until a human records a GO.** Decided 2026-10-10 (Derek): yes, as written (#5826). It pauses enrolment only, never reader access.
 9. **Policy holds become blocked reasons** (`ocr_policy`, `ocr_untrusted`) at R1, in observe mode. The hold markers stay untouched until step 6.
 10. **Envelopes are for projects only, with a 30-day default expiry. SPENT envelopes close automatically.**
 
