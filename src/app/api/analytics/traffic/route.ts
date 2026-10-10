@@ -10,7 +10,7 @@ export const maxDuration = 60;
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
-const VALID_BINS: TrafficBin[] = ['hour', 'day', 'week'];
+const VALID_BINS: TrafficBin[] = ['hour', '4h', 'day', 'week'];
 
 export const GET = withAuth(async (request: NextRequest) => {
   try {

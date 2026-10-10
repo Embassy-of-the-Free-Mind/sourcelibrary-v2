@@ -123,7 +123,7 @@ export async function getTrafficData(days = 30): Promise<TrafficData> {
 // Powers /admin/traffic. getTrafficData() above stays as the simple shape the
 // tenant analytics route reads.
 
-export type TrafficBin = 'hour' | 'day' | 'week';
+export type TrafficBin = 'hour' | '4h' | 'day' | 'week';
 
 export interface TrafficFilters {
   country?: string;
@@ -162,6 +162,9 @@ export interface TrafficDashboardData {
   };
   // First day with any pageview row, so the page can say how far back it goes.
   earliest: string | null;
+  // Fixed headline windows, independent of the chosen range and filters
+  // except proxy-pool exclusion. Days are UTC.
+  recent: { lastHour: number; last4h: number; today: number; yesterday: number };
 }
 
 // Groups for the bot chart. Names are what classifyBot() in
@@ -198,6 +201,26 @@ function defaultBin(days: number): TrafficBin {
   return 'week';
 }
 
+const BIN_MS: Record<TrafficBin, number> = { hour: 36e5, '4h': 4 * 36e5, day: 864e5, week: 7 * 864e5 };
+
+// $dateTrunc for a bin. UTC; weeks start on Sunday (Mongo's default).
+function truncExpr(bin: TrafficBin) {
+  return bin === '4h'
+    ? { $dateTrunc: { date: '$timestamp', unit: 'hour', binSize: 4 } }
+    : { $dateTrunc: { date: '$timestamp', unit: bin } };
+}
+
+// Start of the bucket containing `d`, matching truncExpr, so a range begins on
+// a whole bucket and its first bar is not a partial one.
+function floorToBin(d: Date, bin: TrafficBin): Date {
+  const out = new Date(d);
+  out.setUTCMinutes(0, 0, 0);
+  if (bin === '4h') out.setUTCHours(out.getUTCHours() - (out.getUTCHours() % 4));
+  if (bin === 'day' || bin === 'week') out.setUTCHours(0);
+  if (bin === 'week') out.setUTCDate(out.getUTCDate() - out.getUTCDay());
+  return out;
+}
+
 // Derive a top-level "section" from the path. `/embed/<tenant>` keeps two
 // segments so partner reading-room traffic is its own section; everything else
 // collapses to its first segment ('/', '/book', '/gallery', …).
@@ -224,8 +247,12 @@ export async function getTrafficDashboard(opts: {
   const bin = opts.bin ?? defaultBin(days);
   const filters = opts.filters ?? {};
 
-  const rangeMs = days * 24 * 60 * 60 * 1000;
-  const since = new Date(Date.now() - rangeMs);
+  // Whole buckets: the range ends with the bucket now filling (the last bar,
+  // drawn faded) and starts at a bucket boundary, so e.g. 30d daily is 29
+  // complete days plus today. The previous period has the same length.
+  const now = Date.now();
+  const since = floorToBin(new Date(now - days * 864e5 + BIN_MS[bin]), bin);
+  const rangeMs = now - since.getTime();
   const prevSince = new Date(since.getTime() - rangeMs);
 
   const col = db.collection('analytics_pageviews');
@@ -262,7 +289,7 @@ export async function getTrafficDashboard(opts: {
               ...sectionMatch,
               {
                 $group: {
-                  _id: { $dateTrunc: { date: '$timestamp', unit: bin } },
+                  _id: truncExpr(bin),
                   ips: { $addToSet: '$ip' },
                   pageviews: { $sum: 1 },
                 },
@@ -332,12 +359,12 @@ export async function getTrafficDashboard(opts: {
 
   // Pool pageviews per bucket: what the exclusion removed from this window.
   // Unfiltered, like the bot counters it is charted with.
-  const botBin = bin === 'hour' ? 'day' : bin;
+  const botBin: TrafficBin = bin === 'hour' || bin === '4h' ? 'day' : bin;
   const poolQuery = pool.length
     ? col
         .aggregate([
           { $match: { timestamp: { $gte: since }, userAgent: { $in: pool } } },
-          { $group: { _id: { $dateTrunc: { date: '$timestamp', unit: botBin } }, n: { $sum: 1 } } },
+          { $group: { _id: truncExpr(botBin), n: { $sum: 1 } } },
         ])
         .toArray()
     : Promise.resolve([]);
@@ -354,11 +381,26 @@ export async function getTrafficDashboard(opts: {
     ])
     .toArray();
 
-  const [[result], [prev], poolRows, botRows, first] = await Promise.all([
+  const dayStart = floorToBin(new Date(now), 'day');
+  const recentCount = (from: Date, to?: Date) =>
+    col.countDocuments({
+      path: { $ne: null },
+      ...excludePool(pool),
+      timestamp: to ? { $gte: from, $lt: to } : { $gte: from },
+    });
+  const recentQuery = Promise.all([
+    recentCount(new Date(now - BIN_MS.hour)),
+    recentCount(new Date(now - BIN_MS['4h'])),
+    recentCount(dayStart),
+    recentCount(new Date(dayStart.getTime() - BIN_MS.day), dayStart),
+  ]);
+
+  const [[result], [prev], poolRows, botRows, [lastHour, last4h, today, yesterday], first] = await Promise.all([
     mainQuery,
     prevQuery,
     poolQuery,
     botQuery,
+    recentQuery,
     col.find({}, { projection: { timestamp: 1 } }).sort({ timestamp: 1 }).limit(1).next(),
   ]);
 
@@ -413,6 +455,7 @@ export async function getTrafficDashboard(opts: {
         .slice(0, 12)
         .map(([bot, hits]) => ({ bot, group: botGroup(bot), hits })),
     },
+    recent: { lastHour, last4h, today, yesterday },
     earliest: first?.timestamp ? new Date(first.timestamp).toISOString().slice(0, 10) : null,
   };
 }
