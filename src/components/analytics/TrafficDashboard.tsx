@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot, MousePointerClick } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import Link from 'next/link';
-import { AreaChart } from './charts/AreaChart';
+import { BarChart } from './charts/BarChart';
 import { MultiLineChart } from './charts/MultiLineChart';
 // Type-only: analytics-traffic.ts imports the Mongo driver, which must not
 // reach this client bundle.
@@ -28,6 +28,7 @@ const POOL_SCREENING_STARTED = '2026-08-30';
 const BINS: { value: TrafficBin | 'auto'; label: string }[] = [
   { value: 'auto', label: 'Auto' },
   { value: 'hour', label: 'Hourly' },
+  { value: '4h', label: '4-hourly' },
   { value: 'day', label: 'Daily' },
   { value: 'week', label: 'Weekly' },
 ];
@@ -44,7 +45,7 @@ function pctDelta(cur: number, prev: number): { text: string; up: boolean | null
 
 function fmtBucket(iso: string, bin: TrafficBin): string {
   // iso like 2026-05-02T00:00:00.000Z
-  if (bin === 'hour') return iso.slice(5, 13).replace('T', ' ') + ':00';
+  if (bin === 'hour' || bin === '4h') return iso.slice(5, 13).replace('T', ' ') + ':00';
   return iso.slice(5, 10); // MM-DD
 }
 
@@ -151,6 +152,22 @@ export default function TrafficDashboard() {
         </div>
       ) : (
         <div className={`space-y-6 transition-opacity ${loading ? 'opacity-50' : ''}`}>
+          {/* Fixed recent windows: the numbers to glance at */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {([
+              ['Last hour', data.recent.lastHour],
+              ['Last 4 hours', data.recent.last4h],
+              ['Today so far (UTC)', data.recent.today],
+              ['Yesterday (UTC)', data.recent.yesterday],
+            ] as const).map(([label, n]) => (
+              <div key={label} className="p-4 rounded-xl" style={card}>
+                <div className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                <div className="text-3xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>{n.toLocaleString('en-US')}</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>pageviews</div>
+              </div>
+            ))}
+          </div>
+
           {/* Summary cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SummaryCard
@@ -181,11 +198,17 @@ export default function TrafficDashboard() {
                 ))}
               </div>
             </div>
-            <AreaChart
+            <BarChart
               data={data.series.map(s => ({ x: s.bucket, y: s[metric] }))}
               color={metric === 'pageviews' ? 'var(--accent-violet)' : '#3b82f6'}
               xLabel={(v) => fmtBucket(v, data.range.bin)}
+              height={240}
+              showValues
+              partialLast
             />
+            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+              Times are UTC. The faded last bar is still filling. Hover a bar for its exact count.
+            </p>
             {data.range.since.slice(0, 10) < POOL_SCREENING_STARTED && (
               <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>
                 Before {POOL_SCREENING_STARTED} nothing screened for proxy pools, so spikes in that stretch
