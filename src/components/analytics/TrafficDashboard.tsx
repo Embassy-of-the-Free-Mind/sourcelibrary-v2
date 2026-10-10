@@ -6,7 +6,9 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import Link from 'next/link';
 import { AreaChart } from './charts/AreaChart';
 import { MultiLineChart } from './charts/MultiLineChart';
-import { BOT_GROUPS, type TrafficDashboardData, type TrafficBin, type BotGroup } from '@/lib/analytics-traffic';
+// Type-only: analytics-traffic.ts imports the Mongo driver, which must not
+// reach this client bundle.
+import type { TrafficDashboardData, TrafficBin, BotGroup } from '@/lib/analytics-traffic';
 
 type FilterKey = 'country' | 'section' | 'referrer' | 'host';
 
@@ -331,6 +333,8 @@ const BOT_GROUP_META: Record<BotGroup, { label: string; color: string; note: str
   script: { label: 'Scripts', color: '#d97706', note: 'curl, python, other HTTP libraries' },
   other: { label: 'Other', color: '#16a34a', note: 'SEO tools, rate-limited clients, our own MCP' },
 };
+
+const BOT_GROUPS = Object.keys(BOT_GROUP_META) as BotGroup[];
 
 function BotSection({ bots, bin }: { bots: TrafficDashboardData['bots']; bin: TrafficBin }) {
   const groups = BOT_GROUPS.filter(g => bots.totals[g] > 0);

@@ -167,7 +167,6 @@ export interface TrafficDashboardData {
 // Groups for the bot chart. Names are what classifyBot() in
 // src/app/api/analytics/bots/route.ts writes; anything unlisted is "other".
 export type BotGroup = 'pool' | 'ai' | 'search' | 'unidentified' | 'script' | 'other';
-export const BOT_GROUPS: BotGroup[] = ['pool', 'ai', 'search', 'unidentified', 'script', 'other'];
 const BOT_GROUP_OF: Record<string, BotGroup> = {
   openai: 'ai', anthropic: 'ai', perplexity: 'ai', meta: 'ai', 'you.com': 'ai',
   cohere: 'ai', bytedance: 'ai', commoncrawl: 'ai',
