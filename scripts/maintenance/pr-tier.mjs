@@ -137,11 +137,23 @@ export function groupedBumps(diff) {
   return { pairs: bumps.length, breaking: bumps.filter((b) => b.breaking) };
 }
 
-function classifyPR(number) {
-  const pr = JSON.parse(sh(`gh pr view ${number} --json number,title,author,isDraft,labels,files,url,comments`));
+// The first line of a failed command's stderr, e.g. `HTTP 406: Sorry, the diff exceeded the maximum number of files (300)`.
+const errLine = (e) => (String(e?.stderr || '').split('\n').find((l) => l.trim()) || e?.message || String(e)).trim().slice(0, 200);
+
+/**
+ * `run` is injectable so a test can stand in for `gh`. A diff GitHub will not
+ * serve (#6324: HTTP 406 `too_large` past 300 files or 20K lines) used to throw
+ * out of `--all` partway through the list. A diff we cannot read is a diff
+ * nobody checked, so it HOLDs with the reason instead.
+ */
+export function classifyPR(number, run = sh) {
+  const pr = JSON.parse(run(`gh pr view ${number} --json number,title,author,isDraft,labels,files,url,comments`));
   const paths = (pr.files || []).map((f) => f.path);
-  const diff = sh(`gh pr diff ${number}`);
+  let diff = '';
+  let diffError = null;
+  try { diff = run(`gh pr diff ${number}`); } catch (e) { diffError = errLine(e); }
   const result = classifyPaths(paths, scannableAddedLines(diff));
+  if (diffError) result.reasons.push({ reason: `diff could not be read, so its lines were not checked — ${diffError}`, paths: [], lines: [] });
   const author = pr.author?.login || '';
   const isBot = /dependabot/.test(author);
   if (!RULES.autoMergeAuthors.some((a) => a === author || a.replace('app/', '') === author)) {
@@ -227,9 +239,19 @@ function main() {
   if (has('--label')) ensureLabels();
   let anyHold = false;
   for (const n of numbers) {
-    const c = classifyPR(n);
+    let c;
+    try { c = classifyPR(n); } catch (e) {
+      // `gh pr view` itself failed: nothing to label, but `--all` carries on.
+      // A single `--pr` (pr-tier.yml) still exits 1, so the check goes red rather than passing unlabelled.
+      console.log(`#${n} HOLD  (could not classify)\n   - ${errLine(e)}`);
+      if (numbers.length === 1) process.exit(1);
+      anyHold = true;
+      continue;
+    }
     print(c);
-    if (has('--label')) applyLabel(c);
+    if (has('--label')) {
+      try { applyLabel(c); } catch (e) { console.log(`   label NOT applied — ${errLine(e)}`); }
+    }
     if (c.result.tier === 'HOLD') anyHold = true;
   }
   process.exit(numbers.length === 1 && anyHold ? 3 : 0);

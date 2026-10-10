@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs maintenance script, no type declarations
-import { classifyPaths, groupedBumps, scannableAddedLines } from '../../scripts/maintenance/pr-tier.mjs';
+import { classifyPaths, classifyPR, groupedBumps, scannableAddedLines } from '../../scripts/maintenance/pr-tier.mjs';
 
 const DELETION = 'data deletion or migration in the diff';
 const reasons = (paths: string[], lines: string[]) =>
@@ -72,5 +72,25 @@ describe('pr-tier: a grouped dependabot bump is read from the diff', () => {
   it('a newly added dependency is not a pair; a diff with no pairs reads as zero so the caller keeps the hold', () => {
     expect(groupedBumps(pkg(['+    "left-pad": "^1.3.0",'])).pairs).toBe(0);
     expect(groupedBumps('').pairs).toBe(0);
+  });
+});
+
+describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashing (#6324)', () => {
+  const view = JSON.stringify({ number: 5991, title: 'eval: big results drop', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: 'scripts/eval/results/x.json' }], comments: [] });
+  const fakeGh = (diff: () => string) => (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff());
+
+  it('a readable diff of harmless paths is AUTO', () => {
+    expect(classifyPR(5991, fakeGh(() => '')).result.tier).toBe('AUTO');
+  });
+
+  it('an HTTP 406 too_large diff is HOLD with the reason, not a throw', () => {
+    const tooLarge = () => {
+      throw Object.assign(new Error('Command failed: gh pr diff 5991'), {
+        stderr: 'could not find pull request diff: HTTP 406: Sorry, the diff exceeded the maximum number of files (300).\nPullRequest.diff too_large\n',
+      });
+    };
+    const { result } = classifyPR(5991, fakeGh(tooLarge));
+    expect(result.tier).toBe('HOLD');
+    expect(result.reasons.map((r: { reason: string }) => r.reason).join('\n')).toMatch(/diff could not be read.*HTTP 406/);
   });
 });
