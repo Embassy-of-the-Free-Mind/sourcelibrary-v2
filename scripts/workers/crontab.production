@@ -299,3 +299,7 @@
 # and the generated table in .claude/docs/ocr-engine-routing.md. No model call, no database. --apply files, rewrites or closes ONE
 # GitHub issue per finding class (label routing-drift); nothing automated reads those issues. Guarded on the script so the line is inert until it is on main.
 40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1
+# Spare lane (#6395): when this box's Claude account is under its fair share of the week (or in the last 48 h before
+# the reset), start a claude-job on the next small bug / user-feedback / data-quality issue; stop lane jobs at weekly 92% /
+# session 85%. Subscription only, $0. Guarded on the script so the line is inert until it is on main.
+*/30 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
