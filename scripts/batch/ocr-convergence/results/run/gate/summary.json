@@ -1,0 +1,56 @@
+{
+ "set": "gate",
+ "threshold": 0.01,
+ "pages": 300,
+ "books": 30,
+ "actions": {
+  "residual": 108,
+  "agree": 23,
+  "keep": 93,
+  "write": 51,
+  "contain": 13,
+  "pending-adjudication": 4,
+  "no-second-read": 8
+ },
+ "by_group": {
+  "latin": {
+   "residual": 44,
+   "agree": 14,
+   "keep": 52,
+   "write": 35,
+   "contain": 2,
+   "pending-adjudication": 2,
+   "no-second-read": 1
+  },
+  "greek": {
+   "write": 2,
+   "residual": 36,
+   "keep": 9,
+   "contain": 1,
+   "pending-adjudication": 2
+  },
+  "german": {
+   "keep": 16,
+   "write": 9,
+   "residual": 5,
+   "no-second-read": 1,
+   "agree": 9
+  },
+  "chinese": {
+   "write": 3,
+   "residual": 10,
+   "contain": 10,
+   "keep": 7
+  },
+  "arabic": {
+   "keep": 5,
+   "write": 2,
+   "residual": 13
+  },
+  "hebrew": {
+   "no-second-read": 6,
+   "keep": 4
+  }
+ },
+ "decided_at": "2026-10-10T18:31:28.993Z"
+}
