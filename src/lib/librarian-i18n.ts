@@ -8,7 +8,7 @@
 // conversation. Client-safe: no server imports, no hooks.
 
 import type { Metadata } from 'next';
-import type { Locale } from './locale-path';
+import { withEnglishFallback, type Locale } from './locale-path';
 import { siteOgImage, OG_LOCALE } from './og-locale';
 
 export interface LibrarianStrings {
@@ -68,14 +68,16 @@ export interface LibrarianStrings {
   dateLocale: string;
 }
 
-export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFallback({
   en: {
-    metaTitle: 'The Librarian — Source Library',
-    metaDescription: 'Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy — thousands of rare books, many translated into English for the first time.',
+    metaTitle: 'The Librarian | Source Library',
+    metaDescription: 'Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy: thousands of rare books, many translated into English for the first time.',
     title: 'The Librarian',
     intro: 'Your research agent for over 10,000 rare books. Ask a question, and the Librarian will search the collection, cross-reference sources, and build up findings you can export.',
     emptyLead: 'The Librarian searches the collection, Wikipedia, and semantic search to find answers in over 10,000 rare books.',
-    emptyDisclaimer: 'Responses may contain errors — always verify against the source page.',
+    emptyDisclaimer: 'Responses may contain errors. Always verify against the source page.',
     placeholder: 'Ask the Librarian...',
     send: 'Send',
     stop: 'Stop',
@@ -95,8 +97,8 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
     tryAgain: 'Try again',
     share: 'Share',
     linkCopied: 'Link copied ✓',
-    limitReached: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian&reason=limit) (free) to keep talking with the Librarian — create an account or sign in with Google.',
-    genericError: 'I’m sorry — something went wrong on my end. Try again?',
+    limitReached: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian&reason=limit) (free) to keep talking with the Librarian. Create an account or sign in with Google.',
+    genericError: 'I’m sorry, something went wrong on my end. Try again?',
     notYetInCollection: 'Not yet in collection',
     recent: 'Recent',
     myConversations: 'My Conversations',
@@ -184,7 +186,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
     dateLocale: 'en-US',
   },
   es: {
-    metaTitle: 'Pregunta a la fuente — El Bibliotecario | Source Library',
+    metaTitle: 'Pregunta a la fuente: El Bibliotecario | Source Library',
     metaDescription: 'Pregunta al Bibliotecario sobre cualquier texto de la colección. Alquimia, Hermetismo, Cábala, astrología, filosofía natural: miles de libros raros, y una edición en español que crece.',
     title: 'Pregunta a la fuente',
     intro: 'El Bibliotecario es tu agente de investigación sobre más de 10.000 libros raros. Haz una pregunta y buscará en la colección, contrastará fuentes y citará la edición en español cuando exista.',
@@ -267,7 +269,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
     ],
     dateLocale: 'es-ES',
   },
-};
+});
 
 /** Route metadata for `/librarian` and `/es/librarian`, with hreflang twins. */
 export function librarianMetadata(lang: Locale): Metadata {

@@ -6,9 +6,9 @@
  *   Every sweep here has written a new FIELD on `books` instead of a new ROW in
  *   a log collection. Measured 2026-08-13: `books` carries 403 top-level fields
  *   plus ~176 nested sub-keys; only 17 are present on >=99% of documents, while
- *   144 sit on fewer than 1% — one sweep's residue each. `books_warehouse`, the
- *   newest of the three book collections, carries 129 fields with 25 core. The
- *   difference is accretion, not necessary complexity.
+ *   144 sit on fewer than 1% — one sweep's residue each. The warehouse book
+ *   collection (then the newest of three; retired 2026-10, #5470) carried 129
+ *   fields with 25 core. The difference is accretion, not necessary complexity.
  *
  * WHY IT MATTERS — this is a correctness problem, not a tidiness one
  *   A query against a field that exists but is 2%-populated returns a confident,
@@ -100,7 +100,7 @@ const MAX_NESTED = Number(argVal('--max-nested') || 0);
 const FORBID = (argVal('--forbid') || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 // Collections worth watching by default. Everything else needs --all.
-const WATCHED = ['books', 'deleted_books', 'books_warehouse', 'pages', 'first_translation_attempts', 'entities'];
+const WATCHED = ['books', 'deleted_books', 'pages', 'first_translation_attempts', 'entities'];
 
 // Object-valued fields whose sub-keys sprawl independently of the top level.
 const NESTED = {
@@ -481,8 +481,8 @@ async function main() {
 
   console.log(`\n${'='.repeat(72)}`);
   console.log('The rule this audit exists to enforce: a sweep records a ROW in a log');
-  console.log('collection keyed to the book, never a new FIELD on the book. That is what');
-  console.log('books_warehouse (25 core / 129 total) got right and books (17 / 403) did not.');
+  console.log('collection keyed to the book, never a new FIELD on the book. Measured');
+  console.log('2026-08-13: the warehouse copy kept 25 core / 129 total; books, 17 / 403.');
   console.log(`${'='.repeat(72)}`);
 
   process.exit(breach ? 1 : 0);

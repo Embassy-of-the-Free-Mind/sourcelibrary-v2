@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, typedPages, sampleAudit } from '@/lib/quality-center';
 import { EXPERIMENTS, experiment, type ExperimentRecord } from '@/lib/experiments-index';
+// @ts-expect-error -- plain ESM script, no types
+import { digest, render, unfitRows, dropReason, OUT as DIGEST } from '../../scripts/eval/build-pareto-sample-digest.mjs';
 import { FOOTER_NAV_COLUMNS, visibleFooterNavColumns } from '@/lib/footer-nav';
 import { FOOTER_STRINGS } from '@/lib/i18n';
 // @ts-expect-error -- plain ESM script, no types
@@ -128,5 +130,46 @@ describe('footer door', () => {
     expect(participate.links.map(l => l.href)).toContain('/quality');
     for (const strings of Object.values(FOOTER_STRINGS)) expect(strings.qualityCenter).toBeTruthy();
     expect(visibleFooterNavColumns(true).flatMap(c => c.links.map(l => l.href))).not.toContain('/quality');
+  });
+});
+
+describe('the Pareto sample check (#6304) on /quality', () => {
+  it('the committed digest matches its sources (run scripts/eval/build-pareto-sample-digest.mjs)', () => {
+    expect(fs.readFileSync(path.join(process.cwd(), DIGEST), 'utf8')).toBe(render(digest()));
+  });
+
+  it('states consistent figures', () => {
+    const a = sampleAudit();
+    expect(a.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(a.checked.translation).toBeGreaterThan(0);
+    expect(a.dropped.translation + a.dropped.ocr).toBe(a.dropped.reasons.reduce((t, r) => t + r.n, 0));
+    expect(a.held.translation.n).toBeLessThanOrEqual(a.held.translation.of);
+    for (const v of [a.edition.greek, a.edition.latinNormalised, a.edition.chineseOverrun]) expect(v.n).toBeLessThanOrEqual(v.of);
+    expect(a.eye.fit + a.eye.limit + a.eye.unfit).toBe(a.eye.pages);
+    expect(a.unfit.length).toBeGreaterThan(0);
+    expect(a.spearman[0]).toBeLessThanOrEqual(a.spearman[1]);
+  });
+
+  it('takes the not-fit rows of the verdict table, one per chart', () => {
+    const md = [
+      '| chart · panel | n (dropped) | verdict | the limit |',
+      '|---|---|---|---|',
+      '| Latin · most-pages / #6182 | 70 (1) | sound with a stated limit | x |',
+      '| Chinese · #6182 | 21 (4) | **not fit to rank the top arms** | y |',
+      '| Chinese print OCR · most-pages | 12 (7) | **not fit to rank engines** | z |',
+      '| Chinese print OCR · most-engines | — | not fit | w |',
+      '| Armenian OCR | 5 (0) | not fit to rank | v |',
+    ].join('\n');
+    expect(unfitRows(md)).toEqual([
+      { chart: 'Chinese translation (the #6182 chart)', qualifier: 'the top engines' },
+      { chart: 'Chinese print OCR', qualifier: null },
+      { chart: 'Armenian OCR', qualifier: null },
+    ]);
+  });
+
+  it('refuses a drop reason it cannot name', () => {
+    expect(dropReason('ref-fit:offset')).toBe('judges');
+    expect(dropReason('best-engine-cer:0.41')).toBe('cer');
+    expect(() => dropReason('something new')).toThrow();
   });
 });

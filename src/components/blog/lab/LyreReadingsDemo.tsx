@@ -26,28 +26,28 @@ const READINGS: Record<Reading, {
   direction: string;
 }> = {
   len: {
-    button: 'As lengths — Zarlino’s direction',
+    button: 'As lengths: Zarlino’s direction',
     freqs: NUMBERS.map((n) => 1760 / n),
     pure: true,
     verdict:
-      '12:6 sounds the octave; 12:8 and 9:6 pure fifths; 12:9 and 8:6 pure fourths; 9:8 the tone. The Greatest Harmony, exactly as promised — the long string lies low, just as Zarlino’s direction says.',
-    direction: 'sounding low → high: 12 · 9 · 8 · 6 — bigger number, deeper voice.',
+      '12:6 sounds the octave; 12:8 and 9:6 pure fifths; 12:9 and 8:6 pure fourths; 9:8 the tone. The Greatest Harmony, exactly as promised: the long string lies low, just as Zarlino’s direction says.',
+    direction: 'sounding low → high: 12 · 9 · 8 · 6, bigger number, deeper voice.',
   },
   wgt: {
-    button: 'As hung weights — Plutarch’s direction',
+    button: 'As hung weights: Plutarch’s direction',
     freqs: NUMBERS.map((n) => 165 * Math.sqrt(n / 6)),
     pure: false,
     verdict:
-      'Every span halves: 12 against 6 sounds 600¢ — the tritone — the “fifths” sound 351¢, the “fourths” 249¢. No names in the scale. But notice the direction: the heaviest weight sings highest, exactly as Plutarch’s ordering implies. Right direction, wrong intervals.',
-    direction: 'sounding low → high: 6 · 8 · 9 · 12 — bigger weight, higher voice.',
+      'Every span halves: 12 against 6 sounds 600¢ (the tritone); the “fifths” sound 351¢, the “fourths” 249¢. No names in the scale. But notice the direction: the heaviest weight sings highest, exactly as Plutarch’s ordering implies. Right direction, wrong intervals.',
+    direction: 'sounding low → high: 6 · 8 · 9 · 12, bigger weight, higher voice.',
   },
   ham: {
-    button: 'As struck hammers — scale model',
+    button: 'As struck hammers: scale model',
     freqs: NUMBERS.map((n) => 260 * Math.cbrt(6 / n)),
     pure: false,
     verdict:
-      'Solid bodies scale by the cube root: 12 against 6 rings only ~400¢ apart and the whole chord crushes into a cluster — with the heavy hammer sunk low, against both the legend and Galilei’s own guess. And in a real forge the anvil sings one note regardless of the hammer.',
-    direction: 'sounding low → high: 12 · 9 · 8 · 6 — but squeezed to a third of the promised spans.',
+      'Solid bodies scale by the cube root: 12 against 6 rings only ~400¢ apart and the whole chord crushes into a cluster, with the heavy hammer sunk low, against both the legend and Galilei’s own guess. And in a real forge the anvil sings one note regardless of the hammer.',
+    direction: 'sounding low → high: 12 · 9 · 8 · 6, but squeezed to a third of the promised spans.',
   },
 };
 
@@ -95,8 +95,8 @@ export default function LyreReadingsDemo() {
 
   return (
     <LabCard
-      title="The Lyre of Mercury — but which way up?"
-      caption="Boethius gives Mercury's lyre four strings in the proportions 6 · 8 · 9 · 12 — the hammer numbers. Plutarch's camp put 6 on the lowest string; Zarlino's put 12 there, and Galilei saw why: one camp read the numbers as weights, the other as lengths. Each reading is a law; each law is a chord. Choose one and listen —"
+      title="The Lyre of Mercury, but which way up?"
+      caption="Boethius gives Mercury's lyre four strings in the proportions 6 · 8 · 9 · 12, the hammer numbers. Plutarch's camp put 6 on the lowest string; Zarlino's put 12 there, and Galilei saw why: one camp read the numbers as weights, the other as lengths. Each reading is a law; each law is a chord. Choose one and listen:"
       sourceHref="/book/dialogo-della-musica-antica-et-della-moderna-galilei?page=144"
       sourceLabel="Vincenzo Galilei, Dialogo (1581), p. 144"
     >

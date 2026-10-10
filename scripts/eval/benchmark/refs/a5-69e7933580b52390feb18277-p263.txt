@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>Arabic, Persian</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>296</page-num>
+<warning>Handwritten Nasta'liq script for marginalia and interlinear glosses; printed Arabic text for the main body.</warning>
+
+لَهُ سِوَاهُ فَقُلْتُ لِلْقَاضِي أَوَ تَعْرِفُ أَبَاهُ أَخْزَاهُ اللهُ فَقَالَ وَهَلْ يُجْهَلُ
+أَبُو زَيْدٍ الَّذِي جُرْحُهُ جُبَارٌ وَلَهُ عِنْدَ كُلِّ قَاضٍ أَخْبَارٌ وَإِخْبَارٌ فَتَحَرَّقْتُ
+حِينَئِذٍ وَحَوْلَقْتُ وَأَفَقْتُ لَكِنْ حِينَ فَاتَ الْوَقْتُ وَأَيْقَنْتُ أَنَّ لِثَامَهُ
+كَانَ شَرَكَ مَكِيدَتِهِ وَبَيْتَ قَصِيدَتِهِ فَنَكَّسَ طَرْفِي مَا لَقِيتُ وَآلَيْتُ
+أَنْ لَا أُعَامِلَ مُتَلَثِّمًا مَا بَقِيتُ وَلَمْ أَزَلْ أَتَأَوَّهُ لِخُسْرِ صَفْقَتِي وَ
+الِافْتِضَاحِ بَيْنَ رُفْقَتِي فَقَالَ لِيَ الْقَاضِي حِينَ رَأَى امْتِعَاضِي وَتَبَيَّنَ
+حَرَّ ارْتِمَاضِي يَا هَذَا مَا ذَهَبَ مِنْ مَالِكَ مَا وَعَظَكَ وَلَا أَجْرَمَ إِلَيْكَ
+مَنْ أَيْقَظَكَ فَاتَّعِظْ بِمَا نَابَكَ وَكَاتِمْ أَصْحَابَكَ مَا أَصَابَكَ وَتَذَكَّرْ
+أَبَدًا مَا دَهِمَكَ لِتَقِيَ الذِّكْرَى دَرَاهِمَكَ وَتَخَلَّقْ بِخُلُقِ مَنِ ابْتُلِيَ فَصَبَرَ
+وَتَجَلَّتْ لَهُ الْعِبَرُ فَاعْتَبَرَ فَوَدَّعْتُهُ لَابِسًا ثَوْبَ الْخَجَلِ وَالْحَزَنِ سَاحِبًا
+ذَيْلَ الْغَبْنِ وَالْغَبَنِ وَنَوَيْتُ مُكَاشَفَةَ أَبِي زَيْدٍ بِالْهَجْرِ وَمُصَارَمَتَهُ
+
+---
+
+<margin>
+(Marginalia contains extensive commentary in Persian Nasta'liq script, explaining the narrative of Abu Zayd al-Saruji and the judge, detailing the linguistic nuances of the Maqama and the moral lessons regarding greed and deception.)
+</margin>
+
+<vocab>مقامات الحريري, Maqamat al-Hariri, Abu Zayd al-Saruji, Arabic literature, Nasta'liq, classical Arabic, Persian glosses</vocab>

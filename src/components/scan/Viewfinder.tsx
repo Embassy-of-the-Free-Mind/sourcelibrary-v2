@@ -339,7 +339,7 @@ const Viewfinder = forwardRef<ViewfinderHandle, ViewfinderProps>(function Viewfi
         if (conditions.stable && sharp && exposed) {
           setStatusText('Hold steady...');
         } else if (!sharp) {
-          setStatusText('Too blurry — hold still');
+          setStatusText('Too blurry. Hold still');
         } else if (!exposed) {
           setStatusText(q.meanBrightness < LUMINANCE_MIN ? 'Too dark' : 'Too bright');
         } else {

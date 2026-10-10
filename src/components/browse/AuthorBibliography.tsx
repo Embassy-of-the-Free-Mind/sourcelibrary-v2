@@ -154,25 +154,25 @@ export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
                     </td>
                     <td className="py-3 pr-4 text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
                       <Link href={bookUrl(book)} className="block">
-                        {book.year || book.published || '—'}
+                        {book.year || book.published || '–'}
                       </Link>
                     </td>
                     <td className="py-3 pr-4 hidden md:table-cell">
                       <Link href={bookUrl(book)} className="block">
                         <span className="text-xs px-2 py-0.5 rounded" style={{ color: 'var(--text-muted)', background: 'var(--bg-warm)' }}>
-                          {book.language || '—'}
+                          {book.language || '–'}
                         </span>
                       </Link>
                     </td>
                     <td className="py-3 pr-4 hidden lg:table-cell">
                       <Link href={bookUrl(book)} className="block text-xs line-clamp-1" style={{ color: 'var(--text-faint)' }}>
-                        {publisher || '—'}
+                        {publisher || '–'}
                         {place && publisher && <span className="text-[10px]"> ({place})</span>}
                       </Link>
                     </td>
                     <td className="py-3 hidden sm:table-cell text-right">
                       <Link href={bookUrl(book)} className="block text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                        {book.pages_count || '—'}
+                        {book.pages_count || '–'}
                         {pct > 0 && pct < 95 && (
                           <span className="text-[10px] ml-1" style={{ color: 'var(--accent-gold-dark)' }}>{pct}%</span>
                         )}

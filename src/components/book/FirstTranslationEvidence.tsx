@@ -246,7 +246,7 @@ function EvidenceFooter({
   if (tools.length > 0) {
     return (
       <p className="text-stone-600 text-[10px]">
-        Automated catalogue check{date ? ` · ${fmtDate(date)}` : ''} via {tools.slice(0, 6).join(', ')} — detailed
+        Automated catalogue check{date ? ` · ${fmtDate(date)}` : ''} via {tools.slice(0, 6).join(', ')}. Detailed
         query log not retained.
         {methodology}
       </p>
@@ -261,7 +261,7 @@ function EvidenceFooter({
   // weak verdict is preserved in the attempt log so its accuracy can be measured.
   return (
     <p className="text-stone-600 text-[10px]">
-      Preliminary{date ? ` · ${fmtDate(date)}` : ''} — automated catalogue + model-knowledge check; not
+      Preliminary{date ? ` · ${fmtDate(date)}` : ''}: automated catalogue + model-knowledge check; not
       independently verified.
       {methodology}
     </p>
@@ -280,7 +280,7 @@ function StrengthChip({ strength, preliminary }: { strength?: string; preliminar
     const title =
       strength === 'strong'
         ? 'Cross-checked across independent catalogues/models'
-        : 'Single documented search — not cross-model verified';
+        : 'Single documented search, not cross-model verified';
     return (
       <span
         title={title}
@@ -293,7 +293,7 @@ function StrengthChip({ strength, preliminary }: { strength?: string; preliminar
   if (preliminary) {
     return (
       <span
-        title="Weak evidence — automated catalogue + model-knowledge check, not independently verified"
+        title="Weak evidence: automated catalogue + model-knowledge check, not independently verified"
         className="inline-block whitespace-nowrap text-[10px] px-1.5 py-0.5 rounded bg-stone-700/40 text-stone-500"
       >
         preliminary

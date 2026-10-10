@@ -64,7 +64,7 @@ export async function POST(
         modernized: null,
         skipped: 'already-modern',
         source: resolved.source,
-        message: 'This page is already in modern English — a modernization would return the same text.',
+        message: 'This page is already in modern English, so a modernization would return the same text.',
       });
     }
 

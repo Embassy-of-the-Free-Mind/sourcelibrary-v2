@@ -1,0 +1,95 @@
+{
+ "issue": 5918,
+ "findings_issue": 6056,
+ "snapshot": "2026-10-06",
+ "collection": "eternity-spot-check (private)",
+ "method": "hand-picked curation check: books chosen for interest, two consecutive mid-book pages each, read against the page image. NOT a rate.",
+ "books": 107,
+ "by_tier": {
+  "1": 43,
+  "2": 30,
+  "3": 34
+ },
+ "tiers": {
+  "1": "show",
+  "2": "show with care",
+  "3": "fix first or do not show"
+ },
+ "by_tradition": {
+  "Sanskrit (Nālandā, Prajñāpāramitā)": {
+   "1": 4,
+   "2": 0,
+   "3": 2,
+   "n": 6
+  },
+  "Tibetan": {
+   "1": 6,
+   "2": 5,
+   "3": 5,
+   "n": 16
+  },
+  "Pali": {
+   "1": 5,
+   "2": 4,
+   "3": 1,
+   "n": 10
+  },
+  "Korean": {
+   "1": 4,
+   "2": 3,
+   "3": 2,
+   "n": 9
+  },
+  "Persian": {
+   "1": 6,
+   "2": 2,
+   "3": 3,
+   "n": 11
+  },
+  "Arabic": {
+   "1": 6,
+   "2": 4,
+   "3": 3,
+   "n": 13
+  },
+  "Chinese": {
+   "1": 8,
+   "2": 5,
+   "3": 5,
+   "n": 18
+  },
+  "Japanese": {
+   "1": 1,
+   "2": 3,
+   "3": 5,
+   "n": 9
+  },
+  "Hebrew and Aramaic": {
+   "1": 3,
+   "2": 4,
+   "3": 8,
+   "n": 15
+  }
+ },
+ "by_reader": {
+  "earlier session": {
+   "1": 10,
+   "2": 3,
+   "3": 11,
+   "n": 24
+  },
+  "read from image": {
+   "1": 7,
+   "2": 3,
+   "3": 5,
+   "n": 15
+  },
+  "reviewer by eye": {
+   "1": 26,
+   "2": 24,
+   "3": 18,
+   "n": 68
+  }
+ },
+ "hidden_at_snapshot": 17
+}

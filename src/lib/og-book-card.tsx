@@ -28,6 +28,9 @@ export const BOOK_OG_CONTENT_TYPE = 'image/png';
 export const BOOK_OG_ALT: Record<Locale, string> = {
   en: 'Book from Source Library',
   es: 'Libro de Source Library',
+  la: 'Liber ex Source Library',
+  nl: 'Boek uit Source Library',
+  zh: 'Source Library 藏书',
 };
 
 const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;

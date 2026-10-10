@@ -61,3 +61,15 @@ jobs:
       # and new direct `@vercel/blob` imports that bypass storagePut().
       - name: No new Vercel Blob dependencies
         run: node scripts/audit/no-vercel-blob.mjs
+
+      # Static source check (#6215): an em dash in reader-visible copy under
+      # src/app or src/components (JSX text, string literals; comments are
+      # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
+      - name: No new em dashes in reader-facing copy
+        run: node scripts/maintenance/check-em-dashes.mjs
+      # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
+      # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
+      # other classes compare the code with the decisions ledger and are filed as issues by
+      # the daily cron, never failed on a PR. Exit 2 (could not run) fails the step too.
+      - name: Generated routing table is current
+        run: node scripts/audit/routing-drift.mjs --ci

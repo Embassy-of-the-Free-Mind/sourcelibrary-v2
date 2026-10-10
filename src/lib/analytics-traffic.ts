@@ -1,3 +1,4 @@
+import type { Db } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 
 /**
@@ -12,6 +13,36 @@ import { getReadDb } from '@/lib/mongodb';
  * this behind `withAuth` / `requireInnerCircle`.
  */
 
+// ── Proxy-pool exclusion ─────────────────────────────────────────────────────
+// `/api/track` labels every beacon human, because a beacon only fires from a
+// browser that ran JavaScript (#3657). Residential proxy pools run JavaScript
+// too: on 2026-09-19 one forged Chrome string was 87% of the day's pageviews.
+// scripts/workers/traffic-anomaly-alert.mjs flags such strings hourly into
+// `suspected_pool_fingerprints`; this is the TypeScript read side of
+// scripts/lib/suspected-pool.mjs, so the dashboard and the metrics snapshot
+// exclude the same traffic.
+//
+// Exclude every string flagged at any point in the window being measured, for
+// the whole window. The detector's first_seen lags the pool's arrival (on
+// 2026-09-19 its flagged hours covered 7K of the pool's 68K views), so a
+// per-hour exclusion would leave most of a pool in.
+
+const POOL_COLLECTION = 'suspected_pool_fingerprints';
+
+async function poolFingerprints(db: Db, since: Date): Promise<string[]> {
+  const rows = await db
+    .collection<{ _id: string }>(POOL_COLLECTION)
+    .find({ last_seen: { $gte: since } })
+    .project<{ _id: string }>({ _id: 1 })
+    .toArray()
+    .catch(() => []);
+  return rows.map((r) => r._id);
+}
+
+function excludePool(fingerprints: string[]): Record<string, unknown> {
+  return fingerprints.length ? { userAgent: { $nin: fingerprints } } : {};
+}
+
 export interface TrafficData {
   topPages: Array<{ path: string; count: number }>;
   topReferrers: Array<{ referrer: string; count: number }>;
@@ -24,12 +55,13 @@ export interface TrafficData {
 export async function getTrafficData(days = 30): Promise<TrafficData> {
   const db = await getReadDb();
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+  const pool = await poolFingerprints(db, since);
 
   const [result] = await db
     .collection('analytics_pageviews')
     .aggregate(
       [
-        { $match: { timestamp: { $gte: since }, path: { $ne: null } } },
+        { $match: { timestamp: { $gte: since }, path: { $ne: null }, ...excludePool(pool) } },
         {
           $facet: {
             totals: [
@@ -88,10 +120,10 @@ export async function getTrafficData(days = 30): Promise<TrafficData> {
 }
 
 // ── Rich dashboard query (range/bin/compare + sections + cross-filter) ───────
-// Powers the standalone /traffic page. getTrafficData() above stays as the
-// simple shape consumed by the /analytics Traffic tab.
+// Powers /admin/traffic. getTrafficData() above stays as the simple shape the
+// tenant analytics route reads.
 
-export type TrafficBin = 'hour' | 'day' | 'week';
+export type TrafficBin = 'hour' | '4h' | 'day' | 'week';
 
 export interface TrafficFilters {
   country?: string;
@@ -116,17 +148,77 @@ export interface TrafficDashboardData {
   // "click" per visitor, which is the number comparable to Search Console.
   clicksBySource: Array<{ referrer: string; count: number }>;
   topCountries: Array<{ country: string; count: number }>;
-  // Human vs bot vs AI, from the compact ingestion counter (not the pageview
-  // collection). Empty until traffic accrues after this feature ships.
-  classification: Array<{ class: string; count: number }>;
+  // Automated traffic, shown separately and never in the figures above.
+  // `pool` is pageviews from flagged proxy-pool strings (they run the beacon,
+  // so they are removed from every human figure). Bot rows are server-side
+  // requests the proxy recognised as bots (`analytics_bot_access`, one counter
+  // per bot per path prefix per day); bots never run the beacon. Daily
+  // resolution only, and site/section/country/referrer filters don't apply.
+  bots: {
+    poolFingerprints: number;
+    totals: Record<BotGroup, number>;
+    series: Array<{ bucket: string } & Record<BotGroup, number>>;
+    topBots: Array<{ bot: string; group: BotGroup; hits: number }>;
+  };
+  // First day with any pageview row, so the page can say how far back it goes.
+  earliest: string | null;
+  // Fixed headline windows, independent of the chosen range and filters
+  // except proxy-pool exclusion. Days are UTC.
+  recent: { lastHour: number; last4h: number; today: number; yesterday: number };
 }
 
-const MAX_DAYS = 90; // analytics_pageviews has a 90-day TTL — nothing older exists
+// Groups for the bot chart. Names are what classifyBot() in
+// src/app/api/analytics/bots/route.ts writes; anything unlisted is "other".
+export type BotGroup = 'pool' | 'ai' | 'search' | 'unidentified' | 'script' | 'other';
+const BOT_GROUP_OF: Record<string, BotGroup> = {
+  openai: 'ai', anthropic: 'ai', perplexity: 'ai', meta: 'ai', 'you.com': 'ai',
+  cohere: 'ai', bytedance: 'ai', commoncrawl: 'ai',
+  google: 'search', bing: 'search',
+  'unknown-bot': 'unidentified', 'other-bot': 'unidentified',
+  script: 'script',
+};
+const botGroup = (bot: string): BotGroup => BOT_GROUP_OF[bot] ?? 'other';
+
+function emptyGroups(): Record<BotGroup, number> {
+  return { pool: 0, ai: 0, search: 0, unidentified: 0, script: 0, other: 0 };
+}
+
+// Bucket key for a YYYY-MM-DD day, matching Mongo's $dateTrunc (weeks start
+// on Sunday, UTC). Bot counters are daily, so an hourly view gets daily bars.
+function dayBucket(day: string, bin: TrafficBin): string {
+  const d = new Date(`${day}T00:00:00.000Z`);
+  if (bin === 'week') d.setUTCDate(d.getUTCDate() - d.getUTCDay());
+  return d.toISOString();
+}
+
+// analytics_pageviews has no TTL (rows reach back to 2026-04-05). The cap only
+// bounds the scan; a year is ~2M rows.
+const MAX_DAYS = 366;
 
 function defaultBin(days: number): TrafficBin {
   if (days <= 2) return 'hour';
-  if (days <= 60) return 'day';
+  if (days <= 120) return 'day';
   return 'week';
+}
+
+const BIN_MS: Record<TrafficBin, number> = { hour: 36e5, '4h': 4 * 36e5, day: 864e5, week: 7 * 864e5 };
+
+// $dateTrunc for a bin. UTC; weeks start on Sunday (Mongo's default).
+function truncExpr(bin: TrafficBin) {
+  return bin === '4h'
+    ? { $dateTrunc: { date: '$timestamp', unit: 'hour', binSize: 4 } }
+    : { $dateTrunc: { date: '$timestamp', unit: bin } };
+}
+
+// Start of the bucket containing `d`, matching truncExpr, so a range begins on
+// a whole bucket and its first bar is not a partial one.
+function floorToBin(d: Date, bin: TrafficBin): Date {
+  const out = new Date(d);
+  out.setUTCMinutes(0, 0, 0);
+  if (bin === '4h') out.setUTCHours(out.getUTCHours() - (out.getUTCHours() % 4));
+  if (bin === 'day' || bin === 'week') out.setUTCHours(0);
+  if (bin === 'week') out.setUTCDate(out.getUTCDate() - out.getUTCDay());
+  return out;
 }
 
 // Derive a top-level "section" from the path. `/embed/<tenant>` keeps two
@@ -155,26 +247,37 @@ export async function getTrafficDashboard(opts: {
   const bin = opts.bin ?? defaultBin(days);
   const filters = opts.filters ?? {};
 
-  const rangeMs = days * 24 * 60 * 60 * 1000;
-  const since = new Date(Date.now() - rangeMs);
+  // Whole buckets: the range ends with the bucket now filling (the last bar,
+  // drawn faded) and starts at a bucket boundary, so e.g. 30d daily is 29
+  // complete days plus today. The previous period has the same length.
+  const now = Date.now();
+  const since = floorToBin(new Date(now - days * 864e5 + BIN_MS[bin]), bin);
+  const rangeMs = now - since.getTime();
   const prevSince = new Date(since.getTime() - rangeMs);
 
   const col = db.collection('analytics_pageviews');
+  const pool = await poolFingerprints(db, prevSince);
 
   // Base match shared by current + prior windows (country/referrer filter, but
   // NOT section — section is applied per-sub-pipeline so the sections list can
   // still offer every section to switch to).
-  const baseMatch: Record<string, unknown> = { path: { $ne: null } };
-  if (filters.country) baseMatch.country = filters.country;
-  if (filters.referrer) baseMatch.referrer = filters.referrer;
-  if (filters.host) baseMatch.host = filters.host;
+  const filterMatch: Record<string, unknown> = { path: { $ne: null } };
+  if (filters.country) filterMatch.country = filters.country;
+  if (filters.referrer) filterMatch.referrer = filters.referrer;
+  if (filters.host) filterMatch.host = filters.host;
+  const baseMatch = { ...filterMatch, ...excludePool(pool) };
 
   const sectionMatch = filters.section ? [{ $match: { _section: filters.section } }] : [];
 
-  const [result] = await col
+  // The queries below are independent full scans of the window; run them in
+  // parallel so the page waits for the slowest, not the sum.
+  const mainQuery = col
     .aggregate(
       [
         { $match: { ...baseMatch, timestamp: { $gte: since } } },
+        // Carry only the fields the facets read: $facet materialises its input,
+        // and a full pageview row (user agent, headers) is several times larger.
+        { $project: { _id: 0, path: 1, timestamp: 1, ip: 1, host: 1, referrer: 1, country: 1 } },
         { $addFields: { _section: SECTION_EXPR } },
         {
           $facet: {
@@ -186,7 +289,7 @@ export async function getTrafficDashboard(opts: {
               ...sectionMatch,
               {
                 $group: {
-                  _id: { $dateTrunc: { date: '$timestamp', unit: bin } },
+                  _id: truncExpr(bin),
                   ips: { $addToSet: '$ip' },
                   pageviews: { $sum: 1 },
                 },
@@ -241,7 +344,7 @@ export async function getTrafficDashboard(opts: {
     .toArray();
 
   // Prior-period totals (same filters incl. section) for compare deltas.
-  const [prev] = await col
+  const prevQuery = col
     .aggregate(
       [
         { $match: { ...baseMatch, timestamp: { $gte: prevSince, $lt: since } } },
@@ -254,20 +357,67 @@ export async function getTrafficDashboard(opts: {
     )
     .toArray();
 
-  // Human/bot/AI split from the compact per-day counter (separate collection,
-  // no TTL). Section/country/referrer filters don't apply here (the counter
-  // isn't per-pageview), but host does.
+  // Pool pageviews per bucket: what the exclusion removed from this window.
+  // Unfiltered, like the bot counters it is charted with.
+  const botBin: TrafficBin = bin === 'hour' || bin === '4h' ? 'day' : bin;
+  const poolQuery = pool.length
+    ? col
+        .aggregate([
+          { $match: { timestamp: { $gte: since }, userAgent: { $in: pool } } },
+          { $group: { _id: truncExpr(botBin), n: { $sum: 1 } } },
+        ])
+        .toArray()
+    : Promise.resolve([]);
+
+  // Bot requests per bot per day. Not `analytics_traffic_class`: that
+  // counter's bot rows hold ~200 a day against ~40,000 here (measured
+  // 2026-10-10), and its human row is every beacon, pool included (#3657).
   const sinceDay = since.toISOString().slice(0, 10);
-  const classMatch: Record<string, unknown> = { day: { $gte: sinceDay } };
-  if (filters.host) classMatch.host = filters.host;
-  const classRows = await db
-    .collection('analytics_traffic_class')
+  const botQuery = db
+    .collection('analytics_bot_access')
     .aggregate([
-      { $match: classMatch },
-      { $group: { _id: '$class', count: { $sum: '$count' } } },
-      { $sort: { count: -1 } },
+      { $match: { date: { $gte: sinceDay } } },
+      { $group: { _id: { bot: '$bot', date: '$date' }, hits: { $sum: '$hits' } } },
     ])
     .toArray();
+
+  const dayStart = floorToBin(new Date(now), 'day');
+  const recentCount = (from: Date, to?: Date) =>
+    col.countDocuments({
+      path: { $ne: null },
+      ...excludePool(pool),
+      timestamp: to ? { $gte: from, $lt: to } : { $gte: from },
+    });
+  const recentQuery = Promise.all([
+    recentCount(new Date(now - BIN_MS.hour)),
+    recentCount(new Date(now - BIN_MS['4h'])),
+    recentCount(dayStart),
+    recentCount(new Date(dayStart.getTime() - BIN_MS.day), dayStart),
+  ]);
+
+  const [[result], [prev], poolRows, botRows, [lastHour, last4h, today, yesterday], first] = await Promise.all([
+    mainQuery,
+    prevQuery,
+    poolQuery,
+    botQuery,
+    recentQuery,
+    col.find({}, { projection: { timestamp: 1 } }).sort({ timestamp: 1 }).limit(1).next(),
+  ]);
+
+  const botBuckets = new Map<string, Record<BotGroup, number>>();
+  const botTotals = emptyGroups();
+  const byBot = new Map<string, number>();
+  const addTo = (bucket: string, group: BotGroup, n: number) => {
+    const row = botBuckets.get(bucket) ?? emptyGroups();
+    row[group] += n;
+    botBuckets.set(bucket, row);
+    botTotals[group] += n;
+  };
+  for (const r of poolRows as { _id: Date; n: number }[]) addTo(new Date(r._id).toISOString(), 'pool', r.n);
+  for (const r of botRows as { _id: { bot: string; date: string }; hits: number }[]) {
+    addTo(dayBucket(r._id.date, botBin), botGroup(r._id.bot), r.hits);
+    byBot.set(r._id.bot, (byBot.get(r._id.bot) ?? 0) + r.hits);
+  }
 
   const totals = result?.totals?.[0] as { pageviews: number; ips: (string | null)[] } | undefined;
   const prevTotals = prev as { pageviews: number; ips: (string | null)[] } | undefined;
@@ -294,6 +444,18 @@ export async function getTrafficDashboard(opts: {
     topReferrers: (result?.topReferrers ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     clicksBySource: (result?.clicksBySource ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     topCountries: (result?.topCountries ?? []).map((c: { _id: string; count: number }) => ({ country: c._id, count: c.count })),
-    classification: (classRows as { _id: string; count: number }[]).map((c) => ({ class: c._id, count: c.count })),
+    bots: {
+      poolFingerprints: pool.length,
+      totals: botTotals,
+      series: [...botBuckets.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([bucket, g]) => ({ bucket, ...g })),
+      topBots: [...byBot.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 12)
+        .map(([bot, hits]) => ({ bot, group: botGroup(bot), hits })),
+    },
+    recent: { lastHour, last4h, today, yesterday },
+    earliest: first?.timestamp ? new Date(first.timestamp).toISOString().slice(0, 10) : null,
   };
 }

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { canonicalPath, localeHref, localeFromPathname, localePath, LOCALIZED_PATHS } from '@/lib/i18n';
+import { canonicalPath, localeHref, localeFromPathname, localePath, hasLocalizedTwin, withEnglishFallback, LOCALIZED_PATHS } from '@/lib/i18n';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
 
 describe('canonicalPath', () => {
   it('drops the /es prefix', () => {
@@ -47,13 +48,17 @@ describe('localeHref (sitewide toggle, #2763)', () => {
 
   it('round-trips a localized twin path', () => {
     // Simulate the funnel PR registering /support as localized.
-    LOCALIZED_PATHS.add('/support');
+    // `/support` has since become a real member of the set, so restore the set
+    // to how it was found: deleting unconditionally removed a live twin from
+    // every test that ran after this one.
+    const had = LOCALIZED_PATHS.es.has('/support');
+    LOCALIZED_PATHS.es.add('/support');
     try {
       expect(localeHref('es', '/support')).toBe('/es/support');
       expect(localeHref('es', '/es/support')).toBe('/es/support');
       expect(localeHref('en', '/es/support')).toBe('/support');
     } finally {
-      LOCALIZED_PATHS.delete('/support');
+      if (!had) LOCALIZED_PATHS.es.delete('/support');
     }
   });
 });
@@ -97,5 +102,72 @@ describe('localePath (keep an internal link on its locale, #4082)', () => {
 
   it('keeps the query string when it prefixes', () => {
     expect(localePath('/book/foo?v=2', 'es')).toBe('/es/book/foo?v=2');
+  });
+});
+
+// Latin (#6254) is the second prefixed locale, and the first whose set of twin
+// routes differs from Spanish: the homepage, the book page and the reader, and
+// nothing else. The registry is per locale for exactly that reason — these pin
+// that a Latin link never borrows a Spanish-only twin.
+describe('the Latin locale has its own, smaller set of twins', () => {
+  it('reads /la as Latin and strips it', () => {
+    expect(localeFromPathname('/la')).toBe('la');
+    expect(localeFromPathname('/la/book/x')).toBe('la');
+    expect(localeFromPathname('/latin-alchemy')).toBe('en'); // segment-wise, not a string prefix
+    expect(canonicalPath('/la')).toBe('/');
+    expect(canonicalPath('/la/book/x/page/y')).toBe('/book/x/page/y');
+  });
+
+  it('keeps /la on the homepage, the book page and the reader', () => {
+    expect(localePath('/', 'la')).toBe('/la');
+    expect(localePath('/book/x', 'la')).toBe('/la/book/x');
+    expect(localePath('/book/x/page/y', 'la')).toBe('/la/book/x/page/y');
+    expect(localePath('/book/x/page-number/12', 'la')).toBe('/la/book/x/page-number/12');
+  });
+
+  it('leaves a path with a Spanish twin but no Latin one untouched', () => {
+    // Positive control first: the same paths DO prefix for Spanish, so an
+    // unprefixed result below is the Latin registry answering, not a broken helper.
+    for (const p of ['/support', '/search', '/librarian', '/auth/signin', '/collections', '/collections/alchemy']) {
+      expect(localePath(p, 'es')).toBe(`/es${p}`);
+      expect(localePath(p, 'la')).toBe(p);
+      expect(hasLocalizedTwin(p, 'la')).toBe(false);
+    }
+  });
+
+  it('switches language to the twin, or to that locale\'s front page', () => {
+    expect(localeHref('la', '/book/x')).toBe('/la/book/x');
+    expect(localeHref('la', '/es/book/x')).toBe('/la/book/x');
+    expect(localeHref('es', '/la/book/x')).toBe('/es/book/x');
+    expect(localeHref('en', '/la/book/x/page/y')).toBe('/book/x/page/y');
+    expect(localeHref('la', '/support')).toBe('/la');
+  });
+
+  it('hasLocalizedTwin with no locale means a twin in ANY locale', () => {
+    expect(hasLocalizedTwin('/support')).toBe(true); // Spanish only
+    expect(hasLocalizedTwin('/gallery')).toBe(false);
+  });
+
+  it('withEnglishFallback fills only the locales a surface has no copy for', () => {
+    const d = withEnglishFallback({ en: 'Search', es: 'Buscar' });
+    expect(d).toEqual({ en: 'Search', es: 'Buscar', la: 'Search', nl: 'Search', zh: 'Search' });
+  });
+});
+
+describe('the Dutch and Chinese sites are original-text sites like Latin (#6382)', () => {
+  it('keeps the homepage, book page and reader on /nl and /zh, and nothing else', () => {
+    for (const l of ['nl', 'zh'] as const) {
+      expect(localeHref(l, '/')).toBe(`/${l}`);
+      expect(localeHref(l, '/book/x')).toBe(`/${l}/book/x`);
+      expect(localeHref(l, '/book/x/page/p1')).toBe(`/${l}/book/x/page/p1`);
+      expect(localeHref(l, '/support')).toBe(`/${l}`);
+      expect(localePath('/collections/alchemy', l)).toBe('/collections/alchemy');
+      expect(localeFromPathname(`/${l}/book/x`)).toBe(l);
+      expect(canonicalPath(`/${l}/book/x`)).toBe('/book/x');
+    }
+  });
+
+  it('reads the original on la, nl and zh, and not on en or es', () => {
+    expect(['en', 'es', 'la', 'nl', 'zh'].filter((l) => readsOriginal(l as Locale))).toEqual(['la', 'nl', 'zh']);
   });
 });

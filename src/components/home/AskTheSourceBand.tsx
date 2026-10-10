@@ -46,7 +46,7 @@ export default function AskTheSourceBand({ lang = 'en' }: { lang?: HomeLang }) {
             onChange={(e) => setQ(e.target.value)}
             placeholder={t.librarianPlaceholder}
             aria-label={t.librarianPlaceholder}
-            className="flex-1 px-5 py-3.5 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-base outline-none border border-white focus:ring-2 focus:ring-white/40 transition-colors shadow-lg"
+            className="flex-1 min-w-0 px-5 py-3.5 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-base outline-none border border-white focus:ring-2 focus:ring-white/40 transition-colors shadow-lg"
           />
           <button
             type="submit"

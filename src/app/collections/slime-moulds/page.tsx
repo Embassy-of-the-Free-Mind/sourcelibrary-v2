@@ -48,7 +48,7 @@ const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
-const OG_TITLE = 'Slime Moulds — Source Library';
+const OG_TITLE = 'Slime Moulds | Source Library';
 const OG_DESC = 'One cell that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over the slime moulds, from Panckow in 1654 to the first monograph of 1875.';
 // The book pinned as the featured work. Rendered only when it is actually in
 // the collection, so the authored copy below can never sit under another title.

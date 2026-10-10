@@ -205,8 +205,10 @@ describe('every translation enrol path asks the gate', () => {
     'src/lib/types/ai-models.ts': 'the TS twin of the router',
     'src/data/public-models.ts': 'a comment',
     'src/workers/translation-processor-logic.ts': 'the Lambda processor: consumes jobs queued by the gated /api/jobs/queue-books route',
+    'scripts/maintenance/relabel-language-4884.mjs': 'asks the router only to REPORT the model before and after a language relabel (#4884); enrols and translates nothing',
   };
-  const files = execSync("git grep -l getTranslateModelForBook -- scripts/lib scripts/batch scripts/workers scripts/maintenance src ':!*.test.ts' ':!*.md'", { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean);
+  // JSON is data (e.g. src/data/translation-pareto.json names the router in a method note); it cannot enrol a book.
+  const files = execSync("git grep -l getTranslateModelForBook -- scripts/lib scripts/batch scripts/workers scripts/maintenance src ':!*.test.ts' ':!*.md' ':!*.json'", { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean);
 
   it('finds the enrol paths', () => {
     expect(files).toEqual(expect.arrayContaining([

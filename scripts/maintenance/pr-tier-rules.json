@@ -10,6 +10,9 @@
       "globs": ["src/lib/r2-key.ts", "scripts/lib/r2-key.mjs", "src/lib/storage.ts"] },
     { "reason": "public copy Derek has not seen",
       "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
+    { "reason": "public copy Derek has not seen: interface strings in a language other than English",
+      "_doc": "#6403. An added entry keyed by a non-English site locale (`nl: {`, `zh: '…'`, `es: (n) =>`) is copy a reader of that language will see: a new language block in a dictionary, or a component's inline per-locale map. #6384 added ~1,000 lines of Dutch and Chinese per language and was classed AUTO. Keep the locale list in step with PREFIXED_LOCALES (src/lib/locale-path.ts). It does not see an edit to one string inside an existing block.",
+      "diffPatterns": ["^\\s*['\"]?(es|la|nl|zh)['\"]?\\s*:\\s*[{'\"`(]"] },
     { "reason": "tenant lockdown surface",
       "globs": ["src/app/embed/**", "src/app/[tenant]/**"] },
     { "reason": "doctrine or enforcement (CLAUDE.md, hooks, workflows, commands)",
@@ -18,5 +21,8 @@
       "globs": ["scripts/migrations/**"],
       "diffPatterns": ["\\.deleteMany\\(", "\\.deleteOne\\(", "dropCollection\\(", "\\.drop\\(\\)", "DROP TABLE", "TRUNCATE ", "deleteBookArchived\\(", "\\$unset", "\\.rename\\("] }
   ],
+  "_diffIgnoreDoc": "diffPatterns fire only on added lines that can execute. Lines in these files are prose, fixtures or results, never run against data; comment-only lines are skipped too. The path globs above are NOT affected: a file under scripts/migrations/ still holds whatever it contains. src/generated/** is generated data (ustc-year-counts.json keys its counts by language code): regenerating it neither runs nor publishes anything, and the blog copy there still holds by its path glob.",
+  "diffIgnoreGlobs": ["**/*.md", "**/*.txt", "tests/**", "scripts/eval/results/**", "scripts/eval/experiments/**", ".claude/docs/**", "docs/**", "src/generated/**"],
+  "diffIgnoreCommentLines": true,
   "dependabotMajorHolds": true
 }

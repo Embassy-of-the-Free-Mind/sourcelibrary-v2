@@ -12,8 +12,8 @@ import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
-import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
-import { localePath } from '@/lib/locale-path';
+import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, type HomeLang, collectionName } from '@/lib/home-i18n';
+import { localePath, readsOriginal } from '@/lib/locale-path';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -25,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -34,16 +34,28 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // suffix on `/`, where every book is already in the page's language. A
   // collection of artworks rather than books (Leonardo's notebooks) counts
   // its artworks instead of reading "0 books".
-  const indexCount = (col: { slug: string; book_count: number; artwork_count?: number }) => {
-    const base = col.book_count > 0
-      ? `${nf(col.book_count)} ${t.booksLabel}`
-      : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
+  const indexCount = (col: { slug: string; book_count: number; total_book_count?: number; artwork_count?: number }) => {
     const localized = localizedCollectionCounts[col.slug] ?? 0;
-    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+    // `book_count` is the books READABLE IN ENGLISH; `total_book_count` is every
+    // visible member (visibility-and-stats.md). A Spanish edition is made from
+    // the English, so its count is a part of `book_count`. A Latin book is
+    // Latin whether or not it has been translated, so on /la the whole it is a
+    // part of is every member: against `book_count` the line read "1,730 libri
+    // · 2,839 Latine" (#6254).
+    const books = readsOriginal(lang) ? Math.max(col.total_book_count ?? 0, col.book_count) : col.book_count;
+    const base = books > 0
+      ? `${nf(books)} ${t.booksLabel}`
+      : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
+    // A part larger than its whole means the stored counter is stale; show the
+    // whole alone rather than a line that contradicts itself.
+    return localized > 0 && localized <= books ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
   };
 
   return (
-    <div className="min-h-screen">
+    // `lang` on the wrapper, as the book page does: the root layout's <html> is
+    // always "en", and a screen reader or a translator needs to know this page
+    // is Spanish or Latin.
+    <div className="min-h-screen" lang={lang === 'en' ? undefined : lang}>
       <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.readableInEnglish} />
 
       {/* Video Hero */}
@@ -72,6 +84,50 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
               </div>
             </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Libri Latini — the first thing under the hero on /la, for the same
+          reason the Spanish card leads /es: it is the one section whose BOOKS
+          are in the visitor's language (#6254). Every card opens `/la/book/…`,
+          where the reader shows the Latin text first. Empty, so unrendered, on
+          the other homepages. */}
+      {nativeShelf.length > 0 && (
+        <section className="bg-white py-10 md:py-14">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.nativeShelfHeading}
+              </h2>
+              <Link
+                href={`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`}
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.nativeShelfAll} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.nativeShelfSubtitle}
+            </p>
+            <BookSlider books={nativeShelf as unknown as MiniBook[]} lang={lang} />
+          </div>
+        </section>
+      )}
+
+      {/* Tironibus — readable Latin, hand-picked and ordered easiest first
+          (#6278). The anchor is the link a teacher shares with a class:
+          sourcelibrary.org/la#tironibus. */}
+      {beginnerShelf.length > 0 && (
+        <section id="tironibus" className="bg-white pb-10 md:pb-14 scroll-mt-20">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+              {t.beginnerShelfHeading}
+            </h2>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.beginnerShelfSubtitle}
+            </p>
+            <BookSlider books={beginnerShelf as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -111,7 +167,12 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           {hasShowcase && (
             <>
               <CuratedShowcase
-                items={curatedShowcase.items}
+                // The one-line hooks are English prose. On an original-text site
+                // the card carries its name in the page's language alone rather
+                // than a translated title over an English sentence (#6278).
+                items={readsOriginal(lang)
+                  ? curatedShowcase.items.map((item) => ({ ...item, name: collectionName(lang, item.slug, item.name), subtitle: '' }))
+                  : curatedShowcase.items}
                 lang={lang}
                 countLabel={(item) => `${nf(item.book_count)} ${t.booksLabel}`}
               />

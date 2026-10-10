@@ -51,6 +51,8 @@ const ALLOW = [
   /scripts\/maintenance\/repoint-blob-.*\.mjs$/,
   /scripts\/maintenance\/rehost-blob-.*\.mjs$/,
   /scripts\/maintenance\/verify-blob-residue-in-r2\.mjs$/,
+  // The residue deleter: must import del() to delete (#3645).
+  /scripts\/maintenance\/delete-verified-blob-residue\.mjs$/,
   // The CSP allowlist and the reader's legacy-URL rewrite must keep naming the
   // host while ANY historical URL can still reach a browser. Remove these two
   // entries when the Blob store is deleted.

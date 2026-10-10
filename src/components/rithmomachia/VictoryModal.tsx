@@ -28,7 +28,6 @@ export default function VictoryModal({ victory, onNewGame, onClose, mode, diffic
           <div className="bg-accent-violet/10 rounded-lg p-4 mb-6 text-sm text-secondary italic font-body">
             &ldquo;In those numbers all the harmonies are contained.&rdquo;
             <div className="text-xs text-muted mt-1 not-italic">
-              &mdash;{' '}
               <a
                 href="https://sourcelibrary.org/book/the-game-of-chess-gustavus-selenus?page=536"
                 target="_blank"

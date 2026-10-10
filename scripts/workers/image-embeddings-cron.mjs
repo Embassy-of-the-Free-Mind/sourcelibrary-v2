@@ -29,6 +29,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = path.resolve(path.dirname(__filename), '..', '..');
@@ -84,8 +85,8 @@ async function main() {
     await client.connect();
     const db = client.db('bookstore');
     const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-    if (control?.paused) {
-      console.log('[image-embeddings] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[image-embeddings] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await client.close();
       process.exit(0);
     }

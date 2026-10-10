@@ -1,0 +1,1266 @@
+[
+ {
+  "book_id": "6993899a0f04c37dcfa61b3c",
+  "slot": 5,
+  "tradition": "greek-latin-classics",
+  "title": "Sophocles, Hesiod, Euripides (18 tragedies), and Aeschylus",
+  "shelf_fit": "fits",
+  "shelf_note": "A 14th-century codex (Plut. 32.2) from the Biblioteca Medicea Laurenziana containing plays of Sophocles, Euripides, and Aeschylus alongside Hesiod; it fits the greek-latin-classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The 143 printed repeats and 33 backsteps indicate manuscript foliation or marginal notations were misread as printed pagination. There is also a discrepancy between translated page counts (503 in structure vs 472 in catalog metadata), and 25 pages lack OCR.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "This volume presents the 14th-century Laurentian manuscript of classical Greek drama by Sophocles, Euripides, and Aeschylus, alongside Hesiod. Although the scans are genuine, the transcription fails on manuscript layout, scrambling columns, duplicating text in phantom gloss tags, and garbling lines. The resulting English translation routinely invents dialogue, omits entire columns, and cannot be trusted.",
+  "book_verdict": "A major primary source severely compromised by column reading order failures, phantom duplication, dropped passages, and leaked prompt markup. It is unfit to present to scholars until transcription and layout handling are overhauled.",
+  "pages": [
+   {
+    "page_number": 40,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<gloss>ὦ νὺξ ὦ ὕπνων ἀρχὴ καὶ πηγὴ</gloss>\nὦ νὺξ ὦ ὕπνων ἀρχὴ καὶ πηγὴ",
+      "image": "ὢ νύξ, ὢ δείπνων ἀρρήτων ἔκπαγλ᾽ ἄχθη",
+      "problem": "Every single line is duplicated as a phantom interlinear gloss tag repeating the garbled line, systematically doubling the text",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "<column-break/>",
+      "image": "single poetic column with surrounding marginal scholia",
+      "problem": "Falsely splits a single poetic text column into two columns, duplicating the same passage of Sophocles' Electra (lines 189–251) across both columns",
+      "severity": "serious",
+      "class": "O4"
+     },
+     {
+      "ocr": "σὺ γινώσκεις ἵνα καὶ ἀθηνᾶς νόσοις",
+      "image": "δεινοῖς ἠναγκάσθην, δεινοῖς",
+      "problem": "Severe misreading of Sophocles' Electra line 221 into an invented phrase mentioning Athena and diseases",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "οἱ κτάμεν νόσοις αὐτῷ",
+      "image": "οἰκτρὰ μὲν νόστοις αὐδά",
+      "problem": "Severe misreading of Electra line 193 into a garbled clause about dying by disease",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<margin>\nὀρ:\nχορ:\nΗ:\n</margin>",
+      "image": "Chorus and Electra interlocutors only",
+      "problem": "Invented speaker attribution for Orestes ('ὀρ:'), who is absent from this lyric scene, mistakenly treating Sophocles' Electra as Euripides' Orestes",
+      "severity": "serious",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "σὺ γινώσκεις ἵνα καὶ ἀθηνᾶς νόσοις",
+      "english": "you know so that also the diseases of Athena",
+      "problem": "Nonsensical translation derived from severely corrupt OCR of Electra line 221",
+      "severity": "serious",
+      "class": "T5"
+     },
+     {
+      "source": "<margin>or:</margin>",
+      "english": "or:",
+      "problem": "Assigns lines to Orestes, who is not in this scene of the tragedy",
+      "severity": "serious",
+      "class": "T7"
+     },
+     {
+      "source": "<gloss>the ones having been killed by diseases for him</gloss>\nthe ones having been killed by diseases for him",
+      "english": "the ones having been killed by diseases for him",
+      "problem": "Every sentence is translated and displayed twice due to duplicated gloss markup in OCR",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "ἆρ' ἥδ' ὦ παῖ κήτος ἀπεύθυνουσι",
+      "english": "is this, O child, directing the beast",
+      "problem": "Severe mistranslation of garbled Electra line 251 ('ἐγὼ μέν, ὦ παῖ, καὶ τὸ σὸν σπεύδουσ᾽ ἅμα')",
+      "severity": "serious",
+      "class": "T5"
+     }
+    ],
+    "other": [
+     {
+      "note": "Internal structural and prompt tags (<language>, <page-type>, <columns>, <warning>, <gloss>, <margin>, <column-break>, <vocab>) leak into OCR and translation reader text",
+      "severity": "serious",
+      "class": "D1"
+     },
+     {
+      "note": "Hallucinated meta-commentary (<warning>, <summary>, <keywords>) erroneously identifying the play as Euripides' Orestes leaked into the translation",
+      "severity": "serious",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 173,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<column-break/> separating left and right columns",
+      "image": "verses and hemistichs laid out horizontally across the two columns (e.g. Bacchae 593, 604, 608)",
+      "problem": "column reading order cleaves horizontally paired verse lines across columns into disconnected vertical halves",
+      "severity": "serious",
+      "class": "O3"
+     },
+     {
+      "ocr": "ἐμφαν’ μέ’ ἦσον ἡμῖν Δίου βακχεύματ’",
+      "image": "ὦ φάος μέγιστον ἡμῖν εὐίου βακχεύματος",
+      "problem": "mangled transcription of chorus verse into corrupted syllables",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "πὸς πῶς πεπτωκάθ’ ὧδε δίκ’ βακχ’",
+      "image": "πρὸς πέδῳ πεπτώκατε;",
+      "problem": "dialogue line misread into fragmented nonsense words",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "χάλεπ’ οἱ λῶς ὁδὸν γ’ πλησίον γ’ τῶ π’ πῶν",
+      "image": "χείλεσιν διδοὺς ὀδόντας: πλησίον δ᾽ ἐγὼ παρών",
+      "problem": "severe misreading of Greek verse into garbled fragments",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "ὅ’ τέ τι’ ἔν, γ’ ὅπ’ μ’ ἡμῶν ἐλπίσ’ γ’ βόσκετ’",
+      "image": "δοκῶν οὔτ᾽ ἔθιγεν οὔθ᾽ ἥψαθ᾽ ἡμῶν, ἐλπίσιν δ᾽ ἐβόσκετο",
+      "problem": "verse degraded into fragmented characters and apostrophes",
+      "severity": "serious",
+      "class": "O5"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "π’ φαν’ δ’ ἑταῖρ’ οὐραν’ καθαρ’ ἐπ’ ἐμ’ ἄγων, (image: πρὸς φάτναις δὲ ταῦρον εὑρών, οὗ καθεῖρξ᾽ ἡμᾶς ἄγων)",
+      "english": "and appearing, the companions leading me to the pure heavens,",
+      "problem": "hallucinated translation reversing sense; source describes Pentheus finding a bull at the stables where he led Dionysus to shut him in",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ὅ’ τέ τι’ ἔν, γ’ ὅπ’ μ’ ἡμῶν ἐλπίσ’ γ’ βόσκετ’ (image: ἐλπίσιν δ᾽ ἐβόσκετο)",
+      "english": "Where, indeed, is there any hope of ours, grazing?",
+      "problem": "distorted translation of idiomatic ἐλπίσιν δ᾽ ἐβόσκετο ('fed on idle hopes') as hope grazing",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "χάλεπ’ οἱ λῶς ὁδὸν γ’ πλησίον γ’ τῶ π’ πῶν (image: χείλεσιν διδοὺς ὀδόντας: πλησίον δ᾽ ἐγὼ παρών)",
+      "english": "Difficult are the ways, indeed, near the...",
+      "problem": "invented meaning due to mangled OCR; source describes Pentheus biting his lips while Dionysus watched calmly",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ση’ μ’ καθ’ ὅντε γὰρ οὐκ ἀπὰ ψαῦ’ τόπος.",
+      "english": "Sign me, for there is no place untouched.",
+      "problem": "invented clause from corrupted transcription of tragic dialogue",
+      "severity": "serious",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "Prompt/schema markup tags (<column-break/>, <margin>, <insert>, </insert>, </margin>) leaked directly into reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 363,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "κἀμοὶ ξυνήκεις καὶ ξυνεκπλήσσεις φρένας",
+      "image": "ἤδη δ᾽ ἂν ἕλκων κῶλον ἑκπλέθρου δρόμου",
+      "problem": "verse completely hallucinated; does not match manuscript text (Euripides Medea 1178)",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "φράσουσα νῦν ξυμφοράν. ἀπωλόμην",
+      "image": "φράσουσα νύμφης συμφοράν· ἅπασα δὲ",
+      "problem": "νύμφης misread as νῦν, and ἅπασα δὲ misread as ἀπωλόμην (Medea 1177)",
+      "severity": "serious",
+      "class": "O4"
+     },
+     {
+      "ocr": "<columns>2</columns> ... [reading order conflated across columns]",
+      "image": "two distinct parallel columns containing Euripides Medea 1177–1213 (col 1) and 1214–1250 (col 2)",
+      "problem": "column reading order scrambled; lines and fragments from column 2 are interleaved into column 1, and column 2 repeats corrupted column 1 fragments",
+      "severity": "serious",
+      "class": "O2"
+     },
+     {
+      "ocr": "συλλοῖσ’ ἃ σ’ ἐλθὼν φάρμακ’ ἐκμάθης ἔχον.",
+      "image": "σείουσα χαίτην κρατά τ᾽ ἄλλοτ᾽ ἄλλοσε",
+      "problem": "verse misread and garbled into pseudo-Greek (Medea 1188)",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "tr_score": 1,
+    "tr_errors": [
+     {
+      "source": "<column-break/> ... [entire second column of 37 lines]",
+      "english": "[omitted]",
+      "problem": "entire second column of OCR text (corresponding to Medea 1214–1250) is omitted from the English translation",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "συλλοῖσ’ ἃ σ’ ἐλθὼν φάρμακ’ ἐκμάθης ἔχον.",
+      "english": "Gathering what, having come, you might learn the remedies <note>or potions/medicines</note> having.",
+      "problem": "translates hallucinated Greek; image text describes the princess shaking her head and hair in agony",
+      "severity": "serious",
+      "class": "T1"
+     },
+     {
+      "source": "ψυχὴν ἔχεις γὰρ οὐκ ἐπᾶν ὑπὸ τόπον.",
+      "english": "For you have a soul, not to be under the place.",
+      "problem": "distorted translation of garbled text; image has Medea 1216 (ψυχήν· κακοῦ γὰρ οὐκέτ᾽ ἦν ὑπέρτερος)",
+      "severity": "serious",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "<note>or potions/medicines</note> markup tag leaks into the reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 524,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "XML tags and model metadata (<language>, <page-type>, <meta>, <vocab>) leaking into reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69a5e60885fa13e734e42186",
+  "slot": 6,
+  "tradition": "greek-latin-classics",
+  "title": "Procli In Platonis Alcibiadem Commentarius (Barocci 140)",
+  "shelf_fit": "fits",
+  "shelf_note": "Proclus' Commentary on Plato's Alcibiades in Bodleian MS Barocci 140 is a late antique Neoplatonic philosophical commentary on a Platonic dialogue, belonging squarely to Greek and Latin classics.",
+  "rights_flag": null,
+  "structure_note": "Page count of 336 is complete with no duplicate records. The 162 pages recorded with printed numbers reflect handwritten foliation (likely rectos only); the 7 backsteps and 8 repeats stem from OCR misidentifications of handwritten numerals rather than structural scanning defects.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "This is a 15th-century manuscript copy (Bodleian MS Barocci 140) of Proclus' commentary on Plato's Alcibiades I. The transcription is of the correct text, but the OCR struggles with Byzantine ligatures and hand, producing non-words and substantive misreadings throughout. The English translation cannot be trusted, as it turns OCR corruptions into fabricated phrases and doctrinal distortions while leaking system XML tags into the display text.",
+  "book_verdict": "Severe OCR deficiencies on Byzantine cursive Greek propagate into untrustworthy, hallucinated translations and pervasive markup leakage. This manuscript presentation is unsuitable for scholarly review.",
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "νοοῦμεν",
+      "image": "νῦν μὲν",
+      "problem": "νῦν μὲν ('for the present') misread as νοοῦμεν ('we understand'), turning a temporal particle into a first-person verb and corrupting the syntax",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "πρῆττε δ᾽",
+      "image": "ποτὲ δὲ",
+      "problem": "ποτὲ δὲ misread as Ionic/poetic verb form πρῆττε δ᾽, breaking the correlative ποτὲ μὲν … ποτὲ δὲ",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "περιάουτον ἀσυνδως",
+      "image": "περιβόητον ἀσυνήθως",
+      "problem": "περιβόητον ἀσυνήθως ('notoriously and unusually') misread as nonsensical non-words περιάουτον ἀσυνδως",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἄκοσμος",
+      "image": "ἀλλ᾽ ὅμως",
+      "problem": "ἀλλ᾽ ὅμως ('but nevertheless') misread as ἄκοσμος ('disorderly'), turning an adversative conjunction into an ungrammatical adjective and changing the subject",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "νοοῦμεν οὐδὲ μνήμη γενήσεται",
+      "english": "we understand that there will not even be a memory",
+      "problem": "μνήμη γενήσεται ('mention will be made') mistranslated as 'there will not even be a memory', exacerbated by translating OCR error νοοῦμεν",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "πρῆττε δ᾽ ἐν τῷ ἅμα τουτουῒ κἀκείνα",
+      "english": "[was doing] in that [moment] this and that",
+      "problem": "invented/conjectural phrasing attempting to translate OCR error πρῆττε δ᾽ (image: ποτὲ δὲ)",
+      "severity": "moderate",
+      "class": "T3"
+     },
+     {
+      "source": "τὸν σωκράτους περιάουτον ἀσυνδως τε πρῶτον προσεδρίαν",
+      "english": "Socrates's [holding] of his position",
+      "problem": "corrupted OCR words περιάουτον ἀσυνδως (image: περιβόητον ἀσυνήθως, 'notoriously and unusually') are omitted entirely, and προσεδρίαν ('attendance/devotion') is vaguely paraphrased",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "ἄκοσμος οἱ τὸ ἐντὸς αὐτὸ καθ᾿ ἑαυτὸ καὶ τὴν ἕξιν μὴ δυνάμενοι κρίνειν",
+      "english": "The disorderly, who are not able to judge what is within itself according to itself and the state [of the soul]",
+      "problem": "translates OCR error ἄκοσμος as 'The disorderly' rather than image text ἀλλ᾽ ὅμως ('but nevertheless'), inventing a subject group and altering the meaning",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ἔπαθε οὖν",
+      "english": "Therefore, he suffered...",
+      "problem": "ἔπαθε mistranslated as 'he suffered' rather than 'such was his experience / this happened to him'",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "<note> editorial apparatus tag ('The following line is a scribal repetition (dittography)') inserted by model and leaking into both OCR and translation reader text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<term> and <gloss> markup tags leaking into translation text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 124,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ἔλλειψις",
+      "image": "ὀλιγότης",
+      "problem": "misread 'ὀλιγότης' (scantiness/slightness) as 'ἔλλειψις' (lack/deficiency)",
+      "severity": "serious",
+      "class": "O4"
+     },
+     {
+      "ocr": "ὥσπερ",
+      "image": "τῷ μὲν",
+      "problem": "misread balanced dative particle 'τῷ μὲν' as comparative 'ὥσπερ'",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "οὗτος ὁ βίος",
+      "image": "ἕτερος βίος",
+      "problem": "misread 'ἕτερος βίος' (another life) as 'οὗτος ὁ βίος' (this life)",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "συλλέλεκται",
+      "image": "συλλεχθὲν",
+      "problem": "misread neuter aorist passive participle 'συλλεχθὲν' as 3rd person perfect verb 'συλλέλεκται'",
+      "severity": "moderate",
+      "class": "O4"
+     },
+     {
+      "ocr": "<insert>καλὸν α</insert> ... <insert>πάντα β</insert>",
+      "image": "καλὸν ... πάντα with superscript transposition marks α and β",
+      "problem": "scribal transposition signs (α and β) transcribed as inserted letters inside XML tags",
+      "severity": "moderate",
+      "class": "O16"
+     },
+     {
+      "ocr": "οὗ δὲ ποτὲ μετεχόμενος",
+      "image": "ὁ δὲ ποτὲ μετεχόμενος",
+      "problem": "misread nominative article 'ὁ' in parallel series (ὁ μὲν... ὁ δὲ... ὁ δὲ...) as genitive/relative 'οὗ'",
+      "severity": "minor",
+      "class": "O3"
+     },
+     {
+      "ocr": "σαφέστεροις",
+      "image": "σαφέστερον",
+      "problem": "misread neuter adverb 'σαφέστερον' as dative plural adjective 'σαφέστεροις'",
+      "severity": "minor",
+      "class": "O3"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "τὸ αὐτὸ <insert>καλὸν α</insert> ὁρᾶν· καὶ οὐ τοῦτο μόνον ἀλλὰ καὶ τὰ λοιπὰ <insert>πάντα β</insert> εἴδη·",
+      "english": "the same <insert>beautiful A</insert> in two ways; and not only this, but also all the remaining <insert>all B</insert> forms:",
+      "problem": "scribal transposition marks α and β translated literally as 'A' and 'B' within reader-facing XML insert tags",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "οὐδὲ ἡ ἔλλειψις τῆς μεθέξεως [image: ὀλιγότης]",
+      "english": "nor the lack of participation",
+      "problem": "propagated OCR misreading of 'ὀλιγότης' (slightness/scantiness) as 'ἔλλειψις' (lack)",
+      "severity": "moderate",
+      "class": "T15"
+     },
+     {
+      "source": "ὥσπερ ἐνταῦθα δικαίῳ, τὸ ἄδικον [image: τῷ μὲν ἐνταῦθα]",
+      "english": "just as here with the just, the unjust",
+      "problem": "propagated OCR misreading of 'τῷ μὲν' as 'ὥσπερ', altering syntax from coordinated datives to a comparative clause",
+      "severity": "moderate",
+      "class": "T15"
+     },
+     {
+      "source": "παρυφέστηκεν",
+      "english": "added as a secondary existence <note>original: \"παρυφέστηκεν\"</note> <gloss>a subordinate/subsidiary state</gloss>",
+      "problem": "model reasoning and dictionary apparatus tags (<note> and <gloss>) inserted into translation text",
+      "severity": "moderate",
+      "class": "T14"
+     },
+     {
+      "source": "τὸ δὲ τὸ κἀνταῦθα συλλέλεκται· [image: συλλεχθὲν]",
+      "english": "But that which has been collected here does not turn me",
+      "problem": "failed to recognise lemma quotation introduced by 'τὸ δὲ', taking OCR error 'συλλέλεκται' as main verb",
+      "severity": "moderate",
+      "class": "T6"
+     }
+    ],
+    "other": [
+     {
+      "note": "Leaked XML tags (<summary>, <keywords>, <note>, <gloss>, <insert>, <unclear>) appearing in the translation reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 236,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ἀκμῆς",
+      "image": "αὐτῆς",
+      "problem": "misread αὐτῆς as ἀκμῆς, altering philosophical meaning ('regarding the prime' instead of 'regarding it')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "προε-χεῖσθαι",
+      "image": "προη-γεῖσθαι",
+      "problem": "misread προηγεῖσθαι ('to precede') as nonexistent compound προεχεῖσθαι",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<unclear>α</unclear>",
+      "image": "τινα",
+      "problem": "missed τιν and flagged remaining letter with unclear tag",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ἐπισημειώσασθαι ἄξιον",
+      "image": "ἐπισημήνασθαι δ’ ἄξιον",
+      "problem": "misread aorist form and dropped particle δ’",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ὁ μυστικὸς",
+      "image": "ὅμως",
+      "problem": "misread ὅμως ('nevertheless') as ὁ μυστικὸς ('the mystical'), falsely characterizing Alcibiades",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἀγνοῶν",
+      "image": "ἀγνοοῦντι",
+      "problem": "misread dative participle agreeing with dative required by ἔοικε as nominative",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "δι’ α-",
+      "image": "δι’ ὧν",
+      "problem": "misread relative pronoun ὧν as truncated α- with trailing hyphen",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ἐσχάτην",
+      "image": "τὸ ἔσχατον",
+      "problem": "misread τὸ ἔσχατον as feminine accusative ἐσχάτην",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "μέσον",
+      "image": "μέγιστον",
+      "problem": "misread μέγιστον ('greatest') as μέσον ('middle'), breaking the triad corresponding to magnitude (μεγέθους)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἀναβαίνει",
+      "image": "ἀνατείνει",
+      "problem": "misread transitive ἀνατείνει ('stretches/directs upward') as ἀναβαίνει, making syntax with accusative ἑαυτόν ungrammatical",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<unclear>ὡς ἀγνοοῦντα</unclear>",
+      "image": "ἅμα συγκαλύπτων",
+      "problem": "missed ἅμα συγκαλύπτων ('at the same time concealing [it]') and inserted hallucinated unclear tag with false text",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "χρὴ",
+      "image": "ἄγει",
+      "problem": "misread verb ἄγει as modal particle χρὴ, producing ungrammatical Greek",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ἢ",
+      "image": "ᾖ",
+      "problem": "misread subjunctive verb ᾖ as conjunction ἢ, breaking syntax of the purpose clause",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ἐλέγχων",
+      "image": "ἐλεγχόμενος",
+      "problem": "misread passive participle ἐλεγχόμενος ('being refuted') as active participle ἐλέγχων ('refuting'), reversing the voice",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "τὸν ἐλέγχου τρόπον",
+      "image": "τὸν τοῦ ἐλέγχου τρόπον",
+      "problem": "omitted article τοῦ",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "οὐδ’ περὶ ἀκμῆς [image: οὐδὲ περὶ αὐτῆς]",
+      "english": "...nor regarding the prime [is it true that] both are true...",
+      "problem": "inherits OCR misreading ἀκμῆς as 'the prime', obscuring the reference to knowledge itself (αὐτῆς)",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "ὁ μυστικὸς [image: ὅμως]",
+      "english": "that the young man is consistently mystical and perplexed",
+      "problem": "translates hallucinated reading ὁ μυστικὸς as 'mystical', falsely asserting that Alcibiades is mystical instead of Proclus stating that 'nevertheless, even when perplexed, he is such that...'",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "δι’ α- [image: δι’ ὧν]",
+      "english": "[he says] more [in perplexity]",
+      "problem": "invents contextual filler to bridge OCR truncation δι’ α-",
+      "severity": "moderate"
+     },
+     {
+      "source": "μέσον [image: μέγιστον]",
+      "english": "he ascends to the middle, most high, and most powerful [realm] of the gods",
+      "problem": "translates misread μέσον as 'middle', ruining the correspondence to magnitude (μεγέθους → μέγιστον)",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "<unclear>ὡς ἀγνοοῦντα</unclear> [image: ἅμα συγκαλύπτων]",
+      "english": "but as one who does not know",
+      "problem": "translates hallucinated OCR tag instead of manuscript ἅμα συγκαλύπτων ('at the same time concealing [it]'), losing the philosophical point that Socrates is tactfully concealing Alcibiades' ignorance",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ἵν’ αὐτὸς ἢ τρόπον τινὰ δι’ αὐτοῦ ἐλέγχων [image: ἵν’ αὐτὸς ᾖ τρόπον τινὰ δι’ αὑτοῦ ἐλεγχόμενος]",
+      "english": "so that he may, in a certain way, refute [him] through himself",
+      "problem": "active voice in English attributes refutation to Socrates rather than the reflexive passive where Alcibiades is refuted through himself (αὐτὸς ᾖ ... ἐλεγχόμενος)",
+      "severity": "serious",
+      "class": "T3"
+     }
+    ],
+    "other": [
+     {
+      "note": "Prompt/model metadata tags <language>, <page-type>, and <vocab> leaked into the transcription text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 270,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "εὐθὺν φυσαμᾶς ἐστιν ἀγαθοειδές",
+      "image": "σύμφυτον, οὖσα ἀγαθοειδής",
+      "problem": "misreads ligature into pseudo-word gibberish φυσαμᾶς",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "οὐκ οἶδα πρὸς ὃν ὁ ἔλεγχος ἀφίγμαι· οὐδὲ πρὸς τὴν κάθαρσιν",
+      "image": "οὐχ ὥσπερ ἐπὶ τῶν ἄλλων καθάρσεων [ἄλλος μὲν ὁ καθαίρων...]",
+      "problem": "severe misreading and hallucination creating an incoherent first-person clause",
+      "severity": "serious",
+      "class": "O2"
+     },
+     {
+      "ocr": "οὐ κοινῶς δὲ ἔλεγχος ὁ πρὸς αὐτὴν οἰκείως ἔχει πρὸς τὴν οὐσίαν τῆς ψυχῆς· καὶ ὁ διάλογος δῆλον λόγος·",
+      "image": "οἰκείως δὲ ἔχει πρὸς τὴν οὐσίαν τῆς ψυχῆς καὶ ὁ διάλογος, καὶ ὁ δι’ ἀποκρινομένου ἔλεγχος...",
+      "problem": "scrambled syntax, misread ligatures, and hallucinated phrase δῆλον λόγος",
+      "severity": "serious",
+      "class": "O3"
+     },
+     {
+      "ocr": "μόνα δὲ ἐκάμα ἐναλῆ ἐστιν",
+      "image": "μόνα δὲ ἐκεῖνα ἐναργῆ ἐστιν",
+      "problem": "misreads into non-words ἐκάμα and ἐναλῆ",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "λαμβάνει ζῴην",
+      "image": "λαμβάνει ζωτικήν",
+      "problem": "misreads adjective ζωτικήν as non-word / corrupted noun form ζῴην",
+      "severity": "moderate",
+      "class": "O3"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "οὐ κοινῶς δὲ ἔλεγχος ὁ πρὸς αὐτὴν οἰκείως ἔχει πρὸς τὴν οὐσίαν τῆς ψυχῆς",
+      "english": "The refutation, however, is not commonly [something] which has an affinity toward the soul's essence",
+      "problem": "reverses the philosophical sense of the argument by claiming refutation lacks affinity to the soul",
+      "severity": "serious",
+      "class": "T4"
+     },
+     {
+      "source": "οὐκ οἶδα πρὸς ὃν ὁ ἔλεγχος ἀφίγμαι· οὐδὲ πρὸς τὴν κάθαρσιν",
+      "english": "I do not know toward whom I have arrived at the refutation; nor toward the cleansing.",
+      "problem": "fabricates an invented first-person confessional statement from corrupted OCR",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "εὐθὺν φυσαμᾶς ἐστιν ἀγαθοειδές",
+      "english": "immediately <term>physemas</term> <gloss>a natural quality</gloss> [and] is good-natured",
+      "problem": "hallucinates a transliterated term and fabricated English gloss for the OCR pseudo-word",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "ἑαυτὸν καθαίρει κατὰ τὸ σῶμα τῆς ψυχικῆς οὐσίας",
+      "english": "he cleanses himself according to the body of the psychic essence",
+      "problem": "incoherent philosophical phrasing resulting from corrupt OCR",
+      "severity": "moderate",
+      "class": "T10"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML markup tags (<term>, <gloss>) leaking directly into reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Prompt/wrapper metadata tags (<language>, <script>, <page-type>, <warning>, <vocab>) present in OCR text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69a9768ee12635ded71c4e2f",
+  "slot": 7,
+  "tradition": "greek-latin-classics",
+  "title": "Quaestiones de Primis Principiis",
+  "shelf_fit": "fits",
+  "shelf_note": "Fits greek-latin-classics: the editio princeps of Damascius' late Neoplatonic treatise Quaestiones de primis principiis, edited with Latin commentary by Joseph Kopp (1826).",
+  "rights_flag": null,
+  "structure_note": "Of 424 pages, 420 have OCR and 418 are translated, with the un-transcribed pages corresponding to blank preliminary leaves or endpapers. The 14 printed backsteps and 10 repeats across 401 numbered pages reflect the transition between preliminary roman numerals and arabic pagination alongside minor leaf-numeral misreads; the volume structure is intact.",
+  "on_sight_defect": true,
+  "fit_to_show": "show_with_caveat",
+  "showcase_pages": [],
+  "reader_summary": "A reader finds Joseph Kopp's 1826 edition of Damascius's Quaestiones de primis principiis, with the Greek text transcribed accurately against the print across all reviewed pages. The English translation cannot be trusted, as it omits entire paragraphs and clauses, drops Latin commentary, and reverses key metaphysical distinctions. In addition, internal XML tags such as <summary>, <term>, and <margin> leak into the reader text throughout.",
+  "book_verdict": "The volume is fit to show only with strong caveats: while the Greek transcription is nearly flawless, the English translation frequently drops text, misrepresents core philosophical arguments, and is marred by raw XML markup leaking into the reader interface.",
+  "pages": [
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἰσαίτερον",
+      "english": "the same",
+      "problem": "Comparative 'more equal' (for which the author excuses himself with 'if it is possible to speak thus') mistranslated as 'the same'",
+      "severity": "moderate"
+     },
+     {
+      "source": "> 2) Mox μίαν ἀρχὴν εἶναι δεικν. β. — Unum pariterne et aequaliter est Omnia? ... > 3) Hamb. προελθεῖν τι. ...",
+      "english": "",
+      "problem": "Footnotes 2 and 3 containing Latin philosophical commentary and Greek manuscript apparatus/scholion are entirely omitted from translation",
+      "severity": "serious",
+      "class": "T2"
+     }
+    ],
+    "other": [
+     {
+      "note": "<margin>p. 43.</margin> tag leaked into reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 127,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "τῶν μετ’ αὐτὸ, ἐπεὶ οὐδὲ ἑνούμεθα ἐκείνῳ 10); ἀλλὰ τῷ ἑνὶ,",
+      "english": "",
+      "problem": "Opening clause (\"of the things after it, since neither are we united to that, but to the One\") is completely omitted from the translation.",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ἐκεῖνο δὲ πρὸς τῷ ἑνὶ καὶ πάντα ἦν, ἵνα τοῦτο 11) εἴπω, τὸ πρὸ τοῦ ἑνὸς καὶ τῶν πάντων.",
+      "english": "while that <note>the secondary thing</note> was, in relation to the One, also all things, to put it this way: that which is before the One and all things.",
+      "problem": "Translator glosses ἐκεῖνο with an invented note identifying it as \"the secondary thing\", directly contradicting the source text which states it is \"before the One and all things\".",
+      "severity": "serious",
+      "class": "T4"
+     },
+     {
+      "source": "τί δὲ, τὸ φῶς αὐτὸ οὐ συνῆπται τῷ ἀπ’ αὐτοῦ;",
+      "english": "Why, then, is the light itself, that which is from it, not connected?",
+      "problem": "Misinterprets the dative complement τῷ ἀπ’ αὐτοῦ (\"to that which is from it\") as an appositive to the subject (\"the light itself, that which is from it\").",
+      "severity": "moderate"
+     }
+    ],
+    "other": [
+     {
+      "note": "<summary> and <keywords> tags leaking into the reader translation",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "<note> tags inserted inline into the reader translation",
+      "severity": "minor",
+      "class": "D1"
+     },
+     {
+      "note": "<vocab> and structural metadata tags leaking into the OCR text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 232,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἔχει τὴν τριπλῆν σχέσιν καὶ πρὸς τὸ ὂν κατὰ τὴν ἀπ’ ἐκείνου γένεσιν. Ἀλλὰ περὶ μὲν τούτων καὶ αὖθις.",
+      "english": "[omitted]",
+      "problem": "Opening paragraph completely omitted from translation",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "Εἰ δὲ καὶ μέθεξιν ἐν ἑκάστῃ",
+      "english": "[omitted]",
+      "problem": "Incomplete final clause at bottom of page omitted from translation",
+      "severity": "moderate",
+      "class": "T4"
+     }
+    ],
+    "other": [
+     {
+      "note": "Inline <term> and <gloss> markup tags leaking into reader translation text",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "Structural XML tags (<scan-quality>, <language>, <vocab>, etc.) present in OCR output",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 358,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "4) Mon. ὡς om. Hamb. τὸ δὲ ὂν μόνων τῶν οὐσιῶν.",
+      "image": "4) Mon. ὡς om. Hamb. τὸ δὲ ὂν μόνων τῶν οὐσιῶν om.",
+      "problem": "apparatus dropped 'om.' at end of note",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἡ μὲν οὐσία ἐστὶ σύνθετος, ἡ δὲ ἁπλῆ",
+      "english": "essence is compound, while the simple [is not]",
+      "problem": "invented '[is not]' and mistranslated 'ἡ μὲν ... ἡ δὲ ...', reversing the sense: Damascius posits that one essence is composite and the other simple, rather than denying simple essence",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ὡς φάναι ὁμοειδῆ πρόοδον καὶ οἰκείου πλήθους",
+      "english": "so as to speak of a uniform procession and of a proper multitude",
+      "problem": "renders as an affirmation of procession what explains 'ἀπρόοδον' (without procession, namely without uniform procession and its proper multitude)",
+      "severity": "moderate"
+     },
+     {
+      "source": "ἡ ἁπλῶς οὐσία ... τοῦ ἁπλῶς ἑνὸς ... τὸ ἁπλῶς ὂν",
+      "english": "the simply essence ... the simply One ... the simply being",
+      "problem": "ungrammatical calque of the adverb ἁπλῶς modifying nouns ('simply essence', 'simply One', 'simply being') instead of 'essence as such / absolute essence', 'the One as such', 'Being as such'",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<term> tags leaking into the translation text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "slot": 8,
+  "tradition": "greek-latin-classics",
+  "title": "Vitruvii de architectura libri X",
+  "shelf_fit": "fits",
+  "shelf_note": "A 13th-century manuscript copy of Vitruvius' De architectura from the Biblioteca Medicea Laurenziana firmly belongs in Greek and Latin classics.",
+  "rights_flag": null,
+  "structure_note": "The 18 printed backsteps and 14 repeats across 84 pages flagged with printed numbers represent spurious OCR detection of foliation or text in a 13th-century manuscript rather than actual pagination defects, with nearly full transcription coverage (114 of 116 pages).",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "This is a 13th-century manuscript copy of Vitruvius' De architectura from the Biblioteca Medicea Laurenziana. Although the scans contain the genuine Latin treatise, the transcription regularly fails on medieval abbreviations, resulting in dropped passages, corrupt readings, and hallucinated Arabic script on a blank flyleaf. The English translation cannot be trusted, as it converts OCR corruptions into incoherent nonsense—such as mistranslating Socrates as a father-in-law and fir pitch as a potter—while raw XML markup leaks into the text.",
+  "book_verdict": "Unfit for scholarly use due to systemic OCR failure on medieval Latin abbreviations, major translation omissions and hallucinations, and pervasive markup leaks.",
+  "pages": [
+   {
+    "page_number": 24,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "isinmã",
+      "image": "īfīnītã",
+      "problem": "infinitam misread as nonsensical isinmã due to minim confusion",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ppatonib̃",
+      "image": "c̃porib̃",
+      "problem": "abbreviation for corporibus misread as ppatonib̃",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "an biennium casgra i h̃ieme",
+      "image": "añ biennium ea saxa ñ hieme",
+      "problem": "ea saxa ñ hieme misread as casgra i h̃ieme, losing the negation and subject",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "d̃ uer̃ h̃m̃ officiũ",
+      "image": "eẽt ut ex his officinis",
+      "problem": "esset ut ex his officinis severely misread as d̃ uer̃ h̃m̃ officiũ",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "sc̃e c̃m̃ta ñ poss̃ c̃h̃choere",
+      "image": "sic cem̃ta ñ poss̃ coh̃ere",
+      "problem": "sic caementa non possunt cohaerere garbled into sc̃e c̃m̃ta ñ poss̃ c̃h̃choere",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "s̃i uiuo se pitinũ",
+      "image": "sempit̃nũ",
+      "problem": "sempiternum split across line break and severely mangled into s̃i uiuo se pitinũ",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "pforat̃",
+      "image": "p̃f̃ct̃a",
+      "problem": "abbreviation for praefectura misread as pforat̃",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "c̃m̃tatit̃ struct̃",
+      "image": "cem̃titiis struct̃",
+      "problem": "caementiciis misread as c̃m̃tatit̃",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "dissoluunt. Itẽ saxa maritima ab salsugine ex ea desluunt... dignũ d̃ uer̃ h̃m̃ officiũ oĩa opa p̃ficer̃. Cũ g̃ ppinq̃tatẽ necessitat̃ cogat̃ p̃r̃ urbẽ la-",
+      "english": null,
+      "problem": "The first 15 lines of the page (~175 words discussing sea stone, Tiburtine stone, Anician quarries, Lake Bolsena, Statonia, and Ferento monuments) are completely omitted from the translation",
+      "severity": "serious",
+      "class": "T1"
+     },
+     {
+      "source": "casgra i h̃ieme s̃ estate eximant̃",
+      "english": "whether in winter or summer",
+      "problem": "Sense reversed: Vitruvius explicitly states stones should be quarried in summer and not in winter ('non hieme sed aestate'), rendered here as 'whether in winter or summer'",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "s̃i uiuo se pitinũ",
+      "english": "[as] a living fortification",
+      "problem": "Invented phrasing: OCR corruption of sempiternum ('everlasting') into 's̃i uiuo se pitinũ' translated as '[as] a living fortification'",
+      "severity": "serious",
+      "class": "T3"
+     },
+     {
+      "source": "Ex his uenust̃: reticulatũ s̃ ad rimas faciendat̃",
+      "english": "Of these, [in] beauty, the reticulate is such as to make cracks",
+      "problem": "Comparative adjective venustius ('more pleasing') lost and clause syntax distorted",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "Prompt/model XML metadata tags (<language>, <page-type>, <page-num>, <meta>, <vocab>) and codicological commentary leaked into the reader transcription",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "huiusque naturam demonstrare:",
+      "image": "huiusq ad ravennā depōrat",
+      "problem": "Hallucinates 'naturam demonstrare' for 'ad Ravennam deportatur', dropping the mention of larch timber being transported to Ravenna.",
+      "severity": "serious",
+      "class": "O10"
+     },
+     {
+      "ocr": "Olarius vero plura tractavit ad res cum opitimum a sapina:",
+      "image": "Olet u° picē plua tractātib; cū oleo a sapina",
+      "problem": "Severe misreading: turns 'Olet vero picem plura tractantibus cum oleo' into 'Olarius vero plura tractavit ad res cum opitimum', inventing a potter ('Olarius') discussing fir wood where the text describes fir resin smelling like pitch.",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Namque in iis locis agens in machina",
+      "image": "Cū ū mōtes iugū ferē agens i machia",
+      "problem": "Hallucinates 'Namque in iis locis' in place of 'Cum vero montes iugum fere'.",
+      "severity": "serious",
+      "class": "O10"
+     },
+     {
+      "ocr": "tuncis",
+      "image": "thificis",
+      "problem": "Misreads 'thificis' (abbreviation for phthisicis, consumptives) as 'tuncis', corrupting the medical application of fir resin.",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "socerem",
+      "image": "socēem",
+      "problem": "Misreads 'Socratem' (abbreviated or scribally corrupted as socrem/socēem) as 'socerem' (father-in-law).",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "id id castellum Larignum.",
+      "image": "id ē castellū larigni",
+      "problem": "Misreads abbreviation 'id est' (id ē) as duplicated 'id id'.",
+      "severity": "minor"
+     },
+     {
+      "ocr": "haec maxime adriatici pergit esse:",
+      "image": "hezq maxī mare adriatīū pgit ēē",
+      "problem": "Omits 'mare' from 'mare adriaticum'.",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "Delphis Apollo socerem omnium sapientissimum pythie responsis est professus.",
+      "english": "Delphis, Apollo declared the father-in-law of all as the wisest by the Pythian responses.",
+      "problem": "Translates 'socerem' as 'father-in-law of all' rather than identifying Socrates at Delphi, turning the famous opening of Vitruvius Book 3 into nonsense.",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "Olarius vero plura tractavit ad res cum opitimum a sapina:",
+      "english": "The potter, however, treated more [things] regarding [the] matter [concerning] the best [wood] from the fir:",
+      "problem": "Translates the OCR hallucination, inventing a fictional potter discussing fir wood where the text describes fir resin smelling like pitch.",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "huiusque naturam demonstrare: ut non modo sanet praeterit.",
+      "english": "And to demonstrate the nature of this: so that it not only heals that which is past.",
+      "problem": "Translates the OCR hallucination, completely obscuring the transport of larch wood to Ravenna and producing senseless text about healing the past.",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "Is autem memorat prudentem ita doctissimum qui omnes operantur omnium pectora fieri fuerit sapientia et ut in occultos haberent sensus: si pa-",
+      "english": "He, however, remembers the prudent [man] as so learned, who acts [so that] all [may] become the hearts of all, [as if it had been] wisdom, and so that they might have senses in the hidden [things]: if...",
+      "problem": "Total breakdown of meaning: Vitruvius records Socrates' famous wish that human chests had windows so thoughts would not be hidden, but the translation yields incoherent gibberish.",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "haecque resina liquida mellei coloris coloret. quae et medetur tuncis.",
+      "english": "and this liquid resin of honey color, which also heals the...",
+      "problem": "The sentence is left truncated with an ellipsis ('heals the...') because OCR misread 'phthisicis' as 'tuncis'.",
+      "severity": "moderate"
+     },
+     {
+      "source": "gemet ubi nostris opacis perperuatur:",
+      "english": "[it] groans where it is perpetually [shadowed] by our shades.",
+      "problem": "Translates 'gemet' as '[it] groans' (from corrupt scribal reading for nocturnal shadows), creating bizarre imagery.",
+      "severity": "moderate"
+     }
+    ],
+    "other": [
+     {
+      "note": "Image description tag '[Large blue Lombardic initial D]' leaked into English translation reader text.",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 60,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "ĩndianaq;",
+      "image": "meridianamque",
+      "problem": "misread meridianamque (southern) as indianaque (Indian)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ĩndianoꝝ",
+      "image": "meridianorum",
+      "problem": "misread meridianorum (of southerners) as indianorum (of Indians)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "refrigit barbaroꝝ iteneres:",
+      "image": "refringit barbarorum impetus",
+      "problem": "misread refringit barbarorum impetus (breaks the onslaught of the barbarians) as refrigit barbarorum iteneres",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "ppt̃ r̃e possidet sinet.",
+      "image": "populus Romanus possidet fines",
+      "problem": "garbled populus Romanus possidet fines (the Roman people holds the borders), dropping the Roman people",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "s latm̃ frigidissima",
+      "image": "et Saturni frigidissima",
+      "problem": "misread et Saturni ([the star of] Saturn) as s latm̃",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "de causil̃ eduĩ uisĩ orb̃ ant̃ dicã.",
+      "image": "de cavis aedium uti sunt orsa ante dicam",
+      "problem": "garbled de cavis aedium uti sunt orsa (about the courtyards of houses as begun) into unrecognisable words",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener.",
+      "image": "haurit ab sole animorum...",
+      "problem": "severely garbled scribal abbreviations into ungrammatical pseudo-Latin gibberish",
+      "severity": "serious",
+      "class": "O15"
+     },
+     {
+      "ocr": "at̃stilon",
+      "image": "tetrastylon",
+      "problem": "misread tetrastylon (tetrastyle atrium) as atstilon",
+      "severity": "moderate",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "ĩtr̃ septrẽonalẽ ĩndianaq; ... gsilijs ĩndianoꝝ cogitationes.",
+      "english": "between the northern and the Indian [nations] ... the thoughts of the Indians by a strong hand and by counsels.",
+      "problem": "translates misread southern (meridianus) as Indian nations/people, distorting Vitruvius' geography and climate theory",
+      "severity": "serious",
+      "class": "T6"
+     },
+     {
+      "source": "staq; gsilijs refrigit barbaroꝝ iteneres:",
+      "english": "cools the itineraries of the barbarians by its counsel",
+      "problem": "translates garbled Latin as 'cools the itineraries of the barbarians' instead of 'breaks the onslaught of the barbarians'",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "ppt̃ r̃e possidet sinet.",
+      "english": "it possesses the space of the whole orb of the earth and the region in the middle of the world by the reason of things.",
+      "problem": "omits the subject 'populus Romanus' (the Roman people), losing the essential political subject of the sentence",
+      "severity": "serious",
+      "class": "T2"
+     },
+     {
+      "source": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener.",
+      "english": "I have said that the itinerary of the minds from the sun erupts from these.",
+      "problem": "hallucinates a nonsensical statement trying to translate garbled OCR gibberish",
+      "severity": "serious",
+      "class": "T9"
+     },
+     {
+      "source": "de causil̃ eduĩ uisĩ orb̃ ant̃ dicã.",
+      "english": "I will speak of the causes of the visual orb.",
+      "problem": "translates garbled text on cava aedium (courtyards) as 'causes of the visual orb'",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "at̃stilon",
+      "english": "Atstilate",
+      "problem": "coins non-existent term 'Atstilate' for tetrastyle (tetrastylon) cava aedium",
+      "severity": "moderate",
+      "class": "T12"
+     },
+     {
+      "source": "s; tarditate aĩ sĩ glictantia ĩruerunt.",
+      "english": "but with slowness of mind, they rush without resistance.",
+      "problem": "translates sine cunctatione (without hesitation) as 'without resistance', reversing the intended meaning",
+      "severity": "moderate",
+      "class": "T5"
+     },
+     {
+      "source": "h̃ aũ ẽ ignoꝝ acunm̃ ñ explicat̃",
+      "english": "This, however, is not explained by the ignorance of the masters",
+      "problem": "translates non ingeniorum acumine (not by the sharpness of wits) as 'ignorance of the masters', inverting ingeniorum into ignorance",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "XML markup tags <language>, <page-type>, and <vocab> leaked into transcription",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 1,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>\n<unclear>يا كببيج</unclear> <unclear>يا كببيج</unclear>\n<unclear>احفظ</unclear> <unclear>الورق</unclear>\n١٢٨٧\n</margin>",
+      "image": "blank flyleaf (no Arabic text; only paper patch repair, foxing, and bleed-through from verso)",
+      "problem": "hallucinated Arabic Kabīkaj invocation and Hijri date from stains and bleed-through on a blank Latin flyleaf",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Markup and model commentary tags (<language>, <page-type>, <warning>, <image-desc>, <note>, <vocab>) leaking into reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ]
+ }
+]

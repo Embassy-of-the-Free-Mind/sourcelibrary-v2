@@ -8,7 +8,7 @@ import { AS_OF, GROUPS, SHIPPED, type Status } from './issues';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Open Quality Work — Source Library Research',
+  title: 'Open Quality Work | Source Library Research',
   description:
     'Known defects in Source Library’s transcriptions and translations, the measurements under way, and what has already changed, each linked to its public issue.',
   alternates: { canonical: '/research/quality/open' },
@@ -71,7 +71,9 @@ export default function OpenQualityWorkPage() {
           <p className="text-secondary leading-relaxed">
             Every figure, with its method and its confidence interval, is in the{' '}
             <Link href="/research/quality#against-references" className="text-accent-rust hover:underline">working paper</Link>.
-            This page lists what is still open. Each item links to its public issue, which is the current record.
+            This page lists what is still open. Each item links to its public issue, which is the current record. What it
+            costs to read every remaining book, and how each kind of page gets its engine, is in{' '}
+            <Link href="/research/reading-plan" className="text-accent-rust hover:underline">the reading plan</Link>.
           </p>
         </section>
 

@@ -1,0 +1,7 @@
+[translate-batch-chained] aaaa: round 4 block p36–44: wrote 8/8
+  23:58:50 aaaa tbc_x: round_submitted — block wrote 8/8; round 22 batches/zzz
+  23:58:50 open chained runs: 64
+[translate-batch-chained] bbbb: round 5 — block p47–54 seeded → batches/yyy (shared, 13 requests)
+  00:03:12 bbbb tbc_y: complete — singles wrote 1/1; complete
+  00:03:12 open chained runs: 63
+[translate-batch-chained] cccc: PARKED — book-held (demo); nothing further sent or written

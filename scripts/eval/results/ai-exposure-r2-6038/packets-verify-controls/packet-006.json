@@ -1,0 +1,25 @@
+{
+ "packet": 6,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "69520571ab34727b1f042c78",
+  "6a3c5f3b879008ba7e153836",
+  "decoy-30",
+  "699050d07d19f3f2aac1e6e4",
+  "6a47496218151fd4a07fe937",
+  "694f396c23a1d0c2ad1d8698",
+  "decoy-16",
+  "694fd600435f95fd0c9556d1",
+  "decoy-33",
+  "6974b648457dd8909910b9fb",
+  "decoy-07",
+  "69e13a120dae29249d20b73f",
+  "decoy-15",
+  "69ef3e4d72c1376fdf2b0fa4",
+  "decoy-09",
+  "69937949b0a84a57639645df",
+  "69e7927a80b52390feb16002",
+  "decoy-12"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Monas hieroglyphica | Year of this edition: 1564 | Language: Latin\n2. Title: 金剛般若波羅蜜經 (vol 1) | Language: Chinese\n3. Title: שער הסודות הנעלמים | Year of this edition: 1685 | Language: Hebrew\n4. Title: De Umbris Idearum | Year of this edition: 1582 | Language: Latin\n5. Title: Inscriptiones veteres in Hispania repertae; ab Adolpho occone medico Augustano collecteae, digestae,et nunc primum in lucem editae: | Year of this edition: 1596 | Language: Latin\n6. Title: De vita libri tres (De triplici vita) | Year of this edition: 1489 | Language: Latin\n7. Title: Le miroir des secrets de nature | Year of this edition: 1611 | Language: French\n8. Title: Opera Omnia (Complete Works) | Year of this edition: 1557 | Language: Latin\n9. Title: ཟབ་དོན་གསལ་བའི་སྒྲོན་མེ | Year of this edition: 1720 | Language: Tibetan\n10. Title: De arte cabalistica | Year of this edition: 1530 | Language: Latin\n11. Title: Oratio de laudibus geometriae habita Lipsiae | Year of this edition: 1556 | Language: Latin\n12. Title: Bhagavad-Gita, id est Thespesion Melos | Year of this edition: 1823 | Language: Sanskrit\n13. Title: Traité de la lumière cachée des métaux | Year of this edition: 1636 | Language: French\n14. Title: De Tradendis Disciplinis, seu de Institutione Christiana Libri XX | Year of this edition: 1551 | Language: Latin\n15. Title: Von der verborgenen Krafft der Kräuter und Steine | Year of this edition: 1687 | Language: German\n16. Title: […] Odyssey Books XIII-XXIV | Year of this edition: 1890 | Language: Greek\n17. Title: Du côté de chez Swann | Year of this edition: 1913 | Language: French\n18. Title: Neu-eröffnetes Kunst-Cabinet der Natur | Year of this edition: 1734 | Language: German\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

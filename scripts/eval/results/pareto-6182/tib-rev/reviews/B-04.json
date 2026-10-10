@@ -1,0 +1,251 @@
+[
+ {
+  "id": "QSQOO",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "པ་ཉིད་ལ་སོགས་པར་ཆོས་མཐུན་པ་ཉིད་ཀྱིས",
+    "english": "such as existence and the like",
+    "why": "The side opens mid-word continuing མི་རྟག་ from the previous side: the shared property is impermanence (anityatva), not existence.",
+    "fix": {
+     "find": "such as existence and the like",
+     "replace": "such as impermanence and the like"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "རྣམ་པར་རྟོག་པ་མཚུངས་པ་ལ་ནི། ཆོས་མཐུན་ཉིད་ལའང་ཁྱད་པར་",
+    "english": "Regarding \"Similar distinctions in the case of similar properties,\"",
+    "why": "The Tibetan cites the verse words following vikalpasama (the named jāti) — 'a difference is stated even for similarity' — and the English mangles the jāti name into the quoted phrase."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དུ་མའི་དོན་ཅན་ཉིད་ཀྱི་ཕྱིར་བྱེད་པ་ནི་འདིར་ཐལ་བར་འགྱུར་བའི་དོན་དུ",
+    "english": "is shown to have multiple meanings; here, the action should be understood",
+    "why": "It is the verb 'making' (byed pa, kṛ) that has many meanings and here means 'entailing', not the whole phrase 'will absurdly follow as undifferentiated'."
+   }
+  ],
+  "note": "Follows the argument on aviśeṣasama reasonably, but misreads the opening property and blurs two grammatical/jāti points."
+ },
+ {
+  "id": "Q31IO",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཡན་ལག་ཐམས་ཅད་ཀྱང་བསྒྲུབ་བྱ་སྒྲུབ་པར་བྱེད་པ་ཉིད་ཀྱི་ཕྱིར་རོ",
+    "english": "All parts of the syllogism exist for the sake of the relationship between what is to be proven and the means of proof.",
+    "why": "The point is that every member of the argument proves the probandum, so 'proving the sādhya' cannot single out the reason; the English loses that."
+   }
+  ],
+  "note": "A sound rendering of the grammatical discussion of the ablative in udāharaṇasādharmyāt; one reason clause is blurred."
+ },
+ {
+  "id": "Q8W6K",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ལྷའི་བཀས་ཇི་ལྟར་བསྒོ་ནས",
+    "english": "just as commanded by the divine order",
+    "why": "In the drama ལྷ (deva) is the form of address for the king, 'Your/His Majesty', not a divine command.",
+    "fix": {
+     "find": "just as commanded by the divine order",
+     "replace": "as commanded by His Majesty"
+    }
+   }
+  ],
+  "note": "Lively and faithful rendering of the drama scene; one stage-direction honorific misread."
+ },
+ {
+  "id": "QTLST",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the Madhyamaka verses, citations (Yuktiṣaṣṭikā, MMK, Āryadeva, Prajñāpāramitā, Kāśyapaparivarta) and the Cārvāka verse."
+ },
+ {
+  "id": "QISM6",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེ་ཚེ་ཐམས་ཅད་དེ་བཞིན་གཤེགས",
+    "english": "at that time it is the (Tathagata) the One Thus Gone; a Buddha",
+    "why": "The verse says that then all (beings) would be Tathāgatas, a reductio, not that the mind is the Tathāgata.",
+    "fix": {
+     "find": "at that time it is the (Tathagata) the One Thus Gone; a Buddha",
+     "replace": "at that time all beings are (Tathagata) Ones Thus Gone; Buddhas"
+    }
+   }
+  ],
+  "note": "Bodhicaryāvatāra IX verses rendered accurately in content, though as prose rather than verse; one reductio misread."
+ },
+ {
+  "id": "QDZZX",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful verse rendering of the sūtra citations and the Lotus Sūtra passage; a few loose but defensible readings."
+ },
+ {
+  "id": "QEKUV",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ལྟུང་བའི་སྡེ་ཐམས་ཅད་ལ་སྦྱར་བ་མ་ཡིན་གྱི",
+    "english": "This rule does apply to all categories of downfalls such as theft",
+    "why": "The Tibetan says this rule is NOT applied to all classes of offence such as theft, only to killing.",
+    "fix": {
+     "find": "This rule does apply to all categories of downfalls such as theft",
+     "replace": "This rule does not apply to all categories of downfalls such as theft"
+    }
+   },
+   {
+    "type": "gloss",
+    "confidence": "high",
+    "tibetan": "ལྟུང་བྱེད་དུ་འགྱུར་བ་ལྟ་བུ་སྟེ",
+    "english": "(payantika) an offense requiring confession and forfeiture",
+    "why": "ལྟུང་བྱེད (pāyattika) is a simple expiatory offence; forfeiture belongs to naiḥsargika-pāyattika (spang ltung).",
+    "fix": {
+     "find": "(payantika) an offense requiring confession and forfeiture",
+     "replace": "(payantika) an offense requiring expiation through confession"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "མིའི་འགྲོ་བར་གཏོགས་པ་མི་མ་ཡིན་པ་དང་། དུད་འགྲོའི་འགྲོ་བ་རྣམས་གཞན་གྱི་ལུས་ཀྱི་རྣམ་",
+    "english": "regarding those non-humans and animals who belong to the human realm or take on the physical forms of others",
+    "why": "The being is one belonging to the human realm who displays the bodily form of the non-human and animal realms, not non-humans and animals belonging to the human realm."
+   }
+  ],
+  "note": "Generally follows the Vinaya casuistry on killing/stealing across realms, but inverts the key restriction to killing and mis-glosses pāyattika."
+ },
+ {
+  "id": "Q6WV7",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the Ratnakūṭa, Sarvāstivāda Vinaya, Mañjuśrīvikrīḍita and Gaṇḍavyūha citations."
+ },
+ {
+  "id": "Q8NLL",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of Vigrahavyāvartanī verses 30–33 and the autocommentary, with correct pramāṇa terminology."
+ },
+ {
+  "id": "QBUG6",
+  "score": 2,
+  "verdict": "specialist",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "གཙོ་བོ་མ་ཡིན་པའི་མཚན་ཉིད",
+    "english": "challenges whether the primary definition [note: referring to literal or primary meaning] is exclusively that which has a non-existent entity as its object",
+    "why": "The objection proposes that having a non-existent object is precisely the defining mark of the non-primary (gauṇa, figurative), not of the primary.",
+    "fix": {
+     "find": "challenges whether the primary definition [note: referring to literal or primary meaning] is exclusively that which has a non-existent entity as its object",
+     "replace": "proposes that having a non-existent entity as its object is precisely the defining mark of the secondary [note: gauṇa, figurative usage]"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མེད་པ་སྨྲ་བས་ན་མེད་པ་བརྗོད་དེ། གཙོ་བོ་ལ་སོགས་པའི་མཉན་པོའོ།",
+    "english": "Because the Nihilist [note: literally: \"one who speaks of non-existence\"] speaks of non-existence, \"non-existence\" is expressed; this refers to the listener [note: or \"auditor\" of the doctrine] regarding the Pradhana",
+    "why": "No nihilist and no listener: 'expressing the non-existent' describes the words (མཉན་པ, śruti) for pradhāna etc., which denote non-existent things.",
+    "fix": {
+     "find": "Because the Nihilist [note: literally: \"one who speaks of non-existence\"] speaks of non-existence, \"non-existence\" is expressed; this refers to the listener [note: or \"auditor\" of the doctrine] regarding the Pradhana",
+     "replace": "Because it speaks of the non-existent it \"expresses the non-existent\": this refers to the words (śruti) for the Pradhana"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ཀྱིས་འདོད་པ་ནི་གཙོ་བོ་ལ་སོགས་པ་དངོས་པོ་མ་ཡིན་ཏེ",
+    "english": "According to your desire [note: addressing the opponent], the Pradhana and such are not actual entities",
+    "why": "The pradhāna etc. are what the opponent accepts; that they are not entities is the author's claim, not the opponent's.",
+    "fix": {
+     "find": "According to your desire [note: addressing the opponent], the Pradhana and such are not actual entities",
+     "replace": "The Pradhana and such that you accept [note: addressing the opponent] are not actual entities"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མེད་པ་རྗོད་པར་བྱེད་པའི་མཉན་པ་དེ་ནི",
+    "english": "That listener who expresses non-existence",
+    "why": "མཉན་པ here is the word (śruti) that expresses the non-existent, not a listener.",
+    "fix": {
+     "find": "That listener who expresses non-existence",
+     "replace": "That word which expresses the non-existent"
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "དེས་ནི་འབྲས་བུ་དུ་མ་རུང་བ་",
+    "english": "the unsuitability of manifold effects is admitted",
+    "why": "The Tibetan says the capacity (suitability) for many effects is accepted.",
+    "fix": {
+     "find": "the unsuitability of manifold effects is admitted",
+     "replace": "the capacity for manifold effects is admitted"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "པར་བྱེད་པ་བཞིན་ཞེས་འབྲེལ་ཏོ",
+    "english": "one still listens to the teachings on the Pradhana and so forth",
+    "why": "The construction is 'just as the words for pradhāna etc. are used', again śruti as word, not listening to teachings.",
+    "fix": {
+     "find": "one still listens to the teachings on the Pradhana and so forth",
+     "replace": "the words for the Pradhana and so forth are still used"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དངོས་པོའི་ཡུལ་ཅན་ཡང་དངོས་སུ་མཐོང་བའི་ཕྱིར་རོ",
+    "english": "that which has an entity as its object is also seen directly",
+    "why": "དངོས་སུ here means 'as primary/literal' (mukhya) in the gauṇa/mukhya discussion, not 'seen directly'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "གཙོ་བོ་ལ་སོགས་པ་དག་ནི་ཐལ་བ་",
+    "english": "meaning the Pradhana and so forth are reduced to ashes",
+    "why": "ཐལ་བ continues onto the next side (ཐལ་བ་དག་གི་བཟློག་པ) and means consequences (prasaṅga), not ashes."
+   }
+  ],
+  "note": "The gauṇa/mukhya argument against Sāṃkhya terms is systematically misread (śruti taken as 'listener', primary/secondary inverted, opponent's view misattributed)."
+ }
+]

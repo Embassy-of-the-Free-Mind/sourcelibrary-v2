@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
@@ -9,7 +10,7 @@ import { updateBookAfterUpload } from '@/lib/uploads/utils';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
 
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const title = formData.get('title') as string;
@@ -100,3 +101,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const POST = withAuth(async (request) => handlePOST(request), { minRole: 'admin' });

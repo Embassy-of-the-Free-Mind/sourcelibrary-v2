@@ -7,7 +7,7 @@ import { getModelUsageReport, type ModelUsageReport } from '@/lib/model-usage-re
 export const metadata: Metadata = {
   title: 'The Models We Use | Source Library',
   description:
-    'Which machine read each page, which one translated it, for which books, why we chose it, and how it fails — with page counts from each page’s own record.',
+    'Which machine read each page, which one translated it, for which books, why we chose it, and how it fails, with page counts from each page’s own record.',
   alternates: { canonical: '/about/models' },
 };
 
@@ -166,7 +166,7 @@ export default async function ModelsPage() {
           </li>
           <li>
             The steps every book goes through are described in{' '}
-            <Link href="/about/processing" className="text-accent-rust hover:underline">how we process books</Link>.
+            <Link href="/how-it-works" className="text-accent-rust hover:underline">how Source Library works</Link>.
           </li>
         </ul>
       </section>

@@ -1,0 +1,59 @@
+{
+ "issue": 6293,
+ "generated_by": "scripts/eval/ocr-pareto-6293/cli-cost.mjs",
+ "engine": "gemini-3.7-flash+antigravity-cli",
+ "model": "gemini-3.7-flash",
+ "price_per_1m": {
+  "input": 0.75,
+  "output": 3.75
+ },
+ "batch_multiplier": 0.5,
+ "basis": "the preregistered x axis: lite's metered production Batch tokens per page (3736 in, 1082 out) scaled by r_in = 1 (identical request) and r_out = CLI characters / lite characters on the same pages, at gemini-3.7-flash's list price and the Batch rate; thinking not counted (the CLI ran at its \"low\" level and reports no per-request tokens); $0 was billed (CLI, subscription)",
+ "all": {
+  "pages_both_text": 548,
+  "r_out": 0.805,
+  "usd_per_1k_batch": 3.034
+ },
+ "charts": {
+  "latin": {
+   "pages_both_text": 147,
+   "r_out": 1.035,
+   "usd_per_1k_batch": 3.501
+  },
+  "english": {
+   "pages_both_text": 43,
+   "r_out": 1.081,
+   "usd_per_1k_batch": 3.595
+  },
+  "latin-script-other": {
+   "pages_both_text": 23,
+   "r_out": 0.95,
+   "usd_per_1k_batch": 3.328
+  },
+  "greek": {
+   "pages_both_text": 124,
+   "r_out": 1.036,
+   "usd_per_1k_batch": 3.503
+  },
+  "chinese-manuscript": {
+   "pages_both_text": 149,
+   "r_out": 1.1,
+   "usd_per_1k_batch": 3.632
+  },
+  "chinese-print": {
+   "pages_both_text": 19,
+   "r_out": 1.059,
+   "usd_per_1k_batch": 3.549
+  },
+  "armenian": {
+   "pages_both_text": 5,
+   "r_out": 0.838,
+   "usd_per_1k_batch": 3.102
+  },
+  "syriac": {
+   "pages_both_text": 38,
+   "r_out": 0.324,
+   "usd_per_1k_batch": 2.059
+  }
+ }
+}

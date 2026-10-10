@@ -10,12 +10,20 @@
  * #2959 (51 dead links across 9 posts) and the cannabis-essay incident
  * (PRs #2584/#2587) for why this exists.
  *
+ * It also follows hard-coded quotation shortlinks (/q/<code>) wherever they
+ * appear under src/ — the About page and the blog lab components cite pages
+ * too. A shortlink encodes a book id and a page number, so it never changes,
+ * but the book behind it can be hidden by a later sweep (rights review, a
+ * duplicate merge, a broken-text hold), and then the reader lands on a 404.
+ * Three such links were live for days in October 2026 (#6307).
+ *
  * Usage:
  *   node scripts/maintenance/check-blog-links.mjs --all
  *   node scripts/maintenance/check-blog-links.mjs src/app/blog/foo/page.tsx [...]
  *
  * Options:
- *   --all                 Check every src/app/blog/⋆⋆/page.tsx
+ *   --all                 Check every src/app/blog/⋆⋆/page.tsx, plus the
+ *                         shortlinks in every source file under src/
  *   --base-url <url>      Target site (default https://sourcelibrary.org)
  *   --concurrency <n>     Parallel fetches (default 8)
  *
@@ -52,7 +60,20 @@ function allBlogPages(dir = BLOG_DIR, out = []) {
   return out;
 }
 
-const files = ALL ? allBlogPages() : args;
+const SRC_DIR = 'src';
+const SOURCE_FILE = /\.(tsx?|mdx?)$/;
+
+function allSourceFiles(dir = SRC_DIR, out = []) {
+  for (const entry of readdirSync(dir)) {
+    if (entry === 'node_modules' || entry === 'generated') continue;
+    const p = join(dir, entry);
+    if (statSync(p).isDirectory()) allSourceFiles(p, out);
+    else if (SOURCE_FILE.test(entry)) out.push(p);
+  }
+  return out;
+}
+
+const files = ALL ? [...new Set([...allBlogPages(), ...allSourceFiles()])] : args;
 if (files.length === 0) {
   console.log('No files to check.');
   process.exit(ALL ? 2 : 0);
@@ -62,6 +83,11 @@ if (files.length === 0) {
 // (href={`/book/${id}`}) are skipped. Author links are excluded — the author
 // page renders a shell for any name, so there's no not-found marker to detect.
 const LINK_RE = /href="(\/(?:book|gallery\/image|collections)\/[^"]+)"/g;
+// Shortlinks are matched anywhere in the file, not only in an href: posts
+// print the link as visible text and components keep it in a data object.
+// 15–26 base62 characters is every code src/lib/shortlinks.ts can produce.
+const SHORTLINK_RE = /(?:https?:\/\/sourcelibrary\.org)?\/q\/([0-9A-Za-z]{15,26})(?![0-9A-Za-z])/g;
+const isBlogPage = (file) => file.replace(/\\/g, '/').includes(`${BLOG_DIR}/`);
 
 const links = new Map(); // path -> Set<sourceFile>
 for (const file of files) {
@@ -72,8 +98,13 @@ for (const file of files) {
     console.error(`Cannot read ${file} — skipping`);
     continue;
   }
-  for (const m of src.matchAll(LINK_RE)) {
-    const path = m[1];
+  // Deep links are checked in blog posts only (the original scope); shortlinks
+  // in every file handed in.
+  const found = [
+    ...(isBlogPage(file) ? [...src.matchAll(LINK_RE)].map(m => m[1]) : []),
+    ...[...src.matchAll(SHORTLINK_RE)].map(m => `/q/${m[1]}`),
+  ];
+  for (const path of found) {
     if (!links.has(path)) links.set(path, new Set());
     links.get(path).add(file);
   }
@@ -86,6 +117,7 @@ if (links.size === 0) process.exit(0);
 const NOT_FOUND = /<title>[^<]*(Book Not Found|Page Not Found|Image Not Found|Collection Not Found)/i;
 // Streamed server redirect (routes with a loading.tsx boundary emit the
 // redirect as an in-body instruction with HTTP 200 — follow it once).
+const NOT_FOUND_BODY = '<title>Page Not Found</title>';
 const NEXT_REDIRECT = /NEXT_REDIRECT;replace;([^;]+);30[78]/;
 
 async function fetchBody(url, redirectsLeft = 3) {
@@ -94,6 +126,9 @@ async function fetchBody(url, redirectsLeft = 3) {
     signal: AbortSignal.timeout(25000),
     headers: { 'User-Agent': 'sourcelibrary-blog-link-check' },
   });
+  // A hidden or missing book answers a real 404 (the shortlink's 302 lands on
+  // it); the soft-404 title check below covers the routes that answer 200.
+  if (res.status === 404) return NOT_FOUND_BODY;
   const body = await res.text();
   const streamed = body.match(NEXT_REDIRECT);
   if (streamed && redirectsLeft > 0) {
@@ -146,6 +181,8 @@ if (broken.length > 0) {
     for (const f of links.get(path)) console.log(`    in ${f}`);
   }
   console.log('\nFix by relinking to a held edition, or unlink (keep the title as plain text).');
+  console.log('A /q/ link 404s when its book was hidden: find the visible copy, locate the passage');
+  console.log('by text, check the page image, and mint the new code with encodeShortlink().');
   console.log('See .claude/handoffs/2026-07-04-link-integrity-visibility-drift.md for the playbook.');
   process.exit(1);
 }

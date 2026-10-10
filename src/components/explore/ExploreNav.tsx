@@ -78,7 +78,7 @@ const VIZ_CARDS: VizCard[] = [
   {
     href: '/ngrams',
     title: 'Ngrams',
-    description: 'How often words and phrases appear across five centuries of sources — click any trend to read the pages behind it.',
+    description: 'How often words and phrases appear across five centuries of sources. Click any trend to read the pages behind it.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8">
         <polyline points="3,17 8,11 12,14 17,6 21,9" />

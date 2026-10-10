@@ -152,7 +152,7 @@ export default async function GalleryDedupReview({ searchParams }: { searchParam
         . Showing {pairs.length} random pair(s) with reachable images. Left = archived (treated as a dupe of right = keeper).
         {skippedBroken > 0 && (
           <>
-            {' '}<span style={{ color: '#f0883e' }}>Skipped {skippedBroken} pair(s) where one or both images 404 on CDN — a separate data-integrity issue, not a dedup mistake.</span>
+            {' '}<span style={{ color: '#f0883e' }}>Skipped {skippedBroken} pair(s) where one or both images 404 on CDN. That is a separate data-integrity issue, not a dedup mistake.</span>
           </>
         )}
         {' '}<a href="?" style={{ color: '#58a6ff' }}>Reshuffle</a>{' '}

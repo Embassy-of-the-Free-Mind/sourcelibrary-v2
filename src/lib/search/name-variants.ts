@@ -445,8 +445,13 @@ export interface NameExpansion {
   variants: string[];
   /** The query's topic words outside the name; [] when the query is only the name. */
   topicWords: string[];
+  /**
+   * The typed surnames that name a person `entities` knows; [] when the query names none. Not the
+   * same as `variants.length > 0`: "Agrippa" names a person and has no generated spelling.
+   */
+  surnames: string[];
 }
-const NONE: NameExpansion = { variants: [], topicWords: [] };
+const NONE: NameExpansion = { variants: [], topicWords: [], surnames: [] };
 const cache = new Map<string, NameExpansion & { expires: number }>();
 
 async function findPersons(candidates: string[]): Promise<PersonNameRecord[]> {
@@ -484,7 +489,7 @@ export async function expandNameQuery(query: string): Promise<NameExpansion> {
     const matched = await findPersons(candidates);
     const related = matched.length > 0 ? await findPersons(secondHopCandidates(query, matched)) : [];
     const variants = buildNameVariants(query, matched, related);
-    result = { variants, topicWords: variants.length > 0 ? topicWords(query, matched) : [] };
+    result = { variants, topicWords: variants.length > 0 ? topicWords(query, matched) : [], surnames: matchedSurnames(query, matched) };
   } catch {
     return NONE;
   }

@@ -219,13 +219,13 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                     e.scope === 'single_work' ? { label: 'Banned', cls: 'bg-stone-100 text-stone-700' } : null;
                   return (
                     <tr key={e.id} className="align-top hover:bg-stone-50/60">
-                      <td className="px-3 py-2.5 text-stone-700 whitespace-nowrap">{e.author || <span className="text-stone-400">—</span>}</td>
+                      <td className="px-3 py-2.5 text-stone-700 whitespace-nowrap">{e.author || <span className="text-stone-400">–</span>}</td>
                       <td className="px-3 py-2.5 font-display text-stone-900 min-w-[14rem]">
                         {e.sl_book_slug
                           ? <Link href={`/book/${e.sl_book_slug}`} className="hover:underline">{e.title}</Link>
                           : <span>{e.title}</span>}
                       </td>
-                      <td className="px-3 py-2.5 text-stone-500 whitespace-nowrap">{e.condemnation_year ?? e.publication_date ?? '—'}</td>
+                      <td className="px-3 py-2.5 text-stone-500 whitespace-nowrap">{e.condemnation_year ?? e.publication_date ?? '–'}</td>
                       <td className="px-3 py-2.5">
                         {scopeBadge && (
                           <span className={`inline-block text-[10px] uppercase tracking-wider ${scopeBadge.cls} px-1.5 py-0.5 rounded`}>
@@ -248,7 +248,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                             className="inline-flex items-center gap-1 text-stone-500 hover:underline">
                             <ExternalLink className="w-3.5 h-3.5" /> USTC
                           </a>
-                        ) : <span className="text-stone-300">—</span>}
+                        ) : <span className="text-stone-300">–</span>}
                       </td>
                       <td className="px-3 py-2.5 whitespace-nowrap">
                         {e.source_book_slug && e.source_page != null ? (
@@ -257,7 +257,7 @@ export default function IndexCatalogSection({ catalogs }: Props) {
                             title="See this entry on the original scanned page of the printed Index">
                             <BookMarked className="w-3.5 h-3.5" /> p.{e.source_page}
                           </Link>
-                        ) : <span className="text-stone-300">—</span>}
+                        ) : <span className="text-stone-300">–</span>}
                       </td>
                     </tr>
                   );

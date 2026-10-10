@@ -26,7 +26,7 @@ import {
   LIST_PAGE_SIZE,
 } from '../../scripts/workers/lib/batch-reconcile.mjs';
 
-type GeminiJob = { name: string; state: string };
+type GeminiJob = { name: string; state: string; displayName?: string };
 
 class ApiErrorStub extends Error {
   status: number;
@@ -59,7 +59,7 @@ function stubClient(opts: { listed?: GeminiJob[]; known?: Record<string, GeminiJ
 type Row = Record<string, unknown> & { _id: string; status: string };
 
 /** A minimal in-memory `batch_jobs` + `pages` stand-in with the verbs the reconciler uses. */
-function stubDb(rows: Row[]) {
+function stubDb(rows: Row[], chainedRuns: Array<{ round?: { job?: { name: string } }; rounds?: Array<{ job: string }> }> = []) {
   const updates: Array<{ filter: unknown; set: Record<string, unknown> }> = [];
   const matches = (row: Row, filter: Record<string, unknown>): boolean => {
     for (const [k, v] of Object.entries(filter)) {
@@ -73,6 +73,13 @@ function stubDb(rows: Row[]) {
   };
   const collection = (name: string) => ({
     find: (filter: Record<string, unknown>) => {
+      if (name === 'translate_batch_runs') {
+        // The reconciler asks by `round.job.name` / `rounds.job` $in the orphan candidates.
+        const names = new Set(((filter.$or as Record<string, { $in: string[] }>[]) ?? []).flatMap(f => Object.values(f)[0].$in));
+        const hitRuns = chainedRuns.filter(r => (r.round?.job?.name && names.has(r.round.job.name)) || (r.rounds ?? []).some(x => names.has(x.job)));
+        const c = { project: () => c, toArray: async () => hitRuns.map(r => ({ ...r })) };
+        return c;
+      }
       const hits = name === 'batch_jobs' ? rows.filter(r => matches(r, filter)) : [];
       const cursor = { project: () => cursor, toArray: async () => hits.map(r => ({ ...r })) };
       return cursor;
@@ -227,12 +234,42 @@ describe('an unmeasurable probe is not a verdict', () => {
 });
 
 describe('orphan cancellation', () => {
-  it('cancels a Gemini-active job the DB has never heard of', async () => {
-    const k0 = stubClient({ listed: [{ name: 'batches/stranger', state: 'JOB_STATE_RUNNING' }] });
+  it('does NOT cancel a chained-translation round recorded only in translate_batch_runs (#6122)', async () => {
+    const inflight = 'batches/chained-inflight';
+    const earlier = 'batches/chained-earlier-round';
+    const k0 = stubClient({ listed: [
+      { name: inflight, state: 'JOB_STATE_RUNNING' },
+      { name: earlier, state: 'JOB_STATE_PENDING' },
+      { name: 'batches/stranger', state: 'JOB_STATE_RUNNING', displayName: `reocr-${'a'.repeat(24)}-lostRow1` },
+    ] });
+    const { db } = stubDb([], [{ round: { job: { name: inflight } } }, { rounds: [{ job: earlier }] }]);
+    const r = await reconcileBatchState(db, { clients: [k0.client], now: () => NOW, log: () => {} });
+    expect(k0.cancels).toEqual(['batches/stranger']);
+    expect(r.orphansCancelled).toBe(1);
+  });
+
+  it('cancels a Gemini-active job that names a batch_jobs row no row holds (a submit that died before recording)', async () => {
+    const k0 = stubClient({ listed: [{ name: 'batches/stranger', state: 'JOB_STATE_RUNNING', displayName: `ocr-${'b'.repeat(24)}-1791000000000` }] });
     const { db } = stubDb([]);
     const r = await reconcileBatchState(db, { clients: [k0.client], now: () => NOW, log: () => {} });
     expect(r.orphansCancelled).toBe(1);
     expect(k0.cancels).toEqual(['batches/stranger']);
+  });
+
+  // #6333: the sweep cancelled every job absent from batch_jobs — 1,519 in eight days, among
+  // them the enrich and embedding lanes' jobs and hand-submitted evals, mid-run.
+  it.each([
+    ['an enrich-lane job', 'enrich-index-muy4a57p-qf1e'],
+    ['an embedding eval job', 'ep-plain-0-muy5ag2y'],
+    ['a one-off script', 'tattva-6184-12'],
+    ['a job with no display name', undefined],
+  ])('does NOT cancel %s it has no row for', async (_what, displayName) => {
+    const k0 = stubClient({ listed: [{ name: 'batches/someone-elses', state: 'JOB_STATE_RUNNING', displayName }] });
+    const { db } = stubDb([]);
+    const r = await reconcileBatchState(db, { clients: [k0.client], now: () => NOW, log: () => {} });
+    expect(k0.cancels).toEqual([]);
+    expect(r.orphansCancelled).toBe(0);
+    expect(r.orphansLeftUnknown).toBe(1);
   });
 
   it('does NOT cancel a Gemini-active job the DB knows in a non-active status (a previously failed row)', async () => {

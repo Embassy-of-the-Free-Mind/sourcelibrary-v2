@@ -1,0 +1,437 @@
+[
+  {
+    "book_id": "6abe88866a920ffd924d46a0",
+    "slot": 13,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ན (Derge Tengyur, vol. 13)",
+    "tradition": "tantra-commentary",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur rgyud 'grel volume na; the pages are Kālacakra/Vimalaprabhā-type commentary (sixteen-fold kāyas, the four joys, initiation and the six-branch yoga, cause and fruit with a Saraha quotation). It belongs on a tantra-commentary shelf. catalog_metadata.collections is empty, and the record is a whole volume with no work titles or authors.",
+    "rights_flag": null,
+    "structure_note": "605 records, 604 with OCR and 604 translated, so one page (probably the cover or label) has no text. Every page read has the right leaf. The western number printed in the scan margin runs one ahead of page_number (p.51 shows 52, p.330 shows 331, p.602 shows 603). That is a constant offset, not a splice. The OCR is the Esukhia Derge e-text aligned to the leaf, not a model's reading.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྡོ་རྗེ་ཟླ་བ་དྲི་མེད་འོད། །ཅེས་གྲུབ་བོ",
+            "english": "the Vajra Moon of Stainless Light <note>original: \"Vajracandra Vimalaprabha\"</note>",
+            "problem": "the note labels a Sanskrit back-reconstruction as 'original', but the page is Tibetan",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "ཡན་ལག་བཅུ་གཉིས་རིགས་བྱུང་བ",
+            "english": "Produced from the twelve links of the family",
+            "problem": "the verse line is forced: it says the winds arise as the twelve links, and 'of the family' is a misparse",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 220,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "རིགས་དྲུག་གི་མཚན་ཉིད",
+            "english": "the six buddha families",
+            "problem": "'buddha' is added",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 330,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྡོ་རྗེ་སློབ་དཔོན་དག་བྱེད་ཕྱིར",
+            "english": "In order to purify the Vajracharya",
+            "problem": "too literal: the sense is to qualify or make the student a vajra master, not to purify an existing one",
+            "severity": "minor"
+          },
+          {
+            "source": "ཆགས་བྲལ་དང་པོ་ཆགས་པ་ཆེ",
+            "english": "The first is freedom from passion; then great passion",
+            "problem": "these are epithets (as in the Nāmasaṃgīti) made into a sequence",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 602,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྒྱུ ... འབྲས་བུ",
+            "english": "<term>Gyü</term> <gloss>Cause</gloss> ... <term>Drébu</term> <gloss>Fruit or Result</gloss>",
+            "problem": "uses a phonetic Tibetan rendering where the English word is needed. It is odd but recoverable.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "All four leaves are right and carry a clean reference e-text. The English is a careful, mostly literal rendering of a Kālacakra-cycle commentary, with only small slips.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      220,
+      330,
+      602
+    ],
+    "reader_summary": "This is one volume of the Derge Tengyur's tantra commentaries; the sampled leaves read like the Vimalaprabhā tradition (the sixteen kāyas, the four joys, initiation, the six-branch yoga). The Tibetan is the Esukhia e-text and matches each scan line for line. The English follows it closely enough to trust for sense, though the Sanskrit glosses in the notes are the model's own additions."
+  },
+  {
+    "book_id": "6abe8add6a920ffd924d507a",
+    "slot": 14,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
+    "tradition": "tantra-commentary",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur rgyud 'grel volume tsa: Cakrasaṃvara/Heruka-cycle commentaries (the third initiation, consort characteristics and siddhis, a list of purifying mantras, Garuḍa-faced Heruka rites, phur pa). It belongs on the shelf. collections is empty.",
+    "rights_flag": null,
+    "structure_note": "463 records, 462 with OCR and translated. The leaves are right, and the margin number runs one ahead of page_number (68 shows 69, 158 shows 159, 396 shows 397). There is no splice. p.396 holds the colophon of chapter 34 ('ལེའུ་སུམ་ཅུ་རྩ་བཞིའི་འགྲེལ་པའོ') and the start of the next section, as the image shows.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 68,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཞེས་རྩ་དབུ་མའི་སྣ་རྩེ་འཕྲོད་པས",
+            "english": "joining the tips of the central channel <note>the union of the central channels of the practitioners</note>",
+            "problem": "the note interprets beyond what the text says",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "དོན་གྱིས་ཡེ་ཤེས་གསང་བ་བླ་ན་མེད་པ",
+            "english": "the supreme secret wisdom is realized",
+            "problem": "'is realized' is added; the source runs on into the next clause",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 158,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རིགས་ལྡན་གསང་བའི་ལམ་ལ་གནས་པའི་དོན",
+            "english": "the secret path of the <term>Rigden</term> <gloss>Kalki or Lineage Holder</gloss>",
+            "problem": "rigs ldan here means a person of the (tantric) family, a qualified practitioner. The gloss brings in the Kalki kings of Shambhala, who are not on this Heruka-cycle page.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "མིང་པོ་ནི་ཤིན་ཏུ་རྩེ་བས་ཀུན་ནས་བསླང་བའོ",
+            "english": "the \"brother\" <note>likely referring to a spiritual peer or a specific male energy</note>",
+            "problem": "a hedged note on a term the model could not place",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "དངོས་གྲུབ་ནི་མཆོག་མངོན་དུ་བྱེད་ཅིང",
+            "english": "Regarding Siddhi, she manifests the supreme attainment",
+            "problem": "makes the consort the subject of the siddhi clause",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Opening <meta> is a free summary ('secret paths of the Vidyadhara'), not a continuity note, and '...becomes <note>referring to a spiritual transformation or realization</note>' glosses a seam fragment",
+            "severity": "minor",
+            "class": "T15"
+          },
+          {
+            "note": "The list of common siddhis is set as a bulleted list; the source is prose",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 261,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྔགས་བཅུ་གསུམ་པ་དག་པས་ཆོས་ཐམས་ཅད་དག་གིས་དག་གོ",
+            "image": "unclear at this resolution; the series (mind, then speech, then body) requires ངག (speech) here",
+            "problem": "speech is probably dropped or misread in the 13th-mantra line, though it may be the block's own reading",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྔགས་བཅུ་གསུམ་པ་དག་པས་ཆོས་ཐམས་ཅད་དག་གིས་དག་གོ",
+            "english": "the thirteenth mantra is purification; it is said, \"All phenomena are purified by the pure.\"",
+            "problem": "renders a defective line fluently instead of flagging it; the parallel series implies 'purified by speech'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 396,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཤར་ལྷོ་མཚམས་སུ་གཤིན་རྗེ་བརྟན་མ ... ནུབ་བྱང་མཚམས་སུ་གཤིན་རྗེ་མཆེ་བ",
+            "english": "in the Southeast is Yamadanti ... In the Northwest is Yamadhadi",
+            "problem": "the Sanskrit names are swapped: brtan ma is Yamadāḍhī, mche ba is Yamadaṃṣṭrī",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The right leaves carry a reference-quality transcription. The translation is faithful in substance, but its glosses sometimes import the wrong context: Kalki on a Heruka page, and swapped goddess names.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      68,
+      396
+    ],
+    "reader_summary": "This is a Derge Tengyur volume of Cakrasaṃvara/Heruka-cycle commentaries: initiation procedure, consort lore, purifying mantras, and phur pa and weather rites. The Tibetan is the right text for every scan. The English is usable for sense, but the glosses in its notes and the Sanskrit names it adds are not reliable: one gloss brings in the Shambhala Kalkis and two goddess names are swapped."
+  },
+  {
+    "book_id": "6abe86656a920ffd924d3f40",
+    "slot": 15,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏ (Derge Tengyur, vol. 10)",
+    "tradition": "tantra-commentary",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur rgyud 'grel volume ta: Hevajra-cycle sādhana and ritual (iconography of the directional guardians and nāga kings, the generation stage, the yoginīs' song rousing Hevajra, consecration). It belongs on the shelf. collections is empty.",
+    "rights_flag": null,
+    "structure_note": "733 records, 730 with OCR and translated, so three pages have no text. The leaves are right, and the margin number runs one ahead of page_number (122 shows 123, 369 shows 370, 644 shows 645). The OCR text keeps the e-text's variant-reading markup, {ཡི་དགས་,ཡི་དྭགས་} and {རི་དགས་,རི་དྭགས་}, which the reader sees in the transcription pane.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 122,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མ་ཧེ་ལ་ཁྲོས་པའི་ཚུལ་གྱིས་བཞུགས་པ",
+            "english": "sitting in the manner of being angry at a buffalo",
+            "problem": "misparse: the figure is seated on a buffalo in a wrathful manner, not angry at it",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR pane shows editorial variant markup '{ཡི་དགས་,ཡི་དྭགས་}' in the line of text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 235,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "པུཀྐ་སཱི་ནི་བདག་ལ་སྐྱོབས",
+            "english": "Pukkasi, protect me!",
+            "problem": "In the Hevajra song each yoginī names herself ('I, Pukkasī: protect me'). The English makes Pukkasī the one addressed, which turns the speaker into the addressee.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "རི་ཁྲོད་མ་འབྲས་གྲུབ་པར་མཛོད",
+            "english": "And grant the fruition of Shavari <note>the mountain goddess</note>",
+            "problem": "the same misreading: Śavarī is the speaker, not the object of the request; the note adds 'mountain goddess'",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR pane shows '{རི་དགས་,རི་དྭགས་}' variant markup three times on this page",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 369,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "ཨོཾ་སརྦ་ཏ་ཐཱ་ག་ཏ་ཨ་ཧ་ར་བྲུཾ་ཛ་ཤྲཱི་ས་མ་ཡེ་ཧཱུཾ",
+            "english": "<gloss>Om, O all Thus-gone Ones, take this food, may the auspicious commitment be established, hum.</gloss>",
+            "problem": "the gloss of the mantra is the model's own",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 644,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མུན་གནག་ཡར་ངོ་ཡིས་ནི་དང་",
+            "english": "With the waxing of the dark moon",
+            "problem": "the source pairs the dark (waning) half and the waxing half; the English merges them",
+            "severity": "minor"
+          },
+          {
+            "source": "མཐེའུ་ཆུང་གདུ་བུ་གསང་བ་ཡི། །སྐེ་ཡི་འཁོར་ལོ་ཚུལ་ཡིན་ནོ",
+            "english": "The ring of the neck is the manner of the secret anklet of the little finger",
+            "problem": "an obscure yogic verse turned into word-for-word English that a reader cannot follow, with no sign of the difficulty",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The leaves are right and the transcriptions clean. But the e-text's {variant,variant} markup shows in the OCR pane, and the Hevajra yoginī song has speaker and addressee confused.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      369
+    ],
+    "reader_summary": "This is a Derge Tengyur volume of Hevajra-cycle ritual and commentary: iconography for painted maṇḍalas, the generation stage, the yoginīs' song, consecration. The Tibetan is the right text, but the transcription shows the e-text's editorial brackets ({ཡི་དགས་,ཡི་དྭགས་}) inline. The English is sound for the ritual prose but misreads who speaks in the liturgical verses, so the verse passages need checking."
+  },
+  {
+    "book_id": "6abe9f6f6a920ffd924da3c8",
+    "slot": 16,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལི (Derge Tengyur, vol. 57)",
+    "tradition": "tantra-commentary",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur rgyud 'grel volume li: Yoga-tantra maṇḍala ritual of the Vajradhātu/Vairocana type (the Tathāgata epithets, empowerments, laying the maṇḍala lines, thrones of the five Buddhas, homa). It belongs on the shelf. collections is empty.",
+    "rights_flag": null,
+    "structure_note": "703 records, 702 with OCR and translated. The leaves are right, and the margin number runs one ahead of page_number (84 shows 85, 221 shows 222, 504 shows 505, 610 shows 611). Nothing else stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མ་གཅིག་ལ།",
+            "english": "To the Mother <note>This refers to the primary female deity or the essence of wisdom</note>",
+            "problem": "the page opens mid-word (most likely [སྐད་ཅིག་]མ་གཅིག་ལ, 'in a single instant'). The translator invents 'the Mother' and adds an explanatory note.",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 221,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 504,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སུ་དགྲོལ་བར་བྱའོ",
+            "english": "One should liberate <note>The context suggests the liberation of sentient beings or the dissolution of concepts</note>",
+            "problem": "a seam fragment explained by a speculative note",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta> asserts the text is 'likely part of the Guhyasamaja'. The page is a Vajradhātu-type Yoga-tantra maṇḍala, with lion, elephant, horse and peacock thrones for the five Buddhas around Vairocana. This is invented, wrong attribution.",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 610,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རང་གི་ལུས་དྲང་པོས་སྣ་ཚོགས་",
+            "english": "With the body held straight, <unclear>various</unclear>",
+            "problem": "the translator marks a clear seam word as <unclear>",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The leaves are right and the transcription clean. The ritual instructions are translated accurately, with the directions and sequence of the line-laying intact. The weak spots are page-top fragments that the translator explains with invented notes, and a wrong attribution to Guhyasamāja in one meta note.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      221,
+      610
+    ],
+    "reader_summary": "This is a Derge Tengyur volume of Yoga-tantra maṇḍala ritual in the Vajradhātu/Vairocana line: empowerment, laying the maṇḍala's lines, the thrones of the five Buddhas, fire offerings. The Tibetan is the right text for every scan. The English is reliable for procedure, but notes at page breaks sometimes invent a meaning for a half-word, and one note names the wrong tantra cycle."
+  }
+]

@@ -34,6 +34,35 @@ const STRINGS: Record<Locale, {
     cta: 'Crea tu cuenta gratuita',
     footnote: 'Entra con tu correo \u00b7 Nunca enviamos spam',
   },
+  // Latin (#6254): the inline nudge renders on `/la`; draft copy.
+  la: {
+    inlineNudge: 'Rationem gratuitam crea, ut libros serves et lecta tua sequaris.',
+    inlineLink: 'Inscriptione electronica intra',
+    eyebrow: 'Operi te adiunge',
+    heading: 'Adiuva ut hereditas ingenii humani amissa recuperetur',
+    body: 'Rationem gratuitam crea, ut libros serves, lecta tua sequaris, novas conversiones editas cognoscas.',
+    cta: 'Rationem gratuitam crea',
+    footnote: 'Inscriptione electronica intra \u00b7 Nihil umquam molestum mittimus',
+  },
+  // Dutch and Chinese (#6382): the inline nudge renders on `/nl` and `/zh`; draft copy.
+  nl: {
+    inlineNudge: 'Maak een gratis account aan om boeken te bewaren en bij te houden wat je leest.',
+    inlineLink: 'Inloggen met e-mail',
+    eyebrow: 'Doe mee',
+    heading: 'Help het verloren intellectuele erfgoed van de mensheid terug te winnen',
+    body: 'Maak een gratis account aan om boeken te bewaren, bij te houden wat je leest en nieuwe vertalingen te volgen zodra ze verschijnen.',
+    cta: 'Gratis account aanmaken',
+    footnote: 'Inloggen met e-mail \u00b7 Nooit spam',
+  },
+  zh: {
+    inlineNudge: '注册免费账户，即可收藏书籍、记录阅读进度。',
+    inlineLink: '用邮箱登录',
+    eyebrow: '加入我们',
+    heading: '帮助找回人类失落的思想遗产',
+    body: '注册免费账户，即可收藏书籍、记录阅读进度，并在新译文发布时及时获知。',
+    cta: '注册免费账户',
+    footnote: '用邮箱登录 \u00b7 绝不发送垃圾邮件',
+  },
 };
 
 interface SignUpCTAProps {

@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import PrintButton from './PrintButton';
 
 export const metadata: Metadata = {
-  title: 'Certificate of Adoption — Source Library',
+  title: 'Certificate of Adoption | Source Library',
   robots: { index: false, follow: false },
 };
 
@@ -61,7 +61,7 @@ export default async function CertificatePage({ params }: { params: Promise<{ to
         </p>
 
         <p className="text-base leading-relaxed text-[#1e1a16] max-w-xl mx-auto">
-          has given <em>{bookTitle}</em> to the world — digitized, translated, and made freely
+          has given <em>{bookTitle}</em> to the world: digitized, translated, and made freely
           readable by anyone, anywhere, for as long as the internet endures.
         </p>
 

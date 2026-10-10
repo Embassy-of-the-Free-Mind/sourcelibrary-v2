@@ -1,0 +1,63 @@
+{
+ "at": "2026-10-06T09:06:04.467Z",
+ "applied": true,
+ "tally": {
+  "books": 1054,
+  "rows": 26344,
+  "typeSkip": 0,
+  "noImage": 0,
+  "badKey": 0,
+  "holds": {
+   "held_other_reason": 1052,
+   "held": 2
+  }
+ },
+ "by_class": {
+  "woodblock": {
+   "books": 566,
+   "pages": 17444
+  },
+  "manuscript": {
+   "books": 486,
+   "pages": 8898
+  },
+  "unclassed": {
+   "books": 2,
+   "pages": 2
+  }
+ },
+ "excluded": {
+  "yigdzin-527 exclude list": {
+   "books": 13,
+   "owed": 19870
+  },
+  "by eye: mixed-tibetan-latin": {
+   "books": 2,
+   "owed": 448
+  },
+  "no gate page": {
+   "books": 7,
+   "owed": 2529
+  },
+  "typeset (by eye)": {
+   "books": 3,
+   "owed": 1007
+  },
+  "by eye: none": {
+   "books": 5,
+   "owed": 882
+  },
+  "by eye: mixed-other": {
+   "books": 1,
+   "owed": 5
+  },
+  "by eye: devanagari": {
+   "books": 1,
+   "owed": 292
+  },
+  "by eye: latin": {
+   "books": 1,
+   "owed": 17
+  }
+ }
+}

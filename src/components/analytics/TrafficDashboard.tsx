@@ -3,30 +3,32 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot, MousePointerClick } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
-import { AreaChart } from './charts/AreaChart';
-import type { TrafficDashboardData, TrafficBin } from '@/lib/analytics-traffic';
-import { TRAFFIC_CLASS_LABELS, type TrafficClass } from '@/lib/traffic-classification';
+import Link from 'next/link';
+import { BarChart } from './charts/BarChart';
+import { MultiLineChart } from './charts/MultiLineChart';
+// Type-only: analytics-traffic.ts imports the Mongo driver, which must not
+// reach this client bundle.
+import type { TrafficDashboardData, TrafficBin, BotGroup } from '@/lib/analytics-traffic';
 
 type FilterKey = 'country' | 'section' | 'referrer' | 'host';
-
-// Display order + color for the human/bot/AI breakdown.
-const CLASS_ORDER: { key: TrafficClass; color: string }[] = [
-  { key: 'human', color: '#16a34a' },
-  { key: 'ai_agent', color: '#8b5cf6' },
-  { key: 'ai_trainer', color: '#a855f7' },
-  { key: 'search_crawler', color: '#3b82f6' },
-  { key: 'other_bot', color: '#94a3b8' },
-];
 
 const RANGES = [
   { days: 1, label: '24h' },
   { days: 7, label: '7d' },
   { days: 30, label: '30d' },
   { days: 90, label: '90d' },
+  { days: 180, label: '6mo' },
+  { days: 366, label: '1y' },
 ];
+
+// The proxy-pool detector started flagging on 2026-08-30. Earlier spikes
+// (June 15 to July 5, early August) were never screened and include automated
+// traffic: 2026-06-19 logged 74K views from 1.3K addresses.
+const POOL_SCREENING_STARTED = '2026-08-30';
 const BINS: { value: TrafficBin | 'auto'; label: string }[] = [
   { value: 'auto', label: 'Auto' },
   { value: 'hour', label: 'Hourly' },
+  { value: '4h', label: '4-hourly' },
   { value: 'day', label: 'Daily' },
   { value: 'week', label: 'Weekly' },
 ];
@@ -34,7 +36,7 @@ const BINS: { value: TrafficBin | 'auto'; label: string }[] = [
 type Metric = 'pageviews' | 'visitors';
 
 function pctDelta(cur: number, prev: number): { text: string; up: boolean | null } {
-  if (prev === 0) return { text: cur > 0 ? 'new' : '—', up: cur > 0 ? true : null };
+  if (prev === 0) return { text: cur > 0 ? 'new' : '–', up: cur > 0 ? true : null };
   const d = ((cur - prev) / prev) * 100;
   const r = Math.round(d);
   if (r === 0) return { text: '0%', up: null };
@@ -43,7 +45,7 @@ function pctDelta(cur: number, prev: number): { text: string; up: boolean | null
 
 function fmtBucket(iso: string, bin: TrafficBin): string {
   // iso like 2026-05-02T00:00:00.000Z
-  if (bin === 'hour') return iso.slice(5, 13).replace('T', ' ') + ':00';
+  if (bin === 'hour' || bin === '4h') return iso.slice(5, 13).replace('T', ' ') + ':00';
   return iso.slice(5, 10); // MM-DD
 }
 
@@ -115,7 +117,8 @@ export default function TrafficDashboard() {
         </div>
         {data && (
           <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>
-            binned {data.range.bin} · vs previous {data.range.days}d
+            binned by {data.range.bin} · compared with the previous {data.range.days} days
+            {data.earliest && data.range.since.slice(0, 10) < data.earliest && ` · records start ${data.earliest}`}
           </span>
         )}
       </div>
@@ -149,6 +152,22 @@ export default function TrafficDashboard() {
         </div>
       ) : (
         <div className={`space-y-6 transition-opacity ${loading ? 'opacity-50' : ''}`}>
+          {/* Fixed recent windows: the numbers to glance at */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {([
+              ['Last hour', data.recent.lastHour],
+              ['Last 4 hours', data.recent.last4h],
+              ['Today so far (UTC)', data.recent.today],
+              ['Yesterday (UTC)', data.recent.yesterday],
+            ] as const).map(([label, n]) => (
+              <div key={label} className="p-4 rounded-xl" style={card}>
+                <div className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                <div className="text-3xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>{n.toLocaleString('en-US')}</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>pageviews</div>
+              </div>
+            ))}
+          </div>
+
           {/* Summary cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SummaryCard
@@ -162,20 +181,8 @@ export default function TrafficDashboard() {
               label="Unique visitors"
               value={data.summary.visitors}
               delta={pctDelta(data.summary.visitors, data.summary.prevVisitors)}
-              hint="approx — anonymized IP"
+              hint="approx., anonymized IP"
             />
-          </div>
-
-          {/* Sites + Human/bot/AI split */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
-              {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
-                <Row key={i} label={s.host} count={s.count} unit="views"
-                  active={filters.host === s.host}
-                  onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
-              ))}
-            </ListCard>
-            <ClassificationCard rows={data.classification} />
           </div>
 
           {/* Trend */}
@@ -191,12 +198,38 @@ export default function TrafficDashboard() {
                 ))}
               </div>
             </div>
-            <AreaChart
+            <BarChart
               data={data.series.map(s => ({ x: s.bucket, y: s[metric] }))}
               color={metric === 'pageviews' ? 'var(--accent-violet)' : '#3b82f6'}
               xLabel={(v) => fmtBucket(v, data.range.bin)}
+              height={240}
+              showValues
+              partialLast
             />
+            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+              Times are UTC. The faded last bar is still filling. Hover a bar for its exact count.
+            </p>
+            {data.range.since.slice(0, 10) < POOL_SCREENING_STARTED && (
+              <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>
+                Before {POOL_SCREENING_STARTED} nothing screened for proxy pools, so spikes in that stretch
+                (June 15 to July 5, early August) include automated traffic. Compare pageviews with visitors:
+                on June 19, 74K views came from 1.3K addresses.
+              </p>
+            )}
           </div>
+
+          {/* Sites */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
+              {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
+                <Row key={i} label={s.host} count={s.count} unit="views"
+                  active={filters.host === s.host}
+                  onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
+              ))}
+            </ListCard>
+          </div>
+
+          <BotSection bots={data.bots} bin={data.range.bin} />
 
           {/* Sections + Top pages */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -311,56 +344,77 @@ function Empty() {
   return <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>None in this range</p>;
 }
 
-// Human vs bot vs AI. Counts come from the ingestion-time classifier, which
-// only starts accruing once this ships — so it's empty for prior history.
-function ClassificationCard({ rows }: { rows: { class: string; count: number }[] }) {
-  const byClass = new Map(rows.map(r => [r.class, r.count]));
-  const ordered = CLASS_ORDER.map(c => ({ ...c, count: byClass.get(c.key) ?? 0 }));
-  const total = ordered.reduce((sum, c) => sum + c.count, 0);
-  const aiCount = (byClass.get('ai_agent') ?? 0) + (byClass.get('ai_trainer') ?? 0);
+// Automated traffic, kept apart from the human figures above. Proxy pools
+// run the page tracker like a browser, so they arrive as pageviews and are
+// subtracted from every human number; bots are counted by the server and
+// never reach the tracker. Both are shown here per day.
+const BOT_GROUP_META: Record<BotGroup, { label: string; color: string; note: string }> = {
+  pool: { label: 'Proxy pools', color: '#dc2626', note: 'pageviews from flagged browser fingerprints' },
+  ai: { label: 'AI companies', color: '#8b5cf6', note: 'OpenAI, Anthropic, Perplexity, Meta, Common Crawl…' },
+  search: { label: 'Search engines', color: '#3b82f6', note: 'Google, Bing' },
+  unidentified: { label: 'Unidentified bots', color: '#94a3b8', note: 'bot-like user agents with no known owner' },
+  script: { label: 'Scripts', color: '#d97706', note: 'curl, python, other HTTP libraries' },
+  other: { label: 'Other', color: '#16a34a', note: 'SEO tools, rate-limited clients, our own MCP' },
+};
+
+const BOT_GROUPS = Object.keys(BOT_GROUP_META) as BotGroup[];
+
+function BotSection({ bots, bin }: { bots: TrafficDashboardData['bots']; bin: TrafficBin }) {
+  const groups = BOT_GROUPS.filter(g => bots.totals[g] > 0);
+  const total = groups.reduce((sum, g) => sum + bots.totals[g], 0);
+  const card = { background: 'var(--bg-white)', border: '1px solid var(--border-light)' };
 
   return (
-    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-          <Bot className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
-          Human · bot · AI
+    <div className="space-y-4 pt-4">
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <h2 className="text-xl font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <Bot className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+          Automated traffic
         </h2>
-        {total > 0 && (
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-            AI {Math.round((aiCount / total) * 100)}% of {total.toLocaleString('en-US')}
-          </span>
-        )}
+        <Link href="/admin/bots" className="text-xs hover:underline" style={{ color: 'var(--accent-rust)' }}>
+          Per-bot user agents and paths →
+        </Link>
+      </div>
+      <p className="text-sm max-w-3xl" style={{ color: 'var(--text-muted)' }}>
+        None of this is in the figures above. {total.toLocaleString('en-US')} automated requests in this range.
+        Counted per day; the site, section, source and country filters do not apply here.
+        {bots.poolFingerprints > 0 && ` Proxy pools: ${bots.poolFingerprints} flagged browser fingerprint${bots.poolFingerprints === 1 ? '' : 's'}.`}
+      </p>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        {BOT_GROUPS.map(g => (
+          <div key={g} className="p-4 rounded-xl" style={card} title={BOT_GROUP_META[g].note}>
+            <div className="flex items-center gap-2 text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: BOT_GROUP_META[g].color }} />
+              {BOT_GROUP_META[g].label}
+            </div>
+            <div className="text-2xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>
+              {bots.totals[g].toLocaleString('en-US')}
+            </div>
+            <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{BOT_GROUP_META[g].note}</div>
+          </div>
+        ))}
       </div>
 
-      {total === 0 ? (
-        <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>
-          No classified traffic yet — this begins accruing now that ingestion records it.
-        </p>
-      ) : (
-        <>
-          {/* Proportion bar */}
-          <div className="flex w-full h-3 rounded-full overflow-hidden mb-4">
-            {ordered.filter(c => c.count > 0).map(c => (
-              <div key={c.key} style={{ width: `${(c.count / total) * 100}%`, background: c.color }}
-                title={`${TRAFFIC_CLASS_LABELS[c.key]}: ${c.count.toLocaleString('en-US')}`} />
-            ))}
-          </div>
-          <div className="space-y-1">
-            {ordered.map(c => (
-              <div key={c.key} className="flex items-center justify-between py-1">
-                <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
-                  {TRAFFIC_CLASS_LABELS[c.key]}
-                </span>
-                <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                  {c.count.toLocaleString('en-US')} · {total > 0 ? Math.round((c.count / total) * 100) : 0}%
-                </span>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="p-6 rounded-xl lg:col-span-2" style={card}>
+          <h3 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+            Automated requests per {bin === 'week' ? 'week' : 'day'}
+          </h3>
+          {bots.series.length === 0 ? <Empty /> : (
+            <MultiLineChart
+              labels={bots.series.map(r => r.bucket)}
+              series={groups.map(g => ({ label: BOT_GROUP_META[g].label, color: BOT_GROUP_META[g].color, data: bots.series.map(r => r[g]) }))}
+              xLabel={(v) => v.slice(5, 10)}
+            />
+          )}
+        </div>
+        <ListCard title="Top bots">
+          {bots.topBots.length === 0 ? <Empty /> : bots.topBots.map(b => (
+            <Row key={b.bot} label={b.bot} count={b.hits} unit="requests" />
+          ))}
+        </ListCard>
+      </div>
     </div>
   );
 }

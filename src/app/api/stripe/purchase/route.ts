@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
                 ? `Book Download: ${itemName || itemId}`
                 : `Image Download: ${itemName || itemId}`,
               description: type === 'book'
-                ? 'PDF/EPUB download — all formats included'
+                ? 'PDF/EPUB download, all formats included'
                 : 'High-resolution image download',
             },
             unit_amount: price.amount,
