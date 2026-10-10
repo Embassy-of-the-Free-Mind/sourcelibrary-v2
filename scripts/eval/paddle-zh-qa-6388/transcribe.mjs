@@ -73,7 +73,7 @@ function runClaude(r, promptText) {
       clearTimeout(timer);
       let j = {}; try { j = JSON.parse(out); } catch { /* not json */ }
       fs.rmSync(ws, { recursive: true, force: true });
-      resolve({ uid: r.uid, arm: 'TO', model: Object.keys(j.modelUsage || {}).join(',') || 'opus (claude -p)', route: 'claude-cli', date: new Date().toISOString(), text: j.result || '', exit: code, is_error: j.is_error ?? null, subtype: j.subtype ?? null, num_turns: j.num_turns ?? null, secs: (Date.now() - t0) / 1000, error: code === 0 && !j.is_error ? null : (err || out).slice(-300) });
+      resolve({ uid: r.uid, arm: 'TO', model: Object.keys(j.modelUsage || {}).join(',') || 'opus (claude -p)', route: 'claude-cli', date: new Date().toISOString(), text: j.result || '', exit: code, is_error: j.is_error ?? null, subtype: j.subtype ?? null, num_turns: j.num_turns ?? null, usage: j.usage ? { input: (j.usage.input_tokens || 0) + (j.usage.cache_read_input_tokens || 0) + (j.usage.cache_creation_input_tokens || 0), uncached_input: j.usage.input_tokens ?? null, output: j.usage.output_tokens ?? null } : null, api_equiv_usd: j.total_cost_usd ?? null, secs: (Date.now() - t0) / 1000, error: code === 0 && !j.is_error ? null : (err || out).slice(-300) });
     });
   });
 }

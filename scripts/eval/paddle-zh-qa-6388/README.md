@@ -35,3 +35,21 @@ The brief was widened while the first job ran. The reviewer arms are relabelled:
 hash 9d8f959e…, the same prompt as `ocr-prereg-6388/prompt-ref.json`). Low is the level the CLI OCR lane and the #6293
 Pareto runs use. Each transcription is then reviewed with the R prompt by the family that did NOT produce it (TO by
 Gemini 3.8 Flash High, TG by Opus), and scored against Kanripo by the same leaf rule as `kanripo.jsonl`.
+
+## Amendment 2 (2026-10-10T18:10Z, job paddle-qa3-6388, before any context-arm call)
+
+The second job was stopped mid-run (its reader processes kept running, orphaned). This job took the runs over: the
+orphaned processes were stopped, their rows copied here unchanged (R1 75/75, R2 12, R3 16, TO 54, TG 31 at
+18:05Z), and each arm resumed from this worktree with the same requests, prompt and model. Every review and
+transcription stays ONE page per fresh CLI process (no --resume/--continue, no shared session).
+
+- **Per-call log.** Opus rows now also carry `usage` (input/output tokens from `--output-format json`) and
+  `api_equiv_usd` (the CLI's API-price figure; the subscription pays $0). Rows written before 18:05Z lack them.
+  `agy -p` reports no token counts; its rows carry seconds, attempts, nudges and errors. score.mjs checks every
+  text with `cliChatterReason` (#6361).
+- **Context arm** (`ctx.mjs`, Derek: "it matters how much each cli does at a time"). 10 of the 57 Kanripo-aligned
+  sample pages (`ctx-draw.json`, seed 6397), transcribed by Opus and by Gemini 3.8 Flash (Low) at 5 and 10 pages per
+  call; k = 1 is the TO / TG rows. Multi-page replies are split on `===== PAGE n =====`. Gated: k = 5 runs first;
+  if it already degrades clearly against k = 1 (Kanripo CER, omitted pages, page mix-ups), k = 10 is skipped.
+  A page mix-up = a segment whose CER against another page's Kanripo window in the same call is lower than against
+  its own by ≥ 0.2.

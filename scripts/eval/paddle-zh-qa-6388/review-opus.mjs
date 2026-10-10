@@ -6,7 +6,8 @@
 // #6388 Paddle zh QA: Opus reviewer. $0 (subscription). One call per request row.
 //   node scripts/eval/paddle-zh-qa-6388/review-opus.mjs --requests=$JOB_SCRATCH/requests.jsonl --arm=R1 [--effort=high] [--parallel=3] [--limit=N]
 // Output: scripts/eval/paddle-zh-qa-6388/reads/<arm>.jsonl, one row per request ({uid, arm, model, text, json, ...});
-// a row without parsed JSON is retried on restart (its last row wins).
+// a row without parsed JSON is retried on restart (its last row wins). Each row logs tokens from --output-format json
+// (usage; api_equiv_usd is what the CLI says the call WOULD cost on the API — the subscription pays nothing).
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
@@ -45,7 +46,7 @@ function runOne(req) {
       let j = {}; try { j = JSON.parse(out); } catch { /* not json */ }
       fs.rmSync(ws, { recursive: true, force: true });
       const text = j.result || '';
-      resolve({ uid: req.uid, arm: ARM, model: Object.keys(j.modelUsage || {}).join(',') || 'opus (claude -p)', effort: args.effort || 'default', route: 'claude-cli', date: new Date().toISOString(), text, json: parseReview(text), exit: code, is_error: j.is_error ?? null, num_turns: j.num_turns ?? null, secs: (Date.now() - t0) / 1000, error: code === 0 && !j.is_error ? null : (err || out).slice(-300) });
+      resolve({ uid: req.uid, arm: ARM, model: Object.keys(j.modelUsage || {}).join(',') || 'opus (claude -p)', effort: args.effort || 'default', route: 'claude-cli', date: new Date().toISOString(), text, json: parseReview(text), exit: code, is_error: j.is_error ?? null, num_turns: j.num_turns ?? null, usage: j.usage ? { input: (j.usage.input_tokens || 0) + (j.usage.cache_read_input_tokens || 0) + (j.usage.cache_creation_input_tokens || 0), uncached_input: j.usage.input_tokens ?? null, output: j.usage.output_tokens ?? null } : null, api_equiv_usd: j.total_cost_usd ?? null, secs: (Date.now() - t0) / 1000, error: code === 0 && !j.is_error ? null : (err || out).slice(-300) });
     });
   });
 }
