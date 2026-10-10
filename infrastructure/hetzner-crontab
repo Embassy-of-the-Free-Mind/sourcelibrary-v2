@@ -123,6 +123,12 @@
 # "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
 # source unreadable. No model call. Runs after paid-vs-got (05:00, ~20 min), whose row it reads, and before the 06:00 ntfy digest.
 40 5 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Quality dashboard (#6429; Derek approved the daily line 2026-10-10): appends today's points to the trend history
+# (ops_reports quality-history-<day>: the #6388 panel's stored text scored against its key, books/pages readable in
+# English) and copies paid-vs-got's ledger days and bill weeks into it, then rebuilds ops_reports/quality-dashboard,
+# which /admin/quality renders. Reads pages/books/ops_reports; writes ops_reports only. No model call ($0).
+# Runs after paid-vs-got (05:00, ~20 min), whose rows it copies. The monthly re-run (series 1b) is by hand, not here.
+30 6 * * * cd /root/sourcelibrary && [ -f scripts/eval/quality-dashboard/trends.mjs ] && flock -n /tmp/sl-quality-dashboard.lock bash -c "set -a; source .env.production.local; set +a; node scripts/eval/quality-dashboard/build.mjs --push" >> /var/log/sourcelibrary/quality-dashboard.log 2>&1
 # Morning ntfy digest (#6181): the ONE default-priority message of the day — jobs landed / not landed on both boxes,
 # yesterday's spend vs the dial + envelopes near cap, decisions waiting, stuck jobs, tier:hold count. Read-only.
 # 06:00 UTC = 08:00 Europe/Amsterdam in summer (CEST). After the clocks go back (last Sunday of October) it arrives
