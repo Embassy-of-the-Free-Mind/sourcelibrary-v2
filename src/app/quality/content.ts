@@ -8,6 +8,14 @@
 export const PROSE_AS_OF = '2026-10-06';
 
 /**
+ * "What changed this month" (#5939): a short dated note written by a person, shown at the top of
+ * the Experiments section — what the month's experiments changed, and what they did not settle.
+ * null renders nothing. scripts/audit/experiments-garden.mjs reminds weekly while it is missing or
+ * more than 35 days old. Keep `as_of` a quoted ISO date on the same line as the key.
+ */
+export const MONTH_NOTE: { as_of: string; text: string } | null = null;
+
+/**
  * The leaf the page opens on (#5918 design direction): a real page whose margins hold a later
  * reader's notes. Chosen by eye from three candidates posted on #5918; Derek picks the final one.
  * Crop boxes are in pixels of `image` (1000 × 1565) and were checked by eye.
