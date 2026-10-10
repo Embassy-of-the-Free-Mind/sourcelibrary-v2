@@ -20,6 +20,10 @@
 
 The boxes cannot ssh to main. Only the laptop reaches all three, so placement is decided on the laptop. The ARM boxes have no Python ML tools (kraken, CLIP, onnx): a brief that needs them goes to main.
 
+## The spare lane on every box (#6395)
+
+Each box is logged into a different Claude account (main: team@sourcelibrary, cloudlayer: derek@playpowerlabs, l7a: derek@sourcelibrary). `scripts/workers/spare-lane.py` runs from cron on all three and spends that account's allowance on small issues when the account is under its fair share of the week. Only main polls usage. It publishes the poll to Mongo (`ops_reports` `claude-limits:latest`, `claude-limits-share.mjs`), and the guests read it there, because no box can ssh to another. Cron: main `*/30` (in `crontab.production`); guests `15,45 * * * *`, logging to `/data/scratch/sl/logs/spare-lane.log`, guarded on the script existing. Jobs are named `spare-<issue>`, at most 2 on main and 1 on a guest, and an issue the lane picks is labelled `spare-lane` so no other box takes it.
+
 ## Placing a job: ask before you start
 
 ```
