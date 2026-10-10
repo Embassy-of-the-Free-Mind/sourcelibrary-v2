@@ -17,6 +17,9 @@ export type Locale = 'en' | 'es' | 'la' | 'nl' | 'zh';
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'es', 'la', 'nl', 'zh'];
 
+/** Each language's name for itself, for language menus. Never translated. */
+export const LOCALE_NATIVE_NAME: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine', nl: 'Nederlands', zh: '中文' };
+
 /**
  * Locales whose site is for reading books WRITTEN in that language, in the
  * original: Latin (#6254), Dutch and Chinese (#6382). Spanish is the other
