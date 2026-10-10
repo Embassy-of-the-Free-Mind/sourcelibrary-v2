@@ -5,7 +5,8 @@ rules. src/app/api/contribute/process/route.ts — the existing bring-your-own-G
 copy it (see "What we already have"). -->
 # Volunteer shifts: people contributing their own Claude to the library (design)
 
-Status: **concept, nothing built.** Written 2026-10-10 from Derek's question "could people contribute
+Status: **Phase 1 built (2026-10-10)**: the MCP tools `start_review_shift` / `submit_page_review`
+and `GET /api/review/translation-check/shift`. Written 2026-10-10 from Derek's question "could people contribute
 the remaining tokens of their subscriptions, and could we package up jobs for them?" Prior-art
 notes and the repository map that fed this are summarised inline. The tracking issue carries the
 decisions.
@@ -168,11 +169,13 @@ transferable credit.
 
 ## Build order
 
-**Phase 0 — permission and demand, no code.**
-1. Write to Anthropic (the Claude for Open Source channel) describing exactly this: volunteers
+**Phase 0 — demand, no code.** *Decided 2026-10-10 (Derek): no vendor letters. A volunteer using
+a connector in their own Claude session for an open-source project is ordinary use; we keep the
+shift interactive and publish no headless recipe, and that is the whole precaution.*
+1. ~~Write to Anthropic (the Claude for Open Source channel) describing exactly this: volunteers
    using the Source Library connector in their own claude.ai sessions to review pages, human in
    the loop, no credentials, no headless use. Ask whether it is within ordinary use and whether a
-   Claude-for-Open-Source grant could extend it. Same note to Google for the Gemini CLI.
+   Claude-for-Open-Source grant could extend it. Same note to Google for the Gemini CLI.~~ Dropped.
 2. Close the open "who replies to volunteers" decision **without a person**: the shift itself
    replies (an end-of-shift summary with the volunteer's gold result and what happened to their
    pages), and free-text replies go to the feedback queue the `feedback` skill already triages.
@@ -180,8 +183,15 @@ transferable credit.
    existing invite-token mail (`/api/review/invite-submit`). If fewer than three people finish a
    shift, tooling will not change it (the review design's Phase 0 test, without the staff hours).
 
-**Phase 1 — the two MCP tools + `page_reviews`.** Build on `review-candidates.ts`, the MCP write
-pattern and `guardPublicSubmission`; add the lease and hidden gold. Quarantine only.
+**Phase 1 — the two MCP tools (built).** No new table: a shift row is a `volunteer_ratings` row in
+the `translation-check` queue, same verdicts as `/check`, with `detail.via = 'mcp-shift'` carrying
+`verdict_before_assistant`, `first_verdict`, `assistant_verdict`, `assistant_findings`,
+`text_version` (sha256 prefixes of the stored OCR and translation) and `shift_id`. So shift rows
+land in the existing rollup and can be split from website rows by `detail.via`.
+`nextCandidate()` gained an optional language filter (`stratum.language`). **Not yet:** a claim
+lease (the "finish what's started" ordering spreads load well enough at current volume) and
+hidden gold — the `translation-check` pool has **0 gold items** today (425 pages, 15 languages,
+measured 2026-10-10), so gold is the first Phase 2 task.
 
 **Phase 2 — aggregation and the anchor feed.** Weighted vote + gold, retirement and the disputed
 queue; `calibration-scorecard.mjs` reads un-anchored human verdicts alongside the existing 32.
@@ -212,6 +222,9 @@ additive: nothing in the measurement pipeline waits for it.
 
 - **Recruiting into silence** (the review design's main risk, already observed: 132 signups, 0
   ratings). Phase 0.2 answers it with automatic replies, not a person who has no hours.
+- **The tool descriptions are the only guard on "verdict first".** Nothing stops a client from
+  submitting the model's verdict as the user's. `verdict_before_assistant` is self-reported;
+  Phase 2 compares its rows with gold before trusting the flag.
 - **A grey-zone reading of the terms.** Mitigated by asking first and by never shipping a headless
   path.
 - **Volunteer verdicts quoted as quality figures before aggregation.** Every figure carries n,

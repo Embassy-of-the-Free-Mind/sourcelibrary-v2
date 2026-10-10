@@ -11,6 +11,7 @@ import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
+import { getRatingOptions } from '@/lib/review-queue';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
@@ -1045,6 +1046,66 @@ async function proposeCollection(args: Record<string, unknown>) {
   return { ok: true, id: result.id, message: result.message || 'Collection proposal sent to the Source Library team for review. Thank you!' };
 }
 
+/** Verdicts for a shift are exactly the translation-check queue's, so shift rows
+ *  and /check rows count in the same rollup. */
+const SHIFT_VERDICTS = getRatingOptions('translation-check').map((r) => r.rating);
+const clipStr = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
+
+async function startReviewShift(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  const code = clipStr(args.volunteer_code, 64);
+  if (code) params.set('volunteer_id', code);
+  const language = clipStr(args.language, 40);
+  if (language) params.set('language', language);
+  if (args.pages != null) params.set('n', String(args.pages));
+  const shift = await apiGet('/review/translation-check/shift', params) as Record<string, unknown>;
+  return {
+    shift_id: shift.shift_id,
+    volunteer_code: shift.volunteer_id,
+    language: shift.language,
+    pages: shift.items,
+    ...(shift.message ? { message: shift.message } : {}),
+    how_to_run: 'One page at a time: show it, ask the user for THEIR verdict first, then give your reading with exact quotes, let them accept or reject each point, then submit_page_review with their final verdict. Tell the user their volunteer_code so they can continue next time.',
+  };
+}
+
+async function submitPageReview(args: Record<string, unknown>) {
+  const verdict = String(args.verdict ?? '');
+  if (!SHIFT_VERDICTS.includes(verdict)) {
+    return { error: `verdict must be one of: ${SHIFT_VERDICTS.join(', ')}` };
+  }
+  const findings = Array.isArray(args.assistant_findings)
+    ? (args.assistant_findings as Array<Record<string, unknown>>).slice(0, 12).map((f) => ({
+        layer: f.layer === 'transcription' ? 'transcription' : 'translation',
+        quote: clipStr(f.quote, 300),
+        problem: clipStr(f.problem, 500),
+        user_agreed: typeof f.user_agreed === 'boolean' ? f.user_agreed : null,
+      }))
+    : [];
+  const asVerdict = (v: unknown) => (typeof v === 'string' && SHIFT_VERDICTS.includes(v) ? v : null);
+  const tv = args.text_version as Record<string, unknown> | undefined;
+  await apiPost('/review/submit', {
+    queue: 'translation-check',
+    item_id: args.item_id,
+    rating: verdict,
+    note: clipStr(args.note, 2000),
+    volunteer_id: args.volunteer_code,
+    volunteer_label: clipStr(args.name, 80),
+    detail: {
+      via: 'mcp-shift',
+      shift_id: clipStr(args.shift_id, 64),
+      verdict_before_assistant: args.verdict_before_assistant === true,
+      first_verdict: asVerdict(args.first_verdict),
+      assistant_verdict: asVerdict(args.assistant_verdict),
+      assistant_findings: findings,
+      assistant_model: clipStr(args.assistant_model, 80),
+      reader_languages: clipStr(args.reader_languages, 200),
+      text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
+    },
+  });
+  return { ok: true, message: 'Review recorded. Thank you — it goes into the library\'s quality measurement, not onto the page.' };
+}
+
 /**
  * Resolve a canonical locus — a Bekker or Stephanus reference — to the leaves
  * that carry it (#3661).
@@ -1335,6 +1396,58 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'start_review_shift',
+    title: 'Start a Review Shift',
+    description: 'Start a volunteer REVIEW SHIFT: up to five pages for the user to check, each with its scan (returned as inline images), our transcription of the original, and our English translation. Use when the user wants to help Source Library by checking pages, says "start a shift", or asks how they can contribute. The user is the reviewer; you are their assistant. RUN THE SHIFT THIS WAY, one page at a time: (1) show the page and its two texts; (2) ASK THE USER FOR THEIR OWN VERDICT FIRST, before you offer any opinion, so their judgement is not anchored on yours (it is what makes the shift valuable: a reader from outside any model family); (3) then give your reading: compare the scan with the transcription, then the transcription with the translation, quoting exact words, and list concrete problems; (4) let the user accept or reject each point and settle their final verdict; (5) call submit_page_review. Never choose the verdict yourself and never submit without the user\'s explicit answer. If the user cannot read the page\'s language or the scan is unreadable, say so and submit verdict "unclear" with a note, or skip it. Pass back volunteer_code from the response on every later call and tell the user to keep it for their next shift. Shifts are for a person at the keyboard; do not run them unattended.',
+    annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin", "Greek", "Arabic", "German", "Chinese", "Tibetan". Omit to accept any language — but ask the user first which languages they read.' },
+        volunteer_code: { type: 'string', description: 'The code from the user\'s earlier shift, if they have one. Omit on a first shift; one is issued.' },
+        pages: { type: 'number', description: 'How many pages (1-5, default 5).' },
+      },
+    },
+  },
+  {
+    name: 'submit_page_review',
+    title: 'Submit a Page Review',
+    description: 'Record the user\'s verdict on one page from start_review_shift. The verdict must be the USER\'S, given in this conversation, never yours. Verdicts: both_sound (transcription matches the scan and the English matches the original), translation_drift (transcription right, English departs from it), transcription_off (the text does not match the scan, so the English cannot be judged), both_off, unclear. Set verdict_before_assistant true only if the user gave a verdict before you shared your reading. Put your own reading in assistant_verdict and assistant_findings, so the library can compare the two. Reviews are evidence for the library\'s quality measurement; they do not edit any page.',
+    annotations: { title: 'Submit a Page Review', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        item_id: { type: 'string', description: 'item_id from start_review_shift' },
+        shift_id: { type: 'string', description: 'shift_id from start_review_shift' },
+        volunteer_code: { type: 'string', description: 'volunteer_code from start_review_shift' },
+        verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'The user\'s final verdict.' },
+        verdict_before_assistant: { type: 'boolean', description: 'True if the user committed to a verdict before seeing your reading.' },
+        first_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'The verdict the user gave before your reading, if it differs from the final one.' },
+        note: { type: 'string', description: 'The user\'s own words on what is wrong or uncertain (optional, max 2000 chars).' },
+        assistant_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'Your own verdict on the page.' },
+        assistant_findings: {
+          type: 'array',
+          description: 'Problems you pointed out, each with the user\'s response (max 12).',
+          items: {
+            type: 'object',
+            properties: {
+              layer: { type: 'string', enum: ['transcription', 'translation'] },
+              quote: { type: 'string', description: 'The exact words at issue (max 300 chars)' },
+              problem: { type: 'string', description: 'What is wrong (max 500 chars)' },
+              user_agreed: { type: 'boolean' },
+            },
+            required: ['layer', 'problem'],
+          },
+        },
+        reader_languages: { type: 'string', description: 'Languages the user says they read, e.g. "Latin, Italian".' },
+        assistant_model: { type: 'string', description: 'Your model name, if known (for analysis only).' },
+        text_version: { type: 'object', description: 'text_version from the item, passed back unchanged.' },
+        name: { type: 'string', description: 'How the user wants to be credited (optional).' },
+      },
+      required: ['item_id', 'volunteer_code', 'verdict', 'verdict_before_assistant'],
+    },
+  },
+  {
     name: 'get_locus',
     title: 'Find a Canonical Reference (Bekker / Stephanus)',
     description: 'Turn a CANONICAL CITATION into the actual leaves that carry it. Aristotle is cited by Bekker number (1094a8, 1447a) and Plato by Stephanus number (Rep. 328b) — the references scholarship has used for centuries, which survive re-typesetting and are shareable in a way a scan page never is. USE THIS FIRST whenever a passage arrives as a canonical reference rather than a page: do not try to derive the page yourself from a book\'s pagination, which is what produced a wrong guess before this tool existed. Bekker numbers are unique across the whole Aristotelian corpus, so the number alone is enough and it also tells you WHICH WORK you are citing. Stephanus numbers restart in each of the three 1578 volumes, so pass work ("Republic", "Timaeus") — without it the response lists the candidate dialogues instead of choosing one. Returns every witness the library holds: the Greek reference edition and, where we have one, an English translation of the same lines, each with its scan page, a reader URL and a quote_api link — so you can compare the original against a translation at one reference. Then call get_quote with the returned book_id + page for the verbatim text and a citable shortlink. LIMITS, stated plainly: a witness is only returned where the reference is PRINTED on that leaf (or, in the two root editions, where a verified constant offset brackets it) — nothing is interpolated, so an empty result means this library holds no anchored leaf there, NOT that the citation is wrong; editions_searched shows what was consulted and the range each covers. Line numbers (the "8" of 1094a8) are not resolved — you get the right leaf and read the line off it. Two works can share a page where one ends and the next begins (Bekker 184 and 1447 are both such joins), and each leaf is filed by the running head printed on it, so a reference at the very start of a work may come back under its predecessor — always read other_works_at_this_reference before concluding a passage is absent. A bare number that exists in both systems returns Aristotle and Plato leaves together; check the system field on each.',
@@ -1417,6 +1530,8 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
+    case 'start_review_shift': return startReviewShift(args);
+    case 'submit_page_review': return submitPageReview(args);
     // Name every tool in the error: a caller that guessed a name ("search") can
     // self-correct on the next call instead of concluding the server is broken.
     default: throw new Error(`Unknown tool: ${name}. Available tools: ${TOOLS.map((t) => t.name).join(', ')}`);
@@ -1490,6 +1605,16 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .map((img) => ({
         urls: [img.image_url as string],
         caption: `${(img.description as string) || 'Image'}\n${img.url as string}`,
+      }));
+  }
+
+  if (name === 'start_review_shift' && Array.isArray(r.pages)) {
+    return (r.pages as Array<Record<string, unknown>>)
+      .filter((p) => typeof p.image_url === 'string')
+      .slice(0, MAX_INLINE_IMAGES)
+      .map((p) => ({
+        urls: [p.image_url as string],
+        caption: `Scan for ${p.item_id as string} — ${(p.book_title as string) || 'untitled'}, p. ${p.page_number as number}`,
       }));
   }
 
