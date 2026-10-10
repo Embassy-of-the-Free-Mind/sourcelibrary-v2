@@ -805,6 +805,14 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
 // exhibition without a Latin name keeps it off the Latin homepage instead of
 // showing it in English.
 export const LA_COLLECTION_NAMES: Record<string, string> = {
+  // Older top-level slugs the homepage's fallback list still uses when the
+  // collections query times out (FALLBACK_COLLECTIONS in home-data.ts).
+  'indic-traditions': 'Traditiones Indicae',
+  'chinese-classics': 'Libri classici Sinenses',
+  'leonardo-da-vinci': 'Leonardus Vincius',
+  'kabbalah': 'Cabbala',
+  'herbalism': 'Herbaria et res botanica',
+  'music-sound': 'Musica et sonus',
   'natural-philosophy': 'Philosophia naturalis et scientiae',
   theology: 'Theologia Christiana',
   literature: 'Litterae et poesis',
@@ -904,6 +912,14 @@ export const LA_COLLECTION_NAMES: Record<string, string> = {
 // Same two groups and the same rule as LA_COLLECTION_NAMES: on `/nl` the
 // showcase draws only from exhibitions named here.
 export const NL_COLLECTION_NAMES: Record<string, string> = {
+  // Older top-level slugs the homepage's fallback list still uses when the
+  // collections query times out (FALLBACK_COLLECTIONS in home-data.ts).
+  'indic-traditions': 'Indiase tradities',
+  'chinese-classics': 'Chinese klassieken',
+  'leonardo-da-vinci': 'Leonardo da Vinci',
+  'kabbalah': 'Kabbala',
+  'herbalism': 'Kruidkunde en plantkunde',
+  'music-sound': 'Muziek en klank',
   'natural-philosophy': 'Natuurfilosofie en wetenschap',
   theology: 'Christelijke theologie',
   literature: 'Literatuur en poëzie',
@@ -1004,6 +1020,14 @@ export const NL_COLLECTION_NAMES: Record<string, string> = {
 // LA_COLLECTION_NAMES: on `/zh` the showcase draws only from exhibitions named
 // here, so an exhibition without a Chinese name stays off the Chinese homepage.
 export const ZH_COLLECTION_NAMES: Record<string, string> = {
+  // Older top-level slugs the homepage's fallback list still uses when the
+  // collections query times out (FALLBACK_COLLECTIONS in home-data.ts).
+  'indic-traditions': '印度传统',
+  'chinese-classics': '中国经典',
+  'leonardo-da-vinci': '达·芬奇',
+  'kabbalah': '卡巴拉',
+  'herbalism': '本草与植物学',
+  'music-sound': '音乐与声音',
   'natural-philosophy': '自然哲学与科学',
   theology: '基督教神学',
   literature: '文学与诗歌',
