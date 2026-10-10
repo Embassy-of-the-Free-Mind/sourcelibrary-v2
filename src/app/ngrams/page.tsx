@@ -4,10 +4,10 @@ import NgramViewer from '@/components/ngrams/NgramViewer';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ExploreTabBar from '@/components/explore/ExploreTabBar';
 
-const TITLE = 'Ngram Viewer — Source Library';
+const TITLE = 'Ngram Viewer | Source Library';
 const DESCRIPTION =
-  'Chart how words and phrases rise and fall across five centuries of primary sources — ' +
-  'alchemy, Hermetica, Kabbalah, and early science — then click through to the pages themselves.';
+  'Chart how words and phrases rise and fall across five centuries of primary sources ' +
+  '(alchemy, Hermetica, Kabbalah, and early science), then click through to the pages themselves.';
 
 // Social-card invariant: a page that defines openGraph must set images
 // explicitly and mirror them in a twitter block (see CLAUDE.md, PRs #3149/#3151).
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: 'https://sourcelibrary.org/ngrams',
     siteName: 'Source Library',
     type: 'website',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -39,7 +39,7 @@ export default function NgramsPage() {
       <p className="text-[var(--text-secondary)] mb-6 max-w-3xl">
         How often does a word or phrase appear across the library, year by year?
         Compare up to six terms, in English translation or in the original
-        languages — and click any point on a curve to read the actual passages.
+        languages, and click any point on a curve to read the actual passages.
       </p>
 
       {/* Ngrams sits outside /explore/* but is one of the explore tools —
@@ -55,8 +55,8 @@ export default function NgramsPage() {
       <div className="mt-8 text-sm text-[var(--text-muted)] max-w-3xl space-y-2">
         <p>
           <strong>Reading these curves honestly:</strong> frequencies describe the
-          Source Library collection — a curated corpus centered on alchemy,
-          Hermetica, and early modern science — not print culture at large. The
+          Source Library collection (a curated corpus centered on alchemy,
+          Hermetica, and early modern science), not print culture at large. The
           gray backdrop shows how much text each year contributes; a spike in a
           thin decade is thin evidence. Years are edition publication years, so a
           1650 reprint of a 15th-century text counts as 1650.

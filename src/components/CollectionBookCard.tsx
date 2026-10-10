@@ -13,9 +13,11 @@ import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
+import { languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
+import PreviewBadge from '@/components/book/PreviewBadge';
 
 export interface CollectionBook {
   bookId?: string;
@@ -55,6 +57,9 @@ export interface CollectionBook {
   published?: string;
   translation_percent?: number;
   resource_type?: string;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
   /** Readers' hearts. Only a surface that ranks by likes sets it; the card
    *  then shows a ♥ count on the cover. Absent everywhere else. */
   like_count?: number;
@@ -94,7 +99,38 @@ export const CARD_LABELS_ES: CollectionBookCardLabels = {
   editedBy: 'editado por',
 };
 
-const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES };
+// Latin (#6254). "Conversus" is the ENGLISH translation; nothing is translated into Latin.
+export const CARD_LABELS_LA: CollectionBookCardLabels = {
+  firstTranslation: 'Prima conversio',
+  pages: 'paginae',
+  ocr: 'OCR',
+  translated: 'Conversus',
+  complete: 'Absolutus',
+  inEnglish: 'Anglice',
+  editedBy: 'edidit',
+};
+
+export const CARD_LABELS_NL: CollectionBookCardLabels = {
+  firstTranslation: 'Eerste vertaling',
+  pages: 'pagina’s',
+  ocr: 'OCR',
+  translated: 'Vertaald',
+  complete: 'Volledig',
+  inEnglish: 'Engelstalig',
+  editedBy: 'bezorgd door',
+};
+
+export const CARD_LABELS_ZH: CollectionBookCardLabels = {
+  firstTranslation: '首次译出',
+  pages: '页',
+  ocr: 'OCR',
+  translated: '已译',
+  complete: '全译',
+  inEnglish: '英文原著',
+  editedBy: '编者',
+};
+
+const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA, nl: CARD_LABELS_NL, zh: CARD_LABELS_ZH };
 
 interface CollectionBookCardProps {
   book: CollectionBook;
@@ -260,8 +296,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           </span>
         )}
 
-        {(isPublishedFirstTranslation(book) || book.has_doi) && (
+        {(isPublishedFirstTranslation(book) || book.has_doi || book.preview) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
+            {book.preview && (
+              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(120,90,30,0.72)' }}>
+                <PreviewBadge lang={lang} />
+              </span>
+            )}
             {isPublishedFirstTranslation(book) && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 {labels.firstTranslation}
@@ -292,7 +333,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         </p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">
-          {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{book.language}</span>}
+          {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{languageName(book.language, lang)}</span>}
           {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)

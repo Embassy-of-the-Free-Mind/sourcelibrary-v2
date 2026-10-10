@@ -33,7 +33,7 @@ export default function VolunteerPage() {
             problem really is open to everyone, so that is what it now says —
             same wording as /contribute, deliberately. */}
         <p className="text-muted text-sm mt-8 leading-relaxed">
-          You can also just start reading &mdash; every page has a &ldquo;Notice a translation issue?&rdquo; link
+          You can also just start reading. Every page has a &ldquo;Notice a translation issue?&rdquo; link
           that takes a note straight to us, no account needed. This form helps us coordinate and reach out
           when we have something specific that matches your skills.
         </p>

@@ -96,7 +96,7 @@ export function TranslationFailuresClient() {
       <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Translation-Failure Triage</h1>
       <p style={{ color: C.dim, fontSize: 13, margin: '4px 0 0' }}>
         First-translation candidates (<code>confirmed_first</code>) that are untranslated because they
-        broke in the pipeline — grouped by root cause. Retry only re-enrolls buckets where re-running
+        broke in the pipeline, grouped by root cause. Retry only re-enrolls buckets where re-running
         actually helps; <span style={{ color: C.amber }}>re-acquire</span> /{' '}
         <span style={{ color: C.dim }}>park</span> buckets need a different fix.
       </p>
@@ -156,12 +156,12 @@ export function TranslationFailuresClient() {
                           <a href={`https://sourcelibrary.org/book/${b.slug || b.id}`} target="_blank" rel="noreferrer" style={{ color: C.accent, textDecoration: 'none' }}>
                             {b.title}
                           </a>
-                          <div style={{ color: C.dim, fontSize: 11 }}>{b.author || '—'}</div>
+                          <div style={{ color: C.dim, fontSize: 11 }}>{b.author || '–'}</div>
                         </td>
-                        <td style={td}>{b.language || '—'}</td>
+                        <td style={td}>{b.language || '–'}</td>
                         <td style={{ ...td, textAlign: 'right' }}>{b.pages_ocr}/{b.pages_count}</td>
                         <td style={{ ...td, textAlign: 'right' }}>{b.retry_count}</td>
-                        <td style={{ ...td, color: C.dim, fontFamily: 'monospace', fontSize: 11 }}>{b.error || '—'}</td>
+                        <td style={{ ...td, color: C.dim, fontFamily: 'monospace', fontSize: 11 }}>{b.error || '–'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -171,7 +171,7 @@ export function TranslationFailuresClient() {
           );
         })}
         {!loading && data?.buckets.length === 0 && (
-          <div style={{ color: C.dim, padding: 24, textAlign: 'center' }}>No stuck first-translation candidates — the queue is clear.</div>
+          <div style={{ color: C.dim, padding: 24, textAlign: 'center' }}>No stuck first-translation candidates. The queue is clear.</div>
         )}
       </div>
     </div>

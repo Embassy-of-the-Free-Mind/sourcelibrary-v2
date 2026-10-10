@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     permissions: doc.permissions,
     rate_limit: doc.rate_limit,
     created_at: doc.created_at,
-    message: 'Save this key — it will not be shown again.',
+    message: 'Save this key. It will not be shown again.',
   }, { status: 201 });
 }
 

@@ -198,7 +198,7 @@ export async function POST(req: NextRequest) {
       .in(chunk.column, chunk.values);
     if (error) {
       console.error('[catalog/bph/export] selection query failed:', error);
-      return NextResponse.json({ error: 'Export failed — please try again' }, { status: 500 });
+      return NextResponse.json({ error: 'Export failed. Please try again' }, { status: 500 });
     }
     for (const row of (data ?? []) as unknown as Array<Record<string, unknown>>) {
       if (typeof row.ubn === 'string' && row.ubn) byKey.set(row.ubn, row);
@@ -236,7 +236,7 @@ export async function GET(req: NextRequest) {
     const { data, error } = await query.range(offset, offset + PAGE - 1);
     if (error) {
       console.error('[catalog/bph/export] query failed:', error);
-      return NextResponse.json({ error: 'Export failed — please try again' }, { status: 500 });
+      return NextResponse.json({ error: 'Export failed. Please try again' }, { status: 500 });
     }
     const page = (data ?? []) as unknown as Array<Record<string, unknown>>;
     rows.push(...page);
@@ -249,7 +249,7 @@ export async function GET(req: NextRequest) {
 
   // Never let a cap pass for a complete answer.
   const notes = truncated
-    ? [`NOTE: export capped at ${MAX_ROWS} rows — narrow the search and export again.`]
+    ? [`NOTE: export capped at ${MAX_ROWS} rows. Narrow the search and export again.`]
     : [];
   // The search term goes in the filename when there is one.
   const termRaw = filters.q || filters.author || filters.title || filters.shelfMark || '';

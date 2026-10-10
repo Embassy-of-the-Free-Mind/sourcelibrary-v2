@@ -90,6 +90,10 @@ judge() {
     const failing = [], pending = [];
     for (const c of pr.statusCheckRollup || []) {
       const name = c.name || c.context;
+      // Vercel is not gating, as in auto-merge.mjs: previews are opt-in (#5980),
+      // and a skipped one leaves its status PENDING forever. `next-build` is the
+      // build check (#5990).
+      if (name === "Vercel") continue;
       const result = c.conclusion || c.state;
       if (c.status && c.status !== "COMPLETED") pending.push(name);
       else if (BAD.has(result)) failing.push(name);
@@ -97,6 +101,8 @@ judge() {
     }
     const unknown = failing.filter((n) => !allowed.has(n));
     if (pending.length) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus}; checks still running: ${pending.join(", ")}`);
+    // UNSTABLE with nothing failing or running once Vercel is set aside: Vercel was the only reason.
+    if (!failing.length && pr.mergeStateStatus === "UNSTABLE") out(`${ok} clean apart from Vercel`);
     if (!failing.length) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus} with no failing check (reviews? branch protection?)`);
     if (unknown.length) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus}; failing: ${unknown.join(", ")} (pass --allow-check NAME only for a failure you know is not caused by this PR)`);
     if (!["UNSTABLE", "BLOCKED"].includes(pr.mergeStateStatus)) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus}`);

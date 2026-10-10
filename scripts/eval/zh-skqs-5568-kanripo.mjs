@@ -87,7 +87,7 @@ function cnNum(s) {
   return total + cur;
 }
 const NUM = '[〇零一二兩三四五六七八九十百千\\d]+';
-function juanRange(title) {
+export function juanRange(title) {
   const m = String(title || '').match(new RegExp(`·?([^·()（）]*?)卷(${NUM})(?:之(${NUM})|([上中下]))?(?:[~～至\\-—]卷?(${NUM})?(?:之(${NUM})|([上中下]))?)?`));
   if (!m) return null;
   const lo = cnNum(m[2]), hi = m[5] ? cnNum(m[5]) : lo;
@@ -131,7 +131,7 @@ async function raw(id, ref, file) {
 }
 
 /** A work's repo: witness branch (WYG, else master), its juan files, its own licence statements. */
-async function workInfo(krId) {
+export async function workInfo(krId) {
   const repo = await gh(`repos/kanripo/${krId}`);
   if (!repo) return { id: krId, repo: false };
   const br = (await gh(`repos/kanripo/${krId}/branches?per_page=100`)) || [];
@@ -146,7 +146,7 @@ async function workInfo(krId) {
 }
 
 /** All `<pb>` pages of a set of juan files: [{ pb, juan, leaf, side, text(folded) }] in file order. */
-async function pbPages(krId, ref, juans) {
+export async function pbPages(krId, ref, juans) {
   const out = [];
   for (const j of juans) {
     const t = await raw(krId, ref, `${krId}_${String(j).padStart(3, '0')}.txt`);
@@ -162,9 +162,9 @@ async function pbPages(krId, ref, juans) {
 }
 
 /** Juan files to search: the title's range ± 5 (Siku volume juan are often off by a few from Kanripo's file numbers), else all. */
-const nearJuan = (w, r) => (r ? w.juan_files.filter(j => j >= r.lo - 5 && j <= r.hi + 5) : w.juan_files);
+export const nearJuan = (w, r) => (r ? w.juan_files.filter(j => j >= r.lo - 5 && j <= r.hi + 5) : w.juan_files);
 
-function best(textFolded, pages, lo = 0, hi = pages.length) {
+export function best(textFolded, pages, lo = 0, hi = pages.length) {
   let b = null, second = 0;
   const A = bigrams(textFolded);
   pages.slice(lo, hi).forEach((p, k) => {
@@ -340,7 +340,7 @@ async function drift() {
 }
 
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
-if (!isMain) { /* imported by the test-2 script for drawSample and the text helpers */ }
+if (!isMain) { /* imported by the test-2 script (drawSample, text helpers) and by the #5600 Paddle lane's Kanripo QA screen */ }
 else if (CMD === 'coverage') await coverage();
 else if (CMD === 'align') await align();
 else if (CMD === 'drift') await drift();

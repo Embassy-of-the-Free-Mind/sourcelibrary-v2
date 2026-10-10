@@ -53,6 +53,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/vision',
   '/census',
   '/research',
+  // Ideas across traditions (#6173): every page is a list of books from the
+  // whole library, chosen for spanning traditions. Same reasoning as /works.
+  '/ideas',
   '/blog',
   '/contribute',
   '/support',
@@ -69,6 +72,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Cleopatra); the nightly leak audit flagged it on bph.sourcelibrary.org the
   // day it shipped (2026-09-30).
   '/connect',
+  // The journey film's curated instance (#5861): Source Library's own story,
+  // told through one global (non-partner) book, with links into it.
+  '/how-it-works',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room
   // would hand its visitors other libraries' pages to judge — the same content
@@ -100,6 +106,12 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // museum QR use case points at sourcelibrary.org/identify, not a subdomain,
   // so nothing tenant-facing is lost. (#4232)
   '/identify',
+  // The Librarian (#4330, decided 2026-10-07). It answers from the whole
+  // library: its tools search, quote and link any book, and its threads and
+  // rooms belong to the global site. A partner reading room that wants an
+  // assistant over its own shelf needs a different feature, not this one on
+  // its domain. The header and footer filter on this list, so the link goes too.
+  '/librarian',
 ] as const;
 
 /**
@@ -142,6 +154,10 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',
+  // Everything behind the Librarian: chat, voice, voice-search, threads, rooms.
+  // Blocking only the page would leave the whole-library agent callable from
+  // the partner host.
+  '/api/embassy',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

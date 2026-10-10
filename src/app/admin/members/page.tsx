@@ -68,7 +68,7 @@ export default function MembersPage() {
           }}>
             <div style={{ fontSize: 12, color: '#8b949e', marginBottom: 4 }}>{s.label}</div>
             <div style={{ fontSize: 24, fontWeight: 600, color: s.color }}>
-              {loading ? '—' : s.value}
+              {loading ? '–' : s.value}
             </div>
           </div>
         ))}
@@ -123,7 +123,7 @@ export default function MembersPage() {
                       <span style={{ color: '#8b949e', marginLeft: 6, fontSize: 11 }}>hidden</span>
                     )}
                   </td>
-                  <td style={{ padding: '8px 12px', color: '#8b949e' }}>{m.email || '—'}</td>
+                  <td style={{ padding: '8px 12px', color: '#8b949e' }}>{m.email || '–'}</td>
                   <td style={{ padding: '8px 12px' }}>
                     <span style={{
                       padding: '2px 8px', borderRadius: 10, fontSize: 11,
@@ -134,15 +134,15 @@ export default function MembersPage() {
                     </span>
                   </td>
                   <td style={{ padding: '8px 12px', color: '#8b949e' }}>
-                    {m.membership?.plan || '—'}
+                    {m.membership?.plan || '–'}
                   </td>
                   <td style={{ padding: '8px 12px', color: '#8b949e' }}>
-                    {joined ? new Date(joined).toLocaleDateString() : '—'}
+                    {joined ? new Date(joined).toLocaleDateString() : '–'}
                   </td>
                   <td style={{ padding: '8px 12px', color: '#8b949e' }}>
                     {m.membership?.expiresAt
                       ? new Date(m.membership.expiresAt).toLocaleDateString()
-                      : '—'}
+                      : '–'}
                   </td>
                   <td style={{ padding: '8px 12px', color: '#8b949e' }}>
                     {m.editCount ?? 0}

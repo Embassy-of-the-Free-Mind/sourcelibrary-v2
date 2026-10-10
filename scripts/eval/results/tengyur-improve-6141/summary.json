@@ -1,0 +1,23 @@
+{
+ "measured_at": "2026-10-07T06:05:13.081Z",
+ "pages_with_english": 128333,
+ "pages_with_verse_runs": 70486,
+ "padas_distinct": 716217,
+ "linked_pairs": 9680,
+ "verses": 4504,
+ "verses_on_3plus_pages": 3766,
+ "occurrences": 26818,
+ "occ_aligned": 9074,
+ "occ_rendered": 6788,
+ "top200": {
+  "pages_median": 18,
+  "with_divergence": 133,
+  "sanskrit_held": 38,
+  "by_work": {
+   "MMK": 35,
+   "PV": 1,
+   "AK": 2
+  }
+ },
+ "all_sanskrit_held": 1011
+}

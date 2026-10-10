@@ -1,0 +1,24 @@
+{"vol": 112, "pages": [
+{"page": 253, "image_matches_ocr": "yes",
+ "A_serious": [
+  {"class": "term mistranslated / reversed sense", "tibetan": "འདི་ན་ཆོས་ཀྱི་རྔ་ཆེན་སུ་ཡིས་འཇོམས། །ཆོས་ཀྱི་ཆུ་བོ་འདི་ན་སུས་སྐེམས་ནུས།", "english": "Who here will beat the great Drum of Dharma?", "problem": "འཇོམས་ means destroy/shatter, parallel to 'who can dry up the river of Dharma'; 'beat the drum' turns a question about who could destroy the Dharma into one about who will proclaim it, and A's note then rationalises the drying-up line."},
+  {"class": "term mistranslated", "tibetan": "རྐྱེན་ཅི་ཞིག་གིས་ཆོས་ཚུལ་འདི་འཆད་འགྱུར། །ཇི་ལྟར་ཆོས་སྒྲོན་སླར་ཡང་ཡུན་རིང་འབར།", "english": "By what conditions will this way of Dharma be explained?", "problem": "In context འཆད་འགྱུར་ is 'be cut off/interrupted' (followed by 'how will the lamp blaze AGAIN'); 'explained' loses the question about the Dharma's discontinuation."}
+ ],
+ "B_serious": [],
+ "better": "B",
+ "note": "Both render the verses fully; A misreads 'joms (destroy) as 'beat' and 'chad (be cut off) as 'explained', B gets both right."},
+{"page": 254, "image_matches_ocr": "yes",
+ "A_serious": [
+  {"class": "invented clause / page-boundary misreading", "tibetan": "ཉོ་ཚོང་ལ་ནི་ཡང་དག་བརྩོན། །ཁྱིམ་པ་རྣམས་ [p255: ལ་སྟོན་པར་འགྱུར]", "english": "They will apply themselves diligently to buying and selling, just like householders.", "problem": "ཁྱིམ་པ་རྣམས་ begins a new line that continues on the next page ('they will teach/show householders'); A invents a comparison 'just like householders'."}
+ ],
+ "B_serious": [],
+ "better": "B",
+ "note": "Both translations are close to the Tibetan; A's only real slip is the invented 'just like householders' at the page break, which B leaves correctly as a dangling 'Householders'."},
+{"page": 255, "image_matches_ocr": "yes",
+ "A_serious": [
+  {"class": "wrong subject", "tibetan": "ཚུལ་ཁྲིམས་ལྡན་པ་སྡང་བ་ཡིས། །ལྷ་རྣམས་དེ་དག་ལ་སྨོད་འགྱུར། །རྒྱལ་རིགས་རྗེའུ་རིགས་བྲམ་ཟེ་དང་། །ཡུལ་འཁོར་མཐའ་དག་སྤོང་བར་འགྱུར། །རིན་ཆེན་གླིང་དུ་འགྲོ་འགྱུར་ཞིང་།", "english": "The kings, merchants, and Brahmins will abandon the entire kingdom. They will go to the Jewel Island and remain in a state of indifference.", "problem": "The gods (ལྷ་རྣམས་) are the ones who abandon the kṣatriyas, vaiśyas, brahmins and the whole country and go to the Jewel Island; A makes the castes the subject, breaking the logic of the following 'when all the gods depart, great terror arises'."}
+ ],
+ "B_serious": [],
+ "better": "B",
+ "note": "B correctly has the deities abandon the castes and the kingdom; A turns the castes into the ones leaving, and its added note at the top ('the path to lower realms') is speculation, not on the page."}
+]}

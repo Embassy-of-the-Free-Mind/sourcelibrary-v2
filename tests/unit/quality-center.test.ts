@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, typedPages, sampleAudit } from '@/lib/quality-center';
 import { EXPERIMENTS, experiment, type ExperimentRecord } from '@/lib/experiments-index';
+// @ts-expect-error -- plain ESM script, no types
+import { digest, render, unfitRows, dropReason, OUT as DIGEST } from '../../scripts/eval/build-pareto-sample-digest.mjs';
 import { FOOTER_NAV_COLUMNS, visibleFooterNavColumns } from '@/lib/footer-nav';
 import { FOOTER_STRINGS } from '@/lib/i18n';
 // @ts-expect-error -- plain ESM script, no types
@@ -30,10 +32,18 @@ describe('experiment write-ups (from the #5939 index)', () => {
     expect(list[1].headline).toBeNull();
   });
 
-  it('the committed index lists every dated file in the directory, newest first', () => {
+  // index.json is regenerated on main after each merge (eval-ledgers-regenerate.yml) and a PR may not
+  // hand-edit it (append-only-ledgers.mjs REGENERATED_ON_MAIN). So a write-up that just landed is on
+  // disk before it is in the index: tolerate files the index does not list yet, but every indexed
+  // entry must still be a file, once, newest first. Requiring equality made main red between a
+  // write-up's merge and the regenerate commit.
+  it('every entry in the committed index is a dated file in the directory, newest first', () => {
     const dir = path.join(process.cwd(), 'scripts/eval/experiments');
-    const dated = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f)).sort().reverse();
-    expect(EXPERIMENTS.map(e => e.file)).toEqual(dated);
+    const dated = new Set(fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f)));
+    const files = EXPERIMENTS.map(e => e.file);
+    expect(files.filter(f => !dated.has(f))).toEqual([]);
+    expect(new Set(files).size).toBe(files.length);
+    expect(files).toEqual([...files].sort().reverse());
     expect(EXPERIMENTS.every(e => e.question.length > 0)).toBe(true);
     expect(listExperiments().some(e => e.status === 'superseded')).toBe(false);
   });
@@ -128,5 +138,46 @@ describe('footer door', () => {
     expect(participate.links.map(l => l.href)).toContain('/quality');
     for (const strings of Object.values(FOOTER_STRINGS)) expect(strings.qualityCenter).toBeTruthy();
     expect(visibleFooterNavColumns(true).flatMap(c => c.links.map(l => l.href))).not.toContain('/quality');
+  });
+});
+
+describe('the Pareto sample check (#6304) on /quality', () => {
+  it('the committed digest matches its sources (run scripts/eval/build-pareto-sample-digest.mjs)', () => {
+    expect(fs.readFileSync(path.join(process.cwd(), DIGEST), 'utf8')).toBe(render(digest()));
+  });
+
+  it('states consistent figures', () => {
+    const a = sampleAudit();
+    expect(a.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(a.checked.translation).toBeGreaterThan(0);
+    expect(a.dropped.translation + a.dropped.ocr).toBe(a.dropped.reasons.reduce((t, r) => t + r.n, 0));
+    expect(a.held.translation.n).toBeLessThanOrEqual(a.held.translation.of);
+    for (const v of [a.edition.greek, a.edition.latinNormalised, a.edition.chineseOverrun]) expect(v.n).toBeLessThanOrEqual(v.of);
+    expect(a.eye.fit + a.eye.limit + a.eye.unfit).toBe(a.eye.pages);
+    expect(a.unfit.length).toBeGreaterThan(0);
+    expect(a.spearman[0]).toBeLessThanOrEqual(a.spearman[1]);
+  });
+
+  it('takes the not-fit rows of the verdict table, one per chart', () => {
+    const md = [
+      '| chart · panel | n (dropped) | verdict | the limit |',
+      '|---|---|---|---|',
+      '| Latin · most-pages / #6182 | 70 (1) | sound with a stated limit | x |',
+      '| Chinese · #6182 | 21 (4) | **not fit to rank the top arms** | y |',
+      '| Chinese print OCR · most-pages | 12 (7) | **not fit to rank engines** | z |',
+      '| Chinese print OCR · most-engines | — | not fit | w |',
+      '| Armenian OCR | 5 (0) | not fit to rank | v |',
+    ].join('\n');
+    expect(unfitRows(md)).toEqual([
+      { chart: 'Chinese translation (the #6182 chart)', qualifier: 'the top engines' },
+      { chart: 'Chinese print OCR', qualifier: null },
+      { chart: 'Armenian OCR', qualifier: null },
+    ]);
+  });
+
+  it('refuses a drop reason it cannot name', () => {
+    expect(dropReason('ref-fit:offset')).toBe('judges');
+    expect(dropReason('best-engine-cer:0.41')).toBe('cer');
+    expect(() => dropReason('something new')).toThrow();
   });
 });

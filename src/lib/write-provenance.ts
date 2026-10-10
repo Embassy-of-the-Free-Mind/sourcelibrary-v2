@@ -55,7 +55,7 @@ export interface TranslationInput { source_field: string; source_text_hash: stri
 export interface GeminiEngine {
   schema: typeof ENGINE_SCHEMA; name: 'gemini'; model: string;
   model_version: string | null; model_version_source: string;
-  api: 'realtime' | 'batch'; call_site: string;
+  api: 'realtime' | 'batch' | 'cli'; cli?: { name: string; version: string }; call_site: string;
   prompt: PromptBlock; generation: GenerationBlock | NotRecorded; run: RunBlock;
   input: ImageInput | TranslationInput | NotRecorded; recorded_by: string;
 }
@@ -156,13 +156,16 @@ function runBlock(run: Partial<RunBlock> | undefined): RunBlock {
 }
 
 export interface GeminiEngineArgs {
-  call_site: string; api: 'realtime' | 'batch'; model: string; prompt: PromptArg;
+  call_site: string; api: 'realtime' | 'batch' | 'cli'; cli?: { name: string; version: string }; model: string; prompt: PromptArg;
   generationConfig: Record<string, unknown> | NotRecorded; run: Partial<RunBlock>;
   input: ImageInput | TranslationInput | NotRecorded; response?: { modelVersion?: string; raw?: { modelVersion?: string } };
 }
-export function geminiEngine({ call_site, api, model, prompt, generationConfig, run, input, response }: GeminiEngineArgs): GeminiEngine {
+export function geminiEngine({ call_site, api, cli, model, prompt, generationConfig, run, input, response }: GeminiEngineArgs): GeminiEngine {
   if (!call_site || typeof call_site !== 'string') throw new Error('write-provenance: call_site is required — name the writer');
-  if (api !== 'realtime' && api !== 'batch') throw new Error(`write-provenance: api must be 'realtime' or 'batch' (got ${api})`);
+  if (api !== 'realtime' && api !== 'batch' && api !== 'cli') throw new Error(`write-provenance: api must be 'realtime', 'batch' or 'cli' (got ${api})`);
+  // A read through a vendor's subscription CLI: see the note on geminiEngine in scripts/lib/write-provenance.mjs.
+  if (api === 'cli' && !(cli && cli.name && cli.version)) throw new Error('write-provenance: api \'cli\' needs cli: { name, version }');
+  if (api === 'cli' && !isNotRecorded(generationConfig)) throw new Error('write-provenance: a CLI read cannot know its generation settings — pass notRecorded(reason)');
   if (!model || typeof model !== 'string') throw new Error('write-provenance: model is required');
   if (!input || typeof input !== 'object') throw new Error('write-provenance: input is required (imageInput / translationInput / notRecorded)');
   return {
@@ -171,6 +174,7 @@ export function geminiEngine({ call_site, api, model, prompt, generationConfig, 
     model,
     ...modelVersion(model, response),
     api,
+    ...(api === 'cli' && cli ? { cli: { name: String(cli.name), version: String(cli.version) } } : {}),
     call_site,
     prompt: promptBlock(prompt),
     // A writer completing a job submitted before the settings were kept passes the marker.
@@ -278,7 +282,9 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
     if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);
-    if (e.api !== 'realtime' && e.api !== 'batch') missing.push(`${field}.engine.api`);
+    if (e.api !== 'realtime' && e.api !== 'batch' && e.api !== 'cli') missing.push(`${field}.engine.api`);
+    const cli = e.cli as { name?: string; version?: string } | undefined;
+    if (e.api === 'cli' && !(cli && cli.name && cli.version)) missing.push(`${field}.engine.cli`);
     if (!e.call_site || e.call_site === NOT_RECORDED) missing.push(`${field}.engine.call_site`);
     else mark(`${field}.engine.call_site`, e.call_site);
     const p = obj(e.prompt);
@@ -312,7 +318,7 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test((i.source_text_hash as string) || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle') {
     if (!e) missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);

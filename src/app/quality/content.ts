@@ -15,6 +15,32 @@ export const PROSE_AS_OF = '2026-10-06';
  */
 export const MONTH_NOTE: { as_of: string; text: string } | null = null;
 
+/**
+ * The leaf the page opens on (#5918 design direction): a real page whose margins hold a later
+ * reader's notes. Chosen by eye from three candidates posted on #5918; Derek picks the final one.
+ * Crop boxes are in pixels of `image` (1000 × 1565) and were checked by eye.
+ */
+export const LEAF = {
+  bookId: '6952b0fb77f38f6761bc28b7',
+  page: 272,
+  title: 'Angelo Poliziano, Omnium operum tomus prior',
+  date: '1519',
+  image: 'https://images.sourcelibrary.org/archived/6952b0fb77f38f6761bc28b7/272.jpg',
+  width: 1000,
+  height: 1565,
+  alt: 'A printed folio page of Latin commentary with a woodcut initial A. A reader has written notes in ink in the left margin and a full line at the foot of the page, and underlined words in the text.',
+  /** The end of one printed line: the worked example of a check. */
+  line: { x: 630, y: 185, w: 358, h: 17 },
+  /** The same line's last words, for narrow screens. */
+  lineNarrow: { x: 820, y: 185, w: 170, h: 17 },
+  /** The reader's line at the foot of the page. */
+  note: { x: 10, y: 1330, w: 680, h: 110 },
+  /** Blank paper beside it: where a reader's note on our page would go. */
+  margin: { x: 660, y: 1310, w: 280, h: 240 },
+} as const;
+
+export const leafHref = `/book/${LEAF.bookId}?page=${LEAF.page}`;
+
 export type Door = { label: string; href: string };
 
 export type Way = {
@@ -91,3 +117,48 @@ export const WAYS: Way[] = [
     planned: true,
   },
 ];
+
+/**
+ * The reader-facing page grade (#5984). The rule behind each grade, the severities, and the
+ * standards it is built from are in .claude/docs/quality-rubric-and-sampling.md §5; keep the two
+ * in step. Defined, not yet measured: no page has been graded under this rubric.
+ */
+export const GRADES: { name: string; means: string; rule: string }[] = [
+  {
+    name: 'Fit to quote',
+    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
+  },
+  {
+    name: 'Fit to read',
+    means: 'The page says what the scan says. Check the scan before you quote it.',
+    rule: 'The right page, and no serious error. Small slips are allowed.',
+  },
+  {
+    name: 'Fit for search only',
+    means: 'It will help you find the page, but do not trust the reading.',
+    rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
+  },
+  {
+    name: 'Not usable',
+    means: 'Do not rely on this page.',
+    rule: 'The text belongs to another page, contains words that are not on the page, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
+  },
+];
+
+/**
+ * One error and its fix, worked end to end (#5918, Derek 2026-10-06: "a great example of a type of
+ * error and a type of fix"). Every figure is copied from the write-up in `writeup`; change them only
+ * together with it. Taxonomy classes: O7 (sub-variant) and O18 in .claude/docs/page-error-taxonomy.md.
+ */
+export const WORKED_FIX = {
+  issue: 4686,
+  title: 'Numbers read as letters, on pages that were blank',
+  writeup: 'scripts/eval/experiments/2026-10-06-glm-digit-repair-4686.md',
+  example: { href: '/book/6ac2798d02c7f994f8506911?page=287', label: 'Birch, History of the Royal Society, 1756, vol. II, page 287' },
+  saw: 'Our usual transcription engine refuses to read pages of famous published texts. It returns nothing at all, so 715 pages of the Philosophical Transactions (1669–78) and of Birch’s History of the Royal Society (1756) show a scan and no text.',
+  line: { scan: 'whoſe angle is about 66 or 67 degrees', before: 'whoſe angle is about cé or éy degrees', after: 'whoſe angle is about 66 or 67 degrees' },
+  measured: 'A free engine with no refusal, Kraken, read 20 of these pages, drawn before the test. Each was checked against a careful transcription of the same scan. The letters came out very well, with 0.9% of characters wrong. The numbers did not: 17th-century type sets figures that hang below the line, and Kraken read them as letters. Only 79% of printed numbers came out right, against a bar of 90% set before the test.',
+  fix: 'Keep Kraken’s letters, and take only the numbers from a second engine that reads figures as figures (GLM-OCR), wherever the two readings line up word for word.',
+  after: 'On the same 20 pages, 89% of printed numbers were right (83 of 93), and 96% in the body text, with no extra errors in the letters. That is one number short of the bar. The numbers still missed are in the running heads: dates printed one above the other, and page numbers the second engine leaves out. So the pages have not been filled yet, and the next step is decided in the open on the issue.',
+} as const;

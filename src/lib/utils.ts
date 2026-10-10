@@ -186,9 +186,12 @@ export function getBookThumbnailUrl(
       if (raw.endsWith('.jpg')) return raw.replace(/\.jpg$/, '-thumb.jpg');
       return raw;
     }
-    // Display size: prefer -full.jpg
-    if (raw.endsWith('-thumb.jpg')) return raw.replace(/-thumb\.jpg$/, '-full.jpg');
-    return raw;
+    // Display size: the 2000px bare `.jpg`, never the `-full.jpg` original. The
+    // originals run 3-22MB (7765px for one emblem) — larger than the Vercel
+    // optimiser will process, so it passes them through untouched and a 336px
+    // card downloaded 22MB (#6092). The artwork page's zoom reads the master
+    // from `archived_full_url`, not from here.
+    return toDisplayVariantUrl(raw.replace(/-thumb\.jpg$/, '.jpg')) ?? raw;
   }
 
   // Rewrite legacy /thumbnails/{bookId}/{num}.jpg → /pages/{bookId}/{0num}.jpg
@@ -229,6 +232,20 @@ export function getBookThumbnailUrl(
     return raw.replace(/\.jpg$/, '-thumb.jpg');
   }
   return raw;
+}
+
+/**
+ * The 2000px display sibling of an R2 `-full.jpg` original, for anywhere an
+ * image is SHOWN in a page (cards, heroes, tiles). Downloads, IIIF and deep
+ * zoom keep the master. Applies to the `pages/`, `cropped/` and `artwork(s)/`
+ * families, which carry the three-variant convention; every display-facing
+ * `-full.jpg` reference had its sibling on 2026-10-07 (17 missing artwork
+ * siblings were generated that day). Returns the url unchanged otherwise.
+ */
+export function toDisplayVariantUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (!/images\.sourcelibrary\.org\/(pages|cropped|artworks?)\/.*-full\.jpg(\?|$)/.test(url)) return url;
+  return url.replace(/-full\.jpg(\?|$)/, '.jpg$1');
 }
 
 export function isArchiveFailed(photo: string | undefined | null): boolean {

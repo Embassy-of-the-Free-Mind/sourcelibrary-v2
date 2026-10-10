@@ -68,12 +68,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const facet = FACETS.find((f) => f.id === facetParsed.facetId)!;
     const value = facet.values.find((v) => v.id === facetParsed.valueId)!;
     return {
-      title: `${value.label} — ${facet.label} | Source Library`,
+      title: `${value.label} · ${facet.label} | Source Library`,
       description: `Browse Source Library books tagged "${value.label}" in the ${facet.label} facet. ${value.differentia}`,
       alternates: { canonical: `/topics/${slug}` },
       twitter: {
         card: 'summary_large_image',
-        title: `${value.label} — ${facet.label} | Source Library`,
+        title: `${value.label} · ${facet.label} | Source Library`,
         description: `Browse Source Library books tagged "${value.label}" in the ${facet.label} facet.`,
       },
     };

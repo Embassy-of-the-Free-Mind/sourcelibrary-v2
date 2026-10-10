@@ -159,12 +159,12 @@ export async function generateMetadata({ params }: ArtistPageProps): Promise<Met
     : name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   return {
-    title: `${artistName} — Artist — Source Library`,
+    title: `${artistName}, Artist | Source Library`,
     description: `Visual works by ${artistName} in Source Library's collection of rare historical prints, paintings, and drawings, digitized and catalogued with AI.`,
     alternates: { canonical: `/artist/${name}` },
     openGraph: {
-      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-      title: `${artistName} — Artist — Source Library`,
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+      title: `${artistName}, Artist | Source Library`,
       description: `Visual works by ${artistName} in Source Library`,
     },
   };

@@ -249,6 +249,17 @@ Checks (follow-up issues; design here):
 - **Zero-output check**: a `run_id` with no `outcome: text` rows is marked `failed` in the run index.
 - **Checkpoint rule**: any corpus walk feeding the store writes a checkpoint every 100K items and materialises its id list before slow work.
 
+### 9.1 Closure rule: a finding is not done until something lasting holds it (2026-10-06)
+
+The landing rule closes a **run**. This closes a **finding**. On 2026-10-06 a random image-and-book check (#5914) found the "Fifteen Principal Upanishads" duplicates still public twelve days after the page-integrity walk had flagged them. The flag had been recorded and nothing had acted on it (#5059). Every serious finding, from any source (a random check, an audit, a volunteer, reader feedback, a detector), is closed by all that apply:
+
+1. **A regression page.** The page goes into the regression set (#5913) with its expected behaviour: the correct sense, refuse, restate only, or transcribe-and-annotate. Every later prompt or model change must pass the set, so the finding cannot quietly return.
+2. **A board entry.** It joins or creates a row on the improvement board (`src/data/quality-methods.json` → /quality/methods) with an owner issue and a next step. The board is rewritten each review cycle (fortnightly, #5914), ranked by how often the latest window met each class.
+3. **Same-day withholding** for a book that is broken, invented or not ours to publish (`scripts/maintenance/hide-named-books.mjs`, a reason ending in the issue number). Hiding is reversible; serving it while we decide is not.
+4. **An action for every detector flag.** A detector whose flags have no action (hold, repair, reroute) is not finished. A high-precision flag class on a public book holds it from view, and a low-precision class is reviewed on a schedule. A list nobody reads is a repair flag nothing reads.
+
+A fix is **done** when the next review window's rate for that class falls, not when the PR merges. The board records "fixed — not yet re-measured" until then.
+
 ## 10. From evidence to decision
 
 1. A cell reaches the grade its decision needs (§3.3) with a paired result (§7) and its five worst pages read by eye (#4735 rule 5).

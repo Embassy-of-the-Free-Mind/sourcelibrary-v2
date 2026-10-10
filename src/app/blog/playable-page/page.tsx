@@ -13,7 +13,7 @@ const HERO_ALT =
 export const metadata: Metadata = {
   title: 'The Playable Page - Source Library',
   description:
-    'Old books are full of instruments diagrammed and silenced: monochord divisions, tetrachord arcs, interval tables. This note replicates three of them and strings them — Galilei\'s two-string bench, the Lyre of Mercury\'s disputed numbers, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+    'Old books are full of instruments diagrammed and silenced: monochord divisions, tetrachord arcs, interval tables. This note replicates three of them and strings them: Galilei\'s two-string bench, the Lyre of Mercury\'s disputed numbers, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
   alternates: {
     canonical: '/blog/playable-page',
   },
@@ -64,8 +64,8 @@ export default function PlayablePagePage() {
           made the argument, and{' '}
           <Link href="/blog/sound-laboratory" className="text-accent-rust hover:text-accent-rust underline">the Sound Laboratory</Link>{' '}
           built the bench. This note goes one step further into the books themselves. The old
-          treatises are full of instruments that were diagrammed and then silenced — monochord
-          divisions, tetrachord arcs, string tables with every pitch worked out to the integer —
+          treatises are full of instruments that were diagrammed and then silenced (monochord
+          divisions, tetrachord arcs, string tables with every pitch worked out to the integer),
           waiting five centuries for a reader who could hear them. Below, three of those diagrams
           are replicated and strung. Nothing is a recording; every sound is synthesized live from
           the numbers on the page.
@@ -83,7 +83,7 @@ export default function PlayablePagePage() {
           these are stretched to unison over a flat surface, and one of them is deprived of half
           its length by means of a bridge, fret, or even the fingers of the hand, one will hear
           (as has been said before) the Diapason consonance every time they are struck together or
-          one after the other&rdquo; &mdash; and, a line later, &ldquo;From these observations, the
+          one after the other&rdquo;, and, a line later, &ldquo;From these observations, the
           use of the Monochord easily took its origin&rdquo;{' '}
           (<a href="https://sourcelibrary.org/q/BeoftnrTNYqCao3dYsz" className="text-accent-rust hover:text-accent-rust underline">verified verbatim</a>).
           The presets below are his sentence, word for word. The weight pan is the half of the
@@ -94,52 +94,52 @@ export default function PlayablePagePage() {
         <FolioFigure
           src="https://images.sourcelibrary.org/gallery/69ac83c55d2908b26341c442/69ac83c55d2908b26341c4c4-0.jpg"
           alt="Woodcut monochord division from Zarlino's Le istitutioni harmoniche: a long ruled diagram dividing a string into tetrachords with numerical ratios."
-          caption={<>The instrument as the orthodoxy drew it: a monochord division from Gioseffo Zarlino&apos;s <em>Le istitutioni harmoniche</em> (1558). Zarlino was Galilei&apos;s teacher — and the <em>Dialogo</em>&apos;s chief target.</>}
-          href="/book/69ac83c55d2908b26341c442?page=130"
+          caption={<>The instrument as the orthodoxy drew it: a monochord division from Gioseffo Zarlino&apos;s <em>Le istitutioni harmoniche</em> (1558). Zarlino was Galilei&apos;s teacher, and the <em>Dialogo</em>&apos;s chief target.</>}
+          href="/book/le-istitutioni-harmoniche-zarlino?page=130"
           sourceLabel="Zarlino, Le istitutioni harmoniche (1558)"
         />
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">II. Four numbers, three laws</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Boethius gives Mercury&apos;s lyre four strings in the proportions
-          6&thinsp;&middot;&thinsp;8&thinsp;&middot;&thinsp;9&thinsp;&middot;&thinsp;12 — the same
+          6&thinsp;&middot;&thinsp;8&thinsp;&middot;&thinsp;9&thinsp;&middot;&thinsp;12, the same
           numbers as the hammers. But the authorities could not agree which <em>end</em> was low.
           Galilei lays out the dispute on p.&thinsp;144: Plutarch&apos;s camp &ldquo;applied the
           number six to the first, eight to the second, nine to the third, and twelve to the fourth
-          and last named&rdquo; — six on the lowest string — while the Zarlino camp assigns the
+          and last named&rdquo; (six on the lowest string), while the Zarlino camp assigns the
           numbers &ldquo;exactly the opposite&rdquo; way{' '}
           (<a href="https://sourcelibrary.org/q/BeoftnrTNYqCao3dYsy" className="text-accent-rust hover:text-accent-rust underline">verified verbatim</a>).
-          His diagnosis, same page: Plutarch&apos;s numbers cannot be monochord divisions — they
+          His diagnosis, same page: Plutarch&apos;s numbers cannot be monochord divisions; they
           only make sense as <em>weights</em>, while the reversed order reads them as measures of
           length. The direction of a scale is the fossil of a physical hypothesis. And a hypothesis
           about sound is audible: each reading is a different law, so the same four numbers sing
-          three different chords. That is how you know for sure — authority picks a direction; the
+          three different chords. That is how you know for sure: authority picks a direction; the
           bench picks the law.
         </p>
         <LyreReadingsDemo />
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Two honest footnotes. The struck-hammer reading is the one a browser cannot fully settle:
           our tone follows the cube-root scaling of similar solid bodies, but in a real smithy the
-          <em> anvil</em> sings its own note almost regardless of the hammer — and Galilei himself
+          <em> anvil</em> sings its own note almost regardless of the hammer, and Galilei himself
           guessed that direction wrong, writing that the twelve-pound hammer &ldquo;made the high
           sound.&rdquo; To know that for sure you need iron, not a web page. And the legend never
           agreed with itself about its own data: in Boethius&apos;s telling there are five hammers
-          and Pythagoras rejects one as dissonant —{' '}
-          <a href="https://sourcelibrary.org/q/BeoftnrTNYqCao3dYt3" className="text-accent-rust hover:text-accent-rust underline">Galilei replays that arithmetic</a>{' '}
-          — while Gaffurius&apos;s woodcut draws six.
+          and Pythagoras rejects one as dissonant (
+          <a href="https://sourcelibrary.org/q/BeoftnrTNYqCao3dYt3" className="text-accent-rust hover:text-accent-rust underline">Galilei replays that arithmetic</a>),{' '}
+          while Gaffurius&apos;s woodcut draws six.
         </p>
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">III. The page that begs to be played</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
           In our fifteenth-century{' '}
           <Link href="/book/de-institutione-musica-15th-c-ms-boethius" className="text-accent-rust hover:text-accent-rust underline">Boethius manuscript</Link>,
-          the whole two-octave system of ancient music is drawn as nested arcs in red ink — string
+          the whole two-octave system of ancient music is drawn as nested arcs in red ink: string
           names, interval spans, and the monochord number of every string, in ladders for the
           chromatic and enharmonic genera. Below, the same ladder is replicated and strung. The
           drawn length of each string is true to its number on the 9,216 ruler, and the diatonic
           division reproduces the manuscript tradition&apos;s canonical integers exactly: 9216,
           8192, 7776&hellip;down to 2304, two octaves up. Switch the genus and the brass strings
-          — the movable notes — re-divide, just as the facing diagrams on the page do; the
+          (the movable notes) re-divide, just as the facing diagrams on the page do; the
           chromatic pulls Lichanos up to an F&#9839;, and the enharmonic lands on genuine
           quarter-tones, notes that fall between the frets of every modern instrument.
         </p>
@@ -167,7 +167,7 @@ export default function PlayablePagePage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           A monochord division is not an illustration <em>about</em> music; it is music, stored in
           the only medium its author had. The three instruments on this page took an afternoon to
-          string because the hard work was done centuries ago — the numbers are on the pages,
+          string because the hard work was done centuries ago: the numbers are on the pages,
           worked out to the integer. The library holds many more: division tables in Zarlino and
           Salinas, interval ladders in Gaffurius, circle diagrams in Descartes, tuning grids from
           Ming China. We intend to keep stringing them. If there is a page you want to hear, tell

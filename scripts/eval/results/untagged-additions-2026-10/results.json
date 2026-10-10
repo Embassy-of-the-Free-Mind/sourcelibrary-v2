@@ -1,0 +1,2375 @@
+{
+ "issue": 5982,
+ "detector": "gemini-3-flash-preview, prompt additions-5982-v2 + keepFlag",
+ "draw": {
+  "pages": 450,
+  "flagged_pages_raw": {
+   "k": 40,
+   "n": 450,
+   "pct": 8.9,
+   "ci": [
+    6.6,
+    11.9
+   ]
+  },
+  "by_eye_flags": {
+   "read": 40,
+   "pages_covered": 25,
+   "verdicts": {
+    "NEIGHBOUR_PAGE": 4,
+    "ADDED_COMMENTARY": 20,
+    "IN_SOURCE": 7,
+    "TRANSLATION_CHOICE": 7,
+    "INVENTED_TEXT": 2
+   },
+   "true_additions": {
+    "k": 22,
+    "n": 40,
+    "pct": 55,
+    "ci": [
+     39.8,
+     69.3
+    ]
+   },
+   "commentary": 20,
+   "invented_text": 2
+  },
+  "flagged_pages_confirmed": {
+   "k": 22,
+   "n": 40,
+   "pct": 55,
+   "ci": [
+    39.8,
+    69.3
+   ]
+  },
+  "flagged_pages_not_confirmed_with_unread_flags": 4,
+  "rate_confirmed_pages": {
+   "k": 22,
+   "n": 450,
+   "pct": 4.9,
+   "ci": [
+    3.3,
+    7.3
+   ]
+  },
+  "pages_read": 40,
+  "confirmed_from_the_ocr_description": 1,
+  "page_verdicts": {
+   "false flag": 16,
+   "addition": 22,
+   "neighbour page text": 2
+  },
+  "unflagged_pages_read": 20,
+  "unflagged_with_an_addition_of_5_words_or_more": {
+   "k": 0,
+   "n": 20,
+   "pct": 0,
+   "ci": [
+    0,
+    16.1
+   ]
+  },
+  "unflagged_with_neighbour_page_text": 1,
+  "unflagged_with_short_additions": 5,
+  "confirmed_by_model_and_version": {
+   "etcsl-corpus · vnone": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 5,
+    "pct": 0,
+    "ci": [
+     0,
+     43.4
+    ]
+   },
+   "gemini-3-flash-preview · v1": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 5,
+    "pct": 20,
+    "ci": [
+     3.6,
+     62.4
+    ]
+   },
+   "gemini-3-flash-preview · v10": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 22,
+    "pct": 0,
+    "ci": [
+     0,
+     14.9
+    ]
+   },
+   "gemini-3-flash-preview · v11": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 21,
+    "pct": 0,
+    "ci": [
+     0,
+     15.5
+    ]
+   },
+   "gemini-3-flash-preview · v12": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "ci": [
+     0,
+     49
+    ]
+   },
+   "gemini-3-flash-preview · v13": {
+    "raw_flagged": 5,
+    "k": 0,
+    "n": 30,
+    "pct": 0,
+    "ci": [
+     0,
+     11.4
+    ]
+   },
+   "gemini-3-flash-preview · v2": {
+    "raw_flagged": 15,
+    "k": 11,
+    "n": 53,
+    "pct": 20.8,
+    "ci": [
+     12,
+     33.5
+    ]
+   },
+   "gemini-3-flash-preview · v5.1.2026-03b": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "gemini-3-flash-preview · v5.2026-02": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 10,
+    "pct": 10,
+    "ci": [
+     1.8,
+     40.4
+    ]
+   },
+   "gemini-3-flash-preview · vnone": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "gemini-3.1-flash-lite · v1": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 6,
+    "pct": 16.7,
+    "ci": [
+     3,
+     56.4
+    ]
+   },
+   "gemini-3.1-flash-lite · v11": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 41,
+    "pct": 2.4,
+    "ci": [
+     0.4,
+     12.6
+    ]
+   },
+   "gemini-3.1-flash-lite · v12": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "gemini-3.1-flash-lite · v13": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 94,
+    "pct": 0,
+    "ci": [
+     0,
+     3.9
+    ]
+   },
+   "gemini-3.1-flash-lite · v2": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "ci": [
+     0,
+     65.8
+    ]
+   },
+   "gemini-3.1-flash-lite-preview · v1": {
+    "raw_flagged": 3,
+    "k": 3,
+    "n": 16,
+    "pct": 18.8,
+    "ci": [
+     6.6,
+     43
+    ]
+   },
+   "gemini-3.1-flash-lite-preview · v10": {
+    "raw_flagged": 6,
+    "k": 2,
+    "n": 104,
+    "pct": 1.9,
+    "ci": [
+     0.5,
+     6.7
+    ]
+   },
+   "gemini-3.1-flash-lite-preview · v11": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 24,
+    "pct": 0,
+    "ci": [
+     0,
+     13.8
+    ]
+   },
+   "gemini-3.1-flash-lite-preview · v6": {
+    "raw_flagged": 2,
+    "k": 1,
+    "n": 8,
+    "pct": 12.5,
+    "ci": [
+     2.2,
+     47.1
+    ]
+   },
+   "gemini-3.1-flash-lite-preview · vnone": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "none · vnone": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 1,
+    "pct": 100,
+    "ci": [
+     20.7,
+     100
+    ]
+   }
+  },
+  "confirmed_by_model": {
+   "etcsl-corpus": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 5,
+    "pct": 0,
+    "ci": [
+     0,
+     43.4
+    ]
+   },
+   "gemini-3-flash-preview": {
+    "raw_flagged": 22,
+    "k": 13,
+    "n": 147,
+    "pct": 8.8,
+    "ci": [
+     5.2,
+     14.5
+    ]
+   },
+   "gemini-3.1-flash-lite": {
+    "raw_flagged": 4,
+    "k": 2,
+    "n": 144,
+    "pct": 1.4,
+    "ci": [
+     0.4,
+     4.9
+    ]
+   },
+   "gemini-3.1-flash-lite-preview": {
+    "raw_flagged": 12,
+    "k": 6,
+    "n": 153,
+    "pct": 3.9,
+    "ci": [
+     1.8,
+     8.3
+    ]
+   },
+   "none": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 1,
+    "pct": 100,
+    "ci": [
+     20.7,
+     100
+    ]
+   }
+  },
+  "confirmed_by_prompt_version": {
+   "1": {
+    "raw_flagged": 5,
+    "k": 5,
+    "n": 27,
+    "pct": 18.5,
+    "ci": [
+     8.2,
+     36.7
+    ]
+   },
+   "2": {
+    "raw_flagged": 16,
+    "k": 11,
+    "n": 55,
+    "pct": 20,
+    "ci": [
+     11.6,
+     32.4
+    ]
+   },
+   "6": {
+    "raw_flagged": 2,
+    "k": 1,
+    "n": 8,
+    "pct": 12.5,
+    "ci": [
+     2.2,
+     47.1
+    ]
+   },
+   "10": {
+    "raw_flagged": 6,
+    "k": 2,
+    "n": 126,
+    "pct": 1.6,
+    "ci": [
+     0.4,
+     5.6
+    ]
+   },
+   "11": {
+    "raw_flagged": 2,
+    "k": 1,
+    "n": 86,
+    "pct": 1.2,
+    "ci": [
+     0.2,
+     6.3
+    ]
+   },
+   "12": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 5,
+    "pct": 0,
+    "ci": [
+     0,
+     43.4
+    ]
+   },
+   "13": {
+    "raw_flagged": 6,
+    "k": 0,
+    "n": 124,
+    "pct": 0,
+    "ci": [
+     0,
+     3
+    ]
+   },
+   "5.1.2026-03b": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "5.2026-02": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 10,
+    "pct": 10,
+    "ci": [
+     1.8,
+     40.4
+    ]
+   },
+   "none": {
+    "raw_flagged": 2,
+    "k": 1,
+    "n": 8,
+    "pct": 12.5,
+    "ci": [
+     2.2,
+     47.1
+    ]
+   }
+  },
+  "confirmed_by_language": {
+   "Arabic": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 8,
+    "pct": 0,
+    "ci": [
+     0,
+     32.4
+    ]
+   },
+   "Armenian": {
+    "raw_flagged": 2,
+    "k": 2,
+    "n": 2,
+    "pct": 100,
+    "ci": [
+     34.2,
+     100
+    ]
+   },
+   "Chinese": {
+    "raw_flagged": 8,
+    "k": 2,
+    "n": 43,
+    "pct": 4.7,
+    "ci": [
+     1.3,
+     15.5
+    ]
+   },
+   "Classical Chinese": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "ci": [
+     0,
+     65.8
+    ]
+   },
+   "Dutch": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 9,
+    "pct": 0,
+    "ci": [
+     0,
+     29.9
+    ]
+   },
+   "Egyptian hieroglyphs": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "ci": [
+     0,
+     65.8
+    ]
+   },
+   "English": {
+    "raw_flagged": 9,
+    "k": 5,
+    "n": 58,
+    "pct": 8.6,
+    "ci": [
+     3.7,
+     18.6
+    ]
+   },
+   "French": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 20,
+    "pct": 0,
+    "ci": [
+     0,
+     16.1
+    ]
+   },
+   "Ge'ez": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "German": {
+    "raw_flagged": 2,
+    "k": 1,
+    "n": 39,
+    "pct": 2.6,
+    "ci": [
+     0.5,
+     13.2
+    ]
+   },
+   "Greek": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 22,
+    "pct": 4.5,
+    "ci": [
+     0.8,
+     21.8
+    ]
+   },
+   "Hebrew": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 4,
+    "pct": 25,
+    "ci": [
+     4.6,
+     69.9
+    ]
+   },
+   "Italian": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 11,
+    "pct": 0,
+    "ci": [
+     0,
+     25.9
+    ]
+   },
+   "Japanese": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 3,
+    "pct": 33.3,
+    "ci": [
+     6.1,
+     79.2
+    ]
+   },
+   "Javanese": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Korean": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "ci": [
+     0,
+     49
+    ]
+   },
+   "Latin": {
+    "raw_flagged": 9,
+    "k": 5,
+    "n": 191,
+    "pct": 2.6,
+    "ci": [
+     1.1,
+     6
+    ]
+   },
+   "Latin-English": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "ci": [
+     0,
+     65.8
+    ]
+   },
+   "Latin-German": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 1,
+    "pct": 100,
+    "ci": [
+     20.7,
+     100
+    ]
+   },
+   "Nahuatl-Spanish": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Ottoman Turkish": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Persian": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 3,
+    "pct": 0,
+    "ci": [
+     0,
+     56.2
+    ]
+   },
+   "Portuguese": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Provençal": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Russian": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "ci": [
+     0,
+     65.8
+    ]
+   },
+   "Sanskrit": {
+    "raw_flagged": 3,
+    "k": 2,
+    "n": 6,
+    "pct": 33.3,
+    "ci": [
+     9.7,
+     70
+    ]
+   },
+   "Spanish": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 3,
+    "pct": 0,
+    "ci": [
+     0,
+     56.2
+    ]
+   },
+   "Sumerian": {
+    "raw_flagged": 1,
+    "k": 0,
+    "n": 5,
+    "pct": 0,
+    "ci": [
+     0,
+     43.4
+    ]
+   },
+   "Syriac": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "Tamil": {
+    "raw_flagged": 1,
+    "k": 1,
+    "n": 1,
+    "pct": 100,
+    "ci": [
+     20.7,
+     100
+    ]
+   },
+   "e": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   },
+   "und": {
+    "raw_flagged": 0,
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "ci": [
+     0,
+     79.3
+    ]
+   }
+  },
+  "confirmed_when_lite_also_flags": {
+   "k": 20,
+   "n": 31,
+   "pct": 64.5,
+   "ci": [
+    46.9,
+    78.9
+   ]
+  },
+  "confirmed_when_flash_alone": {
+   "k": 2,
+   "n": 9,
+   "pct": 22.2,
+   "ci": [
+    6.3,
+    54.7
+   ]
+  }
+ },
+ "draw_pages": [
+  {
+   "id": "69bf60f6065df5d87d778aa2_00198",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6992caf6d4d545ae73feeb7c_00111",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 4,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 3,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a19cdf8035a9b71d6d41f2a_00471",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "1",
+   "flags": 4,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "ocr",
+   "confirmed": true,
+   "verdicts": [
+    "FROM_TRANSCRIBER_DESCRIPTION"
+   ],
+   "unread_flags": 3,
+   "lite_flags_too": true
+  },
+  {
+   "id": "697a30555760769ad3c96636_00137",
+   "language": "Latin-German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 4,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 2,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69a68457256d25f466059e53_00037",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "1",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69924f3bc8e06d213c5d3c07_00502",
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69938a83d5a98fd66f42c86c_00221",
+   "language": "Greek",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6992ca1cd4d545ae73fed82b_00007",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6aa94ea998dd95a320803cca_00130",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "2",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE",
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a3c647639b4508b04e2740c_00079",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69aec0f51f4011b58bb54073_00407",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6",
+   "flags": 6,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "NEIGHBOUR_PAGE",
+    "NEIGHBOUR_PAGE"
+   ],
+   "unread_flags": 4,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6953ab1077f38f6761bd67aa_00001",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 4,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 2,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6990666f2ec9f7db5717a544_00142",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69f8c13a0c0c281d4bd32e1c_00006",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "flags": 3,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 1,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69907ceb5f855ec553e7801f_00284",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "5.2026-02",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a267cbd6c1f37c9c4f3705c_00025",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "INVENTED_TEXT"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69b52596cced70d8e6d72a42_00-75",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "69dbcbe81040d1d5e20bb324_00013",
+   "language": "German",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "69b62f921c1c21a3737f7418_00123",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6953112e77f38f6761bcbe3b_00061",
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 7,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE",
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 5,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69b6429a09a998b4c36de0a2_00011",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a3c643839b4508b04e25465_00042",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6992ce273ea667fbac82854a_00042",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 6,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 4,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69b3e67c304c1c6b3950b7c3_00002",
+   "language": "Hebrew",
+   "model": null,
+   "prompt_version": "none",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "699062f6e7b7642c081dd071_00021",
+   "language": "German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69ee475f6dd925d126f421de_00020",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6992582ead311253224cdf30_00215",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69aff08157adc49dbfc4237f_00006",
+   "language": "Sumerian",
+   "model": "etcsl-corpus",
+   "prompt_version": "none",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6953a82c77f38f6761bd0bc5_00304",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6992cf69f5b4f75c1a4c8d6d_00046",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6a3c650c39b4508b04e2c22c_00017",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69906304e7b7642c081dd7a9_00286",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE",
+    "IN_SOURCE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": false
+  },
+  {
+   "id": "69920b74e0a548a13d882d08_-1451",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 10,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 8,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69b30238c22956d8a0de5ddc_00479",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69afcec5810c8f0e0060e4fa_00059",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "69e787b34a6785cfd60cce39_00014",
+   "language": "Japanese",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "flags": 1,
+   "sampled": 1,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "INVENTED_TEXT"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a4443dfaa50a8e8f5052727_00015",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "flags": 2,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "NEIGHBOUR_PAGE",
+    "NEIGHBOUR_PAGE"
+   ],
+   "unread_flags": 0,
+   "lite_flags_too": true
+  },
+  {
+   "id": "6a2032be18654bf8e190369d_00036",
+   "language": "Arabic",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "flags": 2,
+   "sampled": 1,
+   "read_by": "job session",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "TRANSLATION_CHOICE"
+   ],
+   "unread_flags": 1,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6a3c65fa39b4508b04e30936_00105",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "flags": 3,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": null,
+   "confirmed": false,
+   "verdicts": [
+    "IN_SOURCE",
+    "IN_SOURCE"
+   ],
+   "unread_flags": 1,
+   "lite_flags_too": false
+  },
+  {
+   "id": "6990673a249ce014347d36f6_00004",
+   "language": "Tamil",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "flags": 5,
+   "sampled": 2,
+   "read_by": "subagent sample",
+   "origin": "translation",
+   "confirmed": true,
+   "verdicts": [
+    "ADDED_COMMENTARY",
+    "ADDED_COMMENTARY"
+   ],
+   "unread_flags": 3,
+   "lite_flags_too": true
+  }
+ ],
+ "draw_flags_by_eye": [
+  {
+   "id": "69aec0f51f4011b58bb54073_00407",
+   "n": 8,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6",
+   "detector_kind": "unsupported",
+   "words": "Thou who still hast all thy rage, whose tresses are still riotous and fresh from Cocytus’ fount, join thou thy strength to mine.",
+   "verdict": "NEIGHBOUR_PAGE",
+   "note": "source_text is the facing English of lines 51-77; translation renders next page's Latin (lines 77ff). Sentences 1-6 match next_page_start; this one lies past where the excerpt is cut.",
+   "confidence": 0.6
+  },
+  {
+   "id": "69aec0f51f4011b58bb54073_00407",
+   "n": 9,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6",
+   "detector_kind": "unsupported",
+   "words": "Gird we ourselves with deadly hate, with armed discord. Dost thou hesitate?",
+   "verdict": "NEIGHBOUR_PAGE",
+   "note": "Same as F01: continuation of the next page's Latin speech, beyond the truncated next_page_start excerpt; nothing on this page's source corresponds.",
+   "confidence": 0.6
+  },
+  {
+   "id": "6953ab1077f38f6761bd67aa_00001",
+   "n": 6,
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "Founded in 1475, this is the central research library of the Holy See and one of the most important repositories",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source is only 'S.P / OTTOB. LAT. 2074'. Founding date and importance of the library are the translator's encyclopedic gloss; not in the transcriber description either.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6953ab1077f38f6761bd67aa_00001",
+   "n": 7,
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "A unique identification code (similar to a modern call number) used by librarians and scholars to locate a specific book",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Definition of 'shelfmark'; the word itself occurs only in the transcriber's description, the definition nowhere. Translator's gloss.",
+   "confidence": 0.96
+  },
+  {
+   "id": "6953112e77f38f6761bcbe3b_00061",
+   "n": 20,
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "and view the error as native to the $G^g$ manuscript.",
+   "verdict": "IN_SOURCE",
+   "note": "Footnote 4 says exactly this; 'error' for 'corruption', 'manuscript' supplied. Detector wrong.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6953112e77f38f6761bcbe3b_00061",
+   "n": 22,
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "Alternatively, if we take the meaning \"to practice,\" the text might be a corruption of a Hebrew word meaning \"and they are perishing.\"",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "Condensed paraphrase of footnote 4's second half (meaning 'to practise', Hebrew corruption, 'are perishing'). Abridged, not added.",
+   "confidence": 0.9
+  },
+  {
+   "id": "6992ce273ea667fbac82854a_00042",
+   "n": 4,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "image_description",
+   "words": "[Illustration: A woodcut diagram of a Red Square Canopy .",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source has only page number, running title and heading 紅方繖. Bracketed illustration description is the translator's; no transcriber description exists.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6992ce273ea667fbac82854a_00042",
+   "n": 6,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "image_description",
+   "words": "It is adorned with two tiers of ruffled valances and is supported by a tall, multi-segmented carrying pole used by attendants in processions.]",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Continuation of the translator's own picture description (valances, pole); nothing in source or transcriber descriptions.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6990666f2ec9f7db5717a544_00142",
+   "n": 5,
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "Astronomical Data and Planetary Positions",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Table rows carry only ति./ग्र. labels; no column header is printed. The header is supplied by the translator.",
+   "confidence": 0.9
+  },
+  {
+   "id": "6a3c647639b4508b04e2740c_00079",
+   "n": 2,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "detector_kind": "explanation",
+   "words": "If it is two characters",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "The two 丨 are ditto marks for the headword (奮厲); translator misread them literally as 'two characters'. Mistranslation of source marks, not commentary.",
+   "confidence": 0.8
+  },
+  {
+   "id": "6aa94ea998dd95a320803cca_00130",
+   "n": 68,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "2",
+   "detector_kind": "unsupported",
+   "words": "is supported by the canons.",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "'facit' = supports, followed by a string of canon citations; rendered collectively as 'the canons'. Summarised citation, not added.",
+   "confidence": 0.9
+  },
+  {
+   "id": "6aa94ea998dd95a320803cca_00130",
+   "n": 20,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "2",
+   "detector_kind": "unsupported",
+   "words": "It is the supreme evil.",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "Source words are a citation ('Isidore, De summo bono'), misrendered as a statement about supreme evil. Mistranslation of present words, not an addition.",
+   "confidence": 0.75
+  },
+  {
+   "id": "69ee475f6dd925d126f421de_00020",
+   "n": 1,
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "detector_kind": "explanation",
+   "words": "(the Roman Empire)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source ends 'the wings of the dying Eagle.' The parenthetical gloss is the translator's.",
+   "confidence": 0.98
+  },
+  {
+   "id": "69ee475f6dd925d126f421de_00020",
+   "n": 9,
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "detector_kind": "definition",
+   "words": "(an old game)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source verse: 'And Barley-Break the ready way to Hell;' the parenthetical definition is added.",
+   "confidence": 0.98
+  },
+  {
+   "id": "697a30555760769ad3c96636_00137",
+   "n": 14,
+   "language": "Latin-German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "John George I of Saxony",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source has only 'Ihre Churfürst. Durchl.'; no name on this or neighbouring pages. Identification is the translator's gloss.",
+   "confidence": 0.96
+  },
+  {
+   "id": "697a30555760769ad3c96636_00137",
+   "n": 3,
+   "language": "Latin-German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "the other prince-electors of the Empire",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "'Mit-Churfürsten' is translated ('Fellow-Electors') and then explained again; the explanatory gloss after the semicolon is added.",
+   "confidence": 0.93
+  },
+  {
+   "id": "6a3c643839b4508b04e25465_00042",
+   "n": 10,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "detector_kind": "explanation",
+   "words": "in the name of the crown refers to the shape being",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "Expanded rendering of 委貌之委 ('the 委 of 委貌') plus 冠形 and the ditto marks (上小) 下大. Loose but source-based.",
+   "confidence": 0.75
+  },
+  {
+   "id": "6992cf69f5b4f75c1a4c8d6d_00046",
+   "n": 11,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "unsupported",
+   "words": "The Kingdom of Fu-lin reaches southeast to Mieli-sha",
+   "verdict": "IN_SOURCE",
+   "note": "Direct translation. Detector wrong; what is actually missing from the translation is the 源案 note, an omission not an addition.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6a3c65fa39b4508b04e30936_00105",
+   "n": 5,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "detector_kind": "explanation",
+   "words": "The Collected Chapters on the Stars records that",
+   "verdict": "IN_SOURCE",
+   "note": "The three ditto marks stand for the headword 集星章, and 所載 = 'records'. Words are in the source (though sentence 4 mangles the same clause).",
+   "confidence": 0.85
+  },
+  {
+   "id": "6a3c65fa39b4508b04e30936_00105",
+   "n": 15,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "detector_kind": "unsupported",
+   "words": "Sometimes it is like a dragon-horse",
+   "verdict": "IN_SOURCE",
+   "note": "Ditto marks stand for headword phrase 如龍馬 (third of the entry's three); translator expanded them correctly.",
+   "confidence": 0.85
+  },
+  {
+   "id": "699062f6e7b7642c081dd071_00021",
+   "n": 5,
+   "language": "German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "summary",
+   "words": "Muscle irritability , Nerve irritability , Sensitivity of the nerves , Muscle fiber , Nerve fiber , Dynamic relations , Sensory nerve irritability , Change of position",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Appended keyword/index list after the page's last (cut-off) sentence; the terms occur in the running text but no such list is printed on the page.",
+   "confidence": 0.9
+  },
+  {
+   "id": "6992ca1cd4d545ae73fed82b_00007",
+   "n": 19,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "in both internal and external studies",
+   "verdict": "IN_SOURCE",
+   "note": "內外 = 'internal and external' (learning); only the noun 'studies' is supplied. Detector's own reason concedes it is translated.",
+   "confidence": 0.85
+  },
+  {
+   "id": "69f8c13a0c0c281d4bd32e1c_00006",
+   "n": 8,
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "detector_kind": "definition",
+   "words": "(they speared)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source is English and gives the Spanish word with no gloss; '(they speared)' is the translator's added definition.",
+   "confidence": 0.95
+  },
+  {
+   "id": "69f8c13a0c0c281d4bd32e1c_00006",
+   "n": 8,
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "detector_kind": "definition",
+   "words": "(they took)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source gives the Spanish word with no gloss; '(they took)' is the translator's added definition.",
+   "confidence": 0.95
+  },
+  {
+   "id": "69920b74e0a548a13d882d08_-1451",
+   "n": 22,
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "copyright infringement: the use of works protected by copyright law without permission, which can lead to legal penalties",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Inline glossary definition of 'copyright infringement' inserted mid-sentence; the source sentence has no definition.",
+   "confidence": 0.97
+  },
+  {
+   "id": "69920b74e0a548a13d882d08_-1451",
+   "n": 14,
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "optical character recognition (OCR): a technology that converts images of typed, handwritten, or printed text into machine-encoded text",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Inline glossary definition of OCR inserted mid-sentence; source only names the term.",
+   "confidence": 0.97
+  },
+  {
+   "id": "6a267cbd6c1f37c9c4f3705c_00025",
+   "n": 3,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "detector_kind": "unsupported",
+   "words": ", on the sense of things and magic . Frankfurt, 1620.",
+   "verdict": "INVENTED_TEXT",
+   "note": "Reads as a catalogue entry (a 'De sensu rerum et magia', Frankfurt 1620) but page opens 'gallicum religione confectum. 690'; no such title on page or in the neighbour excerpts.",
+   "confidence": 0.7
+  },
+  {
+   "id": "6953a82c77f38f6761bd0bc5_00304",
+   "n": 2,
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "image_description",
+   "words": "Left Column (Greek)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Layout label supplied by translator; the page prints only '301' then the Greek column. Not in transcriber descriptions either (only a catchword).",
+   "confidence": 0.95
+  },
+  {
+   "id": "6953a82c77f38f6761bd0bc5_00304",
+   "n": 11,
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "image_description",
+   "words": "Right Column (Armenian)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Layout label supplied by translator before the Armenian column; nothing printed on the page corresponds, and it is not in the transcriber descriptions.",
+   "confidence": 0.95
+  },
+  {
+   "id": "6990673a249ce014347d36f6_00004",
+   "n": 11,
+   "language": "Tamil",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "explanation",
+   "words": "(the primal Guru of the Siddhas)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source says only 'the Nigandu that Nandi spoke'; the parenthetical identifying Nandi is the translator's gloss.",
+   "confidence": 0.85
+  },
+  {
+   "id": "6990673a249ce014347d36f6_00004",
+   "n": 25,
+   "language": "Tamil",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "(a specific alchemical preparation, likely involving litharge or lead-based minerals)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source only names the substance; the parenthetical guessing at its composition ('likely involving litharge') is the translator's own explanation.",
+   "confidence": 0.88
+  },
+  {
+   "id": "69e787b34a6785cfd60cce39_00014",
+   "n": 12,
+   "language": "Japanese",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "detector_kind": "unsupported",
+   "words": "Because it did not stop raining day after day, I wanted to finish my task.",
+   "verdict": "INVENTED_TEXT",
+   "note": "No rain or finishing a task anywhere. It sits where source has あへてうけごはず。予が曰吾子あやまてり ('he would not accept; I said you are mistaken'). Whole translation is badly off.",
+   "confidence": 0.6
+  },
+  {
+   "id": "6a3c650c39b4508b04e2c22c_00017",
+   "n": 35,
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "detector_kind": "unsupported",
+   "words": "The next entry states: The matter is recorded in the Public Record.",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "Loose guess at six garbled characters ending the page: 次…曰 as 'next…states', 事公書 as 'matter…public record'. Not commentary; the quoted letter continues on the next page.",
+   "confidence": 0.6
+  },
+  {
+   "id": "69906304e7b7642c081dd7a9_00286",
+   "n": 23,
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "\"The planet occupying it\" means the planet situated in the tenth house.",
+   "verdict": "IN_SOURCE",
+   "note": "The printed commentary itself glosses tadvatena as daśamagatena ('by the one located in the tenth'); the translation just renders that gloss, supplying 'planet'.",
+   "confidence": 0.85
+  },
+  {
+   "id": "69906304e7b7642c081dd7a9_00286",
+   "n": 24,
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2",
+   "detector_kind": "definition",
+   "words": "\"The planet aspecting it\" means the planet looking at the tenth house.",
+   "verdict": "IN_SOURCE",
+   "note": "The printed commentary glosses taddraṣṭrā as daśamadraṣṭrā ('by the one aspecting the tenth'); translation renders that gloss.",
+   "confidence": 0.85
+  },
+  {
+   "id": "6a4443dfaa50a8e8f5052727_00015",
+   "n": 8,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "detector_kind": "unsupported",
+   "words": "[8] Indeed, some seeds of plants are found to be of such minute quantity that for that reason it could seem that some",
+   "verdict": "NEIGHBOUR_PAGE",
+   "note": "Inferred, not seen: sentences 5-6 demonstrably render next page (p.13) and run past where the excerpt cuts off ('instar ca'); 8 continues that run. Not on this page.",
+   "confidence": 0.5
+  },
+  {
+   "id": "6a4443dfaa50a8e8f5052727_00015",
+   "n": 7,
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "detector_kind": "unsupported",
+   "words": "[7] In vegetables, what elegant phenomena are detected by the art of microscopes, otherwise observable by no reason!",
+   "verdict": "NEIGHBOUR_PAGE",
+   "note": "Inferred, not seen: this page ends 'ubicunque minimum of-'; sentences 5-6 render p.13 beyond the truncated excerpt and 7 follows on. Not on this page.",
+   "confidence": 0.5
+  },
+  {
+   "id": "69b6429a09a998b4c36de0a2_00011",
+   "n": 13,
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "detector_kind": "definition",
+   "words": "(from cause to effect) and à posteriori (from effect to cause)",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Source is English and gives the two terms without explanation; both parenthetical definitions are the translator's.",
+   "confidence": 0.97
+  },
+  {
+   "id": "69a68457256d25f466059e53_00037",
+   "n": 13,
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "1",
+   "detector_kind": "explanation",
+   "words": "[written as ef]",
+   "verdict": "ADDED_COMMENTARY",
+   "note": "Translator silently emends 'e f' to 'fc' and adds a bracketed note on what the page actually prints; an editorial note, not translated text.",
+   "confidence": 0.9
+  },
+  {
+   "id": "69a68457256d25f466059e53_00037",
+   "n": 4,
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "1",
+   "detector_kind": "explanation",
+   "words": "[proposition] of the first [book of Euclid]",
+   "verdict": "TRANSLATION_CHOICE",
+   "note": "'per 18. primi' is the standard short Euclid citation; the bracketed words spell it out (proposition 18 of Book I). Expanded citation, not commentary.",
+   "confidence": 0.88
+  }
+ ],
+ "typed": {
+  "pages": 86,
+  "flagged_sentences_read": 86,
+  "seen_on_image": 83,
+  "verdicts": {
+   "both / TRANSLATION_ADDED": {
+    "sentences": 7,
+    "pages": 6
+   },
+   "both / TYPED_OMITS": {
+    "sentences": 1,
+    "pages": 1
+   },
+   "ocr_only / IN_BOTH_SOURCES": {
+    "sentences": 2,
+    "pages": 1
+   },
+   "ocr_only / TRANSLATION_CHOICE": {
+    "sentences": 6,
+    "pages": 5
+   },
+   "typed_only / IN_BOTH_SOURCES": {
+    "sentences": 5,
+    "pages": 5
+   },
+   "typed_only / NEIGHBOUR_PAGE": {
+    "sentences": 11,
+    "pages": 2
+   },
+   "typed_only / OCR_INVENTED": {
+    "sentences": 4,
+    "pages": 4
+   },
+   "typed_only / TYPED_OMITS": {
+    "sentences": 50,
+    "pages": 25
+   }
+  },
+  "translation_introduced": {
+   "sentences": 7,
+   "k": 6,
+   "n": 86,
+   "pct": 7,
+   "ci": [
+    3.2,
+    14.4
+   ]
+  },
+  "ocr_introduced_invented_text": {
+   "sentences": 4,
+   "k": 4,
+   "n": 86,
+   "pct": 4.7,
+   "ci": [
+    1.8,
+    11.4
+   ]
+  },
+  "ocr_introduced_description_rendered_as_text": {
+   "sentences": 0,
+   "k": 0,
+   "n": 86,
+   "pct": 0,
+   "ci": [
+    0,
+    4.3
+   ]
+  },
+  "ocr_read_the_facing_page_and_translation_completed_it": {
+   "sentences": 10,
+   "k": 1,
+   "n": 86,
+   "pct": 1.2,
+   "ci": [
+    0.2,
+    6.3
+   ]
+  },
+  "ocr_introduced_any": {
+   "k": 5,
+   "n": 86,
+   "pct": 5.8,
+   "ci": [
+    2.5,
+    12.9
+   ]
+  },
+  "typed_text_leaves_it_out": {
+   "sentences": 51,
+   "k": 26,
+   "n": 86,
+   "pct": 30.2,
+   "ci": [
+    21.5,
+    40.6
+   ]
+  },
+  "detector_wrong_against_ocr": {
+   "sentences": 8,
+   "k": 6,
+   "n": 86,
+   "pct": 7,
+   "ci": [
+    3.2,
+    14.4
+   ]
+  },
+  "detector_wrong_against_typed": {
+   "sentences": 5,
+   "k": 5,
+   "n": 86,
+   "pct": 5.8,
+   "ci": [
+    2.5,
+    12.9
+   ]
+  },
+  "by_translating_model": {
+   "gemini-3.1-flash-lite": {
+    "translation_introduced": {
+     "k": 2,
+     "n": 24,
+     "pct": 8.3,
+     "ci": [
+      2.3,
+      25.8
+     ]
+    }
+   },
+   "gemini-3-flash-preview": {
+    "translation_introduced": {
+     "k": 4,
+     "n": 26,
+     "pct": 15.4,
+     "ci": [
+      6.1,
+      33.5
+     ]
+    }
+   },
+   "gemini-3.1-flash-lite-preview": {
+    "translation_introduced": {
+     "k": 0,
+     "n": 36,
+     "pct": 0,
+     "ci": [
+      0,
+      9.6
+     ]
+    }
+   }
+  },
+  "stage_rows": [
+   {
+    "id": "6a3ceb0c95fcd45563052e60_00064",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3.1-flash-lite",
+    "prompt_version": "13",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "n": 1,
+    "verdict": "OCR_INVENTED",
+    "seen_on_image": "yes",
+    "confidence": 0.88,
+    "note": "Margin shows 欽定四庫全書 (cut) and 卷三 only; 金石目錄 is nowhere on page. Book is 繪事備考 per neighbours. Only 卷三 is real."
+   },
+   {
+    "id": "6992c907453c7175dc1bccbb_00076",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v5.2026-02",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 5,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.95,
+    "note": "Glossary-style definition of 足材拱; page only has 若造足材拱各於逐等拱上更加功限. No definition in typed text, OCR or image."
+   },
+   {
+    "id": "6992c907453c7175dc1bccbb_00076",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v5.2026-02",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 7,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.95,
+    "note": "Definition of 令拱; page only names it in 華拱令拱各加五釐功. Translator's own glossary entry."
+   },
+   {
+    "id": "6992cec7673ee1e40e321834_00145",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v5.2026-02",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 1,
+    "verdict": "OCR_INVENTED",
+    "seen_on_image": "yes",
+    "confidence": 0.6,
+    "note": "Margin shows 欽定四庫全書 and 卷一; no 金匱要略論註 visible. Translation further changed it to 'Treatise on Cold Damage'. Book is 醫宗金鑑."
+   },
+   {
+    "id": "6992caf6d4d545ae73feeb7c_00122",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v2",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 1,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.5,
+    "note": "Title not in this page's OCR text (only 抱朴子 in vocab tag); image shows only a cropped centre strip. Present in prev/next page headers; may be translator supply."
+   },
+   {
+    "id": "6992caf6d4d545ae73feeb7c_00122",
+    "language": "Chinese",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v2",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 14,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.88,
+    "note": "Main clause printed and in both sources; the dash clause 'being partial to one art while ignoring the others' is the translator's gloss of 偏枯."
+   },
+   {
+    "id": "6953e4fa77f38f6761bef1dc_00053",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v5.2026-02",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 1,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.95,
+    "note": "Sentence is printed and in both sources; the dash-enclosed definition of reductio ad absurdum is the translator's."
+   },
+   {
+    "id": "697a8014e680cef7cedae395_00031",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v2",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 9,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.96,
+    "note": "Sentence printed and in both; the inline 'Clementines: a collection of decrees...' is a translator's note run into the text."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 31,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.9,
+    "note": "OCR transcribed line-beginnings of the facing page as a second column; translation strings the fragments together. Not this page's text."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 32,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.75,
+    "note": "Only 'gustin. d' is visible and in OCR; 'on the quantity of the soul' is completed from text beyond the image edge or guessed."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 33,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.75,
+    "note": "Line-beginnings of the facing page; the full sentence is reconstructed beyond what is visible."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 34,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.7,
+    "note": "Only 'fol. 85.' is visible and in OCR; 'Grimal on the Best Senator' lies beyond the image edge or is supplied."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 35,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.75,
+    "note": "Start of section II on the facing page, fragments only; '[Pietas]' and the rest are reconstruction."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 36,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "no, text only",
+    "confidence": 0.45,
+    "note": "No Bodin citation in OCR or in the visible sliver. Inferred from position among facing-page fragments; could be translator invention."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 37,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.7,
+    "note": "Fragments fit '[hu]manis I[mperiis] ... [con]tineri d[icunt]'. 'Valerius Maximus' and the rest are not visible."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 38,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "no, text only",
+    "confidence": 0.45,
+    "note": "No Casmann citation in OCR or visible sliver. Inferred from position; could be translator invention."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 39,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "yes",
+    "confidence": 0.7,
+    "note": "Fragments fit 'Aristoteles ... [præ]ferenda[m]'; Plato's school and the rest are beyond the image edge or supplied."
+   },
+   {
+    "id": "69c8a3f26c6f3cc53c85e777_00036",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "n": 40,
+    "verdict": "NEIGHBOUR_PAGE",
+    "seen_on_image": "no, text only",
+    "confidence": 0.45,
+    "note": "No Steuco citation in OCR or visible sliver. Inferred from position after the last fragment; could be translator invention."
+   },
+   {
+    "id": "6a26c136aad44c98627bfb47_00021",
+    "language": "Latin",
+    "ref_kind": "same-edition-transcription",
+    "translation_model": "gemini-3.1-flash-lite",
+    "prompt_version": "11",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 3,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.96,
+    "note": "Sentence printed and in both; '(the science of elements)' is the translator's parenthetical gloss of the Greek word."
+   },
+   {
+    "id": "6a425310343d756d34e34ea7_00015",
+    "language": "Latin",
+    "ref_kind": "ocr-same-text",
+    "translation_model": "gemini-3.1-flash-lite",
+    "prompt_version": "13",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 5,
+    "verdict": "TRANSLATION_ADDED",
+    "seen_on_image": "yes",
+    "confidence": 0.96,
+    "note": "Sentence printed and in both; '(sneezing powders)' is the translator's parenthetical definition."
+   },
+   {
+    "id": "69938a93d5a98fd66f42d3fa_00297",
+    "language": "Greek",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3-flash-preview",
+    "prompt_version": "v5.2026-02",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 7,
+    "verdict": "OCR_INVENTED",
+    "seen_on_image": "yes",
+    "confidence": 0.7,
+    "note": "MS has 'ἐν δὲ αὐτοῖσι [gap] τὸν ἀδελφεόν. τοῦ ἔργα χειρῶν τε καὶ λήματος...' as typed (ἀδελφεόν for Δελφόν). 'Of Isagoras, greatly honoured' is OCR's."
+   },
+   {
+    "id": "69b2fee065b9d6bf89925253_00299",
+    "language": "Greek",
+    "ref_kind": "e-text-window",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "prompt_version": "v10",
+    "ocr_model": "gemini-3-flash-preview",
+    "n": 16,
+    "verdict": "OCR_INVENTED",
+    "seen_on_image": "yes",
+    "confidence": 0.7,
+    "note": "OCR inserted οὐ before μέντοι; page reads τοὺς μέντοι like the typed text. Translation faithfully renders the OCR's false negative. Small print."
+   }
+  ],
+  "tibetan_engine_judgement_only": {
+   "pages": 60,
+   "flagged_pages": {
+    "k": 3,
+    "n": 60,
+    "pct": 5,
+    "ci": [
+     1.7,
+     13.7
+    ]
+   },
+   "note": "the Esukhia e-text is the stored page text, so there is no OCR stage to compare; no Tibetan was translated; flags not read by a Tibetan reader"
+  }
+ }
+}

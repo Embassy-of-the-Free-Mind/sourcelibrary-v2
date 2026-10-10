@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a46062f896a4826cccdf873",
+    "title": "Rudimenta grammatices et docendi methodus",
+    "published": "1529",
+    "source": "EEBO-TCP A19129",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9769,
+    "median_char_acc_windowed": 0.9514,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a46062f896a4826cccdf873-p7",
+      "page": 7,
+      "overlap": 0.741,
+      "probe_words": 186,
+      "ref_chars": 2461,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.193,
+      "char_acc": 0.9769,
+      "char_acc_windowed": 0.9514
+    }
+  ]
+}

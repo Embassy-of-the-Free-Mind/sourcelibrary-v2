@@ -1,0 +1,431 @@
+{
+ "at": "2026-10-06T11:45:38.775Z",
+ "source": "/tmp/nav/heldout-raw.json",
+ "ranking": "default",
+ "rows": [
+  {
+   "id": "page-sources",
+   "kind": "page",
+   "query": "sources",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/about/sources",
+    "/collections/bhutan",
+    "/collections/jungs-library",
+    "/collections/neoplatonism",
+    "/catalog/scholar",
+    "/languages/e"
+   ]
+  },
+  {
+   "id": "page-progress",
+   "kind": "page",
+   "query": "progress",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/about/progress",
+    "/collections/nova-reperta",
+    "/blog/progress-studies",
+    "/research/quality/open"
+   ]
+  },
+  {
+   "id": "page-dataset",
+   "kind": "page",
+   "query": "dataset",
+   "r1": 1,
+   "r3": 1,
+   "total": 5,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/dataset",
+    "/collections/index-librorum-prohibitorum",
+    "/tablets",
+    "/blog/clustering",
+    "/licensing"
+   ]
+  },
+  {
+   "id": "page-terms",
+   "kind": "page",
+   "query": "terms",
+   "r1": 1,
+   "r3": 1,
+   "total": 5,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/terms",
+    "/collections/perennial-philosophy",
+    "/licensing",
+    "/research/concept-diffusion",
+    "/research/quality"
+   ]
+  },
+  {
+   "id": "page-tablets",
+   "kind": "page",
+   "query": "tablets",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/tablets",
+    "/collections/newtons-other-science"
+   ]
+  },
+  {
+   "id": "page-browse-authors",
+   "kind": "page",
+   "query": "browse authors",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/browse/authors",
+    "/catalog/scholar",
+    "/browse/artists",
+    "/browse"
+   ]
+  },
+  {
+   "id": "page-learn",
+   "kind": "page",
+   "query": "learn",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/learn",
+    "/collections/renaissance-philosophy",
+    "/collections/herbalism",
+    "/collections/byzantine-philosophy",
+    "/encyclopedia",
+    "/languages"
+   ]
+  },
+  {
+   "id": "page-contribute",
+   "kind": "page",
+   "query": "contribute",
+   "r1": 1,
+   "r3": 1,
+   "total": 5,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/contribute",
+    "/collections/microscopy",
+    "/volunteers",
+    "/contribute/volunteer",
+    "/give"
+   ]
+  },
+  {
+   "id": "page-blog",
+   "kind": "page",
+   "query": "blog",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/blog",
+    "/blog/free-reading",
+    "/review/hallucination"
+   ]
+  },
+  {
+   "id": "page-catalog",
+   "kind": "page",
+   "query": "catalog",
+   "r1": 1,
+   "r3": 1,
+   "total": 8,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/catalog",
+    "/collections/contemplative-traditions/catalog",
+    "/collections/mycology/catalog",
+    "/collections/music-sound",
+    "/collections/natural-history",
+    "/collections/prehistory-of-ai"
+   ]
+  },
+  {
+   "id": "page-topics",
+   "kind": "page",
+   "query": "topics",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/topics",
+    "/topics/clusters",
+    "/collection-areas",
+    "/languages"
+   ]
+  },
+  {
+   "id": "page-status",
+   "kind": "page",
+   "query": "status",
+   "r1": 1,
+   "r3": 1,
+   "total": 2,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/status",
+    "/review/hallucination"
+   ]
+  },
+  {
+   "id": "page-rithmomachia-guide",
+   "kind": "page",
+   "query": "rithmomachia guide",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/rithmomachia/guide",
+    "/blog/rithmomachia",
+    "/rithmomachia",
+    "/rithmomachia/scenarios"
+   ]
+  },
+  {
+   "id": "page-gilgamesh",
+   "kind": "page",
+   "query": "gilgamesh",
+   "r1": 1,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/read/gilgamesh",
+    "/collections/sumerian-mesopotamian",
+    "/collections/myths-epics"
+   ]
+  },
+  {
+   "id": "page-in-memoriam",
+   "kind": "page",
+   "query": "in memoriam",
+   "r1": 1,
+   "r3": 1,
+   "total": 1,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/in-memoriam"
+   ]
+  },
+  {
+   "id": "page-bhutan",
+   "kind": "page",
+   "query": "bhutan",
+   "r1": 0,
+   "r3": 1,
+   "total": 3,
+   "ranking": "#2",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/bhutan",
+    "/bhutan-library",
+    "/collections/contemplative-traditions"
+   ]
+  },
+  {
+   "id": "page-founder-letter",
+   "kind": "page",
+   "query": "founder letter",
+   "r1": 0,
+   "r3": 0,
+   "total": 0,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": []
+  },
+  {
+   "id": "page-how-can-i-help",
+   "kind": "page",
+   "query": "how can i help",
+   "r1": 0,
+   "r3": 0,
+   "total": 0,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": []
+  },
+  {
+   "id": "author-john-dee",
+   "kind": "author",
+   "query": "john dee",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/author/john-dee",
+    "/collections/divination-oracles",
+    "/collections/rudolf-prague",
+    "/collections/spirit-conjuration"
+   ]
+  },
+  {
+   "id": "author-fludd",
+   "kind": "author",
+   "query": "fludd",
+   "r1": 1,
+   "r3": 1,
+   "total": 4,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/author/robert-fludd",
+    "/collections/cosmology-astronomy",
+    "/collections/paracelsian-medicine",
+    "/collections/rosicrucian-tradition"
+   ]
+  },
+  {
+   "id": "author-böhme",
+   "kind": "author",
+   "query": "böhme",
+   "r1": 0,
+   "r3": 0,
+   "total": 6,
+   "ranking": "miss",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/author/jakob-bohme",
+    "/author/bohme-aurora",
+    "/blog/fechner-bohme",
+    "/collections/theology",
+    "/collections/mysticism",
+    "/collections/christian-mysticism-sub"
+   ]
+  },
+  {
+   "id": "browse-astrology",
+   "kind": "browse",
+   "query": "astrology",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/astrology",
+    "/categories/astrology",
+    "/collections/index-librorum-prohibitorum",
+    "/collections/jyotisha-vedic-astrology",
+    "/blog/history-of-astrology",
+    "/collections/chinese-astrology"
+   ]
+  },
+  {
+   "id": "browse-demonology",
+   "kind": "browse",
+   "query": "demonology",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1 card",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/collections/demonology",
+    "/blog/demonology",
+    "/collections/theological-demonology",
+    "/collections/global-demonology",
+    "/collections/arabic-islamic-magic",
+    "/collections/the-infernal"
+   ]
+  },
+  {
+   "id": "browse-sanskrit",
+   "kind": "browse",
+   "query": "sanskrit",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/languages/sanskrit",
+    "/collections/south-asia",
+    "/collections/drama",
+    "/collections/jyotisha-vedic-astrology",
+    "/collections/nalanda",
+    "/collections/indic-alchemy"
+   ]
+  },
+  {
+   "id": "browse-ars-notoria",
+   "kind": "browse",
+   "query": "ars notoria",
+   "r1": 1,
+   "r3": 1,
+   "total": 7,
+   "ranking": "#1",
+   "degraded": [],
+   "error": null,
+   "top": [
+    "/categories/ars-notoria",
+    "/collections/magic",
+    "/collections/forbidden-books",
+    "/collections/mystical-practice",
+    "/blog",
+    "/categories/ritual-magic"
+   ]
+  }
+ ]
+}

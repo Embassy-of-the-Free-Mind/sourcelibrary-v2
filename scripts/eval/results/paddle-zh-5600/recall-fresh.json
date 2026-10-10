@@ -1,0 +1,2406 @@
+{
+ "generated_at": "2026-10-02T22:00:12.920Z",
+ "prereg": "scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md (amendment 2026-10-02 ~21:40Z)",
+ "n": 95,
+ "rows": [
+  {
+   "arm": "base",
+   "n": 95,
+   "median_recall": 0.8364,
+   "mean_recall": 0.808,
+   "recall_below_0_8": 39,
+   "median_cer": 0.194,
+   "catastrophic": 0,
+   "pages_with_header": 72,
+   "pages_with_page_num": 25,
+   "pages_with_skqs_strip": 36,
+   "pages_with_juan_line": 47
+  },
+  {
+   "arm": "fresh-layout-on",
+   "n": 95,
+   "median_recall": 0.8346,
+   "mean_recall": 0.8063,
+   "recall_below_0_8": 39,
+   "median_cer": 0.196,
+   "catastrophic": 0,
+   "pages_with_header": 74,
+   "pages_with_page_num": 26,
+   "pages_with_skqs_strip": 36,
+   "pages_with_juan_line": 48
+  },
+  {
+   "arm": "fresh-nolayout",
+   "n": 95,
+   "median_recall": 0.8434,
+   "mean_recall": 0.8088,
+   "recall_below_0_8": 40,
+   "median_cer": 0.172,
+   "catastrophic": 0,
+   "pages_with_header": 28,
+   "pages_with_page_num": 12,
+   "pages_with_skqs_strip": 14,
+   "pages_with_juan_line": 19
+  }
+ ],
+ "paired": {
+  "a": "fresh-nolayout",
+  "b": "fresh-layout-on",
+  "median_delta_cer": -0.007,
+  "median_delta_recall": 0,
+  "wlt_cer": [
+   61,
+   15,
+   19
+  ],
+  "biggest_wins": [
+   {
+    "slug": "chinese-cohort-5547-162a08-p78",
+    "d_cer": -0.154,
+    "d_recall": 0.1459
+   },
+   {
+    "slug": "chinese-cohort-5547-1e9e9a-p27",
+    "d_cer": -0.13,
+    "d_recall": -0.0065
+   },
+   {
+    "slug": "chinese-cohort-5547-1b70d8-p96",
+    "d_cer": -0.087,
+    "d_recall": 0.0517
+   },
+   {
+    "slug": "chinese-cohort-5547-1cbeff-p69",
+    "d_cer": -0.083,
+    "d_recall": 0.0119
+   },
+   {
+    "slug": "chinese-cohort-5547-8ef950-p57",
+    "d_cer": -0.073,
+    "d_recall": 0.0056
+   }
+  ],
+  "biggest_losses": [
+   {
+    "slug": "chinese-cohort-5547-e2ee51-p64",
+    "d_cer": 0.039,
+    "d_recall": -0.0579
+   },
+   {
+    "slug": "chinese-cohort-5547-c0ca6f-p25",
+    "d_cer": 0.036,
+    "d_recall": 0
+   },
+   {
+    "slug": "chinese-cohort-5547-214742-p16",
+    "d_cer": 0.033,
+    "d_recall": -0.033
+   },
+   {
+    "slug": "chinese-cohort-5547-11ad17-p51",
+    "d_cer": 0.022,
+    "d_recall": 0
+   },
+   {
+    "slug": "chinese-cohort-5547-e44fd9-p209",
+    "d_cer": 0.013,
+    "d_recall": -0.0131
+   }
+  ],
+  "recall_drops_over_0_05": [
+   {
+    "slug": "chinese-cohort-5547-e2ee51-p64",
+    "d_cer": 0.039,
+    "d_recall": -0.0579
+   }
+  ]
+ },
+ "pages": {
+  "base": {
+   "chinese-cohort-5547-11ad17-p51": {
+    "recall": 0.8345864661654135,
+    "cer": 0.158,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-158d4c-p41": {
+    "recall": 0.9037800687285223,
+    "cer": 0.196,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-15bef8-p67": {
+    "recall": 0.7453703703703703,
+    "cer": 0.313,
+    "header": 1,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-162a08-p78": {
+    "recall": 0.9177718832891246,
+    "cer": 0.095,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-165e45-p31": {
+    "recall": 0.9518072289156626,
+    "cer": 0.174,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-167a17-p97": {
+    "recall": 0.8888888888888888,
+    "cer": 0.167,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1687bf-p98": {
+    "recall": 0.7602040816326531,
+    "cer": 0.286,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b2b4c-p81": {
+    "recall": 0.8954248366013072,
+    "cer": 0.137,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b4835-p170": {
+    "recall": 0.9574468085106383,
+    "cer": 0.096,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b70d8-p96": {
+    "recall": 0.7931034482758621,
+    "cer": 0.259,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b8cfd-p34": {
+    "recall": 0.8873239436619719,
+    "cer": 0.12,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1ba9dd-p41": {
+    "recall": 0.7784256559766763,
+    "cer": 0.239,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1bd7f3-p106": {
+    "recall": 0.8637992831541219,
+    "cer": 0.14,
+    "header": 1,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c2632-p40": {
+    "recall": 0.765,
+    "cer": 0.265,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c8d68-p156": {
+    "recall": 0.8391608391608392,
+    "cer": 0.161,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cac6c-p115": {
+    "recall": 0.8432835820895522,
+    "cer": 0.149,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cbeff-p69": {
+    "recall": 0.8452380952380952,
+    "cer": 0.226,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cc663-p145": {
+    "recall": 0.935374149659864,
+    "cer": 0.075,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cfb7c-p71": {
+    "recall": 0.7831325301204819,
+    "cer": 0.253,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1cfdf0-p35": {
+    "recall": 0.7228915662650602,
+    "cer": 0.275,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d4966-p105": {
+    "recall": 0.88,
+    "cer": 0.147,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d89bb-p120": {
+    "recall": 0.7751196172248804,
+    "cer": 0.22,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ddcd0-p80": {
+    "recall": 0.874251497005988,
+    "cer": 0.12,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1de82d-p98": {
+    "recall": 0.5555555555555556,
+    "cer": 0.474,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e2cbe-p66": {
+    "recall": 0.8009950248756219,
+    "cer": 0.194,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e3517-p42": {
+    "recall": 0.6614173228346457,
+    "cer": 0.339,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e37f3-p113": {
+    "recall": 0.9030303030303031,
+    "cer": 0.097,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e38be-p142": {
+    "recall": 0.8653846153846154,
+    "cer": 0.212,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e6e3d-p90": {
+    "recall": 0.7564766839378239,
+    "cer": 0.244,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e9e9a-p27": {
+    "recall": 0.9478827361563518,
+    "cer": 0.244,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1eb63b-p113": {
+    "recall": 0.8108108108108109,
+    "cer": 0.2,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ed188-p29": {
+    "recall": 0.9151515151515152,
+    "cer": 0.097,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f090c-p191": {
+    "recall": 0.907608695652174,
+    "cer": 0.092,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f27b4-p85": {
+    "recall": 0.8791946308724832,
+    "cer": 0.161,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f5f9c-p150": {
+    "recall": 0.8733333333333333,
+    "cer": 0.133,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f683b-p141": {
+    "recall": 0.9036144578313253,
+    "cer": 0.145,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1fd323-p49": {
+    "recall": 0.6623376623376623,
+    "cer": 0.335,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ff309-p166": {
+    "recall": 0.8136882129277566,
+    "cer": 0.19,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ffe4e-p100": {
+    "recall": 0.599009900990099,
+    "cer": 0.396,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-206f84-p147": {
+    "recall": 0.8958990536277602,
+    "cer": 0.12,
+    "header": 1,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-20ca06-p59": {
+    "recall": 0.9022988505747126,
+    "cer": 0.126,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-20de2f-p75": {
+    "recall": 0.8959537572254336,
+    "cer": 0.121,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-20df47-p64": {
+    "recall": 0.7755102040816326,
+    "cer": 0.23,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-21136b-p141": {
+    "recall": 0.9021739130434783,
+    "cer": 0.103,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-214742-p16": {
+    "recall": 0.7307692307692307,
+    "cer": 0.261,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-2191b7-p93": {
+    "recall": 0.7104072398190046,
+    "cer": 0.299,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-484a5b-p61": {
+    "recall": 0.6479591836734694,
+    "cer": 0.352,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-485101-p171": {
+    "recall": 0.7528089887640449,
+    "cer": 0.247,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-48671c-p105": {
+    "recall": 0.7242990654205608,
+    "cer": 0.316,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-486ab5-p24": {
+    "recall": 0.6363636363636364,
+    "cer": 0.364,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-4871cb-p118": {
+    "recall": 0.757847533632287,
+    "cer": 0.238,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-48798e-p89": {
+    "recall": 0.8971428571428571,
+    "cer": 0.114,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-489739-p158": {
+    "recall": 0.6736842105263158,
+    "cer": 0.321,
+    "header": 1,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-48d48e-p51": {
+    "recall": 0.7142857142857143,
+    "cer": 0.317,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4912de-p64": {
+    "recall": 0.7111913357400722,
+    "cer": 0.31,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4924f4-p125": {
+    "recall": 0.5810055865921788,
+    "cer": 0.419,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-49dcb8-p128": {
+    "recall": 0.8493975903614458,
+    "cer": 0.151,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-49f12b-p94": {
+    "recall": 0.933852140077821,
+    "cer": 0.07,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4a448c-p88": {
+    "recall": 0.9006024096385542,
+    "cer": 0.093,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-5cfb8d-p101": {
+    "recall": 0.8539325842696629,
+    "cer": 0.146,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d0f3b-p122": {
+    "recall": 0.7291666666666666,
+    "cer": 0.318,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d514f-p40": {
+    "recall": 0.7615384615384615,
+    "cer": 0.246,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-5dbe2e-p116": {
+    "recall": 0.8888888888888888,
+    "cer": 0.111,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-5deb60-p20": {
+    "recall": 0.7445652173913043,
+    "cer": 0.255,
+    "header": 1,
+    "page_num": 2,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5ec75a-p48": {
+    "recall": 0.6141975308641975,
+    "cer": 0.473,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-71bf88-p88": {
+    "recall": 0.8269230769230769,
+    "cer": 0.149,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-8ef950-p57": {
+    "recall": 0.8388888888888889,
+    "cer": 0.361,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-8f4f2c-p114": {
+    "recall": 0.8988439306358381,
+    "cer": 0.103,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-c08247-p94": {
+    "recall": 0.8920454545454546,
+    "cer": 0.148,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c0ca6f-p25": {
+    "recall": 0.8540145985401459,
+    "cer": 0.161,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c50486-p132": {
+    "recall": 0.8767123287671232,
+    "cer": 0.137,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-dfa73d-p80": {
+    "recall": 0.606694560669456,
+    "cer": 0.402,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e2ee51-p64": {
+    "recall": 0.9207317073170732,
+    "cer": 0.101,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e30f6e-p57": {
+    "recall": 0.8633540372670807,
+    "cer": 0.171,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e31885-p61": {
+    "recall": 0.8264462809917356,
+    "cer": 0.163,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e39166-p28": {
+    "recall": 0.9021739130434783,
+    "cer": 0.109,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e3f40c-p66": {
+    "recall": 0.627906976744186,
+    "cer": 0.419,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e43b2b-p78": {
+    "recall": 0.8,
+    "cer": 0.209,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e44c6e-p122": {
+    "recall": 0.7835051546391752,
+    "cer": 0.211,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e44fd9-p209": {
+    "recall": 0.8627450980392157,
+    "cer": 0.137,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e45152-p89": {
+    "recall": 0.755868544600939,
+    "cer": 0.244,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-e45762-p36": {
+    "recall": 0.6585365853658537,
+    "cer": 0.346,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e478ba-p32": {
+    "recall": 0.7557603686635944,
+    "cer": 0.24,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e4b84f-p21": {
+    "recall": 0.6476190476190476,
+    "cer": 0.348,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e4bd15-p22": {
+    "recall": 0.907608695652174,
+    "cer": 0.092,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e4c75a-p64": {
+    "recall": 0.6681034482758621,
+    "cer": 0.319,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e506a8-p42": {
+    "recall": 0.6985645933014354,
+    "cer": 0.349,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e51fd7-p146": {
+    "recall": 0.9044117647058824,
+    "cer": 0.081,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e52f07-p64": {
+    "recall": 0.8930817610062893,
+    "cer": 0.107,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e5318b-p112": {
+    "recall": 0.8544303797468354,
+    "cer": 0.146,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e54ac9-p54": {
+    "recall": 0.8350515463917526,
+    "cer": 0.227,
+    "header": 0,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-e55466-p58": {
+    "recall": 0.8591549295774648,
+    "cer": 0.155,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e566f8-p46": {
+    "recall": 0.8363636363636363,
+    "cer": 0.164,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e5814c-p51": {
+    "recall": 0.7511111111111111,
+    "cer": 0.271,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e61617-p126": {
+    "recall": 0.8698224852071006,
+    "cer": 0.142,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   }
+  },
+  "fresh-layout-on": {
+   "chinese-cohort-5547-11ad17-p51": {
+    "recall": 0.8345864661654135,
+    "cer": 0.158,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-158d4c-p41": {
+    "recall": 0.9037800687285223,
+    "cer": 0.196,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-15bef8-p67": {
+    "recall": 0.7453703703703703,
+    "cer": 0.313,
+    "header": 1,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-162a08-p78": {
+    "recall": 0.8010610079575596,
+    "cer": 0.207,
+    "header": 1,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-165e45-p31": {
+    "recall": 0.9518072289156626,
+    "cer": 0.174,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-167a17-p97": {
+    "recall": 0.8888888888888888,
+    "cer": 0.167,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1687bf-p98": {
+    "recall": 0.7602040816326531,
+    "cer": 0.286,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b2b4c-p81": {
+    "recall": 0.8954248366013072,
+    "cer": 0.137,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b4835-p170": {
+    "recall": 0.9574468085106383,
+    "cer": 0.09,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b70d8-p96": {
+    "recall": 0.7931034482758621,
+    "cer": 0.259,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b8cfd-p34": {
+    "recall": 0.8873239436619719,
+    "cer": 0.12,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1ba9dd-p41": {
+    "recall": 0.7784256559766763,
+    "cer": 0.239,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1bd7f3-p106": {
+    "recall": 0.8637992831541219,
+    "cer": 0.14,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c2632-p40": {
+    "recall": 0.765,
+    "cer": 0.265,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c8d68-p156": {
+    "recall": 0.8391608391608392,
+    "cer": 0.161,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cac6c-p115": {
+    "recall": 0.8432835820895522,
+    "cer": 0.149,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cbeff-p69": {
+    "recall": 0.8452380952380952,
+    "cer": 0.226,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cc663-p145": {
+    "recall": 0.935374149659864,
+    "cer": 0.075,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cfb7c-p71": {
+    "recall": 0.7831325301204819,
+    "cer": 0.253,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1cfdf0-p35": {
+    "recall": 0.7289156626506024,
+    "cer": 0.269,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d4966-p105": {
+    "recall": 0.88,
+    "cer": 0.153,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d89bb-p120": {
+    "recall": 0.7751196172248804,
+    "cer": 0.22,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ddcd0-p80": {
+    "recall": 0.874251497005988,
+    "cer": 0.12,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1de82d-p98": {
+    "recall": 0.5555555555555556,
+    "cer": 0.474,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e2cbe-p66": {
+    "recall": 0.8009950248756219,
+    "cer": 0.194,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e3517-p42": {
+    "recall": 0.6653543307086615,
+    "cer": 0.335,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e37f3-p113": {
+    "recall": 0.9030303030303031,
+    "cer": 0.097,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e38be-p142": {
+    "recall": 0.8653846153846154,
+    "cer": 0.221,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e6e3d-p90": {
+    "recall": 0.7564766839378239,
+    "cer": 0.244,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e9e9a-p27": {
+    "recall": 0.9511400651465798,
+    "cer": 0.237,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1eb63b-p113": {
+    "recall": 0.8,
+    "cer": 0.2,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ed188-p29": {
+    "recall": 0.9151515151515152,
+    "cer": 0.097,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f090c-p191": {
+    "recall": 0.907608695652174,
+    "cer": 0.092,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f27b4-p85": {
+    "recall": 0.87248322147651,
+    "cer": 0.168,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f5f9c-p150": {
+    "recall": 0.8733333333333333,
+    "cer": 0.133,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f683b-p141": {
+    "recall": 0.9036144578313253,
+    "cer": 0.139,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-1fd323-p49": {
+    "recall": 0.658008658008658,
+    "cer": 0.339,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ff309-p166": {
+    "recall": 0.8098859315589354,
+    "cer": 0.194,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ffe4e-p100": {
+    "recall": 0.599009900990099,
+    "cer": 0.396,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-206f84-p147": {
+    "recall": 0.8958990536277602,
+    "cer": 0.12,
+    "header": 1,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-20ca06-p59": {
+    "recall": 0.9022988505747126,
+    "cer": 0.121,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-20de2f-p75": {
+    "recall": 0.8959537572254336,
+    "cer": 0.126,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-20df47-p64": {
+    "recall": 0.7755102040816326,
+    "cer": 0.23,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-21136b-p141": {
+    "recall": 0.9021739130434783,
+    "cer": 0.103,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-214742-p16": {
+    "recall": 0.7307692307692307,
+    "cer": 0.261,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-2191b7-p93": {
+    "recall": 0.7058823529411765,
+    "cer": 0.303,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-484a5b-p61": {
+    "recall": 0.6530612244897959,
+    "cer": 0.347,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-485101-p171": {
+    "recall": 0.7528089887640449,
+    "cer": 0.247,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-48671c-p105": {
+    "recall": 0.7242990654205608,
+    "cer": 0.316,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-486ab5-p24": {
+    "recall": 0.6298701298701299,
+    "cer": 0.383,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-4871cb-p118": {
+    "recall": 0.757847533632287,
+    "cer": 0.238,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-48798e-p89": {
+    "recall": 0.9028571428571428,
+    "cer": 0.097,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-489739-p158": {
+    "recall": 0.6736842105263158,
+    "cer": 0.321,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-48d48e-p51": {
+    "recall": 0.7142857142857143,
+    "cer": 0.317,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4912de-p64": {
+    "recall": 0.7148014440433214,
+    "cer": 0.318,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4924f4-p125": {
+    "recall": 0.5642458100558659,
+    "cer": 0.43,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-49dcb8-p128": {
+    "recall": 0.8493975903614458,
+    "cer": 0.151,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-49f12b-p94": {
+    "recall": 0.933852140077821,
+    "cer": 0.07,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4a448c-p88": {
+    "recall": 0.9006024096385542,
+    "cer": 0.093,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-5cfb8d-p101": {
+    "recall": 0.8539325842696629,
+    "cer": 0.146,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d0f3b-p122": {
+    "recall": 0.7291666666666666,
+    "cer": 0.307,
+    "header": 0,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d514f-p40": {
+    "recall": 0.7615384615384615,
+    "cer": 0.246,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-5dbe2e-p116": {
+    "recall": 0.8888888888888888,
+    "cer": 0.111,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-5deb60-p20": {
+    "recall": 0.7445652173913043,
+    "cer": 0.255,
+    "header": 1,
+    "page_num": 3,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5ec75a-p48": {
+    "recall": 0.6080246913580247,
+    "cer": 0.479,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-71bf88-p88": {
+    "recall": 0.8269230769230769,
+    "cer": 0.149,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-8ef950-p57": {
+    "recall": 0.8444444444444444,
+    "cer": 0.356,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-8f4f2c-p114": {
+    "recall": 0.8988439306358381,
+    "cer": 0.103,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-c08247-p94": {
+    "recall": 0.8920454545454546,
+    "cer": 0.153,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c0ca6f-p25": {
+    "recall": 0.8540145985401459,
+    "cer": 0.161,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c50486-p132": {
+    "recall": 0.8698630136986302,
+    "cer": 0.144,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-dfa73d-p80": {
+    "recall": 0.6150627615062761,
+    "cer": 0.402,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e2ee51-p64": {
+    "recall": 0.9176829268292683,
+    "cer": 0.104,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e30f6e-p57": {
+    "recall": 0.8633540372670807,
+    "cer": 0.174,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e31885-p61": {
+    "recall": 0.8264462809917356,
+    "cer": 0.163,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e39166-p28": {
+    "recall": 0.9021739130434783,
+    "cer": 0.109,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e3f40c-p66": {
+    "recall": 0.6395348837209303,
+    "cer": 0.416,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e43b2b-p78": {
+    "recall": 0.8,
+    "cer": 0.209,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e44c6e-p122": {
+    "recall": 0.7835051546391752,
+    "cer": 0.211,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e44fd9-p209": {
+    "recall": 0.8627450980392157,
+    "cer": 0.137,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e45152-p89": {
+    "recall": 0.755868544600939,
+    "cer": 0.244,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-e45762-p36": {
+    "recall": 0.6585365853658537,
+    "cer": 0.346,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e478ba-p32": {
+    "recall": 0.7557603686635944,
+    "cer": 0.24,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e4b84f-p21": {
+    "recall": 0.6476190476190476,
+    "cer": 0.348,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e4bd15-p22": {
+    "recall": 0.907608695652174,
+    "cer": 0.092,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e4c75a-p64": {
+    "recall": 0.6681034482758621,
+    "cer": 0.319,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e506a8-p42": {
+    "recall": 0.6985645933014354,
+    "cer": 0.33,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e51fd7-p146": {
+    "recall": 0.9117647058823529,
+    "cer": 0.081,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e52f07-p64": {
+    "recall": 0.8930817610062893,
+    "cer": 0.107,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e5318b-p112": {
+    "recall": 0.8544303797468354,
+    "cer": 0.146,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e54ac9-p54": {
+    "recall": 0.8350515463917526,
+    "cer": 0.227,
+    "header": 0,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-e55466-p58": {
+    "recall": 0.8450704225352113,
+    "cer": 0.169,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e566f8-p46": {
+    "recall": 0.8303030303030303,
+    "cer": 0.164,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e5814c-p51": {
+    "recall": 0.7422222222222222,
+    "cer": 0.267,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e61617-p126": {
+    "recall": 0.863905325443787,
+    "cer": 0.154,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   }
+  },
+  "fresh-nolayout": {
+   "chinese-cohort-5547-11ad17-p51": {
+    "recall": 0.8345864661654135,
+    "cer": 0.18,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-158d4c-p41": {
+    "recall": 0.9037800687285223,
+    "cer": 0.196,
+    "header": 2,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-15bef8-p67": {
+    "recall": 0.7430555555555556,
+    "cer": 0.315,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-162a08-p78": {
+    "recall": 0.946949602122016,
+    "cer": 0.053,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-165e45-p31": {
+    "recall": 0.9457831325301205,
+    "cer": 0.162,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-167a17-p97": {
+    "recall": 0.8958333333333334,
+    "cer": 0.097,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1687bf-p98": {
+    "recall": 0.7551020408163265,
+    "cer": 0.245,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b2b4c-p81": {
+    "recall": 0.8954248366013072,
+    "cer": 0.105,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1b4835-p170": {
+    "recall": 0.9574468085106383,
+    "cer": 0.048,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b70d8-p96": {
+    "recall": 0.8448275862068966,
+    "cer": 0.172,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1b8cfd-p34": {
+    "recall": 0.8802816901408451,
+    "cer": 0.113,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ba9dd-p41": {
+    "recall": 0.7725947521865889,
+    "cer": 0.227,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1bd7f3-p106": {
+    "recall": 0.8673835125448028,
+    "cer": 0.136,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c2632-p40": {
+    "recall": 0.765,
+    "cer": 0.235,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1c8d68-p156": {
+    "recall": 0.8461538461538461,
+    "cer": 0.154,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1cac6c-p115": {
+    "recall": 0.8507462686567164,
+    "cer": 0.142,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cbeff-p69": {
+    "recall": 0.8571428571428571,
+    "cer": 0.143,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-1cc663-p145": {
+    "recall": 0.9387755102040817,
+    "cer": 0.068,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1cfb7c-p71": {
+    "recall": 0.7831325301204819,
+    "cer": 0.223,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1cfdf0-p35": {
+    "recall": 0.7349397590361446,
+    "cer": 0.263,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d4966-p105": {
+    "recall": 0.8933333333333333,
+    "cer": 0.107,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1d89bb-p120": {
+    "recall": 0.7751196172248804,
+    "cer": 0.22,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ddcd0-p80": {
+    "recall": 0.8862275449101796,
+    "cer": 0.114,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1de82d-p98": {
+    "recall": 0.6222222222222222,
+    "cer": 0.407,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1e2cbe-p66": {
+    "recall": 0.8059701492537313,
+    "cer": 0.189,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e3517-p42": {
+    "recall": 0.6614173228346457,
+    "cer": 0.339,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e37f3-p113": {
+    "recall": 0.9030303030303031,
+    "cer": 0.097,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e38be-p142": {
+    "recall": 0.8653846153846154,
+    "cer": 0.192,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e6e3d-p90": {
+    "recall": 0.7616580310880829,
+    "cer": 0.238,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1e9e9a-p27": {
+    "recall": 0.9446254071661238,
+    "cer": 0.107,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1eb63b-p113": {
+    "recall": 0.7945945945945946,
+    "cer": 0.184,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ed188-p29": {
+    "recall": 0.9212121212121213,
+    "cer": 0.097,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f090c-p191": {
+    "recall": 0.907608695652174,
+    "cer": 0.092,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-1f27b4-p85": {
+    "recall": 0.87248322147651,
+    "cer": 0.128,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1f5f9c-p150": {
+    "recall": 0.88,
+    "cer": 0.12,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1f683b-p141": {
+    "recall": 0.891566265060241,
+    "cer": 0.114,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1fd323-p49": {
+    "recall": 0.6493506493506493,
+    "cer": 0.348,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ff309-p166": {
+    "recall": 0.8136882129277566,
+    "cer": 0.19,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-1ffe4e-p100": {
+    "recall": 0.599009900990099,
+    "cer": 0.396,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-206f84-p147": {
+    "recall": 0.9022082018927445,
+    "cer": 0.117,
+    "header": 1,
+    "page_num": 1,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-20ca06-p59": {
+    "recall": 0.9022988505747126,
+    "cer": 0.098,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-20de2f-p75": {
+    "recall": 0.8959537572254336,
+    "cer": 0.098,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-20df47-p64": {
+    "recall": 0.7806122448979592,
+    "cer": 0.219,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-21136b-p141": {
+    "recall": 0.9021739130434783,
+    "cer": 0.092,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-214742-p16": {
+    "recall": 0.6978021978021978,
+    "cer": 0.294,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-2191b7-p93": {
+    "recall": 0.7104072398190046,
+    "cer": 0.29,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-484a5b-p61": {
+    "recall": 0.6530612244897959,
+    "cer": 0.347,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-485101-p171": {
+    "recall": 0.7528089887640449,
+    "cer": 0.249,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-48671c-p105": {
+    "recall": 0.719626168224299,
+    "cer": 0.279,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-486ab5-p24": {
+    "recall": 0.6298701298701299,
+    "cer": 0.37,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-4871cb-p118": {
+    "recall": 0.757847533632287,
+    "cer": 0.238,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-48798e-p89": {
+    "recall": 0.8971428571428571,
+    "cer": 0.103,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-489739-p158": {
+    "recall": 0.6736842105263158,
+    "cer": 0.321,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-48d48e-p51": {
+    "recall": 0.7301587301587301,
+    "cer": 0.27,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4912de-p64": {
+    "recall": 0.7075812274368231,
+    "cer": 0.292,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4924f4-p125": {
+    "recall": 0.5921787709497207,
+    "cer": 0.402,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-49dcb8-p128": {
+    "recall": 0.8433734939759037,
+    "cer": 0.139,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-49f12b-p94": {
+    "recall": 0.933852140077821,
+    "cer": 0.07,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-4a448c-p88": {
+    "recall": 0.9156626506024096,
+    "cer": 0.078,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-5cfb8d-p101": {
+    "recall": 0.8651685393258427,
+    "cer": 0.135,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d0f3b-p122": {
+    "recall": 0.7135416666666666,
+    "cer": 0.281,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5d514f-p40": {
+    "recall": 0.7538461538461538,
+    "cer": 0.246,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5dbe2e-p116": {
+    "recall": 0.8888888888888888,
+    "cer": 0.111,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5deb60-p20": {
+    "recall": 0.7445652173913043,
+    "cer": 0.255,
+    "header": 1,
+    "page_num": 2,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-5ec75a-p48": {
+    "recall": 0.6080246913580247,
+    "cer": 0.479,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-71bf88-p88": {
+    "recall": 0.8333333333333334,
+    "cer": 0.137,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-8ef950-p57": {
+    "recall": 0.85,
+    "cer": 0.283,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-8f4f2c-p114": {
+    "recall": 0.8959537572254336,
+    "cer": 0.1,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-c08247-p94": {
+    "recall": 0.8920454545454546,
+    "cer": 0.114,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c0ca6f-p25": {
+    "recall": 0.8540145985401459,
+    "cer": 0.197,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-c50486-p132": {
+    "recall": 0.8835616438356164,
+    "cer": 0.116,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-dfa73d-p80": {
+    "recall": 0.606694560669456,
+    "cer": 0.393,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e2ee51-p64": {
+    "recall": 0.8597560975609756,
+    "cer": 0.143,
+    "header": 1,
+    "page_num": 1,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e30f6e-p57": {
+    "recall": 0.8695652173913043,
+    "cer": 0.146,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e31885-p61": {
+    "recall": 0.8209366391184573,
+    "cer": 0.168,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e39166-p28": {
+    "recall": 0.8967391304347826,
+    "cer": 0.114,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e3f40c-p66": {
+    "recall": 0.6395348837209303,
+    "cer": 0.404,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e43b2b-p78": {
+    "recall": 0.7897435897435897,
+    "cer": 0.209,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e44c6e-p122": {
+    "recall": 0.7835051546391752,
+    "cer": 0.211,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e44fd9-p209": {
+    "recall": 0.8496732026143791,
+    "cer": 0.15,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e45152-p89": {
+    "recall": 0.755868544600939,
+    "cer": 0.244,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e45762-p36": {
+    "recall": 0.6544715447154471,
+    "cer": 0.346,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e478ba-p32": {
+    "recall": 0.7511520737327189,
+    "cer": 0.244,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e4b84f-p21": {
+    "recall": 0.6523809523809524,
+    "cer": 0.343,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e4bd15-p22": {
+    "recall": 0.9130434782608695,
+    "cer": 0.087,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e4c75a-p64": {
+    "recall": 0.6637931034482759,
+    "cer": 0.323,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e506a8-p42": {
+    "recall": 0.6889952153110048,
+    "cer": 0.311,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e51fd7-p146": {
+    "recall": 0.9044117647058824,
+    "cer": 0.074,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e52f07-p64": {
+    "recall": 0.8930817610062893,
+    "cer": 0.107,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e5318b-p112": {
+    "recall": 0.8607594936708861,
+    "cer": 0.127,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e54ac9-p54": {
+    "recall": 0.8350515463917526,
+    "cer": 0.155,
+    "header": 0,
+    "page_num": 0,
+    "skqs": true,
+    "juan": false
+   },
+   "chinese-cohort-5547-e55466-p58": {
+    "recall": 0.8661971830985915,
+    "cer": 0.148,
+    "header": 2,
+    "page_num": 0,
+    "skqs": true,
+    "juan": true
+   },
+   "chinese-cohort-5547-e566f8-p46": {
+    "recall": 0.8242424242424242,
+    "cer": 0.17,
+    "header": 1,
+    "page_num": 0,
+    "skqs": false,
+    "juan": true
+   },
+   "chinese-cohort-5547-e5814c-p51": {
+    "recall": 0.7377777777777778,
+    "cer": 0.253,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   },
+   "chinese-cohort-5547-e61617-p126": {
+    "recall": 0.8698224852071006,
+    "cer": 0.142,
+    "header": 0,
+    "page_num": 0,
+    "skqs": false,
+    "juan": false
+   }
+  }
+ }
+}

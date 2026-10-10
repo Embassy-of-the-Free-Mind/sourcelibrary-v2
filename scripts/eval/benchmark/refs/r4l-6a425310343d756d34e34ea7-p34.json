@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A06769",
+  "edition": "Sanitatis semita. Authore Ioanne Makluireo, M.D. Cum tractatu de febre pestilente præfixo — STC 17208; ESTC S100298 (1630)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A06769",
+  "origin": "library",
+  "book_id": "6a425310343d756d34e34ea7",
+  "page_number": 34,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 38149,
+    "to_char": 39491,
+    "overlap": 0.532,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.34 Sanitatis Semita: damaged left margin, blurry; ref matches, Greek word omitted",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      34,
+      35,
+      36
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.702Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "0c0b0318620db77f0fc0dee2696755865b5faf2ec17e6cb250b798d72919af22",
+  "unit": {
+    "chars": 1342
+  }
+}

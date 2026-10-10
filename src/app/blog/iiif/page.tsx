@@ -12,7 +12,7 @@ export const metadata: Metadata = {
       'IIIF as a universal input layer for an AI pipeline: import rare books from thirteen institutions through one importer, then serve them back as IIIF with machine OCR and translation overlaid on the original page.',
     images: [
       {
-        url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
+        url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg',
         width: 1200,
         height: 630,
       },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg' }],
   },
   alternates: {
     canonical: '/blog/iiif',
@@ -39,11 +39,11 @@ const LINE = '#b6a47e'; // darker border
 /* ── Transcript of the lightning talk (Scheltema, Leiden, 2 June 2026) ── */
 const TALK_TRANSCRIPT: string[] = [
   `Hello, I'm Derek Lomas, Director of the Digital Collection at the Embassy of the Free Mind in Amsterdam. This is our brand new website; it launched last week. This library is special; it has a Guinness record for the largest library devoted to magic and mysticism. It is a really, really special place, and I've been going there for the past few years. I'm a design professor at TU Delft, and much of my work focuses on design philosophy. So, looking at topics like harmony and resonance, which are esoteric topics, I found this library to be incredible. The problem is that it's all in Latin, or most of it. I have a couple years of Latin, but it's really not good enough. So I started working with them to translate their Latin works, which you can find in their digitized catalog.`,
-  `Now, there are probably on the order of 300,000 Latin works from the Renaissance, and about 3% of them have been translated. Many people don't know that; they think that with Latin, we've kind of covered that. The Loeb Classical Library is incredible, but very, very little of it has anything to do with the neo-Latin works of the medieval and Renaissance. I think Marx even published in Latin. I also don't read German — I know I'm married to a German, but I don't read German. I don't read French. There are a lot of languages I don't read. Actually, I only read English.`,
-  `So, the thing was that we were working with the Embassy of the Free Mind, and it was taking a long time to get their digitized works. Dan Brown, the author of the Da Vinci Code, donated to scan these books, because he wrote much of the Da Vinci Code based on the works in the collection — also known as the Bibliotheca Philosophica Hermetica. These books were kind of locked away in an outdated database system, and so we were waiting. I was busy trying to build a pipeline to translate these books with the new Gemini 3 models, which we heard earlier today are just incredible for transcription and translation. I was impatient, and I was also trying to do my research on metadata standards for libraries. I knew some of the standards, but then I stumbled across IIIF, and I had no idea — and it was so magical. Because of that, we created this organization called SourceLibrary.org.`,
+  `Now, there are probably on the order of 300,000 Latin works from the Renaissance, and about 3% of them have been translated. Many people don't know that; they think that with Latin, we've kind of covered that. The Loeb Classical Library is incredible, but very, very little of it has anything to do with the neo-Latin works of the medieval and Renaissance. I think Marx even published in Latin. I also don't read German. I know I'm married to a German, but I don't read German. I don't read French. There are a lot of languages I don't read. Actually, I only read English.`,
+  `So, the thing was that we were working with the Embassy of the Free Mind, and it was taking a long time to get their digitized works. Dan Brown, the author of the Da Vinci Code, donated to scan these books, because he wrote much of the Da Vinci Code based on the works in the collection, also known as the Bibliotheca Philosophica Hermetica. These books were kind of locked away in an outdated database system, and so we were waiting. I was busy trying to build a pipeline to translate these books with the new Gemini 3 models, which we heard earlier today are just incredible for transcription and translation. I was impatient, and I was also trying to do my research on metadata standards for libraries. I knew some of the standards, but then I stumbled across IIIF, and I had no idea, and it was so magical. Because of that, we created this organization called SourceLibrary.org.`,
   `This is where we are trying to translate the Renaissance, and because of IIIF, we've now done 15,000 books. It's not so easy to prove a negative, but it seems that about 8,000 or so of these books have never been translated before. And not just the back catalog; some really incredible books, like Robert Fludd's "The Greater and Lesser of Two Worlds," where there are selected translations here and there, but no one took the time to translate a thousand-page Latin tome that has beautiful imagery. A lot of these books have really incredible illustrations. Here's Jacob Böhme, and they have little bits of Latin in there.`,
-  `So this is what we've got: a facing-page system where you can see the original text, and you can see the OCR — if it's still appropriate to call it OCR these days — and you can see the language models that were used. So here it's the 3 Flash model, and then you have the English over here. Now, when you throw these things into search — if you use Claude, we've got an MCP, you can connect to this, this is all free, this is all AGPL, open source, Creative Commons — and if you connect to the MCP, it is just incredible. Because not only are there the Latin works that I don't read, there are also the Chinese works and the Sanskrit works, the Armenian works. There's so much that I can't read, and now Claude is able to do these cross-cutting investigations. The Embassy of the Free Mind focuses on things like alchemy. Well, there's a huge Sanskrit alchemy tradition; there's a huge Chinese alchemy tradition, and no one is an expert in all three. Being able to find these links, to put all of these books in one place so you can search through it all — and to search by images too — is really, really fun.`,
-  `So this whole talk is basically a love letter to IIIF. Really, what you all have done is remarkable; it's magical. I didn't know it existed, and I felt like I was just able to take advantage of this. So I want to buy you all drinks, and I really encourage you to check out SourceLibrary.org. I also encourage you to visit the Embassy of the Free Mind — that's embassyofthefreemind.com. It's in Amsterdam, on Keizersgracht 123. Source Library is on the fourth floor, so 1-2-3-4. I'm really into Pythagoreanism. And on Thursday evening we're having an official beta launch of Source Library. I just hope to be in touch with all of you, and I thank you for the work that you do.`,
+  `So this is what we've got: a facing-page system where you can see the original text, and you can see the OCR (if it's still appropriate to call it OCR these days), and you can see the language models that were used. So here it's the 3 Flash model, and then you have the English over here. Now, when you throw these things into search (if you use Claude, we've got an MCP, you can connect to this, this is all free, this is all AGPL, open source, Creative Commons), and if you connect to the MCP, it is just incredible. Because not only are there the Latin works that I don't read, there are also the Chinese works and the Sanskrit works, the Armenian works. There's so much that I can't read, and now Claude is able to do these cross-cutting investigations. The Embassy of the Free Mind focuses on things like alchemy. Well, there's a huge Sanskrit alchemy tradition; there's a huge Chinese alchemy tradition, and no one is an expert in all three. Being able to find these links, to put all of these books in one place so you can search through it all, and to search by images too, is really, really fun.`,
+  `So this whole talk is basically a love letter to IIIF. Really, what you all have done is remarkable; it's magical. I didn't know it existed, and I felt like I was just able to take advantage of this. So I want to buy you all drinks, and I really encourage you to check out SourceLibrary.org. I also encourage you to visit the Embassy of the Free Mind: that's embassyofthefreemind.com. It's in Amsterdam, on Keizersgracht 123. Source Library is on the fourth floor, so 1-2-3-4. I'm really into Pythagoreanism. And on Thursday evening we're having an official beta launch of Source Library. I just hope to be in touch with all of you, and I thank you for the work that you do.`,
 ];
 
 export default function IIIFPage() {
@@ -52,8 +52,8 @@ export default function IIIFPage() {
       header={
         <ContentHeader
           title="How IIIF Helped Us Translate the Renaissance"
-          subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world."
-          image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg"
+          subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline, and let us hand the results back to the whole IIIF world."
+          image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg"
           imageAlt="Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), an alchemical emblem book digitized by e-rara and re-hosted on Source Library"
         >
           <p className="text-stone-400 text-sm mt-4">
@@ -87,7 +87,7 @@ export default function IIIFPage() {
           <Link href="/libraries/e-rara" className="text-accent-rust hover:text-accent-rust underline">
             e-rara
           </Link>
-          , the Swiss rare-books platform run from the ETH Library in Zurich &mdash; the same kind of
+          , the Swiss rare-books platform run from the ETH Library in Zurich: the same kind of
           manifest published by the{' '}
           <Link href="/libraries/bodleian" className="text-accent-rust hover:text-accent-rust underline">Bodleian</Link>, by{' '}
           <Link href="/libraries/gallica" className="text-accent-rust hover:text-accent-rust underline">Gallica</Link>, by the{' '}
@@ -107,7 +107,7 @@ export default function IIIFPage() {
           </Link>{' '}
           (the Embassy of the Free Mind) in Amsterdam, and we now hold roughly{' '}
           <Link href="/library" className="text-accent-rust hover:text-accent-rust underline"><strong>30,000 publicly visible works</strong></Link>{' '}
-          in Latin, German, Hebrew, Arabic, Sanskrit, Chinese and more &mdash; with over{' '}
+          in Latin, German, Hebrew, Arabic, Sanskrit, Chinese and more, with over{' '}
           <Link href="/search?first_translation=true" className="text-accent-rust hover:text-accent-rust underline"><strong>6,000</strong> first-ever English translations</Link>{' '}
           you can read today and nearly{' '}
           <Link href="/gallery" className="text-accent-rust hover:text-accent-rust underline"><strong>143,000</strong> illustrations</Link>{' '}
@@ -118,8 +118,8 @@ export default function IIIFPage() {
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-12">
           <p className="text-stone-700 leading-relaxed text-sm">
             <strong>What IIIF is, in one breath.</strong> A set of open APIs that let any library
-            describe a digitized object &mdash; its pages, their pixel dimensions, the order they go in,
-            who holds it, what you&rsquo;re allowed to do with it &mdash; in a <em>manifest</em> that
+            describe a digitized object (its pages, their pixel dimensions, the order they go in,
+            who holds it, what you&rsquo;re allowed to do with it) in a <em>manifest</em> that
             any compliant viewer can open. The companion Image API lets you ask for any region of a
             page at any size with one predictable URL. Adopted by hundreds of institutions, it is the
             closest thing the cultural-heritage world has to a universal plug.
@@ -170,8 +170,8 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           That uniformity is what let us treat thirteen-plus archives as a single faucet feeding one
-          downstream pipeline. Everything past the manifest &mdash; OCR, translation, illustration
-          detection, scholarly publishing &mdash; is identical regardless of who digitized the book.
+          downstream pipeline. Everything past the manifest (OCR, translation, illustration
+          detection, scholarly publishing) is identical regardless of who digitized the book.
         </p>
 
         <Figure caption="IIIF as a fan-in. Many institutions, one manifest shape, one importer, one pipeline. The interoperability promise is most powerful when the consumer on the right is not a human viewer but a machine.">
@@ -216,7 +216,7 @@ export default function IIIFPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Here is what that machine consumer actually looks like. Asked to explore the historical
           libraries discussed in the collection, Claude works through Source Library, surfaces the
-          relevant works, and &mdash; on a follow-up to find quotes &mdash; returns exact passages from
+          relevant works, and, on a follow-up to find quotes, returns exact passages from
           Gabriel Naud&eacute;&rsquo;s{' '}
           <em>Advice on Establishing a Library</em> (1627), each with a page number and a citation link
           back to the original:
@@ -240,7 +240,7 @@ export default function IIIFPage() {
           <figcaption className="text-sm text-muted leading-relaxed mt-3 px-1">
             An AI reading the library (sped up). Claude reaches Source Library through its connector,
             works the collection, and returns grounded quotes with page numbers and citation URLs back to
-            the original folios &mdash; the interoperability promise, with a machine on the other end. The
+            the original folios: the interoperability promise, with a machine on the other end. The
             same content is exposed as IIIF for any viewer.
           </figcaption>
         </figure>
@@ -250,10 +250,10 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           When a book enters the library, its IIIF manifest is the seed. Our importer detects the
-          version &mdash; IIIF Presentation 2.x stores canvases under{' '}
+          version (IIIF Presentation 2.x stores canvases under{' '}
           <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">sequences[0].canvases[]</code>,
           while 3.0 puts them under{' '}
-          <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">items[]</code> &mdash; walks every
+          <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">items[]</code>), walks every
           canvas, and resolves each page to a canonical Image API URL. From there a single pipeline
           carries the book the rest of the way.
         </p>
@@ -270,8 +270,8 @@ export default function IIIFPage() {
         <p className="text-secondary leading-relaxed mt-10 mb-8">
           The books arrive <em>hidden</em>. Nothing becomes publicly visible until it has been through
           OCR, translation, and a{' '}
-          <Link href="/blog/what-makes-a-good-scan" className="text-accent-rust hover:text-accent-rust underline">quality pass</Link>{' '}
-          &mdash; the <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">visible</code> flag
+          <Link href="/blog/what-makes-a-good-scan" className="text-accent-rust hover:text-accent-rust underline">quality pass</Link>;
+          the <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">visible</code> flag
           flips only at the end. The whole sequence, from a Gallica manifest to a readable, translated
           English edition, runs unattended; minting a citable DOI through Zenodo is a separate, deliberate
           publishing step on top.
@@ -284,7 +284,7 @@ export default function IIIFPage() {
           The quiet hero of the whole arrangement is the{' '}
           <a href="https://iiif.io/api/image/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF Image API</a>{' '}
           URL. It is a small grammar that lets you request any region of any page at any size, by rotation
-          and quality, just by editing the path. Here is a real one &mdash; how a viewer asks the Wellcome
+          and quality, just by editing the path. Here is a real one: how a viewer asks the Wellcome
           Collection&rsquo;s image server for a full page at 1600 pixels wide:
         </p>
 
@@ -303,7 +303,7 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The clean story above hides a lot of friction. IIIF standardizes the <em>shape</em> of the
-          data, but not the politics of getting it &mdash; and a project that fetches millions of images
+          data, but not the politics of getting it, and a project that fetches millions of images
           has to be a good citizen or it gets (rightly) blocked.
         </p>
 
@@ -311,7 +311,7 @@ export default function IIIFPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Library and museum image servers throttle aggressively, and they should. We keep a per-host
           token bucket with deliberately conservative limits and exponential backoff on every fetch.
-          These are real numbers from our fetcher &mdash; requests per second, per host:
+          These are real numbers from our fetcher, in requests per second, per host:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-6">
@@ -343,7 +343,7 @@ export default function IIIFPage() {
         <p className="text-secondary leading-relaxed mb-8">
           Those small numbers add up. A single corpus-wide re-archive job to pull full-resolution
           illustrations from the British Library&rsquo;s Endangered Archives meant roughly{' '}
-          <strong>240,000 pages &times; 9 image tiles each &mdash; about 2.16 million requests</strong>.
+          <strong>240,000 pages &times; 9 image tiles each, about 2.16 million requests</strong>.
           Done impatiently, that&rsquo;s an accidental denial-of-service against a cultural institution.
           Done at fifteen requests a second behind their cache, it&rsquo;s invisible. The rate limit
           isn&rsquo;t a nuisance to route around; it&rsquo;s the terms of the relationship.
@@ -353,7 +353,7 @@ export default function IIIFPage() {
           The datacenter problem (and an accidental gift from IIIF)
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
-          Some institutions &mdash; Harvard, and apparently Gallica &mdash; serve <em>residential</em> IP
+          Some institutions (Harvard, and apparently Gallica) serve <em>residential</em> IP
           addresses happily but rate-limit <em>datacenter</em> IPs hard. Our import server runs on
           Vercel, in a datacenter, so its requests get 429&rsquo;d while the same manifest opens fine in a
           browser at home. The workaround is to fetch the manifest from a residential connection and
@@ -361,8 +361,8 @@ export default function IIIFPage() {
         </p>
         <p className="text-secondary leading-relaxed mb-8">
           Here IIIF&rsquo;s architecture quietly saves us. Because the manifest is separate from the
-          images &mdash; it merely <em>references</em> image URLs that are then served straight to the
-          reader&rsquo;s browser &mdash; we only need to fetch the manifest <strong>once</strong>. The
+          images (it merely <em>references</em> image URLs that are then served straight to the
+          reader&rsquo;s browser), we only need to fetch the manifest <strong>once</strong>. The
           facsimile renders for every reader afterwards even if our own servers never successfully fetch
           those images datacenter-side. Separating presentation metadata from pixels turns a hard block
           into a one-time, low-volume fetch.
@@ -384,7 +384,7 @@ export default function IIIFPage() {
             <span className="text-accent-gold-dark mt-1 shrink-0">&bull;</span>
             <span>
               <strong>Version drift.</strong> Presentation 2.x and 3.0 nest their canvases differently,
-              and plenty of &ldquo;IIIF&rdquo; endpoints are partial &mdash; a valid manifest with no
+              and plenty of &ldquo;IIIF&rdquo; endpoints are partial: a valid manifest with no
               Image API service (so no deep zoom), metadata in a dozen idiosyncratic shapes, the
               occasional canvas pointing at a missing image.
             </span>
@@ -406,7 +406,7 @@ export default function IIIFPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Not everything publishes IIIF. A great many digitized books live behind a bespoke viewer, an
           OAI-PMH feed, a discovery layer, or nothing more than a download link. IIIF is our preferred
-          on-ramp, not our only one &mdash; so when there&rsquo;s no manifest, we fall back, roughly in
+          on-ramp, not our only one, so when there&rsquo;s no manifest, we fall back, roughly in
           this order:
         </p>
 
@@ -432,8 +432,8 @@ export default function IIIFPage() {
           <li className="flex gap-3">
             <span className="font-mono text-sm text-accent-gold-dark mt-0.5 shrink-0">3.</span>
             <span>
-              <strong>Direct partner ingest.</strong> The founding collection &mdash; the Embassy of the
-              Free Mind&rsquo;s own rare books &mdash; comes straight off the institution&rsquo;s scanning
+              <strong>Direct partner ingest.</strong> The founding collection (the Embassy of the
+              Free Mind&rsquo;s own rare books) comes straight off the institution&rsquo;s scanning
               archive, never via IIIF. (Those scans bring their own puzzles: many are two-page spreads
               that have to be detected and split before the pipeline can read a single page.)
             </span>
@@ -442,14 +442,14 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The design choice that makes this manageable: <strong>every path normalizes into the same book
-          and page document shape</strong> &mdash; same fields, same content fingerprint for dedup, same
-          provenance record &mdash; before anything downstream runs. So the pipeline neither knows nor
+          and page document shape</strong> (same fields, same content fingerprint for dedup, same
+          provenance record) before anything downstream runs. So the pipeline neither knows nor
           cares whether a book arrived as a pristine IIIF v3 manifest or was hand-assembled from a browser
           session. IIIF is the widest, cleanest door into one shared room.
         </p>
 
-        <Figure caption="Every on-ramp converges. IIIF is the best entry point, but a browser-driven viewer, a catalog API, the fallback chain, or a partner's own scans all normalize into the same document shape — so one downstream pipeline serves them all.">
-          <svg viewBox="0 0 720 260" className="w-full h-auto" role="img" aria-label="Diagram: four ingest paths — IIIF manifest, browser-driven viewer, catalog API, partner scans — converge into one normalized document shape and one pipeline">
+        <Figure caption="Every on-ramp converges. IIIF is the best entry point, but a browser-driven viewer, a catalog API, the fallback chain, or a partner's own scans all normalize into the same document shape, so one downstream pipeline serves them all.">
+          <svg viewBox="0 0 720 260" className="w-full h-auto" role="img" aria-label="Diagram: four ingest paths (IIIF manifest, browser-driven viewer, catalog API, partner scans) converge into one normalized document shape and one pipeline">
             <defs>
               <marker id="arrow3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
                 <path d="M0,0 L7,3 L0,6 Z" fill={STONE} />
@@ -496,8 +496,8 @@ export default function IIIFPage() {
         </div>
         <p className="text-sm text-muted mb-8">
           Live example: the{' '}
-          <a href="https://sourcelibrary.org/api/iiif/69bd9e336120d54bd037bf37/manifest" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">manifest for <em>Atalanta Fugiens</em></a>{' '}
-          &mdash; load it in a viewer and you can search and read its translation.
+          <a href="https://sourcelibrary.org/api/iiif/69bd9e336120d54bd037bf37/manifest" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">manifest for <em>Atalanta Fugiens</em></a>.
+          Load it in a viewer and you can search and read its translation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -506,7 +506,7 @@ export default function IIIFPage() {
           <a href="https://universalviewer.io/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Universal Viewer</a>,{' '}
           <a href="https://samvera-labs.github.io/clover-iiif/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Clover</a>, or{' '}
           <a href="https://theseusviewer.org/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Theseus</a>{' '}
-          at that URL and you get the page images &mdash; but also something the original manifest never
+          at that URL and you get the page images, but also something the original manifest never
           had:{' '}
           <strong>our AI-generated OCR and English translation, delivered as Web Annotations that overlay
           the original folio</strong>. The transcription and the translation sit on the very pixels they
@@ -554,8 +554,8 @@ export default function IIIFPage() {
           invariant. AI text is never presented as a faithful human transcription: every annotation
           carries a Web-Annotation <code className="text-sm bg-stone-100 px-1.5 py-0.5 rounded">generator</code>{' '}
           labeled &ldquo;machine-generated, not human-verified,&rdquo; with the model name attached. And
-          we are scrupulous never to leak the AI&rsquo;s <em>editorial</em> notes &mdash; the little
-          summaries and keyword blocks our pipeline writes <em>about</em> a page &mdash; into the
+          we are scrupulous never to leak the AI&rsquo;s <em>editorial</em> notes (the little
+          summaries and keyword blocks our pipeline writes <em>about</em> a page) into the
           transcription, because those describe the page rather than quote it. The whole point of a
           source library is that what you quote is really on the leaf in front of you.
         </p>
@@ -569,7 +569,7 @@ export default function IIIFPage() {
           words it claims. There is also a{' '}
           <a href="https://iiif.io/api/search/2.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">Content Search 2.0</a>{' '}
           endpoint, so a viewer can search across a book&rsquo;s OCR and translation and get back
-          highlighted hits as annotations &mdash; a single book&rsquo;s manifest can return dozens of
+          highlighted hits as annotations; a single book&rsquo;s manifest can return dozens of
           matches with the exact phrase highlighted on each folio.
         </p>
 
@@ -580,8 +580,8 @@ export default function IIIFPage() {
           Everything above is in service of one idea, and it is worth saying plainly. We take a book, run
           it through machine OCR, run that through machine translation, and add machine-written editorial
           notes. By the time a reader sees an English sentence, it has passed through three layers of
-          automation. The single thing that keeps this honest &mdash; that makes it a <em>library</em>{' '}
-          rather than a content farm &mdash; is an unbroken chain of provenance back to the original leaf.
+          automation. The single thing that keeps this honest, that makes it a <em>library</em>{' '}
+          rather than a content farm, is an unbroken chain of provenance back to the original leaf.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -595,7 +595,7 @@ export default function IIIFPage() {
               <strong>On the way in,</strong> every book records who digitized it, the URL of the original
               catalog record, the institution&rsquo;s own attribution and rights statement, and a content
               fingerprint (often the IIIF identifier itself) used for deduplication. We mirror the page
-              images to our own storage for speed and reliability &mdash; but we never sever the link
+              images to our own storage for speed and reliability, but we never sever the link
               back. Every book page keeps a live link to the source record <em>and</em> to the upstream
               IIIF manifest, so a skeptical reader can go check the original for themselves. <em>Ad
               fontes.</em>
@@ -615,7 +615,7 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           That last point is not theoretical. Early on, a page-description note our pipeline had written{' '}
-          <em>about</em> a page &mdash; mentioning mercury discussed on a neighboring leaf &mdash; leaked
+          <em>about</em> a page, mentioning mercury discussed on a neighboring leaf, leaked
           into a search snippet and produced a confident citation to words that were not on the page. The
           fix was to treat the boundary between the author&rsquo;s words and the machine&rsquo;s words as
           sacred, everywhere those words are served. For a human reader that boundary is a matter of
@@ -629,20 +629,20 @@ export default function IIIFPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Where this could go next</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A few directions we&rsquo;re thinking about &mdash; some prompted by the question that started
+          A few directions we&rsquo;re thinking about, some prompted by the question that started
           this post: <em>do we really have to hit an endpoint for every single book?</em>
         </p>
 
         <div className="space-y-5 mb-8">
           <IdeaCard
             n="01"
-            title="Harvest collections, not books — via IIIF Collection documents"
+            title="Harvest collections, not books, via IIIF Collection documents"
             body={
               <>
                 Today we mostly enumerate candidates one institution at a time, then fetch each
                 manifest at import. But IIIF already has the right primitive for bulk: the{' '}
                 <a href="https://iiif.io/api/presentation/3.0/#51-collection" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline"><strong>Collection</strong></a>{' '}
-                document &mdash; a manifest of manifests. A single
+                document: a manifest of manifests. A single
                 Collection URL can list thousands of objects with their manifest links and enough
                 metadata to dedupe and subject-filter <em>before</em> we ever fetch a page. Walking
                 published Collections (and the top-level &ldquo;collection of collections&rdquo; some
@@ -661,8 +661,8 @@ export default function IIIFPage() {
                 <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">ETag</code> /{' '}
                 <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">Last-Modified</code> and a
                 content hash. Re-imports and re-checks then become conditional requests that mostly
-                return <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">304 Not Modified</code>{' '}
-                &mdash; near-zero load on the institution, and we notice when a manifest genuinely
+                return <code className="text-xs bg-stone-100 px-1 py-0.5 rounded">304 Not Modified</code>,
+                with near-zero load on the institution, and we notice when a manifest genuinely
                 changes (a new page, corrected rights, an added DOI). It also makes our imports
                 reproducible: the manifest we built from is on disk, not re-fetched from a moving target.
               </>
@@ -674,7 +674,7 @@ export default function IIIFPage() {
             body={
               <>
                 Because ~99.8% of our pages live as flat JPEGs on R2, our own hosted books are{' '}
-                <em>not</em> currently deep-zoomable in external viewers &mdash; only the upstream tail
+                <em>not</em> currently deep-zoomable in external viewers; only the upstream tail
                 is. The clean convergence is to serve a Level 1/2 Image API over the R2 derivatives:
                 then every page is simultaneously <em>ours</em>, reliable, <em>and</em> zoomable, with no
                 dependency on any upstream server. The most promising path extends our existing image
@@ -686,14 +686,14 @@ export default function IIIFPage() {
           />
           <IdeaCard
             n="04"
-            title="Publish our own Collections — and a Change Discovery feed"
+            title="Publish our own Collections and a Change Discovery feed"
             body={
               <>
                 If Collections are good for ingesting, they&rsquo;re good for sharing. We could expose
                 our holdings as IIIF Collections (by language, by tradition, by source institution) and
                 a{' '}
                 <a href="https://iiif.io/api/discovery/1.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF Change Discovery</a>{' '}
-                activity stream, so other projects can harvest <em>us</em> the same efficient way &mdash;
+                activity stream, so other projects can harvest <em>us</em> the same efficient way,
                 including the first-translation editions that don&rsquo;t exist anywhere else.
               </>
             }
@@ -705,7 +705,7 @@ export default function IIIFPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           None of this exists without the institutions that did the patient, expensive work of
-          digitizing these books and &mdash; crucially &mdash; <em>chose to publish them as IIIF</em>{' '}
+          digitizing these books and, crucially, <em>chose to publish them as IIIF</em>{' '}
           rather than locking them behind a bespoke viewer. Every English translation we&rsquo;ve made
           rests on their decision to be interoperable. A standard is only as generous as the people who
           adopt it, and these libraries have been generous.
@@ -774,7 +774,7 @@ export default function IIIFPage() {
             Source Library is a project of the Embassy of the Free Mind. These notes accompany a
             lightning talk at the{' '}
             <a href="https://iiif.io/event/2026/leiden/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF 2026 Annual Conference &amp; Showcase</a>{' '}
-            in Leiden and The Hague. Corrections and feedback are welcome &mdash;{' '}
+            in Leiden and The Hague. Corrections and feedback are welcome:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
               team@sourcelibrary.org
             </a>

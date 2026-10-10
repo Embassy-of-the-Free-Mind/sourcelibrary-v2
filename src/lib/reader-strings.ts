@@ -2,6 +2,7 @@
 // `src/lib/i18n.ts` about why server code (this catalogue may be read from
 // `layout.tsx`'s generateMetadata) must not import `@/lib/i18n` itself.
 import type { Locale } from '@/lib/locale-path';
+import type { WarningKind } from '@/lib/book-warnings';
 
 /**
  * Chrome strings for the redesigned reader (`reader-v2`, currently
@@ -159,6 +160,8 @@ export interface ReaderStrings {
     /** ViewToggleGroup chip labels. */
     viewScan: string;
     viewOcr: string;
+    /** Header of the transcription pane; `language` is the stored `books.language`. */
+    ocrPaneHeader: (language: string) => string;
     viewRoman: string;
     viewEnglish: string;
     visiblePanesAria: string;
@@ -332,6 +335,12 @@ export interface ReaderStrings {
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
+    /** Syriac pages read by a specialist Kraken model (#4883), by route: Sophro Mhiro for
+     *  manuscripts, omnisyr for print. Replaces transcribedBy + machineNotice on those pages. */
+    krakenTranscript: (route: 'manuscript' | 'print') => string;
+    krakenNotice: (route: 'manuscript' | 'print') => string;
+    /** Label for the link under krakenNotice to the by-eye check it cites (KRAKEN_EVIDENCE_URL). */
+    krakenEvidenceLink: string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
     iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
     /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
@@ -353,6 +362,19 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /**
+     * Quality warnings from stored checks (#6199). Voice: .claude/docs/quality-statements.md — what was found, by
+     * whom, when; no softening, no verdict adjectives. Each `qualityKinds` value is a clause that follows "found that".
+     */
+    qualityKinds: Record<WarningKind, string>;
+    /** Joins the clauses of one page: at most two are named, `more` says others were found. */
+    qualityFindings: (clauses: string[], more: boolean) => string;
+    qualityPageReview: (o: { ai: boolean; image: boolean; findings: string; date: string }) => string;
+    qualityPageDetector: (date: string) => string;
+    /** `serious` is null when the check kept no per-page record. */
+    qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
+    qualitySeeReview: string;
+    qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
     corpusTranslation: (name: string) => string;
@@ -397,6 +419,16 @@ export interface ReaderStrings {
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
+    /**
+     * An English edition with no `translation.data` is not "untranslated" —
+     * the pipeline never translates English. The transcription is the
+     * reading text; say so, with no request CTA and no pipeline button.
+     */
+    englishReadingText: string;
+    englishReadingTextBody: string;
+    /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
+    notModernized: string;
+    notModernizedBody: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -484,13 +516,38 @@ export interface ReaderStrings {
       invented_text: string;
       wrong_image: string;
       wrong_language: string;
+      translation_error: string;
     };
     commentPlaceholder: string;
+    /** The three fields a `translation_error` report adds (#6120). */
+    passageLabel: string;
+    correctionLabel: string;
+    sourceLabel: string;
     send: string;
     sending: string;
     cancel: string;
     thanks: string;
     failed: string;
+  };
+
+  /**
+   * The Derge Tengyur section note under the machine-draft line (#6120). Every number comes from
+   * src/data/tengyur-section-quality.json; these are only the sentences around them.
+   */
+  tengyurNote: {
+    /** How good: the section's measured light/work/specialist split, who judged it and when. */
+    rated: (a: { section: string; n: number; date: string; light: number; work: number; specialist: number }) => string;
+    /** What goes wrong: the commonest kinds, then reversal/agent findings per 100 pages. */
+    faults: (a: { kinds: string[]; revAgent: number; voice: boolean }) => string;
+    /** n below the threshold: no rate of its own, the whole-Tengyur figures instead. */
+    tooFew: (a: { section: string; n: number; of: number; date: string; light: number; revAgent: number }) => string;
+    kinds: { term: string; structure: string; gloss: string; omission: string; addition: string; reversal: string; agent: string };
+    /** Section-specific failure the reviewers named (#5829 Result 2, Result 5). */
+    /** The Vinaya's term kind, naming the Pali offence-class names (#5829 Result 6). */
+    vinayaTerms: (pct: number) => string;
+    methodLink: string;
+    /** Section names as a reader of this locale says them; Sanskrit names stay. */
+    sectionNames: Record<string, string>;
   };
 
   /** Revision history panel (public; the Restore action itself stays
@@ -584,6 +641,38 @@ export interface ReaderStrings {
     viewCurrentEdition: string;
   };
 }
+
+/** The Tengyur quality note in English (#6120). Hoisted so the Latin block can reuse it:
+ * a `/la` reader page exists only for a book written in Latin, so a Tibetan canon volume
+ *  never renders there and the note needs no Latin wording. */
+const TENGYUR_NOTE_EN: ReaderStrings['tengyurNote'] = {
+    rated: ({ section, n, date, light, work, specialist }) =>
+      `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+    faults: ({ kinds, revAgent, voice }) =>
+      `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
+    tooFew: ({ section, n, of, date, light, revAgent }) =>
+      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
+    kinds: {
+      term: 'mistranslated technical terms',
+      structure: 'misread sentence structure',
+      gloss: 'inaccurate notes',
+      omission: 'omitted phrases',
+      addition: 'added words',
+      reversal: 'reversed statements',
+      agent: 'misattributed speakers',
+    },
+    vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
+    methodLink: 'How this was measured',
+    sectionNames: {
+      'Tantra commentary': 'tantra commentary',
+      'Sūtra commentary': 'sūtra commentary',
+      'Grammar & sciences': 'grammar and sciences',
+      Praises: 'praises',
+      Letters: 'letters',
+      Miscellaneous: 'miscellaneous',
+      Catalogue: 'catalogue',
+    },
+};
 
 export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
   en: {
@@ -682,6 +771,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: 'Scan',
       viewOcr: 'OCR',
+      ocrPaneHeader: (language) => `${language} · OCR`,
       viewRoman: 'Roman',
       viewEnglish: 'English',
       visiblePanesAria: 'Visible panes',
@@ -698,15 +788,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiShort: 'AI',
       aiTitle: 'Produced with AI assistance',
       corpusChip: (shortName) => `${shortName} translation`,
-      corpusChipTitle: (name) => `The English follows the scholarly translation of the ${name} — it is not machine-made`,
+      corpusChipTitle: (name) => `The English follows the scholarly translation of the ${name}. It is not machine-made`,
       tabletWitness: 'Tablet witness',
       witnessCount: (index, total) => `Tablet ${index} of ${total}`,
-      witnessNotSource: (shortName) => `The text follows the ${shortName} edition — it is not read from this photograph`,
+      witnessNotSource: (shortName) => `The text follows the ${shortName} edition. It is not read from this photograph`,
       witnessAlt: (designation) => `Photograph of tablet ${designation}`,
       prevWitness: 'Previous tablet',
       nextWitness: 'Next tablet',
       viewOnCdli: 'View on CDLI',
-      noFacsimile: 'No facsimile — this is a text edition',
+      noFacsimile: 'No facsimile: this is a text edition',
       scanAlt: (pageNumber, title) => `Scan of page ${pageNumber} of ${title}`,
 
       originalScan: 'Original scan',
@@ -794,7 +884,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       inputAria: 'Ask the librarian',
       ask: 'Ask',
       consulting: 'Consulting the text…',
-      askErrorInline: "The librarian couldn't answer just now — try again.",
+      askErrorInline: "The librarian couldn't answer just now. Try again.",
     },
     info: {
       thisPage: 'This page',
@@ -816,9 +906,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translatedBy: (model) => `Translated from the transcript by ${model}`,
       machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
       corpusNoScan: (witnessCount) => witnessCount > 0
-        ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
-        : 'None — this is a digital text edition; no page images exist.',
+        ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
+        : 'None. This is a digital text edition; no page images exist.',
       corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Read from the scan by omnisyr, a model trained on printed Syriac.'
+        : 'Read from the scan by Sophro Mhiro (Beth Mardutho), a model trained on Syriac manuscripts.',
+      krakenNotice: (route) =>
+        'Machine transcription, not checked by a person. ' +
+        (route === 'print'
+          ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
+        ' Check the scan wherever a reading matters.',
+      krakenEvidenceLink: 'How we checked',
       iaTranscript: (engine, year, agreement) =>
         `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
@@ -831,11 +931,39 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
-      machineDraftNotice: 'Machine draft, not yet reviewed by a scholar.',
+      machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      qualityKinds: {
+        wrong_page: 'the scan and the text are from different pages',
+        english_other_page: 'the English belongs to a different page',
+        invented_transcription: 'the transcription has text that is not on the page',
+        model_notes: 'the model’s own notes stand where the text should be',
+        garble_translated: 'the English translates a garbled transcription as if it were sound',
+        meaning_reversed: 'the English reverses a statement or drops a qualifier',
+        misread_meaning: 'a misread word changes the meaning',
+        unsupported_notes: 'the notes state things the page does not say',
+        missing_transcription: 'part of the page is missing from the transcription',
+        missing_english: 'part of the page is missing from the English',
+        number_misread: 'a number, date or quantity is misread',
+        repeated_text: 'a passage is repeated that appears once on the page',
+        serious_transcription: 'the transcription has a serious error',
+        serious_english: 'the English has a serious error',
+        serious_other: 'the page has a serious error',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', and that ') + (more ? ', among other serious errors' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'An AI reviewer' : 'A reviewer'} reading this page ${image ? 'against the scan' : 'as text, without the scan,'} found that ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Flagged by an automated check, not yet read by a person (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `A check by ${ai ? 'an AI reviewer' : 'a reviewer'} read ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date}`;
+        if (serious === null) return `${start} and found serious errors.`;
+        return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
+      },
+      qualitySeeReview: 'See the review',
+      qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
-      corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
-      corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
+      corpusTranslation: (name) => `Scholarly translation from the ${name}, not machine-made`,
+      corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours; the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
     },
     cite: {
@@ -858,18 +986,22 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
+      englishReadingText: 'English edition',
+      englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
+      notModernized: 'Not yet modernized',
+      notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
       sending: 'Sending…',
       requested: 'Requested',
-      thanksWillEmail: 'Thanks — we’ll email you when this page is translated.',
-      thanksWillPrioritise: 'Thanks — we’ll prioritize this book.',
+      thanksWillEmail: 'Thanks. We’ll email you when this page is translated.',
+      thanksWillPrioritise: 'Thanks. We’ll prioritize this book.',
     },
     paneGated: {
       label: 'Sign in to keep reading',
       body: (freePages) => `The scan is free to browse. Reading the transcription and translation past the first ${freePages} pages asks for a free account.`,
-      signIn: 'Sign in — it’s free',
+      signIn: 'Sign in (it’s free)',
     },
     save: {
       anonymousNotice: 'Saves work without an account, on this device only.',
@@ -925,14 +1057,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Translation adds things',
         wrong_image: 'Wrong page image',
         wrong_language: 'Wrong language',
+        translation_error: 'The English is wrong here',
       },
       commentPlaceholder: 'Anything else? (optional)',
+      passageLabel: 'The English as it reads now',
+      correctionLabel: 'What it should say',
+      sourceLabel: 'The original words (optional)',
       send: 'Send report',
       sending: 'Sending…',
       cancel: 'Cancel',
       thanks: 'Thank you. We will look at this page.',
       failed: 'That did not send. Try again in a moment.',
     },
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -942,7 +1079,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       chars: 'chars',
       showMaintenance: (n) => `Show ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       hideMaintenance: (n) => `Hide ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
-      maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page — not fresh readings of the scan.',
+      maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page, not fresh readings of the scan.',
       restoreForbidden: 'You are not signed in as an editor any more. Sign in again to restore this version.',
       restoreFailed: 'That version could not be restored. Try again in a moment.',
       today: (time) => `Today ${time}`,
@@ -997,9 +1134,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       resolving: 'Resolving the cited edition…',
       unresolvable: (v) => `This link cites edition v${v}, but it could not be resolved. Showing the current text.`,
       continueReadingLink: 'Continue reading →',
-      pageNotInEdition: (label, date) => `This page was not part of edition ${label}, published ${date} — showing the current text.`,
+      pageNotInEdition: (label, date) => `This page was not part of edition ${label}, published ${date}. Showing the current text.`,
       readingEdition: (label, date) => `You are reading edition ${label}, published ${date}.`,
-      readingEditionRevised: (label, date) => `You are reading edition ${label}, published ${date} — the translation has since been revised.`,
+      readingEditionRevised: (label, date) => `You are reading edition ${label}, published ${date}. The translation has since been revised.`,
       viewCurrentEdition: 'View current edition →',
     },
   },
@@ -1103,6 +1240,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: 'Escaneo',
       viewOcr: 'OCR',
+      ocrPaneHeader: (language) => `${language} · OCR`,
       // Short chip label (matches "Roman" width); the fuller
       // "romanisedTranscription" string below spells it out.
       viewRoman: 'Latina',
@@ -1121,15 +1259,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiShort: 'IA',
       aiTitle: 'Generado con ayuda de IA',
       corpusChip: (shortName) => `Traducción ${shortName}`,
-      corpusChipTitle: (name) => `El inglés sigue la traducción académica de ${name} — no es obra de una máquina`,
+      corpusChipTitle: (name) => `El inglés sigue la traducción académica de ${name}. No es obra de una máquina`,
       tabletWitness: 'Tablilla testigo',
       witnessCount: (index, total) => `Tablilla ${index} de ${total}`,
-      witnessNotSource: (shortName) => `El texto sigue la edición ${shortName} — no se leyó de esta fotografía`,
+      witnessNotSource: (shortName) => `El texto sigue la edición ${shortName}. No se leyó de esta fotografía`,
       witnessAlt: (designation) => `Fotografía de la tablilla ${designation}`,
       prevWitness: 'Tablilla anterior',
       nextWitness: 'Tablilla siguiente',
       viewOnCdli: 'Ver en CDLI',
-      noFacsimile: 'Sin facsímil — es una edición de texto',
+      noFacsimile: 'Sin facsímil: es una edición de texto',
       scanAlt: (pageNumber, title) => `Escaneo de la página ${pageNumber} de ${title}`,
 
       originalScan: 'Escaneo original',
@@ -1244,26 +1382,64 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translatedBy: (model) => `Traducida de la transcripción por ${model}`,
       machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
       corpusNoScan: (witnessCount) => witnessCount > 0
-        ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
-        : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
+        ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
+        : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
       corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Leída del escaneo por omnisyr, un modelo entrenado con siríaco impreso.'
+        : 'Leída del escaneo por Sophro Mhiro (Beth Mardutho), un modelo entrenado con manuscritos siríacos.',
+      krakenNotice: (route) =>
+        'Transcripción automática, no revisada por una persona. ' +
+        (route === 'print'
+          ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
+        ' Consulta el escaneo siempre que una lectura sea importante.',
+      krakenEvidenceLink: 'Cómo lo comprobamos',
       iaTranscript: (engine, year, agreement) =>
         `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
       manualTranscript: (model) => model ? `Leída del escaneo por ${model}, corregida a mano` : 'Transcrita a mano',
       transcriptChipIa: (engine) => `OCR del Internet Archive${engine ? ` · ${engine}` : ''}`,
       transcriptChipIaTitle: (agreement) =>
-        'OCR del Archive — los números pueden estar mal leídos (véase #5186)' +
+        'OCR del Archive: los números pueden estar mal leídos (véase #5186)' +
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
-      machineDraftNotice: 'Borrador automático, aún no revisado por un especialista.',
+      machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      qualityKinds: {
+        wrong_page: 'la imagen y el texto son de páginas distintas',
+        english_other_page: 'la traducción corresponde a otra página',
+        invented_transcription: 'la transcripción contiene texto que no está en la página',
+        model_notes: 'las notas del propio modelo ocupan el lugar del texto',
+        garble_translated: 'la traducción da por bueno un pasaje mal transcrito',
+        meaning_reversed: 'la traducción invierte una afirmación u omite un matiz',
+        misread_meaning: 'una palabra mal leída cambia el sentido',
+        unsupported_notes: 'las notas afirman cosas que la página no dice',
+        missing_transcription: 'falta parte de la página en la transcripción',
+        missing_english: 'falta parte de la página en la traducción',
+        number_misread: 'un número, una fecha o una cantidad están mal leídos',
+        repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
+        serious_transcription: 'la transcripción tiene un error grave',
+        serious_english: 'la traducción tiene un error grave',
+        serious_other: 'la página tiene un error grave',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', y que ') + (more ? ', entre otros errores graves' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Un revisor de IA' : 'Un revisor'}, al leer esta página ${image ? 'junto a la imagen' : 'solo como texto, sin la imagen'}, encontró que ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Señalada por una comprobación automática; aún no la ha leído una persona (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `Una revisión hecha por ${ai ? 'un revisor de IA' : 'un revisor'} leyó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date}`;
+        if (serious === null) return `${start} y encontró errores graves.`;
+        return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
+      },
+      qualitySeeReview: 'Ver la revisión',
+      qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
-      corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
-      corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
+      corpusTranslation: (name) => `Traducción académica procedente de ${name}, no obra de una máquina`,
+      corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra; el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
     },
     cite: {
@@ -1286,6 +1462,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
+      englishReadingText: 'Edición en inglés',
+      englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
+      notModernized: 'Aún sin modernizar',
+      notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
@@ -1297,7 +1477,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneGated: {
       label: 'Inicia sesión para seguir leyendo',
       body: (freePages) => `El escaneo se puede hojear libremente. Para leer la transcripción y la traducción más allá de las primeras ${freePages} páginas hace falta una cuenta gratuita.`,
-      signIn: 'Inicia sesión — es gratis',
+      signIn: 'Inicia sesión (es gratis)',
     },
     save: {
       anonymousNotice: 'Puedes guardar sin una cuenta; se guarda solo en este dispositivo.',
@@ -1353,13 +1533,45 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'La traducción añade cosas',
         wrong_image: 'Imagen de página equivocada',
         wrong_language: 'Idioma equivocado',
+        translation_error: 'La traducción está mal aquí',
       },
       commentPlaceholder: '¿Algo más? (opcional)',
+      passageLabel: 'La traducción tal como se lee ahora',
+      correctionLabel: 'Lo que debería decir',
+      sourceLabel: 'Las palabras del original (opcional)',
       send: 'Enviar',
       sending: 'Enviando…',
       cancel: 'Cancelar',
       thanks: 'Gracias. Revisaremos esta página.',
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
+    },
+    tengyurNote: {
+      rated: ({ section, n, date, light, work, specialist }) =>
+        `De ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión sustancial` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
+      faults: ({ kinds, revAgent, voice }) =>
+        `Errores medidos: unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}${kinds.length ? `. También frecuentes: ${kinds.join(', ')}` : ''}.`,
+      tooFew: ({ section, n, of, date, light, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, y unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
+      kinds: {
+        term: 'términos técnicos mal traducidos',
+        structure: 'estructura de la frase mal leída',
+        gloss: 'notas inexactas',
+        omission: 'frases omitidas',
+        addition: 'palabras añadidas',
+        reversal: 'afirmaciones invertidas',
+        agent: 'hablantes mal atribuidos',
+      },
+      vinayaTerms: (pct) => `términos técnicos mal traducidos (nombres pali para las clases de faltas en el ${pct} % de las páginas del Vinaya)`,
+      methodLink: 'Cómo se midió',
+      sectionNames: {
+        'Tantra commentary': 'comentario tántrico',
+        'Sūtra commentary': 'comentario de sūtras',
+        'Grammar & sciences': 'gramática y ciencias',
+        Praises: 'himnos de alabanza',
+        Letters: 'cartas',
+        Miscellaneous: 'miscelánea',
+        Catalogue: 'catálogo',
+      },
     },
     history: {
       title: 'Historial de revisiones',
@@ -1429,6 +1641,1437 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       readingEdition: (label, date) => `Estás leyendo la edición ${label}, publicada el ${date}.`,
       readingEditionRevised: (label, date) => `Estás leyendo la edición ${label}, publicada el ${date}; la traducción se ha revisado desde entonces.`,
       viewCurrentEdition: 'Ver la edición actual →',
+    },
+  },
+  // Latin (#6254). Draft copy, to be read by a Latinist before launch.
+  //
+  // Two things differ from the Spanish block. First, a `/la` reader page exists
+  // only for a book WRITTEN in Latin (`NATIVE_EDITION_LANGUAGE.la` is the route
+  // gate), so the strings that take the book's language name it as Latin
+  // outright rather than interpolating the stored English word "Latin".
+  // Second, "conversio" always means the ENGLISH translation: nothing is
+  // translated into Latin, and here the transcription is the reading text.
+  la: {
+    toolbar: {
+      contents: 'Index',
+      guide: 'Dux',
+      search: 'Quaere',
+      librarian: 'Bibliothecarius',
+      save: 'Serva',
+      share: 'Communica',
+      cite: 'Cita',
+      download: 'Deprome',
+      info: 'Notitia',
+      views: 'Aspectus',
+      pages: 'Paginae',
+      settings: 'Optiones',
+      feedback: 'Scribe nobis',
+      more: 'Plura',
+      menu: 'Index',
+      readerToolsAria: 'Instrumenta legendi',
+      previousPage: 'Pagina prior',
+      nextPage: 'Pagina sequens',
+      previous: 'Prior',
+      next: 'Sequens',
+      close: 'Claude',
+      jumpToPage: 'Paginam pete',
+      backToTheBook: 'Ad librum redi',
+      backToTheBookPage: 'Ad paginam libri redi',
+      backToTheReader: 'Ad lectionem redi',
+      scanFullScreen: 'Imago, toto scrinio',
+      viewScanFullScreen: 'Imaginem toto scrinio specta',
+    },
+    panels: {
+      titles: {
+        save: 'Serva',
+        menu: 'Index',
+        contents: 'Index capitum',
+        search: 'In hoc libro quaere',
+        guide: 'Dux legendi',
+        librarian: 'Bibliothecarium roga',
+        info: 'De editione et pagina',
+        cite: 'Hanc paginam cita',
+        share: 'Communica',
+        settings: 'Optiones legendi',
+        views: 'Imago, textus, conversio',
+        downloads: 'Deprome',
+        history: 'Historia recensionum',
+        feedback: 'Scribe nobis',
+        more: 'Plura',
+      },
+      blurbs: {
+        contents: 'Index capitum ipsius libri, ut impressus est.',
+        search: 'Quaerit in textu transcripto et in descriptionibus imaginum.',
+        guide: 'Summarium libri nostrum, ab intellegentia artificiali ex transcriptione confectum.',
+        librarian: 'Responsa intellegentiae artificialis, hac pagina et libro circumstante nixa.',
+        info: 'Quid haec pagina sit, et ex qua editione photographice descripta.',
+        cite: 'Citatio quae hanc ipsam paginam indicat.',
+        share: 'Nexum ad hanc paginam exscribe, vel eum publica.',
+        settings: 'Quomodo textus componatur. Quae elegeris in hoc instrumento servantur.',
+        views: 'Plura simul ostende.',
+        downloads: 'Hanc paginam, vel totum librum, tecum aufer.',
+        history: 'Omnes mutationes relatae transcriptionis et conversionis huius paginae.',
+      },
+      closeAria: (title) => `Claude: ${title}`,
+      backToMore: 'Ad Plura redi',
+    },
+    moreMenu: {
+      contents: 'Index capitum',
+      contentsBlurb: 'Index capitum ipsius libri, ut impressus est',
+      guide: 'Dux legendi',
+      guideBlurb: 'Conspectus, argumenta, partes',
+      search: 'In hoc libro quaere',
+      searchBlurb: 'Verbum in textu transcripto inveni',
+      librarian: 'Bibliothecarium roga',
+      librarianBlurb: 'Quaestiones de hac pagina vel de libro',
+      cite: 'Hanc paginam cita',
+      citeBlurb: 'Citatio quae hanc ipsam paginam indicat',
+      downloads: 'Deprome',
+      downloadsBlurb: 'Haec pagina, vel totus liber, pluribus formis',
+      info: 'De editione et pagina',
+      infoBlurb: 'Haec pagina, et editio unde sumpta est',
+      history: 'Historia recensionum',
+      historyBlurb: 'Omnes mutationes relatae huius paginae',
+      settings: 'Optiones legendi',
+      settingsBlurb: 'Color, magnitudo litterarum, typi, notae',
+      views: 'Imago, textus, conversio',
+      viewsBlurb: 'Plura simul ostende',
+      feedback: 'Scribe nobis',
+      feedbackBlurb: 'Dic nobis de hac pagina vel de instrumento legendi',
+      menu: 'Index',
+      menuBlurb: 'Reliqua bibliotheca, et ratio tua',
+      groupRead: 'Lege',
+      groupPage: 'Haec pagina',
+      groupReader: 'Instrumentum legendi',
+    },
+    panes: {
+      viewScan: 'Imago',
+      // The transcription IS the reading text on `/la`, so the pane is named for
+      // what it holds rather than for how it was made.
+      viewOcr: 'Latine',
+      ocrPaneHeader: () => 'Textus Latinus',
+      viewRoman: 'Litteris Latinis',
+      viewEnglish: 'Anglice',
+      visiblePanesAria: 'Tabulae quae ostenduntur',
+      showPane: (label) => `Ostende: ${label}`,
+      lastPaneShowing: 'Ultima tabula quae ostenditur',
+      pickPaneAria: 'Imago, textus, vel conversio',
+      translatedFrom: () => 'Ex Latino conversum',
+      viewTheScan: 'imaginem specta',
+      viewTheText: () => 'textum Latinum specta',
+
+      originalFallback: 'Textus primigenius',
+      romanisedHeader: 'Litteris Latinis',
+      aiTranslated: 'Intellegentia artificiali conversum',
+      aiShort: 'IA',
+      aiTitle: 'Intellegentia artificiali adiuvante factum',
+      corpusChip: (shortName) => `Conversio ${shortName}`,
+      corpusChipTitle: (name) => `Textus Anglicus conversionem doctam sequitur (${name}); machina factus non est`,
+      tabletWitness: 'Tabula testis',
+      witnessCount: (index, total) => `Tabula ${index} ex ${total}`,
+      witnessNotSource: (shortName) => `Textus editionem ${shortName} sequitur; ex hoc photographemate non legitur`,
+      witnessAlt: (designation) => `Photographema tabulae ${designation}`,
+      prevWitness: 'Tabula prior',
+      nextWitness: 'Tabula sequens',
+      viewOnCdli: 'Apud CDLI specta',
+      noFacsimile: 'Imago nulla: haec est editio textus',
+      scanAlt: (pageNumber, title) => `Imago paginae ${pageNumber} libri ${title}`,
+
+      originalScan: 'Imago exemplaris',
+      originalScanHint: 'Pagina ut photographice descripta est',
+      transcriptionOf: () => 'Textus Latinus',
+      transcriptionHint: 'Textus impressus, machina lectus',
+      englishTranslation: 'Conversio Anglica',
+      englishTranslationHint: 'Intellegentia artificiali adiuvante conversa',
+      romanisedTranscription: 'Transcriptio litteris Latinis',
+      romanisedTranscriptionHint: 'Eadem verba litteris Latinis scripta',
+
+      zoomOut: 'Minue',
+      zoomIn: 'Auge',
+      resetZoom: 'Magnitudinem restitue',
+      readingLens: 'Vitrum legendi: locum sub indice auge',
+      readingLensOff: 'Vitrum legendi tolle',
+      readingLensUnavailable: 'Vitrum legendi (in magnitudine 100% praesto)',
+
+      notes: 'Notae',
+      showNotes: 'Notas et glossas in textu ostende',
+      hideNotes: 'Notas et glossas in textu cela',
+      trace: 'Vestiga',
+      turnTracingOff: 'Vestigationem tolle',
+      traceFallbackLanguage: 'textu primigenio',
+      traceHint: () => 'Vestigatio: locutionem quamlibet preme, ut eam in textu Latino videas',
+      traceAligning: 'Haec pagina cum conversione componitur…',
+      traceUnavailable: 'Vestigatio huic paginae praesto non est.',
+      traceEnglishOnly: 'Vestigatio textum primigenium cum conversione Anglica confert. Ad Anglicam redi, ut ea utaris.',
+      descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Notas ostende, ut descriptionem legas.`,
+      traceRateLimited: 'Finis vestigationum attactus est. Intra (gratis), ut pergas.',
+      traceClickHint: 'Locutionem quamlibet preme, ut eam in altera tabula videas.',
+
+      romanising: 'Haec pagina litteris Latinis redditur…',
+      romanisingLonger: 'diutius quam solet in pagina huius magnitudinis',
+      romanisingEstimate: (seconds) => `plerumque circiter ${seconds}s pro tanto textu`,
+      translitFailed: 'Transcriptio litteris Latinis huius paginae confici non potuit.',
+      translitNone: 'Huius paginae transcriptio litteris Latinis nondum exstat.',
+
+      copyTranscription: 'Transcriptionem exscribe',
+      copyTranslation: 'Conversionem exscribe',
+      copyTransliteration: 'Transcriptionem litteris Latinis exscribe',
+      copied: 'Exscriptum',
+
+      marksMeaning: 'Quid signa in textu significent',
+      marksMeaningShort: 'Quid signa significent',
+      marksInText: 'Signa in textu',
+      markGlossOrTerm: 'Glossa vel vocabulum',
+      markGlossOrTermDesc: 'Verbum explicatum, vel vocabulum artis notatum.',
+      markOnThePage: 'In pagina',
+      markOnThePageDesc: 'Nota marginalis vel manus recentior, in exemplari praesens.',
+      markOurNote: 'Nota nostra',
+      markOurNoteDesc: 'Hic ab editore addita; in exemplari non est.',
+      marksHiddenByNotes: 'Notis celatis omnia celantur.',
+    },
+    contents: {
+      noContentsTranscribed: 'Index capitum huius editionis nondum transcriptus est. Duce legendi vel serie paginarum utere, ut per librum eas.',
+      noContentsAtAll: 'Hic liber indicem capitum non habet.',
+    },
+    guide: {
+      noGuideYet: 'Hic liber ducem legendi nondum habet.',
+      requestGuide: 'Ducem legendi pete',
+      requestGuideThanks: 'Gratias agimus. Hic liber in ordinem relatus est; dux hic apparebit cum confectus erit.',
+      requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
+      showLess: 'Pauciora ostende',
+      readFullOverview: (more) => `Totum conspectum lege (${more} plura)`,
+      sections: 'Partes',
+      readThisSection: 'Hanc partem lege →',
+    },
+    search: {
+      placeholder: 'Quaere…',
+      inputAria: 'In hoc libro quaere',
+      noMatches: 'Nihil in hoc libro repertum',
+      failed: 'Quaerere nunc non licet. Paulo post iterum tempta.',
+      pagesMatch: (total) => `${total} ${total === 1 ? 'pagina congruit' : 'paginae congruunt'}`,
+      pageLabel: (n) => `Pagina ${n}`,
+    },
+    librarian: {
+      suggestions: [
+        'De qua re agit haec pagina?',
+        'Quis fuit auctor?',
+        'Praecipuas notiones huius paginae explica',
+      ],
+      orStartHere: 'Vel hinc incipe',
+      askAboutPage: (pageNumber) => `De p. ${pageNumber} roga…`,
+      inputAria: 'Bibliothecarium roga',
+      ask: 'Roga',
+      consulting: 'Textus consulitur…',
+      askErrorInline: 'Bibliothecarius nunc respondere non potuit. Iterum tempta.',
+    },
+    info: {
+      thisPage: 'Haec pagina',
+      thisEdition: 'Haec editio',
+      howPageWasMade: 'Quomodo haec pagina facta sit',
+      fieldTitle: 'Titulus',
+      fieldEnglish: 'Anglice',
+      fieldAuthor: 'Auctor',
+      fieldLanguage: 'Lingua',
+      fieldPlace: 'Locus',
+      fieldPublisher: 'Typographus',
+      fieldPublished: 'Editus',
+      fieldFormat: 'Forma',
+      fieldPages: 'Paginae',
+      fieldScan: 'Imago',
+      fieldTranscript: 'Transcriptio',
+      scannedFrom: (pageNumber) => `Ex editione impressa photographice descripta${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
+      transcribedBy: (model) => `Ex imagine lecta a ${model}`,
+      translatedBy: (model) => `Ex transcriptione conversa a ${model}`,
+      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est: eam iuxta textum lege, ubicumque lectio alicuius momenti est.',
+      corpusNoScan: (witnessCount) => witnessCount > 0
+        ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
+        : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
+      corpusTranscript: (name, org) => `Transcriptio composita ex ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Ex imagine lecta ab omnisyr, exemplari in libris Syriacis typis impressis exercitato.'
+        : 'Ex imagine lecta a Sophro Mhiro (Beth Mardutho), exemplari in codicibus Syriacis manu scriptis exercitato.',
+      krakenNotice: (route) =>
+        'Transcriptio machina facta, ab homine non recognita. ' +
+        (route === 'print'
+          ? 'Quinque paginas typis impressas cum imaginibus contulimus (mense Septembri 2026): verba in omnibus quinque recte lecta sunt, in duabus autem versus e columnis diversis confusi sunt.'
+          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.') +
+        ' Imaginem inspice, ubicumque lectio alicuius momenti est.',
+      krakenEvidenceLink: 'Quomodo exploraverimus',
+      iaTranscript: (engine, year, agreement) =>
+        `Ex imagine lecta ab OCR Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+        (agreement != null ? `, recepta quia cum nostra lectione paginarum huius libri delectarum consentit (${Math.round(agreement * 100)}% verborum)` : ''),
+      manualTranscript: (model) => model ? `Ex imagine lecta a ${model}, manu emendata` : 'Manu transcripta',
+      transcriptChipIa: (engine) => `OCR Internet Archive${engine ? ` · ${engine}` : ''}`,
+      transcriptChipIaTitle: (agreement) =>
+        'OCR Internet Archive: numeri perperam legi possunt (vide #5186)' +
+        (agreement != null ? ` · cum lectione nostra in ${Math.round(agreement * 100)}% verborum consentit` : ''),
+      transcriptChipManual: 'Manu',
+      transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
+      textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
+      machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      // Latin has no neat "found that X, and that Y": each kind is a full
+      // clause and the sentence frames them after a colon.
+      qualityKinds: {
+        wrong_page: 'imago et textus ex diversis paginis sunt',
+        english_other_page: 'textus Anglicus ad aliam paginam pertinet',
+        invented_transcription: 'transcriptio verba habet quae in pagina non sunt',
+        model_notes: 'adnotationes ipsius machinae locum textus tenent',
+        garble_translated: 'textus Anglicus transcriptionem corruptam quasi sanam convertit',
+        meaning_reversed: 'textus Anglicus sententiam invertit vel exceptionem omittit',
+        misread_meaning: 'verbum perperam lectum sensum mutat',
+        unsupported_notes: 'adnotationes ea affirmant quae pagina non dicit',
+        missing_transcription: 'pars paginae in transcriptione deest',
+        missing_english: 'pars paginae in textu Anglico deest',
+        number_misread: 'numerus, dies vel quantitas perperam lecta est',
+        repeated_text: 'locus iteratur qui in pagina semel legitur',
+        serious_transcription: 'transcriptio mendum grave habet',
+        serious_english: 'textus Anglicus mendum grave habet',
+        serious_other: 'pagina mendum grave habet',
+      },
+      qualityFindings: (clauses, more) => clauses.join('; ') + (more ? '; praeterea alia menda gravia' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Recensor artificialis' : 'Recensor'} hanc paginam ${image ? 'cum imagine collatam' : 'ut textum, sine imagine,'} legens haec invenit: ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Probatione automataria notata, ab homine nondum lecta (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date})`;
+        if (serious === null) return `${start} et menda gravia invenit.`;
+        return `${start} et menda gravia ${read === 1 ? 'in ea' : `in ${serious} earum`} invenit.`;
+      },
+      qualitySeeReview: 'Recensionem vide',
+      qualityDetectorLink: 'Quid probatio quaerat',
+      licenceLink: 'licentia',
+      sourceLink: 'fons',
+      corpusTranslation: (name) => `Conversio docta ex ${name}; machina facta non est`,
+      corpusNotice: 'Haec pagina editionem corporis docti refert: transcriptio et conversio editorum eius opus sunt, non intellegentiae artificialis. Divisio in paginas nostra est: corpus textum per versus dividit, non per paginas.',
+      corpusAiNotice: (name) => `Transcriptio ${name} sequitur; textus Anglicus ex ea machina conversus est et menda habere potest.`,
+    },
+    cite: {
+      copyCitation: 'Citationem exscribe',
+      copied: 'Exscriptum',
+    },
+    share: {
+      copyLink: 'Nexum ad hanc paginam exscribe',
+      copyLinkWithReference: 'Nexum cum citatione exscribe',
+      postTo: 'Publica in',
+      email: 'Epistula electronica',
+    },
+    paneEmpty: {
+      notTranscribed: 'Nondum transcripta',
+      notTranscribedBody: 'Imago adest et libere legi potest, sed haec pagina nondum transcripta est; nihil igitur est unde convertatur.',
+      notReliablyLegible: 'Non satis certo legibilis',
+      notReliablyLegibleBody: 'Hanc paginam transcribere conati sumus, sed lectionem cui fidamus efficere non potuimus; itaque nullam ostendimus. Imago iuxta posita fons certus est.',
+      translationWithheld: 'Conversio retracta',
+      translationWithheldBody: 'Haec pagina modo denuo transcripta est, et conversio Anglica quam habebamus ex lectione priore, minus accurata, facta erat. Eam sustulimus, ne conversio textus qui iam non adest relinqueretur. Nova sequetur.',
+      blankPage: 'Pagina vacua.',
+      readyToTranslate: 'Ad convertendum parata',
+      readyToTranslateBody: 'Haec pagina iam machina lecta est. Anglice nondum conversa est.',
+      englishReadingText: 'Editio Anglica',
+      englishReadingTextBody: 'Hic liber Anglice scriptus est: transcriptio ipsa legenda est. Nihil est quod convertatur.',
+      notModernized: 'Nondum sermone hodierno reddita',
+      notModernizedBody: 'Hic liber Anglice prisco scriptus est. Sermone hodierno nondum redditus est; transcriptio ipsa legenda est.',
+      signInToRequest: 'Intra, ut conversionem petas',
+      requestTranslation: 'Conversionem pete',
+      requestFailed: 'Petitio non pervenit. Paulo post iterum tempta.',
+      sending: 'Mittitur…',
+      requested: 'Petitum',
+      thanksWillEmail: 'Gratias agimus: per epistulam te certiorem faciemus cum haec pagina conversa erit.',
+      thanksWillPrioritise: 'Gratias agimus: hunc librum ceteris anteponemus.',
+    },
+    paneGated: {
+      label: 'Intra, ut legere pergas',
+      body: (freePages) => `Imagines libere perlustrantur. Ad transcriptionem et conversionem ultra primas ${freePages} paginas legendas ratio gratuita requiritur.`,
+      signIn: 'Intra: gratis est',
+    },
+    save: {
+      anonymousNotice: 'Sine ratione servare licet, sed in hoc instrumento tantum.',
+      signInToKeep: 'Intra, ut ubique serventur',
+      savedPage: 'In bibliotheca tua servata',
+      savePage: 'Hanc paginam serva',
+      savedBook: (title) => `Servatus: “${title}”`,
+      saveBook: 'Totum librum serva',
+      saveFailed: 'Servari non potuit. Iterum tempta.',
+      yourLibrary: 'Bibliotheca tua',
+      everythingSaved: 'Omnia quae servasti',
+    },
+    downloads: {
+      thisPage: 'Haec pagina',
+      scanOfPage: (pageNumber) => `Imago p. ${pageNumber ?? ''}`.trim(),
+      scanFormatNote: 'JPEG, ea magnitudine qua in archivo servata est',
+      noScanArchived: 'Huius paginae imago in archivo nulla servatur.',
+      thisPageComplete: 'Haec pagina, integra',
+      thisPageCompleteNote: 'Imago, transcriptio, conversio, citatio, in unum fasciculum compressae',
+      dailyLimitReached: 'Finis hodiernus depromendi attactus est.',
+      signInToDownload: 'Intra, ut hanc paginam depromas.',
+      downloadFailed: 'Depromi non potuit. Iterum tempta.',
+      wholeBook: 'Totus liber',
+    },
+    feedback: {
+      blurb: 'Quidquid in hac pagina vel in ipso instrumento legendi mendosum est, deest, vel scitu dignum.',
+      placeholder: 'Quid animadvertisti?',
+      emailLabel: 'Inscriptio electronica',
+      emailPlaceholder: 'tu@exemplum.com',
+      emailNote: 'Tantum si responsum cupis. Ad nullam aliam rem ea utemur.',
+      send: 'Mitte',
+      sending: 'Mittitur…',
+      thanks: 'Gratias agimus. Hoc ad nos pervenit, una cum pagina in qua eras.',
+      failed: 'Mitti non potuit. Paulo post iterum tempta.',
+      tooShort: 'Paulo plura prius scribe.',
+      aboutPage: (pageNumber) => `Nota tua dicet te in p. ${pageNumber} fuisse.`,
+      attach: 'Imaginem scrinii adde',
+      attachHint: 'vel imaginem huc adglutina aut trahe',
+      attachLimit: 'Ad summum quattuor imagines',
+      attachFailed: 'Ea imago mitti non potuit. Minorem tempta.',
+      removeImage: 'Imaginem remove',
+    },
+    readCaution: {
+      unclear: (share) => `Haec pagina aegre lecta est: circiter ${Math.round(share * 100)}% transcriptionis incerta notantur, et conversio Anglica ibi coniectura est.`,
+      damage: 'Haec pagina locis quibusdam laesa vel evanida est, et partes conversionis Anglicae lectionibus incertis niti possunt.',
+    },
+    pageReport: {
+      open: 'Mendum huius paginae defer',
+      prompt: 'Quid mendosum est? Unum elige, si convenit.',
+      kinds: {
+        garbled_source: 'Transcriptio corrupta est',
+        missing_text: 'Textus deest',
+        invented_text: 'Conversio aliquid addit',
+        wrong_image: 'Imago alienae paginae',
+        wrong_language: 'Lingua falsa',
+        translation_error: 'Conversio Anglica hic errat',
+      },
+      commentPlaceholder: 'Aliquid aliud? (si vis)',
+      passageLabel: 'Conversio ut nunc legitur',
+      correctionLabel: 'Quid dicere debeat',
+      sourceLabel: 'Verba fontis (si vis)',
+      send: 'Relationem mitte',
+      sending: 'Mittitur…',
+      cancel: 'Omitte',
+      thanks: 'Gratias agimus. Hanc paginam inspiciemus.',
+      failed: 'Mitti non potuit. Paulo post iterum tempta.',
+    },
+    // Unreachable on /la (Latin-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
+    history: {
+      title: 'Historia recensionum',
+      loading: 'Historia recensionum arcessitur…',
+      loadFailed: 'Historia recensionum huius paginae arcessi non potuit. Paulo post iterum tempta.',
+      noRevisions: 'Nullae recensiones huius paginae relatae sunt.',
+      onlyMaintenance: 'Tantum opera curationis universae, infra.',
+      chars: 'litterae',
+      showMaintenance: (n) => `Ostende ${n} ${n === 1 ? 'recensionem' : 'recensiones'} curationis universae`,
+      hideMaintenance: (n) => `Cela ${n} ${n === 1 ? 'recensionem' : 'recensiones'} curationis universae`,
+      maintenanceNote: 'Reparationes corporis et curationes totius bibliothecae quae forte hanc paginam attigerunt; novae lectiones imaginis non sunt.',
+      restoreForbidden: 'Ut editor iam non intrasti. Iterum intra, ut hanc versionem restituas.',
+      restoreFailed: 'Ea versio restitui non potuit. Paulo post iterum tempta.',
+      today: (time) => `Hodie ${time}`,
+      yesterday: 'Heri',
+      daysAgo: (n) => `abhinc ${n} d.`,
+      sourceAi: 'IA',
+      sourceBatch: 'Gregatim',
+      sourceManual: 'Manu',
+      sourceContributor: 'Adiutor',
+      sourceMaintenance: 'Curatio',
+      fieldTranscript: 'Transcriptio',
+      fieldTranslation: 'Conversio',
+    },
+    settings: {
+      theme: 'Color',
+      themeLight: 'Clarus',
+      themeSepia: 'Sepia',
+      themeDark: 'Obscurus',
+      textSize: 'Magnitudo litterarum',
+      smallerText: 'Litterae minores',
+      largerText: 'Litterae maiores',
+      lineWidth: 'Latitudo versuum',
+      lineWidthNarrow: 'Angusta',
+      lineWidthNormal: 'Media',
+      lineWidthWide: 'Lata',
+      typeface: 'Typi',
+      typefaceSerif: 'Serif',
+      typefaceSans: 'Sans',
+      lineHeight: 'Intervallum versuum',
+    },
+    accountMenu: {
+      library: 'Bibliotheca',
+      collections: 'Collectiones',
+      gallery: 'Pinacotheca',
+      browse: 'Perlustra',
+      catalogue: 'Catalogus',
+      works: 'Opera',
+      explore: 'Tabulae',
+      librarian: 'Bibliothecarius',
+      you: 'Tu',
+      yourAccount: 'Ratio tua',
+      savedPages: 'Paginae servatae',
+      readingHistory: 'Historia legendi',
+      signIn: 'Intra',
+      supportSourceLibrary: 'Source Library sustenta',
+      sendFeedback: 'Scribe nobis',
+      siteLanguage: 'Lingua situs',
+      signOut: 'Exi',
+    },
+    pinnedEdition: {
+      citedVersion: 'Versio citata',
+      resolving: 'Editio citata quaeritur…',
+      unresolvable: (v) => `Hic nexus editionem v${v} citat, sed ea inveniri non potuit. Textus praesens ostenditur.`,
+      continueReadingLink: 'Legere perge →',
+      pageNotInEdition: (label, date) => `Haec pagina in editione ${label}, die ${date} edita, non erat; textus praesens ostenditur.`,
+      readingEdition: (label, date) => `Editionem ${label} legis, die ${date} editam.`,
+      readingEditionRevised: (label, date) => `Editionem ${label} legis, die ${date} editam; conversio postea recensita est.`,
+      viewCurrentEdition: 'Editionem praesentem specta →',
+    },
+  },
+  // Dutch (#6382). Draft copy, to be read by a native speaker before launch.
+  //
+  // As in the Latin block: a `/nl` reader page exists only for a book WRITTEN
+  // in Dutch, so the strings that take the book's language name it as Dutch
+  // outright rather than interpolating the stored English word "Dutch". And
+  // "vertaling" always means the ENGLISH translation: nothing is translated
+  // into Dutch, and here the transcription is the reading text.
+  nl: {
+    toolbar: {
+      contents: 'Inhoud',
+      guide: 'Wijzer',
+      search: 'Zoeken',
+      librarian: 'Bibliothecaris',
+      save: 'Bewaren',
+      share: 'Delen',
+      cite: 'Citeren',
+      download: 'Downloaden',
+      info: 'Info',
+      views: 'Weergave',
+      pages: 'Pagina’s',
+      settings: 'Instellingen',
+      feedback: 'Feedback',
+      more: 'Meer',
+      menu: 'Menu',
+      readerToolsAria: 'Leesgereedschap',
+      previousPage: 'Vorige pagina',
+      nextPage: 'Volgende pagina',
+      previous: 'Vorige',
+      next: 'Volgende',
+      close: 'Sluiten',
+      jumpToPage: 'Naar pagina',
+      backToTheBook: 'Terug naar het boek',
+      backToTheBookPage: 'Terug naar de boekpagina',
+      backToTheReader: 'Terug naar de lezer',
+      scanFullScreen: 'Scan, volledig scherm',
+      viewScanFullScreen: 'De scan op volledig scherm bekijken',
+    },
+    panels: {
+      titles: {
+        save: 'Bewaren',
+        menu: 'Menu',
+        contents: 'Inhoud',
+        search: 'Zoeken in dit boek',
+        guide: 'Leeswijzer',
+        librarian: 'Vraag het de bibliothecaris',
+        info: 'Editie en pagina',
+        cite: 'Deze pagina citeren',
+        share: 'Delen',
+        settings: 'Leesinstellingen',
+        views: 'Scan, tekst en vertaling',
+        downloads: 'Downloaden',
+        history: 'Wijzigingsgeschiedenis',
+        feedback: 'Feedback sturen',
+        more: 'Meer',
+      },
+      blurbs: {
+        contents: 'De inhoudsopgave van het boek zelf, zoals gedrukt.',
+        search: 'Zoekt in de getranscribeerde tekst en in de beschrijvingen van de illustraties.',
+        guide: 'Onze samenvatting van het boek, door AI geschreven op basis van de transcriptie.',
+        librarian: 'Antwoorden van AI, gebaseerd op deze pagina en het boek eromheen.',
+        info: 'Wat deze pagina is, en van welke editie ze is gescand.',
+        cite: 'Een bronvermelding die naar precies deze pagina verwijst.',
+        share: 'Kopieer een link naar deze pagina, of plaats hem online.',
+        settings: 'Hoe de tekst wordt weergegeven. Je keuzes worden op dit apparaat onthouden.',
+        views: 'Toon er meer dan één tegelijk.',
+        downloads: 'Neem deze pagina, of het hele boek, mee.',
+        history: 'Elke vastgelegde wijziging in de transcriptie en vertaling van deze pagina.',
+      },
+      closeAria: (title) => `${title} sluiten`,
+      backToMore: 'Terug naar Meer',
+    },
+    moreMenu: {
+      contents: 'Inhoud',
+      contentsBlurb: 'De inhoudsopgave van het boek zelf, zoals gedrukt',
+      guide: 'Leeswijzer',
+      guideBlurb: 'Overzicht, thema’s, onderdelen',
+      search: 'Zoeken in dit boek',
+      searchBlurb: 'Zoek een woord in de getranscribeerde tekst',
+      librarian: 'Vraag het de bibliothecaris',
+      librarianBlurb: 'Vragen over deze pagina of het boek',
+      cite: 'Deze pagina citeren',
+      citeBlurb: 'Een bronvermelding die naar precies deze pagina verwijst',
+      downloads: 'Downloaden',
+      downloadsBlurb: 'Deze pagina, of het hele boek, in verschillende formaten',
+      info: 'Editie en pagina',
+      infoBlurb: 'Deze pagina, en de editie waar ze uit komt',
+      history: 'Wijzigingsgeschiedenis',
+      historyBlurb: 'Elke vastgelegde wijziging in deze pagina',
+      settings: 'Leesinstellingen',
+      settingsBlurb: 'Thema, tekstgrootte, letter, noten',
+      views: 'Scan, tekst en vertaling',
+      viewsBlurb: 'Toon er meer dan één tegelijk',
+      feedback: 'Feedback sturen',
+      feedbackBlurb: 'Vertel ons over deze pagina of de lezer',
+      menu: 'Menu',
+      menuBlurb: 'De rest van de bibliotheek, en je account',
+      groupRead: 'Lezen',
+      groupPage: 'Deze pagina',
+      groupReader: 'Lezer',
+    },
+    panes: {
+      viewScan: 'Scan',
+      // The transcription IS the reading text on `/nl`, so the pane is named for
+      // what it holds rather than for how it was made.
+      viewOcr: 'Nederlands',
+      ocrPaneHeader: () => 'Nederlandse tekst',
+      viewRoman: 'Latijns schrift',
+      viewEnglish: 'Engels',
+      visiblePanesAria: 'Zichtbare panelen',
+      showPane: (label) => `${label} tonen`,
+      lastPaneShowing: 'Het laatste zichtbare paneel',
+      pickPaneAria: 'Scan, tekst of vertaling',
+      translatedFrom: () => 'Vertaald uit het Nederlands',
+      viewTheScan: 'de scan bekijken',
+      viewTheText: () => 'de Nederlandse tekst bekijken',
+
+      originalFallback: 'Origineel',
+      romanisedHeader: 'Latijns schrift',
+      aiTranslated: 'Vertaald met AI',
+      aiShort: 'AI',
+      aiTitle: 'Gemaakt met hulp van AI',
+      corpusChip: (shortName) => `Vertaling ${shortName}`,
+      corpusChipTitle: (name) => `Het Engels volgt de wetenschappelijke vertaling van het ${name}. Het is niet door een machine gemaakt`,
+      tabletWitness: 'Tablet als getuige',
+      witnessCount: (index, total) => `Tablet ${index} van ${total}`,
+      witnessNotSource: (shortName) => `De tekst volgt de editie van ${shortName}. Hij is niet van deze foto afgelezen`,
+      witnessAlt: (designation) => `Foto van tablet ${designation}`,
+      prevWitness: 'Vorige tablet',
+      nextWitness: 'Volgende tablet',
+      viewOnCdli: 'Bekijken op CDLI',
+      noFacsimile: 'Geen facsimile: dit is een tekstuitgave',
+      scanAlt: (pageNumber, title) => `Scan van pagina ${pageNumber} van ${title}`,
+
+      originalScan: 'Originele scan',
+      originalScanHint: 'De pagina zoals ze is gefotografeerd',
+      transcriptionOf: () => 'Nederlandse tekst',
+      transcriptionHint: 'De gedrukte tekst, door een machine gelezen',
+      englishTranslation: 'Engelse vertaling',
+      englishTranslationHint: 'Vertaald met hulp van AI',
+      romanisedTranscription: 'Transcriptie in Latijns schrift',
+      romanisedTranscriptionHint: 'Dezelfde woorden in Latijnse letters',
+
+      zoomOut: 'Uitzoomen',
+      zoomIn: 'Inzoomen',
+      resetZoom: 'Zoom herstellen',
+      readingLens: 'Leesloep: vergroot de plek onder de aanwijzer',
+      readingLensOff: 'Leesloep uitzetten',
+      readingLensUnavailable: 'Leesloep (beschikbaar op 100%)',
+
+      notes: 'Noten',
+      showNotes: 'Noten en verklaringen in de tekst tonen',
+      hideNotes: 'Noten en verklaringen in de tekst verbergen',
+      trace: 'Traceren',
+      turnTracingOff: 'Traceren uitzetten',
+      traceFallbackLanguage: 'origineel',
+      traceHint: () => 'Traceren: klik op een zinsdeel om het in de Nederlandse tekst te zien',
+      traceAligning: 'Deze pagina wordt naast de vertaling gelegd…',
+      traceUnavailable: 'Traceren is voor deze pagina niet beschikbaar.',
+      traceEnglishOnly: 'Traceren vergelijkt het origineel met de Engelse vertaling. Schakel terug naar Engels om het te gebruiken.',
+      descriptionHidden: (pageTypeLabel: string) => `Pagina: ${pageTypeLabel}. Zet Noten aan om de beschrijving te lezen.`,
+      traceRateLimited: 'Je hebt de limiet voor traceren bereikt. Log in (gratis) om verder te gaan.',
+      traceClickHint: 'Klik op een zinsdeel om het in het andere paneel te zien.',
+
+      romanising: 'Deze pagina wordt in Latijns schrift omgezet…',
+      romanisingLonger: 'langer dan gewoonlijk voor een pagina van deze omvang',
+      romanisingEstimate: (seconds) => `meestal ongeveer ${seconds}s voor zoveel tekst`,
+      translitFailed: 'De transliteratie van deze pagina kon niet worden gemaakt.',
+      translitNone: 'Nog geen transliteratie voor deze pagina.',
+
+      copyTranscription: 'Transcriptie kopiëren',
+      copyTranslation: 'Vertaling kopiëren',
+      copyTransliteration: 'Transliteratie kopiëren',
+      copied: 'Gekopieerd',
+
+      marksMeaning: 'Wat de tekens in de tekst betekenen',
+      marksMeaningShort: 'Wat de tekens betekenen',
+      marksInText: 'Tekens in de tekst',
+      markGlossOrTerm: 'Verklaring of term',
+      markGlossOrTermDesc: 'Een uitgelegd woord, of een herkende vakterm.',
+      markOnThePage: 'Op de pagina',
+      markOnThePageDesc: 'Een kanttekening of een latere hand, aanwezig in het origineel.',
+      markOurNote: 'Onze noot',
+      markOurNoteDesc: 'Hier toegevoegd door een redacteur, niet in het origineel.',
+      marksHiddenByNotes: 'Met Noten uit zijn ze allemaal verborgen.',
+    },
+    contents: {
+      noContentsTranscribed: 'De inhoudsopgave van deze editie is nog niet getranscribeerd. Gebruik de leeswijzer of de paginastrook om door het boek te gaan.',
+      noContentsAtAll: 'Dit boek heeft geen inhoudsopgave.',
+    },
+    guide: {
+      noGuideYet: 'Dit boek heeft nog geen leeswijzer.',
+      requestGuide: 'Vraag een leeswijzer aan',
+      requestGuideThanks: 'Bedankt. Dit boek staat in de wachtrij voor een leeswijzer, die hier verschijnt zodra hij klaar is.',
+      requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
+      showLess: 'Minder tonen',
+      readFullOverview: (more) => `Lees het volledige overzicht (nog ${more})`,
+      sections: 'Onderdelen',
+      readThisSection: 'Dit onderdeel lezen →',
+    },
+    search: {
+      placeholder: 'Zoeken…',
+      inputAria: 'Zoeken in dit boek',
+      noMatches: 'Niets gevonden in dit boek',
+      failed: 'Zoeken is nu niet beschikbaar. Probeer het zo nog eens.',
+      pagesMatch: (total) => `${total} ${total === 1 ? 'pagina gevonden' : 'pagina’s gevonden'}`,
+      pageLabel: (n) => `Pagina ${n}`,
+    },
+    librarian: {
+      suggestions: [
+        'Waar gaat deze pagina over?',
+        'Wie was de auteur?',
+        'Leg de belangrijkste begrippen hier uit',
+      ],
+      orStartHere: 'Of begin hier',
+      askAboutPage: (pageNumber) => `Stel een vraag over p. ${pageNumber}…`,
+      inputAria: 'Vraag het de bibliothecaris',
+      ask: 'Vraag',
+      consulting: 'De tekst wordt geraadpleegd…',
+      askErrorInline: 'De bibliothecaris kon nu geen antwoord geven. Probeer het opnieuw.',
+    },
+    info: {
+      thisPage: 'Deze pagina',
+      thisEdition: 'Deze editie',
+      howPageWasMade: 'Hoe deze pagina is gemaakt',
+      fieldTitle: 'Titel',
+      fieldEnglish: 'Engels',
+      fieldAuthor: 'Auteur',
+      fieldLanguage: 'Taal',
+      fieldPlace: 'Plaats',
+      fieldPublisher: 'Uitgever',
+      fieldPublished: 'Uitgegeven',
+      fieldFormat: 'Formaat',
+      fieldPages: 'Pagina’s',
+      fieldScan: 'Scan',
+      fieldTranscript: 'Transcriptie',
+      scannedFrom: (pageNumber) => `Gefotografeerd uit de gedrukte editie${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
+      transcribedBy: (model) => `Van de scan gelezen door ${model}`,
+      translatedBy: (model) => `Uit de transcriptie vertaald door ${model}`,
+      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron: lees die naast de tekst waar het op een lezing aankomt.',
+      corpusNoScan: (witnessCount) => witnessCount > 0
+        ? `Geen. Dit is een digitale tekstuitgave. De tekst is bewaard gebleven op ${witnessCount} ${witnessCount === 1 ? 'kleitablet' : 'kleitabletten'}, gecatalogiseerd bij CDLI.`
+        : 'Geen. Dit is een digitale tekstuitgave; er bestaan geen pagina-afbeeldingen.',
+      corpusTranscript: (name, org) => `Samengestelde transliteratie uit het ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Van de scan gelezen door omnisyr, een model dat is getraind op gedrukt Syrisch.'
+        : 'Van de scan gelezen door Sophro Mhiro (Beth Mardutho), een model dat is getraind op Syrische handschriften.',
+      krakenNotice: (route) =>
+        'Machinale transcriptie, niet door een mens gecontroleerd. ' +
+        (route === 'print'
+          ? 'We hebben vijf gedrukte pagina’s naast hun scans gelezen (september 2026): op alle vijf klopten de woorden, en op twee ervan liepen regels uit verschillende kolommen door elkaar.'
+          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.') +
+        ' Bekijk de scan waar het op een lezing aankomt.',
+      krakenEvidenceLink: 'Hoe we het hebben gecontroleerd',
+      iaTranscript: (engine, year, agreement) =>
+        `Van de scan gelezen door de OCR van het Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+        (agreement != null ? `, overgenomen omdat die overeenkomt met onze eigen lezing van de proefpagina’s van dit boek (${Math.round(agreement * 100)}% van de woorden)` : ''),
+      manualTranscript: (model) => model ? `Van de scan gelezen door ${model}, met de hand gecorrigeerd` : 'Met de hand getranscribeerd',
+      transcriptChipIa: (engine) => `OCR van het Internet Archive${engine ? ` · ${engine}` : ''}`,
+      transcriptChipIaTitle: (agreement) =>
+        'OCR van het Internet Archive: getallen kunnen verkeerd gelezen zijn (zie #5186)' +
+        (agreement != null ? ` · komt voor ${Math.round(agreement * 100)}% van de woorden overeen met onze proeflezing` : ''),
+      transcriptChipManual: 'Handmatig',
+      transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Tekst: ${shortName}, ${license}`,
+      textSourceTranscript: (name, license, version) => `Tekst: ${name}${version ? ` (${version})` : ''}, ${license}`,
+      machineDraftNotice: 'AI-vertaling, nog niet door een wetenschapper nagekeken.',
+      // Each kind is a subordinate clause (verb last): it follows "vond dat".
+      qualityKinds: {
+        wrong_page: 'de scan en de tekst van verschillende pagina’s zijn',
+        english_other_page: 'het Engels bij een andere pagina hoort',
+        invented_transcription: 'de transcriptie tekst bevat die niet op de pagina staat',
+        model_notes: 'de eigen aantekeningen van het model staan waar de tekst hoort te staan',
+        garble_translated: 'het Engels een onleesbare transcriptie vertaalt alsof die in orde is',
+        meaning_reversed: 'het Engels een bewering omdraait of een voorbehoud weglaat',
+        misread_meaning: 'een verkeerd gelezen woord de betekenis verandert',
+        unsupported_notes: 'de noten dingen beweren die niet op de pagina staan',
+        missing_transcription: 'een deel van de pagina in de transcriptie ontbreekt',
+        missing_english: 'een deel van de pagina in het Engels ontbreekt',
+        number_misread: 'een getal, datum of hoeveelheid verkeerd is gelezen',
+        repeated_text: 'een passage herhaald wordt die maar één keer op de pagina staat',
+        serious_transcription: 'de transcriptie een ernstige fout bevat',
+        serious_english: 'het Engels een ernstige fout bevat',
+        serious_other: 'de pagina een ernstige fout bevat',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', en dat ') + (more ? ', naast andere ernstige fouten' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Een AI-beoordelaar' : 'Een beoordelaar'} die deze pagina ${image ? 'naast de scan' : 'als tekst, zonder de scan,'} las, vond dat ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Gemarkeerd door een automatische controle, nog niet door een mens gelezen (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''}`;
+        if (serious === null) return `${start} en vond ernstige fouten.`;
+        return `${start} en vond ernstige fouten ${read === 1 ? 'op die pagina' : `op ${serious} daarvan`}.`;
+      },
+      qualitySeeReview: 'Bekijk de beoordeling',
+      qualityDetectorLink: 'Waar de controle op let',
+      licenceLink: 'licentie',
+      sourceLink: 'bron',
+      corpusTranslation: (name) => `Wetenschappelijke vertaling uit het ${name}, niet door een machine gemaakt`,
+      corpusNotice: 'Deze pagina geeft een wetenschappelijke corpuseditie weer: de transliteratie en vertaling zijn het werk van de redacteuren ervan, niet van AI. De indeling in pagina’s is van ons; het corpus deelt de tekst in regels in, niet in pagina’s.',
+      corpusAiNotice: (name) => `De transliteratie volgt het ${name}; het Engels is daar een machinevertaling van en kan fouten bevatten.`,
+    },
+    cite: {
+      copyCitation: 'Bronvermelding kopiëren',
+      copied: 'Gekopieerd',
+    },
+    share: {
+      copyLink: 'Link naar deze pagina kopiëren',
+      copyLinkWithReference: 'Link met bronvermelding kopiëren',
+      postTo: 'Delen op',
+      email: 'E-mail',
+    },
+    paneEmpty: {
+      notTranscribed: 'Nog niet getranscribeerd',
+      notTranscribedBody: 'De scan staat hier en is vrij te lezen, maar deze pagina heeft nog geen transcriptie, dus er is nog niets om uit te vertalen.',
+      notReliablyLegible: 'Niet betrouwbaar leesbaar',
+      notReliablyLegibleBody: 'We hebben geprobeerd deze pagina te transcriberen, maar kwamen niet tot een lezing die we vertrouwen, dus we tonen er geen. De scan hiernaast is de gezaghebbende bron.',
+      translationWithheld: 'Vertaling ingetrokken',
+      translationWithheldBody: 'Deze pagina is net opnieuw getranscribeerd, en het Engels dat we hadden was gemaakt op basis van de oudere, minder nauwkeurige lezing. We hebben het weggehaald in plaats van een vertaling te laten staan van tekst die er niet meer is. Er komt een nieuwe.',
+      blankPage: 'Lege pagina.',
+      readyToTranslate: 'Klaar om te vertalen',
+      readyToTranslateBody: 'De OCR van deze pagina is klaar. Ze is nog niet in het Engels vertaald.',
+      englishReadingText: 'Engelse editie',
+      englishReadingTextBody: 'Dit boek is in het Engels: de transcriptie is de leestekst. Er is niets te vertalen.',
+      notModernized: 'Nog niet gemoderniseerd',
+      notModernizedBody: 'Dit boek is in vroegmodern Engels. Er is nog geen gemoderniseerde versie; de transcriptie is de leestekst.',
+      signInToRequest: 'Log in om een vertaling aan te vragen',
+      requestTranslation: 'Vertaling aanvragen',
+      requestFailed: 'Dat verzoek is niet aangekomen. Probeer het zo nog eens.',
+      sending: 'Bezig met versturen…',
+      requested: 'Aangevraagd',
+      thanksWillEmail: 'Bedankt. We mailen je zodra deze pagina is vertaald.',
+      thanksWillPrioritise: 'Bedankt. We geven dit boek voorrang.',
+    },
+    paneGated: {
+      label: 'Log in om verder te lezen',
+      body: (freePages) => `Door de scan kun je vrij bladeren. Om de transcriptie en vertaling na de eerste ${freePages} pagina’s te lezen, heb je een gratis account nodig.`,
+      signIn: 'Inloggen (gratis)',
+    },
+    save: {
+      anonymousNotice: 'Bewaren werkt zonder account, maar alleen op dit apparaat.',
+      signInToKeep: 'Log in om ze overal te bewaren',
+      savedPage: 'Bewaard in je bibliotheek',
+      savePage: 'Deze pagina bewaren',
+      savedBook: (title) => `“${title}” bewaard`,
+      saveBook: 'Het hele boek bewaren',
+      saveFailed: 'Bewaren mislukt. Probeer het opnieuw.',
+      yourLibrary: 'Je bibliotheek',
+      everythingSaved: 'Alles wat je hebt bewaard',
+    },
+    downloads: {
+      thisPage: 'Deze pagina',
+      scanOfPage: (pageNumber) => `De scan van p. ${pageNumber ?? ''}`.trim(),
+      scanFormatNote: 'JPEG, in de resolutie waarin hij is gearchiveerd',
+      noScanArchived: 'Van deze pagina is geen scan gearchiveerd.',
+      thisPageComplete: 'Deze pagina, compleet',
+      thisPageCompleteNote: 'Scan, transcriptie, vertaling en bronvermelding, als zip',
+      dailyLimitReached: 'Je hebt de downloadlimiet voor vandaag bereikt.',
+      signInToDownload: 'Log in om deze pagina te downloaden.',
+      downloadFailed: 'Die download is mislukt. Probeer het opnieuw.',
+      wholeBook: 'Het hele boek',
+    },
+    feedback: {
+      blurb: 'Alles wat er mis is, ontbreekt of het weten waard is over deze pagina of de lezer zelf.',
+      placeholder: 'Wat viel je op?',
+      emailLabel: 'E-mail',
+      emailPlaceholder: 'jij@voorbeeld.nl',
+      emailNote: 'Alleen als je een antwoord wilt. We gebruiken het nergens anders voor.',
+      send: 'Versturen',
+      sending: 'Bezig met versturen…',
+      thanks: 'Bedankt. Je bericht is bij ons aangekomen, samen met de pagina waarop je was.',
+      failed: 'Dat is niet verstuurd. Probeer het zo nog eens.',
+      tooShort: 'Vertel ons eerst iets meer.',
+      aboutPage: (pageNumber) => `In je bericht staat dat je op p. ${pageNumber} was.`,
+      attach: 'Schermafbeelding toevoegen',
+      attachHint: 'of plak / sleep een afbeelding',
+      attachLimit: 'Maximaal vier afbeeldingen',
+      attachFailed: 'Die afbeelding kon niet worden geüpload. Probeer een kleinere.',
+      removeImage: 'Afbeelding verwijderen',
+    },
+    readCaution: {
+      unclear: (share) => `Deze pagina was moeilijk te lezen: ongeveer ${Math.round(share * 100)}% van de transcriptie is als onzeker gemarkeerd, en het Engels is daar een beste gok.`,
+      damage: 'Deze pagina is hier en daar beschadigd of vervaagd, en delen van het Engels kunnen op onzekere lezingen berusten.',
+    },
+    pageReport: {
+      open: 'Een probleem met deze pagina melden',
+      prompt: 'Wat is er mis? Kies er een als die past.',
+      kinds: {
+        garbled_source: 'Transcriptie is onleesbaar',
+        missing_text: 'Er ontbreekt tekst',
+        invented_text: 'Vertaling voegt dingen toe',
+        wrong_image: 'Verkeerde pagina-afbeelding',
+        wrong_language: 'Verkeerde taal',
+        translation_error: 'Het Engels klopt hier niet',
+      },
+      commentPlaceholder: 'Nog iets? (optioneel)',
+      passageLabel: 'Het Engels zoals het er nu staat',
+      correctionLabel: 'Wat er zou moeten staan',
+      sourceLabel: 'De oorspronkelijke woorden (optioneel)',
+      send: 'Melding versturen',
+      sending: 'Bezig met versturen…',
+      cancel: 'Annuleren',
+      thanks: 'Bedankt. We gaan naar deze pagina kijken.',
+      failed: 'Dat is niet verstuurd. Probeer het zo nog eens.',
+    },
+    // Unreachable on /nl (Dutch-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
+    history: {
+      title: 'Wijzigingsgeschiedenis',
+      loading: 'Wijzigingsgeschiedenis laden…',
+      loadFailed: 'De wijzigingsgeschiedenis van deze pagina kon niet worden geladen. Probeer het zo nog eens.',
+      noRevisions: 'Geen vastgelegde wijzigingen voor deze pagina.',
+      onlyMaintenance: 'Alleen bulkonderhoud, hieronder.',
+      chars: 'tekens',
+      showMaintenance: (n) => `${n} ${n === 1 ? 'wijziging' : 'wijzigingen'} door bulkonderhoud tonen`,
+      hideMaintenance: (n) => `${n} ${n === 1 ? 'wijziging' : 'wijzigingen'} door bulkonderhoud verbergen`,
+      maintenanceNote: 'Reparaties aan het corpus en bibliotheekbrede rondes die toevallig deze pagina raakten, geen nieuwe lezingen van de scan.',
+      restoreForbidden: 'Je bent niet meer als redacteur ingelogd. Log opnieuw in om deze versie terug te zetten.',
+      restoreFailed: 'Die versie kon niet worden teruggezet. Probeer het zo nog eens.',
+      today: (time) => `Vandaag ${time}`,
+      yesterday: 'Gisteren',
+      daysAgo: (n) => `${n} d geleden`,
+      sourceAi: 'AI',
+      sourceBatch: 'Batch',
+      sourceManual: 'Handmatig',
+      sourceContributor: 'Bijdrager',
+      sourceMaintenance: 'Onderhoud',
+      fieldTranscript: 'Transcriptie',
+      fieldTranslation: 'Vertaling',
+    },
+    settings: {
+      theme: 'Thema',
+      themeLight: 'Licht',
+      themeSepia: 'Sepia',
+      themeDark: 'Donker',
+      textSize: 'Tekstgrootte',
+      smallerText: 'Kleinere tekst',
+      largerText: 'Grotere tekst',
+      lineWidth: 'Regelbreedte',
+      lineWidthNarrow: 'Smal',
+      lineWidthNormal: 'Normaal',
+      lineWidthWide: 'Breed',
+      typeface: 'Lettertype',
+      typefaceSerif: 'Schreef',
+      typefaceSans: 'Schreefloos',
+      lineHeight: 'Regelafstand',
+    },
+    accountMenu: {
+      library: 'Bibliotheek',
+      collections: 'Collecties',
+      gallery: 'Galerij',
+      browse: 'Bladeren',
+      catalogue: 'Catalogus',
+      works: 'Werken',
+      explore: 'Verkennen',
+      librarian: 'Bibliothecaris',
+      you: 'Jij',
+      yourAccount: 'Je account',
+      savedPages: 'Bewaarde pagina’s',
+      readingHistory: 'Leesgeschiedenis',
+      signIn: 'Inloggen',
+      supportSourceLibrary: 'Steun Source Library',
+      sendFeedback: 'Feedback sturen',
+      siteLanguage: 'Taal van de site',
+      signOut: 'Uitloggen',
+    },
+    pinnedEdition: {
+      citedVersion: 'Geciteerde versie',
+      resolving: 'De geciteerde editie wordt opgezocht…',
+      unresolvable: (v) => `Deze link citeert editie v${v}, maar die kon niet worden gevonden. De huidige tekst wordt getoond.`,
+      continueReadingLink: 'Verder lezen →',
+      pageNotInEdition: (label, date) => `Deze pagina hoorde niet bij editie ${label}, verschenen op ${date}. De huidige tekst wordt getoond.`,
+      readingEdition: (label, date) => `Je leest editie ${label}, verschenen op ${date}.`,
+      readingEditionRevised: (label, date) => `Je leest editie ${label}, verschenen op ${date}. De vertaling is sindsdien herzien.`,
+      viewCurrentEdition: 'Huidige editie bekijken →',
+    },
+  },
+  // Chinese (#6382). Draft copy, to be read by a native editor before launch.
+  //
+  // Same two departures from the Spanish block as the Latin one. A `/zh` reader
+  // page exists only for a book WRITTEN in Chinese, so the strings that take the
+  // book's language name it as Chinese outright rather than interpolating the
+  // stored English word "Chinese". And "译文/翻译" always means the ENGLISH
+  // translation: nothing is translated into Chinese, and here the transcription
+  // is the reading text. Labels interpolated into a sentence (`showPane`,
+  // `closeAria`) join with no space, as Chinese does.
+  zh: {
+    toolbar: {
+      contents: '目录',
+      guide: '导读',
+      search: '搜索',
+      librarian: '图书馆员',
+      save: '保存',
+      share: '分享',
+      cite: '引用',
+      download: '下载',
+      info: '信息',
+      views: '视图',
+      pages: '页面',
+      settings: '设置',
+      feedback: '反馈',
+      more: '更多',
+      menu: '菜单',
+      readerToolsAria: '阅读工具',
+      previousPage: '上一页',
+      nextPage: '下一页',
+      previous: '上一个',
+      next: '下一个',
+      close: '关闭',
+      jumpToPage: '跳转到页',
+      backToTheBook: '返回本书',
+      backToTheBookPage: '返回本书页面',
+      backToTheReader: '返回阅读器',
+      scanFullScreen: '扫描图（全屏）',
+      viewScanFullScreen: '全屏查看扫描图',
+    },
+    panels: {
+      titles: {
+        save: '保存',
+        menu: '菜单',
+        contents: '目录',
+        search: '在本书中搜索',
+        guide: '阅读指南',
+        librarian: '询问图书馆员',
+        info: '版本与页面信息',
+        cite: '引用本页',
+        share: '分享',
+        settings: '阅读设置',
+        views: '扫描图、原文与译文',
+        downloads: '下载',
+        history: '修订历史',
+        feedback: '发送反馈',
+        more: '更多',
+      },
+      blurbs: {
+        contents: '本书自身的目录，据原书。',
+        search: '搜索转录文本和插图说明。',
+        guide: '我们为本书写的概要，由 AI 根据转录文本生成。',
+        librarian: '由 AI 回答，依据本页及本书上下文。',
+        info: '本页是什么，以及它扫描自哪个版本。',
+        cite: '指向这一页的引用格式。',
+        share: '复制本页链接，或分享出去。',
+        settings: '文本的排版方式。您的选择会保存在本设备上。',
+        views: '同时显示多个视图。',
+        downloads: '将本页或整本书下载带走。',
+        history: '本页转录与译文的每一次有记录的改动。',
+      },
+      closeAria: (title) => `关闭${title}`,
+      backToMore: '返回“更多”',
+    },
+    moreMenu: {
+      contents: '目录',
+      contentsBlurb: '本书自身的目录，据原书',
+      guide: '阅读指南',
+      guideBlurb: '概述、主题、章节',
+      search: '在本书中搜索',
+      searchBlurb: '在转录文本中查找字词',
+      librarian: '询问图书馆员',
+      librarianBlurb: '关于本页或本书的问题',
+      cite: '引用本页',
+      citeBlurb: '指向这一页的引用格式',
+      downloads: '下载',
+      downloadsBlurb: '本页或整本书，多种格式',
+      info: '版本与页面信息',
+      infoBlurb: '本页，以及它所出自的版本',
+      history: '修订历史',
+      historyBlurb: '本页每一次有记录的改动',
+      settings: '阅读设置',
+      settingsBlurb: '主题、字号、字体、注释',
+      views: '扫描图、原文与译文',
+      viewsBlurb: '同时显示多个视图',
+      feedback: '发送反馈',
+      feedbackBlurb: '告诉我们关于本页或阅读器的问题',
+      menu: '菜单',
+      menuBlurb: '图书馆的其他部分，以及您的账户',
+      groupRead: '阅读',
+      groupPage: '本页',
+      groupReader: '阅读器',
+    },
+    panes: {
+      viewScan: '扫描图',
+      // The transcription IS the reading text on `/zh`, so the pane is named for
+      // what it holds rather than for how it was made.
+      viewOcr: '中文',
+      ocrPaneHeader: () => '中文原文',
+      viewRoman: '罗马字',
+      viewEnglish: '英文',
+      visiblePanesAria: '当前显示的窗格',
+      showPane: (label) => `显示${label}`,
+      lastPaneShowing: '这是最后一个显示的窗格',
+      pickPaneAria: '扫描图、原文或译文',
+      translatedFrom: () => '译自中文',
+      viewTheScan: '查看扫描图',
+      viewTheText: () => '查看中文原文',
+
+      originalFallback: '原文',
+      romanisedHeader: '罗马字转写',
+      aiTranslated: 'AI 翻译',
+      aiShort: 'AI',
+      aiTitle: '借助 AI 生成',
+      corpusChip: (shortName) => `${shortName} 译本`,
+      corpusChipTitle: (name) => `英文依据 ${name} 的学术译本，并非机器生成`,
+      tabletWitness: '泥板见证本',
+      witnessCount: (index, total) => `第 ${index} 块泥板，共 ${total} 块`,
+      witnessNotSource: (shortName) => `文本依据 ${shortName} 版本，并非从这张照片识读`,
+      witnessAlt: (designation) => `泥板 ${designation} 的照片`,
+      prevWitness: '上一块泥板',
+      nextWitness: '下一块泥板',
+      viewOnCdli: '在 CDLI 查看',
+      noFacsimile: '无影印图像：这是文本版',
+      scanAlt: (pageNumber, title) => `《${title}》第 ${pageNumber} 页的扫描图`,
+
+      originalScan: '原书扫描图',
+      originalScanHint: '页面拍摄时的原貌',
+      transcriptionOf: () => '中文原文',
+      transcriptionHint: '印刷文字，由机器识读',
+      englishTranslation: '英文译文',
+      englishTranslationHint: '借助 AI 翻译',
+      romanisedTranscription: '罗马字转写',
+      romanisedTranscriptionHint: '同样的文字，以拉丁字母拼写',
+
+      zoomOut: '缩小',
+      zoomIn: '放大',
+      resetZoom: '重置缩放',
+      readingLens: '阅读放大镜：放大指针下的位置',
+      readingLensOff: '关闭阅读放大镜',
+      readingLensUnavailable: '阅读放大镜（在 100% 时可用）',
+
+      notes: '注释',
+      showNotes: '显示行内注释和释义',
+      hideNotes: '隐藏行内注释和释义',
+      trace: '对照',
+      turnTracingOff: '关闭对照',
+      traceFallbackLanguage: '原文',
+      traceHint: () => '对照：点击任意短语，查看它在中文原文中的位置',
+      traceAligning: '正在将本页与译文对齐…',
+      traceUnavailable: '本页无法使用对照功能。',
+      traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',
+      descriptionHidden: (pageTypeLabel: string) => `本页类型：${pageTypeLabel}。打开“注释”即可阅读说明。`,
+      traceRateLimited: '已达到对照次数上限。登录（免费）后可继续使用。',
+      traceClickHint: '点击任意短语，查看它在另一窗格中的对应内容。',
+
+      romanising: '正在将本页转写为罗马字…',
+      romanisingLonger: '比同样篇幅的页面通常所需的时间更长',
+      romanisingEstimate: (seconds) => `这么多文本通常需要约 ${seconds} 秒`,
+      translitFailed: '无法为本页生成罗马字转写。',
+      translitNone: '本页尚无罗马字转写。',
+
+      copyTranscription: '复制转录文本',
+      copyTranslation: '复制译文',
+      copyTransliteration: '复制罗马字转写',
+      copied: '已复制',
+
+      marksMeaning: '文中标记的含义',
+      marksMeaningShort: '标记的含义',
+      marksInText: '文中标记',
+      markGlossOrTerm: '释义或术语',
+      markGlossOrTermDesc: '对某个词的解释，或标出的专门术语。',
+      markOnThePage: '原页所有',
+      markOnThePageDesc: '页边批注或后人笔迹，原书上就有。',
+      markOurNote: '我们的注释',
+      markOurNoteDesc: '由编者在此添加，原书上没有。',
+      marksHiddenByNotes: '关闭“注释”会隐藏全部标记。',
+    },
+    contents: {
+      noContentsTranscribed: '本版本的目录尚未转录。可以通过阅读指南或页面缩略条在书中跳转。',
+      noContentsAtAll: '本书没有目录。',
+    },
+    guide: {
+      noGuideYet: '本书还没有阅读指南。',
+      requestGuide: '申请阅读指南',
+      requestGuideThanks: '谢谢。本书已排入生成队列，生成后会显示在这里。',
+      requestFailed: '申请未能提交，请稍后再试。',
+      showLess: '收起',
+      readFullOverview: (more) => `阅读完整概述（还有 ${more}）`,
+      sections: '章节',
+      readThisSection: '阅读本节 →',
+    },
+    search: {
+      placeholder: '搜索…',
+      inputAria: '在本书中搜索',
+      noMatches: '本书中没有匹配结果',
+      failed: '搜索暂时不可用，请稍后再试。',
+      pagesMatch: (total) => `${total} 页匹配`,
+      pageLabel: (n) => `第 ${n} 页`,
+    },
+    librarian: {
+      suggestions: [
+        '这一页讲的是什么？',
+        '作者是谁？',
+        '解释一下这里的关键概念',
+      ],
+      orStartHere: '或者从这里开始',
+      askAboutPage: (pageNumber) => `就第 ${pageNumber} 页提问…`,
+      inputAria: '询问图书馆员',
+      ask: '提问',
+      consulting: '正在查阅文本…',
+      askErrorInline: '图书馆员暂时无法回答，请重试。',
+    },
+    info: {
+      thisPage: '本页',
+      thisEdition: '本版本',
+      howPageWasMade: '本页是如何制作的',
+      fieldTitle: '书名',
+      fieldEnglish: '英文',
+      fieldAuthor: '作者',
+      fieldLanguage: '语言',
+      fieldPlace: '出版地',
+      fieldPublisher: '出版者',
+      fieldPublished: '出版时间',
+      fieldFormat: '开本',
+      fieldPages: '页数',
+      fieldScan: '扫描图',
+      fieldTranscript: '转录',
+      scannedFrom: (pageNumber) => `拍摄自印本${pageNumber != null ? `，第 ${pageNumber} 页` : ''}`,
+      transcribedBy: (model) => `由 ${model} 从扫描图识读`,
+      translatedBy: (model) => `由 ${model} 根据转录文本翻译`,
+      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据，凡是关键的读法，请对照扫描图阅读。',
+      corpusNoScan: (witnessCount) => witnessCount > 0
+        ? `无。这是数字文本版。该作品保存在 CDLI 著录的 ${witnessCount} 块泥板上。`
+        : '无。这是数字文本版，没有页面图像。',
+      corpusTranscript: (name, org) => `综合转写，出自 ${name}${org ? `（${org}）` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? '由 omnisyr 从扫描图识读，这是一个用印刷体叙利亚文训练的模型。'
+        : '由 Sophro Mhiro（Beth Mardutho）从扫描图识读，这是一个用叙利亚文手稿训练的模型。',
+      krakenNotice: (route) =>
+        '机器转录，未经人工核对。' +
+        (route === 'print'
+          ? '我们对照扫描图审读了五页印本（2026 年 9 月）：五页的字词全部正确，其中两页把不同栏的行混在了一起。'
+          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。') +
+        '凡是关键的读法，请核对扫描图。',
+      krakenEvidenceLink: '我们如何核对',
+      iaTranscript: (engine, year, agreement) =>
+        `由 Internet Archive 的 OCR 从扫描图识读${engine ? `（${engine}${year ? `，${year}` : ''}）` : year ? `（${year}）` : ''}` +
+        (agreement != null ? `；之所以采用，是因为它与我们对本书样本页的识读一致（${Math.round(agreement * 100)}% 的字词）` : ''),
+      manualTranscript: (model) => model ? `由 ${model} 从扫描图识读，经人工校正` : '人工转录',
+      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      transcriptChipIaTitle: (agreement) =>
+        'Archive OCR：数字可能识读有误（见 #5186）' +
+        (agreement != null ? ` · 与我们的样本识读在 ${Math.round(agreement * 100)}% 的字词上一致` : ''),
+      transcriptChipManual: '人工',
+      transcriptChipCorpus: (shortName) => `语料库：${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `文本：${shortName}，${license}`,
+      textSourceTranscript: (name, license, version) => `文本：${name}${version ? `（${version}）` : ''}，${license}`,
+      machineDraftNotice: 'AI 译文，尚未经学者审校。',
+      qualityKinds: {
+        wrong_page: '扫描图和文本来自不同的页面',
+        english_other_page: '英文属于另一页',
+        invented_transcription: '转录中有页面上没有的文字',
+        model_notes: '本该是正文的位置放的是模型自己的说明',
+        garble_translated: '英文把一段错乱的转录当作正常文本译了出来',
+        meaning_reversed: '英文把一句话的意思弄反了，或漏掉了限定语',
+        misread_meaning: '一个字词识读错误，改变了意思',
+        unsupported_notes: '注释里写了页面上没有说的内容',
+        missing_transcription: '转录中缺了页面的一部分',
+        missing_english: '英文中缺了页面的一部分',
+        number_misread: '数字、日期或数量识读有误',
+        repeated_text: '页面上只出现一次的段落被重复了',
+        serious_transcription: '转录有严重错误',
+        serious_english: '英文有严重错误',
+        serious_other: '本页有严重错误',
+      },
+      qualityFindings: (clauses, more) => clauses.join('；') + (more ? '；此外还有其他严重错误' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'AI 审校员' : '审校员'}${image ? '对照扫描图' : '仅阅读文本（未对照扫描图）'}审读本页，发现：${findings}（${date}）。`,
+      qualityPageDetector: (date) => `由自动检查标出，尚未经人工审读（${date}）。`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页`;
+        if (serious === null) return `${start}，发现了严重错误。`;
+        return `${start}，发现${read === 1 ? '该页' : `其中 ${serious} 页`}有严重错误。`;
+      },
+      qualitySeeReview: '查看审校记录',
+      qualityDetectorLink: '这项检查查什么',
+      licenceLink: '许可',
+      sourceLink: '来源',
+      corpusTranslation: (name) => `学术译本，出自 ${name}，并非机器生成`,
+      corpusNotice: '本页转载一部学术语料库版本：转写和翻译出自其编者之手，而非 AI。分页是我们做的；语料库按行而不是按页划分文本。',
+      corpusAiNotice: (name) => `转写依据 ${name}；英文是据此生成的机器翻译，可能有错误。`,
+    },
+    cite: {
+      copyCitation: '复制引用',
+      copied: '已复制',
+    },
+    share: {
+      copyLink: '复制本页链接',
+      copyLinkWithReference: '复制带引用信息的链接',
+      postTo: '分享到',
+      email: '电子邮件',
+    },
+    paneEmpty: {
+      notTranscribed: '尚未转录',
+      notTranscribedBody: '扫描图在这里，可以免费阅读，但本页还没有转录，因此也就无从翻译。',
+      notReliablyLegible: '无法可靠识读',
+      notReliablyLegibleBody: '我们尝试转录本页，但未能得到可信的读法，所以不予显示。旁边的扫描图是可靠的依据。',
+      translationWithheld: '译文已撤下',
+      translationWithheldBody: '本页刚刚重新转录，而原有的英文是根据较早、较不准确的读法译出的。我们把它撤了下来，以免留下一份所译文字已不存在的译文。新的译文随后会补上。',
+      blankPage: '空白页。',
+      readyToTranslate: '可以翻译',
+      readyToTranslateBody: '本页已完成 OCR，尚未译成英文。',
+      englishReadingText: '英文版',
+      englishReadingTextBody: '本书以英文写成，转录文本就是阅读文本，无需翻译。',
+      notModernized: '尚未现代化',
+      notModernizedBody: '本书以早期现代英语写成，尚未制作现代英语读本；转录文本就是阅读文本。',
+      signInToRequest: '登录后申请翻译',
+      requestTranslation: '申请翻译',
+      requestFailed: '申请未能提交，请稍后再试。',
+      sending: '正在发送…',
+      requested: '已申请',
+      thanksWillEmail: '谢谢。本页译好后我们会发邮件通知您。',
+      thanksWillPrioritise: '谢谢。我们会优先处理这本书。',
+    },
+    paneGated: {
+      label: '登录后继续阅读',
+      body: (freePages) => `扫描图可免费浏览。阅读前 ${freePages} 页之后的转录和译文，需要一个免费账户。`,
+      signIn: '登录（免费）',
+    },
+    save: {
+      anonymousNotice: '无需账户也能保存，但仅限本设备。',
+      signInToKeep: '登录后可在所有设备上保留',
+      savedPage: '已保存到您的书房',
+      savePage: '保存本页',
+      savedBook: (title) => `已保存《${title}》`,
+      saveBook: '保存整本书',
+      saveFailed: '保存失败，请重试。',
+      yourLibrary: '我的书房',
+      everythingSaved: '您保存的全部内容',
+    },
+    downloads: {
+      thisPage: '本页',
+      scanOfPage: (pageNumber) => `${pageNumber != null ? `第 ${pageNumber} 页的` : ''}扫描图`,
+      scanFormatNote: 'JPEG，按存档时的分辨率',
+      noScanArchived: '本页没有存档的扫描图。',
+      thisPageComplete: '本页完整内容',
+      thisPageCompleteNote: '扫描图、转录、译文和引用，打包为 zip',
+      dailyLimitReached: '已达到每日下载上限。',
+      signInToDownload: '登录后可下载本页。',
+      downloadFailed: '下载失败，请重试。',
+      wholeBook: '整本书',
+    },
+    feedback: {
+      blurb: '关于本页或阅读器本身，任何错误、缺漏或值得我们知道的事。',
+      placeholder: '您发现了什么？',
+      emailLabel: '邮箱',
+      emailPlaceholder: 'you@example.com',
+      emailNote: '仅在您希望收到回复时填写。我们不会用于其他用途。',
+      send: '发送',
+      sending: '正在发送…',
+      thanks: '谢谢。我们已收到，连同您当时所在的页面。',
+      failed: '发送失败，请稍后再试。',
+      tooShort: '请再多写几句。',
+      aboutPage: (pageNumber) => `您的留言会注明您当时在第 ${pageNumber} 页。`,
+      attach: '添加截图',
+      attachHint: '或粘贴 / 拖入图片',
+      attachLimit: '最多四张图片',
+      attachFailed: '这张图片无法上传，请换一张小一点的。',
+      removeImage: '移除图片',
+    },
+    readCaution: {
+      unclear: (share) => `本页较难识读：约 ${Math.round(share * 100)}% 的转录被标为不确定，这些地方的英文是尽力推测的结果。`,
+      damage: '本页有些地方受损或褪色，英文的部分内容可能基于不确定的读法。',
+    },
+    pageReport: {
+      open: '报告本页的问题',
+      prompt: '哪里有问题？如有合适的选项，请选一个。',
+      kinds: {
+        garbled_source: '转录错乱',
+        missing_text: '文字缺失',
+        invented_text: '译文添加了内容',
+        wrong_image: '页面图像不对',
+        wrong_language: '语言不对',
+        translation_error: '这里的英文有误',
+      },
+      commentPlaceholder: '还有别的吗？（选填）',
+      passageLabel: '目前的英文',
+      correctionLabel: '应该怎么说',
+      sourceLabel: '原文字句（选填）',
+      send: '发送报告',
+      sending: '正在发送…',
+      cancel: '取消',
+      thanks: '谢谢。我们会检查这一页。',
+      failed: '发送失败，请稍后再试。',
+    },
+    // Unreachable on /zh (Chinese-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
+    history: {
+      title: '修订历史',
+      loading: '正在加载修订历史…',
+      loadFailed: '无法加载本页的修订历史，请稍后再试。',
+      noRevisions: '本页没有修订记录。',
+      onlyMaintenance: '只有批量维护记录，见下方。',
+      chars: '字符',
+      showMaintenance: (n) => `显示 ${n} 条批量维护修订`,
+      hideMaintenance: (n) => `隐藏 ${n} 条批量维护修订`,
+      maintenanceNote: '语料修复和全馆范围的批量处理恰好涉及本页，并非对扫描图的重新识读。',
+      restoreForbidden: '您已不再以编辑身份登录。请重新登录后恢复此版本。',
+      restoreFailed: '无法恢复该版本，请稍后再试。',
+      today: (time) => `今天 ${time}`,
+      yesterday: '昨天',
+      daysAgo: (n) => `${n} 天前`,
+      sourceAi: 'AI',
+      sourceBatch: '批量',
+      sourceManual: '人工',
+      sourceContributor: '贡献者',
+      sourceMaintenance: '维护',
+      fieldTranscript: '转录',
+      fieldTranslation: '译文',
+    },
+    settings: {
+      theme: '主题',
+      themeLight: '浅色',
+      themeSepia: '暖黄',
+      themeDark: '深色',
+      textSize: '字号',
+      smallerText: '缩小文字',
+      largerText: '放大文字',
+      lineWidth: '行宽',
+      lineWidthNarrow: '窄',
+      lineWidthNormal: '标准',
+      lineWidthWide: '宽',
+      typeface: '字体',
+      typefaceSerif: '衬线',
+      typefaceSans: '无衬线',
+      lineHeight: '行距',
+    },
+    accountMenu: {
+      library: '图书馆',
+      collections: '专题',
+      gallery: '图库',
+      browse: '浏览',
+      catalogue: '目录',
+      works: '作品',
+      explore: '可视化',
+      librarian: '图书馆员',
+      you: '我的',
+      yourAccount: '我的账户',
+      savedPages: '已保存的页面',
+      readingHistory: '阅读记录',
+      signIn: '登录',
+      supportSourceLibrary: '支持 Source Library',
+      sendFeedback: '发送反馈',
+      siteLanguage: '网站语言',
+      signOut: '退出登录',
+    },
+    pinnedEdition: {
+      citedVersion: '所引版本',
+      resolving: '正在查找所引版本…',
+      unresolvable: (v) => `此链接引用的是 v${v} 版，但无法找到该版本。现显示当前文本。`,
+      continueReadingLink: '继续阅读 →',
+      pageNotInEdition: (label, date) => `本页不在 ${date} 发布的 ${label} 版中。现显示当前文本。`,
+      readingEdition: (label, date) => `您正在阅读 ${date} 发布的 ${label} 版。`,
+      readingEditionRevised: (label, date) => `您正在阅读 ${date} 发布的 ${label} 版。此后译文已有修订。`,
+      viewCurrentEdition: '查看当前版本 →',
     },
   },
 };

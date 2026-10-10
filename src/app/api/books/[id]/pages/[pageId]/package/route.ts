@@ -92,7 +92,7 @@ function buildReadme(opts: {
   // Contents manifest — say what's here AND what was left out, and why.
   lines.push('CONTENTS OF THIS PACKAGE');
   if (hasImage) {
-    lines.push(`  - page-${String(page.page_number).padStart(4, '0')}.jpg — the page scan`);
+    lines.push(`  - page-${String(page.page_number).padStart(4, '0')}.jpg: the page scan`);
   } else if (imageAccess === 'blocked') {
     lines.push('  - [scan NOT included] the source institution has not released this');
     lines.push('    book\'s scans under a redistributable license.');
@@ -100,12 +100,12 @@ function buildReadme(opts: {
     lines.push('  - [scan NOT included] no scan is archived for this page.');
   }
   if (page.ocr?.data) {
-    lines.push('  - transcription.txt — the original-language text');
+    lines.push('  - transcription.txt: the original-language text');
   } else {
     lines.push('  - [transcription NOT included] this page has not been transcribed.');
   }
   if (page.translation?.data) {
-    lines.push('  - translation.txt — the English translation');
+    lines.push('  - translation.txt: the English translation');
   } else {
     lines.push('  - [translation NOT included] no translation available for this page.');
   }

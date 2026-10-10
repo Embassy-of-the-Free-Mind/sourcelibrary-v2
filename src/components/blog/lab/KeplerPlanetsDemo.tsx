@@ -151,11 +151,11 @@ export default function KeplerPlanetsDemo() {
 
   return (
     <LabCard
-      title="Station VII — The planets, auditioned"
+      title="Station VII: The planets, auditioned"
       headerRight={<PlayToggle playing={playing} onClick={toggle} label="Hear the planet" />}
-      caption="Tap a planet on Kepler's engraving and hear it swing between its slowest and fastest motion, as he notated — a continuous glissando, transposed into hearing range. Switch to the modern orbit to hear how far his harmony was from the measured sky."
+      caption="Tap a planet on Kepler's engraving and hear it swing between its slowest and fastest motion, as he notated: a continuous glissando, transposed into hearing range. Switch to the modern orbit to hear how far his harmony was from the measured sky."
       sourceHref="/book/the-harmony-of-the-world-kepler?page=325"
-      sourceLabel="Kepler, Harmonices Mundi, Book V, ch. 4 (1619) — the table of extreme motions"
+      sourceLabel="Kepler, Harmonices Mundi, Book V, ch. 4 (1619), the table of extreme motions"
     >
       <div className="relative rounded overflow-hidden border border-border-light mb-3 bg-white">
         <img
@@ -180,7 +180,7 @@ export default function KeplerPlanetsDemo() {
         ))}
       </div>
       <p className="text-xs text-muted mb-4">
-        The engraving is the instrument panel — tap a stave. It is the very page carrying the{' '}
+        The engraving is the instrument panel: tap a stave. It is the very page carrying the{' '}
         <Link href="/book/the-harmony-of-the-world-kepler?page=336" className="text-accent-rust underline">
           MI FA MI margin note
         </Link>
@@ -200,13 +200,13 @@ export default function KeplerPlanetsDemo() {
       </div>
       {choirOn && (
         <p className="text-xs text-muted mb-4">
-          The whole choir at once — the polyphony Kepler says the heavens sing perpetually, each
+          The whole choir at once: the polyphony Kepler says the heavens sing perpetually, each
           planet on its own period, never resolving.
         </p>
       )}
 
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <Readout label="Kepler assigned" value={`${p.ratio[0]}:${p.ratio[1]}`} note={`${p.interval} — ${Math.round(kc)} ¢`} />
+        <Readout label="Kepler assigned" value={`${p.ratio[0]}:${p.ratio[1]}`} note={`${p.interval}, ${Math.round(kc)} ¢`} />
         <Readout label="Modern orbit gives" value={`${Math.round(mc)} ¢`} note={`from e = ${p.e}`} />
         <Readout label="Kepler's error" value={`${dev.toFixed(1)} ¢`} note={verdict(dev)} />
       </div>

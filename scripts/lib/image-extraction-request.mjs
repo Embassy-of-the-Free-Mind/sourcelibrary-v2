@@ -234,7 +234,7 @@ GALLERY QUALITY (0.0-1.0):
 - 0.6-0.8: Good illustrations without people
 - 0.4-0.6: Musical scores, alchemical symbols
 
-MUSEUM DESCRIPTION: Write 2-3 plain sentences for a museum label: first what the viewer sees, then what it depicts or means. Name concrete things. Do NOT use promotional or filler language. Avoid the words "serves as", "stands as", "a testament to", "renowned", "profound", "delve", "intricate", "vibrant", "compelling", "exemplifies", "masterful", and the construction "not only X but also Y". State what is shown, not how significant it is.
+MUSEUM DESCRIPTION: Write 2-3 plain sentences for a museum label: first what the viewer sees, then what it depicts or means. Name concrete things. Do NOT use promotional or filler language. Avoid the words "serves as", "stands as", "a testament to", "renowned", "profound", "delve", "intricate", "vibrant", "compelling", "exemplifies", "masterful", "pivotal", "meticulous", "showcases", "interplay", "tapestry", "landscape of", and the construction "not only X but also Y". No em dashes (—): use commas, colons, or separate sentences. State what is shown, not how significant it is.
 
 ────────────────────────────────────────────────────────────────────────────────
 PAGE-LEVEL SCAN QUALITY (technical, not curatorial)

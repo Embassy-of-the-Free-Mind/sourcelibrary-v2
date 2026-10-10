@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { READABLE_IN_ENGLISH_OR } from '@/lib/books-catalog';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getReadDb } from '@/lib/mongodb';
 import { translationPercent } from '@/lib/translation-completeness';
@@ -59,7 +60,8 @@ export async function GET(request: NextRequest) {
     if (collection) query = query.contains('collections', [collection]);
     if (library) query = query.eq('image_source_provider', library);
     if (firstTranslation) query = query.eq('is_first_translation', true);
-    if (hasTranslation) query = query.gt('pages_translated', 0);
+    // readable_in_english (#5288), same expression as browseBooks' hasTranslation.
+    if (hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
 
     // Sort
     switch (sort) {

@@ -1,0 +1,56 @@
+[
+{"id": "QLWMJ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བ་ལང་སྐྱོང་གི་མ་ཞི་བ་ཉིད་ཀྱིས་ཤེས་པར་འགྱུར་རོ", "english": "the cowherd's mother will come to know through unrest", "why": "ཞི་བ is the name of the cowherd's mother (Śānti), the same Śānti whose hand throws the curd pot in the gloss; it is not 'unrest'.", "fix": {"find": "the cowherd's mother will come to know through unrest", "replace": "the cowherd's mother Śānti will come to know"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཚང་ཞེས་བྱ་བ་ནི་", "english": "\"Complete\" means...", "why": "ཚང here is 'nest', glossed on the next side as a dwelling (གནས་ཡིན་ནོ), not 'complete'."}
+ ],
+ "note": "A lemma-by-lemma Vinaya glossary that is mostly sound, but it turns the proper name Śānti into 'unrest'."},
+{"id": "QVSDX", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "A faithful rendering of the general and specific, indirect and direct characteristics of the Truths."},
+{"id": "QX9LZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "དངོས་པོ་སྐད་ཅིག་མ་གཅིག་ལ་འབྱུང་བ་ཅན་འབྲས་བུ་སྐྱེད་དོ", "english": "a momentary thing produces an effect that arises in a single moment", "why": "'Occurring in a single moment' (ekakṣaṇabhāvin) qualifies the producing thing, not the effect."}
+ ],
+ "note": "A sound translation of the momentariness argument, with one qualifier attached to the wrong noun."},
+{"id": "QAJ2E", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བརྒྱ་བྱིན་སྤྱི་བོ་མེའི#", "english": "If the fire on the crown of Indra's head [note: a reference to a specific type of plant or phenomenon traditionally contrasted with true fire]", "why": "Śakramūrdhan ('Indra's head') is the stock Pramāṇa example of an anthill whose vapour looks like smoke; the verse says 'if the anthill had the nature of fire, it would be fire itself', and the note is wrong.", "fix": {"find": "If the fire on the crown of Indra's head [note: a reference to a specific type of plant or phenomenon traditionally contrasted with true fire]", "replace": "If the anthill (śakramūrdhan, 'Indra's head') [note: an anthill, whose rising vapour resembles smoke]"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཅུང་ཟད་ལྕི་བ་ལ་སོགས་པ་རིགས་མི་མཐུན་པ་ལས", "english": "from dissimilar types such as slightly heavy [note: substances]", "why": "ལྕི་བ here is cow-dung, the classic dissimilar cause from which a lotus-type plant is said to grow; it does not mean 'heavy'.", "fix": {"find": "from dissimilar types such as slightly heavy [note: substances]", "replace": "from dissimilar types such as cow-dung"}},
+  {"type": "term", "confidence": "medium", "tibetan": "རྣམ་གྲངས་མེད་པར་སྐྱེད་པར་བྱེད་པ", "english": "produce the effect without a sequence", "why": "རྣམ་གྲངས་མེད་པར means 'not alternatively', i.e. jointly rather than each one separately; it is not about sequence."}
+ ],
+ "note": "The argument structure is right, but the anthill and cow-dung examples are both misread."},
+{"id": "Q3CJ5", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "མངོན་པར་འདོད་པའི་སྐྱེས་བུ་བཞིན", "english": "much like a person who is the object of desire", "why": "མངོན་པར་འདོད་པ here is 'accepted/intended' (abhimata): the person under discussion in the dream example, not a desired person."},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ནི་དེ་ཉིད་རིགས་ཅན་མིན།", "english": "That is not the nature of reality itself.", "why": "The root line says that this is not known as it really is (by all who do not see the supreme), which the commentary takes up with 'by whom?'; it is not a claim about the nature of reality."}
+ ],
+ "note": "A good rendering of the elephant-gaze passage, with two misreadings in its opening lines."},
+{"id": "QX9VJ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "སྔོ་བསངས་ཡིན་ཏེ་ཕ་དེའི་བུ། །ཡིན་ཕྱིར་", "english": "Being blue, he is the son of that father, because of being it, like the other appearing.", "why": "This is the stock pseudo-reason 'he is dark, because he is that father's son, like the other sons seen'; the English swaps the thesis and the reason.", "fix": {"find": "Being blue, he is the son of that father, because of being it, like the other appearing.", "replace": "He is dark, because he is that father's son, like the other [sons] that are seen."}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དཔེར་ན་བུ་གསུམ་ཡོད་པ་ལའང་། །", "english": "For example, even if someone has three sons,", "why": "The whole side is verse (seven-syllable pādas) and is run together as one block of prose, which blurs the boundaries between the arguments."}
+ ],
+ "note": "A very literal, hard-to-follow prose rendering of verse on anyathānupapatti, with one example inverted."},
+{"id": "Q6O4B", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཤེས་པ་དང་དེའི་ཡུལ་དགག་པར་བྱ་བའི་དོན་ནི་ཡོད་པར་གདགས་པས་ཡོད་པ་ཡིན་ལ། དེ་དག་ལོག་པ་ནི་མི་དམིགས་པའི་མེད་པ་ཡིན་ནོ", "english": "the object of cognition and the negation of that object are designated as existing because they are present, while their reversal is the non-existence of non-perception", "why": "The Tibetan says that cognition and its object are, by designation, the existence of the thing to be negated, and that their absence is non-perception, i.e. non-existence; 'negation of that object' and 'non-existence of non-perception' are wrong.", "fix": {"find": "the object of cognition and the negation of that object are designated as existing because they are present, while their reversal is the non-existence of non-perception", "replace": "cognition and its object are, by designation, the existence of the thing to be negated, while their absence is non-perception, that is, non-existence"}},
+  {"type": "structure", "confidence": "high", "tibetan": "ལུས་དང་བློ་ཐམས་ཅད་མཁྱེན་པ་ལ་སོགས་པ་དང་མི་འགལ་བ་དག་གིས", "english": "by using signs that are not incompatible with the body or the mind", "why": "The Mīmāṃsakas' reasons are having a body, having an intellect and the like, which are not incompatible with omniscience; the English inverts what is compatible with what.", "fix": {"find": "by using signs that are not incompatible with the body or the mind", "replace": "by using reasons such as having a body or an intellect, which are not incompatible with omniscience and the like"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཡུལ་ལམ་དབང་པོ་བྱིན་གྱི་རླབས་ཀྱིས་འདུས་བྱས་ན", "english": "it is affected by the transformative power of the object or the sense faculties", "why": "The object or the faculty is the thing affected by (an external) adhiṣṭhāna; the power does not belong to them."},
+  {"type": "structure", "confidence": "medium", "tibetan": "རྒྱུ་མཚན་ཅན་གཞན་ནི་ལྐོག་ཤལ་ལ་སོགས་པ་བ་ལང་གི་རྒྱུ་མཚན་ལོག་ནས", "english": "other qualifying characteristics such as the dewlap will be explained after the characteristics of the cow are reversed", "why": "The dewlap and so on are the cow's marks (nimitta) whose absence is meant; the 'other' is the marked thing (nimittin), so the two are conflated."}
+ ],
+ "note": "The non-perception passage is garbled at key points, though the rest of the logic is followed."},
+{"id": "QXS58", "score": 4, "verdict": "light", "span": "extra", "span_why": "It opens with the husband's reply ('Good lady, what you say is not wrong'), the bath and the new clothes, all of which are on the previous side.",
+ "errors": [],
+ "note": "A faithful narrative translation of the Upananda episode, prefixed by material from the previous side."},
+{"id": "QFM58", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དོན་བྱ་བ་བྱེད་པའི་དོན་ལ་འཇུག་གོ", "english": "they engage in purposeful action", "why": "They act toward an object capable of arthakriyā (causal efficacy); they are not 'engaging in purposeful action'."}
+ ],
+ "note": "A solid rendering of the apoha discussion of conceptual cognition and conventional users."},
+{"id": "Q5TXM", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "མིག་གི་བྱེད་པས་ཐམས་ཅད་ཤེས་པར་རྟོགས་པའི་ཕྱིར་ཏེ", "english": "This is because all is understood through the function of the eye.", "why": "This is an unwanted consequence ('for then everything would be known by the operation of the eye'), and the English states it as a fact."},
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་ཕྱིར་གཅིག་དོན་དུ་མ་ཅན།", "english": "Therefore, one object possesses many aspects.", "why": "The verse says that a single cognition has many objects (the point being that non-conceptual cognition grasps many at once), not that one object has many aspects."}
+ ],
+ "note": "A generally accurate account of the citra-cognition debate; the closing verse and one prasaṅga are misread."}
+]

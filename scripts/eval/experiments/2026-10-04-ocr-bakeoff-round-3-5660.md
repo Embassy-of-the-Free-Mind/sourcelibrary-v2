@@ -1,0 +1,64 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en, la, grc, de]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 657
+verdict: "GLM-OCR beats lite on English 1600-1699 (CER 0.034 vs 0.053) and 1700+; five other open engines do not; Latin stays directional (40 library pages)."
+status: rejected
+decision: "No routing change; the whole-book GLM pilot (2026-10-04-does-glm-ocr-hold-up...) found word swaps and modernised spelling, so English stays on lite"
+superseded_by: null
+issue: 5660
+---
+## 2026-10-04 · Which open engine should read our English and early-Latin print? Round 3 of #5660: GLM-OCR beats lite on English 1600–1699 and 1700+; Latin still cannot be called
+
+PRIOR ART: 2026-10-03-open-engine-print-5660.md (rounds 1–2: PaddleOCR-VL-1.6, olmOCR-2-7B-FP8 — same 632 pages, cells, scorer and rule, reused unchanged here); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md (the EEBO-TCP reference method, extended here to Latin); 2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md (Kraken CATMuS on Latin print, other pages).
+
+**Question.** Six engines not yet tried on our print (brief, Derek 2026-10-04: "more english ocr's to try"): GLM-OCR, dots.ocr, Nanonets-OCR2, MinerU2.5-Pro, Calamari + GT4HistOCR, and Kraken CATMuS-Print on English. Does any beat production `gemini-3.1-flash-lite` per cell, priority English 1600–1699 and Latin 1500–1699?
+
+**Caveat first: Latin.** Latin 1500–1699 had 36 reference pages, 15 of them library pages, and 10 pages before 1600. Before any round-3 run I added **25 EEBO-TCP (CC0) same-edition Latin references** at $0, all leaf-checked by eye (31 checked: 4 not Latin-majority, 1 edition not established, 1 window off the page). The cell is now 61 pages, **40 library, still under the 50 needed for a decision**, so it is directional. The 1500–1599 part is **14 pages: no winner is called on it**.
+
+**Design.** `measure: accuracy`. Preregistered as Amendment 2 of `PREREGISTRATION-open-engine-print-5660.md` (commit f386840a3, pushed before any round-3 output was scored). Same 632 JPEGs plus the 25 new pages (stratum `eebo-tcp-latin-5660`, `benchmark/eebo-tcp-latin-5660.json`; cell map `cells-r3.json`). Scorer: `benchmark-score.mjs`, unchanged. Rule: the #4925 cost-lane rule in `benchmark-cost-lane.mjs --cells`, unchanged; it is applied only with ≥ 50 library books. Convention: `open-engine-markup@1`, unchanged. Each arm was scored in its own bench root holding only lite, lite-b and flash-preview, so `invention` is measured against the same other-engine set as rounds 1–2. GPU arms ran on one RunPod SECURE RTX PRO 4000 Blackwell (the GEX45's GPU), except MinerU, which ran on an L4 (no Blackwell was available). The stack was vLLM 0.30.0, torch 2.13, transformers 5.18, temperature 0, one attempt, 8 clients, and each model's own documented prompt or call. The two CPU arms ran on the same pod's CPUs, on the 397 non-Greek pages. Calamari reads Kraken's line polygons, so both share one segmentation. Lite arms reused; lite + lite-b + flash-preview run on the 25 new pages ($0.09).
+
+**Result** (657-page map; the 632-page view is in `summary-<arm>-632.json`, and English cells are identical in both). Δ = arm CER − lite CER per page, median [bootstrap 95% CI]; W/L = pages the arm is better/worse.
+
+| arm | English 1600–1699 (59 library; lite 0.053) | English 1700+ (106 library; lite 0.022) | Latin 1500–1699, directional (60 paired, 39 library; lite 0.084) | s/page |
+|---|---|---|---|---|
+| **GLM-OCR** 0.9B (MTP) | **0.034 · Δ −0.021 [−0.026, −0.002] · 41/14 (p < 0.001) · catastrophic 0 vs 3 · passes all checks, beats lite** | **0.002 · Δ −0.014 [−0.017, −0.011] · 98/5 · passes** | 0.070 · Δ −0.015 [−0.023, +0.001] · 34/25 | 2.0 |
+| dots.ocr 1.7B | 0.038 · Δ −0.009 [−0.020, +0.002] · 34/24 · fails: 1 loop flag (by eye, a duplicated catchword) | 0.017 · Δ 0.000 · 32/14 · fails invention (0.019 vs 0.018) | 0.071 · Δ −0.005 [−0.016, +0.003] · 31/26 | 5.8 |
+| Nanonets-OCR2 3B | 0.045 · Δ −0.002 [−0.018, +0.002] · 31/23 · fails loops | 0.017 · Δ 0.000 · 31/27 · fails invention, loops | 0.092 · Δ +0.016 [+0.006, +0.021] · 18/40 | 3.6 |
+| MinerU2.5-Pro 1.2B | 0.057 · Δ +0.004 [−0.003, +0.017] · 23/33 · fails invention, loops | 0.017 · Δ 0.000 · 30/21 · fails invention | 0.092 · Δ +0.005 [+0.002, +0.010] · 17/41 | 1.7 (L4) |
+| Kraken CATMuS-Print (CPU) | 0.046 · Δ +0.003 [−0.005, +0.004] · 24/35 · **passes the no-worse rule, does not beat lite** | 0.018 · Δ 0.000 · 44/42 · fails invention | 0.090 · Δ +0.002 [−0.004, +0.009] · 25/35 | 66 CPU-s |
+| Calamari GT4HistOCR, binarized (CPU) | 0.060 · Δ +0.015 [+0.005, +0.022] · 17/42 · fails invention | 0.035 · Δ +0.010 · 26/78 · fails | 0.109 · Δ +0.012 [−0.001, +0.036] · 23/37 | — |
+| *olmOCR-2 (round 2)* | *0.036 · Δ −0.014 [−0.024, 0.000] · 35/19 · passes* | *fails 1 loop* | *36-page cell only: Δ +0.003* | *2.7* |
+| *PaddleOCR-VL (round 1)* | *0.063 · Δ +0.012 · fails* | *fails invention* | *36-page cell only: Δ +0.022* | *0.96* |
+
+- **Other cells (every VLM on Greek; directional on Latin 1700+ and German):** every arm loses to lite. Greek print, catastrophic pages out of 114: GLM 60, Nanonets 60, dots 57, MinerU 15 (lite 1). German (21 of 29 Fraktur): GLM 0.042, MinerU 0.025, Nanonets 0.029, dots 0.013, Kraken 0.260, against lite 0.005.
+- **Latin, split (descriptive only):** GLM's Latin lean comes from the 1600s. On the 46 1600–1699 pages it has Δ −0.020 (30/15); on the new EEBO pages, Δ −0.030 (18/6 of 24 paired; lite has no score on the title page; mostly long-s). On the 14 pre-1600 pages **no arm beats lite**: GLM is 4/10, dots 5/8, Kraken 3/11, Calamari 4/10.
+- **Long-s (#4877), words with ſ misread as f on EEBO-TCP English (73 pp; Kraken and Calamari read 68):** lite 1,030 (repeat 1,092). Calamari **11**, olmOCR 13, Kraken 34, GLM 70, dots 232, Nanonets 313, MinerU 1,228, Paddle 1,261. On the 25 new Latin pages: lite 580, Calamari 6, Kraken 9, GLM 40, dots 70, Nanonets 224, MinerU 376. Only Calamari writes the ſ glyph (dots sometimes does). Abbreviation marks on `latin-pre1700`: Calamari 271, Kraken 249, lite 206, GLM 101, MinerU 101, dots 89, Nanonets 29.
+- **Five pages read by eye (`read-from-image`, Claude):**
+  1. **GLM replaces Hebrew with a repeated word.** *Ethics of Maimonides* bibliography (en-6aa1d5-ws52; GLM 0.255 vs lite 0.069): every Hebrew/Yiddish title becomes "ישראל ישראל ישראל …" ("Israel"), while the Latin-script parts are right. This is confident invention in the right script. Lite reads the Hebrew. olmOCR looped on the same page.
+  2. **GLM on long-s:** *Jew of Malta* (ed-6a08fd63…-p27; 0.074 vs lite 0.105). It reads ſ as s ("rests", "Treasure"), where lite writes f. It also substitutes plausible words, like olmOCR: "gentle fleece" for "gentle sleepe", "Halt thoun't" for "Hast thou't", "The Iow of Malta".
+  3. **Kraken fails loud, not plausible:** a speckled, show-through EEBO page (ed-6991d65e…-p118; Kraken 0.77, lite 0.11). Kraken writes Latin-looking garble ("at pir ¡aaquamvopadar iaa") throughout. Lite reads the page.
+  4. **dots' one "loop" is a duplicated catchword:** ed-6992017d…-p9 (dots 0.046, better than lite's 0.056). The layout JSON repeats the signature and catchword block "A 3 / ſically,". That trips the scorer's repeated-line test (2 of 5 lines repeated). It is not a runaway, but under the preregistered rule the cell fails.
+  5. **Calamari needs binarized lines; GLM mangles abbreviations:** *De fide*, gothic rotunda, about 1500 (latin-pre1700-0b0df1-p100). On grey crops, Calamari produced noise ("oeeeemnehou"). On Kraken-binarized crops it reads "Nõ poſſet eſſe idem ſpũs crcatꝰ in oibus / ſunctis.⁊ paulopoſt…": ſ, abbreviations and ⁊ are kept, with letter slips. GLM writes "Nö poftet esse … spüs creat²": macrons become umlauts and ſ becomes f. The same happens on the 1529 *Rudimenta* ("commentariorü", "quecuníp").
+- **Throughput and cost:** GLM-OCR runs at 2.0 s/page on the RTX PRO 4000 with MTP speculative decoding. That is **$0.19 per 1,000 pages on the GEX45** ($249/mo), against lite's $0.90 realtime and $0.45 on Batch. 92 GLM pages hit the 4,500-token cap (81 Greek, none in the English cells). The English 1600–1699 backlog (145 books, 39,412 pages without OCR; #5750) is **≈ 22 box-hours** for GLM.
+
+**Deviations.**
+1. **Calamari input.** The prereg specified grey line crops. The OCR-D GT4HistOCR models expect binarized lines: the grey run averaged 50% confidence and scored CER 0.41 on English 1600–1699. I re-ran on lines cut from Kraken `nlbin`-binarized pages, with the same polygons. Both runs are reported (`*-calamari-gt4histocr*`). The binarized run is the one in the table.
+2. **Calamari first run:** predictions are keyed by line-image basename, and per-page `00000.png…` names collided across pages, which gave page A book B's text. Crops were renamed `<slug>__NNNNN.png` and re-predicted before any score.
+3. **vLLM on Blackwell:** FlashInfer's JIT sampler needs a CUDA ≥ 12.9 toolkit for SM 12.x, and the image ships 12.8. Every server ran with `VLLM_USE_FLASHINFER_SAMPLER=0`, which leaves greedy decoding unchanged. GLM's first serve attempt (with MTP) failed on this before the flag was added. It then served with MTP as preregistered.
+4. **MinerU's first serve** failed on my `--max-model-len 32768` (the model's limit is 8,192). It was re-run on a second pod at the model's own limit. No Blackwell was available, so that pod was an **L4**, and MinerU's s/page is not comparable.
+5. dots.ocr's first client was interrupted after about 50 pages. The priority cells were read next, then the rest, all on the same server and settings. Its s/page excludes those pages.
+6. The Kraken/Calamari CPU rate is pod CPU time (24 threads), not GEX45 time.
+7. The dashboard was not regenerated (landing rule 3 deferred, as in rounds 1–2).
+
+**Implication.** **GLM-OCR is the best open reader of our English print.** It beats lite on English 1600–1699 (and edges olmOCR there) and is the first arm to pass English 1700+. It is 8× smaller than olmOCR and faster. If English goes to the box, GLM-OCR is the engine. It must sit behind **two guards first**:
+- a script guard for non-Latin inserts (by-eye 1: it writes "ישראל" in place of Hebrew), and
+- the length/truncation guard already owed for olmOCR.
+
+No routing was changed. Kraken CATMuS is the €0 fallback: on CPU it is no worse than lite on English 1600–1699, and it fails loudly rather than plausibly. **Latin stays on lite**: no arm can be decided, and on the 14 pre-1600 pages every arm loses or ties. The next Latin step is references, not engines: ≥ 50 library pages, and ≥ 30 before 1600. Greek and German stay on lite.
+
+**Replicated?** No; each arm ran once at temperature 0, with lite and its repeat as the A-vs-A floor (Δ₀ = 0.000). **Artifact:** `results/open-engine-print-5660/` (`cells-r3.json`, `scored-<arm>/`, `cost-lane-<arm>[-632].json`, `summary-<arm>[-632].json`, `weak-spots-<arm>.json`, `<arm>-arm-run.json`), `results/edition-refs/leaf-check-eebo-tcp-latin-2026-10-04.json`, 25 new `benchmark/refs/ed-*` (CC0, text public), driver and clients in `scripts/gpu/ocr-bakeoff-r3-5660/`. Raw outputs: Hetzner `/root/r3-bench-5660/<arm>/` and `/root/ocr-bakeoff-5660c/lane/bench/arms/`. **Cost: $1.82** (GPU $1.73: Blackwell pod 2.6 h $1.49 + L4 pod $0.24, both terminated and confirmed gone; Gemini $0.09).
