@@ -1103,7 +1103,7 @@ async function submitPageReview(args: Record<string, unknown>) {
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
     },
   });
-  return { ok: true, message: 'Review recorded. Thank you — it goes into the library\'s quality measurement, not onto the page.' };
+  return { ok: true, message: 'Review recorded. Thank you. It goes into the library\'s quality measurement, not onto the page.' };
 }
 
 /**
@@ -1403,7 +1403,7 @@ const TOOLS: Tool[] = [
     inputSchema: {
       type: 'object' as const,
       properties: {
-        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin", "Greek", "Arabic", "German", "Chinese", "Tibetan". Omit to accept any language — but ask the user first which languages they read.' },
+        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin", "Greek", "Arabic", "German", "Chinese", "Tibetan". Omit to accept any language, but ask the user first which languages they read.' },
         volunteer_code: { type: 'string', description: 'The code from the user\'s earlier shift, if they have one. Omit on a first shift; one is issued.' },
         pages: { type: 'number', description: 'How many pages (1-5, default 5).' },
       },
@@ -1614,7 +1614,7 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .slice(0, MAX_INLINE_IMAGES)
       .map((p) => ({
         urls: [p.image_url as string],
-        caption: `Scan for ${p.item_id as string} — ${(p.book_title as string) || 'untitled'}, p. ${p.page_number as number}`,
+        caption: `Scan for ${p.item_id as string}: ${(p.book_title as string) || 'untitled'}, p. ${p.page_number as number}`,
       }));
   }
 
