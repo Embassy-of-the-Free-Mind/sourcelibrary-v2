@@ -77,7 +77,11 @@ user's request. Nothing we run touches their credentials. Two new tools —
 with stratum tags, `is_gold` items, `CONSENSUS_TARGET = 3`, "finish what's started first"
 ordering, per-volunteer ids, note-only abstention and invite tokens. This is BOINC's scheduler,
 already written. Issue #3635 records that the queue is stocked (8,767 items) and showed "Coming
-soon".
+soon". The closest live queue is `translation-check`: 305 audit pages across 15 languages,
+served to invited scholars at `/check/[token]` (#5406, strategy #3560), built to calibrate the
+Opus judge behind the corpus translation audit (#5274). A shift is that same task with the
+volunteer's own Claude beside them; it should draw from the same queue and write the same row
+shape, so the two populations can be compared.
 
 **The review instrument — `scripts/eval/spot-check/REVIEWER.md`.** A frozen brief that reads each
 page against its image and classes errors with `.claude/docs/page-error-taxonomy.md` codes, with
