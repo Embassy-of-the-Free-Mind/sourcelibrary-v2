@@ -218,16 +218,16 @@ async function packets() {
 // ── adjudicate ─────────────────────────────────────────────────────────────────────────────────────────────────────
 // Sealed like scripts/eval/second-reader/run-readers.sh: one folder per chunk holding only the brief, the items and
 // their images; `--restricted --tools Read Write` removes Bash and confines reads to the folder.
-function runSealed(chunkFile, outFile, metaDir, model) {
+function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md') {
   const name = path.basename(chunkFile, '.json');
-  const sealed = path.join(process.env.TMPDIR || '/tmp', 'ocr-convergence-sealed', path.basename(path.dirname(path.dirname(chunkFile))) + '-' + (SET || 'x'), name);
+  const sealed = path.join(process.env.TMPDIR || '/tmp', 'ocr-convergence-sealed', path.basename(path.dirname(path.dirname(chunkFile))) + '-' + (SET || 'x') + '-' + brief.replace(/\.md$/, ''), name);
   fs.rmSync(sealed, { recursive: true, force: true });
   fs.mkdirSync(path.join(sealed, 'images'), { recursive: true });
-  fs.copyFileSync(path.join(HERE, 'ADJUDICATOR.md'), path.join(sealed, 'ADJUDICATOR.md'));
+  fs.copyFileSync(path.join(HERE, brief), path.join(sealed, brief));
   const items = JSON.parse(fs.readFileSync(chunkFile, 'utf8'));
   fs.writeFileSync(path.join(sealed, 'items.json'), JSON.stringify(items, null, 1));
   for (const it of items) fs.copyFileSync(path.join(path.dirname(path.dirname(chunkFile)), it.image_file), path.join(sealed, it.image_file));
-  const prompt = 'Your instructions are the full text of `ADJUDICATOR.md` in this folder (skip the leading `<!-- … -->` comment); follow them exactly. Work only inside this folder.\nITEMS_FILE: `items.json`\nOUTPUT_FILE: `review.json`';
+  const prompt = `Your instructions are the full text of \`${brief}\` in this folder (skip the leading \`<!-- … -->\` comment); follow them exactly. Work only inside this folder.\nITEMS_FILE: \`items.json\`\nOUTPUT_FILE: \`review.json\``;
   return new Promise((resolve) => {
     const t0 = Date.now();
     const out = fs.openSync(path.join(metaDir, `${name}.jsonl`), 'w');
@@ -366,6 +366,78 @@ async function apply() {
   await client.close();
 }
 
-const steps = { frame, select, compare, packets, adjudicate, decide, apply };
+// ── audit: the gate (#6420): a blind by-eye check of 40 staged decisions by a fresh Opus and Gemini 3.8 ───────────
+// Items: every `write` up to 40, then `contain`, then `keep`, seeded. X/Y order drawn with another seed than the
+// adjudication's, and no diff hint: the auditor answers "which is the more faithful transcription of this leaf".
+async function auditPackets() {
+  const dec = readJsonl(path.join(SETDIR, 'decisions.jsonl'));
+  const n = Number(arg('n', 40));
+  const r = rng(64200);
+  const shuffle = (a) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pick = [];
+  for (const act of ['write', 'contain', 'keep', 'residual', 'defer']) for (const d of shuffle(dec.filter((x) => x.action === act))) if (pick.length < n) pick.push(d);
+  const AUD = path.join(SETDIR, 'audit');
+  fs.mkdirSync(path.join(AUD, 'chunks'), { recursive: true }); fs.mkdirSync(path.join(AUD, 'images'), { recursive: true });
+  const items = [], key = [];
+  for (const d of pick) {
+    const stored = fs.readFileSync(path.join(SETDIR, 'stored', `${d.page_id}.txt`), 'utf8');
+    const cli = fs.readFileSync(path.join(SETDIR, 'reads', `${d.page_id}.txt`), 'utf8');
+    fs.copyFileSync(path.join(SETDIR, 'reads', `ws-${d.page_id}`, `${d.page_id}.jpg`), path.join(AUD, 'images', `${d.page_id}.jpg`));
+    const side = sideOf(d.page_id, 'audit-6420');
+    const [tx, ty] = side === 'stored-is-A' ? [stored, cli] : [cli, stored];
+    items.push({ item_id: d.page_id, language: d.language, image_file: `images/${d.page_id}.jpg`, text_x: tx, text_y: ty });
+    key.push({ page_id: d.page_id, action: d.action, stored_is: side === 'stored-is-A' ? 'X' : 'Y' });
+  }
+  const per = Number(arg('per-chunk', 10));
+  for (let i = 0; i * per < items.length; i++) fs.writeFileSync(path.join(AUD, 'chunks', `a${String(i).padStart(3, '0')}.json`), JSON.stringify(items.slice(i * per, (i + 1) * per), null, 1));
+  writeJsonl(path.join(AUD, 'key.jsonl'), key);
+  // The Gemini auditor: one page per call through scripts/eval/run-cli-arm.py (plan mode, the nudge), brief inline.
+  const brief = fs.readFileSync(path.join(HERE, 'AUDITOR.md'), 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
+  const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message. OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `better`, `worse_serious`, `confidence`, `note`), with no prose and no markdown fence.';
+  writeJsonl(path.join(AUD, 'gemini-requests.jsonl'), items.map((it) => ({ uid: it.item_id, image: path.join(AUD, it.image_file), prompt: `${brief}\n\n${wrapper}\n\nITEMS_FILE:\n${JSON.stringify([{ ...it, image_file: `${it.item_id}.jpg` }], null, 1)}` })));
+  const tally = {}; for (const k of key) tally[k.action] = (tally[k.action] || 0) + 1;
+  console.log(`${SET}: audit of ${items.length} decisions ${JSON.stringify(tally)}\nnext: driver.mjs audit-opus, and python3 scripts/eval/run-cli-arm.py --requests ${path.join(AUD, 'gemini-requests.jsonl')} --out ${path.join(AUD, 'gemini-out.jsonl')} --arm audit6420-g38 --model gemini-3.8-flash-high --job convergent-ocr-6420 --kind audit --parallel 2 --attempts 4`);
+}
+
+async function auditOpus() {
+  const AUD = path.join(SETDIR, 'audit');
+  fs.mkdirSync(path.join(AUD, 'opus'), { recursive: true }); fs.mkdirSync(path.join(AUD, 'meta'), { recursive: true });
+  const queue = fs.readdirSync(path.join(AUD, 'chunks')).filter((f) => !fs.existsSync(path.join(AUD, 'opus', f)));
+  await Promise.all(Array.from({ length: 4 }, async () => {
+    while (queue.length) {
+      const f = queue.shift();
+      let r = await runSealed(path.join(AUD, 'chunks', f), path.join(AUD, 'opus', f), path.join(AUD, 'meta'), arg('model', 'opus'), 'AUDITOR.md');
+      if (!r.ok) r = await runSealed(path.join(AUD, 'chunks', f), path.join(AUD, 'opus', f), path.join(AUD, 'meta'), arg('model', 'opus'), 'AUDITOR.md');
+      console.log(`  ${r.name} ${r.ok ? 'ok' : 'FAILED'} ${r.secs}s`);
+    }
+  }));
+}
+
+async function auditScore() {
+  const AUD = path.join(SETDIR, 'audit');
+  const key = readJsonl(path.join(AUD, 'key.jsonl'));
+  const opus = new Map();
+  for (const f of fs.readdirSync(path.join(AUD, 'opus'))) for (const v of JSON.parse(fs.readFileSync(path.join(AUD, 'opus', f), 'utf8'))) opus.set(v.item_id, v);
+  const gem = new Map();
+  for (const l of fs.existsSync(path.join(AUD, 'gemini-out.jsonl')) ? fs.readFileSync(path.join(AUD, 'gemini-out.jsonl'), 'utf8').split('\n') : []) {
+    try { const o = JSON.parse(l); if (!o.text) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
+  }
+  const rows = key.map((k) => {
+    const verdict = (v) => (!v ? null : v.better === 'same' ? 'same' : v.better === k.stored_is ? 'stored' : 'cli');
+    return { ...k, opus: verdict(opus.get(k.page_id)), opus_serious: opus.get(k.page_id)?.worse_serious ?? null, gemini: verdict(gem.get(k.page_id)), gemini_serious: gem.get(k.page_id)?.worse_serious ?? null, opus_note: opus.get(k.page_id)?.note, gemini_note: gem.get(k.page_id)?.note };
+  });
+  // A write "made the page worse" when the auditor prefers the stored text over the CLI read that replaced it.
+  const writes = rows.filter((r) => r.action === 'write');
+  const worse = (who) => writes.filter((r) => r[who] === 'stored').length;
+  const res = { set: SET, audited: rows.length, writes: writes.length, read: { opus: rows.filter((r) => r.opus).length, gemini: rows.filter((r) => r.gemini).length },
+    writes_worse: { opus: worse('opus'), gemini: worse('gemini') }, writes_better: { opus: writes.filter((r) => r.opus === 'cli').length, gemini: writes.filter((r) => r.gemini === 'cli').length },
+    writes_same: { opus: writes.filter((r) => r.opus === 'same').length, gemini: writes.filter((r) => r.gemini === 'same').length },
+    gate: worse('opus') <= 2 && worse('gemini') <= 2 ? 'GO' : 'STOP', rows };
+  fs.writeFileSync(path.join(AUD, 'result.json'), JSON.stringify(res, null, 1));
+  console.log(JSON.stringify({ ...res, rows: undefined }, null, 1));
+  for (const r of rows.filter((x) => x.action === 'write' && (x.opus === 'stored' || x.gemini === 'stored'))) console.log(`  worse? ${r.page_id} opus=${r.opus} gemini=${r.gemini} | ${r.opus_note} | ${r.gemini_note}`);
+}
+
+const steps = { frame, select, compare, packets, adjudicate, decide, apply, 'audit-packets': auditPackets, 'audit-opus': auditOpus, 'audit-score': auditScore };
 if (!steps[STEP]) { console.error(`unknown step ${STEP}; one of ${Object.keys(steps).join(', ')}`); process.exit(2); }
 await steps[STEP]();
