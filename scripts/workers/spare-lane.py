@@ -157,7 +157,7 @@ def pick_issue(tried: set[int]) -> dict | None:
 
 
 BRIEF = """Lands: #{n}
-PR: yes
+PR: if it fixes the issue (a skip commits nothing and expects no PR)
 
 Spare-lane job (#6395): you are using Claude subscription allowance that would otherwise expire.
 Issue #{n}: {title}
