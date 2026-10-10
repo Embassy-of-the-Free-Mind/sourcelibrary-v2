@@ -37,6 +37,8 @@
  *   --book-limit=N        Max books to process (default: 100)
  *   --book-concurrency=N  Parallel books (default: 5)
  *   --dry-run             Show what would be processed
+ *   --lite                With --book-id: translate on gemini-3.1-flash-lite a book the router
+ *                         sends to another model (decided runs under the 2026-10-08 Gemini rule).
  */
 
 import { MongoClient } from 'mongodb';
@@ -45,6 +47,7 @@ import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 import {
   getTranslateModelForBook,
+  MODEL_LITE,
   loadTranslationPrompts,
   buildTranslationPrompt,
   writePageTranslation,
@@ -82,6 +85,10 @@ const DRY_RUN = hasFlag('dry-run');
 // named pilot that re-translates re-read pages before the book as a whole is released.
 const ALLOW_UNTRUSTED_OCR = hasFlag('allow-untrusted-ocr');
 const SINGLE_BOOK = getArg('book-id');
+// --lite (with --book-id): translate a named book on gemini-3.1-flash-lite although the router
+// sends its language to another model. For runs decided under the 2026-10-08 Gemini rule (only
+// lite on the paid API). The router itself is not changed here.
+const FORCE_LITE = hasFlag('lite');
 const OFFSET = parseInt(getArg('offset') || '0', 10);
 const PIPELINE_STATUS = getArg('status');
 const PROVIDER = getArg('provider');
@@ -185,7 +192,7 @@ function extractTranslationMetadata(text) {
 
 // --- Process one book sequentially ---
 async function processBook(book, pages, prompts, db, globalStats) {
-  const model = getTranslateModelForBook(book);
+  const model = FORCE_LITE && SINGLE_BOOK ? MODEL_LITE : getTranslateModelForBook(book);
   let previousTranslation = null;
   let bookCompleted = 0, bookFailed = 0, bookSkipped = 0;
 
@@ -469,7 +476,11 @@ async function main() {
       const pages = await db.collection('pages')
         .find(
           PAGE_IDS ? { book_id: book.id, id: { $in: PAGE_IDS } }
-            : STALE_MODE ? { book_id: book.id, [`${STALE_FIELD}.reason`]: { $exists: true } } : { book_id: book.id },
+            : STALE_MODE ? { book_id: book.id, [`${STALE_FIELD}.reason`]: { $exists: true } }
+              // Visible pages only: a split parent (negative page_number) keeps its OCR and never
+              // renders. Without this a --book-id run translated 8 archived parent photos of the
+              // Neyphug Kanjur before its leaves (2026-10-10, #5771).
+              : { book_id: book.id, ...VISIBLE_PAGE_MATCH },
           {
             projection: {
               id: 1, _id: 0, book_id: 1, page_number: 1,
