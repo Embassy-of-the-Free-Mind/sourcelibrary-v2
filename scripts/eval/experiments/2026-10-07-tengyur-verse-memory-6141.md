@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 20
+verdict: "The verse memory failed its gate: of 20 proposed replacements read against the Tibetan, 15 were better, 2 no better and 3 worse (bar 18 and 0), all from span mapping."
+status: rejected
+decision: "No write; round 2 (whole blocks only) also failed its gate (#6141)"
+superseded_by: null
+issue: 6141
+---
 ## 2026-10-07 · Tengyur: what does each section read like, and can one reviewed rendering per much-quoted root verse replace the scattered page-by-page ones? (#6141)
 <!-- PRIOR ART: 2026-10-07-tengyur-weak-section-levers-6121.md (re-translation levers; no lever adopted, and its vol 174 p312 read proposed this verse check) and the 2026-10-07 shelf overview (`results/spot-check/overview-2026-10-07/`, the Tengyur as ONE stratum). Neither split the Tengyur by section or compared the renderings of one verse across pages. -->
 

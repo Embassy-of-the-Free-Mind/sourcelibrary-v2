@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged, judged_vs_reference]
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 60
+verdict: "Neither context nor Gemini 3.1 Pro clears the bar: context lowers reference fidelity (-0.14); Pro's reviewer gain (38 vs 63 per 100) came from a failed gate and the references do not confirm it."
+status: rejected
+decision: "No context and no Pro re-translation; instrument failed its gate (#6121)"
+superseded_by: null
+issue: 6121
+---
 ## 2026-10-07 · Tengyur weak sections (Pramāṇa, Madhyamaka, Vinaya, Jātaka): does context or a stronger model fix the reversals? (#6121)
 <!-- PRIOR ART: 2026-10-04-tengyur-characterize-random-sample-5829.md (the instrument reused here: rubric, two blind Opus reviewers, planted controls, by-eye check) and 2026-10-03-tengyur-quality-arms-5497.md (production's one-page request; glossary, Sanskrit, thinking and the negation detector + Pro fix pass were already ruled out, on 84000's texts only). Neither tested a lever where the errors are. -->
 

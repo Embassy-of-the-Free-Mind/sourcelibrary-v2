@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "A quota-2 re-rank with a 0.02 margin raises relevant traditions in the top 10 from 1.68 to 1.88 (production families 2.84 to 4.16) with known-item recall@10 unchanged."
+status: adopted
+decision: "diversify (src/lib/search/diversity.ts) shipped in concept and Librarian search with the default policy (#3514, #3895)"
+superseded_by: null
+issue: [3514, 3895]
+---
 ## 2026-10-07 · Does a tradition-aware re-rank put more traditions in the first ten results without losing known items? (#3514, #3895)
 <!-- PRIOR ART: scripts/eval/experiments/2026-10-07-embedding-granularity-cross-tradition.md (#6173; quota and MMR over a 12K-page pool, with by-eye shelf labels and no known-item check) and scripts/eval/embed-format (#6170; the two known-item gold sets). Neither runs the shipped re-ranker on the stored books.tradition labels, and neither measures production's own candidate pool. -->
 

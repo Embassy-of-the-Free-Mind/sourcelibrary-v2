@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 136
+n_pages: 136
+verdict: "Exactly 211,377 e5 rows in 1,402 books; after re-embedding 140,965 pages none remain on embeddable pages. Stale and OCR-before-translation vectors lose about 0.2 recall@10."
+status: informational
+decision: "e5 rows re-embedded ($11.40); stale/OCR-before-translation re-embed deferred to #6221, archived-page rows to #6270"
+superseded_by: null
+issue: [6175, 6221, 6270, 6267]
+---
 ## 2026-10-07 · Which wrong page vectors cost search results, and are the e5 rows gone? (#6175)
 <!-- PRIOR ART: 2026-10-07-embedding-vector-truth.md (same issue) classed the rows and explained the drift by cosine; it did not test retrieval per class, and its e5 count was scaled from a 3-rows-per-book sample. 2026-10-07-embedding-models-qwen3-dual.md (#6172) measured stored vs fresh on a 10,888-page eval pool, not in the production index and not per class. -->
 

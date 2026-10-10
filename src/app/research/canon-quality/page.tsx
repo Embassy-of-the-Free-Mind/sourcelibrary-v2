@@ -4,6 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import PageEditMode from '@/components/PageEditMode';
 import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
 import { IMPROVEMENTS } from '../canon-gap/improvements';
+import { experiment } from '@/lib/experiments-index';
 import { getDb } from '@/lib/mongodb';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { TENGYUR_QUALITY, namedKinds } from '@/lib/tengyur-quality';
@@ -29,21 +30,25 @@ export const metadata: Metadata = {
 
 const ISSUE = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/';
 const BLOB = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/d86acc119ac343806e4cf3ca4bb52191977f23e8/';
-const EXP = `${BLOB}scripts/eval/experiments/`;
+
+// A write-up's link comes from the experiment index (#5939): a cited file that is not in the index fails
+// the build, and the weekly garden (scripts/audit/experiments-garden.mjs) reports a cited file that a
+// later run superseded. Write-up bodies never change after they land, so the main link is stable.
+const exp = (file: string) => experiment(file).href;
 
 // The write-ups every figure on this page is copied from.
 const SRC = {
-  tengyurStored: `${EXP}2026-10-04-tengyur-stored-draft-vs-84000-5797.md`,
-  tengyurAB: `${EXP}2026-10-03-tengyur-84000-reference-ab-5497.md`,
-  tengyurRandom: `${EXP}2026-10-04-tengyur-characterize-random-sample-5829.md`,
-  t5: `${EXP}2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md`,
-  t4: `${EXP}2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md`,
-  synthesis: `${EXP}2026-10-04-translation-vs-reference-synthesis-5695.md`,
-  persian: `${EXP}2026-10-01-persian-ocr-vs-ganjoor-5525.md`,
-  sefaria: `${EXP}2026-10-02-can-open-sefaria-text-be-fitted-to-ocr-failed-pages-5560.md`,
-  kangyurOcr: `${EXP}2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md`,
-  ceilingText: `${EXP}2026-10-04-human-ceiling-transcription-5762.md`,
-  ceilingEnglish: `${EXP}2026-10-04-human-ceiling-translation-5762.md`,
+  tengyurStored: exp('2026-10-04-tengyur-stored-draft-vs-84000-5797.md'),
+  tengyurAB: exp('2026-10-03-tengyur-84000-reference-ab-5497.md'),
+  tengyurRandom: exp('2026-10-04-tengyur-characterize-random-sample-5829.md'),
+  t5: exp('2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md'),
+  t4: exp('2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md'),
+  synthesis: exp('2026-10-04-translation-vs-reference-synthesis-5695.md'),
+  persian: exp('2026-10-01-persian-ocr-vs-ganjoor-5525.md'),
+  sefaria: exp('2026-10-02-can-open-sefaria-text-be-fitted-to-ocr-failed-pages-5560.md'),
+  kangyurOcr: exp('2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md'),
+  ceilingText: exp('2026-10-04-human-ceiling-transcription-5762.md'),
+  ceilingEnglish: exp('2026-10-04-human-ceiling-translation-5762.md'),
   readiness: `${BLOB}scripts/eval/results/nalanda-readiness-2026-09-30.json`,
   status: `${BLOB}scripts/catalog-coverage/results/canon-gap-status-2026-10.json`,
   review: `${BLOB}.claude/docs/community-quality-review-design.md`,

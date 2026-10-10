@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 269
+n_pages: 549
+verdict: "At least 549 pages in 269 live books carry the model's reasoning or a chat reply as the translation (38/40 by eye); rare, clustered, still being written in Oct 2026."
+status: informational
+decision: null
+superseded_by: null
+issue: [6056, 5918]
+---
 ## 2026-10-06 · How many stored translations are the model talking about its job instead of the page? A model-free count (#6056, #5918)
 <!-- PRIOR ART: `ocrReasoningLeak()` in scripts/lib/page-integrity.mjs (taxonomy O15, 25 pages, #5055) looks for the same thing in the OCR. Nothing had looked in the translation, where it reaches a reader as plain English. scripts/audit/page-integrity.mjs walks the local mirror, which the job box does not hold, so this walk reads Atlas. -->
 

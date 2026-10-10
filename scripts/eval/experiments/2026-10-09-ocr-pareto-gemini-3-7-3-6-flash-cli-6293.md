@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 555
+verdict: "3.7 Flash CLI beats lite on Greek, Chinese and Syriac manuscript and ties 3 Flash, as 3.8 does; 3.6 is worse than 3.8 on four charts and loops; the CLI adds a third failure, the plan note."
+status: informational
+decision: null
+superseded_by: null
+issue: 6293
+---
 ## 2026-10-09 · OCR Pareto, Amendment 2: Gemini 3.7 and 3.6 Flash through the CLI on 555 pages (#6293) — 3.7 reads as well as 3.8 and ties 3 Flash; 3.6 is worse; no decision changes
 
 Preregistration: `scripts/eval/PREREGISTRATION-ocr-pareto-6293.md`, **Amendment 2** (`c745f9649`, committed 2026-10-09

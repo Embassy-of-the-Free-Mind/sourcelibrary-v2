@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 60
+n_pages: 60
+verdict: "Kraken fine-tuned on EEBO-TCP beats lite on Latin 1500-1699 (median dCER -0.026, 46/13) but only on EEBO microfilm; it ties lite on 21 other-library pages."
+status: rejected
+decision: "No routing change: the gain does not carry beyond EEBO film and Kraken takes 166-271 s/page on Hetzner (#5730)"
+superseded_by: null
+issue: 5730
+---
 ## 2026-10-04 · Does a Kraken model fine-tuned on our own corrected early-print pages read Latin 1500–1699 better than flash-lite? (#5730)
 
 **Answer: by the preregistered rule it beats lite, but only on EEBO-microfilm pages like its training data.** On the

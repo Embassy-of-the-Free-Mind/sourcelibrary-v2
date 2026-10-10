@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 40
+n_pages: 40
+verdict: "A synthetic 40-book run found four harness bugs (matching, planting, sealing, blinding), fixed before any real read; --allowedTools does not restrict a headless reader, --restricted does."
+status: adopted
+decision: "Harness fixed, synthetic suite runs in CI (35 tests); the calibration runner refuses a CLI without --restricted (#6338)"
+superseded_by: null
+issue: 6338
+---
 ## 2026-10-08 · Can the second-reader harness be trusted before it reads a real page? (#6338)
 
 PRIOR ART: `2026-10-07-script-run-reviewers-6174.md` (the Opus–Opus floor and the headless runner this extends).

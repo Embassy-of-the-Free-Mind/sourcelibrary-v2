@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: [Latn, Grek, Hani, Syrc, Armn]
+canons: []
+n_books: null
+n_pages: 661
+verdict: "Wave-1 ranks replicate on the full panels; only DeepSeek-OCR joins a frontier, as the cheapest and worst point. Sonnet 0.940 vs Flash 0.947 on Latin; open engines score 0 on Syriac."
+status: informational
+decision: "Charts only (src/data/ocr-pareto.json), no routing change; Opus and Sonnet Greek/Syriac wait for credit (#6011)"
+superseded_by: null
+issue: 6011
+---
 <!-- PRIOR ART: 2026-10-06-untried-ocr-engines-wave1-6011.md (wave 1: the same six engines on a seeded 6–60 pages per script, paired against the chart engines). This entry fills each chart's most-pages panel; it asks no new paired question. -->
 ## 2026-10-07 · Do the wave-1 OCR engines hold their place on each chart's FULL page set? (#6011, wave 2)
 

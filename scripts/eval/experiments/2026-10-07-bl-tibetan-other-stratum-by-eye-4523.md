@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 28
+n_pages: 112
+verdict: "The 993 held no-reference BL Tibetan books read by eye: 9% serious pages (frame-weighted), mostly in the English; 0 wrong leaves, 0 don't-show books, 25 of 28 show with caveat."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-07 · The 993 held BL Tibetan books with no reference (ritual, sādhana, astrology, local), read by eye per monastery: 9% serious pages (frame-weighted), 0 "don't show" (#4523, step B)
 <!-- PRIOR ART: .claude/skills/shelf-overview (method, unchanged); scripts/eval/results/spot-check/overview-2026-10-07-bhutan-kangyur (PR #6143: Padmasambhava lives + Derge Kangyur, 2 strata). Neither read the no-reference "other" stratum of the held set, or split it by monastery collection. -->
 

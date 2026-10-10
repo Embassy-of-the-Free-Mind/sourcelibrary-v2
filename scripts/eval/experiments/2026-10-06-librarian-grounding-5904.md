@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "A post-generation grounding pass cut uncited claim units from 72% to 37%, unsupported quotes 7/81 to 2/64 and caption errors 11/29 to 0/32 at the same cost per turn."
+status: adopted
+decision: "Grounding pass, +/-1 neighbour pages and tool URL fixes are live in the Librarian (src/lib/embassy/grounding.ts, #5904)"
+superseded_by: null
+issue: 5904
+---
 <!-- PRIOR ART: scripts/eval/librarian-search/ (README + golden set) measures RETRIEVAL precision@5; no earlier entry scored the Librarian's ANSWERS for uncited claims, unsupported quotes/numbers or captions. -->
 ## 2026-10-06 · Does a post-generation grounding pass make Librarian answers cite what they claim? (#5904)
 

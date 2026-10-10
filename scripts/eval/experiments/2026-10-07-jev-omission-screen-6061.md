@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 321
+verdict: "Jev is a weak omission screen: live AUC 0.75, and at the control threshold it flags at 68% precision but finds only 51 of 129 judged omissions (40%)."
+status: rejected
+decision: "Not adopted as a screen; at most to order a by-eye review queue (#6061)"
+superseded_by: null
+issue: 6061
+---
 ## 2026-10-07 · Can Jev screen served translations for omissions (source text left out of the English)? (#6061)
 <!-- PRIOR ART: 2026-10-06-jev-additions-screen-5982.md asked Jev the opposite question (words added) on the same client and threshold rule; the #5695 translation-vs-reference tracks (2026-10-04-translation-vs-reference-synthesis-5695.md) are the omission labels this reuses. Neither tested a cheap screen for omissions. -->
 

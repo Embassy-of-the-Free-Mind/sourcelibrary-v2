@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 908
+verdict: "3.8 Flash through the CLI beats Flash-Lite on Greek, Chinese and Syriac manuscript, never 3 Flash; about 6% of CLI pages fail in ways the API does not (empties, blocks, prose refusals)."
+status: informational
+decision: null
+superseded_by: null
+issue: [6293, 6345]
+---
 ## 2026-10-09 · OCR Pareto, Part A: Gemini 3.8 Flash through the CLI on the 908 preregistered pages (#6293) — it beats Flash-Lite on Greek, Chinese and Syriac manuscript, never 3 Flash; the CLI fails ~6 % of pages in ways the API arms don't
 
 Preregistration: `scripts/eval/PREREGISTRATION-ocr-pareto-6293.md`, committed before any arm ran. Hetzner job

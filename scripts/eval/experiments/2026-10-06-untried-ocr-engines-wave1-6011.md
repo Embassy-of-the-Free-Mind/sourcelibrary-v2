@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 385
+n_pages: 385
+verdict: "No untried engine beats Gemini 3 Flash outside the margin on any script; Qwen3-VL-8B (Chinese MS), Opus 5.5 (Greek), Sonnet 5.5 (early English) beat lite; none near Yigdzin on Tibetan."
+status: undecided
+decision: "No routing change; wave-2 arms (Qwen3-VL-32B, GPT) pending Derek (#6011)"
+superseded_by: null
+issue: 6011
+---
 <!-- PRIOR ART: the #6011 pricing comment lists every earlier run of these engines (the 44-page dataset/v0.3 set in July: Sonnet 5, Mistral OCR July, Qwen-VL-plus, DeepSeek-OCR on Replicate; Chandra v1 by eye; the CLLG Qwen3-VL-8B fine-tune on Greek). None ran on the sealed strata behind the Pareto charts (#5983). -->
 ## 2026-10-06 · Six untried OCR engines on the Pareto charts' own pages: does any of them beat Gemini? (#6011, wave 1)
 

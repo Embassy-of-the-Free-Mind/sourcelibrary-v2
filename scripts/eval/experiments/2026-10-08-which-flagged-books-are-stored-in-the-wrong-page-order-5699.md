@@ -1,3 +1,17 @@
+---
+stage: image
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 60
+n_pages: null
+verdict: "50 of 60 flagged right-to-left and CJK books are confirmed out of reading order by image (26 whole-book descending, 17 one part, 6 pair-swapped, 1 swap); 10 are false positives."
+status: informational
+decision: null
+superseded_by: null
+issue: 5699
+---
 ## 2026-10-08 · Which right-to-left and CJK books are stored in the wrong page order, and what would a repair move? (#5699) — 50 of 60 confirmed by image
 
 PRIOR ART: `scripts/eval/page-marker-order.mjs` (PR #5707, the detector, re-run unchanged) and

@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "No re-embed clears the bar: dual Gemini vectors gain nothing on B, Qwen3-8B wins A (+0.05) but ties B; 16% of stored vectors drift from their own text (cos < 0.9)."
+status: rejected
+decision: "No new model or dual vectors; repair off-space and drifted rows instead (#6175)"
+superseded_by: null
+issue: [6172, 6175]
+---
 ## 2026-10-07 · Would a different embedding model, or a second original-language vector, find more of the right pages? (#6172)
 <!-- PRIOR ART: scripts/eval/orig-lang-recall/ (#5729; pool A, gold A, Gemini/e5/BGE-M3 arms, scorer reused here) and scripts/eval/librarian-search/ (golden set B, book-grain, run through the LIVE index only — no pool, so no way to score a model that has no stored vectors). Neither has a translated-page pool with both OCR and translation text, nor a Qwen3 arm. #6170 (job embed-format-eval) covers Gemini preview→GA, task prefixes and dims; not repeated here. -->
 
