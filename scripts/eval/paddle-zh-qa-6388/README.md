@@ -36,15 +36,15 @@ hash 9d8f959e…, the same prompt as `ocr-prereg-6388/prompt-ref.json`). Low is 
 Pareto runs use. Each transcription is then reviewed with the R prompt by the family that did NOT produce it (TO by
 Gemini 3.8 Flash High, TG by Opus), and scored against Kanripo by the same leaf rule as `kanripo.jsonl`.
 
-## Amendment 2 (2026-10-10T18:10Z, job paddle-qa3-6388, before any context-arm call)
+## Amendment 2 (2026-10-10T18:00Z, job paddle-qa3-6388, before any context-arm call)
 
 The second job was stopped mid-run (its reader processes kept running, orphaned). This job took the runs over: the
 orphaned processes were stopped, their rows copied here unchanged (R1 75/75, R2 12, R3 16, TO 54, TG 31 at
-18:05Z), and each arm resumed from this worktree with the same requests, prompt and model. Every review and
+≈ 17:58Z), and each arm resumed from this worktree with the same requests, prompt and model. Every review and
 transcription stays ONE page per fresh CLI process (no --resume/--continue, no shared session).
 
 - **Per-call log.** Opus rows now also carry `usage` (input/output tokens from `--output-format json`) and
-  `api_equiv_usd` (the CLI's API-price figure; the subscription pays $0). Rows written before 18:05Z lack them.
+  `api_equiv_usd` (the CLI's API-price figure; the subscription pays $0). Rows written before ≈ 17:58Z lack them.
   `agy -p` reports no token counts; its rows carry seconds, attempts, nudges and errors. score.mjs checks every
   text with `cliChatterReason` (#6361).
 - **Context arm** (`ctx.mjs`, Derek: "it matters how much each cli does at a time"). 10 of the 57 Kanripo-aligned
@@ -53,3 +53,15 @@ transcription stays ONE page per fresh CLI process (no --resume/--continue, no s
   if it already degrades clearly against k = 1 (Kanripo CER, omitted pages, page mix-ups), k = 10 is skipped.
   A page mix-up = a segment whose CER against another page's Kanripo window in the same call is lower than against
   its own by ≥ 0.2.
+
+## Results (2026-10-10, job paddle-qa3-6388)
+
+Write-up: `scripts/eval/experiments/2026-10-10-paddle-zh-random-qa-6388.md`; every number in `results.md` /
+`results.json` (`node scripts/eval/paddle-zh-qa-6388/score.mjs`). As run:
+- R3 (Gemini Pro) was stopped at 50 of 75 requests by a guard that kept the job inside the 450-call `agy` cap, so
+  R2 and the cross-reviews could finish; its control row is reported as "not established".
+- R2 has no row for one sample page (q024: the model asked for a tool twice) and XTO none for one Opus transcription;
+  the cap left no call to retry them.
+- The context arm ran Opus at k = 5 and 10 and Gemini at k = 5; Gemini k = 10 was skipped by the gate (k = 5 put
+  text from no page in the call on one page).
+- Containment: none. The one "unusable" verdict (R2) is refuted by Kanripo (see the write-up).

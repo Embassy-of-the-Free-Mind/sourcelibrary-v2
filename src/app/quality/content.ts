@@ -5,7 +5,7 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-10-06';
+export const PROSE_AS_OF = '2026-10-10';
 
 /**
  * "What changed this month" (#5939): a short dated note written by a person, shown at the top of
@@ -13,7 +13,10 @@ export const PROSE_AS_OF = '2026-10-06';
  * null renders nothing. scripts/audit/experiments-garden.mjs reminds weekly while it is missing or
  * more than 35 days old. Keep `as_of` a quoted ISO date on the same line as the key.
  */
-export const MONTH_NOTE: { as_of: string; text: string } | null = null;
+export const MONTH_NOTE: { as_of: string; text: string } | null = {
+  as_of: '2026-10-10',
+  text: '10 October: we checked a random sample of 60 Chinese pages read by PaddleOCR, one page from each of 60 Siku Quanshu books. Opus and Gemini each compared the text with the page image. No page was unusable and none had invented text. 51% were clean, 27% had minor errors and 22% had material errors. Opus and Gemini also transcribed the same pages from the image. Measured against the Kanripo text, Opus was about as accurate as PaddleOCR and Gemini was worse.',
+};
 
 /**
  * The leaf the page opens on (#5918 design direction): a real page whose margins hold a later

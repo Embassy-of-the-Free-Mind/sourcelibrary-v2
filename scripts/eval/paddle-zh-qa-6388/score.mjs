@@ -11,6 +11,7 @@ import path from 'node:path';
 import { workInfo, pbPages } from '../zh-skqs-5568-kanripo.mjs';
 import { bodyText, foldHan, bodyCer, makeRng, wilson, median } from '../ground-truth-5935/lib.mjs';
 import { weightedKappa } from '../lib/agreement-stats.mjs';
+import { cliChatterReason } from '../../lib/cli-chatter.mjs';
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const H = f => path.join(HERE, f);
@@ -73,13 +74,13 @@ for (const [s, sub] of Object.entries(strata)) for (const k of ['final', 'R1', '
 // "material or worse" and invented
 for (const [s, sub] of Object.entries(strata)) {
   const n = sub.filter(p => p.final).length, k = sub.filter(p => p.final === 'material' || p.final === 'unusable').length;
-  const ki = sub.filter(p => p.invented_chars > 0).length, ki4 = sub.filter(p => p.invented.some(t => [...t].length >= 4)).length;
+  const ki = sub.filter(p => p.invented_chars > 0).length, ki4 = sub.filter(p => p.invented.some(t => hanCount(t) >= 4)).length;
   out.rates[s].material_or_worse = { k, n, ci: wilson(k, n) };
   out.rates[s].invented_any = { k: ki, n, ci: wilson(ki, n) };
   out.rates[s].invented_span4 = { k: ki4, n, ci: wilson(ki4, n) };
 }
 md.push('', `Material or worse (final): ALL ${out.rates.all.material_or_worse.k}/${out.rates.all.material_or_worse.n} (${ci(out.rates.all.material_or_worse.k, out.rates.all.material_or_worse.n)}); all 60 ${out.rates.both.material_or_worse.k}/${out.rates.both.material_or_worse.n} (${ci(out.rates.both.material_or_worse.k, out.rates.both.material_or_worse.n)}).`);
-md.push(`Pages with any invented span (final list): ${out.rates.both.invented_any.k}/${out.rates.both.invented_any.n} (${ci(out.rates.both.invented_any.k, out.rates.both.invented_any.n)}); with an invented span of ≥ 4 characters: ${out.rates.both.invented_span4.k}/${out.rates.both.invented_span4.n} (${ci(out.rates.both.invented_span4.k, out.rates.both.invented_span4.n)}).`);
+md.push(`Pages with any invented span (final list): ${out.rates.both.invented_any.k}/${out.rates.both.invented_any.n} (${ci(out.rates.both.invented_any.k, out.rates.both.invented_any.n)}); with an invented span of ≥ 4 Han characters: ${out.rates.both.invented_span4.k}/${out.rates.both.invented_span4.n} (${ci(out.rates.both.invented_span4.k, out.rates.both.invented_span4.n)}).`);
 const unus = per.filter(p => p.final === 'unusable').length;
 md.push(`Unusable (the #5547 "catastrophic" analogue): ${unus}/${per.length} (${ci(unus, per.length)}); #5547 measured Paddle 0.9% catastrophic on 540 Kanripo pages.`);
 
@@ -120,11 +121,14 @@ for (const a of ['R1', 'R2', 'R3']) {
     const vs = qs.map(q => review(R[a].get(q))?.verdict ?? null);
     return { uid: u, verdicts: vs, same: vs.every(v => v && v === vs[0]) };
   });
-  out.controls[a] = { plants, plant_pages_answered: answered.length, spans_scored: spans.length, spans_caught: spans.length - missed, spans_missed: missed + (10 - answered.length) * 3, trusted: missed + (10 - answered.length) * 3 <= 2, by_span: Object.fromEntries(['P1', 'P2', 'P3'].map(id => [id, answered.filter(p => p.hit[id]).length])), plant_verdicts: Object.fromEntries(V.map(v => [v, answered.filter(p => p.verdict === v).length])), repeats: reps, repeats_same: reps.filter(r => r.same).length };
+    // a plant page the arm never ran (R3 was stopped at the call cap) is reported as not run, not as missed;
+  // trust needs all 30 spans: "not established" when fewer ran and ≤ 2 were missed.
+  const repsRun = reps.filter(r => r.verdicts.every(Boolean));
+  out.controls[a] = { plants, plant_pages_answered: answered.length, spans_scored: spans.length, spans_caught: spans.length - missed, spans_missed: missed, spans_not_run: (10 - answered.length) * 3, trusted: missed > 2 ? false : answered.length === 10 ? true : 'not established', repeats_run: repsRun.length, by_span: Object.fromEntries(['P1', 'P2', 'P3'].map(id => [id, answered.filter(p => p.hit[id]).length])), plant_verdicts: Object.fromEntries(V.map(v => [v, answered.filter(p => p.verdict === v).length])), repeats: reps, repeats_same: reps.filter(r => r.same).length };
 }
-md.push('', '## Controls\n', '| Reviewer | planted spans caught (of 30) | P1 insert / P2 delete / P3 substitute | trusted (≤ 2 missed) | plant-page verdicts | repeats: same verdict |', '|---|---|---|---|---|---|');
+md.push('', '## Controls\n', '| Reviewer | planted spans caught / run (30 planted) | P1 insert / P2 delete / P3 substitute | trusted (≤ 2 of 30 missed) | plant-page verdicts | repeats: same verdict / run |', '|---|---|---|---|---|---|');
 const NAMES = { R1: 'R1 Opus', R2: 'R2 Gemini 3.8 Flash (High)', R3: 'R3 Gemini 3.1 Pro (High)' };
-for (const [a, c] of Object.entries(out.controls)) md.push(`| ${NAMES[a]} | ${30 - c.spans_missed} | ${c.by_span.P1}/${c.by_span.P2}/${c.by_span.P3} of ${c.plant_pages_answered} | ${c.trusted ? 'yes' : '**no**'} | ${V.map(v => `${v} ${c.plant_verdicts[v]}`).join(', ')} | ${c.repeats_same}/5 |`);
+for (const [a, c] of Object.entries(out.controls)) md.push(`| ${NAMES[a]} | ${c.spans_caught} / ${c.spans_scored} | ${c.by_span.P1}/${c.by_span.P2}/${c.by_span.P3} of ${c.plant_pages_answered} | ${c.trusted === true ? 'yes' : c.trusted === false ? '**no**' : 'not established (' + c.spans_not_run + ' spans not run)'} | ${V.map(v => `${v} ${c.plant_verdicts[v]}`).join(', ')} | ${c.repeats_same}/${c.repeats_run} |`);
 
 // ── 4. Kanripo CER (external instrument) for P, TO, TG; and against the verdicts ───────────────────────────────────
 const pbCache = new Map();
@@ -216,9 +220,60 @@ for (const e of ENG) {
 md.push('', '## Refusals, loops, time\n', '| Engine | n | refusal/empty (< 10 Han chars) | loops | median s/page (wall, incl. CLI start) |', '|---|---|---|---|---|');
 for (const e of ENG) { const o = out.ops[e]; md.push(`| ${ENAME[e]} | ${o.n} | ${o.refusals_or_empty} | ${o.loops} | ${o.secs_median ?? '— (GPU batch)'} |`); }
 
+// ── 6b. Chatter / tokens per arm (#6361; Derek: "context management") ─────────────────────────────────────────────
+const ARMS = ['R1', 'R2', 'R3', 'A', 'XTO', 'XTG', 'TO', 'TG'];
+out.per_call = {};
+for (const a of ARMS) {
+  const rs = a === 'TG' ? [...T.TG.values()] : readJsonl(`reads/${a}.jsonl`);
+  if (!rs.length) continue;
+  const isReview = !['TO', 'TG'].includes(a);
+  // a review reply is JSON, so the "code fence" class is not chatter there
+  const chat = rs.map(r => cliChatterReason(r.text)).filter(x => x && x !== 'empty' && !(isReview && x === 'code fence around the answer'));
+  const withU = rs.filter(r => r.usage);
+  const secs = rs.map(r => r.secs).filter(Number.isFinite);
+  out.per_call[a] = { rows: rs.length, calls: rs.reduce((s, r) => s + (r.attempts || 1), 0), errors: rs.filter(r => r.error).length, nudged: rs.filter(r => r.nudged).length, chatter: chat.length, chatter_kinds: [...new Set(chat)], unparsed_review: isReview ? rs.filter(r => r.text && !review(r)).length : null, secs_median: secs.length ? r4(median(secs)) : null, turns_median: rs.some(r => r.num_turns) ? median(rs.map(r => r.num_turns).filter(Number.isFinite)) : null, tokens_logged: withU.length, input_tokens_median: withU.length ? median(withU.map(r => r.usage.input)) : null, output_tokens_median: withU.length ? median(withU.map(r => r.usage.output)) : null, api_equiv_usd_sum: withU.length ? r4(withU.reduce((s, r) => s + (r.api_equiv_usd || 0), 0)) : null };
+}
+md.push('', '## Per-call log (one page per fresh CLI process)\n', '| Arm | rows | calls (incl. retries) | errors | nudged | chatter/plan replies | unparsed review | median s | median turns | tokens logged | median in / out tokens |', '|---|---|---|---|---|---|---|---|---|---|---|');
+for (const [a, o] of Object.entries(out.per_call)) md.push(`| ${a} | ${o.rows} | ${o.calls} | ${o.errors} | ${o.nudged} | ${o.chatter}${o.chatter_kinds.length ? ' (' + o.chatter_kinds.join(', ') + ')' : ''} | ${o.unparsed_review ?? '—'} | ${o.secs_median ?? '—'} | ${o.turns_median ?? '—'} | ${o.tokens_logged} | ${o.input_tokens_median ?? '—'} / ${o.output_tokens_median ?? '—'} |`);
+
+// ── 6c. Context arm: pages per call (ctx.mjs) ──────────────────────────────────────────────────────────────────────
+const ctxDraw = fs.existsSync(H('ctx-draw.json')) ? readJson('ctx-draw.json').pages : [];
+const ctxRows = readJsonl('reads/CTX.jsonl');
+if (ctxDraw.length) {
+  const win = {}; for (const u of ctxDraw) win[u] = await window(kan.get(u));
+  const cerOf = (t, u) => r4(bodyCer(foldHan(bodyText(t)), win[u].W, { expected: win[u].expected }).cer);
+  const cells = [];
+  for (const [eng, src] of [['opus', 'TO'], ['gemini', 'TG']]) {
+    // k = 1: the TO / TG rows (one page per call)
+    const one = ctxDraw.map(u => { const r = T[src].get(u); const t = r && !r.error ? r.text : ''; return { uid: u, cer: cerOf(t, u), omitted: hanCount(bodyText(t)) < 10, mixup: false, loop: loopy(bodyText(t)), secs: r?.secs ?? null }; });
+    cells.push({ engine: eng, k: 1, calls: 10, pages: one });
+    for (const k of [5, 10]) {
+      const rs = ctxRows.filter(r => r.engine === eng && r.k === k);
+      const last2 = new Map(rs.map(r => [r.group, r]));
+      if (!last2.size) continue;
+      const pages = [];
+      for (const r of last2.values()) {
+        const segs = {}; const parts = String(r.error ? '' : r.text).split(/^\s*=+\s*PAGE\s*(\d+)\s*=+\s*$/m);
+        for (let i = 1; i < parts.length; i += 2) segs[Number(parts[i])] = (segs[Number(parts[i])] || '') + parts[i + 1];
+        r.uids.forEach((u, i) => {
+          const t = segs[i + 1] || '';
+          const own = cerOf(t, u);
+          const other = hanCount(t) >= 10 ? Math.min(1, ...r.uids.filter(v => v !== u).map(v => cerOf(t, v))) : 1;
+          pages.push({ uid: u, cer: own, omitted: hanCount(bodyText(t)) < 10, mixup: other <= own - 0.2, loop: loopy(bodyText(t)), secs: r.secs / r.uids.length });
+        });
+      }
+      cells.push({ engine: eng, k, calls: last2.size, pages, segments_found: pages.filter(p => !p.omitted).length });
+    }
+  }
+  out.context_arm = cells.map(c => ({ engine: c.engine, k: c.k, calls: c.calls, n: c.pages.length, mean_cer: r4(meanOf(c.pages.map(p => p.cer))), median_cer: r4(median(c.pages.map(p => p.cer))), omitted: c.pages.filter(p => p.omitted).length, mixups: c.pages.filter(p => p.mixup).length, loops: c.pages.filter(p => p.loop).length, secs_per_page: r4(meanOf(c.pages.map(p => p.secs).filter(Number.isFinite))), per_page: c.pages }));
+  md.push('', `## Context arm: pages per call (same ${ctxDraw.length} pages, same prompt; Kanripo body CER)\n`, '| Engine | pages per call | calls | mean CER | median CER | omitted pages | page mix-ups | loops | wall s per page |', '|---|---|---|---|---|---|---|---|---|');
+  for (const c of out.context_arm) md.push(`| ${c.engine === 'opus' ? 'Opus' : 'Gemini 3.8 Flash Low'} | ${c.k} | ${c.calls} | ${(100 * c.mean_cer).toFixed(2)}% | ${(100 * c.median_cer).toFixed(2)}% | ${c.omitted} | ${c.mixups} | ${c.loops} | ${c.secs_per_page?.toFixed(1)} |`);
+}
+
 // ── 7. Calls ───────────────────────────────────────────────────────────────────────────────────────────────────────
 const calls = a => readJsonl(`reads/${a}.jsonl`).reduce((s, r) => s + (r.attempts || 1), 0);
-out.calls = { opus: calls('R1') + calls('A') + calls('TO') + calls('XTG'), agy: calls('R2') + calls('R3') + calls('TG') + calls('XTO'), by_arm: Object.fromEntries(['R1', 'R2', 'R3', 'A', 'TO', 'TG', 'XTO', 'XTG'].map(a => [a, calls(a)])) };
+const ctxCalls = e => ctxRows.filter(r => r.engine === e).length;
+out.calls = { opus: calls('R1') + calls('A') + calls('TO') + calls('XTG') + ctxCalls('opus'), agy: calls('R2') + calls('R3') + calls('TG') + calls('XTO') + ctxCalls('gemini'), by_arm: Object.fromEntries(['R1', 'R2', 'R3', 'A', 'TO', 'TG', 'XTO', 'XTG'].map(a => [a, calls(a)])) };
 md.push('', `Calls: Opus ${out.calls.opus} (cap 450), agy ${out.calls.agy} (cap 450); ${JSON.stringify(out.calls.by_arm)}. API spend $0.`);
 
 fs.writeFileSync(H('results.json'), JSON.stringify(out, null, 1) + '\n');
