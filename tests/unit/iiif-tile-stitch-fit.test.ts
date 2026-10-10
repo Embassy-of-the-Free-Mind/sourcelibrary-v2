@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { tileFits } from '../../scripts/lib/iiif-utils.mjs';
+import { tileFits, fullIsNative, FULL_FIRST_HOSTS } from '../../scripts/lib/iiif-utils.mjs';
 
 /**
  * #4523. `fetchIiifNativeRes` composites region tiles onto a WHITE canvas at
@@ -50,5 +50,39 @@ describe('tileFits — the stitcher refuses a tile that does not fill its cell',
     // all — an HTML error page, say. Absence is not a pass.
     expect(tileFits(1024, 1024, undefined, undefined)).toBe(false);
     expect(tileFits(1024, 1024, 0, 0)).toBe(false);
+  });
+});
+
+/**
+ * #6006. On FULL_FIRST_HOSTS the stitcher tries one `/full/full/` request first
+ * and keeps it only when it is native per info.json. A capped response must
+ * fall through to the stitch (and its guard), never be stored as the master.
+ *
+ * Verified live 2026-10-10: e-rara 3737205 / 3737206 / 1000000 serve
+ * `/full/full/` at exactly info.json's size, while the stitch-only route fails
+ * on every one ("requested 138x1024 ... returned 138x1031").
+ */
+describe('fullIsNative — the full-first shortcut accepts only a native image', () => {
+  it('accepts the exact info.json size (e-rara 3737205)', () => {
+    expect(fullIsNative(1162, 1768, 1162, 1768)).toBe(true);
+  });
+
+  it('rejects a capped response (e-rara audit: 1.67x loss)', () => {
+    expect(fullIsNative(2000, 3000, 1200, 1800)).toBe(false);
+  });
+
+  it('rejects even 1px short — the whole master is at stake, not a tile', () => {
+    expect(fullIsNative(1162, 1768, 1161, 1768)).toBe(false);
+    expect(fullIsNative(1162, 1768, 1162, 1767)).toBe(false);
+  });
+
+  it('rejects unknown dimensions rather than assuming native', () => {
+    expect(fullIsNative(1162, 1768, undefined, undefined)).toBe(false);
+    expect(fullIsNative(undefined, undefined, 1162, 1768)).toBe(false);
+  });
+
+  it('is scoped to partial cappers: EAP caps every page and is not full-first', () => {
+    expect(FULL_FIRST_HOSTS).toContain('www.e-rara.ch');
+    expect(FULL_FIRST_HOSTS).not.toContain('images.eap.bl.uk');
   });
 });
