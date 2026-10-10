@@ -72,6 +72,10 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
  */
 const UNATTENDED = [
   // ── Hetzner crontab ──
+  { match: 'climits check', spends: false, gated: false,
+    note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
+  { match: 'box.sh push-limits', spends: false, gated: false,
+    note: 'copies the climits meter file to the other job boxes over the mesh; no model call (#6360)' },
   { match: 'pipeline-orchestrator.mjs', spends: true, gated: true,
     note: 'per-phase budgetAllowsDispatch; verified structurally by check A' },
   { match: 'translate-worker.mjs', spends: true, gated: true,
