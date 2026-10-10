@@ -248,9 +248,26 @@ describe('screens', () => {
 });
 
 describe('the draw', () => {
-  it('every language present gets a seat before any gets a second', () => {
-    expect(sc.allocateSeats({ latin: 200, german: 80, greek: 3, hebrew: 2 }, 10)).toEqual({ latin: 6, german: 2, greek: 1, hebrew: 1 });
-    expect(Object.values(sc.allocateSeats({ a: 1, b: 1 }, 10)).reduce((x: number, y: number) => x + y, 0)).toBe(2);
+  it('diversity seats go one per script family first, the rest follow the window', () => {
+    // translate-300's own mix (2026-10-04): the draw must reach Hebrew and Arabic, and still read mostly Latin.
+    const counts = { latin: 234, german: 39, cjk: 18, greek: 8, french: 7, hebrew: 7, italian: 3, 'southeast-asian': 2, arabic: 2, spanish: 2, ethiopic: 1, indic: 1 };
+    const s = sc.allocateSeats(counts, 10);
+    expect(s).toMatchObject({ cjk: 1, greek: 1, hebrew: 1 });
+    expect(s.latin).toBeGreaterThanOrEqual(4);
+    expect(s.german).toBe(1);
+    expect(Object.values(s).reduce((x: number, y: number) => x + y, 0)).toBe(10);
+    expect(Object.values(sc.allocateSeats({ latin: 1, german: 1 }, 10)).reduce((x: number, y: number) => x + y, 0)).toBe(2);
+  });
+  it('strata: Latin-script books by language, other scripts by family', () => {
+    expect(sc.stratumOf('Latin')).toBe('latin');
+    expect(sc.stratumOf('Classical Chinese')).toBe('cjk');
+    expect(sc.stratumOf('Hebrew and Judeo-Arabic')).toBe('hebrew');
+    expect(sc.stratumOf("Ge'ez")).toBe('ethiopic');
+  });
+  it('a book with a 3-page run is drawn before a one-page tail', () => {
+    const bs = [{ id: 'a', language: 'Arabic' }, { id: 'b', language: 'Arabic' }];
+    const pg = new Map([['a', [{ id: 'a7', page_number: 7, ol: 900 }]], ['b', [1, 2, 3].map((n) => ({ id: `b${n}`, page_number: n, ol: 900 }))]]);
+    for (const seed of [1, 2, 3, 4]) expect(sc.drawSample(bs, pg, { seed, nBooks: 1 })[0]).toMatchObject({ book_id: 'b', consecutive: true });
   });
   const books = Array.from({ length: 40 }, (_, i) => ({ id: `b${String(i).padStart(2, '0')}`, language: i < 25 ? 'Latin' : i < 35 ? 'German' : i < 38 ? 'Greek' : 'Hebrew' }));
   const pages = new Map(books.map((b) => [b.id, Array.from({ length: 12 }, (_, j) => ({ id: `${b.id}p${j + 1}`, page_number: j + 1, ol: j === 4 ? 10 : 500 }))]));

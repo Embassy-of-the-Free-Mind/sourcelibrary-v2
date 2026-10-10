@@ -116,52 +116,115 @@ export function summariseScreens(rows, { examplesPerFlag = 10 } = {}) {
 /** A book's language bucket for stratification: the first named language, lower-cased. */
 export const languageBucket = (lang) => String(lang || 'unknown').split(/[,;/+&]| and /i)[0].trim().toLowerCase() || 'unknown';
 
+// The script a language is mostly written in, for spreading the draw across scripts: OCR fails by
+// SCRIPT first (handwritten Hebrew, CJK, Greek), so a draw that reads ten Latin-script books has not
+// looked at the failures that matter. Anything unlisted counts as Latin script.
+const SCRIPT_FAMILIES = [
+  ['cjk', /chinese|japanese|korean|kanbun/],
+  ['greek', /greek/],
+  ['hebrew', /hebrew|yiddish|aramaic|ladino|judeo/],
+  ['arabic', /arabic|persian|farsi|ottoman|urdu|pashto/],
+  ['cyrillic', /russian|slavonic|ukrainian|bulgarian|serbian|belarus/],
+  ['indic', /sanskrit|hindi|bengali|marathi|tamil|telugu|pali|nepali|gujarati|punjabi|kannada|malayalam|sinhala/],
+  ['tibetan', /tibetan/],
+  ['syriac', /syriac/],
+  ['ethiopic', /ge.ez|amharic|tigr/],
+  ['armenian', /armenian/],
+  ['georgian', /georgian/],
+  ['coptic', /coptic/],
+  ['southeast-asian', /javanese|balinese|sundanese|thai|lao|burmese|khmer/],
+];
+export function scriptFamily(lang) {
+  const l = String(lang || '').toLowerCase();
+  return (SCRIPT_FAMILIES.find(([, re]) => re.test(l)) || ['latin'])[0];
+}
+/** The stratum: the language for Latin-script books, the script family for every other script. */
+export const stratumOf = (lang) => (scriptFamily(lang) === 'latin' ? languageBucket(lang) : scriptFamily(lang));
+
 /**
- * Seats per language for an n-book draw: every language present gets one seat, largest first, until
- * the seats run out (the protocol: "at least one each where present"); the remaining seats go by
- * largest remainder of the language's share of the window. Pure; ties break by name.
+ * Seats per stratum for an n-book draw, in three moves:
+ *   1. each stratum gets the floor of its share of the window (a window that is 70% Latin reads mostly
+ *      Latin, and German at 12% still gets its seat);
+ *   2. leftover seats go first to script families not yet represented (largest family first), then by
+ *      largest remainder;
+ *   3. until min(families present, ceil(n/2)) script families are represented, the stratum holding the
+ *      most seats gives one up to the largest stratum of the next unrepresented family.
+ * So a 10-book draw reads Hebrew, Arabic, Greek and CJK where the window has them (the
+ * translate-next-5467 protocol: "Latin, German, Chinese, Greek, Hebrew/Arabic at least one each where
+ * present"). `countsByStratum` keys are strata (stratumOf). Pure; ties break by name.
  */
-export function allocateSeats(countsByLang, n) {
-  const langs = Object.entries(countsByLang).filter(([, c]) => c > 0).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  const seats = Object.fromEntries(langs.map(([l]) => [l, 0]));
-  let left = Math.min(n, langs.reduce((s, [, c]) => s + c, 0));
-  for (const [l] of langs) { if (!left) break; seats[l] = 1; left--; }
-  const total = langs.reduce((s, [, c]) => s + c, 0);
-  while (left > 0) {
-    const pick = langs
-      .filter(([l, c]) => seats[l] < c)
-      .map(([l, c]) => [l, (c / total) * n - seats[l]])
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
-    if (!pick) break;
-    seats[pick[0]]++; left--;
+export function allocateSeats(countsByStratum, n) {
+  const strata = Object.entries(countsByStratum).filter(([, c]) => c > 0).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const total = strata.reduce((s, [, c]) => s + c, 0);
+  const count = Object.fromEntries(strata);
+  const quota = Object.fromEntries(strata.map(([l, c]) => [l, (c / total) * n]));
+  const seats = Object.fromEntries(strata.map(([l]) => [l, Math.min(count[l], Math.floor(quota[l]))]));
+  const familyOf = (l) => (SCRIPT_FAMILIES.some(([name]) => name === l) ? l : 'latin');
+  const families = new Map();
+  for (const [l, c] of strata) {
+    const f = familyOf(l);
+    if (!families.has(f)) families.set(f, { size: 0, top: l });
+    families.get(f).size += c;
   }
-  return seats;
+  const famOrder = [...families.entries()].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0]));
+  const represented = () => new Set(strata.filter(([l]) => seats[l] > 0).map(([l]) => familyOf(l)));
+  const nextMissing = () => famOrder.find(([f]) => !represented().has(f));
+  let left = Math.min(n, total) - Object.values(seats).reduce((a, b) => a + b, 0);
+  while (left > 0) {
+    const miss = nextMissing();
+    let pick = miss ? miss[1].top : null;
+    if (!pick) {
+      pick = strata.filter(([l]) => seats[l] < count[l])
+        .sort((a, b) => (quota[b[0]] - seats[b[0]]) - (quota[a[0]] - seats[a[0]]) || a[0].localeCompare(b[0]))[0]?.[0];
+    }
+    if (!pick) break;
+    seats[pick]++; left--;
+  }
+  const target = Math.min(families.size, Math.ceil(n / 2));
+  while (represented().size < target) {
+    const miss = nextMissing();
+    const donor = strata.filter(([l]) => seats[l] > 1).sort((a, b) => seats[b[0]] - seats[a[0]] || a[0].localeCompare(b[0]))[0]?.[0];
+    if (!miss || !donor) break;
+    seats[donor]--; seats[miss[1].top]++;
+  }
+  return Object.fromEntries(Object.entries(seats).filter(([, k]) => k > 0));
+}
+
+/** Start page numbers of every run of `runLen` consecutive window pages, preferring real text. */
+function runStarts(pages, runLen) {
+  for (const min of [150, 40, 0]) {
+    const ok = new Set(pages.filter((p) => (p.ol || 0) >= min).map((p) => p.page_number));
+    const starts = [...ok].filter((n) => Array.from({ length: runLen }, (_, i) => ok.has(n + i)).every(Boolean)).sort((a, b) => a - b);
+    if (starts.length) return starts;
+  }
+  return [];
 }
 
 /**
  * The by-eye draw. `books` = [{ id, language }]; `pagesByBook` = Map(bookId → [{ id, page_number, ol }])
- * of the WINDOW's pages (ol = OCR body length). Picks `nBooks` books stratified by language with a
- * seeded mulberry32, and in each a run of `runLen` consecutive page numbers, preferring pages with
- * ≥ 150 chars of OCR (then ≥ 40, then any). Pure: the same inputs and seed give the same draw.
+ * of the WINDOW's pages (ol = OCR body length). Picks `nBooks` books stratified by `stratumOf` with a
+ * seeded mulberry32, and in each a run of `runLen` consecutive window pages, preferring pages with
+ * ≥ 150 chars of OCR (then ≥ 40, then any). Within a language, books that HAVE such a run are drawn
+ * first (a tail gap-fill of one page cannot show a seam); a book without one contributes what it has,
+ * marked `consecutive: false`. Pure: the same inputs and seed give the same draw.
  */
 export function drawSample(books, pagesByBook, { seed, nBooks = 10, runLen = 3 } = {}) {
   const rnd = makeRng(Number(seed));
   const withPages = books.filter((b) => (pagesByBook.get(b.id) || []).length).sort((a, b) => a.id.localeCompare(b.id));
   const byLang = {};
-  for (const b of withPages) (byLang[languageBucket(b.language)] ??= []).push(b);
+  for (const b of withPages) (byLang[stratumOf(b.language)] ??= []).push(b);
   const seats = allocateSeats(Object.fromEntries(Object.entries(byLang).map(([l, bs]) => [l, bs.length])), nBooks);
   const out = [];
   for (const lang of Object.keys(seats).sort()) {
-    const pool = [...byLang[lang]];
-    for (let k = 0; k < seats[lang] && pool.length; k++) {
-      const book = pool.splice(Math.floor(rnd() * pool.length), 1)[0];
-      const pages = [...pagesByBook.get(book.id)].sort((a, b) => a.page_number - b.page_number);
-      let starts = [];
-      for (const min of [150, 40, 0]) {
-        const ok = new Map(pages.filter((p) => (p.ol || 0) >= min).map((p) => [p.page_number, p]));
-        starts = [...ok.keys()].filter((n) => Array.from({ length: runLen }, (_, i) => ok.has(n + i)).every(Boolean));
-        if (starts.length) break;
-      }
+    const info = byLang[lang].map((b) => {
+      const pages = [...pagesByBook.get(b.id)].sort((x, y) => x.page_number - y.page_number);
+      return { book: b, pages, starts: runStarts(pages, runLen) };
+    });
+    const pools = [info.filter((x) => x.starts.length), info.filter((x) => !x.starts.length)];
+    for (let k = 0; k < seats[lang]; k++) {
+      const pool = pools.find((p) => p.length);
+      if (!pool) break;
+      const { book, pages, starts } = pool.splice(Math.floor(rnd() * pool.length), 1)[0];
       const byNum = new Map(pages.map((p) => [p.page_number, p]));
       const start = starts.length ? starts[Math.floor(rnd() * starts.length)] : pages[Math.floor(rnd() * pages.length)].page_number;
       const run = Array.from({ length: runLen }, (_, i) => byNum.get(start + i)).filter(Boolean);
