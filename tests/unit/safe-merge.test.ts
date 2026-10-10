@@ -32,8 +32,10 @@ if (a === 'pr' && b === 'view') {
   else { const q = s.views[n]; out = JSON.stringify(q.length > 1 ? q.shift() : q[0]); }
 } else if (a === 'pr' && b === 'list') {
   out = JSON.stringify((s.stacked[opt('--base')] || []).filter((x) => !s.retargeted.includes(String(x))).map((x) => ({ number: x })));
-} else if (a === 'pr' && b === 'edit') {
-  if (!s.editStuck) s.retargeted.push(n);
+} else if (a === 'api' && b === '-X' && n === 'PATCH') {
+  const pr = (args[3] || '').split('/').pop();
+  if (!s.editStuck) s.retargeted.push(pr);
+  out = '{}';
 } else if (a === 'pr' && b === 'merge') {
   s.merged.push(n);
 } else { code = 9; }
@@ -93,11 +95,11 @@ describe('safe-merge.sh', () => {
   it('retargets PRs stacked on the head branch to main BEFORE merging with --delete-branch', () => {
     const r = run(['10'], { views: { 10: [clean(10)] }, stacked: { 'feat/pr-10': [11, 12] } });
     expect(r.code).toBe(0);
-    const editIdx = r.calls.map((c, i) => (c.startsWith('pr edit') ? i : -1)).filter((i) => i >= 0);
+    const editIdx = r.calls.map((c, i) => (c.startsWith('api -X PATCH') ? i : -1)).filter((i) => i >= 0);
     const mergeIdx = r.calls.findIndex((c) => c.startsWith('pr merge'));
-    expect(r.calls.filter((c) => c.startsWith('pr edit'))).toEqual([
-      expect.stringMatching(/^pr edit 11 .*--base main/),
-      expect.stringMatching(/^pr edit 12 .*--base main/),
+    expect(r.calls.filter((c) => c.startsWith('api -X PATCH'))).toEqual([
+      expect.stringMatching(/^api -X PATCH repos\/[^ ]+\/pulls\/11 -f base=main$/),
+      expect.stringMatching(/^api -X PATCH repos\/[^ ]+\/pulls\/12 -f base=main$/),
     ]);
     expect(mergeIdx).toBeGreaterThan(Math.max(...editIdx));
     expect(r.calls[mergeIdx]).toMatch(/--squash/);
@@ -123,7 +125,7 @@ describe('safe-merge.sh', () => {
   it('does not list or retarget for a fork PR (its head branch is not ours to delete)', () => {
     const r = run(['10'], { views: { 10: [clean(10, { isCrossRepository: true })] }, stacked: { 'feat/pr-10': [11] } });
     expect(r.code).toBe(0);
-    expect(r.calls.some((c) => c.startsWith('pr edit') || c.startsWith('pr list'))).toBe(false);
+    expect(r.calls.some((c) => c.startsWith('api -X PATCH') || c.startsWith('pr list'))).toBe(false);
   });
 
   it.each([1, 2])('refuses when the interlock exits %i, before touching the PR', (rc) => {
@@ -144,7 +146,7 @@ describe('safe-merge.sh', () => {
     const r = run(['10'], { views: { 10: [view] }, stacked: { 'feat/pr-10': [11] } });
     expect(r.code).toBe(1);
     expect(r.out).toMatch(msg);
-    expect(r.calls.some((c) => c.startsWith('pr edit') || c.startsWith('pr merge'))).toBe(false);
+    expect(r.calls.some((c) => c.startsWith('api -X PATCH') || c.startsWith('pr merge'))).toBe(false);
   });
 
   const unstable = clean(10, {
@@ -246,7 +248,7 @@ describe('safe-merge.sh', () => {
     const r = run(['--dry-run', '10'], { views: { 10: [clean(10)] }, stacked: { 'feat/pr-10': [11] } });
     expect(r.code).toBe(0);
     expect(r.out).toMatch(/would retarget #11/);
-    expect(r.calls.some((c) => c.startsWith('pr edit') || c.startsWith('pr merge'))).toBe(false);
+    expect(r.calls.some((c) => c.startsWith('api -X PATCH') || c.startsWith('pr merge'))).toBe(false);
   });
 
   it('rejects usage errors with exit 2', () => {

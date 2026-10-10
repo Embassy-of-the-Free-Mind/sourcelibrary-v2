@@ -153,7 +153,9 @@ for pr in "${PRS[@]}"; do
     children=$(stacked_on "$head") || refuse "$pr" "could not list PRs based on $head"
     for child in $children; do
       if [ "$DRY" = 1 ]; then echo "  [dry-run] would retarget #$child: $head -> main"; continue; fi
-      gh pr edit "$child" --repo "$REPO" --base main >/dev/null || refuse "$pr" "retargeting #$child to main failed"
+      # REST, not `gh pr edit`: the latter reads projectCards and fails outright on
+      # the Projects (classic) deprecation error, so the retarget never happened (2026-10-10).
+      gh api -X PATCH "repos/$REPO/pulls/$child" -f base=main >/dev/null || refuse "$pr" "retargeting #$child to main failed"
       echo "  retargeted #$child: $head -> main"
     done
     if [ "$DRY" = 0 ]; then
