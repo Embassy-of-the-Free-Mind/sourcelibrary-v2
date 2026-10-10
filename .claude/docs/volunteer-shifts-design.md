@@ -160,6 +160,29 @@ reader — a trusted volunteer or our own model adjudicator opening the image �
 one volunteer verdict is not yet "by eye" in our sense. Nothing a volunteer
 submits writes to `pages`.
 
+### Corrections (built 2026-10-10)
+
+Reviews are evidence; **corrections change the page**, so they take two steps.
+
+1. **Propose** (`propose_correction`, `POST /api/review/corrections`). During a shift the
+   volunteer, with Claude, proposes **span edits** — `{find, replace, reason}` pairs applied to
+   the stored raw text, each `find` unique on the page — against the `base_hash` the shift served.
+   Span edits, not a retyped page, because the shift shows wrapper-stripped text and a whole-page
+   replacement would delete the stored wrappers (page-type envelope, `<meta>`). Refused at once if
+   the page changed since it was loaded, a span is absent or repeated, or the book is hidden.
+   Stored in `page_corrections` as `proposed`; `pages` is untouched. `drafted_by` records whether
+   the wording was the volunteer's, Claude's accepted by the volunteer, or mixed.
+2. **Apply** (`scripts/maintenance/apply-page-correction.mjs`), by a **second reader** who has the
+   scan open: re-checks the hash, refuses to patch a stale translation, saves a revision and
+   confirms it, writes compare-and-set, stamps `source: 'volunteer-correction'` with the
+   volunteer as `edited_by` (so the pipeline never overwrites it), logs a `correction_events`
+   pair, closes the proposal. Dry run by default. **Actuation:** an OCR correction makes the
+   page's machine translation stale, and the stale lane re-translates it under the spend dial.
+
+The second reader is us for now (Derek or a session reading the scan). Phase 2 can let trusted
+volunteers apply each other's proposals, Wikisource's two-person rule, or route proposals to a
+blind model check against the image first.
+
 ### Credit
 
 Named credit on a public methods page and in the TU Delft paper (#4916) for completed shifts,

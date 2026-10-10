@@ -28,7 +28,8 @@ export type PublicSubmissionRoute =
   | 'feedback'
   | 'feedback-upload'
   | 'share-findings'
-  | 'collection-proposals';
+  | 'collection-proposals'
+  | 'page-corrections';
 
 const LIMITS: Record<PublicSubmissionRoute, number> = {
   // A reader flagging translation issues page by page is doing exactly what we
@@ -43,6 +44,11 @@ const LIMITS: Record<PublicSubmissionRoute, number> = {
   // than a handful an hour from one address is not a person thinking.
   'share-findings': 5,
   'collection-proposals': 5,
+  // A volunteer in a review shift (#6418) proposes span corrections page by
+  // page. Proposals only land in `page_corrections` for a second reader; they
+  // never touch `pages`. Note: calls arriving through the MCP server reach this
+  // route from the server's own address, so MCP volunteers share one window.
+  'page-corrections': 30,
 };
 
 const WINDOW_SECONDS = 3600;

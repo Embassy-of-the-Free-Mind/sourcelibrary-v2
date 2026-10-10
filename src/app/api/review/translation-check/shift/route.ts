@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
@@ -6,6 +6,7 @@ import { nextCandidate } from '@/lib/review-candidates';
 import { isValidVolunteerId } from '@/lib/review-queue';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { contentHash } from '@/lib/write-provenance';
 
 export const maxDuration = 15;
 
@@ -25,8 +26,9 @@ const MAX_TEXT = 6000;
  * as /check and /review/translation-check, so shift rows and website rows can
  * be compared directly.
  *
- * Each item carries `text_version` — short hashes of the stored OCR and
- * translation — so a verdict stays bound to the text it judged (a later re-OCR
+ * Each item carries `text_version` — the stored OCR's and translation's
+ * `contentHash` (the same hash the provenance contract stamps as
+ * `content_hash`) — so a verdict or correction stays bound to the text it judged (a later re-OCR
  * would otherwise silently re-point it). The engine and model are deliberately
  * NOT returned: the reviewer judges the text, not its maker.
  *
@@ -105,7 +107,6 @@ export async function GET(request: NextRequest) {
     if (b.id) bookById.set(String(b.id), b);
   }
 
-  const shortHash = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
   const clip = (s: string) =>
     s.length > MAX_TEXT ? { text: s.slice(0, MAX_TEXT), truncated: true } : { text: s, truncated: false };
 
@@ -137,7 +138,7 @@ export async function GET(request: NextRequest) {
       ...(transcription.truncated || translation.truncated
         ? { truncated_note: `Text over ${MAX_TEXT} characters was cut here; open reader_url for the full page.` }
         : {}),
-      text_version: { ocr: shortHash(ocrRaw), translation: shortHash(trRaw) },
+      text_version: { ocr: contentHash(ocrRaw), translation: contentHash(trRaw) },
       question: entry.prompt,
     });
   }
