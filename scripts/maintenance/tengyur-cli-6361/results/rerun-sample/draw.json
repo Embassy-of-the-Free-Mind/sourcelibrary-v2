@@ -1,0 +1,702 @@
+[
+ {
+  "page_id": "6abeb289896ea18127c82fe4",
+  "vol": 100,
+  "page_number": 11,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8fe40",
+  "vol": 191,
+  "page_number": 364,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f89d",
+  "vol": 189,
+  "page_number": 317,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb3a1896ea18127c83e91",
+  "vol": 106,
+  "page_number": 222,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed69b896ea18127c8ebc6",
+  "vol": 183,
+  "page_number": 464,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ad896ea18127c9006c",
+  "vol": 192,
+  "page_number": 192,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed51b896ea18127c8dd93",
+  "vol": 178,
+  "page_number": 169,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb4ba896ea18127c8472c",
+  "vol": 110,
+  "page_number": 5,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed81b896ea18127c8f309",
+  "vol": 187,
+  "page_number": 61,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb2b4896ea18127c83467",
+  "vol": 101,
+  "page_number": 488,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f86e",
+  "vol": 189,
+  "page_number": 270,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb331896ea18127c83af0",
+  "vol": 104,
+  "page_number": 725,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb4e8896ea18127c84b3e",
+  "vol": 111,
+  "page_number": 329,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed87d896ea18127c8f5eb",
+  "vol": 188,
+  "page_number": 207,
+  "reason": "plan-mode:output contract; door:runaway",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb331896ea18127c839d5",
+  "vol": 104,
+  "page_number": 442,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed69b896ea18127c8eb5e",
+  "vol": 183,
+  "page_number": 360,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed47c896ea18127c8d8c9",
+  "vol": 176,
+  "page_number": 167,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed87d896ea18127c8f684",
+  "vol": 188,
+  "page_number": 360,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abe825259b86b7d32a65a18",
+  "vol": 102,
+  "page_number": 156,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed661896ea18127c8e9d9",
+  "vol": 182,
+  "page_number": 769,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed9ff896ea18127c904ac",
+  "vol": 193,
+  "page_number": 616,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb331896ea18127c8398c",
+  "vol": 104,
+  "page_number": 369,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8fd10",
+  "vol": 191,
+  "page_number": 60,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "vol": 189,
+  "page_number": 86,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb2b4896ea18127c83366",
+  "vol": 101,
+  "page_number": 231,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed661896ea18127c8e90c",
+  "vol": 182,
+  "page_number": 564,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed914896ea18127c8fc0a",
+  "vol": 190,
+  "page_number": 538,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed5e1896ea18127c8e3ce",
+  "vol": 180,
+  "page_number": 580,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8feec",
+  "vol": 191,
+  "page_number": 536,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb406896ea18127c84465",
+  "vol": 108,
+  "page_number": 558,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb1dd896ea18127c829ba",
+  "vol": 97,
+  "page_number": 252,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed42d896ea18127c8d5a3",
+  "vol": 175,
+  "page_number": 82,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb4ba896ea18127c84998",
+  "vol": 110,
+  "page_number": 625,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb4ba896ea18127c84910",
+  "vol": 110,
+  "page_number": 489,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed3fd896ea18127c8d35c",
+  "vol": 174,
+  "page_number": 232,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb20c896ea18127c82b0e",
+  "vol": 98,
+  "page_number": 11,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ad896ea18127c9019d",
+  "vol": 192,
+  "page_number": 497,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb4e8896ea18127c84a6f",
+  "vol": 111,
+  "page_number": 122,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed4cf896ea18127c8db8f",
+  "vol": 177,
+  "page_number": 219,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb1dd896ea18127c82924",
+  "vol": 97,
+  "page_number": 102,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed914896ea18127c8fc61",
+  "vol": 190,
+  "page_number": 625,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb2ee896ea18127c83617",
+  "vol": 103,
+  "page_number": 236,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abe825259b86b7d32a65ac8",
+  "vol": 102,
+  "page_number": 332,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb1dd896ea18127c828d3",
+  "vol": 97,
+  "page_number": 21,
+  "reason": "chatter:conversational opener; plan-mode:Please review",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb20c896ea18127c82c94",
+  "vol": 98,
+  "page_number": 401,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed4cf896ea18127c8db4b",
+  "vol": 177,
+  "page_number": 151,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f7f3",
+  "vol": 189,
+  "page_number": 147,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed42d896ea18127c8d7d1",
+  "vol": 175,
+  "page_number": 640,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed47c896ea18127c8d99d",
+  "vol": 176,
+  "page_number": 379,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed47c896ea18127c8d8f0",
+  "vol": 176,
+  "page_number": 206,
+  "reason": "plan-mode:Please review",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed582896ea18127c8e07a",
+  "vol": 179,
+  "page_number": 294,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abe825259b86b7d32a65981",
+  "vol": 102,
+  "page_number": 5,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed3fd896ea18127c8d286",
+  "vol": 174,
+  "page_number": 18,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb3d8896ea18127c8401d",
+  "vol": 107,
+  "page_number": 46,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed51b896ea18127c8df3f",
+  "vol": 178,
+  "page_number": 597,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f95c",
+  "vol": 189,
+  "page_number": 508,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed42d896ea18127c8d6ce",
+  "vol": 175,
+  "page_number": 381,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8fcda",
+  "vol": 191,
+  "page_number": 6,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed7ae896ea18127c8f19c",
+  "vol": 186,
+  "page_number": 200,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed72a896ea18127c8ed5c",
+  "vol": 184,
+  "page_number": 294,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed69b896ea18127c8ea67",
+  "vol": 183,
+  "page_number": 113,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ad896ea18127c9000f",
+  "vol": 192,
+  "page_number": 99,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed47c896ea18127c8d957",
+  "vol": 176,
+  "page_number": 309,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb331896ea18127c83834",
+  "vol": 104,
+  "page_number": 25,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ff896ea18127c903b1",
+  "vol": 193,
+  "page_number": 365,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed914896ea18127c8fb8c",
+  "vol": 190,
+  "page_number": 412,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ad896ea18127c8ffca",
+  "vol": 192,
+  "page_number": 30,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed51b896ea18127c8de64",
+  "vol": 178,
+  "page_number": 378,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed8d1896ea18127c8f77c",
+  "vol": 189,
+  "page_number": 28,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed81b896ea18127c8f3fa",
+  "vol": 187,
+  "page_number": 302,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb4e8896ea18127c84b6e",
+  "vol": 111,
+  "page_number": 377,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed661896ea18127c8e98c",
+  "vol": 182,
+  "page_number": 692,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed69b896ea18127c8ea50",
+  "vol": 183,
+  "page_number": 90,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb3d8896ea18127c84093",
+  "vol": 107,
+  "page_number": 164,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed42d896ea18127c8d745",
+  "vol": 175,
+  "page_number": 500,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abe825259b86b7d32a659c1",
+  "vol": 102,
+  "page_number": 69,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8fd6d",
+  "vol": 191,
+  "page_number": 153,
+  "reason": "plan-mode:Output contract",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb3a1896ea18127c83e46",
+  "vol": 106,
+  "page_number": 147,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb20c896ea18127c82b6e",
+  "vol": 98,
+  "page_number": 107,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed47c896ea18127c8d97f",
+  "vol": 176,
+  "page_number": 349,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed69b896ea18127c8eaf6",
+  "vol": 183,
+  "page_number": 256,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed661896ea18127c8e89c",
+  "vol": 182,
+  "page_number": 452,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed4cf896ea18127c8dafc",
+  "vol": 177,
+  "page_number": 72,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed51b896ea18127c8de56",
+  "vol": 178,
+  "page_number": 364,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ad896ea18127c8ffd0",
+  "vol": 192,
+  "page_number": 36,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed87d896ea18127c8f6c2",
+  "vol": 188,
+  "page_number": 422,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb2ee896ea18127c8376c",
+  "vol": 103,
+  "page_number": 577,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb3d8896ea18127c84131",
+  "vol": 107,
+  "page_number": 322,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb331896ea18127c83a41",
+  "vol": 104,
+  "page_number": 550,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb442896ea18127c8466f",
+  "vol": 109,
+  "page_number": 444,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb3a1896ea18127c83ed9",
+  "vol": 106,
+  "page_number": 294,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb2ee896ea18127c83570",
+  "vol": 103,
+  "page_number": 69,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abed61a896ea18127c8e588",
+  "vol": 181,
+  "page_number": 290,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb442896ea18127c84534",
+  "vol": 109,
+  "page_number": 129,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb331896ea18127c8389c",
+  "vol": 104,
+  "page_number": 129,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed9ff896ea18127c90482",
+  "vol": 193,
+  "page_number": 574,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abeb361896ea18127c83be1",
+  "vol": 105,
+  "page_number": 234,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed582896ea18127c8e0dc",
+  "vol": 179,
+  "page_number": 392,
+  "reason": "stage1-failed:denied_tool",
+  "stratum": "stage1-failed"
+ },
+ {
+  "page_id": "6abeb406896ea18127c84332",
+  "vol": 108,
+  "page_number": 251,
+  "reason": "chatter:conversational opener; plan-mode:translation_plan",
+  "stratum": "plan-mode"
+ },
+ {
+  "page_id": "6abed96d896ea18127c8fe14",
+  "vol": 191,
+  "page_number": 320,
+  "reason": "chatter:conversational opener; plan-mode:implementation plan",
+  "stratum": "plan-mode"
+ }
+]
