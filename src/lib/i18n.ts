@@ -498,3 +498,50 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
   },
 };
+
+/**
+ * Shared controls that appear on every localized page — the sign-in link, the
+ * Cite and Download buttons, the cookie banner (#6278 item 6, #6382). One
+ * full `Record<Locale, …>`, so adding a language lists this dictionary too.
+ * The Download panel's own contents (formats, the premium-format offer and its
+ * price) stay English: that copy is part of a purchase flow.
+ */
+export interface ChromeStrings {
+  signIn: string;
+  cite: string;
+  citeTitle: string;
+  download: string;
+  close: string;
+  cookieText: string;
+  privacyPolicy: string;
+  decline: string;
+  accept: string;
+}
+
+export const CHROME_STRINGS: Record<Locale, ChromeStrings> = {
+  en: {
+    signIn: 'Sign in', cite: 'Cite', citeTitle: 'Cite this book', download: 'Download', close: 'Close',
+    cookieText: 'We use cookies for analytics to understand how the library is used.',
+    privacyPolicy: 'Privacy policy', decline: 'Decline', accept: 'Accept',
+  },
+  es: {
+    signIn: 'Iniciar sesión', cite: 'Citar', citeTitle: 'Citar este libro', download: 'Descargar', close: 'Cerrar',
+    cookieText: 'Usamos cookies de analítica para entender cómo se usa la biblioteca.',
+    privacyPolicy: 'Política de privacidad', decline: 'Rechazar', accept: 'Aceptar',
+  },
+  la: {
+    signIn: 'Intra', cite: 'Cita', citeTitle: 'Hunc librum cita', download: 'Deprome', close: 'Claude',
+    cookieText: 'Crustulis (cookies) utimur ut cognoscamus quomodo bibliotheca adhibeatur.',
+    privacyPolicy: 'De secreto servando', decline: 'Recusa', accept: 'Accipe',
+  },
+  nl: {
+    signIn: 'Inloggen', cite: 'Citeren', citeTitle: 'Dit boek citeren', download: 'Downloaden', close: 'Sluiten',
+    cookieText: 'We gebruiken analytische cookies om te begrijpen hoe de bibliotheek wordt gebruikt.',
+    privacyPolicy: 'Privacybeleid', decline: 'Weigeren', accept: 'Accepteren',
+  },
+  zh: {
+    signIn: '登录', cite: '引用', citeTitle: '引用本书', download: '下载', close: '关闭',
+    cookieText: '我们使用分析类 Cookie，以了解图书馆的使用情况。',
+    privacyPolicy: '隐私政策', decline: '拒绝', accept: '接受',
+  },
+};
