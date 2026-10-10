@@ -271,6 +271,13 @@ Three things in that table are load-bearing:
   `ia-ocr-repair`, `reocr-contamination-repair-3362` (the #3362 shared-key
   contamination), `spread-split`, `ai-repair-sync`. Text carrying one of these
   was *relocated or rewritten*, not read from the page in front of it.
+- **`volunteer-correction`** (new 2026-10-10, #6418) is a volunteer's span correction from a
+  review shift, applied by a second reader with `scripts/maintenance/apply-page-correction.mjs`.
+  NOT model output. The field carries `model: 'human'`, `edited_by` (the volunteer, which also
+  arms the human-edit guard) and a `correction` block (`id`, `drafted_by` — `volunteer` |
+  `assistant_accepted` | `mixed` — `second_reader`, `revision_id`). The superseded text and its old
+  prompt/engine keys are in `page_revisions` (reason `volunteer_correction`, `meta`). The proposal
+  itself, applied or not, stays in `page_corrections`.
 - **`songshi-juan56` and `AI generated` (1 row each) are junk labels** — a book
   slug and a free-text string that leaked into an enum. Left documented rather
   than silently ignored, because the alternative is an audit that has to be

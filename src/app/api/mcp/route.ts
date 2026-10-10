@@ -45,7 +45,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.7.1';
+const SERVER_VERSION = '4.8.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1106,6 +1106,29 @@ async function submitPageReview(args: Record<string, unknown>) {
   return { ok: true, message: 'Review recorded. Thank you. It goes into the library\'s quality measurement, not onto the page.' };
 }
 
+async function proposeCorrection(args: Record<string, unknown>) {
+  // item_id is `trans:<language>:<pages.id>`; the route takes the page id.
+  const pageId = String(args.item_id ?? '').split(':').slice(2).join(':');
+  const result = await apiPost('/review/corrections', {
+    page_id: pageId,
+    field: args.field,
+    base_hash: args.base_hash,
+    edits: args.edits,
+    volunteer_id: args.volunteer_code,
+    volunteer_label: clipStr(args.name, 80),
+    drafted_by: args.drafted_by,
+    assistant_model: clipStr(args.assistant_model, 80),
+    note: clipStr(args.note, 2000),
+    shift_id: clipStr(args.shift_id, 64),
+  }) as Record<string, unknown>;
+  return {
+    ok: true,
+    id: result.id,
+    status: result.status,
+    message: 'Correction proposed. A second reader will check it against the scan before it changes the page; the volunteer is credited when it is applied.',
+  };
+}
+
 /**
  * Resolve a canonical locus — a Bekker or Stephanus reference — to the leaves
  * that carry it (#3661).
@@ -1448,6 +1471,40 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'propose_correction',
+    title: 'Propose a Correction',
+    description: 'During a review shift, propose a correction to a page\'s transcription (field "ocr") or English (field "translation") that the USER has decided on. A correction is a list of exact span edits: each "find" must be copied exactly from the text the shift returned and occur once on the page (add surrounding words if it repeats); "replace" is the corrected text ("" deletes). Fix only what the user can see is wrong on the scan or in the original; do not restyle or modernise a translation. Propose transcription fixes before translation fixes, as separate calls. Pass base_hash = the item\'s text_version for that field. A proposal does NOT change the page: a second reader checks it against the scan before it is applied, with the volunteer credited. If the call says the page changed since it was loaded, tell the user and move on. Set drafted_by honestly: "volunteer" if the user supplied the wording, "assistant_accepted" if you drafted it and the user approved it, "mixed" otherwise.',
+    annotations: { title: 'Propose a Correction', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        item_id: { type: 'string', description: 'item_id from start_review_shift' },
+        field: { type: 'string', enum: ['ocr', 'translation'], description: '"ocr" for the transcription, "translation" for the English' },
+        base_hash: { type: 'string', description: 'text_version.ocr or text_version.translation from the item' },
+        edits: {
+          type: 'array',
+          description: 'Span edits (1-30).',
+          items: {
+            type: 'object',
+            properties: {
+              find: { type: 'string', description: 'Exact text currently on the page' },
+              replace: { type: 'string', description: 'Corrected text' },
+              reason: { type: 'string', description: 'What the scan or the original shows (short)' },
+            },
+            required: ['find', 'replace'],
+          },
+        },
+        volunteer_code: { type: 'string', description: 'volunteer_code from start_review_shift' },
+        drafted_by: { type: 'string', enum: ['volunteer', 'assistant_accepted', 'mixed'] },
+        note: { type: 'string', description: 'Anything the second reader should know (optional)' },
+        assistant_model: { type: 'string', description: 'Your model name, if known' },
+        shift_id: { type: 'string' },
+        name: { type: 'string', description: 'How the user wants to be credited (optional)' },
+      },
+      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by'],
+    },
+  },
+  {
     name: 'get_locus',
     title: 'Find a Canonical Reference (Bekker / Stephanus)',
     description: 'Turn a CANONICAL CITATION into the actual leaves that carry it. Aristotle is cited by Bekker number (1094a8, 1447a) and Plato by Stephanus number (Rep. 328b) — the references scholarship has used for centuries, which survive re-typesetting and are shareable in a way a scan page never is. USE THIS FIRST whenever a passage arrives as a canonical reference rather than a page: do not try to derive the page yourself from a book\'s pagination, which is what produced a wrong guess before this tool existed. Bekker numbers are unique across the whole Aristotelian corpus, so the number alone is enough and it also tells you WHICH WORK you are citing. Stephanus numbers restart in each of the three 1578 volumes, so pass work ("Republic", "Timaeus") — without it the response lists the candidate dialogues instead of choosing one. Returns every witness the library holds: the Greek reference edition and, where we have one, an English translation of the same lines, each with its scan page, a reader URL and a quote_api link — so you can compare the original against a translation at one reference. Then call get_quote with the returned book_id + page for the verbatim text and a citable shortlink. LIMITS, stated plainly: a witness is only returned where the reference is PRINTED on that leaf (or, in the two root editions, where a verified constant offset brackets it) — nothing is interpolated, so an empty result means this library holds no anchored leaf there, NOT that the citation is wrong; editions_searched shows what was consulted and the range each covers. Line numbers (the "8" of 1094a8) are not resolved — you get the right leaf and read the line off it. Two works can share a page where one ends and the next begins (Bekker 184 and 1447 are both such joins), and each leaf is filed by the running head printed on it, so a reference at the very start of a work may come back under its predecessor — always read other_works_at_this_reference before concluding a passage is absent. A bare number that exists in both systems returns Aristotle and Plato leaves together; check the system field on each.',
@@ -1532,6 +1589,7 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'propose_collection': return proposeCollection(args);
     case 'start_review_shift': return startReviewShift(args);
     case 'submit_page_review': return submitPageReview(args);
+    case 'propose_correction': return proposeCorrection(args);
     // Name every tool in the error: a caller that guessed a name ("search") can
     // self-correct on the next call instead of concluding the server is broken.
     default: throw new Error(`Unknown tool: ${name}. Available tools: ${TOOLS.map((t) => t.name).join(', ')}`);
@@ -1734,6 +1792,16 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           'io.modelcontextprotocol/ui': { mimeTypes: [MCP_APP_MIME_TYPE] },
         },
       },
+      // Server-level routing hint. Without it, "start a review shift" in
+      // claude.ai was answered with an improvised menu instead of a call to
+      // start_review_shift (first live try, 2026-10-10, #6418).
+      instructions:
+        'Source Library: historical primary sources with transcriptions and English translations. ' +
+        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
+        'or help Source Library, call start_review_shift directly (ask only which language they read ' +
+        'if they have not said), then follow its how_to_run steps; record verdicts with ' +
+        'submit_page_review and fixes with propose_correction.',
     },
   );
 
