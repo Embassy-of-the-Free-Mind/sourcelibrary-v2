@@ -17,3 +17,21 @@ Committed **before any reviewer ran** (draw time 2026-10-10T17:26:26Z):
 
 Reviewers (subscriptions, $0): R1 Opus via `claude -p --model opus` (`review-opus.mjs`); R2 Gemini 3.1 Pro (High) via
 `agy -p` (`scripts/eval/run-cli-arm.py`). Smoke calls before the run: one each, on q001, not used.
+
+## Amendment 1 (2026-10-10T17:40Z, job paddle-qa2-6388, before any R2/R3 row or transcription was read)
+
+The brief was widened while the first job ran. The reviewer arms are relabelled:
+
+- **R1** Opus, unchanged (`review-opus.mjs`, started 17:32Z by job paddle-qa-6388).
+- **R2** is now **Gemini 3.8 Flash (High)** via `agy -p` (Derek: "3.8 may be better"), same 75 requests, same prompt,
+  blind to R1 and R3. Started 17:39Z.
+- **R3** is **Gemini 3.1 Pro (High)**, the arm the first job started at 17:32Z as "R2". Its rows are imported unchanged
+  with `arm` relabelled R3.
+- **Adjudication**: a page where R1 and R2 give different verdicts gets a third read by Opus at high effort, shown the
+  image, the Paddle text and both error lists (unlabelled as "reviewer A/B" in seeded order).
+
+**Transcription comparison** (`transcribe.mjs`): Opus (`claude -p --model opus`, arm TO) and Gemini 3.8 Flash (Low,
+`agy -p`, arm TG) each transcribe the 60 drawn pages from the image alone with the live OCR prompt (Standard OCR v19.1,
+hash 9d8f959e…, the same prompt as `ocr-prereg-6388/prompt-ref.json`). Low is the level the CLI OCR lane and the #6293
+Pareto runs use. Each transcription is then reviewed with the R prompt by the family that did NOT produce it (TO by
+Gemini 3.8 Flash High, TG by Opus), and scored against Kanripo by the same leaf rule as `kanripo.jsonl`.
