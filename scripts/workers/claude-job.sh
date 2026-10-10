@@ -73,9 +73,15 @@ $HOST_RULES
 - Before you write the done file, \`git status --porcelain\` in your worktree must be empty: commit and push what
   is worth keeping, move scratch to \$JOB_SCRATCH, delete the rest. Anything left uncommitted or unpushed pages
   Derek at high priority as work at risk (#6358).
-- If anything needs Derek's decision (spend above the floor, public copy, a hold-list item), end your FINAL
-  message with one line per decision: \`DECISION: <question> — default: <recommended answer> (#issue)\`.
-  The wrapper collects these into $JD/decisions.txt and pages Derek; nothing else surfaces them.
+- DECIDE, don't ask, unless it is a one-way door. Raise a DECISION only for: paid spend above the \$10
+  floor, public copy Derek has not seen, deleting or migrating data, auth/security, money, or anything
+  irreversible. Everything else (a \$0.15 arm, copying a fix to another box, resuming after a reset,
+  rejecting a model, which of two equivalent methods) you decide: take the default, do it, and log it in
+  your FINAL message as \`TAKEN: <what you decided> — why: <one line> (#issue)\`. (#6360: 176 DECISION
+  lines in six days, half of them this kind.)
+- A real decision: end your FINAL message with one line each:
+  \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
+  $JD/decisions.txt for the morning digest; they do not page.
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
@@ -212,6 +218,48 @@ landing_check() {
   else echo "ok ${pr:-no PR expected} $c"; fi
 }
 
+# Checkpoint on every exit that is not DONE (#6360 fix 1): GAVE UP, a weekly cap, stopped, died twice.
+# On 2026-10-09 cli38-xl-6331 and judge-fable-6182b ended on a limit with scores and scripts uncommitted;
+# they were saved by hand. Commits whatever the worktree holds (git's ignore rules apply; the shared
+# node_modules link, the vendored bundle, .vercel and files over 5 MB are left out) and pushes it to the
+# job's branch, or to <branch>-checkpoint-<time> when that push is refused. --no-verify: a failing hook
+# must not cost the results. Prints the branch it pushed to, or nothing. Never fails the caller.
+checkpoint() {  # $1 name, $2 why
+  local name="$1" d="$(wt_dir "$1")" log="$LOGD/$1.log" br big to
+  [ -d "$d" ] || return 0
+  ( cd "$d" || exit 0
+    git add -A -- . ':!node_modules' ':!src/lib/vendor/lamejs-bundle.js' ':!.vercel' 2>/dev/null
+    big=$(git diff --cached --name-only -z 2>/dev/null | xargs -0 -I{} find {} -maxdepth 0 -type f -size +5M 2>/dev/null)
+    [ -n "$big" ] && echo "$big" | while IFS= read -r f; do git reset -q -- "$f"; done
+    git diff --cached --quiet || git commit -q -s --no-verify -m "checkpoint: job $name ended without DONE ($2)
+
+Committed by claude-job.sh so the work survives the job (#6360).${big:+ Left out (over 5 MB): $(echo "$big" | tr '\n' ' ')}" >/dev/null 2>&1
+    [ -n "$(git rev-list HEAD --not --remotes=origin 2>/dev/null | head -1)" ] || exit 0
+    br=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); [ "$br" = HEAD ] && br="job-$name"
+    to="$br"
+    git push -q origin "HEAD:refs/heads/$to" >/dev/null 2>&1 || { to="$br-checkpoint-$(date -u +%Y%m%d%H%M)"; git push -q origin "HEAD:refs/heads/$to" >/dev/null 2>&1 || to=""; }
+    if [ -n "$to" ]; then echo "[claude-job] checkpoint pushed to $to ($2) $(date -u +%FT%TZ)" >> "$log"; echo "$to"
+    else echo "[claude-job] checkpoint push FAILED ($2) $(date -u +%FT%TZ)" >> "$log"; fi
+  )
+  return 0
+}
+
+# Fix 2 (placement half): the box's own account, from the climits meter (#6359). Prints the weekly
+# all-models percent, or nothing when the meter is absent, stale (> 30 min) or unreadable.
+weekly_pct() {
+  local f=/root/.claude-limits/latest.json
+  [ -f "$f" ] && [ -n "$(find "$f" -mmin -30 2>/dev/null)" ] || return 0
+  python3 -c '
+import json, sys
+d = json.load(open(sys.argv[1])); me = d.get("claude_code_account")
+for a in d.get("accounts", []):
+    if a.get("email") == me and a.get("ok"):
+        for l in a.get("limits", []):
+            if l.get("key") == "weekly_all:all": print(int(l.get("percent") or 0))
+' "$f" 2>/dev/null | head -1
+}
+MAX_WEEKLY_PCT=${MAX_WEEKLY_PCT:-90}
+
 # ntfy page for job outcomes (Derek 2026-10-04: "not getting notifications any more").
 # Same topic as the box alerts. Never fails the job: a dead ntfy is not a dead job.
 NTFY_TOPIC="${NTFY_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}"
@@ -261,12 +309,18 @@ Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, 
     claude_capped -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
   fi
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
-  i=0
+  i=0; capped=""
   while [ ! -f "$JD/$name.done" ] && [ $i -lt $MAX_RESUMES ]; do
     # A usage/session limit is a wait, not a failure (2026-10-03: all 8 resumes burned in 3 min on
     # "You've hit your session limit", then GAVE UP for 7 h). When the last claude output is a
     # limit message, sleep 20 min and retry WITHOUT spending a resume, for up to 18 waits (6 h).
-    if grep -v '^\[claude-job\]' "$log" | tail -n 2 | grep -qiE "hit your (session|usage|weekly) limit|usage limit reached|rate limit"; then
+    # A WEEKLY cap resets in days, not inside the 6 h wait (#6360 fix 2: 15 jobs gave up on a limit in a
+    # week, 10 of them on the weekly or monthly cap). Stop now; the GAVE UP path checkpoints and says
+    # how to restart it on a box whose account has headroom.
+    if grep -v '^\[claude-job\]' "$log" | tail -n 2 | grep -qiE "hit your (weekly|monthly) limit"; then
+      echo "[claude-job] weekly cap: not waiting $(date -u +%FT%TZ)" >> "$log"; capped=weekly; break
+    fi
+    if grep -v '^\[claude-job\]' "$log" | tail -n 2 | grep -qiE "hit your (session|usage) limit|usage limit reached|rate limit"; then
       w=$((${w:-0}+1))
       if [ $w -gt 18 ]; then echo "[claude-job] limit wait exhausted (6 h) $(date -u +%FT%TZ)" >> "$log"; break; fi
       [ $w -eq 1 ] && ntfy_job low hourglass "Job waiting on usage limit: $name ($HOST)" "Retries every 20 min for up to 6 h without spending a resume."
@@ -292,8 +346,10 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
       *) ntfy_job low mag "Job done, report not found: $name ($HOST)" "${land#REPORT:}" ;;
     esac
   else
-    echo "[claude-job] GAVE UP after $MAX_RESUMES resumes $(date -u +%FT%TZ)" >> "$log"
-    ntfy_job high warning "Job GAVE UP: $name ($HOST)" "$(grep -vE '^\[claude-job\]|^\s*$' "$log" | tail -n 1 | cut -c1-200)"
+    echo "[claude-job] GAVE UP${capped:+ on the $capped cap} after $i resumes $(date -u +%FT%TZ)" >> "$log"
+    cp=$(checkpoint "$name" "${capped:+$capped cap}${capped:-gave up}")
+    move=""; [ -n "${capped:-}" ] && move=" Move it: on the laptop, scripts/workers/job-where.sh, then start it there from the brief; branch ${cp:-job-$name} holds the work."
+    ntfy_job high warning "Job GAVE UP${capped:+ (weekly cap)}: $name ($HOST)" "$(grep -vE '^\[claude-job\]|^\s*$' "$log" | tail -n 1 | cut -c1-160)${cp:+ — work checkpointed to $cp.}$move"
   fi
   collect_decisions "$name"
   rm -f "$JD/$name.hb"
@@ -306,8 +362,11 @@ collect_decisions() {
   grep -oE 'DECISION: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
     grep -qF "$name | $l" "$JD/decisions.txt" 2>/dev/null || echo "$(date -u +%F) | $name | $l" >> "$JD/decisions.txt"
   done
-  n=$(grep -c " | $name | DECISION" "$JD/decisions.txt" 2>/dev/null || true)
-  [ "${n:-0}" -gt 0 ] && ntfy_job high question "Job $name: $n decision(s) for Derek" "$(grep " | $name | " "$JD/decisions.txt" | cut -d'|' -f3- | head -3 | cut -c1-300)"
+  # Decisions reach Derek through the morning digest, which reads decisions.txt, never one page each
+  # (#6360 fix 3). TAKEN lines are the record of what a job decided alone, for the weekly measure.
+  grep -oE 'TAKEN: .*' "$log" 2>/dev/null | sed 's/\\n.*//; s/[`"]*$//' | sort -u | while read -r l; do
+    grep -qF "$name | $l" "$JD/taken.txt" 2>/dev/null || echo "$(date -u +%F) | $name | $l" >> "$JD/taken.txt"
+  done
   return 0
 }
 
@@ -338,6 +397,11 @@ case "${1:-status}" in
       echo "REFUSED: root disk has ${free}G free (< ${MIN_ROOT_FREE_GB}G). Free space first (disk-steward.sh), or JOB_IGNORE_DISK=1."
       ntfy_job high warning "Job refused, root disk ${free}G free: $name ($HOST)" "Run disk-steward.sh or move /root folders to the volume (#6223)."
       exit 5
+    fi
+    wk=$(weekly_pct)
+    if [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && [ -z "${JOB_IGNORE_LIMIT:-}" ]; then
+      echo "REFUSED: this box's Claude account is at ${wk}% of its weekly limit (>= ${MAX_WEEKLY_PCT}%). Place it elsewhere (scripts/workers/job-where.sh), or JOB_IGNORE_LIMIT=1."
+      exit 6
     fi
     d="$(wt_dir "$name")"
     if [ ! -d "$d" ]; then
@@ -379,13 +443,15 @@ case "${1:-status}" in
       k=$(grep -c '\[claude-job\] sweep-resume' "$LOGD/$n.log" 2>/dev/null || true)
       if [ "${k:-0}" -ge 2 ]; then
         echo "[claude-job] sweep gave up after 2 resumes $(date -u +%FT%TZ)" >> "$LOGD/$n.log"; rm -f "$hb"
-        ntfy_job high warning "Job DIED twice, not resumed: $n" "Check dmesg/df on the box; \`claude-job.sh resume $n\` by hand."; continue; fi
+        cp=$(checkpoint "$n" "died twice")
+        ntfy_job high warning "Job DIED twice, not resumed: $n" "Check dmesg/df on the box; \`claude-job.sh resume $n\` by hand.${cp:+ Work checkpointed to $cp.}"; continue; fi
       echo "[claude-job] sweep-resume $((k+1))/2: no tmux, no done file, heartbeat $(( ($(date +%s)-$(cat "$hb"))/60 ))m old $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
       dmesg -T 2>/dev/null | grep -i 'killed process' | tail -1 >> "$LOGD/$n.log"
       tmux new -d -s "job-$n" "$0 _run_resume $n"
     done ;;
   log) tail -"${3:-40}" "$LOGD/$2.log" ;;
-  stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2" ;;
+  stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2"
+    cp=$(checkpoint "$2" stopped); [ -n "$cp" ] && echo "work checkpointed to $cp" ;;
   _reap) reap_if_clean "$2"; tail -1 "$LOGD/$2.log" ;;  # test/one-off: apply the reap rule to one job
   _land) landing_check "$2" ;;  # test/one-off: would this job count as landed?
   backtest)  # every finished job on this box: the verdict as logged (what Derek was paged) vs the check run again NOW
@@ -412,5 +478,6 @@ case "${1:-status}" in
     [ -s /root/sourcelibrary/.env.production.local ] || why="$why,no-env-file"
     [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
     ready=yes; [ -n "$why" ] && ready="no:${why#,}"
-    echo "host=$HOST cores=$cores load1=$load mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live ready=$ready" ;;
+    wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
+    echo "host=$HOST cores=$cores load1=$load mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;
 esac
