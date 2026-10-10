@@ -598,10 +598,10 @@ const COPIES: Copy[] = [
   { id: 'book-i18n.ts LANGUAGE_NAMES_ES (keys)', step: 'step 2 (#5332)', drift: () => unknownTokens(Object.keys(lit('src/lib/book-i18n.ts', 'LANGUAGE_NAMES_ES'))) },
   { id: 'page-translations.ts TARGET_LANGUAGE_NAMES (locales)', step: 'step 2 (#5332)', drift: () => Object.keys(TARGET_LANGUAGE_NAMES).filter((l) => !fromLocale(l)) },
   { id: 'embassy/librarian.ts LANG_NAMES (locales)', step: 'step 2 (#5332)', drift: () => Object.keys(lit('src/lib/embassy/librarian.ts', 'LANG_NAMES')).filter((l) => !fromLocale(l)) },
-  { id: 'prompts.ts LANGUAGE_*_PROMPT_NAMES (keys)', step: 'step 2 (#5332)', drift: () => unknownTokens([
-    ...Object.keys(lit('src/lib/prompts.ts', 'LANGUAGE_OCR_PROMPT_NAMES')),
-    ...Object.keys(lit('src/lib/prompts.ts', 'LANGUAGE_TRANSLATION_PROMPT_NAMES')),
-  ]) },
+  // LANGUAGE_TRANSLATION_PROMPT_NAMES was removed in #6122 (no per-language translation prompt fork).
+  { id: 'prompts.ts LANGUAGE_OCR_PROMPT_NAMES (keys)', step: 'step 2 (#5332)', drift: () => unknownTokens(
+    Object.keys(lit('src/lib/prompts.ts', 'LANGUAGE_OCR_PROMPT_NAMES')),
+  ) },
   { id: 'processing-priority.ts LANGUAGE_SCORES (keys)', step: 'step 2 (#5332)', drift: () => unknownTokens(Object.keys(lit('src/lib/processing-priority.ts', 'LANGUAGE_SCORES'))) },
   { id: 'semantic-alignment.ts LANGUAGE_THRESHOLDS (keys)', step: 'step 2 (#5332)', drift: () => unknownTokens(Object.keys(lit('src/lib/semantic-alignment.ts', 'LANGUAGE_THRESHOLDS'))) },
   { id: 'transcription-reliability.ts UNREADABLE_LANGUAGES', step: 'step 2 (#5332)', drift: () => unknownTokens(tokens(lit('src/lib/transcription-reliability.ts', 'UNREADABLE_LANGUAGES'))) },

@@ -6,6 +6,7 @@ import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
+import { ocrTrustGate } from '../../../../../../../scripts/lib/ocr-trust-gate.mjs';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
@@ -60,6 +61,7 @@ export const POST = withAuth(async (request, session, context) => {
       force = false, // When true, include pages that already have translation (for re-processing)
       staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
       resubmit = false, // When true, bypass the pending-job double-submit guard
+      allowUntrustedOcr = false, // Operator override of the #5700 OCR trust gate (e.g. a book just re-read); never a default
     } = body;
 
     const db = await getDb();
@@ -77,6 +79,17 @@ export const POST = withAuth(async (request, session, context) => {
     // Translation routing, not OCR routing and not a hardcoded flash (#6122): a caller
     // that omits `model` gets what every pipeline lane would pick for this book.
     const model: string = requestedModel || getTranslateModelForBook(book as RoutableBook);
+
+    // #5700: a book in a stratum whose OCR was measured untrusted is not translated until it
+    // has been re-read — the same gate as /api/jobs/queue-books. This route is a translation
+    // enrol path too (#6122), and it used to be the unguarded one.
+    const trust = await ocrTrustGate(db, book, { lane: 'batch-translate-async', allow: allowUntrustedOcr === true });
+    if (!trust.ok) {
+      return NextResponse.json(
+        { error: `Translation refused: this book's transcription is not trusted yet (${trust.reason}). Re-OCR it first, or pass allowUntrustedOcr: true.` },
+        { status: 409 }
+      );
+    }
 
     // Double-submit guard (#3749, archaeology I68): a pending translation
     // batch for this book means submitting again pays Gemini twice for the
