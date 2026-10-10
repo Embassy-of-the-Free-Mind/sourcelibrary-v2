@@ -8,8 +8,15 @@ Each job either fixes its issue end to end (PR with `Closes #n`) or comments why
 can't and labels it `spare-skip`. Nothing it does adds to Derek's decision queue:
 hold-list work is skipped, not asked about.
 
-Cron, main box, every 30 min:
-  */30 * * * * /usr/bin/python3 /root/sourcelibrary/scripts/workers/spare-lane.py >> /var/log/sourcelibrary/spare-lane.log 2>&1
+Runs on every job box, each spending the account that box is logged in as
+(main: team@sourcelibrary; cloudlayer: derek@playpowerlabs; l7a: derek@sourcelibrary).
+Only main polls usage (climits, every 5 min). Main can't reach the guest boxes and they
+can't reach it, so each run on main publishes its poll to Mongo (ops_reports
+`claude-limits:latest`, scripts/workers/claude-limits-share.mjs) and the guests read it.
+
+Cron, every 30 min (guests offset by 15 min so they read a poll main just published):
+  main        */30 * * * *      ... spare-lane.py >> /var/log/sourcelibrary/spare-lane.log 2>&1
+  guests      15,45 * * * *     ... spare-lane.py >> /data/scratch/sl/logs/spare-lane.log 2>&1
 
   spare-lane.py            decide, and start or stop jobs
   spare-lane.py --dry-run  print the decision, change nothing
@@ -19,7 +26,8 @@ Gates, all from the box's own climits poll (/root/.claude-limits/latest.json):
   start (last 48 h)     weekly < 90%, session < 70%   — use it or lose it
   stop running jobs     weekly >= 92% or session >= 85%, so the account is never run dry
                         for interactive use or pushed into extra usage
-  box                   load1 < cores, at most MAX_JOBS lane jobs, poll data < 15 min old
+  box                   load1 < cores, at most MAX_JOBS lane jobs (1 on the shared guest boxes),
+                        poll data < 15 min old on main, < 45 min old from Mongo on a guest
 """
 from __future__ import annotations
 
@@ -30,14 +38,17 @@ import subprocess
 import sys
 import tempfile
 
-LATEST = "/root/.claude-limits/latest.json"
+LATEST = "/root/.claude-limits/latest.json"  # main only: the box's own climits poll
+SL = os.environ.get("SPARE_LANE_SL", "/root/sourcelibrary")  # a symlink to /data/scratch/sl/sourcelibrary on the guest boxes
+SHARE = [ "node", "--env-file=.env.production.local", "scripts/workers/claude-limits-share.mjs"]
+GUEST = os.path.isdir("/data/scratch/sl/sourcelibrary")
 STATE = "/root/claude-jobs/spare-lane-state.json"  # issues already tried: never retried
 JOB = "/root/bin/claude-job.sh"
 REPO = "Embassy-of-the-Free-Mind/sourcelibrary-v2"
 
-MAX_JOBS = 2
+MAX_JOBS = 1 if GUEST else 2  # guests share the box with a live public service
 LABEL_ORDER = ("bug", "user-feedback", "data-quality")
-SKIP_LABELS = {"epic", "spare-skip", "blocked", "hold", "tier:hold"}
+SKIP_LABELS = {"epic", "spare-skip", "spare-lane", "blocked", "hold", "tier:hold"}
 WEEK_S = 7 * 86400
 LAST_STRETCH_S = 2 * 86400
 
@@ -65,14 +76,40 @@ def lane_jobs() -> list[str]:
     return [s[len("job-"):] for s in out.split() if s.startswith("job-spare-")]
 
 
-def account_limits() -> tuple[str, dict] | None:
+def read_fresh_local() -> dict | None:
     try:
         latest = json.load(open(LATEST))
     except (OSError, ValueError):
         return None
     if (NOW - parse_iso(latest["checked_at"])).total_seconds() > 15 * 60:
         return None
-    email = latest.get("claude_code_account")
+    return latest
+
+
+def this_box_account() -> str | None:
+    """The account Claude Code (and so every claude-job) on this box runs as."""
+    try:
+        return ((json.load(open("/root/.claude.json")).get("oauthAccount") or {}).get("emailAddress") or "").lower() or None
+    except (OSError, ValueError):
+        return None
+
+
+def account_limits() -> tuple[str, dict] | None:
+    latest = read_fresh_local()
+    if latest is not None and not DRY:
+        # Main: publish the poll for the guest boxes. A failure here only starves the guests.
+        r = subprocess.run(SHARE + ["push", LATEST], cwd=SL, capture_output=True, text=True, timeout=90)
+        if r.returncode:
+            log(f"warn: could not publish limits for the guest boxes: {(r.stderr or r.stdout).strip()[-200:]}")
+    if latest is None:
+        r = subprocess.run(SHARE + ["pull"], cwd=SL, capture_output=True, text=True, timeout=90)
+        try:
+            latest = json.loads(r.stdout)
+        except ValueError:
+            return None
+        if (NOW - parse_iso(latest["checked_at"])).total_seconds() > 45 * 60:
+            return None
+    email = this_box_account() or latest.get("claude_code_account")
     acct = next((a for a in latest["accounts"] if a["email"] == email and a.get("ok")), None)
     if not acct:
         return None
@@ -149,7 +186,7 @@ https://github.com/{repo}/issues/{n}
 def main():
     got = account_limits()
     if not got:
-        log("idle: no fresh climits data for this box's account")
+        log(f"idle: no fresh limits for this box's account ({this_box_account()})")
         return
     email, limits = got
     action, why = decide(limits)
@@ -190,6 +227,8 @@ def main():
         return
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as fh:
         fh.write(BRIEF.format(n=n, title=issue["title"], repo=REPO))
+    # The label is the cross-box claim: three boxes run this lane, each with its own state file.
+    sh("gh", "issue", "edit", str(n), "-R", REPO, "--add-label", "spare-lane")
     state["tried"][str(n)] = NOW.isoformat()
     tmp = STATE + ".tmp"
     json.dump(state, open(tmp, "w"), indent=1)
