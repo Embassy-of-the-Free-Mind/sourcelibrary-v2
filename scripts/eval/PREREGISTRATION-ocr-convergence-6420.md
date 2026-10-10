@@ -75,3 +75,11 @@ any page an auditor found worse.
 Per group and pooled: pages compared, agree / keep / write / defer / contain / residual / no-second-read, with
 Wilson 95% CIs for the write and contain rates by page; the CER distribution; the audit result. Experiment file in
 `scripts/eval/experiments/`, comment on #6420.
+
+## Calibration result (2026-10-10, appended before the gate's adjudication)
+59 of 60 calibration pages compared (1 CLI reply refused twice on a Zohar page: `no-second-read`); 18 first reads had
+used the whole spread on split pages and were re-read from the page's own image (cli-ocr.mjs fix, same commit range).
+All 59 adjudicated by Opus. Pages needing action by CER band: CER < 0.01: 3 of 5; 0.01–0.03: 7 of 14; 0.03–0.10:
+9 of 13; ≥ 0.10: 20 of 27. No candidate meets the rule (no band below any T has ≤ 1 page and ≤ 5% needing action), so by the rule
+**T = 0.01**: in effect every disagreement goes to Opus. Two near-identical reads (CER 0.003, 0.006, Suidas) were
+judged to share a serious misreading: the two families' errors are correlated, so low CER is not acceptance here.
