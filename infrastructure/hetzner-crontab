@@ -195,3 +195,5 @@
 
 # Edge crawl detector (#6398 follow-up): who read more /book pages in the last hour than a person could, from Cloudflare (sees clients our own analytics cannot). Pushes ntfy on change. Needs CLOUDFLARE_API_TOKEN_READ in .env.production.local.
 7 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
+# Crawl-protection canary (weekly, Mon 06:13): 70 book loads must hit the Cloudflare rate-limit challenge, and the edge detector must see traffic. ntfy only on failure. See .claude/docs/crawl-register.md.
+13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
