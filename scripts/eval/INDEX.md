@@ -58,6 +58,7 @@ Read these for the house conventions before designing a new study.
 - `PREREGISTRATION-latin-cli-pilot-6375.md`
 - `PREREGISTRATION-latin-period-5126.md`
 - `PREREGISTRATION-mineru-english-5182.md`
+- `PREREGISTRATION-ocr-convergence-6420.md`
 - `PREREGISTRATION-ocr-pareto-6293.md`
 - `PREREGISTRATION-ocr-tags-5830.md`
 - `PREREGISTRATION-ocr-v18-blank-insert.md`

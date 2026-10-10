@@ -468,6 +468,36 @@ page numbers in that book).
 
 Artifacts: `scripts/eval/ocr-prereg-6388/` (README, draw, sample, reads/*.jsonl.gz, results, adjudication).
 
+## 2026-10-10 · Can a Gemini CLI second read, adjudicated by Opus against the image, safely repair the OCR of the most-read non-English books?
+
+**Design.** Preregistered (`scripts/eval/PREREGISTRATION-ocr-convergence-6420.md`). Frame: visible books with OCR in
+six language groups, ranked by distinct (ip, day) page views in `analytics_pageviews` over 60 days (9,839 books).
+Calibration: 20 books × 3 pages; gate: the top 30 books (Latin 15, Greek 5, German 4, Chinese 3, Arabic 2, Hebrew 1) ×
+10 pages, the pages readers opened most. Second read `gemini-3.7-flash-low` through `scripts/batch/cli-ocr.mjs read`
+(plan mode, #6331 nudge, one re-read on a chatter-guard failure). Opus (subscription, sealed `claude -p`, brief
+`scripts/batch/ocr-convergence/ADJUDICATOR.md`) read the image against both texts, blind to which is served. Gate: a
+fresh Opus and Gemini 3.8 Flash (high) read 40 staged writes blind (`AUDITOR.md`, X/Y order drawn); go only if neither
+finds more than 2 of 40 made worse.
+
+**Result.**
+- Calibration set T = 0.01 by the rule (no CER band had ≤ 1 page needing action). In the gate, 12 of 30 pages with
+  CER < 0.01 still needed action (rule: > 3 lowers T; there is no lower candidate), so a main run would adjudicate every page.
+- Gate, 300 pages / 30 books: 8 no second read (CLI failed twice; 6 on one Hebrew book), 4 adjudication pending (3 verdicts
+  dropped because the transcript shows the image was not opened), 23 agree, 93 keep, **51 write staged**, 108 residual
+  (merge or medium confidence), **13 contained**. Stored read serious (Opus): 121/283 = 43% [37, 49].
+- Gate audit, 40 staged writes: Opus better 36, same 4, worse 0; Gemini 3.8 better 34, same 3, **worse 3** → **STOP**.
+  Of Gemini's three: the Chinese page (illustrated Tang tales p.160) is an auditor error — the leaf reads
+  妍媸面哭…, as the CLI read has it, and the stored text (尚質聯詩) is another leaf; the other two (a Theophrastus book
+  number, *si/ni solum*) are direct Opus/Gemini disagreements about the image.
+- Found on the way: `cli-ocr.mjs read` sent `archived_photo`, the whole spread on split pages (18 of 60 calibration reads);
+  fixed to `getPageSource()`. Two books serve another leaf's text under the image: `illustrated-tang-dynasty-supernatural-tales`
+  (10 of 10 pages read) and `erster-zehender-theil-der-bucher…` (pp. 1770/1963/1964, shifted +3) — contained.
+
+**Replicated?** No. Each verdict is one Opus read; the audit shows the two families disagree on what some images say.
+
+**Artifacts.** `scripts/batch/ocr-convergence/results/run/` (frame, decisions, adjudications, audit, the next-1,000 queue);
+`book_checks` rows method `ocr-convergence` v1, run ids `convergent-ocr-6420-{gate,calib}-run`.
+
 ## 2026-10-09 · Can Gemini through the CLI do the shelf reviewer's job? A 16-page feasibility pilot (#6338): it runs, one page per call
 
 PRIOR ART: the shelf-overview reviewer (`.claude/skills/shelf-overview/SKILL.md`, `scripts/eval/spot-check/REVIEWER.md`
