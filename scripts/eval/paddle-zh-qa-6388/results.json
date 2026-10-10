@@ -1,0 +1,3530 @@
+{
+ "issue": 6388,
+ "computed_at": "2026-10-10T19:05:40.061Z",
+ "n": 60,
+ "pages": [
+  {
+   "uid": "all|6a3c742601fe4f593c1eea82|79",
+   "stratum": "all",
+   "book_id": "6a3c742601fe4f593c1eea82",
+   "title": "稗編·卷七十九~卷八十 (vol 43)",
+   "page_id": "6a3c742601fe4f593c1eeb61",
+   "q": "q026",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 12,
+   "final_han": 130,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1429
+  },
+  {
+   "uid": "all|6a3c787801fe4f593c208732|153",
+   "stratum": "all",
+   "book_id": "6a3c787801fe4f593c208732",
+   "title": "書畫彙考·卷六 (vol 6)",
+   "page_id": "6a3c787801fe4f593c2087cb",
+   "q": "q013",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 152,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0
+  },
+  {
+   "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+   "stratum": "all",
+   "book_id": "6a3cb6a957c1f37219c4bb86",
+   "title": "尚書說·卷五~卷六 (vol 7)",
+   "page_id": "6a3cb6a957c1f37219c4bbe6",
+   "q": "q037",
+   "R1": "clean",
+   "R2": "material",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 227,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0248
+  },
+  {
+   "uid": "all|6a3cee024701a906f10e55d0|80",
+   "stratum": "all",
+   "book_id": "6a3cee024701a906f10e55d0",
+   "title": "御定淵鑑類函·卷一百三十三 (vol 76)",
+   "page_id": "6a3cee024701a906f10e5620",
+   "q": "q042",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "clean",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 176,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0536
+  },
+  {
+   "uid": "all|6a3c721a01fe4f593c1dc2a3|58",
+   "stratum": "all",
+   "book_id": "6a3c721a01fe4f593c1dc2a3",
+   "title": "周官新義·卷六~卷八 (vol 3)",
+   "page_id": "6a3c721b01fe4f593c1dc2dd",
+   "q": "q033",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 150,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0065
+  },
+  {
+   "uid": "all|6a3ceead4701a906f10eb8aa|131",
+   "stratum": "all",
+   "book_id": "6a3ceead4701a906f10eb8aa",
+   "title": "御定淵鑑類函·卷四百二十三~卷四百二十四 (vol 231)",
+   "page_id": "6a3ceead4701a906f10eb92d",
+   "q": "q056",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 300,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0278
+  },
+  {
+   "uid": "all|6a3c723701fe4f593c1dd409|152",
+   "stratum": "all",
+   "book_id": "6a3c723701fe4f593c1dd409",
+   "title": "周禮纂訓·卷七~卷八 (vol 4)",
+   "page_id": "6a3c723701fe4f593c1dd4a1",
+   "q": "q062",
+   "R1": "material",
+   "R2": "material",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 6,
+   "final_han": 92,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0729
+  },
+  {
+   "uid": "all|6a3c66bcaf3c49b59c5cd02c|82",
+   "stratum": "all",
+   "book_id": "6a3c66bcaf3c49b59c5cd02c",
+   "title": "歷算全書·卷六 (vol 3)",
+   "page_id": "6a3c66bcaf3c49b59c5cd07e",
+   "q": "q007",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 176,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0298
+  },
+  {
+   "uid": "all|6a3c66abaf3c49b59c5cc4de|125",
+   "stratum": "all",
+   "book_id": "6a3c66abaf3c49b59c5cc4de",
+   "title": "肘後備急方·卷七~卷八 (vol 5)",
+   "page_id": "6a3c66abaf3c49b59c5cc55b",
+   "q": "q034",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 111,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0536
+  },
+  {
+   "uid": "all|6a3c797701fe4f593c20fbc2|97",
+   "stratum": "all",
+   "book_id": "6a3c797701fe4f593c20fbc2",
+   "title": "北堂書鈔·卷一百十一~卷一百十八 (vol 16)",
+   "page_id": "6a3c797701fe4f593c20fca9",
+   "q": "q071",
+   "R1": "clean",
+   "R2": "material",
+   "R3": null,
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 3,
+   "final_han": 320,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0233
+  },
+  {
+   "uid": "all|6a3c6738af3c49b59c5d165d|49",
+   "stratum": "all",
+   "book_id": "6a3c6738af3c49b59c5d165d",
+   "title": "性理大全書·卷八 (vol 5)",
+   "page_id": "6a3c6738af3c49b59c5d168e",
+   "q": "q053",
+   "R1": "material",
+   "R2": "material",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 26,
+   "final_han": 95,
+   "invented": [
+    "西"
+   ],
+   "invented_chars": 1,
+   "order_errors": 4,
+   "kanripo": 0.2843
+  },
+  {
+   "uid": "all|6a3c64d539b4508b04e2a71d|36",
+   "stratum": "all",
+   "book_id": "6a3c64d539b4508b04e2a71d",
+   "title": "御定佩文韻府·卷五十五之五 (vol 649)",
+   "page_id": "6a3c64d539b4508b04e2a741",
+   "q": "q011",
+   "R1": "clean",
+   "R2": "material",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 470,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0488
+  },
+  {
+   "uid": "all|6a3cbfe2f9474f825c16c0ca|44",
+   "stratum": "all",
+   "book_id": "6a3cbfe2f9474f825c16c0ca",
+   "title": "六藝之一錄·卷三百五十六~卷三百五十七 (vol 155)",
+   "page_id": "6a3cbfe2f9474f825c16c0f6",
+   "q": "q044",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 104,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0686
+  },
+  {
+   "uid": "all|6a3c6a3daf3c49b59c5e4fa1|108",
+   "stratum": "all",
+   "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+   "title": "三易洞璣·卷三~卷四 (vol 2)",
+   "page_id": "6a3c6a3daf3c49b59c5e500d",
+   "q": "q027",
+   "R1": "minor",
+   "R2": "unusable",
+   "R3": "minor",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 320,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0277
+  },
+  {
+   "uid": "all|6a3c63d5af3c49b59c5c8e88|89",
+   "stratum": "all",
+   "book_id": "6a3c63d5af3c49b59c5c8e88",
+   "title": "御定佩文韻府·卷二十二之一 (vol 390)",
+   "page_id": "6a3c63d5af3c49b59c5c8ee1",
+   "q": "q057",
+   "R1": "clean",
+   "R2": "material",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 360,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0437
+  },
+  {
+   "uid": "all|6a3cbfedf9474f825c16c745|83",
+   "stratum": "all",
+   "book_id": "6a3cbfedf9474f825c16c745",
+   "title": "六藝之一錄·卷三百八十~卷三百八十一 (vol 167)",
+   "page_id": "6a3cbfedf9474f825c16c798",
+   "q": "q074",
+   "R1": "material",
+   "R2": "material",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 4,
+   "final_han": 94,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1058
+  },
+  {
+   "uid": "all|6a3c67a939b4508b04e37db1|136",
+   "stratum": "all",
+   "book_id": "6a3c67a939b4508b04e37db1",
+   "title": "御定孝經衍義·卷八十六~卷八十七 (vol 57)",
+   "page_id": "6a3c67a939b4508b04e37e39",
+   "q": "q043",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 143,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.029
+  },
+  {
+   "uid": "all|6a3cbdc0ec254ff6cadf9fe2|89",
+   "stratum": "all",
+   "book_id": "6a3cbdc0ec254ff6cadf9fe2",
+   "title": "證治準繩·卷二十九 (vol 27)",
+   "page_id": "6a3cbdc0ec254ff6cadfa03b",
+   "q": "q031",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 1,
+   "final_han": 135,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0292
+  },
+  {
+   "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+   "stratum": "all",
+   "book_id": "6a3ce7d30a0011cb4bc0b2dd",
+   "title": "詩經集傳·卷七~卷八 (vol 13)",
+   "page_id": "6a3ce7d30a0011cb4bc0b32a",
+   "q": "q059",
+   "R1": "clean",
+   "R2": "material",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 232,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0343
+  },
+  {
+   "uid": "all|6a3cbdebec254ff6cadfb7c5|94",
+   "stratum": "all",
+   "book_id": "6a3cbdebec254ff6cadfb7c5",
+   "title": "證治準繩·卷八十 (vol 68)",
+   "page_id": "6a3cbdebec254ff6cadfb823",
+   "q": "q006",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 121,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.024
+  },
+  {
+   "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+   "stratum": "all",
+   "book_id": "6a3c6bf939b4508b04e46f2a",
+   "title": "周易會通·卷七 (vol 22)",
+   "page_id": "6a3c6bf939b4508b04e46f72",
+   "q": "q049",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 455,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0578
+  },
+  {
+   "uid": "all|6a3c6302879008ba7e164f85|84",
+   "stratum": "all",
+   "book_id": "6a3c6302879008ba7e164f85",
+   "title": "御定佩文韻府·卷四十七之四~卷四十八 (vol 184)",
+   "page_id": "6a3c6302879008ba7e164fd9",
+   "q": "q072",
+   "R1": "material",
+   "R2": "material",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 14,
+   "final_han": 380,
+   "invented": [
+    "趙於",
+    "趙"
+   ],
+   "invented_chars": 3,
+   "order_errors": 0,
+   "kanripo": 0.1123
+  },
+  {
+   "uid": "all|6a3c625040c88a541d8f3586|62",
+   "stratum": "all",
+   "book_id": "6a3c625040c88a541d8f3586",
+   "title": "御定佩文韻府·卷二之一~卷二之二 (vol 5)",
+   "page_id": "6a3c625040c88a541d8f35c4",
+   "q": "q065",
+   "R1": "minor",
+   "R2": "material",
+   "R3": null,
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 380,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0935
+  },
+  {
+   "uid": "all|6a3cea99c895e71c6023c0ce|36",
+   "stratum": "all",
+   "book_id": "6a3cea99c895e71c6023c0ce",
+   "title": "日講春秋解義·卷五十六~卷五十七 (vol 45)",
+   "page_id": "6a3cea99c895e71c6023c0f2",
+   "q": "q058",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 2,
+   "final_han": 250,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0119
+  },
+  {
+   "uid": "all|6a3c7a0239b4508b04e62189|62",
+   "stratum": "all",
+   "book_id": "6a3c7a0239b4508b04e62189",
+   "title": "御定分類字錦·卷五十三 (vol 51)",
+   "page_id": "6a3c7a0239b4508b04e621c8",
+   "q": "q068",
+   "R1": "clean",
+   "R2": "material",
+   "R3": null,
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 175,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0339
+  },
+  {
+   "uid": "all|6a3c5fb2879008ba7e156f22|111",
+   "stratum": "all",
+   "book_id": "6a3c5fb2879008ba7e156f22",
+   "title": "圖書編·卷九十二~卷九十三 (vol 75)",
+   "page_id": "6a3c5fb2879008ba7e156f91",
+   "q": "q047",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 167,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0351
+  },
+  {
+   "uid": "all|6a3ced054701a906f10dcd97|90",
+   "stratum": "all",
+   "book_id": "6a3ced054701a906f10dcd97",
+   "title": "玉海·卷一百九十八~卷一百九十九 (vol 112)",
+   "page_id": "6a3ced054701a906f10dcdf1",
+   "q": "q024",
+   "R1": "clean",
+   "R2": null,
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": null,
+   "final_from": "R1=R2",
+   "final_error_chars": null,
+   "final_han": null,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0351
+  },
+  {
+   "uid": "all|6a3cb88c3dce6cfad748e4ac|42",
+   "stratum": "all",
+   "book_id": "6a3cb88c3dce6cfad748e4ac",
+   "title": "禮記訓義擇言·卷七~卷八 (vol 3)",
+   "page_id": "6a3cb88c3dce6cfad748e552",
+   "q": "q051",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 162,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0
+  },
+  {
+   "uid": "all|6a3c740201fe4f593c1ed60b|159",
+   "stratum": "all",
+   "book_id": "6a3c740201fe4f593c1ed60b",
+   "title": "稗編·卷十七~卷十八 (vol 11)",
+   "page_id": "6a3c740201fe4f593c1ed6aa",
+   "q": "q066",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 2,
+   "final_han": 176,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.012
+  },
+  {
+   "uid": "all|6a3c6181879008ba7e15eb10|39",
+   "stratum": "all",
+   "book_id": "6a3c6181879008ba7e15eb10",
+   "title": "御定駢字類編·卷二百三十八: Imperial Parallel Characters (vol 410)",
+   "page_id": "6a3c6181879008ba7e15eb37",
+   "q": "q039",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 10,
+   "final_han": 300,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.134
+  },
+  {
+   "uid": "all|6a3c6b6739b4508b04e43b2a|44",
+   "stratum": "all",
+   "book_id": "6a3c6b6739b4508b04e43b2a",
+   "title": "古今攷·卷十六~卷十八 (vol 7)",
+   "page_id": "6a3c6b6739b4508b04e43b57",
+   "q": "q032",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 176,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0357
+  },
+  {
+   "uid": "all|6a3cb6013dce6cfad74847e0|104",
+   "stratum": "all",
+   "book_id": "6a3cb6013dce6cfad74847e0",
+   "title": "大易擇言·卷十二~卷十三 (vol 7)",
+   "page_id": "6a3cb6013dce6cfad7484848",
+   "q": "q073",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 150,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.007
+  },
+  {
+   "uid": "all|6a3c60aa40c88a541d8e97c5|23",
+   "stratum": "all",
+   "book_id": "6a3c60aa40c88a541d8e97c5",
+   "title": "御定駢字類編·卷十一: Imperial Parallel Characters (vol 194)",
+   "page_id": "6a3c60aa40c88a541d8e97dc",
+   "q": "q020",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 19,
+   "final_han": 265,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 1,
+   "kanripo": 0.1706
+  },
+  {
+   "uid": "all|6a3c640f39b4508b04e23ec9|56",
+   "stratum": "all",
+   "book_id": "6a3c640f39b4508b04e23ec9",
+   "title": "御定佩文韻府·卷三十二之二~卷三十三 (vol 446)",
+   "page_id": "6a3c640f39b4508b04e23f01",
+   "q": "q025",
+   "R1": "clean",
+   "R2": "material",
+   "R3": "minor",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 3,
+   "final_han": 420,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1068
+  },
+  {
+   "uid": "all|6a3cec2f8642f0445b15a44b|287",
+   "stratum": "all",
+   "book_id": "6a3cec2f8642f0445b15a44b",
+   "title": "御定佩文齋廣羣芳譜·卷一 (vol 1)",
+   "page_id": "6a3cec2f8642f0445b15a56a",
+   "q": "q003",
+   "R1": "clean",
+   "R2": "material",
+   "R3": "material",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 176,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0482
+  },
+  {
+   "uid": "all|6a3cec6b8642f0445b15c5b3|113",
+   "stratum": "all",
+   "book_id": "6a3cec6b8642f0445b15c5b3",
+   "title": "職官分紀·卷八 (vol 6)",
+   "page_id": "6a3cec6b8642f0445b15c624",
+   "q": "q035",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "material",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 276,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0301
+  },
+  {
+   "uid": "all|6a3cc25bec254ff6cae105e8|140",
+   "stratum": "all",
+   "book_id": "6a3cc25bec254ff6cae105e8",
+   "title": "書經集傳·卷五~卷六 (vol 9)",
+   "page_id": "6a3cc25bec254ff6cae10733",
+   "q": "q015",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 1,
+   "final_han": 237,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.018
+  },
+  {
+   "uid": "all|6a3cc158ec254ff6cae0b749|93",
+   "stratum": "all",
+   "book_id": "6a3cc158ec254ff6cae0b749",
+   "title": "鶴林玉露·卷五~卷八 (vol 2)",
+   "page_id": "6a3cc158ec254ff6cae0b83b",
+   "q": "q075",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": null,
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 142,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.014
+  },
+  {
+   "uid": "all|6a3c77fb01fe4f593c206225|59",
+   "stratum": "all",
+   "book_id": "6a3c77fb01fe4f593c206225",
+   "title": "玉照新志·卷四~卷六 (vol 2)",
+   "page_id": "6a3c77fb01fe4f593c2062dc",
+   "q": "q028",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "material",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 177,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0059
+  },
+  {
+   "uid": "all|6a3c64a339b4508b04e28b59|102",
+   "stratum": "all",
+   "book_id": "6a3c64a339b4508b04e28b59",
+   "title": "御定佩文韻府·卷八十之一 (vol 595)",
+   "page_id": "6a3c64a339b4508b04e28bbf",
+   "q": "q030",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 2,
+   "final_han": 300,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1598
+  },
+  {
+   "uid": "all|6a3c6bbd39b4508b04e45a93|95",
+   "stratum": "all",
+   "book_id": "6a3c6bbd39b4508b04e45a93",
+   "title": "唐開元占經·卷四十七~卷五十一 (vol 12)",
+   "page_id": "6a3c6bbd39b4508b04e45af2",
+   "q": "q036",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 150,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0424
+  },
+  {
+   "uid": "all|6a3c715639b4508b04e53d5e|112",
+   "stratum": "all",
+   "book_id": "6a3c715639b4508b04e53d5e",
+   "title": "御纂朱子全書·卷四~卷五 (vol 61)",
+   "page_id": "6a3c715639b4508b04e53dce",
+   "q": "q022",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 160,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0437
+  },
+  {
+   "uid": "all|6a3c67ebaf3c49b59c5d4994|111",
+   "stratum": "all",
+   "book_id": "6a3c67ebaf3c49b59c5d4994",
+   "title": "天中記·卷五十三 (vol 53)",
+   "page_id": "6a3c67ebaf3c49b59c5d4a03",
+   "q": "q061",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 108,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0161
+  },
+  {
+   "uid": "all|6a3c6a98af3c49b59c5e8416|67",
+   "stratum": "all",
+   "book_id": "6a3c6a98af3c49b59c5e8416",
+   "title": "儀禮集釋·卷十九~卷二十 (vol 9)",
+   "page_id": "6a3c6a98af3c49b59c5e8459",
+   "q": "q064",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 102,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0098
+  },
+  {
+   "uid": "all|6a3cc0a9f9474f825c17106b|73",
+   "stratum": "all",
+   "book_id": "6a3cc0a9f9474f825c17106b",
+   "title": "周易新講義·卷五~卷六 (vol 3)",
+   "page_id": "6a3cc0a9f9474f825c1710b5",
+   "q": "q070",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 134,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0076
+  },
+  {
+   "uid": "all|6a3c794a01fe4f593c20e86e|57",
+   "stratum": "all",
+   "book_id": "6a3c794a01fe4f593c20e86e",
+   "title": "藝文類聚·卷五十三~卷五十五 (vol 25)",
+   "page_id": "6a3c794a01fe4f593c20e8a7",
+   "q": "q067",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 152,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0
+  },
+  {
+   "uid": "all|6a3c74d301fe4f593c1f2b6d|134",
+   "stratum": "all",
+   "book_id": "6a3c74d301fe4f593c1f2b6d",
+   "title": "萬姓統譜·卷八十五~卷八十七 (vol 30)",
+   "page_id": "6a3c74d301fe4f593c1f2bf3",
+   "q": "q014",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 4,
+   "final_han": 72,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1098
+  },
+  {
+   "uid": "all|6a3c775d01fe4f593c201888|94",
+   "stratum": "all",
+   "book_id": "6a3c775d01fe4f593c201888",
+   "title": "葉八白易傳·卷十五~卷十六 (vol 8)",
+   "page_id": "6a3c775d01fe4f593c2018e7",
+   "q": "q005",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "material",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 2,
+   "final_han": 168,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0187
+  },
+  {
+   "uid": "all|6a3c7b3d01fe4f593c21d3a9|113",
+   "stratum": "all",
+   "book_id": "6a3c7b3d01fe4f593c21d3a9",
+   "title": "大易粹言·卷十一~卷十三 (vol 5)",
+   "page_id": "6a3c7b3d01fe4f593c21d41a",
+   "q": "q018",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": "minor",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 160,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0125
+  },
+  {
+   "uid": "all|6a3ce86e552d34d98411bb5a|30",
+   "stratum": "all",
+   "book_id": "6a3ce86e552d34d98411bb5a",
+   "title": "欽定儀禮義疏·卷三 (vol 4)",
+   "page_id": "6a3ce86e552d34d98411bb78",
+   "q": "q054",
+   "R1": "clean",
+   "R2": "minor",
+   "R3": null,
+   "A": "clean",
+   "adjudicated": true,
+   "final": "clean",
+   "final_from": "A",
+   "final_error_chars": 0,
+   "final_han": 122,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0168
+  },
+  {
+   "uid": "stale|6a3c5e5c40c88a541d8e1553|96",
+   "stratum": "stale",
+   "book_id": "6a3c5e5c40c88a541d8e1553",
+   "title": "周易義海撮要·卷四 (vol 4)",
+   "page_id": "6a3c5e5c40c88a541d8e15b3",
+   "q": "q008",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 130,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0476
+  },
+  {
+   "uid": "stale|6a3c5e5840c88a541d8e12e7|35",
+   "stratum": "stale",
+   "book_id": "6a3c5e5840c88a541d8e12e7",
+   "title": "錦繡萬花谷別集(三) (vol 3)",
+   "page_id": "6a3c5e5840c88a541d8e1364",
+   "q": "q055",
+   "R1": "minor",
+   "R2": "minor",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "minor",
+   "final_from": "R1=R2",
+   "final_error_chars": 1,
+   "final_han": 185,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": null
+  },
+  {
+   "uid": "stale|6a3c5e4140c88a541d8e05c9|60",
+   "stratum": "stale",
+   "book_id": "6a3c5e4140c88a541d8e05c9",
+   "title": "羣書治要(二) (vol 2)",
+   "page_id": "6a3c5e4140c88a541d8e0605",
+   "q": "q060",
+   "R1": "material",
+   "R2": "material",
+   "R3": null,
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 5,
+   "final_han": 130,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": null
+  },
+  {
+   "uid": "stale|6a3c5e6c40c88a541d8e1ec8|188",
+   "stratum": "stale",
+   "book_id": "6a3c5e6c40c88a541d8e1ec8",
+   "title": "御定康熙字典·卷一~卷二 (vol 2)",
+   "page_id": "6a3c5e6c40c88a541d8e1f84",
+   "q": "q038",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 20,
+   "final_han": 330,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 1,
+   "kanripo": 0.1711
+  },
+  {
+   "uid": "stale|6a3c5ea540c88a541d8e4349|121",
+   "stratum": "stale",
+   "book_id": "6a3c5ea540c88a541d8e4349",
+   "title": "御定康熙字典·卷十七 (vol 52)",
+   "page_id": "6a3c5ea540c88a541d8e43c2",
+   "q": "q040",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 11,
+   "final_han": 330,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1182
+  },
+  {
+   "uid": "stale|6a3c6f4301fe4f593c1caa33|23",
+   "stratum": "stale",
+   "book_id": "6a3c6f4301fe4f593c1caa33",
+   "title": "經問·卷十~卷十二 (vol 3)",
+   "page_id": "6a3c6f4301fe4f593c1caa4a",
+   "q": "q019",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 147,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.0138
+  },
+  {
+   "uid": "stale|6a3c5e9540c88a541d8e39c6|97",
+   "stratum": "stale",
+   "book_id": "6a3c5e9540c88a541d8e39c6",
+   "title": "御定康熙字典·卷四 (vol 39)",
+   "page_id": "6a3c5e9540c88a541d8e3a27",
+   "q": "q002",
+   "R1": "material",
+   "R2": "material",
+   "R3": "material",
+   "A": null,
+   "adjudicated": false,
+   "final": "material",
+   "final_from": "R1=R2",
+   "final_error_chars": 8,
+   "final_han": 360,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": 0.1019
+  },
+  {
+   "uid": "stale|6a3c5e5f40c88a541d8e1745|185",
+   "stratum": "stale",
+   "book_id": "6a3c5e5f40c88a541d8e1745",
+   "title": "周易義海撮要·卷五 (vol 5)",
+   "page_id": "6a3c5e5f40c88a541d8e17fe",
+   "q": "q029",
+   "R1": "minor",
+   "R2": "material",
+   "R3": "minor",
+   "A": "minor",
+   "adjudicated": true,
+   "final": "minor",
+   "final_from": "A",
+   "final_error_chars": 1,
+   "final_han": 139,
+   "invented": [
+    "一、1.1"
+   ],
+   "invented_chars": 5,
+   "order_errors": 0,
+   "kanripo": 0.0222
+  },
+  {
+   "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+   "stratum": "stale",
+   "book_id": "6a3c5eb740c88a541d8e51e3",
+   "title": "御定康熙字典·卷三十四 (vol 69)",
+   "page_id": "6a3c5eb740c88a541d8e521b",
+   "q": "q012",
+   "R1": "minor",
+   "R2": "material",
+   "R3": "material",
+   "A": "material",
+   "adjudicated": true,
+   "final": "material",
+   "final_from": "A",
+   "final_error_chars": 8,
+   "final_han": 265,
+   "invented": [
+    "駟"
+   ],
+   "invented_chars": 1,
+   "order_errors": 0,
+   "kanripo": 0.0559
+  },
+  {
+   "uid": "stale|6a09f7a6ae0ff9f86740bf88|127",
+   "stratum": "stale",
+   "book_id": "6a09f7a6ae0ff9f86740bf88",
+   "title": "淮南鴻烈解·卷一~卷三 (Huainan Hongliejie, juan 1-3, contains Tianwen, the 12-pitch cosmol",
+   "page_id": "6a09f7a6ae0ff9f86740c007",
+   "q": "q023",
+   "R1": "clean",
+   "R2": "clean",
+   "R3": "minor",
+   "A": null,
+   "adjudicated": false,
+   "final": "clean",
+   "final_from": "R1=R2",
+   "final_error_chars": 0,
+   "final_han": 188,
+   "invented": [],
+   "invented_chars": 0,
+   "order_errors": 0,
+   "kanripo": null
+  }
+ ],
+ "rates": {
+  "all": {
+   "final": {
+    "clean": {
+     "k": 27,
+     "n": 49,
+     "p": 0.5510204081632653,
+     "ci": [
+      0.41315108115866206,
+      0.6814715902409312
+     ]
+    },
+    "minor": {
+     "k": 14,
+     "n": 49,
+     "p": 0.2857142857142857,
+     "ci": [
+      0.17849594390337364,
+      0.4240888362183338
+     ]
+    },
+    "material": {
+     "k": 8,
+     "n": 49,
+     "p": 0.16326530612244897,
+     "ci": [
+      0.08512698327209231,
+      0.29036338549059093
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 49,
+     "p": 0,
+     "ci": [
+      0,
+      0.07269782028398425
+     ]
+    }
+   },
+   "R1": {
+    "clean": {
+     "k": 35,
+     "n": 50,
+     "p": 0.7,
+     "ci": [
+      0.5624964942316114,
+      0.8089644656969429
+     ]
+    },
+    "minor": {
+     "k": 7,
+     "n": 50,
+     "p": 0.14,
+     "ci": [
+      0.0695083338917044,
+      0.2618619382368978
+     ]
+    },
+    "material": {
+     "k": 8,
+     "n": 50,
+     "p": 0.16,
+     "ci": [
+      0.08337420635400901,
+      0.2851421617674486
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 50,
+     "p": 0,
+     "ci": [
+      0,
+      0.07134760017861413
+     ]
+    }
+   },
+   "R2": {
+    "clean": {
+     "k": 10,
+     "n": 49,
+     "p": 0.20408163265306123,
+     "ci": [
+      0.1148184955317063,
+      0.3363700103506517
+     ]
+    },
+    "minor": {
+     "k": 21,
+     "n": 49,
+     "p": 0.42857142857142855,
+     "ci": [
+      0.3002331898865981,
+      0.567295070153971
+     ]
+    },
+    "material": {
+     "k": 17,
+     "n": 49,
+     "p": 0.3469387755102041,
+     "ci": [
+      0.2292439275588767,
+      0.48688805824234294
+     ]
+    },
+    "unusable": {
+     "k": 1,
+     "n": 49,
+     "p": 0.02040816326530612,
+     "ci": [
+      0.003611672549881484,
+      0.10693521629394014
+     ]
+    }
+   },
+   "R3": {
+    "clean": {
+     "k": 1,
+     "n": 30,
+     "p": 0.03333333333333333,
+     "ci": [
+      0.005908590316197976,
+      0.16670391146115726
+     ]
+    },
+    "minor": {
+     "k": 18,
+     "n": 30,
+     "p": 0.6,
+     "ci": [
+      0.42320360121215705,
+      0.7540937198355525
+     ]
+    },
+    "material": {
+     "k": 11,
+     "n": 30,
+     "p": 0.36666666666666664,
+     "ci": [
+      0.21873920712263448,
+      0.5448643648137528
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 30,
+     "p": 0,
+     "ci": [
+      0,
+      0.11351339476145204
+     ]
+    }
+   },
+   "material_or_worse": {
+    "k": 8,
+    "n": 49,
+    "ci": [
+     0.08512698327209231,
+     0.29036338549059093
+    ]
+   },
+   "invented_any": {
+    "k": 2,
+    "n": 49,
+    "ci": [
+     0.01126563326469128,
+     0.1371303241389677
+    ]
+   },
+   "invented_span4": {
+    "k": 0,
+    "n": 49,
+    "ci": [
+     0,
+     0.07269782028398425
+    ]
+   }
+  },
+  "stale": {
+   "final": {
+    "clean": {
+     "k": 3,
+     "n": 10,
+     "p": 0.3,
+     "ci": [
+      0.10779126655639398,
+      0.6032218546540291
+     ]
+    },
+    "minor": {
+     "k": 2,
+     "n": 10,
+     "p": 0.2,
+     "ci": [
+      0.05668215093776685,
+      0.5098375308778678
+     ]
+    },
+    "material": {
+     "k": 5,
+     "n": 10,
+     "p": 0.5,
+     "ci": [
+      0.23659308901147935,
+      0.7634069109885206
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 10,
+     "p": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    }
+   },
+   "R1": {
+    "clean": {
+     "k": 3,
+     "n": 10,
+     "p": 0.3,
+     "ci": [
+      0.10779126655639398,
+      0.6032218546540291
+     ]
+    },
+    "minor": {
+     "k": 3,
+     "n": 10,
+     "p": 0.3,
+     "ci": [
+      0.10779126655639398,
+      0.6032218546540291
+     ]
+    },
+    "material": {
+     "k": 4,
+     "n": 10,
+     "p": 0.4,
+     "ci": [
+      0.1681803285264069,
+      0.6873262320788047
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 10,
+     "p": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    }
+   },
+   "R2": {
+    "clean": {
+     "k": 3,
+     "n": 10,
+     "p": 0.3,
+     "ci": [
+      0.10779126655639398,
+      0.6032218546540291
+     ]
+    },
+    "minor": {
+     "k": 1,
+     "n": 10,
+     "p": 0.1,
+     "ci": [
+      0.017876212896073995,
+      0.4041500295247722
+     ]
+    },
+    "material": {
+     "k": 6,
+     "n": 10,
+     "p": 0.6,
+     "ci": [
+      0.3126737679211953,
+      0.831819671473593
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 10,
+     "p": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    }
+   },
+   "R3": {
+    "clean": {
+     "k": 0,
+     "n": 8,
+     "p": 0,
+     "ci": [
+      0,
+      0.3244075683414076
+     ]
+    },
+    "minor": {
+     "k": 3,
+     "n": 8,
+     "p": 0.375,
+     "ci": [
+      0.13684428473912286,
+      0.694257607346229
+     ]
+    },
+    "material": {
+     "k": 5,
+     "n": 8,
+     "p": 0.625,
+     "ci": [
+      0.30574239265377096,
+      0.8631557152608771
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 8,
+     "p": 0,
+     "ci": [
+      0,
+      0.3244075683414076
+     ]
+    }
+   },
+   "material_or_worse": {
+    "k": 5,
+    "n": 10,
+    "ci": [
+     0.23659308901147935,
+     0.7634069109885206
+    ]
+   },
+   "invented_any": {
+    "k": 2,
+    "n": 10,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "invented_span4": {
+    "k": 0,
+    "n": 10,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   }
+  },
+  "both": {
+   "final": {
+    "clean": {
+     "k": 30,
+     "n": 59,
+     "p": 0.5084745762711864,
+     "ci": [
+      0.3843514296708263,
+      0.6315616318303229
+     ]
+    },
+    "minor": {
+     "k": 16,
+     "n": 59,
+     "p": 0.2711864406779661,
+     "ci": [
+      0.17436970875269475,
+      0.39597763071627756
+     ]
+    },
+    "material": {
+     "k": 13,
+     "n": 59,
+     "p": 0.22033898305084745,
+     "ci": [
+      0.13354197574226984,
+      0.34132699471980754
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 59,
+     "p": 0,
+     "ci": [
+      0,
+      0.06112937143219893
+     ]
+    }
+   },
+   "R1": {
+    "clean": {
+     "k": 38,
+     "n": 60,
+     "p": 0.6333333333333333,
+     "ci": [
+      0.506830005299727,
+      0.7437908338911456
+     ]
+    },
+    "minor": {
+     "k": 10,
+     "n": 60,
+     "p": 0.16666666666666666,
+     "ci": [
+      0.093131769363607,
+      0.2803161326592111
+     ]
+    },
+    "material": {
+     "k": 12,
+     "n": 60,
+     "p": 0.2,
+     "ci": [
+      0.1182850527328094,
+      0.31781805908772687
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 60,
+     "p": 0,
+     "ci": [
+      0,
+      0.060171853034227174
+     ]
+    }
+   },
+   "R2": {
+    "clean": {
+     "k": 13,
+     "n": 59,
+     "p": 0.22033898305084745,
+     "ci": [
+      0.13354197574226984,
+      0.34132699471980754
+     ]
+    },
+    "minor": {
+     "k": 22,
+     "n": 59,
+     "p": 0.3728813559322034,
+     "ci": [
+      0.2608399871472825,
+      0.5004640903354799
+     ]
+    },
+    "material": {
+     "k": 23,
+     "n": 59,
+     "p": 0.3898305084745763,
+     "ci": [
+      0.27579361754225085,
+      0.5173365829428099
+     ]
+    },
+    "unusable": {
+     "k": 1,
+     "n": 59,
+     "p": 0.01694915254237288,
+     "ci": [
+      0.002998233885205405,
+      0.08995726054929187
+     ]
+    }
+   },
+   "R3": {
+    "clean": {
+     "k": 1,
+     "n": 38,
+     "p": 0.02631578947368421,
+     "ci": [
+      0.004660587634200075,
+      0.1349487624572532
+     ]
+    },
+    "minor": {
+     "k": 21,
+     "n": 38,
+     "p": 0.5526315789473685,
+     "ci": [
+      0.39706297006975455,
+      0.6985359910311952
+     ]
+    },
+    "material": {
+     "k": 16,
+     "n": 38,
+     "p": 0.42105263157894735,
+     "ci": [
+      0.27852501060597445,
+      0.5780765477426011
+     ]
+    },
+    "unusable": {
+     "k": 0,
+     "n": 38,
+     "p": 0,
+     "ci": [
+      0,
+      0.09180986954097846
+     ]
+    }
+   },
+   "material_or_worse": {
+    "k": 13,
+    "n": 59,
+    "ci": [
+     0.13354197574226984,
+     0.34132699471980754
+    ]
+   },
+   "invented_any": {
+    "k": 4,
+    "n": 59,
+    "ci": [
+     0.026678618785917388,
+     0.16175524465547492
+    ]
+   },
+   "invented_span4": {
+    "k": 0,
+    "n": 59,
+    "ci": [
+     0,
+     0.06112937143219893
+    ]
+   }
+  }
+ },
+ "agreement": {
+  "R1_R2": {
+   "n": 59,
+   "exact": 31,
+   "exact_ci": [
+    0.4003979507626142,
+    0.6473412337408334
+   ],
+   "material_split_agree": 47,
+   "kappa_w": 0.4454
+  },
+  "R2_R3": {
+   "n": 37,
+   "exact": 18,
+   "exact_ci": [
+    0.33446404195282825,
+    0.6410510344574818
+   ],
+   "material_split_agree": 25,
+   "kappa_w": 0.1871
+  },
+  "R1_R3": {
+   "n": 38,
+   "exact": 12,
+   "exact_ci": [
+    0.19084603596761648,
+    0.4745576001790598
+   ],
+   "material_split_agree": 29,
+   "kappa_w": 0.2565
+  }
+ },
+ "adjudicated": {
+  "n": 28,
+  "A_sided_with_R1": 20,
+  "A_sided_with_R2": 5,
+  "A_neither": 3
+ },
+ "controls": {
+  "R1": {
+   "plants": [
+    {
+     "uid": "plant|6a3cc05bec254ff6cae05e86|86",
+     "q": "q048",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc239f9474f825c175c31|34",
+     "q": "q063",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3ceeab4701a906f10eb73c|182",
+     "q": "q052",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cf08a8642f0445b165512|32",
+     "q": "q069",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c6e9c01fe4f593c1c4507|121",
+     "q": "q041",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c7a6301fe4f593c216e75|85",
+     "q": "q004",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cbc28ec254ff6cadee1df|74",
+     "q": "q050",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc2a5af74b230c69082a8|45",
+     "q": "q009",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cb99b3dce6cfad7495182|30",
+     "q": "q017",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c79ae01fe4f593c2118d3|129",
+     "q": "q045",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    }
+   ],
+   "plant_pages_answered": 10,
+   "spans_scored": 30,
+   "spans_caught": 30,
+   "spans_missed": 0,
+   "spans_not_run": 0,
+   "trusted": true,
+   "repeats_run": 5,
+   "by_span": {
+    "P1": 10,
+    "P2": 10,
+    "P3": 10
+   },
+   "plant_verdicts": {
+    "clean": 0,
+    "minor": 0,
+    "material": 10,
+    "unusable": 0
+   },
+   "repeats": [
+    {
+     "uid": "all|6a3cbdc0ec254ff6cadf9fe2|89",
+     "verdicts": [
+      "minor",
+      "minor"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c625040c88a541d8f3586|62",
+     "verdicts": [
+      "minor",
+      "minor"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "verdicts": [
+      "clean",
+      "clean"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "verdicts": [
+      "clean",
+      "clean"
+     ],
+     "same": true
+    },
+    {
+     "uid": "stale|6a3c5e6c40c88a541d8e1ec8|188",
+     "verdicts": [
+      "material",
+      "material"
+     ],
+     "same": true
+    }
+   ],
+   "repeats_same": 5
+  },
+  "R2": {
+   "plants": [
+    {
+     "uid": "plant|6a3cc05bec254ff6cae05e86|86",
+     "q": "q048",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc239f9474f825c175c31|34",
+     "q": "q063",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3ceeab4701a906f10eb73c|182",
+     "q": "q052",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cf08a8642f0445b165512|32",
+     "q": "q069",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c6e9c01fe4f593c1c4507|121",
+     "q": "q041",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c7a6301fe4f593c216e75|85",
+     "q": "q004",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 1
+    },
+    {
+     "uid": "plant|6a3cbc28ec254ff6cadee1df|74",
+     "q": "q050",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc2a5af74b230c69082a8|45",
+     "q": "q009",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cb99b3dce6cfad7495182|30",
+     "q": "q017",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c79ae01fe4f593c2118d3|129",
+     "q": "q045",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    }
+   ],
+   "plant_pages_answered": 10,
+   "spans_scored": 30,
+   "spans_caught": 30,
+   "spans_missed": 0,
+   "spans_not_run": 0,
+   "trusted": true,
+   "repeats_run": 5,
+   "by_span": {
+    "P1": 10,
+    "P2": 10,
+    "P3": 10
+   },
+   "plant_verdicts": {
+    "clean": 0,
+    "minor": 0,
+    "material": 10,
+    "unusable": 0
+   },
+   "repeats": [
+    {
+     "uid": "all|6a3cbdc0ec254ff6cadf9fe2|89",
+     "verdicts": [
+      "minor",
+      "minor"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c625040c88a541d8f3586|62",
+     "verdicts": [
+      "material",
+      "material"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "verdicts": [
+      "clean",
+      "clean"
+     ],
+     "same": true
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "verdicts": [
+      "material",
+      "material"
+     ],
+     "same": true
+    },
+    {
+     "uid": "stale|6a3c5e6c40c88a541d8e1ec8|188",
+     "verdicts": [
+      "material",
+      "material"
+     ],
+     "same": true
+    }
+   ],
+   "repeats_same": 5
+  },
+  "R3": {
+   "plants": [
+    {
+     "uid": "plant|6a3cc05bec254ff6cae05e86|86",
+     "q": "q048",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc239f9474f825c175c31|34",
+     "q": "q063",
+     "verdict": null,
+     "hit": {
+      "P1": null,
+      "P2": null,
+      "P3": null
+     },
+     "other_errors": null
+    },
+    {
+     "uid": "plant|6a3ceeab4701a906f10eb73c|182",
+     "q": "q052",
+     "verdict": null,
+     "hit": {
+      "P1": null,
+      "P2": null,
+      "P3": null
+     },
+     "other_errors": null
+    },
+    {
+     "uid": "plant|6a3cf08a8642f0445b165512|32",
+     "q": "q069",
+     "verdict": null,
+     "hit": {
+      "P1": null,
+      "P2": null,
+      "P3": null
+     },
+     "other_errors": null
+    },
+    {
+     "uid": "plant|6a3c6e9c01fe4f593c1c4507|121",
+     "q": "q041",
+     "verdict": "material",
+     "hit": {
+      "P1": false,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3c7a6301fe4f593c216e75|85",
+     "q": "q004",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 1
+    },
+    {
+     "uid": "plant|6a3cbc28ec254ff6cadee1df|74",
+     "q": "q050",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 0
+    },
+    {
+     "uid": "plant|6a3cc2a5af74b230c69082a8|45",
+     "q": "q009",
+     "verdict": "material",
+     "hit": {
+      "P1": false,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 1
+    },
+    {
+     "uid": "plant|6a3cb99b3dce6cfad7495182|30",
+     "q": "q017",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 3
+    },
+    {
+     "uid": "plant|6a3c79ae01fe4f593c2118d3|129",
+     "q": "q045",
+     "verdict": "material",
+     "hit": {
+      "P1": true,
+      "P2": true,
+      "P3": true
+     },
+     "other_errors": 1
+    }
+   ],
+   "plant_pages_answered": 7,
+   "spans_scored": 21,
+   "spans_caught": 19,
+   "spans_missed": 2,
+   "spans_not_run": 9,
+   "trusted": "not established",
+   "repeats_run": 3,
+   "by_span": {
+    "P1": 5,
+    "P2": 7,
+    "P3": 7
+   },
+   "plant_verdicts": {
+    "clean": 0,
+    "minor": 0,
+    "material": 7,
+    "unusable": 0
+   },
+   "repeats": [
+    {
+     "uid": "all|6a3cbdc0ec254ff6cadf9fe2|89",
+     "verdicts": [
+      "material",
+      "minor"
+     ],
+     "same": false
+    },
+    {
+     "uid": "all|6a3c625040c88a541d8f3586|62",
+     "verdicts": [
+      "material",
+      null
+     ],
+     "same": false
+    },
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "verdicts": [
+      "minor",
+      "material"
+     ],
+     "same": false
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "verdicts": [
+      "material",
+      null
+     ],
+     "same": false
+    },
+    {
+     "uid": "stale|6a3c5e6c40c88a541d8e1ec8|188",
+     "verdicts": [
+      "material",
+      "material"
+     ],
+     "same": true
+    }
+   ],
+   "repeats_same": 1
+  }
+ },
+ "kanripo": {
+  "n": 57,
+  "recomputed_P_matches_stored": 57,
+  "P": {
+   "mean": 0.0537,
+   "ci": [
+    0.0403,
+    0.069
+   ],
+   "median": 0.0343,
+   "over_0_10": 12,
+   "catastrophic_0_5": 0
+  },
+  "TO": {
+   "mean": 0.0617,
+   "ci": [
+    0.0378,
+    0.1004
+   ],
+   "median": 0.0386,
+   "over_0_10": 9,
+   "catastrophic_0_5": 1
+  },
+  "TG": {
+   "mean": 0.0936,
+   "ci": [
+    0.0674,
+    0.1235
+   ],
+   "median": 0.0536,
+   "over_0_10": 16,
+   "catastrophic_0_5": 1
+  },
+  "TO_minus_P": {
+   "mean": 0.008,
+   "ci": [
+    -0.017,
+    0.0472
+   ],
+   "engine_better_pages": 16,
+   "paddle_better_pages": 24
+  },
+  "TG_minus_P": {
+   "mean": 0.0399,
+   "ci": [
+    0.0217,
+    0.0597
+   ],
+   "engine_better_pages": 10,
+   "paddle_better_pages": 38
+  },
+  "per_page": [
+   {
+    "uid": "all|6a3c742601fe4f593c1eea82|79",
+    "P": 0.1429,
+    "TO": 0.1429,
+    "TG": 0.2054
+   },
+   {
+    "uid": "all|6a3c787801fe4f593c208732|153",
+    "P": 0,
+    "TO": 0.0066,
+    "TG": 0.0132
+   },
+   {
+    "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+    "P": 0.0248,
+    "TO": 0.0207,
+    "TG": 0.0992
+   },
+   {
+    "uid": "all|6a3cee024701a906f10e55d0|80",
+    "P": 0.0536,
+    "TO": 0.0536,
+    "TG": 0.0536
+   },
+   {
+    "uid": "all|6a3c721a01fe4f593c1dc2a3|58",
+    "P": 0.0065,
+    "TO": 0,
+    "TG": 0.0196
+   },
+   {
+    "uid": "all|6a3ceead4701a906f10eb8aa|131",
+    "P": 0.0278,
+    "TO": 0.0516,
+    "TG": 0.0714
+   },
+   {
+    "uid": "all|6a3c723701fe4f593c1dd409|152",
+    "P": 0.0729,
+    "TO": 0.0104,
+    "TG": 0.0521
+   },
+   {
+    "uid": "all|6a3c66bcaf3c49b59c5cd02c|82",
+    "P": 0.0298,
+    "TO": 0.0714,
+    "TG": 0.0298
+   },
+   {
+    "uid": "all|6a3c66abaf3c49b59c5cc4de|125",
+    "P": 0.0536,
+    "TO": 0.0536,
+    "TG": 0.0536
+   },
+   {
+    "uid": "all|6a3c797701fe4f593c20fbc2|97",
+    "P": 0.0233,
+    "TO": 0.02,
+    "TG": 0.0733
+   },
+   {
+    "uid": "all|6a3c6738af3c49b59c5d165d|49",
+    "P": 0.2843,
+    "TO": 0.049,
+    "TG": 0.5882
+   },
+   {
+    "uid": "all|6a3c64d539b4508b04e2a71d|36",
+    "P": 0.0488,
+    "TO": 0.0521,
+    "TG": 0.1484
+   },
+   {
+    "uid": "all|6a3cbfe2f9474f825c16c0ca|44",
+    "P": 0.0686,
+    "TO": 0.1078,
+    "TG": 0.0784
+   },
+   {
+    "uid": "all|6a3c6a3daf3c49b59c5e4fa1|108",
+    "P": 0.0277,
+    "TO": 0.0063,
+    "TG": 0.0625
+   },
+   {
+    "uid": "all|6a3c63d5af3c49b59c5c8e88|89",
+    "P": 0.0437,
+    "TO": 0.0437,
+    "TG": 0.1645
+   },
+   {
+    "uid": "all|6a3cbfedf9474f825c16c745|83",
+    "P": 0.1058,
+    "TO": 0.0096,
+    "TG": 0.0192
+   },
+   {
+    "uid": "all|6a3c67a939b4508b04e37db1|136",
+    "P": 0.029,
+    "TO": 0.029,
+    "TG": 0.0362
+   },
+   {
+    "uid": "all|6a3cbdc0ec254ff6cadf9fe2|89",
+    "P": 0.0292,
+    "TO": 0.0073,
+    "TG": 0.0219
+   },
+   {
+    "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+    "P": 0.0343,
+    "TO": 0.0386,
+    "TG": 0.0601
+   },
+   {
+    "uid": "all|6a3cbdebec254ff6cadfb7c5|94",
+    "P": 0.024,
+    "TO": 0.056,
+    "TG": 0.04
+   },
+   {
+    "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+    "P": 0.0578,
+    "TO": 0.0912,
+    "TG": 0.1094
+   },
+   {
+    "uid": "all|6a3c6302879008ba7e164f85|84",
+    "P": 0.1123,
+    "TO": 0.0401,
+    "TG": 0.1658
+   },
+   {
+    "uid": "all|6a3c625040c88a541d8f3586|62",
+    "P": 0.0935,
+    "TO": 0.1195,
+    "TG": 0.1558
+   },
+   {
+    "uid": "all|6a3cea99c895e71c6023c0ce|36",
+    "P": 0.0119,
+    "TO": 0.0079,
+    "TG": 0.0238
+   },
+   {
+    "uid": "all|6a3c7a0239b4508b04e62189|62",
+    "P": 0.0339,
+    "TO": 0.9492,
+    "TG": 0.2938
+   },
+   {
+    "uid": "all|6a3c5fb2879008ba7e156f22|111",
+    "P": 0.0351,
+    "TO": 0.0409,
+    "TG": 0.0351
+   },
+   {
+    "uid": "all|6a3ced054701a906f10dcd97|90",
+    "P": 0.0351,
+    "TO": 0.0175,
+    "TG": 0.0351
+   },
+   {
+    "uid": "all|6a3cb88c3dce6cfad748e4ac|42",
+    "P": 0,
+    "TO": 0,
+    "TG": 0
+   },
+   {
+    "uid": "all|6a3c740201fe4f593c1ed60b|159",
+    "P": 0.012,
+    "TO": 0.024,
+    "TG": 0.018
+   },
+   {
+    "uid": "all|6a3c6181879008ba7e15eb10|39",
+    "P": 0.134,
+    "TO": 0.0478,
+    "TG": 0.0909
+   },
+   {
+    "uid": "all|6a3c6b6739b4508b04e43b2a|44",
+    "P": 0.0357,
+    "TO": 0.0536,
+    "TG": 0.0536
+   },
+   {
+    "uid": "all|6a3cb6013dce6cfad74847e0|104",
+    "P": 0.007,
+    "TO": 0.007,
+    "TG": 0.007
+   },
+   {
+    "uid": "all|6a3c60aa40c88a541d8e97c5|23",
+    "P": 0.1706,
+    "TO": 0.0992,
+    "TG": 0.1071
+   },
+   {
+    "uid": "all|6a3c640f39b4508b04e23ec9|56",
+    "P": 0.1068,
+    "TO": 0.1068,
+    "TG": 0.2344
+   },
+   {
+    "uid": "all|6a3cec2f8642f0445b15a44b|287",
+    "P": 0.0482,
+    "TO": 0.0723,
+    "TG": 0.0904
+   },
+   {
+    "uid": "all|6a3cec6b8642f0445b15c5b3|113",
+    "P": 0.0301,
+    "TO": 0.0338,
+    "TG": 0.094
+   },
+   {
+    "uid": "all|6a3cc25bec254ff6cae105e8|140",
+    "P": 0.018,
+    "TO": 0.009,
+    "TG": 0.1441
+   },
+   {
+    "uid": "all|6a3cc158ec254ff6cae0b749|93",
+    "P": 0.014,
+    "TO": 0.042,
+    "TG": 0.028
+   },
+   {
+    "uid": "all|6a3c77fb01fe4f593c206225|59",
+    "P": 0.0059,
+    "TO": 0.0118,
+    "TG": 0.0176
+   },
+   {
+    "uid": "all|6a3c64a339b4508b04e28b59|102",
+    "P": 0.1598,
+    "TO": 0.1928,
+    "TG": 0.3884
+   },
+   {
+    "uid": "all|6a3c6bbd39b4508b04e45a93|95",
+    "P": 0.0424,
+    "TO": 0.0424,
+    "TG": 0.0339
+   },
+   {
+    "uid": "all|6a3c715639b4508b04e53d5e|112",
+    "P": 0.0438,
+    "TO": 0.0313,
+    "TG": 0.025
+   },
+   {
+    "uid": "all|6a3c67ebaf3c49b59c5d4994|111",
+    "P": 0.0161,
+    "TO": 0.0242,
+    "TG": 0.0161
+   },
+   {
+    "uid": "all|6a3c6a98af3c49b59c5e8416|67",
+    "P": 0.0098,
+    "TO": 0.0098,
+    "TG": 0.0196
+   },
+   {
+    "uid": "all|6a3cc0a9f9474f825c17106b|73",
+    "P": 0.0076,
+    "TO": 0.0227,
+    "TG": 0.0076
+   },
+   {
+    "uid": "all|6a3c794a01fe4f593c20e86e|57",
+    "P": 0,
+    "TO": 0.0063,
+    "TG": 0.0063
+   },
+   {
+    "uid": "all|6a3c74d301fe4f593c1f2b6d|134",
+    "P": 0.1098,
+    "TO": 0.039,
+    "TG": 0.0779
+   },
+   {
+    "uid": "all|6a3c775d01fe4f593c201888|94",
+    "P": 0.0188,
+    "TO": 0.0375,
+    "TG": 0.0688
+   },
+   {
+    "uid": "all|6a3c7b3d01fe4f593c21d3a9|113",
+    "P": 0.0125,
+    "TO": 0.0313,
+    "TG": 0.0313
+   },
+   {
+    "uid": "all|6a3ce86e552d34d98411bb5a|30",
+    "P": 0.0168,
+    "TO": 0.0252,
+    "TG": 0.0252
+   },
+   {
+    "uid": "stale|6a3c5e5c40c88a541d8e1553|96",
+    "P": 0.0476,
+    "TO": 0,
+    "TG": 0.0079
+   },
+   {
+    "uid": "stale|6a3c5e6c40c88a541d8e1ec8|188",
+    "P": 0.1711,
+    "TO": 0.1026,
+    "TG": 0.2895
+   },
+   {
+    "uid": "stale|6a3c5ea540c88a541d8e4349|121",
+    "P": 0.1182,
+    "TO": 0.1303,
+    "TG": 0.3
+   },
+   {
+    "uid": "stale|6a3c6f4301fe4f593c1caa33|23",
+    "P": 0.0138,
+    "TO": 0.0138,
+    "TG": 0.0069
+   },
+   {
+    "uid": "stale|6a3c5e9540c88a541d8e39c6|97",
+    "P": 0.1019,
+    "TO": 0.126,
+    "TG": 0.2413
+   },
+   {
+    "uid": "stale|6a3c5e5f40c88a541d8e1745|185",
+    "P": 0.0222,
+    "TO": 0.0148,
+    "TG": 0.0296
+   },
+   {
+    "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+    "P": 0.0559,
+    "TO": 0.0615,
+    "TG": 0.1643
+   }
+  ]
+ },
+ "kanripo_by_verdict": {
+  "clean": {
+   "n": 29,
+   "median": 0.029,
+   "max": 0.0686
+  },
+  "minor": {
+   "n": 15,
+   "median": 0.0233,
+   "max": 0.1598
+  },
+  "material": {
+   "n": 12,
+   "median": 0.1153,
+   "max": 0.2843
+  },
+  "unusable": {
+   "n": 0,
+   "median": null,
+   "max": null
+  }
+ },
+ "kanripo_vs_verdict": {
+  "n": 56,
+  "spearman_verdict": 0.5425,
+  "spearman_error_rate": 0.5188,
+  "t22_cer5": {
+   "both": 12,
+   "rev_only": 0,
+   "kan_only": 7,
+   "neither": 37
+  }
+ },
+ "family": {
+  "gemini_reviewer": {
+   "P": {
+    "label": "Paddle, reviewed by Gemini 3.8 Flash (R2)",
+    "n": 59,
+    "verdicts": {
+     "clean": 13,
+     "minor": 22,
+     "material": 23,
+     "unusable": 1
+    },
+    "mean_error_rate": 0.0503,
+    "ci": [
+     0.0227,
+     0.0905
+    ],
+    "order_errors": 5,
+    "invented_pages": 19
+   },
+   "TO": {
+    "label": "Opus transcription, reviewed by Gemini 3.8 Flash (XTO)",
+    "n": 59,
+    "verdicts": {
+     "clean": 20,
+     "minor": 26,
+     "material": 13,
+     "unusable": 0
+    },
+    "mean_error_rate": 0.0145,
+    "ci": [
+     0.0082,
+     0.023
+    ],
+    "order_errors": 2,
+    "invented_pages": 13
+   },
+   "paired": {
+    "n": 58,
+    "diff_mean": -0.0365,
+    "ci": [
+     -0.0739,
+     -0.0128
+    ]
+   }
+  },
+  "opus_reviewer": {
+   "P": {
+    "label": "Paddle, reviewed by Opus (R1)",
+    "n": 60,
+    "verdicts": {
+     "clean": 38,
+     "minor": 10,
+     "material": 12,
+     "unusable": 0
+    },
+    "mean_error_rate": 0.015,
+    "ci": [
+     0.0067,
+     0.0267
+    ],
+    "order_errors": 6,
+    "invented_pages": 4
+   },
+   "TG": {
+    "label": "Gemini 3.8 transcription, reviewed by Opus (XTG)",
+    "n": 60,
+    "verdicts": {
+     "clean": 18,
+     "minor": 17,
+     "material": 25,
+     "unusable": 0
+    },
+    "mean_error_rate": 0.0361,
+    "ci": [
+     0.0233,
+     0.0509
+    ],
+    "order_errors": 14,
+    "invented_pages": 16
+   },
+   "paired": {
+    "n": 60,
+    "diff_mean": 0.0211,
+    "ci": [
+     0.0095,
+     0.0338
+    ]
+   }
+  }
+ },
+ "ops": {
+  "P": {
+   "n": 60,
+   "refusals_or_empty": 0,
+   "loops": 0,
+   "secs_median": null,
+   "nudged": 0,
+   "attempts_over_1": 0
+  },
+  "TO": {
+   "n": 60,
+   "refusals_or_empty": 0,
+   "loops": 1,
+   "secs_median": 20.2705,
+   "nudged": 0,
+   "attempts_over_1": 0
+  },
+  "TG": {
+   "n": 60,
+   "refusals_or_empty": 0,
+   "loops": 0,
+   "secs_median": 34.35,
+   "nudged": 33,
+   "attempts_over_1": 33
+  }
+ },
+ "per_call": {
+  "R1": {
+   "rows": 75,
+   "calls": 75,
+   "errors": 0,
+   "nudged": 0,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 14.33,
+   "turns_median": 2,
+   "tokens_logged": 0,
+   "input_tokens_median": null,
+   "output_tokens_median": null,
+   "api_equiv_usd_sum": null
+  },
+  "R2": {
+   "rows": 86,
+   "calls": 172,
+   "errors": 12,
+   "nudged": 84,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 94.7,
+   "turns_median": null,
+   "tokens_logged": 0,
+   "input_tokens_median": null,
+   "output_tokens_median": null,
+   "api_equiv_usd_sum": null
+  },
+  "R3": {
+   "rows": 50,
+   "calls": 53,
+   "errors": 0,
+   "nudged": 3,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 128.8,
+   "turns_median": null,
+   "tokens_logged": 0,
+   "input_tokens_median": null,
+   "output_tokens_median": null,
+   "api_equiv_usd_sum": null
+  },
+  "A": {
+   "rows": 28,
+   "calls": 28,
+   "errors": 0,
+   "nudged": 0,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 14.824,
+   "turns_median": 2,
+   "tokens_logged": 28,
+   "input_tokens_median": 39571.5,
+   "output_tokens_median": 762,
+   "api_equiv_usd_sum": 3.5111
+  },
+  "XTO": {
+   "rows": 63,
+   "calls": 126,
+   "errors": 4,
+   "nudged": 62,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 89.9,
+   "turns_median": null,
+   "tokens_logged": 0,
+   "input_tokens_median": null,
+   "output_tokens_median": null,
+   "api_equiv_usd_sum": null
+  },
+  "XTG": {
+   "rows": 60,
+   "calls": 60,
+   "errors": 0,
+   "nudged": 0,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": 0,
+   "secs_median": 15.0655,
+   "turns_median": 2,
+   "tokens_logged": 60,
+   "input_tokens_median": 39414,
+   "output_tokens_median": 735,
+   "api_equiv_usd_sum": 7.7722
+  },
+  "TO": {
+   "rows": 60,
+   "calls": 60,
+   "errors": 0,
+   "nudged": 0,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": null,
+   "secs_median": 20.2705,
+   "turns_median": 2,
+   "tokens_logged": 6,
+   "input_tokens_median": 46373,
+   "output_tokens_median": 2190,
+   "api_equiv_usd_sum": 1.1383
+  },
+  "TG": {
+   "rows": 60,
+   "calls": 93,
+   "errors": 0,
+   "nudged": 33,
+   "chatter": 0,
+   "chatter_kinds": [],
+   "unparsed_review": null,
+   "secs_median": 34.35,
+   "turns_median": null,
+   "tokens_logged": 0,
+   "input_tokens_median": null,
+   "output_tokens_median": null,
+   "api_equiv_usd_sum": null
+  }
+ },
+ "context_arm": [
+  {
+   "engine": "opus",
+   "k": 1,
+   "calls": 10,
+   "n": 10,
+   "mean_cer": 0.1469,
+   "median_cer": 0.0415,
+   "omitted": 0,
+   "mixups": 0,
+   "loops": 0,
+   "secs_per_page": 32.3712,
+   "per_page": [
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "cer": 0.0912,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 30.833
+    },
+    {
+     "uid": "all|6a3cc158ec254ff6cae0b749|93",
+     "cer": 0.042,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 18.19
+    },
+    {
+     "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+     "cer": 0.0386,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 20.463
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "cer": 0.9492,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 47.853
+    },
+    {
+     "uid": "all|6a3cbfedf9474f825c16c745|83",
+     "cer": 0.0096,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 15.706
+    },
+    {
+     "uid": "all|6a3c64a339b4508b04e28b59|102",
+     "cer": 0.1928,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 93.407
+    },
+    {
+     "uid": "all|6a3c5fb2879008ba7e156f22|111",
+     "cer": 0.0409,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 16.84
+    },
+    {
+     "uid": "all|6a3cc0a9f9474f825c17106b|73",
+     "cer": 0.0227,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 14.794
+    },
+    {
+     "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+     "cer": 0.0207,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 20.912
+    },
+    {
+     "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+     "cer": 0.0615,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 44.714
+    }
+   ]
+  },
+  {
+   "engine": "opus",
+   "k": 5,
+   "calls": 2,
+   "n": 10,
+   "mean_cer": 0.1361,
+   "median_cer": 0.0318,
+   "omitted": 0,
+   "mixups": 0,
+   "loops": 0,
+   "secs_per_page": 21.6442,
+   "per_page": [
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "cer": 0.0395,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.978800000000001
+    },
+    {
+     "uid": "all|6a3cc158ec254ff6cae0b749|93",
+     "cer": 0.028,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.978800000000001
+    },
+    {
+     "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+     "cer": 0.0343,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.978800000000001
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "cer": 0.9435,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.978800000000001
+    },
+    {
+     "uid": "all|6a3cbfedf9474f825c16c745|83",
+     "cer": 0.0192,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.978800000000001
+    },
+    {
+     "uid": "all|6a3c64a339b4508b04e28b59|102",
+     "cer": 0.1736,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 29.3096
+    },
+    {
+     "uid": "all|6a3c5fb2879008ba7e156f22|111",
+     "cer": 0.0292,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 29.3096
+    },
+    {
+     "uid": "all|6a3cc0a9f9474f825c17106b|73",
+     "cer": 0.0227,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 29.3096
+    },
+    {
+     "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+     "cer": 0.0207,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 29.3096
+    },
+    {
+     "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+     "cer": 0.0503,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 29.3096
+    }
+   ]
+  },
+  {
+   "engine": "opus",
+   "k": 10,
+   "calls": 1,
+   "n": 10,
+   "mean_cer": 0.1406,
+   "median_cer": 0.0339,
+   "omitted": 0,
+   "mixups": 0,
+   "loops": 0,
+   "secs_per_page": 19.277,
+   "per_page": [
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "cer": 0.0821,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3cc158ec254ff6cae0b749|93",
+     "cer": 0.028,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+     "cer": 0.0386,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "cer": 0.9435,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3cbfedf9474f825c16c745|83",
+     "cer": 0.0192,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3c64a339b4508b04e28b59|102",
+     "cer": 0.1818,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3c5fb2879008ba7e156f22|111",
+     "cer": 0.0292,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3cc0a9f9474f825c17106b|73",
+     "cer": 0.0152,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+     "cer": 0.0207,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    },
+    {
+     "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+     "cer": 0.0475,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 19.277
+    }
+   ]
+  },
+  {
+   "engine": "gemini",
+   "k": 1,
+   "calls": 10,
+   "n": 10,
+   "mean_cer": 0.1205,
+   "median_cer": 0.0797,
+   "omitted": 0,
+   "mixups": 0,
+   "loops": 0,
+   "secs_per_page": 34.87,
+   "per_page": [
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "cer": 0.1094,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 135
+    },
+    {
+     "uid": "all|6a3cc158ec254ff6cae0b749|93",
+     "cer": 0.028,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 34.8
+    },
+    {
+     "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+     "cer": 0.0601,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 12.7
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "cer": 0.2938,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 12.8
+    },
+    {
+     "uid": "all|6a3cbfedf9474f825c16c745|83",
+     "cer": 0.0192,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 12
+    },
+    {
+     "uid": "all|6a3c64a339b4508b04e28b59|102",
+     "cer": 0.3884,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 90.9
+    },
+    {
+     "uid": "all|6a3c5fb2879008ba7e156f22|111",
+     "cer": 0.0351,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13
+    },
+    {
+     "uid": "all|6a3cc0a9f9474f825c17106b|73",
+     "cer": 0.0076,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 12.2
+    },
+    {
+     "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+     "cer": 0.0992,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 13.6
+    },
+    {
+     "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+     "cer": 0.1643,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 11.7
+    }
+   ]
+  },
+  {
+   "engine": "gemini",
+   "k": 5,
+   "calls": 2,
+   "n": 10,
+   "mean_cer": 0.2159,
+   "median_cer": 0.0757,
+   "omitted": 0,
+   "mixups": 0,
+   "loops": 0,
+   "secs_per_page": 3.7293,
+   "per_page": [
+    {
+     "uid": "all|6a3c6bf939b4508b04e46f2a|72",
+     "cer": 0.1307,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 3.4173999999999998
+    },
+    {
+     "uid": "all|6a3cc158ec254ff6cae0b749|93",
+     "cer": 0.035,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 3.4173999999999998
+    },
+    {
+     "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+     "cer": 0.0987,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 3.4173999999999998
+    },
+    {
+     "uid": "all|6a3c7a0239b4508b04e62189|62",
+     "cer": 0.565,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 3.4173999999999998
+    },
+    {
+     "uid": "all|6a3cbfedf9474f825c16c745|83",
+     "cer": 0.0192,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 3.4173999999999998
+    },
+    {
+     "uid": "all|6a3c64a339b4508b04e28b59|102",
+     "cer": 1,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 4.0412
+    },
+    {
+     "uid": "all|6a3c5fb2879008ba7e156f22|111",
+     "cer": 0.0526,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 4.0412
+    },
+    {
+     "uid": "all|6a3cc0a9f9474f825c17106b|73",
+     "cer": 0.0152,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 4.0412
+    },
+    {
+     "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+     "cer": 0.0413,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 4.0412
+    },
+    {
+     "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+     "cer": 0.2017,
+     "omitted": false,
+     "mixup": false,
+     "loop": false,
+     "secs": 4.0412
+    }
+   ]
+  }
+ ],
+ "calls": {
+  "opus": 226,
+  "agy": 446,
+  "by_arm": {
+   "R1": 75,
+   "R2": 172,
+   "R3": 53,
+   "A": 28,
+   "TO": 60,
+   "TG": 93,
+   "XTO": 126,
+   "XTG": 60
+  }
+ }
+}
