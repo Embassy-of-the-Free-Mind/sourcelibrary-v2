@@ -38,6 +38,15 @@
  *   node --env-file=.env.production.local scripts/workers/edge-crawl-alert.mjs
  *   ... --from 2026-10-03T22:00:00Z --to 2026-10-03T23:00:00Z --no-push   (backtest)
  *   ... --json
+ *   ... --canary   (weekly: prove the rate limit still challenges and this detector can still see traffic)
+ *
+ * The canary exists because a protection that silently stops working looks
+ * exactly like a quiet week. It fires 70 full book-page loads in under a
+ * minute at a throwaway /book URL from this box: the Cloudflare rate limit
+ * (60/min/address, managed challenge) must start answering 429 +
+ * cf-mitigated: challenge before request 70. It then asks Cloudflare for the
+ * last hour's /book traffic: zero means the instrument is blind (token,
+ * filter or dataset change). Either failure pages ntfy; a pass is logged only.
  */
 import { MongoClient } from 'mongodb';
 
@@ -45,7 +54,10 @@ const ZONE = process.env.CF_ZONE_ID || '2a9b9c5c8eaf11ed3f9279ad50a0d06c';
 const TOKEN = process.env.CLOUDFLARE_API_TOKEN_READ;
 const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
 
-const ADDRESS_LIMIT = 500;
+// 1,500, not 500: Cloudflare's per-hour counts are sample-adjusted estimates,
+// and at 500 a 7-day backtest flagged ~18 home connections for one hour each
+// (noise). At 1,500 it still flags every real crawl in that week.
+const ADDRESS_LIMIT = 1500;
 const AGENT_LIMIT = 2000;
 
 // Mirrors the Cloudflare skip rule "Allow social-card scrapers + verified
@@ -113,6 +125,33 @@ export function findCrawlers({ byAddress, byAgent }, perHour = { address: ADDRES
   return alerts.sort((a, b) => b.count - a.count);
 }
 
+const CANARY_URL = 'https://sourcelibrary.org/book/__ratelimit-canary__';
+
+async function canary() {
+  const failures = [];
+  let challengedAt = null;
+  for (let i = 1; i <= 70; i++) {
+    const r = await fetch(CANARY_URL, { headers: { 'user-agent': 'sourcelibrary-ratelimit-canary/1.0' }, redirect: 'manual' });
+    if (r.headers.get('cf-mitigated') === 'challenge') { challengedAt = i; break; }
+  }
+  if (!challengedAt) failures.push('Rate limit did NOT challenge 70 book-page loads in a minute. The crawl brake (Cloudflare http_ratelimit rule, 60/min/address) is off, edited or gone: check Security > WAF > Rate limiting rules.');
+  console.log(`[edge-crawl] canary: rate limit ${challengedAt ? `challenged at request ${challengedAt}` : 'DID NOT challenge'}`);
+
+  const now = new Date(), hourAgo = new Date(now.getTime() - 36e5);
+  try {
+    const z = await gql(`{ viewer { zones(filter:{zoneTag:"${ZONE}"}) {
+      t: httpRequestsAdaptiveGroups(limit:1, filter:{datetime_geq:"${hourAgo.toISOString()}", datetime_lt:"${now.toISOString()}", clientRequestPath_like:"/book/%", requestSource:"eyeball"}) { count } } } }`);
+    const seen = z.t[0]?.count ?? 0;
+    console.log(`[edge-crawl] canary: detector sees ${seen} /book requests in the last hour`);
+    if (seen === 0) failures.push('The detector sees ZERO /book requests in the last hour. It is blind: check CLOUDFLARE_API_TOKEN_READ and the GraphQL filter in edge-crawl-alert.mjs.');
+  } catch (err) {
+    failures.push(`The detector cannot query Cloudflare: ${err.message}`);
+  }
+
+  if (failures.length) await pushNtfy('Crawl protection canary FAILED', failures.join('\n\n'), 'high');
+  return failures.length;
+}
+
 async function run() {
   if (!TOKEN) { console.error('[edge-crawl] CLOUDFLARE_API_TOKEN_READ is not set'); process.exit(1); }
   // eyeball = real client requests; earlyHintsCache rows are Cloudflare's own
@@ -164,5 +203,5 @@ async function run() {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('edge-crawl-alert.mjs')) {
-  run().then((n) => process.exit(n ? 2 : 0)).catch((err) => { console.error(`[edge-crawl] FAILED: ${err.message}`); process.exit(1); });
+  (args.includes('--canary') ? canary() : run()).then((n) => process.exit(n ? 2 : 0)).catch((err) => { console.error(`[edge-crawl] FAILED: ${err.message}`); process.exit(1); });
 }
