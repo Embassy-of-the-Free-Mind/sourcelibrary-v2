@@ -9,21 +9,19 @@ import { TRAFFIC_CLASS_LABELS, type TrafficClass } from '@/lib/traffic-classific
 
 type FilterKey = 'country' | 'section' | 'referrer' | 'host';
 
-// Display order + color for the human/bot/AI breakdown.
-const CLASS_ORDER: { key: TrafficClass; color: string }[] = [
-  { key: 'human', color: '#16a34a' },
-  { key: 'ai_agent', color: '#8b5cf6' },
-  { key: 'ai_trainer', color: '#a855f7' },
-  { key: 'search_crawler', color: '#3b82f6' },
-  { key: 'other_bot', color: '#94a3b8' },
-];
-
 const RANGES = [
   { days: 1, label: '24h' },
   { days: 7, label: '7d' },
   { days: 30, label: '30d' },
   { days: 90, label: '90d' },
+  { days: 180, label: '6mo' },
+  { days: 366, label: '1y' },
 ];
+
+// The proxy-pool detector started flagging on 2026-08-30. Earlier spikes
+// (June 15 to July 5, early August) were never screened and include automated
+// traffic: 2026-06-19 logged 74K views from 1.3K addresses.
+const POOL_SCREENING_STARTED = '2026-08-30';
 const BINS: { value: TrafficBin | 'auto'; label: string }[] = [
   { value: 'auto', label: 'Auto' },
   { value: 'hour', label: 'Hourly' },
@@ -115,7 +113,8 @@ export default function TrafficDashboard() {
         </div>
         {data && (
           <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>
-            binned {data.range.bin} · vs previous {data.range.days}d
+            binned by {data.range.bin} · compared with the previous {data.range.days} days
+            {data.earliest && data.range.since.slice(0, 10) < data.earliest && ` · records start ${data.earliest}`}
           </span>
         )}
       </div>
@@ -166,18 +165,6 @@ export default function TrafficDashboard() {
             />
           </div>
 
-          {/* Sites + Human/bot/AI split */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
-              {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
-                <Row key={i} label={s.host} count={s.count} unit="views"
-                  active={filters.host === s.host}
-                  onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
-              ))}
-            </ListCard>
-            <ClassificationCard rows={data.classification} />
-          </div>
-
           {/* Trend */}
           <div className="p-6 rounded-xl" style={card}>
             <div className="flex items-center justify-between mb-4">
@@ -196,6 +183,25 @@ export default function TrafficDashboard() {
               color={metric === 'pageviews' ? 'var(--accent-violet)' : '#3b82f6'}
               xLabel={(v) => fmtBucket(v, data.range.bin)}
             />
+            {data.range.since.slice(0, 10) < POOL_SCREENING_STARTED && (
+              <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>
+                Before {POOL_SCREENING_STARTED} nothing screened for proxy pools, so spikes in that stretch
+                (June 15 to July 5, early August) include automated traffic. Compare pageviews with visitors:
+                on June 19, 74K views came from 1.3K addresses.
+              </p>
+            )}
+          </div>
+
+          {/* Sites + what the figures leave out */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
+              {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
+                <Row key={i} label={s.host} count={s.count} unit="views"
+                  active={filters.host === s.host}
+                  onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
+              ))}
+            </ListCard>
+            <ExcludedCard excluded={data.excluded} />
           </div>
 
           {/* Sections + Top pages */}
@@ -311,56 +317,37 @@ function Empty() {
   return <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>None in this range</p>;
 }
 
-// Human vs bot vs AI. Counts come from the ingestion-time classifier, which
-// only starts accruing once this ships — so it's empty for prior history.
-function ClassificationCard({ rows }: { rows: { class: string; count: number }[] }) {
-  const byClass = new Map(rows.map(r => [r.class, r.count]));
-  const ordered = CLASS_ORDER.map(c => ({ ...c, count: byClass.get(c.key) ?? 0 }));
-  const total = ordered.reduce((sum, c) => sum + c.count, 0);
-  const aiCount = (byClass.get('ai_agent') ?? 0) + (byClass.get('ai_trainer') ?? 0);
+// What the figures leave out. Pool pageviews were removed from every number
+// above; bot and AI requests never reached the beacon, so they were never in
+// them. The tracker's own "human" count is not shown: it labels every beacon
+// human by construction, pool included (#3657).
+const BOT_CLASSES: TrafficClass[] = ['search_crawler', 'ai_agent', 'ai_trainer', 'other_bot'];
 
+function ExcludedCard({ excluded }: { excluded: TrafficDashboardData['excluded'] }) {
+  const byClass = new Map(excluded.bots.map(r => [r.class, r.count]));
+  const { pool } = excluded;
   return (
     <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
           <Bot className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
-          Human · bot · AI
+          Not counted above
         </h2>
-        {total > 0 && (
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-            AI {Math.round((aiCount / total) * 100)}% of {total.toLocaleString('en-US')}
-          </span>
-        )}
       </div>
-
-      {total === 0 ? (
-        <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>
-          No classified traffic yet. This begins accruing now that ingestion records it.
+      <div className="space-y-1">
+        <Row label="Proxy-pool pageviews (removed)" count={pool.pageviews} unit="views" />
+        <p className="text-xs pb-2" style={{ color: 'var(--text-muted)' }}>
+          {pool.fingerprints === 0
+            ? 'No browser fingerprint was flagged as a proxy pool in this range.'
+            : `${pool.fingerprints} browser fingerprint${pool.fingerprints === 1 ? '' : 's'} flagged by the hourly anomaly detector; all their views in this range are left out.`}
         </p>
-      ) : (
-        <>
-          {/* Proportion bar */}
-          <div className="flex w-full h-3 rounded-full overflow-hidden mb-4">
-            {ordered.filter(c => c.count > 0).map(c => (
-              <div key={c.key} style={{ width: `${(c.count / total) * 100}%`, background: c.color }}
-                title={`${TRAFFIC_CLASS_LABELS[c.key]}: ${c.count.toLocaleString('en-US')}`} />
-            ))}
-          </div>
-          <div className="space-y-1">
-            {ordered.map(c => (
-              <div key={c.key} className="flex items-center justify-between py-1">
-                <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: c.color }} />
-                  {TRAFFIC_CLASS_LABELS[c.key]}
-                </span>
-                <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                  {c.count.toLocaleString('en-US')} · {total > 0 ? Math.round((c.count / total) * 100) : 0}%
-                </span>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+        {BOT_CLASSES.map(c => (
+          <Row key={c} label={TRAFFIC_CLASS_LABELS[c]} count={byClass.get(c) ?? 0} unit="requests" />
+        ))}
+        <p className="text-xs pt-2" style={{ color: 'var(--text-muted)' }}>
+          Crawlers and AI agents are counted by the server. They do not run the page tracker, so they were never in the pageview figures.
+        </p>
+      </div>
     </div>
   );
 }

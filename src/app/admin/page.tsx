@@ -216,7 +216,7 @@ export default async function AdminDashboard() {
 
       {/* ───────── Readers ───────── */}
       {metrics && (
-        <Section id="readers" title="Readers" intro={<><b className="text-stone-900">{fmtK(metrics.engagement.mau)}</b> people read something in the last 30 days{history[0] ? `, up from ${fmtK(history[0].mau)} when the daily record began on ${dayLabel(history[0].date)}` : ''}. The median session with more than one page lasts <b className="text-stone-900">{Math.floor(metrics.engagement.dwellMedianSec / 60)}m {String(metrics.engagement.dwellMedianSec % 60).padStart(2, '0')}s</b>.</>} link={{ href: '/platform/admin/metrics', label: 'Audience and usage detail' }}>
+        <Section id="readers" title="Readers" intro={<><b className="text-stone-900">{fmtK(metrics.engagement.mau)}</b> people read something in the last 30 days{history[0] ? `, up from ${fmtK(history[0].mau)} when the daily record began on ${dayLabel(history[0].date)}` : ''}. The median session with more than one page lasts <b className="text-stone-900">{Math.floor(metrics.engagement.dwellMedianSec / 60)}m {String(metrics.engagement.dwellMedianSec % 60).padStart(2, '0')}s</b>.</>} link={{ href: '/admin/traffic', label: 'Traffic by day, any range' }}>
           <Tiles tiles={[
             { l: 'Unique visitors, 30 days', v: fmtK(metrics.conversion.uniqVisitors), n: `${pct(metrics.conversion.returningVisitors, metrics.conversion.uniqVisitors)} came back on another day` },
             { l: 'Daily readers', v: fmtFull(metrics.engagement.avgDau), n: '14-day average' },
@@ -238,7 +238,7 @@ export default async function AdminDashboard() {
                 <LineChart labels={history.map(h => dayLabel(h.date))} series={[{ name: 'Accounts', color: SERIES[0], data: history.map(h => h.signupsTotal) }, { name: 'Email verified', color: SERIES[6], data: history.map(h => h.verified) }]} ariaLabel="Accounts and verified accounts over time" />
               </Panel>
             )}
-            <Panel title="Page views per day, last 30 days" note="Bots excluded. Spikes line up with newsletter and social pushes.">
+            <Panel title="Page views per day, last 30 days" note="Bots and flagged proxy pools excluded. Spikes line up with newsletter and social pushes.">
               <LineChart labels={metrics.traffic.dailyPageviews.slice(0, -1).map(d => dayLabel(d.date))} series={[{ name: 'Page views', data: metrics.traffic.dailyPageviews.slice(0, -1).map(d => d.hits), fill: true }]} height={200} ariaLabel="Human page views per day" />
             </Panel>
             <Panel title="Sign-ups per day, last 90 days">

@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAuth } from '@/lib/auth-helpers';
 import { getTrafficDashboard, type TrafficBin } from '@/lib/analytics-traffic';
 
-export const maxDuration = 30;
+// The 1-year range scans ~1.5M pageviews (~35s measured 2026-10-10); 30 days ~15s.
+export const maxDuration = 60;
 
 // Short in-memory cache keyed by the full query (range/bin/filters). Traffic
-// changes slowly and these aggregations scan the 90-day window.
+// changes slowly and the longer ranges scan up to a year of pageviews.
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -42,4 +43,6 @@ export const GET = withAuth(async (request: NextRequest) => {
     console.error('Traffic dashboard API error:', error);
     return NextResponse.json({ error: 'Failed to fetch traffic data' }, { status: 500 });
   }
-});
+  // Admin, matching /admin/traffic: the response carries top pages, sources
+  // and countries for the whole site.
+}, { minRole: 'admin' });
