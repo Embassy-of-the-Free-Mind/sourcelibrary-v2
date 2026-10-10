@@ -67,3 +67,21 @@ describe('matchKnownEntity — site features', () => {
     expect(matchKnownEntity('gallery', { collections: collections as any })?.kind).toBe('collection');
   });
 });
+
+// #4330: the proxy refuses the Librarian on partner hosts, so the search page
+// on a partner host must not offer a card that leads to a 404.
+describe('matchKnownEntity — on a partner host', () => {
+  it('does not offer the Librarian there, and still does on the apex', () => {
+    for (const q of ['librarian', 'ask the librarian', 'AI Librarian']) {
+      expect(matchKnownEntity(q, { onTenantHost: true }), q).toBeNull();
+      expect(matchKnownEntity(q)?.href, q).toBe('/librarian');
+      expect(matchKnownEntity(q, { onTenantHost: false })?.href, q).toBe('/librarian');
+    }
+  });
+
+  it('still offers what the partner host serves', () => {
+    expect(matchKnownEntity('gallery', { onTenantHost: true })?.href).toBe('/gallery');
+    const collections = [{ slug: 'alchemy', name: 'Alchemy', description: '', subtitle: '' }];
+    expect(matchKnownEntity('alchemy', { collections, onTenantHost: true })?.href).toBe('/collections/alchemy');
+  });
+});

@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { ChevronDown, Share2, Link2, Check } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import LikeButton from '@/components/ui/LikeButton';
+import { useIsTenantHost } from '@/hooks/useEmbedContext';
 
-interface Section { id: string; label: string }
+/** `hideOnTenantHost`: the section is wrapped in <HideOnTenantHost>, so its
+ *  jump link must go on a partner subdomain too (the Librarian, #4330). */
+interface Section { id: string; label: string; hideOnTenantHost?: boolean }
 
 /**
  * Section bar for a collection page. Sits under the hero and sticks to the top
@@ -17,7 +20,12 @@ interface Section { id: string; label: string }
  * `tone="dark"` sets the bar in the dark navbar's colour (bg-dark) so it reads
  * as a continuation of the header under a dark hero. Popovers stay white.
  */
-export default function CollectionAnchorBar({ sections, slug, tone = 'light' }: { sections: Section[]; slug: string; tone?: 'light' | 'dark' }) {
+export default function CollectionAnchorBar({ sections: allSections, slug, tone = 'light' }: { sections: Section[]; slug: string; tone?: 'light' | 'dark' }) {
+  const onTenantHost = useIsTenantHost();
+  const sections = useMemo(
+    () => (onTenantHost ? allSections.filter((s) => !s.hideOnTenantHost) : allSections),
+    [onTenantHost, allSections]
+  );
   const [open, setOpen] = useState<null | 'jump' | 'share'>(null);
   const [copied, setCopied] = useState(false);
   const [active, setActive] = useState<string | null>(null);
