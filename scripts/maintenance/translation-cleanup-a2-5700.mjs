@@ -25,6 +25,12 @@
  *               → `<term>X</term> <note>definition</note>`. The rule is the reader's
  *               (scripts/lib/term-definitions.mjs, shape 1 only); a chip inside another annotation
  *               span is left. Its own run: source `cleanup-termdef-5901`, never mixed with the others
+ *   e_leak      (#5700 A1(c)) the markup leaks the reader already repairs at read time
+ *               (scripts/lib/leaked-markup.mjs `repairLeakedMarkup`, imported, not copied): break
+ *               markers written as closers, `<meta>` with attributes or an unclosed continuity
+ *               label, note words written as attributes, a word doubled before its <term>, a word
+ *               echoed through a tag, entities (reader form: `&nbsp;` becomes a no-break space),
+ *               stray and closing heading hashes. Its own run: source `cleanup-markup-5700`
  *
  * NOT touched: `[Blank page — no translatable content]` (the pipeline's own marker — page-counts
  * and the translate worker read it; an empty translation would be picked up for retranslation),
@@ -53,16 +59,20 @@ import { parseTranslationTerms, hasNonLatinLetter } from '../lib/page-terms-pars
 import { sanitizeTranslationTags, TRANSLATION_TAG_VOCABULARY } from '../lib/translate-core.mjs';
 import { stripEditorialWrappers } from '../lib/strip-editorial-wrappers.mjs';
 import { splitInlineTermDefinitions, splitTermDefinition } from '../lib/term-definitions.mjs';
+import { repairLeakedMarkup } from '../lib/leaked-markup.mjs';
 
 export const SOURCE = 'cleanup-a2-5700';
 export const TERMDEF_SOURCE = 'cleanup-termdef-5901';
-export const CLASSES = ['a_initial', 'a_scan', 'c_tags', 'c_visible', 'b_original', 'd_termdef'];
-/** The classes a run with no --classes means: the #5700 set. d_termdef is always asked for by name. */
-export const A2_CLASSES = CLASSES.filter((c) => c !== 'd_termdef');
-/** Which revision label, issue and job a set of classes writes under. d_termdef has its own undo key, so it runs alone. */
+export const LEAK_SOURCE = 'cleanup-markup-5700';
+export const CLASSES = ['a_initial', 'a_scan', 'c_tags', 'c_visible', 'b_original', 'd_termdef', 'e_leak'];
+/** The classes a run with no --classes means: the #5700 set. d_termdef and e_leak are always asked for by name. */
+export const A2_CLASSES = CLASSES.filter((c) => c !== 'd_termdef' && c !== 'e_leak');
+/** Which revision label, issue and job a set of classes writes under. d_termdef and e_leak each have their own undo key, so each runs alone. */
 export function runFor(classes) {
-  if (!classes.includes('d_termdef')) return { source: SOURCE, issue: '#5700', jobId: 'a2-cleanup-5700' };
-  if (classes.length !== 1) throw new Error('d_termdef runs alone: its revision rows carry their own source label');
+  const own = classes.filter((c) => c === 'd_termdef' || c === 'e_leak');
+  if (!own.length) return { source: SOURCE, issue: '#5700', jobId: 'a2-cleanup-5700' };
+  if (classes.length !== 1) throw new Error(`${own[0]} runs alone: its revision rows carry their own source label`);
+  if (own[0] === 'e_leak') return { source: LEAK_SOURCE, issue: '#5700', jobId: 'decisions-data' };
   return { source: TERMDEF_SOURCE, issue: '#5901', jobId: 'term-defs-5901' };
 }
 const WHAT = {
@@ -72,6 +82,7 @@ const WHAT = {
   c_visible: 'centre markers the reader printed repaired',
   b_original: 'original: clauses whose quote is not on the page dropped',
   d_termdef: 'model definitions inside <term> moved to a <note> after the term',
+  e_leak: 'leaked markup repaired as the reader already shows it',
 };
 
 // ── (a) notes about the scan, not the text ───────────────────────────────────────────────────
@@ -365,6 +376,11 @@ export function cleanupPage(text, { classes = A2_CLASSES, ocrs = null } = {}) {
     if (Object.values(did).some(Boolean)) fired.d_termdef = Object.fromEntries(Object.entries(did).filter(([, v]) => v));
     if (inSpan) skipped.d_termdef = 'in-span';
   }
+  if (classes.includes('e_leak')) {
+    const did = {};
+    t = repairLeakedMarkup(t, { fired: did });
+    if (Object.keys(did).length) fired.e_leak = did;
+  }
   return { text: t, fired, skipped };
 }
 
@@ -475,10 +491,11 @@ function summarise(books) {
     const ks = Object.keys(c.f);
     if (ks.length) { s.pages_with_any++; booksHit.add(c.b); if ('l' in c) (s.by_language[c.l || '?'] ||= { pages_read: 0, pages_with_any: 0 }).pages_with_any++; }
     for (const [op, v] of Object.entries(c.f.d_termdef || {})) s.d_termdef_ops[op] = (s.d_termdef_ops[op] || 0) + v;
+    for (const op of Object.keys(c.f.e_leak || {})) (s.e_leak_rule_pages ||= {})[op] = (s.e_leak_rule_pages[op] || 0) + 1;
     for (const k of ks) (s.by_class[k] ||= { pages: 0, edits: 0 }, s.by_class[k].pages++, s.by_class[k].edits += typeof c.f[k] === 'number' ? c.f[k] : Array.isArray(c.f[k]) ? c.f[k].length : Object.values(c.f[k]).reduce((a, b) => a + b, 0));
     for (const [op, v] of Object.entries(c.f.c_visible || {})) s.c_visible_ops[op] = (s.c_visible_ops[op] || 0) + v;
     for (const [k, why] of Object.entries(c.s || {})) s.skipped[`${k}:${why}`] = (s.skipped[`${k}:${why}`] || 0) + 1;
-    if (ks.some((k) => k !== 'b_original' && k !== 'd_termdef')) s.union.a2 = (s.union.a2 || 0) + 1;
+    if (ks.some((k) => k !== 'b_original' && k !== 'd_termdef' && k !== 'e_leak')) s.union.a2 = (s.union.a2 || 0) + 1;
   }
   s.books_with_any = booksHit.size;
   fs.writeFileSync(fp('scan'), JSON.stringify(s, null, 1));

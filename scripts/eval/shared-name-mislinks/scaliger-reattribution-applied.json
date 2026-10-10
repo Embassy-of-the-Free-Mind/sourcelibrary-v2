@@ -1,0 +1,70 @@
+{
+ "planned_at": "2026-10-10T17:15:43.341Z",
+ "summary": {
+  "surname": "Scaliger",
+  "record_id": "6952b1a9c263a0240a48f3b0",
+  "record_wikidata_id": "Q441066",
+  "books": 605,
+  "mentions": 3588,
+  "proposed_moves": 1907,
+  "needs_reader": 2,
+  "stay": 1679,
+  "moves_by_person": {
+   "julius": 987,
+   "joseph": 920
+  },
+  "moves_by_person_and_tier": {
+   "julius/by-eye": 624,
+   "joseph/printed": 169,
+   "joseph/by-eye": 751,
+   "julius/printed": 363
+  },
+  "stay_by_reason": {
+   "by-eye": 73,
+   "no-evidence": 1255,
+   "both-on-page": 10,
+   "both-in-book": 336,
+   "too-early-for-anyone": 5
+  },
+  "books_by_outcome": {
+   "stay": 228,
+   "julius": 143,
+   "joseph+stay": 49,
+   "joseph": 71,
+   "julius+stay": 89,
+   "joseph+julius+stay": 15,
+   "joseph+julius": 10
+  },
+  "target_records": {
+   "julius": [
+    {
+     "_id": "6995433cfb05b02a153a5afb",
+     "name": "Julius Caesar Scaliger",
+     "books": 207
+    },
+    {
+     "_id": "699987d78eb174f845dadf2b",
+     "name": "Julius Scaliger",
+     "books": 91
+    },
+    {
+     "_id": "69953076fb05b02a153a42dc",
+     "name": "J. C. Scaliger",
+     "books": 15
+    }
+   ],
+   "joseph": [
+    {
+     "_id": "69952727fb05b02a153a3d16",
+     "name": "Joseph Scaliger",
+     "books": 261
+    },
+    {
+     "_id": "699897b88eb174f845da5668",
+     "name": "Joseph Justus Scaliger",
+     "books": 38
+    }
+   ]
+  }
+ }
+}

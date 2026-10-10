@@ -1,0 +1,40 @@
+{
+ "sweep": "clear-bare-surname-claims-5950",
+ "applied_at": {
+  "$date": "2026-10-10T16:24:12.396Z"
+ },
+ "docs": [
+  {
+   "_id": "6991f0edfb05b02a1539aeec",
+   "name": "Bacon",
+   "removed": {
+    "wikidata_id": "Q37388",
+    "wikidata_birth_date": "1561-01-22",
+    "wikidata_death_date": "1626-04-09",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "description": "Refers to either Roger Bacon, the medieval scientist, or Francis Bacon, the philosopher of the scientific method; both were highly influential in early modern natural philosophy.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Francis_Bacon",
+    "birth_place": {
+     "city": "London",
+     "lat": 51.507222222,
+     "lng": -0.1275,
+     "country": "United Kingdom"
+    },
+    "death_place": {
+     "city": "Highgate",
+     "lat": 51.5716,
+     "lng": -0.1448,
+     "country": "United Kingdom"
+    },
+    "aliases": [
+     "Francis Bacon",
+     "Roger Bacon",
+     "Verulam",
+     "Doctor Mirabilis"
+    ]
+   }
+  }
+ ]
+}
