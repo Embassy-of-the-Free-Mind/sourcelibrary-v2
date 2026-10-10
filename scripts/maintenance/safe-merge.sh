@@ -44,7 +44,6 @@ set -uo pipefail
 REPO="${SAFE_MERGE_REPO:-Embassy-of-the-Free-Mind/sourcelibrary-v2}"
 POLL_SECS="${SAFE_MERGE_POLL_SECS:-5}"
 POLL_TRIES="${SAFE_MERGE_POLL_TRIES:-24}"
-INTERLOCK=(node --env-file=.env.production.local scripts/audit/entities-sweep-active.mjs)
 VIEW_FIELDS=number,title,state,isDraft,labels,baseRefName,headRefName,headRefOid,isCrossRepository,mergeable,mergeStateStatus,statusCheckRollup
 
 usage() { sed -n '/^# USAGE/,/^# exit/p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2; }
@@ -64,8 +63,18 @@ while [ $# -gt 0 ]; do
 done
 [ ${#PRS[@]} -gt 0 ] || usage
 
-# The interlock path and its env file are relative to the repo root.
+# The interlock path is relative to the repo root.
 cd "$(dirname "$0")/../.." || exit 2
+
+# The env file lives only in the main checkout; a worktree has none (#6105).
+# Prefer a local one, else the main checkout's (the parent of the common .git).
+# With neither, node exits 9 and the interlock refuses below.
+ENV_FILE=.env.production.local
+if [ ! -f "$ENV_FILE" ]; then
+  main_dir=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)")
+  [ -f "$main_dir/.env.production.local" ] && ENV_FILE="$main_dir/.env.production.local"
+fi
+INTERLOCK=(node --env-file="$ENV_FILE" scripts/audit/entities-sweep-active.mjs)
 
 refuse() { echo "REFUSED #$1: $2" >&2; echo "stopping; nothing after #$1 was touched." >&2; exit 1; }
 
@@ -124,7 +133,7 @@ for pr in "${PRS[@]}"; do
   "${INTERLOCK[@]}"
   rc=$?
   if [ "$rc" -ne 0 ]; then
-    [ -f .env.production.local ] || echo "(no .env.production.local here — run from the main checkout, where the secrets live)" >&2
+    [ -f "$ENV_FILE" ] || echo "(no .env.production.local here or in the main checkout — the interlock needs its secrets)" >&2
     refuse "$pr" "entities interlock exited $rc (0 = clear; 1 = active sweep; 2 = UNKNOWN, which is not clear)"
   fi
 
