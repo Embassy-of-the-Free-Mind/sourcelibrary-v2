@@ -1,3 +1,16 @@
+---
+stage: translation
+measure: judged
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: 60
+n_pages: 60
+verdict: "No arm displaces lite: preview beats it blind (31-16, p=0.040) at 2.2x cost; Chinese-lab arms write less; the judge's test-retest is only 52%."
+status: rejected
+decision: "Lite kept for the Chinese ritual-dance books; pre-registered rule applied as written"
+superseded_by: null
+---
 ## 2026-09-14 — Which model should translate classical Chinese? (樂舞 preview pages, SIX arms) — RESULT
 
 **Headline: no arm displaces `gemini-3.1-flash-lite`. `gemini-3-flash-preview` is the

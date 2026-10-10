@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { browseBooks, type SortOption } from '@/lib/books-catalog';
 import { ART_EXCLUDED_RESOURCE_TYPES } from '@/lib/collections-utils';
+import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 
 export const maxDuration = 30;
 
@@ -108,12 +109,17 @@ export async function GET(
       } catch {
         // Supabase unavailable (local dev, etc.) — fall back to MongoDB
         console.warn(`[Collection ${id}] Supabase manifest query failed, falling back to MongoDB`);
+        // readable_in_english over the stored ladder (#5288) — the same view the
+        // Supabase path filters on. Under $and because the provider clause is an $or too.
         const mongoFilter: Record<string, unknown> = {
           collections: id,
           visible: true,
-          ...(skipTranslationFilter ? {} : { pages_translated: { $gt: 0 } }),
-          ...(provider ? { $or: [{ held_by: provider }, { 'image_source.provider': provider }] } : {}),
+          $and: [
+            ...(skipTranslationFilter ? [] : [READABLE_IN_ENGLISH_FILTER]),
+            ...(provider ? [{ $or: [{ held_by: provider }, { 'image_source.provider': provider }] }] : []),
+          ],
         };
+        if ((mongoFilter.$and as unknown[]).length === 0) delete mongoFilter.$and;
         const mongoDocs = await db.collection('books')
           .find(mongoFilter, {
             projection: {

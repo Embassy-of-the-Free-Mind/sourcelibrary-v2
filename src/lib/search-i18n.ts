@@ -137,7 +137,7 @@ export interface SearchStrings {
   searchingPageContent: string;
   catalogMatches: string;
   fromTheSite: string;
-  sitePageType: (type: 'blog' | 'collection' | 'page' | 'feature') => string;
+  sitePageType: (type: 'blog' | 'collection' | 'page' | 'feature' | 'author') => string;
   works: (n: number) => string;
   searchingCatalog: string;
   openAllCatalogueMatches: (n: string) => string;
@@ -262,8 +262,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     hasDoi: 'Has DOI',
 
     signInHeading: 'Sign in to keep searching',
-    signInBody: 'You’ve used your free searches for now. Sign in — it’s free — to keep exploring over 10,000 primary sources.',
-    signInCta: 'Sign in — free',
+    signInBody: 'You’ve used your free searches for now. Sign in (it’s free) to keep exploring over 10,000 primary sources.',
+    signInCta: 'Sign in for free',
 
     show: 'Show',
     perPage: 'per page',
@@ -299,7 +299,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
 
     illustrations: 'Illustrations',
     seeAllImages: 'See all images',
-    semanticDegraded: 'Related results couldn’t be loaded just now — you may be seeing fewer matches than we hold. Try again in a moment.',
+    semanticDegraded: 'Related results couldn’t be loaded just now, so you may be seeing fewer matches than we hold. Try again in a moment.',
     weakMatchTitle: (q) => `No strong matches for “${q}”`,
     weakMatchBody: 'Nothing in the library matches all of your search words. The results below match only part of your search.',
     conceptualMatches: 'Conceptual matches',
@@ -309,7 +309,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     searchingPageContent: 'Searching page content...',
     catalogMatches: 'Catalog matches',
     fromTheSite: 'From the site',
-    sitePageType: (type) => (type === 'blog' ? 'Essay' : type === 'collection' ? 'Collection' : type === 'feature' ? 'Tool' : 'Page'),
+    sitePageType: (type) => (type === 'blog' ? 'Essay' : type === 'collection' ? 'Collection' : type === 'feature' ? 'Tool' : type === 'author' ? 'Author' : 'Page'),
     works: (n) => (n === 1 ? 'work' : 'works'),
     searchingCatalog: 'Searching catalog...',
     openAllCatalogueMatches: (n) => `Open all ${n} catalogue matches`,
@@ -401,8 +401,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     hasDoi: 'Con DOI',
 
     signInHeading: 'Inicia sesión para seguir buscando',
-    signInBody: 'Has agotado tus búsquedas gratuitas por ahora. Inicia sesión — es gratis — para seguir explorando más de 10.000 fuentes primarias.',
-    signInCta: 'Inicia sesión — es gratis',
+    signInBody: 'Has agotado tus búsquedas gratuitas por ahora. Inicia sesión (es gratis) para seguir explorando más de 10.000 fuentes primarias.',
+    signInCta: 'Inicia sesión gratis',
 
     show: 'Mostrar',
     perPage: 'por página',
@@ -438,7 +438,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
 
     illustrations: 'Ilustraciones',
     seeAllImages: 'Ver todas las imágenes',
-    semanticDegraded: 'No se han podido cargar los resultados relacionados — puede que veas menos coincidencias de las que tenemos. Inténtalo de nuevo en un momento.',
+    semanticDegraded: 'No se han podido cargar los resultados relacionados, así que puede que veas menos coincidencias de las que tenemos. Inténtalo de nuevo en un momento.',
     weakMatchTitle: (q) => `No hay coincidencias exactas para «${q}»`,
     weakMatchBody: 'Nada en la biblioteca coincide con todas las palabras de tu búsqueda. Los resultados siguientes coinciden solo con una parte.',
     conceptualMatches: 'Coincidencias conceptuales',
@@ -448,7 +448,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     searchingPageContent: 'Buscando en el texto de las páginas...',
     catalogMatches: 'Coincidencias en el catálogo',
     fromTheSite: 'En el sitio',
-    sitePageType: (type) => (type === 'blog' ? 'Ensayo' : type === 'collection' ? 'Colección' : type === 'feature' ? 'Herramienta' : 'Página'),
+    sitePageType: (type) => (type === 'blog' ? 'Ensayo' : type === 'collection' ? 'Colección' : type === 'feature' ? 'Herramienta' : type === 'author' ? 'Autor' : 'Página'),
     works: (n) => (n === 1 ? 'obra' : 'obras'),
     searchingCatalog: 'Buscando en el catálogo...',
     openAllCatalogueMatches: (n) => `Ver las ${n} coincidencias del catálogo`,

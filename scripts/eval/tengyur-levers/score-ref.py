@@ -22,6 +22,8 @@ writes results/.../refjudge/scores.json (no quotes).
                  Tengyur sides (PREREG-claude-arms.md; companion packet), PREREG.md's judge gate, by-text CIs,
                  C38 (#6321's packet) bridged through G38; [--exclude drops.json] as above
   --round claude6182xl the same arms on the 365 other-language pages: score-xl.run_claude
+  --round cli6182xl #6331 test 1: C38 beside G38 and production on the 365 other-language pages (score-xl.run_cli;
+                 experiments/2026-10-08-cli-arm-xl-365-6331.md), with and without #6304's drops
 """
 import collections, glob, itertools, json, random, sys
 
@@ -59,6 +61,23 @@ if ROUND == "claude6182xl":  # both judges on every item (companion packet, PRER
     spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     m.run_claude(key=key, J=J, OUT=OUT, drops=drops)
+    sys.exit(0)
+if ROUND == "cli6182xl":  # #6331 test 1: C38 beside G38 and production on the 365 xl pages, both judges on every item
+    import importlib.util, re
+    OUT, JW = "scripts/eval/results/cli-arm-6182/xljudge", "/root/cli38-6182/xljudge"
+    key = json.load(open(f"{OUT}/key.json"))
+    J = {"J1": {}, "J2": {}}
+    for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
+        j = "J2" if "-J2-" in f else "J1"
+        for l in open(f):
+            if l.strip():
+                o = json.loads(l); J[j][o["id"]] = o
+    missing = {j: [i for i in key["items"] if i not in J[j]] for j in J}
+    assert not any(missing.values()), missing
+    drops = {re.sub(r"_0*(\d+)$", r"_\1", d["page"]) for d in json.load(open("scripts/eval/results/pareto-sample-audit-6304/drops.json"))["drops"] if d["family"] == "translation"}
+    spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.run_cli(key=key, J=J, OUT=OUT, drops=drops)
     sys.exit(0)
 P6182 = ROUND == "6182"
 CLT = ROUND == "claude6182"

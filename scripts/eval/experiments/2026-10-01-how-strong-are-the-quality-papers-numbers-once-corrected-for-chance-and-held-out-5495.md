@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 327
+verdict: "Corrected for chance the two judges agree at kappa 0.56 on sound vs not, and the two-read screen's recall falls from 74% in-sample to 55% held out."
+status: informational
+decision: "Quality paper text corrected and reader-panel protocol changed before sign-off (#5495)"
+superseded_by: null
+issue: 5495
+---
 ## 2026-10-01 · How strong are the /research/quality paper's numbers once agreement is corrected for chance and the screen is scored on held-out pages? (#5495)
 
 PRIOR ART: 2026-09-30-were-the-bootstrap-intervals-in-this-file-the-right-5373.md — recomputed bootstrap widths after the RNG fix, not chance correction or held-out scoring; 2026-09-30-translation-corpus-audit-…-5274.md and the #5313 entry are the runs re-analysed here, not replaced.

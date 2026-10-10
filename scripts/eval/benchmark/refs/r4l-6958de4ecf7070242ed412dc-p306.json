@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Pena_adversaria_2",
+  "edition": "Stirpium Adversaria Nova : perfacilis Vestigatio, luculentaqne [recte: luculentaque] accessio ad Priscorum, praesertim Dioscoridis &amp; Recentiorum, Materiam Medicam ; Quibus Propediem Accedet Altera Pars [...]. — London: Thomae Purfoetius, 1571.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6958de4ecf7070242ed412dc",
+  "page_number": 306,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 300811,
+    "to_char": 305153,
+    "overlap": 0.421,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "p.282 (misprinted for 285?) Cappares cont., Vinca, Pervinca, Viscum; ref matches incl. marginal vernacular names; Greek garbled in ref beta-code.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      304,
+      305,
+      306
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.478Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "6de15536d456ad43dff26d9045f7ebb27173ec161e1ceb7fffed4c39d298c6f2",
+  "unit": {
+    "chars": 4342
+  }
+}

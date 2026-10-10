@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: 69
+n_pages: 69
+verdict: "PaddleOCR-VL-1.6 passes the cost-lane rule on SKQS manuscript-regular: median dCER -0.028 vs flash-lite, 57W/10L, 0 vs 14 catastrophic; woodblock and typeset directional only"
+status: adopted
+decision: "Siku Quanshu Chinese routed to a PaddleOCR-VL cost lane by rule (#4743); lane writer being built (#5600)"
+superseded_by: null
+issue: [4925, 4743]
+---
 ## 2026-09-18 — Is PaddleOCR-VL-1.6 an acceptable COST LANE for Chinese pages, decided per observed page class? (#4925 step 1a, #4743) — RESULT
 
 **Headline: on Siku Quanshu brush manuscript (`manuscript-regular`, 69 referenced books,

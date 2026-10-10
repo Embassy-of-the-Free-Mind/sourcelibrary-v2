@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocale, localePath } from '@/lib/i18n';
+import { useLocale, localePath, CHROME_STRINGS } from '@/lib/i18n';
 import { adminMenuLinks } from '@/lib/admin-links';
 
 interface UserMenuProps {
@@ -43,10 +43,10 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     return (
       <Link
         href={localePath('/auth/signin', locale)}
-        className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
+        className={`text-sm font-medium whitespace-nowrap transition-colors hover:opacity-80 ${textColor}`}
         style={textStyle}
       >
-        {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
+        {CHROME_STRINGS[locale].signIn}
       </Link>
     );
   }

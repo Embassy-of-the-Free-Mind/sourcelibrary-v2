@@ -170,7 +170,7 @@ function buildProviders(
       {
         id: BASE,
         type: 'Text',
-        label: { en: ['Source Library — re-hosted edition with AI OCR & translation'] },
+        label: { en: ['Source Library: re-hosted edition with AI OCR & translation'] },
         format: 'text/html',
       },
     ],
@@ -363,7 +363,7 @@ export async function GET(
       label: { en: ['AI Training / TDM'] },
       value: {
         en: [
-          'Reserved (EU Directive 2019/790 Art. 4). A standard license is available — see <a href="https://sourcelibrary.org/licensing">sourcelibrary.org/licensing</a>.',
+          'Reserved (EU Directive 2019/790 Art. 4). A standard license is available; see <a href="https://sourcelibrary.org/licensing">sourcelibrary.org/licensing</a>.',
         ],
       },
     });

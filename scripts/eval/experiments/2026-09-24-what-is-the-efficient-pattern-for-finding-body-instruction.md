@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 926
+n_pages: 1343
+verdict: "A linear probe on page embeddings distilled from Jev puts 44.5% Jev-positives in its top 1,343 pages vs 0.9% at random and 15.6% for the best Jev-only cascade"
+status: informational
+decision: null
+superseded_by: null
+issue: null
+---
 ## 2026-09-24 — What is the efficient pattern for finding "body instruction" pages across 4.5M pages? (Jev, $8.57 total) — RESULT
 
 **Headline: distil Jev into a linear probe on the page embeddings we already hold, then spend Jev only on the probe's top.**

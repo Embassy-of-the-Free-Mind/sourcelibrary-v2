@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [grc, fa, la]
+scripts: [Grek, Arab, Latn]
+canons: []
+n_books: null
+n_pages: 135
+verdict: "10,005 untranslated pages in 703 books sit in the bad-OCR strata; no cheap page signal reaches precision 0.8 (best: Greek dictionary miss P 0.80, R 0.24)."
+status: rejected
+decision: "No page-level gate; the per-stratum OCR trust gate at every translation enrol was merged instead (#5761)"
+superseded_by: null
+issue: [5700, 5695]
+---
 ## 2026-10-03 · Which untranslated pages sit on OCR we already know is bad, and can a cheap page signal find the rest? (#5700)
 <!-- PRIOR ART: scripts/lib/ocr-garble-score.mjs + ocr-garble-verdict.mjs (#5313: the features, reused; tuned against a judge's "garbled" label, never against an image-checked cause); scripts/eval/quality-census-score.mjs (#5707: sampled served defects, not pending pages per stratum); the #5695 track results under scripts/eval/results/xlref-t*-2026-10 (the cause labels this calibrates on). -->
 

@@ -139,6 +139,8 @@ describe('proxy behavior', () => {
     '/vision',
     '/census',
     '/research',
+    '/ideas',
+    '/ideas/prima-materia',
     '/blog',
     '/contribute',
     '/support',

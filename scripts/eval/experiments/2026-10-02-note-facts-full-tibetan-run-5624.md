@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 197
+n_pages: null
+verdict: "All 359 candidate notes in the Tibetan run checked: 18 (5.0%) wrong or partly wrong, 11 (3.1%) strictly wrong, mostly Sanskrit equivalents and identifications; the sample's 15% was high by chance."
+status: informational
+decision: "18-row corrections list; the corrections were later applied (seen in #5647); prompt line still pending (#5624)"
+superseded_by: null
+issue: [5624, 4523]
+---
 ## 2026-10-02 · Every candidate note in the Tibetan run, fact-checked (#5624)
 <!-- PRIOR ART: 2026-10-02-are-the-facts-translation-notes-add-right-5624.md (PR #5632) — same question and method on a 40-note sample; this file extends it to all 359 candidates and reuses its 40 verdicts. -->
 

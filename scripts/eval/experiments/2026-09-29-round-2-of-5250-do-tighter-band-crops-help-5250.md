@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [bo, syc]
+scripts: [Tibt, Syrc]
+canons: []
+n_books: null
+n_pages: 158
+verdict: "Band crops do not beat leafcrop for Yigdzin (identity -9 pp, duplicated lines); photometric arms null for Yigdzin, but unsharp, flatten and denoise help Kraken on Syriac."
+status: rejected
+decision: "Band crops not adopted; the exploratory Kraken gains went to a fresh-page replication (round 3, #5250)"
+superseded_by: null
+issue: 5250
+---
 ## 2026-09-29 — Round 2 of #5250: do tighter band crops help Yigdzin, and do the untested photometric arms help Yigdzin or Kraken? (#5250)
 
 **Headline, bands: NO. Band crops do not beat the production leafcrop for Yigdzin.** Under the pre-registered merge rule

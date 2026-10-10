@@ -12,6 +12,21 @@ import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
 import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
 import { matchStems, hasWordForms, keywordVariants } from '@/lib/search/word-forms';
+import { READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, type TranslationRung } from '@/lib/page-counts';
+
+/**
+ * PostgREST `or` expression for the named view `readable_in_english`
+ * (.claude/docs/translation-state.md, #5288): the book reads in English now —
+ * ≥ 90% of its translatable pages translated, or an English original whose text
+ * is transcribed. This is what `hasTranslation` means on every catalog query.
+ * It replaced `pages_translated > 0`, which called a 25-page preview of a
+ * 300-page book "translated" and an English original "untranslated".
+ * Columns: `translation_rung` / `english_original`, written by
+ * scripts/workers/sync-books-catalog.mjs via catalogTranslationColumns().
+ */
+export const READABLE_IN_ENGLISH_OR =
+  `translation_rung.in.(${READABLE_RUNGS.join(',')}),` +
+  `and(english_original.is.true,translation_rung.in.(${ENGLISH_ORIGINAL_READABLE_RUNGS.join(',')}))`;
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -80,6 +95,10 @@ export interface CatalogBook {
   /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
   text_role: string | null;
   place_published: string | null;
+  /** Translation-state ladder rung (#5288); null only on a row not yet mirrored. */
+  translation_rung: TranslationRung | null;
+  /** The edition's own language is English — readable at `transcribed`. */
+  english_original: boolean;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -122,7 +141,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // and PostgREST 42703s the whole query on an unknown column — which would take
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
-export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
 
 // The extra columns search and the book-detail shell append after BOOK_SELECT.
 // `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
@@ -252,7 +271,7 @@ export async function browseBooks(opts: {
     .eq('visible', true);
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
-  if (opts.hasTranslation) query = query.gt('pages_translated', 0);
+  if (opts.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
   if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
@@ -376,7 +395,7 @@ export async function countBooks(filter: {
     .eq('visible', true);
 
   if (filter.hasPages !== false) query = query.gt('pages_count', 0);
-  if (filter.hasTranslation) query = query.gt('pages_translated', 0);
+  if (filter.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
   if (filter.language) query = query.eq('language', filter.language);
   if (filter.provider) {
     query = Array.isArray(filter.provider)
@@ -736,7 +755,7 @@ export async function searchBooksCatalog(
     if (opts?.language) query = query.eq('language', opts.language);
     if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
     if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
-    if (opts?.hasTranslation) query = query.gt('pages_translated', 0);
+    if (opts?.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
     // Publication-year range. Rows with a null year drop out of a bounded range,
     // same as listBooksCatalog — an undated edition can't satisfy "after 1600".
     if (opts?.yearMin != null) query = query.gte('year', opts.yearMin);

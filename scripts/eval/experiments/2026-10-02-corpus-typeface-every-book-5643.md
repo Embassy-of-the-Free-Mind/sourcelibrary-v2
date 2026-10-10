@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 41555
+n_pages: 41555
+verdict: "Typeface now known for 92% of books: blackletter 10.0% of all 41,555 books, German 83.1%, Dutch 42.6%, Latin 9.7%; most BSB books undescribed after IIIF 429s."
+status: informational
+decision: null
+superseded_by: null
+issue: 5643
+---
 ## 2026-10-02 · How much of the collection is blackletter? Typeface for every book, from one page each (#5643, extension)
 <!-- PRIOR ART: 2026-10-02-corpus-page-profile-5643.md (the first pass: same picked page per book, descriptor on 17% of books only); scripts/eval/quality-covariates.mjs --corpus-profile (extended with --typeface rather than a new script); scripts/eval/lib/page-descriptor.mjs (unchanged). -->
 

@@ -1,0 +1,2212 @@
+{
+  "summary": {
+    "stratum": "latin-pre1700",
+    "issue": 4800,
+    "date": "2026-10-04",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "calamari-gt4histocr-bin": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.069,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.715,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.069,
+          "mean_cer": 0.102,
+          "mean_cer_answered": 0.102
+        },
+        "invention": {
+          "median": 0.135,
+          "mean": 0.17,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-0b0df1-p100",
+            "title": "Summa de virtutibus et vitiis",
+            "year": 1497,
+            "cer": 0.706,
+            "gap": 0.215,
+            "invention": 0.399,
+            "has_ref": false,
+            "unsupported": [
+              "spũs",
+              "crcatꝰ",
+              "sunctis",
+              "aplus",
+              "sctũm",
+              "spũm",
+              "anctũ",
+              "eilij"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-58b2bd-p44",
+            "title": "Ordo missas celebrandi iuxta missale Romanum ...",
+            "year": 1597,
+            "cer": 0.164,
+            "gap": 0.011,
+            "invention": 0.238,
+            "has_ref": false,
+            "unsupported": [
+              "cebrandi",
+              "ssam",
+              "iungẽs",
+              "orarione",
+              "deminic",
+              "tact",
+              "mmun",
+              "elebrans"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.137,
+            "gap": 0.035,
+            "invention": 0.045,
+            "has_ref": false,
+            "unsupported": [
+              "dasistiu",
+              "exponen",
+              "menta",
+              "linoxcarbasino",
+              "porest",
+              "uaporemdissipat",
+              "atteręntis",
+              "aspe"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-f0c975-p8",
+            "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort",
+            "year": 1635,
+            "cer": 0.134,
+            "gap": 0.008,
+            "invention": 0.359,
+            "has_ref": false,
+            "unsupported": [
+              "uodnec",
+              "popnlo",
+              "carere",
+              "quoqne",
+              "adaucti",
+              "sorte",
+              "reforma",
+              "rævar"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c139bb-p260",
+            "title": "Mechanicorum libri octo",
+            "year": 1684,
+            "cer": 0.105,
+            "gap": 0,
+            "invention": 0.246,
+            "has_ref": false,
+            "unsupported": [
+              "secundus",
+              "capu",
+              "hujusmodi",
+              "uneiâ",
+              "esset",
+              "assumatur",
+              "solitarium",
+              "conspectum"
+            ]
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.045,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.831,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.045,
+          "mean_cer": 0.042,
+          "mean_cer_answered": 0.042
+        },
+        "invention": {
+          "median": 0.046,
+          "mean": 0.066,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.146,
+            "gap": 0.043,
+            "invention": 0.028,
+            "has_ref": false,
+            "unsupported": [
+              "καρπασίῳ",
+              "potest",
+              "dissipat",
+              "aspectu",
+              "masistius"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "cer": 0.092,
+            "gap": 0.013,
+            "invention": 0.209,
+            "has_ref": false,
+            "unsupported": [
+              "nusquam",
+              "hodie",
+              "haec",
+              "sobria",
+              "manichaeum",
+              "christiani",
+              "haeretici",
+              "verum"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "cer": 0.075,
+            "gap": 0.01,
+            "invention": 0.058,
+            "has_ref": false,
+            "unsupported": [
+              "cœlestia",
+              "pissimis",
+              "impissima",
+              "uerborꝝ"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-767838-p246",
+            "title": "Phrases Latinae linguae, tabulis delineatæ",
+            "year": 1636,
+            "cer": 0.068,
+            "gap": 0,
+            "invention": 0.035,
+            "has_ref": false,
+            "unsupported": [
+              "tuorúmque",
+              "tuísque",
+              "servetia",
+              "titi"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.097,
+            "has_ref": false,
+            "unsupported": [
+              "atqꝫ",
+              "probatum",
+              "christiano",
+              "tantí",
+              "protestatiõe",
+              "eoqꝫ",
+              "utraqꝫ",
+              "potest"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.112,
+          "mean": 0.161,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "invention": 0.507,
+            "has_ref": false,
+            "unsupported": [
+              "effet",
+              "scholaftica",
+              "sophiftica",
+              "fomnia",
+              "funt",
+              "cœleftia",
+              "ecclefiæ",
+              "facramentorum"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "invention": 0.361,
+            "has_ref": false,
+            "unsupported": [
+              "feueritatẽ",
+              "expofcens",
+              "iuftũ",
+              "conclufionibus",
+              "chriftiano",
+              "ipfa",
+              "lucefcat",
+              "poft"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-517be1-p4",
+            "title": "De transactionibus theses LXIV",
+            "year": 1582,
+            "invention": 0.326,
+            "has_ref": false,
+            "unsupported": [
+              "tranfigens",
+              "caufæ",
+              "tranfigendo",
+              "poteft",
+              "fubfecuto",
+              "reftitutio",
+              "præftet",
+              "abfq"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "invention": 0.315,
+            "has_ref": false,
+            "unsupported": [
+              "genefi",
+              "quadragefima",
+              "nufquam",
+              "concifiones",
+              "difcurfus",
+              "conftantinopolis",
+              "honeftam",
+              "fobria"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "invention": 0.296,
+            "has_ref": false,
+            "unsupported": [
+              "effe",
+              "lychnū",
+              "femel",
+              "infequentis",
+              "fufficit",
+              "affiduè",
+              "inπαπυρίς",
+              "ellychniū"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "latin-pre1700-0b0df1-p100",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Summa de virtutibus et vitiis",
+      "year": 1497,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 3292,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.706,
+          "acc": 0.294,
+          "seq": 0.367,
+          "bow": 0.582,
+          "gap": 0.215,
+          "len_ratio": 0.989,
+          "invention": 0.399,
+          "invention_indep": 0.399,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "spũs",
+            "crcatꝰ",
+            "sunctis",
+            "aplus",
+            "sctũm",
+            "spũm",
+            "anctũ",
+            "eilij"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.612,
+            "gemini-3.1-flash-lite": 0.582
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 3336,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.06,
+          "acc": 0.94,
+          "seq": 0.84,
+          "bow": 0.84,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.149,
+          "invention_indep": 0.149,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqꝫ",
+            "scđo",
+            "coꝛdibus",
+            "eiūs",
+            "inueniatur",
+            "spēs",
+            "viij",
+            "vnde"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.612,
+            "gemini-3.1-flash-lite": 0.84
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3328,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.166,
+          "invention_indep": 0.166,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqz",
+            "scdo",
+            "inueniatu",
+            "corda",
+            "sanc",
+            "postqz",
+            "producitur",
+            "appzopriatur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.582,
+            "gemini-3-flash-preview": 0.84
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-217b93-p10",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "... Disputationem inauguralem de concursu actionum",
+      "year": 1620,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1327,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.928,
+          "bow": 0.928,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prætor2",
+            "vindicarione",
+            "quiservum",
+            "qquæritur",
+            "quæex"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.946,
+            "gemini-3.1-flash-lite": 0.928
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1327,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.976,
+          "bow": 0.976,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "superfuum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.946,
+            "gemini-3.1-flash-lite": 0.976
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1328,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_indep": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "raptoru",
+            "supereft",
+            "consequēdum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.928,
+            "gemini-3-flash-preview": 0.976
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-2ffaf6-p66",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Das Buch Paragranvm Avreoli Theophrasti Paracelsi : Darinn die vier Columnae, als da ist, Philosophia, Astronomia, Alchi",
+      "year": 1565,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 822,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.026,
+          "acc": 0.974,
+          "seq": 0.846,
+          "bow": 0.846,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.08,
+          "invention_indep": 0.08,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "holtz",
+            "natu",
+            "rlich",
+            "morbusist",
+            "speculierunt",
+            "llen",
+            "ssen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.83,
+            "gemini-3.1-flash-lite": 0.846
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 819,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.018,
+          "acc": 0.982,
+          "seq": 0.82,
+          "bow": 0.82,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.128,
+          "invention_indep": 0.128,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "verlieren",
+            "einem",
+            "kleineren",
+            "saget",
+            "gewisse",
+            "recept",
+            "genommen",
+            "lasset"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.83,
+            "gemini-3.1-flash-lite": 0.82
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 822,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.08,
+          "invention_indep": 0.08,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eingea",
+            "passio",
+            "wollen",
+            "staten",
+            "nitru",
+            "lurische",
+            "auge"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.846,
+            "gemini-3-flash-preview": 0.82
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-3b3ace-p140",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+      "year": 1579,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 831,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.088,
+          "acc": 0.912,
+          "seq": 0.572,
+          "bow": 0.579,
+          "gap": 0.007,
+          "len_ratio": 0.979,
+          "invention": 0.311,
+          "invention_indep": 0.311,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quitur",
+            "usquam",
+            "omni",
+            "cuuitas",
+            "sobriã",
+            "matremfamiliàs",
+            "christiami",
+            "atholici"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.646,
+            "gemini-3.1-flash-lite": 0.579
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 860,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.092,
+          "acc": 0.908,
+          "seq": 0.649,
+          "bow": 0.662,
+          "gap": 0.013,
+          "len_ratio": 1.013,
+          "invention": 0.209,
+          "invention_indep": 0.209,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "nusquam",
+            "hodie",
+            "haec",
+            "sobria",
+            "manichaeum",
+            "christiani",
+            "haeretici",
+            "verum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.646,
+            "gemini-3.1-flash-lite": 0.662
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 849,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.315,
+          "invention_indep": 0.315,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "genefi",
+            "quadragefima",
+            "nufquam",
+            "concifiones",
+            "difcurfus",
+            "conftantinopolis",
+            "honeftam",
+            "fobria"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.579,
+            "gemini-3-flash-preview": 0.662
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-42915a-p15",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Epistolae ad titum expositio, in qua pleraque tractantur per quaestiones, ut à pueris facilius percipi, et retineri poss",
+      "year": 1552,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1059,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.95,
+          "bow": 0.95,
+          "gap": 0,
+          "len_ratio": 0.995,
+          "invention": 0.025,
+          "invention_indep": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "corum",
+            "iußit",
+            "inciptt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.939,
+            "gemini-3.1-flash-lite": 0.95
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1060,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.007,
+          "acc": 0.993,
+          "seq": 0.926,
+          "bow": 0.926,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.042,
+          "invention_indep": 0.042,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "oeconomia",
+            "prædicatores",
+            "euangelij",
+            "ecclesiam",
+            "propriè"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.939,
+            "gemini-3.1-flash-lite": 0.926
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1064,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "timet",
+            "quoque",
+            "quæcunque",
+            "vult",
+            "novam"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.95,
+            "gemini-3-flash-preview": 0.926
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-517be1-p4",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De transactionibus theses LXIV",
+      "year": 1582,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 827,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.649,
+          "bow": 0.649,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.1,
+          "invention_indep": 0.1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pateruerò",
+            "creto",
+            "prępositus",
+            "recte",
+            "test",
+            "xiiij",
+            "dede",
+            "sententiaindubitata"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.918,
+            "gemini-3.1-flash-lite": 0.649
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 827,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.704,
+          "bow": 0.704,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "præpositus",
+            "xiiii",
+            "sententia"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.918,
+            "gemini-3.1-flash-lite": 0.704
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 825,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.326,
+          "invention_indep": 0.326,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tranfigens",
+            "caufæ",
+            "tranfigendo",
+            "poteft",
+            "fubfecuto",
+            "reftitutio",
+            "præftet",
+            "abfq"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.649,
+            "gemini-3-flash-preview": 0.704
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-5464dc-p46",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Buccolica",
+      "year": 1510,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 783,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.055,
+          "acc": 0.945,
+          "seq": 0.682,
+          "bow": 0.682,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.3,
+          "invention_indep": 0.3,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "exustũqʒnemus",
+            "spectẽ",
+            "vilẽ",
+            "sortita",
+            "locũ",
+            "tẽtabo",
+            "panesqʒ",
+            "recẽtes"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.669,
+            "gemini-3.1-flash-lite": 0.682
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 779,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.955,
+          "bow": 0.955,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.036,
+          "invention_indep": 0.036,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "iuuentas",
+            "panesq",
+            "quid",
+            "īgressi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.669,
+            "gemini-3.1-flash-lite": 0.955
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 778,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.035,
+          "invention_indep": 0.035,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "panelq",
+            "quidnā",
+            "nōdū",
+            "igressi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.682,
+            "gemini-3-flash-preview": 0.955
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-58b2bd-p44",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ordo missas celebrandi iuxta missale Romanum ...",
+      "year": 1597,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 875,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.164,
+          "acc": 0.836,
+          "seq": 0.625,
+          "bow": 0.636,
+          "gap": 0.011,
+          "len_ratio": 0.907,
+          "invention": 0.238,
+          "invention_indep": 0.238,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "cebrandi",
+            "ssam",
+            "iungẽs",
+            "orarione",
+            "deminic",
+            "tact",
+            "mmun",
+            "elebrans"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.646,
+            "gemini-3.1-flash-lite": 0.636
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 965,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.009,
+          "acc": 0.991,
+          "seq": 0.93,
+          "bow": 0.93,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.045,
+          "invention_indep": 0.045,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "usque",
+            "usquead",
+            "oremus",
+            "usquè",
+            "pacē"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.646,
+            "gemini-3.1-flash-lite": 0.93
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 965,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.054,
+          "invention_indep": 0.054,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vsquead",
+            "sintelligibili",
+            "vsquè",
+            "diiunctis",
+            "pace",
+            "stris"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.636,
+            "gemini-3-flash-preview": 0.93
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-598444-p7",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De unico et aeterno dei foedere theses inaugurales",
+      "year": 1599,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1286,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.732,
+          "bow": 0.74,
+          "gap": 0.008,
+          "len_ratio": 0.998,
+          "invention": 0.06,
+          "invention_indep": 0.06,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "conclusum",
+            "floreantqemnes",
+            "xiix",
+            "hierosolymæ",
+            "figurà",
+            "diiabitur",
+            "disr",
+            "impenturelllud"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.915,
+            "gemini-3.1-flash-lite": 0.74
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1291,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.051,
+          "acc": 0.949,
+          "seq": 0.802,
+          "bow": 0.802,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.02,
+          "invention_indep": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dissipabitur",
+            "disrumpentur",
+            "christ9"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.915,
+            "gemini-3.1-flash-lite": 0.802
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1289,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.252,
+          "invention_indep": 0.252,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effet",
+            "aterno",
+            "chriftus",
+            "occlufit",
+            "refpondeat",
+            "fuiffe",
+            "pfal",
+            "fenfu"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.74,
+            "gemini-3-flash-preview": 0.802
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-767838-p246",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Phrases Latinae linguae, tabulis delineatæ",
+      "year": 1636,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1100,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.08,
+          "acc": 0.92,
+          "seq": 0.717,
+          "bow": 0.717,
+          "gap": 0,
+          "len_ratio": 1.018,
+          "invention": 0.134,
+          "invention_indep": 0.134,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "parass",
+            "lati",
+            "tbat",
+            "opinian",
+            "depone",
+            "nillâ",
+            "tbee",
+            "friendt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.855,
+            "gemini-3.1-flash-lite": 0.717
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1116,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.821,
+          "bow": 0.821,
+          "gap": 0,
+          "len_ratio": 1.032,
+          "invention": 0.035,
+          "invention_indep": 0.035,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tuorúmque",
+            "tuísque",
+            "servetia",
+            "titi"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.855,
+            "gemini-3.1-flash-lite": 0.821
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1081,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.212,
+          "invention_indep": 0.212,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adverfum",
+            "adverfatur",
+            "ipfa",
+            "poftulat",
+            "defiderat",
+            "adeft",
+            "fententiæ",
+            "obftinate"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.717,
+            "gemini-3-flash-preview": 0.821
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-8454e4-p310",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+      "year": 1528,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1496,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.064,
+          "acc": 0.936,
+          "seq": 0.646,
+          "bow": 0.65,
+          "gap": 0.004,
+          "len_ratio": 0.997,
+          "invention": 0.091,
+          "invention_indep": 0.091,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "mvrneri",
+            "cliristiano",
+            "etsi",
+            "acsi",
+            "statiõe",
+            "nuncprobare",
+            "legibꝰ",
+            "test"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.865,
+            "gemini-3.1-flash-lite": 0.65
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1500,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.65,
+          "bow": 0.65,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.097,
+          "invention_indep": 0.097,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "atqꝫ",
+            "probatum",
+            "christiano",
+            "tantí",
+            "protestatiõe",
+            "eoqꝫ",
+            "utraqꝫ",
+            "potest"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.865,
+            "gemini-3.1-flash-lite": 0.65
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1501,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.361,
+          "invention_indep": 0.361,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "feueritatẽ",
+            "expofcens",
+            "iuftũ",
+            "conclufionibus",
+            "chriftiano",
+            "ipfa",
+            "lucefcat",
+            "poft"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.65,
+            "gemini-3-flash-preview": 0.65
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-85d458-p480",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Fabularum Aesopiarum. Libri V. Phoenix. Psalmi XVII. Erotopaegnion. Satira In Bavium. Alcaeus Latinus. Elegiarum Lib. IV",
+      "year": 1623,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 529,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.057,
+          "acc": 0.943,
+          "seq": 0.819,
+          "bow": 0.819,
+          "gap": 0,
+          "len_ratio": 0.969,
+          "invention": 0.184,
+          "invention_indep": 0.184,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "yricorm",
+            "sanctisimus",
+            "vita",
+            "polirga",
+            "leyet",
+            "medicifera",
+            "graviyida",
+            "graria"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.809,
+            "gemini-3.1-flash-lite": 0.819
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 564,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.044,
+          "acc": 0.956,
+          "seq": 0.952,
+          "bow": 0.961,
+          "gap": 0.009,
+          "len_ratio": 1.033,
+          "invention": 0.049,
+          "invention_indep": 0.049,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "facinora",
+            "vitulus",
+            "digitized",
+            "google"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.809,
+            "gemini-3.1-flash-lite": 0.961
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 546,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_indep": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "finit",
+            "facmora"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.819,
+            "gemini-3-flash-preview": 0.961
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c139bb-p260",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Mechanicorum libri octo",
+      "year": 1684,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1832,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.753,
+          "bow": 0.753,
+          "gap": 0,
+          "len_ratio": 0.938,
+          "invention": 0.246,
+          "invention_indep": 0.246,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "secundus",
+            "capu",
+            "hujusmodi",
+            "uneiâ",
+            "esset",
+            "assumatur",
+            "solitarium",
+            "conspectum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.756,
+            "gemini-3.1-flash-lite": 0.753
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1954,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.001,
+          "acc": 0.999,
+          "seq": 0.997,
+          "bow": 0.997,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.756,
+            "gemini-3.1-flash-lite": 0.997
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1954,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.005,
+          "invention_indep": 0.005,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "obnoxia"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.753,
+            "gemini-3-flash-preview": 0.997
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c30bd1-p25",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+      "year": 1553,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 587,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.083,
+          "acc": 0.917,
+          "seq": 0.586,
+          "bow": 0.596,
+          "gap": 0.01,
+          "len_ratio": 1,
+          "invention": 0.058,
+          "invention_indep": 0.058,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ceelestia",
+            "pijssimis",
+            "impnssima",
+            "uerbo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.959,
+            "gemini-3.1-flash-lite": 0.596
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 587,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.075,
+          "acc": 0.925,
+          "seq": 0.586,
+          "bow": 0.596,
+          "gap": 0.01,
+          "len_ratio": 1,
+          "invention": 0.058,
+          "invention_indep": 0.058,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "cœlestia",
+            "pissimis",
+            "impissima",
+            "uerborꝝ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.959,
+            "gemini-3.1-flash-lite": 0.596
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 587,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.507,
+          "invention_indep": 0.507,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effet",
+            "scholaftica",
+            "sophiftica",
+            "fomnia",
+            "funt",
+            "cœleftia",
+            "ecclefiæ",
+            "facramentorum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.596,
+            "gemini-3-flash-preview": 0.596
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c4f178-p93",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Exercitium puerorum grammaticale",
+      "year": 1491,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1538,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.071,
+          "acc": 0.929,
+          "seq": 0.736,
+          "bow": 0.752,
+          "gap": 0.016,
+          "len_ratio": 0.998,
+          "invention": 0.226,
+          "invention_indep": 0.226,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dieta",
+            "nona",
+            "schlahen",
+            "sceltẽ",
+            "pꝛime",
+            "cõtribuo",
+            "minuoui",
+            "minderẽ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.778,
+            "gemini-3.1-flash-lite": 0.752
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1547,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.046,
+          "acc": 0.954,
+          "seq": 0.812,
+          "bow": 0.815,
+          "gap": 0.003,
+          "len_ratio": 1.004,
+          "invention": 0.135,
+          "invention_indep": 0.135,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sceltē",
+            "prime",
+            "cōtribuo",
+            "minderē",
+            "cōminuo",
+            "setzē",
+            "cōstituo",
+            "istituo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.778,
+            "gemini-3.1-flash-lite": 0.815
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1541,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.145,
+          "invention_indep": 0.145,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "loncutio",
+            "scelre",
+            "pume",
+            "cotribuo",
+            "mindere",
+            "cominuo",
+            "setze",
+            "lostruo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.752,
+            "gemini-3-flash-preview": 0.815
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-c79f6d-p67",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+      "year": 1541,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1446,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.137,
+          "acc": 0.863,
+          "seq": 0.669,
+          "bow": 0.704,
+          "gap": 0.035,
+          "len_ratio": 0.996,
+          "invention": 0.045,
+          "invention_indep": 0.045,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dasistiu",
+            "exponen",
+            "menta",
+            "linoxcarbasino",
+            "porest",
+            "uaporemdissipat",
+            "atteręntis",
+            "aspe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.939,
+            "gemini-3.1-flash-lite": 0.704
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1452,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.146,
+          "acc": 0.854,
+          "seq": 0.694,
+          "bow": 0.736,
+          "gap": 0.043,
+          "len_ratio": 1,
+          "invention": 0.028,
+          "invention_indep": 0.028,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "καρπασίῳ",
+            "potest",
+            "dissipat",
+            "aspectu",
+            "masistius"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.939,
+            "gemini-3.1-flash-lite": 0.736
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1452,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.296,
+          "invention_indep": 0.296,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effe",
+            "lychnū",
+            "femel",
+            "infequentis",
+            "fufficit",
+            "affiduè",
+            "inπαπυρίς",
+            "ellychniū"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.704,
+            "gemini-3-flash-preview": 0.736
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cb2d8a-p7",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Epithalamion, Scriptvm Pio Ac Ervdito Ivveni Antonio Reuchlino Argentoratensi, Pastori in pago Luxheim, &amp; castæ atqu",
+      "year": 1563,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 481,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.854,
+          "bow": 0.854,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.136,
+          "invention_indep": 0.136,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "desumpta",
+            "sanitatem",
+            "vdit",
+            "addevm",
+            "simul",
+            "psallant",
+            "plasmatà",
+            "vsscis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.787,
+            "gemini-3.1-flash-lite": 0.854
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 481,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.933,
+          "bow": 0.933,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.076,
+          "invention_indep": 0.076,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "confecutus",
+            "caftus",
+            "fanitas",
+            "foli",
+            "pofterorum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.787,
+            "gemini-3.1-flash-lite": 0.933
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 481,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.854,
+            "gemini-3-flash-preview": 0.933
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cd81db-p5",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Theses theologicae de peccato originali",
+      "year": 1625,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1729,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.069,
+          "acc": 0.931,
+          "seq": 0.713,
+          "bow": 0.713,
+          "gap": 0,
+          "len_ratio": 1.007,
+          "invention": 0.27,
+          "invention_indep": 0.27,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "contumeliosi",
+            "sunt",
+            "fuisse",
+            "fœdissimam",
+            "adspergunt",
+            "guostici",
+            "vitiositatem",
+            "accersitam"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.718,
+            "gemini-3.1-flash-lite": 0.713
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1718,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.02,
+          "invention_indep": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "foediffimam",
+            "anabaptiftæ",
+            "effentiã",
+            "ipfã"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.718,
+            "gemini-3.1-flash-lite": 0.978
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1717,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_indep": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fœdiffimam",
+            "effentia",
+            "sicautem",
+            "tantú",
+            "ipfa"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.713,
+            "gemini-3-flash-preview": 0.978
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-cec219-p215",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De imperio Magni Mogolis sive India vera commentarius : e variis auctoribus congestus",
+      "year": 1631,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 906,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.017,
+          "acc": 0.983,
+          "seq": 0.89,
+          "bow": 0.89,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.092,
+          "invention_indep": 0.092,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "idiae",
+            "fata",
+            "xhandaharen",
+            "præerat",
+            "regen",
+            "tredder",
+            "tsander",
+            "maurhenet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.903,
+            "gemini-3.1-flash-lite": 0.89
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 912,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.013,
+          "acc": 0.987,
+          "seq": 0.938,
+          "bow": 0.938,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.046,
+          "invention_indep": 0.046,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "praeerat",
+            "t'sander",
+            "aemularetur",
+            "haesissent",
+            "militiaeque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.903,
+            "gemini-3.1-flash-lite": 0.938
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 908,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.065,
+          "invention_indep": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "praerat",
+            "mifit",
+            "hāma",
+            "t'fander",
+            "auté",
+            "regioné",
+            "hæsissent"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.89,
+            "gemini-3-flash-preview": 0.938
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-pre1700-f0c975-p8",
+      "substratum": "latin-1450-1699",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort",
+      "year": 1635,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1198,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.134,
+          "acc": 0.866,
+          "seq": 0.519,
+          "bow": 0.527,
+          "gap": 0.008,
+          "len_ratio": 0.952,
+          "invention": 0.359,
+          "invention_indep": 0.359,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "uodnec",
+            "popnlo",
+            "carere",
+            "quoqne",
+            "adaucti",
+            "sorte",
+            "reforma",
+            "rævar"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.61,
+            "gemini-3.1-flash-lite": 0.527
+          }
+        },
+        "gemini-3-flash-preview": {
+          "n_content": 1259,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.05,
+          "acc": 0.95,
+          "seq": 0.793,
+          "bow": 0.793,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.103,
+          "invention_indep": 0.103,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "adauctâ",
+            "usuræ",
+            "sortis",
+            "usur",
+            "accessorium",
+            "digest",
+            "process",
+            "quæst"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.61,
+            "gemini-3.1-flash-lite": 0.793
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1259,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.277,
+          "invention_indep": 0.277,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "poftea",
+            "adaucta",
+            "contveverunt",
+            "ufuræ",
+            "fortis",
+            "ufur",
+            "accelforium",
+            "diffolvitur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.527,
+            "gemini-3-flash-preview": 0.793
+          }
+        }
+      }
+    }
+  ]
+}

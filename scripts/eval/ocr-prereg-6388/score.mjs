@@ -1,0 +1,246 @@
+#!/usr/bin/env node
+// PRIOR ART: scripts/eval/lib/metrics.mjs (normalizeForScript / normalizeCJK, the existing normalisers, reused
+// unchanged; its `cer` is a single-reference Levenshtein and its `scoreAgainstReference` scores against one
+// reference passage, so neither can score against a multi-reader key); scripts/eval/lib/paired-stats.mjs
+// (`bootstrapCI`, `resetSeed`, reused); scripts/eval/latin-cli-pilot-6375.mjs (the REFUSAL pattern, copied).
+// What is new here is the leave-one-out consensus key (plurality per aligned column, ties accept every tied
+// reading) that #6388 preregisters; nothing in scripts/eval builds one.
+/**
+ * score.mjs — #6388 provisional (AI-consensus key) scores, paired gaps, AA band, adjudication spans.
+ * Reads reads/*.jsonl and sample.json; writes results.json, results.md and adjudication-<stratum>.jsonl.gz.
+ * $0, no network, no Mongo.
+ *
+ *   node scripts/eval/ocr-prereg-6388/score.mjs
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import zlib from 'node:zlib';
+import { normalizeForScript, normalizeCJK } from '../lib/metrics.mjs';
+import { bootstrapCI, resetSeed, mean } from '../lib/paired-stats.mjs';
+
+const HERE = path.dirname(new URL(import.meta.url).pathname);
+const SEED = 6386, MIN_EFFECT = 0.01, MAX_CHARS = 6000;
+// reads/<arm>.jsonl while the reads run; the committed copy is reads/<arm>.jsonl.gz.
+const readJsonl = f => {
+  const text = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : fs.existsSync(`${f}.gz`) ? zlib.gunzipSync(fs.readFileSync(`${f}.gz`)).toString('utf8') : '';
+  return text.split('\n').filter(Boolean).map(l => JSON.parse(l));
+};
+const sample = JSON.parse(fs.readFileSync(path.join(HERE, 'sample.json'), 'utf8')).rows;
+const ARMS = ['P', 'L1', 'L2', 'G', 'S', 'O', 'IA'];
+const reads = Object.fromEntries(ARMS.map(a => [a, new Map(readJsonl(path.join(HERE, 'reads', `${a}.jsonl`)).map(r => [r.uid, r]))]));
+
+const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|blocked by Gemini's filters|^#{2,3} Summary\b|overview and summary of the text/im;
+const BLOCK_FINISH = ['SAFETY', 'RECITATION', 'PROHIBITED_CONTENT', 'BLOCKLIST'];
+const isZh = st => st === 'zh-manuscript';
+const norm = (t, st, spaces) => {
+  if (isZh(st)) return [...normalizeCJK(t || '')].slice(0, MAX_CHARS);
+  const s = normalizeForScript(t || '', 'latin');
+  return [...(spaces ? s : s.replace(/ /g, ''))].slice(0, MAX_CHARS);
+};
+// outcome: 'text' | 'refusal' | 'failed' | 'empty' | 'missing'
+function outcomeOf(r, chars) {
+  // missing = no read exists (no Archive leaf, arm not run). A read that errored or timed out is a failed read: 'empty'.
+  if (!r || r.skipped || r.error === 'not run') return 'missing';
+  // claude -p returns its filter refusal as the result text with is_error set ("Output blocked by content filtering policy").
+  if (r.blocked || r.is_error || BLOCK_FINISH.includes(r.finishReason) || REFUSAL.test(r.text || '') || /Output blocked by content filtering/i.test(r.text || '')) return 'refusal';
+  if (r.error && !(r.text || '').trim()) return 'failed';  // timeout, denied tool: scored 1.0, never in a key
+  if (!chars.length) return 'empty';
+  return 'text';
+}
+
+// ── the consensus network ────────────────────────────────────────────────────
+// cols[i] = array of symbols, one per reader added so far (null = gap). Progressive profile alignment.
+function addToNetwork(cols, k, s) {
+  if (k === 0) return s.map(c => [c]);
+  const n = cols.length, m = s.length, Wd = m + 1;
+  const back = new Uint8Array((n + 1) * Wd); // 1 = diag, 2 = up (reader gap), 3 = left (new column)
+  let prev = new Int32Array(Wd), cur = new Int32Array(Wd);
+  for (let j = 0; j <= m; j++) { prev[j] = j; back[j] = 3; }
+  for (let i = 1; i <= n; i++) {
+    const col = cols[i - 1];
+    cur[0] = i; back[i * Wd] = 2;
+    for (let j = 1; j <= m; j++) {
+      const d = prev[j - 1] + (col.includes(s[j - 1]) ? 0 : 1), u = prev[j] + 1, l = cur[j - 1] + 1;
+      if (d <= u && d <= l) { cur[j] = d; back[i * Wd + j] = 1; } else if (u <= l) { cur[j] = u; back[i * Wd + j] = 2; } else { cur[j] = l; back[i * Wd + j] = 3; }
+    }
+    [prev, cur] = [cur, prev];
+  }
+  const out = [];
+  let i = n, j = m;
+  while (i > 0 || j > 0) {
+    const b = i === 0 ? 3 : j === 0 ? 2 : back[i * Wd + j];
+    if (b === 1) { out.push([...cols[i - 1], s[j - 1]]); i--; j--; }
+    else if (b === 2) { out.push([...cols[i - 1], null]); i--; }
+    else { out.push([...Array(k).fill(null), s[j - 1]]); j--; }
+  }
+  return out.reverse();
+}
+const buildNetwork = strings => strings.reduce((cols, s, k) => addToNetwork(cols, k, s), []);
+// Plurality per column over the key readers; a tie accepts every tied reading.
+function accepted(cols) {
+  return cols.map(col => {
+    const v = new Map();
+    for (const x of col) v.set(x, (v.get(x) || 0) + 1);
+    const top = Math.max(...v.values());
+    const acc = [...v].filter(([, c]) => c === top).map(([x]) => x);
+    return { acc: acc.filter(x => x !== null), eps: acc.includes(null) };
+  });
+}
+// Edit distance of a hypothesis to the key network.
+function distToKey(key, h) {
+  const m = h.length;
+  let prev = new Int32Array(m + 1), cur = new Int32Array(m + 1);
+  for (let j = 0; j <= m; j++) prev[j] = j;
+  for (const { acc, eps } of key) {
+    const skip = eps ? 0 : 1;
+    cur[0] = prev[0] + skip;
+    for (let j = 1; j <= m; j++) {
+      const d = prev[j - 1] + (acc.includes(h[j - 1]) ? 0 : 1), u = prev[j] + skip, l = cur[j - 1] + 1;
+      cur[j] = d < u ? (d < l ? d : l) : (u < l ? u : l);
+    }
+    [prev, cur] = [cur, prev];
+  }
+  return prev[m];
+}
+
+// ── per-page keys and scores ─────────────────────────────────────────────────
+// keyArms → { status: 'ok'|'blank'|'unscorable', key, denom, used }
+function makeKey(page, keyArms) {
+  const live = keyArms.map(a => ({ a, ...page.arm[a] })).filter(x => x.outcome !== 'missing');
+  const hasText = live.some(x => x.outcome === 'text' && x.chars.length >= 20);
+  const used = live.filter(x => x.outcome === 'text' || (!hasText && x.outcome === 'empty'));
+  if (!used.length) return { status: 'unscorable', used: [] };
+  if (used.every(x => !x.chars.length)) return { status: 'blank', used: used.map(x => x.a) };
+  const key = accepted(buildNetwork(used.map(x => x.chars)));
+  return { status: 'ok', key, denom: mean(used.map(x => x.chars.length)), used: used.map(x => x.a) };
+}
+function scoreArm(page, k, arm) {
+  const r = page.arm[arm];
+  if (!r || r.outcome === 'missing') return null;
+  if (k.status === 'unscorable') return null;
+  if (k.status === 'blank') return r.chars.length ? 1 : 0;
+  if (r.outcome !== 'text') return 1;                      // refusal or empty output on a page with text
+  if (r.chars.length > 3 * k.denom) return 1;              // at least 2× the key's length in insertions alone
+  return Math.min(1, distToKey(k.key, r.chars) / k.denom);
+}
+
+const pages = sample.map(s => {
+  const arm = {};
+  for (const a of ARMS) {
+    const r = reads[a].get(s.uid);
+    const chars = norm(r?.text, s.stratum, false);
+    arm[a] = { outcome: outcomeOf(r, chars), chars, raw: r?.text || '' };
+  }
+  return { ...s, arm };
+});
+
+const STRATA = ['latin-print', 'zh-manuscript', 'english-print'];
+const READERS = st => (isZh(st) ? ['G', 'S'] : ['G', 'S', 'O']);
+const fmt = x => (x == null ? '—' : (100 * x).toFixed(1));
+function paired(rows, base, x) {
+  const ds = rows.filter(r => r[base] != null && r[x] != null).map(r => r[base] - r[x]);
+  resetSeed(SEED);
+  return { n: ds.length, mean_d: ds.length ? mean(ds) : null, ci: bootstrapCI(ds, 10000) };
+}
+function verdict(ci, margin) {
+  if (!ci) return 'not enough pages';
+  if (ci[0] > margin) return 'switch';
+  if (ci[1] < margin) return 'no change';
+  return 'cannot be told apart';
+}
+
+const results = { issue: 6388, label: 'provisional (AI-consensus key)', seed: SEED, min_effect: MIN_EFFECT, generated_at: new Date().toISOString(), strata: {} };
+const md = [];
+for (const st of STRATA) {
+  const P = pages.filter(p => p.stratum === st);
+  const R_ = READERS(st);
+  const keys = Object.fromEntries([...R_.map(x => [x, R_.filter(y => y !== x)]), ['all', R_]]);
+  const scored = {}; const keyStatus = {};
+  for (const [kname, karms] of Object.entries(keys)) {
+    scored[kname] = []; keyStatus[kname] = { ok: 0, blank: 0, unscorable: 0 };
+    const armsToScore = kname === 'all' ? ['P', 'L1', 'L2', 'IA'] : ['P', 'L1', 'L2', kname];
+    for (const p of P) {
+      const k = makeKey(p, karms);
+      keyStatus[kname][k.status]++;
+      const row = { uid: p.uid, key_used: k.used };
+      for (const a of armsToScore) row[a] = scoreArm(p, k, a);
+      scored[kname].push(row);
+    }
+  }
+  const outcomes = Object.fromEntries(ARMS.map(a => [a, P.reduce((o, p) => (o[p.arm[a].outcome] = (o[p.arm[a].outcome] || 0) + 1, o), {})]));
+  const stored_models = P.reduce((o, p) => (o[p.stored_ocr_model] = (o[p.stored_ocr_model] || 0) + 1, o), {});
+  // AA band per key: the larger absolute end of the 95% CI of CER(L1) − CER(L2).
+  const aa = {};
+  for (const kname of Object.keys(keys)) {
+    const r = paired(scored[kname], 'L1', 'L2');
+    aa[kname] = { ...r, band: r.ci ? Math.max(Math.abs(r.ci[0]), Math.abs(r.ci[1])) : null };
+  }
+  const comps = [];
+  const candidates = [...R_.map(x => ({ x, key: x })), ...(isZh(st) ? [{ x: 'P', key: 'all' }] : [{ x: 'IA', key: 'all' }])];
+  for (const { x, key } of candidates) {
+    for (const base of ['L1', 'P']) {
+      if (x === base) continue;
+      const r = paired(scored[key], base, x);
+      const margin = Math.max(aa[key].band ?? Infinity, MIN_EFFECT);
+      const meanX = mean(scored[key].filter(z => z[x] != null && z[base] != null).map(z => z[x]));
+      const meanB = mean(scored[key].filter(z => z[x] != null && z[base] != null).map(z => z[base]));
+      comps.push({ engine: x, baseline: base, key: keys[key], ...r, mean_cer_engine: meanX, mean_cer_baseline: meanB, margin, verdict: verdict(r.ci, margin) });
+    }
+  }
+  results.strata[st] = { n_pages: P.length, readers: R_, keys, key_status: keyStatus, outcomes, stored_models, aa, comparisons: comps, per_page: scored };
+
+  md.push(`### ${st} (n = ${P.length} works) — provisional (AI-consensus key)`, '');
+  md.push(`Stored OCR models: ${Object.entries(stored_models).map(([k, v]) => `${k} ${v}`).join(', ')}.`, '');
+  md.push('| engine | baseline | key | n | CER engine | CER baseline | gap (baseline − engine) [95% CI] | margin | verdict |', '|---|---|---|---:|---:|---:|---|---:|---|');
+  for (const c of comps) md.push(`| ${c.engine} | ${c.baseline} | {${c.key.join(', ')}} | ${c.n} | ${fmt(c.mean_cer_engine)} | ${fmt(c.mean_cer_baseline)} | ${fmt(c.mean_d)} [${c.ci ? fmt(c.ci[0]) + ', ' + fmt(c.ci[1]) : '—'}] | ${fmt(c.margin)} | ${c.verdict} |`);
+  md.push('', '| key | n | AA: CER(L1) − CER(L2) [95% CI] | band |', '|---|---:|---|---:|');
+  for (const [k, a] of Object.entries(aa)) md.push(`| {${keys[k].join(', ')}} | ${a.n} | ${fmt(a.mean_d)} [${a.ci ? fmt(a.ci[0]) + ', ' + fmt(a.ci[1]) : '—'}] | ${fmt(a.band)} |`);
+  md.push('', `Outcomes: ${ARMS.map(a => `${a} ${Object.entries(outcomes[a]).map(([k, v]) => `${k}:${v}`).join('/')}`).join('; ')}.`, '');
+}
+
+// ── adjudication spans: all non-production readers, spaces kept; P shown where it aligns ──
+const adjSummary = {};
+for (const st of STRATA) {
+  const R_ = READERS(st), rows = [];
+  let pagesWithSpans = 0;
+  for (const p of pages.filter(x => x.stratum === st)) {
+    const voters = R_.filter(a => p.arm[a].outcome === 'text');
+    if (voters.length < 2) { rows.push({ uid: p.uid, image: p.image, note: `fewer than 2 readers with text (${voters.join(', ') || 'none'})` }); continue; }
+    const strs = voters.map(a => norm(p.arm[a].raw, st, true));
+    const withP = p.arm.P.outcome === 'text' ? [...strs, norm(p.arm.P.raw, st, true)] : strs;
+    const cols = buildNetwork(withP);
+    const nv = voters.length;
+    const dis = cols.map(c => { const v = c.slice(0, nv); return v.some(x => x !== v[0]); });
+    const spans = [];
+    for (let i = 0; i < cols.length; i++) {
+      if (!dis[i]) continue;
+      const last = spans[spans.length - 1];
+      if (last && i - last[1] <= 3) last[1] = i; else spans.push([i, i]);
+    }
+    const ctx = (a, b) => cols.slice(a, b).map(c => c.slice(0, nv).find(x => x !== null) ?? '').join('');
+    const read = (a, b, idx) => cols.slice(a, b + 1).map(c => c[idx] ?? '').join('');
+    // A span whose readings differ only in word spacing is not a reading to adjudicate (CER removes spaces too).
+    const kept = spans.filter(([a, b]) => new Set(voters.map((_, i) => read(a, b, i).replace(/ /g, ''))).size > 1);
+    if (kept.length) pagesWithSpans++;
+    kept.forEach(([a, b], si) => {
+      const reading = idx => read(a, b, idx);
+      rows.push({
+        uid: p.uid, image: p.image, span: si, readings: Object.fromEntries(voters.map((v, i) => [v, reading(i)])),
+        production: withP.length > nv ? reading(nv) : null, before: ctx(Math.max(0, a - 30), a), after: ctx(b + 1, b + 31),
+      });
+    });
+  }
+  const spanRows = rows.filter(r => r.span != null);
+  adjSummary[st] = { pages: pages.filter(x => x.stratum === st).length, pages_with_spans: pagesWithSpans, spans: spanRows.length, median_spans_per_page: (() => { const c = Object.values(Object.groupBy(spanRows, r => r.uid)).map(v => v.length).sort((x, y) => x - y); return c.length ? c[Math.floor(c.length / 2)] : 0; })() };
+  fs.writeFileSync(path.join(HERE, `adjudication-${st}.jsonl.gz`), zlib.gzipSync(rows.map(r => JSON.stringify(r)).join('\n') + '\n'));
+}
+results.adjudication = adjSummary;
+md.push('### Adjudication lists', '', '| stratum | pages | pages with spans | spans | median spans per page |', '|---|---:|---:|---:|---:|');
+for (const [st, a] of Object.entries(adjSummary)) md.push(`| ${st} | ${a.pages} | ${a.pages_with_spans} | ${a.spans} | ${a.median_spans_per_page} |`);
+
+const spend = ['L1', 'L2'].reduce((n, a) => n + [...reads[a].values()].reduce((m, r) => m + (r.cost || 0), 0), 0);
+results.spend_usd = +spend.toFixed(4);
+md.push('', `Paid spend (flash-lite L1 + L2, list price): $${spend.toFixed(3)}.`);
+fs.writeFileSync(path.join(HERE, 'results.json'), JSON.stringify(results, null, 1) + '\n');
+fs.writeFileSync(path.join(HERE, 'results.md'), md.join('\n') + '\n');
+console.log(md.filter(l => /^###|verdict|^\| (G|S|O|IA|P) /.test(l)).slice(0, 60).join('\n'));

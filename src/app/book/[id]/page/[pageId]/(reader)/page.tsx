@@ -35,7 +35,7 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
-    name: `${bookTitle} — Page ${page.page_number}`,
+    name: `${bookTitle}, Page ${page.page_number}`,
     url: pageUrl,
     inLanguage: book.language || undefined,
     datePublished: book.published || undefined,

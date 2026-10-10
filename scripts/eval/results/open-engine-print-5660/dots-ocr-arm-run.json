@@ -1,0 +1,1 @@
+{"pages": 609, "wall_secs": 3533.7, "clients": 8, "mode": "dots", "max_tokens": 8000, "note": "two client runs on one server: priority cells 72 pages (491.1 s), then the remaining 537 (3042.6 s); the first 45+ pages (initial run, interrupted, wall not recorded) are excluded from the rate", "s_per_page": 5.802}

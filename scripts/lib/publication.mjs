@@ -20,10 +20,13 @@
  * derived from the state, in the same updateOne — and publicationFilter() expands to
  * the legacy predicates, so call sites do not change twice.
  *
- * Out of scope here: fan-out to gallery_images / Supabase / caches (#5342). The
+ * Out of scope here: fan-out to gallery_images / Supabase (#5342). The
  * Supabase catalogue sync keys on `updated_at`, which every write bumps.
+ * The CDN/ISR cache IS evicted here, for the transitions that need it (#6227) —
+ * see needsEviction().
  */
 import { ObjectId } from 'mongodb';
+import { revalidateBookPages, bookEvictionFollowUp } from './revalidate.mjs';
 
 export const PUBLICATION_STATES = Object.freeze(['public', 'unpublished', 'hidden', 'takedown']);
 
@@ -276,7 +279,50 @@ function bookRefsFilter(refs) {
   return { $or: [{ id: { $in: strs } }, { _id: { $in: [...strs, ...oids] } }] };
 }
 
-const PROJECTION = { _id: 1, id: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
+const PROJECTION = { _id: 1, id: 1, slug: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1 };
+
+const WITHDRAWN = new Set(['hidden', 'takedown']);
+
+/**
+ * Transitions whose cached pages are now WRONG in a way a reader hits (#6227):
+ *   withdrawn → reachable  every reader URL touched while hidden is a cached
+ *                          404 (layout level, 24h) — the published book 404s;
+ *   anything → takedown    a rights withdrawal must not keep serving pages.
+ * A plain hide (public → hidden) is not evicted here: its stale copy is the
+ * book's own legitimate text for ≤24h, and duplicate sweeps hide thousands one
+ * call at a time — one broad route-pattern revalidation each would be a
+ * function invocation per book. The visibility route still evicts every flip.
+ */
+export function needsEviction(fromState, toState) {
+  if (toState === 'takedown') return fromState !== 'takedown';
+  return WITHDRAWN.has(fromState) && !WITHDRAWN.has(toState);
+}
+
+/**
+ * Run the eviction (opts.evict: a function, false to opt out, default the real
+ * one). Never throws: the Mongo write already happened. On failure it prints
+ * the exact follow-up commands and returns them, so a publish whose pages
+ * still 404 cannot read as finished.
+ */
+async function evictBooks(books, opts) {
+  if (!books.length) return null;
+  const refs = books.map((b) => ({ id: b.id ?? String(b._id), slug: b.slug ?? null }));
+  if (opts?.evict === false) {
+    return { ok: false, skipped: true, followUp: bookEvictionFollowUp(refs) };
+  }
+  const evict = typeof opts?.evict === 'function' ? opts.evict : revalidateBookPages;
+  try {
+    await evict(refs, { quiet: true });
+    return { ok: true };
+  } catch (err) {
+    const followUp = bookEvictionFollowUp(refs);
+    console.error(
+      `publication: ${refs.length} book(s) changed state but their cached pages were NOT evicted ` +
+      `(${err?.message || err}). Readers get cached 404s until you run:\n${followUp}`,
+    );
+    return { ok: false, error: String(err?.message || err), followUp };
+  }
+}
 
 function eventFor(book, from, state, reason, opts, now) {
   return {
@@ -298,10 +344,14 @@ function eventFor(book, from, state, reason, opts, now) {
 
 /**
  * Set one book's publication state.
- * opts: { state, reason?, note?, by, issue?, override?, duplicateOf?, from?, now? }
+ * opts: { state, reason?, note?, by, issue?, override?, duplicateOf?, from?, now?, evict? }
  *   from: optional list of current states the write is allowed from; otherwise skipped
  *         (e.g. the duplicates route hides only books that are public right now).
- * Returns { status: 'written' | 'unchanged' | 'skipped' | 'not_found', book_id, from, to }.
+ *   evict: false to skip the cache eviction (the caller evicts itself — the result
+ *          then carries the followUp), or a function(books) replacing it in tests.
+ * Returns { status: 'written' | 'unchanged' | 'skipped' | 'not_found', book_id, from, to, eviction? }.
+ *   eviction (only when needsEviction()): { ok, error?, followUp? } — ok:false means
+ *   the book's pages are still cached in their old state; followUp is what to run.
  * Throws on a refused transition (takedown without issue, leaving takedown without override).
  */
 export async function setPublication(db, bookRef, opts) {
@@ -323,13 +373,15 @@ export async function setPublication(db, bookRef, opts) {
 
   await books.updateOne({ _id: book._id }, buildUpdate(state, reason, opts, now));
   await db.collection('publication_events').insertOne(eventFor(book, from, state, reason, opts, now));
-  return { status: 'written', ...base };
+  if (!needsEviction(from.state, state)) return { status: 'written', ...base };
+  return { status: 'written', ...base, eviction: await evictBooks([book], opts) };
 }
 
 /**
  * The bulk form: same state for every book, one updateMany per batch, one event per book.
  * A book in takedown is refused individually (listed in `refused`), never silently moved.
- * Returns { written, unchanged, skipped, refused, not_found } — each a list of book ids.
+ * Returns { written, unchanged, skipped, refused, not_found } — each a list of book ids —
+ * plus `eviction` when any written book needsEviction(): ONE eviction for the whole call.
  */
 export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 } = {}) {
   const now = opts?.now ?? new Date();
@@ -340,6 +392,7 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
   checkTransition('unpublished', opts);
 
   const out = { written: [], unchanged: [], skipped: [], refused: [], not_found: [] };
+  const toEvict = [];
   const refs = [...new Set((bookRefs || []).map(String))];
   for (let i = 0; i < refs.length; i += batchSize) {
     const chunk = refs.slice(i, i + batchSize);
@@ -364,12 +417,14 @@ export async function setPublicationMany(db, bookRefs, opts, { batchSize = 500 }
       toWrite.push(book._id);
       events.push(eventFor(book, from, state, reason, opts, now));
       out.written.push(id);
+      if (needsEviction(from.state, state)) toEvict.push(book);
     }
     if (toWrite.length) {
       await books.updateMany({ _id: { $in: toWrite } }, buildUpdate(state, reason, opts, now));
       await db.collection('publication_events').insertMany(events);
     }
   }
+  if (toEvict.length) out.eviction = await evictBooks(toEvict, opts);
   return out;
 }
 

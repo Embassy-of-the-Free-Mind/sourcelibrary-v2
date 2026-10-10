@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Exact detectors over 6.78M pages find 30,186 duplicate captures (20/20 real) and 66,525 truncated translations (10 real, 0 false); catchword and partial-echo detectors fail"
+status: informational
+decision: null
+superseded_by: null
+issue: [5055, 5056, 5057, 5058]
+---
 ## 2026-09-24 — Are the scans in order, and is every page's translation all there? Five exact page-integrity detectors over the whole mirror
 
 **Question.** A reader who turns a page and meets a leaf missing, the same leaf twice, or a

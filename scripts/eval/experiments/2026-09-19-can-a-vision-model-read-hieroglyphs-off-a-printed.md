@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [egy]
+scripts: [Egyp]
+canons: []
+n_books: 5
+n_pages: 38
+verdict: "gemini-3-flash-preview cannot read printed hieroglyphs: median anchored sign error 0.78 over 38 pairs (noise level), 37 of 38 outputs looped into recitation"
+status: informational
+decision: null
+superseded_by: null
+issue: null
+---
 ## 2026-09-19 — Can a vision model read hieroglyphs off a printed edition? (baseline for `scripts/eval/hieroglyph-ocr/`)
 
 **Headline: no — and the benchmark can say so.** `gemini-3-flash-preview`, temperature 0,

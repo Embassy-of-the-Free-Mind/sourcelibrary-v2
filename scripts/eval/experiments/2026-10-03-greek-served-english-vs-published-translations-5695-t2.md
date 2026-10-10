@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [grc]
+scripts: [Grek]
+canons: []
+n_books: 75
+n_pages: 75
+verdict: "Served Greek English scores 3.64/5 against published translations (manuscripts 2.54); OCR misread causes 16 of 22 low pages; Flash beats Lite by +0.32."
+status: adopted
+decision: "Greek translation routes to Flash (PR #5740); Greek MSS and 1450-1599 print gated on OCR trust (#5761)"
+superseded_by: null
+issue: [5695, 5722]
+---
 ## 2026-10-03 · Ancient and Byzantine Greek: how faithful is the served English against a published translation, and where do the bad pages start? (#5695 track T2)
 
 <!-- PRIOR ART: 2026-10-03-translation-vs-reference-harness-smoke-5695.md (the harness this run uses, unchanged); 2026-09-30-translation-corpus-audit-how-faithful-is-a-random-served-5274.md (Greek 27/36 faithful, source-grounded, no reference); 2026-10-02-greek-manuscripts-fit-open-edition-5619.md (edition fitting for Greek manuscripts; not repeated here); #3884 Suda/SOL (entry-level gold, n=150, 77.3% faithful; reported, not re-labelled). This is the first page-level score of served Greek against published human translations, with the cause of each bad page read from the image. -->

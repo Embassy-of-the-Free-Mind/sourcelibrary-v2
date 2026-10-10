@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged, accuracy]
+languages: []
+scripts: []
+canons: []
+n_books: 327
+n_pages: 327
+verdict: "Script is the only covariate tied to translation quality (non-Latin OR 0.20); for OCR, date matters within a script (Greek 1500s CER 17.1% vs 1800s 0.8%), resolution above 1,500 px does not."
+status: informational
+decision: null
+superseded_by: null
+issue: 5615
+---
 ## 2026-10-02 · Does page quality move with the book's date, the amount of text on the page, or the scan's resolution, once script is accounted for? (#5615)
 <!-- PRIOR ART: quality-by-language.mjs (the same audit pooling, by language only); benchmark-dashboard-data.mjs (OCR cells by catalogue period, pooled over languages, no characters or resolution); translation-corpus-audit/score.mjs (by_period for one audit, no intervals). None joins pages to characters or scan resolution, and none fits a model. -->
 

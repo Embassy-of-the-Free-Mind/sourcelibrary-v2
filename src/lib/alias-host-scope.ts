@@ -166,7 +166,7 @@ export function isPreviewGatedPath(pathname: string): boolean {
 /** Plain-text body for the anonymous-on-preview refusal. */
 export function previewGateResponse(pathname: string): string {
   return [
-    'This is a preview deployment — book content is not served here to anonymous visitors.',
+    'This is a preview deployment. Book content is not served here to anonymous visitors.',
     `Read this page on the canonical site: https://${CANONICAL_HOST}${pathname}`,
     'Reviewing a branch? Sign in on this host (email sign-in works on previews), or send an Authorization header.',
   ].join('\n');

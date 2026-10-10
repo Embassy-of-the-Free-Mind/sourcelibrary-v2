@@ -206,11 +206,11 @@ export const POST = withInnerCircleAuth(async (request, session) => {
     const reviewed = Number(sc.reviewed) || 0;
     const flagged = Number(sc.flagged) || 0;
     if (of === 0 || reviewed < of) {
-      return NextResponse.json({ error: 'spot check incomplete — review every sampled pair before approving' }, { status: 400 });
+      return NextResponse.json({ error: 'spot check incomplete: review every sampled pair before approving' }, { status: 400 });
     }
     if (of > 0 && flagged / of >= SPOT_CHECK_ABORT_RATIO) {
       return NextResponse.json({
-        error: `${flagged}/${of} sampled pairs were flagged — the LLM screen is unreliable on this slice; review it by hand instead of batching`,
+        error: `${flagged}/${of} sampled pairs were flagged. The LLM screen is unreliable on this slice; review it by hand instead of batching`,
       }, { status: 409 });
     }
   }

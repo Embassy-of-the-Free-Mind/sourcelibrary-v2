@@ -1,3 +1,16 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "gemini-3-flash-preview reads Shaker letteral pitch poorly (interval NER 0.19) and rhythm at 0.49; on mensural staff it read the printed syllables, not the staff (0.42)."
+status: rejected
+decision: "VLMs not used on score pages; score against ground-truth first (music-notation.md)"
+superseded_by: null
+---
 ## 2026-09-11 — Music: can a VLM read Shaker letteral notation? (first scored run)
 
 **Headline: pitch yes, rhythm no.** gemini-3-flash-preview on seven verified

@@ -20,6 +20,10 @@
 
 The boxes cannot ssh to main. Only the laptop reaches all three, so placement is decided on the laptop. The ARM boxes have no Python ML tools (kraken, CLIP, onnx): a brief that needs them goes to main.
 
+## The spare lane on every box (#6395)
+
+Each box is logged into a different Claude account (main: team@sourcelibrary, cloudlayer: derek@playpowerlabs, l7a: derek@sourcelibrary). `scripts/workers/spare-lane.py` runs from cron on all three and spends that account's allowance on small issues when the account is under its fair share of the week. Only main polls usage. It publishes the poll to Mongo (`ops_reports` `claude-limits:latest`, `claude-limits-share.mjs`), and the guests read it there, because no box can ssh to another. Cron: main `*/30` (in `crontab.production`); guests `15,45 * * * *`, logging to `/data/scratch/sl/logs/spare-lane.log`, guarded on the script existing. Jobs are named `spare-<issue>`, at most 2 on main and 1 on a guest, and an issue the lane picks is labelled `spare-lane` so no other box takes it.
+
 ## Placing a job: ask before you start
 
 ```
@@ -61,3 +65,10 @@ A high page means work exists only on that box. The job's HEADLESS RULES tell it
 - One job: `claude-job.sh _land <name>`.
 - Every finished job on the box, logged verdict beside the check run again now: `claude-job.sh backtest`.
 - Every verdict is appended to `landings.txt` in the box's job directory (`date | host | name | verdict`).
+
+## When a job does not finish, and what it asks (#6360 fixes 1–3)
+
+- **Checkpoint on every non-DONE exit.** GAVE UP, a weekly cap, `stop`, and the sweep's "died twice" all commit the worktree (gitignore applies; files over 5 MB, the shared `node_modules` link, the vendored bundle and `.vercel` are left out) and push it to the job's branch, or to `<branch>-checkpoint-<time>` if that push is refused. The page names the branch. A lost job costs time, not results.
+- **A weekly cap stops the job instead of waiting.** The 6-hour wait is for the 5-hour session window only; a weekly cap resets in days. The page says to restart from the brief on a box with headroom (`job-where.sh` on the laptop); the checkpoint branch holds the work.
+- **No placement on a spent account.** `start` refuses when this box's account is at or over `MAX_WEEKLY_PCT` (90) of its weekly limit, read from the climits meter (`/root/.claude-limits/latest.json`, main box only; absent or stale = no check). `where` prints `weekly_pct` and reports `ready=no:weekly-NNpct`, so `job-where.sh` skips the box. Override: `JOB_IGNORE_LIMIT=1`.
+- **Jobs decide two-way doors.** The HEADLESS RULES let a job raise `DECISION:` only above the $10 spend floor or on the hold list; anything else it decides and logs as `TAKEN:` (collected into `taken.txt`). DECISION lines go to `decisions.txt` for the morning digest and no longer page one by one.
