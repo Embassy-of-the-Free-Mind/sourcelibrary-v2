@@ -83,3 +83,12 @@ All 59 adjudicated by Opus. Pages needing action by CER band: CER < 0.01: 3 of 5
 9 of 13; ≥ 0.10: 20 of 27. No candidate meets the rule (no band below any T has ≤ 1 page and ≤ 5% needing action), so by the rule
 **T = 0.01**: in effect every disagreement goes to Opus. Two near-identical reads (CER 0.003, 0.006, Suidas) were
 judged to share a serious misreading: the two families' errors are correlated, so low CER is not acceptance here.
+
+## Gate result (2026-10-10, appended after the audit)
+Check on T: 12 of 30 agree pages needed action (> 3); there is no candidate below 0.01, so a main run adjudicates every
+page. Audit of 40 staged writes: Opus worse 0 / better 36 / same 4; Gemini 3.8 worse 3 / better 34 / same 3. **STOP**
+by the rule (Gemini > 2). Nothing written; containments and check rows applied (`driver.mjs apply --no-writes`).
+Deviation, decided before any containment was applied: "both reads seriously wrong" on a page where each read is right
+somewhere (a merge) is `residual`, not `contain` — containment is kept to pages neither read can give a reader
+(neither / cannot tell at medium or high confidence) and to pages whose stored text the adjudicator found to be
+another leaf's (`contain-extra.json`), the bar in `containment-on-finding.md`.

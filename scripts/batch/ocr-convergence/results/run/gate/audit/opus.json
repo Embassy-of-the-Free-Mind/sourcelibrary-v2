@@ -1,0 +1,282 @@
+[
+{
+"item_id": "69f761f3b2b698b3bb82f703",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "The leaf is a single column ending 'unter des Menschen Ge-' / catchword 'walt'; Y invents a second column ('in der Welt / und in den Dingen ... Gott hat uns in diese Welt gegossen ...') that is not on the page."
+},
+{
+"item_id": "697b581d89027e953d154d22",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "Both have slips (X has 'αὐτόθι' where the print has 'ἀντιοχείᾳ'), but Y garbles whole clauses, e.g. 'ἵνα δὲ καὶ ἀγνοῶσιν ὧδεξασάμενον' for 'ἠναγκάσθημεν οὖν ἀλλαξάμενον', 'κείου' for 'κείσθω', and 'ἔτεσι τρισὶν ἐξαρχήσας' where the print has 'ἔτεσι γοῦν ἓξ κρατήσαντα' (wrong number)."
+},
+{
+"item_id": "69b51ea1cf111105c42a1a60",
+"better": "X",
+"worse_serious": false,
+"confidence": "medium",
+"note": "The two texts are very close; X keeps 'in concessum principum' and the final 'queat?', while Y has 'concessu' and stops at 'que-'."
+},
+{
+"item_id": "69905d762fd6a0399389f73f",
+"better": "same",
+"worse_serious": false,
+"confidence": "high",
+"note": "Both match the leaf word for word ('Quare illusistis mihi. 1. Regum, cap. 19' ... 'decepit me & commedi.'). They differ only in line breaks and long-s spelling."
+},
+{
+"item_id": "69b6476a18b87551bfc4c2e4",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "Y invents its citations ('summa contra gentiles libro tertio capitulo centesimo decimo octavo' where the print has 'su. co. li. 3. ti. 13' and 'ti. 24. q. 9'). It also reads 'quadragesima' for 'qdriga' and 'cupiditas regni' for 'cupiditas utrum'. X is closer, though it misreads 'utrum sit' as 'rerum sive'."
+},
+{
+"item_id": "698051b57ba803694e9b3611",
+"better": "same",
+"worse_serious": false,
+"confidence": "high",
+"note": "Both give the same entries and page numbers as the print; the only differences are trivial, like Y's 'Confeſſus' for 'Conſeſſus' and some punctuation."
+},
+{
+"item_id": "6a909543ac1fcc717ba3008d",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "X gives a readable expansion that follows the leaf. Y is heavily garbled and drops text: in §21 'R. Pa. i. c. sic vide' omits 'pertinebat. de his q fi. a pla. Fed. csil. lj. tenet q', and in §16 it drops the 'de re. ec. no alie. z in c. tua de his q fi. a pla' citation."
+},
+{
+"item_id": "69f74b17790965e51ce028e2",
+"better": "Y",
+"worse_serious": false,
+"confidence": "high",
+"note": "The texts are almost identical, but the print reads 'Mutter Mæcha' as Y has it. X normalizes this to 'Maacha' and splits 'daher' into 'das her'."
+},
+{
+"item_id": "6992f405c8c6ac61574e7480",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "The leaf has the 湯媪 and two women poems ('先自吟曰 平生渾是熱心腸...'), which X transcribes. Y gives a completely different text ('陝西賈人胡以誠...') from another leaf."
+},
+{
+"item_id": "69804e71732a829300ba6b45",
+"better": "X",
+"worse_serious": false,
+"confidence": "medium",
+"note": "Y misreads 'Abſchalom' as 'Abischalom' and 'Aër' as 'Ær', and it normalizes 'Alphabethum'. X's one slip is 'ſq.' for the printed 'ſqq.' at 'Adami primi peccatum 494'."
+},
+{
+"item_id": "69f749740ceb71cb052c9764",
+"better": "same",
+"worse_serious": false,
+"confidence": "high",
+"note": "Both give the full page text; X keeps the printed abbreviations ('Clariss. D. Joach.') and Y expands them, which is a convention difference only."
+},
+{
+"item_id": "69b303d95facc83a9a3db240",
+"better": "Y",
+"worse_serious": false,
+"confidence": "medium",
+"note": "Both are complete; X misreads 'hæc est prima utilitas' as 'hac est', a minor slip."
+},
+{
+"item_id": "69b6476a18b87551bfc4c2d0",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X drops printed passages such as 'sextus si sit senex aut valitudinarius', the 'decimus quintus in monialibus … decimus sextus in hospitalariis sancti Johannis hierosolimitani' cases, and 'si tamen hoc fit ad defensionem non est excommunicatus'."
+},
+{
+"item_id": "6a909543ac1fcc717ba300b2",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "Y omits printed lines ('cessaria vocationes qua deo tenetur exhibere', 'subsistente … iurisdictionem habente episcopalem … sibi subiecta'), replaces 'vt capiat: qz licite merces accipitur' with repeated text, and misreads headwords as 'Celura'/'Celus' for Censura/Census."
+},
+{
+"item_id": "699f10ecbbbd5e12a9038f32",
+"better": "Y",
+"worse_serious": false,
+"confidence": "medium",
+"note": "X has small misreadings ('daß lebhafteste' for 'das', 'Herz' for 'Hertz', 'GÖtt', 'vergeffen'); Y matches the print."
+},
+{
+"item_id": "6992f405c8c6ac61574e7437",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X describes illustrations and poems that are not on this leaf; the leaf is the text '孔惑景春 臨安徐景春…', which Y transcribes."
+},
+{
+"item_id": "69905d762fd6a0399389f73e",
+"better": "same",
+"worse_serious": false,
+"confidence": "high",
+"note": "Both are complete and accurate; the only difference is that X renders long s as 'ſ' and Y as 'f'."
+},
+{
+"item_id": "69f72541ddf0d859f80ac1c2",
+"better": "X",
+"worse_serious": false,
+"confidence": "medium",
+"note": "Y misreads 'widersetzen' as 'widersehen' and normalizes 'gefält'/'bestimten'/'JEsus'; X follows the print."
+},
+{
+"item_id": "69f749840ceb71cb052c979a",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "Y drops the line 'que Medicinæ mentis insint, unum ab ipsomet prodi-' (giving 'libro-tum') and misreads 'Pseudorthodoxis' as 'Pseudodoxis'."
+},
+{
+"item_id": "699f5594684ffe948f93580e",
+"better": "X",
+"worse_serious": false,
+"confidence": "low",
+"note": "Both are complete; Y misreads 'was er siehet' as 'suchet' and 'gehäufet' as 'gehäuset', while X modernizes 'Besitzer'/'Schätze' to 'Besizer'/'Schäze'."
+},
+{
+"item_id": "69f74b26790965e51ce0290f",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "Y collapses 'bettet über die Götzen Jerobeams, seinem Sidonischen Weib Isabel zu lieb' into 'bettet über die Göbel zu lieb', dropping Jeroboam and Jezebel, and garbles 'hierauf den Untergang' as 'hierses an Untergang'."
+},
+{
+"item_id": "6a3a3bc2862ce9a5b4d762ae",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X drops the citations 'de excomm.Summistæ,verb.excomm.Sayr.lib.3.' from the Additiones, drops 'cap.1.' from 'Sayr.lib.3.cap.1.nu.18', and omits 'tamen' in 'voluit tamen hæc omnia'."
+},
+{
+"item_id": "69f749c40ceb71cb052c9847",
+"better": "X",
+"worse_serious": false,
+"confidence": "medium",
+"note": "The two are nearly identical; Y reads 'lectorum suorum' for the printed 'lectorumque suorum' and has long-s misreadings ('fextam infectatur', 'fique', 'cenfeat')."
+},
+{
+"item_id": "69f724f1ddf0d859f80ac0d0",
+"better": "Y",
+"worse_serious": false,
+"confidence": "medium",
+"note": "Y matches the print in 'Erzälung', 'ausgesezt', 'Synopsis scripturae' and 'gerümet', where X has 'Erzählung', 'ausgesetzt', 'Synopse' and 'gerühmet'; these are only spelling differences."
+},
+{
+"item_id": "69a5d988a63a00aaae8ab676",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "The leaf reads 'Theophrastus lib.XVII.cap.VIIII.', which X renders correctly, but Y gives the wrong book number 'lib. VII.' and also has 'Aezoon' for 'Aeizoon'."
+},
+{
+"item_id": "699209c4bed8f4b5ff5b3483",
+"better": "Y",
+"worse_serious": true,
+"confidence": "medium",
+"note": "X omits the opening lines ('ροσολύμων, καὶ ἰουδαίας... ἰορδάνου' / 'rosolymis: et de iudea... iordanem') and adds a whole layer of Latin interlinear '<gloss>' words that are not printed on the leaf."
+},
+{
+"item_id": "695361879c494f9f9f0424f7",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "The print reads 'كتمها العلماء' ('the scholars concealed'), 'هذا العلم' and 'الدريجانات', which Y gives correctly; X has 'كتبها' ('wrote'), 'هذا العالم' and 'الدرجان'."
+},
+{
+"item_id": "6a3a3bc2862ce9a5b4d762cb",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X drops summary entry 4 ('Quædam circa hanc excommunicationem contra incendiarios latam aduertenda. 5') and the '&' in '& quamdiu duret', which changes the sense of item 7."
+},
+{
+"item_id": "69f7621eb2b698b3bb82f77f",
+"better": "Y",
+"worse_serious": true,
+"confidence": "medium",
+"note": "X adds a column of fragments cut off from the facing page ('und / brau- / kon- / selb...') as if they were part of this leaf, and drops 'ad' from 'si ad imbecillitatem'."
+},
+{
+"item_id": "6982be43298c369118f62800",
+"better": "Y",
+"worse_serious": false,
+"confidence": "medium",
+"note": "Y keeps the printed spellings 'condematione', 'tamdem' and 'enimuero', which X normalises to 'condemnatione', 'tandem' and 'enimvero', and X also has long-s misreadings ('promisiffet'); none of this changes the meaning."
+},
+{
+"item_id": "69b6476a18b87551bfc4c2de",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X turns the printed 'Idem conceditur predicatoribus et minoribus: sine tamen preiudicio parochialis ecclesie' into 'Idem conceditur parochialibus ecclesie', which changes the sense, and also misreads 'Secus de mobilibus' as 'Sed de mobilibus'."
+},
+{
+"item_id": "6953b56577f38f6761bd97a7",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "The heading reads 'القول على الوجه الاول من برج'; Y gives 'صورة' for 'الوجه' and counts nine orbs where the image shows eight."
+},
+{
+"item_id": "69f749910ceb71cb052c97be",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X drops 'Mysticorum à Collectore Nobilissimo elegantiori stylo ornatorum' and shortens the title 'Praxis Theologiæ Mysticæ veræ' to 'Theologiæ Mysticæ veræ'."
+},
+{
+"item_id": "6992f405c8c6ac61574e73fc",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "X matches the leaf ('風號見者無不酸鼻…華尸獨浮於水面'), while Y transcribes a different story ('詩動秦邦… 秦邦字本固') that is not on this page."
+},
+{
+"item_id": "6992f405c8c6ac61574e73cf",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "The leaf is the preface '萬選清談引 / 維昔 聖天子在御…', which Y gives; X describes an illustration with a couplet ('四妓解吟') from another leaf."
+},
+{
+"item_id": "6992f405c8c6ac61574e748a",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "The leaf has the flower-spirit poems ('輕于燕燕逐風翔…衆花之妖云') that Y gives; X describes an illustrated spread ('淮水/斷魂') that is not this page."
+},
+{
+"item_id": "6992c88d4f3a879124230204",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "The image reads '周 喆' in the list of contributing translators; Y gives '周 洁', which gets the name wrong. Otherwise the two texts are the same."
+},
+{
+"item_id": "6982b2ef0d2427493bdb68da",
+"better": "X",
+"worse_serious": true,
+"confidence": "medium",
+"note": "The image reads 'atque ni solum succum esset' and '& non cognoscit, quod cognoscitur'; Y has 'si solum', which changes the sense, and 'non cognoscitur'."
+},
+{
+"item_id": "6a909543ac1fcc717ba30089",
+"better": "Y",
+"worse_serious": true,
+"confidence": "high",
+"note": "X is a garbled abbreviation-level reading that drops the line 'mulier deprehenduntur in latebris se osculantes' (§8) and mangles many citations; Y follows the leaf closely."
+},
+{
+"item_id": "6992f405c8c6ac61574e746e",
+"better": "X",
+"worse_serious": true,
+"confidence": "high",
+"note": "X matches the leaf ('妍媸面哭膽難知善惡情…硯中恠祟亦不復有矣'), while Y transcribes a different story ('尚質聯詩') that is not on this page."
+}
+]

@@ -1,0 +1,9007 @@
+{
+"built_at": "2026-10-10T17:06:15.459Z",
+"instrument": "analytics_pageviews, distinct (ip, day) per book, human-filtered at write",
+"note": "#6420 lane B queue after ranks 1-200: the next 1,000 books by readers, in group order (Latin first). Pages are selected at run time (driver.mjs select --books=201-\u2026).",
+"books": [
+{
+"rank": 202,
+"book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+"slug": "musaeum-hermeticum-1677-edition-jennis",
+"group": "latin",
+"language": "Latin",
+"views": 99,
+"lane_block": null
+},
+{
+"rank": 203,
+"book_id": "69c809c06c6f3cc53c84624a",
+"slug": "opera-omnia-quibus-tradidit-artis-raymundi-lulliu-lavinheta",
+"group": "latin",
+"language": "Latin",
+"views": 99,
+"lane_block": null
+},
+{
+"rank": 204,
+"book_id": "69bd9f17f6d63c919747f37f",
+"slug": "adagiorum-desiderii-erasmi-roterodami-epitome-erasmus-2",
+"group": "latin",
+"language": "Latin",
+"views": 98,
+"lane_block": null
+},
+{
+"rank": 205,
+"book_id": "6a22da7068f6a1498e300cbb",
+"slug": "clarificatorium-super-nono-almansoris-tournemire",
+"group": "latin",
+"language": "Latin",
+"views": 98,
+"lane_block": null
+},
+{
+"rank": 206,
+"book_id": "69b51dde47b06ecd581858e0",
+"slug": "theatrum-regularium-auda-2",
+"group": "latin",
+"language": "Latin",
+"views": 98,
+"lane_block": "status ocr_complete: a translate lane would re-translate the page"
+},
+{
+"rank": 209,
+"book_id": "6a3a3bb7862ce9a5b4d76118",
+"slug": "aphorismi-confessariorum-ex-doctorum-sententiis-collecti-sa",
+"group": "latin",
+"language": "Latin",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 210,
+"book_id": "69af2366b5227118e60e5143",
+"slug": "cyprian-opera-omnia-hartel-csel-3-1-cyprian",
+"group": "latin",
+"language": "Latin",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 213,
+"book_id": "6954354d1479a63c1108c210",
+"slug": "psychologia-empirica-wolff",
+"group": "latin",
+"language": "Latin",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 215,
+"book_id": "69bd9e066120d54bd037a8ad",
+"slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-5",
+"group": "latin",
+"language": "Latin",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 218,
+"book_id": "69c819256c6f3cc53c8492d0",
+"slug": "in-quatuor-evangelia-enarationes-luculentissimae-ochrid",
+"group": "latin",
+"language": "Latin",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 219,
+"book_id": "69c8168e6c6f3cc53c848b0c",
+"slug": "opera-alexandrinus-2",
+"group": "latin",
+"language": "Latin",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 220,
+"book_id": "6953ab8677f38f6761bd7725",
+"slug": "pal-lat-1339-archelaus",
+"group": "latin",
+"language": "Latin",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 221,
+"book_id": "6953ab9577f38f6761bd786e",
+"slug": "pal-lat-984-llull",
+"group": "latin",
+"language": "Latin",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 225,
+"book_id": "6a0857c249638a50931c563c",
+"slug": "epistolarum-pauli-manutii-libri-5-quincto-nuper-addito-eiusd",
+"group": "latin",
+"language": "Latin",
+"views": 95,
+"lane_block": null
+},
+{
+"rank": 229,
+"book_id": "6981920829276dc0500a60dc",
+"slug": "a-new-light-kindled-by-phosphorus-cohausen",
+"group": "latin",
+"language": "Latin",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 231,
+"book_id": "69b2f33d21208ea9dc277e2a",
+"slug": "medicae-artis-principes-post-hippocratem-et-galenum-ed",
+"group": "latin",
+"language": "Latin",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 236,
+"book_id": "6984e8498a2f054f912420cd",
+"slug": "golden-and-blessed-pandora-of-natural-wonders-figulus",
+"group": "latin",
+"language": "Latin",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 242,
+"book_id": "69527376ab34727b1f04948a",
+"slug": "magnes-sive-de-arte-magnetica-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 246,
+"book_id": "6aa9286a29214a687db64194",
+"slug": "cambridge-corpus-christi-college-ms-441-including-robert-of-flamborough",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 247,
+"book_id": "69dbcb161040d1d5e20b1cfc",
+"slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus-1",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 248,
+"book_id": "69c83cb46c6f3cc53c84fa60",
+"slug": "cyrillic-ctiri-knigi-o-istinnum-christijanstve-four-books-arndt",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 249,
+"book_id": "6990612b322e01b1349a39cf",
+"slug": "directorium-inquisitorum-comm",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 250,
+"book_id": "69ac843a274fb531f2b6bf6f",
+"slug": "opera-omnia-tomus-primus-gassendi",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 251,
+"book_id": "69ac7fde20878c5c9ba5381d",
+"slug": "opus-tertium-opus-minus-compendium-philosophiae-bacon",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 252,
+"book_id": "69906ec78a353648e1ed015e",
+"slug": "pal-lat-1340-peter-peregrinus",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 254,
+"book_id": "a5d0c381-d4ea-42cd-8864-44457e7fda33",
+"slug": "the-great-art-of-light-and-shadow-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 255,
+"book_id": "69b2f3d2a9a500a45e5e8bb2",
+"slug": "thesaurus-linguae-latinae-expanded-ed-estienne",
+"group": "latin",
+"language": "Latin",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 258,
+"book_id": "69b2f49df9f1ad2b3b15437e",
+"slug": "dictionarium-seu-thesaurus-linguae-latinae-estienne",
+"group": "latin",
+"language": "Latin",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 259,
+"book_id": "68d5571a110616ec557a3708",
+"slug": "eight-books-on-astronomy-maternus",
+"group": "latin",
+"language": "Latin",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 260,
+"book_id": "69a956fa65ddd05bbcd3d7c8",
+"slug": "opera-graece-et-latine-pyrrhoniarum-institutionum-libri-iii-empiricus",
+"group": "latin",
+"language": "Latin",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 263,
+"book_id": "695591c87bd6d2cd1d61978b",
+"slug": "amphitheatre-of-anatomy-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 268,
+"book_id": "69b222c756715b0e324751a4",
+"slug": "livy-epitomae-decadum-with-lucius-florus-aldine-press-florus",
+"group": "latin",
+"language": "Latin",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 269,
+"book_id": "69906ed98a353648e1ed08a9",
+"slug": "pal-lat-1369-hermes-trismegistus",
+"group": "latin",
+"language": "Latin",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 270,
+"book_id": "69819209c73493ba18172b35",
+"slug": "philosophical-magic-patrizi",
+"group": "latin",
+"language": "Latin",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 274,
+"book_id": "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
+"slug": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+"group": "latin",
+"language": "Latin",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 276,
+"book_id": "2950c384-e5de-44c2-bbb5-a486556d6a93",
+"slug": "poliziano-miscellaneorum-1489-florence-poliziano",
+"group": "latin",
+"language": "Latin",
+"views": 89,
+"lane_block": null
+},
+{
+"rank": 277,
+"book_id": "69b222fd56715b0e32475df5",
+"slug": "quintilian-institutiones-oratoriae-aldine-press-2nd-ed-quintilian",
+"group": "latin",
+"language": "Latin",
+"views": 89,
+"lane_block": null
+},
+{
+"rank": 280,
+"book_id": "69c79da6732b9d1f2b38170b",
+"slug": "de-perenni-philosophia-steuco",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 281,
+"book_id": "6991f8d4ff9de7ebcc934741",
+"slug": "de-urinis-et-pulsibus-corbeil",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 282,
+"book_id": "695aaf48ccf1d7d64e9e0966",
+"slug": "devil-s-bible-codex-gigas-attr",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 285,
+"book_id": "69b18a82c4be2cdd0edc7f8e",
+"slug": "leviathan-sive-de-materia-hobbes",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 286,
+"book_id": "69b30094e5d6d64d8e199966",
+"slug": "notitia-dignitatum-cum-orientis-tum-occidentis-various",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 287,
+"book_id": "6a42c42197284560a2b0bb2e",
+"slug": "relectio-de-poenitentiae-sacramento-in-sex-partes-distributa-cano",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 288,
+"book_id": "69b631a51c1c21a373809403",
+"slug": "summula-confessionis-antonino",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 290,
+"book_id": "69523495ab34727b1f044a45",
+"slug": "the-hammer-of-witches-sprenger",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 291,
+"book_id": "694f396c23a1d0c2ad1d8698",
+"slug": "three-books-on-life-1489-first-edition-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 292,
+"book_id": "69b220f356715b0e32473bd0",
+"slug": "cornucopiae-linguae-latinae-aldine-press-perotti",
+"group": "latin",
+"language": "Latin",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 295,
+"book_id": "69b4cd24d5b6c3815e1a42ab",
+"slug": "gerardus-mercator-jodocus-hondius-atlas-minor-latin-edition-hondius",
+"group": "latin",
+"language": "Latin",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 299,
+"book_id": "6952050fab34727b1f04216b",
+"slug": "universal-music-making-musurgia-universalis-volume-i-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 300,
+"book_id": "6952d08677f38f6761bc5477",
+"slug": "amphitheatre-of-eternal-wisdom-1609-khunrath",
+"group": "latin",
+"language": "Latin",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 303,
+"book_id": "69aff9963346b1fdd94b30c2",
+"slug": "gemini-elementa-astronomiae-geminus",
+"group": "latin",
+"language": "Latin",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 308,
+"book_id": "69af0d3bca8f47eb1206b135",
+"slug": "liber-canonis-avicennae-complete-canon-of-medicine-sina",
+"group": "latin",
+"language": "Latin",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 309,
+"book_id": "695677cbbe7c607c5f03acc3",
+"slug": "operis-medico-chymici-pars-altera-basilica-philosophica-mylius",
+"group": "latin",
+"language": "Latin",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 311,
+"book_id": "69af43458b369f0c1210a822",
+"slug": "prisciani-caesariensis-grammatici-institutionum-priscian-2",
+"group": "latin",
+"language": "Latin",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 312,
+"book_id": "6970e3549b09d309d780a242",
+"slug": "adages-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 315,
+"book_id": "69b32d015a396b236494be3c",
+"slug": "de-republica-ecclesiastica-libri-x-vol-1-dominis",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 316,
+"book_id": "69b32cf95a396b236494ba29",
+"slug": "germaniae-antiquae-libri-tres-cluver",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 319,
+"book_id": "69b52c263dd6d9423027e308",
+"slug": "herbarium-of-apuleius-dioscorides-on-herbs-c-1000-ad-musa",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 320,
+"book_id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+"slug": "newton-principia-1726-third-edition-newton",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 321,
+"book_id": "69a5d8254d84314297c08e10",
+"slug": "ornithologiae-hoc-est-de-avibus-historiae-libri-xii-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 326,
+"book_id": "69c800466c6f3cc53c843ec1",
+"slug": "dissertatio-de-sobria-alterius-sexus-frequentatione-per-raynaud",
+"group": "latin",
+"language": "Latin",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 327,
+"book_id": "69925492d5d1c6dbb2bcddea",
+"slug": "missale-romanum-1837-edition-church",
+"group": "latin",
+"language": "Latin",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 334,
+"book_id": "69c85a876c6f3cc53c8548cd",
+"slug": "d-ioannis-rusbrochii-summi-atque-sanctiss-viri-quem-ruusbroec",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 338,
+"book_id": "69a5e476006a4098422172b0",
+"slug": "michael-scot-liber-introductorius-pal-lat-1066-scot",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 339,
+"book_id": "6958e96f813ea03889c33051",
+"slug": "monstrorum-historia-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 340,
+"book_id": "69b2ff09a1a4246ddb45ab68",
+"slug": "novum-instrumentum-omne-first-greek-new-testament-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 341,
+"book_id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95",
+"slug": "paracelsus-complete-works-latin-paracelsus",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 343,
+"book_id": "6977413fd3c5725511424d63",
+"slug": "select-library-of-mystics-poiret",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 344,
+"book_id": "6aa94ead98dd95a320803eed",
+"slug": "summa-de-casibus-conscientiae-astesana-venice-johann-de-ast",
+"group": "latin",
+"language": "Latin",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 347,
+"book_id": "6a51d66d361684666359655d",
+"slug": "de-casibus-conscientiae-libri-iii-in-festorum-dierum-perkins",
+"group": "latin",
+"language": "Latin",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 348,
+"book_id": "69c825006c6f3cc53c84b72d",
+"slug": "deutsches-theatrum-chemicum-roth-scholtz",
+"group": "latin",
+"language": "Latin",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 353,
+"book_id": "69c7d4dc25ec2ba5ccd8050a",
+"slug": "physiologia-medica-zwinger",
+"group": "latin",
+"language": "Latin",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 358,
+"book_id": "6952b0fd77f38f6761bc2adc",
+"slug": "miscellanies-philological-studies-poliziano",
+"group": "latin",
+"language": "Latin",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 359,
+"book_id": "69942c9eb2f6748db4abdf39",
+"slug": "opera-divinarum-institutionum-libri-vii-de-ira-dei-de-lactantius",
+"group": "latin",
+"language": "Latin",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 361,
+"book_id": "69b2211308069e96e842e702",
+"slug": "prudentius-opera-christian-latin-poetry-vol-1-aldine-press-prudentius",
+"group": "latin",
+"language": "Latin",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 362,
+"book_id": "6953ab7477f38f6761bd729d",
+"slug": "reg-lat-1278-anonymous",
+"group": "latin",
+"language": "Latin",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 365,
+"book_id": "69b4d652853c26e0d1560d3d",
+"slug": "auriferae-artis-quam-chemiam-vocant-antiquissimi-authores-philosophorum-2",
+"group": "latin",
+"language": "Latin",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 367,
+"book_id": "698255f0b964b6154f32f9a6",
+"slug": "harmonic-nosology-petraeus",
+"group": "latin",
+"language": "Latin",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 369,
+"book_id": "69b3005de5d6d64d8e1990d7",
+"slug": "opera-omnia-giustiniani",
+"group": "latin",
+"language": "Latin",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 370,
+"book_id": "69ac5efe8efc70d517607a48",
+"slug": "opera-varia-vol-2-huygens",
+"group": "latin",
+"language": "Latin",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 371,
+"book_id": "6a08598249638a50931c7bf9",
+"slug": "pomponius-mela-iulius-solinus-itinerarium-antonini-aug-vibiu-2",
+"group": "latin",
+"language": "Latin",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 373,
+"book_id": "69b41881f1200e2ab53cfb8d",
+"slug": "alchemical-compendium-rupescissa-aquinas-rhazes-mid-1500s-al-razi",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 374,
+"book_id": "69b52c2b3dd6d9423027e41a",
+"slug": "avicenna-canon-of-medicine-sina",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 375,
+"book_id": "69b633381c1c21a373817007",
+"slug": "confessionale-bartholomaeus-3",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 376,
+"book_id": "69b1860cc4be2cdd0edc4de2",
+"slug": "epistolae-physiologicae-vol-1-leeuwenhoek",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 378,
+"book_id": "69cf7d616d17d9f121ccf340",
+"slug": "poetarum-philosophorum-fragmenta-ed",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 379,
+"book_id": "69dbcc470f8c5edf20f48e32",
+"slug": "summa-theologiae-pars-secunda-prima-pars-thomas-aquinas-3",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 380,
+"book_id": "69751588a88d83c830d99e16",
+"slug": "the-art-of-gold-making-artis-auriferae-morienus",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 381,
+"book_id": "69520571ab34727b1f042c78",
+"slug": "the-hieroglyphic-monad-dee",
+"group": "latin",
+"language": "Latin",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 386,
+"book_id": "69af1113c59ddc7f44a85649",
+"slug": "historiae-animalium-liber-i-de-quadrupedibus-viviparis-gessner",
+"group": "latin",
+"language": "Latin",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 387,
+"book_id": "69ac84205d2908b26341ca48",
+"slug": "institutio-astronomica-juxta-hypotheses-tam-veterum-quam-gassendi",
+"group": "latin",
+"language": "Latin",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 393,
+"book_id": "6952587bab34727b1f045546",
+"slug": "symbols-of-the-golden-table-of-the-twelve-nations-maier",
+"group": "latin",
+"language": "Latin",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 397,
+"book_id": "69c864706c6f3cc53c855faa",
+"slug": "curationum-empericarum-historicarum-centuria-quarta-ruland-sr",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 398,
+"book_id": "69aea70d971abe996d21b9f3",
+"slug": "epistolae-selectae-selected-letters-nairn",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 399,
+"book_id": "69b52bdad6bd9f58edb24fe0",
+"slug": "hugh-of-santalla-geomancy-arabic-divination-santalla",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 400,
+"book_id": "69942e16d607f8e57e4b7602",
+"slug": "in-calumniatorem-platonis-libri-iv-correctio-platonis-de-bessarion",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 402,
+"book_id": "69b51e0fefd8df28f2dafa7d",
+"slug": "platonis-opera-plato",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 406,
+"book_id": "6aa94d3a98dd95a320802ce7",
+"slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 407,
+"book_id": "6978ee3a598a6361bba7fbaf",
+"slug": "the-sum-of-perfection-and-the-marrow-of-alchemy-geber",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 409,
+"book_id": "69b2f44bf9f1ad2b3b1524b7",
+"slug": "varii-historiae-romanae-scriptores-ed",
+"group": "latin",
+"language": "Latin",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 410,
+"book_id": "6aa94ec498dd95a3208048ed",
+"slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 411,
+"book_id": "69af42393fd91d3991398cca",
+"slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 412,
+"book_id": "69c81f706c6f3cc53c84a56d",
+"slug": "de-perenni-philosophia-steuco-2",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 413,
+"book_id": "69b32d635a396b236494c1ae",
+"slug": "dissertatio-de-foenore-trapezitico-saumaise",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 414,
+"book_id": "69b4c08586a5921d5bc4427f",
+"slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 415,
+"book_id": "69b303fb983e01f74b98704a",
+"slug": "historia-de-bello-svecico-matthiae",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 416,
+"book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+"slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 417,
+"book_id": "695592827bd6d2cd1d61ab34",
+"slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 421,
+"book_id": "6991ec417cafcbc1b0209f2a",
+"slug": "theatrum-chemicum-vol-v-ed",
+"group": "latin",
+"language": "Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 422,
+"book_id": "69bd9f13f6d63c919747ef3b",
+"slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 425,
+"book_id": "694f3d6ebe37f451a5324e95",
+"slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 426,
+"book_id": "69b418bc2b0edf3eaa2ddc19",
+"slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 427,
+"book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+"slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 428,
+"book_id": "69c78d3a6a0f3d112faf99bc",
+"slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 433,
+"book_id": "69772b6b47dc849429ffb22e",
+"slug": "the-curious-chemical-library-manget",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 434,
+"book_id": "697d9ca2e930671f09614566",
+"slug": "the-harmony-of-the-world-kepler",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 435,
+"book_id": "699066472ec9f7db57179ee2",
+"slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+"group": "latin",
+"language": "Latin",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 437,
+"book_id": "6a357ed02aadc65cf0907ea1",
+"slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 440,
+"book_id": "695573a0f63a757109172141",
+"slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 443,
+"book_id": "69b18669c4be2cdd0edc648b",
+"slug": "de-historicis-latinis-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 444,
+"book_id": "6953e55777f38f6761bf05cf",
+"slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 449,
+"book_id": "69b418b22b0edf3eaa2dda8d",
+"slug": "key-of-solomon-latin-ms-18th-c-colorni",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 450,
+"book_id": "69af42b25d9a8c328fe8a0a4",
+"slug": "m-verrii-flacci-fragmenta-et-sexti-pompei-festi-de-verborum-festus",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 453,
+"book_id": "69a9571a65ddd05bbcd3ddda",
+"slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 455,
+"book_id": "6988a5a076a49ee3a652f51c",
+"slug": "revealer-of-secrets-cregut",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 456,
+"book_id": "6991e1b0339ebc850994ab9e",
+"slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+"group": "latin",
+"language": "Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 458,
+"book_id": "69c83bc96c6f3cc53c84f7a2",
+"slug": "alle-de-wercken-cats",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 459,
+"book_id": "69b301ecc22956d8a0de5299",
+"slug": "aristarchus-sacer-heinsius",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 462,
+"book_id": "69b3040b5facc83a9a3dba90",
+"slug": "de-bosporo-thracio-gilles",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 465,
+"book_id": "6a0850b515c643eb1af486bc",
+"slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 470,
+"book_id": "69527367ab34727b1f048f38",
+"slug": "mundus-subterraneus-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 471,
+"book_id": "6953e4fa77f38f6761bef1dc",
+"slug": "philosophiae-naturalis-principia-mathematica-1687-first-newton",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 472,
+"book_id": "69aeade197d553c75e9d9421",
+"slug": "poggii-florentini-opera-bracciolini",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 473,
+"book_id": "6991e1a8339ebc850994a802",
+"slug": "politicorum-libri-octo-aristotle",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 476,
+"book_id": "6aa94eb398dd95a3208044a5",
+"slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 477,
+"book_id": "6aa94eb698dd95a3208046b9",
+"slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 478,
+"book_id": "6984e8498a2f054f912420d3",
+"slug": "two-volumes-of-pasquils",
+"group": "latin",
+"language": "Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 482,
+"book_id": "69af13c46de7e4b9449474af",
+"slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 484,
+"book_id": "69b4c057978ca9526eda396d",
+"slug": "firmicus-maternus-mathesis-second-copy-maternus",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 485,
+"book_id": "69af2339285bd73604373fd4",
+"slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 486,
+"book_id": "6985ca7130d79dd170ec623f",
+"slug": "on-the-preternatural-history-of-both-worlds-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 487,
+"book_id": "69bd9c706120d54bd036eeb7",
+"slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 488,
+"book_id": "69944b981ba83513779075f0",
+"slug": "opera-exegetica-in-libros-mosis-eds",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 490,
+"book_id": "69aec5d23b6ebce5e0ee97fa",
+"slug": "philosophia-moralis-sive-ethica-wolff-2",
+"group": "latin",
+"language": "Latin",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 492,
+"book_id": "69593410b282844d7b277966",
+"slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+"group": "latin",
+"language": "Latin",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 497,
+"book_id": "69c70f9dda9771c71631622d",
+"slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+"group": "latin",
+"language": "Latin",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 504,
+"book_id": "6990616fef12272ffdc8db47",
+"slug": "de-humana-physiognomonia-libri-iv-porta",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 505,
+"book_id": "6956eaf4f23ebf30578dba35",
+"slug": "de-occulta-philosophia-libri-i-latin-1531-agrippa",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 509,
+"book_id": "69b4190a2b0edf3eaa2de972",
+"slug": "khunrath-amphitheatre-of-eternal-wisdom-1702-ms-khunrath",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 510,
+"book_id": "69dbcaa91040d1d5e20ad6b4",
+"slug": "liber-de-exemplis-ac-similitudinibus-rerum-johannes-de-sancto-g",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 511,
+"book_id": "69c80dd96c6f3cc53c846e1f",
+"slug": "opera-bucher-und-schrifften-paracelsus",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 512,
+"book_id": "6955dc6c8407b7c9ae213b80",
+"slug": "principia-philosophiae-descartes",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 513,
+"book_id": "697932b1f35c6bbfbfd252fd",
+"slug": "rational-thoughts-on-god-the-soul-and-evil-poiret",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 516,
+"book_id": "6991d8cd8c1030b12444cac5",
+"slug": "speculum-lapidum-et-sympathia-septem-metallorum-ad-planetas-scudalupis",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 517,
+"book_id": "695203a5ab34727b1f041c53",
+"slug": "the-hermetic-museum-various-sendivogius",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 519,
+"book_id": "69af47022a8090156eec1451",
+"slug": "valerii-maximi-factorum-et-dictorum-memorabilium-libri-maximus",
+"group": "latin",
+"language": "Latin",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 520,
+"book_id": "69906e648a353648e1ecf7df",
+"slug": "astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 523,
+"book_id": "69c8410e6c6f3cc53c850941",
+"slug": "de-veritate-religionis-christianae-liber-mornay",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 530,
+"book_id": "69b18675c4be2cdd0edc681a",
+"slug": "institutiones-oratoriae-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 531,
+"book_id": "31f2d90a-88af-4414-a445-68406caca58d",
+"slug": "kepler-astronomia-nova-1609-prague-kepler",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 532,
+"book_id": "695d0e044afae5c3b3aead52",
+"slug": "meditationes-de-prima-philosophia-descartes",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 533,
+"book_id": "699253ff59cdabeb78f1aa9a",
+"slug": "missale-romanum-church",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 534,
+"book_id": "695258d1ab34727b1f045aed",
+"slug": "natural-magic-or-on-the-miracles-of-natural-things-porta",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 536,
+"book_id": "6a22da4468f6a1498e3003a1",
+"slug": "practica-nova-medicine-concoregio",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 538,
+"book_id": "6970e3619b09d309d780a26a",
+"slug": "several-small-works-on-alchemy-anonymous",
+"group": "latin",
+"language": "Latin",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 539,
+"book_id": "69aead2466bcc9447837c4cc",
+"slug": "corollarium-in-dioscoridem-barbaro",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 540,
+"book_id": "69af45f4d6be7ec9cc3234ea",
+"slug": "d-magni-ausonii-burdigalensis-opera-omnia-vol-ii-ausonius-valpy",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 541,
+"book_id": "69c82e516c6f3cc53c84d5ef",
+"slug": "de-honesta-disciplina-de-poetis-latinis-eiusdem-poematorum-crinitus",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 542,
+"book_id": "69b18655c4be2cdd0edc5eb7",
+"slug": "de-theologia-gentili-et-physiologia-christiana-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 543,
+"book_id": "69c7dcca25ec2ba5ccd80881",
+"slug": "de-triplici-disciplina-champier",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 547,
+"book_id": "69af1119266659b71a322cc7",
+"slug": "historiae-animalium-liber-ii-de-quadrupedibus-oviparis-gessner",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 549,
+"book_id": "699201557c226bdd25f9862c",
+"slug": "liber-chimico-medicus-manuscript-naude",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 550,
+"book_id": "69938e0ed5a98fd66f43018d",
+"slug": "oracula-sibyllina-editio-princeps-castellion-castellion",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 551,
+"book_id": "69906ed58a353648e1ed05e7",
+"slug": "pal-lat-1375-regiomontanus",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 556,
+"book_id": "6a0853d015c643eb1af50f14",
+"slug": "sicuti-antiquarum-lectionum-commentarios-concinnarat-olim-vi",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 558,
+"book_id": "6909d654cf28baa1b4cb0269",
+"slug": "the-first-volume-of-minor-works-on-theological-historical-zimmermann",
+"group": "latin",
+"language": "Latin",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 560,
+"book_id": "69af2225c6df16b7172a94c2",
+"slug": "cassiodori-senatoris-variae-cassiodorus",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 562,
+"book_id": "69af0fc46f6d83348c7fa572",
+"slug": "de-rebus-naturalibus-libri-xxx-1590-zabarella",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 565,
+"book_id": "6991bf6f734f402cad489dba",
+"slug": "harley-ms-3859-solinus",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 568,
+"book_id": "69b00ea8312120db3b489116",
+"slug": "l-annaei-senecae-opera-philosophica-vol-2-ed",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 569,
+"book_id": "69ae9b7902039497d3a62624",
+"slug": "novum-testamentum-ex-sinaitico-codice-tischendorf",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 572,
+"book_id": "69af0bfad52f95654dfadf69",
+"slug": "ornithologiae-libri-xii-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 574,
+"book_id": "69b3010ee28f56bd749437d6",
+"slug": "quae-exstant-elzevir-pocket-caesar",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 579,
+"book_id": "695592c17bd6d2cd1d61afec",
+"slug": "the-great-art-ars-magna-lavinheta",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 580,
+"book_id": "69904dd67d19f3f2aac1d49d",
+"slug": "utriusque-cosmi-historia-1617-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 581,
+"book_id": "69b4d63cf22c8341a90b9e32",
+"slug": "verae-alchemiae-artis-qve-metallicae-citra-aenigmata-philosophorum",
+"group": "latin",
+"language": "Latin",
+"views": 67,
+"lane_block": "status ocr_complete: a translate lane would re-translate the page"
+},
+{
+"rank": 582,
+"book_id": "69b5259e2f891867c1ae3de9",
+"slug": "biblia-sacra-hebr-a-correcta-collata-cum-antiquissimis-leusden",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 584,
+"book_id": "6a4f7563eeef22aafac6164b",
+"slug": "breve-directorium-ad-confessarii-et-confitentis-munus-recte-polanco",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 585,
+"book_id": "69b6fec53c7947b468d92d14",
+"slug": "christianismi-restitutio-mdliii-servetus",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 586,
+"book_id": "695285a6ab34727b1f04b9e8",
+"slug": "conciliator-differentiarum-philosophorum-et-medicorum-d-abano",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 594,
+"book_id": "6958e972813ea03889c33412",
+"slug": "musaeum-metallicum-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 595,
+"book_id": "69c880496c6f3cc53c859041",
+"slug": "mythologiae-christianae-sive-virtutum-vitiorum-vitae-andreae",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 597,
+"book_id": "69af0d35067c0c26ee26d2bc",
+"slug": "rariorum-stirpium-per-pannoniam-historia-clusius",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 605,
+"book_id": "69819203084978306e4933f4",
+"slug": "universal-medicine-or-the-mystic-sanctuary-of-the-healing-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 606,
+"book_id": "69593413b282844d7b277aaf",
+"slug": "utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 608,
+"book_id": "69b2ffdc5545150b61b4a290",
+"slug": "apophthegmatum-opus-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 609,
+"book_id": "69942e9ed607f8e57e4b99ae",
+"slug": "aristotelis-metaphysicorum-libri-xiv-bessarion-trans-trans",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 614,
+"book_id": "69b32d6e5a396b236494c5c9",
+"slug": "de-republica-ecclesiastica-libri-x-vol-2-dominis",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 615,
+"book_id": "69c70fd0da9771c71631624d",
+"slug": "de-verbo-dei-scripto-et-non-scripto-agricola",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 618,
+"book_id": "6952723fab34727b1f04810e",
+"slug": "integrum-morborum-mysterium-medical-mysteries-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 619,
+"book_id": "6952861eab34727b1f04c3df",
+"slug": "ioannis-pici-mirandulae-omnia-opera-mirandola",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 620,
+"book_id": "dfb9c1de-d300-4e1b-a9c1-941cdb809764",
+"slug": "llull-ars-magna-generalis-1517-vinheta",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 622,
+"book_id": "69b21cda429e087c6f865b68",
+"slug": "origines-antwerpianae-becanus",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 625,
+"book_id": "69b2ff8fa1a4246ddb45b3f2",
+"slug": "sermones-fideles-sive-interiora-rerum-bacon-2",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 627,
+"book_id": "69dbcb031040d1d5e20b0a80",
+"slug": "summa-de-virtutibus-et-vitiis-paraldus",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 628,
+"book_id": "69dbcb011040d1d5e20b071e",
+"slug": "summa-de-virtutibus-paraldus",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 630,
+"book_id": "69a0278f5a61461956f4ce1d",
+"slug": "thesaurus-practicus-besold-2",
+"group": "latin",
+"language": "Latin",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 632,
+"book_id": "69c870796c6f3cc53c8572ee",
+"slug": "coelestis-hierarchia-ecclesiastica-hierarchia-divina-nomina-areopagita-ignatius",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 633,
+"book_id": "694fd600435f95fd0c9556d1",
+"slug": "complete-works-opera-omnia-translation",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 634,
+"book_id": "6a3f035f97e91e1768f6a310",
+"slug": "corpus-paroemiographorum-graecorum-ediderunt-e-l-a-leutsch-leutsch",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 636,
+"book_id": "69dbc8d51040d1d5e209cb29",
+"slug": "decem-tractatus-astronomiae-additions-by-jacobus-canter-ed-j-bonatus",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 637,
+"book_id": "698fb9446b95eeda7d2d38b9",
+"slug": "disquisitionum-magicarum-libri-sex-rio",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 640,
+"book_id": "69b2f3cca9a500a45e5e87bf",
+"slug": "mosis-libri-v-cum-ioannis-calvini-commentariis-estienne",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 642,
+"book_id": "69ac5ef58efc70d51760769a",
+"slug": "opera-varia-vol-1-huygens",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 643,
+"book_id": "69af2331d510291a0ec78a9e",
+"slug": "orosius-adversus-paganos-historiarum-libri-septem-orosius",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 644,
+"book_id": "69528626ab34727b1f04c673",
+"slug": "picatrix-ghayat-al-hakim-pseudo-maslama",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 646,
+"book_id": "69b69d32080b19f98fd0ac3e",
+"slug": "renati-des-cartes-opera-philosophica-descartes",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 649,
+"book_id": "69c7d03525ec2ba5ccd8031e",
+"slug": "theologia-mystica-cum-speculativa-herpen",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 650,
+"book_id": "69b67cff24677234712502ea",
+"slug": "ulyssis-aldrovandi-ornithologiae-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 652,
+"book_id": "69b2f372a9a500a45e5e81c6",
+"slug": "auli-gellii-noctes-atticae-estienne",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 655,
+"book_id": "6984e84f9404d58b48aca521",
+"slug": "complete-philosophical-works-the-enneads-plotinus",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 656,
+"book_id": "69c8001f6c6f3cc53c843e25",
+"slug": "de-rerum-varietate-cardano-2",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 657,
+"book_id": "6958dfb9dbe0f678e5c52aa7",
+"slug": "de-stirpium-nomenclaturis-tragus",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 658,
+"book_id": "6975158ca88d83c830d99e2e",
+"slug": "dissertation-on-the-most-august-sacrament-of-the-lord-s-marcellius",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 661,
+"book_id": "699062ebef12272ffdc8ddbc",
+"slug": "kabbala-denudata-tomus-i-rosenroth",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 663,
+"book_id": "69b00c3c74f90a85f3eced64",
+"slug": "liber-quadripartiti-ptolomei-1493-incunabulum-ptolemy",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 664,
+"book_id": "69b6424e1c1c21a37388beb1",
+"slug": "m-vitruvii-pollionis-de-architectura-libri-x-ad-augustum-vitruvius",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 665,
+"book_id": "69a979f2daf647306a736eab",
+"slug": "macrobii-commentarii-in-somnium-scipionis-macrobius",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 667,
+"book_id": "6979536eeef1c286564aa437",
+"slug": "new-alchemical-compendium-or-pandora-explained-faust",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 669,
+"book_id": "698420e3a907eafa9ae63f83",
+"slug": "occult-philosophy-agrippa",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 670,
+"book_id": "69af21b0f98f6eff774cb5b8",
+"slug": "opera-quae-extant-statius",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 671,
+"book_id": "69af53c86011c40e7176a51c",
+"slug": "opus-majus-of-roger-bacon-vol-i-bridges-ed-bacon",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 673,
+"book_id": "69aec144b87be1eef391ddab",
+"slug": "procopii-caesariensis-opera-omnia-caesarea",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 674,
+"book_id": "69afd0a8775a23a98ee933ec",
+"slug": "rhazes-opera-medica-continent-liber-rhazes",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 678,
+"book_id": "69bd9d3c6120d54bd037424c",
+"slug": "summa-omnium-haeresum-et-catalogus-schismaticorum-medici-2",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 680,
+"book_id": "69c815276c6f3cc53c8484be",
+"slug": "veritas-sui-vindex-seu-solennis-fidei-declaratio-labadie",
+"group": "latin",
+"language": "Latin",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 682,
+"book_id": "69b2feee65b9d6bf89925558",
+"slug": "adagiorum-chiliades-aldine-edition-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 685,
+"book_id": "69afd1f09a8092f06abf0601",
+"slug": "de-materia-medica-libri-quinque-vol-i-sprengel-edition-pedanius",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 686,
+"book_id": "69c89fe06c6f3cc53c85de54",
+"slug": "de-physiologia-christiana-et-theologia-gentili-liber-v-vi-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 687,
+"book_id": "69b4c08d86a5921d5bc445cf",
+"slug": "hermes-trismegistus-translated-by-apuleius-ficino-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 688,
+"book_id": "69aea8741cbf28a363a4fad7",
+"slug": "iamblichus-de-mysteriis-psellus-de-daemonibus-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 690,
+"book_id": "69b21c3c429e087c6f86448e",
+"slug": "italia-antiqua-cluver",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 693,
+"book_id": "69af0d99067c0c26ee26d5f4",
+"slug": "opera-omnia-astronomiae-instauratae-progymnasmata-brahe",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 694,
+"book_id": "69b30097e5d6d64d8e199c53",
+"slug": "opera-omnia-vives",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 698,
+"book_id": "69c88ae96c6f3cc53c85a7c3",
+"slug": "symbola-aureae-mensae-duodecim-nationum-maier-2",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 700,
+"book_id": "69c88c2e6c6f3cc53c85ab59",
+"slug": "theologia-naturalis-sabunde",
+"group": "latin",
+"language": "Latin",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 703,
+"book_id": "69b4cc3fbb3208142d7bc86d",
+"slug": "agrippa-de-occulta-philosophia-book-iii-1531-nettesheim",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 704,
+"book_id": "69c803536c6f3cc53c844af1",
+"slug": "alcoran",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 705,
+"book_id": "69b17be3938cbe91c8720452",
+"slug": "b-d-s-opera-posthuma-spinoza",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 706,
+"book_id": "69af111ad5d111f99e41cc1f",
+"slug": "bibliotheca-universalis-gessner",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 707,
+"book_id": "69b51e50cf111105c429a8b0",
+"slug": "breviarium-romanum-pars-hiemalis-ex-decreto-sacrosancti-lucis",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 708,
+"book_id": "6a084d9715c643eb1af3f59e",
+"slug": "buc-geor-aeneis-p-virgilii-maronis-mantuani-doctiss-virorum-",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 709,
+"book_id": "69c8701f6c6f3cc53c857213",
+"slug": "chymisticum-artificium-naturae-dorn",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 710,
+"book_id": "69af22d9f98f6eff774cd5d3",
+"slug": "cornelius-nepos-vitae-nepos",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 713,
+"book_id": "6a0855a615c643eb1af56831",
+"slug": "de-vitis-sanctorvm-t-4-complectens-sanctos-mensivm-iulijj-au",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 716,
+"book_id": "6957ef6bcbe1dcad7b76beff",
+"slug": "hortus-sanitatis-meydenbach",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 718,
+"book_id": "6a26c209aad44c98627c1662",
+"slug": "nosologia-harmonica-dogmatica-amp-hermetica-petraeus-2",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 719,
+"book_id": "69af0a0803e79fb33525bfff",
+"slug": "obeliscus-aegyptiacus-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 720,
+"book_id": "69b2ffc95545150b61b49756",
+"slug": "opera-pars-secunda-origen",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 721,
+"book_id": "69a9768ee12635ded71c4e2f",
+"slug": "quaestiones-de-primis-principiis-kopp",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 722,
+"book_id": "69af462d61b03be5fb7af572",
+"slug": "s-isidori-hispalensis-opera-omnia-tom-iii-isidore-of-seville",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 726,
+"book_id": "69c7e10c295ea01b70c8d66c",
+"slug": "sententiae-stobaeus",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 728,
+"book_id": "69b52597cced70d8e6d72b52",
+"slug": "theatrum-biblicum-hoc-est-histori-sacr-veteris-et-novi-visscher",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 729,
+"book_id": "69906ed78a353648e1ed085f",
+"slug": "vat-lat-6842-pseudo-solomonic",
+"group": "latin",
+"language": "Latin",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 732,
+"book_id": "69b3f78da107e55a0ee1dd03",
+"slug": "avicenna-s-canon-of-medicine-13th-century-latin-ms-cremona",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 733,
+"book_id": "69af12f493903bf8119f3388",
+"slug": "claudii-galeni-de-placitis-hippocratis-et-platonis-libri-galen",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 736,
+"book_id": "699253f759cdabeb78f1a27c",
+"slug": "didascalia-et-constitutiones-apostolorum-funk",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 739,
+"book_id": "69b6c95731b7f0d07f5057d3",
+"slug": "dominici-gulielmini-opera-omnia-mathematica-hydraulica-guglielmini",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 740,
+"book_id": "69ae6818b3b0e7bf712d6c63",
+"slug": "epistolographi-graeci-hercher",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 741,
+"book_id": "69b686d470c69d645a746941",
+"slug": "epitome-astronomiae-copernicanae-usitata-forma-quaestionum-kepler",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 743,
+"book_id": "69afd0df775a23a98ee93a30",
+"slug": "historia-naturalis-elder",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 744,
+"book_id": "69c7c9cb25ec2ba5ccd7fd73",
+"slug": "historia-templariorum-gurtler",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 745,
+"book_id": "69b3009ee28f56bd749422ab",
+"slug": "historiarum-libri-vol-3-elzevir-1645-livy",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 747,
+"book_id": "69c74f7f6a0f3d112faf848b",
+"slug": "operis-politici-variis-digressionibus-philologicis-besold",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 748,
+"book_id": "69b301f5c22956d8a0de5680",
+"slug": "orationes-elzevir-heinsius",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 751,
+"book_id": "6a084f5f15c643eb1af446c5",
+"slug": "prisciani-grammatici-caesariensis-libri-omnes-quibus-omnibus",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 752,
+"book_id": "69a957a865ddd05bbcd3ee7c",
+"slug": "pyrrhoniarum-hypotyposeon-libri-iii-outlines-of-pyrrhonism-stephanus",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 753,
+"book_id": "69dbc9c01040d1d5e20a5f41",
+"slug": "quaestiones-selectae-abbreviatae-et-ordinatae-per-alphabetum-duns-scotus",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 755,
+"book_id": "69af0ddf9f13b61d0a6c642b",
+"slug": "rerum-medicarum-novae-hispaniae-thesaurus-hernandez",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 756,
+"book_id": "697929a0f35c6bbfbfd252f5",
+"slug": "the-heaven-of-the-philosophers-or-the-secrets-of-nature-ulstad",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 757,
+"book_id": "6a1009c3f71729295096b78b",
+"slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-9",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 758,
+"book_id": "69ad6a975e7e0803b48e6d61",
+"slug": "valerius-maximus-de-dictis-factisque-memorabilibus-maximus",
+"group": "latin",
+"language": "Latin",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 763,
+"book_id": "69dbcb7d1040d1d5e20b6ef4",
+"slug": "ephemerides-1489-1506-regiomontanus",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 764,
+"book_id": "6a08521115c643eb1af4bf35",
+"slug": "ex-14-t-liuij-decadibus-prima-tertia-quarta-in-qua-praeter-f",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 767,
+"book_id": "695201a9ab34727b1f041826",
+"slug": "history-of-the-microcosm-volume-ii-fludd",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 769,
+"book_id": "69c771db6a0f3d112faf91b6",
+"slug": "in-dionysii-areopagitae-de-mystica-theologia-hersent",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 770,
+"book_id": "69b21dac94025df5d29092b6",
+"slug": "novus-index-librorum-prohibitorum-et-expurgatorum-1632-zapata",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 771,
+"book_id": "65c7583f-4866-4f74-8903-a37bd8f1de33",
+"slug": "oedipus-aegyptiacus-volume-i-1652-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 772,
+"book_id": "69af0be1bc67baee10860ec1",
+"slug": "opera-chirurgica-aquapendente",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 773,
+"book_id": "695435201479a63c1108adc2",
+"slug": "philosophia-rationalis-sive-logica-wolff",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 774,
+"book_id": "69aec7b02bb3df12d9b41f2b",
+"slug": "rhetoricorum-libri-quinque-1532-trebizond",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 775,
+"book_id": "69aeab3c67e6731bc1366363",
+"slug": "rhetoricorum-libri-quinque-trebizond-2",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 779,
+"book_id": "695207e4ab34727b1f043cf6",
+"slug": "the-art-of-gold-making-alchemy-anthology-various-turba",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 781,
+"book_id": "6836f8ee811c8ab472a49e36",
+"slug": "two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 782,
+"book_id": "6953eab81479a63c1108770c",
+"slug": "works-of-descartes-vol-vii-meditations-descartes",
+"group": "latin",
+"language": "Latin",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 784,
+"book_id": "6a26bc74d6b178e5aad8358f",
+"slug": "artificii-chymistici-physici-metaphysicique-pars-quarum-dorn",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 785,
+"book_id": "69593045a41e40e9146a4cc2",
+"slug": "aureum-vellus-golden-treasure-chamber-paracelsus",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 788,
+"book_id": "69aeaaaa2eebe4c57e9ad797",
+"slug": "epistolarum-familiarium-libri-vi-bembo",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 791,
+"book_id": "69b52beb3dd6d9423027cb60",
+"slug": "ficino-three-books-on-life-talismanic-magic-celestial-ficino",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 792,
+"book_id": "69b00a62c42435fcd0cf9ee0",
+"slug": "galeni-opera-omnia-vol-1-biu-sante-ed",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 795,
+"book_id": "6a08509515c643eb1af47e28",
+"slug": "in-hoc-volumine-haec-continentur-neruae-et-traiani-atque-adr",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 796,
+"book_id": "69ef2f5d72c1376fdf2af1d6",
+"slug": "liber-ad-almansorem-rhazes",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 797,
+"book_id": "69b00d34229049d651692532",
+"slug": "m-vitruvii-pollionis-de-architectura-libri-decem-1649-ed",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 799,
+"book_id": "69af2186a854057228c078b4",
+"slug": "opera-omnia-vol-iii-apuleius",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 800,
+"book_id": "69dbc9211040d1d5e20a064b",
+"slug": "orationes-ed-ludovicus-carbo-cicero",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 801,
+"book_id": "69bd9cef6120d54bd0371efe",
+"slug": "origenis-adamantii-eximii-scripturarum-interpretis-opera-origenes-3",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 806,
+"book_id": "6a085a5a49638a50931c915c",
+"slug": "statii-syluarum-libri-5-achilleidos-libri-12-thebaidos-libri",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 808,
+"book_id": "69906ecf7d027b8182c0ab65",
+"slug": "vat-lat-4087-scot",
+"group": "latin",
+"language": "Latin",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 816,
+"book_id": "69b51ddccf111105c42922b3",
+"slug": "catalogi-librorum-manuscriptorum-angliae-et-hiberniae-in-bernard",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 818,
+"book_id": "69bd9cfd6120d54bd0372612",
+"slug": "commentarius-de-praecipuis-generibus-divinationum-in-quo-a-peucer-2",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 819,
+"book_id": "69af457452b46fe9760334d5",
+"slug": "corpus-scriptorum-ecclesiasticorum-latinorum-vol-xix-lactantius-brandt",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 820,
+"book_id": "6a500179e39653852101a3e7",
+"slug": "de-poenitentia-et-confessione-secreta-semper-in-ecclesia-eck",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 821,
+"book_id": "69dbcb191040d1d5e20b2258",
+"slug": "de-rebus-memorandis-add-epistola-de-studiorum-suorum-success-petrarca",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 822,
+"book_id": "69b21c4d79013c38632892d8",
+"slug": "de-republica-hebraeorum-cunaeus",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 823,
+"book_id": "69b1867ac4be2cdd0edc6c4d",
+"slug": "de-sibyllinis-aliisque-quae-christi-natalem-praecessere-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 824,
+"book_id": "69b300cb5545150b61b4d64f",
+"slug": "decretalium-libri-church",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 828,
+"book_id": "6991e1aa339ebc850994a92a",
+"slug": "ethicorum-libri-x-with-averroes-commentary-aristotle",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 830,
+"book_id": "6992469fbc722ec0ee80f357",
+"slug": "evangelia-apocrypha-apocryphal-gospels-greek-latin-ed",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 831,
+"book_id": "69af43aca7f17290d51daeb4",
+"slug": "grammatici-latini-vol-vi-pt-2-scriptores-artis-metricae-keil",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 832,
+"book_id": "69aea5c357ed98c21d25ae38",
+"slug": "griechische-palaeographie-band-i-gardthausen",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 834,
+"book_id": "69b21dc494025df5d2909c7c",
+"slug": "index-librorum-prohibitorum-1664-alternate-copy-vii",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 836,
+"book_id": "69c7b90c25ec2ba5ccd7f800",
+"slug": "libelli-duo-in-quorum-altero-aenigmata-pleraque-antiquorum-giraldus",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 838,
+"book_id": "69906ff9245959b9547d5ccb",
+"slug": "opticae-thesaurus-alhazeni-arabis-libri-vii-vitellonis-risner",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 840,
+"book_id": "69b43d4006b196d69f66fc21",
+"slug": "plato-dialogues-ficino-translation-with-de-amore-translator",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 841,
+"book_id": "69b269679c47116e2114d59e",
+"slug": "pontani-de-aspiratione-charon-antonius-aegidius-actius-pontano",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 849,
+"book_id": "69dbcb901040d1d5e20b7d3a",
+"slug": "vocabularius-breviloquus-add-guarinus-ars-diphthongandi-joha-reuchlin",
+"group": "latin",
+"language": "Latin",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 852,
+"book_id": "69c7653b6a0f3d112faf8ef5",
+"slug": "acta-eruditarum-recognitionum-in-publicam-lucem-et-censuram-lange",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 853,
+"book_id": "69c7e5c5fb10016c3f389ba4",
+"slug": "adversus-valentini-similium-gnosticorum-haereses-libri-irenaeus",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 854,
+"book_id": "6955939c7bd6d2cd1d61c19c",
+"slug": "agrippa-opera-in-duos-tomos-1553-agrippa",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 862,
+"book_id": "69b300eae5d6d64d8e19a00c",
+"slug": "epistolae-familiares-bembo",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 863,
+"book_id": "69942e6ad607f8e57e4b913f",
+"slug": "epitome-physica-blemmydes",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 864,
+"book_id": "6957ef84cbe1dcad7b76c80a",
+"slug": "exoticorum-libri-decem-clusius",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 870,
+"book_id": "69aea74c971abe996d21c3c0",
+"slug": "opera-chymica-alchemical-works-villanova",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 871,
+"book_id": "69af21fb7c27d4b637fedf7d",
+"slug": "opera-omnia-vol-xxxiv-magnus",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 872,
+"book_id": "69ac7f2d20878c5c9ba528cd",
+"slug": "operum-moralium-et-civilium-tomus-bacon",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 874,
+"book_id": "69b630a21c1c21a3738031f4",
+"slug": "scripta-philosophica-quintus-cicero",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 875,
+"book_id": "69bd9fddf6d63c91974827c1",
+"slug": "sibylliakoi-chresmoi-sibyllina-oracula-ex-veteribus-opsopaus-2",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 876,
+"book_id": "69906327ef12272ffdc8f9ac",
+"slug": "somniorum-synesiorum-libri-iv-cardano",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 881,
+"book_id": "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+"slug": "three-books-of-occult-philosophy-1533-latin-agrippa",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 884,
+"book_id": "69bd9e106120d54bd037b2d8",
+"slug": "tractatus-posthumus-jani-jacobi-boissardi-de-divinatione-boissard-2",
+"group": "latin",
+"language": "Latin",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 888,
+"book_id": "69b2ffdfe5d6d64d8e1976c2",
+"slug": "annotationes-in-novum-testamentum-1527-ed-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 889,
+"book_id": "69af4749d6be7ec9cc323bd3",
+"slug": "apuleii-opera-omnia-vol-iv-oudendorp-1825-apuleius",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 890,
+"book_id": "69bd9ca86120d54bd03701ab",
+"slug": "artemidori-de-somniorum-interpretatione-libri-quinque-cornarius-2",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 891,
+"book_id": "69b2f3b221208ea9dc27884b",
+"slug": "biblia-robert-estienne-bible-ed",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 893,
+"book_id": "69b2692ab42fc08a921c5c1b",
+"slug": "c-plinii-secundi-historiae-naturalis-libri-xxxvii-1510-elder",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 894,
+"book_id": "69a5ef38bfd8cafd91e43e69",
+"slug": "charta-lusoria-schroeter",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 896,
+"book_id": "69af0fb5024c2bf295285492",
+"slug": "de-rebus-naturalibus-libri-xxx-zabarella",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 898,
+"book_id": "69dbcb7f1040d1d5e20b7120",
+"slug": "ephemerides-1492-1506-regiomontanus",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 899,
+"book_id": "6a08529815c643eb1af4d4dc",
+"slug": "ex-plauti-comoediis-20-quarum-carmina-magna-ex-parte-in-mens",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 900,
+"book_id": "69c88efc6c6f3cc53c85b25e",
+"slug": "greek-de-vita-pythagorae-jamblichus",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 901,
+"book_id": "69b21cad429e087c6f8656a2",
+"slug": "harmoniae-evangelicae-vossius",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 904,
+"book_id": "69905e292fd6a039938a15c6",
+"slug": "liber-incantationum-exorcismorum-et-fascinationum-munich-anonymous",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 905,
+"book_id": "69b00ec3312120db3b4899d5",
+"slug": "macrobii-opera-quae-supersunt-vol-1-jan-1848-ed",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 906,
+"book_id": "69af45cdb8e08960c7fbb242",
+"slug": "magni-aurelii-cassiodori-opera-omnia-tomus-ii-cassiodorus-garetius",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 907,
+"book_id": "6958ea03538549809db82ce2",
+"slug": "mesue-cum-expositione-super-canones-universales-et-mesue",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 914,
+"book_id": "69c8133e6c6f3cc53c847e6e",
+"slug": "tractatus-theologico-politicus-spinoza-2",
+"group": "latin",
+"language": "Latin",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 916,
+"book_id": "69af131693903bf8119f36db",
+"slug": "alberti-magni-opera-omnia-vol-xxxvii-magnus",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 918,
+"book_id": "6952e45477f38f6761bc79e0",
+"slug": "alchymia-triumphans-defense-of-alchemy-against-the-parisian-libavius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 919,
+"book_id": "6991ed578bec46532eb4a6a0",
+"slug": "artis-auriferae-quam-chemiam-vocant-vol-ii-various",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 920,
+"book_id": "6a36cf034525d204ce0a73a7",
+"slug": "augustinus-tomus-iii-de-gratia-christi-salvatoris-louvain-jansenius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 921,
+"book_id": "69aff9e23f1fcb29634ce545",
+"slug": "autolyci-de-sphaera-et-de-ortibus-hultsch-1885-pitane",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 922,
+"book_id": "69c7f8b46c6f3cc53c842434",
+"slug": "basilica-chymica-de-signaturis-rerum-crollius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 924,
+"book_id": "69b21c6c429e087c6f8646f6",
+"slug": "colloquia-erasmus",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 926,
+"book_id": "69b21c28429e087c6f864034",
+"slug": "de-constantia-lipsius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 927,
+"book_id": "69a5d8114d84314297c08924",
+"slug": "de-historia-stirpium-commentarii-insignes-fuchs-2",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 928,
+"book_id": "6991e171b53cae6bb6024476",
+"slug": "de-iure-belli-ac-pacis-grotius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 929,
+"book_id": "69af0d05be5fc7f363545789",
+"slug": "examen-philosophiae-novae-libavius",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 930,
+"book_id": "69b301d717357a3d382a0eb6",
+"slug": "helvetiorum-respublica-simmler",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 933,
+"book_id": "69dbca511040d1d5e20aae49",
+"slug": "hortus-sanitatis",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 935,
+"book_id": "6a0850a215c643eb1af48194",
+"slug": "in-hoc-volumine-habentur-haec-cornucopiae-siue-linguae-latin",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 936,
+"book_id": "69aebe64a103e42dc9414056",
+"slug": "magia-universalis-naturae-et-artis-vol-i-schott",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 937,
+"book_id": "69488ddc73ee5c998cfe0f66",
+"slug": "medical-letters-volume-one-massa",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 945,
+"book_id": "69ade7e4da7f32a00beda7a8",
+"slug": "psychologia-rationalis-wolff-2",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 946,
+"book_id": "69b51ea29a81ef7feb3d84e3",
+"slug": "raymundi-lullii-opera-ea-quae-ad-adinventam-ab-ipso-artem-lullus",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 949,
+"book_id": "69b1d9bdbd74411f89f7233d",
+"slug": "theatrum-sympateticum-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 951,
+"book_id": "69c774af6a0f3d112faf9362",
+"slug": "veteris-testamenti-ad-veritatem-hebraicam-recognitio-steuco",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 952,
+"book_id": "6952b0fb77f38f6761bc28b7",
+"slug": "works-vol-1-epistles-translations-poliziano",
+"group": "latin",
+"language": "Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 953,
+"book_id": "69b51cea261c58d636647f49",
+"slug": "andreae-libavii-schediasmata-medica-et-philosophica-ad-libavius",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 954,
+"book_id": "69aeac1911981ede8212caf3",
+"slug": "angeli-politiani-opera-omnia-poliziano",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 955,
+"book_id": "69c79c3d6a0f3d112fafa256",
+"slug": "antidotarium-medico-chymicum-reformatum-mylius",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 958,
+"book_id": "69c7433a6a0f3d112faf7eb8",
+"slug": "biblia-quincuplex-psalterium",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 959,
+"book_id": "69b51e53ff09e4fe943abd4e",
+"slug": "breviarium-romanum-4-lucis",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 960,
+"book_id": "6a08574049638a50931c3f0c",
+"slug": "buc-geor-aeneis-p-virgilii-maronis-mantuani-doctiss-virorum--2",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 961,
+"book_id": "6a0852d949638a50931bb8eb",
+"slug": "canones-et-decreta-sacrosancti-oecumenici-et-generalis-conci-2",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 962,
+"book_id": "6a0850cc49638a50931b74ae",
+"slug": "cl-claudiani-opera-quam-diligentissime-castigata-quorum-indi",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 965,
+"book_id": "695435461479a63c1108bbc2",
+"slug": "cosmologia-generalis-wolff",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 966,
+"book_id": "69dbc8e41040d1d5e209d3f6",
+"slug": "de-vita-et-moribus-philosophorum-incomplete-edition-burlaeus-1",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 968,
+"book_id": "69aea8291cbf28a363a4e4f6",
+"slug": "ethica-nicomachea-argyropoulos-translation-argyropoulos",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 971,
+"book_id": "69aeb69cbf00526d1d64c76f",
+"slug": "historiae-venetae-libri-xii-bembo",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 972,
+"book_id": "69b30090e28f56bd74941f9a",
+"slug": "historiarum-libri-vol-2-elzevir-1645-livy",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 975,
+"book_id": "69b21d9e94025df5d2908ddc",
+"slug": "index-librorum-prohibitorum-et-expurgatorum-1628-inquisicion",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 977,
+"book_id": "69aeac132834f3a3bf99ff66",
+"slug": "ioannis-pici-mirandulae-opera-omnia-pico",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 978,
+"book_id": "6a267efd6c1f37c9c4f3d4b9",
+"slug": "johannis-helfrici-jungken-physici-francofurtensis-lexicon-jungken",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 979,
+"book_id": "69c7d4dc25ec2ba5ccd80510",
+"slug": "liber-sohar",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 982,
+"book_id": "6909ec3ecf28baa1b4cb09c3",
+"slug": "most-lucid-expositions-on-the-four-gospels-ochrid",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 984,
+"book_id": "6980941f1eb524781a7fdc09",
+"slug": "on-the-fourfold-life-champier",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 985,
+"book_id": "69b2ff225545150b61b46d12",
+"slug": "opera-q-septimii-florentis-tertulliani-tertullian",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 989,
+"book_id": "6a097091bf2196cdca903f5d",
+"slug": "pauli-de-palacio-granatensis-s-th-d-et-in-inclyta-lusytanoru",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 990,
+"book_id": "69af0da19f13b61d0a6c5b8b",
+"slug": "quaestiones-celeberrimae-in-genesim-mersenne",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 994,
+"book_id": "6952d04f77f38f6761bc4ee2",
+"slug": "the-hieroglyphic-monad-1564-antwerp-dee",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 995,
+"book_id": "6a1009edf71729295096d027",
+"slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-12",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 996,
+"book_id": "69b4cc36d2bf9b45ea47926f",
+"slug": "theatrum-chemicum-vol-i-zetzner-1659-ed",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 997,
+"book_id": "69af0ea4067c0c26ee26e677",
+"slug": "thesaurus-geographicus-ortelius",
+"group": "latin",
+"language": "Latin",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 1000,
+"book_id": "17c0e140-78f4-420f-98b3-01bf7dbb683a",
+"slug": "alberti-de-re-aedificatoria-1512-paris-alberti",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1001,
+"book_id": "69b2220708069e96e8431f39",
+"slug": "aulus-gellius-noctes-atticae-aldine-press-2nd-ed-gellius",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1003,
+"book_id": "69af408e2a17c2103c81fd5b",
+"slug": "ausonii-opuscula-ausonius",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1004,
+"book_id": "6953cc1077f38f6761be0f99",
+"slug": "book-of-kells-latin-text-with-variants-codex-kenanensis-abbott",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1005,
+"book_id": "69c8078c6c6f3cc53c8458e1",
+"slug": "coelum-philosophorum-seu-liber-de-secretis-naturae-ulstad",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1006,
+"book_id": "697a30536dc6ae6bd18cd1e1",
+"slug": "confucius-philosopher-of-the-chinese-intorcetta",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1007,
+"book_id": "69aea708971abe996d21b4aa",
+"slug": "de-remediis-utriusque-fortunae-secretum-on-remedies-for-petrarca",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1008,
+"book_id": "69c7f8936c6f3cc53c8423cd",
+"slug": "de-rudimentis-hebraicis-reuchlin",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1012,
+"book_id": "69af0f70ef6e1afe25b63049",
+"slug": "geometria-indivisibilibus-continuorum-cavalieri",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1014,
+"book_id": "6a10093ff7172929509684a4",
+"slug": "jo-jacobi-mangeti-bibliotheca-chemica-curiosa-seu-rerum-ad-s-n",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1015,
+"book_id": "6953e4a277f38f6761beed5d",
+"slug": "kepler-opera-omnia-vol-i-frisch",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1016,
+"book_id": "69b3030c18264608f1e12b04",
+"slug": "les-provinciales-pascal",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1017,
+"book_id": "6a0851c315c643eb1af4b0f7",
+"slug": "m-tullii-ciceronis-de-philosophia-prima-pars-uolumen-secundu-2",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1018,
+"book_id": "69b636261c1c21a37382b146",
+"slug": "m-vitruvius-per-iocundum-solito-castigatior-factus-cum-giocondo",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1019,
+"book_id": "69af45cca8962161993e6ea9",
+"slug": "magni-aurelii-cassiodori-opera-omnia-tomus-i-cassiodorus-garetius",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1020,
+"book_id": "69af4a320c7af0237dfb900e",
+"slug": "metrologicorum-scriptorum-reliquiae-vol-i-hultsch",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1021,
+"book_id": "69af0fb5024c2bf295285491",
+"slug": "opera-logica-zabarella",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1022,
+"book_id": "69dbc8d71040d1d5e209ce7f",
+"slug": "opuscula-tractatus-et-libri-breviloquium-soliloquium-itinera-bonaventura",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1023,
+"book_id": "6a267b8c6c1f37c9c4f325f7",
+"slug": "oswaldi-crollii-basilica-chymica-croll",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1024,
+"book_id": "69bd9d0a6120d54bd0372c80",
+"slug": "philonis-judaei-operum-quotquot-ad-hunc-diem-haberi-philo-2",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1026,
+"book_id": "69b3015878de5de2306d4c3a",
+"slug": "respublica-romana-series",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1028,
+"book_id": "69c802f46c6f3cc53c844964",
+"slug": "syriac-liber-sacrosancti-evangelii-de-jesu-christo",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1030,
+"book_id": "695435491479a63c1108bdab",
+"slug": "theologia-naturalis-vol-i-wolff",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1031,
+"book_id": "69dbcb961040d1d5e20b8774",
+"slug": "vocabularius-breviloquus-add-guarinus-ars-diphthongandi-joha-reuchlin-2",
+"group": "latin",
+"language": "Latin",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1035,
+"book_id": "69b3e60f304c1c6b3950b0c2",
+"slug": "albumasar-introductorium-in-astronomiam-prognosticon-1481-albumasar",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1038,
+"book_id": "69af0cbe067c0c26ee26c64b",
+"slug": "canon-medicinae-al-qanun-fi-al-tibb-sina",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1039,
+"book_id": "69aea8241cbf28a363a4e1e4",
+"slug": "commentarii-rerum-memorabilium-memoirs-of-a-renaissance-pope-piccolomini",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1041,
+"book_id": "f176cb65-a60e-4f8a-9514-39796f092cde",
+"slug": "de-arte-cabalistica-in-galatino-1550-reuchlin",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1042,
+"book_id": "69a5b8f3486a857b0587c7b8",
+"slug": "de-re-metallica-libri-xii-agricola",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1044,
+"book_id": "69b300f1e28f56bd74942ecb",
+"slug": "epitome-rerum-romanarum-elzevir-1638-florus",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1045,
+"book_id": "69b185afc4be2cdd0edc3e95",
+"slug": "eratosthenes-batavus-snellius",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1048,
+"book_id": "69af2362f98f6eff774ce011",
+"slug": "festus-de-verborum-significatu-thewrewk-ed-festus",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1049,
+"book_id": "69b4c054978ca9526eda3865",
+"slug": "firmicus-maternus-mathesis-astrological-treatise-maternus",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1050,
+"book_id": "69b418f82b0edf3eaa2de64c",
+"slug": "flamel-bernard-of-trevisan-llull-alchemical-collection-18th-llull",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1054,
+"book_id": "69bd9edaf6d63c919747d0bd",
+"slug": "henrici-cornelii-agrippae-ab-nettesheym-de-incertitudine-agrippa-von-3",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1055,
+"book_id": "6958e0d19659a6529d5772be",
+"slug": "historia-plantarum-vol-ii-ray",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1056,
+"book_id": "69dbca531040d1d5e20ab4c0",
+"slug": "hortus-sanitatis-2",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1060,
+"book_id": "699062f5e7b7642c081dd070",
+"slug": "libellus-isagogicus-ad-magisterium-iudiciorum-astrorum-al-qabisi",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1062,
+"book_id": "69b222839dbc3744b781a93e",
+"slug": "livy-ab-urbe-condita-decades-iii-books-21-30-aldine-press-livy",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1063,
+"book_id": "e48a21de-4db2-4c94-a71a-e952b9fa5393",
+"slug": "musurgia-universalis-universal-music-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1064,
+"book_id": "69e8b1782ff2a8dc09e75e6c",
+"slug": "naturalis-historia-elder",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1065,
+"book_id": "69ac8546960d5ad0b4731f4a",
+"slug": "opera-omnia-tomus-quintus-gassendi",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1066,
+"book_id": "69a5ee5abfd8cafd91e4386a",
+"slug": "opera-omnia-vol-1-liber-de-ludo-aleae-cardano",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1068,
+"book_id": "695435231479a63c1108b019",
+"slug": "philosophia-prima-sive-ontologia-wolff",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1069,
+"book_id": "6a08570315c643eb1af5a7c4",
+"slug": "quae-hoc-volumine-continentur-annotationes-in-omnia-ouidij-o",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1072,
+"book_id": "69dbc7cf1040d1d5e20943fc",
+"slug": "sermones-de-tempore-et-de-sanctis-albertus-magnus-3",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1073,
+"book_id": "69dbcc330f8c5edf20f477e9",
+"slug": "summa-contra-gentiles-sive-de-veritate-catholicae-fidei-thomas-aquinas",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1074,
+"book_id": "698255f37fdcaf06a9760acc",
+"slug": "the-cyranides-trismegistus",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1077,
+"book_id": "69c83e356c6f3cc53c84ff88",
+"slug": "trismegistus-christianus-drechsel",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1078,
+"book_id": "69520516ab34727b1f04245b",
+"slug": "universal-musical-work-volume-ii-musurgia-universalis-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1081,
+"book_id": "694f8d99efce46492e19fdad",
+"slug": "900-theses-1486-rome-edition-pico-della-mirandola",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1082,
+"book_id": "69af242fc6df16b7172ab9c4",
+"slug": "albii-tibulli-carmina-accedunt-sulpiciae-elegidia-tibullus",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1086,
+"book_id": "6a08580e15c643eb1af5d5fd",
+"slug": "commentarii-in-epistolas-pauli-ad-romanos-et-ad-galatas-grim",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1087,
+"book_id": "69af0c7c067c0c26ee26b5da",
+"slug": "de-scientia-stellarum-zij-al-sabi-albategnius",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1088,
+"book_id": "69c823356c6f3cc53c84afa2",
+"slug": "epistolae-synesius",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1089,
+"book_id": "69af43957872e4f8698c77ce",
+"slug": "grammatici-latini-vol-vii-scriptores-de-orthographia-keil",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1090,
+"book_id": "69af41dceaef59aff2e0ebbc",
+"slug": "gromatici-veteres-al",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1095,
+"book_id": "6992543059cdabeb78f1c89b",
+"slug": "liturgiarum-orientalium-collectio-vol-2-renaudot",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1096,
+"book_id": "69b18a95c4be2cdd0edc835c",
+"slug": "lux-in-tenebris-poniatowska",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1097,
+"book_id": "69b643331c1c21a37389536b",
+"slug": "m-vitruvii-pollonis-de-architectura-libri-decem-ad-caesarem-vitruvius",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1101,
+"book_id": "69b43d3c06b196d69f66f8f7",
+"slug": "plato-complete-works-ficino-translation-translator",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1102,
+"book_id": "6958e96c813ea03889c32bf7",
+"slug": "quadrupedum-omnium-bisulcorum-historia-aldrovandi",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1103,
+"book_id": "69afcf8e1b215b8741e34b1b",
+"slug": "quaestiones-in-quattuor-libros-sententiarum-scotus",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1106,
+"book_id": "6a10099af71729295096ac97",
+"slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-3",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1107,
+"book_id": "6990615bef12272ffdc8d528",
+"slug": "thesaurus-exorcismorum-atque-conjurationum-terribilium-part-al",
+"group": "latin",
+"language": "Latin",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1111,
+"book_id": "69906e698a353648e1ecfb0b",
+"slug": "alchemical-and-astrological-texts-cambridge-university-morienus-romanus",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1113,
+"book_id": "69b69ddb080b19f98fd0cec1",
+"slug": "athanasii-kircheri-musurgia-universalis-sive-ars-magna-kircher",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1114,
+"book_id": "6992544259cdabeb78f1d4df",
+"slug": "breviarium-romanum-church",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1115,
+"book_id": "6a0853a215c643eb1af505b0",
+"slug": "catullus-tibullus-propertius-gaius-valerius-catullus",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1116,
+"book_id": "6a085a8049638a50931c990a",
+"slug": "catullus-tibullus-propertius-manuzio-aldo-1449-or-50-1515-to",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1118,
+"book_id": "6a097186bf2196cdca906be1",
+"slug": "constantini-lascaris-byzantini-grammaticae-compendium-adiect",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1121,
+"book_id": "695925a1aecc3a7338f95f0a",
+"slug": "de-occulta-philosophia-complete-edition-agrippa",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1124,
+"book_id": "69dbcb821040d1d5e20b74bb",
+"slug": "ephemerides-1494-1506-regiomontanus",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1125,
+"book_id": "69b4c050978ca9526eda368d",
+"slug": "george-of-parma-on-the-magical-discipline-parmensis",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1127,
+"book_id": "69af0d9d2705dcc541045867",
+"slug": "historia-coelestis-brahe",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1128,
+"book_id": "69b30077e28f56bd7494185e",
+"slug": "historiarum-libri-elzevir-1634-livy",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1131,
+"book_id": "6958e897d3a89283348144a2",
+"slug": "images-and-descriptions-of-plants-chabrae",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1133,
+"book_id": "69b64f1318b87551bfc9053b",
+"slug": "in-m-vitruvium-de-architectura-annotationes-guilielmi-vitruvius",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1136,
+"book_id": "69b4ccefd5b6c3815e1a2b71",
+"slug": "lucian-of-samosata-saturnalia-1521-samosata",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1137,
+"book_id": "6991d64e8c1030b12444ac5e",
+"slug": "mago-cabalistic-and-theological-work-welling",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1138,
+"book_id": "69bd9daa6120d54bd0378ada",
+"slug": "missale-constantiense-ad-romani-formam-amp-normam-revocatum-s-n-2",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1139,
+"book_id": "69b30103e28f56bd749434b2",
+"slug": "opera-1558-froben-reprint-alexandria",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1142,
+"book_id": "69bd9e706120d54bd037cff0",
+"slug": "polyhistor-symbolicus-electorum-symbolorum-amp-parabolarum-caussin-2",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1143,
+"book_id": "6957ef81cbe1dcad7b76c52d",
+"slug": "rariorum-plantarum-historia-clusius",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1144,
+"book_id": "6a4ccd51000086439953bcfc",
+"slug": "resolutiones-selectae-in-materia-de-restitutione-ad-puritanus",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1147,
+"book_id": "697d9c999788c62e1238c876",
+"slug": "the-heliotrope-drechsel",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1151,
+"book_id": "69c831db6c6f3cc53c84ddef",
+"slug": "triumph-wagen-antimonii-valentinus",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1153,
+"book_id": "69dbc9b41040d1d5e20a5714",
+"slug": "vitae-et-sententiae-philosophorum-tr-ambrosius-traversarius-diogenes-laertius",
+"group": "latin",
+"language": "Latin",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1159,
+"book_id": "69592a44c6f388ea5a33c9d1",
+"slug": "aesopus-fabulae-steinhowel",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1164,
+"book_id": "6aa9279f29214a687db63d13",
+"slug": "decretorum-libri-xx-burchard-of-worms-bsb-clm-4570-wormaciensis",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1169,
+"book_id": "69c879b86c6f3cc53c858529",
+"slug": "historica-narratio-de-fratrum-orthodoxonum-ecclesiis-in-camerarius",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1171,
+"book_id": "6a08543515c643eb1af520a5",
+"slug": "in-omnes-de-arte-rhetorica-m-tullij-ciceronis-libros-item-in",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1174,
+"book_id": "69bda131f6d63c919748e9d3",
+"slug": "lucii-apuleii-opera-apuleius-2",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1177,
+"book_id": "69b21c35429e087c6f86414b",
+"slug": "opera-lipsius-edition-tacitus",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1179,
+"book_id": "69aec2fe1a2ee568582fc93a",
+"slug": "poggii-historia-florentina-bracciolini",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1181,
+"book_id": "69af428aed0692ab5c226760",
+"slug": "s-thasci-caecili-cypriani-opera-omnia-csel-cyprian",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1185,
+"book_id": "69dbcc510f8c5edf20f49ace",
+"slug": "summa-theologiae-pars-secunda-secunda-pars-thomas-aquinas-5",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1187,
+"book_id": "69522ff2ab34727b1f044362",
+"slug": "the-tree-of-science-llull",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1189,
+"book_id": "69c7a6b092b884e4f8173c12",
+"slug": "tractatus-posthumus-juris-publici-de-origine-et-successione-besold",
+"group": "latin",
+"language": "Latin",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1191,
+"book_id": "69af131546ef029572e02e60",
+"slug": "alberti-magni-de-vegetabilibus-libri-vii-magnus",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1192,
+"book_id": "6952e47c77f38f6761bc7ca8",
+"slug": "alchymia-comprehensive-treatise-on-alchemy-libavius",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1193,
+"book_id": "69c8254d6c6f3cc53c84b865",
+"slug": "apologia-chrysopoeiae-et-argyropoeiae-claves",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1195,
+"book_id": "6a08533215c643eb1af4f14e",
+"slug": "bartholomaei-fumi-vilaurensis-placentini-summa-quae-aurea-ar",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1197,
+"book_id": "69a5edc996d6dd816a56b5ec",
+"slug": "bibliotheca-orientalis-i-assemani",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1200,
+"book_id": "69b3012ca80e8206f6a72277",
+"slug": "de-architectura-libri-x-elzevir-pocket-vitruvius",
+"group": "latin",
+"language": "Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 224,
+"book_id": "69938d615d28b693146cee47",
+"slug": "dionysiaca-cunaeus-edition-panopolis",
+"group": "greek",
+"language": "Greek",
+"views": 95,
+"lane_block": null
+},
+{
+"rank": 232,
+"book_id": "69942e5cd607f8e57e4b89fa",
+"slug": "paraphrasis-in-dionysium-areopagitam-pachymeres",
+"group": "greek",
+"language": "Greek",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 237,
+"book_id": "6953a93977f38f6761bd58f4",
+"slug": "hermetica-vol-i-texts-and-translation-ed",
+"group": "greek",
+"language": "Greek",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 240,
+"book_id": "695580c057e3b773024f5e03",
+"slug": "in-aristotelis-physicorum-libros-commentaria-ed",
+"group": "greek",
+"language": "Greek",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 264,
+"book_id": "6a0859db49638a50931c872c",
+"slug": "anthologia-diaphoron-epigrammaton-archaiois-suntetheimenon-s",
+"group": "greek",
+"language": "Greek",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 265,
+"book_id": "69aff350c83500af1dbf7002",
+"slug": "claudii-ptolemaei-opera-quae-exstant-omnia-vol-ii-heiberg-heiberg",
+"group": "greek",
+"language": "Greek",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 266,
+"book_id": "6993831d84cf5845c644cea8",
+"slug": "codex-macedoniensis-cambridge-university-library-ms-add-6594-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 267,
+"book_id": "69b269da2a2dfd041c5e770c",
+"slug": "etymologicum-magnum-editio-princeps-manutius",
+"group": "greek",
+"language": "Greek",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 271,
+"book_id": "6990532bd7712f78163cd522",
+"slug": "tetrabiblos-ptolemy",
+"group": "greek",
+"language": "Greek",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 297,
+"book_id": "69b2ffbce5d6d64d8e19757b",
+"slug": "institutiones-iuris-civilis-greek-justinian",
+"group": "greek",
+"language": "Greek",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 301,
+"book_id": "6953c68777f38f6761bd9e16",
+"slug": "aristotelis-opera-omnia-greek-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 307,
+"book_id": "69b630611c1c21a37380114a",
+"slug": "lexicon-graecolatinum-recentissimum-ad-formam-ab-henr-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 313,
+"book_id": "69ae633c5d11d232640c382c",
+"slug": "aristotelis-opera-bekker-edition-vol-2-metaphysica-ethica-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 328,
+"book_id": "69942a40045dfc482ad76029",
+"slug": "opera-quae-exstant-first-greek-edition-sylburg-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 331,
+"book_id": "69afe65fda5fa12b664a75a2",
+"slug": "aristotelis-opera-vol-i-bekker-1831-bekker",
+"group": "greek",
+"language": "Greek",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 333,
+"book_id": "69a956dc65ddd05bbcd3d160",
+"slug": "bibliotheca-historica-siculus",
+"group": "greek",
+"language": "Ancient Greek",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 335,
+"book_id": "69b6848470c69d645a737f80",
+"slug": "diogenous-laertiou-peri-bion-dogmaton-kai-apophthegmaton-laerce-3",
+"group": "greek",
+"language": "Greek",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 350,
+"book_id": "69a97a1bf3f3d2fb7de26ca4",
+"slug": "hermetica-vol-1-scott",
+"group": "greek",
+"language": "Greek",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 351,
+"book_id": "699382f784cf5845c644c2d3",
+"slug": "herodotus-cambridge-emmanuel-college-ms-30-herodotus",
+"group": "greek",
+"language": "Greek",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 354,
+"book_id": "69a5e5f385fa13e734e41e1f",
+"slug": "platonis-dialogi-xxiv-the-clarke-plato-plato",
+"group": "greek",
+"language": "Greek",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 357,
+"book_id": "6952e4cc77f38f6761bc8c0b",
+"slug": "greek-new-testament-tischendorf-critical-edition-tischendorf",
+"group": "greek",
+"language": "Greek",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 360,
+"book_id": "699389f2ce15387065947f46",
+"slug": "photius-bibliotheca-myriobiblon-photius",
+"group": "greek",
+"language": "Greek",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 366,
+"book_id": "6955801057e3b773024f5030",
+"slug": "bibliotheca-myriobiblon-photius-i",
+"group": "greek",
+"language": "Greek",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 372,
+"book_id": "69938dced5a98fd66f42eeb3",
+"slug": "the-homeric-hymns-allen-sikes-critical-edition-homer",
+"group": "greek",
+"language": "Greek",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 382,
+"book_id": "6993838c50654cbbe29170c5",
+"slug": "vat-gr-244-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 390,
+"book_id": "69526a50ab34727b1f046dc5",
+"slug": "plotini-opera-omnia-cum-ficini-commentariis-trans",
+"group": "greek",
+"language": "Greek",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 394,
+"book_id": "69b2f40e0e2f024dfbfba5c2",
+"slug": "thesaurus-graecae-linguae-vol-2-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 396,
+"book_id": "69938963ce15387065946bf9",
+"slug": "basel-universitatsbibliothek-an-iv-1-erasmus",
+"group": "greek",
+"language": "Greek",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 401,
+"book_id": "69b300125545150b61b4b882",
+"slug": "novum-testamentum-graece-elzevir-1624-receptus",
+"group": "greek",
+"language": "Greek",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 418,
+"book_id": "69944b932aa4c20217a33f12",
+"slug": "philonos-ioudaiou-syngrammata-omnia-quae-extant-opera-1691-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 419,
+"book_id": "6a3f023d97e91e1768f669a9",
+"slug": "platonis-dialogi-secundum-thrasylli-tetralogias-dispositi-plato",
+"group": "greek",
+"language": "Greek",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 420,
+"book_id": "699247034c402ed78ad696ac",
+"slug": "the-ascension-of-isaiah-ethiopic-greek-latin-slavonic-texts-ed",
+"group": "greek",
+"language": "Greek-Latin",
+"views": 76,
+"lane_block": null
+},
+{
+"rank": 436,
+"book_id": "69938e26d5a98fd66f4307b0",
+"slug": "accurata-graeciae-descriptio-greek-latin-pausanias",
+"group": "greek",
+"language": "Greek-Latin",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 438,
+"book_id": "69bfcf293047130b1c3beced",
+"slug": "bodleian-library-ms-auct-e-1-6-theophylactus",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 439,
+"book_id": "6a357eaac6e2d5bb56a6406e",
+"slug": "clemens-alexandrinus-gcs-edition-vol-3-stromateis-vii-viii-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 441,
+"book_id": "6993890ece15387065946496",
+"slug": "corpus-hermeticum-and-plotinus-enneads-cambridge-trinity-plotinus",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 446,
+"book_id": "69b6684cb3f4fc0441568c7e",
+"slug": "diogenous-laertiou-peri-bion-dogmaton-kai-apophthegmaton-laerce-2",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 447,
+"book_id": "6a3f02bb97e91e1768f68204",
+"slug": "fragmenta-philosophorum-graecorum-mullach",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 448,
+"book_id": "69938de1d5a98fd66f42f79c",
+"slug": "kallimachou-kyrenaiou-hymnoi-callimachus-hymns-callimachus",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 452,
+"book_id": "6953e60e1479a63c11084af4",
+"slug": "on-the-natural-faculties-loeb-classical-library-galen",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 454,
+"book_id": "69b4c07086a5921d5bc43acd",
+"slug": "proclus-commentary-on-plato-s-parmenides-proclus",
+"group": "greek",
+"language": "Greek",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 463,
+"book_id": "69aebfe651d30e6c1f6c8eaf",
+"slug": "de-cerimoniis-aulae-byzantinae-libri-duo-porphyrogenitus",
+"group": "greek",
+"language": "Greek",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 466,
+"book_id": "69aea3b5912e8f072fbef54f",
+"slug": "hierosolymitike-bibliotheke-ii-papadopoulos",
+"group": "greek",
+"language": "Greek",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 469,
+"book_id": "6956952b8c9559f6c2db06a3",
+"slug": "meditations-latin-and-greek-bilingual-antoninus",
+"group": "greek",
+"language": "Greek/Latin",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 489,
+"book_id": "69b3006c5545150b61b4c6b0",
+"slug": "opera-omnia-froben-1538-hippocrates",
+"group": "greek",
+"language": "Greek",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 494,
+"book_id": "69bfcc988ab50eb88e8c5589",
+"slug": "bodleian-library-ms-barocci-29-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 495,
+"book_id": "69938d9dd5a98fd66f42dc60",
+"slug": "chronographia-dindorf-cshb-edition-malalas",
+"group": "greek",
+"language": "Greek",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 498,
+"book_id": "69d146041c2a66dc094b1fad",
+"slug": "in-nicomachi-arithmeticam-introductionem-de-fato-tennulius",
+"group": "greek",
+"language": "Greek",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 499,
+"book_id": "69942a7f045dfc482ad772e7",
+"slug": "philocalia-editio-princeps-tarinus-1618-origen",
+"group": "greek",
+"language": "Greek",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 507,
+"book_id": "69b2f32121208ea9dc2779bb",
+"slug": "eklogai-ek-ton-dionos-dio-cassius-excerpts-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 518,
+"book_id": "69b2f30ba9a500a45e5e7ac4",
+"slug": "thucydides-peloponnesian-war-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 522,
+"book_id": "69bfccdf8ab50eb88e8c6c4c",
+"slug": "bodleian-library-ms-barocci-241-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 528,
+"book_id": "695aa9ddbe4023bd34bd7448",
+"slug": "heronis-alexandrini-opera-quae-supersunt-omnia-vol-4-ed-2",
+"group": "greek",
+"language": "Greek",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 535,
+"book_id": "69937706b0a84a57639627bb",
+"slug": "platos-republic-greek-text-plato",
+"group": "greek",
+"language": "Greek",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 537,
+"book_id": "69b222db56715b0e324757a1",
+"slug": "scholia-on-homer-ancient-commentaries-on-the-iliad-and-scholars",
+"group": "greek",
+"language": "Greek",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 545,
+"book_id": "69b222ed56715b0e32475a8c",
+"slug": "greek-anthology-florilegium-epigrammatum-aldine-press-2nd-ed-poets",
+"group": "greek",
+"language": "Greek",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 564,
+"book_id": "6a3f035697e91e1768f6a0b5",
+"slug": "epiphanius-epiphanius",
+"group": "greek",
+"language": "Greek",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 570,
+"book_id": "69b300275545150b61b4c385",
+"slug": "novum-testamentum-graece-elzevir-1662-receptus",
+"group": "greek",
+"language": "Greek",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 583,
+"book_id": "69bfccb18ab50eb88e8c5ec1",
+"slug": "bodleian-library-ms-barocci-235-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 587,
+"book_id": "6a08a9e20e77acb4f9307cde",
+"slug": "dio-chrysostom-orationes-von-arnim-teubner-chrysostom",
+"group": "greek",
+"language": "Greek",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 591,
+"book_id": "699382d984cf5845c644af1f",
+"slug": "homer-and-quintus-of-smyrna-cambridge-corpus-christi-homer",
+"group": "greek",
+"language": "Greek",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 596,
+"book_id": "6993892b74305116d72d1169",
+"slug": "proclus-elements-of-theology-proclus",
+"group": "greek",
+"language": "Greek",
+"views": 66,
+"lane_block": "91% translated: gap-fill would re-queue it"
+},
+{
+"rank": 604,
+"book_id": "69b2f4280e2f024dfbfbb79d",
+"slug": "theocriti-idyllia-et-epigrammata-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 607,
+"book_id": "69b1deccca46fa60ea1ee439",
+"slug": "alexander-von-tralles-original-text-und-ubersetzung-vol-1-tralles",
+"group": "greek",
+"language": "Greek",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 610,
+"book_id": "69b220b356715b0e324732e1",
+"slug": "aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 613,
+"book_id": "69942c54b2f6748db4abd74f",
+"slug": "de-natura-hominis-first-greek-latin-edition-trans",
+"group": "greek",
+"language": "Greek",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 623,
+"book_id": "69b21f344522d8c1db3be18c",
+"slug": "plutarchi-vitae-vol-2-didot-greek-latin-doehner",
+"group": "greek",
+"language": "Greek",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 641,
+"book_id": "69aea5c81c89af5ce4bc1d8f",
+"slug": "novum-testamentum-graece-editio-octava-critica-maior-tischendorf",
+"group": "greek",
+"language": "Greek",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 645,
+"book_id": "69b21d4addb4fa7c305b4a88",
+"slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+"group": "greek",
+"language": "Greek",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 651,
+"book_id": "6a0851bb49638a50931b901a",
+"slug": "aristotelous-pasan-logiken-retoriken-kai-poietiken-pragmatei",
+"group": "greek",
+"language": "Greek",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 659,
+"book_id": "69942a9b045dfc482ad7797c",
+"slug": "hexaplorum-quae-supersunt-i-field-critical-edition-origen",
+"group": "greek",
+"language": "Greek",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 668,
+"book_id": "6953a88c77f38f6761bd19d6",
+"slug": "novum-testamentum-graece-tischendorf-tischendorf",
+"group": "greek",
+"language": "Greek",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 672,
+"book_id": "6a3f027f97e91e1768f67513",
+"slug": "patrologiae-cursus-completus-series-graeca-volume-48-books",
+"group": "greek",
+"language": "Greek",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 683,
+"book_id": "69938d895d28b693146d0231",
+"slug": "alexias-reifferscheid-critical-edition-comnena",
+"group": "greek",
+"language": "Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 684,
+"book_id": "69938f985d28b693146d1099",
+"slug": "bodleian-library-ms-barocci-131-various",
+"group": "greek",
+"language": "Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 695,
+"book_id": "6993882874305116d72cf9f3",
+"slug": "pal-gr-182-laertius",
+"group": "greek",
+"language": "Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 696,
+"book_id": "69938d705d28b693146cf97e",
+"slug": "paraphrasis-evangelii-ioannei-panopolis",
+"group": "greek",
+"language": "Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 701,
+"book_id": "699389830f04c37dcfa616d6",
+"slug": "theonis-expositio-magnae-constructionis-ptolemaei-theonos-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 715,
+"book_id": "695aa9c7be4023bd34bd6f13",
+"slug": "heronis-geometricorum-et-stereometricorum-reliquiae-hultsch-ed",
+"group": "greek",
+"language": "Greek",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 727,
+"book_id": "6993895d74305116d72d1644",
+"slug": "st-gallen-stiftsbibliothek-cod-sang-48-bobbio",
+"group": "greek",
+"language": "Greek",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 734,
+"book_id": "695230c6ab34727b1f044784",
+"slug": "corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 737,
+"book_id": "69938d5f5d28b693146cede1",
+"slug": "dionysiaca-editio-princeps-panopolis",
+"group": "greek",
+"language": "Greek",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 742,
+"book_id": "69aeb620b6cf480123443359",
+"slug": "hermetica-volume-ii-notes-on-the-corpus-hermeticum-scott",
+"group": "greek",
+"language": "Greek",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 749,
+"book_id": "69b21d36ddb4fa7c305b4440",
+"slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+"group": "greek",
+"language": "Greek",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 750,
+"book_id": "69b21d42ddb4fa7c305b4693",
+"slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+"group": "greek",
+"language": "Greek",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 761,
+"book_id": "699376e7b0a84a5763961e8f",
+"slug": "aristotelis-opera-complete-works-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 762,
+"book_id": "695311a477f38f6761bcc8b8",
+"slug": "codex-alexandrinus-greek-museum",
+"group": "greek",
+"language": "Greek",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 783,
+"book_id": "69b2f31321208ea9dc27748b",
+"slug": "anthologia-diaphoron-epigrammaton-greek-anthology-ed",
+"group": "greek",
+"language": "Greek",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 787,
+"book_id": "69b2ff96a1a4246ddb45b596",
+"slug": "de-vitis-dogmatibus-et-apophthegmatibus-philosophorum-laertius",
+"group": "greek",
+"language": "Greek",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 794,
+"book_id": "69afe2ebcf56258c93890cac",
+"slug": "hippocrates-vol-iv-loeb-classical-library-hippocrates",
+"group": "greek",
+"language": "Greek",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 802,
+"book_id": "69a5e5e385fa13e734e41894",
+"slug": "procli-opera-grec-1839-proclus",
+"group": "greek",
+"language": "Greek",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 809,
+"book_id": "69b2fee065b9d6bf89925253",
+"slug": "vitae-parallelae-plutarch",
+"group": "greek",
+"language": "Greek",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 812,
+"book_id": "6993896474305116d72d17e1",
+"slug": "basel-universitatsbibliothek-an-iv-2-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 817,
+"book_id": "69ad716ac5001c07fa847f7d",
+"slug": "clement-of-alexandria-miscellanies-stromata-book-vii-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 825,
+"book_id": "69938d6d5d28b693146cf50c",
+"slug": "dionysiaca-graefe-critical-edition-panopolis",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 826,
+"book_id": "69938e685d28b693146d0737",
+"slug": "dionysiaca-koechly-spiro-teubner-edition-panopolis",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 827,
+"book_id": "696925034fa3b04c6de86f6b",
+"slug": "e-dialectice-petri-hispani-ek-tes-dialektikes-petrou-tou-texts",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 829,
+"book_id": "699379a0b0a84a576396590a",
+"slug": "euripidis-tragoediae-alt-edition-euripides",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 837,
+"book_id": "69de0cc580210ba13d79f4a5",
+"slug": "lucian-vii-dialogues-of-the-dead-sea-gods-gods-courtesans-loeb",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 844,
+"book_id": "69af453b004a024aaf21615d",
+"slug": "sancti-eusebii-hieronymi-stridonensis-presbyteri-opera-jerome-migne-2",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 847,
+"book_id": "69924f3f09c5da0cf50d7b8d",
+"slug": "the-odes-of-pindar-sandys",
+"group": "greek",
+"language": "Greek",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 856,
+"book_id": "69937a5eb0a84a5763968246",
+"slug": "aristophanes-ii-peace-birds-frogs-loeb-aristophanes",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 859,
+"book_id": "699388e60f04c37dcfa6000f",
+"slug": "demosthenes-complete-orations-demosthenes",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 866,
+"book_id": "69c7ff506c6f3cc53c843b2c",
+"slug": "greek-panoplia-dogmatike-euthymius",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 868,
+"book_id": "69b62f671c1c21a3737f51f5",
+"slug": "lt-aristotelous-tou-stageiritou-ta-sozomena-gt-operum-aristote",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 869,
+"book_id": "6993830384cf5845c644c637",
+"slug": "lucian-libanius-severus-alexandrinus-aelius-aristides-and-lucian",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 880,
+"book_id": "69b2235a56715b0e324772cb",
+"slug": "theodore-gaza-greek-grammar-with-manuel-moschopoulos-and-gaza",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 882,
+"book_id": "6993897cce1538706594711f",
+"slug": "thucydides-thoukudides-thucydides",
+"group": "greek",
+"language": "Greek",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 892,
+"book_id": "69938a88c564adf9fabebf28",
+"slug": "bodleian-library-ms-barocci-87-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 897,
+"book_id": "69d143e91c2a66dc094b1ba5",
+"slug": "de-vita-pythagorica-liber-pars-2-kiessling-kiessling",
+"group": "greek",
+"language": "Greek",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 903,
+"book_id": "6a0853c415c643eb1af50cbf",
+"slug": "in-hoc-libro-haec-habentur-constantini-lascaris-byzantini-de-2",
+"group": "greek",
+"language": "Greek",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 908,
+"book_id": "6a3f024e97e91e1768f66d4b",
+"slug": "musici-scriptores-graeci-aristoteles-euclides-nicomachus-jan",
+"group": "greek",
+"language": "Greek",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 925,
+"book_id": "69557474f63a7571091734e4",
+"slug": "commentarius-in-platonis-timaeum-diadochus",
+"group": "greek",
+"language": "Greek/Latin",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 931,
+"book_id": "69aec0e11f4011b58bb53c7b",
+"slug": "historiae-byzantinae-scriptores-tres-trebizond",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 939,
+"book_id": "69b2ff82e5d6d64d8e196fab",
+"slug": "opera-nyssa",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 940,
+"book_id": "69942f6fb2f6748db4ac0db5",
+"slug": "pal-gr-39-confessor",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 942,
+"book_id": "69b21e0f94025df5d290b2a7",
+"slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 943,
+"book_id": "69b21e3194025df5d290b90a",
+"slug": "plutarchi-chaeronensis-moralia-vol-6-bernardakis-teubner-bernardakis",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 944,
+"book_id": "5ddd6b40-5a26-4994-86ea-e2dfd4957597",
+"slug": "pseudo-dionysius-opera-1516-areopagite",
+"group": "greek",
+"language": "Greek",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 956,
+"book_id": "699388e61075be7d32054f2f",
+"slug": "aristotle-rhetoric-and-poetics-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 963,
+"book_id": "69b00962c7a61612f0103bbc",
+"slug": "claudii-galeni-opera-omnia-vol-13-ed",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 964,
+"book_id": "69942a5a045dfc482ad76926",
+"slug": "clemens-alexandrinus-iii-stromata-vii-viii-excerpta-quis-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 969,
+"book_id": "69b2ffb05545150b61b491d9",
+"slug": "fabulae-aesop",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 980,
+"book_id": "69937716b0a84a5763962d53",
+"slug": "luciani-samosatensis-opera-vol-1-lucian",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 983,
+"book_id": "69b21cf8429e087c6f866456",
+"slug": "novum-testamentum-greek-latin-2nd-froben-edition-erasmus",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 986,
+"book_id": "69938dd7d5a98fd66f42f463",
+"slug": "orphica-abel-edition-with-proclus-hymns-hymn-to-isis-abel",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 988,
+"book_id": "699438416879ff0184cb8300",
+"slug": "patrologia-graeca-vol-40-evagrius-ponticus-migne",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 998,
+"book_id": "6952e4b477f38f6761bc7d4c",
+"slug": "vetus-testamentum-graecum-septuagint-with-latin-translation-septuagint",
+"group": "greek",
+"language": "Greek",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 1011,
+"book_id": "69aead1166bcc9447837c2af",
+"slug": "epistolae-diversorum-philosophorum-oratorum-et-rhetorum-editor",
+"group": "greek",
+"language": "Greek",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1037,
+"book_id": "69bfcfa33047130b1c3bfa4c",
+"slug": "bodleian-library-ms-barocci-33-anonymous",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1043,
+"book_id": "69938985ce1538706594752c",
+"slug": "diversorum-scriptorum-opera-varia-diaphoron-syngrapheon-plato",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1047,
+"book_id": "69937998b0a84a57639656c1",
+"slug": "euripidis-tragoediae-nauck-3rd-ed-euripides",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1051,
+"book_id": "69b52c6d3dd6d94230280370",
+"slug": "galen-commentary-on-hippocrates-aphorisms-hippocrates",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1052,
+"book_id": "69f32c7034076d2bddeb3327",
+"slug": "gospels-of-luke-and-john-in-greek-manuscript-between-1175-amherst",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1067,
+"book_id": "69942a68045dfc482ad76ec8",
+"slug": "patrologia-graeca-vol-8-clemens-alexandrinus-i-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1071,
+"book_id": "6a08561515c643eb1af57ce0",
+"slug": "scholia-palaia-te-kai-panu-ophelima-eis-ten-tou-omerou-iliad",
+"group": "greek",
+"language": "Greek",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1091,
+"book_id": "69b2f41b0e2f024dfbfbb280",
+"slug": "herodoti-halicarnassei-historiae-estienne",
+"group": "greek",
+"language": "Greek",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1092,
+"book_id": "6993897c74305116d72d1d5f",
+"slug": "herodotus-erodotos-herodotus",
+"group": "greek",
+"language": "Greek",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1094,
+"book_id": "69942e81d607f8e57e4b956a",
+"slug": "in-aristotelis-de-anima-libros-commentaria-cag-xv-hayduck",
+"group": "greek",
+"language": "Greek",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1109,
+"book_id": "6993838250654cbbe2916e4c",
+"slug": "vat-gr-124-polybius",
+"group": "greek",
+"language": "Greek",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1112,
+"book_id": "69b21be764fe7db19620a5ec",
+"slug": "anthologia-graeca-planudean-ed",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1117,
+"book_id": "69942a51045dfc482ad766f4",
+"slug": "clemens-alexandrinus-ii-stromata-i-vi-gcs-stahlin-alexandria",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1123,
+"book_id": "69aff2b8c83500af1dbf681e",
+"slug": "dioscoridis-libri-octo-graece-et-latine-ruel-1549-ruel",
+"group": "greek",
+"language": "Ancient Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1135,
+"book_id": "699253e30feca3d31bc57895",
+"slug": "liturgies-eastern-and-western-vol-i-eastern-liturgies-brightman",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1146,
+"book_id": "69bfcfac3047130b1c3bfda3",
+"slug": "summary-of-theology-aquinas",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1148,
+"book_id": "69a976a1e12635ded71c4fd9",
+"slug": "the-symposium-of-plato-bury",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1152,
+"book_id": "6993837f50654cbbe2916cba",
+"slug": "vat-gr-126-thucydides",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1157,
+"book_id": "699379bfb0a84a5763965ed6",
+"slug": "xenophontis-historia-graeca-xenophon",
+"group": "greek",
+"language": "Greek",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1158,
+"book_id": "69937cd4c970b9f8351dd023",
+"slug": "acharnians-knights-clouds-wasps-loeb-l178-aristophanes",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1160,
+"book_id": "69b21ba0429e087c6f862ab8",
+"slug": "aristotelis-opera-vol-1-organon-aristotle",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1167,
+"book_id": "69b2222608069e96e8432997",
+"slug": "gregory-of-nazianzus-orationes-selectae-xvi-aldine-press-nazianzus",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1170,
+"book_id": "6a084df315c643eb1af405eb",
+"slug": "in-hoc-libro-haec-habentur-constantini-lascaris-byzantini-de",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1178,
+"book_id": "6953ae7f77f38f6761bd7e65",
+"slug": "papyri-graecae-magicae-preisendanz-ed",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1180,
+"book_id": "699389e574305116d72d2c9f",
+"slug": "polybius-historiae-i-v-herodianus-heliodorus-heliodorus",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1188,
+"book_id": "6a06c798d4d0d7b9fa7bdcc8",
+"slug": "thesaurus-cornucopiae-theocritus-hesiod-theognis-phocylides-theocritus",
+"group": "greek",
+"language": "Greek",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1194,
+"book_id": "69937991b0a84a5763965383",
+"slug": "aristophanis-comoediae-dindorf-greek-latin-aristophanes",
+"group": "greek",
+"language": "Greek-Latin",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1198,
+"book_id": "69b009c5c42435fcd0cf96c8",
+"slug": "claudii-galeni-opera-omnia-vol-17-pt-1-ed",
+"group": "greek",
+"language": "Greek",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 1199,
+"book_id": "69b21bcb429e087c6f8636eb",
+"slug": "comoediae-novem-aristophanes",
+"group": "greek",
+"language": "Greek",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 201,
+"book_id": "69c84dda6c6f3cc53c8527eb",
+"slug": "lehr-und-geistreiche-predigten-tauler",
+"group": "german",
+"language": "German",
+"views": 99,
+"lane_block": null
+},
+{
+"rank": 207,
+"book_id": "6970e3729b09d309d780a29e",
+"slug": "three-dialogues-on-love-abrabanel",
+"group": "german",
+"language": "German",
+"views": 98,
+"lane_block": null
+},
+{
+"rank": 211,
+"book_id": "69a554e20904636c44e544de",
+"slug": "die-hellenistischen-mysterienreligionen-reitzenstein",
+"group": "german",
+"language": "German",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 212,
+"book_id": "6952901bb184004c526a1635",
+"slug": "of-famous-women-von-etlichen-frowen-trans",
+"group": "german",
+"language": "German",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 223,
+"book_id": "69c862ac6c6f3cc53c855bc2",
+"slug": "theodicaea-oder-versuch-und-abhandlung-wie-die-gute-und-leibnitz",
+"group": "german",
+"language": "German",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 226,
+"book_id": "69c718aada9771c71631663b",
+"slug": "evangelische-kirchen-harmonie-august",
+"group": "german",
+"language": "German",
+"views": 95,
+"lane_block": null
+},
+{
+"rank": 227,
+"book_id": "69c85ab66c6f3cc53c854930",
+"slug": "historie-und-beschreibung-der-mystischen-theologie-oder-arnold",
+"group": "german",
+"language": "German",
+"views": 95,
+"lane_block": null
+},
+{
+"rank": 228,
+"book_id": "695591667bd6d2cd1d618fc3",
+"slug": "paracelsus-chirurgische-bucher-und-schrifften-huser",
+"group": "german",
+"language": "German",
+"views": 95,
+"lane_block": null
+},
+{
+"rank": 230,
+"book_id": "6974b63d19126e775cf6d7d3",
+"slug": "apostolic-light-and-law-lange",
+"group": "german",
+"language": "German",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 234,
+"book_id": "697d9ca1361634bd363e2fdf",
+"slug": "the-hermetic-museum-anonymous",
+"group": "german",
+"language": "German",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 235,
+"book_id": "69a0278ca7e9465eead94093",
+"slug": "theologia-germanica-frankfurtian",
+"group": "german",
+"language": "German",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 241,
+"book_id": "6958dfb3dbe0f678e5c5272c",
+"slug": "kreuter-buch-tragus",
+"group": "german",
+"language": "German",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 243,
+"book_id": "698255ec3e158c7e3c9a4f76",
+"slug": "new-collection-of-old-and-rare-philosophical-and-alchemical-anonymous",
+"group": "german",
+"language": "German",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 245,
+"book_id": "69c71b82da9771c7163168b6",
+"slug": "ausspruch-der-alten-judischen-kirchen-allix",
+"group": "german",
+"language": "German",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 272,
+"book_id": "6970e35b9b09d309d780a256",
+"slug": "the-outer-and-inner-golden-eye-mirror-anonymous",
+"group": "german",
+"language": "German",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 294,
+"book_id": "697c8e0f58e66b1bd4f095d8",
+"slug": "freemasons-library-anonymous",
+"group": "german",
+"language": "German",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 302,
+"book_id": "69af59c6522dc3dfdf7260f4",
+"slug": "die-philosophischen-werke-des-robert-grosseteste-bischofs-ed",
+"group": "german",
+"language": "German",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 310,
+"book_id": "69c884fe6c6f3cc53c859ac3",
+"slug": "predig-tauler",
+"group": "german",
+"language": "German",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 318,
+"book_id": "69c802796c6f3cc53c844745",
+"slug": "hebrew-terumot-ha-nedabah-oder-freywillige-heb-opffer-von-anonymous",
+"group": "german",
+"language": "German",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 322,
+"book_id": "6984e850dd6092c0226caa07",
+"slug": "the-little-peasant-a-philosophical-and-chemical-treatise-grasshoff",
+"group": "german",
+"language": "German",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 323,
+"book_id": "69906a0cd69de0e69806f5cc",
+"slug": "bibliotheca-acta-et-scripta-magica-vol-ii-hauber",
+"group": "german",
+"language": "German",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 324,
+"book_id": "69b52c43a2d71b015aa97877",
+"slug": "compendium-alchymisticum-novum-new-alchemical-compendium-faust",
+"group": "german",
+"language": "German",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 325,
+"book_id": "695592ca7bd6d2cd1d61b2d0",
+"slug": "della-porta-magia-naturalis-german-1713-porta",
+"group": "german",
+"language": "German",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 330,
+"book_id": "6970c9313932a3984e9117f6",
+"slug": "treatise-on-the-free-investigation-of-the-canon-semler",
+"group": "german",
+"language": "German",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 332,
+"book_id": "697750b7b66c66fb54c69ce4",
+"slug": "biblical-historical-light-and-right-lange",
+"group": "german",
+"language": "German",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 336,
+"book_id": "697b079ac66889d6835b576a",
+"slug": "introduction-to-the-true-knowledge-of-the-great-mystery-of-bohme",
+"group": "german",
+"language": "German",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 337,
+"book_id": "69592a05c6f388ea5a33c22f",
+"slug": "magia-naturalis-das-ist-kunst-und-wunderbuch-hildebrand",
+"group": "german",
+"language": "German",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 349,
+"book_id": "69afdbfae42898a2828787bf",
+"slug": "erster-entwurf-eines-systems-der-naturphilosophie-schelling",
+"group": "german",
+"language": "German",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 352,
+"book_id": "698192079534729403fc4db4",
+"slug": "medico-chemical-wonders-or-the-highest-medical-and-paracelsus",
+"group": "german",
+"language": "German",
+"views": 82,
+"lane_block": null
+},
+{
+"rank": 355,
+"book_id": "6a26c4bbaad44c98627d1dec",
+"slug": "anthropodemvs-plvtonicvs-das-ist-eine-neue-weltbeschreibung-praetorius",
+"group": "german",
+"language": "German",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 356,
+"book_id": "6a26bea50e247ebad6de7e8c",
+"slug": "cosmographey-das-ist-beschreibung-aller-lander-munster",
+"group": "german",
+"language": "German",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 364,
+"book_id": "6975158ca88d83c830d99e32",
+"slug": "aurea-catena-homeri-homer-s-golden-chain-kirchweger",
+"group": "german",
+"language": "German",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 377,
+"book_id": "69c81e1d6c6f3cc53c84a166",
+"slug": "geschichte-der-chemie-gmelin",
+"group": "german",
+"language": "German",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 388,
+"book_id": "69c795836a0f3d112fafa04e",
+"slug": "lehr-satze-von-der-atheisterey-und-dem-aberglauben-buddeus",
+"group": "german",
+"language": "German",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 391,
+"book_id": "699ef9fbc384f32a28ff58c1",
+"slug": "spinozism-in-judaism-wachter",
+"group": "german",
+"language": "German",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 395,
+"book_id": "69aff7d558428e939a5144b5",
+"slug": "vorlesungen-uber-die-geschichte-der-philosophie-erster-band-hegel-2",
+"group": "german",
+"language": "German",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 423,
+"book_id": "69c8330b6c6f3cc53c84e140",
+"slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+"group": "german",
+"language": "German",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 442,
+"book_id": "6a26bd05d6b178e5aad87607",
+"slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+"group": "german",
+"language": "German",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 445,
+"book_id": "69c88e706c6f3cc53c85b0f4",
+"slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+"group": "german",
+"language": "German",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 451,
+"book_id": "6992cbd3018b80967354b406",
+"slug": "on-the-highest-good-fechner",
+"group": "german",
+"language": "German",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 460,
+"book_id": "69c85d376c6f3cc53c854e7c",
+"slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+"group": "german",
+"language": "German",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 461,
+"book_id": "69af55b5ec9e6c278212d9f4",
+"slug": "das-aegyptische-todtenbuch-der-xviii-bis-xx-dynastie-naville",
+"group": "german",
+"language": "German",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 464,
+"book_id": "69c836fd6c6f3cc53c84ed4c",
+"slug": "der-gantze-psalter-davids-arndt",
+"group": "german",
+"language": "German",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 468,
+"book_id": "6a26c4b9aad44c98627d1b44",
+"slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+"group": "german",
+"language": "German",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 479,
+"book_id": "69afe484d3545b7c9c2cfaaa",
+"slug": "wissenschaft-der-logik-erster-band-die-objective-logik-hegel-2",
+"group": "german",
+"language": "German",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 483,
+"book_id": "6a100a22f71729295096e0ac",
+"slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+"group": "german",
+"language": "German",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 506,
+"book_id": "69aebad46059efb05d4fca4a",
+"slug": "die-geschichte-der-neueren-philosophie-windelband",
+"group": "german",
+"language": "German",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 508,
+"book_id": "697c8e0fbaa544415f85b6c0",
+"slug": "gloria-mundi-the-little-tablet-of-paradise-anonymous",
+"group": "german",
+"language": "German",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 515,
+"book_id": "697b079996ae1f6ea7847cfa",
+"slug": "several-masonic-assembly-speeches-anonymous",
+"group": "german",
+"language": "German",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 524,
+"book_id": "69905f1c40bc3a0478efa9d3",
+"slug": "die-welt-als-wille-und-vorstellung-schopenhauer",
+"group": "german",
+"language": "German",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 525,
+"book_id": "69c7a6db92b884e4f8173c5a",
+"slug": "freymuthige-betrachtungen-uber-das-christenthum-starck",
+"group": "german",
+"language": "German",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 526,
+"book_id": "697d9c9c72d515cb07bb3850",
+"slug": "golden-epistles-of-the-ancient-christians-arnold",
+"group": "german",
+"language": "German",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 544,
+"book_id": "69bda06af6d63c919748703b",
+"slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-roth-scholtz",
+"group": "german",
+"language": "German",
+"views": 68,
+"lane_block": "status ocr_complete: a translate lane would re-translate the page"
+},
+{
+"rank": 559,
+"book_id": "695435671479a63c1108c8ed",
+"slug": "vernunftige-gedancken-von-der-menschen-thun-und-lassen-wolff",
+"group": "german",
+"language": "German",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 563,
+"book_id": "69aebb806e076d07213e87d8",
+"slug": "der-formalismus-in-der-ethik-und-die-materiale-wertethik-scheler",
+"group": "german",
+"language": "German",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 567,
+"book_id": "697e23c982ca28a1280f850a",
+"slug": "historical-and-theological-introduction-to-religious-walch",
+"group": "german",
+"language": "German",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 571,
+"book_id": "697c8e0f6000fdec2f130608",
+"slug": "on-secret-sciences-initiations-and-modern-societies-anonymous",
+"group": "german",
+"language": "German",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 590,
+"book_id": "697c8e0fbaa544415f85b6c8",
+"slug": "history-of-human-folly-adelung",
+"group": "german",
+"language": "German",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 593,
+"book_id": "6991eb0d2f801130a473f42a",
+"slug": "leonardo-da-vinci-thinker-researcher-and-poet-vinci",
+"group": "german",
+"language": "German",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 611,
+"book_id": "6978ee3af4d5bdc7b3df604c",
+"slug": "chemical-writings-valentinus",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 612,
+"book_id": "69c801696c6f3cc53c844309",
+"slug": "das-grosse-geheimnis-der-offenbahrung-jesu-christi-in-uns-anonymous",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 617,
+"book_id": "69c70a25da9771c716315eb4",
+"slug": "geistreiche-predigten-schade",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 621,
+"book_id": "6984e8498a2f054f912420b3",
+"slug": "opus-vegetabile-the-vegetable-work-hollandus",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 629,
+"book_id": "6985ca72d53aa86216a37add",
+"slug": "theological-prophecy-of-the-last-day-rostius",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 631,
+"book_id": "69c6350d3e8cae136d149872",
+"slug": "versuch-ueber-die-kirchlichen-alterthuemer-der-gnostiker",
+"group": "german",
+"language": "German",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 648,
+"book_id": "697c8e145ea422b025bbdc70",
+"slug": "the-hand-of-the-philosophers-hollandus",
+"group": "german",
+"language": "German",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 660,
+"book_id": "69c8a2e26c6f3cc53c85e51f",
+"slug": "hussiten-krieg-theobald",
+"group": "german",
+"language": "German",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 662,
+"book_id": "69c860096c6f3cc53c8556f9",
+"slug": "kirchen-oder-hauspostill-uber-die-sonntags-und-furnembsten-weigel",
+"group": "german",
+"language": "German",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 666,
+"book_id": "6955d9b78407b7c9ae21309a",
+"slug": "mystische-schriften-eckhart",
+"group": "german",
+"language": "German",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 679,
+"book_id": "6a9afa09441bca6a13ac2510",
+"slug": "urkunden-des-alten-reichs-urkunden-des-agyptischen-sethe-2",
+"group": "german",
+"language": "German",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 681,
+"book_id": "69aff82f57090f8072b7a520",
+"slug": "vorlesungen-uber-die-geschichte-der-philosophie-zweiter-band-hegel-2",
+"group": "german",
+"language": "German",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 699,
+"book_id": "695936143b43cb6630c916a6",
+"slug": "the-book-of-the-goetia-of-solomon-the-king-crowley-mathers-crowley",
+"group": "german",
+"language": "German",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 711,
+"book_id": "697a3055f077efe5c8fd6a2c",
+"slug": "crata-repoa-initiations-into-the-ancient-secret-society-of-koppen",
+"group": "german",
+"language": "German",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 714,
+"book_id": "69c849216c6f3cc53c851dcf",
+"slug": "die-einzige-wahre-religion-allgemein-in-ihren-grund-satzen-loen",
+"group": "german",
+"language": "German",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 730,
+"book_id": "69aea85d1cbf28a363a4f63c",
+"slug": "wirtschaft-und-gesellschaft-weber",
+"group": "german",
+"language": "German",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 731,
+"book_id": "69c804966c6f3cc53c844ef0",
+"slug": "zusatze-zu-der-teutschen-uebersetzung-von-fludds-semler",
+"group": "german",
+"language": "German",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 735,
+"book_id": "69528702ab34727b1f04cf65",
+"slug": "der-weg-zu-christo-bohme",
+"group": "german",
+"language": "German",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 746,
+"book_id": "69a5b99ed76b98f272fced25",
+"slug": "instruction-on-the-fortification-of-cities-durer",
+"group": "german",
+"language": "German",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 754,
+"book_id": "6992545159cdabeb78f1dc13",
+"slug": "religion-und-kultus-der-romer-wissowa",
+"group": "german",
+"language": "German",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 759,
+"book_id": "69c8907a6c6f3cc53c85b67f",
+"slug": "weg-der-wiedergeburt-boehme",
+"group": "german",
+"language": "German",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 760,
+"book_id": "6974b645457dd8909910b9f1",
+"slug": "archidoxes-ten-books-paracelsus",
+"group": "german",
+"language": "German",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 780,
+"book_id": "69593455b282844d7b277cc3",
+"slug": "theosophia-practica-volume-i-gichtel",
+"group": "german",
+"language": "German",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 786,
+"book_id": "69c86fdd6c6f3cc53c85718f",
+"slug": "chymische-schrifften-ripley",
+"group": "german",
+"language": "German",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 789,
+"book_id": "69c7a81892b884e4f8173d17",
+"slug": "erklarte-offenbarung-johannis-und-vielmehr-jesu-christi-bengel",
+"group": "german",
+"language": "German",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 805,
+"book_id": "69c830506c6f3cc53c84da00",
+"slug": "schola-sapientum-das-ist-schul-der-weisen-anonymous",
+"group": "german",
+"language": "German",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 810,
+"book_id": "698fb7856b95eeda7d2d257f",
+"slug": "zur-farbenlehre-erster-band-goethe",
+"group": "german",
+"language": "German",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 811,
+"book_id": "69bda050f6d63c9197485ed9",
+"slug": "aurea-catena-homeri-oder-eine-beschreibung-von-dem-ursprung-kirchweger",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 814,
+"book_id": "69906a10d69de0e69806f990",
+"slug": "bibliotheca-acta-et-scripta-magica-vol-iii-hauber",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 815,
+"book_id": "69b418c72b0edf3eaa2ddcf7",
+"slug": "bohme-mysterium-magnum-pre-1640-ms-copy-bohme",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 839,
+"book_id": "697b0799093f320f0a302167",
+"slug": "original-writings-of-the-order-of-the-illuminati-zwack",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 842,
+"book_id": "698420e4e8a1d0539ce47e1d",
+"slug": "revelation-of-divine-majesty-gutman",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 845,
+"book_id": "699ef9f4b0a976d32fd37469",
+"slug": "splendor-of-light-splendor-lucis-wienner-von",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 846,
+"book_id": "697c8e0f14b7d066516d71b9",
+"slug": "the-flaming-star-tschoudy",
+"group": "german",
+"language": "German",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 855,
+"book_id": "69c81f916c6f3cc53c84a5d1",
+"slug": "archidoxa-von-heymligkeyten-der-natur-zehen-bucher-paracelsus",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 857,
+"book_id": "69c859ca6c6f3cc53c8546e8",
+"slug": "christianus-democritus-autocatacritus-das-ist-der-sich-wagner",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 858,
+"book_id": "69c7414f6a0f3d112faf7cf0",
+"slug": "das-erste-sechst-und-letste-hundert-allerhand-sinnreicher-besold",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 860,
+"book_id": "69c7cc4325ec2ba5ccd80104",
+"slug": "die-erste-liebe-das-ist-wahre-abbildung-der-ersten-christen-arnold",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 861,
+"book_id": "69aea8acb3730458c4378ef8",
+"slug": "einleitung-in-die-geisteswissenschaften-dilthey",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 867,
+"book_id": "69c853c66c6f3cc53c8536f2",
+"slug": "kirchen-oder-haus-postill-uber-die-sonntags-und-furnehmste-weigel",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 878,
+"book_id": "697b0799606defbadb0f6d0b",
+"slug": "the-experimental-artworks-of-the-english-count-of-s-anonymous",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 879,
+"book_id": "69b51db1ff09e4fe943a70cf",
+"slug": "theil-der-bucher-und-schrifften-des-edlen-hochgelehrten-und-paracelsus-3",
+"group": "german",
+"language": "German",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 887,
+"book_id": "697a3055f757bfc134c75d9f",
+"slug": "a-course-of-chymistry-lemery",
+"group": "german",
+"language": "German",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 895,
+"book_id": "69a976a9e12635ded71c520e",
+"slug": "clemens-alexandrinus-ii-stromata-buch-i-vi-stromateis-stahlin",
+"group": "german",
+"language": "German",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 909,
+"book_id": "69c7f78a6c6f3cc53c8420ed",
+"slug": "prognosticon-theologicon-oder-theologische-weissagung-vom-rostius",
+"group": "german",
+"language": "German",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 913,
+"book_id": "69c88b9f6c6f3cc53c85a997",
+"slug": "tafel-der-wiedergeburt-boehme",
+"group": "german",
+"language": "German",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 917,
+"book_id": "6a26c407aad44c98627ccc4c",
+"slug": "alchimia-nova-birelli",
+"group": "german",
+"language": "German",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 932,
+"book_id": "6a26c265aad44c98627c3b08",
+"slug": "hodogeticus-chymicus-popp",
+"group": "german",
+"language": "German",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 934,
+"book_id": "69afe233cf56258c93890546",
+"slug": "ideen-zur-philosophie-der-geschichte-der-menschheit-zweyter-herder",
+"group": "german",
+"language": "German",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 941,
+"book_id": "69ade7aa6a6b945bbdfa2e6d",
+"slug": "parerga-und-paralipomena-schopenhauer",
+"group": "german",
+"language": "German",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 967,
+"book_id": "69bda0b1f6d63c9197489c7b",
+"slug": "eirenaei-philalethae-erklarung-der-hermetisch-poetischen-starkey",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 970,
+"book_id": "6970e36e9b09d309d780a292",
+"slug": "general-principles-of-the-freemasons-anonymous",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 974,
+"book_id": "69c581e4ef9444b5fe7c4794",
+"slug": "impartial-collections-for-the-history-of-the-rosicrucians-semler",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 976,
+"book_id": "6867c831aadfee9e955ecc6a",
+"slug": "introduction-to-primitive-cabalistic-science-anonymous",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 981,
+"book_id": "699ef9fc6b1fc7b9ac07a425",
+"slug": "missive-to-the-honorable-lodge-of-freemasons-in-berlin-simonetti",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 987,
+"book_id": "69b51dceefd8df28f2dab4b8",
+"slug": "osiandrische-experiment-von-sole-luna-et-mercuria-resch",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 991,
+"book_id": "697d9ca3b81580c494bf992a",
+"slug": "saint-balthasar-a-rosicrucian-brother-anonymous",
+"group": "german",
+"language": "German",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 1002,
+"book_id": "69b52bf7a2d71b015aa975ab",
+"slug": "aureum-vellus-splendor-solis-golden-fleece-trismosin",
+"group": "german",
+"language": "German",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1025,
+"book_id": "69905e1a2fd6a039938a0f5d",
+"slug": "quellen-und-untersuchungen-zur-geschichte-des-hexenwahns-hansen",
+"group": "german",
+"language": "German",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1027,
+"book_id": "69804b931076b05d8d70fe71",
+"slug": "royal-chemical-and-medicinal-palace-cardilucius",
+"group": "german",
+"language": "German",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1029,
+"book_id": "69aeb621b6cf480123443543",
+"slug": "the-hellenistic-mystery-religions-their-basic-ideas-and-reitzenstein",
+"group": "german",
+"language": "German",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1040,
+"book_id": "69c84b0e6c6f3cc53c852100",
+"slug": "das-leben-und-offenbahrungen-ans-licht-gebracht-durch-helfta",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1046,
+"book_id": "6a100969f717292950969869",
+"slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-s-n-2",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1053,
+"book_id": "69c847e76c6f3cc53c851af9",
+"slug": "gottselige-betrachtungen-uber-die-auferstehung-jesu-christi-bogatzky",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1058,
+"book_id": "69ae939373fc4632370d4aec",
+"slug": "koptisch-gnostische-schriften-schmidt",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1059,
+"book_id": "69776dfe4896622ce9e30c70",
+"slug": "letters-to-a-friend-in-switzerland-semler",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1061,
+"book_id": "69c87d586c6f3cc53c858b1f",
+"slug": "libri-apologetici-oder-schutz-schriften-boehme",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1079,
+"book_id": "69c6e84dda9771c7163145fe",
+"slug": "wahrheit-der-religion-stender",
+"group": "german",
+"language": "German",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1083,
+"book_id": "69c75d9a6a0f3d112faf8b18",
+"slug": "astronomia-inferior-oder-septem-planetarum-terrestrium-ritter",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1084,
+"book_id": "69b51e70cf111105c429d0b6",
+"slug": "bibliographie-instructive-ou-traite-de-la-connoissance-des-debure",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": "status ocr_complete: a translate lane would re-translate the page"
+},
+{
+"rank": 1085,
+"book_id": "69c74af76a0f3d112faf828c",
+"slug": "chronica-oder-beschreibung-der-furnembsten-gedenckwurdigen-mecker",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1099,
+"book_id": "69c844be6c6f3cc53c85138b",
+"slug": "neuer-kern-wahrer-geistes-gebete-arnold",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1100,
+"book_id": "9f2fd808-7d15-40c2-a333-885c67ff3cb5",
+"slug": "paramirum-works-paracelsus",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1104,
+"book_id": "6970e3709b09d309d780a29a",
+"slug": "the-proverbs-and-examples-of-the-ancient-sages-bidpai",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1105,
+"book_id": "697c8e0f150e68b9f40701fa",
+"slug": "the-secret-of-the-life-and-multiplication-of-all-things-anonymous",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1108,
+"book_id": "69b418a12b0edf3eaa2dd755",
+"slug": "three-faculties-magical-invention-suchten-paracelsus-16th-c-paracelsus",
+"group": "german",
+"language": "German",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1119,
+"book_id": "69aebb7a6e076d07213e85fd",
+"slug": "das-erlebnis-und-die-dichtung-lessing-goethe-novalis-dilthey",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1120,
+"book_id": "6902ed49583dd7d2641408a5",
+"slug": "dawn-rising-boehme",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1122,
+"book_id": "69c6edbdda9771c716314a48",
+"slug": "der-weg-des-friedens-bril",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1129,
+"book_id": "69c850c66c6f3cc53c852ebc",
+"slug": "hochstnothwendige-und-zur-seelen-seligkeit-sehr-nutzliche-tennhardt",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1134,
+"book_id": "69bda11bf6d63c919748e22f",
+"slug": "johann-gottfried-jugels-naturliche-berg-schmelz-und-figier-jugel",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1140,
+"book_id": "6992017b7c226bdd25f99131",
+"slug": "paradoxa-ducenta-octoginta-franck",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1141,
+"book_id": "69c7fea96c6f3cc53c8438b4",
+"slug": "philosophie-des-hautes-sciences-alliette",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1149,
+"book_id": "69c88c706c6f3cc53c85ac11",
+"slug": "theoretischer-und-praktischer-unterricht-ueber-das-buch-thot-alliette",
+"group": "german",
+"language": "German",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1162,
+"book_id": "69c7f9746c6f3cc53c8426c1",
+"slug": "chymisches-laboratorium-oder-unter-erdische-naturkundigung-becher",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1163,
+"book_id": "69e8b2e52ff2a8dc09e78cf9",
+"slug": "critik-der-reinen-vernunft-kant",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1165,
+"book_id": "6953ea711479a63c11086d65",
+"slug": "die-philosophischen-schriften-vol-iv-leibniz",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1166,
+"book_id": "69c77c826a0f3d112faf96d1",
+"slug": "explication-de-divers-monumens-singuliers-qui-ont-rapport-a-martin",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1168,
+"book_id": "6a35707dea27ed96662d7ab9",
+"slug": "gro-e-zusammenstellung-uber-die-krafte-der-bekannten-al-baytar",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1173,
+"book_id": "69b51ed5c35d928cea4efe76",
+"slug": "kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1184,
+"book_id": "697c8e0f6000fdec2f130612",
+"slug": "spiritual-correspondence-schutz",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1186,
+"book_id": "6a1a981af2e16cafa7e5c539",
+"slug": "the-sibylline-oracles-friedlieb-critical-edition-friedlieb",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1190,
+"book_id": "69c6e6d0500fb263739553cd",
+"slug": "wahre-abbildung-des-inwendigen-christenthums-arnold",
+"group": "german",
+"language": "German",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1196,
+"book_id": "69906a08d69de0e69806f201",
+"slug": "bibliotheca-acta-et-scripta-magica-grundliche-nachrichten-hauber",
+"group": "german",
+"language": "German",
+"views": 47,
+"lane_block": null
+},
+{
+"rank": 208,
+"book_id": "6992cabbd4d545ae73fee88b",
+"slug": "wuxing-dayi-great-meaning-of-the-five-elements-vol-2-ji",
+"group": "chinese",
+"language": "Chinese",
+"views": 98,
+"lane_block": null
+},
+{
+"rank": 214,
+"book_id": "6992ce403ea667fbac828a09",
+"slug": "sancai-tuhui-juan-85",
+"group": "chinese",
+"language": "Chinese",
+"views": 97,
+"lane_block": null
+},
+{
+"rank": 216,
+"book_id": "6992ca85d4d545ae73fee420",
+"slug": "huangdi-neijing-taisu-yellow-emperor-classic-grand-basis-huangdi",
+"group": "chinese",
+"language": "Chinese",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 217,
+"book_id": "6a1d81ba5afc14a085e6dbe2",
+"slug": "huayang-jinxian-zhenglun-huiming-jing-liu-huayang-neidan",
+"group": "chinese",
+"language": "Chinese",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 233,
+"book_id": "6992cd9243713c66ea6374ff",
+"slug": "sancai-tuhui-juan-37",
+"group": "chinese",
+"language": "Chinese",
+"views": 94,
+"lane_block": null
+},
+{
+"rank": 238,
+"book_id": "6a0a4eec7cd8e1e3d0f49ce0",
+"slug": "huangji-jingshi-shu-juan-slice-15-of-24-shao-yong-neo-yong",
+"group": "chinese",
+"language": "Chinese",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 239,
+"book_id": "6a0a4f007cd8e1e3d0f49e8f",
+"slug": "huangji-jingshi-shu-juan-slice-18-of-24-shao-yong-neo-yong",
+"group": "chinese",
+"language": "Chinese",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 244,
+"book_id": "6992cd9d43713c66ea637919",
+"slug": "sancai-tuhui-juan-40",
+"group": "chinese",
+"language": "Chinese",
+"views": 93,
+"lane_block": null
+},
+{
+"rank": 253,
+"book_id": "6992cd4243713c66ea635a00",
+"slug": "sancai-tuhui-juan-15",
+"group": "chinese",
+"language": "Chinese",
+"views": 92,
+"lane_block": null
+},
+{
+"rank": 261,
+"book_id": "6992ce5c673ee1e40e32030d",
+"slug": "sancai-tuhui-juan-92",
+"group": "chinese",
+"language": "Chinese",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 262,
+"book_id": "6992ce6f77d26f9321776dcc",
+"slug": "treatise-on-armament-technology-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 278,
+"book_id": "6992cdb543713c66ea63818d",
+"slug": "sancai-tuhui-juan-47",
+"group": "chinese",
+"language": "Chinese",
+"views": 89,
+"lane_block": null
+},
+{
+"rank": 283,
+"book_id": "6a0a4f207cd8e1e3d0f4a1b9",
+"slug": "huangji-jingshi-shu-juan-slice-24-of-24-shao-yong-neo-yong",
+"group": "chinese",
+"language": "Chinese",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 284,
+"book_id": "6992ca5fd4d545ae73fedf66",
+"slug": "imperial-astronomical-instruments-survey-vols-1-3-bureau",
+"group": "chinese",
+"language": "Chinese",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 289,
+"book_id": "6a087eaab2a99026ccf6fd01",
+"slug": "the-chinese-classics-vol-4-part-2-the-she-king-james-legge",
+"group": "chinese",
+"language": "Chinese",
+"views": 88,
+"lane_block": null
+},
+{
+"rank": 293,
+"book_id": "6992cac0d4d545ae73feea71",
+"slug": "five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang",
+"group": "chinese",
+"language": "Chinese",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 296,
+"book_id": "6992cf0af7519cdd65044cd3",
+"slug": "illustrated-compendium-of-materia-medica-vol-5",
+"group": "chinese",
+"language": "Chinese",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 298,
+"book_id": "6992c93c69b777d72c76353e",
+"slug": "study-of-celestial-star-positions-and-lunar-mansions-bureau",
+"group": "chinese",
+"language": "Chinese",
+"views": 87,
+"lane_block": null
+},
+{
+"rank": 304,
+"book_id": "6992ca86d4d545ae73fee46f",
+"slug": "huangdi-neijing-lingshu-commentary-vol-1-huangdi",
+"group": "chinese",
+"language": "Chinese",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 305,
+"book_id": "6a0a4ef57cd8e1e3d0f49d6d",
+"slug": "huangji-jingshi-shu-juan-slice-16-of-24-shao-yong-neo-yong",
+"group": "chinese",
+"language": "Chinese",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 306,
+"book_id": "6992cf3e27dcac3f8ca1b835",
+"slug": "illustrated-compendium-of-materia-medica-vol-18",
+"group": "chinese",
+"language": "Chinese",
+"views": 86,
+"lane_block": null
+},
+{
+"rank": 314,
+"book_id": "6953e28477f38f6761be9922",
+"slug": "confucius-sinarum-philosophus-latin-jesuit-translation-1687-missionaries",
+"group": "chinese",
+"language": "Chinese-Latin",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 329,
+"book_id": "6992cdd6c8c0c1ab515dcc7a",
+"slug": "sancai-tuhui-juan-56",
+"group": "chinese",
+"language": "Chinese",
+"views": 84,
+"lane_block": null
+},
+{
+"rank": 342,
+"book_id": "6992cd13ae978f7d4159839a",
+"slug": "sancai-tuhui-juan-3",
+"group": "chinese",
+"language": "Chinese",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 345,
+"book_id": "6992cd9843713c66ea637791",
+"slug": "wubei-zhi-vol-17",
+"group": "chinese",
+"language": "Chinese",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 346,
+"book_id": "6992cda143713c66ea637bc4",
+"slug": "wubei-zhi-vol-19",
+"group": "chinese",
+"language": "Chinese",
+"views": 83,
+"lane_block": null
+},
+{
+"rank": 363,
+"book_id": "6992cdd281c9d7efb84d065f",
+"slug": "sancai-tuhui-juan-55",
+"group": "chinese",
+"language": "Chinese",
+"views": 81,
+"lane_block": null
+},
+{
+"rank": 368,
+"book_id": "69e72692a409200ea79ef816",
+"slug": "liaozhai-zhiyi-strange-tales-from-a-chinese-studio-vol-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 80,
+"lane_block": null
+},
+{
+"rank": 383,
+"book_id": "6992ced8673ee1e40e321a8b",
+"slug": "wubei-zhi-treatise-on-armament-technology-5",
+"group": "chinese",
+"language": "Chinese",
+"views": 79,
+"lane_block": null
+},
+{
+"rank": 384,
+"book_id": "69bd0aaab01b17638a097e63",
+"slug": "collected-works-of-bai-yuchan-southern-daoist-alchemist-bai-yuchan-1194",
+"group": "chinese",
+"language": "Chinese",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 385,
+"book_id": "6992cea0673ee1e40e32134f",
+"slug": "essential-compendium-of-sericulture-vol-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 389,
+"book_id": "699df07e3430a1d77dc79099",
+"slug": "orthodox-compendium-of-fate-calculation-nan",
+"group": "chinese",
+"language": "Chinese",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 392,
+"book_id": "6992cc03018b80967354caf2",
+"slug": "suanfa-tongzong-systematic-treatise-on-arithmetic-vol-10-dawei",
+"group": "chinese",
+"language": "Chinese",
+"views": 78,
+"lane_block": null
+},
+{
+"rank": 403,
+"book_id": "6992cddac8c0c1ab515dcded",
+"slug": "sancai-tuhui-juan-57",
+"group": "chinese",
+"language": "Chinese",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 404,
+"book_id": "6992ce113ea667fbac827f2f",
+"slug": "sancai-tuhui-juan-72",
+"group": "chinese",
+"language": "Chinese",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 405,
+"book_id": "6992ce203ea667fbac8283ec",
+"slug": "sancai-tuhui-juan-76",
+"group": "chinese",
+"language": "Chinese",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 408,
+"book_id": "6992ce7877d26f93217773a6",
+"slug": "treatise-on-armament-technology-wubei-zhi-vol-63",
+"group": "chinese",
+"language": "Chinese",
+"views": 77,
+"lane_block": null
+},
+{
+"rank": 424,
+"book_id": "69e788024a6785cfd60ce896",
+"slug": "bencao-gangmu-vol-5",
+"group": "chinese",
+"language": "Chinese",
+"views": 75,
+"lane_block": "71% translated: gap-fill would re-queue it"
+},
+{
+"rank": 429,
+"book_id": "6992cd4e43713c66ea635b76",
+"slug": "sancai-tuhui-juan-18",
+"group": "chinese",
+"language": "Chinese",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 430,
+"book_id": "6992cd7943713c66ea636b07",
+"slug": "sancai-tuhui-juan-30",
+"group": "chinese",
+"language": "Chinese",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 431,
+"book_id": "6992ce1d3ea667fbac828320",
+"slug": "sancai-tuhui-juan-75",
+"group": "chinese",
+"language": "Chinese",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 432,
+"book_id": "6992ce2e3ea667fbac8286b2",
+"slug": "sancai-tuhui-juan-80",
+"group": "chinese",
+"language": "Chinese",
+"views": 75,
+"lane_block": null
+},
+{
+"rank": 457,
+"book_id": "6992ce81673ee1e40e320cff",
+"slug": "wubei-zhi-vol-65",
+"group": "chinese",
+"language": "Chinese",
+"views": 74,
+"lane_block": null
+},
+{
+"rank": 474,
+"book_id": "6992cd8343713c66ea636fce",
+"slug": "sancai-tuhui-juan-33",
+"group": "chinese",
+"language": "Chinese",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 475,
+"book_id": "6992ce542960dc4e5cea9195",
+"slug": "sancai-tuhui-juan-90",
+"group": "chinese",
+"language": "Chinese",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 480,
+"book_id": "6992ca3bd4d545ae73feda2a",
+"slug": "wubai-shi-dongtian-huidun-vol-5",
+"group": "chinese",
+"language": "Chinese",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 481,
+"book_id": "6992cd7e43713c66ea636d58",
+"slug": "-al",
+"group": "chinese",
+"language": "Chinese",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 491,
+"book_id": "6992ceca673ee1e40e321953",
+"slug": "treatise-on-armament-technology-6",
+"group": "chinese",
+"language": "Chinese",
+"views": 72,
+"lane_block": null
+},
+{
+"rank": 493,
+"book_id": "6992cde681c9d7efb84d0ab7",
+"slug": "bencao-gangmu-compendium-of-materia-medica-vols-43-44",
+"group": "chinese",
+"language": "Chinese",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 496,
+"book_id": "6953e27b77f38f6761be90fa",
+"slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+"group": "chinese",
+"language": "Chinese-English",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 500,
+"book_id": "6a0acab14d80f9c1594971ea",
+"slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+"group": "chinese",
+"language": "Chinese",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 501,
+"book_id": "6992cd6a43713c66ea6364a0",
+"slug": "sancai-tuhui-juan-26",
+"group": "chinese",
+"language": "Chinese",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 502,
+"book_id": "6992ce393ea667fbac828874",
+"slug": "sancai-tuhui-juan-83",
+"group": "chinese",
+"language": "Chinese",
+"views": 71,
+"lane_block": null
+},
+{
+"rank": 514,
+"book_id": "6992cdde81c9d7efb84d0815",
+"slug": "sancai-tuhui-juan-58",
+"group": "chinese",
+"language": "Chinese",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 548,
+"book_id": "699df0863430a1d77dc7922c",
+"slug": "illustrated-astronomical-omen-compendium",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 552,
+"book_id": "6992ce86673ee1e40e320e15",
+"slug": "sancai-tuhui-juan-104",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 553,
+"book_id": "6992cd7c43713c66ea636be2",
+"slug": "sancai-tuhui-juan-31",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 554,
+"book_id": "6992cda743713c66ea637c9a",
+"slug": "sancai-tuhui-juan-43",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 555,
+"book_id": "6992cdcf23b3ade43ec1519b",
+"slug": "sancai-tuhui-juan-54",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 557,
+"book_id": "6a087eb1b2a99026ccf6ff2c",
+"slug": "the-chinese-classics-vol-5-part-1-the-chun-tsew-with-the-tso",
+"group": "chinese",
+"language": "Chinese",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 561,
+"book_id": "69935b692c63944063133f67",
+"slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": "84% translated: gap-fill would re-queue it"
+},
+{
+"rank": 573,
+"book_id": "6992cc12018b80967354cc95",
+"slug": "qimin-yaoshu-essential-techniques-for-the-welfare-of-the-sixie-3",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 575,
+"book_id": "6992cd3e43713c66ea63598e",
+"slug": "sancai-tuhui-juan-14",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 576,
+"book_id": "6992cd4a43713c66ea635aa2",
+"slug": "sancai-tuhui-juan-17",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 577,
+"book_id": "6992ce243ea667fbac8284b0",
+"slug": "sancai-tuhui-juan-77",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 578,
+"book_id": "6992ce313ea667fbac828700",
+"slug": "sancai-tuhui-juan-81",
+"group": "chinese",
+"language": "Chinese",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 588,
+"book_id": "6992ca1bd4d545ae73fed80a",
+"slug": "dunhuang-document-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 589,
+"book_id": "695924fe1cac2ce31a4a8b6b",
+"slug": "essence-of-taoist-canon-masters",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 592,
+"book_id": "6992cf3cf5b4f75c1a4c8518",
+"slug": "illustrated-treatise-on-the-maritime-kingdoms-vol-3",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 598,
+"book_id": "6992cd6e43713c66ea636659",
+"slug": "sancai-tuhui-juan-27",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 599,
+"book_id": "6992cdf281c9d7efb84d0ee0",
+"slug": "sancai-tuhui-juan-64",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 600,
+"book_id": "6992cd26ae978f7d415985b3",
+"slug": "sancai-tuhui-juan-8",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 601,
+"book_id": "6992ce492960dc4e5cea8efb",
+"slug": "sancai-tuhui-juan-87",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 602,
+"book_id": "6992ce582960dc4e5cea91f2",
+"slug": "sancai-tuhui-juan-91",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 603,
+"book_id": "6992f3d4dc69844b023ff228",
+"slug": "shishi-yuanliu-illustrated-life-of-the-buddha",
+"group": "chinese",
+"language": "Chinese",
+"views": 66,
+"lane_block": null
+},
+{
+"rank": 616,
+"book_id": "6992caced4d545ae73feeb1c",
+"slug": "dunhuang-illustrated-manuscript",
+"group": "chinese",
+"language": "Chinese",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 624,
+"book_id": "6992cd22ae978f7d41598549",
+"slug": "sancai-tuhui-juan-7",
+"group": "chinese",
+"language": "Chinese",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 626,
+"book_id": "6992c91569b777d72c7633f7",
+"slug": "shanhai-jing-classic-of-mountains-and-seas-illustrated-commentary",
+"group": "chinese",
+"language": "Chinese",
+"views": 65,
+"lane_block": null
+},
+{
+"rank": 635,
+"book_id": "69af0f0cbe5fc7f363547076",
+"slug": "da-qing-shi-xian-shu-qing-imperial-calendar-bureau",
+"group": "chinese",
+"language": "Chinese",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 638,
+"book_id": "6992f401c8c6ac61574e7394",
+"slug": "imperial-pictures-of-tilling-and-weaving-jiao-bingzhen",
+"group": "chinese",
+"language": "Chinese",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 639,
+"book_id": "6992cfdaf5b4f75c1a4c9a6b",
+"slug": "in-search-of-the-supernatural-soushen-ji",
+"group": "chinese",
+"language": "Chinese",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 647,
+"book_id": "6992cd5c43713c66ea63600f",
+"slug": "sancai-tuhui-juan-22",
+"group": "chinese",
+"language": "Chinese",
+"views": 64,
+"lane_block": null
+},
+{
+"rank": 654,
+"book_id": "6992cdf081c9d7efb84d0e9a",
+"slug": "compendium-of-materia-medica-vol-49",
+"group": "chinese",
+"language": "Chinese",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 675,
+"book_id": "6992ce60673ee1e40e320488",
+"slug": "sancai-tuhui-juan-93",
+"group": "chinese",
+"language": "Chinese",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 676,
+"book_id": "6992ce66673ee1e40e32081c",
+"slug": "sancai-tuhui-juan-95",
+"group": "chinese",
+"language": "Chinese",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 677,
+"book_id": "6992ce6a673ee1e40e32090d",
+"slug": "sancai-tuhui-juan-96",
+"group": "chinese",
+"language": "Chinese",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 689,
+"book_id": "6a05f06e6a888f57ebd7713f",
+"slug": "ishimpo-preserving-sunu-jing-yufang-bijue-dongxuanzi",
+"group": "chinese",
+"language": "Classical Chinese",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 692,
+"book_id": "6992cbd8018b80967354ba40",
+"slug": "nongzheng-quanshu-complete-treatise-on-agricultural-guangqi",
+"group": "chinese",
+"language": "Chinese",
+"views": 62,
+"lane_block": "92% translated: gap-fill would re-queue it"
+},
+{
+"rank": 697,
+"book_id": "6992ce353ea667fbac8287cc",
+"slug": "sancai-tuhui-juan-82",
+"group": "chinese",
+"language": "Chinese",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 702,
+"book_id": "6992cefff7519cdd65044b57",
+"slug": "zhiwu-mingshi-tukao-vol-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 712,
+"book_id": "69bd0a11b01b17638a0978c6",
+"slug": "dao-zong-liu-shu-six-daoist-classics-36-juan-li-shi-compiler",
+"group": "chinese",
+"language": "Chinese",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 723,
+"book_id": "6992cdb243713c66ea638041",
+"slug": "sancai-tuhui-juan-46",
+"group": "chinese",
+"language": "Chinese",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 724,
+"book_id": "6992ce63673ee1e40e320633",
+"slug": "sancai-tuhui-juan-94",
+"group": "chinese",
+"language": "Chinese",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 725,
+"book_id": "6992f3d6dc69844b023ff3d1",
+"slug": "sanguo-zhi-tuxiang-illustrated-romance-of-the-three-kingdoms",
+"group": "chinese",
+"language": "Chinese",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 738,
+"book_id": "6992cac1d4d545ae73feeac4",
+"slug": "diqiu-tushu-illustrated-explanation-of-the-earth",
+"group": "chinese",
+"language": "Chinese",
+"views": 60,
+"lane_block": null
+},
+{
+"rank": 766,
+"book_id": "6992cabad4d545ae73fee83d",
+"slug": "great-meaning-of-the-five-elements-wuxing-dayi-ji",
+"group": "chinese",
+"language": "Chinese",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 768,
+"book_id": "69d5adbcd0bd3547a56563a0",
+"slug": "history-of-the-three-kingdoms-oldest-surviving-korean-bu-sik",
+"group": "chinese",
+"language": "Classical Chinese",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 776,
+"book_id": "6992cd3b43713c66ea635917",
+"slug": "sancai-tuhui-juan-13",
+"group": "chinese",
+"language": "Chinese",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 777,
+"book_id": "6992cdc343713c66ea63870c",
+"slug": "sancai-tuhui-juan-51",
+"group": "chinese",
+"language": "Chinese",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 778,
+"book_id": "6992cdf681c9d7efb84d108a",
+"slug": "sancai-tuhui-juan-65",
+"group": "chinese",
+"language": "Chinese",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 790,
+"book_id": "6992cf083158e1eeeea7f958",
+"slug": "erya-with-annotations",
+"group": "chinese",
+"language": "Chinese",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 803,
+"book_id": "6992cd6743713c66ea6363c5",
+"slug": "sancai-tuhui-juan-25",
+"group": "chinese",
+"language": "Chinese",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 804,
+"book_id": "6992ce0200f13b15f3ca3ccf",
+"slug": "sancai-tuhui-juan-68",
+"group": "chinese",
+"language": "Chinese",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 813,
+"book_id": "6958e9af9659a6529d577ba1",
+"slug": "ben-cao-gang-mu-compendium-of-materia-medica-vol-8-shizhen",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 833,
+"book_id": "6992cf48f5b4f75c1a4c877b",
+"slug": "illustrated-compendium-of-materia-medica-vol-21",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 835,
+"book_id": "6992ca5ad4d545ae73fedda0",
+"slug": "jihe-yuanben-euclids-elements-in-chinese-vol-1-guangqi",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 843,
+"book_id": "6992cdcb23b3ade43ec150d5",
+"slug": "sancai-tuhui-juan-53",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 848,
+"book_id": "69af0dc5d2d9291eaf09bbd5",
+"slug": "tian-wen-chu-xue-kao-elementary-study-of-astronomy-dynasty",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": "88% translated: gap-fill would re-queue it"
+},
+{
+"rank": 850,
+"book_id": "6992ca94d4d545ae73fee548",
+"slug": "zhenjiu-dacheng-great-compendium-of-acupuncture-vol-1-jizhou",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 851,
+"book_id": "6992ca97d4d545ae73fee68a",
+"slug": "zhenjiu-dacheng-great-compendium-of-acupuncture-vol-3-jizhou",
+"group": "chinese",
+"language": "Chinese",
+"views": 57,
+"lane_block": null
+},
+{
+"rank": 865,
+"book_id": "69aebb3439a4307877772f55",
+"slug": "four-books-with-collected-annotations",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 873,
+"book_id": "6992cd2dae978f7d41598661",
+"slug": "sancai-tuhui-juan-10",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 877,
+"book_id": "6a087ebab2a99026ccf70177",
+"slug": "the-chinese-classics-vol-5-part-2-the-chun-tsew-with-the-tso",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 883,
+"book_id": "6992cbda018b80967354bea2",
+"slug": "tiangong-kaiwu-exploitation-of-the-works-of-nature-complete-yingxing",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 885,
+"book_id": "6992cebd673ee1e40e32171f",
+"slug": "treatise-on-armament-technology-wubei-zhi-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 886,
+"book_id": "69dea7dd51267905f92aaca5",
+"slug": "water-margin-vol-35-shi-nai-an-li-zhuowu",
+"group": "chinese",
+"language": "Chinese",
+"views": 56,
+"lane_block": null
+},
+{
+"rank": 910,
+"book_id": "6992ce8a673ee1e40e320f60",
+"slug": "sancai-tuhui-juan-105",
+"group": "chinese",
+"language": "Chinese",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 911,
+"book_id": "6992cdae43713c66ea637ec9",
+"slug": "sancai-tuhui-juan-45",
+"group": "chinese",
+"language": "Chinese",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 912,
+"book_id": "6992ce2b3ea667fbac828609",
+"slug": "sancai-tuhui-juan-79",
+"group": "chinese",
+"language": "Chinese",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 915,
+"book_id": "6992cdbc43713c66ea6383f4",
+"slug": "wubei-zhi-vol-25",
+"group": "chinese",
+"language": "Chinese",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 923,
+"book_id": "6992cffef5b4f75c1a4c9ede",
+"slug": "chengshi-moyuan",
+"group": "chinese",
+"language": "Chinese",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 947,
+"book_id": "6992cd9643713c66ea63769d",
+"slug": "sancai-tuhui-juan-38",
+"group": "chinese",
+"language": "Chinese",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 948,
+"book_id": "6992ce273ea667fbac82854a",
+"slug": "sancai-tuhui-juan-78",
+"group": "chinese",
+"language": "Chinese",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 957,
+"book_id": "69e788094a6785cfd60ceb41",
+"slug": "bencao-gangmu-vol-10",
+"group": "chinese",
+"language": "Chinese",
+"views": 53,
+"lane_block": "78% translated: gap-fill would re-queue it"
+},
+{
+"rank": 973,
+"book_id": "6992cb50d4d545ae73feee35",
+"slug": "illustrated-great-compassion-mantra-in-84-aspects",
+"group": "chinese",
+"language": "Chinese",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 992,
+"book_id": "6992ce153ea667fbac82803e",
+"slug": "sancai-tuhui-juan-73",
+"group": "chinese",
+"language": "Chinese",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 993,
+"book_id": "69bcebf9ae27b5d80618b7ce",
+"slug": "sancai-tuhui-juan-92-2",
+"group": "chinese",
+"language": "Chinese",
+"views": 53,
+"lane_block": null
+},
+{
+"rank": 1010,
+"book_id": "6992cad0d4d545ae73feeb43",
+"slug": "dunhuang-manuscript",
+"group": "chinese",
+"language": "Chinese",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1013,
+"book_id": "69af12630092756351e449f9",
+"slug": "guide-to-calculation-zhizao",
+"group": "chinese",
+"language": "Chinese",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1032,
+"book_id": "6992ce3a3ea667fbac8288d4",
+"slug": "wubei-zhi-vol-50",
+"group": "chinese",
+"language": "Chinese",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1033,
+"book_id": "6992c907453c7175dc1bccbb",
+"slug": "yingzao-fashi-4",
+"group": "chinese",
+"language": "Chinese",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1036,
+"book_id": "6958e9ac538549809db82aee",
+"slug": "ben-cao-gang-mu-compendium-of-materia-medica-vol-7-shizhen",
+"group": "chinese",
+"language": "Chinese",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1057,
+"book_id": "6992c9bc54b3f8b16b4afddd",
+"slug": "jingyou-taiyi-blessed-response-classic",
+"group": "chinese",
+"language": "Chinese",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1070,
+"book_id": "6992cdec81c9d7efb84d0cea",
+"slug": "sancai-tuhui-juan-62",
+"group": "chinese",
+"language": "Chinese",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1075,
+"book_id": "69ee19caa478f461b9eb6357",
+"slug": "the-divine-farmers-classic-of-materia-medica",
+"group": "chinese",
+"language": "Chinese",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1080,
+"book_id": "6992cd6243713c66ea636200",
+"slug": "wubei-zhi-vol-5",
+"group": "chinese",
+"language": "Chinese",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1093,
+"book_id": "6992cf51f5b4f75c1a4c8989",
+"slug": "illustrated-compendium-of-materia-medica-vol-23",
+"group": "chinese",
+"language": "Chinese",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1098,
+"book_id": "69d5ae474dc55b8478de136d",
+"slug": "mahaprajnaparamita-sutra-vol-565-anonymous",
+"group": "chinese",
+"language": "Chinese",
+"views": 50,
+"lane_block": "88% translated: gap-fill would re-queue it"
+},
+{
+"rank": 1110,
+"book_id": "6992cdaf43713c66ea637f22",
+"slug": "wubei-zhi-vol-22",
+"group": "chinese",
+"language": "Chinese",
+"views": 50,
+"lane_block": null
+},
+{
+"rank": 1130,
+"book_id": "6992cf073158e1eeeea7f8fd",
+"slug": "illustrated-investigation-of-the-names-and-realities-of",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1132,
+"book_id": "6992ce7d673ee1e40e320b99",
+"slug": "imperial-collection-of-mathematical-essence",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1145,
+"book_id": "6992cde981c9d7efb84d0ba0",
+"slug": "sancai-tuhui-juan-61",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1150,
+"book_id": "6992cf29f5b4f75c1a4c8238",
+"slug": "treatise-on-military-preparedness-vol-101",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1154,
+"book_id": "69e7287fa409200ea79eff4b",
+"slug": "vol-6",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1155,
+"book_id": "6992ce313ea667fbac8286ff",
+"slug": "wubei-zhi-vol-48",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1156,
+"book_id": "6992ce4a2960dc4e5cea8f7d",
+"slug": "wubei-zhi-vol-53",
+"group": "chinese",
+"language": "Chinese",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1172,
+"book_id": "6992cb51d4d545ae73feee9a",
+"slug": "jade-spirit-mirror-gallbladder-classic",
+"group": "chinese",
+"language": "Chinese",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1176,
+"book_id": "6992ca59d4d545ae73fedcd8",
+"slug": "nine-chapters-on-the-mathematical-art-vols-7-9",
+"group": "chinese",
+"language": "Chinese",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1182,
+"book_id": "6992cd8043713c66ea636ec0",
+"slug": "sancai-tuhui-juan-32",
+"group": "chinese",
+"language": "Chinese",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1183,
+"book_id": "6992ce7477d26f9321776f6a",
+"slug": "sancai-tuhui-juan-99",
+"group": "chinese",
+"language": "Chinese",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 222,
+"book_id": "695931cbb91a6184ea94337c",
+"slug": "radiant-sparks-al-buni",
+"group": "arabic",
+"language": "Arabic",
+"views": 96,
+"lane_block": null
+},
+{
+"rank": 256,
+"book_id": "6a477ce51874da9b1a9a5552",
+"slug": "al-mawaiz-wa-al-itibar-bi-dhikr-al-khitat-wa-al-athar-khitat-ahmad-ibn",
+"group": "arabic",
+"language": "Arabic",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 257,
+"book_id": "695931d4b91a6184ea9433a8",
+"slug": "amulet-composed-by-al-buni-al-buni",
+"group": "arabic",
+"language": "Arabic",
+"views": 91,
+"lane_block": null
+},
+{
+"rank": 273,
+"book_id": "69d5ac5f4dc55b8478ddd6b6",
+"slug": "thousand-and-one-nights-14th-15th-century-ms-anonymous",
+"group": "arabic",
+"language": "Arabic",
+"views": 90,
+"lane_block": null
+},
+{
+"rank": 275,
+"book_id": "69935b318e28d8f4c5d3c9da",
+"slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+"group": "arabic",
+"language": "Arabic",
+"views": 89,
+"lane_block": null
+},
+{
+"rank": 317,
+"book_id": "695361cd9c494f9f9f042f19",
+"slug": "ghayat-al-hakim-arabic-ms-al-majriti",
+"group": "arabic",
+"language": "Arabic",
+"views": 85,
+"lane_block": null
+},
+{
+"rank": 503,
+"book_id": "69b3e596c94a4ff7cce22d4f",
+"slug": "collection-of-magical-and-other-treatises-ascribed-to-trismegistus",
+"group": "arabic",
+"language": "Arabic",
+"views": 70,
+"lane_block": null
+},
+{
+"rank": 529,
+"book_id": "69a5f052ac4e926899bd4c0d",
+"slug": "historia-compendiosa-dynastiarum-hebraeus",
+"group": "arabic",
+"language": "Arabic",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 653,
+"book_id": "6a9b59f7ff40c2791f174c19",
+"slug": "bibliotheca-geographorum-arabicorum-vol-i-viae-regnorum-goeje",
+"group": "arabic",
+"language": "Arabic",
+"views": 63,
+"lane_block": null
+},
+{
+"rank": 807,
+"book_id": "69935b348e28d8f4c5d3cb86",
+"slug": "three-theological-treatises-al-ghazali",
+"group": "arabic",
+"language": "Arabic",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 999,
+"book_id": "6a9f34409a132af385446091",
+"slug": "al-hamadhani",
+"group": "arabic",
+"language": "Arabic",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1009,
+"book_id": "6953dd3677f38f6761be70c8",
+"slug": "deliverance-from-error-al-ghazali",
+"group": "arabic",
+"language": "Arabic-English",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 279,
+"book_id": "69c1bc368522835be8461dc5",
+"slug": "yemenite-haftarot-with-aramaic-targum-anonymous",
+"group": "hebrew",
+"language": "Hebrew and Aramaic",
+"views": 89,
+"lane_block": null
+},
+{
+"rank": 467,
+"book_id": "69c1ba978522835be845973b",
+"slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 73,
+"lane_block": null
+},
+{
+"rank": 521,
+"book_id": "69d5ac5f4dc55b8478ddd6b5",
+"slug": "babylonian-talmud-vilna-romm-edition-1884-various-romm-press",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 527,
+"book_id": "69c734846a0f3d112faf755c",
+"slug": "hebrew-sefer-me-il-shemu-el-ottolengo",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 69,
+"lane_block": null
+},
+{
+"rank": 546,
+"book_id": "69c1bb538522835be845ee95",
+"slug": "hasidic-discourses-anonymous",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 68,
+"lane_block": null
+},
+{
+"rank": 566,
+"book_id": "69c734076a0f3d112faf750d",
+"slug": "hebrew-ayelet-ahavim-perush-al-shir-ha-shirim-alkabets",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 67,
+"lane_block": null
+},
+{
+"rank": 691,
+"book_id": "6992469abc722ec0ee80efa9",
+"slug": "mamusse-wunneetupanatamwe-up-biblium-god-eliot-indian-bible-eliot",
+"group": "hebrew",
+"language": "Hebrew-Greek",
+"views": 62,
+"lane_block": null
+},
+{
+"rank": 717,
+"book_id": "69b3e5b5304c1c6b395099fd",
+"slug": "luria-s-commentary-on-the-zohar-of-genesis-luria",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 61,
+"lane_block": null
+},
+{
+"rank": 765,
+"book_id": "6988a59fa4de5da34fd130e0",
+"slug": "gates-of-righteousness-sha-arei-zedek-gikatilla",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 59,
+"lane_block": null
+},
+{
+"rank": 793,
+"book_id": "69c1bad18522835be845aabc",
+"slug": "hebrew-bible-writings-anonymous",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 798,
+"book_id": "69b4cd3dd5b6c3815e1a504b",
+"slug": "menasseh-ben-israel-hamisah-humse-torah-1631-1631-israel",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 58,
+"lane_block": null
+},
+{
+"rank": 902,
+"book_id": "69c7b2da25ec2ba5ccd7f49a",
+"slug": "hebrew-sefer-eshel-avraham-rovigo",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 55,
+"lane_block": null
+},
+{
+"rank": 938,
+"book_id": "69c1bbc68522835be8460774",
+"slug": "new-testament-in-hebrew-translation-anonymous",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 950,
+"book_id": "699067ef249ce014347d4e4f",
+"slug": "vat-ebr-226-leon",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 54,
+"lane_block": null
+},
+{
+"rank": 1034,
+"book_id": "69b3e677304c1c6b3950b41f",
+"slug": "zohar-on-genesis-exodus-attributed",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 52,
+"lane_block": null
+},
+{
+"rank": 1076,
+"book_id": "69b2f4a2f9f1ad2b3b1548b3",
+"slug": "thesaurus-linguae-sanctae-pagnini-hebrew-dictionary-estienne",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 51,
+"lane_block": null
+},
+{
+"rank": 1126,
+"book_id": "69a5e462006a40984221706a",
+"slug": "hebrew-bible-codex-vaticanus-hebraicus-14-anonymous",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 49,
+"lane_block": null
+},
+{
+"rank": 1161,
+"book_id": "6952e4bc77f38f6761bc7db1",
+"slug": "biblia-hebraica-hebrew-bible-with-critical-annotations-michaelis",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 48,
+"lane_block": null
+},
+{
+"rank": 1175,
+"book_id": "699243ebbc722ec0ee80a9d1",
+"slug": "midrash-bereshit-rabbah-theodor-albeck-critical-edition-eds",
+"group": "hebrew",
+"language": "Hebrew",
+"views": 48,
+"lane_block": null
+}
+]
+}

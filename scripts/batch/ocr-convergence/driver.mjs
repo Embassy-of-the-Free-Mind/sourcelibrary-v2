@@ -187,11 +187,15 @@ async function packets() {
   const rows = readJsonl(path.join(SETDIR, 'compare.jsonl'));
   const T = Number(arg('threshold', NaN));
   const all = flag('all');
-  if (!all && !Number.isFinite(T)) throw new Error('--threshold=T (from the preregistration) or --all');
+  if (!all && !Number.isFinite(T) && !Number.isFinite(Number(arg('below', NaN)))) throw new Error('--threshold=T (from the preregistration), --below=T --sample=N, or --all');
   const per = Number(arg('per-chunk', 25));
   const seed = Number(arg('seed', 6420));
-  const todo = rows.filter((r) => r.status === 'compared' && (all || r.cer >= T));
-  const ADJ = path.join(SETDIR, 'adj');
+  // --below=T --sample=N: the preregistered check on T, N random pages that AGREED, adjudicated into adj-agree/.
+  const below = Number(arg('below', NaN));
+  const r0 = rng(seed);
+  let todo = rows.filter((r) => r.status === 'compared' && (Number.isFinite(below) ? r.cer < below : (all || r.cer >= T)));
+  if (Number.isFinite(below)) todo = todo.map((r) => [r0(), r]).sort((a, b) => a[0] - b[0]).slice(0, Number(arg('sample', 30))).map(([, r]) => r);
+  const ADJ = path.join(SETDIR, Number.isFinite(below) ? 'adj-agree' : 'adj');
   fs.mkdirSync(path.join(ADJ, 'chunks'), { recursive: true });
   fs.mkdirSync(path.join(ADJ, 'images'), { recursive: true });
   const key = [];
@@ -244,7 +248,7 @@ function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md')
 }
 
 async function adjudicate() {
-  const ADJ = path.join(SETDIR, 'adj');
+  const ADJ = path.join(SETDIR, arg('dir', 'adj'));
   const model = arg('model', 'opus');
   const par = Math.min(8, Number(arg('parallel', 8)));
   fs.mkdirSync(path.join(ADJ, 'reviews'), { recursive: true });
@@ -269,12 +273,31 @@ async function decide() {
   if (!Number.isFinite(T)) throw new Error('--threshold=T (from the preregistration) is required');
   const rows = readJsonl(path.join(SETDIR, 'compare.jsonl'));
   const ADJ = path.join(SETDIR, 'adj');
-  const key = new Map(readJsonl(path.join(ADJ, 'key.jsonl')).map((k) => [k.page_id, k.side]));
+  const key = new Map([...readJsonl(path.join(ADJ, 'key.jsonl')), ...readJsonl(path.join(SETDIR, 'adj-agree', 'key.jsonl'))].map((k) => [k.page_id, k.side]));
   const verdicts = new Map();
-  if (fs.existsSync(path.join(ADJ, 'reviews'))) for (const f of fs.readdirSync(path.join(ADJ, 'reviews'))) for (const v of JSON.parse(fs.readFileSync(path.join(ADJ, 'reviews', f), 'utf8'))) verdicts.set(v.item_id, v);
+  // A verdict counts only if the transcript shows the adjudicator opened that page's image (Read of images/<id>.jpg);
+  // one that judged from the texts alone is dropped and the page stays pending.
+  const unread = [];
+  for (const dir of ['adj', 'adj-agree']) {
+    const D = path.join(SETDIR, dir);
+    if (!fs.existsSync(path.join(D, 'reviews'))) continue;
+    for (const f of fs.readdirSync(path.join(D, 'reviews'))) {
+      const tr = fs.existsSync(path.join(D, 'meta', f.replace(/\.json$/, '.jsonl'))) ? fs.readFileSync(path.join(D, 'meta', f.replace(/\.json$/, '.jsonl')), 'utf8') : '';
+      for (const v of JSON.parse(fs.readFileSync(path.join(D, 'reviews', f), 'utf8'))) {
+        if (!new RegExp(`"name":"Read","input":\\{"file_path":"[^"]*images/${v.item_id}\\.jpg`).test(tr)) { unread.push(v.item_id); continue; }
+        if (!key.has(v.item_id)) continue;
+        verdicts.set(v.item_id, v);
+      }
+    }
+  }
+  if (unread.length) console.log(`  ${unread.length} verdicts dropped: image not opened (${unread.join(', ')})`);
   const { client, db } = await connect();
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(rows.map((r) => r.book_id))] } }, { projection: { id: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pipeline_auto: 1 } }).toArray()).map((b) => [b.id, b]));
   await client.close();
+  // contain-extra.json: [{ page_id, why }] — pages a reader of the image found carrying ANOTHER leaf's text (the
+  // containment bar), named by hand from the adjudication notes; they are contained whatever the pick.
+  const extraF = path.join(SETDIR, 'contain-extra.json');
+  const extra = new Map(fs.existsSync(extraF) ? JSON.parse(fs.readFileSync(extraF, 'utf8')).map((e) => [e.page_id, e.why]) : []);
   const out = [];
   for (const r of rows) {
     const base = { page_id: r.page_id, book_id: r.book_id, slug: r.slug, page_number: r.page_number, group: r.group, language: r.language, cer: r.cer, chatter: r.chatter, stored_model: r.stored_model };
@@ -294,7 +317,12 @@ async function decide() {
     }
     if (!adj) { out.push({ ...base, action: 'pending-adjudication' }); continue; }
     let action, why;
-    if (adj.pick === 'cannot_tell' || adj.pick === 'neither' || (adj.stored_serious && adj.cli_serious)) { action = 'contain'; why = adj.pick === 'cannot_tell' ? 'cannot tell from the image' : 'both reads seriously wrong'; }
+    if (extra.has(r.page_id)) { out.push({ ...base, action: 'contain', why: extra.get(r.page_id), adj }); continue; }
+    // Containment is for a page neither family can give a reader (containment-on-finding.md: the bar is "not this
+    // leaf's text", not a judgment of quality): the adjudicator says neither read is usable, or cannot settle it, at
+    // medium or high confidence. A MERGE (each read right where the other is wrong) or a low-confidence "cannot tell"
+    // is residual: no write, a page finding on the book's check, and a third read later.
+    if ((adj.pick === 'cannot_tell' || adj.pick === 'neither') && adj.confidence !== 'low') { action = 'contain'; why = adj.pick === 'cannot_tell' ? 'cannot tell from the image' : 'neither read is usable'; }
     else if (adj.pick === 'cli' && adj.confidence === 'high' && adj.replace && !adj.cli_serious && !r.chatter) {
       const lane = translationLaneReason(books.get(r.book_id));
       if (lane) { action = 'defer'; why = lane; } else action = 'write';
@@ -318,7 +346,10 @@ async function apply() {
   const reason = `#6420 lane B: second read (gemini-3.7-flash-low, CLI) disagreed with the stored read; Opus picked this read from the image (run ${runId})`;
   // 1. Writes, through cli-ocr.mjs apply and its guards. Each written page is stamped translation_stale with this
   //    lane, so lane C finds exactly these pages; no automatic lane re-translates a book outside TRANSLATING (decide).
-  const writes = dec.filter((d) => d.action === 'write').map((d) => d.page_id);
+  // --no-writes: a failed gate (or any stop) applies checks and containments only; `write` pages are reported as
+  // staged repairs (a serious stored misreading the check row names), never written.
+  const NO_WRITES = flag('no-writes');
+  const writes = NO_WRITES ? [] : dec.filter((d) => d.action === 'write').map((d) => d.page_id);
   const onlyFile = path.join(SETDIR, 'write-ids.json');
   fs.writeFileSync(onlyFile, JSON.stringify(writes));
   if (writes.length) {
@@ -347,15 +378,15 @@ async function apply() {
   let rows = 0;
   for (const [bookId, ds] of Object.entries(byBook)) {
     const pagesRead = ds.map((d) => d.page_number).sort((a, b) => a - b);
-    const findings = ds.filter((d) => d.action === 'contain' || d.action === 'residual' || (d.action === 'defer' && d.adj?.stored_serious) || (d.action === 'keep' && d.adj?.stored_serious))
-      .map((d) => ({ page_number: d.page_number, errors: [{ stage: 'ocr', class: d.action === 'contain' ? 'ocr-unsettled' : 'ocr-misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
+    const findings = ds.filter((d) => d.action === 'contain' || d.action === 'residual' || (NO_WRITES && d.action === 'write') || (d.action === 'defer' && d.adj?.stored_serious) || (d.action === 'keep' && d.adj?.stored_serious))
+      .map((d) => ({ page_number: d.page_number, ...(d.action === 'contain' && /another leaf/.test(d.why || '') ? { wrong_page: true } : {}), errors: [{ stage: 'ocr', class: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'ocr-wrong-leaf' : 'ocr-unsettled') : 'ocr-misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
     const verdict = ds.some((d) => d.action === 'contain') ? 'fix' : findings.length ? 'caveat' : 'show';
     const input = {
       book_id: bookId, checked_at: new Date(), method_id: METHOD.id, method_version: METHOD.version, run_id: runId,
       frame: `#6420 lane B: top books by readers (analytics_pageviews), ${SET}`, pages_read: pagesRead,
       reader: { kind: 'model', model: 'gemini-3.7-flash-low', role: 'ocr-convergence: CLI second read vs stored; Opus (subscription) reads the image on disagreement', image_opened: true },
       verdict, classes: [...new Set(ds.map((d) => d.action))], page_findings: findings,
-      note: `${ds.filter((d) => d.action === 'agree').length} agree, ${ds.filter((d) => d.action === 'keep').length} kept, ${ds.filter((d) => d.action === 'write').length} written, ${ds.filter((d) => d.action === 'defer').length} deferred, ${ds.filter((d) => d.action === 'residual').length} residual, ${ds.filter((d) => d.action === 'contain').length} contained`,
+      note: `${ds.filter((d) => d.action === 'agree').length} agree, ${ds.filter((d) => d.action === 'keep').length} kept, ${ds.filter((d) => d.action === 'write').length} ${NO_WRITES ? 'staged, not written (gate)' : 'written'}, ${ds.filter((d) => d.action === 'defer').length} deferred, ${ds.filter((d) => d.action === 'residual').length} residual, ${ds.filter((d) => d.action === 'contain').length} contained`,
       evidence_path: `scripts/batch/ocr-convergence/results/${path.basename(RUN)}/${SET}/decisions.jsonl.gz`,
       text_provenance: await pageProvenance(db, bookId, pagesRead),
       api_usd: 0,
