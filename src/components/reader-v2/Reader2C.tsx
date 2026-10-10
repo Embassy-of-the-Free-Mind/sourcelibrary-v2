@@ -21,7 +21,7 @@ import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl, getPageThumbUrl, swapToFallback } from '@/lib/utils';
-import { pageImageFrame } from '@/lib/framed-image';
+import { framedThumbSourceWidth, pageImageFrame } from '@/lib/framed-image';
 import FramedImg from '@/components/FramedImg';
 import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -73,6 +73,8 @@ const INK = 'var(--bg-dark)';
 const BAR_H = 52;
 /** Second row of the phone bar: the pane picker (Scan | German | English). */
 const SEG_H = 44;
+/** Width of a page's `thumb` image (page-image-url THUMB_WIDTH, R2 `-thumb.jpg`). */
+const STRIP_THUMB_SOURCE_WIDTH = 150;
 /** The phone bar's full height — title row plus the pane picker — and the
  *  lead-in the column keeps for it. */
 const PHONE_BAR_H = BAR_H + SEG_H;
@@ -2191,13 +2193,22 @@ function Filmstrip({
     setAspect(prev => (Math.abs(prev - a) > 0.02 ? a : prev));
   }, []);
   const thumbW = Math.round(thumbH * aspect);
+  // Read after mount so the server render and the first client render agree.
+  const [dpr, setDpr] = useState(1);
+  useEffect(() => { setDpr(window.devicePixelRatio || 1); }, []);
   const thumbs = useMemo(
     () => pageList.map(p => {
       const rec = p as unknown as Record<string, unknown>;
       const thumb = getPageThumbUrl(rec);
-      return { p, thumb, fallback: getPageDisplayUrl(rec), frame: pageImageFrame(rec, thumb) };
+      const display = getPageDisplayUrl(rec);
+      const frame = pageImageFrame(rec, thumb);
+      // A framed thumb is drawn larger than its slot (#6010). When the 150px
+      // thumb would be upscaled, take the next size up: the display image.
+      const sharp = frame && display && framedThumbSourceWidth(frame, thumbW, thumbH, dpr) > STRIP_THUMB_SOURCE_WIDTH
+        && pageImageFrame(rec, display) ? display : thumb;
+      return { p, thumb: sharp, fallback: display, frame: sharp === thumb ? frame : pageImageFrame(rec, display) };
     }),
-    [pageList],
+    [pageList, thumbW, thumbH, dpr],
   );
   return (
     <div

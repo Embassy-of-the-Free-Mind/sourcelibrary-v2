@@ -60,3 +60,35 @@ export function framedImageStyle(f: PageFrame): { left: string; top: string; wid
   const pct = (n: number) => `${Math.round(n * 1e6) / 1e4}%`;
   return { left: pct(-f.x / f.w), top: pct(-f.y / f.h), width: pct(1 / f.w), height: pct(1 / f.h) };
 }
+
+/**
+ * How much bigger the source must be so the framed page keeps the pixels it
+ * had uncropped (#6010, Derek's source-size requirement). The scan is drawn
+ * 1/frame.w times the width of the page box, so a width-based request (a
+ * `sizes` length, a thumb's `w`) is scaled by that. This is at least the
+ * 1/max(frame.w, frame.h) the issue asks for.
+ */
+export function frameSourceScale(f: PageFrame | null): number {
+  return f && f.w > 0 && f.w < 1 ? 1 / f.w : 1;
+}
+
+/**
+ * A `sizes` attribute with each slot length scaled by `k`, so next/image's
+ * srcset picks a source big enough for the cropped page. Media conditions are
+ * left alone; only the trailing `vw`/`px` length of each entry is scaled.
+ */
+export function scaleSizes(sizes: string, k: number): string {
+  if (!(k > 1)) return sizes;
+  return sizes.split(',').map(part => part.replace(/(\d+(?:\.\d+)?)(vw|px)\s*$/, (_, n: string, unit: string) =>
+    `${Math.ceil(parseFloat(n) * k * 100) / 100}${unit}`)).join(',');
+}
+
+/**
+ * Width in source pixels a thumbnail needs so its framed page is as sharp as
+ * the uncropped thumb was: the scan is drawn at boxWidth / frame.w, where the
+ * page box covers the slot (`fit="cover"`).
+ */
+export function framedThumbSourceWidth(f: PageFrame, slotW: number, slotH: number, dpr: number): number {
+  const boxW = Math.max(slotW, slotH * framedAspect(f));
+  return Math.ceil((boxW / f.w) * dpr);
+}

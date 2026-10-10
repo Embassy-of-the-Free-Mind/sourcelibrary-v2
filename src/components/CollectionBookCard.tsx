@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Check, Heart, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
-import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
+import { bookCoverResponsiveLoader, framedCardLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
@@ -206,6 +206,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   // behaviour for every non-card book.
   const fallbackUrl = (cardUrl && displayUrl) || getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+  // A framed cover is drawn larger than its card (#6010): when the 500px card
+  // variant would be upscaled, take the display scan of the same page.
+  const frame = coverFrame(book, thumbnailUrl);
+  const coverLoader = frame && thumbnailUrl === cardUrl && displayUrl ? framedCardLoader(displayUrl) : bookCoverResponsiveLoader;
   const slug = book.slug || book.id || book.bookId || '';
 
   // "Does this book exist in the surface language?" — asked through the shared
@@ -251,9 +255,9 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         {thumbnailUrl && !imageError ? (
           <FramedImg
             as={Image}
-            frame={coverFrame(book, thumbnailUrl)}
+            frame={frame}
             src={thumbnailUrl}
-            loader={bookCoverResponsiveLoader}
+            loader={coverLoader}
             alt={shownTitle}
             fill
             quality={85}

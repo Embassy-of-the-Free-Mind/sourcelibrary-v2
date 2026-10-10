@@ -105,3 +105,31 @@ describe('cover-frame-backfill — which cover is measured', () => {
     expect(same(stored, null)).toBe(false);
   });
 });
+
+describe('source size for a cropped page (#6010)', () => {
+  it('scales each sizes length by 1/frame.w and leaves media conditions alone', async () => {
+    const { scaleSizes, frameSourceScale } = await import('@/lib/framed-image');
+    const k = frameSourceScale({ x: 0.1, y: 0, w: 0.8, h: 1, ar: 0.75, v: 3 });
+    expect(k).toBe(1.25);
+    expect(scaleSizes('(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw', k))
+      .toBe('(max-width: 768px) 62.5vw, (max-width: 1024px) 41.25vw, 25vw');
+    expect(scaleSizes('200px', 1)).toBe('200px');
+    expect(frameSourceScale(null)).toBe(1);
+  });
+
+  it('a framed thumb needs more source pixels than its slot', async () => {
+    const { framedThumbSourceWidth } = await import('@/lib/framed-image');
+    const f = { x: 0.1, y: 0.05, w: 0.8, h: 0.9, ar: 0.75, v: 3 };
+    // 42x54 slot at 2x: the scan is drawn at boxW/0.8.
+    expect(framedThumbSourceWidth(f, 42, 54, 2)).toBeGreaterThan(84);
+  });
+});
+
+describe('framedCardLoader', () => {
+  it('serves the card up to its width and the display scan above it', async () => {
+    const { framedCardLoader } = await import('@/lib/book-cover-loader');
+    const l = framedCardLoader('https://images.sourcelibrary.org/pages/b/1.jpg');
+    expect(l({ src: 'https://images.sourcelibrary.org/pages/b/1-card.avif', width: 384 })).toContain('-card.avif');
+    expect(l({ src: 'https://images.sourcelibrary.org/pages/b/1-card.avif', width: 640 })).toBe('https://images.sourcelibrary.org/pages/b/1.jpg');
+  });
+});

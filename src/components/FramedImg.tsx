@@ -2,7 +2,7 @@
 
 import { useCallback, useState, type ComponentPropsWithoutRef, type CSSProperties, type ElementType, type SyntheticEvent } from 'react';
 import { frameForImage, type PageFrame } from '@/lib/page-frame';
-import { framedAspect, framedImageStyle } from '@/lib/framed-image';
+import { frameSourceScale, framedAspect, framedImageStyle, scaleSizes } from '@/lib/framed-image';
 
 type FramedImgProps<C extends ElementType> = {
   /** A frame already matched to this image (`coverFrame` / `pageImageFrame`), or null. */
@@ -44,7 +44,7 @@ export default function FramedImg<C extends ElementType = 'img'>({
   frame, fit = 'page', as, wrapperClassName = 'absolute inset-0', onShownSize, ...rest
 }: FramedImgProps<C>) {
   const Img: ElementType = as ?? 'img';
-  const props = rest as { src?: unknown; style?: CSSProperties; onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void };
+  const props = rest as { src?: unknown; sizes?: unknown; style?: CSSProperties; onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void };
   // Remembered per src: a fallback URL is another file and is judged afresh.
   const [refused, setRefused] = useState<unknown>(null);
   const applied = frame && refused !== props.src ? frame : null;
@@ -74,6 +74,9 @@ export default function FramedImg<C extends ElementType = 'img'>({
       >
         <Img
           {...rest}
+          // A cropped page is drawn larger than its slot; ask next/image for a
+          // source big enough to keep today's sharpness (#6010).
+          {...(typeof props.sizes === 'string' ? { sizes: scaleSizes(props.sizes, frameSourceScale(applied)) } : {})}
           onLoad={handleLoad}
           style={{
             ...props.style,

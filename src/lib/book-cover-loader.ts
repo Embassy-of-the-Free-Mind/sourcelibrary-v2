@@ -96,3 +96,17 @@ export function bookCoverResponsiveLoader({
 
   return src;
 }
+
+/** Width of the `-card.avif` variant. */
+export const CARD_VARIANT_WIDTH = 500;
+
+/**
+ * Loader for a FRAMED cover whose src is the 500px card variant (#6010). The
+ * crop draws the scan 1/frame.w times larger, so for wide requests the card
+ * would be upscaled and soft; above its width this serves the full display scan
+ * of the same page instead (the next size up). At or below it, the card.
+ */
+export function framedCardLoader(displayUrl: string) {
+  return ({ src, width, quality }: { src: string; width: number; quality?: number }): string =>
+    width <= CARD_VARIANT_WIDTH ? src : bookCoverResponsiveLoader({ src: displayUrl, width, quality });
+}
