@@ -3,9 +3,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Users, Globe, BarChart3, X, ChevronRight, Server, Bot, MousePointerClick } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
+import Link from 'next/link';
 import { AreaChart } from './charts/AreaChart';
-import type { TrafficDashboardData, TrafficBin } from '@/lib/analytics-traffic';
-import { TRAFFIC_CLASS_LABELS, type TrafficClass } from '@/lib/traffic-classification';
+import { MultiLineChart } from './charts/MultiLineChart';
+import { BOT_GROUPS, type TrafficDashboardData, type TrafficBin, type BotGroup } from '@/lib/analytics-traffic';
 
 type FilterKey = 'country' | 'section' | 'referrer' | 'host';
 
@@ -192,7 +193,7 @@ export default function TrafficDashboard() {
             )}
           </div>
 
-          {/* Sites + what the figures leave out */}
+          {/* Sites */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ListCard title="Sites" icon={<Server className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />} hint="click to filter by subdomain">
               {data.sites.length === 0 ? <Empty /> : data.sites.map((s, i) => (
@@ -201,8 +202,9 @@ export default function TrafficDashboard() {
                   onClick={s.host === '(pre-tracking)' ? undefined : () => toggleFilter('host', s.host)} />
               ))}
             </ListCard>
-            <ExcludedCard excluded={data.excluded} />
           </div>
+
+          <BotSection bots={data.bots} bin={data.range.bin} />
 
           {/* Sections + Top pages */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -317,36 +319,74 @@ function Empty() {
   return <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>None in this range</p>;
 }
 
-// What the figures leave out. Pool pageviews were removed from every number
-// above; bot and AI requests never reached the beacon, so they were never in
-// them. The tracker's own "human" count is not shown: it labels every beacon
-// human by construction, pool included (#3657).
-const BOT_CLASSES: TrafficClass[] = ['search_crawler', 'ai_agent', 'ai_trainer', 'other_bot'];
+// Automated traffic, kept apart from the human figures above. Proxy pools
+// run the page tracker like a browser, so they arrive as pageviews and are
+// subtracted from every human number; bots are counted by the server and
+// never reach the tracker. Both are shown here per day.
+const BOT_GROUP_META: Record<BotGroup, { label: string; color: string; note: string }> = {
+  pool: { label: 'Proxy pools', color: '#dc2626', note: 'pageviews from flagged browser fingerprints' },
+  ai: { label: 'AI companies', color: '#8b5cf6', note: 'OpenAI, Anthropic, Perplexity, Meta, Common Crawl…' },
+  search: { label: 'Search engines', color: '#3b82f6', note: 'Google, Bing' },
+  unidentified: { label: 'Unidentified bots', color: '#94a3b8', note: 'bot-like user agents with no known owner' },
+  script: { label: 'Scripts', color: '#d97706', note: 'curl, python, other HTTP libraries' },
+  other: { label: 'Other', color: '#16a34a', note: 'SEO tools, rate-limited clients, our own MCP' },
+};
 
-function ExcludedCard({ excluded }: { excluded: TrafficDashboardData['excluded'] }) {
-  const byClass = new Map(excluded.bots.map(r => [r.class, r.count]));
-  const { pool } = excluded;
+function BotSection({ bots, bin }: { bots: TrafficDashboardData['bots']; bin: TrafficBin }) {
+  const groups = BOT_GROUPS.filter(g => bots.totals[g] > 0);
+  const total = groups.reduce((sum, g) => sum + bots.totals[g], 0);
+  const card = { background: 'var(--bg-white)', border: '1px solid var(--border-light)' };
+
   return (
-    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-          <Bot className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
-          Not counted above
+    <div className="space-y-4 pt-4">
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <h2 className="text-xl font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <Bot className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+          Automated traffic
         </h2>
+        <Link href="/admin/bots" className="text-xs hover:underline" style={{ color: 'var(--accent-rust)' }}>
+          Per-bot user agents and paths →
+        </Link>
       </div>
-      <div className="space-y-1">
-        <Row label="Proxy-pool pageviews (removed)" count={pool.pageviews} unit="views" />
-        <p className="text-xs pb-2" style={{ color: 'var(--text-muted)' }}>
-          {pool.fingerprints === 0
-            ? 'No browser fingerprint was flagged as a proxy pool in this range.'
-            : `${pool.fingerprints} browser fingerprint${pool.fingerprints === 1 ? '' : 's'} flagged by the hourly anomaly detector; all their views in this range are left out.`}
-        </p>
-        {BOT_CLASSES.map(c => (
-          <Row key={c} label={TRAFFIC_CLASS_LABELS[c]} count={byClass.get(c) ?? 0} unit="requests" />
+      <p className="text-sm max-w-3xl" style={{ color: 'var(--text-muted)' }}>
+        None of this is in the figures above. {total.toLocaleString('en-US')} automated requests in this range.
+        Counted per day; the site, section, source and country filters do not apply here.
+        {bots.poolFingerprints > 0 && ` Proxy pools: ${bots.poolFingerprints} flagged browser fingerprint${bots.poolFingerprints === 1 ? '' : 's'}.`}
+      </p>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        {BOT_GROUPS.map(g => (
+          <div key={g} className="p-4 rounded-xl" style={card} title={BOT_GROUP_META[g].note}>
+            <div className="flex items-center gap-2 text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: BOT_GROUP_META[g].color }} />
+              {BOT_GROUP_META[g].label}
+            </div>
+            <div className="text-2xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>
+              {bots.totals[g].toLocaleString('en-US')}
+            </div>
+            <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{BOT_GROUP_META[g].note}</div>
+          </div>
         ))}
-        <p className="text-xs pt-2" style={{ color: 'var(--text-muted)' }}>
-          Crawlers and AI agents are counted by the server. They do not run the page tracker, so they were never in the pageview figures.
-        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="p-6 rounded-xl lg:col-span-2" style={card}>
+          <h3 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+            Automated requests per {bin === 'week' ? 'week' : 'day'}
+          </h3>
+          {bots.series.length === 0 ? <Empty /> : (
+            <MultiLineChart
+              labels={bots.series.map(r => r.bucket)}
+              series={groups.map(g => ({ label: BOT_GROUP_META[g].label, color: BOT_GROUP_META[g].color, data: bots.series.map(r => r[g]) }))}
+              xLabel={(v) => v.slice(5, 10)}
+            />
+          )}
+        </div>
+        <ListCard title="Top bots">
+          {bots.topBots.length === 0 ? <Empty /> : bots.topBots.map(b => (
+            <Row key={b.bot} label={b.bot} count={b.hits} unit="requests" />
+          ))}
+        </ListCard>
       </div>
     </div>
   );

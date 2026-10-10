@@ -148,16 +148,45 @@ export interface TrafficDashboardData {
   // "click" per visitor, which is the number comparable to Search Console.
   clicksBySource: Array<{ referrer: string; count: number }>;
   topCountries: Array<{ country: string; count: number }>;
-  // What the figures above leave out. `pool` is pageviews from flagged proxy
-  // pool strings, removed from every number on the page. `bots` are requests
-  // the server-side classifier recognised (crawlers, AI agents), which never
-  // reach the beacon and so were never in the pageview figures to begin with.
-  excluded: {
-    pool: { pageviews: number; fingerprints: number };
-    bots: Array<{ class: string; count: number }>;
+  // Automated traffic, shown separately and never in the figures above.
+  // `pool` is pageviews from flagged proxy-pool strings (they run the beacon,
+  // so they are removed from every human figure). Bot rows are server-side
+  // requests the proxy recognised as bots (`analytics_bot_access`, one counter
+  // per bot per path prefix per day); bots never run the beacon. Daily
+  // resolution only, and site/section/country/referrer filters don't apply.
+  bots: {
+    poolFingerprints: number;
+    totals: Record<BotGroup, number>;
+    series: Array<{ bucket: string } & Record<BotGroup, number>>;
+    topBots: Array<{ bot: string; group: BotGroup; hits: number }>;
   };
   // First day with any pageview row, so the page can say how far back it goes.
   earliest: string | null;
+}
+
+// Groups for the bot chart. Names are what classifyBot() in
+// src/app/api/analytics/bots/route.ts writes; anything unlisted is "other".
+export type BotGroup = 'pool' | 'ai' | 'search' | 'unidentified' | 'script' | 'other';
+export const BOT_GROUPS: BotGroup[] = ['pool', 'ai', 'search', 'unidentified', 'script', 'other'];
+const BOT_GROUP_OF: Record<string, BotGroup> = {
+  openai: 'ai', anthropic: 'ai', perplexity: 'ai', meta: 'ai', 'you.com': 'ai',
+  cohere: 'ai', bytedance: 'ai', commoncrawl: 'ai',
+  google: 'search', bing: 'search',
+  'unknown-bot': 'unidentified', 'other-bot': 'unidentified',
+  script: 'script',
+};
+const botGroup = (bot: string): BotGroup => BOT_GROUP_OF[bot] ?? 'other';
+
+function emptyGroups(): Record<BotGroup, number> {
+  return { pool: 0, ai: 0, search: 0, unidentified: 0, script: 0, other: 0 };
+}
+
+// Bucket key for a YYYY-MM-DD day, matching Mongo's $dateTrunc (weeks start
+// on Sunday, UTC). Bot counters are daily, so an hourly view gets daily bars.
+function dayBucket(day: string, bin: TrafficBin): string {
+  const d = new Date(`${day}T00:00:00.000Z`);
+  if (bin === 'week') d.setUTCDate(d.getUTCDate() - d.getUTCDay());
+  return d.toISOString();
 }
 
 // analytics_pageviews has no TTL (rows reach back to 2026-04-05). The cap only
@@ -302,32 +331,52 @@ export async function getTrafficDashboard(opts: {
     )
     .toArray();
 
-  // Pageviews the pool exclusion removed in this window (same non-pool filters).
+  // Pool pageviews per bucket: what the exclusion removed from this window.
+  // Unfiltered, like the bot counters it is charted with.
+  const botBin = bin === 'hour' ? 'day' : bin;
   const poolQuery = pool.length
-    ? col.countDocuments({ ...filterMatch, timestamp: { $gte: since }, userAgent: { $in: pool } })
-    : Promise.resolve(0);
+    ? col
+        .aggregate([
+          { $match: { timestamp: { $gte: since }, userAgent: { $in: pool } } },
+          { $group: { _id: { $dateTrunc: { date: '$timestamp', unit: botBin } }, n: { $sum: 1 } } },
+        ])
+        .toArray()
+    : Promise.resolve([]);
 
-  // Bot and AI requests from the compact per-day counter the proxy writes
-  // (separate collection). Its `human` row is every beacon, pool included, so
-  // it is not shown. Section/country/referrer filters don't apply here (the
-  // counter isn't per-pageview), but host does.
+  // Bot requests per bot per day. Not `analytics_traffic_class`: that
+  // counter's bot rows hold ~200 a day against ~40,000 here (measured
+  // 2026-10-10), and its human row is every beacon, pool included (#3657).
   const sinceDay = since.toISOString().slice(0, 10);
-  const classMatch: Record<string, unknown> = { day: { $gte: sinceDay }, class: { $ne: 'human' } };
-  if (filters.host) classMatch.host = filters.host;
-  const [[result], [prev], poolPageviews, classRows, first] = await Promise.all([
+  const botQuery = db
+    .collection('analytics_bot_access')
+    .aggregate([
+      { $match: { date: { $gte: sinceDay } } },
+      { $group: { _id: { bot: '$bot', date: '$date' }, hits: { $sum: '$hits' } } },
+    ])
+    .toArray();
+
+  const [[result], [prev], poolRows, botRows, first] = await Promise.all([
     mainQuery,
     prevQuery,
     poolQuery,
-    db
-      .collection('analytics_traffic_class')
-      .aggregate([
-        { $match: classMatch },
-        { $group: { _id: '$class', count: { $sum: '$count' } } },
-        { $sort: { count: -1 } },
-      ])
-      .toArray(),
+    botQuery,
     col.find({}, { projection: { timestamp: 1 } }).sort({ timestamp: 1 }).limit(1).next(),
   ]);
+
+  const botBuckets = new Map<string, Record<BotGroup, number>>();
+  const botTotals = emptyGroups();
+  const byBot = new Map<string, number>();
+  const addTo = (bucket: string, group: BotGroup, n: number) => {
+    const row = botBuckets.get(bucket) ?? emptyGroups();
+    row[group] += n;
+    botBuckets.set(bucket, row);
+    botTotals[group] += n;
+  };
+  for (const r of poolRows as { _id: Date; n: number }[]) addTo(new Date(r._id).toISOString(), 'pool', r.n);
+  for (const r of botRows as { _id: { bot: string; date: string }; hits: number }[]) {
+    addTo(dayBucket(r._id.date, botBin), botGroup(r._id.bot), r.hits);
+    byBot.set(r._id.bot, (byBot.get(r._id.bot) ?? 0) + r.hits);
+  }
 
   const totals = result?.totals?.[0] as { pageviews: number; ips: (string | null)[] } | undefined;
   const prevTotals = prev as { pageviews: number; ips: (string | null)[] } | undefined;
@@ -354,9 +403,16 @@ export async function getTrafficDashboard(opts: {
     topReferrers: (result?.topReferrers ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     clicksBySource: (result?.clicksBySource ?? []).map((r: { _id: string; count: number }) => ({ referrer: r._id, count: r.count })),
     topCountries: (result?.topCountries ?? []).map((c: { _id: string; count: number }) => ({ country: c._id, count: c.count })),
-    excluded: {
-      pool: { pageviews: poolPageviews, fingerprints: pool.length },
-      bots: (classRows as { _id: string; count: number }[]).map((c) => ({ class: c._id, count: c.count })),
+    bots: {
+      poolFingerprints: pool.length,
+      totals: botTotals,
+      series: [...botBuckets.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([bucket, g]) => ({ bucket, ...g })),
+      topBots: [...byBot.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 12)
+        .map(([bot, hits]) => ({ bot, group: botGroup(bot), hits })),
     },
     earliest: first?.timestamp ? new Date(first.timestamp).toISOString().slice(0, 10) : null,
   };
