@@ -165,7 +165,11 @@ function serve(doc: PooledDoc): NextItemResult {
  * 19 million. We over-fetch and filter in JS so a volunteer deep into a queue
  * still gets an item without a second round trip.
  */
-export async function nextCandidate(queue: string, volunteerId: string): Promise<NextItemResult> {
+export async function nextCandidate(
+  queue: string,
+  volunteerId: string,
+  opts: { language?: string } = {},
+): Promise<NextItemResult> {
   const [rated, counts, db] = await Promise.all([
     alreadyRated(queue, volunteerId),
     voteCounts(queue),
@@ -173,6 +177,12 @@ export async function nextCandidate(queue: string, volunteerId: string): Promise
   ]);
 
   const pool = db.collection('review_candidates');
+  // A reader of Greek cannot judge a Tibetan page. The language filter narrows
+  // both stages; vote counts stay queue-wide, which is harmless because the
+  // $match below discards ids outside the language.
+  const scope: Record<string, unknown> = opts.language
+    ? { queue, 'stratum.language': opts.language }
+    : { queue };
 
   // 1. Finish what's started: items short of consensus that this volunteer has
   //    not already judged. Capped so the $in list stays small.
@@ -183,7 +193,7 @@ export async function nextCandidate(queue: string, volunteerId: string): Promise
   if (undecided.length > 0) {
     const docs = (await pool
       .aggregate([
-        { $match: { queue, item_id: { $in: sampleOf(undecided, 200) } } },
+        { $match: { ...scope, item_id: { $in: sampleOf(undecided, 200) } } },
         { $sample: { size: 20 } },
         { $project: { _id: 0 } },
       ])
@@ -196,7 +206,7 @@ export async function nextCandidate(queue: string, volunteerId: string): Promise
   // 2/3. Otherwise sample the pool, preferring an item nobody has voted on and
   //      falling back to an already-decided one rather than stalling.
   const docs = (await pool
-    .aggregate([{ $match: { queue } }, { $sample: { size: 40 } }, { $project: { _id: 0 } }])
+    .aggregate([{ $match: scope }, { $sample: { size: 40 } }, { $project: { _id: 0 } }])
     .toArray()) as unknown as PooledDoc[];
 
   if (docs.length === 0) {
