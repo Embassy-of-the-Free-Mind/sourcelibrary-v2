@@ -1,6 +1,6 @@
 ---
 stage: translation
-measure: count
+measure: none
 languages: []
 scripts: []
 canons: []
