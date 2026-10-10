@@ -45,7 +45,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.7.1';
+const SERVER_VERSION = '4.8.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1792,6 +1792,16 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           'io.modelcontextprotocol/ui': { mimeTypes: [MCP_APP_MIME_TYPE] },
         },
       },
+      // Server-level routing hint. Without it, "start a review shift" in
+      // claude.ai was answered with an improvised menu instead of a call to
+      // start_review_shift (first live try, 2026-10-10, #6418).
+      instructions:
+        'Source Library: historical primary sources with transcriptions and English translations. ' +
+        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
+        'or help Source Library, call start_review_shift directly (ask only which language they read ' +
+        'if they have not said), then follow its how_to_run steps; record verdicts with ' +
+        'submit_page_review and fixes with propose_correction.',
     },
   );
 
