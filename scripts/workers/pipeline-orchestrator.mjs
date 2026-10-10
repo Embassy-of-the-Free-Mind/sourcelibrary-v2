@@ -51,6 +51,7 @@ import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal 
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
+import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
@@ -3342,7 +3343,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
     // while it was inline realtime, which meant the one phase that runs every
     // two minutes was the one phase the ceiling could not stop.
-    if (shouldRun(1.5) && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
+    // The standing quality gate (#5826): a NO-GO on ocr pauses ENROLMENT — no new book's pages are
+    // submitted (1.5 and 2); jobs already submitted are still collected by Phase 3 / batch-collector.
+    if (shouldRun(1.5) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
@@ -3895,7 +3898,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2) && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
+    if (shouldRun(2) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -4757,7 +4760,10 @@ Rules:
           'pipeline_auto.status': 'translate_submitted',
         });
         const headroom = MAX_INFLIGHT_TRANSLATIONS - inFlight;
-        const effectiveLimit = Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        // The standing quality gate (#5826): a NO-GO on translate pauses enrolment of new books into
+        // either lane; the reapers above and jobs already dispatched carry on.
+        const translateGate = await enrolBrake(db, 'translate');
+        const effectiveLimit = translateGate.paused ? 0 : Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
         console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
 
         if (effectiveLimit === 0) {
