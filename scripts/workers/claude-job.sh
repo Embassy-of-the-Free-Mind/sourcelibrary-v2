@@ -244,14 +244,18 @@ Committed by claude-job.sh so the work survives the job (#6360).${big:+ Left out
   return 0
 }
 
-# Fix 2 (placement half): the box's own account, from the climits meter (#6359). Prints the weekly
-# all-models percent, or nothing when the meter is absent, stale (> 30 min) or unreadable.
+# Fix 2 (placement half): the box's own account, from the climits meter (#6359). The meter runs on the
+# main box and box.sh push-limits copies it to the others every 5 min, so the account is looked up by this
+# box's own Claude login, not by the meter's. Prints the weekly all-models percent, or nothing when the
+# meter is absent, stale (> 30 min) or unreadable.
 weekly_pct() {
   local f=/root/.claude-limits/latest.json
   [ -f "$f" ] && [ -n "$(find "$f" -mmin -30 2>/dev/null)" ] || return 0
   python3 -c '
 import json, sys
 d = json.load(open(sys.argv[1])); me = d.get("claude_code_account")
+try: me = json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"] or me
+except Exception: pass
 for a in d.get("accounts", []):
     if a.get("email") == me and a.get("ok"):
         for l in a.get("limits", []):
@@ -259,6 +263,26 @@ for a in d.get("accounts", []):
 ' "$f" 2>/dev/null | head -1
 }
 MAX_WEEKLY_PCT=${MAX_WEEKLY_PCT:-90}
+
+# A job capped on this box's account continues on the emptiest other box (#6360 fix 2), through the box
+# mesh (box.sh / box-rpc.sh). The new job is <name>-mv, starts from origin/main like any job, and its brief
+# tells it to pick up the checkpoint branch. One move per job: a -mv job that is capped again pages.
+# Prints the box it moved to, or nothing.
+move_job() {  # $1 name, $2 checkpoint branch
+  local name="$1" br="${2:-job-$1}" to new b
+  case "$name" in *-mv) return 0 ;; esac
+  [ -x /root/bin/box.sh ] || return 0
+  to=$(/root/bin/box.sh pick --exclude "$(/root/bin/box.sh self)" 2>/dev/null); [ -n "$to" ] || return 0
+  new="$name-mv"; b=$(mktemp)
+  { cat "$JD/$name.brief.txt"; printf '\n\n## Moved from %s on its weekly usage cap (claude-job.sh, %s)\n' "$HOST" "$(date -u +%FT%TZ)"
+    printf 'An earlier run of this brief stopped on the weekly cap. Its work is on branch %s: start with\n' "$br"
+    printf '`git fetch origin %s && git merge --no-edit FETCH_HEAD`, read what it already did (the issue thread too), and continue to done. Do not redo finished steps.\n' "$br"
+  } > "$b"
+  if /root/bin/box.sh "$to" start "$new" < "$b" >> "$LOGD/$name.log" 2>&1; then
+    echo "[claude-job] moved to $to as $new $(date -u +%FT%TZ)" >> "$LOGD/$name.log"; echo "$to"
+  else echo "[claude-job] move to $to FAILED $(date -u +%FT%TZ)" >> "$LOGD/$name.log"; fi
+  rm -f "$b"; return 0
+}
 
 # ntfy page for job outcomes (Derek 2026-10-04: "not getting notifications any more").
 # Same topic as the box alerts. Never fails the job: a dead ntfy is not a dead job.
@@ -348,8 +372,13 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
   else
     echo "[claude-job] GAVE UP${capped:+ on the $capped cap} after $i resumes $(date -u +%FT%TZ)" >> "$log"
     cp=$(checkpoint "$name" "${capped:+$capped cap}${capped:-gave up}")
-    move=""; [ -n "${capped:-}" ] && move=" Move it: on the laptop, scripts/workers/job-where.sh, then start it there from the brief; branch ${cp:-job-$name} holds the work."
-    ntfy_job high warning "Job GAVE UP${capped:+ (weekly cap)}: $name ($HOST)" "$(grep -vE '^\[claude-job\]|^\s*$' "$log" | tail -n 1 | cut -c1-160)${cp:+ — work checkpointed to $cp.}$move"
+    moved=""; [ -n "${capped:-}" ] && moved=$(move_job "$name" "${cp:-}")
+    if [ -n "$moved" ]; then
+      ntfy_job low arrow_right "Job moved on the weekly cap: $name ($HOST -> $moved)" "Continues as ${name%-mv}-mv on $moved from branch ${cp:-job-$name}."
+    else
+      move=""; [ -n "${capped:-}" ] && move=" No box could take it (box.sh pick). Move it by hand: job-where.sh on the laptop; branch ${cp:-job-$name} holds the work."
+      ntfy_job high warning "Job GAVE UP${capped:+ (weekly cap)}: $name ($HOST)" "$(grep -vE '^\[claude-job\]|^\s*$' "$log" | tail -n 1 | cut -c1-160)${cp:+ — work checkpointed to $cp.}$move"
+    fi
   fi
   collect_decisions "$name"
   rm -f "$JD/$name.hb"
