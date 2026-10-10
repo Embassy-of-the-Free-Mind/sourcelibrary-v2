@@ -198,6 +198,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/backfill-author-canonical-links.mjs', reason: 'metadata: author canonical links' },
   { file: 'scripts/maintenance/classify-text-role.mjs', reason: 'metadata: books.text_role' },
   { file: 'scripts/maintenance/fix-broken-image-thumb.mjs', reason: 'display: thumbnail URLs' },
+  { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },
   { file: 'scripts/maintenance/withhold-stale-translations.mjs', reason: 'marker: withholds a stale page translation from readers' },
   { file: 'scripts/migration/backfill-display-images.mjs', reason: 'display: display image fields' },
