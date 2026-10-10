@@ -38,6 +38,7 @@ import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem } from '../lib/cli-chatter.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
@@ -103,7 +104,7 @@ if (STAGE === 'read') {
   fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify({ id: prompt._id?.toString(), name: prompt.name, version: String(prompt.version ?? ''), hash: prompt.content_hash ?? null }));
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
-  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1 } }).toArray();
+  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 } }).toArray();
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
   const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
   console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
@@ -111,8 +112,13 @@ if (STAGE === 'read') {
   const readOne = async (p) => {
     const key = p.id;
     if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); return; }
-    if (!p.archived_photo) { console.log(`  ${p.page_number} has no archived_photo; skipped`); return; }
-    const buf = Buffer.from(await (await fetch(p.archived_photo)).arrayBuffer());
+    // The page's own image, split-aware (#6420): on a page split from a spread `archived_photo` is the WHOLE spread,
+    // and a read of it transcribes both pages onto one. getPageSource() is the resolver the OCR lanes use.
+    const src = getPageSource(p);
+    if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
+    const res = await fetch(src);
+    if (!res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
+    const buf = Buffer.from(await res.arrayBuffer());
     // One directory per page, so the CLI's workspace holds exactly the one image it is asked to read.
     const img = workspaceImage(key);
     fs.mkdirSync(path.dirname(img), { recursive: true });
@@ -142,7 +148,7 @@ if (STAGE === 'read') {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
       chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text) : null,
-      image_url: p.archived_photo, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
+      image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err,
     }, null, 1));
     console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
