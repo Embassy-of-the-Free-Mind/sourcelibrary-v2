@@ -44,7 +44,7 @@ export default function FramedImg<C extends ElementType = 'img'>({
   frame, fit = 'page', as, wrapperClassName = 'absolute inset-0', onShownSize, ...rest
 }: FramedImgProps<C>) {
   const Img: ElementType = as ?? 'img';
-  const props = rest as { src?: unknown; sizes?: unknown; style?: CSSProperties; onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void };
+  const props = rest as { src?: unknown; sizes?: unknown; fill?: unknown; style?: CSSProperties; onLoad?: (e: SyntheticEvent<HTMLImageElement>) => void };
   // Remembered per src: a fallback URL is another file and is judged afresh.
   const [refused, setRefused] = useState<unknown>(null);
   const applied = frame && refused !== props.src ? frame : null;
@@ -72,19 +72,25 @@ export default function FramedImg<C extends ElementType = 'img'>({
         className={`framed-box framed-box-${fit}`}
         style={{ '--framed-a': framedAspect(applied), '--framed-over': PAGE_OVERFILL } as CSSProperties}
       >
-        <Img
-          {...rest}
-          // A cropped page is drawn larger than its slot; ask next/image for a
-          // source big enough to keep today's sharpness (#6010).
-          {...(typeof props.sizes === 'string' ? { sizes: scaleSizes(props.sizes, frameSourceScale(applied)) } : {})}
-          onLoad={handleLoad}
-          style={{
-            ...props.style,
-            position: 'absolute', right: 'auto', bottom: 'auto', maxWidth: 'none', maxHeight: 'none',
-            objectFit: 'fill',
-            ...framedImageStyle(applied),
-          }}
-        />
+        {/* The whole scan, placed so only the page shows. The image fills this
+            span, so next/image's fill prop (which forbids style width/height)
+            works unchanged. */}
+        <span style={{ position: 'absolute', display: 'block', ...framedImageStyle(applied) }}>
+          <Img
+            {...rest}
+            // A cropped page is drawn larger than its slot; ask next/image for a
+            // source big enough to keep today's sharpness (#6010).
+            {...(typeof props.sizes === 'string' ? { sizes: scaleSizes(props.sizes, frameSourceScale(applied)) } : {})}
+            onLoad={handleLoad}
+            style={props.fill
+              ? { ...props.style, objectFit: 'fill' }
+              : {
+                ...props.style,
+                position: 'absolute', left: 0, top: 0, right: 'auto', bottom: 'auto',
+                width: '100%', height: '100%', maxWidth: 'none', maxHeight: 'none', objectFit: 'fill',
+              }}
+          />
+        </span>
       </span>
     </span>
   );
