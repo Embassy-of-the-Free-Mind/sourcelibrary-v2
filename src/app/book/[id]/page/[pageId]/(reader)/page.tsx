@@ -125,6 +125,8 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
       .project({
         _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1,
         image_thumb: 1, thumbnail_blob: 1, display_photo: 1, archived_photo: 1, photo: 1,
+        // Strip thumbnails are shown cropped to the page (#6010).
+        page_frame: 1,
       })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)

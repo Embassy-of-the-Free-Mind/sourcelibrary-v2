@@ -75,6 +75,9 @@ export interface CatalogBook {
    *  names the same page as `image_display` — see getBookCardUrl. `undefined`
    *  means "not looked up yet"; `null` means "looked up, this book has none". */
   image_card?: string | null;
+  /** Where the page sits inside the cover scan (#6010); see coverFrame().
+   *  Attached from Mongo alongside `image_card`. */
+  thumbnail_frame?: unknown;
   read_count: number;
   is_first_translation: boolean;
   quality_score: number;
@@ -344,7 +347,7 @@ async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
     const { getReadDb } = await import('@/lib/mongodb');
     const db = await getReadDb();
     const docs = await db.collection('books')
-      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1 } })
+      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1, thumbnail_frame: 1 } })
       .maxTimeMS(2000)
       .toArray();
     const byId = new Map(docs.map(d => [d.id as string, d]));
@@ -362,6 +365,9 @@ async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
       // cut from a different page than `thumbnail` simply keep the full-size
       // cover until the two fields are reconciled — a separate fix.
       row.image_card = (doc.image_card as string | null) ?? null;
+      // Safe to attach whichever cover this row draws: the frame names the
+      // image it was measured on and coverFrame() refuses any other (#6010).
+      if (doc.thumbnail_frame) row.thumbnail_frame = doc.thumbnail_frame;
     }
   } catch (err) {
     console.error('[books-catalog] card-variant lookup failed, serving full-size covers:', (err as Error)?.message);

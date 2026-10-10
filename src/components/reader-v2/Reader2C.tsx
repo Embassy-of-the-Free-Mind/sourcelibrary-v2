@@ -21,6 +21,8 @@ import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl, getPageThumbUrl, swapToFallback } from '@/lib/utils';
+import { framedThumbSourceWidth, pageImageFrame } from '@/lib/framed-image';
+import FramedImg from '@/components/FramedImg';
 import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
@@ -71,6 +73,8 @@ const INK = 'var(--bg-dark)';
 const BAR_H = 52;
 /** Second row of the phone bar: the pane picker (Scan | German | English). */
 const SEG_H = 44;
+/** Width of a page's `thumb` image (page-image-url THUMB_WIDTH, R2 `-thumb.jpg`). */
+const STRIP_THUMB_SOURCE_WIDTH = 150;
 /** The phone bar's full height — title row plus the pane picker — and the
  *  lead-in the column keeps for it. */
 const PHONE_BAR_H = BAR_H + SEG_H;
@@ -2181,19 +2185,30 @@ function Filmstrip({
   // show fewer, wider pages in the same bar. Clamped so one freak scan can't
   // make a slot the width of the screen.
   const [aspect, setAspect] = useState(0.78);
-  const onThumbLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
+  // The size is the page's: for a scan with a page frame (#6010) that is the
+  // framed page, not the scan with its scanner bed.
+  const onThumbLoad = useCallback((w: number, h: number) => {
     if (!w || !h) return;
     const a = Math.min(6, Math.max(0.25, w / h));
     setAspect(prev => (Math.abs(prev - a) > 0.02 ? a : prev));
   }, []);
   const thumbW = Math.round(thumbH * aspect);
+  // Read after mount so the server render and the first client render agree.
+  const [dpr, setDpr] = useState(1);
+  useEffect(() => { setDpr(window.devicePixelRatio || 1); }, []);
   const thumbs = useMemo(
     () => pageList.map(p => {
       const rec = p as unknown as Record<string, unknown>;
-      return { p, thumb: getPageThumbUrl(rec), fallback: getPageDisplayUrl(rec) };
+      const thumb = getPageThumbUrl(rec);
+      const display = getPageDisplayUrl(rec);
+      const frame = pageImageFrame(rec, thumb);
+      // A framed thumb is drawn larger than its slot (#6010). When the 150px
+      // thumb would be upscaled, take the next size up: the display image.
+      const sharp = frame && display && framedThumbSourceWidth(frame, thumbW, thumbH, dpr) > STRIP_THUMB_SOURCE_WIDTH
+        && pageImageFrame(rec, display) ? display : thumb;
+      return { p, thumb: sharp, fallback: display, frame: sharp === thumb ? frame : pageImageFrame(rec, display) };
     }),
-    [pageList],
+    [pageList, thumbW, thumbH, dpr],
   );
   return (
     <div
@@ -2215,7 +2230,7 @@ function Filmstrip({
             settings change and every scroll that flips the bar, and this map
             ran getPageThumbUrl for all 4,198 pages of the largest book each
             time. */}
-        {thumbs.map(({ p, thumb, fallback }) => {
+        {thumbs.map(({ p, thumb, fallback, frame }) => {
           const isCurrent = p.id === currentPageId;
           return (
             <button
@@ -2243,9 +2258,9 @@ function Filmstrip({
                 }}
               >
                 {thumb && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={thumb} alt="" loading="lazy" decoding="async"
-                    onLoad={onThumbLoad}
+                  <FramedImg frame={frame} fit="cover" wrapperClassName="relative w-full h-full"
+                    src={thumb} alt="" loading="lazy" decoding="async"
+                    onShownSize={onThumbLoad}
                     onError={e => swapToFallback(e.currentTarget, fallback)}
                     className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
                     style={{ opacity: isCurrent ? 1 : 0.72 }} />
