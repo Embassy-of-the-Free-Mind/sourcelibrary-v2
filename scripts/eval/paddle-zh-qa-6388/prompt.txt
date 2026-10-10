@@ -1,0 +1,32 @@
+You are checking a machine transcription of one page of a classical Chinese manuscript (a Siku Quanshu copy, written in vertical columns read top to bottom, right to left) against the page image.
+
+Read the page image character by character and compare it with the transcription below. List EVERY error in the body text:
+- "invented": characters in the transcription that are not on the page (added text, text from somewhere else, repeated lines).
+- "omitted": characters on the page that the transcription leaves out.
+- "misread": a character on the page transcribed as a different character.
+- "order": text that is present but in the wrong reading order (e.g. columns swapped).
+
+Rules:
+- Do NOT count variant or traditional/simplified forms of the same character as errors (爲/為, 着/著, 於/于 where the page plainly writes the variant, 衆/眾, 旣/既 and similar). Only count a different character.
+- The fold margin (四庫全書, the juan number, the leaf number) is marked <header>/<page-num> or may be missing; ignore it. Ignore the <language>/<script> tags and line breaks.
+- Small double-column interlinear notes ARE body text.
+- A span of several consecutive wrong characters is ONE error entry; give the whole span.
+- Report only what you can see. If the image is too unclear to judge a span, do not list it; mention it in "notes".
+
+Then give a page verdict:
+- "clean": no errors in the body text.
+- "minor": errors affect at most about 1% of the page's characters (for example 1–3 characters on a page of 200).
+- "material": more than about 1% of characters are wrong, but the transcription is still recognisably this page's text.
+- "unusable": the transcription cannot serve as this page's text (most of it wrong, missing or invented; another page's text; repetition loops; a blank or plate page given invented text).
+
+Reply with ONLY one JSON object, no other text, in exactly this shape:
+{"page_han_chars": <your estimate of the number of Chinese characters in the page's body>,
+ "errors": [{"type": "invented|omitted|misread|order", "transcription": "<the exact characters from the transcription, empty for omitted>", "page": "<what the page actually shows, empty for invented>", "context": "<up to 6 transcription characters just before the error>"}],
+ "error_chars": <total number of characters affected>,
+ "verdict": "clean|minor|material|unusable",
+ "notes": "<one short sentence>"}
+
+TRANSCRIPTION:
+{TRANSCRIPTION}
+
+The page image:
