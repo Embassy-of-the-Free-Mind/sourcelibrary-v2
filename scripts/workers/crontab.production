@@ -140,10 +140,7 @@
 # Rebuild the volunteer review-candidate pool weekly (#3568). Off :00 — nine
 # schedules converge there and the pile of cold Atlas dials drops handshakes.
 42 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-review-candidates.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-review-candidates.mjs --target=3000 --per-book=2" >> /var/log/sourcelibrary/review-candidates.log 2>&1
-# Collect Gemini Batch API results (#3713). The Vercel process-batches cron was archived
-# as "replaced by Hetzner workers" but this replacement was never added, so submitted
-# batches sat uncollected until someone ran the script by hand.
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collect-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/batch/collect-batch-results.mjs --limit 200 --abandon-stale=7" >> /var/log/sourcelibrary/collect-batch.log 2>&1
+# collect-batch-results.mjs cron removed 2026-10-10 (#5813, Derek): it raced batch-collector (run by scheduler.mjs) and closed jobs without failure reasons or usage rows.
 # Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
 # Stage coverage snapshot — nightly semantic monitoring (#3756)
@@ -303,3 +300,8 @@
 # the reset), start a claude-job on the next small bug / user-feedback / data-quality issue; stop lane jobs at weekly 92% /
 # session 85%. Subscription only, $0. Guarded on the script so the line is inert until it is on main.
 */30 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
+# Nightly Parquet mirror (#6047, #5189); installed live 2026-10-09. build-map-cache.mjs (05:45) reads it since #6084.
+0-59/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-mirror-changelog.lock node --max-old-space-size=512 --env-file=.env.production.local scripts/workers/mirror-changelog.mjs >> /var/log/sourcelibrary/mirror-changelog.log 2>&1
+40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-export-mirror.lock node --max-old-space-size=1536 --env-file=.env.production.local scripts/maintenance/export-mirror.mjs >> /var/log/sourcelibrary/export-mirror.log 2>&1
+# Weekly cover-frame backfill (#6010, Derek 2026-10-10): writes only books.thumbnail_frame diffs, sweep_log per write; undo: --rollback --apply
+30 1 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-cover-frame-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/cover-frame-backfill.mjs --apply" >> /var/log/sourcelibrary/cover-frame-backfill.log 2>&1
