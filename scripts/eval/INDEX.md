@@ -16,7 +16,7 @@ re-implementing one is the most common way work gets duplicated here.
 | `lib/agreement-stats.mjs` | `wilson`, `wilsonHalfWidth`, `nForHalfWidth`, `binaryAgreement`, `weightedKappa`, `aucLowerIsPositive`, `bootstrapItems` |
 | `lib/benchmark-rows.mjs` | `BENCHMARK_DIR`, `readBenchmarkRows` |
 | `lib/contact-sheet.mjs` | `sheetFor` |
-| `lib/edition-window.mjs` | `wordWindow`, `SUPPORTED_SCRIPTS`, `foldWord`, `stripTags`, `foldedWords`, `cutEditionWindow`, `longWordWindow`, `alignSpan` |
+| `lib/edition-window.mjs` | `wordWindow`, `SUPPORTED_SCRIPTS`, `foldWord`, `stripTags`, `foldedWords`, `cutEditionWindow`, `longWordWindow`, `alignSpan`, `alignTrimWindow` |
 | `lib/embedding-eval.mjs` | `embedTexts`, `embedText`, `evaluatePage`, `evaluateCorpus`, `evaluateRunConsistency` |
 | `lib/experiment-header.mjs` | `STAGES`, `MEASURES`, `STATUSES`, `FIELDS`, `canonIds`, `splitHeader`, `parseHeader`, `validateHeader`, `readExperiment`, `serializeHeader` |
 | `lib/metrics.mjs` | `tokenize`, `levenshtein`, `charSimilarity`, `cer`, `syllableSimilarity`, `mcr`, `bleu4`, `rougeL`, `cosineSimilarity`, `cosineDistance`, `cleanText`, `pairwiseMetrics`, `stripWrappers`, `normalizeCJK`, `subsequenceCER`, `SCRIPT_DEFS`, `NORMALIZE_FOR_SCRIPT_VERSION`, `normalizeForScript`, `subsequenceWER`, `greedySpanStats`, `windowedErrorRate`, `GUARD_THRESHOLDS`, `scoreAgainstReference`, `deEntity`, `toAgreementWords`, `agreementWords`, `SPACELESS_RE`, `scriptClassOf`, `toAgreementChars`, `agreementChars`, `agreementPrimary` |
