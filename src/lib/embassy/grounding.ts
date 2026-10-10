@@ -87,7 +87,8 @@ export interface GroundingImage {
   description?: string;
 }
 
-export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption';
+// 'notebook_claim' is not produced here: src/lib/embassy/notebook-claims.ts (#6255).
+export type GroundingEditReason = 'attach_citation' | 'unquote' | 'drop_sentence' | 'drop_blockquote' | 'caption' | 'notebook_claim';
 
 export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */

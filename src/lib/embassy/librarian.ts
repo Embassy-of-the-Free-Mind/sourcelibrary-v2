@@ -16,6 +16,7 @@ import {
   type GroundingPage,
   type GroundingReport,
 } from '@/lib/embassy/grounding';
+import { mergeNotebookClaimEdits, notebookClaimEdits } from '@/lib/embassy/notebook-claims';
 import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
 import { semanticSiteSearch } from '@/lib/semantic-search';
 import { esCollectionSlugs } from '@/lib/es-collections';
@@ -1648,6 +1649,9 @@ export async function* streamAgenticResponse(
   // broken links — which crowds real, new breakage out of the repair budget.
   const generatedChunks: string[] = [];
   let choicesPresented = false;
+  // True once add_to_notebook really saved a finding this turn. Without it the
+  // answer may not say "Saved to your research notebook" (#6255).
+  let notebookSaved = false;
   // True once the model voluntarily stops searching and writes its answer. If it
   // instead runs out of search rounds (MAX_ROUNDS) while still calling tools, we
   // force a final synthesis turn below so the reader never gets a stub or an
@@ -1763,6 +1767,7 @@ export async function* streamAgenticResponse(
       const { result, step, sources, retrievedPages, images } = toolResults[i];
 
       yield step;
+      if (step.type === 'notebook_update') notebookSaved = true;
       collectSources(sources);
       collectToolImageUrls(result);
       // Pages read directly (get_book_page, read_nearby_pages) and the
@@ -1898,14 +1903,20 @@ export async function* streamAgenticResponse(
     question: userMessage,
     siteBase: siteBase(lang),
   });
-  if (grounding.edits.length > 0) {
-    yield { type: 'grounding_edits', edits: grounding.edits, report: grounding.report };
+  // The prompt forbids claiming a save that did not happen; the model claims
+  // one anyway about three times in four (#6255). Strip the claim when no
+  // add_to_notebook succeeded this turn — same event, same apply order.
+  const edits: GroundingEdit[] = notebookSaved
+    ? grounding.edits
+    : mergeNotebookClaimEdits(grounding.edits, notebookClaimEdits(rawText));
+  if (edits.length > 0) {
+    yield { type: 'grounding_edits', edits, report: grounding.report };
   }
 
   // Verify links against the DB — but only over what the model wrote THIS
   // turn, as the reader now sees it. Scanning the whole `contents` array would
   // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
-  const fullText = applyGroundingEdits(rawText, grounding.edits);
+  const fullText = applyGroundingEdits(rawText, edits);
 
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
