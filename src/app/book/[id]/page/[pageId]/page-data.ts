@@ -25,7 +25,50 @@ export const BOOK_META_PROJECTION = {
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
+  // An archived split parent (negative page_number) names its leaves here;
+  // the reader redirects to the first one (#5842).
+  split_into: 1,
 };
+
+/**
+ * The leaf an archived split parent should redirect to, or null (#5842).
+ *
+ * Splitting a photo into one page per leaf (scripts/split-pecha.mjs, the
+ * split-book flow) keeps the parent with `page_number: -n` and
+ * `split_into: [leafIds]`. The parent's URL still resolves, but the reader's
+ * page list drops negative pages, so it opened on the book's FIRST page —
+ * every shortlink, quote or citation made against the photo landed on the
+ * wrong text. Its first leaf is where that text now lives.
+ *
+ * Follows a re-split leaf (itself archived with its own split_into) a few
+ * hops, and only answers with a leaf that exists in the same book, so a
+ * dangling id falls back to rendering the parent as before.
+ */
+export const getSplitLeafId = cache(async function getSplitLeafId(bookId: string, firstLeafId: string): Promise<string | null> {
+  try {
+    const db = await getReadDb();
+    let leafId = firstLeafId;
+    for (let hop = 0; hop < 3; hop++) {
+      const leaf = await db.collection('pages').findOne(
+        { id: leafId, book_id: bookId },
+        { projection: { _id: 0, id: 1, page_number: 1, split_into: 1 } },
+      );
+      if (!leaf) return null;
+      if (!isArchivedSplit(leaf)) return leaf.id as string;
+      leafId = leaf.split_into[0];
+    }
+    return null;
+  } catch {
+    return null;
+  }
+});
+
+export function isArchivedSplit<T extends object>(page: T | null | undefined): page is T & { page_number: number; split_into: string[] } {
+  const p = page as { page_number?: unknown; split_into?: unknown } | null | undefined;
+  return !!p
+    && typeof p.page_number === 'number' && p.page_number < 0
+    && Array.isArray(p.split_into) && typeof p.split_into[0] === 'string';
+}
 
 export const getPageData = cache(async function getPageData(bookId: string, pageId: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
