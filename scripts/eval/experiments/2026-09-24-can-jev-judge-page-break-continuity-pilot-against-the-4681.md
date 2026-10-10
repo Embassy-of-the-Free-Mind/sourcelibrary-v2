@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 48
+verdict: "Jev side-form agrees with Sonnet judges on 5 of 6 both-decided seam junctions (AUC 0.79, n=15) and ties 15/16 A/A pairs; paired form leans RIGHT"
+status: superseded
+decision: null
+superseded_by: "2026-09-24-batch-seam-repair-lane-vs-production-at-mid-flow-4681.md"
+issue: 4681
+---
 ## 2026-09-24 — Can Jev judge page-break continuity? Pilot against the 48 Sonnet-judged junctions (#4681 follow-up, Derek's question)
 
 **Headline: as an independent per-side scorer, Jev agrees with the eight Sonnet judges on 5 of 6

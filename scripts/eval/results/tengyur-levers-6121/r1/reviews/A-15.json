@@ -1,0 +1,101 @@
+[
+{"id": "QNZ58", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "གོམས་པ་ཁོ་ན་ཡིན་ཏེ", "english": "habituation (vasana) mental impressions or tendencies",
+   "why": "gom pa is habituation/repeated practice (abhyāsa), not vāsanā (bag chags); the equivalent and gloss are wrong.",
+   "fix": {"find": "habituation (vasana) mental impressions or tendencies", "replace": "habituation (abhyāsa)"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "ངེས་པའི་ཁྱད་པར་གྱི་ལྷན་ཅིག་བྱེད་པ་ཅན་ཡིན་པའི་ཕྱིར་རོ་ཞེས་དོགས་པ་བསུ་བ་ནི་འོན་ཏེ་འབྲས་བུ་ཞེས་བྱ་བའོ", "english": "This should be inferred because we see a definite result at all times.",
+   "why": "The inference from always seeing a definite effect, with its reason 'because it has a definite specific co-operating cause', is the anticipated objection introduced by 'But the effect...', not the commentator's own assertion."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "མ་ཡིན་ཏེ་ཞེས་དོགས་པ་", "english": "thus raising a doubt",
+   "why": "With the next side's འགོག་པའོ, 'It is not so' refutes the doubt; it does not raise one."},
+  {"type": "agent", "confidence": "medium", "tibetan": "དེ་ཉིད་གང་གི་ཚེ་ཞེ་སྡང་ལ་སོགས་པའི་རྒྱུ་ཡང་ཡིན་པར་ཉེ་བར་དམིགས་སོ", "english": "causes such as hatred are also observed to be present",
+   "why": "It says that same (humoral transformation) is observed to be also the cause of hatred etc., not that hatred etc. are present as causes."},
+  {"type": "structure", "confidence": "medium", "tibetan": "གང་གི་སྒྲ་ལ་ལྟོས་ཀྱང་རྒྱུ་དེ་ལས་ཞེས་ཁོང་ནས་ཕྱུང་སྟེ", "english": "Regardless of which term one considers, the conclusion is drawn from that very cause",
+   "why": "A grammatical note: with reference to the relative 'which', the correlative 'from that cause' is to be supplied; the English turns it into a substantive claim."}
+ ],
+ "note": "Follows the general line of the humoral argument but misreads the commentary's grammatical notes, mixes objection and reply, and wrongly equates habituation with vāsanā."},
+{"id": "QASA0", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "དེས་ན་དམིགས་པ་ཙམ་ལས་རང་གི་མཚན་ཉིད་ཀྱི་སྐྱེ་བ་མི་འཐད་པས་སོ", "english": "Therefore, since arising through an intrinsic nature is not illogical, it is merely an object of observation.",
+   "why": "The Tibetan says arising by own-characteristic is NOT tenable on the basis of mere observation.",
+   "fix": {"find": "Therefore, since arising through an intrinsic nature is not illogical, it is merely an object of observation.", "replace": "Therefore, arising by way of an intrinsic nature is not tenable merely on the grounds that something is observed."}}
+ ],
+ "note": "Generally accurate on the reflection example and the two-truths argument, with one reversed sentence."},
+{"id": "QWWOX", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "ད་ནི་ལུས་ཀྱི་ཡང་། །ཡོངས་སུ་དག་པ་བརྗོད་པར་བྱ", "english": "Now, you shall also explain the complete purification of the body.",
+   "why": "The author announces that he will now explain the purification of the body; there is no 'you'.",
+   "fix": {"find": "Now, you shall also explain the complete purification of the body.", "replace": "Now, here I shall also explain the complete purification of the body."}},
+  {"type": "term", "confidence": "medium", "tibetan": "སེམས་ཅན་ལ་ཡང་དང་བྱ་སྟེ", "english": "one should show patience even toward those beings who strive to destroy you",
+   "why": "dang ba is faith/serene confidence, contrasting with the lack of faith (ma dad pa) just named, and what such beings strive to destroy is the virtue, not 'you'."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "དེ་བཞིན་གལ་ཏེ་གུས་པས་བདེ་གཤེགས་ཉིད་མཚུངས་འདིར་སྟེར་རམ", "english": "can it not grant a state equal to the Sugata",
+   "why": "A rhetorical question that expects 'no', parallel to the angry king being unable to send one to hell: a pleased king cannot grant Buddhahood."},
+  {"type": "structure", "confidence": "medium", "tibetan": "མདོར་ན་ལུས་ཀྱི་སྡིག་པ་ནི། །ཟད་དང་ཉོན་མོངས་སྦྱང་བའོ", "english": "the sins of the body are exhausted by purifying the afflictions",
+   "why": "In brief, (purification of) the body is two things: exhausting sin and purifying the afflictions. It is not a means–end relation."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཆུ་བོ་རྒྱ་མཚོར་འབབ་པ་བཞིན།", "english": "Just as a river flows toward the ocean",
+   "why": "The whole side is verse (ślokas, and longer-metre verses in the king passage) but it is rendered as continuous prose."}
+ ],
+ "note": "The overall sense is there, but the verse is turned into prose, the author's 'I' becomes 'you', faith is rendered as patience, and the king analogy is inverted."},
+{"id": "Q80TI", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "གཞན་ཉིད་ཅེས་བྱ་བར་བརྗོད་པའི་ཆོས་ཅན་གཞན་ཉིད་ལ་ལྟོས་པ་དང་བཅས་པའི་ཕྱིར", "english": "the subject characterized as \"otherness\" depends upon something else",
+   "why": "The subject called 'other' depends on the category of otherness (gzhan nyid), not on 'something else', as the English itself renders the same phrase correctly a paragraph later."}
+ ],
+ "note": "A sound rendering of the Vaiśeṣika objection and the commentator's reply, with one blurred referent."},
+{"id": "QM3E8", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བ", "english": "an assembly meeting in a single object",
+   "why": "'du ba here is Vaiśeṣika samavāya, inherence; the phrase is ekārthasamavāya, 'inherence in a single object', not an assembly.",
+   "fix": {"find": "an assembly meeting in a single object", "replace": "inherence in a single object (ekārthasamavāya)"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "རེ་རེ་སྣ་ཚོགས་མིན་ཕྱིར་རོ།", "english": "\"diverse is not present in each, because they are not diverse\"",
+   "why": "The opponent claims that variegatedness does not inhere in the whole where conjunction is present, and the root text answers 'because each one is not variegated'. The English merges the two and loses the claim about the whole (yan lag can)."},
+  {"type": "structure", "confidence": "medium", "tibetan": "འོན་ཏེ་ཇི་ལྟར་མེ་ལ་མེར་བཟུང་བ།", "english": "Well then, how is fire perceived as fire?",
+   "why": "ji ltar opens the opponent's analogy ('Just as one who has grasped fire as fire...superimposes fire on the brahmin boy'); it is not a question."},
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་ཕྱིར་གཅིག་དོན་དུ་མ་ཅན།", "english": "Therefore, one object possesses many meanings,",
+   "why": "The root verse says that one (cognition) has many objects, not that one object has many meanings."}
+ ],
+ "note": "The argument against perceiving variegated colour sequentially is followable, but the Vaiśeṣika samavāya vocabulary and the objection–reply structure are mishandled."},
+{"id": "QUBRJ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "བག་ཆགས་ཀྱི་མཚན་ཉིད་རྒྱུ་མི་མཐུན་པ་སྐྱེད་པ་ལས", "english": "causes the mind that perceives the absence of an entity to cut the continuity",
+   "why": "The cognition of non-existence, by producing an incompatible cause of the nature of a vāsanā, cuts off the continuity of the very occurrence of the cognition of the entity. The English inverts which cognition acts on which."},
+  {"type": "structure", "confidence": "medium", "tibetan": "གང་གིས་ཧ་ཅང་ཐལ་བར་འགྱུར་བ་སྔོན་པོའི་རྣམ་པར་རྟོག་པ་ཡང་", "english": "If one were to take this to an extreme",
+   "why": "It denies an over-extension: the conception of blue, which cannot make that vāsanā incompatible and so does not cut off suffering, is not thereby contradictory. It is not a reductio offered by the author."}
+ ],
+ "note": "The thread of the sahānavasthāna-virodha discussion is kept, but the causal direction in the opening and the over-extension point are muddled."},
+{"id": "QMTC0", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི།", "english": "Even the one in reliance should not merely ask, but should provide assistance",
+   "why": "It is the niśraya teacher (gnas) who, except that he need not ask permission, should help the pupil with bowl, robes and so on. It is not the dependent pupil.",
+   "fix": {"find": "Even the one in reliance should not merely ask, but should provide assistance", "replace": "The teacher of dependence, too, is exempt only from asking permission; otherwise he should provide assistance"}},
+  {"type": "gloss", "confidence": "medium", "tibetan": "ལྷག་མ་བཅབས་པའི་ཉེས་པ", "english": "remainder [note: a violation of monastic rules not fully confessed]",
+   "why": "lhag ma is the saṅghāvaśeṣa class of offence; concealment is the separate element (bcabs pa), so the note misdefines the term."}
+ ],
+ "note": "A good rendering of the niśraya rules and the sets of five, apart from one sentence that assigns the teacher's duty to the pupil."},
+{"id": "Q88U2", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "སྤང་ལེབ་དག་གིས་གཡོགས་", "english": "If they cover it with wooden planks",
+   "why": "spang leb are slabs of turf or sod; wooden planks are the ཤིང་ལེབ of the next clause, so two of the three roofing materials are conflated."}
+ ],
+ "note": "A faithful rendering of the commentary on the building pāyattika, with one misidentified material."},
+{"id": "QNJKO", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "high", "tibetan": "དེ་བས་ན་ཡུལ་དང་དུས་ངེས་པའི་ཕྱིར་གང་ན་དུ་བ་ལན་ཅིག་མཐོང་ལ་མ་ཚང་ན་མ་མཐོང་བ་ནི་འདིའི་དེས་བསྐྱེད་པར་བྱ་བའི་ངོ་བོ་ཉིད་ཡིན་ཏེ།", "english": "If it is certain in that way, how could it arise from something else?",
+   "why": "The side's opening sentences are untranslated: dependence cannot be fixed there; since place and time are determined, smoke being seen where (its causal complex) is present and not seen when it is incomplete is its nature of being produced by that, for otherwise it would never occur.",
+   "fix": {"find": "If it is certain in that way, how could it arise", "replace": "…because dependence cannot be fixed there. Therefore, since place and time are determined, that smoke is seen where [its causes] are present and not seen when they are incomplete is its very nature of being produced by that; otherwise it would never occur at all. If it is certain in that way, how could it arise"}},
+  {"type": "term", "confidence": "high", "tibetan": "བརྒྱ་བྱིན་སྤྱི་བོ", "english": "If the head of (Indra) the king of gods",
+   "why": "śakramūrdhan, 'Indra's head', is the anthill in Dharmakīrti's verse (PV 1.36), the stock example of something mistaken for fire because of smoke-like vapour.",
+   "fix": {"find": "If the head of (Indra) the king of gods", "replace": "If the anthill (śakramūrdhan, lit. \"Indra's head\")"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཅུང་ཟད་ལྕི་བ་ལ་སོགས་པ", "english": "slightly heavy [note: earthly] elements",
+   "why": "lci ba is cow dung (gomaya), the stock example of a dissimilar origin from which plants are seen to arise; it does not mean 'heavy'.",
+   "fix": {"find": "slightly heavy [note: earthly] elements", "replace": "cow dung"}}
+ ],
+ "note": "The argument on fixed causal natures is rendered well, but the opening is skipped and two stock examples (the anthill, cow dung) are mistranslated."},
+{"id": "QJM0C", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "བདག་གིས་བསྟན་ཟིན་ཏེ", "english": "you have already demonstrated",
+   "why": "The author speaks of himself: 'I have already shown' non-arising from self.",
+   "fix": {"find": "you have already demonstrated", "replace": "I have already demonstrated"}}
+ ],
+ "note": "An accurate rendering of Avalokitavrata's discussion of the first of the four theses, with one person error and some broken note markup."}
+]

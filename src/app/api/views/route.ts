@@ -6,7 +6,7 @@
  *
  * Why this exists: the only per-item view signals were GA `view_item` events
  * (consent-gated, captures almost nothing) and `analytics_pageviews`
- * (path-level, 90-day TTL, misses in-lightbox navigation). This collection
+ * (path-level, no TTL, misses in-lightbox navigation). This collection
  * keeps a tiny permanent counter per target so "most viewed" is a real,
  * queryable thing — same target keying as the likes system.
  *

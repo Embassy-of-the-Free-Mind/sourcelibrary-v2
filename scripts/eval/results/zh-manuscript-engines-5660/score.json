@@ -1,0 +1,136 @@
+{
+ "issue": 5660,
+ "measure": "accuracy",
+ "scored_at": "2026-10-06T08:56:20.395Z",
+ "drawn": 50,
+ "n_scored": 48,
+ "excluded": {
+  "textless": [],
+  "ref_mismatch": [
+   "chinese-cohort-5547-8ed270-p146",
+   "chinese-cohort-5547-e256b2-p57"
+  ]
+ },
+ "base_catastrophic": 0,
+ "rule": {
+  "delta": -0.02,
+  "catastrophic_slack": 1
+ },
+ "owed_pages": 494495,
+ "arms": [
+  {
+   "arm": "flash",
+   "n": 48,
+   "median_cer": 0.304,
+   "delta_vs_paddle": 0.084,
+   "ci95": [
+    0.064,
+    0.1
+   ],
+   "wlt": [
+    4,
+    43,
+    1
+   ],
+   "catastrophic": 6,
+   "loops": 0,
+   "invention_ref_median": 0.231,
+   "eur_per_page": 0.0027122,
+   "cost_how": "metered: $0.1577 over 50 calls / 50 pages, ×0.86 €/$",
+   "wins": false,
+   "eur_for_all": 1341
+  },
+  {
+   "arm": "lite",
+   "n": 48,
+   "median_cer": 0.372,
+   "delta_vs_paddle": 0.096,
+   "ci95": [
+    0.067,
+    0.176
+   ],
+   "wlt": [
+    4,
+    44,
+    0
+   ],
+   "catastrophic": 13,
+   "loops": 0,
+   "invention_ref_median": 0.285,
+   "eur_per_page": 0.0018324,
+   "cost_how": "metered: $0.1065 over 50 calls / 50 pages, ×0.86 €/$",
+   "wins": null,
+   "eur_for_all": 906
+  },
+  {
+   "arm": "lite-b",
+   "n": 48,
+   "median_cer": 0.372,
+   "delta_vs_paddle": 0.096,
+   "ci95": [
+    0.067,
+    0.176
+   ],
+   "wlt": [
+    4,
+    44,
+    0
+   ],
+   "catastrophic": 13,
+   "loops": 0,
+   "invention_ref_median": 0.285,
+   "eur_per_page": 0.0018324,
+   "cost_how": "metered: $0.1065 over 50 calls / 50 pages, ×0.86 €/$",
+   "wins": null,
+   "eur_for_all": 906
+  },
+  {
+   "arm": "paddle",
+   "n": 48,
+   "median_cer": 0.1315,
+   "delta_vs_paddle": 0,
+   "ci95": null,
+   "wlt": null,
+   "catastrophic": 0,
+   "loops": 0,
+   "invention_ref_median": 0.067,
+   "eur_per_page": 0.0001541,
+   "cost_how": "H100-1-80G box time: 400 cohort pages in 77.4 s after load (0.194 s/page, vLLM server, 8 clients, no layout) × €2.8665/h; the #5600 fleet's all-in L4 figure was €0.000235/page",
+   "wins": null,
+   "eur_for_all": 76
+  },
+  {
+   "arm": "qwen3vl",
+   "n": 48,
+   "median_cer": 0.2045,
+   "delta_vs_paddle": 0.016,
+   "ci95": [
+    0.01,
+    0.032
+   ],
+   "wlt": [
+    4,
+    42,
+    2
+   ],
+   "catastrophic": 1,
+   "loops": 0,
+   "invention_ref_median": 0.1125,
+   "eur_per_page": 0.0004092,
+   "cost_how": "H100-1-80G box time: 400 cohort pages in 205.6 s (0.514 s/page, vLLM 0.31.0, 8 clients) × €2.8665/h; setup ≈ 15 min not included",
+   "wins": false,
+   "eur_for_all": 202
+  }
+ ],
+ "noise_floor": {
+  "measure": "stability",
+  "median_delta": 0,
+  "ci95": [
+   0,
+   0
+  ],
+  "median_abs_delta": 0,
+  "identical_pages": 48,
+  "n": 48
+ }
+}

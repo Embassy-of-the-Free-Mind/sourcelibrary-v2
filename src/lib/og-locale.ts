@@ -19,14 +19,23 @@ const SITE = 'https://sourcelibrary.org';
 
 /** Alt text for the share card, in the card's own language. */
 const OG_ALT: Record<Locale, string> = {
-  en: 'Source Library — Digitizing and translating ancient texts',
-  es: 'Source Library — Digitalización y traducción de textos antiguos',
+  en: 'Source Library: Digitizing and translating ancient texts',
+  es: 'Source Library: Digitalización y traducción de textos antiguos',
+  la: 'Source Library: textus antiqui photographice descripti et conversi',
+  nl: 'Source Library: oude teksten gedigitaliseerd en vertaald',
+  zh: 'Source Library：古籍数字化与翻译',
 };
+
+/** Prefixed locales whose share-card art exists under `public/` (`og-image-<iso>-*.jpg`). */
+const OWN_CARD_ART: Locale[] = ['es'];
 
 /** `og:locale` value for a locale. */
 export const OG_LOCALE: Record<Locale, string> = {
   en: 'en_US',
   es: 'es_ES',
+  la: 'la_VA',
+  nl: 'nl_NL',
+  zh: 'zh_CN',
 };
 
 /**
@@ -35,7 +44,11 @@ export const OG_LOCALE: Record<Locale, string> = {
  * sourcelibrary.org link.
  */
 export function siteOgImageUrl(lang: Locale): string {
-  return lang === 'en' ? `${SITE}/og-image.jpg` : `${SITE}/og-image-${lang}.jpg`;
+  // Latin has no card art of its own yet (#6254), so it shares the English
+  // card rather than point at a file that does not exist. Add the locale here
+  // on the day `scripts/one-off/generate-og-images.mjs` has been run for it
+  // and `src/proxy.ts` rewrites its URL.
+  return OWN_CARD_ART.includes(lang) ? `${SITE}/og-image-${lang}.jpg` : `${SITE}/og-image.jpg`;
 }
 
 /**

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [mn]
+scripts: [Mong]
+canons: [mongolian-kanjur]
+n_books: 10
+n_pages: 10
+verdict: "No engine reads the Mongolian Kanjur: Flash read 0 of 285 columns on 10 pages (called it Manchu); hinted Flash loops on-genre invented text; CrossLing-OCR-Mini emits Tibetan."
+status: rejected
+decision: "No character-level reference commissioned to score Flash; a trained Mongolian recogniser is a separate decision for Derek (#5664)"
+superseded_by: null
+issue: 5664
+---
 ## 2026-10-04 · Can any engine read the Mongolian Kanjur (BDRC W4CZ5370) well enough to be worth a scored reference? (#5664)
 
 PRIOR ART: the #5664 3-page pilot (issue comment, scratchpad only, no script or prompt kept); `scripts/eval/lib/production-prompt.mjs` (used, for the live OCR prompt); #5665 Derge alignment (used, as the Tibetan parallel). No earlier eval of Mongolian script in `scripts/eval/INDEX.md` or this log.

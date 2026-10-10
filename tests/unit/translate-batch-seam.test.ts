@@ -458,6 +458,41 @@ describe('nothing is sent to Gemini when a pre-flight refuses', () => {
     });
   }
 
+  it('the pause (#5492): a translate step pause in any spelling, or a global pause without a scope for the book', async () => {
+    for (const c of [{ paused_phases: ['translate'] }, { paused_phases: ['translation'] }, { paused_phases: [5] }, { paused: true }, { paused: true, allow_scopes: { t: { book_ids: ['other'] } } }]) {
+      const db = makeDb({ books: [BOOK], pages: PAGES, system_config: [{ _id: 'processing_control', ...c }] });
+      const gemini = makeGemini();
+      const res = await startRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+      expect(res.ok).toBe(false);
+      expect(res.reason).toMatch(/paused/);
+      expect(gemini.submitted).toHaveLength(0);
+    }
+  });
+
+  it('a pause set after submit still collects, meters and writes the paid translate job; it stops only the repair submit (#5496 review)', async () => {
+    const db = makeDb({ books: [BOOK], pages: PAGES, system_config: [{ _id: 'processing_control', paused_phases: [] }] });
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const { run } = await startRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted).toHaveLength(1);
+    db.data.system_config[0].paused_phases = ['translate'];
+    const fetch = vi.spyOn(gemini, 'fetch');
+    const step = await advanceRun(db, run, deps);
+    expect(step).toMatchObject({ advanced: true, phase: PHASE.READY_TO_WRITE });
+    expect(step.note).toMatch(/translate step paused — repair not submitted/);
+    expect(fetch).toHaveBeenCalledTimes(1); // collected
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1); // metered exactly once
+    expect(gemini.submitted).toHaveLength(1); // no repair job
+    expect(run.repair_failure).toMatch(/repair not submitted: translate step paused/);
+    // Still paused: writing is free, so the drafts land; seams keep their draft.
+    const final = await runToEnd(db, deps);
+    expect(final.phase).toBe(PHASE.WRITTEN);
+    expect(final.write_counts).toMatchObject({ written: 20, repaired: 0 });
+    expect(pageText(db, 'p9')).toBe(draftFor(9));
+    expect(gemini.submitted).toHaveLength(1);
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1); // never metered twice
+  });
+
   it('a held book, a book the realtime lane owns, and a book with an open run', async () => {
     for (const book of [
       { ...BOOK, pipeline_auto: { hold: { reason: 'ia-wrong-leaf-4790' } } },

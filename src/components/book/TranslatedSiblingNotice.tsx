@@ -76,7 +76,7 @@ export default async function TranslatedSiblingNotice({
     <div className="mt-3 flex items-start gap-2.5 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-sm">
       <Languages className="w-4 h-4 mt-0.5 text-accent-gold flex-shrink-0" />
       <div className="text-stone-300">
-        This edition is not yet translated, but the library holds this work in English —{' '}
+        This edition is not yet translated, but the library holds this work in English:{' '}
         <Link
           href={`/book/${encodeURIComponent(best.slug || best.id || '')}`}
           className="text-accent-gold hover:text-accent-gold/80 underline underline-offset-2"

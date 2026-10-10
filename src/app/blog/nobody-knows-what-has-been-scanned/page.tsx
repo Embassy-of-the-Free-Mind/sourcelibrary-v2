@@ -8,14 +8,14 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: 'Nobody Knows What Has Been Scanned - Research Notes - Source Library',
   description:
-    'There is no global registry of digitized books. Every library that wants to scan responsibly has to privately rebuild the same census — we know, because we just did. The case for a shared one.',
+    'There is no global registry of digitized books. Every library that wants to scan responsibly has to privately rebuild the same census. We know, because we just did. The case for a shared one.',
   openGraph: {
     title: 'Nobody Knows What Has Been Scanned',
     description:
       'There is no global registry of digitized books. The case for building a shared one.',
     images: [
       {
-        url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg',
+        url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg',
         width: 1200,
         height: 630,
       },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/nobody-knows-what-has-been-scanned',
@@ -38,15 +38,15 @@ export default function GlobalScanRegistryPage() {
         title="Nobody Knows What Has Been Scanned"
         description="There is no global registry of digitized books. Every library that wants to scan responsibly has to privately rebuild the same census. The case for a shared one."
         datePublished="2026-08-09"
-        image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg"
+        image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg"
       />
       <ContentPageLayout
         header={
           <ContentHeader
             title="Nobody Knows What Has Been Scanned"
             subtitle="The case for a global registry of digitized books"
-            image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg"
-            imageAlt="Engraved title page of Zwinger's Theatrum Humanae Vitae, 1604 — the largest encyclopedia of its age"
+            image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg"
+            imageAlt="Title page of a volume of Zwinger's Theatrum Humanae Vitae, the largest encyclopedia of its age"
           >
             <p className="text-stone-400 text-sm mt-4">9 August 2026 &middot; 6 min read</p>
           </ContentHeader>
@@ -72,7 +72,7 @@ export default function GlobalScanRegistryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Not &ldquo;does my library have a scan&rdquo; &mdash; any catalogue can answer that.
+            Not &ldquo;does my library have a scan&rdquo;; any catalogue can answer that.
             The real question a scanning program needs answered: has <em>anyone</em>, at any of the
             thousands of institutions digitizing books, already put this particular printing online?
             Because scanning budgets are finite, and the marginal scan should be a book the world
@@ -104,8 +104,8 @@ export default function GlobalScanRegistryPage() {
               To find out, we had to compare the catalogue against every digitization we could see.
               &ldquo;Every digitization we could see&rdquo; is doing enormous work in that sentence.
               There is no list. We have spent months harvesting one: 3.5 million records of scanned
-              books, gathered institution by institution &mdash; the Internet Archive, the Bavarian
-              State Library, e-rara, Gallica, Biblissima, the Vatican, and a dozen more &mdash;
+              books, gathered institution by institution (the Internet Archive, the Bavarian
+              State Library, e-rara, Gallica, Biblissima, the Vatican, and a dozen more),
               because the IIIF standard that makes scans interoperable deliberately has no central
               registry of what exists. In the IIIF community this is politely called the
               &ldquo;discovery problem.&rdquo; It has been open for a decade.
@@ -114,7 +114,7 @@ export default function GlobalScanRegistryPage() {
             <p className="text-secondary leading-relaxed mb-6 font-body">
               With that private census in hand, the answer took an afternoon:{' '}
               <strong>3,655 books printed before 1830 in this one collection have no digitization
-              anywhere we can find</strong> &mdash; plus about five hundred manuscripts, unique by
+              anywhere we can find</strong>, plus about five hundred manuscripts, unique by
               definition. Meanwhile 324 of its books are printings that are already online in full,
               where a rescan would duplicate the world&apos;s coverage almost exactly.
             </p>
@@ -122,7 +122,7 @@ export default function GlobalScanRegistryPage() {
             <p className="text-secondary leading-relaxed mb-6 font-body">
               That is the scanning queue any collection would want. And here is the absurdity: every
               library that wants to scan responsibly has to rebuild this same apparatus privately
-              &mdash; the harvest, the identity matching, the census &mdash; or scan blind. Most,
+              (the harvest, the identity matching, the census) or scan blind. Most,
               reasonably, scan blind.
             </p>
           </section>
@@ -140,12 +140,12 @@ export default function GlobalScanRegistryPage() {
                 Universal Short Title Catalogue
               </a>{' '}
               knows 1.65 million European editions printed before 1700 and links about 600,000
-              digital copies &mdash; the best attempt anywhere, and still tagged to under a third of
+              digital copies: the best attempt anywhere, and still tagged to under a third of
               its records, with nothing after 1700. The incunabula catalogues (ISTC, GW) do this
               well for the fifteenth century. The German VD16/17/18 do it for German print; the
               Dutch STCN for Dutch. The English ESTC links to scans that mostly sit behind
               subscription walls. Europeana and HathiTrust aggregate tens of millions of digitized
-              objects but at the level of <em>files</em>, not <em>editions</em> &mdash; they cannot
+              objects but at the level of <em>files</em>, not <em>editions</em>; they cannot
               tell you whether two records are the same printing. Google scanned perhaps forty
               million books and publishes no list at all.
             </p>
@@ -160,11 +160,11 @@ export default function GlobalScanRegistryPage() {
             <p className="text-secondary leading-relaxed mb-6 font-body">
               That last detail is not hypothetical. In our spot checks, a 1688 Tollius volume showed
               up as &ldquo;never digitized&rdquo; until we found its later German edition at the
-              Bavarian State Library &mdash; catalogued under <em>Manvdvctio Ad Coelvm
+              Bavarian State Library, catalogued under <em>Manvdvctio Ad Coelvm
               Chemicvm</em>, with the author&apos;s name fused into the title and <em>coelum</em>{' '}
               spelled against our <em>caelum</em>. Early modern books do not agree on their own
-              names. Matching them takes bibliographic identity work &mdash; author, title, year,
-              volume, orthography &mdash; not string comparison.
+              names. Matching them takes bibliographic identity work (author, title, year,
+              volume, orthography), not string comparison.
             </p>
           </section>
 
@@ -189,7 +189,7 @@ export default function GlobalScanRegistryPage() {
               </li>
               <li>
                 <strong>Evidence, not flags.</strong> A record should carry the manifest URL
-                itself &mdash; a checkable claim. We inherited a dataset whose bare
+                itself: a checkable claim. We inherited a dataset whose bare
                 &ldquo;has been scanned&rdquo; flag turned out to undercount by more than a
                 quarter, and there was no way to tell which rows were wrong because the flag
                 carried no provenance.
@@ -201,7 +201,7 @@ export default function GlobalScanRegistryPage() {
               </li>
               <li>
                 <strong>Openness.</strong> Harvestable in bulk, IIIF-native, contributed to by the
-                institutions doing the scanning &mdash; the way OCLC built a shared catalogue of
+                institutions doing the scanning, the way OCLC built a shared catalogue of
                 <em> holdings</em>, but for digitizations, and open.
               </li>
             </ul>
@@ -209,7 +209,7 @@ export default function GlobalScanRegistryPage() {
             <p className="text-secondary leading-relaxed mb-6 font-body">
               None of this is speculative. The USTC has proven the bibliographic spine works at
               the scale of a million editions. IIIF has proven the interoperability. The missing
-              piece is the join &mdash; maintained as shared infrastructure rather than re-derived
+              piece is the join, maintained as shared infrastructure rather than re-derived
               in private by every project with a harvester and a deadline.
             </p>
           </section>
@@ -226,7 +226,7 @@ export default function GlobalScanRegistryPage() {
               building the world&apos;s registry. But we hold a working prototype of its parts: a
               3.5-million-record harvest of digitized books across nineteen sources, matching
               tooling tuned for early modern print, and a live case study in what the census makes
-              possible &mdash; a real library&apos;s scanning priorities, computed rather than
+              possible: a real library&apos;s scanning priorities, computed rather than
               guessed.
             </p>
 
@@ -241,7 +241,7 @@ export default function GlobalScanRegistryPage() {
 
             <p className="text-secondary leading-relaxed mb-6 font-body">
               Every year, digitization money is spent rescanning books that are already online,
-              while books that exist nowhere else wait. Not because anyone chose that &mdash;
+              while books that exist nowhere else wait. Not because anyone chose that, but
               because nobody can see the whole board. The fix is a list. Libraries have known how
               to make lists for four thousand years. This one is overdue.
             </p>

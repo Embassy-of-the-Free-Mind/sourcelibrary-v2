@@ -3,7 +3,7 @@ import BookConstellationViz from '@/components/research/BookConstellationViz';
 import dataRaw from '@/data/book-constellation.json';
 
 export const metadata: Metadata = {
-  title: 'Book Atlas — Source Library',
+  title: 'Book Atlas | Source Library',
   description:
     'Explore 8,900+ pre-modern texts as a navigable constellation, clustered by content similarity using AI embeddings and UMAP dimensionality reduction.',
   alternates: { canonical: '/research/atlas' },

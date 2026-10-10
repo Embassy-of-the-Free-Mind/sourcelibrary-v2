@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la, grc, de]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: null
+verdict: "Interim: Kraken matches Gemini on Latin and Greek print, loses badly on German Fraktur (72.8-89.1%), and its failures are all guard-visible."
+status: superseded
+decision: null
+superseded_by: "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+issue: 4523
+---
 ## 2026-09-03 — Bench 2 first arms (superseded by the entry above)
 
 - **Design.** As above, Kraken + Gemini only.

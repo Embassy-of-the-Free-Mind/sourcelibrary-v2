@@ -596,7 +596,7 @@ Feedback: submit_feedback. Partnerships: team@sourcelibrary.org.`;
 const server = new Server(
   {
     name: "source-library",
-    version: "4.5.0",
+    version: "4.7.0",
   },
   {
     capabilities: {
@@ -790,7 +790,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error(`Source Library MCP server v4.6.0 running (${TOOLS.length} tools)`);
+  console.error(`Source Library MCP server v4.7.0 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {

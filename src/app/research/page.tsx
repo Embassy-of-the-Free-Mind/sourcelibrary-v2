@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { posts } from '@/app/blog/page';
+import { posts } from '@/app/blog/posts';
 
 export const revalidate = false;
 
@@ -10,13 +10,13 @@ const OG_DESCRIPTION =
   'A working library is also an instrument. The questions we are trying to answer with it: whether machines read historical pages or recite them, what makes a scan readable, how much has never been translated, and what a first translation actually is.';
 
 export const metadata: Metadata = {
-  title: 'Research — Source Library',
+  title: 'Research | Source Library',
   description: OG_DESCRIPTION,
   alternates: { canonical: '/research' },
   openGraph: {
     title: OG_TITLE,
     description: OG_DESCRIPTION,
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -39,6 +39,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
     refs: [
       { slug: 'confident-hallucinator' },
       { slug: 'did-the-ai-read-this' },
+      { slug: 'what-the-models-cannot-name' },
     ],
   },
   {
@@ -108,6 +109,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
       { href: '/research/concept-diffusion', label: 'Concept diffusion' },
       { href: '/research/atlas', label: 'Text atlas' },
       { href: '/research/image-atlas', label: 'Image atlas' },
+      { href: '/about/meaning', label: 'Search by meaning' },
     ],
   },
 ];
@@ -176,7 +178,7 @@ export default function ResearchProgrammePage() {
           <p className="text-base leading-relaxed mb-4">
             Estimates by script and era, from calibrating agreement between independent machine
             readings of the same pages against pages where a published scholarly transcription
-            lets us measure accuracy directly — fitted only on passages the models have{' '}
+            lets us measure accuracy directly, fitted only on passages the models have{' '}
             <em>not</em> memorised, for the reason question 01 explains.
           </p>
           <div className="overflow-x-auto my-4">
@@ -194,7 +196,7 @@ export default function ResearchProgrammePage() {
                 <tr className="border-t border-stone-200"><td className="px-4 py-2">Latin, 1500–1800</td><td className="px-4 py-2 text-right">≈97%</td><td className="px-4 py-2 text-right">31,000+</td></tr>
                 <tr className="border-t border-stone-200"><td className="px-4 py-2">Greek (polytonic print)</td><td className="px-4 py-2 text-right">≈93–100% per page</td><td className="px-4 py-2 text-right">12 reference pages</td></tr>
                 <tr className="border-t border-stone-200"><td className="px-4 py-2">Armenian (grabar)</td><td className="px-4 py-2 text-right">≈94–99% per page</td><td className="px-4 py-2 text-right">8 reference pages</td></tr>
-                <tr className="border-t border-stone-200"><td className="px-4 py-2">Hebrew</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">2 reference pages — too few</td></tr>
+                <tr className="border-t border-stone-200"><td className="px-4 py-2">Hebrew</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">2 reference pages (too few)</td></tr>
                 <tr className="border-t border-stone-200"><td className="px-4 py-2">Chinese, Japanese, Tibetan</td><td className="px-4 py-2 text-right text-stone-500">not yet calibrated</td><td className="px-4 py-2 text-right text-stone-500">no unmemorised reference pages exist yet</td></tr>
               </tbody>
             </table>
@@ -203,7 +205,7 @@ export default function ResearchProgrammePage() {
             Honest notes: the estimates are conditional on the calibration transferring from our
             reference pages to the wider corpus, and most double-readings come from successive
             models in the same family, which are not fully independent. <em>Not yet calibrated</em>{' '}
-            is a statement about our measurement, not the text — Tibetan we already know to be
+            is a statement about our measurement, not the text. Tibetan we already know to be
             unreliable and flag in the reader. A fully independent check, reproducible from public
             files: Internet Archive&apos;s own non-AI OCR of the same scans agrees with our text at
             87% on modern English print and 81% on 19th-century French. Full scorecard with fit

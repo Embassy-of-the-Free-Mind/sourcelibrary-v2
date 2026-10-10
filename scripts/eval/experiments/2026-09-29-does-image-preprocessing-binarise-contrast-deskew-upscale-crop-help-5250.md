@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [bo, syc, grc, la, lzh]
+scripts: [Tibt, Syrc, Grek, Latn, Hani]
+canons: []
+n_books: null
+n_pages: 277
+verdict: "Only per-leaf cropping helps (Yigdzin +46 matched Derge syllables per page, 98-2); Otsu hurts every engine; Sauvola, CLAHE, deskew and upscaling are null or harmful."
+status: rejected
+decision: "No preprocessing step added to the OCR path; leafcrop (production since 09-28) kept (#5250)"
+superseded_by: null
+issue: 5250
+---
 ## 2026-09-29 — Does image preprocessing (binarise / contrast / deskew / upscale / crop) help any OCR engine on our pages? Paired, four scripts, three engines (#5250)
 
 **Headline: cropping helps Yigdzin; no enhancement helps any engine. Per-leaf crop is the only arm that beats the

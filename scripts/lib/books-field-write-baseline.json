@@ -10,7 +10,7 @@
     "never to books, but the file also writes books so every $set in it gets scanned.",
     "They replace five identical entries for the two route files the code moved out of (#4271)."
   ],
-  "count": 21,
+  "count": 19,
   "accepted": [
     "scripts/enrichment/verify-translation-claims.mjs::write",
     "scripts/enrichment/wikidata-books.mjs::wikidata_label",
@@ -28,8 +28,6 @@
     "scripts/maintenance/repair-erara-text-shift.mjs::text_shift_repair_manual",
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_adopted_at",
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_sponsor",
-    "src/app/api/admin/promote-warehouse/route.ts::demoted_at",
-    "src/app/api/admin/promote-warehouse/route.ts::promoted_session",
     "src/app/api/books/[id]/dedicate/route.ts::dedication",
     "src/lib/identity-review-apply.ts::reviewed_at",
     "src/lib/identity-review-apply.ts::reviewed_by"

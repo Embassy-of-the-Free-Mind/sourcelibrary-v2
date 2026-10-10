@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 114
+n_pages: 122
+verdict: "Post hoc, with PR #5299's footnote step MinerU's catastrophic rate falls 2.6% to 0.0% and median delta vs lite to +0.08 pp, so the rule says PEER; lite still wins page by page 34-10."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5182, 5299]
+---
 ## 2026-09-30 (later) — POST-HOC: the same MinerU rule, re-applied with PR #5299's footnote step (#5182)
 
 **Headline: with footnotes kept, the fixed rule says PEER, but this is a re-analysis, not a preregistered result.**

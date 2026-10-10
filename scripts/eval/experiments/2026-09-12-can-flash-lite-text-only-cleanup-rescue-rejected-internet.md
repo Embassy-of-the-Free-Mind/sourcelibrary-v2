@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 10
+n_pages: 60
+verdict: "Text-only lite cleanup raises agreement a little (48/60 improved) but lifts no rejected book over the 0.85 gate, costs 86% of image OCR, and invents on unreadable input."
+status: rejected
+decision: "Not a lane for rejected IA OCR (#4727, #4763)"
+superseded_by: null
+issue: [4727, 4763]
+---
 ## 2026-09-12 — Can flash-lite text-only cleanup rescue rejected Internet Archive OCR?
 
 **Headline: no lane. It raises agreement a little everywhere, lifts no rejected book over

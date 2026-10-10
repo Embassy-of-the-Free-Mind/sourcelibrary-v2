@@ -1,0 +1,422 @@
+[
+  {
+    "book_id": "69e7ab895f1a22ab19a99cb5",
+    "slot": 13,
+    "title": "Thadrak Thor bu 024 Phreng lung rgya mtsho sogs",
+    "tradition": "bl-other-thadrak",
+    "shelf_fit": "fits",
+    "shelf_note": "A Thadrak Temple (BL) miscellany of Tibetan manuscripts on its own collection shelf. The four pages are four different works, as 'sogs' allows: an Abhidharma commentary on the faculties (p25), a Vajrayoga/six-yoga instruction manual titled mThong ba don ldan (p49), a Kalacakra completion-stage text on empty-form and dhyana (p150), and a gter-ma geomancy/house-building and army-repelling rite with terma marks (p167). 'Author: Thadrak Temple' is the holding institution, not an author.",
+    "rights_flag": null,
+    "structure_note": "Every image is one photograph of three loose pecha leaves on a board (I5), so a 'page' here is three leaves and site order is not reading order. The OCR does mark most leaf seams with <leaf-break/>, but on p49 it leaves out the seam between leaves 1 and 2. All 190 records carry OCR, but the book's pages_ocr field says 70; 58/190 are translated. Only 2 pages carry a printed number, so the single printed backstep means nothing. It is more likely a misread margin numeral than a scan problem.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དོན་བཞི་བཞི་ལ་དབང་མྱེད་པ་ཡིན་ཏེ ... རྡུལ་དབང་མྱེད་པའི་ཕྱིར",
+            "image": "དབང་བྱེད་པ (cursive ba with ya-btags, the same shape the OCR reads as བྱེད་ elsewhere on this leaf)",
+            "problem": "'exercises power over' (dbang byed) read as 'has no power' (dbang myed = med). The doctrine (each faculty is dominant over its four ends) and the OCR's own later 'dbang byed de' both require byed.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "དེས་ཀྱང་ཡོངས་སུ་མྱ་ངན་ལས་འདས་པ་ལ་དབང་མེད་པའི་ཕྱིར་ཏེ",
+            "image": "not verified by eye at this resolution",
+            "problem": "likely the same byed→med misread: the argument is that each path is dominant over the next, ending in parinirvana",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "སོཌ / ལཾ / རྣཾས",
+            "image": "abbreviated cursive ligatures for sogs / lam / rnams",
+            "problem": "scribal abbreviations kept as pseudo-letters (ཌ, ཾ) instead of being expanded or marked",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "རིམ་པ་བཞིན་དོན་བཞི་བཞི་ལ་དབང་མྱེད་པ་ཡིན་ཏེ། མིག་རྣ་དག་ནི ...",
+            "english": "the faculties are respectively without power over four purposes each. The eye and ear do not exercise power over making the body beautiful, protecting the body ...",
+            "problem": "The opening thesis is reversed: the text says each faculty IS dominant over four ends, and the next sentences ('the blind and deaf are not beautiful'), which argue for dominance, contradict the English. The translator follows the misread with no uncertainty marker.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "དེས་ཀྱང་ཡོངས་སུ་མྱ་ངན་ལས་འདས་པ་ལ་དབང་མེད་པའི་ཕྱིར་ཏེ",
+            "english": "That in turn has no power over the final nirvana.",
+            "problem": "contradicts the chain the passage builds ('higher and higher exercises power'); probably carried over from the same misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 49,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཁམས་དྲུག་ལྡན་པ་རྡོ་རྗེའི་ལུས་དང་ | འདི་ལྟར་བྱ་སྟེ།",
+            "english": "To the Vajra body endowed with the six elements, one should act as follows:",
+            "problem": "Leaf 1 breaks off mid-sentence ('...the vajra body with six elements and') and leaf 2 opens a new sentence ('It is done thus:'). The English fuses the two leaves into one invented sentence.",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "other": [
+          {
+            "note": "No <leaf-break/> between leaves 1 and 2 (the OCR runs lines 0–13 as one block, although the image shows two leaves, the second opening 'འདི་ལྟར་བྱ་སྟེ'). This is the hidden-seam case: leaf 2 is not the continuation of leaf 1's recto.",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སོཌ / བོཌ / སདྱས",
+            "image": "khyug-yig abbreviations",
+            "problem": "abbreviations kept as pseudo-letters",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འོད་ཟེར་འཕྲོ་བ། ཆ་ཕྲ་བ། འཚེར་བ། འདར་བ། གཞིག་པ",
+            "english": "radiating light, being subtle, shimmering, vibrating, and being difficult to destroy",
+            "problem": "gzhig pa is 'disintegrating/dissolving', not 'difficult to destroy'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 167,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      150,
+      167
+    ],
+    "reader_summary": "This is a temple miscellany of Tibetan manuscripts: an Abhidharma commentary, a Kalacakra six-yoga manual and completion-stage text, and a gter-ma geomancy and protection rite, each photographed as three leaves per image. The transcription is of the right leaves and mostly sound, but the cursive 'byed/med' confusion reverses the thesis of the Abhidharma page in the English, and one leaf seam is unmarked, so two leaves are fused into one sentence. Read the English as a guide, and check it against the Tibetan wherever the argument turns on 'has / has not'.",
+    "book_verdict": "The right text is transcribed, the English is fluent and mostly faithful, and the gter-ma and Kalacakra pages are usable. One page states the opposite of what the source argues, and the page unit (three leaves per image) is not the reading unit."
+  },
+  {
+    "book_id": "69e7ab955f1a22ab19a9a79c",
+    "slot": 14,
+    "title": "Thadrak Thor bu 033 Yang mgon bka' 'bum sogs",
+    "tradition": "bl-other-thadrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Collected instructions in the Yang dgon pa (Drukpa/Kagyu) line on the Thadrak shelf. p9 carries Yang dgon pa's colophon ('ཤཱཀྱའི་དགེ་སློང་ཡང་དགོན་པས ... བཀོད་པ'), which matches the title.",
+    "rights_flag": null,
+    "structure_note": "Three loose leaves per photograph (I5), with leaf seams marked in the OCR. The vertical margin title and folio number on each leaf's left edge are never transcribed, so a reader cannot recover the folio order from the text. pages_ocr field 120, but all 212 records carry OCR; 111 are translated. On p51 the OCR has FOUR blocks for three leaves: the fourth is invented (see the page entry).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "࿓࿔་།",
+            "image": "༄༅། (yig mgo head mark)",
+            "problem": "head mark encoded as a different ornament",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "vertical marginal title and folio number at each leaf's left edge",
+            "problem": "marginal title/folio dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<leaf-break/> ༄༅། ། དྲན་པ་དང་ལྡན་པ་དང་ལྡན་པ་དང་། བདག་དང་ལྡན་པ་དང་ལྡན་པས་བདག་དང་ལྡན་པ ... (four lines of 'dran pa / bdag / dang' repeated)",
+            "image": "only three leaves on the board; the third ends '...བྱེད་མཁན་ཐམས་ཅད་རིག...' with nothing after it",
+            "problem": "A fourth block of looped, meaningless text that is on no leaf, appended after the three real leaves.",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "དྲན་པ་དང་ལྡན་པ་དང་ལྡན་པ་དང་། བདག་དང་ ...",
+            "english": "Possessing mindfulness, and possessing a self, and possessing mindfulness, and possessing a self, ... and mindfulness by mindfulness by mindfulness, and",
+            "problem": "The invented loop is translated faithfully as if it were text. A reader sees a paragraph of gibberish attributed to the source.",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "other": [
+          {
+            "note": "The English ends in a paragraph of repeated 'mindfulness ... self' phrases that no leaf contains",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 154,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "leaf 3: 'རྟེན་མཆོག་དལ་འབྱོར་ཐོབ་པར་དཀའ། ཐོབ་དཀའི...' (shad without tsheg)",
+            "image": "same hand as leaves 1–2",
+            "problem": "punctuation convention flips on the third leaf, which suggests a different read",
+            "severity": "minor",
+            "class": "O9"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདས་བདག་པོ་རྡོེ་འཆང་། (leaf opens mid-word; 'khor 'das bdag po)",
+            "english": "The late Lord, Vajradhara",
+            "problem": "The fragment '...'das bdag po' (Lord of samsara and nirvana) is read as 'the late (deceased) Lord'.",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      9,
+      113
+    ],
+    "reader_summary": "These are songs, exhortations and practice instructions of Yang dgon pa, with his colophon on page 9. The transcriptions are of the right leaves and the English reads faithfully on most pages. But page 51 ends in a paragraph of looped 'mindfulness and self' nonsense that is on no leaf, and leaf-opening fragments are sometimes misconstrued ('the late Lord').",
+    "book_verdict": "Mostly sound text and translation of a real Yang dgon pa collection. One page has an invented looped block, translated as text, which a reader will notice at once."
+  },
+  {
+    "book_id": "69e7ab915f1a22ab19a9a3be",
+    "slot": 15,
+    "title": "Thadrak Thor bu 030 sNyan ngag 'grel pa",
+    "tradition": "bl-other-thadrak",
+    "shelf_fit": "fits",
+    "shelf_note": "A Tibetan commentary on Dandin's Kavyadarsha (snyan ngag me long): verse-ornament examples and their discussion, which cites Kun mkhyen Padma dkar po and Ratnashri. This matches the title.",
+    "rights_flag": null,
+    "structure_note": "Clean dbu-can manuscript in three-leaf photographs (I5) with seams marked. 204 records, 175 with OCR, 157 translated, so about 29 pages have no text. Only 1 printed number was captured (leaf numbers sit in the margin), so the backstep/repeat counts are empty rather than reassuring.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 54,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(no marking)",
+            "image": "verse-type labels written in red ink on leaves 1 and 3",
+            "problem": "rubrication not marked",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ངེས་པ་ཅན་གྱི་སྦྱར་བ",
+            "english": "The certain double-meaning <note>original: \"niyata-śleṣa\"</note>",
+            "problem": "A Sanskrit term is labelled 'original' although the original here is Tibetan. The Sanskrit is the translator's reconstruction.",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation opens with <meta>continues from previous page: by the power of lying within the hearts of embodied beings, it clarifies the changes of movement...</meta>: text from another page shown at the head of this one",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 105,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<summary>...</summary> and <keywords>...</keywords> blocks stored at the end of the translation text, which will leak into the reader text unless the renderer strips them",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 181,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      17,
+      181
+    ],
+    "reader_summary": "This is a Tibetan commentary on Dandin's Mirror of Poetry, with verse examples of the ornaments and a discussion that cites Padma dkar po. The transcription matches the leaves closely and the English follows it well, including the verse. Expect stray <meta>/<summary> wrappers on some pages and translator-supplied Sanskrit terms labelled 'original'.",
+    "book_verdict": "The soundest book in this packet: clear script, faithful transcription and a careful translation. The defects are display wrappers, not the text."
+  },
+  {
+    "book_id": "69e7ab855f1a22ab19a99a6b",
+    "slot": 16,
+    "title": "Thadrak Thor bu 021 Phag-gru'I zhus lan sogs",
+    "tradition": "bl-other-thadrak",
+    "shelf_fit": "fits",
+    "shelf_note": "Miscellany ('sogs'). Pages 19/26/39 are verses of the Mahayanasutralamkara (theg pa chen po mdo sde rgyan). Page 103 is the end of a guru-sadhana by Padma dkar po with his colophon. None of the sampled pages is the Phag mo gru pa question-and-answer named in the title, which is normal for a 'sogs' volume.",
+    "rights_flag": null,
+    "structure_note": "Three loose leaves per photograph (I5), seams marked. 134 records all with OCR (pages_ocr field 54), 51 translated. Printed numbers are captured on only 4 pages, so the 1 backstep and 1 repeat most likely come from misread marginal leaf numbers, not a scan splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གནས་པ་དཔེ་མེད་སྨྱོ་ཆེས་རྟག་ཏུ་གནས་",
+            "english": "they abide in an incomparable state of madness",
+            "problem": "'madness' for a Brahma-vihara verse is doubtful; probably a misread or mistranslation, not verified against the image",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "࿓࿔་།",
+            "image": "༄༅། head mark",
+            "problem": "head mark encoded as a different ornament",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 103,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "དཔལྡན་དྭཌ་པོའི་དཀར་དྱུད་ལས",
+            "english": "from the glorious Drukpa Kagyu lineage",
+            "problem": "Dwags po bka' brgyud (Dakpo Kagyu) rendered as Drukpa Kagyu, which misnames the lineage",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "གནོད་ཀ་འདིས་དཔལ་དྱལ་བའི་དབང་པོས",
+            "english": "the glorious Lord of Conquerors <note>Gyalwang Pema Karpo</note> said",
+            "problem": "The note identifies the quoted master as Pema Karpo, who is the author of this colophon. The identification is invented.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "དོན་གཞན་དུ་འགྱུར་ཉེ་བར་མཐོང་བ་མ་འཕྱོ་པར་བྱ་བའི་ཆེད",
+            "english": "Seeing that various notes ... were close to changing the meaning, I have not been distracted.",
+            "problem": "The purpose clause 'so that [the meaning] does not drift' becomes a statement about the author.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      26,
+      39
+    ],
+    "reader_summary": "This miscellany holds verses of Asanga's Ornament of the Mahayana Sutras and a guru-sadhana by Padma dkar po. The transcription matches the leaves. The English is serviceable for the verse, but the colophon page misnames the lineage and attaches an invented identification in a note. A reader who wants the Phag mo gru pa answers named in the title did not meet them in these four pages.",
+    "book_verdict": "The transcription is sound and the verse translation usable. The colophon page carries several moderate errors of lineage and attribution that a specialist would catch."
+  }
+]

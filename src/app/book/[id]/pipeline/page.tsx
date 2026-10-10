@@ -216,11 +216,11 @@ function PipelineContent({ bookId }: { bookId: string }) {
         <div className="mt-8 p-4 bg-stone-100 rounded-lg">
           <h3 className="font-medium text-stone-900 mb-2">What happens next?</h3>
           <ul className="text-sm text-stone-600 space-y-1">
-            <li>1. <strong>Crop</strong> — Generates cropped images for split pages</li>
-            <li>2. <strong>OCR</strong> — Extracts text from all page images</li>
-            <li>3. <strong>Translation</strong> — Translates the extracted text to English</li>
-            <li>4. <strong>Summarize</strong> — Generates a book overview with key quotes</li>
-            <li>5. <strong>Edition</strong> — Creates a draft edition with front matter</li>
+            <li>1. <strong>Crop</strong>: Generates cropped images for split pages</li>
+            <li>2. <strong>OCR</strong>: Extracts text from all page images</li>
+            <li>3. <strong>Translation</strong>: Translates the extracted text to English</li>
+            <li>4. <strong>Summarize</strong>: Generates a book overview with key quotes</li>
+            <li>5. <strong>Edition</strong>: Creates a draft edition with front matter</li>
             <li className="text-accent-rust font-medium">→ Review the edition and mint a DOI when ready</li>
           </ul>
         </div>

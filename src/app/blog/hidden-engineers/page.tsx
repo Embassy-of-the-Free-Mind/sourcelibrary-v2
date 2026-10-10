@@ -26,7 +26,7 @@ export default function HiddenEngineersPage() {
       header={
         <ContentHeader
           title="The Hidden Engineers"
-          subtitle="Steam engines in spell books, automata in alchemy, kites in natural magic &mdash; before engineering was a discipline, its knowledge lived in unexpected places"
+          subtitle="Steam engines in spell books, automata in alchemy, kites in natural magic: before engineering was a discipline, its knowledge lived in unexpected places"
           image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg"
           imageAlt="Hero of Alexandria's Aeolipile diagram from a 16th-century manuscript"
         >
@@ -58,13 +58,13 @@ export default function HiddenEngineersPage() {
           There is a manuscript in the Biblioth&egrave;que nationale de France, copied for King Francis I
           around 1545, in which the first 150 pages describe how to build steam engines, automatic
           temple doors, singing bird automata, and a water-powered pipe organ. Page 153 begins the
-          <em> Poimandres</em> of Hermes Trismegistus &mdash; a mystical vision of divine light and
+          <em> Poimandres</em> of Hermes Trismegistus, a mystical vision of divine light and
           the creation of the cosmos.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           The same scribe, the same royal binding, the same book. Hero of Alexandria&rsquo;s
-          <em> Pneumatica</em> &mdash; the foundational text of ancient mechanical engineering &mdash;
+          <em> Pneumatica</em>, the foundational text of ancient mechanical engineering,
           bound with the <em>Corpus Hermeticum</em>, the foundational text of Western mystical
           philosophy. Nobody in the sixteenth century saw a contradiction. The knowledge
           belonged together.
@@ -73,7 +73,7 @@ export default function HiddenEngineersPage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           This post follows that thread: engineering knowledge hidden inside books of magic, alchemy,
           and esoteric philosophy. Not metaphorical engineering. Actual technical specifications
-          for actual machines &mdash; found in the last places a modern reader would think to look.
+          for actual machines, found in the last places a modern reader would think to look.
           Source Library holds the primary texts, translated and annotated. Every quote below links
           to the original page.
         </p>
@@ -88,7 +88,7 @@ export default function HiddenEngineersPage() {
             />
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Hero&rsquo;s Aeolipile &mdash; a steam-powered rotating sphere &mdash; from the same
+            Hero&rsquo;s Aeolipile, a steam-powered rotating sphere, from the same
             manuscript that contains the <em>Corpus Hermeticum</em>. Page 93 of a royal Greek
             manuscript, c. 1545.{' '}
             <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
@@ -104,7 +104,7 @@ export default function HiddenEngineersPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The manuscript is BnF Suppl. gr. 607 &mdash; a 284-page Greek codex copied by the
+            The manuscript is BnF Suppl. gr. 607, a 284-page Greek codex copied by the
             royal scribe Ange Verg&egrave;ce for King Francis I of France. It contains two works
             that modern categories would place in entirely different disciplines.
           </p>
@@ -113,7 +113,7 @@ export default function HiddenEngineersPage() {
             The first half is Hero of Alexandria&rsquo;s <em>Pneumatica</em>, written in
             the first century CE. Hero was an engineer at the Mouseion of Alexandria, and
             the <em>Pneumatica</em> is a catalog of devices powered by air, water, steam,
-            and vacuum &mdash; what we would now call fluid mechanics and thermodynamics.
+            and vacuum: what we would now call fluid mechanics and thermodynamics.
             It opens with a theoretical treatment of the void, then proceeds through dozens
             of working machines.
           </p>
@@ -145,7 +145,7 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The devices escalate. Theorem 45 describes a water organ &mdash; the <em>hydraulis</em>.
+            The devices escalate. Theorem 45 describes a water organ, the <em>hydraulis</em>.
             Theorem 49 produces &ldquo;singing birds&rdquo; that fall silent when an owl rotates
             toward them, driven by the same siphon-and-counterweight principles.
           </p>
@@ -154,7 +154,7 @@ export default function HiddenEngineersPage() {
             Then comes Theorem 50: the aeolipile. A sealed cauldron of boiling water feeds
             steam through a tube into a hollow sphere mounted on a pivot. The sphere has two
             bent nozzles pointing in opposite directions. As the steam escapes through the
-            nozzles, the sphere rotates &mdash; a jet engine in miniature, described in the
+            nozzles, the sphere rotates: a jet engine in miniature, described in the
             first century.
           </p>
 
@@ -175,8 +175,8 @@ export default function HiddenEngineersPage() {
           </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            After the aeolipile, a few blank leaves, and then &mdash; in the same hand, with
-            a decorative headpiece in red ink &mdash; the <em>Poimandres</em> begins:
+            After the aeolipile, a few blank leaves, and then (in the same hand, with
+            a decorative headpiece in red ink) the <em>Poimandres</em> begins:
           </p>
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
@@ -217,7 +217,7 @@ export default function HiddenEngineersPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Giambattista della Porta&rsquo;s <em>Magia Naturalis</em> (Naples, 1558; expanded
             edition 1589) is one of the most widely read books of the sixteenth century. The
-            title promises &ldquo;natural magic&rdquo; &mdash; and modern readers expect occultism.
+            title promises &ldquo;natural magic,&rdquo; and modern readers expect occultism.
             What they get, in the final books, is a pneumatics textbook.
           </p>
 
@@ -242,14 +242,14 @@ export default function HiddenEngineersPage() {
               >
                 Della Porta, <em>Magia Naturalis</em>, Book XII, Ch. 4
               </Link>
-              {' '}&mdash; citing Hero&rsquo;s military applications of pneumatics
+              {', '}citing Hero&rsquo;s military applications of pneumatics
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The final chapter of Book XX, titled &ldquo;On certain mechanical experiments,&rdquo;
             makes the scope explicit. This is not metaphor. Della Porta describes how to build
-            a kite &mdash; calling it a <em>Draco volans</em>, a &ldquo;Flying Dragon&rdquo; &mdash;
+            a kite (calling it a <em>Draco volans</em>, a &ldquo;Flying Dragon&rdquo;)
             with exact specifications for the frame, the covering, the tail, and the wind
             conditions:
           </p>
@@ -292,16 +292,16 @@ export default function HiddenEngineersPage() {
               >
                 Della Porta, <em>Magia Naturalis</em>, Book XX, Ch. 10
               </Link>
-              {' '}&mdash; the kite as a prototype for human flight
+              {', '}the kite as a prototype for human flight
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The book ends with Archytas of Tarentum&rsquo;s legendary wooden dove, said
-            to have flown by means of &ldquo;an enclosed and hidden breath of air&rdquo; &mdash;
+            to have flown by means of &ldquo;an enclosed and hidden breath of air&rdquo;:
             compressed air or steam. Della Porta frames this as evidence that human flight is
             achievable. The last word of the last page of <em>Magia Naturalis</em> is &ldquo;THE
-            END&rdquo; &mdash; but the word just before it is <em>mechanics</em>.
+            END,&rdquo; but the word just before it is <em>mechanics</em>.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -322,7 +322,7 @@ export default function HiddenEngineersPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Vitruvius &mdash; writing around 30 BCE &mdash; placed his description of the
+            Vitruvius, writing around 30 BCE, placed his description of the
             aeolipile not in a treatise on engineering but in a chapter about wind and urban
             planning. The aeolipile is offered as a demonstration experiment:
             if you want to understand where wind comes from, build one and watch.
@@ -348,7 +348,7 @@ export default function HiddenEngineersPage() {
             The 1521 edition held in Source Library includes an elaborate woodcut:
             the aeolipile rendered as a decorated sphere with acanthus leaves, as if
             it were a work of art rather than a scientific instrument. This is characteristic
-            of how engineering knowledge traveled in the Renaissance &mdash; embedded in
+            of how engineering knowledge traveled in the Renaissance: embedded in
             luxurious editions of classical texts, where the boundary between natural
             philosophy, architecture, and applied physics did not exist.
           </p>
@@ -371,7 +371,7 @@ export default function HiddenEngineersPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Alchemy is remembered for its failures &mdash; the gold that nobody made, the
+            Alchemy is remembered for its failures: the gold that nobody made, the
             elixir that nobody found. What is forgotten is that alchemists were the
             best-equipped experimental chemists in Europe for more than a thousand years.
             They designed furnaces, distillation apparatus, and laboratory glassware.
@@ -380,7 +380,7 @@ export default function HiddenEngineersPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>Theatrum Chemicum</em> (Strasbourg, 1659&ndash;1661) is the largest
-            compilation of alchemical texts ever published &mdash; six folio volumes
+            compilation of alchemical texts ever published: six folio volumes
             containing over two hundred treatises. Scattered through its mystical allegories
             and philosophical meditations are precise technical instructions for building
             laboratory equipment:
@@ -402,8 +402,8 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The furnace &mdash; specifically the <em>athanor</em>, a self-feeding furnace
-            designed to maintain constant temperature for days or weeks &mdash; was the
+            The furnace (specifically the <em>athanor</em>, a self-feeding furnace
+            designed to maintain constant temperature for days or weeks) was the
             alchemists&rsquo; signature engineering achievement. It solved a real
             thermodynamics problem: how to maintain low, steady heat for extended chemical
             processes before the existence of thermostats.
@@ -411,9 +411,9 @@ export default function HiddenEngineersPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>Artis Auriferae</em> (Basel, 1572) preserves an even older tradition.
-            Among its texts is a treatise attributed to Mary the Prophetess &mdash; Maria
+            Among its texts is a treatise attributed to Mary the Prophetess (Maria
             Hebraea, a figure from late antiquity credited with fundamental laboratory
-            inventions:
+            inventions):
           </p>
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
@@ -432,7 +432,7 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The <em>bain-marie</em> &mdash; still called that in French kitchens today &mdash;
+            The <em>bain-marie</em> (still called that in French kitchens today)
             is a double-boiler: a vessel of water surrounding an inner vessel, providing
             gentle, indirect heat. It is one of the few alchemical inventions that entered
             common use, surviving in every restaurant and chemistry laboratory in the world
@@ -452,12 +452,12 @@ export default function HiddenEngineersPage() {
             Reginald Scot&rsquo;s <em>The Discoverie of Witchcraft</em> (London, 1584) is
             famous as an argument against the reality of witchcraft. What is less remembered
             is that Scot, in the course of debunking supernatural claims, describes the
-            engineering behind mechanical religious frauds &mdash; and in doing so provides
+            engineering behind mechanical religious frauds, and in doing so provides
             some of the best documentation we have of late medieval automata.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The most striking example is the Rood of Grace at Boxley Abbey in Kent &mdash;
+            The most striking example is the Rood of Grace at Boxley Abbey in Kent,
             a crucifix that moved its eyes, lips, and limbs, and was venerated as miraculous
             for decades before being exposed during the Dissolution of the Monasteries. Scot
             gives a mechanical account:
@@ -479,7 +479,7 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Scot&rsquo;s purpose was polemical &mdash; he wanted to prove that apparent
+            Scot&rsquo;s purpose was polemical: he wanted to prove that apparent
             miracles had mechanical explanations. But the effect of his argument is to
             document a sophisticated tradition of automata construction associated with
             religious institutions. Somebody knew how to build these devices. Somebody
@@ -488,8 +488,8 @@ export default function HiddenEngineersPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            This pattern &mdash; engineering knowledge preserved in polemical rather than
-            technical literature &mdash; is one of the reasons the history of early
+            This pattern (engineering knowledge preserved in polemical rather than
+            technical literature) is one of the reasons the history of early
             technology is so difficult to reconstruct. The people who built the devices
             did not write about them. The people who wrote about them were trying to
             expose them as frauds.
@@ -521,12 +521,12 @@ export default function HiddenEngineersPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous?page=58"
+                href="/book/the-secret-symbols-of-the-rosicrucians?page=164"
                 className="text-accent-rust hover:underline"
               >
                 <em>Die Lehren der Rosenkreuzer</em>, p. 58&ndash;59
               </Link>
-              {' '}&mdash; &ldquo;Elijah&rsquo;s Chariot&rdquo;
+              {': '}&ldquo;Elijah&rsquo;s Chariot&rdquo;
             </p>
           </div>
 
@@ -550,7 +550,7 @@ export default function HiddenEngineersPage() {
             This is not unique. Cornelius Drebbel, the Dutch inventor who built a working
             submarine in 1620, wrote a treatise titled <em>On the Nature of the Elements</em>
             that frames his inventions in terms of elemental philosophy. His perpetual motion
-            clock, his submarine, his thermostatic oven &mdash; all are presented as
+            clock, his submarine, his thermostatic oven: all are presented as
             demonstrations of the interaction of the four elements, not as engineering
             achievements in the modern sense.
           </p>
@@ -583,8 +583,8 @@ export default function HiddenEngineersPage() {
             Francis Bacon&rsquo;s <em>The Advancement of Learning</em> (London, 1605) is
             the text that, more than any other, argued for the dignity of practical
             knowledge. In a culture that prized philosophical contemplation over manual
-            labor, Bacon made the case that the &ldquo;mechanical arts&rdquo; &mdash;
-            what we would now call engineering and applied science &mdash; had epistemological
+            labor, Bacon made the case that the &ldquo;mechanical arts&rdquo;
+            (what we would now call engineering and applied science) had epistemological
             advantages over pure philosophy:
           </p>
 
@@ -605,17 +605,17 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            This is a profound observation, and one that describes the actual history of
+            This is a deep observation, and one that describes the actual history of
             technology accurately. The mechanical arts are cumulative: each generation
-            improves on the last. The philosophical sciences are not &mdash; they are
+            improves on the last. The philosophical sciences are not; they are
             dominated by founding authorities (Aristotle, Galen, Ptolemy) whose work is
             gradually corrupted by commentators. Bacon noticed that the blacksmith improves
             while the philosopher declines.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Bacon went further, arguing for what he called &ldquo;Mechanical History&rdquo;
-            &mdash; a systematic record of the trades and crafts as a foundation for natural
+            Bacon went further, arguing for what he called &ldquo;Mechanical History&rdquo;:
+            a systematic record of the trades and crafts as a foundation for natural
             philosophy:
           </p>
 
@@ -637,7 +637,7 @@ export default function HiddenEngineersPage() {
             By 1605, Bacon was describing something that had already been true for centuries
             without being named. The alchemists had their furnaces. Della Porta had his
             pneumatics. Hero had his automata. The Rosicrucians had their steam engine
-            schematic. The knowledge existed &mdash; it just did not exist under the name
+            schematic. The knowledge existed; it just did not exist under the name
             &ldquo;engineering.&rdquo; It existed under the names of magic, alchemy, and
             natural philosophy, because those were the categories available.
           </p>
@@ -675,10 +675,10 @@ export default function HiddenEngineersPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            &ldquo;Go and take your place with the seekers after gold&rdquo; &mdash; that
+            &ldquo;Go and take your place with the seekers after gold&rdquo;: that
             is, the alchemists. Leonardo saw perpetual motion and alchemy as the same kind
             of error: the pursuit of something that does not exist. His notebooks contain
-            pulleys, gears, flying machines, hydraulic systems, and anatomical studies &mdash;
+            pulleys, gears, flying machines, hydraulic systems, and anatomical studies,
             all treated as purely mechanical problems, without recourse to occult explanation.
           </p>
 
@@ -692,7 +692,7 @@ export default function HiddenEngineersPage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              Studies from Leonardo&rsquo;s <em>Notebooks</em> &mdash; 1,272 pages of
+              Studies from Leonardo&rsquo;s <em>Notebooks</em>: 1,272 pages of
               mechanical observation, stripped of any magical or alchemical framing.{' '}
               <Link href="/book/the-notebooks-of-leonardo-da-vinci-richter?page=37" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
@@ -700,8 +700,8 @@ export default function HiddenEngineersPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Leonardo proves, by contrast, how unusual the separation of engineering from
-            magic actually was. He was an outlier. For most of his contemporaries &mdash;
-            Della Porta, Drebbel, the Rosicrucians &mdash; the mechanical and the mystical
+            magic actually was. He was an outlier. For most of his contemporaries
+            (Della Porta, Drebbel, the Rosicrucians), the mechanical and the mystical
             were aspects of the same investigation. Leonardo&rsquo;s refusal to mix them
             was not the norm. It was a minority position that would not become orthodox for
             another two centuries.
@@ -715,7 +715,7 @@ export default function HiddenEngineersPage() {
           <h2 className="font-serif text-3xl text-primary mb-6">The Boundary Is Modern</h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The separation of engineering from esotericism is a modern invention &mdash;
+            The separation of engineering from esotericism is a modern invention,
             useful, but historically false. For most of the Western tradition, the people
             who knew how to build things also knew how to read Hermes Trismegistus. The
             people who wrote about pneumatics also wrote about natural magic. The people
@@ -740,9 +740,9 @@ export default function HiddenEngineersPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Source Library holds these texts. They are translated, annotated, and searchable.
-            The connections between them &mdash; Hero and Hermes in the same binding, Della
+            The connections between them (Hero and Hermes in the same binding, Della
             Porta&rsquo;s pneumatics inside a spell book, Elijah&rsquo;s chariot as a
-            literal engine &mdash; are visible now in a way they never were before.
+            literal engine) are visible now in a way they never were before.
           </p>
         </section>
 
@@ -754,47 +754,47 @@ export default function HiddenEngineersPage() {
               {
                 href: '/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria',
                 title: 'Hero of Alexandria, Pneumatica + Corpus Hermeticum',
-                detail: 'Greek MS, c. 1545 — steam engines bound with mystical philosophy',
+                detail: 'Greek MS, c. 1545: steam engines bound with mystical philosophy',
               },
               {
                 href: '/book/magia-naturalis-libri-xx-1607-porta',
                 title: 'Della Porta, Magia Naturalis',
-                detail: 'Naples, 1589 — pneumatics, optics, and kites as "natural magic"',
+                detail: 'Naples, 1589: pneumatics, optics, and kites as "natural magic"',
               },
               {
                 href: '/book/ten-books-on-architecture-pollio',
                 title: 'Vitruvius, De architectura',
-                detail: '1521 — aeolipile woodcut, architecture as total knowledge',
+                detail: '1521: aeolipile woodcut, architecture as total knowledge',
               },
               {
                 href: '/book/theatrum-chemicum-vol-iii-1602-zetzner',
                 title: 'Theatrum Chemicum',
-                detail: 'Strasbourg, 1659 — furnace design inside alchemical compilations',
+                detail: 'Strasbourg, 1659: furnace design inside alchemical compilations',
               },
               {
                 href: '/book/the-art-of-gold-making-artis-auriferae-morienus',
                 title: 'Artis Auriferae',
-                detail: 'Basel, 1572 — Mary the Prophetess and the bain-marie',
+                detail: 'Basel, 1572: Mary the Prophetess and the bain-marie',
               },
               {
                 href: '/book/the-teachings-of-the-rosicrucians-from-the-16th-and-17th-anonymous',
                 title: 'Die Lehren der Rosenkreuzer',
-                detail: 'MS — steam engine schematic as "Elijah\'s Chariot"',
+                detail: 'MS: steam engine schematic as "Elijah\'s Chariot"',
               },
               {
                 href: '/book/the-discovery-of-witchcraft-scot',
                 title: 'Scot, The Discoverie of Witchcraft',
-                detail: 'London, 1584 — mechanical crucifixes exposed',
+                detail: 'London, 1584: mechanical crucifixes exposed',
               },
               {
                 href: '/book/the-advancement-of-learning-1605-first-edition-bacon',
                 title: 'Bacon, The Advancement of Learning',
-                detail: 'London, 1605 — the dignity of the mechanical arts',
+                detail: 'London, 1605: the dignity of the mechanical arts',
               },
               {
                 href: '/book/a-thorough-explanation-of-the-nature-and-properties-of-the-drebbel',
                 title: 'Drebbel, On the Nature of the Elements',
-                detail: 'c. 1608 — submarines framed as elemental philosophy',
+                detail: 'c. 1608: submarines framed as elemental philosophy',
               },
               {
                 href: '/book/the-notebooks-of-leonardo-da-vinci-richter',

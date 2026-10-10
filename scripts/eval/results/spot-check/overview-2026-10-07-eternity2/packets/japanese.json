@@ -1,0 +1,363 @@
+[
+ {
+  "slot": 21,
+  "stratum": "japanese",
+  "book_id": "69e75cf2cc48e59ad74eb2b4",
+  "book_url": "https://sourcelibrary.org/book/69e75cf2cc48e59ad74eb2b4",
+  "tradition": "japanese",
+  "book": {
+   "id": "69e75cf2cc48e59ad74eb2b4",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11a",
+   "display_title": null,
+   "author": "Kanze School",
+   "language": "Japanese",
+   "published": "1840",
+   "pages_count": 102,
+   "pages_ocr": 102,
+   "pages_translated": 96,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "smithsonian"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 152,
+   "distinct_page_numbers": 152,
+   "duplicate_records": 0,
+   "pages_with_ocr": 152,
+   "pages_translated": 144,
+   "with_printed_number": 5,
+   "printed_backsteps": 2,
+   "printed_repeats": 1,
+   "pages_count_field": 102,
+   "pages_translated_field": 96
+  },
+  "run": [
+   26,
+   49,
+   64,
+   84
+  ],
+  "pages": [
+   {
+    "page_number": 26,
+    "page_id": "69f64677ec9cbbee5665b794",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75cf2cc48e59ad74eb2b4/sp69f64677ec9cbbee5665b794.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n図正\nハ一一二一一八一二十一人\nからて仮に見えつる事の陰露の身\nなからきゝのこる。妄執の縁社づゝさな\n同一同キセル\nけれ不思議やなはや深更になる\nまゝに。よるのともし火幽なる。覚りのうち\nに人影のあるかなきかに見え給ふは\n。いかなる人にてましますそ〽我經政か\n幽霊なるか。御弔ひの有穀さにごれ\n□□し同きせん・一一・二",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "<gloss>Waki</gloss> In the path of <term>Shura</term> <gloss>the realm of eternal conflict/Asura</gloss>, I become a body of shadow and dew.\n<gloss>Shite</gloss> A mystery, such a deep lament.\n<gloss>Waki</gloss> Even so, the lament doubles back.\n<gloss>Shite</gloss> At the rumors, <gloss>Rete</gloss> a lament.\n<gloss>Waki</gloss> A lament, saying, <gloss>Shite</gloss> of the <term>Shura</term>.\n<gloss>Waki</gloss> A ghostly spirit, <gloss>Waki</gloss> a perilous state, that is, <gloss>Waki</gloss> <unclear>in</unclear>.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 49,
+    "page_id": "69f646aaec9cbbee5665b7a9",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75cf2cc48e59ad74eb2b4/sp69f646aaec9cbbee5665b7a9.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n三十五日\n。荘子かあたにみし夢の。小蝶の姿う\nつゝなきうき世の中そあはれなる\n定めなき世といひなから。つかさくら\nゐもかけたかき。光源氏の古へも。小\n蝶の舞人色々の見ふねにかさる\n金銀の。かめにさす山ふきのがさね\nのきぬをかけ給ふ〽花そのゝ。小蝶を\nヤヲハ",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "Like a light dream, the figure of a small butterfly\nappears in this world of fleeting vanity.\nThe world they call a dream, when one wakes,\nis but a transient shadow, like the passing of time.\nThe butterfly dances, its colors unseen,\na trace of lingering scent in the mountain pass,\na small butterfly that drifts among the eaves.\n\n<note>A small printer's mark or seal appears at the bottom left margin.</note>\n\n<summary>This page contains poetic reflections on the transience of life, comparing the world to a dream and the human figure to a delicate butterfly.</summary>\n<keywords>Kanze School, Utaibon, Butterfly, Dream, Transience</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 64,
+    "page_id": "69f646c9ec9cbbee5665b7ba",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75cf2cc48e59ad74eb2b4/sp69f646c9ec9cbbee5665b7ba.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n十七\n一十\n仝\n御前にんあなたにあたつてふみ\n鼓の音の聞えんは。何事にて有そ\n十七\n一十一\n寄て交り候へ「長て候シカヽ「実を\n去事あり。九州にては此鳥追舟\n社山とつの見事にて作へ此ふねを\nサシ男\n待て見はやと存候おもしろや\n作るといふ事のそのまういないの",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "Hair\n<margin>Keyama</margin>\nMouth Ki\nBefore the master, the rain arrives, suddenly held in the beak\nThe sound of instruction, the wisdom is clear,\n<margin>Hair</margin>\nMay it be fortunate. <margin>Mouth Ki</margin> Dark.\nLeaving, meeting the bird-chasing boat <note>original: \"鳥追舟\" (torioibune)</note> of Kyushu.\nPrivate, the view of the blind, the reason (this sound\nWaiting, thinking of the spring <note>original: \"ゆとね\" (yutone - likely poetic reference to spring/evening sound)</note> <margin>Se Man</margin>\n<unclear>So</unclear>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 84,
+    "page_id": "69f646f4ec9cbbee5665b7ce",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75cf2cc48e59ad74eb2b4/sp69f646f4ec9cbbee5665b7ce.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\nや二人通りて候か。伊通るとや。それ\n留て給う候へ。なふそわうそわら\n給り候へ上二十一一一二十五一\nはか子にて候へ。旧里を出し鶴の子\n一七百九十一一年十一月十一日上刻\nの松にかへらぬ。淋しさよッヤ去程に時\nの末もはや過ぬ。申一天も近つ\nけは。二人を西に引すへてきゝんとすゝ\n・一・・三一一・二三一\nみけり〽聞より心うち乱れ。飛立はかり思へ\nとう。ち□□□",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "\"The two passing by, is that the procession?\"\n<gloss>Spoken while holding the letter.</gloss>\nThey stir and bustle about, fidgeting,\n<gloss>Stirring.</gloss>\nThe <term>hōfuku</term> <gloss>ceremonial garb</gloss>, riding the crane to the old village,\n<gloss>In the ground style.</gloss>\nIf we do not sleep, today we depart,\n<gloss>In the ground style.</gloss>\nThe appearance is elegant, even the heavens change color,\nThe two raise their voices together, striving,\n<gloss>Raised up.</gloss>\nFrom then on, the heart flows with private thoughts.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 22,
+  "stratum": "japanese",
+  "book_id": "69e75ab9095c302d3fddefcf",
+  "book_url": "https://sourcelibrary.org/book/69e75ab9095c302d3fddefcf",
+  "tradition": "japanese",
+  "book": {
+   "id": "69e75ab9095c302d3fddefcf",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3",
+   "display_title": null,
+   "author": "Kanze School",
+   "language": "Japanese",
+   "published": "1840",
+   "pages_count": 112,
+   "pages_ocr": 112,
+   "pages_translated": 108,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "smithsonian"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 167,
+   "distinct_page_numbers": 167,
+   "duplicate_records": 0,
+   "pages_with_ocr": 167,
+   "pages_translated": 152,
+   "with_printed_number": 9,
+   "printed_backsteps": 4,
+   "printed_repeats": 4,
+   "pages_count_field": 112,
+   "pages_translated_field": 108
+  },
+  "run": [
+   25,
+   40,
+   79,
+   101
+  ],
+  "pages": [
+   {
+    "page_number": 25,
+    "page_id": "69f64ed372e9e93842ddc0a8",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75ab9095c302d3fddefcf/sp69f64ed372e9e93842ddc0a8.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n二丁\n□□\n平等院と申御寺の候を御覧せられ\n早討\nて候か不知案内のまにて候程に\n末見得候御をしへ候へ此方へ御出入\n。是社平等院にて候へ又是成は釣殿と\n申て。面白き所にて能々御謡共久し〽やうにお\nもしろき所にて郷また是成之を\nみれは。扇のことく取残さわて候はゞ何と\n頃役",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "The temple called <term>Heike-in</term> <gloss>a temple associated with the Heike clan</gloss> is very elegant.\n<margin>Military Gate</margin>\nIt appears like the gate of the forbidden golden city.\nThe visitor <gloss>Shite (main performer)</gloss> says: Please come this way. This is my private Heike-in. This is the <term>tsuridono</term> <gloss>a fishing pavilion extending over water</gloss>, and it is a fascinating sight. <margin>Early</margin> This is the top, you see. What do you call it? Indeed, this is it. That folding fan, the <term>kokuen</term> <gloss>dark edge</gloss>, proceeding with the affair.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "69f64ee072e9e93842ddc0b9",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75ab9095c302d3fddefcf/sp69f64ee072e9e93842ddc0b9.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n東正\n一月\nたまへ御僧よ。かりそめなから是\nとても。ぜ生の種の縁にいま。扇の\n芝の草の陰に。帰るとてうけにけ\nり立帰るとてうせにけり",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "The priest from the temple looks around.\nThat too is the karma of the world, like the wind on a fan.\nHearing that one returns to the shade of the leaves of the grass.\nThe path of my own life is indeed strange.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 79,
+    "page_id": "69f64efd72e9e93842ddc0de",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75ab9095c302d3fddefcf/sp69f64efd72e9e93842ddc0de.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n十一月廿一日\n武具一領長刀一えたゞにあれに馬をも\n一てつないて持て候。是は只今にしも\nあれ。鎌倉に御大事あらはぢきれ\nたりとも此具是取て投かけざひた\nりとも長刀を持痩たり共あの\n馬に乗べ番にはせ参し着到につき\n伊来",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "A set of armor and one long sword <term>naginata</term> <gloss>long-handled sword/halberd</gloss>. Saying it is a horse that cannot be touched, holding it firmly, it looks like a soldier. The armor is gold, looking through the large pieces. Discarding the equipment, throwing away the gear, saying that, holding the long sword, he leans on it thin and exhausted. Bring the horse, approach the first, attend, attend.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 101,
+    "page_id": "69f64f0e72e9e93842ddc0f4",
+    "image_url": "https://images.sourcelibrary.org/pages/69e75ab9095c302d3fddefcf/sp69f64f0e72e9e93842ddc0f4.jpg",
+    "ocr": "<language>Japanese</language>\n<script>printed</script>\n\n十一月十一日\n日の前にみえて浅ましや〽天の原ぶつ\nさけ見れば。霞たつぶら路まとひて\nゆくへしらすも住馴し空にいつしか\n行雲の浦山しきけしきかな御迦陵\n頻伽の所々し。し入し今さらにわつか\nなる。雁入みの帰り行あまちをきけはな\nつかしや。千鳥鴨のをきつ浪げくか帰る\n月文",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "Looking to the front, I wait. From the heavenly fields,\nIt is clearly visible, pulling the path along.\nI do not know where I live, such a dwelling.\nHearing of the bay of passing clouds,\nThere is trust, I stop by for a moment.\nWithout exceeding the overflowing people,\nThe plover cries, observing as I go.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 23,
+  "stratum": "japanese",
+  "book_id": "69e753d3095c302d3fddc43d",
+  "book_url": "https://sourcelibrary.org/book/69e753d3095c302d3fddc43d",
+  "tradition": "japanese",
+  "book": {
+   "id": "69e753d3095c302d3fddc43d",
+   "title": "観世流改訂謡本 (Kanze-ryū Noh Texts)",
+   "display_title": null,
+   "author": "Zeami",
+   "language": "Japanese",
+   "published": "1912",
+   "pages_count": 28,
+   "pages_ocr": 28,
+   "pages_translated": 25,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "university_of_illinois_urbana-champaign",
+     "americana"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 28,
+   "distinct_page_numbers": 28,
+   "duplicate_records": 0,
+   "pages_with_ocr": 28,
+   "pages_translated": 25,
+   "with_printed_number": 5,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 28,
+   "pages_translated_field": 25
+  },
+  "run": [
+   3,
+   13,
+   15,
+   23
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "69e753d3095c302d3fddc440",
+    "image_url": "https://images.sourcelibrary.org/archived/69e753d3095c302d3fddc43d/3.jpg",
+    "ocr": "<scan-quality>fair</scan-quality>\n<language>Japanese</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<warning>Handwritten Japanese (cursive/semi-cursive). A large library \"Notice\" slip obscures a significant portion of the center text. Pencil call numbers at top.</warning>\n<meta>Library call number \"PL 765 K34X v.1 m.1\" and \"AFX\" in pencil at top.</meta>\n\n<image-desc size=\"medium\" type=\"decorative\" significance=\"low\">Yellow library \"Notice\" slip pasted over the center of the manuscript page, containing printed text and columns for due dates.</image-desc>\n\n<insert>\nNOTICE: Return or renew all Library Materials! The Minimum Fee for\neach Lost Book is $50.00.\nThe person charging this material is responsible for\nits return to the library from which it was withdrawn\non or before the Latest Date stamped below.\nTheft, mutilation, and underlining of books are reasons for discipli-\nnary action and may result in dismissal from the University.\nTo renew call Telephone Center, 333-8400\nUNIVERSITY OF ILLINOIS LIBRARY AT URBANA-CHAMPAIGN\nL161 — O-1096\n</insert>\n\n二番目\n勝修羅トイフ\n早参第一\nヨウク夷 <unclear>乃</unclear>\n\n| | |\n|---|---|\n| 田村 | |\n| 三月ワキテ | |\n| 僧 田村九河ハ童子 | |\n\n<margin>早参り</margin>\n霞もさやに波生ひおろして春の空\n\n敷も長門よめぐる月の霞にむすび其方\n\n<margin>口付</margin>\n\n---\n\n<unclear>山</unclear> <unclear>里</unclear> <unclear>重</unclear>\n\n<vocab>田村 (Tamura), 勝修羅 (Katsu-Shura), 早参 (Hayamairi), 霞 (Kasumi), 謡本 (Utaibon)</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Second Play\nEntitled Victorious Battle-Ashura <note>original: \"Katsu-Shura\"</note>\nFast-Entry <note>original: \"Hayamairi\"</note> First Section\n\n| | |\n|---|---|\n| Tamura | |\n| Third Month, Waki <note>the secondary actor</note> | |\n| Monk, Tamura-maru <note>in his former state as a child</note> | |\n\n<margin>Fast-Entry</margin>\nThe mist clears, revealing the waves upon the spring sky.\n\nEven the path to Nagato is shrouded in the mist of the moon, binding the scene.\n\n<margin>Oral Instruction</margin>\n\n<unclear>Mountain</unclear> <unclear>Village</unclear> <unclear>Heavy</unclear>\n\n<summary>This page introduces the structure of the play \"Tamura,\" noting characters and opening atmospheric imagery.</summary>\n<keywords>Tamura, Noh, Waki, Hayamairi</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 13,
+    "page_id": "69e753d3095c302d3fddc44a",
+    "image_url": "https://images.sourcelibrary.org/archived/69e753d3095c302d3fddc43d/13.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Japanese cursive (Kuzushiji)</warning>\n\n<margin>\n日付\n</margin>\n\n清閑寺といふを尋ねぬれば教へ申也。\n\n早 「まづ南に當つて<gloss>アタ</gloss>塔婆<gloss>トオバ</gloss>の見えてと<gloss>シテ</gloss>\nいらハらゐていふぞ「あハれこそ歌に\n\n早　中山清閑寺<gloss>セイガンジ</gloss>。今熊野<gloss>イマグマ</gloss>まで見えてゐて\nまた北に當つて<gloss>アタ</gloss>入相<gloss>イリ</gloss>の聞えいふにハあら<gloss>シテ</gloss>\nぬ様にていふぞ「あハれハ上見ぬ貌鳥<gloss>カオトリ</gloss>の\n尾の寺。やがて法性坊へ音羽の山に日影にうつる。\n\n---\n\n<vocab>清閑寺, 塔婆, 今熊野, 入相, 貌鳥, 法性坊, 音羽の山, 謡本</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<margin>Date</margin>\n\nWhen I sought out the place called Seikan-ji, they taught me.\n\nEarly: \"First, facing south, you see a pagoda <gloss>tōba</gloss>, and when you go in, you say, 'Ah, how moving—'\"\n\nEarly: Seikan-ji at Nakayama. It is visible as far as Imagumano. And facing north, you hear the evening bell <gloss>iriai</gloss>. It is not to say that you just hear it, but you say, 'Ah, the cuckoo <gloss>kaotori</gloss> does not look up.' It reflects in the sunlight on Mt. Otowa at the temple of the tail <gloss>O-no-tera</gloss>. Immediately, it reaches Hōshō-bō.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 15,
+    "page_id": "69e753d3095c302d3fddc44c",
+    "image_url": "https://images.sourcelibrary.org/archived/69e753d3095c302d3fddc43d/15.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten [Japanese kuzushiji calligraphic hand with musical notations for Noh chanting]</warning>\n\n# ●仕舞\n\n地<gloss>ウ</gloss>は<gloss>ハナ</gloss>花<gloss>ノ</gloss>の<gloss>ケ</gloss>気<gloss>シ</gloss>色<gloss>キ</gloss>や<gloss>ハ</gloss>。柳<gloss>ヤナギ</gloss>桜<gloss>サクラ</gloss>木<gloss>コ</gloss>の<gloss>ノ</gloss>間<gloss>アヒダ</gloss>よ<gloss>リ</gloss>\nあ<gloss>ニ</gloss>け<gloss>中</gloss>ぼ<gloss>甲</gloss>の<gloss>元</gloss>の<gloss>ネ</gloss>露<gloss>下</gloss>も<gloss>ウ</gloss>。わ<gloss>ニ</gloss>づ<gloss>中</gloss>か<gloss>ネ</gloss>に<gloss>下</gloss>光<gloss>ヒカ</gloss>の<gloss>リ</gloss>。透<gloss>ス</gloss>き\nと<gloss>ト</gloss>ほ<gloss>ホ</gloss>り<gloss>リ</gloss>て<gloss>テ</gloss>散<gloss>チ</gloss>る<gloss>ル</gloss>や<gloss>ヤ</gloss>。心<gloss>ココロ</gloss>あ<gloss>ア</gloss>ら<gloss>ラ</gloss>ん<gloss>ン</gloss>。さ<gloss>サ</gloss>す<gloss>ス</gloss>が<gloss>ガ</gloss>に<gloss>ニ</gloss>お<gloss>オ</gloss>ぼ\nろ<gloss>ロ</gloss>げ<gloss>ゲ</gloss>の<gloss>ノ</gloss>夜<gloss>ヨ</gloss>は<gloss>ハ</gloss>。春<gloss>ハル</gloss>の<gloss>ノ</gloss>宝<gloss>タカラ</gloss>げ<gloss>ゲ</gloss>よ<gloss>ヨ</gloss>。時<gloss>トキ</gloss>め<gloss>メ</gloss>け<gloss>ケ</gloss>る<gloss>ル</gloss>。粧<gloss>ヨソオ</gloss>\nひ<gloss>ヒ</gloss>。青<gloss>セイ</gloss>柳<gloss>ヨウ</gloss>は<gloss>ハ</gloss>。数<gloss>カズ</gloss>な<gloss>ナ</gloss>ら<gloss>ラ</gloss>う<gloss>ウ</gloss>し<gloss>シ</gloss>て<gloss>テ</gloss>。風<gloss>カゼ</gloss>に<gloss>ニ</gloss>長<gloss>ノド</gloss>閑<gloss>カ</gloss>な<gloss>ナ</gloss>る<gloss>ル</gloss>。\n音<gloss>オト</gloss>羽<gloss>ハ</gloss>の<gloss>ノ</gloss>瀧<gloss>タキ</gloss>の<gloss>ノ</gloss>。白<gloss>シラ</gloss>糸<gloss>イト</gloss>の<gloss>ノ</gloss>。く<gloss>ク</gloss>り<gloss>リ</gloss>返<gloss>カエ</gloss>し<gloss>シ</gloss>て<gloss>テ</gloss>。へ<gloss>ヘ</gloss>て<gloss>テ</gloss>も<gloss>モ</gloss>\n面<gloss>オモ</gloss>白<gloss>シロ</gloss>や<gloss>ヤ</gloss>。あら。た<gloss>タ</gloss>へ<gloss>エ</gloss>な<gloss>ナ</gloss>る<gloss>ル</gloss>や<gloss>ヤ</gloss>。地<gloss>チ</gloss>を<gloss>ヲ</gloss>権<gloss>ゴン</gloss>現<gloss>ゲン</gloss>の<gloss>ノ</gloss>。花<gloss>ハナ</gloss>の<gloss>ノ</gloss>\n\n<vocab>能 (Noh), 謡本 (Utai-bon), 仕舞 (Shimai), 田村 (Tamura), 権現 (Gongen), 音羽の瀧 (Otowa no taki), 柳桜 (Yanagi-zakura)</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# ● Dance <gloss>Shimai</gloss>\n\nThe ground <gloss>ji</gloss> [sings]: The scenery of the flowers. Between the willow and the cherry trees, the dew drops from the light. It shines through and scatters. If there is a heart that feels, indeed, the hazy night is the treasure of spring. The thriving, ornate appearance. The green willow is of no account, and in the wind, it is tranquil. The Otowa Waterfall, the white threads, repeating and passing through. How wonderful. Ah, how sublime. The ground [sings]: The manifestation of the Gongen, the flowers.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 23,
+    "page_id": "69e753d3095c302d3fddc454",
+    "image_url": "https://images.sourcelibrary.org/archived/69e753d3095c302d3fddc43d/23.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Japanese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten [Kuzushiji Japanese cursive with musical/vocal notations]</warning>\n\nふ<gloss>フ</gloss>な<gloss>ナ</gloss>こ<gloss>コ</gloss>に<gloss>ニ</gloss>。元<gloss>ゲン</gloss>に<gloss>ニ</gloss>。行<gloss>ギョウ</gloss>に<gloss>ニ</gloss>。\n\n神國<gloss>シンコク</gloss>はもとより<gloss>。元に。行に。</gloss>觀音<gloss>クワンオン</gloss>の吉誓<gloss>キツゼイ</gloss>。佛力<gloss>ブツリキ</gloss>\n\nといひ神力<gloss>リキ</gloss>とも。其<gloss>ソノ</gloss>数<gloss>カズ</gloss>によまじらじ。\n\n侍<gloss>ハベ</gloss>つといふべし。さきに唐<gloss>モロコシ</gloss>の玄宗<gloss>ゲンソウ</gloss>皇帝。\n\nきかせたまふも思へば。あやし。\n\nさらば天<gloss>テン</gloss>にありては鬼神<gloss>キシニ</gloss>の勢<gloss>キ</gloss>。天を\n\n響き地<gloss>チ</gloss>は滿ちて。滿目青山<gloss>マンモクセイザン</gloss>動揺<gloss>ドウヨウ</gloss>せり\n\n<margin>\n●獨吟\n翹\n</margin>\n\n●いかに鬼神もたゞ今は。聞け昔もさるな。\n\n<vocab>神國 (Shinkoku), 觀音 (Kannon), 佛力 (Butsuriki), 神力 (Shinriki), 玄宗皇帝 (Emperor Xuanzong), 鬼神 (Kishin), 滿目青山 (Manmoku Seizan), 獨吟 (Dokushō), 翹 (Gyo)</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "In the boat. In the origin. In the practice.\n\nThe land of the gods <gloss>Shinkoku</gloss> is from the beginning. The vow of Kannon. The power of the Buddha,\n\nor the power of the gods; it cannot be counted in numbers.\n\nOne should say he is present. I recall the Emperor Xuanzong of Tang China\n\nwho heard of this. When I think of it, it is mysterious.\n\nIf we speak of the heavens, the force of the demons shakes\n\nthe sky, and the earth is filled. The vast green mountains are trembling.\n\n<margin>\n● Solo chant\n(Gyo)\n</margin>\n\n● Even if you are a demon, for now, listen. Such things happened in the past, too.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 24,
+  "stratum": "japanese",
+  "book_id": "69dfede38d34461cbe7f4db6",
+  "book_url": "https://sourcelibrary.org/book/69dfede38d34461cbe7f4db6",
+  "tradition": "japanese",
+  "book": {
+   "id": "69dfede38d34461cbe7f4db6",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+   "display_title": null,
+   "author": "Murasaki Shikibu",
+   "language": "Japanese",
+   "original_language": "Japanese",
+   "published": "1100",
+   "pages_count": 19,
+   "pages_ocr": 19,
+   "pages_translated": 18,
+   "image_source": {
+    "provider": "ndl"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 19,
+   "distinct_page_numbers": 19,
+   "duplicate_records": 0,
+   "pages_with_ocr": 19,
+   "pages_translated": 18,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 19,
+   "pages_translated_field": 18
+  },
+  "run": [
+   4,
+   8,
+   11,
+   17
+  ],
+  "pages": [
+   {
+    "page_number": 4,
+    "page_id": "69dfede38d34461cbe7f4dba",
+    "image_url": "https://images.sourcelibrary.org/archived/69dfede38d34461cbe7f4db6/4.jpg",
+    "ocr": "<language>Japanese</language>\n<script>handwritten</script>\n\n□□□\nのみらになむはつりける念すもたい\n□□して覚しおくれさす□つたう\nあのさまなにてなかくわかれなは\n□□□",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "<note>Red square seal in the upper center of the page.</note>\n<note>Purple oval library stamp at the bottom center.</note>\n<note>Small square stamp in the upper right corner.</note>\n\nNot only this, but after a short while, he soon pays a visit <note>original: \"otozure\"</note>.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 8,
+    "page_id": "69dfede38d34461cbe7f4dbe",
+    "image_url": "https://images.sourcelibrary.org/archived/69dfede38d34461cbe7f4db6/8.jpg",
+    "ocr": "<language>Japanese</language>\n<script>handwritten</script>\n\n□□\n□□\n□\n□□□\nみやは女きみのおほむありさまひる\n見きこえさせたまふにいとゝ御こゝろ\nさしまさりにけりおほきさよきほと",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "<note>A handscroll painting (emaki) depicting an interior scene from the Genji Monogatari. On the left, a woman in layered robes sits behind a folding screen. On the right, two figures are engaged in a game of Go on a board placed on a tatami mat.</note>\n\nThe Prince also speaks of the mother's disposition; observing her with such pity, the depth of the barrier between them is truly...",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 11,
+    "page_id": "69dfede38d34461cbe7f4dc1",
+    "image_url": "https://images.sourcelibrary.org/archived/69dfede38d34461cbe7f4db6/11.jpg",
+    "ocr": "<language>Japanese</language>\n<script>handwritten</script>\n\n二十\n心にいりたることにくもゑしはてす大か\nおし\nきみき丁のつまよりけうそくにおり\nわてなやみたきましてさしいてたまへる\nいとみまほしくらうたけなり\nあきはつるのゝのけしきもとのす\nきほのめくゝかせにつけてころみ\nわかみれとつのとてなみたくまるゝかさすかに\nはつかしけれはあたきをまさらはして\nおはするころのうちくらうたくおほしや\nこるれをかゝるにころひともおもふはなれは\nめとうたくしきかたゝおほしてうら\nみたまふなめり\n□\n□\n同\n□",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "<note>A horizontal handscroll segment features a central column of calligraphy flanked by two illustrative panels. The left panel shows a figure behind a green lattice screen, while the right panel shows two court figures in elaborate robes against a stylized landscape.</note>\n\nIt is troublesome and regrettable. The amorous affairs of the palace, the evening meetings, and the morning heart are all quite clear. How regrettable to remain in such a state. The mind is wretched, and the habits of the heart are troublesome. Layers of grass, overlapping, as one looks toward that side. Within that darkness, the heart remains caught in its own foolish presumption.\n<note>The text here appears to be a fragmented or stylized rendering of common Heian-period poetic tropes regarding the frustrations of courtly romance, likely serving as a caption for the accompanying visual narrative.</note>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 17,
+    "page_id": "69dfede38d34461cbe7f4dc7",
+    "image_url": "https://images.sourcelibrary.org/archived/69dfede38d34461cbe7f4db6/17.jpg",
+    "ocr": "<language>Japanese</language>\n<script>handwritten</script>\n\n如し□□□れにていかなる\nまにかといひあへりよつやすきと\nころにて月ころおもひあまることもき\nこしさをむとてなむといはせたまへり\nつかにきこゆへきことにかときみはく\nしうおもひくゐたまへれとめのと\nなどのくるしかりてしかおはします\nむをたちなかこやはゝつしたてまつ\nわたまはむと故にこそかくなむとし\nのひくきこみめちかきほとなりといふ\nはとかひゝしくなとてかさはにんわかき\n御とちものきこしたまはむことはふか\nくしみつくつくもあらぬをいとかやすまて\n心のとかにおはれるとのなれはも人のゆるしなく\nてうちとけたまはしなといふほとあめはや\nこよやりてそらはいとくらしとのひゝものあやにこ\nしなる夜行うちしてやかのたつみの\nすみのくつれあやふしこのひとのみくる\nまいれなとおもはゞいれくみかとさして\nよかゝるひとのみともひとそうたゝあるな\nといひあへるむくしくきゝなられぬこゝちし\nたまふさのゝわたりこはへもあらんなとく\nちすさひたまてさとひたるすのこのはし\nしかたについゐたまへり\nさしとむるむくらやしけにあつ\nまやのあまりほとふるあまはゝ\nきかなゝ\nとうちはらひたまへるおひかせいとか\nたわなるまてあつまやのさとひとおと\nろきぬへし\n同二日",
+    "ocr_engine": "ndl-koten",
+    "ocr_model": "ndl-koten/v3",
+    "translation": "It was spoken of as a promise,\nAnd even as the moon is left behind, it is said that the east has come.\nHolding this thought, the strength of the longing, the moon that passes,\nThe lord speaks, and I hold it in my heart.\nThinking of the loneliness that follows,\nI return to the traces, the heart that does not forget the lingering memories.\nTo hear such things, to be with one through the passing years,\nHow very sad it is, to think of the moon that fades,\nThe edge of the fire-starter,\nThe edge of the mouth.\nThe mysterious person who touched my heart, the strange one,\n\"That which is not graceful,\" is what he said,\nThe reading of this person, the confusion,\nThe coming of the person who is not graceful,\n\"Come,\" he said, and \"Gather,\" he said,\nThinking only of the path of the father.\nThe head of the one who is known,\nThe hanging tassels, the love, the deep sadness,\nRemaining after the play,\nWhat is this, what is that?\nThe clear path of the ink, the fisherman,\nGlittering,\nThe small gathering of the path, the haste,\nI have not seen the path of the one who has left.\n\n<note>Gold leaf flecks (kirigane) are scattered across the paper surface.</note>\n\n<summary>This page continues the introspective and often melancholy reflection on personal relationships, the interpretation of mysterious figures, and the transient nature of memory and human connection.</summary>\n<keywords>memory, loneliness, melancholy, mysterious figure, longing, Genji Monogatari</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

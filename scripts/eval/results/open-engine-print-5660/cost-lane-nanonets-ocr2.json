@@ -1,0 +1,680 @@
+{
+  "engine": "nanonets-ocr2",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "eebo-tcp-5488",
+      "file": "eebo-tcp-5488-2026-10-04.json",
+      "n_pages": 73,
+      "n_with_ref": 73
+    },
+    {
+      "stratum": "eebo-tcp-latin-5660",
+      "file": "eebo-tcp-latin-5660-2026-10-04.json",
+      "n_pages": 25,
+      "n_with_ref": 24
+    },
+    {
+      "stratum": "english-ia-5124",
+      "file": "english-ia-5124-2026-10-04.json",
+      "n_pages": 122,
+      "n_with_ref": 121
+    },
+    {
+      "stratum": "ref-ws",
+      "file": "ref-ws-2026-10-04.json",
+      "n_pages": 120
+    },
+    {
+      "stratum": "greek",
+      "file": "greek-2026-10-04.json",
+      "n_pages": 14,
+      "n_with_ref": 11
+    },
+    {
+      "stratum": "greek-ext",
+      "file": "greek-ext-2026-10-04.json",
+      "n_pages": 170,
+      "n_with_ref": 117
+    },
+    {
+      "stratum": "greek-ext2",
+      "file": "greek-ext2-2026-10-04.json",
+      "n_pages": 10,
+      "n_with_ref": 8
+    }
+  ],
+  "classes": {
+    "english-1600-1699": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.051,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 56,
+          "n": 59,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": 0.059,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "nanonets-ocr2": 0.059,
+          "gemini-3.1-flash-lite": 0.12
+        },
+        "invention_ref": {
+          "nanonets-ocr2": 0.092,
+          "gemini-3.1-flash-lite": 0.171
+        }
+      },
+      "n_pages": 59,
+      "n_referenced": 59,
+      "n_paired": 59,
+      "n_gate": 59,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 53,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 6,
+        "ref-ws": 0,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.045,
+        "gemini-3.1-flash-lite": 0.053,
+        "gemini-3.1-flash-lite-b": 0.052
+      },
+      "ref_median_cer_ci95": [
+        0.045,
+        0.059
+      ],
+      "delta": {
+        "median": -0.002,
+        "ci95": [
+          -0.018,
+          0.002
+        ],
+        "wins": 31,
+        "losses": 23,
+        "ties": 5,
+        "untied": 54,
+        "p_sign": 0.341,
+        "share_le_minus_005": 0.051
+      },
+      "noise_floor": {
+        "n": 59,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 2,
+        "gemini-3.1-flash-lite": 3
+      },
+      "invention_median": {
+        "nanonets-ocr2": 0.092,
+        "gemini-3.1-flash-lite": 0.171
+      },
+      "loops": {
+        "nanonets-ocr2": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "english-1700+": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.198,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 97,
+          "n": 106,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": 0,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "nanonets-ocr2": 0,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_ref": {
+          "nanonets-ocr2": 0.02,
+          "gemini-3.1-flash-lite": 0.018
+        }
+      },
+      "n_pages": 106,
+      "n_referenced": 106,
+      "n_paired": 106,
+      "n_gate": 106,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 106,
+        "ref-ws": 0,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.017,
+        "gemini-3.1-flash-lite": 0.022,
+        "gemini-3.1-flash-lite-b": 0.024
+      },
+      "ref_median_cer_ci95": [
+        0.017,
+        0.033
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "wins": 31,
+        "losses": 27,
+        "ties": 48,
+        "untied": 58,
+        "p_sign": 0.694,
+        "share_le_minus_005": 0.198
+      },
+      "noise_floor": {
+        "n": 106,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 1,
+        "gemini-3.1-flash-lite": 21
+      },
+      "invention_median": {
+        "nanonets-ocr2": 0.02,
+        "gemini-3.1-flash-lite": 0.018
+      },
+      "loops": {
+        "nanonets-ocr2": 2,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "german": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=29 < 50) — rule (e): no routing decision",
+        "a_lite": "adequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 23,
+          "n": 23,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 30,
+      "n_referenced": 30,
+      "n_paired": 29,
+      "n_gate": 0,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 29,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.029,
+        "gemini-3.1-flash-lite": 0.005,
+        "gemini-3.1-flash-lite-b": 0.005
+      },
+      "ref_median_cer_ci95": [
+        0.003,
+        0.008
+      ],
+      "delta": {
+        "median": 0.019,
+        "ci95": [
+          0.012,
+          0.033
+        ],
+        "wins": 1,
+        "losses": 27,
+        "ties": 1,
+        "untied": 28,
+        "p_sign": 0,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 23,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "nanonets-ocr2": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "nanonets-ocr2": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 library < 50) — no lane decision"
+    },
+    "greek-print": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.009,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 103,
+          "n": 114,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": 0.781,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "nanonets-ocr2": 0.781,
+          "gemini-3.1-flash-lite": 0.121
+        },
+        "invention_ref": {
+          "nanonets-ocr2": 0.84,
+          "gemini-3.1-flash-lite": 0.244
+        }
+      },
+      "n_pages": 114,
+      "n_referenced": 114,
+      "n_paired": 114,
+      "n_gate": 114,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 0,
+        "greek": 9,
+        "greek-ext": 97,
+        "greek-ext2": 8
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.518,
+        "gemini-3.1-flash-lite": 0.145,
+        "gemini-3.1-flash-lite-b": 0.14
+      },
+      "ref_median_cer_ci95": [
+        0.116,
+        0.165
+      ],
+      "delta": {
+        "median": 0.324,
+        "ci95": [
+          0.253,
+          0.434
+        ],
+        "wins": 1,
+        "losses": 113,
+        "ties": 0,
+        "untied": 114,
+        "p_sign": 0,
+        "share_le_minus_005": 0.009
+      },
+      "noise_floor": {
+        "n": 114,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 60,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "nanonets-ocr2": 0.84,
+        "gemini-3.1-flash-lite": 0.244
+      },
+      "loops": {
+        "nanonets-ocr2": 18,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "latin-1500-1699": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=60 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.017,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 60,
+          "n": 60,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": 0.211,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "nanonets-ocr2": 0.211,
+          "gemini-3.1-flash-lite": 0.173
+        },
+        "invention_ref": {
+          "nanonets-ocr2": 0.327,
+          "gemini-3.1-flash-lite": 0.25
+        }
+      },
+      "n_pages": 61,
+      "n_referenced": 60,
+      "n_paired": 60,
+      "n_gate": 39,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 15,
+        "eebo-tcp-latin-5660": 24,
+        "english-ia-5124": 0,
+        "ref-ws": 21,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.092,
+        "gemini-3.1-flash-lite": 0.084,
+        "gemini-3.1-flash-lite-b": 0.084
+      },
+      "ref_median_cer_ci95": [
+        0.076,
+        0.095
+      ],
+      "delta": {
+        "median": 0.016,
+        "ci95": [
+          0.006,
+          0.021
+        ],
+        "wins": 18,
+        "losses": 40,
+        "ties": 2,
+        "untied": 58,
+        "p_sign": 0.005,
+        "share_le_minus_005": 0.017
+      },
+      "noise_floor": {
+        "n": 60,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 4,
+        "gemini-3.1-flash-lite": 2
+      },
+      "invention_median": {
+        "nanonets-ocr2": 0.327,
+        "gemini-3.1-flash-lite": 0.25
+      },
+      "loops": {
+        "nanonets-ocr2": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "directional (n=39 library < 50) — no lane decision"
+    },
+    "latin-1700+": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=39 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.077,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 37,
+          "n": 37,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "nanonets-ocr2": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 42,
+      "n_referenced": 42,
+      "n_paired": 39,
+      "n_gate": 0,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 39,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "nanonets-ocr2": 0.031,
+        "gemini-3.1-flash-lite": 0.007,
+        "gemini-3.1-flash-lite-b": 0.008
+      },
+      "ref_median_cer_ci95": [
+        0.003,
+        0.019
+      ],
+      "delta": {
+        "median": 0.007,
+        "ci95": [
+          0.003,
+          0.024
+        ],
+        "wins": 6,
+        "losses": 31,
+        "ties": 2,
+        "untied": 37,
+        "p_sign": 0,
+        "share_le_minus_005": 0.077
+      },
+      "noise_floor": {
+        "n": 37,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "nanonets-ocr2": 1,
+        "gemini-3.1-flash-lite": 2
+      },
+      "invention_median": {
+        "nanonets-ocr2": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "nanonets-ocr2": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 library < 50) — no lane decision"
+    }
+  }
+}

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: 8
+n_pages: 354
+verdict: "Stored Tengyur English matches the test arm against 84000: 6.2 reversed statements per 100 pages by either judge, 3.4 by both; label should read about 3-6 per 100 pages."
+status: informational
+decision: null
+superseded_by: null
+issue: 5797
+---
 ## 2026-10-04 · Tengyur stored draft vs 84000: is the English the library holds as good as the test arm? (#5797)
 <!-- PRIOR ART: 2026-10-03-tengyur-84000-reference-ab-5497.md (PR #5704: same 864 aligned sides, same judge prompt and controls, but it scored two TEST arms written to files, not the English stored in pages.translation.data). This re-runs that harness on the stored English, against arm B, over the 113-side sample plus 250 more. -->
 

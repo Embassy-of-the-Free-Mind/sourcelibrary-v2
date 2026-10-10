@@ -1,0 +1,342 @@
+{
+ "J2-000": {
+  "kind": "ARMS",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "C38-K",
+   "T2": "C38-R",
+   "T3": "K",
+   "T4": "R"
+  }
+ },
+ "J2-001": {
+  "kind": "PLANT",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "C38-R_PLANT",
+   "T2": "C38-R"
+  },
+  "plant": {
+   "old": "He said: \"I did not come to abolish the Law and the Prophets, but to fulfill them.\" Again it is written: \"The truth of the Law came through Jesus.\"",
+   "new": "He said: \"I did not come to abolish the Law and the Prophets, but to fulfill them.\" Again it is not written: \"The truth of the Law came through Jesus.\"",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-002": {
+  "kind": "DUP",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "C38-R_DUP",
+   "T2": "C38-R",
+   "T3": "C38-K"
+  }
+ },
+ "J2-003": {
+  "kind": "DUP",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "C38-K",
+   "T2": "C38-R",
+   "T3": "C38-R_DUP"
+  }
+ },
+ "J2-004": {
+  "kind": "ARMS",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C38-R",
+   "T4": "C38-K"
+  }
+ },
+ "J2-005": {
+  "kind": "DUP",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "C38-R_DUP",
+   "T2": "C38-K",
+   "T3": "C38-R"
+  }
+ },
+ "J2-006": {
+  "kind": "ARMS",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "K",
+   "T2": "C38-R",
+   "T3": "R",
+   "T4": "C38-K"
+  }
+ },
+ "J2-007": {
+  "kind": "DUP",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "C38-K",
+   "T2": "C38-R_DUP",
+   "T3": "C38-R"
+  }
+ },
+ "J2-008": {
+  "kind": "PLANT",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "C38-R_PLANT",
+   "T2": "C38-R"
+  },
+  "plant": {
+   "old": "In this same manner, every day there are angels beside every person,",
+   "new": "In this same manner, every day there are not angels beside every person,",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-009": {
+  "kind": "ARMS",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "C38-K",
+   "T2": "K",
+   "T3": "R",
+   "T4": "C38-R"
+  }
+ },
+ "J2-010": {
+  "kind": "ARMS",
+  "uid": "699443fa_308",
+  "labels": {
+   "T1": "R",
+   "T2": "C38-R",
+   "T3": "K",
+   "T4": "C38-K"
+  }
+ },
+ "J2-011": {
+  "kind": "ARMS",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "R",
+   "T3": "C38-K",
+   "T4": "K"
+  }
+ },
+ "J2-012": {
+  "kind": "ARMS",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C38-K",
+   "T4": "C38-R"
+  }
+ },
+ "J2-013": {
+  "kind": "ARMS",
+  "uid": "69943ce1_628",
+  "labels": {
+   "T1": "R",
+   "T2": "C38-K",
+   "T3": "K",
+   "T4": "C38-R"
+  }
+ },
+ "J2-014": {
+  "kind": "PLANT",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-R_PLANT"
+  },
+  "plant": {
+   "old": "and quickly others are brought forth in their place,",
+   "new": "and quickly others are not brought forth in their place,",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-015": {
+  "kind": "ARMS",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C38-K"
+  }
+ },
+ "J2-016": {
+  "kind": "ARMS",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "R",
+   "T2": "C38-R",
+   "T3": "C38-K",
+   "T4": "K"
+  }
+ },
+ "J2-017": {
+  "kind": "PLANT",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-R_PLANT"
+  },
+  "plant": {
+   "old": "For when Daniel saw the vision of the four beasts, he saw first that of the sons of Ham, the seed of Nimrod, who are the Babylonians.",
+   "new": "For when Daniel saw the vision of the four beasts, he saw first that of the sons of Ham, the seed of Nimrod, who are not the Babylonians.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-018": {
+  "kind": "ARMS",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C38-K"
+  }
+ },
+ "J2-019": {
+  "kind": "ARMS",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "R",
+   "T2": "C38-R",
+   "T3": "C38-K",
+   "T4": "K"
+  }
+ },
+ "J2-020": {
+  "kind": "ARMS",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-K",
+   "T3": "K",
+   "T4": "R"
+  }
+ },
+ "J2-021": {
+  "kind": "ARMS",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "C38-K",
+   "T2": "R",
+   "T3": "C38-R",
+   "T4": "K"
+  }
+ },
+ "J2-022": {
+  "kind": "ARMS",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C38-K",
+   "T4": "C38-R"
+  }
+ },
+ "J2-023": {
+  "kind": "ARMS",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "K",
+   "T3": "C38-K",
+   "T4": "R"
+  }
+ },
+ "J2-024": {
+  "kind": "ARMS",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "K",
+   "T2": "C38-R",
+   "T3": "C38-K",
+   "T4": "R"
+  }
+ },
+ "J2-025": {
+  "kind": "PLANT",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-R_PLANT"
+  },
+  "plant": {
+   "old": "concerning those who are taken and those who are left behind,",
+   "new": "concerning those who are not taken and those who are left behind,",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-026": {
+  "kind": "PLANT",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-R_PLANT"
+  },
+  "plant": {
+   "old": "Pride does not perceive that it walks in darkness; it knows neither true understanding nor wisdom.",
+   "new": "Pride does perceive that it walks in darkness; it knows neither true understanding nor wisdom.",
+   "how": "\\bdoes not\\b → does"
+  }
+ },
+ "J2-027": {
+  "kind": "ARMS",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C38-K"
+  }
+ },
+ "J2-028": {
+  "kind": "PLANT",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "C38-R_PLANT",
+   "T2": "C38-R"
+  },
+  "plant": {
+   "old": "He said to the holy man: \"Because you have denied before us the gods who govern heaven and earth, and have confessed Jesus, the one whom the Jews crucified, we also will reject your friendship.",
+   "new": "He said to the holy man: \"Because you have denied before us the gods who govern heaven and earth, and have confessed Jesus, the one whom the Jews crucified, we also will not reject your friendship.",
+   "how": "\\bwill\\b → will not"
+  }
+ },
+ "J2-029": {
+  "kind": "ARMS",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C38-K",
+   "T4": "C38-R"
+  }
+ },
+ "J2-030": {
+  "kind": "PLANT",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "C38-R_PLANT"
+  },
+  "plant": {
+   "old": "Old things have passed away, and our will is that everything be renewed afresh, so that each person of their own accord may distinguish rightly, and worship and honor the immortal gods, whose mercy has overflowed even toward those who wronged their glory.",
+   "new": "Old things have passed away, and our will is not that everything be renewed afresh, so that each person of their own accord may distinguish rightly, and worship and honor the immortal gods, whose mercy has overflowed even toward those who wronged their glory.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-031": {
+  "kind": "ARMS",
+  "uid": "6994400f_296",
+  "labels": {
+   "T1": "C38-R",
+   "T2": "R",
+   "T3": "C38-K",
+   "T4": "K"
+  }
+ }
+}

@@ -45,7 +45,7 @@ Production is read from `getOcrModelForBook` with `OCR_LITE_ONLY` on, the defaul
 | language | pages (hidden, owed) | Gemini router now | specialist lane | OCR accuracy | translation fidelity | routing evals | ledger |
 |---|---:|---|---|---|---|---|---|
 | Latin (`lat`) | 14.0M (10.5M) | lite | — | lite 6.8% (159 refs, decision); flash 5.6%, 108W 33L 17T | served 4.16 (71); flash − lite +0.22 [+0.06, +0.37] | — | 1 pending, 4 unjudged, 3 no decision recorded (#5090, #5126, #5695, #5660, #5700) |
-| Greek (`grc`) | 2.3M (1.8M) | flash (visible, new); lite (hidden backlog) | — | lite 11% (172 refs, decision); flash 6.6%, 139W 16L 16T | served 3.64 (75); flash − lite +0.32 [+0.16, +0.48]; flash re-read of a lite read +1.04 [+0.61, +1.50] (14) | — | 1 decided, 2 pending, 1 unjudged, 3 no decision recorded (#5575, #5660, #5700, #5870) |
+| Greek (`grc`) | 2.3M (1.8M) | flash (visible, new); lite (hidden backlog) | — | lite 11% (172 refs, decision); flash 6.6%, 139W 16L 16T | served 3.64 (75); flash − lite +0.32 [+0.16, +0.48]; flash re-read of a lite read +1.04 [+0.61, +1.50] (14) | — | 1 decided, 2 pending, 1 unjudged, 4 no decision recorded (#5575, #5660, #5700, #5813, #5870) |
 | Chinese (`zho`) | 2.1M (105K) | lite | PaddleOCR-VL for Siku Quanshu (being built, #5600) | lite 26% (536 refs, decision); flash 21%, 402W 62L 71T | served 3.75 (22); flash − lite +0.33 [+0.17, +0.50]; flash re-read of a lite read +0.30 [−0.60, +1.30] (5) | — | 2 pending, 1 unjudged, 1 no decision recorded (#4743, #5547, #5700) |
 | English (`eng`) | 1.8M (507K) | lite | — | lite 5.3% (57 refs, decision); flash 3.9%, 38W 7L 6T | — | — | 2 decided, 2 pending, 1 no decision recorded (#5182, #5124, #5660) |
 | German (`deu`) | 1.6M (677K) | lite | — | lite 0.6% (35 refs, directional); flash 0.2%, 22W 1L 11T | served 4.43 (22); flash − lite +0.39 [+0.18, +0.59] | — | 1 unjudged, 1 no decision recorded (#5090, #5660) |
@@ -60,7 +60,7 @@ Production is read from `getOcrModelForBook` with `OCR_LITE_ONLY` on, the defaul
 | Arabic (`ara`) | 113K (45K) | flash (visible, new); lite (hidden backlog) | — | — | served 3.50 (20); flash − lite +0.43 [−0.02, +0.80]; flash re-read of a lite read +0.39 [−0.06, +0.78] (9) | #5795: relabel (#4884) (every rule) | 1 decided, 3 pending, 1 unjudged (#5700, #5795) |
 | Persian (`fas`) | 89K (59K) | flash (visible, new, hidden backlog) | — | — | served 2.96 (12); flash − lite +0.63 [+0.33, +0.92]; flash re-read of a lite read +1.00 [+0.33, +1.67] (6) | #5795: stay on lite (hidden-flash-5795-registered); route to flash (margin-v1) | 2 decided, 3 pending, 1 unjudged (#5700, #5795) |
 | Mongolian (`mon`) | 83K (83K) | lite | — | — | — | — | — |
-| Syriac (`syc`) | 73K (18K) | lite | Kraken (`syriac-kraken-lane`, #4883); never Gemini | — | — | — | 1 decided (#4883) |
+| Syriac (`syc`) | 73K (18K) | lite | Kraken (`syriac-kraken-lane`, #4883); never Gemini | — | — | — | 1 decided, 1 unjudged (#4883, #6295) |
 | Korean (`kor`) | 70K (6.1K) | lite | — | — | — | — | 1 unjudged |
 | Spanish (`spa`) | 70K (36K) | lite | — | — | served 4.08 (6); flash − lite +0.25 [−0.17, +0.67] | — | — |
 | Javanese (`jav`) | 56K (52K) | lite | — | — | — | — | — |

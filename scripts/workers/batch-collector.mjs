@@ -21,12 +21,12 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { completeBatchUsage, sumBatchResponseUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
-import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText } from '../lib/translate-core.mjs';
+import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -37,6 +37,7 @@ import { isTruncatedCandidate, truncationFailReason, candidateText } from '../li
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { endBatchJob, endNamelessBatchJobs } from '../lib/end-batch-job.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
@@ -44,6 +45,7 @@ import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQual
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
+import { collectableBatchJobsFilter } from '../lib/batch-job-filters.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -129,8 +131,9 @@ function calculateCost(model, inputTokens, outputTokens) {
  */
 async function getJobData(jobName) {
   const probe = await probeBatchJob(jobName, SDK_CLIENTS, UNIQUE_KEYS);
-  if (probe.verdict === 'exists') return { sdkJob: probe.sdkJob, apiKey: UNIQUE_KEYS[probe.keyIndex], keyIndex: probe.keyIndex };
-  return { sdkJob: null, verdict: probe.verdict, attempts: probe.attempts };
+  // The probe travels with the answer: it is the evidence endBatchJob() requires (#6276).
+  if (probe.verdict === 'exists') return { sdkJob: probe.sdkJob, apiKey: UNIQUE_KEYS[probe.keyIndex], keyIndex: probe.keyIndex, probe };
+  return { sdkJob: null, verdict: probe.verdict, attempts: probe.attempts, probe };
 }
 
 /**
@@ -209,13 +212,15 @@ async function processOneJob(db, job) {
   // Type allowlist (#3725): the save path below treats anything that isn't
   // 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
   // submitter would silently write model output into translation.data.
-  // Refuse to collect unknown types and mark the job so it stops re-matching.
+  // Refuse to collect unknown types and mark the job so it stops re-matching —
+  // but only once Gemini says the job is dead (#6276). A SUCCEEDED or running job
+  // stays open, so paid-vs-got's 40 h check puts it in front of a human instead.
   if (!KNOWN_JOB_TYPES.has(job.type)) {
-    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
-    );
+    const error = `unknown job type '${job.type}' — collector allowlist refused (#3725)`;
+    const ended = DRY_RUN ? { action: 'dry-run' } : await endBatchJob(db, job, {
+      status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error }, clients: SDK_CLIENTS, keys: UNIQUE_KEYS,
+    });
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; end as failed: ${ended.action}${ended.why ? ` (${ended.why})` : ''}.`);
     return { status: 'unknown_type' };
   }
 
@@ -769,11 +774,17 @@ async function processOneJob(db, job) {
           failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
           continue;
         }
+        // #6117: the model's reasoning or a chat reply is not a translation; refused the same way.
+        if (refusableReasoningLeak(text)) {
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, REASONING_LEAK_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(REASONING_LEAK_REASON); failedPageIds.set(pageId, REASONING_LEAK_REASON);
+          continue;
+        }
         // #5734: Korean 그-for-"that" repaired; any other script in the English that is in neither
         // the source nor the book's language (outside note/term/gloss…) is refused the same way.
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { failCount++; noteFail(STRAY_SCRIPT_REASON); failedPageIds.set(pageId, STRAY_SCRIPT_REASON); continue; }
-        text = stray.text;
+        text = guardTranslationText(stray.text); // #5902: term definitions → <note>
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
@@ -1035,10 +1046,17 @@ async function processOneJob(db, job) {
           }
         } catch (_) { /* best effort */ }
 
-        await db.collection('batch_jobs').updateOne(
-          { _id: job._id },
-          { $set: { status: 'failed', gemini_state: state, error: `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`, updated_at: new Date() } }
-        );
+        // Gemini is asked again AFTER the cancel: only a job it now calls CANCELLED is
+        // written failed. One still RUNNING (or that SUCCEEDED in the meantime) stays open
+        // and the next cycle collects or ends it on Gemini's word (#6276).
+        const error = `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`;
+        const ended = await endBatchJob(db, job, {
+          status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error }, clients: SDK_CLIENTS, keys: UNIQUE_KEYS,
+        });
+        if (ended.action !== 'written') {
+          console.log(`  Stale job not ended: ${ended.action} (${ended.why})`);
+          return { status: 'pending', state };
+        }
       }
       return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
     }
@@ -1061,16 +1079,17 @@ async function processOneJob(db, job) {
       console.log(`  GEMINI_CANCELLED: ${job.book_id || 'cross-book'} | age ${jobAge.toFixed(1)}h | ${jobName}`);
     }
     if (!DRY_RUN) {
-      await db.collection('batch_jobs').updateOne(
-        { _id: job._id },
-        { $set: {
-          status: 'failed',
-          gemini_state: state,
-          error: `Gemini state: ${state}`,
-          job_age_hours: parseFloat(jobAge.toFixed(1)),
-          updated_at: new Date(),
-        } }
-      );
+      // Gemini's own answer is the evidence; a state outside FAILED/CANCELLED/EXPIRED
+      // (a new one, or UNKNOWN) is refused and the row stays open for a human (#6276).
+      const ended = await endBatchJob(db, job, {
+        status: 'failed', reason: `Gemini state: ${state}`, by: COLLECTOR_CALL_SITE,
+        gemini: result.probe, keyCount: SDK_CLIENTS.length,
+        set: { error: `Gemini state: ${state}`, job_age_hours: parseFloat(jobAge.toFixed(1)) },
+      });
+      if (ended.action !== 'written') {
+        console.log(`  Not ending ${jobName}: ${ended.action} (${ended.why})`);
+        return { status: 'pending', state };
+      }
       // Close the submit-time usage placeholder — a job that never ran spent
       // nothing, but the row must say so rather than sit at 'submitted'
       // forever, indistinguishable from a batch still in flight (#3452).
@@ -1312,20 +1331,16 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause.
-  // Selective unpause: if a scope is configured (allow_book_ids / allow_collections),
-  // keep collecting — pulling already-generated batch results costs no Gemini spend,
-  // and the scoped books the orchestrator submitted while paused need their results
-  // ingested or the OCR/translation text never lands. Empty scope = full stop.
+  // A pause never stops collection (#5492, #5496 review N1). Every row this collector selects
+  // was already submitted to Gemini and is paid for; pulling the results costs no Gemini spend.
+  // Exiting under a pause used to leave every in-flight OCR, translation and image batch
+  // uncollected until resume — and past 48 h Gemini expires it and Phase 8.5 re-dispatches the
+  // book (#4839). Pauses stop SUBMISSION, in the orchestrator and the workers; this file
+  // submits nothing. (The scheduler also launches this worker, but skips it under a pause; the
+  // hetzner-crontab line every 10 minutes is the path that keeps collecting.)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  const _scopeActive = hasScope(control);
-  if (control?.paused && !_scopeActive) {
-    console.log(`[batch-collector] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
-  }
-  if (control?.paused && _scopeActive) {
-    console.log(`[batch-collector] Paused, but selective-unpause scope is active — collecting results (free) for in-flight jobs.`);
+  if (control?.paused) {
+    console.log(`[batch-collector] Pipeline paused — collecting anyway: results of already-submitted jobs are free and already paid for.`);
   }
 
   // ── Batch Health Probe: reconcile DB vs Gemini state ──
@@ -1347,13 +1362,8 @@ async function run() {
   const pendingJobs = await db.collection('batch_jobs')
     .find({
       $or: [
-        {
-          status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
-          $or: [
-            { job_name: { $exists: true, $nin: [null, ''] } },
-            { gemini_job_name: { $exists: true, $nin: [null, ''] } },
-          ],
-        },
+        // Shared with the emergency-stop route, which must never cancel these (#5492).
+        collectableBatchJobsFilter(),
         {
           // Recovery: pick up "saved" jobs with 0 completed AND 0 failed pages
           // (metadata.key bug). Jobs with failed_pages > 0 already ran but all
@@ -1449,15 +1459,12 @@ async function run() {
         const jobToFail = batch[j];
         if (jobToFail && !DRY_RUN) {
           try {
-            await db.collection('batch_jobs').updateOne(
-              { _id: jobToFail._id },
-              { $set: {
-                status: 'failed',
-                error: GHOST_ERROR,
-                ghost_verdict: { probed_at: new Date(), verdict: 'not_found', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] },
-                updated_at: new Date(),
-              } }
-            );
+            const ended = await endBatchJob(db, jobToFail, {
+              status: 'failed', reason: GHOST_ERROR, by: COLLECTOR_CALL_SITE,
+              gemini: { verdict: 'not_found', attempts: val.attempts || [] }, keyCount: SDK_CLIENTS.length,
+              set: { error: GHOST_ERROR, ghost_verdict: { probed_at: new Date(), verdict: 'not_found', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] } },
+            });
+            if (ended.action !== 'written') { console.log(`  NOT_FOUND not ended: ${ended.why}`); continue; }
             await closeUsagePlaceholder(db, jobToFail, GHOST_ERROR);
             console.log(`  NOT_FOUND -> failed: ${jobToFail.gemini_job_name || jobToFail.job_name} (book: ${jobToFail.book_id})`);
             // Track for pipeline advance so book can be requeued
@@ -1666,18 +1673,15 @@ async function run() {
   let namelessReaped = 0;
   try {
     const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
-    const namelessResult = await db.collection('batch_jobs').updateMany(
-      {
-        status: { $in: ['pending', 'processing'] },
-        created_at: { $lt: thirtyMinAgo },
-        $and: [
-          { $or: [{ job_name: { $exists: false } }, { job_name: null }, { job_name: '' }] },
-          { $or: [{ gemini_job_name: { $exists: false } }, { gemini_job_name: null }, { gemini_job_name: '' }] },
-        ],
-        parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
-      },
-      { $set: { status: 'failed', error: 'Nameless: created in DB but never submitted to Gemini', updated_at: new Date() } }
-    );
+    // endNamelessBatchJobs ANDs the no-name clauses onto this filter itself (#6276).
+    const namelessResult = DRY_RUN ? { modifiedCount: 0 } : await endNamelessBatchJobs(db, {
+      status: { $in: ['pending', 'processing'] },
+      created_at: { $lt: thirtyMinAgo },
+      parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
+    }, {
+      status: 'failed', reason: 'Nameless: created in DB but never submitted to Gemini', by: `${COLLECTOR_CALL_SITE}#nameless-reaper`,
+      set: { error: 'Nameless: created in DB but never submitted to Gemini' },
+    });
     namelessReaped = namelessResult.modifiedCount;
     if (namelessReaped > 0) console.log(`\n[nameless-reaper] Failed ${namelessReaped} batch jobs with no Gemini job name (>30min old)`);
   } catch (e) { console.error(`[nameless-reaper] Error: ${e.message}`); }

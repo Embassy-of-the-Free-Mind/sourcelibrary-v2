@@ -1,0 +1,7 @@
+8
+               total        used        free      shared  buff/cache   available
+Mem:              47           1          44           0           1          45
+NVIDIA L4, 580.126.20, 23034 MiB
+CPU(s):                                  8
+Model name:                              AMD EPYC 7413 24-Core Processor
+BIOS Model name:                         pc-q35-jammy  CPU @ 2.0GHz

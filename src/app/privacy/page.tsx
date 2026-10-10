@@ -21,7 +21,7 @@ export default function PrivacyPage() {
           <p>
             Source Library is operated by the Embassy of the Free Mind, Amsterdam.
             We are committed to protecting your privacy, and to describing what we
-            actually do — this page is checked against our codebase, not aspirations.
+            actually do. This page is checked against our codebase, not aspirations.
           </p>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Cookies and consent</h2>
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
             <li><strong>First-party analytics</strong> (always active): Pages visited, country (from IP), referrer domain, user agent. IP addresses are anonymized (last octet removed) before storage.</li>
             <li><strong>Reading activity:</strong> Which books and pages you view. Used to personalize your experience; you can clear your reading history from your account.</li>
             <li><strong>Search queries:</strong> What you search for, with a truncated one-way hash of your IP and, if you are signed in, your account ID. Used to improve search.</li>
-            <li><strong>Feedback and volunteering:</strong> If you use the feedback form, we store your message, the page it was sent from, your user agent, a truncated hash of your IP, and — only if you provide them — your name and email.</li>
+            <li><strong>Feedback and volunteering:</strong> If you use the feedback form, we store your message, the page it was sent from, your user agent, a truncated hash of your IP, and (only if you provide them) your name and email.</li>
             <li><strong>AI chat and &ldquo;ask&rdquo; features:</strong> The messages you type are processed to generate a response (see AI processing below); conversation threads in the Embassy chat are stored.</li>
             <li><strong>Anonymous visitor ID:</strong> A random ID stored in your browser identifies your likes and favorites while you are not signed in. It is sent with those actions, and if you later sign in it is used once to attach your existing favorites to your account.</li>
             <li><strong>Developer / dataset API:</strong> Requests made with an API key are logged (key, endpoint, records returned, anonymized IP) for rate limiting and EU AI Act compliance.</li>
@@ -60,8 +60,8 @@ export default function PrivacyPage() {
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>AI processing</h2>
           <p>
-            Text you type into AI features — search expansion, book chat, page
-            &ldquo;ask,&rdquo; and the Embassy chat — is sent to Google&rsquo;s Gemini API together
+            Text you type into AI features (search expansion, book chat, page
+            &ldquo;ask,&rdquo; and the Embassy chat) is sent to Google&rsquo;s Gemini API together
             with the relevant book text to generate the response. Under Google&rsquo;s
             paid API terms this data is not used to train their models. Avoid
             putting personal information in these boxes; the text you type is the
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>How we use your data</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>To provide and improve the Service.</li>
-            <li>To send important updates about your account or the Service (rare — we don&rsquo;t spam).</li>
+            <li>To send important updates about your account or the Service (rare; we don&rsquo;t spam).</li>
             <li>To generate aggregate statistics about library usage.</li>
             <li>To prevent abuse of our public forms and APIs.</li>
           </ul>
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
             <li><strong>Google Gemini:</strong> AI processing of text you submit to AI features (see above).</li>
             <li><strong>Resend:</strong> Delivers our emails; processes recipient addresses on our behalf. <a href="https://resend.com/legal/privacy-policy" className="underline" target="_blank" rel="noopener noreferrer">Resend&rsquo;s privacy policy</a>.</li>
             <li><strong>MongoDB Atlas:</strong> Database hosting. Data stored in the EU (Frankfurt).</li>
-            <li><strong>Supabase and Cloudflare R2:</strong> Store library content — texts, translations, search indexes, page images — not personal data.</li>
+            <li><strong>Supabase and Cloudflare R2:</strong> Store library content (texts, translations, search indexes, page images), not personal data.</li>
           </ul>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Data retention</h2>

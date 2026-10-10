@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
   description:
-    'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 2,500 newly translated books in Latin, German, Arabic, and Hebrew confirm it — with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
+    'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 2,500 newly translated books in Latin, German, Arabic, and Hebrew confirm it, with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
   openGraph: {
     title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base',
     description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 2,500 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
@@ -26,9 +26,9 @@ export default function ProgressStudiesPage() {
       header={
         <ContentHeader
           title="The Deeper Roots"
-          subtitle="How 2,500 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
+          subtitle="How 2,500 newly translated books confirm what progress studies predicted: innovation didn&rsquo;t begin with the Industrial Revolution"
           image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg"
-          imageAlt="Mechanical diagrams from Hero of Alexandria's Pneumatica"
+          imageAlt="The opening of Hero of Alexandria's Pneumatica in a 16th-century Greek manuscript: a red interlace headpiece and initial over Greek minuscule"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
@@ -62,7 +62,7 @@ export default function ProgressStudiesPage() {
           and Peter Howitt for work on the &ldquo;prerequisites for sustained growth through
           technological progress.&rdquo; The committee cited Mokyr&rsquo;s insight that the
           Industrial Revolution depended not just on incentives or institutions, but on a culture
-          that valued &ldquo;useful knowledge&rdquo; &mdash; propositional knowledge about nature
+          that valued &ldquo;useful knowledge&rdquo;: propositional knowledge about nature
           that could be turned into prescriptive knowledge about technique.
         </p>
 
@@ -72,7 +72,7 @@ export default function ProgressStudiesPage() {
           Industrial Enlightenment. But he has always acknowledged that the evidence gets thin
           before 1700, not because the knowledge didn&rsquo;t exist, but because most pre-modern
           texts on natural philosophy, alchemy, mechanics, and experimental method were written
-          in Latin, German, Arabic, and Hebrew &mdash; and have never been translated into English.
+          in Latin, German, Arabic, and Hebrew, and have never been translated into English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -80,8 +80,8 @@ export default function ProgressStudiesPage() {
           the 2nd to 19th centuries, drawn from fourteen digital library collections. Over
           500,000 pages have been translated into English, and over 1,200 of these books are{' '}
           <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
-            first-ever English translations</Link>{' '}
-          &mdash; texts that have existed for centuries but had no prior English version. What
+            first-ever English translations</Link>:
+          texts that have existed for centuries but had no prior English version. What
           they contain confirms and extends the central insights of progress studies: the
           culture of useful knowledge has deeper roots than anyone could previously read.
         </p>
@@ -96,18 +96,18 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The remarkable thing about progress studies is how well its frameworks predict what
-            we found in the pre-1750 sources &mdash; sources that were unavailable when the
+            we found in the pre-1750 sources, sources that were unavailable when the
             frameworks were built.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Mokyr argued that sustained growth requires a culture that produces &ldquo;useful
-            knowledge&rdquo; &mdash; systematic understanding of natural phenomena that practitioners
+            knowledge&rdquo;: systematic understanding of natural phenomena that practitioners
             can turn into working techniques. He built this case from Enlightenment-era evidence.
             But the pre-1750 texts show exactly this dynamic: alchemists systematically studying
             the properties of matter, natural philosophers developing theories of pneumatics and
             hydraulics, instrument-makers accumulating practical knowledge about furnaces,
-            distillation, and metallurgy &mdash; all producing propositional knowledge and
+            distillation, and metallurgy, all producing propositional knowledge and
             turning it into prescriptive technique.
           </p>
 
@@ -115,11 +115,11 @@ export default function ProgressStudiesPage() {
             <a href="https://press.princeton.edu/books/hardcover/9780691222875/arts-and-minds" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               Anton Howes</a>{' '}
             argued that innovation is driven by the spread of an &ldquo;improving
-            mentality&rdquo; &mdash; a learned cultural disposition, spreading person to person,
+            mentality&rdquo;: a learned cultural disposition, spreading person to person,
             characterized by &ldquo;a belief in the acceptability of contesting tradition&rdquo;
             and &ldquo;a vision of the benefits of progress.&rdquo; He traced it through British
             inventor networks starting in the 1540s. The translated texts show that this mentality
-            existed centuries earlier &mdash; it just lived under different names and in different
+            existed centuries earlier; it just lived under different names and in different
             languages. Howes was right about the mechanism. The timeline goes back further than
             he could see.
           </p>
@@ -130,7 +130,7 @@ export default function ProgressStudiesPage() {
             has been building the case for a{' '}
             <a href="https://rootsofprogress.org/techno-humanist-manifesto" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               &ldquo;techno-humanist&rdquo;</a>{' '}
-            philosophy &mdash; the view that technological progress and human flourishing are
+            philosophy: the view that technological progress and human flourishing are
             connected, not opposed. The pre-industrial texts are full of this conviction.
             Renaissance natural philosophers believed that understanding nature&rsquo;s secrets
             was a path to human improvement. The alchemist&rsquo;s project was explicitly
@@ -158,7 +158,7 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The collection was assembled for the study of Western esotericism &mdash; alchemy,
+            The collection was assembled for the study of Western esotericism: alchemy,
             Hermeticism, Kabbalah, astrology, natural magic. But when you actually read these
             texts, the boundary between &ldquo;esotericism&rdquo; and &ldquo;proto-science&rdquo;
             dissolves. The same books that describe the{' '}
@@ -177,7 +177,7 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             We documented this in detail in{' '}
             <Link href="/blog/hidden-engineers" className="text-accent-rust hover:underline">
-              &ldquo;The Hidden Engineers&rdquo;</Link> &mdash;
+              &ldquo;The Hidden Engineers&rdquo;</Link>,
             every claim linked to the original translated page. Here is a summary of the evidence.
           </p>
 
@@ -187,9 +187,9 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             A manuscript copied for King Francis I of France around 1545 binds two works in
-            the same volume: Hero of Alexandria&rsquo;s <em>Pneumatica</em> &mdash; describing
-            steam-powered rotating spheres, automatic temple doors, and singing bird automata
-            &mdash; and the <em>Corpus Hermeticum</em>, the foundational text of Western
+            the same volume: Hero of Alexandria&rsquo;s <em>Pneumatica</em> (describing
+            steam-powered rotating spheres, automatic temple doors, and singing bird automata)
+            and the <em>Corpus Hermeticum</em>, the foundational text of Western
             mystical philosophy. The same scribe, the same royal binding.{' '}
             <Link href="/book/695230c6ab34727b1f044784?page=93" className="text-accent-rust hover:underline">
               The aeolipile diagram</Link>{' '}
@@ -209,7 +209,7 @@ export default function ProgressStudiesPage() {
             Book XX gives{' '}
             <Link href="/book/694fe5f9f844de8615417df4?page=706" className="text-accent-rust hover:underline">
               exact specifications for building a kite</Link>{' '}
-            &mdash; frame proportions, covering materials, wind conditions &mdash; and concludes
+            (frame proportions, covering materials, wind conditions) and concludes
             that &ldquo;the ingenious man will be able to foresee the principles by which even
             a man might be able to fly.&rdquo;
           </p>
@@ -220,7 +220,7 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Alchemists were the best-equipped experimental chemists in Europe for over a
-            thousand years. They invented the <em>athanor</em> &mdash; a self-feeding furnace
+            thousand years. They invented the <em>athanor</em>, a self-feeding furnace
             that maintains constant temperature for days, solving a real thermodynamics problem
             before thermostats existed. The <em>bain-marie</em>, attributed to{' '}
             <Link href="/book/69751588a88d83c830d99e17?page=6" className="text-accent-rust hover:underline">
@@ -229,7 +229,7 @@ export default function ProgressStudiesPage() {
             in the world. The{' '}
             <Link href="/book/694fe601f844de8615417e21?page=2" className="text-accent-rust hover:underline">
               <em>Theatrum Chemicum</em></Link>{' '}
-            (1659) &mdash; six folio volumes, over two hundred treatises &mdash; scatters
+            (1659), six folio volumes with over two hundred treatises, scatters
             precise technical instructions for building laboratory equipment among its
             alchemical allegories.
           </p>
@@ -241,7 +241,7 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Pages 58&ndash;59 of <em>Die Lehren der Rosenkreuzer</em> contain what may be
             the most unexpected document in the collection: a{' '}
-            <Link href="/book/690c27e6e0787282ad593282?page=58" className="text-accent-rust hover:underline">
+            <Link href="/book/the-secret-symbols-of-the-rosicrucians?page=164" className="text-accent-rust hover:underline">
               construction plan for a steam-powered device</Link>,
             labeled &ldquo;Elijah&rsquo;s Chariot.&rdquo; It includes materials (red brick,
             iron plate, angle iron bands), measurements (scale of three-quarters of an inch
@@ -263,14 +263,14 @@ export default function ProgressStudiesPage() {
             Howes&rsquo;s thesis is elegant: innovation spreads like a cultural disposition,
             person to person, through networks of people who believe that things can be made
             better and that making them better is worthwhile. His evidence starts in 1547.
-            But the mechanism he describes is visible centuries earlier in the translated texts
-            &mdash; it just hadn&rsquo;t been readable in English before.
+            But the mechanism he describes is visible centuries earlier in the translated texts;
+            it just hadn&rsquo;t been readable in English before.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Alchemy was, at its core, an explicit program for improving nature. The
             transmutation of base metals into gold was not just a metaphor for spiritual
-            perfection &mdash; it was a technological ambition. Alchemists believed that
+            perfection; it was a technological ambition. Alchemists believed that
             nature&rsquo;s processes could be accelerated, perfected, and surpassed through
             systematic investigation and experiment. The philosopher&rsquo;s stone was imagined
             as a technology: a substance that would perfect any material it touched.
@@ -290,8 +290,8 @@ export default function ProgressStudiesPage() {
               J&#x101;bir ibn Hayy&#x101;n</Link>{' '}
             (8th century)
             described a systematic program for understanding and manipulating the properties
-            of matter. These figures had Howes&rsquo;s two characteristics &mdash; they
-            contested tradition and they envisioned benefits from doing so &mdash; centuries
+            of matter. These figures had Howes&rsquo;s two characteristics (they
+            contested tradition and they envisioned benefits from doing so) centuries
             before the British improving networks he documents.
           </p>
 
@@ -319,12 +319,12 @@ export default function ProgressStudiesPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Francis Bacon &mdash; writing in 1605, within Howes&rsquo;s time frame &mdash;
+            Francis Bacon, writing in 1605, within Howes&rsquo;s time frame,
             described what had already been true for centuries. The &ldquo;mechanical
             arts&rdquo; were cumulative: each generation improved on the last. The blacksmith
             improves while the philosopher declines. Bacon was not inventing this observation.
             He was naming something that alchemists, instrument-makers, and natural
-            philosophers had been doing for generations &mdash; in Latin, German, and Arabic
+            philosophers had been doing for generations, in Latin, German, and Arabic
             texts that are now, for the first time, readable in English.
           </p>
         </section>
@@ -340,17 +340,17 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Progress studies has long grappled with the question of why the Scientific Revolution
             happened where and when it did. The answer, increasingly, involves what the
-            revolutionaries were reading &mdash; and most of it was in the esoteric tradition.
+            revolutionaries were reading, and most of it was in the esoteric tradition.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Isaac Newton spent more time on alchemy than on physics. His alchemical manuscripts
-            &mdash; over a million words &mdash; were hidden for centuries, dismissed as an
+            (over a million words) were hidden for centuries, dismissed as an
             embarrassment. They are now recognized by historians (<a href="https://press.princeton.edu/books/hardcover/9780691174877/newton-the-alchemist" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">William Newman</a>,{' '}
             <a href="https://krieger.jhu.edu/chemistry/directory/lawrence-m-principe/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">Lawrence
             Principe</a>) as central to his intellectual development. Newton&rsquo;s concept of
-            gravity as action at a distance &mdash; the idea that Leibniz mocked as &ldquo;occult
-            qualities&rdquo; &mdash; drew on traditions of sympathetic action that were
+            gravity as action at a distance (the idea that Leibniz mocked as &ldquo;occult
+            qualities&rdquo;) drew on traditions of sympathetic action that were
             commonplace in alchemical and Hermetic texts.
           </p>
 
@@ -369,9 +369,9 @@ export default function ProgressStudiesPage() {
             Johannes Kepler believed that planets were alive. His{' '}
             <Link href="/book/kepler-astronomia-nova-1609-prague-kepler" className="text-accent-rust hover:underline">
               <em>Astronomia Nova</em></Link>{' '}
-            (1609)
-            &mdash; in which he discovered that planetary orbits are elliptical, not circular
-            &mdash; was driven by a conviction that the cosmos had a harmonic structure. He
+            (1609),
+            in which he discovered that planetary orbits are elliptical, not circular,
+            was driven by a conviction that the cosmos had a harmonic structure. He
             described gravity as a &ldquo;mutual material tendency between related bodies&rdquo;
             eighty years before Newton, but also wrote that planets had an &ldquo;animal
             faculty&rdquo; guiding their motion. The elliptical orbit and the living planet
@@ -387,7 +387,7 @@ export default function ProgressStudiesPage() {
             <Link href="/book/69751588a88d83c830d99e17" className="text-accent-rust hover:underline">
               <em>Artis Auriferae</em></Link>,
             the Hermetic and Neoplatonic texts that Ficino translated, the Kabbalistic works
-            that shaped Renaissance natural philosophy &mdash; these are the source code of the
+            that shaped Renaissance natural philosophy: these are the source code of the
             Scientific Revolution. Understanding why progress happened means reading what the
             people who made it happen were reading.
           </p>
@@ -403,7 +403,7 @@ export default function ProgressStudiesPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Beyond the esoteric tradition, Source Library holds a growing collection of
-            explicitly technical works &mdash; the &ldquo;theatre of machines&rdquo; genre
+            explicitly technical works: the &ldquo;theatre of machines&rdquo; genre
             that flourished from the 15th to 17th centuries. These are the handbooks that
             Howes&rsquo;s improvers were learning from.
           </p>
@@ -418,7 +418,7 @@ export default function ProgressStudiesPage() {
             <Link href="/book/de-re-metallica-libri-xii-agricola" className="text-accent-rust hover:underline">
               Georgius Agricola&rsquo;s <em>De re metallica</em></Link>{' '}
             (1556) is a 600-page treatise on mining
-            and metallurgy &mdash; the most comprehensive technical manual of the 16th century.{' '}
+            and metallurgy, the most comprehensive technical manual of the 16th century.{' '}
             <Link href="/book/la-pyrotechnie-ou-art-du-feu-biringuccio" className="text-accent-rust hover:underline">
               Vannoccio Biringuccio&rsquo;s <em>De la pirotechnia</em></Link>{' '}
             (1540) is the first
@@ -428,8 +428,8 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             <Link href="/book/bellifortis-kyeser" className="text-accent-rust hover:underline">
               Konrad Kyeser&rsquo;s <em>Bellifortis</em></Link>{' '}
-            (c. 1430) &mdash; the most important
-            medieval military technology manuscript &mdash; catalogs siege engines, early
+            (c. 1430), the most important
+            medieval military technology manuscript, catalogs siege engines, early
             firearms, diving equipment, and incendiary devices.{' '}
             <Link href="/book/nova-scientia-tartaglia" className="text-accent-rust hover:underline">
               Niccol&ograve; Tartaglia&rsquo;s <em>Nova scientia</em></Link>{' '}
@@ -464,9 +464,9 @@ export default function ProgressStudiesPage() {
             Progress studies already knows that translation is infrastructure. The most
             frequently cited example is the 12th-century Toledo School of Translators, where
             scholars translated Arabic texts on mathematics, astronomy, medicine, and philosophy
-            into Latin. This transfer &mdash; from Arabic to Latin, from Islamic civilization
-            to medieval Europe &mdash; provided the foundation for the European scientific
-            tradition. Euclid, Ptolemy, Aristotle, Galen &mdash; much of the Greek corpus
+            into Latin. This transfer (from Arabic to Latin, from Islamic civilization
+            to medieval Europe) provided the foundation for the European scientific
+            tradition. Euclid, Ptolemy, Aristotle, Galen: much of the Greek corpus
             reached Europe through Arabic intermediaries and Latin translation.
           </p>
 
@@ -487,13 +487,13 @@ export default function ProgressStudiesPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            AI removes this bottleneck. The full pipeline &mdash; digitization, OCR, translation,
-            indexing &mdash; costs approximately $1.90 per book and takes minutes. Source
+            AI removes this bottleneck. The full pipeline (digitization, OCR, translation,
+            indexing) costs approximately $1.90 per book and takes minutes. Source
             Library processed its first thousand books in December 2025. It passed 2,500 in
             March 2026. Of these, over 1,200 are{' '}
             <Link href="/blog/first-translations" className="text-accent-rust hover:underline">
-              first-ever English translations</Link>{' '}
-            &mdash; texts that have existed for centuries but have never been accessible to
+              first-ever English translations</Link>:
+            texts that have existed for centuries but have never been accessible to
             anglophone researchers. The{' '}
             <Link href="/blog/first-translation-methodology" className="text-accent-rust hover:underline">
               methodology</Link>{' '}
@@ -517,7 +517,7 @@ export default function ProgressStudiesPage() {
               Collison and Cowen&rsquo;s</a>{' '}
             framework is direct. They argue that
             we need to understand the mechanisms of progress well enough to produce more of
-            it. One mechanism &mdash; perhaps the oldest one &mdash; is making existing
+            it. One mechanism, perhaps the oldest one, is making existing
             knowledge readable. The Toledo translators did it in the 12th century by moving
             Arabic to Latin. Gutenberg did it in the 15th by reducing the cost of copying.
             We are doing it in the 21st by reducing the cost of translation.
@@ -539,7 +539,7 @@ export default function ProgressStudiesPage() {
             specifications for laboratory equipment? How does the vocabulary of
             &ldquo;experiment&rdquo; evolve across centuries and languages? Where do mechanical
             and mystical descriptions co-occur, and where do they separate? These are questions
-            that require a corpus, not a monograph &mdash; and the corpus now exists.
+            that require a corpus, not a monograph, and the corpus now exists.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">

@@ -1,0 +1,185 @@
+{
+ "98:493": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "98:494": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "98:495": {
+  "staged": 1,
+  "stored": 2,
+  "better": "staged",
+  "staged_classes": [
+   "mistranslated relation"
+  ],
+  "stored_classes": [
+   "reversed claim",
+   "objection misconstrued"
+  ]
+ },
+ "193:203": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "193:204": {
+  "staged": 2,
+  "stored": 2,
+  "better": "staged",
+  "staged_classes": [
+   "technical term mistranslated",
+   "wrong speaker / label read as claim"
+  ],
+  "stored_classes": [
+   "technical term mistranslated",
+   "reversed claim"
+  ]
+ },
+ "193:205": {
+  "staged": 2,
+  "stored": 2,
+  "better": "same",
+  "staged_classes": [
+   "reversed role (probans read as probandum)",
+   "clause garbled so the reply loses its point"
+  ],
+  "stored_classes": [
+   "reversed direction of inference",
+   "wrong object"
+  ]
+ },
+ "175:131": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "175:132": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "175:133": {
+  "staged": 0,
+  "stored": 1,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "wrong speaker / objection boundary"
+  ]
+ },
+ "101:644": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "101:645": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "101:646": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "183:318": {
+  "staged": 1,
+  "stored": 1,
+  "better": "same",
+  "staged_classes": [
+   "term mistranslated"
+  ],
+  "stored_classes": [
+   "structure misread"
+  ]
+ },
+ "183:319": {
+  "staged": 1,
+  "stored": 0,
+  "better": "stored",
+  "staged_classes": [
+   "negation added"
+  ],
+  "stored_classes": []
+ },
+ "183:320": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "174:417": {
+  "staged": 0,
+  "stored": 0,
+  "better": "same",
+  "staged_classes": [],
+  "stored_classes": []
+ },
+ "174:418": {
+  "staged": 0,
+  "stored": 1,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "technical term mistranslated"
+  ]
+ },
+ "174:419": {
+  "staged": 0,
+  "stored": 1,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "reversed claim"
+  ]
+ },
+ "112:253": {
+  "staged": 0,
+  "stored": 2,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "term mistranslated / reversed sense",
+   "term mistranslated"
+  ]
+ },
+ "112:254": {
+  "staged": 0,
+  "stored": 1,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "invented clause / page-boundary misreading"
+  ]
+ },
+ "112:255": {
+  "staged": 0,
+  "stored": 1,
+  "better": "staged",
+  "staged_classes": [],
+  "stored_classes": [
+   "wrong subject"
+  ]
+ }
+}

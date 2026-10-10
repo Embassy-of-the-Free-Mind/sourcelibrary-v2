@@ -1,3 +1,16 @@
+---
+stage: translation
+measure: judged
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: 60
+n_pages: 60
+verdict: "Lite and flash-preview are indistinguishable blind (27:26, p=1.0) at 2.2x the price; 2.5-flash is worse (17:33). Lite stays."
+status: superseded
+decision: null
+superseded_by: "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md"
+---
 ## 2026-09-13 — Which model should translate classical Chinese? (樂舞 preview pages) — RESULT (three arms; superseded by the six-arm read above, which re-judged these same translations)
 
 **Headline: on 60 Chinese pages, `gemini-3.1-flash-lite` and `gemini-3-flash-preview`

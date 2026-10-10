@@ -1,0 +1,5 @@
+2026-10-01T07:50:01.242Z APPLY · 3 instances in 9 zones · 1 watched
+  stopped  old-gpu (L40S-1-48G, fr-par-2, 11111111-2222-3333-4444-555555555555)
+2026-10-01T08:00:01.915Z APPLY · 4 instances in 9 zones · 2 watched
+  stopped  old-gpu (L40S-1-48G, fr-par-2, 11111111-2222-3333-4444-555555555555)
+  ok       demo-gpu (L4-1-24G, pl-waw-2, abcdef12-0000-0000-0000-000000000000) · lease 3.8 h left · owner 1 · no progress tag

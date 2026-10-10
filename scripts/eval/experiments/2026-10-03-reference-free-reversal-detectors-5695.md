@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 150
+verdict: "No reference-free screen works: the best detector (D3, Flash-Lite contradiction check) finds 83% of judged reversals but flags half of all pages at 18% precision."
+status: rejected
+decision: "Not used as a library screen; D3 as a QA sampler and a Latin negation hold-out were proposed, not implemented"
+superseded_by: null
+issue: 5695
+---
 ## 2026-10-03 · Can a reference-free check find the pages the reference judges marked as reversed, omitted or invented? (#5695 extra test)
 
 **Question.** A published human translation exists for perhaps 5 % of our pages. Can a check that sees only the source page and our English screen the rest of the library for reversed or dropped meaning?

@@ -1,0 +1,1158 @@
+[
+ {
+  "draw_id": "D51",
+  "page": "chinese-cohort-5547|chinese-cohort-5547-e2ee51-p64",
+  "chart": "chinese-manuscript",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O5"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-overlap:0.474"
+  ],
+  "why": "Same witness, transcribed faithfully; the only cost is ~4% boundary overrun, which puts a small floor under every engine's CER."
+ },
+ {
+  "draw_id": "D52",
+  "page": "chinese-cohort-5547|chinese-cohort-5547-c49c21-p34",
+  "chart": "chinese-manuscript",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "high",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "page-short",
+   "best-engine-cer:0.369"
+  ],
+  "why": "Over 40% of the reference window is text from neighbouring leaves, so best-engine CER 0.369 mostly measures window length, not reading."
+ },
+ {
+  "draw_id": "D53",
+  "page": "chinese-cohort-5547|chinese-cohort-5547-1de82d-p98",
+  "chart": "chinese-manuscript",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "best-engine-cer:0.459",
+   "ref-overlap:0.43"
+  ],
+  "why": "About 40% of the reference is the next leaf's text, and the page itself is short and half empty, so CER is dominated by the window overrun."
+ },
+ {
+  "draw_id": "D54",
+  "page": "chinese-ext|chinese-ext-8e4639-p82",
+  "chart": "chinese-manuscript",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "high",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "best-engine-cer:0.415"
+  ],
+  "why": "A ~200-char prefix from the previous leaf (~30% of the window) inflates every engine's CER; trim the window to start at 字註 before using it."
+ },
+ {
+  "draw_id": "D55",
+  "page": "chinese-cohort-5547|chinese-cohort-5547-166afc-p33",
+  "chart": "chinese-manuscript",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "E2",
+   "O14"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "About 30% of the reference is neighbouring text, and the page also carries a non-text inscription plate; the unflagged status is wrong."
+ },
+ {
+  "draw_id": "D56",
+  "page": "chinese-cohort-5547|chinese-cohort-5547-def58c-p73",
+  "chart": "chinese-manuscript",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "A ~60-char prefix from the previous leaf means about a quarter of the window is not on the page, which the unflagged status misses."
+ },
+ {
+  "draw_id": "D57",
+  "page": "chinese|chinese-8f0639-p59",
+  "chart": "chinese-print",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-edition-normalised",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O8",
+   "E2"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Right text and witness, but CBETA normalisation plus boundary overrun put ~15-17% of the window beyond reach of a faithful reader, and engines that normalise are rewarded."
+ },
+ {
+  "draw_id": "D44",
+  "page": "greek-ext|greek-ext-e575ce-p225",
+  "chart": "greek",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "other-edition",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O8",
+   "O12"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "best-engine-cer:0.159"
+  ],
+  "why": "This is real ligature-heavy body Greek, but the reference is Babbitt's emended text, so roughly a tenth of the score measures agreement with Babbitt rather than reading accuracy. That accounts for part of the flagged 0.159 floor."
+ },
+ {
+  "draw_id": "D45",
+  "page": "greek-ext|greek-ext-eab76d-p434",
+  "chart": "greek",
+  "page_kind": "apparatus-heavy",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O12",
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "best-engine-cer:0.257"
+  ],
+  "why": "Lemmata the reference leaves out, plus next-page text it adds, set a CER floor of about 0.2 whatever the engine does, which explains the flagged 0.257 best score."
+ },
+ {
+  "draw_id": "D46",
+  "page": "greek-ext|greek-ext-e5ff80-p702",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "other-edition",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O8"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-overlap:0.39"
+  ],
+  "why": "The passage is right but the reference is a different recension, so about one word in seven scores as an error. The low ref-overlap flag reflects edition drift, not misalignment."
+ },
+ {
+  "draw_id": "D47",
+  "page": "greek-ext|greek-ext-eba9ff-p123",
+  "chart": "greek",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "wrong",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "I7",
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "best-engine-cer:0.313"
+  ],
+  "why": "The reference is a different work's quotation of the passage, with variant numerals and wording plus OCR errors of its own, on a short half-empty page. The 0.313 CER measures the reference, not the engines."
+ },
+ {
+  "draw_id": "D48",
+  "page": "greek-ext2|greek-ext2-ebeffe-p100",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "other-edition",
+  "memorisation_risk": "low",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O13",
+   "O12"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "This is good hard body Greek with a well-aligned reference. Edition variants, the reference's own OCR noise and the later-hand marginalia add a small, uneven error floor that the unflagged status missed."
+ },
+ {
+  "draw_id": "D49",
+  "page": "greek-ext|greek-ext-e5b349-p530",
+  "chart": "greek",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O11"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The body text matches, but the Greek headings and the title opening on the page are not in the reference, so engines that read them faithfully are penalised. Only about ten body lines are in scope."
+ },
+ {
+  "draw_id": "D50",
+  "page": "greek-ext|greek-ext-5b4a88-p227",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "other-edition",
+  "memorisation_risk": "high",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "I1",
+   "O3"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The reference aligns well, but on a famous text a low CER can come from recalling Burnet rather than reading the scan. The stored OCR being from another leaf should be flagged separately."
+ },
+ {
+  "draw_id": "D35",
+  "page": "latin-period-5126|ed-69c7a6b092b884e4f8173c12-p232",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-edition-normalised",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O8",
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-expands-abbreviations",
+   "ref-normalises-u-v"
+  ],
+  "why": "About 30% of words are normalised away from the print (u/v, i/j, ij, ae, & -> et, q; expanded) and the reference carries text from the neighbouring pages, so CER measures agreement with a modernised edition, not reading accuracy."
+ },
+ {
+  "draw_id": "D36",
+  "page": "latin-period-5126|ed-6a429a398e351c27eb859980-p20",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-edition-normalised",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O8",
+   "O12",
+   "E2"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-expands-abbreviations"
+  ],
+  "why": "It is the same scan and keeps u/v as printed, but expanded macrons, & spelled 'et', boundary text and about six reference typos add a floor of several percent CER that has nothing to do with the engine."
+ },
+ {
+  "draw_id": "D37",
+  "page": "eebo-tcp-5488|ed-69b18619c4be2cdd0edc524e-p6",
+  "chart": "english",
+  "page_kind": "preface/dedication",
+  "language_fits_chart": true,
+  "reference_fit": "same-scan",
+  "memorisation_risk": "low",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "T6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "page-type:preface"
+  ],
+  "why": "The preface is running prose and EEBO-TCP keeps the printed spelling, so the page suits the measure; only rejoined hyphens and about 10 words of neighbour-page text inflate CER a little."
+ },
+ {
+  "draw_id": "D38",
+  "page": "latin-period-5126|ed-69b51e69768235dc65992e2f-p15",
+  "chart": "latin",
+  "page_kind": "preface/dedication",
+  "language_fits_chart": true,
+  "reference_fit": "other-edition",
+  "memorisation_risk": "low",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "I7",
+   "O8",
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "page-type:dedication",
+   "ref-expands-abbreviations"
+  ],
+  "why": "The reference follows another issue, normalises j/i and & throughout and adds neighbouring-page text, so roughly a quarter of the words differ from the print."
+ },
+ {
+  "draw_id": "D39",
+  "page": "latin-period-5126|ed-69b303fb983e01f74b98704a-p1127",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wrong",
+  "memorisation_risk": "low",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O4",
+   "O8",
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-expands-abbreviations"
+  ],
+  "why": "The reference is itself an error-laden, normalised read with a repeated block, so a perfect engine would still score a high CER."
+ },
+ {
+  "draw_id": "D40",
+  "page": "ref-ws|ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-scan",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "A faithful proofread transcription of this scan's body verse, with only two minor typos and the line numbers left out."
+ },
+ {
+  "draw_id": "D41",
+  "page": "latin-period-5126|ed-69b6e47ea8d7b8d17a676440-p218",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-scan",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "A faithful transcription of the same scan's body text; only the apostrophus numeral and one typo deviate."
+ },
+ {
+  "draw_id": "D42",
+  "page": "eebo-tcp-5488|ed-6a425634dfbbb4d07aa5382e-p15",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-edition-normalised",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O8"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "It is the same scan and keeps the abbreviations, but TCP's æ->ae, the expanded q; and boundary text penalise a diplomatic read on about 10% of words; the script missed this."
+ },
+ {
+  "draw_id": "D43",
+  "page": "ref-ws|ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2",
+  "chart": "latin-script-other",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "partial-passage",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "ocr",
+  "group": "ocr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The passage is faithful, but it covers well under half of a two-column page, so whole-page transcriptions score correctly only if the scorer aligns to the passage."
+ },
+ {
+  "draw_id": "D10",
+  "page": "69938e685d28b693146d0737_641",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wrong",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "len-ratio"
+  ],
+  "why": "A good Greek body page, but there is no reference text, so judges had nothing to score fidelity against. The len-ratio flag is an artefact of the empty reference."
+ },
+ {
+  "draw_id": "D11",
+  "page": "69938d775d28b693146cfc2c_283",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O11"
+  ],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Greek body text with the Dewing passage matched span for span. 'numbers-unmatched' only reflects the section and line numerals in the margin, which the OCR also garbled as '21B213'."
+ },
+ {
+  "draw_id": "D12",
+  "page": "699376d2b0a84a5763961a97_367",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "narrower",
+  "memorisation_risk": "high",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O12"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower",
+   "numbers-unmatched"
+  ],
+  "why": "The page is good Greek body text, but the Republic paired with Jowett is a near-certain memorisation case. On top of that, the reference drops the page's last three lines. The ref-narrower flag is correct; numbers-unmatched only reflects Stephanus numerals."
+ },
+ {
+  "draw_id": "D13",
+  "page": "6955747af63a757109173a5d_381",
+  "chart": "greek",
+  "page_kind": "apparatus-heavy",
+  "language_fits_chart": "partly",
+  "reference_fit": "narrower",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O12",
+   "T13",
+   "T16"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower",
+   "mixed-latin",
+   "len-ratio",
+   "numbers-unmatched"
+  ],
+  "why": "Most of the page is Latin commentary that the reference does not cover. The Greek third is matched only to a loose rhymed paraphrase, so a fidelity score against Taylor would penalise a faithful rendering. All four flags are borne out."
+ },
+ {
+  "draw_id": "D14",
+  "page": "69bd9d6a6120d54bd0376a04_60",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O6",
+   "O12"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The Greek body text and Cory's span match, but the OCR misread 'three' as 'divine' and 'third' as 'grain'. Engines that translate the corrupt source faithfully will be marked down against Cory's '[reference wording]', so this item partly measures OCR rather than translation."
+ },
+ {
+  "draw_id": "D15",
+  "page": "69b21dca94025df5d2909ff2_123",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "A clean Greek body page whose reference covers exactly the same span. The script was right to leave it unflagged."
+ },
+ {
+  "draw_id": "D16",
+  "page": "697b079711cc8928b55ea3a8_659",
+  "chart": "greek",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "I3",
+   "O6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-greek",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The reference matches the transcribed right page, but the image is an unsplit spread, and misreads in the ligatured print (e.g. Sergius for Arsacius) will cost faithful engines points. The unflagged status missed both problems."
+ },
+ {
+  "draw_id": "D24",
+  "page": "6a3c61b1879008ba7e15fba1_68",
+  "chart": "chinese",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "offset",
+  "memorisation_risk": "high",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "T11"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower"
+  ],
+  "why": "Mostly commentary that the reference does not translate, the reference adds chapters that are not on the page, and the Analects/Legge pair is highly memorised."
+ },
+ {
+  "draw_id": "D25",
+  "page": "69e72c60a409200ea79f46f6_141",
+  "chart": "chinese",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O13",
+   "O12",
+   "O6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "span-off"
+  ],
+  "why": "Body text with a close match, but the reference overruns the page at both ends, the head-notes in a later hand were OCR'd as a header, and there are misreads ('胎者之屢' for 刖者之屨)."
+ },
+ {
+  "draw_id": "D26",
+  "page": "69b99ec86ed9e0490990a85d_35",
+  "chart": "pali",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Body verse in Pali that closely matches the reference; the numbers-unmatched flag only reflects verse numbers the prose translation leaves out."
+ },
+ {
+  "draw_id": "D27",
+  "page": "6a09ff3dfa20006dbaba8b4d_427",
+  "chart": "pali",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O6"
+  ],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Dense Pali body text that matches the reference span; the flagged numbers are footnote markers, though the OCR has 'ñāṇabhāvena' where the image prints ñāṇābhāvena (sense: '[reference wording]')."
+ },
+ {
+  "draw_id": "D28",
+  "page": "69b99e856ed9e0490990a0b5_301",
+  "chart": "pali",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The reference covers the whole sutta while the page holds only its middle, so fidelity judging rewards or punishes content not on the page; the auto script missed it."
+ },
+ {
+  "draw_id": "D29",
+  "page": "6a30904dd8c6b8a005c7bea9_324",
+  "chart": "pali",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Pali body text with a reference of exactly the same span and low memorisation risk; OCR slips are minor ('vadeyyaṃ' for vadeyyuṃ)."
+ },
+ {
+  "draw_id": "D30",
+  "page": "69e7491a85f786e884a4d6f9_789",
+  "chart": "sanskrit",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-indic-chinese",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Body Sanskrit with a close reference, but one extra sentence at each end, a recension mismatch on the numbers, and OCR misreads ('नानागणनिषेविताम्' for नानामृगनिषेविताम्; 'समुद्रार्थां' for समृद्धार्थां) the reference will penalise."
+ },
+ {
+  "draw_id": "D01",
+  "page": "6991e171b53cae6bb6024476_216",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O12",
+   "O6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Body text and the span matches, but the abbreviated marginal citations (where the numbers come from) have no counterpart in the reference, so an engine that translates them is judged against nothing."
+ },
+ {
+  "draw_id": "D02",
+  "page": "69ade7165426286aa40cf430_374",
+  "chart": "german",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "T6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "len-ratio"
+  ],
+  "why": "Body text in German, but the reference runs past the page's split word into the next leaf and Eastlake's free rendering loosens the fidelity check on a page this short."
+ },
+ {
+  "draw_id": "D03",
+  "page": "69526191ab34727b1f046982_108",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "O13",
+   "O12"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Clean span match on body text; the unmatched numbers come from a later reader's marginal notes, which the source OCR carries and the reference rightly leaves out."
+ },
+ {
+  "draw_id": "D04",
+  "page": "69593291b91a6184ea943bbe_122",
+  "chart": "french",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Body text and the span matches; the flagged numbers are only the footnote citation, which the reference leaves out, and Waite's reordering makes the reference loose for line-by-line fidelity."
+ },
+ {
+  "draw_id": "D05",
+  "page": "69b21d1a429e087c6f866ee7_452",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "narrower",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower"
+  ],
+  "why": "The reference covers only the first ~45% of a very dense page, so judges have no reference for more than half of what each engine translates."
+ },
+ {
+  "draw_id": "D06",
+  "page": "6953e50577f38f6761bef758_274",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "high",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Clean body text with an exact span match, but Bacon/Spedding is a likely memorised pair, so scores may reward recall rather than translation."
+ },
+ {
+  "draw_id": "D07",
+  "page": "6952603cab34727b1f04647b_194",
+  "chart": "german",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Body text in German, but the reference adds material from both neighbouring leaves; the auto-check missed it."
+ },
+ {
+  "draw_id": "D08",
+  "page": "6976f5fb7b4366f057e0e974_631",
+  "chart": "latin",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "I3"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The translated text and reference line up on p.341 body text, but the stored image is an unsplit spread, so any engine fed the image instead of the OCR would see two pages."
+ },
+ {
+  "draw_id": "D09",
+  "page": "6952872cab34727b1f04d284_499",
+  "chart": "latin",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-latin-script",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Plain body text with an exact span match and a literal reference."
+ },
+ {
+  "draw_id": "D17",
+  "page": "69c7e216295ea01b70c8d7d2_39",
+  "chart": "hebrew",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "narrower",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "I4",
+   "O10"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower"
+  ],
+  "why": "Body Hebrew whose reference covers only ch. 29 (~65% of the page); the ch. 28 tail and a rabbinic-type gloss that the OCR garbled ('טלו טהי' הרחטונק') have no reference counterpart."
+ },
+ {
+  "draw_id": "D18",
+  "page": "69920bb1e0a548a13d884da7_342",
+  "chart": "hebrew",
+  "page_kind": "apparatus-heavy",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "high",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "T13",
+   "O12"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "flagged",
+  "auto_flags": [
+   "mixed-latin",
+   "len-ratio",
+   "numbers-unmatched"
+  ],
+  "why": "von Gall's Samaritan Pentateuch page is more apparatus than text, and the body is canonical Torah an engine can reproduce from memory of JPS rather than translate."
+ },
+ {
+  "draw_id": "D19",
+  "page": "6a08f8b89c1b82475e157ff4_16",
+  "chart": "arabic",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "flagged",
+  "auto_flags": [
+   "numbers-unmatched"
+  ],
+  "why": "Clean Arabic body with an exact-span reference, but Field 1909 is a loose paraphrase (via French) that will mark down a literal engine, and the footnote numbers behind the numbers-unmatched flag do no harm."
+ },
+ {
+  "draw_id": "D20",
+  "page": "69d5ac5f4dc55b8478ddd6b6_299",
+  "chart": "arabic",
+  "page_kind": "mixed",
+  "language_fits_chart": true,
+  "reference_fit": "narrower",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O13",
+   "O1"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "flagged",
+  "auto_flags": [
+   "ref-narrower"
+  ],
+  "why": "Nearly half the source text is later-hand pen trials, which the OCR transcribed as garbled prose ('قلم الروح', 'يا ملك الابواب'), and the reference covers only the 9 lines of body text, from another recension."
+ },
+ {
+  "draw_id": "D21",
+  "page": "69e7933d80b52390feb1841a_27",
+  "chart": "arabic",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "O6"
+  ],
+  "verdict": "fit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Arabic body text with a closely aligned reference; minor OCR misreads ('بمد الليل' for image 'بمدّ النيل', 'فم' for 'قمّ') affect engines equally."
+ },
+ {
+  "draw_id": "D22",
+  "page": "69c1bc788522835be84637be_3",
+  "chart": "hebrew",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "high",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "I4"
+  ],
+  "verdict": "unfit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Span and language are clean, but a biblical book against a public-domain KJV-style reference measures recall of the reference, not translation fidelity."
+ },
+ {
+  "draw_id": "D23",
+  "page": "69c1bc6b8522835be8463238_270",
+  "chart": "hebrew",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "O1",
+   "O8",
+   "O6"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-semitic",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "The page and reference align, but the stored OCR does not match the leaf's opening ('אבוי אבוי לי כי יצרי חתף' is not on the image; 'כמה בימינו' for 'בילדותו'), so engines translated partly invented source text and the unflagged label is wrong."
+ },
+ {
+  "draw_id": "D31",
+  "page": "6abe825259b86b7d32a65b4d",
+  "chart": "translation",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "low",
+  "auto_flags_right": true,
+  "taxonomy_classes": [
+   "T6",
+   "E2"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-tibetan",
+  "stratum": "flagged",
+  "auto_flags": [
+   "side-boundary"
+  ],
+  "why": "Body text with a well-aligned cut, but the reference is FRENCH with OCR noise ('davs', '[reference wording]', '[reference wording]') and starts one subject early at a split-clause seam (side-boundary flag correct), so judges compare English against French."
+ },
+ {
+  "draw_id": "D32",
+  "page": "6abe8368433559215a997d21",
+  "chart": "translation",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "medium",
+  "auto_flags_right": "partly",
+  "taxonomy_classes": [
+   "E2"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-tibetan",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Good body side with an exact end boundary, but the reference carries web-page heading cruft not in the Tibetan (duplicated chapter title, '[reference wording]') and 84000 co-exposure is a real memorisation risk; the empty flag list missed the heading cruft."
+ },
+ {
+  "draw_id": "D33",
+  "page": "6abeafd9896ea18127c822af",
+  "chart": "translation",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "same-span",
+  "memorisation_risk": "medium",
+  "auto_flags_right": true,
+  "taxonomy_classes": [],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-tibetan",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Body text with a near-exact reference cut (one trailing verb short at the start); the limit is only 84000 co-exposure."
+ },
+ {
+  "draw_id": "D34",
+  "page": "6abed8d1896ea18127c8f7b0",
+  "chart": "translation",
+  "page_kind": "body",
+  "language_fits_chart": true,
+  "reference_fit": "wider",
+  "memorisation_risk": "low",
+  "auto_flags_right": false,
+  "taxonomy_classes": [
+   "T6",
+   "E2"
+  ],
+  "verdict": "fit-with-limit",
+  "family": "translation",
+  "group": "tr-tibetan",
+  "stratum": "unflagged",
+  "auto_flags": [],
+  "why": "Body text with a well-aligned span, but the side starts mid-word (no side-boundary flag raised), the English is from the Sanskrit with interpretive parentheticals ('[reference wording]') and OCR noise ('[reference wording]', '[reference wording]'), so a faithful Tibetan rendering can score lower than it should."
+ }
+]

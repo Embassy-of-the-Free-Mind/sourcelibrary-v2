@@ -850,7 +850,7 @@ function ReviewStep({
                       {flags?.low_quality && (
                         <div className="flex items-start gap-2 text-xs p-2 rounded" style={{ background: 'color-mix(in srgb, var(--status-warning) 10%, transparent)' }}>
                           <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: 'var(--status-warning)' }} />
-                          <span style={{ color: 'var(--status-warning)' }}>Low quality score — review carefully</span>
+                          <span style={{ color: 'var(--status-warning)' }}>Low quality score: review carefully</span>
                         </div>
                       )}
                     </div>

@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Every keep-what-we-have decision stands; the Flash translation routing (#5740) is under 30 referenced books in six of seven languages and the A5 re-OCR plan rests on 5-14 pages a script."
+status: informational
+decision: "No routing change; proposed a reference top-up (run as 2026-10-06-reference-topup-flash-translation-5873) and a human calibration set (#5406)"
+superseded_by: null
+issue: [5873, 5700]
+---
 ## 2026-10-05 · Did this week's quality decisions have enough evidence? An audit against the decision cards (#5873)
 <!-- PRIOR ART: 2026-10-04-routing-eval-tool-replay-5828.md replayed ONE run (#5795) through a rule with a margin; scripts/eval/DECISIONS.md records what was decided and on what evidence. Neither asks whether the evidence was enough for the money at stake, per language. -->
 

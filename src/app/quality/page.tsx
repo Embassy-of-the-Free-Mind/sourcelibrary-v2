@@ -6,9 +6,9 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
-import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import { GRADES, LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -20,7 +20,7 @@ import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Quality Center — Source Library',
+  title: 'Quality Center | Source Library',
   description:
     'How good the transcriptions and translations in Source Library are, by language and by canon; what we have not measured; the experiments behind the figures; what readers have reported; and how to take part.',
   alternates: { canonical: '/quality' },
@@ -40,6 +40,23 @@ const longDate = (iso: string) =>
 /* ── data, shaped once ── */
 
 type LangRow = (typeof byLanguage.rows)[number];
+/** Transcription error three ways (#5939): raw, after the OCR prompt's own conventions, and the kinds. */
+type ThreeWays = {
+  pages: number;
+  median_cer_raw: number;
+  median_cer_prompt: number;
+  kinds: { long_s_as_f: number; refusals: number; modernised: number; reference_wrong: number; other: number } | null;
+};
+const threeWaysOf = (row: LangRow | null) => ((row?.ocr ?? null) as { three_ways?: ThreeWays } | null)?.three_ways ?? null;
+const twMeta = (byLanguage as { ocr_three_ways?: { hand_check?: { file: string; examples: number; reference_wrong: number } | null } }).ocr_three_ways;
+const twSource = (byLanguage.sources as { ocr_three_ways?: string }).ocr_three_ways;
+const TW_KINDS: [keyof NonNullable<ThreeWays['kinds']>, string][] = [
+  ['long_s_as_f', 'long s read as f'],
+  ['refusals', 'refused'],
+  ['modernised', 'spelling modernised'],
+  ['reference_wrong', 'published text wrong'],
+  ['other', 'other'],
+];
 type Fidelity = {
   kind: string;
   language: string;
@@ -74,6 +91,18 @@ const experiments = listExperiments();
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
+
+const audit = sampleAudit();
+const of = (v: Of) => `${v.n} of ${v.of}`;
+const DROP_REASON: Record<DropReason, string> = {
+  judges: 'the judges themselves said the published translation does not fit the page',
+  'by-eye': 'read by eye, the reference does not match the page',
+  language: 'the page is mostly in another language or script',
+  cer: 'on a printed page, no engine came within 35% character error of the reference',
+};
+const reasonList = (family: 'translation' | 'ocr') =>
+  audit.dropped.reasons.filter(r => r.family === family).map(r => `${DROP_REASON[r.reason]} (${r.n})`).join('; ');
+const cov = audit.coverage;
 
 type Theme = (typeof feedback.themes)[number];
 
@@ -182,7 +211,7 @@ function Entry() {
         </figure>
         <div className="md:pb-10">
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-stone-900 mb-5">Quality Center</h1>
-          <p className="text-lg text-stone-700 leading-relaxed mb-6">
+          <p className="font-body text-lg text-stone-700 leading-relaxed mb-6">
             Every page here was read by a machine first. This is where we show how good that reading is, what we are doing
             to improve it, and how you can help.
           </p>
@@ -222,7 +251,7 @@ export default function QualityCenterPage() {
       }
       bg="bg-cream"
     >
-      <article className="max-w-4xl text-stone-700">
+      <article className="max-w-4xl font-body text-stone-700">
         {/* ── 1. Where quality stands ── */}
         <Section id="stands" title="Where quality stands">
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
@@ -243,7 +272,8 @@ export default function QualityCenterPage() {
             }
           >
             <Row label="The scan">
-              <Crop box={LEAF.line} alt="The end of one printed line: natio. Quisquilias. i. vilissimas et abiectissimas, then an abbreviated word broken at the line end." />
+              <Crop box={LEAF.line} className="hidden sm:block" alt="The end of one printed line: natio. Quisquilias. i. vilissimas et abiectissimas, then an abbreviated word broken at the line end." />
+              <Crop box={LEAF.lineNarrow} className="sm:hidden" alt="The last words of one printed line: et abiectissimas, then an abbreviated word broken at the line end." />
             </Row>
             <Row label="Our text">
               <p className="font-mono text-sm leading-relaxed text-stone-800">
@@ -264,14 +294,28 @@ export default function QualityCenterPage() {
           </Figure>
 
           <Sub>By language</Sub>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            We score each transcription three ways: the raw share of characters that differ from a published text of the same
+            printing, the share left once we allow the conventions our transcription instructions ask for (abbreviations written
+            out, the long s written as s, standard characters), and what kinds of error make up the rest, a rough sorting
+            {twMeta?.hand_check ? (
+              <>
+                {' '}that we checked by eye on {twMeta.hand_check.examples} examples, in {twMeta.hand_check.reference_wrong} of
+                which the published text, not ours, was wrong (<A href={`${BLOB}${twMeta.hand_check.file}`}>the check</A>).
+              </>
+            ) : (
+              '.'
+            )}
+          </p>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-            <table className="min-w-[680px] w-full text-sm text-stone-700">
+            <table className="min-w-[860px] w-full text-sm text-stone-700">
               <thead>
                 <tr>
                   <th className={th}>Language</th>
                   <th className={th}>Share of English pages</th>
                   <th className={th}>Transcription: median character error against a published text</th>
+                  <th className={th}>Transcription three ways: raw, after the prompt&rsquo;s own conventions, and what the error is</th>
                   <th className={th}>English rated 4 or 5 of 5 by a model judge</th>
                   <th className={th}>English against a published translation: pages at 4 or 5 of 5</th>
                   <th className={th}>Checked by a person who reads it</th>
@@ -281,19 +325,35 @@ export default function QualityCenterPage() {
                 {languages.map(({ language, row, fid }) => {
                   const ocr = row?.ocr?.current;
                   const tr = row?.translation;
+                  const tw = threeWaysOf(row);
                   return (
                     <tr key={language}>
                       <td className={`${td} font-semibold text-stone-900`}>{language}</td>
-                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-stone-500">—</span>}</td>
+                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-stone-500">–</span>}</td>
                       <td className={td}>
                         {ocr?.median_cer != null ? (
                           <>{pct(ocr.median_cer, 1)} <span className="text-stone-500 text-xs">({ocr.pages_scored} pages)</span></>
                         ) : (
-                          <span className="text-stone-500">{row ? 'not measured' : '—'}</span>
+                          <span className="text-stone-500">{row ? 'not measured' : '–'}</span>
                         )}
                       </td>
                       <td className={td}>
-                        {tr ? <>{pct(tr.share)} <span className="text-stone-500 text-xs">({tr.books} books)</span></> : <span className="text-stone-500">—</span>}
+                        {tw ? (
+                          <>
+                            {pct(tw.median_cer_raw, 1)} raw, {pct(tw.median_cer_prompt, 1)} after{' '}
+                            <span className="text-stone-500 text-xs">({tw.pages} pages)</span>
+                            {tw.kinds && (
+                              <span className="block text-stone-500 text-xs mt-1">
+                                {TW_KINDS.filter(([k]) => tw.kinds![k] >= 0.005).map(([k, label]) => `${label} ${pct(tw.kinds![k])}`).join(' · ')}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-stone-500">{ocr?.median_cer != null ? 'not broken down' : '–'}</span>
+                        )}
+                      </td>
+                      <td className={td}>
+                        {tr ? <>{pct(tr.share)} <span className="text-stone-500 text-xs">({tr.books} books)</span></> : <span className="text-stone-500">–</span>}
                       </td>
                       <td className={td}>
                         {fid?.share_ge4 != null ? (
@@ -314,6 +374,13 @@ export default function QualityCenterPage() {
           <Source>
             Share, transcription and model-judge columns: <A href={`${BLOB}src/data/quality-by-language.json`}>src/data/quality-by-language.json</A>{' '}
             (generated {longDate(byLanguage.generated)}). {byLanguage.notes.ocr} {byLanguage.notes.translation}{' '}
+            {twSource && (
+              <>
+                Three-ways column: <A href={`${BLOB}${twSource}`}>{twSource.split('/').pop()}</A>, Wikisource and EEBO-TCP pages
+                of the same scan or edition, the current engine (flash-lite) on a plain transcription prompt; &ldquo;other&rdquo;
+                is mostly marginal notes placed differently, and misreads.{' '}
+              </>
+            )}
             Published-translation column: the <code>translation_fidelity</code> cells of{' '}
             <A href={`${BLOB}src/data/ocr-benchmark-evidence.json`}>src/data/ocr-benchmark-evidence.json</A>
             {fidelityRun && <> (run {fidelityRun}{fidelityIssue && <>, <IssueLink num={fidelityIssue} /></>})</>}: one page per book,
@@ -345,9 +412,19 @@ export default function QualityCenterPage() {
                 .
               </li>
             )}
+            <li>
+              The pages behind the cost charts below do not look like the library in four places (checked{' '}
+              {longDate(audit.date)}, <IssueLink num={audit.issue} />). Chinese translation is {pct(cov.chineseTranslationPrinted.sample)}{' '}
+              printed pages, where {pct(cov.chineseHandwritten.corpus)} of the library&rsquo;s Chinese pages are handwritten.
+              Tibetan translation covers {cov.tibetan.texts} texts, {cov.tibetan.printed.sample === 1 ? 'all' : pct(cov.tibetan.printed.sample)} printed, where{' '}
+              {pct(cov.tibetan.handwritten.corpus)} of Tibetan pages are manuscripts. Early English OCR is{' '}
+              {pct(cov.english17c.sample)} 17th-century print, against {pct(cov.english17c.corpus)} of English pages. German
+              and French OCR is {cov.germanFrench.n} pages{cov.germanFrench.wikisource.sample === 1 && <>, all from Wikisource&rsquo;s own scans</>},{' '}
+              {pct(cov.germanFrench.c19.sample)} 19th century.
+            </li>
             {caveats.map(r => (
               <li key={r.language}>
-                {r.language} &mdash; {r.caveat!.text}
+                {r.language}: {r.caveat!.text}
                 {'issue' in r.caveat! && r.caveat!.issue ? <> <IssueLink num={r.caveat!.issue as number} /></> : null}
               </li>
             ))}
@@ -360,6 +437,43 @@ export default function QualityCenterPage() {
           <Source>
             Generated from the files above and from the open-work list on <A href="/research/quality/open">Open quality work</A>{' '}
             (status as of {OPEN_WORK_AS_OF}). Each item links to its public issue, which is the current record.
+          </Source>
+
+          <Sub>How a page will be graded, and which pages we check</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            The figures above use different scales, chosen study by study. We are replacing them with one grade per page,
+            built from published standards: the error severities of{' '}
+            <A href="https://arxiv.org/abs/2405.16969">MQM</A>, the scheme translation research uses to count errors, and
+            the transcription levels of the <A href="https://ocr-d.de/en/gt-guidelines/trans/trLevels.html">OCR-D guidelines</A>,
+            which keep the long s, u and v and abbreviation marks as printed. To these we add three checks of our own: is
+            it the right page, does the text contain words that are not on the page, and did the machine refuse to read it.
+          </p>
+          <dl className="max-w-3xl">
+            {GRADES.map(g => (
+              <div key={g.name} className="py-3 border-b border-stone-200 md:grid md:grid-cols-[12rem_1fr] md:gap-x-6">
+                <dt className="font-semibold text-stone-900 mb-1">{g.name}</dt>
+                <dd className="text-stone-700 leading-relaxed">
+                  <p>{g.means}</p>
+                  <p className="mt-1 text-sm text-stone-500">{g.rule}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="text-stone-700 leading-relaxed mt-4 mb-4 max-w-3xl">
+            Which pages: each month a random draw of books, one page per book, so that no single book counts twice. Every
+            language and period is drawn, with more books where we serve more pages and where errors have been more
+            common. Title pages, blank pages,
+            tables, pages in two scripts and damaged pages are drawn separately, because that is where machines most often
+            invent text, and then weighted back to their share of the library. Pages used to score a month are never used
+            to tune the next fix.
+          </p>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            None of this has run yet. The first graded round, and a check of the grades by people who read each language,
+            come before any grade replaces the figures above.
+          </p>
+          <Source>
+            The rubric, the sampling plan, and a count of what is measured in each language and period today:{' '}
+            <A href={`${BLOB}.claude/docs/quality-rubric-and-sampling.md`}>quality-rubric-and-sampling.md</A> (<IssueLink num={5984} />).
           </Source>
 
           <Sub>By canon</Sub>
@@ -390,7 +504,7 @@ export default function QualityCenterPage() {
                         {n(t.pages_transcribed)} <span className="text-stone-500 text-xs">of {n(t.pages_scanned)}</span>
                       </td>
                       <td className={td}>
-                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-stone-500">—</span>}
+                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-stone-500">–</span>}
                       </td>
                       <td className={td}>{n(t.pages_translated)}</td>
                     </tr>
@@ -415,16 +529,13 @@ export default function QualityCenterPage() {
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
 
-          <Sub>Cost against accuracy, by script</Sub>
+          <Sub>Cost against agreement with a typed text, by script</Sub>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            Each OCR engine we have measured: what it costs to read 1,000 pages, and how accurately it reads them against
-            a typed reference. Within a figure, the engines are compared only on pages every one of them read. The bar is
-            the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
-            (invented text). The teal line joins the engines no other engine beats on both cost and accuracy. Gemini
-            costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
-            priced on its inference time alone, which assumes the machine does nothing else, so it reads low.{' '}
+            For each script: is any OCR engine clearly better or cheaper than the one we use, judged on the same pages
+            against a typed text, and how far can that answer be trusted (<a href="#chart-limits" className={LINK}>limits</a>)?
+            The charts, tables and method are on{' '}
             <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
-              One per screen, for presenting
+              the cost and quality page
             </Link>
             .
           </p>
@@ -439,15 +550,11 @@ export default function QualityCenterPage() {
 
           <Sub>Translation cost against fidelity, by language</Sub>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            Each translation engine we have measured: what it costs to translate 1,000 pages, and how closely its English
-            keeps to the meaning of a published human translation of the same page. The score is model-judged, not
-            human-scored: blind AI judges read both and grade from 1 to 5, and they read our transcription, not the page
-            image, so this is not accuracy. Within a figure, the engines are compared only on pages every one of them
-            translated, graded in the same read. The bar is the 95% interval; the dashed ring grows with the share of pages
-            where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
-            engine run without a metered cost is listed under its chart, scored on the pages it did translate.{' '}
+            For each language: is any engine clearly better or cheaper than the one we use? Fidelity is model-judged, not
+            human-scored: blind AI judges compare our English with a published translation of the same page and grade it
+            from 1 to 5. The charts, tables and method are on{' '}
             <Link href="/quality/pareto#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
-              One per screen, for presenting
+              the cost and quality page
             </Link>
             .
           </p>
@@ -457,6 +564,98 @@ export default function QualityCenterPage() {
             <IssueLink num={5497} />) by{' '}
             <A href={`${GH}blob/main/scripts/eval/build-translation-pareto.mjs`}>scripts/eval/build-translation-pareto.mjs</A>.
           </Source>
+          <Figure
+            title={`One error and its fix: ${WORKED_FIX.title}`}
+            caption={
+              <>
+                From <A href={`${BLOB}${WORKED_FIX.writeup}`}>the write-up</A> and <IssueLink num={WORKED_FIX.issue} />. One
+                of the blank pages: <A href={WORKED_FIX.example.href}>{WORKED_FIX.example.label}</A>.
+              </>
+            }
+          >
+            <Row label="What readers saw">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.saw}</p>
+            </Row>
+            <Row label="How we measured">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.measured}</p>
+              <p className="font-mono text-sm leading-relaxed text-stone-800 mt-2">
+                printed: {WORKED_FIX.line.scan}
+                <br />
+                read: <span className="underline decoration-amber-700 decoration-2 underline-offset-4">{WORKED_FIX.line.before}</span>
+              </p>
+            </Row>
+            <Row label="The fix">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.fix}</p>
+              <p className="font-mono text-sm leading-relaxed text-stone-800 mt-2">repaired: {WORKED_FIX.line.after}</p>
+            </Row>
+            <Row label="After">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.after}</p>
+            </Row>
+          </Figure>
+
+          <div id="chart-limits" className="scroll-mt-24">
+            <Sub>How far these charts can be trusted</Sub>
+            <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+              On {longDate(audit.date)} we checked whether the pages behind both sets of charts suit the measure. A script
+              checked all {n(audit.checked.translation)} translation page slots and {n(audit.checked.ocr)} OCR pages.{' '}
+              {audit.eye.pages} of them, one page per book, were read against the page image by {audit.eye.readers} AI
+              reviewers (Claude Opus). No scholar has read them yet.
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl">
+              <li>
+                <b>Pages left out.</b> {audit.dropped.translation + audit.dropped.ocr} pages no longer count in the charts.
+                Translation ({audit.dropped.translation}): {reasonList('translation')}. OCR ({audit.dropped.ocr}):{' '}
+                {reasonList('ocr')}.
+              </li>
+              <li>
+                <b>What still ranks.</b> Without those pages, the order of engines and the frontier stayed the same on{' '}
+                {of(audit.held.translation)} translation charts and {of(audit.held.ocr)} OCR charts
+                {audit.held.swapsAllOverlap && <>; every pair of engines that changed places was already within each other&rsquo;s 95% intervals</>}.
+                Not fit to rank engines:{' '}
+                {audit.unfit.map((u, i) => (
+                  <span key={u.chart}>
+                    {i > 0 && (i === audit.unfit.length - 1 ? ' and ' : '; ')}
+                    {u.chart}
+                    {u.qualifier && <>, for {u.qualifier}</>}
+                  </span>
+                ))}
+                . The others can rank engines, with the limit stated under each chart.
+              </li>
+              <li>
+                <b>An OCR score is partly agreement with an edition.</b> Greek: on {of(audit.edition.greek)} pages the
+                reference is a modern edition of the work, not a transcription of this print. Latin: on{' '}
+                {of(audit.edition.latinNormalised)} pages the reference expands abbreviations or modernises u and v where the
+                print does not. Chinese manuscripts: on {of(audit.edition.chineseOverrun)} pages the reference runs more than
+                15% past the page. Large gaps between engines hold; small ones are within what the reference itself differs by.
+              </li>
+              <li>
+                <b>Famous texts.</b> Some pages come from texts whose published English is widely reproduced, so a model may
+                recall it rather than translate. Share of such pages in each language&rsquo;s chart of Gemini models:{' '}
+                {audit.famous.map((f, i) => (
+                  <span key={f.language}>
+                    {i > 0 && ', '}
+                    {f.language} {f.famous} of {f.n}
+                  </span>
+                ))}
+                . On those pages the engines keep the same order as on the rest (rank correlation{' '}
+                {audit.spearman[0].toFixed(2)} to {audit.spearman[1].toFixed(2)}), but the level moves, from{' '}
+                {Math.abs(audit.levelShift[0]).toFixed(1)} lower to {audit.levelShift[1].toFixed(1)} higher on the scale of 5.
+                Read these charts for order more than for level.
+              </li>
+              <li>
+                <b>The script is a screen, not a verdict.</b> By eye, {of(audit.eye.flagged)} pages it flagged were unfit,
+                and so were {of(audit.eye.unflagged)} it passed. If you read one of these languages, reading the pages we
+                left out and the ones we kept is a check we cannot yet make ourselves:{' '}
+                <a href="#take-part" className={LINK}>take part</a>.
+              </li>
+            </ul>
+            <Source>
+              <A href={audit.writeup}>The write-up</A> (<IssueLink num={audit.issue} />), with the verdict for each chart;
+              figures read from <A href={`${BLOB}${audit.files.summary}`}>summary.json</A>; the pages left out and why,{' '}
+              <A href={`${BLOB}${audit.files.drops}`}>drops.json</A>; the {audit.eye.pages} readings by eye,{' '}
+              <A href={`${BLOB}${audit.files.eye}`}>eye.json</A>.
+            </Source>
+          </div>
 
           <Sub>Running now</Sub>
           <ul className="space-y-2 text-stone-700 leading-relaxed">
@@ -569,16 +768,16 @@ export default function QualityCenterPage() {
             title="A reader's note, and where yours would go"
             caption={
               <>
-                Left: the foot of the leaf above. As we read the hand: <i>De ea Endelechia plura doctissimus Budeus in libro
+                First, the foot of the leaf above. As we read the hand: <i>De ea Endelechia plura doctissimus Budeus in libro
                 de Asse primo</i>, &ldquo;more on this <i>endelechia</i> in the most learned Budé, in the first book of{' '}
-                <i>De Asse</i>&rdquo;. Right: blank paper from the same page. No reader has yet left a note here that we may
+                <i>De Asse</i>&rdquo;. Beside it, blank paper from the same page. No reader has yet left a note here that we may
                 show with their name; when one does, and agrees, it will stand in that margin.
               </>
             }
           >
             <div className="grid gap-4 sm:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] sm:items-start">
               <Crop box={LEAF.note} alt="A line of ink handwriting at the foot of the printed page." />
-              <div className="relative">
+              <div className="relative max-w-[12rem] sm:max-w-none">
                 <Crop box={LEAF.margin} alt="Blank paper from the margin of the same page." />
                 <div className="absolute inset-3 border border-dashed border-stone-500/60 flex items-center justify-center p-3">
                   <span className="text-sm text-stone-600 text-center leading-snug">Your note would go here</span>

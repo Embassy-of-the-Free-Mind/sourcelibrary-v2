@@ -1,0 +1,85 @@
+{
+ "book_id": "6a4271af28e9db2e39c1178a",
+ "tcp": "A81106",
+ "pages": 20,
+ "pages_kept": 0,
+ "page_drop": {
+  "no-page-match": 11,
+  "too-little-text": 9
+ },
+ "lines": 583,
+ "lines_kept": 0,
+ "line_drop": {
+  "page-dropped": 583
+ },
+ "per_page": [
+  {
+   "page": "1",
+   "match": 0.24,
+   "kept": 0,
+   "lines": 26
+  },
+  {
+   "page": "10",
+   "match": 0.154,
+   "kept": 0,
+   "lines": 40
+  },
+  {
+   "page": "11",
+   "match": 0.13,
+   "kept": 0,
+   "lines": 71
+  },
+  {
+   "page": "13",
+   "match": 0.2,
+   "kept": 0,
+   "lines": 63
+  },
+  {
+   "page": "14",
+   "match": 0.292,
+   "kept": 0,
+   "lines": 54
+  },
+  {
+   "page": "3",
+   "match": 0.09,
+   "kept": 0,
+   "lines": 72
+  },
+  {
+   "page": "4",
+   "match": 0.18,
+   "kept": 0,
+   "lines": 41
+  },
+  {
+   "page": "6",
+   "match": 0.086,
+   "kept": 0,
+   "lines": 47
+  },
+  {
+   "page": "7",
+   "match": 0.341,
+   "kept": 0,
+   "lines": 46
+  },
+  {
+   "page": "8",
+   "match": 0.354,
+   "kept": 0,
+   "lines": 35
+  },
+  {
+   "page": "9",
+   "match": 0.167,
+   "kept": 0,
+   "lines": 49
+  }
+ ],
+ "kept_read_cer_median": null,
+ "kept_read_cer_mean": null
+}

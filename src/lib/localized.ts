@@ -49,9 +49,54 @@ export function localizedTitle(book: BookLike, lang: Locale): string {
     if (gloss) return gloss;
     // No gloss yet in this language: fall back to the ORIGINAL, not the English
     // gloss — an English title under Spanish chrome is the wrong half-measure.
-    return book.title || book.display_title || '';
+    const original = book.title || book.display_title || '';
+    return lang === 'zh' ? chineseShownTitle(original) : original;
   }
   return book.display_title || book.title || '';
+}
+
+const HAN = /[\u3400-\u9fff\uf900-\ufaff]/;
+const VOLUME = /\bvols?\.?\s*(\d+(?:\s*[-–~]\s*\d+)?)\b/i;
+
+/**
+ * The stored title of a Chinese book as a Chinese reader should see it on
+ * `/zh` (#6382). 12,221 of 12,786 live Chinese books store a Chinese title
+ * with Roman-letter additions (measured 2026-10-10): a volume note,
+ * "春秋大全·卷一 (vol 1)"; a romanisation or English gloss in brackets, after a
+ * dash or around the title, "五行大義 (Wuxing Dayi: …) Vol 2", "御定駢字類編·卷二
+ * — Imperial Parallel Characters (vol 2)", "Laozi Yuanyi 老子元翼 — …".
+ *
+ * Shown: the span from the first Han character to the last, less any bracket
+ * inside it that holds no Han, plus the volume as "（第 N 册）". The English site
+ * still shows the gloss, so nothing is lost to a reader who wants it. A title
+ * with no Han characters is returned as stored. Display only — the stored title
+ * is never rewritten.
+ */
+function hanSpan(s: string): string {
+  const first = s.search(HAN);
+  if (first < 0) return '';
+  let last = s.length - 1;
+  while (last > first && !HAN.test(s[last])) last--;
+  // Keep a bracket or quote mark that closes inside the span: "周易 (周易注疏)".
+  while (last + 1 < s.length && /[)）》」』】]/.test(s[last + 1])) last++;
+  return s.slice(first, last + 1);
+}
+
+export function chineseShownTitle(title: string): string {
+  if (!HAN.test(title)) return title;
+  let core = hanSpan(title);
+  // A bracket left open means the span ended inside an English one, as in
+  // "… — Daoyan neiwai mijue quanshu (incl. 悟真篇 Wuzhen pian)": cut it off
+  // and trim to the Han again.
+  const open = Math.max(core.lastIndexOf('('), core.lastIndexOf('（'));
+  if (open > Math.max(core.lastIndexOf(')'), core.lastIndexOf('）'))) core = hanSpan(core.slice(0, open));
+  core = core
+    .replace(/\s*[(（]([^()（）]*)[)）]/g, (m, inner: string) => (HAN.test(inner) ? m : ''))
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  const vol = title.match(VOLUME);
+  if (vol) core += `（第 ${vol[1].replace(/\s*[-–~]\s*/, '–')} 册）`;
+  return core || title;
 }
 
 /**
@@ -61,6 +106,9 @@ export function localizedTitle(book: BookLike, lang: Locale): string {
 export function originalTitleIfDifferent(book: BookLike, lang: Locale): string | null {
   const shown = localizedTitle(book, lang);
   const original = book.title || '';
+  // On /zh the shown title IS the original, with only its Roman-letter gloss
+  // removed; printing the stored string beneath would put the English back.
+  if (lang === 'zh' && !book.localized?.zh?.title) return null;
   return original && original !== shown ? original : null;
 }
 
@@ -69,8 +117,10 @@ export function originalTitleIfDifferent(book: BookLike, lang: Locale): string |
  * `scripts/lib/book-docs.mjs`; one field per language, written by
  * `scripts/maintenance/sync-pages-translated-es.mjs`.
  */
-const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
+const TRANSLATED_COUNTER: Partial<Record<Exclude<Locale, 'en'>, string>> = {
   es: 'pages_translated_es',
+  // No `la`: nothing is translated INTO Latin (#6254). A book exists in Latin
+  // only by being WRITTEN in it — see NATIVE_EDITION_LANGUAGE below.
 };
 
 /**
@@ -106,6 +156,23 @@ const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
  */
 export const NATIVE_EDITION_LANGUAGE: Record<Exclude<Locale, 'en'>, RegExp> = {
   es: /^\s*(spanish|espa(?:ñ|n)ol|castellano|castilian)\s*$/i,
+  // Latin (#6254). Anchored for the same reason as Spanish: the stored values
+  // it must REFUSE are real ones — "Latin-German" (61 live books), "Greek-Latin",
+  // "Latin/English", "Chinese, Latin". A `/la` URL promises a Latin page, and a
+  // bilingual one keeps half of it. Measured 2026-10-07: "Latin" 15,771 live
+  // books, "lat" 5. "Neo-Latin" and "Ecclesiastical Latin" are the language
+  // table's aliases for Latin (`language-normalize.ts`) and a Latin reader reads
+  // both; the parity test holds this pattern to that table.
+  la: /^\s*(latin|latina|latine|lat|neo-latin|ecclesiastical latin)\s*$/i,
+  // Dutch and Chinese (#6382), anchored for the same reason. Refused real
+  // values: "Latin-Dutch", "Dutch-English", "Dutch-German", "Chinese-English",
+  // "Chinese, Latin", "Classical Chinese / Japanese". Measured 2026-10-09:
+  // "Dutch" 568 live books, "Middle Dutch" 7; "Chinese" 12,786, "Classical
+  // Chinese" 88. Middle Dutch and Classical Chinese are left out: the language
+  // table counts them as languages of their own, and the parity test holds
+  // these patterns to the table's codes (nld, zho).
+  nl: /^\s*(dutch|nederlands|flemish|nld|dut)\s*$/i,
+  zh: /^\s*(chinese|zho|chi|mandarin|cmn|traditional chinese|simplified chinese)\s*$/i,
 };
 
 /** Is the book's own text already in `lang` (no translation involved)? */
@@ -122,12 +189,10 @@ export function isNativeEdition(book: Record<string, unknown>, lang: Locale): bo
  * page, so the query and `hasLocalizedEdition` below can never disagree.
  */
 export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<string, unknown> {
-  return {
-    $or: [
-      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
-      { language: NATIVE_EDITION_LANGUAGE[lang] },
-    ],
-  };
+  const counter = TRANSLATED_COUNTER[lang];
+  const native = { language: NATIVE_EDITION_LANGUAGE[lang] };
+  // A locale with no translation counter (Latin) exists by native editions alone.
+  return counter ? { $or: [{ [counter]: { $gt: 0 } }, native] } : native;
 }
 
 /** The slice of a Mongo `Db` the indexed filter needs — kept narrow so tests can fake it. */
@@ -169,12 +234,9 @@ export async function localizedEditionFilterIndexed(db: LanguageSpellingsSource,
   } catch {
     return localizedEditionFilter(lang);
   }
-  return {
-    $or: [
-      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
-      { language: { $in: spellings } },
-    ],
-  };
+  const counter = TRANSLATED_COUNTER[lang];
+  const native = { language: { $in: spellings } };
+  return counter ? { $or: [{ [counter]: { $gt: 0 } }, native] } : native;
 }
 
 /**
@@ -203,10 +265,12 @@ export function hasLocalizedEdition(
   lang: Locale,
 ): boolean | null {
   if (lang === 'en') return true;
-  const field = TRANSLATED_COUNTER[lang];
-  if (!field) return false;
   // Written in the language: the pages already ARE it, no counter involved.
   if (isNativeEdition(book, lang)) return true;
+  const field = TRANSLATED_COUNTER[lang];
+  // A locale nothing is translated INTO (Latin): the native test above is the
+  // whole answer, and it could only be given if `language` was projected.
+  if (!field) return book.language === undefined ? null : false;
   const value = book[field];
   if (value === undefined) return null;
   if (typeof value === 'number' && value > 0) return true;

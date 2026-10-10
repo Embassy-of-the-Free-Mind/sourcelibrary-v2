@@ -1,0 +1,254 @@
+{
+ "seed": 6361,
+ "at": "2026-10-10T14:40:42.499Z",
+ "min_src_chars": 300,
+ "draw": [
+  {
+   "vol": 98,
+   "book_id": "6abeb20a896ea18127c82b01",
+   "section": "Madhyamaka",
+   "why": "random (seed 6361)",
+   "pages": [
+    {
+     "page_id": "6abeb20c896ea18127c82cf0",
+     "page_number": 493,
+     "page_label": "f. 247b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb20a896ea18127c82b01/0493.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p493"
+    },
+    {
+     "page_id": "6abeb20c896ea18127c82cf1",
+     "page_number": 494,
+     "page_label": "f. 248a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb20a896ea18127c82b01/0494.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p494"
+    },
+    {
+     "page_id": "6abeb20c896ea18127c82cf2",
+     "page_number": 495,
+     "page_label": "f. 248b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb20a896ea18127c82b01/0495.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p495"
+    }
+   ]
+  },
+  {
+   "vol": 193,
+   "book_id": "6abed9f5896ea18127c90242",
+   "section": "Pramana",
+   "why": "random (seed 6361)",
+   "pages": [
+    {
+     "page_id": "6abed9ff896ea18127c9030f",
+     "page_number": 203,
+     "page_label": "f. 102b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed9f5896ea18127c90242/0203.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p203"
+    },
+    {
+     "page_id": "6abed9ff896ea18127c90310",
+     "page_number": 204,
+     "page_label": "f. 103a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed9f5896ea18127c90242/0204.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p204"
+    },
+    {
+     "page_id": "6abed9ff896ea18127c90311",
+     "page_number": 205,
+     "page_label": "f. 103b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed9f5896ea18127c90242/0205.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p205"
+    }
+   ]
+  },
+  {
+   "vol": 175,
+   "book_id": "6abed42c896ea18127c8d54f",
+   "section": "Pramana",
+   "why": "random (seed 6361)",
+   "pages": [
+    {
+     "page_id": "6abed42d896ea18127c8d5d4",
+     "page_number": 131,
+     "page_label": "f. 66a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed42c896ea18127c8d54f/0131.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p131"
+    },
+    {
+     "page_id": "6abed42d896ea18127c8d5d5",
+     "page_number": 132,
+     "page_label": "f. 66b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed42c896ea18127c8d54f/0132.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p132"
+    },
+    {
+     "page_id": "6abed42d896ea18127c8d5d6",
+     "page_number": 133,
+     "page_label": "f. 67a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed42c896ea18127c8d54f/0133.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p133"
+    }
+   ]
+  },
+  {
+   "vol": 101,
+   "book_id": "6abeb2b1896ea18127c8327d",
+   "section": "Madhyamaka",
+   "why": "random (seed 6361)",
+   "pages": [
+    {
+     "page_id": "6abeb2b4896ea18127c83503",
+     "page_number": 644,
+     "page_label": "f. 323a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb2b1896ea18127c8327d/0644.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p644"
+    },
+    {
+     "page_id": "6abeb2b4896ea18127c83504",
+     "page_number": 645,
+     "page_label": "f. 323b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb2b1896ea18127c8327d/0645.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p645"
+    },
+    {
+     "page_id": "6abeb2b4896ea18127c83505",
+     "page_number": 646,
+     "page_label": "f. 324a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb2b1896ea18127c8327d/0646.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p646"
+    }
+   ]
+  },
+  {
+   "vol": 183,
+   "book_id": "6abed698896ea18127c8e9f4",
+   "section": "Pramana",
+   "why": "random (seed 6361)",
+   "pages": [
+    {
+     "page_id": "6abed69b896ea18127c8eb34",
+     "page_number": 318,
+     "page_label": "f. 160a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed698896ea18127c8e9f4/0318.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p318"
+    },
+    {
+     "page_id": "6abed69b896ea18127c8eb35",
+     "page_number": 319,
+     "page_label": "f. 160b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed698896ea18127c8e9f4/0319.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p319"
+    },
+    {
+     "page_id": "6abed69b896ea18127c8eb36",
+     "page_number": 320,
+     "page_label": "f. 161a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed698896ea18127c8e9f4/0320.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p320"
+    }
+   ]
+  },
+  {
+   "vol": 174,
+   "book_id": "6abed3fc896ea18127c8d272",
+   "section": "Pramana",
+   "why": "extreme length ratio",
+   "rel_ratio": 1.047,
+   "pages": [
+    {
+     "page_id": "6abed3fd896ea18127c8d415",
+     "page_number": 417,
+     "page_label": "f. 209a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed3fc896ea18127c8d272/0417.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p417"
+    },
+    {
+     "page_id": "6abed3fd896ea18127c8d416",
+     "page_number": 418,
+     "page_label": "f. 209b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed3fc896ea18127c8d272/0418.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p418"
+    },
+    {
+     "page_id": "6abed3fd896ea18127c8d417",
+     "page_number": 419,
+     "page_label": "f. 210a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abed3fc896ea18127c8d272/0419.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p419"
+    }
+   ]
+  },
+  {
+   "vol": 112,
+   "book_id": "6abeb51b896ea18127c84c67",
+   "section": "Madhyamaka",
+   "why": "extreme length ratio",
+   "rel_ratio": 0.976,
+   "pages": [
+    {
+     "page_id": "6abeb51e896ea18127c84d66",
+     "page_number": 253,
+     "page_label": "f. 127b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb51b896ea18127c84c67/0253.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p253"
+    },
+    {
+     "page_id": "6abeb51e896ea18127c84d67",
+     "page_number": 254,
+     "page_label": "f. 128a",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb51b896ea18127c84c67/0254.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p254"
+    },
+    {
+     "page_id": "6abeb51e896ea18127c84d68",
+     "page_number": 255,
+     "page_label": "f. 128b",
+     "image_url": "https://images.sourcelibrary.org/pages/6abeb51b896ea18127c84c67/0255.jpg",
+     "stored_model": "gemini-3-flash-preview",
+     "staged_model": "gemini-3.8-flash-low",
+     "files": "p255"
+    }
+   ]
+  }
+ ]
+}

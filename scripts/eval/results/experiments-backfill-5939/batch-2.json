@@ -1,0 +1,448 @@
+{
+ "2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md": {
+  "header": {
+   "issue": 4883,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "syc"
+   ],
+   "scripts": [
+    "Latn",
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 0,
+   "verdict": "NT 1905 (100% gemini-3-flash-preview, 0 pages looped): of 350 pages with Syriac,",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md": {
+  "header": {
+   "issue": [
+    4746,
+    4883
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 40,
+   "verdict": "Decision (proposed on #4883, Derek's call).",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-09-17-does-translation-survive-the-batch-api-the-block-boundary-4681.md": {
+  "header": {
+   "issue": [
+    4681,
+    4905
+   ],
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 4,
+   "n_pages": 8,
+   "verdict": "## 2026-09-17 — Does translation survive the Batch API?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 1, pipeline 1, ocr 0, image 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected, undecided)"
+  ]
+ },
+ "2026-09-18-is-paddleocr-vl-1-6-an-acceptable-cost-lane-4925.md": {
+  "header": {
+   "issue": [
+    4925,
+    4743
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "lzh"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": 69,
+   "n_pages": 14,
+   "verdict": "Route manuscript-regular Chinese pages to a PaddleOCR-VL-1.6 lane (sizing",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-19-can-a-vision-model-read-hieroglyphs-off-a-printed.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "egy"
+   ],
+   "scripts": [
+    "Egyp"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-19 — Can a vision model read hieroglyphs off a printed edition?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-21-which-engine-should-read-greek-print-per-period-4925.md": {
+  "header": {
+   "issue": [
+    4925,
+    4744
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "grc"
+   ],
+   "scripts": [
+    "Grek"
+   ],
+   "canons": [],
+   "n_books": 53,
+   "n_pages": 101,
+   "verdict": "## 2026-09-21 — Which engine should read Greek print, per period?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-24-are-the-scans-in-order-and-is-every-page.md": {
+  "header": {
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 64990,
+   "n_pages": 30186,
+   "verdict": "| class | flagged | books (visible) | precision, final read of 20 | repair cost |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (translation 1, pipeline 1, ocr 0, image 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-24-batch-api-translation-lane-first-live-shadow-run-on-4681.md": {
+  "header": {
+   "issue": [
+    4681,
+    5000,
+    5011,
+    5013
+   ],
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 228,
+   "verdict": "## 2026-09-24 — Batch API translation lane, first live shadow run on three books: A/A floor, blind judge vs production, and what the Batch API did (#4681 steps 3–4; PRs #5000/#5011/#5013)",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-09-24-batch-seam-repair-lane-vs-production-at-mid-flow-4681.md": {
+  "header": {
+   "issue": 4681,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 9,
+   "n_pages": 116,
+   "verdict": "Answer: TIE. On 62 mid-flow junctions, production was preferred 19, the lane 14, tie 29.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-24-can-jev-judge-page-break-continuity-pilot-against-the-4681.md": {
+  "header": {
+   "issue": 4681,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-24 — Can Jev judge page-break continuity?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-24-can-jev-typesafe-s-typed-decision-model-screen-pages.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 292,
+   "verdict": "## 2026-09-24 — Can Jev (TypeSafe's typed-decision model) screen pages for \"this tells a body what to do\"?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-24-can-the-archive-s-own-ocr-confidence-replace-the-4763.md": {
+  "header": {
+   "issue": [
+    4763,
+    4784
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 129,
+   "n_pages": null,
+   "verdict": "## 2026-09-24 — can the Archive's own OCR confidence replace the paid reference?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 1, pipeline 1, translation 0, image 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-24-contact-sheet-screen-for-illustrated-pages-5009.md": {
+  "header": {
+   "issue": 5009,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 491,
+   "verdict": "## 2026-09-24 — contact-sheet screen for illustrated pages (#5009)",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-24-how-often-does-a-translation-put-text-on-the-5021.md": {
+  "header": {
+   "issue": [
+    5021,
+    5026
+   ],
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 9315,
+   "n_pages": 8,
+   "verdict": "## 2026-09-24 — How often does a translation put text on the wrong page?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-09-24-what-is-the-efficient-pattern-for-finding-body-instruction.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 926,
+   "n_pages": 87566,
+   "verdict": "## 2026-09-24 — What is the efficient pattern for finding \"body instruction\" pages across 4.5M pages?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-25-batch-seam-repair-lane-vs-production-judged-for-real-4681.md": {
+  "header": {
+   "issue": 4681,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-25 — Batch + seam-repair lane vs production, judged for REAL this time (#4681) — TIE on fluency; the repair step has fidelity defects the judge cannot see",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-25-late-night-page-break-fix-without-the-lookahead-f0.md": {
+  "header": {
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-25 (late night) — Page-break fix without the lookahead (F0) and with a clause-length one (FC), same 63 seams, same judge — F0 halves the defect rate on device breaks with no duplication penalty; any lookahead is where the duplica",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-09-25-late-seam-fidelity-judge-source-beside-both-translations-gated-4681.md": {
+  "header": {
+   "issue": 4681,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-25 (late) — Seam FIDELITY judge: source beside both translations, gated lane vs production (#4681) — production ahead on fidelity; the page break is a defect hotspot for BOTH",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ }
+}

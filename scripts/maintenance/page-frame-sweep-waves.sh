@@ -33,9 +33,9 @@ note() {  # one line to the log and the issue
   echo "$(date -u +%FT%TZ) $1" | tee -a "$DIR/waves.log"
   gh issue comment "$ISSUE" --body "page-frame sweep: $1" >/dev/null 2>&1 || echo "  (issue comment failed)"
 }
-say() {  # ... and to Derek's phone: stops and completion only
+say() {  # ... and to Derek's phone: stops and completion only — both need him, so they buzz (#6181)
   note "$1"
-  curl -s -m 20 -H "Title: page-frame sweep" -d "$1" "$NTFY" >/dev/null || true
+  curl -s -m 20 -H "Title: page-frame sweep" -H "Priority: high" -d "$1" "$NTFY" >/dev/null || true
 }
 
 # Preflight: the checkout must parse and still frame the reference page (page 13
@@ -84,7 +84,13 @@ Write exactly one line to $W/VERDICT and then stop:
   STOP <tile numbers and sheet> <what is cut off>
 Do not edit, commit, push or comment on anything else.
 EOF
-  "$JOB" start "pf-review-$i" "$W/brief.txt" >"$W/job.log" 2>&1
+  # The job name carries the state dir: claude-job.sh refuses a name whose branch
+  # already exists, so a second run's "pf-review-1" never started and its wave
+  # went unreviewed for an hour before the stop (run2, 2026-10-06).
+  if ! "$JOB" start "pf-review-$(basename "$DIR")-$i" "$W/brief.txt" >"$W/job.log" 2>&1; then
+    echo "wave $i: review job did not start" >"$STOP"
+    say "wave $i STOPPED: the review job did not start ($(tail -1 "$W/job.log")). Sheets $W/sheet-*.jpg"; exit 4
+  fi
   for _ in $(seq 1 120); do [ -s "$W/VERDICT" ] && break; sleep 30; done
   verdict=$(head -1 "$W/VERDICT" 2>/dev/null || echo "STOP no verdict within an hour")
   case "$verdict" in

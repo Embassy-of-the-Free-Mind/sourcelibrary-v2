@@ -1,0 +1,482 @@
+[
+{
+"type": "blank",
+"bid": "6a3cc133ec254ff6cae0a4db",
+"pn": 6,
+"sheet_ix": 0
+},
+{
+"type": "blank",
+"bid": "6a3cefe54701a906f10f2d72",
+"pn": 22,
+"sheet_ix": 1
+},
+{
+"type": "blank",
+"bid": "6a3ceaa1c895e71c6023c2db",
+"pn": 8,
+"sheet_ix": 2
+},
+{
+"type": "blank",
+"bid": "6a3ced494701a906f10defdb",
+"pn": 17,
+"sheet_ix": 4
+},
+{
+"type": "blank",
+"bid": "6a3cec0c8642f0445b159225",
+"pn": 6,
+"sheet_ix": 5
+},
+{
+"type": "blank",
+"bid": "6a3cefee4701a906f10f31d7",
+"pn": 17,
+"sheet_ix": 6
+},
+{
+"type": "blank",
+"bid": "6a3cc0baf9474f825c171c50",
+"pn": 17,
+"sheet_ix": 7
+},
+{
+"type": "blank",
+"bid": "6a3cc0c6f9474f825c1723f1",
+"pn": 10,
+"sheet_ix": 8
+},
+{
+"type": "blank",
+"bid": "6a3c7a8501fe4f593c217e81",
+"pn": 10,
+"sheet_ix": 9
+},
+{
+"type": "blank",
+"bid": "6a3c6b2c39b4508b04e41590",
+"pn": 14,
+"sheet_ix": 10
+},
+{
+"type": "title",
+"bid": "6a3cb9cf3dce6cfad749706e",
+"pn": 3,
+"sheet_ix": 0
+},
+{
+"type": "title",
+"bid": "6a3cec808642f0445b15d192",
+"pn": 24,
+"sheet_ix": 1
+},
+{
+"type": "title",
+"bid": "6a3cf09e8642f0445b165fc1",
+"pn": 13,
+"sheet_ix": 4
+},
+{
+"type": "title",
+"bid": "6a3cebe98642f0445b158239",
+"pn": 18,
+"sheet_ix": 5
+},
+{
+"type": "title",
+"bid": "6a3cb75957c1f37219c4f98e",
+"pn": 19,
+"sheet_ix": 9
+},
+{
+"type": "title",
+"bid": "6a3c6b2739b4508b04e41283",
+"pn": 3,
+"sheet_ix": 13
+},
+{
+"type": "title",
+"bid": "6a3cb9623d799518cd71d92c",
+"pn": 18,
+"sheet_ix": 15
+},
+{
+"type": "title",
+"bid": "6a3cefee4701a906f10f31d7",
+"pn": 3,
+"sheet_ix": 17
+},
+{
+"type": "illustrated",
+"bid": "6a3cefe54701a906f10f2d72",
+"pn": 15,
+"sheet_ix": 0
+},
+{
+"type": "illustrated",
+"bid": "6a3ce9360a0011cb4bc0f280",
+"pn": 3,
+"sheet_ix": 6
+},
+{
+"type": "illustrated",
+"bid": "6a3cbfc2f9474f825c16ad00",
+"pn": 6,
+"sheet_ix": 8
+},
+{
+"type": "illustrated",
+"bid": "6a3cefe54701a906f10f2d71",
+"pn": 4,
+"sheet_ix": 9
+},
+{
+"type": "illustrated",
+"bid": "6a3cea3b0a0011cb4bc12db4",
+"pn": 23,
+"sheet_ix": 12
+},
+{
+"type": "illustrated",
+"bid": "6a3cec598642f0445b15ba69",
+"pn": 9,
+"sheet_ix": 15
+},
+{
+"type": "illustrated",
+"bid": "6a3cb9333dce6cfad74937c0",
+"pn": 4,
+"sheet_ix": 16
+},
+{
+"type": "illustrated",
+"bid": "6a3c71db39b4508b04e55a25",
+"pn": 12,
+"sheet_ix": 17
+},
+{
+"type": "illustrated",
+"bid": "6a3cbca6ec254ff6cadf1f8b",
+"pn": 8,
+"sheet_ix": 18
+},
+{
+"type": "illustrated",
+"bid": "6a3cec618642f0445b15bebe",
+"pn": 8,
+"sheet_ix": 19
+},
+{
+"type": "table_dict",
+"bid": "6a3ceafe95fcd4556305267a",
+"pn": 5,
+"sheet_ix": 0
+},
+{
+"type": "table_dict",
+"bid": "6a3cbec4ec254ff6cae02f15",
+"pn": 16,
+"sheet_ix": 1
+},
+{
+"type": "table_dict",
+"bid": "6a3cbd50ec254ff6cadf7d60",
+"pn": 20,
+"sheet_ix": 2
+},
+{
+"type": "table_dict",
+"bid": "6a3cbea1ec254ff6cae01880",
+"pn": 8,
+"sheet_ix": 4
+},
+{
+"type": "table_dict",
+"bid": "6a3cbef2ec254ff6cae04274",
+"pn": 11,
+"sheet_ix": 5
+},
+{
+"type": "table_dict",
+"bid": "6a3cf0168642f0445b16265d",
+"pn": 7,
+"sheet_ix": 7
+},
+{
+"type": "table_dict",
+"bid": "6a3cbd82f9474f825c161f4c",
+"pn": 11,
+"sheet_ix": 13
+},
+{
+"type": "table_dict",
+"bid": "6a3cf0198642f0445b162874",
+"pn": 15,
+"sheet_ix": 14
+},
+{
+"type": "table_dict",
+"bid": "6a3cf0128642f0445b16246e",
+"pn": 14,
+"sheet_ix": 16
+},
+{
+"type": "table_dict",
+"bid": "6a3ceb0595fcd45563052a46",
+"pn": 24,
+"sheet_ix": 18
+},
+{
+"type": "damaged",
+"bid": "6a3cc13fec254ff6cae0aae6",
+"pn": 3,
+"sheet_ix": 1
+},
+{
+"type": "damaged",
+"bid": "6a3c735601fe4f593c1e7834",
+"pn": 3,
+"sheet_ix": 2
+},
+{
+"type": "damaged",
+"bid": "6a3cbb243d799518cd71f8ba",
+"pn": 3,
+"sheet_ix": 5
+},
+{
+"type": "damaged",
+"bid": "6a3c6d6001fe4f593c1ba7a1",
+"pn": 3,
+"sheet_ix": 7
+},
+{
+"type": "damaged",
+"bid": "6a3c800d01fe4f593c21f401",
+"pn": 3,
+"sheet_ix": 8
+},
+{
+"type": "damaged",
+"bid": "6a3cc099f9474f825c17087d",
+"pn": 17,
+"sheet_ix": 9
+},
+{
+"type": "damaged",
+"bid": "6a3cc065ec254ff6cae062f9",
+"pn": 3,
+"sheet_ix": 10
+},
+{
+"type": "damaged",
+"bid": "6a3cc2bdaf74b230c6908ddd",
+"pn": 23,
+"sheet_ix": 11
+},
+{
+"type": "damaged",
+"bid": "6a3ceaff95fcd455630527e6",
+"pn": 3,
+"sheet_ix": 14
+},
+{
+"type": "damaged",
+"bid": "6a3cf0198642f0445b162874",
+"pn": 17,
+"sheet_ix": 17
+},
+{
+"type": "seal",
+"bid": "6a3cef6b4701a906f10ef6e3",
+"pn": 3,
+"sheet_ix": 0
+},
+{
+"type": "seal",
+"bid": "6a3cef5d4701a906f10eee94",
+"pn": 3,
+"sheet_ix": 1
+},
+{
+"type": "seal",
+"bid": "6a3cc2dfaf74b230c690a2a6",
+"pn": 3,
+"sheet_ix": 3
+},
+{
+"type": "seal",
+"bid": "6a3ceefe4701a906f10ec95a",
+"pn": 3,
+"sheet_ix": 9
+},
+{
+"type": "seal",
+"bid": "6a3cf0158642f0445b162595",
+"pn": 3,
+"sheet_ix": 10
+},
+{
+"type": "seal",
+"bid": "6a3cbeaeec254ff6cae0219a",
+"pn": 3,
+"sheet_ix": 13
+},
+{
+"type": "seal",
+"bid": "6a3cc249f9474f825c17663f",
+"pn": 3,
+"sheet_ix": 15
+},
+{
+"type": "seal",
+"bid": "6a3cefbb4701a906f10f229d",
+"pn": 3,
+"sheet_ix": 17
+},
+{
+"type": "seal",
+"bid": "6a3cc118ec254ff6cae092f6",
+"pn": 3,
+"sheet_ix": 18
+},
+{
+"type": "seal",
+"bid": "6a3cea74a2e82dc281659d40",
+"pn": 3,
+"sheet_ix": 19
+},
+{
+"type": "smallnote",
+"bid": "6a3cbba587ee3d48c89cfd00",
+"pn": 3,
+"sheet_ix": 0
+},
+{
+"type": "smallnote",
+"bid": "6a3cbb803dce6cfad74a45b8",
+"pn": 6,
+"sheet_ix": 2
+},
+{
+"type": "smallnote",
+"bid": "6a3cc275ec254ff6cae11609",
+"pn": 15,
+"sheet_ix": 3
+},
+{
+"type": "smallnote",
+"bid": "6a3cf0f58642f0445b1683ec",
+"pn": 7,
+"sheet_ix": 5
+},
+{
+"type": "smallnote",
+"bid": "6a3cc276ec254ff6cae11712",
+"pn": 8,
+"sheet_ix": 7
+},
+{
+"type": "smallnote",
+"bid": "6a3cbbb887ee3d48c89d0944",
+"pn": 9,
+"sheet_ix": 8
+},
+{
+"type": "smallnote",
+"bid": "6a3cc2feaf74b230c690b65a",
+"pn": 24,
+"sheet_ix": 11
+},
+{
+"type": "smallnote",
+"bid": "6a3cbb8b3dce6cfad74a4b86",
+"pn": 23,
+"sheet_ix": 12
+},
+{
+"type": "smallnote",
+"bid": "6a3c726b01fe4f593c1df4d4",
+"pn": 15,
+"sheet_ix": 14
+},
+{
+"type": "smallnote",
+"bid": "6a3cba8f3dce6cfad749ca92",
+"pn": 7,
+"sheet_ix": 16
+},
+{
+"type": "mixed",
+"bid": "6a3cebf48642f0445b158724",
+"pn": 7,
+"sheet_ix": 0
+},
+{
+"type": "mixed",
+"bid": "6a3cbda1f9474f825c163224",
+"pn": 3,
+"sheet_ix": 1
+},
+{
+"type": "mixed",
+"bid": "6a3cebfa8642f0445b158a17",
+"pn": 5,
+"sheet_ix": 2
+},
+{
+"type": "mixed",
+"bid": "6a3cec188642f0445b159768",
+"pn": 3,
+"sheet_ix": 3
+},
+{
+"type": "mixed",
+"bid": "6a3cec178642f0445b1596c3",
+"pn": 3,
+"sheet_ix": 5
+},
+{
+"type": "mixed",
+"bid": "6a3cf03e8642f0445b163a4c",
+"pn": 10,
+"sheet_ix": 6
+},
+{
+"type": "mixed",
+"bid": "6a3cebf88642f0445b158935",
+"pn": 4,
+"sheet_ix": 8
+},
+{
+"type": "mixed",
+"bid": "6a3cec048642f0445b158e3c",
+"pn": 25,
+"sheet_ix": 9
+},
+{
+"type": "mixed",
+"bid": "6a3cebf58642f0445b1587d6",
+"pn": 7,
+"sheet_ix": 11
+},
+{
+"type": "mixed",
+"bid": "6a3cec018642f0445b158d83",
+"pn": 4,
+"sheet_ix": 16
+},
+{
+"type": "title",
+"bid": "6a3cef374701a906f10edcfa",
+"pn": 1,
+"sheet_ix": "illustrated#2 (cover)"
+},
+{
+"type": "title",
+"bid": "6a3cc21af9474f825c1748b3",
+"pn": 1,
+"sheet_ix": "illustrated#11 (cover)"
+}
+]

@@ -14,6 +14,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { catalogTranslationColumns } from '../lib/page-counts.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co').trim();
@@ -55,6 +56,10 @@ function transformBook(book) {
     // #4166 — paired with `pages_translated_es: 1` in the projection below.
     pages_translated_es: book.pages_translated_es || 0,
     pages_blank: book.pages_blank || 0,
+    // Translation-state ladder (#5288) — same helper as sync-books-catalog.mjs.
+    // Its inputs (`pages_translatable`, `content_type`, `translation_state`) are
+    // in the projection below for this alone.
+    ...catalogTranslationColumns(book),
     is_first_translation: book.is_first_translation === true,
     visible: book.visible === true,
     quality_score: book.quality_score || 0,
@@ -109,7 +114,9 @@ const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
-  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, pages_translatable: 1,
+  content_type: 1,
+  'translation_state.rung': 1, 'translation_state.english_original': 1, 'translation_state.version': 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
@@ -189,12 +196,14 @@ const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 // Verify
 const { count: sbCount } = await supabase.from('books_catalog').select('*', { count: 'exact', head: true });
 const { count: sbTranslated } = await supabase.from('books_catalog').select('*', { count: 'exact', head: true }).gt('pages_translated', 0);
+const { count: sbUnranked } = await supabase.from('books_catalog').select('*', { count: 'exact', head: true }).eq('visible', true).is('translation_rung', null);
 
 console.log(`\nRebuild complete in ${elapsed}s:`);
 console.log(`  MongoDB visible: ${expectedCount}`);
 console.log(`  Synced: ${synced}, Errors: ${errors}`);
 console.log(`  Supabase total: ${sbCount}`);
 console.log(`  Supabase translated>0: ${sbTranslated}`);
+console.log(`  Supabase visible rows with no translation_rung: ${sbUnranked} (should be 0)`);
 
 if (Math.abs(synced - expectedCount) > 10) {
   console.warn(`\n⚠ Synced count (${synced}) differs from expected (${expectedCount}) — concurrent writes may have occurred during rebuild.`);
