@@ -122,6 +122,6 @@ describe('clear-bare-surname-claims', () => {
     const doc = { _id: 'x', name: 'Montanus', type: 'person', books: [{ book_id: 'b' }], book_count: 1, total_mentions: 2, wikidata_id: 'Q1697209', description: 'A physician', aliases: ['Monte'], created_at: 1, updated_at: 2 };
     expect(claimOf(doc)).toEqual({ wikidata_id: 'Q1697209', description: 'A physician', aliases: ['Monte'] });
     for (const kept of ['name', 'type', 'books', 'book_count', 'total_mentions', 'created_at', 'updated_at']) expect(CLAIM_FIELDS).not.toContain(kept);
-    expect(Object.keys(APPROVED).sort()).toEqual(['Agrippa', 'Bruno', 'Fabricius', 'Montanus']);
+    expect(Object.keys(APPROVED).sort()).toEqual(['Agrippa', 'Bacon', 'Bruno', 'Fabricius', 'Montanus']);
   });
 });

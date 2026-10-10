@@ -11,7 +11,7 @@
  * and to a local JSONL, and only then `ocr` is unset. A page is touched only while it still holds
  * the read it was listed for (`ocr.pipeline` equals `--pipeline`) and has no translation. A book
  * with a live OCR batch job is skipped (#2449: the collector would write the text back).
- * `books.pages_ocr` is recounted (`page_number >= 0`, as quarantine-fabricated-ocr.mjs does).
+ * The book's counters are recounted through `recountBook()` (scripts/lib/page-counts.mjs).
  * Nothing is requeued: the caller decides the next reader. Undo: `--undo <backup.jsonl>` puts the
  * `ocr` block back on pages that still have none.
  *
@@ -23,17 +23,17 @@
 import fs from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { MongoClient } from 'mongodb';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const arg = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
 
 async function recount(db, bookIds) {
   for (const id of bookIds) {
-    const actual = await db.collection('pages').countDocuments({ book_id: id, page_number: { $gte: 0 }, 'ocr.data': { $type: 'string' } });
     const before = await db.collection('books').findOne({ id }, { projection: { pages_ocr: 1 } });
-    if ((before?.pages_ocr ?? null) === actual) continue;
-    await db.collection('books').updateOne({ id }, { $set: { pages_ocr: actual, updated_at: new Date() } });
-    console.log(`  counter ${id} pages_ocr ${before?.pages_ocr ?? '?'} -> ${actual}`);
+    await recountBook(db, id, { reason: 'revert-first-ocr-pages' });
+    const after = await db.collection('books').findOne({ id }, { projection: { pages_ocr: 1 } });
+    if (before?.pages_ocr !== after?.pages_ocr) console.log(`  counter ${id} pages_ocr ${before?.pages_ocr ?? '?'} -> ${after?.pages_ocr ?? '?'}`);
   }
 }
 

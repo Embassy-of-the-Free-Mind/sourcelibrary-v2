@@ -76,9 +76,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       }
       const count = (f) => plan.filter((p) => p.field === f).length;
       console.log(`live books with an em dash: ${rows.length}; title ${count('title')}, display_title ${count('display_title')}`);
-      let st = ISSUE; const rnd = () => (st = (st * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+      // One example per title shape, taken in id order: a sample to read, not a statistic.
       const seen = new Set();
-      for (const p of plan.map((x) => [rnd(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1])) {
+      for (const p of [...plan].sort((a, b) => (String(a.id) < String(b.id) ? -1 : 1))) {
         const shape = p.old.replace(/[\p{L}\p{N}]+/gu, 'w').slice(0, 40);
         if (seen.has(shape) || seen.size >= Number(process.env.SAMPLE || 40)) continue;
         seen.add(shape);
