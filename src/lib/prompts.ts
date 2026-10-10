@@ -200,19 +200,16 @@ export async function getOcrPrompt(
 }
 
 /**
- * Map of book languages to their DB translation prompt names.
- */
-const LANGUAGE_TRANSLATION_PROMPT_NAMES: Record<string, string> = {
-  arabic: 'Arabic Translation',
-  hebrew: 'Hebrew Translation',
-  latin: 'Latin Translation (Neo-Latin)',
-  german: 'German Translation (Early Modern)',
-};
-
-/**
  * Get translation prompt with language variables replaced.
- * If sourceLanguage matches a language-specific prompt in DB, uses that instead
- * of the default Standard Translation prompt.
+ *
+ * Always the `is_default` translation prompt unless the caller names one
+ * (name/id/customText). There is deliberately NO per-language swap (#6122):
+ * this used to substitute "Latin Translation (Neo-Latin)" v2, "German
+ * Translation (Early Modern)" v3, "Arabic Translation" and "Hebrew
+ * Translation" for those languages — none of them `is_default`, none covered
+ * by any fidelity eval — so the API route forked ~13.9K pp/30d off the prompt
+ * every pipeline lane and every eval uses. A language prompt that earns its
+ * place does so by an eval and by being passed by name.
  */
 export async function getTranslationPrompt(
   sourceLanguage: string,
@@ -259,21 +256,6 @@ export async function getTranslationPrompt(
         version: 0,
       },
     };
-  }
-
-  // Try language-specific prompt if no explicit name/id/custom
-  if (!options?.name && !options?.id && !options?.customText) {
-    const langKey = sourceLanguage.toLowerCase();
-    const promptName = LANGUAGE_TRANSLATION_PROMPT_NAMES[langKey];
-    if (promptName) {
-      const langResult = await getPrompt('translation', { name: promptName });
-      if (langResult.reference.id !== 'hardcoded') {
-        return {
-          text: langResult.text,
-          reference: langResult.reference,
-        };
-      }
-    }
   }
 
   const result = await getPrompt('translation', options);

@@ -5,6 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
+import { getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
@@ -55,7 +56,7 @@ export const POST = withAuth(async (request, session, context) => {
     const {
       limit = 500,
       targetLanguage = 'English',
-      model = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview',
+      model: requestedModel, // omitted → the translation router decides (#6122)
       force = false, // When true, include pages that already have translation (for re-processing)
       staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
       resubmit = false, // When true, bypass the pending-job double-submit guard
@@ -73,6 +74,9 @@ export const POST = withAuth(async (request, session, context) => {
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    // Translation routing, not OCR routing and not a hardcoded flash (#6122): a caller
+    // that omits `model` gets what every pipeline lane would pick for this book.
+    const model: string = requestedModel || getTranslateModelForBook(book as RoutableBook);
 
     // Double-submit guard (#3749, archaeology I68): a pending translation
     // batch for this book means submitting again pays Gemini twice for the
