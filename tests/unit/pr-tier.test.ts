@@ -94,3 +94,28 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
     expect(result.reasons.map((r: { reason: string }) => r.reason).join('\n')).toMatch(/diff could not be read.*HTTP 406/);
   });
 });
+
+describe('pr-tier: interface strings in another language are public copy (#6403)', () => {
+  const COPY = 'public copy Derek has not seen: interface strings in a language other than English';
+
+  it('a new language block in a dictionary holds', () => {
+    const diff = diffOf('src/lib/i18n.ts', ['  nl: {', "    signIn: 'Inloggen',", '  },']);
+    expect(reasons(['src/lib/i18n.ts'], scannableAddedLines(diff))).toContain(COPY);
+  });
+
+  it("a component's inline per-locale map holds", () => {
+    const diff = diffOf('src/components/home/RecentlyRead.tsx', ["  zh: { heading: '最近浏览', subtitle: '从上次停下的地方继续。', seeAll: '查看全部' },"]);
+    expect(reasons(['src/components/home/RecentlyRead.tsx'], scannableAddedLines(diff))).toContain(COPY);
+  });
+
+  it('an English-only edit to the same dictionary does not', () => {
+    const diff = diffOf('src/lib/i18n.ts', ['  en: {', "    signIn: 'Sign in',", '  },']);
+    expect(reasons(['src/lib/i18n.ts'], scannableAddedLines(diff))).not.toContain(COPY);
+  });
+
+  it('regenerated data keyed by language code does not', () => {
+    const diff = diffOf('src/generated/ustc-year-counts.json', ['  "nl": {', '    "1650": 12']);
+    expect(scannableAddedLines(diff)).toEqual([]);
+  });
+});
+
