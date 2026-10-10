@@ -186,3 +186,9 @@
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
 30 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/daily-digest.mjs ] && flock -n /tmp/sl-daily-digest.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/daily-digest.mjs" >> /var/log/sourcelibrary/daily-digest.log 2>&1
+
+# climits: poll all four Claude accounts every 5 min; history + latest.json in /root/.claude-limits (#6360)
+*/5 * * * * /usr/local/bin/climits check --quiet >> /var/log/climits.log 2>&1
+# Box mesh (#6360): copy that meter to cloudlayer and l7a a minute later, so each box's job wrapper can refuse a
+# start on an account at >= 90% weekly. Pages once if a box is unreachable for 30 min. scripts/workers/box.sh
+1-59/5 * * * * [ -x /root/bin/box.sh ] && /root/bin/box.sh push-limits >> /var/log/box-mesh.log 2>&1
