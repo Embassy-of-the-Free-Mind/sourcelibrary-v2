@@ -1,0 +1,443 @@
+{
+ "2026-10-07-verse-memory-r2-6141.md": {
+  "header": {
+   "issue": 6141,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 20,
+   "verdict": "Verse memory, round 2: whole verse blocks only (#6141) — gate FAILED, no write",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-canon-reference-set-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "lzh",
+    "sa",
+    "pi"
+   ],
+   "scripts": [
+    "Latn",
+    "Hani"
+   ],
+   "canons": [
+    "cbeta",
+    "pali",
+    "chinese-classics"
+   ],
+   "n_books": null,
+   "n_pages": 21,
+   "verdict": "Chinese canon reference set and the Sanskrit/Pali extension (#6331 tests 2 and 5) — set built, Sonnet arm run, nothing judged yet",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-canon-set-judged-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "lzh",
+    "sa",
+    "pi"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [
+    "pali"
+   ],
+   "n_books": null,
+   "n_pages": 40,
+   "verdict": "Verdict: the route is Gemini 3.8 Flash through the CLI (C38) for all three languages.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-claude-subscription-arms-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 363,
+   "n_pages": 10,
+   "verdict": "Translation on subscriptions only: Claude Sonnet (subagents) or Gemini 3.8 Flash (Antigravity CLI)?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-113-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 6309,
+   "verdict": "Does the Antigravity-CLI arm hold up on the 113 fresh 84000 Tengyur sides?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "Lower bound −0.10 > −0.15, and C38 inversion sides 2 ≤ 3 + 2: the gate passes.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-cli-arm-xl-365-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 363,
+   "n_pages": 365,
+   "verdict": "Verdict: the preregistered gate fails.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-pareto-sample-audit-6304.md": {
+  "header": {
+   "issue": 6304,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 2,
+   "n_pages": 880,
+   "verdict": "(8 Oct 2026; all 880 translation panel pages and 908 OCR panel pages checked by script; 57 of them, a stratified draw with one page per book, read against the page image by 8 AI reviewers, Opus on the subscription; no scholar has read them).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-second-reader-harness-synthetic-check-6338.md": {
+  "header": {
+   "issue": 6338,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "- Four harness bugs, fixed before any real read (three found by the synthetic run):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-syriac-cli-flash-tiers-6295.md": {
+  "header": {
+   "issue": 6295,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 24,
+   "verdict": "Printed Syriac: Gemini 3.7 Flash and 3.6 Flash through the CLI, and 3.8 Flash's full repeat read (#6295) — directional; neither decision changes",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-syriac-print-pareto-6295.md": {
+  "header": {
+   "issue": 6295,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": 24,
+   "n_pages": 20,
+   "verdict": "Verdict (the issue's preregistered rule).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 3, ocr 2, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-which-flagged-books-are-stored-in-the-wrong-page-order-5699.md": {
+  "header": {
+   "issue": 5699,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1456,
+   "n_pages": 764,
+   "verdict": "(60 books; scripts/eval/results/page-order-dryrun-5699/verdicts.json):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (image 1, pipeline 1, ocr 0, translation 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-09-agentic-qa-arms-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 23,
+   "verdict": "Does a Sonnet check-and-revise flow beat one-shot Gemini 3.8 Flash (CLI) on the canon set, and at what subscription cost?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-latin-cli-pilot-6375.md": {
+  "header": {
+   "issue": 6375,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 28807,
+   "n_pages": 299,
+   "verdict": "Latin OCR backlog: Gemini 3.7 Flash through the CLI against production flash-lite on 299 queue pages (#6375)",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-ocr-pareto-gemini-3-7-3-6-flash-cli-6293.md": {
+  "header": {
+   "issue": 6293,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 555,
+   "verdict": "OCR Pareto, Amendment 2: Gemini 3.7 and 3.6 Flash through the CLI on 555 pages (#6293) — 3.7 reads as well as 3.8 and ties 3 Flash; 3.6 is worse; no decision changes",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-09-ocr-pareto-gemini-3-8-flash-cli-6293.md": {
+  "header": {
+   "issue": 6293,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "grc",
+    "lzh",
+    "syc"
+   ],
+   "scripts": [
+    "Grek",
+    "Hani",
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 908,
+   "verdict": "OCR Pareto, Part A: Gemini 3.8 Flash through the CLI on the 908 preregistered pages (#6293) — it beats Flash-Lite on Greek, Chinese and Syriac manuscript, never 3 Flash; the CLI fails ~6 % of pages in ways the API arms don't",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-second-reader-pilot-gemini-cli-6338.md": {
+  "header": {
+   "issue": 6338,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 4,
+   "n_pages": 16,
+   "verdict": "Can Gemini through the CLI do the shelf reviewer's job?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ }
+}

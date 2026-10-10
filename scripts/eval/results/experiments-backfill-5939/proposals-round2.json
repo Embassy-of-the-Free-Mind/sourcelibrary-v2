@@ -1,0 +1,1854 @@
+{
+ "2026-10-03-hidden-meta-move-pilot-5376.md": {
+  "header": {
+   "issue": 5376,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 20,
+   "n_pages": 10160,
+   "verdict": "Decision needed. (a) apply the 9,582 remaining as-is; (b) apply only where headInPrev < 0.3 (≈ 8,990",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-kraken-latin-ft-5730.md": {
+  "header": {
+   "issue": 5730,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 1535,
+   "n_pages": 39,
+   "verdict": "(median CER; paired Δ = arm − lite, median with a seeded bootstrap 95 % CI; catastrophic = CER > 0.5).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-04-ocr-bakeoff-round-3-5660.md": {
+  "header": {
+   "issue": 5660,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "la",
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 50,
+   "n_pages": 632,
+   "verdict": "(657-page map; the 632-page view is in summary-<arm>-632.json, and English cells are identical in both).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-04-relabel-4884.md": {
+  "header": {
+   "issue": 4884,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 96205,
+   "n_pages": 96205,
+   "verdict": "Decision rule, as written.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-ai-exposure-refresh-6038.md": {
+  "header": {
+   "issue": 6038,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 75,
+   "n_pages": null,
+   "verdict": "| control (recognised = knows_of or self_familiar yes, or a verified opening) | Flash-Lite | Flash | Pro | Haiku |",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-bacon-reattribution-applied-5950.md": {
+  "header": {
+   "issue": 5950,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 98,
+   "n_pages": 163,
+   "verdict": "Not all, and the 5-row check could not have shown it.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-dedupe-review-6019.md": {
+  "header": {
+   "issue": 6019,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 42078,
+   "n_pages": 1603,
+   "verdict": "How many duplicates do we still hold, where does the dedupe process lose them, and is the e-rara merge worth doing?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-edition-key-role-words-4444.md": {
+  "header": {
+   "issue": [
+    4444,
+    6019
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 734,
+   "n_pages": null,
+   "verdict": "What does dropping role words from the edition_key surname do to the corpus?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-eternity-shelf-review.md": {
+  "header": {
+   "issue": [
+    5918,
+    6056
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 30,
+   "n_pages": 156,
+   "verdict": "43 show, 30 show with care, 34 fix first or do not show.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-glm-digit-repair-4686.md": {
+  "header": {
+   "issue": 4686,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 6,
+   "n_pages": 20,
+   "verdict": "The repair works on the body text but misses the preregistered bar by one number, so the gate STOPS again and nothing was written.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (rejected, undecided)"
+  ]
+ },
+ "2026-10-06-greek-reocr-production-5813.md": {
+  "header": {
+   "issue": 5813,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "grc"
+   ],
+   "scripts": [
+    "Grek"
+   ],
+   "canons": [],
+   "n_books": 540,
+   "n_pages": 119978,
+   "verdict": "Mostly yes for the transcription, at $0.0030 per submitted page, but three things the pilot did not show: the collectors stored a cut-off page whenever Gemini answered in two parts (fixed, #5930); RECITATION refuses 7.8 % of pages, whole ca",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-06-jev-additions-screen-5982.md": {
+  "header": {
+   "issue": 5982,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 37,
+   "verdict": "Can Jev screen translated pages for untagged additions, in front of the Gemini detector?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-kraken-refused-english-4686.md": {
+  "header": {
+   "issue": 4686,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 6,
+   "n_pages": 5,
+   "verdict": "The text, yes; the numbers, not by the preregistered bar.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-latin-print-r4-by-book-5924.md": {
+  "header": {
+   "issue": [
+    5924,
+    5660
+   ],
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 5660,
+   "n_pages": 260,
+   "verdict": "Verdict per cell. - 1500s: no box engine.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-leaked-markup-census-5700.md": {
+  "header": {
+   "issue": 5700,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 22925,
+   "n_pages": 5184671,
+   "verdict": "The repair changes 72,191 pages (1.39%) in 9,002 books (39% of live translated books).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-librarian-grounding-5904.md": {
+  "header": {
+   "issue": 5904,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 1,
+   "verdict": "Yes for quotes and captions, partly for citations:",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-notes-layer-phase1-2-5942.md": {
+  "header": {
+   "issue": 5942,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 40,
+   "n_pages": 40,
+   "verdict": "P1 and P2 pass → the note-free prompt is cleared for Lite as well as Flash (the switch itself still waits for the notes step, #5942 phase 5).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-shared-name-mislinks-5950.md": {
+  "header": {
+   "issue": 5950,
+   "stage": "metadata",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 3030,
+   "n_pages": null,
+   "verdict": "56 of 120 sampled mentions (47%) are on the wrong person (Wilson 95% 38–56%; resampling whole surnames 28–67%).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-site-nav-search-5945.md": {
+  "header": {
+   "issue": 5945,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 192,
+   "verdict": "Both, in about equal parts.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-term-definition-cleanup-applied-5901.md": {
+  "header": {
+   "issue": 5901,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 22925,
+   "n_pages": 5184671,
+   "verdict": "Applied to 207,363 pages in 4,911 books (4.0% of translated pages); 473,124 chips.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-translation-reasoning-leak-6056.md": {
+  "header": {
+   "issue": [
+    6056,
+    5918
+   ],
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 269,
+   "n_pages": 25,
+   "verdict": "Measured 2026-10-06.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-translation-write-guard-brackets-5902.md": {
+  "header": {
+   "issue": 5902,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 48,
+   "verdict": "- The first rule (any bracket after a term) fired on 147 brackets in 99 of 12,584 stored pages, about half of",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-typed-editions-ground-truth-chinese-pali-5935.md": {
+  "header": {
+   "issue": 5935,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "lzh",
+    "pi"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [
+    "pali"
+   ],
+   "n_books": 1201,
+   "n_pages": 838,
+   "verdict": "Within Chinese, extrapolation held.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-typed-references-dta-camena-eebo-6012.md": {
+  "header": {
+   "issue": 6012,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "de"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 72,
+   "n_pages": 82,
+   "verdict": "How many of our Latin and German pages can be checked against a human-typed text, and against a period English translation?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-06-untagged-additions-5982.md": {
+  "header": {
+   "issue": 5982,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 1329,
+   "n_pages": 45,
+   "verdict": "How often does a translation carry untagged words of ours, and at which stage do they come in?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-06-untried-ocr-engines-wave1-6011.md": {
+  "header": {
+   "issue": 6011,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 60,
+   "n_pages": 1000,
+   "verdict": "No arm beats Gemini 3 Flash outside the margin on any script.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "status unclear (adopted, rejected, undecided)"
+  ]
+ },
+ "2026-10-07-ai-exposure-run2-6038.md": {
+  "header": {
+   "issue": 6038,
+   "stage": "metadata",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "Answer (preregistered primary).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "status unclear (superseded, rejected)"
+  ]
+ },
+ "2026-10-07-ai-exposure-run3-6038.md": {
+  "header": {
+   "issue": 6038,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 10,
+   "verdict": "- A, crawl presence (instrument passed its gates).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-bl-kangyur-chained-retranslation-pilot-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": null,
+   "n_pages": 84000,
+   "verdict": "(results/tibetan-bl-evidence-2026-10-07/C-pilot/judge-results.json; mean fidelity, wins = ranked",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 1, pipeline 1, ocr 0, image 0, metadata 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-bl-tibetan-other-stratum-by-eye-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 1434,
+   "n_pages": 117643,
+   "verdict": "(results/tibetan-bl-evidence-2026-10-07/B-shelf-overview/report.md).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-bl-tibetan-terma-biography-printed-reference-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 1434,
+   "n_pages": 274753,
+   "verdict": "(results/tibetan-bl-evidence-2026-10-07/A-terma-reference/summary.json).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-books-tradition-labels-4773.md": {
+  "header": {
+   "issue": 4773,
+   "stage": "metadata",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 304,
+   "n_pages": null,
+   "verdict": "Answer: yes. 109,006 books (every book with pages) carry books.tradition since 2026-10-07, for $2.74.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-clef-jev-token-readers-6184.md": {
+  "header": {
+   "issue": [
+    6184,
+    6203
+   ],
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "sa"
+   ],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "(95% Clopper–Pearson CIs):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-concept-lane-stage1.md": {
+  "header": {
+   "issue": 6173,
+   "stage": "pipeline",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1216,
+   "n_pages": 325308,
+   "verdict": "Does the concept-abstract lane, built on 1,216 books, put more traditions in the first ten results than the page vectors?",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-embedding-format-ga.md": {
+  "header": {
+   "issue": 6170,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 27,
+   "n_pages": 40,
+   "verdict": "- Model: preview and GA are the same function.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-embedding-granularity-cross-tradition.md": {
+  "header": {
+   "issue": 6173,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [
+    "sufi"
+   ],
+   "n_books": 304,
+   "n_pages": 10,
+   "verdict": "Embed a short, model-written concept abstract of each page, in plain language without the tradition's own terms, as a second lane beside the page vectors.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 1, translation 1, image 0, metadata 0, pipeline 0)",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-embedding-models-qwen3-dual.md": {
+  "header": {
+   "issue": 6172,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 120,
+   "n_pages": 8576,
+   "verdict": "Answer: no re-embed clears the bar.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-embedding-prefix-100k.md": {
+  "header": {
+   "issue": 6170,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 4334,
+   "n_pages": 100766,
+   "verdict": "Does the task prefix earn the $360 re-embed when the baseline is off the ceiling?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-embedding-vector-truth.md": {
+  "header": {
+   "issue": 6175,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 23234,
+   "n_pages": 80000,
+   "verdict": "- Root cause of the e5 rows.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-jev-omission-screen-6061.md": {
+  "header": {
+   "issue": 6061,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "sa"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 321,
+   "verdict": "Can Jev screen served translations for omissions (source text left out of the English)?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-jev-reversal-screen-6062.md": {
+  "header": {
+   "issue": 6062,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "grc",
+    "en"
+   ],
+   "scripts": [
+    "Latn",
+    "Grek"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 100,
+   "verdict": "No, not as a screen. Jev ranks sentences that the judges quoted as reversed above clean sentences (AUC 0.84), and it catches every planted negation flip (21 of 21).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-meaning-prototypes-6201.md": {
+  "header": {
+   "issue": 6201,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 304,
+   "n_pages": 25,
+   "verdict": "- (1) Yes, inside a book, with one correction.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-nalanda-thread-shelf-overview.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 4,
+   "n_pages": 4,
+   "verdict": "Shelf overview: the Nalanda–Indonesia–Tibet thread",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-ocr-engines-full-sets-wave2-6011.md": {
+  "header": {
+   "issue": 6011,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 60,
+   "verdict": "- Five of the six engines now sit in every big panel they could reach.",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-orig-lang-embedding-recall-5729.md": {
+  "header": {
+   "issue": 5729,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "en",
+    "de",
+    "fr",
+    "lzh"
+   ],
+   "scripts": [
+    "Latn",
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": 3438,
+   "n_pages": 8576,
+   "verdict": "Answer: not an open model.",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-other-languages-pareto-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "grc",
+    "bo",
+    "lzh",
+    "sa",
+    "pi",
+    "he",
+    "ar",
+    "fa"
+   ],
+   "scripts": [
+    "Latn",
+    "Grek",
+    "Tibt",
+    "Hani",
+    "Hebr",
+    "Arab"
+   ],
+   "canons": [
+    "derge-tengyur",
+    "pali"
+   ],
+   "n_books": 70,
+   "n_pages": 365,
+   "verdict": "(2026-10-07; two blind Opus judges; 365 pages, one per book, each against a published human translation; AI judges, not a scholar's review).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-page-vector-repair-and-drift-recall-6175.md": {
+  "header": {
+   "issue": 6175,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1402,
+   "n_pages": 1085,
+   "verdict": "- e5 rows, counted exactly: 211,377 in 1,402 books (2026-10-07 23:15 UTC).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-reader-diversity-plain-prompt-arm-6184.md": {
+  "header": {
+   "issue": 6184,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "sa"
+   ],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 30,
+   "verdict": "Counts are k/n, 95% Clopper–Pearson CIs, reads pooled over samples.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-reader-diversity-temperature-vs-family-6184.md": {
+  "header": {
+   "issue": 6184,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "sa"
+   ],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 30,
+   "verdict": "Counts are k/n, 95 % Clopper–Pearson CIs.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-script-run-reviewers-6174.md": {
+  "header": {
+   "issue": 6174,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 24,
+   "n_pages": 96,
+   "verdict": "Both conditions pass.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-07-search-word-forms-5517.md": {
+  "header": {
+   "issue": 5517,
+   "stage": "pipeline",
+   "measure": "agreement",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 122,
+   "n_pages": 13000,
+   "verdict": "The issue's own examples were fixed by #5518 (botanical 122 books = botany 122).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-07-temperature-best-of-n-vs-reference-6202.md": {
+  "header": {
+   "issue": 6202,
+   "stage": "translation",
+   "measure": "judged_vs_reference",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 104,
+   "n_pages": 50,
+   "verdict": "Decision rule (per model; pooled over the three sets, and per set).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-07-tengyur-newer-models-6121.md": {
+  "header": {
+   "issue": 6121,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 60,
+   "verdict": "Yes, two of the three: gemini-3.8-flash (G38) and Opus (O) pass the preregistered rule on both texts that have a published reference.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-07-tengyur-pareto-replication-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 100,
+   "verdict": "- Rule A replicates on both instruments, so re-translating Pramāṇa + Madhyamaka with G38 is supported.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-07-tengyur-verse-memory-6141.md": {
+  "header": {
+   "issue": 6141,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": 2026100741,
+   "n_pages": 3,
+   "verdict": "- The baseline: serious-page rates are 0–13% by section; Pramāṇa and Vinaya carry the serious pages.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-07-tengyur-weak-section-levers-6121.md": {
+  "header": {
+   "issue": 6121,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 74,
+   "verdict": "No lever clears the preregistered bar, so nothing changes.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-07-tradition-diversity-rerank.md": {
+  "header": {
+   "issue": [
+    3514,
+    3895
+   ],
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1011,
+   "n_pages": 40,
+   "verdict": "Answer: it passes, and the gain is modest.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-07-verse-memory-r2-6141.md": {
+  "header": {
+   "issue": 6141,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 20,
+   "verdict": "Verse memory, round 2: whole verse blocks only (#6141) — gate FAILED, no write",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-canon-reference-set-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "lzh",
+    "sa",
+    "pi"
+   ],
+   "scripts": [
+    "Latn",
+    "Hani"
+   ],
+   "canons": [
+    "cbeta",
+    "pali",
+    "chinese-classics"
+   ],
+   "n_books": null,
+   "n_pages": 21,
+   "verdict": "Chinese canon reference set and the Sanskrit/Pali extension (#6331 tests 2 and 5) — set built, Sonnet arm run, nothing judged yet",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-canon-set-judged-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "lzh",
+    "sa",
+    "pi"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [
+    "pali"
+   ],
+   "n_books": null,
+   "n_pages": 40,
+   "verdict": "Verdict: the route is Gemini 3.8 Flash through the CLI (C38) for all three languages.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-claude-subscription-arms-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 363,
+   "n_pages": 10,
+   "verdict": "Translation on subscriptions only: Claude Sonnet (subagents) or Gemini 3.8 Flash (Antigravity CLI)?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-113-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": 6309,
+   "verdict": "Does the Antigravity-CLI arm hold up on the 113 fresh 84000 Tengyur sides?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-tengyur"
+   ],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "Lower bound −0.10 > −0.15, and C38 inversion sides 2 ≤ 3 + 2: the gate passes.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-cli-arm-xl-365-6331.md": {
+  "header": {
+   "issue": 6331,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 363,
+   "n_pages": 365,
+   "verdict": "Verdict: the preregistered gate fails.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-pareto-sample-audit-6304.md": {
+  "header": {
+   "issue": 6304,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 2,
+   "n_pages": 880,
+   "verdict": "(8 Oct 2026; all 880 translation panel pages and 908 OCR panel pages checked by script; 57 of them, a stratified draw with one page per book, read against the page image by 8 AI reviewers, Opus on the subscription; no scholar has read them).",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-08-second-reader-harness-synthetic-check-6338.md": {
+  "header": {
+   "issue": 6338,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "- Four harness bugs, fixed before any real read (three found by the synthetic run):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-syriac-cli-flash-tiers-6295.md": {
+  "header": {
+   "issue": 6295,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 24,
+   "verdict": "Printed Syriac: Gemini 3.7 Flash and 3.6 Flash through the CLI, and 3.8 Flash's full repeat read (#6295) — directional; neither decision changes",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-syriac-print-pareto-6295.md": {
+  "header": {
+   "issue": 6295,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": 24,
+   "n_pages": 20,
+   "verdict": "Verdict (the issue's preregistered rule).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 3, ocr 2, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-08-which-flagged-books-are-stored-in-the-wrong-page-order-5699.md": {
+  "header": {
+   "issue": 5699,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1456,
+   "n_pages": 764,
+   "verdict": "(60 books; scripts/eval/results/page-order-dryrun-5699/verdicts.json):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (image 1, pipeline 1, ocr 0, translation 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-09-agentic-qa-arms-6182.md": {
+  "header": {
+   "issue": 6182,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 23,
+   "verdict": "Does a Sonnet check-and-revise flow beat one-shot Gemini 3.8 Flash (CLI) on the canon set, and at what subscription cost?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-latin-cli-pilot-6375.md": {
+  "header": {
+   "issue": 6375,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 28807,
+   "n_pages": 299,
+   "verdict": "Latin OCR backlog: Gemini 3.7 Flash through the CLI against production flash-lite on 299 queue pages (#6375)",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-ocr-pareto-gemini-3-7-3-6-flash-cli-6293.md": {
+  "header": {
+   "issue": 6293,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 555,
+   "verdict": "OCR Pareto, Amendment 2: Gemini 3.7 and 3.6 Flash through the CLI on 555 pages (#6293) — 3.7 reads as well as 3.8 and ties 3 Flash; 3.6 is worse; no decision changes",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-09-ocr-pareto-gemini-3-8-flash-cli-6293.md": {
+  "header": {
+   "issue": 6293,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "grc",
+    "lzh",
+    "syc"
+   ],
+   "scripts": [
+    "Grek",
+    "Hani",
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 908,
+   "verdict": "OCR Pareto, Part A: Gemini 3.8 Flash through the CLI on the 908 preregistered pages (#6293) — it beats Flash-Lite on Greek, Chinese and Syriac manuscript, never 3 Flash; the CLI fails ~6 % of pages in ways the API arms don't",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-09-second-reader-pilot-gemini-cli-6338.md": {
+  "header": {
+   "issue": 6338,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 4,
+   "n_pages": 16,
+   "verdict": "Can Gemini through the CLI do the shelf reviewer's job?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ }
+}

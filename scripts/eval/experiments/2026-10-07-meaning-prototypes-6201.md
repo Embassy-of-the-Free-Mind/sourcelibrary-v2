@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: [accuracy, judged]
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "A centred emblem image vector ranks the right Atalanta fugiens passage first for 34 of 44 emblems (5 uncentred); a see-also list from a page finds a real parallel only 13 of 75 times."
+status: informational
+decision: null
+superseded_by: null
+issue: 6201
+---
 ## 2026-10-07 · Two cheap prototypes on the stored page vectors: does a picture find its passage, and can one page propose the same idea in other traditions? (#6201)
 <!-- PRIOR ART: 2026-10-07-embedding-granularity-cross-tradition.md (#6173; typed concept queries over the same pool, never a page as the query, and it lists the see-also case as "not tested"); 2026-10-04-clef-page-image-screens.md (#5803; a decision model asked whether a text transcribes an image, not an embedding). Neither embeds an image into the page-text space or ranks pages from a page. -->
 

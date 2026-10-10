@@ -1,0 +1,173 @@
+{
+  "2026-10-03-hidden-meta-move-pilot-5376.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 20, "n_pages": 20,
+    "verdict": "Moving the own-text continuity-meta payload into the body was right on 18 of 20 pilot pages, under the 19/20 bar; both misses carry a lead-in from the previous page.",
+    "status": "undecided",
+    "decision": "Full apply (9,582 pages) not run; options (a) all, (b) headInPrev < 0.3, (c) second pilot await a decision (#5376)",
+    "superseded_by": null,
+    "issue": 5376
+  },
+  "2026-10-04-kraken-latin-ft-5730.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["la"], "scripts": ["Latn"], "canons": [],
+    "n_books": 60, "n_pages": 60,
+    "verdict": "Kraken fine-tuned on EEBO-TCP beats lite on Latin 1500-1699 (median dCER -0.026, 46/13) but only on EEBO microfilm; it ties lite on 21 other-library pages.",
+    "status": "rejected",
+    "decision": "No routing change: the gain does not carry beyond EEBO film and Kraken takes 166-271 s/page on Hetzner (#5730)",
+    "superseded_by": null,
+    "issue": 5730
+  },
+  "2026-10-04-ocr-bakeoff-round-3-5660.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en", "la", "grc", "de"], "scripts": ["Latn", "Grek"], "canons": [],
+    "n_books": null, "n_pages": 657,
+    "verdict": "GLM-OCR beats lite on English 1600-1699 (CER 0.034 vs 0.053) and 1700+; five other open engines do not; Latin stays directional (40 library pages).",
+    "status": "rejected",
+    "decision": "No routing change; the whole-book GLM pilot (2026-10-04-does-glm-ocr-hold-up...) found word swaps and modernised spelling, so English stays on lite",
+    "superseded_by": null,
+    "issue": 5660
+  },
+  "2026-10-04-relabel-4884.md": {
+    "stage": "metadata", "measure": "judged", "languages": ["grc", "la", "sa", "en"], "scripts": ["Grek", "Latn", "Deva"], "canons": [],
+    "n_books": 40, "n_pages": null,
+    "verdict": "Four agreeing page reads relabel books.language right on 40 of 40 fresh gate books (58/58 overall); 683 relabels written, 616 of them Greek to Latin.",
+    "status": "adopted",
+    "decision": "683 books relabelled in production (sweep relabel-4884, undoable); Javanese, translation-edition and bilingual patterns left unwritten",
+    "superseded_by": null,
+    "issue": 4884
+  },
+  "2026-10-06-ai-exposure-refresh-6038.md": {
+    "stage": "metadata", "measure": "agreement", "languages": [], "scripts": [], "canons": [],
+    "n_books": 500, "n_pages": null,
+    "verdict": "Gemini 3.1 Pro does not recognise 45.0% [40.7-49.4] of 500 random works (about a third by books); the May self-familiarity detector fails its own controls.",
+    "status": "superseded",
+    "decision": "Run 2 (PR #6089) retracted the works figure: quote 52.2% of works not named by any frontier model, about a third only by volumes",
+    "superseded_by": "2026-10-07-ai-exposure-run2-6038.md",
+    "issue": 6038
+  },
+  "2026-10-06-bacon-reattribution-applied-5950.md": {
+    "stage": "metadata", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 238,
+    "verdict": "Read in full, the same-book tier was right on 143 of 163 Bacon moves (88%) and the note tier on 61 of 63; with by-eye fixes 340 mentions moved to Roger or Francis.",
+    "status": "adopted",
+    "decision": "340 mentions moved in production; by-eye verdicts outrank the tiers and every same-book and note proposal is read before an apply (#6024)",
+    "superseded_by": null,
+    "issue": [5950, 6024]
+  },
+  "2026-10-06-dedupe-review-6019.md": {
+    "stage": "metadata", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 80, "n_pages": null,
+    "verdict": "About 1 live book in 13 (6/80, 7.5% [3.5-15.4]) has a same-edition copy the import keys miss; the e-rara merge is 13 groups, not 1,146.",
+    "status": "informational",
+    "decision": null,
+    "superseded_by": null,
+    "issue": [6019, 3102, 4444]
+  },
+  "2026-10-06-edition-key-role-words-4444.md": {
+    "stage": "metadata", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "Dropping role words from the edition_key surname changes 1,275 keys (805 live), merges 5 same-printing pairs and splits none.",
+    "status": "adopted",
+    "decision": "editionSurname drops role words (#6069); edition keys re-stamped 2026-10-06 with materialize-edition-keys.ts (4,283 books rows)",
+    "superseded_by": null,
+    "issue": [4444, 6019]
+  },
+  "2026-10-06-eternity-shelf-review.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 107, "n_pages": 214,
+    "verdict": "Of 107 hand-picked books across nine traditions, two pages each: 43 show, 30 show with care, 34 fix first; a curation worklist, not a rate.",
+    "status": "informational",
+    "decision": "3 books hidden, 4 records relabelled, translationReasoningLeak detector added (#6056)",
+    "superseded_by": null,
+    "issue": [5918, 6056]
+  },
+  "2026-10-06-glm-digit-repair-4686.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en"], "scripts": ["Latn"], "canons": [],
+    "n_books": 6, "n_pages": 20,
+    "verdict": "GLM-OCR digits lift Kraken's digit strings from 78.5% to 89.2% (body text 95.6%) with no CER loss, one number under the 90% bar, so the gate stopped.",
+    "status": "undecided",
+    "decision": "Nothing written and #5969 stays blocked; write with unverified running heads, re-gate on body text, or leave empty is Derek's call on #4686",
+    "superseded_by": null,
+    "issue": [4686, 5969]
+  },
+  "2026-10-06-greek-reocr-production-5813.md": {
+    "stage": "ocr", "measure": ["agreement", "judged"], "languages": ["grc"], "scripts": ["Grek"], "canons": [],
+    "n_books": 540, "n_pages": 119978,
+    "verdict": "Flash re-read 110,164 of 119,978 lite-read Greek print pages at $0.0030 a page; 7.8% refused (RECITATION); by eye 2 inventions, diacritics lost on 1% (4% pre-1600).",
+    "status": "adopted",
+    "decision": "Re-read kept in production, 11,608 pp retranslated; collectors join text parts (#5930); 25K-page retranslation and 1450-1599 release pending Derek",
+    "superseded_by": null,
+    "issue": [5813, 5700, 5930]
+  },
+  "2026-10-06-jev-additions-screen-5982.md": {
+    "stage": "translation", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 154,
+    "verdict": "Jev separates planted additions (AUC 0.96) but real ones less well (AUC 0.81); as a pre-screen halving Gemini reads it keeps 16 of 22 true additions (73%).",
+    "status": "undecided",
+    "decision": null,
+    "superseded_by": null,
+    "issue": 5982
+  },
+  "2026-10-06-kraken-refused-english-4686.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en"], "scripts": ["Latn"], "canons": [],
+    "n_books": 6, "n_pages": 20,
+    "verdict": "Kraken reads the English pages Gemini refuses at median CER 0.009 but reproduces only 78.5% of digit strings (bar 90%), so the gate stopped and nothing was written.",
+    "status": "rejected",
+    "decision": "Gate stopped; Derek chose option (b), GLM digit repair, re-gated in 2026-10-06-glm-digit-repair-4686.md",
+    "superseded_by": null,
+    "issue": 4686
+  },
+  "2026-10-06-latin-print-r4-by-book-5924.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["la"], "scripts": ["Latn"], "canons": [],
+    "n_books": 97, "n_pages": 237,
+    "verdict": "No open engine beats the flash models on Latin print: 1500s lite+longs and flash+cal tie (0.076), 1600s flash+cal and 3.8-flash (0.068), lite 0.093; GLM trails.",
+    "status": "undecided",
+    "decision": "No routing change and Latin stays off the GPU box; the lite long-s post-pass and flash routing are posed to Derek in the PR (#5924)",
+    "superseded_by": null,
+    "issue": [5924, 5660]
+  },
+  "2026-10-06-leaked-markup-census-5700.md": {
+    "stage": "translation", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": 22925, "n_pages": 5184671,
+    "verdict": "A read-time repair changes 72,191 of 5.18M served translation pages (1.39%, 9,002 books); by-eye precision was 37/37 to 40/40 per class.",
+    "status": "adopted",
+    "decision": "repairLeakedMarkup runs in the reader, stripEditorialWrappers and the EPUB/HTML export; the stored-text (A2) apply is proposed, not run",
+    "superseded_by": null,
+    "issue": 5700
+  },
+  "2026-10-06-librarian-grounding-5904.md": {
+    "stage": "pipeline", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "A post-generation grounding pass cut uncited claim units from 72% to 37%, unsupported quotes 7/81 to 2/64 and caption errors 11/29 to 0/32 at the same cost per turn.",
+    "status": "adopted",
+    "decision": "Grounding pass, +/-1 neighbour pages and tool URL fixes are live in the Librarian (src/lib/embassy/grounding.ts, #5904)",
+    "superseded_by": null,
+    "issue": 5904
+  },
+  "2026-10-06-notes-layer-phase1-2-5942.md": {
+    "stage": "translation", "measure": ["judged_vs_reference", "accuracy"], "languages": ["la", "de", "fr", "it", "nl", "es"], "scripts": ["Latn"], "canons": [],
+    "n_books": 40, "n_pages": 40,
+    "verdict": "On 40 Lite pages the note-free prompt is not less faithful than v13 (4.38 vs 4.24, P1 and P2 pass); a parser splits 800 stored pages into text and annotations exactly.",
+    "status": "undecided",
+    "decision": "Cleared for Lite by rule but not switched (waits for #5942 phase 5); parser in src/lib/translation-layers.ts; phase-3 data model awaits Derek",
+    "superseded_by": null,
+    "issue": 5942
+  },
+  "2026-10-06-shared-name-mislinks-5950.md": {
+    "stage": "metadata", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 120,
+    "verdict": "56 of 120 sampled mentions (47%) on 12 bare-surname person records belong to someone else, from 0/10 (Gesner, Helmont) to 10/10 (Montanus).",
+    "status": "informational",
+    "decision": "Search name chooser built from full-name records only (src/lib/search/name-chooser.ts); Bacon repair dry-run followed (#5950)",
+    "superseded_by": null,
+    "issue": 5950
+  },
+  "2026-10-06-site-nav-search-5945.md": {
+    "stage": "pipeline", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "Navigational recall@3 on 42 fixed queries rose from 0.40 to 0.69 with a re-index and to 1.00 with a name match; 0.88 on 25 held-out queries.",
+    "status": "adopted",
+    "decision": "Site index rebuilt from a derived page list plus a name match in /api/search/unified (src/lib/search/site-nav.ts, #5945)",
+    "superseded_by": null,
+    "issue": 5945
+  }
+}

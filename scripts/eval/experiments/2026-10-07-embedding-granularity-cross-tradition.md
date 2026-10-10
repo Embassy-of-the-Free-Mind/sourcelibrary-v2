@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 304
+n_pages: 12154
+verdict: "A per-page concept abstract lane was the only index change to clear the bar: relevant traditions in the top ten 1.68 to 2.80 (+1.12 [0.60, 1.64]); chunks and query rewriting did not."
+status: adopted
+decision: "Concept lane stage 1 built (1,216 books) and serving search; corpus-wide pass held (#6173)"
+superseded_by: null
+issue: 6173
+---
 ## 2026-10-07 · Which embedding unit, text and ranking put several traditions into the first ten results for a concept? (#6173)
 <!-- PRIOR ART: scripts/eval/orig-lang-recall/ (#5729; one gold page per query over untranslated pages, a model comparison), scripts/eval/librarian-search/ (page-grain golden set of factual questions against the live RPCs), scripts/analysis/experience-map/ (#3276; probe retrieval stratified by language, no gold set). None has a gold set of one idea in several traditions and none compares embedding units or texts. -->
 

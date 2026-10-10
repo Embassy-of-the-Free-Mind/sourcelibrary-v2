@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 10
+n_pages: 29
+verdict: "Chained re-translation ties the stored flash-v13 English on held BL Kangyur pages (Opus 4.17 vs 4.22, 23 pages) and adds the only inversions; value is in the 26,440 pages with no English."
+status: undecided
+decision: "Do not re-translate the 168,815 pages with English; translating the 26,440 without English awaits Derek (#4523)"
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-07 · Re-translating held BL Kangyur pages on the #4523 chained lane: no better than the English readers already have; worth it only where there is none (#4523, step C)
 <!-- PRIOR ART: 2026-09-25 engine A/B (#4742: flash vs lite vs MITRA against 84000, single pages) and 2026-10-03 Tengyur chained-vs-single (#5497). This reuses #5497's run-arms.mjs (arm A = the chained lane's own request builders, now with --arms/--tag) and #4742's blind judge kit unchanged, on the HELD BL Kangyur books, and compares against the English those books already serve. -->
 

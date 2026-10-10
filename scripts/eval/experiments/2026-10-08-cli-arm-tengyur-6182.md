@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: 2
+n_pages: 58
+verdict: "The CLI arm cannot be told from the API on 58 Tengyur sides: C38 − G38 +0.06 [−0.10, +0.23], inversion sides 2 vs 3; both beat production by about 0.4–0.5; gate passed."
+status: undecided
+decision: "Tengyur re-translation runs through the CLI, not the API (Derek 2026-10-08, #6361); writing it to pages is still gated"
+superseded_by: null
+issue: [6182, 6277]
+---
 ## 2026-10-08 · Can the Tengyur re-translation run through the Antigravity CLI (subscription) instead of the API? (#6182) — gate PASSED
 
 PRIOR ART: `scripts/eval/tengyur-levers/PREREG-R2.md` (#6121 round 2) and `scripts/eval/pareto-6182/PREREG.md`. Same 58

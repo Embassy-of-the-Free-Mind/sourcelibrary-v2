@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 22925
+n_pages: 5184671
+verdict: "A read-time repair changes 72,191 of 5.18M served translation pages (1.39%, 9,002 books); by-eye precision was 37/37 to 40/40 per class."
+status: adopted
+decision: "repairLeakedMarkup runs in the reader, stripEditorialWrappers and the EPUB/HTML export; the stored-text (A2) apply is proposed, not run"
+superseded_by: null
+issue: 5700
+---
 ## 2026-10-06 · How many served translation pages carry each class of leaked markup, and which can a read-time rule fix? (#5700 A1(c))
 
 PRIOR ART: `2026-10-03-quality-census-backfill-sizes-5700.md` sized leaked markup on one page per book, by the classes the A2 stored-text cleanup then fixed (`2026-10-04-a2-cleanup-applied-5700.md`: empty and orphan tags, printed centre markers). This run counts the classes the 2026-10-06 random spot check (#5914) found afterwards, on every page, and counts them with the repair itself.

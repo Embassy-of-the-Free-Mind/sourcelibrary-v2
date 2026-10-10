@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 30
+n_pages: null
+verdict: "Flash-lite labelled the tradition of all 109,006 books for $2.74; 27/30 right by eye, 3 arguable, 0 wrong; same family as the pilot's by-eye labels on every non-European shelf."
+status: adopted
+decision: "books.tradition stored on 109,006 books and used by the search tradition re-rank (#4773)"
+superseded_by: null
+issue: 4773
+---
 ## 2026-10-07 · Can flash-lite label every book's tradition from its catalogue record? (#4773)
 <!-- PRIOR ART: scripts/eval/embed-granularity/label-books.mjs (#6173; by-eye shelf labels for 304 pool books, eight families) and books.faceted_tags.tradition (scripts/maintenance/faceted-tagger.mjs; a 20-value school vocabulary on 23.7K books). Neither labels the corpus with the 31 map labels. -->
 

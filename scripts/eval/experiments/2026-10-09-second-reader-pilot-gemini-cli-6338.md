@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: none
+languages: [grc, la]
+scripts: [Grek, Latn]
+canons: []
+n_books: 4
+n_pages: 16
+verdict: "Gemini through the CLI can run the shelf-reviewer brief: 16/16 pages per arm, no empties, blocks or schema failures; one call per page, since the four-image book call thins the reading."
+status: informational
+decision: null
+superseded_by: null
+issue: [6338, 6347]
+---
 ## 2026-10-09 · Can Gemini through the CLI do the shelf reviewer's job? A 16-page feasibility pilot (#6338): it runs, one page per call
 
 PRIOR ART: the shelf-overview reviewer (`.claude/skills/shelf-overview/SKILL.md`, `scripts/eval/spot-check/REVIEWER.md`

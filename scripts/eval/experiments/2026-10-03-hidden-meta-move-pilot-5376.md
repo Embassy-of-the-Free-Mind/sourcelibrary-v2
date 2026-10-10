@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 20
+n_pages: 20
+verdict: "Moving the own-text continuity-meta payload into the body was right on 18 of 20 pilot pages, under the 19/20 bar; both misses carry a lead-in from the previous page."
+status: undecided
+decision: "Full apply (9,582 pages) not run; options (a) all, (b) headInPrev < 0.3, (c) second pilot await a decision (#5376)"
+superseded_by: null
+issue: 5376
+---
 ## 2026-10-03 · Does moving the `own-text` continuity-meta payload into the body put the page's own text back? (#5376 tq11 pilot)
 
 **Question.** On the ~10,160 live pages the scan classes `own-text`, does the $0 move

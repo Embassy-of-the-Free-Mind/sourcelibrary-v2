@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 4334
+n_pages: 88318
+verdict: "On a 100K pool the prefix on both sides lifts cross-lingual R@10 0.58 to 0.97 but misses the bar on set B by one query (+0.039); query prefix alone and mixed stores lose."
+status: rejected
+decision: "No re-embed on this evidence; re-score with human-written set-B questions before deciding (#6170)"
+superseded_by: null
+issue: 6170
+---
 ## 2026-10-07 · Does the task prefix earn the $360 re-embed when the baseline is off the ceiling? (#6170, follow-up)
 <!-- PRIOR ART: 2026-10-07-embedding-format-ga.md — the first test, two pools of 8–10K pages, both baselines at the ceiling (R@10 0.93 / 0.97), so it could not show +0.05 on set B. This is the larger test it asked for; design and bar in scripts/eval/embed-format/DESIGN-100k.md, committed before scoring. -->
 

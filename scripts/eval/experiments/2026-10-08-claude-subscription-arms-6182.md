@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: 373
+n_pages: 534
+verdict: "Claude Sonnet on the subscription scores below Gemini 3.8 Flash in every pool (pooled −0.16 [−0.22, −0.09]; Tengyur −0.35) with 2.6x the reversal pages; Haiku is far worse."
+status: rejected
+decision: "No Claude translation route; subscription routing goes to Gemini 3.8 Flash CLI (#6331, PR #6350); panels published in PR #6349"
+superseded_by: null
+issue: [6182, 6349]
+---
 ## 2026-10-08 · Translation on subscriptions only: Claude Sonnet (subagents) or Gemini 3.8 Flash (Antigravity CLI)? (#6182) — Gemini, in every pool
 
 PRIOR ART: `scripts/eval/pareto-6182/PREREG-claude-arms.md` (the arms, as amended at 1f8ec8215: subscription

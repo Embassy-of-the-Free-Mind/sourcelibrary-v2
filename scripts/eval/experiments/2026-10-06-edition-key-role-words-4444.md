@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Dropping role words from the edition_key surname changes 1,275 keys (805 live), merges 5 same-printing pairs and splits none."
+status: adopted
+decision: "editionSurname drops role words (#6069); edition keys re-stamped 2026-10-06 with materialize-edition-keys.ts (4,283 books rows)"
+superseded_by: null
+issue: [4444, 6019]
+---
 ## 2026-10-06 · What does dropping role words from the `edition_key` surname do to the corpus? (#4444, #6019 decision 6)
 <!-- PRIOR ART: scripts/maintenance/edition-key-integrity.ts counts stored-vs-computed drift but not which groups a change merges or splits, and reads `books` only; scripts/maintenance/materialize-edition-keys.ts (dry run) reports cluster totals after a change, not the difference; the #6019 review (2026-10-06-dedupe-review-6019.md §4) counted the role-word keys but did not replay a fix. -->
 

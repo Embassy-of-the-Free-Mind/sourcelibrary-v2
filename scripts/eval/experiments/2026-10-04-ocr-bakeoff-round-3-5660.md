@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en, la, grc, de]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 657
+verdict: "GLM-OCR beats lite on English 1600-1699 (CER 0.034 vs 0.053) and 1700+; five other open engines do not; Latin stays directional (40 library pages)."
+status: rejected
+decision: "No routing change; the whole-book GLM pilot (2026-10-04-does-glm-ocr-hold-up...) found word swaps and modernised spelling, so English stays on lite"
+superseded_by: null
+issue: 5660
+---
 ## 2026-10-04 · Which open engine should read our English and early-Latin print? Round 3 of #5660: GLM-OCR beats lite on English 1600–1699 and 1700+; Latin still cannot be called
 
 PRIOR ART: 2026-10-03-open-engine-print-5660.md (rounds 1–2: PaddleOCR-VL-1.6, olmOCR-2-7B-FP8 — same 632 pages, cells, scorer and rule, reused unchanged here); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md (the EEBO-TCP reference method, extended here to Latin); 2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md (Kraken CATMuS on Latin print, other pages).

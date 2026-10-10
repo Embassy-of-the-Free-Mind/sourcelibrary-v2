@@ -32,10 +32,18 @@ describe('experiment write-ups (from the #5939 index)', () => {
     expect(list[1].headline).toBeNull();
   });
 
-  it('the committed index lists every dated file in the directory, newest first', () => {
+  // index.json is regenerated on main after each merge (eval-ledgers-regenerate.yml) and a PR may not
+  // hand-edit it (append-only-ledgers.mjs REGENERATED_ON_MAIN). So a write-up that just landed is on
+  // disk before it is in the index: tolerate files the index does not list yet, but every indexed
+  // entry must still be a file, once, newest first. Requiring equality made main red between a
+  // write-up's merge and the regenerate commit.
+  it('every entry in the committed index is a dated file in the directory, newest first', () => {
     const dir = path.join(process.cwd(), 'scripts/eval/experiments');
-    const dated = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f)).sort().reverse();
-    expect(EXPERIMENTS.map(e => e.file)).toEqual(dated);
+    const dated = new Set(fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f)));
+    const files = EXPERIMENTS.map(e => e.file);
+    expect(files.filter(f => !dated.has(f))).toEqual([]);
+    expect(new Set(files).size).toBe(files.length);
+    expect(files).toEqual([...files].sort().reverse());
     expect(EXPERIMENTS.every(e => e.question.length > 0)).toBe(true);
     expect(listExperiments().some(e => e.status === 'superseded')).toBe(false);
   });

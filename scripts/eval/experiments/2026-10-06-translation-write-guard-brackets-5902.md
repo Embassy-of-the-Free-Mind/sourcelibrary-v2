@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "A bracket-after-term rule caught supplied words half the time; cut to brackets the sentence names as a term, it fires 0-2 times per ~12.5K stored pages, all glosses."
+status: adopted
+decision: "bracketDefinitionsToNotes runs in the translation write guard (translate-write, #5902)"
+superseded_by: null
+issue: 5902
+---
 ## 2026-10-06 · Can a write-time rule tell a bracketed gloss after a `<term>` from the translator's supplied words?
 
 **Design.** `bracketDefinitionsToNotes` (scripts/lib/translation-write-guard.mjs, #5902) run, $0, over (a) the

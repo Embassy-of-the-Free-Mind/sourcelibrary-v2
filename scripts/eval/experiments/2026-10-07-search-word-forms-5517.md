@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "After the second word-form pass a typed form finds 0.98 of its best sibling's books, up from 0.54 (24 queries); the 13 non-Latin and control queries return the same ids."
+status: adopted
+decision: "Second-pass folding shipped in src/lib/search/word-forms.ts (#5517)"
+superseded_by: null
+issue: [5517, 5518]
+---
 ## 2026-10-07 · After the first word-form fix, which forms of a word still find a fraction of what their sibling finds? (#5517)
 <!-- PRIOR ART: scripts/eval/experiments/2026-10-06-site-search-recall-5905.md scores /api/search for book recall on names and concepts; it has no word-form pairs. PR #5518 (the first fix) reported one number, the "botanical" filter going 0 → 114, and no query list. -->
 
