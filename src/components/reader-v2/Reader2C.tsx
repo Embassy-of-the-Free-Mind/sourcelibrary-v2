@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, use
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
-import { ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
+import { LOCALE_NATIVE_NAME, ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
@@ -835,7 +835,7 @@ function SearchHighlighter() {
  * the middle column scrolls.
  */
 /** Each language's own name for itself, for the reader menu's site-language links. */
-const SITE_LANGUAGE_LABEL: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine', nl: 'Nederlands', zh: '中文' };
+const SITE_LANGUAGE_LABEL = LOCALE_NATIVE_NAME;
 
 function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
   onClose: () => void;

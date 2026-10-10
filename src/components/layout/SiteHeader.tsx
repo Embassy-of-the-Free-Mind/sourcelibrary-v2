@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
+import LanguageMenu from './LanguageMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { trackEvent } from '@/lib/track-event';
@@ -302,29 +303,11 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             </Link>
           )}
 
-          {/* Language toggle — one link per locale that has a real twin of this
-              page (#2763, #6254). Built from the registry, so a new locale shows
-              up here without another hand-written link. */}
+          {/* Language menu — one button, listing each locale that has a real twin
+              of this page (#2763, #6254, #6382). Built from the registry, so a new
+              locale shows up here without another hand-written link. */}
           {showLangToggle && (
-          <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
-            {langLinks.map((l, i) => (
-              <span key={l} className="flex items-center gap-1.5">
-                {i > 0 && <span className={isWhiteText ? 'text-white/30' : 'text-stone-300'}>·</span>}
-                <Link
-                  href={localeHref(l, pathname)}
-                  hrefLang={l}
-                  aria-current={locale === l ? 'page' : undefined}
-                  className={
-                    locale === l
-                      ? (isWhiteText ? 'text-white' : 'text-primary')
-                      : (isWhiteText ? 'text-white/50 hover:text-white' : 'text-secondary hover:text-primary')
-                  }
-                >
-                  {l.toUpperCase()}
-                </Link>
-              </span>
-            ))}
-          </div>
+            <LanguageMenu locales={langLinks} current={locale} pathname={pathname} onDark={isWhiteText} />
           )}
 
           {/* Desktop search icon */}

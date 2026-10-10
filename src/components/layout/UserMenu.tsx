@@ -43,7 +43,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     return (
       <Link
         href={localePath('/auth/signin', locale)}
-        className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
+        className={`text-sm font-medium whitespace-nowrap transition-colors hover:opacity-80 ${textColor}`}
         style={textStyle}
       >
         {locale === 'es' ? 'Iniciar sesión' : 'Sign in'}
