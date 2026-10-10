@@ -37,14 +37,16 @@ others() { local me b; me=$(self); for b in $BOXES; do [ "${b%%=*}" != "$me" ] &
 
 case "${1:-}" in
   self) self ;;
-  pick)  # prints "<box>" of the emptiest ready box, or nothing; same scoring as job-where.sh (load per core + jobs/100)
+  pick)  # prints "<box>" of the emptiest ready box, or nothing. Score: load per core + jobs/100, using the 5-minute
+         # load when the box reports it: l7a's archive tick fires every 10 min and swings load1 from ~1 to ~60.
     ex=""; [ "${2:-}" = --exclude ] && ex="${3:-}"; me=$(self)
     for b in $BOXES; do b=${b%%=*}; [ "$b" = "$ex" ] && continue
       if [ "$b" = "$me" ]; then line=$(/root/bin/claude-job.sh where 2>/dev/null); else line=$(call "$b" where </dev/null 2>/dev/null); fi
       echo "$line" | grep -q 'ready=yes' || continue
       echo "$b $line"
     done | awk '{ for (i = 2; i <= NF; i++) { split($i, kv, "="); v[kv[1]] = kv[2] }
-                 s = v["load1"] / (v["cores"] ? v["cores"] : 1) + v["live_jobs"] / 100
+                 l = (v["load5"] != "" ? v["load5"] : v["load1"])
+                 s = l / (v["cores"] ? v["cores"] : 1) + v["live_jobs"] / 100; delete v
                  if (best == "" || s < bs) { best = $1; bs = s } } END { if (best != "") print best }' ;;
   push-limits)  # main box, after climits: other boxes read their own account's weekly % from this file
     src=/root/.claude-limits/latest.json; [ -s "$src" ] || exit 0
@@ -65,7 +67,10 @@ case "${1:-}" in
     sel=$1; shift; rc=0  # stdin is never sent to more than one box
     for b in $BOXES; do b=${b%%=*}
       [ "$sel" = others ] && [ "$b" = "$(self)" ] && continue
-      echo "== $b"; call "$b" "$@" </dev/null || rc=$?
+      echo "== $b"
+      # This box has no mesh key for itself (and no pinned host key), so run its own box-rpc.sh directly.
+      if [ "$b" = "$(self)" ]; then SSH_ORIGINAL_COMMAND="$*" SSH_CLIENT="local" /root/bin/box-rpc.sh </dev/null || rc=$?
+      else call "$b" "$@" </dev/null || rc=$?; fi
     done; exit $rc ;;
   ""|-h|--help) sed -n '2,6p' "$0"; exit 2 ;;
   *) call "$@" ;;

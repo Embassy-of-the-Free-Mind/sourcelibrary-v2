@@ -491,7 +491,7 @@ case "${1:-status}" in
       printf '%s\t%s\t%s\n' "$n" "$old" "$(landing_check "$n")"
     done ;;
   where)  # one line a dispatcher can compare across boxes (scripts/workers/job-where.sh asks each box)
-    cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg)
+    cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg); load5=$(cut -d' ' -f2 /proc/loadavg)
     mem=$(awk '/MemAvailable/{printf "%d", $2/1024}' /proc/meminfo)
     if [ "$HOST" != hetzner ]; then  # guest hosts: what the slice still allows, if that is less
       cap=$(systemctl show sourcelibrary.slice -p MemoryMax --value 2>/dev/null); cur=$(systemctl show sourcelibrary.slice -p MemoryCurrent --value 2>/dev/null)
@@ -508,5 +508,5 @@ case "${1:-status}" in
     [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
     ready=yes; [ -n "$why" ] && ready="no:${why#,}"
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
-    echo "host=$HOST cores=$cores load1=$load mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;
+    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;
 esac
