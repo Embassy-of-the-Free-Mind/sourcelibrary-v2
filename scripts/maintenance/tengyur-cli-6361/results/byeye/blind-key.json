@@ -1,0 +1,86 @@
+{
+ "98:493": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "98:494": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "98:495": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "193:203": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "193:204": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "193:205": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "175:131": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "175:132": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "175:133": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "101:644": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "101:645": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "101:646": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "183:318": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "183:319": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "183:320": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "174:417": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "174:418": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "174:419": {
+  "A": "staged",
+  "B": "stored"
+ },
+ "112:253": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "112:254": {
+  "A": "stored",
+  "B": "staged"
+ },
+ "112:255": {
+  "A": "stored",
+  "B": "staged"
+ }
+}
