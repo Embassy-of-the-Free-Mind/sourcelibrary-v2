@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -20,6 +20,7 @@ import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 import { getQualityWarnings } from '@/lib/book-warnings';
+import { getSplitLeafId, isArchivedSplit } from '../page-data';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -156,6 +157,16 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
   if ((currentPage.book_id as string) !== scopedBookId) {
     notFound();
+  }
+
+  // An archived split parent goes to its first leaf (#5842). The public route
+  // already 308'd in (reader)/layout.tsx; this catches the embed and room
+  // wrappers, which render this component with no layout or loading.tsx
+  // above it, so the redirect is still a real one there. /preview (allowHidden)
+  // stays put: an editor asked for that page.
+  if (!allowHidden && isArchivedSplit(currentPage)) {
+    const leafId = await getSplitLeafId(scopedBookId, currentPage.split_into[0]);
+    if (leafId) permanentRedirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${leafId}`, lang));
   }
 
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
