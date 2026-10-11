@@ -2940,7 +2940,9 @@ async function run() {
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
         })
-        .sort({ hidden: 1 })
+        // processing_priority first (#5308): Phase 1.5 requires split_checked, so an
+        // unsorted window here delays priority books exactly as Phase 1.97 did.
+        .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
@@ -3832,7 +3834,12 @@ Rules:
       let candidates = await db.collection('books').find({
         'pipeline_auto.status': 'archive_complete',
         'pipeline_auto.dedup_complete': { $ne: true },
-      }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
+      })
+        // processing_priority (#3756) must lead here too: Phase 2 only OCRs deduped
+        // books, so an unsorted window let a priority-100 book sit 10 h behind a
+        // 2.3K backlog before Phase 2's own sort ever saw it (#5308).
+        .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
         .limit(DEDUP_LIMIT).toArray();
       // Selective-unpause: confine dedup to the allowlist, like every other phase.
       // This phase previously had NO scope filter, so when globally paused with a
