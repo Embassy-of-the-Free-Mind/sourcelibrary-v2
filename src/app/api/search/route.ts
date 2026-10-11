@@ -14,7 +14,7 @@ import { defaultDiversity, diversify, parseDiversityParam } from '@/lib/search/d
 import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { resolveSearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse } from '@/lib/tenant-search-scope';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
@@ -234,18 +234,20 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const seenBooks = new Set<string>();
 
     // Read tenant context resolved by proxy.ts
-    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
-    if (tenantSlug && !tenantId) {
-      return NextResponse.json({ results: [], total: 0 });
-    }
+    const { slug: tenantSlug } = getTenantContextFromRequest(request.headers);
     // The book set the vector lanes are confined to (#4330). They used to rank
     // the whole library and rely on the Mongo materialization below to drop
     // foreign books — pure, but a tenant got whatever of its shelf happened to
     // sit in the global top-N, usually nothing.
+    //
+    // A slug without an id (the proxy's tenant read failed) is resolved here
+    // rather than answered empty on sight (#6426); if it cannot be, the scope
+    // is closed and the answer says so.
     const scope = await resolveSearchScope(request.headers);
     if (scope.kind === 'closed') {
-      return NextResponse.json({ results: [], total: 0 });
+      return closedScopeResponse(scope, { results: [], total: 0 }, 'search');
     }
+    const tenantId = scope.kind === 'tenant' ? scope.tenantId : null;
 
     // EXPERIMENTAL (#6173): `lane=concept` returns only the concept lane — pages
     // ranked by the embedding of a model-written abstract of their ideas

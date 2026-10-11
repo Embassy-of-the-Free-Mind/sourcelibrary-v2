@@ -34,7 +34,7 @@
  * scan, tenant-catalog-books.ts) are NOT in the set: the keyword lanes do not
  * return them either, and a scope narrower than admission is safe.
  */
-import type { NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
@@ -42,13 +42,43 @@ import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-conte
 export type SearchScope =
   | { kind: 'global' }
   | { kind: 'tenant'; tenantId: string; bookIds: string[]; has: (bookId: string | null | undefined) => boolean }
-  | { kind: 'closed'; reason: string };
+  /**
+   * `transient`: the tenant exists but its book set could not be read right now
+   * (Mongo error, timeout). Answered 503, not "no matches" (#6426).
+   */
+  | { kind: 'closed'; reason: string; transient?: boolean };
 
 /** The whole library. Writing this is a statement that the surface is main-site only. */
 export const GLOBAL_SCOPE: SearchScope = { kind: 'global' };
 
-export function closedScope(reason: string): SearchScope {
-  return { kind: 'closed', reason };
+export function closedScope(reason: string, transient = false): SearchScope {
+  return { kind: 'closed', reason, transient };
+}
+
+/**
+ * The answer to a request whose scope is closed. It used to be the route's
+ * ordinary empty body with a 200, which a reader — and the purity audit — could
+ * not tell from "nothing matched": on 2026-10-10 the BPH reading room answered
+ * `alchemy` with nothing for ~45 minutes and the audit said PASS (#6426).
+ *
+ * Still fail-closed: the body carries the route's empty shape, so a client that
+ * ignores the status renders nothing rather than breaking. What changes is that
+ * it says so — `scope: 'closed'` — with 503 + Retry-After when the tenant exists
+ * but its book set could not be read, and 404 when the tenant signal names no
+ * tenant at all. Never cached.
+ */
+export function closedScopeResponse(
+  scope: Extract<SearchScope, { kind: 'closed' }>,
+  emptyBody: Record<string, unknown>,
+  route: string,
+): NextResponse {
+  console.error(`[tenant-search-scope] ${route}: scope closed (${scope.reason}) — answering ${scope.transient ? 503 : 404}`);
+  const headers: Record<string, string> = { 'Cache-Control': 'private, no-store' };
+  if (scope.transient) headers['Retry-After'] = '5';
+  return NextResponse.json(
+    { ...emptyBody, scope: 'closed', scope_reason: scope.reason },
+    { status: scope.transient ? 503 : 404, headers },
+  );
 }
 
 export function bookSetScope(tenantId: string, bookIds: string[]): SearchScope {
@@ -78,29 +108,46 @@ export function clearSearchScopeCache(): void {
   scopeCache.clear();
 }
 
+async function readBookSet(tenantId: string): Promise<string[]> {
+  const db = await getDb();
+  const docs = await db.collection('books')
+    .find(
+      { tenantId, visible: true, hidden: { $ne: true } },
+      { projection: { _id: 0, id: 1 }, maxTimeMS: 5000 },
+    )
+    .toArray();
+  return docs.map((d) => d.id as string).filter(Boolean);
+}
+
+/** Pause before the one retry of a failed book-set read. Exported for tests. */
+export const BOOK_SET_RETRY_MS = 300;
+
 /**
  * The scope for a known tenant id. Fails closed: a Mongo error is a closed
  * scope, not a global one and not an empty shelf that gets cached.
+ *
+ * The read is tried twice. Each serverless instance holds its own cache, so a
+ * cold instance meeting one Mongo hiccup used to close the reading room's
+ * search for that request; with ~half the instances cold that read as "half of
+ * all searches empty" (#6426). The indexed read takes ~70 ms warm.
  */
 export function tenantSearchScope(tenantId: string): Promise<SearchScope> {
   const now = Date.now();
   const hit = scopeCache.get(tenantId);
   if (hit && hit.expiresAt > now) return hit.value;
   const value = (async (): Promise<SearchScope> => {
-    try {
-      const db = await getDb();
-      const docs = await db.collection('books')
-        .find(
-          { tenantId, visible: true, hidden: { $ne: true } },
-          { projection: { _id: 0, id: 1 }, maxTimeMS: 5000 },
-        )
-        .toArray();
-      return bookSetScope(tenantId, docs.map((d) => d.id as string).filter(Boolean));
-    } catch (e) {
-      scopeCache.delete(tenantId);
-      console.error('[tenant-search-scope] book set lookup failed — scope closed:', e instanceof Error ? e.message : String(e));
-      return closedScope('tenant book set unavailable');
+    let lastError: unknown;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      if (attempt > 0) await new Promise((r) => setTimeout(r, BOOK_SET_RETRY_MS));
+      try {
+        return bookSetScope(tenantId, await readBookSet(tenantId));
+      } catch (e) {
+        lastError = e;
+      }
     }
+    scopeCache.delete(tenantId);
+    console.error('[tenant-search-scope] book set lookup failed twice — scope closed:', lastError instanceof Error ? lastError.message : String(lastError));
+    return closedScope('tenant book set unavailable', true);
   })();
   scopeCache.set(tenantId, { value, expiresAt: now + SCOPE_TTL_MS });
   return value;
@@ -118,8 +165,9 @@ export async function resolveSearchScope(requestOrHeaders: NextRequest | Headers
   if (!tenantId && ctx.slug) {
     try {
       tenantId = await resolveTenantId(ctx.slug);
-    } catch {
-      return closedScope('tenant lookup failed');
+    } catch (e) {
+      console.error('[tenant-search-scope] tenant lookup failed — scope closed:', e instanceof Error ? e.message : String(e));
+      return closedScope('tenant lookup failed', true);
     }
   }
   if (!tenantId) return closedScope('unresolved tenant');

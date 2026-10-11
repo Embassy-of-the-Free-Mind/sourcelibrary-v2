@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { artistAuthorRegex } from '@/lib/artist-match';
 import { isOwnInfraUrl } from '@/lib/public-image-fields';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
-import { resolveSearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse } from '@/lib/tenant-search-scope';
 import { semanticArtworkSearch } from '@/lib/semantic-search';
 import { resolveTitle } from '@/lib/title-provenance';
 
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     // leave `tenantScope` empty and serve every artwork (#4330).
     const scope = await resolveSearchScope(request);
     if (scope.kind === 'closed') {
-      return NextResponse.json({ total: 0, showing: 0, items: [], artist: null }, { headers: { 'Cache-Control': 'private, no-store' } });
+      return closedScopeResponse(scope, { total: 0, showing: 0, items: [], artist: null }, 'artwork.search');
     }
 
     const q = searchParams.get('q');

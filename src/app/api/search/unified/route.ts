@@ -15,7 +15,7 @@ import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { resolveSearchScope, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
@@ -154,27 +154,21 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    if (tenantContext.slug && !tenantContext.id) {
-      return NextResponse.json({
-        query,
-        books: { results: [], total: 0 },
-        index: { results: [], total: 0 },
-        gallery: { results: [], total: 0 },
-        visual: { results: [], total: 0 },
-      });
-    }
     // The book set the vector lanes (semantic books, artworks, CLIP) rank
     // inside (#4330). The Mongo "defense-in-depth" filter further down stays.
+    // A slug the proxy could not resolve is resolved here rather than answered
+    // empty on sight; a scope that stays closed says so (#6426).
     const scope = await resolveSearchScope(request.headers);
     if (scope.kind === 'closed') {
-      return NextResponse.json({
+      return closedScopeResponse(scope, {
         query,
         books: { results: [], total: 0 },
         index: { results: [], total: 0 },
         gallery: { results: [], total: 0 },
         visual: { results: [], total: 0 },
-      });
+      }, 'search.unified');
     }
+    const tenantId = scope.kind === 'tenant' ? scope.tenantId : null;
 
     const db = await getDb();
     // Strip surrounding quotes for regex/semantic matching (phrase detection handled by each subsystem)
@@ -192,7 +186,7 @@ export async function GET(request: NextRequest) {
     if (hasTranslation) searchFilters.hasTranslation = true;
     if (yearFrom !== undefined) searchFilters.yearFrom = yearFrom;
     if (yearTo !== undefined) searchFilters.yearTo = yearTo;
-    if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
+    if (tenantId) searchFilters.tenantId = tenantId;
 
     // Run book, index, gallery, and visual search in parallel.
     // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
@@ -211,7 +205,7 @@ export async function GET(request: NextRequest) {
     // catalogue entries and returns each as a page result at the text's opening page. Same book
     // filters as the keyword lane, applied in the query.
     const canonFilter: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
-    if (tenantContext.id) canonFilter.tenantId = tenantContext.id;
+    if (tenantId) canonFilter.tenantId = tenantId;
     if (language) canonFilter.language = language;
     if (category) canonFilter.categories = category;
     if (firstTranslation) canonFilter.is_first_translation = true;
@@ -264,7 +258,7 @@ export async function GET(request: NextRequest) {
     // reading room never shows SL-wide pages. Started before the book lanes so
     // it shares their query embedding (getQueryEmbedding caches the promise).
     const emptySite: { results: SemanticSiteResult[] } = { results: [] };
-    const siteResultPromise = tenantContext.id
+    const siteResultPromise = tenantId
       ? Promise.resolve(emptySite)
       : withTimeout(
           semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
@@ -274,7 +268,7 @@ export async function GET(request: NextRequest) {
     // NAME the query spells ("timeline", "check pages", "Huygens"). One indexed
     // lookup on site_pages.name_tokens. Main site only, like the site lane.
     const emptyNav: { results: NavSiteResult[] } = { results: [] };
-    const navResultPromise = tenantContext.id
+    const navResultPromise = tenantId
       ? Promise.resolve(emptyNav)
       : withTimeout(
           navSiteSearch(matchQuery, 3).then(results => ({ results })).catch((err) => {
@@ -288,7 +282,7 @@ export async function GET(request: NextRequest) {
     // and the /author links are library-wide, which a tenant's reading room must not show. Started
     // here so it runs beside the lanes; for anything but a one-word query it resolves at once,
     // without a lookup.
-    const nameChoicesPromise: Promise<NameChoices | null> = tenantContext.id || isPhrase
+    const nameChoicesPromise: Promise<NameChoices | null> = tenantId || isPhrase
       ? Promise.resolve(null)
       : withTimeout(findNameChoices(matchQuery).catch(() => null), null, 'name-chooser', 2000);
 
@@ -296,13 +290,13 @@ export async function GET(request: NextRequest) {
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
       isPhrase ? Promise.resolve(emptyIndex) : withTimeout(
-        searchIndex(db, matchQuery, limit, tenantContext.id || undefined, yearRange).catch((err) => {
+        searchIndex(db, matchQuery, limit, tenantId || undefined, yearRange).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
         }),
         emptyIndex, 'index',
       ),
-      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined, yearRange), emptyGallery, 'gallery'),
+      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantId || undefined, yearRange), emptyGallery, 'gallery'),
       withTimeout(searchVisual(db, matchQuery, galleryLimit, scope, yearRange), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
@@ -371,7 +365,7 @@ export async function GET(request: NextRequest) {
       // that literally contains the term (#2735).
       withTimeout(
         // Related word forms too (#5517): "herbal" matched no artwork, "herbs" nine.
-        lexicalArtworkSearch(db, wordFormRegex, 24, tenantContext.id || undefined, yearRange)
+        lexicalArtworkSearch(db, wordFormRegex, 24, tenantId || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
@@ -518,11 +512,11 @@ export async function GET(request: NextRequest) {
 
     // Filter visual results by tenant if needed
     let filteredVisualResults = visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR);
-    if (tenantContext.id && filteredVisualResults.length > 0) {
+    if (tenantId && filteredVisualResults.length > 0) {
       const visualBookIds = [...new Set(filteredVisualResults.map((r: any) => r.bookId).filter(Boolean))];
       if (visualBookIds.length > 0) {
         const allowedBooks = await db.collection('books')
-          .find({ id: { $in: visualBookIds }, tenantId: tenantContext.id }, { projection: { id: 1 } })
+          .find({ id: { $in: visualBookIds }, tenantId }, { projection: { id: 1 } })
           .toArray();
         const allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
         filteredVisualResults = filteredVisualResults.filter((r: any) => allowedBookIds.has(r.bookId));
@@ -628,7 +622,7 @@ export async function GET(request: NextRequest) {
     let scopedIndex = indexResult;
     let scopedGallery = galleryResult;
     let scopedSemantic = filteredSemantic;
-    if (tenantContext.id) {
+    if (tenantId) {
       const collectIds = [
         ...booksResult.results.map((r: any) => r.id),
         ...indexResult.results.map((r: any) => r.book_id),
@@ -641,7 +635,7 @@ export async function GET(request: NextRequest) {
       if (uniqueIds.length > 0) {
         const docs = await db.collection('books')
           .find(
-            { id: { $in: uniqueIds }, tenantId: tenantContext.id },
+            { id: { $in: uniqueIds }, tenantId },
             { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 },
           )
           .toArray();
@@ -668,7 +662,7 @@ export async function GET(request: NextRequest) {
     // under a tenant: an edition census across the global library is not a
     // partner reading room's claim to make (tenant-lockdown.md).
     const fanouts = await fetchWorkFanouts(db, collapsedByKey, {
-      tenantScoped: !!tenantContext.id || !!tenantContext.slug || tenantContext.isEmbedded,
+      tenantScoped: !!tenantId || !!tenantContext.slug || tenantContext.isEmbedded,
     });
     if (fanouts.size > 0) {
       scopedBooks = {
@@ -693,7 +687,7 @@ export async function GET(request: NextRequest) {
     logSearchEvent({
       request, db, query, source: 'unified',
       resultsCount: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
-      tenantId: tenantContext.id || null,
+      tenantId: tenantId || null,
       filters: { language, category, library },
     });
 

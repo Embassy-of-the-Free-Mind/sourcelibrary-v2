@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
-import { resolveSearchScope, matchClip, matchGalleryText, scopeAdmits, type SearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse, matchClip, matchGalleryText, scopeAdmits, type SearchScope } from '@/lib/tenant-search-scope';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
@@ -163,9 +163,10 @@ export async function GET(request: NextRequest) {
     // A tenant signal that resolves to no tenant is answered with nothing. It
     // used to fall through to `tenantFilter = {}` — the whole gallery.
     if (searchScope.kind === 'closed') {
-      return NextResponse.json(
+      return closedScopeResponse(
+        searchScope,
         { items: [], total: 0, hasMore: false, limit: 0, offset: 0, bookInfo: null, filters: { types: [], subjects: [], yearRange: {} } },
-        { headers: { 'Cache-Control': NO_STORE } },
+        'gallery',
       );
     }
     // The tenant's books, as a filter on `gallery_images.book_id`. NOT

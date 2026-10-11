@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { cosineSimilarity } from '@/lib/embeddings';
 import { supabase } from '@/lib/supabase';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
-import { resolveSearchScope, matchClip, matchGalleryText, type SearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse, matchClip, matchGalleryText, type SearchScope } from '@/lib/tenant-search-scope';
 
 export const preferredRegion = 'fra1';
 
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     // neighbours from being whatever of its shelf sat in the global top-N.
     const scope = await resolveSearchScope(request);
     if (scope.kind === 'closed') {
-      return NextResponse.json({ items: [], total: 0, method: 'none' }, { headers: { 'Cache-Control': 'private, no-store' } });
+      return closedScopeResponse(scope, { items: [], total: 0, method: 'none' }, 'gallery.similar');
     }
 
     const db = await getDb();
