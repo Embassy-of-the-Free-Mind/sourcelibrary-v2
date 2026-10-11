@@ -121,16 +121,19 @@ export type ImageIdentity = Omit<ApiIdentity, 'kind'> & {
 };
 
 /**
- * Clean (visible-mark-free) serving is a capability, not a default: implied by
- * full-scope paid tiers, or admin-granted per key via permissions.clean_images.
+ * Clean (visible-mark-free) serving is a PAID capability, not a default: a
+ * full-scope tier backed by a Stripe subscription, or an admin grant via
+ * permissions.clean_images (for a contract paid offline). A full/enterprise
+ * key minted free for a partner keeps the visible marks — tier alone is not
+ * payment (13 free partner keys were serving clean until this check).
  * Only the VISIBLE marks come off — the invisible evidence layer (EXIF, keyed
  * watermark) stays on every tier by design; a bit-clean corpus is a negotiated
  * deal, not an API parameter.
  */
-export function keyAllowsCleanImages(doc: Pick<ApiKeyDoc, 'tier' | 'permissions'>): boolean {
+export function keyAllowsCleanImages(doc: Pick<ApiKeyDoc, 'tier' | 'permissions' | 'stripe_subscription_id'>): boolean {
   if (doc.permissions?.clean_images === true) return true;
   const cfg = DATASET_TIERS[doc.tier as DatasetTier];
-  return cfg?.scope === 'full';
+  return cfg?.scope === 'full' && !!doc.stripe_subscription_id;
 }
 
 export interface ImageAccessDecision {
