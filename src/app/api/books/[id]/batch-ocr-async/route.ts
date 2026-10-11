@@ -676,7 +676,7 @@ export const GET = withAuth(async (request, session, context) => {
 
         let successCount = 0;
         let failCount = 0;
-        const now = new Date().toISOString();
+        const now = new Date();
 
         // Build flat list of { pageId, ocrText } from responses
         const pageResults: Array<{ pageId: string; text: string }> = [];
