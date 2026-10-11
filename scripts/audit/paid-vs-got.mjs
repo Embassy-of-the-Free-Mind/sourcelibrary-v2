@@ -45,6 +45,16 @@
  *                  scripts/maintenance/resolve-batch-findings.mjs): it used to drop to WARN at
  *                  48 h, which is how an unfixed loss went quiet (#6333). A SUCCEEDED job whose
  *                  every request failed (Gemini's batchStats) billed nothing and is not a finding.
+ *   9. METER GAP   Google's own GenerateContent 2xx count (Cloud Monitoring request_count, per
+ *                  project and key, hourly) against the day's non-batch usage rows (#4599). Rows
+ *                  carry no key, so per project it reports a LOWER BOUND of unmetered calls (see
+ *                  meterGap()). FAIL when that bound is > 25% of a project's calls and > 500.
+ *                  Read with the same service account as the bill check (monitoring.read scope).
+ *  10. REPEAT ASKS non-batch calls per (endpoint, type, book_id): a once-per-book question asked
+ *                  more than 3 times in a day is the "paid call, failed write, asked again" loop
+ *                  (#4599, ten days on the soma key before anyone saw it). WARN at any, FAIL at
+ *                  ≥ 500 such calls. Proven only forward from 2026-10-11 (#6466 made that caller
+ *                  write its row before the write that threw).
  *
  * HOURLY: --collection-only runs sections 1 and 8 only (Gemini window: jobs created in the last
  * 72 h, plus the last run's findings that have left that window, asked about by name), writes
@@ -52,9 +62,10 @@
  * ("paid-vs-got: batch collection FAIL") while findings stand — closed by a passing run.
  *
  * FAIL (exit 1) when: a batch is open past 40 h; Gemini finished a job that nothing
- * collected or discarded (or is running one the DB calls over); duplicate-submission spend > $1/day; or
- * unattributed paid usage > 5% of metered. Exit 2 = could not measure (a store unreadable, a
- * Gemini key that cannot be listed, a positive control that did not fire, the bill unreadable on
+ * collected or discarded (or is running one the DB calls over); duplicate-submission spend > $1/day;
+ * unattributed paid usage > 5% of metered; a project's meter gap (9); or ≥ 500 repeat asks (10).
+ * Exit 2 = could not measure (a store unreadable, a Gemini key that cannot be listed, a project
+ * Cloud Monitoring will not read, a positive control that did not fire, the bill unreadable on
  * a bill day). 0 = ran, clean (WARNs included). Never branch on != 0 — measurement-instruments.md.
  *
  * CLOCKS. "Paid" is the collection clock; "got" is the page-write clock (the collector writes
@@ -73,6 +84,7 @@
  *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs --apply          # cron (06:10Z)
  *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs --collection-only [--apply]  # hourly
  *   ... --no-gemini   skip section 8 (the run is then not a statement about Gemini's side)
+ *   ... --no-meter-gap   skip section 9 (no Cloud Monitoring read)
  *   node scripts/audit/paid-vs-got.mjs --negative-control                                 # no DB
  *   ... --json   machine-readable report on stdout
  */
@@ -335,6 +347,131 @@ export function failedWithCost(jobs, { inDay = () => true } = {}) {
   return { real, real_usd: r6(realUsd), phantom, phantom_usd: r6(phantomUsd) };
 }
 
+// ─────────────────────────────────────────── 9. meter gap per project and key (pure)
+
+/** Methods that are one realtime generation each. BatchGenerateContent is a batch submit, not a call. */
+const GENERATE_METHODS = /\.(GenerateContent|StreamGenerateContent)$/;
+/** Usage-row types that are not a GenerateContent call (EmbedContent / BatchEmbedContents). */
+const NOT_GENERATE_TYPES = new Set(['embedding']);
+
+/** The meter side: the day's non-batch usage rows bucketed by UTC hour of their call time. */
+export function meterByHour(realtimeRows, dayStart) {
+  const h = new Array(24).fill(0);
+  const t0 = ms(dayStart);
+  for (const r of realtimeRows) {
+    if (NOT_GENERATE_TYPES.has(r.type)) continue;
+    const i = Math.floor((ms(r.timestamp) - t0) / HOUR);
+    if (i >= 0 && i < 24) h[i]++;
+  }
+  return h;
+}
+
+/**
+ * Google's GenerateContent 2xx count against the meter, per project and per key (#4599).
+ *
+ * A usage row carries no key, so the meter cannot be split by project. What CAN be said per
+ * project is a lower bound: in any hour, the calls a project made beyond EVERY metered call in
+ * that hour cannot all have been metered. Summed over hours, that is unmetered calls the project
+ * certainly made. It only ever under-reports (rows from projects not read here, failed rows,
+ * other keys' rows all count as credit), so a flag is real. Hourly, not daily, because a day sum
+ * lets one hour's surplus hide another hour's gap: on 2026-10-02 a 42K-call eval made the day
+ * read 22% while the soma loop ran unmetered through every quiet hour.
+ *
+ * `projects`: [{ id, name, keys: { credential_id: number[24] }, error? }]. `meterHours`: number[24].
+ * Flag a project when its lower bound > METER_GAP_PCT of its calls AND > METER_GAP_MIN_CALLS.
+ */
+export const METER_GAP_PCT = 25;
+export const METER_GAP_MIN_CALLS = 500;
+export function meterGap({ projects = [], meterHours = new Array(24).fill(0) }) {
+  const lb = (hours) => hours.reduce((a, g, i) => a + Math.max(0, g - (meterHours[i] || 0)), 0);
+  const sum = (a) => a.reduce((x, y) => x + y, 0);
+  const flagged = (calls, lower) => lower > METER_GAP_MIN_CALLS && 100 * lower / Math.max(calls, 1) > METER_GAP_PCT;
+  const out = [];
+  const total = new Array(24).fill(0);
+  const unreadable = [];
+  for (const p of projects) {
+    if (p.error) { unreadable.push({ project: p.name, id: p.id, error: p.error }); continue; }
+    const hours = new Array(24).fill(0);
+    const keys = [];
+    for (const [cred, kh] of Object.entries(p.keys || {})) {
+      for (let i = 0; i < 24; i++) { hours[i] += kh[i] || 0; total[i] += kh[i] || 0; }
+      const calls = sum(kh), lower = lb(kh);
+      keys.push({ key: cred, calls, unmetered_min: lower, pct: calls ? r2(100 * lower / calls) : 0, flag: flagged(calls, lower) });
+    }
+    keys.sort((a, b) => b.unmetered_min - a.unmetered_min);
+    const calls = sum(hours), lower = lb(hours);
+    out.push({ project: p.name, id: p.id, calls, unmetered_min: lower, pct: calls ? r2(100 * lower / calls) : 0,
+      flag: flagged(calls, lower), keys });
+  }
+  const gCalls = sum(total), metered = sum(meterHours);
+  return {
+    projects: out, unreadable, google_calls: gCalls, metered_calls: metered,
+    day_gap: gCalls - metered, hourly_unmetered_min: lb(total),
+    hourly_pct: gCalls ? r2(100 * lb(total) / gCalls) : 0,
+    flagged: out.filter((p) => p.flag).map((p) => p.project),
+  };
+}
+
+/**
+ * Positive control, every run: a fake project making twice the whole meter plus 300 calls every
+ * hour must flag — at least half its calls are unmetered whatever the day's meter looks like.
+ */
+export function meterGapControl(meterHours) {
+  const fake = { id: '__control__', name: '__control__', keys: { 'apikey:__control__': meterHours.map((m) => 2 * (m || 0) + 300) } };
+  return { ok: meterGap({ projects: [fake], meterHours }).flagged.includes('__control__') };
+}
+
+// ─────────────────────────────────────────── 10. repeat asks (pure)
+
+export const REPEAT_ASK_MIN = 4; // "more than 3 calls" for one book on one endpoint in a day
+export const REPEAT_ASK_FAIL_CALLS = 500;
+
+/**
+ * Non-batch calls grouped by (endpoint, type, book_id) — the shape of "paid call, failed write,
+ * asked again" (#4599: Phase 1.6 asked ~40 books every 2 min for ten days). Type is in the key
+ * because one worker endpoint runs several once-per-book tasks (worker/hetzner-enrich: quality,
+ * summary, index, chapters) on the same book.
+ *
+ * A pair is BOOK-LEVEL when no row names a page (page_count 0 and no page_ids — Mongo-store rows
+ * from scripts carry page_ids, not page_count): the question was about the book, so a
+ * book asked more than three times a day is the loop shape. Per-page endpoints (OCR, translate
+ * batches) legitimately call hundreds of times per book; they are counted and shown in the top
+ * list, never flagged, because a usage row carries no page id to tell a re-ask from the next page.
+ *
+ * Only proven forward from 2026-10-11: before #6466 the looping caller wrote its row after the
+ * write that threw, so the loop left no rows to group.
+ */
+export function repeatAsks(rows) {
+  const pairs = new Map();
+  for (const r of rows) {
+    if (!r.book_id) continue;
+    const k = `${r.endpoint || '(no endpoint)'}\u0000${r.type || '?'}\u0000${r.book_id}`;
+    let p = pairs.get(k);
+    if (!p) pairs.set(k, p = { endpoint: r.endpoint || '(no endpoint)', type: r.type || null, book_id: String(r.book_id),
+      calls: 0, failed: 0, usd: 0, book_level: true });
+    p.calls++;
+    p.usd += r.cost_usd || 0;
+    if (r.status === 'failed') p.failed++;
+    if ((r.page_count || 0) > 0 || r.page_ids?.length) p.book_level = false;
+  }
+  const all = [...pairs.values()].map((p) => ({ ...p, usd: r6(p.usd) })).sort((a, b) => b.calls - a.calls);
+  const repeats = all.filter((p) => p.book_level && p.calls >= REPEAT_ASK_MIN);
+  const byEndpoint = {};
+  for (const p of repeats) {
+    const e = byEndpoint[p.endpoint] ||= { books: 0, calls: 0, usd: 0 };
+    e.books++; e.calls += p.calls; e.usd = r6(e.usd + p.usd);
+  }
+  return {
+    pairs: all.length,
+    repeats: repeats.slice(0, 100), repeat_pairs: repeats.length,
+    repeat_calls: repeats.reduce((a, p) => a + p.calls, 0),
+    repeat_usd: r6(repeats.reduce((a, p) => a + p.usd, 0)),
+    by_endpoint: byEndpoint,
+    per_page_over: all.filter((p) => !p.book_level && p.calls >= REPEAT_ASK_MIN).length,
+    top: all.slice(0, 10),
+  };
+}
+
 // ─────────────────────────────────────────── 3. paid (pure)
 
 /**
@@ -392,7 +529,7 @@ export function headline({ paid, got, waste }) {
   });
 }
 
-export function verdict({ collection, dupUsd = 0, unattributedPct = 0, gemini = null }) {
+export function verdict({ collection, dupUsd = 0, unattributedPct = 0, gemini = null, meter = null, repeats = null }) {
   const fails = [];
   const warns = [];
   if (collection.fail) fails.push(`${collection.fail} batch job(s) open at Gemini past ${FAIL_AGE_H} h (expire at 48 h)`);
@@ -410,6 +547,13 @@ export function verdict({ collection, dupUsd = 0, unattributedPct = 0, gemini = 
   }
   if (dupUsd > DUP_FAIL_USD) fails.push(`duplicate-submission spend $${dupUsd.toFixed(2)} > $${DUP_FAIL_USD}/day`);
   if (unattributedPct > UNATTRIBUTED_FAIL_PCT) fails.push(`unattributed paid usage ${unattributedPct.toFixed(1)}% > ${UNATTRIBUTED_FAIL_PCT}% of metered`);
+  for (const p of meter?.projects || []) {
+    if (p.flag) fails.push(`meter gap: Google saw ${p.calls.toLocaleString('en-US')} GenerateContent calls on ${p.project}; at least ${p.unmetered_min.toLocaleString('en-US')} (${p.pct}%) wrote no usage row`);
+  }
+  if (repeats?.repeat_pairs) {
+    const msg = `repeat asks: ${repeats.repeat_pairs} book(s) asked the same once-per-book question more than ${REPEAT_ASK_MIN - 1} times (${repeats.repeat_calls.toLocaleString('en-US')} calls, $${repeats.repeat_usd.toFixed(2)})`;
+    if (repeats.repeat_calls >= REPEAT_ASK_FAIL_CALLS) fails.push(msg); else warns.push(msg);
+  }
   return { status: fails.length ? 'FAIL' : warns.length ? 'WARN' : 'PASS', fails, warns };
 }
 
@@ -422,7 +566,7 @@ async function supabaseRows(qs) {
   const url = clean(process.env.SUPABASE_URL) || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
   const key = clean(process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!key) throw new Error('SUPABASE_SERVICE_ROLE_KEY not set — the primary usage store is unreadable');
-  const select = 'id,timestamp,type,mode,model,page_count,input_tokens,output_tokens,cost_usd,status,batch_job_id,endpoint,completed_at';
+  const select = 'id,timestamp,type,mode,model,book_id,page_count,input_tokens,output_tokens,cost_usd,status,batch_job_id,endpoint,completed_at';
   const out = [];
   for (let from = 0; ; from += 1000) {
     if (from > 300_000) throw new Error('Supabase: >300K usage rows in one day — refusing a truncated sum');
@@ -451,7 +595,7 @@ async function readUsage(db, dayStart, dayEnd) {
   const mongo = await db.collection('gemini_usage').find({
     _id: { $gte: ObjectId.createFromTime(Math.floor((dayStart.getTime() - 3 * DAY) / 1000)) },
     $or: [{ timestamp: { $gte: dayStart, $lt: dayEnd } }, { mode: 'batch', completed_at: { $gte: dayStart, $lt: dayEnd } }],
-  }, { projection: { _id: 0, timestamp: 1, type: 1, mode: 1, model: 1, page_count: 1, input_tokens: 1, output_tokens: 1,
+  }, { projection: { _id: 0, timestamp: 1, type: 1, mode: 1, model: 1, book_id: 1, page_count: 1, page_ids: 1, input_tokens: 1, output_tokens: 1,
     cost_usd: 1, status: 1, batch_job_id: 1, endpoint: 1, completed_at: 1 } }).toArray();
   const inDay = (v) => { const t = ms(v); return t >= dayStart.getTime() && t < dayEnd.getTime(); };
   const all = [...supaByTime.map((r) => ({ ...r, store: 'supabase' })), ...mongo.map((r) => ({ ...r, store: 'mongo' }))];
@@ -537,6 +681,62 @@ async function billCheck(db, dayStart) {
   const first = weeks.find((w) => w.metered_pct != null), last = weeks[weeks.length - 1];
   return { computed_on: dayStart.toISOString().slice(0, 10), weeks,
     trend_pts: first && last.metered_pct != null ? r2(last.metered_pct - first.metered_pct) : null };
+}
+
+// ─────────────────────────────────────────── 9. meter gap reader (Cloud Monitoring)
+
+/** The projects whose GenerateContent traffic the meter must cover (ids: spend-reconcile PROJECTS). */
+const METER_GAP_PROJECTS = ['booksplit', 'soma', 'Sourcelibrary'];
+
+/**
+ * GenerateContent 2xx per project, per key (`resource.labels.credential_id`), per UTC hour, from
+ * serviceruntime request_count. No crossSeriesReducer (spend-reconcile trap A): the raw series are
+ * summed here. A project that answers 403 is UNREADABLE, never zero — the grant is
+ * roles/monitoring.viewer on that project for the spend-reconcile service account (a human step).
+ */
+export async function readGoogleCalls(dayStart, dayEnd) {
+  const sr = await import('./spend-reconcile.mjs');
+  const projects = sr.PROJECTS.filter((p) => METER_GAP_PROJECTS.includes(p.name));
+  const token = await sr.googleToken();
+  if (!token) return { unreadable: 'no Google access token (GOOGLE_SERVICE_ACCOUNT_JSON / gcloud)' };
+  const out = [];
+  for (const p of projects) {
+    const q = new URLSearchParams();
+    q.set('filter', 'metric.type="serviceruntime.googleapis.com/api/request_count" AND resource.type="consumed_api"'
+      + ' AND resource.labels.service="generativelanguage.googleapis.com" AND metric.labels.response_code_class="2xx"');
+    q.set('interval.startTime', dayStart.toISOString());
+    q.set('interval.endTime', dayEnd.toISOString());
+    q.set('aggregation.alignmentPeriod', '3600s');
+    q.set('aggregation.perSeriesAligner', 'ALIGN_SUM');
+    const keys = {};
+    try {
+      let pageToken = '';
+      do {
+        if (pageToken) q.set('pageToken', pageToken);
+        const r = await fetch(`https://monitoring.googleapis.com/v3/projects/${p.id}/timeSeries?${q}`,
+          { headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(60_000) });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) {
+          const msg = j?.error?.message || `HTTP ${r.status}`;
+          throw new Error(r.status === 403 ? `${msg} — needs roles/monitoring.viewer on ${p.id} (human grant)` : msg);
+        }
+        for (const s of j.timeSeries || []) {
+          if (!GENERATE_METHODS.test(s.resource?.labels?.method || '')) continue;
+          const cred = s.resource?.labels?.credential_id || 'unknown';
+          const h = keys[cred] ||= new Array(24).fill(0);
+          for (const pt of s.points || []) {
+            const i = Math.floor((ms(pt.interval?.startTime) - dayStart.getTime()) / HOUR);
+            if (i >= 0 && i < 24) h[i] += Number(pt.value?.int64Value || 0);
+          }
+        }
+        pageToken = j.nextPageToken || '';
+      } while (pageToken);
+      out.push({ id: p.id, name: p.name, keys });
+    } catch (e) {
+      out.push({ id: p.id, name: p.name, error: e.message });
+    }
+  }
+  return { projects: out };
 }
 
 // ─────────────────────────────────────────── 8. Gemini side (#6276)
@@ -707,6 +907,38 @@ export function renderText(R) {
     L.push(`  trend (metered%, last week vs first): ${B.trend_pts == null ? '—' : (B.trend_pts > 0 ? '+' : '') + B.trend_pts + ' pts'}`);
   }
   if (R.gemini !== undefined) { L.push(''); L.push(renderGemini(R.gemini)); }
+  if (R.meter_gap !== undefined) { L.push(''); L.push(renderMeterGap(R.meter_gap)); }
+  if (R.repeat_asks) { L.push(''); L.push(renderRepeatAsks(R.repeat_asks)); }
+  return L.join('\n');
+}
+
+export function renderMeterGap(M) {
+  if (!M) return '9. METER GAP  not run (--no-meter-gap).';
+  if (M.unreadable_all) return `9. METER GAP  UNREADABLE — ${M.unreadable_all}`;
+  const L = [];
+  L.push(`9. METER GAP  Google GenerateContent 2xx vs non-batch usage rows; "unmetered ≥" = Σ hours max(0, Google − every metered call that hour) — a lower bound`);
+  L.push(`  all three projects: Google ${int(M.google_calls)}, metered ${int(M.metered_calls)}, day gap ${int(M.day_gap)}; hourly unmetered ≥ ${int(M.hourly_unmetered_min)} (${M.hourly_pct}%)`);
+  L.push(`  ${pad('project / key', 50)}${lpad('Google', 9)}${lpad('unmetered≥', 12)}${lpad('%', 7)}`);
+  for (const p of M.projects) {
+    L.push(`  ${p.flag ? 'FAIL ' : '     '}${pad(p.project, 45)}${lpad(int(p.calls), 9)}${lpad(int(p.unmetered_min), 12)}${lpad(p.pct + '%', 7)}`);
+    for (const k of p.keys.filter((x) => x.calls > 0).slice(0, 5)) {
+      L.push(`         ${pad(k.key, 41)}${lpad(int(k.calls), 9)}${lpad(int(k.unmetered_min), 12)}${lpad(k.pct + '%', 7)}`);
+    }
+  }
+  for (const u of M.unreadable) L.push(`  UNREADABLE  ${u.project} (${u.id}): ${u.error}`);
+  L.push(`  flag: unmetered ≥ ${METER_GAP_PCT}% of a project's calls AND > ${METER_GAP_MIN_CALLS} calls. positive control: ${M.control?.ok ? 'PASS' : 'BROKEN'}`);
+  return L.join('\n');
+}
+
+export function renderRepeatAsks(A) {
+  const L = [];
+  L.push(`10. REPEAT ASKS  non-batch calls per (endpoint, type, book); a once-per-book question (page_count 0) asked ≥ ${REPEAT_ASK_MIN}× in the day`);
+  L.push(`  ${A.repeat_pairs} book(s), ${int(A.repeat_calls)} calls, ${$(A.repeat_usd)}; WARN at any, FAIL at ≥ ${REPEAT_ASK_FAIL_CALLS} calls. ${A.per_page_over} per-page pair(s) ≥ ${REPEAT_ASK_MIN} calls not flagged (no page id on a row).`);
+  for (const [e, v] of Object.entries(A.by_endpoint)) L.push(`    ${pad(e, 46)} ${lpad(v.books, 4)} books ${lpad(int(v.calls), 7)} calls ${lpad($(v.usd), 9)}`);
+  for (const p of A.repeats.slice(0, 20)) L.push(`      ${pad(p.endpoint, 40)} ${pad(p.type || '', 20)} ${pad(p.book_id, 26)} ${lpad(p.calls, 5)}×${p.failed ? `  (${p.failed} failed)` : ''}`);
+  if (A.repeat_pairs > 20) L.push(`      … ${A.repeat_pairs - 20} more`);
+  L.push('  top 10 (endpoint, type, book) by calls:');
+  for (const p of A.top) L.push(`      ${pad(p.endpoint, 40)} ${pad(p.type || '', 20)} ${pad(p.book_id, 26)} ${lpad(p.calls, 5)}×  ${p.book_level ? 'book-level' : 'per-page'}${p.failed ? `, ${p.failed} failed` : ''}`);
   return L.join('\n');
 }
 
@@ -788,6 +1020,7 @@ async function main() {
   const JSON_OUT = args.includes('--json');
   const COLLECTION_ONLY = args.includes('--collection-only');
   const NO_GEMINI = args.includes('--no-gemini');
+  const NO_METER_GAP = args.includes('--no-meter-gap');
   const windowArg = arg('gemini-window-h');
 
   if (args.includes('--negative-control')) {
@@ -846,6 +1079,16 @@ async function main() {
     const paid = foldPaid(usage.realtime, usage.batch, usage.inFlight);
     const { got, written } = await readGot(db, dayStart, dayEnd, now);
 
+    // 9–10. meter gap per project/key, and repeat asks (#4599)
+    let meter = null;
+    if (!NO_METER_GAP) {
+      const meterHours = meterByHour(usage.realtime, dayStart);
+      const g = await readGoogleCalls(dayStart, dayEnd).catch((e) => ({ unreadable: e.message }));
+      meter = g.unreadable ? { unreadable_all: g.unreadable } : { ...meterGap({ projects: g.projects, meterHours }), control: meterGapControl(meterHours) };
+    }
+    const meterUnknown = meter && (meter.unreadable_all || meter.unreadable.length || !meter.control.ok);
+    const repeats = repeatAsks(usage.realtime);
+
     // 4. waste
     const jobs = await db.collection('batch_jobs').find({
       created_at: { $gte: new Date(dayStart.getTime() - REPEAT_LOOKBACK_DAYS * DAY), $lt: dayEnd },
@@ -883,13 +1126,14 @@ async function main() {
       if (last[0]?.bill) bill = { ...last[0].bill, carried: true };
     }
 
-    const v = verdict({ collection, dupUsd: waste.duplicate_usd, unattributedPct: paid.unattributed_pct, gemini: geminiForVerdict });
+    const v = verdict({ collection, dupUsd: waste.duplicate_usd, unattributedPct: paid.unattributed_pct, gemini: geminiForVerdict,
+      meter: meter?.projects ? meter : null, repeats });
     const report = {
       _id: `paid-vs-got-${dayStr}`, type: REPORT_TYPE, day: dayStr, generated_at: now,
       generated_by: 'scripts/audit/paid-vs-got.mjs', verdict: v,
       headline: headline({ paid, got, waste }),
       collection: { ...collection, flagged: collection.flagged.slice(0, 100) },
-      got, paid, waste, bill, usage_rows: usage.rows, gemini,
+      got, paid, waste, bill, usage_rows: usage.rows, gemini, meter_gap: meter, repeat_asks: repeats,
       controls: { positive, gemini: gemini?.positive || null },
     };
     const text = renderText(report);
@@ -902,6 +1146,9 @@ async function main() {
       exitCode = 1;
     } else if (geminiUnknown) {
       console.error(`\nGemini side UNKNOWN: ${(gemini.unknown || []).join('; ') || 'positive control did not fire'}. Exit 2 — not clear.`);
+      exitCode = 2;
+    } else if (meterUnknown) {
+      console.error(`\nMeter gap UNKNOWN: ${meter.unreadable_all || meter.unreadable.map((u) => `${u.project}: ${u.error}`).join('; ') || 'positive control did not fire'}. Exit 2 — not clear.`);
       exitCode = 2;
     } else if (BILL_DAY && bill?.unreadable) {
       console.error(`\nBill check could not run: ${bill.unreadable}. Exit 2.`);

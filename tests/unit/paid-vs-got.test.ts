@@ -412,3 +412,108 @@ describe('Gemini-side ledger: a job whose every request failed is not paid work 
     expect(r.findings[0]).toMatchObject({ class: 'succeeded_uncollected', records: ['enrich_batch_jobs:submitting'] });
   });
 });
+
+// ─── #4599: the two guards against "paid call, failed write, asked again" ───
+import meterFx from '../fixtures/paid-vs-got-meter-gap.json';
+import repeatFx from '../fixtures/paid-vs-got-repeat-asks.json';
+
+type Proj = { id: string; name: string; keys: Record<string, number[]> };
+type Day = { projects: Proj[]; meterHours: number[] };
+const day = (d: '2026-10-02' | '2026-10-10') => (meterFx as unknown as Record<string, Day>)[d];
+
+describe('meter gap per project (section 9) — measured hourly shapes', () => {
+  it('flags soma on 2026-10-10, the steady loop: ~290/h on one key against a meter of ~10/h', () => {
+    const r = L.meterGap(day('2026-10-10'));
+    expect(r.flagged).toEqual(['soma']);
+    const soma = r.projects.find((p: { project: string }) => p.project === 'soma');
+    expect(soma.calls).toBe(6999);
+    expect(soma.unmetered_min).toBeGreaterThan(5000);
+    expect(soma.keys[0].key).toMatch(/^apikey:147a204f/);
+  });
+
+  it('flags soma on 2026-10-02, when a 42K-call eval hid it in the DAY sum', () => {
+    const d = day('2026-10-02');
+    const r = L.meterGap(d);
+    // The daily sum reads 16%: under the threshold. Only the hourly bound sees it.
+    expect(100 * r.day_gap / r.google_calls).toBeLessThan(L.METER_GAP_PCT);
+    expect(r.flagged).toContain('soma');
+    // Sourcelibrary's three keys ran inside the eval's metered hours: a lower bound of zero, no flag.
+    expect(r.projects.find((p: { project: string }) => p.project === 'Sourcelibrary')).toMatchObject({ unmetered_min: 0, flag: false });
+  });
+
+  it('never flags a project the meter covers hour by hour, and needs BOTH thresholds', () => {
+    const meterHours = day('2026-10-10').meterHours;
+    const covered = { id: 'x', name: 'covered', keys: { 'apikey:a': meterHours.map((m: number) => m) } };
+    expect(L.meterGap({ projects: [covered], meterHours }).flagged).toEqual([]);
+    // 100% unmetered but only 480 calls: under the 500-call floor.
+    const small = { id: 'y', name: 'small', keys: { 'apikey:b': new Array(24).fill(20) } };
+    expect(L.meterGap({ projects: [small], meterHours: new Array(24).fill(0) }).flagged).toEqual([]);
+  });
+
+  it('positive control fires against both measured meters, including the 51K-row day', () => {
+    expect(L.meterGapControl(day('2026-10-02').meterHours).ok).toBe(true);
+    expect(L.meterGapControl(day('2026-10-10').meterHours).ok).toBe(true);
+  });
+
+  it('a project Monitoring would not read is UNREADABLE, never a zero', () => {
+    const r = L.meterGap({ projects: [{ id: 'p', name: 'soma', error: 'Permission denied — needs roles/monitoring.viewer' }], meterHours: new Array(24).fill(0) });
+    expect(r.unreadable).toHaveLength(1);
+    expect(r.projects).toEqual([]);
+  });
+
+  it('meterByHour buckets by call time and leaves embeddings out (they are not GenerateContent)', () => {
+    const start = new Date('2026-10-10T00:00:00Z');
+    const h = L.meterByHour([
+      { timestamp: '2026-10-10T00:10:00Z', type: 'other' },
+      { timestamp: new Date('2026-10-10T23:59:00Z'), type: 'translation' },
+      { timestamp: '2026-10-10T05:00:00Z', type: 'embedding' },
+      { timestamp: '2026-10-11T00:00:00Z', type: 'other' },
+    ], start);
+    expect(h[0]).toBe(1);
+    expect(h[23]).toBe(1);
+    expect(h.reduce((a: number, b: number) => a + b, 0)).toBe(2);
+  });
+
+  it('a flagged project is a FAIL line in the verdict', () => {
+    const v = L.verdict({ collection: { fail: 0, warn: 0 }, meter: L.meterGap(day('2026-10-10')) });
+    expect(v.status).toBe('FAIL');
+    expect(v.fails.join('\n')).toMatch(/meter gap: .* on soma/);
+  });
+});
+
+describe('repeat asks (section 10) — real rows', () => {
+  const rows = (repeatFx as unknown as { rows: Record<string, unknown>[] }).rows;
+
+  it('lists the Phase 1.6 books asked again and again, and nothing per-page', () => {
+    const r = L.repeatAsks(rows);
+    expect(r.repeat_pairs).toBe(3);
+    expect(Object.keys(r.by_endpoint)).toEqual(['hetzner/pipeline-metadata']);
+    // realtime-translate (Mongo rows: page_ids, no page_count) and transliterate (page_count 1) are per-page.
+    expect(r.per_page_over).toBe(2);
+    expect(r.repeats.every((p: { endpoint: string; calls: number }) => p.endpoint === 'hetzner/pipeline-metadata' && p.calls === 12)).toBe(true);
+    // The two books asked at most three times are in the top list, not the repeats.
+    expect(r.top.find((p: { endpoint: string }) => p.endpoint === 'scripts/realtime-translate.mjs')).toMatchObject({ calls: 40, book_level: false });
+    // worker/hetzner-enrich runs four once-per-book tasks on one book: grouped by type, none repeats.
+    expect(r.repeats.some((p: { endpoint: string }) => p.endpoint === 'worker/hetzner-enrich')).toBe(false);
+  });
+
+  it('WARNs on a few repeats and FAILs at the loop rate (the 305×/book seen by 16:00Z)', () => {
+    const few = L.repeatAsks(rows);
+    expect(L.verdict({ collection: { fail: 0, warn: 0 }, repeats: few }).status).toBe('WARN');
+    const looping = new Set(few.repeats.map((p: { book_id: string }) => p.book_id));
+    const meta = rows.filter((x) => x.endpoint === 'hetzner/pipeline-metadata' && looping.has(x.book_id as string));
+    const loop = L.repeatAsks([...rows, ...Array.from({ length: 15 }, () => meta).flat()]);
+    expect(loop.repeat_calls).toBeGreaterThanOrEqual(L.REPEAT_ASK_FAIL_CALLS);
+    const v = L.verdict({ collection: { fail: 0, warn: 0 }, repeats: loop });
+    expect(v.status).toBe('FAIL');
+    expect(v.fails[0]).toMatch(/repeat asks: 3 book\(s\)/);
+  });
+
+  it('three asks a day is not a repeat; a row with no book is ignored', () => {
+    const r = L.repeatAsks([
+      ...Array.from({ length: 3 }, () => ({ endpoint: 'e', type: 't', book_id: 'b', page_count: 0 })),
+      ...Array.from({ length: 9 }, () => ({ endpoint: 'e', type: 't', book_id: null, page_count: 0 })),
+    ]);
+    expect(r).toMatchObject({ repeat_pairs: 0, pairs: 1 });
+  });
+});
