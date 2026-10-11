@@ -90,6 +90,8 @@ export const GET = withApiAuth(async (
       // three, every MCP caller saw one scalar and had no way to tell a
       // translation-of-a-translation from a source text.
       original_language: 1, text_role: 1, is_translation: 1,
+      // Who set text_role: a heuristic "original" is a default, not a claim (#4441).
+      text_role_source: 1,
       pages_count: 1, pages_translated: 1,
       // The stamped translation rung (#5287) — the reader's whole-book
       // download panel reads it instead of its own page arithmetic.

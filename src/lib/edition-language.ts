@@ -25,6 +25,8 @@ export interface LanguageApparatusSource {
   language?: string | null;
   original_language?: string | null;
   text_role?: string | null;
+  /** Who set `text_role` — `heuristic-v1`, `import-heuristic-v1`, `human-qa-*`, … */
+  text_role_source?: string | null;
   is_translation?: boolean | null;
 }
 
@@ -35,6 +37,11 @@ export interface LanguageApparatus {
   work_language?: string;
   /** original | period-translation | modern-translation, when classified. */
   text_role?: string;
+  /**
+   * Present only when `text_role` is "original" by DEFAULT rather than by
+   * review — which is nearly every "original" in the corpus (#4441).
+   */
+  text_role_note?: string;
   /** Present only on a translated edition — states the chain in words. */
   translation_note?: string;
 }
@@ -42,12 +49,37 @@ export interface LanguageApparatus {
 const TRANSLATION_ROLES = new Set(['period-translation', 'modern-translation']);
 
 /**
+ * `text_role: "original"` is what classify-text-role.mjs (and its import twin,
+ * src/lib/text-role.ts) assign to EVERY non-English scan and to every English
+ * book with no translation signal in its title/author. Measured on live books
+ * 2026-10-11: of ~41.5K "original" values, all but ~20 came from
+ * `heuristic-v1` / `import-heuristic-v1` or carry no source at all. Risner's
+ * 1572 Latin Alhazen is "original" by that rule — a Latin edition of a work
+ * composed in Arabic (#4441). So a heuristic "original" means "not classified
+ * as a translation", and serving it bare reads as a scholarly claim.
+ */
+function isDefaultedOriginal(role: string | undefined, source: string | null | undefined): boolean {
+  if (role !== 'original') return false;
+  return !source || /heuristic/i.test(source);
+}
+
+export const DEFAULTED_ORIGINAL_NOTE =
+  'text_role "original" on this record is a default, not a classification: the metadata heuristic ' +
+  'assigns it to every non-English scan and to every English book whose title and author show no ' +
+  'translation signal, and nobody has checked it against the work. It is NOT evidence that these pages ' +
+  'are in the language the work was written in, or are the author\'s own words. The work\'s own language ' +
+  'is not recorded on this record. Before citing a passage as the author\'s wording, establish the ' +
+  'language of composition independently; list_editions shows other witnesses of the same work.';
+
+/**
  * Build the apparatus block for a book record. Returns an object meant to be
  * spread into a response.
  *
  * `work_language` and `translation_note` are omitted rather than nulled when
- * they don't apply: an absent field reads as "this edition is in the work's own
- * language", while `work_language: null` invites a caller to render "null".
+ * they don't apply — `work_language: null` invites a caller to render "null".
+ * An absent `work_language` means NOT RECORDED, never "same as the edition":
+ * `original_language` is set on under a tenth of live books, so its absence is
+ * the normal state of a translated edition too (#4441).
  */
 export function languageApparatus(book: LanguageApparatusSource): LanguageApparatus {
   const edition = displayLanguage(book.language) || null;
@@ -64,7 +96,15 @@ export function languageApparatus(book: LanguageApparatusSource): LanguageAppara
 
   const apparatus: LanguageApparatus = { edition_language: edition };
   if (work) apparatus.work_language = work;
-  if (role) apparatus.text_role = role;
+  // A record stamped "original" that also evidences a translation (a differing
+  // work language, or is_translation: true) contradicts itself — ~200 live
+  // books at the time of #4441. The translation evidence is specific; the
+  // "original" is almost always the classifier's default. Serve the evidence
+  // and withhold the label, so "original" never sits beside a translation_note.
+  if (role && !(role === 'original' && isTranslation)) {
+    apparatus.text_role = role;
+    if (isDefaultedOriginal(role, book.text_role_source)) apparatus.text_role_note = DEFAULTED_ORIGINAL_NOTE;
+  }
 
   if (isTranslation) {
     apparatus.translation_note = work && edition

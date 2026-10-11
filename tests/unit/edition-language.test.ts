@@ -86,6 +86,53 @@ describe('languageApparatus', () => {
     expect(a.work_language).toBeUndefined();
   });
 
+  // #4441 — the two Risner Alhazen records as they sit on live: Latin, no
+  // original_language, text_role "original" from the sweep. The work was
+  // composed in Arabic; nothing in the response may read as saying otherwise.
+  const ALHAZEN = { language: 'Latin', text_role: 'original', text_role_source: 'heuristic-v1' };
+
+  it('flags a heuristic "original" as a default, not a classification', () => {
+    const a = languageApparatus(ALHAZEN);
+    expect(a.text_role).toBe('original');
+    expect(a.text_role_note).toContain('default');
+    expect(a.text_role_note).toContain('not recorded');
+    expect(a.work_language).toBeUndefined();
+    // Still not a translation warning: the record holds no evidence either way.
+    expect(a.translation_note).toBeUndefined();
+    expect(servesTranslatedOriginal(ALHAZEN)).toBe(false);
+  });
+
+  it('treats an unsourced "original" and the import heuristic as defaults too', () => {
+    expect(languageApparatus({ language: 'Latin', text_role: 'original' }).text_role_note).toBeTruthy();
+    expect(languageApparatus({ language: 'Latin', text_role: 'original', text_role_source: 'import-heuristic-v1' }).text_role_note).toBeTruthy();
+  });
+
+  it('serves a reviewed "original" without the default note', () => {
+    for (const src of ['human-qa-3942', 'curated-2026-08-08', 'manual-qa', 'ia-djvu-text-evidence']) {
+      const a = languageApparatus({ language: 'Hebrew', text_role: 'original', text_role_source: src });
+      expect(a.text_role).toBe('original');
+      expect('text_role_note' in a).toBe(false);
+    }
+  });
+
+  it('never notes a translation role as a default', () => {
+    const a = languageApparatus({ language: 'English', text_role: 'modern-translation', text_role_source: 'heuristic-v1' });
+    expect('text_role_note' in a).toBe(false);
+  });
+
+  it('withholds "original" when the record names a different work language', () => {
+    // Self-contradictory rows: the specific evidence (work language) wins over
+    // the classifier's default, so "original" never sits beside a translation_note.
+    const a = languageApparatus({ language: 'Latin', original_language: 'Arabic', text_role: 'original', text_role_source: 'heuristic-v1' });
+    expect(a.work_language).toBe('Arabic');
+    expect(a.translation_note).toContain('Arabic');
+    expect('text_role' in a).toBe(false);
+    expect('text_role_note' in a).toBe(false);
+    const b = languageApparatus({ language: 'French', is_translation: true, text_role: 'original', text_role_source: 'gemini-v1' });
+    expect(b.translation_note).toBeTruthy();
+    expect('text_role' in b).toBe(false);
+  });
+
   it('languageApparatusFields omits the edition language it would duplicate', () => {
     const f = languageApparatusFields(IBN_KHALDUN);
     expect('edition_language' in f).toBe(false);
@@ -118,9 +165,8 @@ describe('citationLanguageFields', () => {
   });
 
   it('omits work_language when it carries no information', () => {
-    // Absent, not null: an absent field reads as "this edition is in the work's
-    // own language", while work_language: null invites a citation renderer to
-    // print "null" into a published payload.
+    // Absent, not null: work_language: null invites a citation renderer to
+    // print "null" into a published payload. Absent means NOT RECORDED (#4441).
     for (const book of [
       { language: 'Latin' },
       { language: 'Latin', original_language: 'Latin' },
