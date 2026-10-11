@@ -1,0 +1,46 @@
+[
+ {
+  "book_id": "6abeb2ec896ea18127c83529",
+  "slot": 8,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཡ (Derge Tengyur, vol. 103)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur, dbu ma (Madhyamaka) section, volume 103 (ya), folio 370b; canonical Madhyamaka commentary analyzing dependent origination, ignorance, and emptiness.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 740,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 2,
+    "tr_errors_A": [
+     {
+      "source": "དངོས་པོ་རྣམས་ལ་ཡང་དག་པ་ཉིད་དུ་སྟེ། དེ་ཁོ་ན་ཉིད་ཀྱི་ངོ་བོར་རྟོགས་པ་གང་བརྟེན་ནས་སྐྱེས་པ་ཉིད་ཀྱི་སྒྱུ་མ་ལ་སོགས་པ་བཞིན་དུ་བརྫུན་པའི་རྣམ་པ་རྣམས་ལ་ཡང་བརྫུན་པ་མ་ཡིན་པའི་རྣམ་པ་ཉིད་དུ་ཁོང་དུ་ཆུད་པ་གང་ཡིན་པ་དེ་ནི་སེམས་ཅན་ཐམས་ཅད་ལ་སྟོན་པར་བྱེད་པའི་ཕྱིར་སྟོན་པས་མ་རིག་པར་གསུངས་ཏེ།",
+      "english": "there is a realization of them as they truly are. This means understanding their fundamental nature. Even for the various false forms, which are like illusions because they are dependently produced, the Teacher spoke of \"ignorance\" in order to demonstrate to all sentient beings the nature of that which is not false.",
+      "problem": "Reverses the core definition of ignorance (avidyā): the Tibetan source defines ignorance as the deluded apprehension of dependently arisen, illusory phenomena as ultimate reality and non-false; Translation A misinterprets this deluded grasping as an authentic realization of reality.",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": true
+     },
+     {
+      "source": "སྡུག་བསྔལ་གྱི་ཕུང་པོ་ཆེན་པོ་ཀུན་རྫོབ་འདིའི་རྐྱེན་ཉིད་དུ་བསྟན་པ་ན་ཞེས་བྱ་བའི་དོན་ཏོ།",
+      "english": "This means that this great mass of suffering is shown to be the very condition of the samvrti relative or conventional reality.",
+      "problem": "Syntactic distortion: the source states that ignorance is shown to be the condition for this great conventional mass of suffering, whereas Translation A makes suffering the condition for conventional reality.",
+      "severity": "moderate",
+      "class": "T1"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately captures the complex syntax and philosophy defining ignorance as the mistaken apprehension of illusory entities as real, whereas Translation A reverses this definition into a genuine realization.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Derge Tengyur Madhyamaka folio 370b is transcribed with full fidelity. Translation B is an exceptionally precise and philosophically accurate rendering, while Translation A suffers from a serious doctrinal reversal regarding the definition of ignorance."
+ }
+]

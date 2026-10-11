@@ -1,0 +1,50 @@
+[
+ {
+  "book_id": "6abed95d896ea18127c8fcd2",
+  "slot": 35,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Correctly cataloged under Pramāṇa in the Derge Tengyur (vol. 191, volume mark 'ze').",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 111,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "བ་མིན་",
+      "image": "བ་མེན་",
+      "problem": "vowel sign misread (drengbu 'e' misread as giku 'i') in the name of the wild ox / gayal (gavaya)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "ཇི་ལྟར་ས་ཕྱོགས་མངོན་སུམ་གྱུར། །མེ་ཉིད་ཀྱང་ནི་དྲན་བཞིན་པའི། །ཁྱད་པར་ཅན་གྱི་ཡུལ་ཉིད་ཀྱིས། །རྗེས་དཔག་ཚད་མ་མ་ཡིན་མིན། །",
+      "english": "For example, just as when a location is perceived and fire itself is remembered, is it not the case that it becomes the object of a distinguished valid cognition of inference <term>anumana</term>?",
+      "problem": "Turns a declarative assertion that inference is valid despite having a qualified object into an awkward rhetorical question, weakening the philosophical point of the double negative (ma yin min).",
+      "severity": "minor"
+     },
+     {
+      "source": "སྤྱི་རྣམས་བསལ་བས་དེ་དག་ལ། །མང་དང་དེ་འབྲེལ་ག་ལ་ཡོད། །",
+      "english": "since universals <term>samanya</term> have been refuted, how could those parts be many or have such a connection?",
+      "problem": "Misidentifies the pronoun referent 'de dag la' (in them) as referring to the parts rather than to the refuted universals.",
+      "severity": "minor"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A exhibits superior philosophical accuracy and fluency in classical Buddhist epistemological terminology, correctly translating the double negative in the inference analogy and accurately resolving pronoun references.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear and complete scan of a Derge Tengyur Pramāṇa folio discussing the epistemological status of comparison (upamāna), with near-flawless OCR and an accurate, philosophically adept translation in version A."
+ }
+]

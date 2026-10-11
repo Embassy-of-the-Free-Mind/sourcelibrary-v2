@@ -1,0 +1,38 @@
+[
+  {
+    "book_id": "6abed65f896ea18127c8e6d6",
+    "slot": 26,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། པེ (Derge Tengyur, vol. 182)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa commentary folio from the Derge Tengyur (pe volume): it discusses qualifiers (ཁྱད་པར), the qualified entity (ཁྱད་པར་དང་ལྡན་པ) and the staff/staff-bearer example, which is standard tshad ma material.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 352,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {"source": "འོན་ཀྱང་དེ་དག་དེའི་ཁྱད་པར་ཡིན་པའི་ཕྱིར་ཁོ་བོ་ཅག་ལ་གྲགས་པའི་དབང་དུ་བྱས་ནས་ཕན་གདགས་བྱ་འདོགས་བྱེད་ཀྱི་རྩ་བ་ཅན་ཡིན་ནོ།", "english": "we refer to them based on what is commonly known as the relationship of benefit", "problem": "Blurs the contrast with the next sentence: the Tibetan says that, in terms of what is accepted 'among us', the qualifier relation is rooted in benefited and benefactor, whereas for 'others' it is rooted in relation. A drops 'among us' and blurs the doctrinal contrast.", "severity": "moderate"},
+          {"source": "དེས་ན་དོན་ལ་ཁྱད་པར་ཐམས་ཅད་དང་འབྲེལ་པ་ཅན་དུ་བཟུང་ན", "english": "Therefore, in reality, if the entity is grasped as being related to all particulars", "problem": "དོན་ (the object) read as 'in reality'; the object becomes a vague 'the entity'.", "severity": "minor"},
+          {"source": "འབྲེལ་པ་ཅན་ཐ་དད་ན་མ་རྟོགས་", "english": "If the related entities were distinct, they would not be understood…", "problem": "The page ends mid-sentence; A completes the fragment with a main clause that is not in the source.", "severity": "minor"},
+          {"source": "གལ་ཏེ་ཡང་ ... གཅིག་ཉིད་ཀྱིས་ཐམས་ཅད་རྟོགས་པ་མ་ཡིན་པ་དེ་ལྟ་ན་ཡང་", "english": "it is not the case that everything is understood through a single entity. Even so,", "problem": "Breaks the 'even if … nevertheless' concession across a full stop, so the conditional reads as an assertion. The meaning can still be recovered.", "severity": "minor"}
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          {"source": "ཁྱད་པར་དང་ལྡན་པ", "english": "<term>dharmin</term> <gloss>qualified entity</gloss>", "problem": "The Sanskrit equivalent is loose: the Tibetan means viśiṣṭa/viśeṣaṇavat (the qualified thing), not dharmin (property-bearer). The English gloss is right.", "severity": "minor"},
+          {"source": "(summary/keywords)", "english": "inherence", "problem": "'Inherence' is a keyword that is not on the page; the text says only 'relation' (འབྲེལ་པ).", "severity": "minor"}
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error. B keeps the 'among us' vs 'others' doctrinal contrast and the 'even if … nevertheless' structure, and it leaves the final fragment open; A blurs the first, breaks the second and completes the fragment with a clause of its own.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A correct Derge Tengyur Pramāṇa leaf (marginal folio 353) with a clean transcription that matches the block print line by line. Both translations are usable; B is the more precise."
+  }
+]

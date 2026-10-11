@@ -1,0 +1,63 @@
+[
+  {
+    "book_id": "6abeb39f896ea18127c83db1",
+    "slot": 11,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཤ (Derge Tengyur, vol. 106)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary (on the applications of mindfulness and the two truths, glossing a root text in the Bodhicaryāvatāra IX style); belongs in the dbu ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": "The facsimile's printed margin page number reads '302' while the record is page 301; this is an ordinary offset between the reprint's pagination and the scan index, not a defect seen on this page.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 301,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "ཚོར་བ་ཉམས་མྱོང་ཞེས་བརྗོད་པ། །",
+            "english": "(absent: the quotation begins at \"If one does not see that which is to be felt...\")",
+            "problem": "First line of the Dharmasaṃgīti verse ('Feeling is called experience') silently dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "དེ་ཡང་གཞན་ཏེ་རྒྱུད་གཞན་གྱི་བློས་རྣམ་པར་འཇོག་པར་བྱེད་དོ།",
+            "english": "that too is established other <note>than it</note>, namely by the intellect of another mental continuum",
+            "problem": "གཞན་ཏེ glosses 'by another' (i.e. another continuum); 'established other than it' is garbled, though the following clause recovers the sense; also 'posited' rendered 'established'",
+            "severity": "minor"
+          },
+          {
+            "source": "དེ་ཉིད་ཀྱི་འཐད་པ་ཡང་སྟབས་གཅིག་ཆོས་དྲན་པ་ཉེ་བར་གཞག་པ་བསྟན་པར་བཞེད་ནས།",
+            "english": "Wishing simultaneously to teach the application of mindfulness to phenomena as the justification for that very point",
+            "problem": "Two things taught together (the reasoning for that point, and the mindfulness of phenomena) collapsed into one, making the mindfulness the justification",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "གང་གིས་ན་ཉིད་ཉམས་སུ་མྱོང་།",
+            "english": "By what can the self experience anything?",
+            "problem": "'the self' is read into ཉིད; the verse asks who/what experiences what, with no self introduced",
+            "severity": "minor"
+          },
+          {
+            "source": "དུ་མངོན་པར་ཞེན་པ་ལས་མ་གཏོགས་པའི་ཚོར་བ་",
+            "english": "Apart from a deep-seated attachment to feelings, sensation",
+            "problem": "'to feelings' supplied; the object of the fixation is on the previous page ('…as X'), not feelings",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error, but A drops the opening line of the quoted verse and garbles 'by another', while B renders the whole page with only minor over-readings.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A correct Derge Madhyamaka folio with a clean transcription; both English versions are faithful in substance, B slightly more complete (A drops one verse line)."
+  }
+]

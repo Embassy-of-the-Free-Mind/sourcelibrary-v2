@@ -1,0 +1,50 @@
+[
+ {
+  "book_id": "6abe825059b86b7d32a6597a",
+  "slot": 7,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། འ (Derge Tengyur, vol. 102)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Madhyamaka treatise from the Derge Tengyur dbu ma collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 216,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "འབྲས་བུ་#མེད་པ་པ་ཡོད་པར་ག་ལ་འགྱུར",
+      "image": "འབྲས་བུ་ཡོད་པར་ག་ལ་འགྱུར",
+      "problem": "spurious insertion of 'མེད་པ་པ་' into clause",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "### Because this karma is",
+      "english": "### Because this karma is",
+      "problem": "injected markdown h3 header for root verse block",
+      "severity": "minor"
+     },
+     {
+      "source": "ཁོ་བོ་ཅག་ནི་ལས་དང་བྱེད་པ་པོ་དང་འབྲས་བུ་ལ་སོགས་པ་",
+      "english": "We do not <note>deny</note> karma, the agent, and the result…",
+      "problem": "interpolates unstated negative verb 'deny' at folio boundary where sentence trails off to next leaf",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B translates the verse quotation and folio boundary trail-off with greater fidelity, avoiding A's spurious h3 header and interpolated verb at the leaf cutoff.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, authentic folio of canonical Madhyamaka commentary from the Derge Tengyur with high OCR accuracy and reliable translations."
+ }
+]

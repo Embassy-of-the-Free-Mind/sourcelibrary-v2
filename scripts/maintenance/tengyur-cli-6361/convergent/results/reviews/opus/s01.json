@@ -1,0 +1,44 @@
+[
+  {
+    "book_id": "6abeb158896ea18127c82682",
+    "slot": 1,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary on Mulamadhyamakakarika ch. 7 (abiding/sthiti of the conditioned), correctly shelved in the dbu ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 386,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "གནས་པ་ཡང་མི་#གནས་པས", "image": "གནས་པ་ཡང་མ་གནས་པས (apparently)", "problem": "negation particle read as མི and flagged uncertain; the argument needs མ་གནས་པ 'not (yet) abiding'", "severity": "minor" },
+          { "ocr": "གནས་པ་#རང་གི་བདག་ཉིད", "image": "a word before རང་གི (sense requires གནས་པས), not cleanly legible at this resolution", "problem": "probable dropped instrumental 'by abiding', marked # by the engine; both translations restore the sense", "severity": "minor" },
+          { "ocr": "སྐྱེ་#ན་ཅི་ཞིག་སྐྱེད་#དུ་ཡོད", "image": "སྐྱེས་ན་ཅི་ཞིག་སྐྱེད་དུ་ཡོད", "problem": "uncertainty markers left in the reader text; suffix ས of སྐྱེས dropped", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "ཉིད་མེད་པའི་ཕྱིར་རོ།", "english": "because of not being itself.", "problem": "page-initial fragment (the noun is on the previous leaf) rendered as an opaque phrase rather than '...-ness does not exist'", "severity": "minor" },
+          { "source": "ཅི་སྟེ་སྐྱེས་པས་སྐྱེད་བྱེད་ན།", "english": "If it is produced after having arisen,", "problem": "'if the already-arisen produces' turned into a passive; sense still recoverable from the next line", "severity": "minor" },
+          { "source": "གང་མེད་པ་དེས་རང་གི་བདག་ཉིད་གང་ཞིག་ཇི་ལྟར་གནས་པར་བྱེད།", "english": "How could that which does not exist cause anything, let alone itself, to endure?", "problem": "'anything, let alone' is an embellishment not in the source", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཉིད་མེད་པའི་ཕྱིར་རོ།", "english": "because there is no selfhood.", "problem": "page-initial fragment guessed as 'selfhood'; the governing noun is on the previous leaf", "severity": "minor" },
+          { "source": "ཅི་སྟེ་སྐྱེས་པས་སྐྱེད་བྱེད་ན།", "english": "If it is produced by what is already born,", "problem": "active 'if the born produces' rendered passively; meaning roughly kept", "severity": "minor" },
+          { "source": "མ་གནས་པ / གནས་པ", "english": "an abiding that has not yet stayed / already stayed", "problem": "alternates 'abiding' and 'stayed' for one term; readable but inconsistent", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "OCR uncertainty markers '#' appear in the transcription pane", "severity": "minor", "class": "D1" }
+        ],
+        "prefer": "same",
+        "prefer_reason": "Both versions render every sentence and verse of the folio faithfully with only minor slips (an opaque page-initial fragment, a passivised verse line); neither has a serious or moderate error the other avoids.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge folio with near-complete OCR and two faithful English versions of the MMK ch. 7 commentary on abiding; nothing an expert would flag on sight beyond stray '#' uncertainty markers."
+  }
+]

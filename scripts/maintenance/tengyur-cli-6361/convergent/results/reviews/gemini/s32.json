@@ -1,0 +1,37 @@
+[
+ {
+  "book_id": "6abed85e896ea18127c8f51a",
+  "slot": 32,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic folio from the Pramāṇa (Tshad ma) section of the Derge Tengyur (volume Dze, vol. 188), containing a commentary on Buddhist epistemology regarding valid cognition and causal efficacy.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 352,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "འོ་ན་ནི་རྟོག་པ་དང་ལྡན་པས་ཤེས་པས་དཔྱད་པར་མི་བྱ་སྟེ",
+      "english": "then conceptual cognition <term>kalpana</term> should not be investigated",
+      "problem": "Misinterprets 'rtog pa dang ldan pas' (by a rational person/thinker) and 'shes pas' (through cognition) as meaning conceptual cognition itself should not be investigated",
+      "severity": "moderate"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly translates 'rtog pa dang ldan pa' as a thinking agent investigating through cognition rather than mistaking it for conceptual cognition as the object of inquiry, and handles the epistemological argument with superior precision.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An authentic Derge Tengyur Pramāṇa folio with a flawless OCR transcription and a highly faithful English translation in Version A."
+ }
+]

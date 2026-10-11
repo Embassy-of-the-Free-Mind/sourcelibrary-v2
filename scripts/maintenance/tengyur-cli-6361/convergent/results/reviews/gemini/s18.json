@@ -1,0 +1,65 @@
+[
+ {
+  "book_id": "6abed3fc896ea18127c8d272",
+  "slot": 18,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Volume 174 (ce) of the Derge Tengyur Pramāṇa section, containing Indian Buddhist epistemological treatises.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 86,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 3,
+    "tr_errors_A": [
+     {
+      "source": "ཆོས་ཅན་ཡང་དེ་བཞིན། །",
+      "english": "[omitted]",
+      "problem": "Entire opening sentence ('The subject is also like that.') is omitted.",
+      "severity": "serious",
+      "class": "T2",
+      "reversal": false
+     },
+     {
+      "source": "གལ་ཏེ་རེ་ཞིག་རིགས་པ་ཉིད་ཡིན་ཏེ། དུ་བ་ཐམས་ཅད་ལ་མེ་མ་མཐོང་བའི་ཕྱིར་རོ། །",
+      "english": "If it were logical, it would be because fire is not seen in all smoke.",
+      "problem": "Mistranslates an opponent's objection introduced by gal te... zhe na as an authorial counterfactual assertion.",
+      "severity": "serious",
+      "class": "T4",
+      "reversal": true
+     },
+     {
+      "source": "ཆོས་ཅན་གྱི་ཆོས་ཅན་སྒྲུབ་པའོ་",
+      "english": "the substratum proving the substratum",
+      "problem": "Mistranslates the genitive relation 'proving the subject of the subject' as active agent/object 'the substratum proving the substratum'.",
+      "severity": "moderate"
+     },
+     {
+      "source": "སྒྲུབ་ཕྱིར་ཆོས་",
+      "english": "Because for the sake of proof, the substratum is likewise.",
+      "problem": "Mistranslates 'chos' (property) as 'substratum' and invents 'is likewise' for an incomplete clause cut off at the leaf boundary.",
+      "severity": "moderate"
+     },
+     {
+      "source": "མེའི་བྱེ་བྲག་ལ་གང་གིས་ན་ངོ་སྲུང་བར་བྱེད།",
+      "english": "By what means does one protect the face of the specific fire?",
+      "problem": "Over-literally translates the idiomatic expression 'ngo srung ba' (to flatter / show favoritism to) as 'protect the face of'.",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B is complete and structurally faithful, accurately rendering dialectical arguments, technical terminology, and the incomplete final clause, whereas Translation A drops the first sentence, misconstrues an opponent's objection as a counterfactual conditional, and invents words at the bottom leaf break.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic folio of Buddhist pramāṇa literature from the Derge Tengyur, correctly cataloged and cleanly printed."
+ }
+]

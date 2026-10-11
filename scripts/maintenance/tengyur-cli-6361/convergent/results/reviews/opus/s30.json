@@ -1,0 +1,44 @@
+[
+  {
+    "book_id": "6abed7ad896ea18127c8f0d2",
+    "slot": 30,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཙེ (Derge Tengyur, vol. 186)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary (perception of absence, memory, the bare spot of ground and the vase); belongs in the Tshad ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 462,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "དུས་གཞན་དུ་གྱུར་པ་ཡིན་ནོ", "image": "དུས་གཞན་དུ་འབྱུང་བ་ཡིན་ནོ (as far as I can read the print)", "problem": "verb misread; sense (memory arises at another time) roughly kept", "severity": "minor" },
+          { "ocr": "དེ་ལྟར་བའི་ས་ཕྱོགས་སོ", "image": "དེ་ལྟ་བུའི་ས་ཕྱོགས་སོ", "problem": "garbled 'of that kind'", "severity": "minor" },
+          { "ocr": "དེ་ལྟ་ཡིན་དང་དེ་ཉིད", "image": "དེ་ལྟ་ཡིན་ན་དེ་ཉིད", "problem": "conditional particle misread", "severity": "minor" },
+          { "ocr": "མ་འདྲེས་པར་གྲུབ་པར་བྱེད་པ", "image": "མ་འདྲེས་པར་སྒྲུབ་པར་བྱེད་པ", "problem": "grub/sgrub confusion", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "མ་འཆོལ་བའི་སྒྲུབ་པར་བྱེད་པ", "english": "establishes a non-erroneous conclusion", "problem": "adds 'conclusion'; the text says it establishes non-confusion (unconfused cognition)", "severity": "minor" },
+          { "source": "འདི་ཡང་ཞེས་བྱ་བ་ནི་དེ་ལྟ་བུའི་ས་ཕྱོགས་སོ", "english": "\"this as well\" refers to the specific location", "problem": "drops 'of that kind'", "severity": "minor" },
+          { "source": "དྲན་པ་ཉེ་བར་སད་པར་བྱེད་པ་ཡང་ཁས་བླང་བར་བྱའོ", "english": "one must also accept what awakens that memory", "problem": "the point is that the same experience must be accepted as also awakening the memory; rendering slightly loose (shared with B)", "severity": "minor" },
+          { "source": "བག་ཆགས", "english": "leaves a latencies", "problem": "grammar slip", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "དྲན་པ་ཉེ་བར་སད་པར་བྱེད་པ་ཡང་ཁས་བླང་བར་བྱའོ", "english": "one must also accept what awakens that memory", "problem": "same loose rendering as A", "severity": "minor" },
+          { "source": "དངོས་པོ་མེད་པའི་དོན་མེད་པ་ཁོ་ནའོ", "english": "positing a distinct real entity of non-existence is entirely without purpose", "problem": "interpretive expansion ('distinct real entity') put in the running text, though correct in sense", "severity": "minor" },
+          { "source": "(keywords)", "english": "Dharmakīrti", "problem": "author attribution in keywords not stated on the page", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium",
+        "prefer": "B",
+        "prefer_reason": "Both are faithful with no serious errors; B is slightly more precise ('the spot of ground of that nature', 'non-confusion' rather than 'non-erroneous conclusion') and marks the objection/reply structure clearly."
+      }
+    ],
+    "book_verdict": "A clean Derge pramāṇa folio with a good transcription (a few minor particle/verb slips) and two sound translations; nothing an expert would flag on sight."
+  }
+]

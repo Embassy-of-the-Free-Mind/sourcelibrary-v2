@@ -1,0 +1,84 @@
+[
+ {
+  "book_id": "6abed7ad896ea18127c8f0d2",
+  "slot": 30,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཙེ (Derge Tengyur, vol. 186)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic canonical Tibetan Buddhist Pramāṇa (epistemology/logic) commentary from the Derge Tengyur collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 462,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ལྟར་",
+      "image": "ཨོཾ། །[ཅི]ལྟར་",
+      "problem": "Initial auspicious syllable and interrogative particle missing at beginning of line 1",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "དེ་ལྟ་ཡིན་དང་",
+      "image": "དེ་ལྟ་ཡིན་ན་",
+      "problem": "Conditional particle ན་ misread as conjunction དང་",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "མ་འཆོལ་བའི་",
+      "image": "མ་འཆོལ་བར་",
+      "problem": "Adverbial particle བར་ misread as genitive བའི་",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "མ་འདྲེས་པར་གྲུབ་པར་བྱེད་པ་ཡིན་ནོ་",
+      "english": "establishes it without confusion",
+      "problem": "Translates ma 'dres par (in an unmixed/isolated manner) as 'without confusion', conflating it with ma 'chol bar",
+      "severity": "moderate",
+      "class": "T11",
+      "reversal": false
+     },
+     {
+      "source": "དོན་མེད་པ་ཡོད་པ་དོགས་པ་བསུ་བ་ནི",
+      "english": "Anticipating a doubt regarding the existence of something purposeless",
+      "problem": "Awkward phrasing for anticipating the objection of superfluity/purposelessness",
+      "severity": "minor",
+      "reversal": false
+     },
+     {
+      "source": "དྲན་པའི་བག་ཆགས་",
+      "english": "leaves a latencies",
+      "problem": "Grammatical error ('a latencies')",
+      "severity": "minor",
+      "reversal": false
+     }
+    ],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "མ་འདྲེས་པར་གྲུབ་པར་བྱེད་པ་ཡིན་ནོ་",
+      "english": "establishes it without confusion",
+      "problem": "Translates ma 'dres par (in an unmixed/isolated manner) as 'without confusion', conflating it with ma 'chol bar",
+      "severity": "moderate",
+      "class": "T11",
+      "reversal": false
+     }
+    ],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately captures the scholastic Pramāṇa commentary structure (distinguishing lemmas, objections, and responses) and provides superior philosophical precision with helpful Sanskrit and Tibetan terminology glosses.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur block print folio containing commentary on Buddhist epistemology (Pramāṇa) concerning the cognition of absence, with accurate transcription and faithful English translations."
+ }
+]

@@ -1,0 +1,48 @@
+[
+  {
+    "book_id": "6abed90a896ea18127c8f9ee",
+    "slot": 34,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio (margin letter ཞེ) of a Pramāṇa commentary refuting the Sāṃkhya (vyakta / prakṛti / vikāra, asiddha and anaikāntika reasons). It belongs in the Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 286,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "གྲུབ་པའི་སྒྲུབ་པར་བྱེད་པའི་སྐྱོན་བསྟན་པ་མེད་པ", "english": "without pointing out or explaining the fault in the proof established by the Sāṃkhya", "problem": "The source names the fault of proving what is already proven (siddhasādhana). A turns it into 'the proof established by the Sāṃkhya', so the technical fault is lost.", "severity": "moderate" },
+          { "source": "གྲངས་ཅན་ལ་མ་གྲུབ་པའི་སྐྱོན་གྱི་རྣམ་པ་འདི་ཉིད་ཀྱི་རང་བཞིན་དང་འགྱུར་བའི་མཚན་ཉིད་རྣམ་པར་གཞག་པའི་སྒོ་ནས", "english": "precisely through defining this nature of the fault of being unestablished and the characteristics of transformation", "problem": "Misparsed: A attaches 'nature' to the fault, where the source means the definitions of prakṛti and vikāra.", "severity": "moderate" },
+          { "source": "འོ་ན་འདི་ལ་རྣ་བ་དང་རྐང་མིག་དང་", "english": "asking: \"Now, where are its ears, its feet, and its eyes?\"", "problem": "The page breaks off mid-sentence, and A completes it with 'where are' and closes the question. The completion is plausible but is not on the page.", "severity": "minor" },
+          { "source": "བར་སྐབས་སུ་ངོ་མཚར་བྱེད་དེ", "english": "temporarily creates an illusion", "problem": "The source says 'performs a marvel/show'. 'Illusion' gives the point away early.", "severity": "minor" },
+          { "source": "དེའི་བཟློག་པའི་ཆོས་ཡིན་པའི་ཕྱིར", "english": "because it possesses contradictory properties", "problem": "A drops 'its/that' (a property contrary to manifestness), so the reason is vaguer.", "severity": "minor" }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          { "source": "གསལ་བ (six times on the page)", "english": "clarity / clearly manifest / contrary to clarity", "problem": "Here གསལ་བ is the Sāṃkhya vyakta, 'the manifest'. The Sāṃkhya proof under attack is that the manifest has the nature of pleasure and the rest because pleasure and the rest pervade it. B renders it 'clarity' every time, so the reader cannot tell the debate is about the manifest world and primordial matter. The logical skeleton survives.", "severity": "moderate" },
+          { "source": "གསལ་བ་འདི་དང་རང་བཞིན་གཅིག་པ་ཡིན་ནོ", "english": "the claim that clarity and this nature are one and the same", "problem": "This compounds the vyakta error and blurs the thesis being refuted.", "severity": "moderate" },
+          { "source": "<summary>", "english": "using logical arguments from the Nyaya perspective", "problem": "The page also faults the Naiyāyika, so it is not argued from the Nyāya side.", "severity": "minor" },
+          { "source": "...བཞིན་དུ་འམ། བདེ་བ་དང་གསལ་བ", "english": "Pleasure and clarity are not of the same nature", "problem": "B drops the 'or' (འམ) that introduces the alternative argument.", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error. B's mistranslation of the core term vyakta as 'clarity' runs through the whole page and hides what the argument is about. A's slips are local: siddhasādhana and one misparse. So A serves a reader better.",
+        "confidence": "medium",
+        "adjudication": [
+          { "raised_by": "both", "version": "B", "claim": "གསལ་བ (vyakta) is rendered 'clarity' throughout", "verdict": "confirmed", "why": "The image reads གསལ་བ in lines 1–3, set against བདེ་བ་ལ་སོགས་པ་རྗེས་སུ་འགྲོ་བ, the classic Sāṃkhya anvaya proof that the manifest has the nature of the guṇas. So it means 'the manifest'. I grade it moderate, not serious (reviewer2's 'serious/T3' rejected on severity; T3 is the wrapper class in any case): the inferential structure and the conclusion that the reason is asiddha survive." },
+          { "raised_by": "both", "version": "A", "claim": "the siddhasādhana fault is rendered as 'the fault in the proof established by the Sāṃkhya'", "verdict": "confirmed", "why": "Line 3 of the image reads གྲུབ་པའི་སྒྲུབ་པར་བྱེད་པའི་སྐྱོན, i.e. proving what is already proven. B gets this right. Moderate." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "the opponent's statement is misparsed, with 'nature' attached to the fault", "verdict": "confirmed", "why": "Lines 4–5 read རང་བཞིན་དང་འགྱུར་བའི་མཚན་ཉིད་རྣམ་པར་གཞག་པའི་སྒོ་ནས: the definitions of prakṛti and vikāra. Moderate." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "A invents the end of the broken final sentence (T5)", "verdict": "confirmed", "why": "The page ends at རྐང་མིག་དང་. The added 'where are' is a plausible completion and does not change the sense, so I downgrade it to minor." },
+          { "raised_by": "reviewer1", "version": "B", "claim": "the summary says the page argues from the Nyāya side", "verdict": "confirmed", "why": "The page also blames the Naiyāyika (རིགས་པ་ཅན་དེས...). Minor." }
+        ]
+      }
+    ],
+    "book_verdict": "A clean Derge Pramāṇa folio with an accurate transcription. Both English versions are usable, with no serious errors. A keeps the Sāṃkhya terminology (manifest / primordial matter), while B renders vyakta as 'clarity' throughout."
+  }
+]

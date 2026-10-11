@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abed9f5896ea18127c90242",
+  "slot": 37,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Folio contains classical Pramāṇa (Buddhist epistemology and logic) commentary discussing jāti (futile rejoinders), fitting the Pramāṇa section of the Derge Tengyur (vol. 193 / ye).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 611,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "same",
+    "prefer_reason": "Both translations are exceptionally faithful and accurate, correctly rendering technical Pramāṇa debate terminology and the dialectical nuances of futile rejoinders.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An authentic woodblock folio from the Pramāṇa section of the Derge Tengyur with flawless transcription and two outstanding, faithful English translations of Buddhist logic."
+ }
+]

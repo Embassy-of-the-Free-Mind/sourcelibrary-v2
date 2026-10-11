@@ -1,0 +1,91 @@
+[
+ {
+  "book_id": "6abed57e896ea18127c8df52",
+  "slot": 23,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཐེ (Derge Tengyur, vol. 179)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic Derge Tengyur Pramāṇa (epistemology/logic) volume leaf (vol. The / 179).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 95,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "{བརྫུན,རྫུན}",
+      "image": "བརྫུན",
+      "problem": "Apparatus variant curly braces notation in transcription where woodblock image reads བརྫུན",
+      "severity": "minor",
+      "class": "O13"
+     }
+    ],
+    "tr_score_A": 3,
+    "tr_errors_A": [
+     {
+      "source": "རྟོགས་བྱེད་གཉིས་ནི་རྩོད་པས་ནི། །རྟོགས་བྱེད་གཞན་དག་ཡིན་པར་ནི། །འགྱུར་ཕྱིར་ཐུག་པ་མེད་པ་ཡིན།",
+      "english": "the two means of realization <note>the arguments or perspectives of the two disputants</note> will conflict. If other means of realization are required to resolve this, it leads to an infinite regress",
+      "problem": "Technical term rtogs byed (debate arbiters / evaluators) mistranslated as 'means of realization' and glossed as the disputants' perspectives, obscuring the third-party arbiter regress argument",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": false
+     },
+     {
+      "source": "གང་གི་ཚེ་རྟོགས་པར་བྱེད་པ་རྣམས་ཕྱོགས་དང་རྒོལ་བ་དང་ཕྱིར་རྒོལ་བ་དག་བློ་ཐ་དད་པ་ཡིན་པ་",
+      "english": "When those who provide the means of realization—the proponent and the opponent—have differing intellects",
+      "problem": "Conflates the arbiters (rtogs par byed pa rnams) with the disputing parties (rgol ba dang phyir rgol ba), merging distinct entities in the debate structure",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "ཚད་མའི་སྟོབས་ལས་འོངས་པ་འདིས་ནི་སྔ་མ་ལ་མ་ཡིན་པའི་ཕྱིར།",
+      "english": "because this [new realization] which comes from the power of valid cognition does not harm the previous one",
+      "problem": "Reverses the meaning of the epistemological argument: valid cognition overturns previous erroneous claims rather than leaving them unharmed",
+      "severity": "serious",
+      "class": "T7",
+      "reversal": true
+     },
+     {
+      "source": "ཇི་ལྟར་འདོད་ཀུན་མེད་པ་འམ། །མ་ཚང་ལ་སོགས་བརྗོད་པ་ཡིན། །",
+      "english": "how can you speak of all desires being non-existent or incomplete?",
+      "problem": "Technical term 'dod (asserted thesis / position, Skt. iṣṭa) mistranslated as psychological 'desires'",
+      "severity": "moderate",
+      "class": "T9"
+     },
+     {
+      "source": "ཕྱོགས་",
+      "english": "",
+      "problem": "The hanging catchword at the bottom-right edge of the folio leaf is omitted",
+      "severity": "minor",
+      "class": "T6"
+     }
+    ],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "སྔར་གྱི་ཁས་བླངས་པས་འདི་ལ་གནོད་པ་ཡིན་གྱི། ཚད་མའི་སྟོབས་ལས་འོངས་པ་འདིས་ནི་སྔ་མ་ལ་མ་ཡིན་པའི་ཕྱིར།",
+      "english": "Thus, in whatever manner a previous acceptance might be harmed by this, it is not harmed by what arrives through the force of valid cognition",
+      "problem": "Confuses the subject-object direction of invalidation (gnod pa) between the prior claim and valid cognition",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "ཇི་ལྟར་འདོད་ཀུན་མེད་པ་འམ། །མ་ཚང་ལ་སོགས་བརྗོད་པ་ཡིན། །",
+      "english": "how could one speak of the non-existence of everything that is desired, or of incompleteness and the like?",
+      "problem": "Translates 'dod (accepted thesis / assertion, Skt. iṣṭa) literally as 'desired' rather than accepted position",
+      "severity": "moderate",
+      "class": "T9"
+     }
+    ],
+    "prefer": "B",
+    "prefer_reason": "Translation B correctly identifies 'rtogs byed' as debate arbiters, maintains the structural distinction between judges and disputants, and preserves the page catchword, whereas Translation A misidentifies the arbiters and reverses an epistemological claim regarding valid cognition.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur Pramāṇa folio with a clean woodblock image, virtually flawless OCR transcription, and sound philosophical debate content on epistemic arbitration and Madhyamaka emptiness."
+ }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abed47a896ea18127c8d820",
+    "slot": 20,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramana commentary (Dharmottara-style gloss on the Nyayabindu's viruddha-karana / viruddha-karya examples: fire vs. horripilation, smoke in a place) in the Derge Tengyur tshad ma section; belongs on the shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 35,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "{སྩོགས་,སོགས་}པ་ཞེས་བྱ་བའི་སྒྲས་", "image": "སོགས་པ་ཞེས་བྱ་བའི་སྒྲས་", "problem": "editorial variant brace markup {a,b} carried into the reader transcription; the block print has only སོགས", "severity": "minor", "class": "D1" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "རྒྱུ་མཚན་དག་འགལ་ན་ནི་རྒྱུ་དམིགས་པ་གོ་བར་བྱེད་པ་ཁོ་ན་ཡིན་ཏེ།", "english": "When causes are mutually incompatible, apprehending the cause merely conveys that contradiction.", "problem": "the point is that only the apprehension of the (incompatible) cause is what makes the absence known; 'merely conveys that contradiction' blurs the claim", "severity": "moderate" },
+          { "source": "སྐྱེས་བུ་ཆོས་ཅན་ཡིན་ན་ནི་ཕྱོགས་ཀྱི་ཆོས་གཏན་ཚིགས་མ་ཡིན་པར་འགྱུར་ཏེ།", "english": "If the person were the subject, the property of the subject would fail to be the valid logical reason", "problem": "garbled: should be 'the reason would not be a property of the subject (pakṣadharma)'; A inverts subject and predicate of the clause, though the following 'because smoke is the property of the locus' keeps the argument recoverable", "severity": "moderate" },
+          { "source": "སྐྱེས་བུ་གང་ལ་མེའི་ཁྱད་པར་ཉེ་བར་ཡོད་པ", "english": "a person in whose vicinity a specific attribute of fire is present", "problem": "མེའི་ཁྱད་པར = a particular (kind of) fire, not an 'attribute of fire'", "severity": "minor" }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          { "source": "དཔེར་ན་སྐྱེས་བུ་འདི་ལ་བ་སྤུ་ལངས་པ་ལ་སོགས་པ་ཁྱད་པར་མེད་དེ།", "english": "For example, in a person who exhibits symptoms such as goosebumps", "problem": "the example statement is negative ('in this person there are NO particular states such as horripilation'); B drops མེད and makes the person exhibit the symptoms, reversing the very thesis the whole passage proves", "severity": "serious", "class": "T8", "reversal": true },
+          { "source": "མཚན་ལ་འགལ་བ་མེད་དོ།", "english": "There is no contradiction in the definition.", "problem": "page opens mid-word of རྒྱུ་མཚན (cause/reason), as the next sentence's གྲང་བའི་རྒྱུ་མཚན shows; 'definition' is a guess", "severity": "moderate" },
+          { "source": "ཕྱོགས་གང་ལ་...ལྡན་པའི་སྐྱེས་བུ་གང་ཡིན་པ་དེ་ཡོད་པ་དེ་ལ་དེ་སྐད་ཅེས་བྱའོ།", "english": "a person in a particular location who possesses the distinct symptoms of goosebumps caused by cold is described in that way", "problem": "the gloss names the PLACE that has such a person, not the person; B shifts the referent, which is exactly the point the next sentence (mentioning the place) depends on", "severity": "moderate" },
+          { "source": "ཤ་ཟ", "english": "<term>shaza</term>", "problem": "non-standard romanisation of ཤ་ཟ (piśāca)", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "B drops the negation in the core example ('no horripilation in this person' becomes 'a person who exhibits goosebumps'), reversing the thesis, while A's slips are moderate and recoverable.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean, correctly matched Derge pramāṇa folio with a near-perfect transcription; translation A is a serviceable reading, while translation B reverses the key negative example and should not be shown."
+  }
+]

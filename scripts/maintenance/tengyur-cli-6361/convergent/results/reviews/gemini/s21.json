@@ -1,0 +1,56 @@
+[
+ {
+  "book_id": "6abed4cd896ea18127c8dab2",
+  "slot": 21,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཉེ (Derge Tengyur, vol. 177)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Pramāṇa commentary volume in the Derge Tengyur collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 288,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "བྱས་བའི་",
+      "image": "བྱས་པའི་",
+      "problem": "subsyllable pa read as ba",
+      "severity": "minor"
+     },
+     {
+      "ocr": "གགས་བྱེད་པ་",
+      "image": "གེགས་བྱེད་པ་",
+      "problem": "vowel 'e' omitted in gegs (obstacle)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "མིག་ལ་སོགས་པ་ལྔ་དང་ཡིད་ནི་སྐྱེ་མཆེད་དེ་དྲུག་གོ།",
+      "english": "The eye and the other five senses, along with the mind, constitute the six ayatana",
+      "problem": "Awkward count phrasing ('the eye and the other five senses' plus mind implies seven items instead of six)",
+      "severity": "minor"
+     },
+     {
+      "source": "གང་དེ་མ་ཐག་ཏུ་སྐྱེ་བའོ། །",
+      "english": "That which is produced immediately after is the basis.",
+      "problem": "Anticipates the predicate from the next lemma ('is the basis') and translates active production as passive",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B provides a cleaner and more accurate technical rendering of Buddhist logic, correctly parsing the sense-bases count and lemma boundaries.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur woodblock print folio of Pramāṇa commentary with high-quality OCR and two competent translations, among which B is more precise."
+ }
+]

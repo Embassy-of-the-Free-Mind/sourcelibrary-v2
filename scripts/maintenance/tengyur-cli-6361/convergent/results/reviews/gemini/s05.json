@@ -1,0 +1,52 @@
+[
+ {
+  "book_id": "6abeb286896ea18127c82fd7",
+  "slot": 5,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཞ (Derge Tengyur, vol. 100)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Buddhist treatise from the Madhyamaka section of the Derge Tengyur (vol. 100, ཞ).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 320,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "རྩ་བ་དང་པོའི་སྐབས་སུ་ ... རྩ་བ་གསུམ་པ་ ... རྩ་བ་བཞི་པ་ ... རྩ་བ་གཉིས་པ་",
+      "english": "the first root verse ... this third root verse ... The fourth root verse ... the second root verse",
+      "problem": "Mistranslates the four lines/pādas of the root kārikā as separate 'root verses'",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "ཡིན་པར་གྱུར་ལ་",
+      "english": "if it is established / established agent / established action",
+      "problem": "Mistranslates 'sadbhūta' (existent entity / real) as 'established' (siddha), confusing ontological existence with logical establishment",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "གཏན་ཚིགས་དང་དཔེའི་ཚིག་ཏུ་སྒྲུབ་ཅིང་",
+      "english": "proves the reason and the example / used to prove the reason and the example",
+      "problem": "Misinterprets setting up the root verse lines as the statements of reason and example (hetu/dṛṣṭānta-vākya) as 'proving' the reason and example",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A is philosophically precise and accurately identifies the four lines (pādas) of the root kārikā, whereas Translation B repeatedly mistakes each line for a separate root verse and conflates existence (sadbhūta) with establishment (siddha).",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A clean woodblock print folio from the Derge Tengyur Madhyamaka section with flawless OCR; Translation A accurately renders the logical commentary and technical vocabulary."
+ }
+]

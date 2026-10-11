@@ -1,0 +1,37 @@
+[
+ {
+  "book_id": "6abed47a896ea18127c8d820",
+  "slot": 39,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic folio from the Pramāṇa (epistemology) section of the Derge Tengyur.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 252,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "རྣམ་པ་བསྲེས་པ་",
+      "english": "<gloss>samakara</gloss>",
+      "problem": "Inaccurate Sanskrit reconstruction (samakara instead of saṃsṛṣṭākāra/saṃkīrṇākāra for mixed/blended aspect)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately preserves the dialectical commentary structure, properly tags the sentence continuation from the preceding folio, and provides precise Sanskrit philosophical terminology.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, well-preserved folio from the Derge Tengyur Pramāṇa section with accurate OCR transcription and high-quality translation."
+ }
+]

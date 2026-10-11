@@ -1,0 +1,44 @@
+[
+  {
+    "book_id": "6abed3fc896ea18127c8d272",
+    "slot": 18,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock Pramana folio: a debate on the subject (chos can), the property and the probandum in the smoke-fire inference, then the Samkhya single-pradhana example. It belongs in the Tengyur Pramana section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "དེའི་ཕྱོགས་ཆོས་གཞན་ཉིད་བསྒྲུབ་པར་བྱ་བ་ཡིན་ནོ", "image": "དེའི་ཕྱིར་ཆོས་གཞན་ཉིད་བསྒྲུབ་པར་བྱ་བ་ཡིན་ནོ", "problem": "ཕྱིར 'therefore' misread as ཕྱོགས, so the line becomes 'its pakṣa-property'. Both translations carry the misreading ('another property of the subject').", "severity": "moderate", "class": "O6" },
+          { "ocr": "དམ་བཅའ་བའི་ཕྱོགས་གཅིག་གི་གཏན་ཚིགས་མ་ཡིན་ཏེ", "image": "…གཏན་ཚིགས་ཀྱང་མ་ཡིན་ཏེ (as far as can be seen)", "problem": "The particle ཀྱང appears to be dropped. The meaning is unchanged.", "severity": "minor" },
+          { "ocr": "ཆོས་ཅན་ཡང་མི་སྒྲུབ་པོ", "image": "…མི་སྒྲུབ་པའོ (probably)", "problem": "A small spelling slip in the final syllable.", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "དུད་པས་མེ་སྒྲུབ་པ་ནི་ཆོས་ཅན་གྱི་ཆོས་ཅན་སྒྲུབ་པའོ", "english": "Proving fire by smoke is a case of the substratum proving the substratum.", "problem": "The genitive 'proving the subject OF the subject' is turned into 'the substratum proving the substratum'. The thesis A attributes to the opponent is not the one the source states.", "severity": "moderate" },
+          { "source": "གལ་ཏེ་རེ་ཞིག་རིགས་པ་ཉིད་ཡིན་ཏེ། དུ་བ་ཐམས་ཅད་ལ་མེ་མ་མཐོང་བའི་ཕྱིར་རོ། ... ས་ཕྱོགས་བརྟགས་པ་དོན་མེད་དོ། །དམ་བཅའ་བའི་ཕྱོགས་གཅིག་གི་གཏན་ཚིགས་མ་ཡིན་ཏེ ... ཞེ་ན།", "english": "If it were logical, it would be because fire is not seen in all smoke. Even if the location is the probandum, ... the investigation of the location would be meaningless. If one argues: \"It is not a reason that is a portion of the thesis...\"", "problem": "The opponent's single objection (གལ་ཏེ … ཞེ་ན) is split in two. Its first half becomes an author's hypothetical, and 'examining the location is pointless' reads as an unattributed assertion. The speaker is blurred, though the reply that follows is still marked.", "severity": "moderate" },
+          { "source": "མེའི་བྱེ་བྲག་ལ་གང་གིས་ན་ངོ་སྲུང་བར་བྱེད།", "english": "By what means does one protect the face of the specific fire?", "problem": "A literal calque of ངོ་སྲུང ('show favouritism'). The rhetorical contrast with ཞེ་སྡང is obscured.", "severity": "minor" },
+          { "source": "ཆོས་ཅན་གྱི་ཆོས་ཅན་བསྒྲུབ་པར་བྱ་བ་ཡང་མ་ཡིན་ནོ་ཞེས་བརྗོད་པར་བྱ་སྟེ", "english": "One should also say that the property does not prove the property.", "problem": "A silently emends the transcription (and apparently the print) to 'property of property'. The emendation is plausible from context, but it is unmarked.", "severity": "minor" },
+          { "source": "ཆོས་ཅན་ཡང་དེ་བཞིན། (page opening) / སྒྲུབ་ཕྱིར་ཆོས (page end)", "english": "(opening omitted) ... Because for the sake of proof, the substratum is likewise.", "problem": "Seam handling: A drops the page's first phrase and completes the last word using the next page. The content is not lost, but it has moved.", "severity": "minor", "class": "T6" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཆོས་ཅན་གྱི་ཆོས་ཅན་བསྒྲུབ་པར་བྱ་བ་ཡང་མ་ཡིན་ནོ་ཞེས་བརྗོད་པར་བྱ་སྟེ", "english": "One must also state: \"The subject of the subject is not to be proven.\"", "problem": "B is faithful to the transcription, but this repeats the previous sentence. The context (fire proving the tangible) wants 'the property of the property', so the reader gets an apparent tautology.", "severity": "minor" },
+          { "source": "སྒྲུབ་ཕྱིར་ཆོས", "english": "Because for the sake of proving, the property", "problem": "ཆོས at the page seam is probably the first half of ཆོས་ཅན (subject); 'the property' may mislead.", "severity": "minor", "class": "T6" },
+          { "source": "(none)", "english": "<summary>…</summary><keywords>…</keywords>", "problem": "A summary and keyword block is appended to the translation text. The content is accurate, but it may show in the reader if not parsed out.", "severity": "minor", "class": "D1" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B frames the opponent's objection and the reply correctly (If one objects … If one says this, we reply), and it renders 'subject of the subject' and ངོ་སྲུང accurately; A blurs the objection's speaker and recasts the opponent's thesis.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is the right leaf and the transcription is good, apart from one moderate misreading (ཕྱོགས for ཕྱིར) that both translations carry. Version B is the more faithful English for a reader of this debate."
+  }
+]

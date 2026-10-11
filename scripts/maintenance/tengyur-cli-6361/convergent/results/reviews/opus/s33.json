@@ -1,0 +1,40 @@
+[
+  {
+    "book_id": "6abed8c2896ea18127c8f75e", "slot": 33,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Pramāṇa commentary (perception, determination/exclusion, non-apprehension); belongs in the Tengyur Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 600,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "དེ་ནི་འདྲེས་པར་མཐོང་བ་དང་ལྡན་པའི་མེ་ཉིད", "image": "དེ་ནི་འདྲེས་པར་སྣང་བ་དང་ལྡན་པའི་མེ་ཉིད (as I read line 5)", "problem": "'appearance' read as 'seeing'; small sense shift", "severity": "minor" },
+          { "ocr": "རྗེས་སུ་མི་བྱེད་པས་མིག་སེར་གྱིས", "image": "appears to read རྗེས་སུ་མི་བྱེད་པ་ལས་ (low confidence)", "problem": "particle slip, no change of meaning", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "...ཐ་སྙད་གྲུབ་པ་ཡིན་ནོ་ཞེ་ན། གྲུབ་པའི་མཐའ་སྨྲ་བས་མི་དམིགས་པ་", "english": "...the worldly convention of engaging with or turning away from things is established. Thus says the proponent of the philosophical tenet regarding non-observation…", "problem": "The ཞེ་ན marks the whole paragraph as an opponent's objection, after which the siddhāntavādin begins his reply ('the proponent of tenets [says] non-apprehension...'). A drops the objection marker and attributes the objection to the proponent of tenets, so the opponent's thesis reads as the author's.", "severity": "serious", "class": "T8", "reversal": true },
+          { "source": "མཐོང་བ་དེས་མ་མཐོང་བ་ཡོངས་སུ་སྤངས་པའི་ཕྱིར", "english": "and avoid what is not. If they did not determine the object,", "problem": "'because that seeing excludes the unseen' rendered as 'avoid what is not'; the conditional 'If they did not determine the object' is added", "severity": "moderate" },
+          { "source": "བོང་བ་ལ་སོགས་པའི་རྣམ་པ", "english": "the form of a piece of stone", "problem": "བོང་བ is a clod of earth", "severity": "minor" },
+          { "source": "ཚེ་ཇི་ལྟར་དེས་དེ་ཡོངས་སུ་གཅོད་པར་འགྱུར།", "english": "How could that cognition possibly determine the object?", "problem": "the 'at that time' (ཚེ) carried over from the previous page is dropped", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "འདྲེས་པ་ཡང་གལ་ཏེ་མི་མཐོང་བས་དེའི་ཚེ་བོང་བ་ལ་སོགས་པའི་རྣམ་པ་ལྟ་བུ་འགའ་ཞིག་གིས་འདི་དག་ཇི་ལྟར་མཐོང་བར་འགྱུར།", "english": "how could these be seen at that time as having the appearance of a clod of earth or the like?", "problem": "the syntax is slightly loose, but the sense holds", "severity": "minor" },
+          { "source": "སྐྱེ་བོ་ཐམས་ཅད་ཀྱིས་རྟོགས་པའི་... འཇུག་པ་དང་ལྡོག་པའི་མཚན་ཉིད་དུ་མི་འགྱུར་ཏེ", "english": "positive engagement and withdrawal would fail to function. That is because people engage to obtain...", "problem": "the clauses are reordered, which makes the ཕྱིར clauses read as the author's grounds; the logic is a little blurred", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B keeps the ཞེ་ན objection and the siddhāntavādin's reply apart ('One might argue... To this, the proponent of tenets replies'); A gives the opponent's objection to the proponent of tenets and also adds a conditional the Tibetan does not have.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is a close read of this Derge folio. Translation A misattributes the closing objection to the proponent of tenets, a speaker reversal; translation B is faithful, with only minor looseness."
+  }
+]

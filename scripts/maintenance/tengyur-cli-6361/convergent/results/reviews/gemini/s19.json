@@ -1,0 +1,46 @@
+[
+ {
+  "book_id": "6abed42c896ea18127c8d54f",
+  "slot": 19,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic volume of the Pramāṇa (epistemology and logic) section of the Derge Tengyur.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 323,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "གལ་ཏེ་ཐམས་ཅད་ལས་ཐ་དད་པའི་དངོས་པོའི་ངོ་བོ་ལ་ཁྱད་པར་མེད་པར་མཐོང་བ་སྐྱེས་པར་གྱུར་པ་ཡིན་ན། ཅིའི་ཕྱིར་ཇི་ལྟ་བ་བཞིན་དུ་ཉམས་སུ་མྱོང་བའི་རྣམ་པ་དག་ལ་ངེས་པ་",
+      "english": "If seeing occurs without distinction regarding the essence of the thing as separate from everything else, why is there certainty regarding the aspects experienced as they truly are?",
+      "problem": "The text ends mid-sentence at the bottom of the folio, but Translation B invents a closed question that reverses the sense of the objection (asking why certainty exists rather than why ascertainment fails to arise).",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": true
+     },
+     {
+      "source": null,
+      "english": "<note>This refers to the Buddhist logical theory where perceiving an object should theoretically mean perceiving all its qualities, yet conceptual thought must still work to eliminate false impositions.</note>",
+      "problem": "Invented explanatory commentary note not present in the Tibetan source text.",
+      "severity": "moderate",
+      "class": "T2"
+     }
+    ],
+    "other": [],
+    "confidence": "high",
+    "prefer": "A",
+    "prefer_reason": "Translation A accurately captures the technical Pramāṇa terminology, preserves the dialectical structure and the trailing sentence fragment at the bottom of the folio, and avoids inserting invented commentary."
+   }
+  ],
+  "book_verdict": "An authentic Derge Tengyur Pramāṇa woodblock folio with flawless transcription, where Translation A provides a highly faithful rendering."
+ }
+]

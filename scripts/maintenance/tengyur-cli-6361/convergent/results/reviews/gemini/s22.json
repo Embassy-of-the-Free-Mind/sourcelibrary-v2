@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abed518896ea18127c8dce8",
+  "slot": 22,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཏེ (Derge Tengyur, vol. 178)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic woodblock print from the Derge Tengyur Pramāṇa (ཚད་མ) section, volume 178 (ཏེ), treating epistemological arguments on causality and rebirth.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 148,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "other": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B formats the summary verses (saṃgraha-ślokas) as verse stanzas rather than prose paragraphs and explicitly indicates the continuation from the preceding folio.",
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Flawless woodblock page scan from the Derge Tengyur with exact OCR transcription and two highly accurate, faithful English translations."
+ }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "book_id": "6abed76c896ea18127c8ee40",
+    "slot": 38,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary (doubt arising over a post versus a man, sdong gru / skyes bu), in the Tshad ma section as catalogued.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 168,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ཐུན་མོང་བའི་སྣང་བ་ནི་དོན་མ་ཡིན་ནོ་ཞེས་ལན་འདེབས་པ",
+            "image": "ཐུན་མོང་བའི་སྣང་བ་འདི་དོན་ཉིད་ཡིན་ནོ་ཞེས་པ་ལ་ལན་འདེབས་པ (as far as I can read it)",
+            "problem": "The opening clause appears to say the common appearance IS the object itself. The OCR inserts a negation ('is not the object') and drops ཞེས་པ་ལ, which reverses the thesis being answered. My reading of the glyph after དོན is medium-confidence.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "ཤེས་པ་ནི་འདི་འབྲང་བ་ཡིན་ནོ",
+            "image": "ཤེས་པ་ནི་འདི་འགྲེང་བ་ཡིན་ནོ (e-vowel visible; context is 'upright')",
+            "problem": "'upright' (འགྲེང་བ) misread as 'follow' (འབྲང་བ), which makes the definition of cognition meaningless",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ཇི་ལྟར་སྡོང་གྲུ་ལ་སོགས་པའི་སྣམ་བུ་མཐོང་བ་ལས་བུམ་པ་ཉིད་ལ",
+            "image": "possibly དེ་ལྟར … རྣམ་པ … (unclear at this resolution)",
+            "problem": "uncertain reading of the 'cloth/vase' clause; the sense ('cloth of a post … vase-ness') is odd and may come from misreads",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          {
+            "source": "ཐུན་མོང་བའི་སྣང་བ་ནི་དོན་མ་ཡིན་ནོ (image: འདི་དོན་ཉིད་ཡིན་ནོ)",
+            "english": "the objection that a common appearance is not the actual object",
+            "problem": "Carries the OCR's inserted negation into English. Measured against the image, the thesis is reversed.",
+            "severity": "serious",
+            "class": "O6",
+            "reversal": true
+          },
+          {
+            "source": "མ་ཡིན་པས་དྲན་པ་ཐེ་ཚོམ་གྱི་རྒྱུ་མཚན་ཡིན་ན་སྤྱི་མངོན་སུམ་ཡིན་པའི་ཕྱིར་རོ",
+            "english": "Because it is not the case, memory is the cause of doubt, as the universal is perceived through direct perception.",
+            "problem": "the conditional 'if memory were the cause of doubt' is turned into a flat assertion that memory is the cause of doubt",
+            "severity": "moderate"
+          },
+          {
+            "source": "དེས་ན་ཐེ་ཚོམ་ཟ་བ་མ་ཡིན་ནོ་ཞེ་ན",
+            "english": "If one asks, \"Since both are not seen here now, does doubt not arise?\"",
+            "problem": "the opponent's assertion ('therefore there is no doubt') is rendered as a question",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          {
+            "source": "ཐུན་མོང་བའི་སྣང་བ་ནི་དོན་མ་ཡིན་ནོ (image: འདི་དོན་ཉིད་ཡིན་ནོ)",
+            "english": "to the objection that what appears in common is not an actual object",
+            "problem": "Carries the OCR's inserted negation into English. Measured against the image, the thesis is reversed.",
+            "severity": "serious",
+            "class": "O6",
+            "reversal": true
+          },
+          {
+            "source": "ཤེས་པ་ནི་འདི་འབྲང་བ་ཡིན་ནོ་ཞེས་བྱ་བར་ངེས་པའོ",
+            "english": "Cognition is determined to follow this.",
+            "problem": "Follows the misread འབྲང and gives nonsense. The sense is 'cognition is the certainty \"this is upright\"', and A recovers it.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "གང་རུང་ཞིག་མ་མཐོང་ངོ",
+            "english": "one does not see either one of them",
+            "problem": "'one or the other is not seen' becomes 'neither is seen'",
+            "severity": "moderate"
+          },
+          {
+            "source": "མ་ཡིན་པས་དྲན་པ",
+            "english": "recollection without direct perception",
+            "problem": "'without direct perception' is an interpretive addition that is not in the text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Both repeat the OCR's opening negation. A recovers 'this is upright' where B writes the nonsense 'determined to follow this', and B also turns 'one of the two is not seen' into 'neither is seen'. A's flattening of the conditional is the lesser fault.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A genuine Derge pramāṇa folio with a mostly sound transcription. The opening clause appears to carry an inserted negation that reverses the thesis being answered (medium confidence), and both translations repeat it. A is otherwise the more faithful English."
+  }
+]

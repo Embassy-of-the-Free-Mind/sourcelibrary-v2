@@ -1,0 +1,8 @@
+s01 reviewer1=opus reviewer2=gemini
+s06 reviewer1=gemini reviewer2=opus
+s11 reviewer1=opus reviewer2=gemini
+s29 reviewer1=opus reviewer2=gemini
+s34 reviewer1=opus reviewer2=gemini
+s36 reviewer1=opus reviewer2=gemini
+s37 reviewer1=opus reviewer2=gemini
+s19 reviewer1=gemini reviewer2=opus
