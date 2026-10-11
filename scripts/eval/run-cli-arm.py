@@ -130,7 +130,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     blob = raw + '\n' + err
     if any(q in blob for q in QUOTA):
         cls = 'quota'
-    elif code == -9:
+    elif code == -9 or 'print timeout' in blob:
+        # #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout after 2m0s with turn in
+        # progress; returning partial output"). That is a cut read, not a transcription: an empty attempt.
         cls = 'timeout'
     elif code != 0:
         cls = f'exit_{code}'

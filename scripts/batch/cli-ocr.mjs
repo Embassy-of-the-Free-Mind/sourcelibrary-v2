@@ -87,7 +87,8 @@ function unwrapRead(raw) {
 // The CLI is an AGENT. Plan mode stops it running tools; without it the model sometimes tries a shell command
 // (seen: cropping a Chinese page into columns in /tmp), and the auto-approve flag this script used to pass let it
 // run as root on the box. Never auto-approve; tests/unit/no-cli-auto-approve.test.ts sweeps for the flag.
-const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '120s', '--output-format', 'json'];
+// #6523: 300 s, not 120: at high thinking 3.8 Flash takes 70–240 s on a dense page, and at the limit agy returns a cut reply.
+const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '300s', '--output-format', 'json'];
 const workspaceImage = (key) => path.join(OUT, `ws-${key}`, `${key}.jpg`);
 // Even in plan mode the model sometimes asks for a shell command (to crop the image); headless mode denies it and the
 // turn ends empty with `denied_actions` set. The #6331 fix: continue THAT conversation once with this nudge
@@ -107,14 +108,15 @@ function agyCall(args, cwd) {
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
-    const timer = setTimeout(() => child.kill('SIGKILL'), 180_000);
+    const timer = setTimeout(() => child.kill('SIGKILL'), 360_000);
     child.on('close', (code) => {
       clearTimeout(timer);
       let j = {};
       try { j = JSON.parse(out); } catch { /* not JSON: an error or an old CLI */ }
       const text = String((j && j.response) ?? (Object.keys(j).length ? '' : out)).trim();
       const denied = (j.denied_actions || []).map((d) => d.action);
-      const cls = QUOTA.test(out + err) ? 'quota' : code === null ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
+      // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
+      const cls = QUOTA.test(out + err) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
       resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
     });
   });
