@@ -3642,15 +3642,20 @@ Rules:
             // ONE typed provenance entry, not three private fields (2026-09-10) — this mirrors
             // src/lib/metadata-enrichment.ts, which had the same three writes. language_source /
             // language_confidence / ai_detected_language were read by nothing.
+            // Held here and folded into the whole `field_provenance` object below: a dotted
+            // 'field_provenance.language' in the same $set as 'field_provenance' is a Mongo path
+            // conflict, so the write threw on every such book and the book was re-asked every run
+            // (~6,000 billed calls/day from 2026-10-01, #4599).
+            let languageProvenance = null;
             if (aiLang && currentLang === 'Unknown') {
               updates.language = aiLang;
-              updates['field_provenance.language'] = {
+              languageProvenance = {
                 source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
                 claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
               };
               changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
             } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-              updates['field_provenance.language'] = {
+              languageProvenance = {
                 source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
                 claims: [
                   { source: 'catalogue', value: currentLang },
@@ -3752,7 +3757,7 @@ Rules:
             // Field provenance
             const provenance = book.field_provenance || {};
             const aiSource = { source: 'ai_enrichment', model: metadataModel, date: now, confidence, pages_checked: ocrSamples.length };
-            if (updates.language) provenance.language = { ...aiSource, previous_value: book.language };
+            if (languageProvenance) provenance.language = languageProvenance;
             if (updates.author) provenance.author = { ...aiSource, previous_value: book.author };
             if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
             if (updates.year) provenance.year = { ...aiSource, previous_value: null };
