@@ -10,6 +10,8 @@
  * Collection `iiif_manifests` is keyed unique on `manifest_url`. See issue #2416.
  */
 
+import { iiifFullSizeUrl } from '../../lib/iiif-utils.mjs';
+
 /**
  * Ensure indexes on the iiif_manifests collection. Call once at startup.
  */
@@ -56,7 +58,7 @@ export function extractCanvasImage(canvas) {
       : (service?.['@id'] || service?.id);
     if (serviceId) {
       return {
-        photo: `${serviceId}/full/full/0/default.jpg`,
+        photo: iiifFullSizeUrl(serviceId, service),
         thumbnail: `${serviceId}/full/200,/0/default.jpg`,
       };
     }
@@ -71,7 +73,7 @@ export function extractCanvasImage(canvas) {
     const serviceId = service?.id || service?.['@id'];
     if (serviceId) {
       return {
-        photo: `${serviceId}/full/full/0/default.jpg`,
+        photo: iiifFullSizeUrl(serviceId, service),
         thumbnail: `${serviceId}/full/200,/0/default.jpg`,
       };
     }

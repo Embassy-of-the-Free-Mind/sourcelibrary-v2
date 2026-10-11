@@ -5,6 +5,8 @@
  * Handles both Presentation API v2 and v3 metadata formats.
  */
 
+import { iiifFullSizeUrl } from '../../lib/iiif-utils.mjs';
+
 /**
  * Extract a string value from a IIIF label field.
  * Handles: plain string, v2 language array, v3 language map.
@@ -202,7 +204,7 @@ export function manifestToPages(manifest, { thumbSize = '!400,400' } = {}) {
   const fromService = (svc, fallback) => {
     const base = typeof svc === 'string' ? svc : (svc?.['@id'] || svc?.id);
     if (!base) return fallback ? { photo: fallback, thumbnail: fallback } : null;
-    return { photo: `${base}/full/full/0/default.jpg`, thumbnail: `${base}/full/${thumbSize}/0/default.jpg` };
+    return { photo: iiifFullSizeUrl(base, svc), thumbnail: `${base}/full/${thumbSize}/0/default.jpg` };
   };
 
   // v2: sequences[].canvases[].images[].resource(.service)

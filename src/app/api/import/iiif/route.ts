@@ -10,6 +10,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
+import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 
 export const maxDuration = 300;
@@ -338,7 +339,7 @@ export const POST = withCuratorAuth(async (request, session) => {
         const imageService = service?.id || service?.['@id'];
 
         if (imageService) {
-          imageUrl = `${imageService}/full/full/0/default.jpg`;
+          imageUrl = iiifFullSizeUrl(imageService, service);
         }
 
         let thumbnailUrl = canvas.thumbnail?.[0]?.id || '';
@@ -359,7 +360,7 @@ export const POST = withCuratorAuth(async (request, session) => {
         const imageService = imageResource?.service?.['@id'];
 
         if (imageService) {
-          imageUrl = `${imageService}/full/full/0/default.jpg`;
+          imageUrl = iiifFullSizeUrl(imageService, imageResource?.service);
         }
 
         let thumbnailUrl = imageUrl;
