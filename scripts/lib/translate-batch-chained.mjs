@@ -71,6 +71,7 @@ import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
 import { preGateBookReason, isPreGateBookRefusal } from './pre-translation-gate.mjs';
+import { enrolBrake } from './quality-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
@@ -348,6 +349,10 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   // dryRun: every refusal above, then stop — the queue and price an enrol would make, nothing written.
   if (dryRun) return { ok: true, dryRun: true, book, model, pages, excluded, estimate };
   if (!(Number(approvedUsd) >= estimate)) return { ok: false, reason: `estimate $${estimate} exceeds approved $${approvedUsd ?? 0}`, book, estimate };
+  // The standing quality gate (#5826): a NO-GO pauses enrolment of new books (every caller: --enrol,
+  // --enrol-auto, orchestrator Phase 4). Asked last, right before the insert, so the read is fresh.
+  const qualityGate = await enrolBrake(db, 'translate', { log: null });
+  if (qualityGate.paused) return { ok: false, reason: `enrol-paused (quality gate ${qualityGate.gate_id})`, book, estimate };
 
   const now = deps.now ? deps.now() : new Date();
   const run = {
@@ -866,7 +871,8 @@ export async function enrolForPhase4(db, book, { prompts, pageCount, deps = {} }
   if (first.ok) return { lane: 'chained', run: first.run };
   // An untrusted-OCR refusal is a skip, never a hand-off: the realtime lane would translate the same bad text.
   // Nor is a book the pre-translation gate refused whole (#5915): the realtime worker would refuse it too.
-  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
+  // Nor is a quality-gate NO-GO (#5826): it pauses enrolment into the whole step, realtime included.
+  if (/^(book-held|open-run|realtime-lane-owns-book|enrol-paused)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
   const ceiling = +(owed * REALTIME_USD_PER_PAGE).toFixed(4);
   if (first.estimate != null && first.estimate <= ceiling) {
     const second = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: first.estimate, submit: false });

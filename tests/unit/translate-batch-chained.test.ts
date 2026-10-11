@@ -877,6 +877,41 @@ describe('the pause stops every submit', () => {
   });
 });
 
+// ── The quality gate's NO-GO brake (#5826) ─────────────────────────────────
+// A NO-GO pauses ENROLMENT into translate: no new run for any caller (Phase 4 included, which must
+// not hand the book to the realtime lane instead), while a run already open keeps being submitted.
+describe('a quality-gate NO-GO stops enrolment, not in-flight runs', () => {
+  const paused = { _id: 'processing_control', lane_budgets: { translate: { enrol_paused: { gate_id: 'qg_translate_x', at: new Date(), by: 'Derek' } } } };
+
+  it('enrolChainedRun refuses with enrol-paused and writes no run', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [paused] });
+    const res = await enrolChainedRun(d, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.ok).toBe(false);
+    expect(res.reason).toMatch(/^enrol-paused \(quality gate qg_translate_x\)/);
+    expect(d.data[RUNS_COLLECTION]).toHaveLength(0);
+  });
+
+  it('Phase 4 skips the book rather than sending it realtime', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [paused] });
+    const routed = await enrolForPhase4(d, BOOK, { prompts: PROMPTS, pageCount: N_PAGES });
+    expect(routed.lane).toBe('skip');
+  });
+
+  it('a run enrolled before the NO-GO is still submitted on the next tick', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [{ _id: 'processing_control' }] });
+    const gemini = makeGemini();
+    expect((await enrolChainedRun(d, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+    d.data.system_config[0].lane_budgets = paused.lane_budgets;
+    await tick(d, makeDeps(gemini));
+    expect(gemini.submitted).toHaveLength(1);
+  });
+
+  it('a NO-GO on another step (ocr) does not stop translate enrolment', async () => {
+    const d = makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [], system_config: [{ _id: 'processing_control', lane_budgets: { ocr: paused.lane_budgets.translate } }] });
+    expect((await enrolChainedRun(d, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+  });
+});
+
 // ── Page-level targeting (eternity finish pass, #5513) ─────────────────────
 describe('enrol can be narrowed to named pages and kept off withheld pages', () => {
   const withhold = (n: number) => { pageDoc(db, n).translation_withheld = { reason: 'withhold-stale-translation-4523', withheld_at: new Date() }; };
