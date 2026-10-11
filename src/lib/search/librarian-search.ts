@@ -124,7 +124,7 @@ export interface HybridSearchOptions {
 // contribute their most substantial books first (Mongo sorts by book_count);
 // keyword recall across the rest still flows via the global keyword path, so
 // nothing is hard-excluded — those pages just don't get the extra boost.
-const MAX_SCOPED_BOOKS = 400;
+export const MAX_SCOPED_BOOKS = 400;
 
 // ── Tenant visibility (Mongo book metadata enrichment) ───────────────
 
@@ -452,6 +452,86 @@ async function collectionScopedSources(
   }));
 
   return { scopedKeyword, scopedSemantic };
+}
+
+/**
+ * RRF scores sit near 1/61 + 1/61 for a page both lanes found at rank 1 and
+ * 1/61 for a page one lane found; 1.5 lets a one-lane source-language page
+ * beat a one-lane English page a few ranks above it, never a two-lane one.
+ */
+const ORIGINAL_LANGUAGE_BOOST = 1.5;
+
+/**
+ * Passages ranked ONLY among `bookIds` — the filter is applied before ranking,
+ * not after (#6077). The keyword and semantic lanes both take the id list as
+ * part of the query, so a shelf with few translated books still returns its own
+ * best pages instead of losing every slot to a larger shelf. Hidden and
+ * tenant-foreign books are dropped at the metadata join, as in hybridSearch.
+ *
+ * Callers pass at most MAX_SCOPED_BOOKS ids (the lanes degrade beyond that).
+ */
+export async function scopedPassageSearch(
+  query: string,
+  bookIds: string[],
+  opts: { limit?: number; maxPerBook?: number; tenantId?: string | null; preferOriginalLanguage?: boolean } = {},
+): Promise<SearchPassage[]> {
+  const limit = opts.limit ?? 3;
+  const maxPerBook = opts.maxPerBook ?? 1;
+  const ids = bookIds.slice(0, MAX_SCOPED_BOOKS);
+  if (ids.length === 0) return [];
+
+  const { scopedKeyword, scopedSemantic } = await collectionScopedSources(query, ids);
+  let merged = rrfMerge([scopedKeyword, scopedSemantic]);
+
+  const db = await getDb();
+  const candidateIds = [...new Set(merged.map(h => h.book_id))];
+  const bookDocs = candidateIds.length > 0
+    ? await db.collection('books')
+        .find({ id: { $in: candidateIds }, ...tenantBookFilter(opts.tenantId) })
+        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, text_role: 1 })
+        .toArray()
+    : [];
+  const bookMap = new Map(bookDocs.map(b => [b.id, b]));
+
+  // Ad fontes: on a shelf like Kabbalah the English studies (Blavatsky, Waite)
+  // are translated in full and outrank the Hebrew sources they discuss. At
+  // comparable relevance, hand over the source in its own language.
+  if (opts.preferOriginalLanguage) {
+    merged = merged
+      .map(h => {
+        const lang = bookMap.get(h.book_id)?.language;
+        return typeof lang === 'string' && lang && !/^english$/i.test(lang) ? { ...h, score: h.score * ORIGINAL_LANGUAGE_BOOST } : h;
+      })
+      .sort((a, b) => b.score - a.score);
+  }
+
+  const pageTexts = await loadPassageTexts(merged.slice(0, Math.max(12, limit * 4)));
+  merged = merged.map(h => ({ ...h, text: passageText(h, pageTexts) }));
+
+  const perBook = new Map<string, number>();
+  const passages: SearchPassage[] = [];
+  for (const hit of merged) {
+    const book = bookMap.get(hit.book_id);
+    if (!book || !hit.text) continue;
+    const n = (perBook.get(hit.book_id) || 0) + 1;
+    if (n > maxPerBook) continue;
+    perBook.set(hit.book_id, n);
+    passages.push({
+      book_id: hit.book_id,
+      bookTitle: book.display_title || book.title || 'Unknown',
+      bookAuthor: book.author || 'Unknown',
+      bookSlug: book.slug,
+      year: typeof book.year === 'number' ? book.year : undefined,
+      language: typeof book.language === 'string' ? book.language : undefined,
+      textRole: typeof book.text_role === 'string' ? book.text_role : undefined,
+      page_number: hit.page_number,
+      text: hit.text,
+      score: hit.score,
+      source: hit.source,
+    });
+    if (passages.length >= limit) break;
+  }
+  return passages;
 }
 
 // ── RRF merge ────────────────────────────────────────────────────────

@@ -35,7 +35,8 @@ export async function GET(
 
   // Load notebook
   const notebook = await db.collection('research_notebooks').findOne({ threadId: new ObjectId(id) });
-  if (!notebook || !notebook.findings?.length) {
+  const findings = notebook?.findings ?? [];
+  if (!notebook || (!findings.length && !notebook.synthesis)) {
     return NextResponse.json({ error: 'No research findings yet' }, { status: 404 });
   }
 
@@ -50,16 +51,27 @@ export async function GET(
   lines.push(`# ${topic}`);
   lines.push('');
   lines.push(`*Research conducted via the Source Library Librarian*`);
-  lines.push(`*${notebook.findings.length} findings · ${new Date(notebook.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}*`);
+  lines.push(`*${findings.length} findings · ${new Date(notebook.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}*`);
   lines.push('');
   lines.push('---');
   lines.push('');
 
+  // The Librarian's comparative synthesis (save_synthesis, #6077) — its
+  // claims link to the pages they rest on, so it leads the export.
+  if (notebook.synthesis) {
+    lines.push('## Synthesis');
+    lines.push('');
+    lines.push(notebook.synthesis);
+    lines.push('');
+  }
+
   // Findings
-  lines.push('## Key Passages');
-  lines.push('');
-  for (let i = 0; i < notebook.findings.length; i++) {
-    const f = notebook.findings[i];
+  if (findings.length) {
+    lines.push('## Key Passages');
+    lines.push('');
+  }
+  for (let i = 0; i < findings.length; i++) {
+    const f = findings[i];
     const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}/page-number/${f.source.pageNumber}`;
     lines.push(`### ${i + 1}. ${f.source.bookTitle}`);
     lines.push(`**${f.source.bookAuthor}** · [Page ${f.source.pageNumber}](${url})`);
@@ -74,7 +86,7 @@ export async function GET(
 
   // Bibliography
   const books = new Map<string, { title: string; author: string; slug?: string; pages: number[] }>();
-  for (const f of notebook.findings) {
+  for (const f of findings) {
     const key = f.source.bookId;
     const existing = books.get(key) || { title: f.source.bookTitle, author: f.source.bookAuthor, slug: f.source.bookSlug, pages: [] as number[] };
     existing.pages.push(f.source.pageNumber);
