@@ -16,6 +16,8 @@
  * and we want to be a good citizen.
  */
 
+import { fetchWithStallTimeout } from './fetch-stall-timeout.mjs';
+
 // ── Per-domain rate limits (requests per second) ──
 
 export const DOMAIN_LIMITS = {
@@ -207,9 +209,20 @@ export function _agePenaltyClockForTest(url, ms) {
  * Fetch a URL respecting per-domain rate limits.
  * Returns a Buffer on success, throws on HTTP error or timeout.
  *
+ * `timeout` is a STALL timeout — an attempt aborts when no bytes have arrived
+ * for that long, re-armed per body chunk — with `maxMs` as the absolute
+ * backstop (#4402). This is the fetch-stall-timeout.mjs discipline the other
+ * archivers already use, and it matters here because archive-acquired fetches
+ * uncapped full-res masters through this function. The previous timer was
+ * cleared as soon as headers arrived, so it bounded time-to-headers and left
+ * the body — where a master spends its time — with no bound at all: a body
+ * that stalled mid-transfer held a pool worker forever. Do not answer slowness
+ * here by requesting a smaller IIIF size (#3186).
+ *
  * @param {string} url
  * @param {object} [opts]
- * @param {number} [opts.timeout=30000]
+ * @param {number} [opts.timeout=30000]  Abort an attempt after this long with no data.
+ * @param {number} [opts.maxMs=900000]   Absolute per-attempt backstop.
  * @param {string} [opts.userAgent]
  * @param {number} [opts.retries=3]  Retry count for transient network errors.
  * @returns {Promise<Buffer>}
@@ -217,6 +230,7 @@ export function _agePenaltyClockForTest(url, ms) {
 export async function rateLimitedFetch(url, opts = {}) {
   const {
     timeout = 30000,
+    maxMs = 15 * 60_000,
     userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
     retries = 3,
   } = opts;
@@ -231,15 +245,13 @@ export async function rateLimitedFetch(url, opts = {}) {
     // rather than jumping ahead of them.
     await claimSlot(host, limit);
 
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), timeout);
     let refused = null;
     try {
-      const res = await fetch(url, {
-        signal: controller.signal,
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: timeout,
+        maxMs,
         headers: { 'User-Agent': userAgent },
       });
-      clearTimeout(t);
       if (!res.ok) {
         // 4xx is unlikely to recover; bail without retrying. 5xx and 429 are
         // worth retrying with backoff. Not a `throw` here: it would land in the
@@ -257,12 +269,11 @@ export async function rateLimitedFetch(url, opts = {}) {
         }
         lastErr = new Error(`HTTP ${res.status}`);
       } else {
-        return Buffer.from(await res.arrayBuffer());
+        return buffer;
       }
     } catch (e) {
-      clearTimeout(t);
       lastErr = e;
-      // Abort, ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
+      // Stall/backstop abort (the message names which), ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
     }
     if (refused) throw refused;
     if (attempt < retries) {

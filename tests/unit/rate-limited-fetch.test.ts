@@ -24,6 +24,23 @@ describe('rateLimitedFetch retry policy', () => {
       const n = hits.get(path)!;
       if (path === '/404') { res.statusCode = 404; return res.end('nope'); }
       if (path === '/403') { res.statusCode = 403; return res.end('forbidden'); }
+      // A large plate on a slow link, in miniature: ~600 ms total, never more
+      // than 60 ms of silence.
+      if (path === '/slow-plate') {
+        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        let i = 0;
+        const tick = setInterval(() => {
+          if (i++ >= 10) { clearInterval(tick); return res.end(); }
+          res.write(Buffer.alloc(1024, 1));
+        }, 60);
+        return;
+      }
+      // Headers and one chunk, then silence: a dead connection.
+      if (path === '/stalled') {
+        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        res.write(Buffer.alloc(1024, 1));
+        return; // never ends
+      }
       // 503 on the first request, then 200: a transient failure that recovers.
       if (path === '/flaky') {
         if (n === 1) { res.statusCode = 503; return res.end('busy'); }
@@ -36,6 +53,7 @@ describe('rateLimitedFetch retry policy', () => {
   });
 
   afterAll(async () => {
+    server.closeAllConnections();
     await new Promise<void>(r => server.close(() => r()));
   });
 
@@ -55,5 +73,35 @@ describe('rateLimitedFetch retry policy', () => {
     const buf = await rateLimitedFetch(`${base}/flaky`);
     expect(buf.toString()).toBe('ok');
     expect(hits.get('/flaky')).toBe(2);
+  });
+
+  /**
+   * `timeout` is a stall timeout with an absolute backstop (#4402), the same
+   * discipline as fetch-stall-timeout.mjs in the other archivers.
+   *
+   * Negative control performed when written, against the previous
+   * implementation (AbortController armed per attempt, cleared once headers
+   * arrived): the slow-plate test PASSED — that cap only ever covered time to
+   * headers — but the stalled body hung until vitest killed it at 30s, and the
+   * trickle was never cut off. The old timer bounded the cheap half of the
+   * request and left the body, where a master spends its time, unbounded.
+   */
+  describe('rateLimitedFetch timeout semantics', () => {
+    it('completes a body that takes 4x `timeout` while it keeps delivering', async () => {
+      const buf = await rateLimitedFetch(`${base}/slow-plate`, { timeout: 150, retries: 0 });
+      expect(buf.length).toBe(10 * 1024);
+    });
+
+    it('still fails fast on a connection that stops delivering, and says why', async () => {
+      const t0 = Date.now();
+      await expect(rateLimitedFetch(`${base}/stalled`, { timeout: 150, retries: 0 }))
+        .rejects.toThrow(/stalled — no data/);
+      expect(Date.now() - t0).toBeLessThan(1000);
+    });
+
+    it('keeps an absolute backstop for a connection that trickles forever', async () => {
+      await expect(rateLimitedFetch(`${base}/slow-plate`, { timeout: 150, maxMs: 200, retries: 0 }))
+        .rejects.toThrow(/absolute cap/);
+    });
   });
 });
