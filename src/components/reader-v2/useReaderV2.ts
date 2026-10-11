@@ -317,7 +317,10 @@ export function useReaderV2(
     // preference that crosses between them.
     const siteLocale = localeFromPathname(window.location.pathname);
     const localeKeyBase = readsOriginal(siteLocale) ? `${viewsKeyBase}-${siteLocale}` : viewsKeyBase;
-    const viewsKey = isPhone ? `${localeKeyBase}-m` : localeKeyBase;
+    // `-m2`: under `-m`, every tap on the old one-pane picker was saved as a
+    // one-pane choice, and those readers would keep a filtered column the
+    // picker no longer makes (#5219). A new key gives them the whole stack.
+    const viewsKey = isPhone ? `${localeKeyBase}-m2` : localeKeyBase;
     viewsKeyRef.current = viewsKey;
     let hasChosen = false;
     try { hasChosen = window.localStorage.getItem(viewsKey) !== null; } catch { /* private mode */ }
@@ -380,13 +383,16 @@ export function useReaderV2(
     });
   }, []);
   /**
-   * Show one pane and nothing else. The phone's pane picker (#5062): a
-   * segmented row is a choice, not a set of switches, so a tap means "this
-   * one" even when the reader had stacked several from the sheet.
+   * The phone's pane picker is a jump, not a filter (#5219). It used to show
+   * the tapped pane and nothing else (#5062), so a reader on the translation
+   * could not scroll up to the original or the scan without tapping again.
+   * A tap now puts the whole page back in the column — scan, original,
+   * translation, in reading order — plus the tapped pane if it is an extra
+   * (the romanisation); the caller scrolls to it.
    */
-  const showOnlyView = useCallback((key: keyof ViewState) => {
-    setViews(() => {
-      const next: ViewState = { scan: false, ocr: false, en: false, translit: false, [key]: true };
+  const revealView = useCallback((key: keyof ViewState, hasScan: boolean) => {
+    setViews(prev => {
+      const next: ViewState = { scan: hasScan, ocr: true, en: true, translit: prev.translit, [key]: true };
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
@@ -501,7 +507,7 @@ export function useReaderV2(
     book, bookPath, pageList, currentPage, currentPageId, currentIndex, totalPages,
     pageLoading, pageError, progress,
     goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage, applyPageUpdate,
-    views, toggleView, showOnlyView,
+    views, toggleView, revealView,
     settings, updateSettings, settingsOpen, setSettingsOpen,
     chapters, currentChapter,
   };
