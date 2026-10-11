@@ -7,7 +7,7 @@ canons: [derge-tengyur]
 n_books: 37
 n_pages: 40
 verdict: "Re-read with the stage-1 call plus one nudge in the same conversation, 6,492 of the 6,494 not-applicable Tengyur pages passed the stage-2 gates and were applied (3,324 through the nudge). On 40 applied pages, two blind readers from different families (Opus; Gemini 3.7 Flash) each found fewer serious-error pages in the new English than in the old (Opus 3 vs 6, Gemini 3 vs 11 of 40). After Opus adjudicated the 8 split pages against the image, the new English was preferred on 35, the old on 4, and 1 was a tie. Both readers preferred the old on 2 of 40 (5%; stop line 10%), and those 2 pages got the old English back."
-status: decided
+status: adopted
 decision: "Applied (Derek, 2026-10-10, #6420: convergent AI check in place of a human read for a month)."
 superseded_by: null
 issue: [6361, 6420]
