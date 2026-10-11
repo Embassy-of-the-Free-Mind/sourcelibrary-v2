@@ -29,6 +29,9 @@
 # `sl-tsc` (flock) is the only sanctioned type check, and a DONE job with a clean, pushed
 # worktree has it removed (reap_if_clean, #5534/#5536). Anything else is kept, reason logged.
 set -u
+# Jobs started from cron (the spare lane) get cron's bare PATH, so `sl-tsc` in /root/bin was
+# "not installed" to them and two l7a jobs on 2026-10-11 skipped the type check (#6360).
+case ":$PATH:" in *:/root/bin:*) ;; *) export PATH="/root/bin:$PATH" ;; esac
 # ---- HOST block ----
 if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/dev/null 2>&1; then
   HOST=cloudlayer; SL=/data/scratch/sl/sourcelibrary; LOGD=/data/scratch/sl/logs/claude-jobs; JD=/data/scratch/sl/claude-jobs
