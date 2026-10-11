@@ -8,7 +8,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
-import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
+import { resolveLanguage, resolveDate, publishedToYear, assessIaOcrLanguage, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -167,9 +167,21 @@ export const POST = withCuratorAuth(async (request, session) => {
     const gbLangCollection = (Array.isArray(iaMetadata.collection) ? iaMetadata.collection : [iaMetadata.collection])
       .map((c: unknown) => /^booksbylanguage_(.+)$/i.exec(String(c || ''))?.[1])
       .find(Boolean) || null;
+    const gbOcrLang = Array.isArray(iaMetadata.ocr_detected_lang) ? iaMetadata.ocr_detected_lang[0] : iaMetadata.ocr_detected_lang;
+    const gbCatalogLang = Array.isArray(iaMetadata.language) ? iaMetadata.language[0] : iaMetadata.language;
     const sourceSignals: LanguageSignal[] = [
-      { value: Array.isArray(iaMetadata.ocr_detected_lang) ? iaMetadata.ocr_detected_lang[0] : iaMetadata.ocr_detected_lang, source: 'ia_ocr_detected' },
-      { value: Array.isArray(iaMetadata.language) ? iaMetadata.language[0] : iaMetadata.language, source: 'ia_metadata' },
+      {
+        value: gbOcrLang,
+        source: 'ia_ocr_detected',
+        // #4582: the six "Kyrgyz" Latin classics were Google scans through this path.
+        discounted: assessIaOcrLanguage({
+          ocrLang: gbOcrLang,
+          ocrScripts: iaMetadata.ocr_detected_script,
+          catalogLang: gbCatalogLang || gbLangCollection,
+          callerLang: language,
+        }),
+      },
+      { value: gbCatalogLang, source: 'ia_metadata' },
       { value: gbLangCollection, source: 'ia_collection' },
     ];
     const lang = resolveLanguage({ callerLanguage: language, sourceSignals });
