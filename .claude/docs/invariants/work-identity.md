@@ -41,6 +41,17 @@ NOT by the `original_edition_id` link (which is half-filled). Umbrella: #2318.
   can't speak for it (the Ellis Yoruba/Tshi/Ewe case), so it is excluded from auto-merge.
   After any apply, run `node scripts/workers/sync-books-catalog.mjs` (books_catalog
   carries work_id).
+- **A local work_id is derived from title + author, so repairing either MOVES it (#4329).**
+  `local:n:homerus:…` becomes `local:a:homer:…` the day `author_id` is filled and
+  `mint-local-work-ids.mjs --remint-local` runs; every queue row and URL holding the old
+  id then resolves to nothing, silently (742 of 1,588 ids in the pending `same` slice of
+  `work_merge_queue`, measured 2026-10-11). Two rules: **a writer that changes an existing
+  `work_id` plans its aliases with `remintAliasPlan()` (`scripts/lib/work-id-remint.mjs`)**
+  — the old id is aliased only when its whole cluster moves to ONE new id; a split or a
+  partial move gets none, by design. And **anything that ACTS on a stored work id resolves
+  it first with `resolveWorkIds()` (`src/lib/work-alias.ts`)**, which names the outcome
+  (`live` / `alias` / `ambiguous` / `orphaned`) instead of reading "no books" as "done".
+  The minter refuses an author that normalises to nothing rather than mint `local:n::<title>`.
 - Full design, tool list, per-tradition candidate coverage, and open levers:
   **`.claude/docs/work-identity-coverage.md`**.
 - **Acquiring works we're missing — read FIRST, don't reinvent:**
