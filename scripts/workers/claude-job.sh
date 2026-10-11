@@ -161,9 +161,12 @@ pr_of() {  # $1 head branch -> "<url> <head sha>" of its newest PR in any state,
 # byte-identical to what PR #6273 had merged. A file is landed when its blob equals origin/main's at that
 # path, or appears in any commit pushed to origin since the job started. Anything else (and a deletion)
 # is listed. Reads at most 500 paths.
+pushed_blobs() {  # $1 worktree, $2 job start (ISO) -> every blob in a commit pushed to origin since then
+  git -C "$1" log --remotes=origin --since="$2" --raw --no-abbrev --no-renames --format= 2>/dev/null | awk '$4 ~ /^[0-9a-f]+$/ {print $4}' | sort -u
+}
 dirty_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
   local d="$1" seen l f h; seen=$(mktemp)
-  git -C "$d" log --remotes=origin --since="$2" --raw --no-abbrev --no-renames --format= 2>/dev/null | awk '$4 ~ /^[0-9a-f]+$/ {print $4}' | sort -u > "$seen"
+  pushed_blobs "$d" "$2" > "$seen"
   git -C "$d" status --porcelain -uall 2>/dev/null | grep -vE '(node_modules|src/lib/vendor/lamejs-bundle\.js|\.vercel/.*)$' | head -500 | while IFS= read -r l; do
     f=${l:3}; f=${f##* -> }
     if [ -f "$d/$f" ]; then
@@ -175,8 +178,29 @@ dirty_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
   done
   rm -f "$seen"
 }
+# The same test for commits on no remote. A squash merge puts the job's files on main and deletes its
+# branch, so the commits are then on no branch at all; a job that opens its PR from a second clone leaves
+# the same shape. Of twelve such worktrees checked by hand on 2026-10-09, twelve held nothing that was not
+# already on GitHub (#6358). For every path those commits touch: the file as it stands at HEAD is landed
+# when its blob equals origin/main's at that path or appears in a commit pushed since the job started; a
+# path HEAD deleted is landed when origin/main lacks it too. Prints the paths that are not landed.
+unpushed_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
+  local d="$1" seen f h; seen=$(mktemp)
+  pushed_blobs "$d" "$2" > "$seen"
+  git -C "$d" log HEAD --not --remotes=origin --name-only --no-renames --format= -z 2>/dev/null | sort -zu | while IFS= read -r -d '' f; do
+    [ -n "$f" ] || continue
+    h=$(git -C "$d" rev-parse -q --verify "HEAD:$f" 2>/dev/null)
+    if [ -z "$h" ]; then git -C "$d" rev-parse -q --verify "origin/main:$f" >/dev/null 2>&1 || continue
+    else
+      [ "$h" = "$(git -C "$d" rev-parse -q --verify "origin/main:$f" 2>/dev/null)" ] && continue
+      grep -qx "$h" "$seen" && continue
+    fi
+    echo "$f"
+  done
+  rm -f "$seen"
+}
 landing_check() {
-  local name="$1" d="$(wt_dir "$1")" brief="$JD/$1.brief.txt" risk="" rep="" since br="" ahead=0 nc p1="" p2="" pr="" dirty unp h
+  local name="$1" d="$(wt_dir "$1")" brief="$JD/$1.brief.txt" risk="" rep="" since br="" ahead=0 nc p1="" p2="" pr="" dirty unp unl h
   [ -f "$brief" ] || { echo "REPORT: no brief file $brief"; return; }
   since=$(date -u -d "@$(stat -c %Y "$brief")" +%FT%TZ)
   landing_contract "$name" "$brief"
@@ -205,14 +229,17 @@ landing_check() {
     elif [ "$LC_PR" = auto ] && [ "${ahead:-0}" -gt 0 ]; then rep="$rep $ahead commit(s) beyond main but no PR;"; fi
   fi
   # 3. Work at risk: it exists only in this worktree. A commit counts as pushed when some remote branch
-  # holds it (jobs push under other names: eleven false "unpushed" on 2026-10-07), or when it is the head
-  # of a PR (a squash-merged PR's branch is deleted, and its commits are then on no branch at all).
+  # holds it (jobs push under other names: eleven false "unpushed" on 2026-10-07), when it is the head
+  # of a PR, or when every file it touched is on GitHub already (unpushed_not_landed).
   if [ -d "$d" ]; then
     dirty=$(dirty_not_landed "$d" "$since")
     [ -n "$dirty" ] && risk="$risk $(echo "$dirty" | wc -l) uncommitted file(s) in $d ($(echo "$dirty" | head -3 | tr '\n' ' ' | sed 's/ $//'));"
     unp=$(git -C "$d" rev-list --count HEAD --not --remotes=origin 2>/dev/null); h=$(git -C "$d" rev-parse HEAD 2>/dev/null)
     if [ "${unp:-0}" -gt 0 ]; then
-      case " $p1 $p2 " in *" $h "*) ;; *) risk="$risk $unp unpushed commit(s) on $br;" ;; esac
+      case " $p1 $p2 " in *" $h "*) ;; *)
+        unl=$(unpushed_not_landed "$d" "$since")
+        [ -n "$unl" ] && risk="$risk $unp unpushed commit(s) on $br ($(echo "$unl" | wc -l) file(s) on no remote: $(echo "$unl" | head -3 | tr '\n' ' ' | sed 's/ $//'));" ;;
+      esac
     fi
   fi
   local c="[#${LC_ISSUE:-?} from ${LC_ISSUE_SRC:-nothing}; PR: $LC_PR]"
@@ -245,6 +272,18 @@ Committed by claude-job.sh so the work survives the job (#6360).${big:+ Left out
     else echo "[claude-job] checkpoint push FAILED ($2) $(date -u +%FT%TZ)" >> "$log"; fi
   )
   return 0
+}
+
+# Jobs run `claude -p --permission-mode acceptEdits`, which allows edits and nothing else: every shell
+# command, the `touch <name>.done` included, needs "Bash" in the user settings' allow-list. On 2026-10-09
+# earthai-l7a read ready=yes with no permissions block, and its first job looped, unable to write its done
+# file (#6358). True when the allow-list holds a bare Bash rule or the default mode skips the prompt.
+can_run_bash() {  # [$1 settings file]
+  python3 -c '
+import json, sys
+p = json.load(open(sys.argv[1])).get("permissions") or {}
+ok = any(a in ("Bash", "Bash(*)") for a in p.get("allow") or []) or p.get("defaultMode") == "bypassPermissions"
+sys.exit(0 if ok else 1)' "${1:-/root/.claude/settings.json}" 2>/dev/null
 }
 
 # Fix 2 (placement half): the box's own account, from the climits meter (#6359). The meter runs on the
@@ -509,6 +548,7 @@ case "${1:-status}" in
     gh auth status >/dev/null 2>&1 || why="$why,gh-not-logged-in"
     [ -s /root/sourcelibrary/.env.production.local ] || why="$why,no-env-file"
     [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
+    can_run_bash || why="$why,no-bash-permission"
     ready=yes; [ -n "$why" ] && ready="no:${why#,}"
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
     echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;

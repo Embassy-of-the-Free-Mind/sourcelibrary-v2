@@ -60,7 +60,7 @@ PR: yes
 |---|---|---|
 | `ok` | comment found; PR found if one was expected; nothing left on the box | ntfy low |
 | `REPORT:` | the comment or the PR was not found | ntfy low, and `landings.txt` for the morning digest |
-| `AT-RISK:` | uncommitted files in the worktree, or commits that are on no remote branch and are not a PR's head | ntfy **high** |
+| `AT-RISK:` | uncommitted files in the worktree, or commits that are on no remote branch, are not a PR's head, and touch a file whose content is on no remote (a squash-merged branch reads as landed) | ntfy **high** |
 
 A high page means work exists only on that box. The job's HEADLESS RULES tell it to leave `git status --porcelain` empty before it writes its done file, so scratch left in a worktree pages too: move it to `$JOB_SCRATCH`.
 
@@ -72,6 +72,7 @@ A high page means work exists only on that box. The job's HEADLESS RULES tell it
 
 - **Checkpoint on every non-DONE exit.** GAVE UP, a weekly cap, `stop`, and the sweep's "died twice" all commit the worktree (gitignore applies; files over 5 MB, the shared `node_modules` link, the vendored bundle and `.vercel` are left out) and push it to the job's branch, or to `<branch>-checkpoint-<time>` if that push is refused. The page names the branch. A lost job costs time, not results.
 - **A weekly cap moves the job.** The 6-hour wait is for the 5-hour session window only; a weekly cap resets in days. The job checkpoints, then `box.sh pick` finds the emptiest ready box and the job continues there as `<name>-mv`, from the checkpoint branch (low page). One move per job; if no box can take it, it pages high with the laptop step.
+- **No placement on a box that cannot run a shell command.** Jobs run with `--permission-mode acceptEdits`, so `/root/.claude/settings.json` must allow `Bash` (or the job cannot write its done file and loops: earthai-l7a, 2026-10-09). `where` reports `ready=no:no-bash-permission` otherwise.
 - **No placement on a spent account.** `start` refuses when this box's account is at or over `MAX_WEEKLY_PCT` (90) of its weekly limit, read from the climits meter (`/root/.claude-limits/latest.json`; it runs on main and `box.sh push-limits` copies it to the other boxes every 5 min; each box looks up its own login's account; absent or older than 30 min = no check). `where` prints `weekly_pct` and reports `ready=no:weekly-NNpct`, so `job-where.sh` skips the box. Override: `JOB_IGNORE_LIMIT=1`.
 - **Jobs decide two-way doors.** The HEADLESS RULES let a job raise `DECISION:` only above the $10 spend floor or on the hold list; anything else it decides and logs as `TAKEN:` (collected into `taken.txt`). DECISION lines go to `decisions.txt` for the morning digest and no longer page one by one.
 
