@@ -309,6 +309,9 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
     galleryImages,
     contributingLibraries,
     basePath,
+    // /libraries/[slug]/gallery is a 308 to the UNSCOPED /gallery; the global
+    // gallery takes the library as a filter instead (#5954).
+    gallery: { path: '/gallery', query: `library=${encodeURIComponent(partner.providerKey)}` },
     sort,
     language,
     q,
