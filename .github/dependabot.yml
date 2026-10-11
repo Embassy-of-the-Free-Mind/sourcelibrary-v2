@@ -58,3 +58,8 @@ updates:
       # until that widens.
       - dependency-name: nodemailer
         update-types: [version-update:semver-major]
+      # eslint-config-next pulls eslint-plugin-react 7.37.5, which calls
+      # context.getFilename() — removed in ESLint 10 — so `npm run lint` crashes
+      # on 10.x. Held on ^9 until that plugin ships ESLint 10 support (#4710).
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
