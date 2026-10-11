@@ -6,7 +6,7 @@
 //
 // #6361 item 3 (Derek, 2026-10-10, #6420): re-read the 6,494 not-applicable pages (results/not-applicable.tsv) with
 // the SAME model and prompt as stage 1 (gemini-3.8-flash-low, v13 prompt file sent verbatim, --mode plan,
-// --print-timeout 180s, --output-format json, never --dangerously-skip-permissions). When a reply is a plan note,
+// --print-timeout 180s, --output-format json, never the auto-approve flag). When a reply is a plan note,
 // empty, or a denied tool, continue that conversation once with NUDGE; such a row is marked `nudged`. Up to
 // ROUNDS fresh calls (each with its one nudge). FILES ONLY: no Mongo, no API.
 //
