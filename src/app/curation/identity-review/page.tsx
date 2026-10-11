@@ -452,6 +452,7 @@ interface MergeManifestRow {
   loser: string;
   booksToMove: number;
   willBeStale: boolean;
+  staleReason?: 'orphaned-id' | 'ambiguous-alias' | 'already-merged' | null;
   llmReason: string;
 }
 
@@ -583,7 +584,7 @@ function WorkMergesTab({ bph }: { bph: boolean }) {
                 {batch === 'approve' ? m.winner : '–'}
               </td>
               <td className="px-2 py-1.5 text-stone-600 whitespace-nowrap">
-                {m.willBeStale ? <span className="text-amber-700">already resolved</span> : (batch === 'approve' ? m.booksToMove : '0')}
+                {m.willBeStale ? <span className="text-amber-700">{m.staleReason || 'already resolved'}</span> : (batch === 'approve' ? m.booksToMove : '0')}
               </td>
             </>
           )}
