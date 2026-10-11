@@ -32,6 +32,7 @@ import { isPaused } from '../lib/pause.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { makeOwnedScratchDir, sweepLeakedScratchDirs, freeBytes } from './lib/scratch-dirs.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -67,7 +68,12 @@ const ALIGN_SAMPLES = parseInt(getArg('align-samples') || '3', 10);
 // Escape hatch for backfills over items already proven aligned. Never default
 // this on — the check is what stops a silent off-by-one reaching readers.
 const SKIP_ALIGN_CHECK = process.argv.includes('--skip-align-check');
-const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
+// Only for sl-bulk-* dirs with no `.owner` file (pre-#4564, or archive-images-fast.ts);
+// owned dirs are swept as soon as their owner process is gone.
+const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;
+// Don't start a book's multi-GB extraction with less than this free on the scratch
+// filesystem (#4564: a large Sanskrit volume needs 3-4GB, BOOK_CONCURRENCY run at once).
+const MIN_SCRATCH_FREE_GB = parseFloat(getArg('min-free-gb') || '15');
 const MAX_BULK_FAILURES = 5;  // Circuit-break a book after N consecutive bulk-archive failures
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -99,32 +105,20 @@ const stats = {
   startTime: Date.now(),
 };
 
-// Sweep leftover sl-bulk-* tmpdirs older than STALE_TMP_AGE_MS. A SIGKILL
-// (OOM, scheduler kill, wrapper teardown) skips the per-book finally block and
-// strands the 700MB-2GB JP2 extraction dir on disk.
+// Sweep leaked sl-bulk-* tmpdirs. A SIGKILL (OOM, scheduler kill, wrapper
+// teardown) skips the per-book finally block and strands the 700MB-4GB JP2
+// extraction dir; the retry mkdtemps a new one. Dirs whose owner process is dead
+// go at once, whatever their age (#4564) — the old age-only rule let 44GB pile up.
 function cleanupStaleTmpDirs() {
-  const tmpRoot = os.tmpdir();
-  const cutoff = Date.now() - STALE_TMP_AGE_MS;
-  let removed = 0;
-  let bytesFreed = 0;
-  let entries;
-  try { entries = fs.readdirSync(tmpRoot); } catch { return; }
-  for (const name of entries) {
-    if (!name.startsWith('sl-bulk-')) continue;
-    const full = path.join(tmpRoot, name);
-    try {
-      const st = fs.statSync(full);
-      if (!st.isDirectory() || st.mtimeMs >= cutoff) continue;
-      let size = 0;
-      try { size = parseInt(execSync(`du -sb "${full}" 2>/dev/null | cut -f1`).toString().trim()) || 0; } catch {}
-      fs.rmSync(full, { recursive: true, force: true });
-      removed++;
-      bytesFreed += size;
-    } catch {}
+  const r = sweepLeakedScratchDirs(os.tmpdir(), 'sl-bulk-', { unownedMaxAgeMs: STALE_TMP_AGE_MS });
+  if (r.removed > 0) {
+    console.log(`[archive-bulk] Swept ${r.removed} leaked tmpdirs (${(r.bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
   }
-  if (removed > 0) {
-    console.log(`[archive-bulk] Swept ${removed} stale tmpdirs (${(bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
-  }
+}
+
+// Free GB on the scratch filesystem, or Infinity if statfs is unavailable.
+function scratchFreeGb() {
+  try { return freeBytes(os.tmpdir()) / (1024 ** 3); } catch { return Infinity; }
 }
 
 // After repeated failures, mark a book as blocked so it stops being selected.
@@ -350,7 +344,16 @@ async function processBook(book, db) {
     .find({ book_id: book.id }, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } })
     .sort({ page_number: 1 }).toArray();
 
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `sl-bulk-${iaId.slice(0, 20)}-`));
+  // Low disk is the box's problem, not the book's: skip without recording a failure.
+  if (scratchFreeGb() < MIN_SCRATCH_FREE_GB) cleanupStaleTmpDirs();
+  const freeGb = scratchFreeGb();
+  if (freeGb < MIN_SCRATCH_FREE_GB) {
+    console.log(`  [SKIP] ${book.title?.slice(0, 50)} — only ${freeGb.toFixed(1)}GB free in ${os.tmpdir()} (need ${MIN_SCRATCH_FREE_GB}GB, --min-free-gb)`);
+    stats.booksSkipped++;
+    return;
+  }
+
+  const tmpDir = makeOwnedScratchDir(os.tmpdir(), `sl-bulk-${iaId.slice(0, 20)}-`);
 
   try {
     const download = await resolveDownloadUrl(iaId);
