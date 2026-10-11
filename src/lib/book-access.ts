@@ -141,7 +141,7 @@ export async function isBookReadable(book: BookLike | null | undefined, request:
  */
 const METADATA_CARD_FIELDS = [
   'id', 'slug', 'title', 'display_title', 'author', 'published', 'year',
-  'language', 'original_language', 'text_role', 'is_translation',
+  'language', 'original_language', 'text_role', 'text_role_source', 'is_translation',
   'pages_count', 'pages_translated', 'categories', 'work_id', 'doi',
   'reading_summary', 'contains_works', 'chapters',
   'thumbnail', 'thumbnail_blob', 'image_display', 'image_thumb',

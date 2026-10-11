@@ -74,9 +74,9 @@ function displayLanguage(raw) {
  *
  * `work_language` is emitted only when the work's language is known AND differs
  * from the language we translated from. Equal languages carry no information
- * (the FRBR work and manifestation coincide), and an absent field reads as "this
- * edition is in the work's own language" — whereas `work_language: null` invites
- * a citation renderer to print "null".
+ * (the FRBR work and manifestation coincide). The field is omitted rather than
+ * nulled because `work_language: null` invites a citation renderer to print
+ * "null" — absent means NOT RECORDED, never "same as the edition" (#4441).
  */
 export function citationLanguageFields(book) {
   const fields = { original_language: book.language ?? '' };
