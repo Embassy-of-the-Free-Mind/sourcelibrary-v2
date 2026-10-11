@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Library, ExternalLink, BookOpen, Globe } from 'lucide-react';
+import { Library, ExternalLink, Globe } from 'lucide-react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import HeroScrim from '@/components/HeroScrim';
@@ -119,10 +119,9 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
     .sort((a, b) => b.count - a.count);
 }
 
-function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: {
+function PartnerCard({ partner, heroImage, languages, size = 'normal' }: {
   partner: typeof LIBRARY_PARTNERS[string];
   heroImage?: string;
-  count: number;
   languages: string[];
   size?: 'hero' | 'featured' | 'normal';
 }) {
@@ -198,10 +197,6 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
         <div className={`flex items-center gap-x-3 gap-y-1 min-w-0 ${
           isCompact ? 'mt-2 flex-nowrap' : 'mt-5 flex-wrap'
         }`}>
-          <span className="inline-flex shrink-0 items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
-            <BookOpen className="w-3 h-3" />
-            {count.toLocaleString('en-US')} books
-          </span>
           {topLangs && (
             <span className={`items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : 'inline-flex'}`}>
               <Globe className="w-3 h-3 shrink-0" />
@@ -295,7 +290,7 @@ export default async function LibrariesPage() {
         {/* BPH — Home Library (full-width hero) */}
         {bph && (
           <section className="mb-12">
-            <PartnerCard partner={bph} heroImage={bph.heroImage} count={bph.count} languages={bph.languages} size="hero" />
+            <PartnerCard partner={bph} heroImage={bph.heroImage} languages={bph.languages} size="hero" />
           </section>
         )}
 
@@ -313,7 +308,6 @@ export default async function LibrariesPage() {
                 key={partner.slug}
                 partner={partner}
                 heroImage={partner.heroImage}
-                count={partner.count}
                 languages={partner.languages}
               />
             ))}
@@ -335,8 +329,7 @@ export default async function LibrariesPage() {
                   key={partner.slug}
                   partner={partner}
                   heroImage={partner.heroImage}
-                  count={partner.count}
-                  languages={partner.languages}
+                    languages={partner.languages}
                 />
               ))}
             </div>
@@ -361,7 +354,6 @@ export default async function LibrariesPage() {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary hover:border-accent-rust/30 transition-colors"
                 >
                   {lib.name}
-                  <span className="text-xs text-muted">({lib.count})</span>
                 </span>
               ))}
             </div>
