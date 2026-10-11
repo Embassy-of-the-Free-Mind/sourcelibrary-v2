@@ -10,7 +10,7 @@ import { applySpanEdits, normalizeEdits } from '../../../../../scripts/lib/span-
 export const maxDuration = 10;
 
 const FIELDS = new Set(['ocr', 'translation']);
-const DRAFTED_BY = new Set(['volunteer', 'assistant_accepted', 'mixed']);
+const DRAFTED_BY = new Set(['assistant', 'volunteer', 'assistant_accepted', 'mixed']);
 const clip = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
 
 /**

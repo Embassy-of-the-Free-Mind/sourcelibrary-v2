@@ -45,7 +45,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.8.0';
+const SERVER_VERSION = '4.9.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1051,7 +1051,67 @@ async function proposeCollection(args: Record<string, unknown>) {
 const SHIFT_VERDICTS = getRatingOptions('translation-check').map((r) => r.rating);
 const clipStr = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
 
+/** Steps for a model-operated book run, returned with every page so a long chat
+ *  never loses them. The volunteer donates their Claude; the person runs it. */
+const BOOK_RUN_STEPS =
+  'For this page: (1) read the scan and compare the transcription with it, line by line and mark by mark ' +
+  '(long s vs f, u/v, abbreviation marks, the margins); (2) compare the English with the transcription: ' +
+  'omissions ("…" where the original runs on), additions, misreadings, and text carried over from the ' +
+  'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
+  '(3) tell the user in two or three plain sentences what the page says and what you found, quoting only ' +
+  'the words at issue; do not paste the full transcription or translation unless asked; they do not need ' +
+  'to read the language; (4) call ' +
+  'submit_page_review with mode "book-run" and YOUR verdict and findings; (5) for each error you can see ' +
+  'on the scan or in the original, call propose_correction with drafted_by "assistant" (transcription ' +
+  'before translation); (6) ask whether to continue, and on yes call continue_review_shift with next.book ' +
+  'and next.after. Submit only after the user agreed, once at the start, that findings are submitted as ' +
+  'you go. Never invent a problem to have something to report: "both_sound" with no findings is a ' +
+  'useful result.';
+
+async function getBookRunPage(args: Record<string, unknown>, extra: Record<string, string>) {
+  const params = new URLSearchParams(extra);
+  const code = clipStr(args.volunteer_code, 64);
+  if (code) params.set('volunteer_id', code);
+  const language = clipStr(args.language, 40);
+  if (language) params.set('language', language);
+  const r = await apiGet('/review/book-run', params) as Record<string, unknown>;
+  const page = r.page as Record<string, unknown> | null;
+  return {
+    volunteer_code: r.volunteer_id,
+    ...(r.resumed ? { resumed: true } : {}),
+    run: r.run ?? null,
+    page,
+    next: r.next ?? null,
+    ...(r.message ? { message: r.message } : {}),
+    ...(page ? { how_to_run: BOOK_RUN_STEPS } : {}),
+  };
+}
+
 async function startReviewShift(args: Record<string, unknown>) {
+  const extra: Record<string, string> = {};
+  const book = clipStr(args.book, 300);
+  if (book) extra.book = book;
+  if (args.new_book === true) extra.fresh = '1';
+  const result = await getBookRunPage(args, extra);
+  return {
+    ...result,
+    first_time: 'Before the first page, tell the user in a few lines: their Claude will check this book page by page ' +
+      'against the scans and send what it finds to Source Library; they can watch, ask questions, or just say ' +
+      '"continue"; findings and proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s ' +
+      'translations, and nothing changes on a page until a second reader agrees. Ask once whether that is OK. ' +
+      'Give them volunteer_code so a later chat can pick up where this one stops.',
+  };
+}
+
+async function continueReviewShift(args: Record<string, unknown>) {
+  const book = clipStr(args.book, 300);
+  if (!book) return { error: 'book is required: pass next.book from the previous page' };
+  const extra: Record<string, string> = { book };
+  if (args.after != null) extra.after = String(args.after);
+  return getBookRunPage(args, extra);
+}
+
+async function startBlindCheck(args: Record<string, unknown>) {
   const params = new URLSearchParams();
   const code = clipStr(args.volunteer_code, 64);
   if (code) params.set('volunteer_id', code);
@@ -1065,7 +1125,7 @@ async function startReviewShift(args: Record<string, unknown>) {
     language: shift.language,
     pages: shift.items,
     ...(shift.message ? { message: shift.message } : {}),
-    how_to_run: 'One page at a time: show it, ask the user for THEIR verdict first, then give your reading with exact quotes, let them accept or reject each point, then submit_page_review with their final verdict. Tell the user their volunteer_code so they can continue next time.',
+    how_to_run: 'One page at a time: show it, ask the user for THEIR verdict first, then give your reading with exact quotes, let them accept or reject each point, then submit_page_review with mode "blind" and their final verdict. Tell the user their volunteer_code so they can continue next time.',
   };
 }
 
@@ -1084,8 +1144,11 @@ async function submitPageReview(args: Record<string, unknown>) {
     : [];
   const asVerdict = (v: unknown) => (typeof v === 'string' && SHIFT_VERDICTS.includes(v) ? v : null);
   const tv = args.text_version as Record<string, unknown> | undefined;
+  // book-run: the verdict is the volunteer's Claude's, with the person running it;
+  // blind: the verdict is the person's own, given before the assistant's reading.
+  const mode = args.mode === 'blind' ? 'blind' : 'book-run';
   await apiPost('/review/submit', {
-    queue: 'translation-check',
+    queue: mode === 'blind' ? 'translation-check' : 'book-run',
     item_id: args.item_id,
     rating: verdict,
     note: clipStr(args.note, 2000),
@@ -1093,8 +1156,12 @@ async function submitPageReview(args: Record<string, unknown>) {
     volunteer_label: clipStr(args.name, 80),
     detail: {
       via: 'mcp-shift',
+      mode,
       shift_id: clipStr(args.shift_id, 64),
-      verdict_before_assistant: args.verdict_before_assistant === true,
+      book_id: clipStr(args.book_id, 64),
+      page_number: typeof args.page_number === 'number' ? args.page_number : null,
+      user_looked: typeof args.user_looked === 'boolean' ? args.user_looked : null,
+      verdict_before_assistant: mode === 'blind' && args.verdict_before_assistant === true,
       first_verdict: asVerdict(args.first_verdict),
       assistant_verdict: asVerdict(args.assistant_verdict),
       assistant_findings: findings,
@@ -1103,7 +1170,7 @@ async function submitPageReview(args: Record<string, unknown>) {
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
     },
   });
-  return { ok: true, message: 'Review recorded. Thank you. It goes into the library\'s quality measurement, not onto the page.' };
+  return { ok: true, message: 'Review recorded. Thank you. It is evidence about this page; it does not change the page by itself.' };
 }
 
 async function proposeCorrection(args: Record<string, unknown>) {
@@ -1421,13 +1488,43 @@ const TOOLS: Tool[] = [
   {
     name: 'start_review_shift',
     title: 'Start a Review Shift',
-    description: 'Start a volunteer REVIEW SHIFT: up to five pages for the user to check, each with its scan (returned as inline images), our transcription of the original, and our English translation. Use when the user wants to help Source Library by checking pages, says "start a shift", or asks how they can contribute. The user is the reviewer; you are their assistant. RUN THE SHIFT THIS WAY, one page at a time: (1) show the page and its two texts; (2) ASK THE USER FOR THEIR OWN VERDICT FIRST, before you offer any opinion, so their judgement is not anchored on yours (it is what makes the shift valuable: a reader from outside any model family); (3) then give your reading: compare the scan with the transcription, then the transcription with the translation, quoting exact words, and list concrete problems; (4) let the user accept or reject each point and settle their final verdict; (5) call submit_page_review. Never choose the verdict yourself and never submit without the user\'s explicit answer. If the user cannot read the page\'s language or the scan is unreadable, say so and submit verdict "unclear" with a note, or skip it. Pass back volunteer_code from the response on every later call and tell the user to keep it for their next shift. Shifts are for a person at the keyboard; do not run them unattended.',
+    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user runs the shift, watches, asks questions and says "continue". Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Shifts are for a person at the keyboard: one page per message, never run unattended or in a loop.',
     annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin", "Greek", "Arabic", "German", "Chinese", "Tibetan". Omit to accept any language, but ask the user first which languages they read.' },
         volunteer_code: { type: 'string', description: 'The code from the user\'s earlier shift, if they have one. Omit on a first shift; one is issued.' },
+        book: { type: 'string', description: 'A book the user wants to check: id, slug or sourcelibrary.org reader URL (optional).' },
+        language: { type: 'string', description: 'Prefer books in this original language, e.g. "Latin" (optional; any language works, the user need not read it).' },
+        new_book: { type: 'boolean', description: 'True to start a different book instead of resuming the last one.' },
+      },
+    },
+  },
+  {
+    name: 'continue_review_shift',
+    title: 'Continue a Review Shift',
+    description: 'Next page of the book being reviewed, after the user says "continue" (or "next"). Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
+    annotations: { title: 'Continue a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        book: { type: 'string', description: 'next.book from the previous page' },
+        after: { type: 'number', description: 'next.after from the previous page' },
+        volunteer_code: { type: 'string' },
+      },
+      required: ['book', 'after', 'volunteer_code'],
+    },
+  },
+  {
+    name: 'start_blind_check',
+    title: 'Start a Blind Check (for readers of the language)',
+    description: 'OPTIONAL lane, only for a user who reads the original language and asks to judge pages themselves: up to five random pages from different books, each with scan, transcription and English. Here the USER is the reviewer: ask for THEIR verdict first, before any opinion of yours, then give your reading with exact quotes, let them accept or reject each point, and call submit_page_review with mode "blind" and their final verdict. Never choose the verdict for them. For everyone else use start_review_shift.',
+    annotations: { title: 'Start a Blind Check', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin".' },
+        volunteer_code: { type: 'string' },
         pages: { type: 'number', description: 'How many pages (1-5, default 5).' },
       },
     },
@@ -1435,52 +1532,56 @@ const TOOLS: Tool[] = [
   {
     name: 'submit_page_review',
     title: 'Submit a Page Review',
-    description: 'Record the user\'s verdict on one page from start_review_shift. The verdict must be the USER\'S, given in this conversation, never yours. Verdicts: both_sound (transcription matches the scan and the English matches the original), translation_drift (transcription right, English departs from it), transcription_off (the text does not match the scan, so the English cannot be judged), both_off, unclear. Set verdict_before_assistant true only if the user gave a verdict before you shared your reading. Put your own reading in assistant_verdict and assistant_findings, so the library can compare the two. Reviews are evidence for the library\'s quality measurement; they do not edit any page.',
+    description: 'Record the verdict on one page of a shift. mode "book-run" (start_review_shift / continue_review_shift): the verdict and findings are YOURS, from reading the scan and both texts; set user_looked true if the user checked anything on the page themselves. mode "blind" (start_blind_check): the verdict is the USER\'S, given before your reading; put yours in assistant_verdict. Verdicts: both_sound (transcription matches the scan and the English matches the original), translation_drift (transcription right, English departs from it), transcription_off (the text does not match the scan), both_off, unclear (the scan or the text cannot be judged). Quote exact words in every finding. A review is evidence about the page; it does not change it.',
     annotations: { title: 'Submit a Page Review', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        item_id: { type: 'string', description: 'item_id from start_review_shift' },
-        shift_id: { type: 'string', description: 'shift_id from start_review_shift' },
-        volunteer_code: { type: 'string', description: 'volunteer_code from start_review_shift' },
-        verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'The user\'s final verdict.' },
-        verdict_before_assistant: { type: 'boolean', description: 'True if the user committed to a verdict before seeing your reading.' },
-        first_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'The verdict the user gave before your reading, if it differs from the final one.' },
-        note: { type: 'string', description: 'The user\'s own words on what is wrong or uncertain (optional, max 2000 chars).' },
-        assistant_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'Your own verdict on the page.' },
+        mode: { type: 'string', enum: ['book-run', 'blind'], description: '"book-run" unless the page came from start_blind_check.' },
+        item_id: { type: 'string', description: 'page.item_id (book run) or the item\'s item_id (blind check)' },
+        volunteer_code: { type: 'string' },
+        verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'book-run: your verdict. blind: the user\'s final verdict.' },
+        book_id: { type: 'string', description: 'run.book_id (book run)' },
+        page_number: { type: 'number', description: 'page.page_number (book run)' },
+        user_looked: { type: 'boolean', description: 'book-run: true if the user checked something on this page themselves.' },
+        verdict_before_assistant: { type: 'boolean', description: 'blind: true if the user committed to a verdict before seeing your reading.' },
+        first_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'blind: the user\'s verdict before your reading, if it changed.' },
+        note: { type: 'string', description: 'Anything a later reader should know (optional, max 2000 chars).' },
+        assistant_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'Your own verdict (blind mode; in book-run it equals verdict).' },
         assistant_findings: {
           type: 'array',
-          description: 'Problems you pointed out, each with the user\'s response (max 12).',
+          description: 'Problems found, each with an exact quote (max 12).',
           items: {
             type: 'object',
             properties: {
               layer: { type: 'string', enum: ['transcription', 'translation'] },
               quote: { type: 'string', description: 'The exact words at issue (max 300 chars)' },
-              problem: { type: 'string', description: 'What is wrong (max 500 chars)' },
-              user_agreed: { type: 'boolean' },
+              problem: { type: 'string', description: 'What is wrong, and what the scan or original shows (max 500 chars)' },
+              user_agreed: { type: 'boolean', description: 'Only if the user actually weighed in on this point' },
             },
             required: ['layer', 'problem'],
           },
         },
-        reader_languages: { type: 'string', description: 'Languages the user says they read, e.g. "Latin, Italian".' },
-        assistant_model: { type: 'string', description: 'Your model name, if known (for analysis only).' },
-        text_version: { type: 'object', description: 'text_version from the item, passed back unchanged.' },
+        reader_languages: { type: 'string', description: 'Languages the user says they read, if they said.' },
+        assistant_model: { type: 'string', description: 'Your model name, if known.' },
+        text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
+        shift_id: { type: 'string', description: 'shift_id (blind check only)' },
         name: { type: 'string', description: 'How the user wants to be credited (optional).' },
       },
-      required: ['item_id', 'volunteer_code', 'verdict', 'verdict_before_assistant'],
+      required: ['item_id', 'volunteer_code', 'verdict'],
     },
   },
   {
     name: 'propose_correction',
     title: 'Propose a Correction',
-    description: 'During a review shift, propose a correction to a page\'s transcription (field "ocr") or English (field "translation") that the USER has decided on. A correction is a list of exact span edits: each "find" must be copied exactly from the text the shift returned and occur once on the page (add surrounding words if it repeats); "replace" is the corrected text ("" deletes). Fix only what the user can see is wrong on the scan or in the original; do not restyle or modernise a translation. Propose transcription fixes before translation fixes, as separate calls. Pass base_hash = the item\'s text_version for that field. A proposal does NOT change the page: a second reader checks it against the scan before it is applied, with the volunteer credited. If the call says the page changed since it was loaded, tell the user and move on. Set drafted_by honestly: "volunteer" if the user supplied the wording, "assistant_accepted" if you drafted it and the user approved it, "mixed" otherwise.',
+    description: 'During a review shift, propose a correction to a page\'s transcription (field "ocr") or English (field "translation"). A correction is a list of exact span edits: each "find" must be copied exactly from the text the shift returned and occur once on the page (add surrounding words if it repeats); "replace" is the corrected text ("" deletes). Fix only what the scan or the original shows is wrong: misread letters, dropped or added words, a sentence the English skips. Do not restyle or modernise. Propose transcription fixes before translation fixes, as separate calls. Pass base_hash = page.text_version for that field. A proposal does NOT change the page: it is applied only after a second reader agrees, and the volunteer is credited. If the call says the page changed since it was loaded, say so and move on. drafted_by: "assistant" if you found and worded it in a book run, "volunteer" if the user supplied the wording, "assistant_accepted" if you drafted it and the user approved it specifically, "mixed" otherwise.',
     annotations: { title: 'Propose a Correction', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        item_id: { type: 'string', description: 'item_id from start_review_shift' },
+        item_id: { type: 'string', description: 'page.item_id from the shift' },
         field: { type: 'string', enum: ['ocr', 'translation'], description: '"ocr" for the transcription, "translation" for the English' },
-        base_hash: { type: 'string', description: 'text_version.ocr or text_version.translation from the item' },
+        base_hash: { type: 'string', description: 'text_version.ocr or text_version.translation from the page' },
         edits: {
           type: 'array',
           description: 'Span edits (1-30).',
@@ -1494,8 +1595,8 @@ const TOOLS: Tool[] = [
             required: ['find', 'replace'],
           },
         },
-        volunteer_code: { type: 'string', description: 'volunteer_code from start_review_shift' },
-        drafted_by: { type: 'string', enum: ['volunteer', 'assistant_accepted', 'mixed'] },
+        volunteer_code: { type: 'string' },
+        drafted_by: { type: 'string', enum: ['assistant', 'volunteer', 'assistant_accepted', 'mixed'] },
         note: { type: 'string', description: 'Anything the second reader should know (optional)' },
         assistant_model: { type: 'string', description: 'Your model name, if known' },
         shift_id: { type: 'string' },
@@ -1588,6 +1689,8 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
     case 'start_review_shift': return startReviewShift(args);
+    case 'continue_review_shift': return continueReviewShift(args);
+    case 'start_blind_check': return startBlindCheck(args);
     case 'submit_page_review': return submitPageReview(args);
     case 'propose_correction': return proposeCorrection(args);
     // Name every tool in the error: a caller that guessed a name ("search") can
@@ -1666,7 +1769,16 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       }));
   }
 
-  if (name === 'start_review_shift' && Array.isArray(r.pages)) {
+  if ((name === 'start_review_shift' || name === 'continue_review_shift') && r.page && typeof r.page === 'object') {
+    const p = r.page as Record<string, unknown>;
+    const run = (r.run ?? {}) as Record<string, unknown>;
+    const urls = Array.isArray(p.scan_urls) ? (p.scan_urls as string[]) : [];
+    return urls.length
+      ? [{ urls, caption: `Scan: ${(run.book_title as string) || 'untitled'}, p. ${p.page_number as number}\n${p.reader_url as string}` }]
+      : [];
+  }
+
+  if (name === 'start_blind_check' && Array.isArray(r.pages)) {
     return (r.pages as Array<Record<string, unknown>>)
       .filter((p) => typeof p.image_url === 'string')
       .slice(0, MAX_INLINE_IMAGES)
@@ -1799,9 +1911,10 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         'Source Library: historical primary sources with transcriptions and English translations. ' +
         'To find and cite texts, use search_library, search_translations and get_quote. ' +
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
-        'or help Source Library, call start_review_shift directly (ask only which language they read ' +
-        'if they have not said), then follow its how_to_run steps; record verdicts with ' +
-        'submit_page_review and fixes with propose_correction.',
+        'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
+        'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
+        'first_time and how_to_run; on "continue" call continue_review_shift. Use start_blind_check ' +
+        'only for a user who reads the language and wants to judge pages themselves.',
     },
   );
 
