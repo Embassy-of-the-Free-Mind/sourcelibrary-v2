@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { translationPercent } from '@/lib/translation-completeness';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -28,6 +29,7 @@ interface BookItem {
   pages_translated?: number;
   pages_ocr?: number;
   pages_blank?: number;
+  pages_translatable?: number | null;
   read_count?: number;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -125,7 +127,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
       projection: {
         _id: 0,
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
-        pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1, read_count: 1,
+        pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1, pages_translatable: 1, read_count: 1,
         thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, faceted_tags: 1,
       },
     })
@@ -264,12 +266,7 @@ async function fetchClusterData(slug: string) {
 function BookCard({ book }: { book: BookItem }) {
   const title = book.display_title || book.title;
   const thumb = getBookThumbnailUrl(book);
-  const pagesOcr = book.pages_ocr || book.pages_count || 0;
-  const denom = Math.max(pagesOcr - (book.pages_blank || 0), 1);
-  const translationPercent =
-    pagesOcr && book.pages_translated
-      ? Math.round((book.pages_translated / denom) * 100)
-      : 0;
+  const pct = translationPercent(book);
 
   return (
     <Link
@@ -302,9 +299,9 @@ function BookCard({ book }: { book: BookItem }) {
           {book.author || 'Unknown author'}
           {book.language ? ` · ${book.language}` : ''}
         </p>
-        {translationPercent > 0 && (
+        {pct > 0 && (
           <p className="text-[11px] text-accent-rust mt-0.5">
-            {translationPercent}% translated
+            {pct}% translated
           </p>
         )}
       </div>

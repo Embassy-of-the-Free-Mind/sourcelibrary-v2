@@ -8,6 +8,7 @@ import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import { bookTitle } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { translationPercent } from '@/lib/translation-completeness';
 
 const PER_PAGE = 60;
 
@@ -24,6 +25,7 @@ interface BookItem {
   pages_ocr?: number;
   pages_translated?: number;
   pages_blank?: number;
+  pages_translatable?: number | null;
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -470,9 +472,9 @@ export default function CollectionAllBooks({
                 thumbnail_frame: book.thumbnail_frame,
                 language: book.language,
                 published: book.published,
-                translation_percent: book.pages_ocr && book.pages_translated
-                  ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
-                  : 0,
+                pages_blank: book.pages_blank,
+                pages_translatable: book.pages_translatable,
+                translation_percent: translationPercent(book),
                 resource_type: book.resource_type,
               }}
               priority={!expanded && i < 4}

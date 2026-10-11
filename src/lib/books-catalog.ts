@@ -64,6 +64,8 @@ export interface CatalogBook {
    */
   pages_translated_es: number;
   pages_blank: number;
+  /** The honest denominator for translationCompleteness() (#4505). Null until recounted. */
+  pages_translatable: number | null;
   photo: string | null;
   thumbnail: string | null;
   thumbnail_blob: string | null;
@@ -141,7 +143,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // and PostgREST 42703s the whole query on an unknown column — which would take
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
-export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
 
 // The extra columns search and the book-detail shell append after BOOK_SELECT.
 // `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
