@@ -307,6 +307,37 @@ export function repairIiifV3Size(url) {
 }
 
 /**
+ * True when a IIIF Image service is API 3.0 — by its PATH (`/iiif/3/`, as in
+ * isIiifV3Path) or by what the service object itself declares (`type:
+ * ImageService3`, or an image/3 `@context`). `service` is the manifest's
+ * service object when the caller has one; a bare id string is fine.
+ * dl.ndl.go.jp is never v3 here (it 500s on `max`).
+ */
+export function isIiifImageV3Service(serviceId, service) {
+  if (!serviceId || typeof serviceId !== 'string') return false;
+  if (serviceId.includes('dl.ndl.go.jp')) return false;
+  if (isIiifV3Path(`${serviceId}/`)) return true;
+  const s = Array.isArray(service) ? service[0] : service;
+  if (!s || typeof s !== 'object') return false;
+  const type = s.type || s['@type'] || '';
+  if (/ImageService3/.test(String(type))) return true;
+  const ctx = [].concat(s['@context'] || []).join(' ');
+  return /iiif\.io\/api\/image\/3/.test(ctx);
+}
+
+/**
+ * The full-size image URL for a IIIF Image service id: `max` for a v3 service,
+ * `full` otherwise. Every manifest→page builder must use this instead of
+ * appending `/full/full/0/default.jpg` — a v3 service answers that with
+ * `400 Invalid size`, and 91,695 stored pages were minted that way (#4655).
+ * Twin: src/lib/iiif-image-service.ts `iiifFullSizeUrl`.
+ */
+export function iiifFullSizeUrl(serviceId, service) {
+  const size = isIiifImageV3Service(serviceId, service) ? 'max' : 'full';
+  return `${serviceId}/full/${size}/0/default.jpg`;
+}
+
+/**
  * Upgrade a IIIF image URL to request full native resolution.
  *
  * Most institutional IIIF servers honour `/full/full/` (request the

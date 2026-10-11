@@ -60,3 +60,34 @@ export function extractImageService(url: string): IiifImageService | null {
   // v2/level1 and let the viewer confirm via info.json.
   return { id: base, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level1.json' };
 }
+
+/**
+ * True when a IIIF Image service is API 3.0 — by its PATH (`/iiif/3/`, or the
+ * DLCS `/iiif-img/v3/`) or by what the service object declares (`type:
+ * ImageService3`, or an image/3 `@context`). dl.ndl.go.jp serves a v3-shaped
+ * path but 500s on `max`, so it is never v3 here.
+ * Twin: scripts/lib/iiif-utils.mjs `isIiifImageV3Service`.
+ */
+export function isIiifImageV3Service(serviceId: string, service?: unknown): boolean {
+  if (!serviceId) return false;
+  if (serviceId.includes('dl.ndl.go.jp')) return false;
+  if (/\/iiif\/3\/|\/iiif-img\/v3\//.test(`${serviceId}/`)) return true;
+  const s = Array.isArray(service) ? service[0] : service;
+  if (!s || typeof s !== 'object') return false;
+  const o = s as Record<string, unknown>;
+  if (/ImageService3/.test(String(o.type || o['@type'] || ''))) return true;
+  const ctx = ([] as unknown[]).concat(o['@context'] || []).join(' ');
+  return /iiif\.io\/api\/image\/3/.test(ctx);
+}
+
+/**
+ * The full-size image URL for a IIIF Image service id: `max` for a v3 service,
+ * `full` otherwise. Manifest→page builders must use this instead of appending
+ * `/full/full/0/default.jpg` — a v3 service (every Internet Archive manifest)
+ * answers that with `400 Invalid size`, and 91,695 stored pages were minted
+ * that way (#4655). Twin: scripts/lib/iiif-utils.mjs `iiifFullSizeUrl`.
+ */
+export function iiifFullSizeUrl(serviceId: string, service?: unknown): string {
+  const size = isIiifImageV3Service(serviceId, service) ? 'max' : 'full';
+  return `${serviceId}/full/${size}/0/default.jpg`;
+}
