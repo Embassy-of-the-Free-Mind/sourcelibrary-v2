@@ -108,6 +108,18 @@ const NEXT: Card[] = [
   },
 ];
 
+// The machinery the methods above become (design: .claude/docs/quality-research-system.md, #6553).
+// One loop: evidence -> estimate -> plan -> run -> route -> canary -> evidence. The same model that routes
+// production pages decides where to test: a "research router".
+const SYSTEM: Card[] = [
+  { title: '1. Evidence store', body: 'Every observation as one row in Supabase: page, model, route, prompt, judge or reference, score, failures counted not scored. Backfilled from 255 experiments.', status: 'proposed' },
+  { title: '2. Search and dedupe', body: '"Have we tested this?" Vector search over write-ups, briefs and issues; one page scored five times counts as one page. Would have caught the missed Opus result.', status: 'proposed' },
+  { title: '3. Estimator', body: 'Bayesian hierarchical model: quality = model + language (pooled by script family) + page kind + work + judge bias + reference error. A best guess with uncertainty for every cell, tested or not.', status: 'proposed' },
+  { title: '4. Planner', body: 'Value of information: test only where more data could flip a routing decision on many pages. Writes the brief with prior art attached.', status: 'proposed' },
+  { title: '5. Runner', body: 'One harness: fixed CLI runner, two-family judges, planted controls, noise floor, staging, stop rules. Every run writes evidence rows.', status: 'running' },
+  { title: '6. Router and canary', body: 'A routing table the lanes read (page kind to reader, translator, check). A few % of pages go to a challenger (Thompson sampling); results flow back to 1.', status: 'proposed' },
+];
+
 const C = {
   card: { background: '#161b22', border: '1px solid #30363d', borderRadius: 8 } as const,
   dim: { color: '#8b949e' } as const,
@@ -173,6 +185,16 @@ export default function QualityMethodsPage() {
       <h2 style={{ fontSize: 15, fontWeight: 600, margin: '30px 0 8px' }}>Next</h2>
       <div style={{ maxWidth: 820 }}>
         {NEXT.map((card) => <MethodCard key={card.title} card={card} />)}
+      </div>
+
+      <h2 style={{ fontSize: 15, fontWeight: 600, margin: '30px 0 4px' }}>The system these methods become</h2>
+      <p style={{ ...C.dim, fontSize: 13, maxWidth: 820, margin: '0 0 12px', lineHeight: 1.55 }}>
+        A research router: one loop from evidence to routing. The same estimates that choose a model for production
+        pages also choose where the next test runs. A test is the router exploring, with controls attached. Design:
+        <code style={{ fontSize: 12 }}> .claude/docs/quality-research-system.md</code>.
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 10, maxWidth: 1240 }}>
+        {SYSTEM.map((card) => <MethodCard key={card.title} card={card} />)}
       </div>
 
       <h2 style={{ fontSize: 15, fontWeight: 600, margin: '30px 0 8px' }}>How one page moves through it</h2>
