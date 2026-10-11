@@ -9,7 +9,7 @@
  * down is extractTranscription() of the reply (scripts/lib/cli-chatter.mjs), the same rule rescore-extract.mjs applies
  * to every stored engine on the charts. Per round it appends one row to $JOB_SCRATCH/rounds.jsonl:
  *   empties · refusals (blocked, or the reply is chat with no transcription) · over-half-wrong · mean CER on the
- *   failed-20 · mean CER on the good-10 · retries · gate denials. CER per page follows build-ocr-pareto.mjs's ONE
+ *   failed-20 · mean CER on the good-10 · retries · gate denials · reads with text that never opened the image. CER per page follows build-ocr-pareto.mjs's ONE
  *   FAILURE RULE: missing, refused or unaligned → 1.0; capped at 1.
  */
 import fs from 'node:fs';
@@ -50,7 +50,7 @@ for (const uid of uids) {
   const ex = extractTranscription(raw);
   fs.writeFileSync(path.join(od, `${slug}.txt`), ex.text);
   (meters[od] ||= []).push({ slug, engine: ENGINE, finishReason: blocked ? 'SAFETY' : raw.trim() ? 'STOP' : 'CLI_EMPTY', chars: ex.text.length });
-  info[uid] = { empty: !raw.trim(), blocked, chat_only: !!raw.trim() && !ex.text, removed: ex.steps, attempts: r.attempts, nudged: !!r.nudged, gate_denials: r.gate_denials ?? null, secs: r.secs };
+  info[uid] = { empty: !raw.trim(), blocked, chat_only: !!raw.trim() && !ex.text, removed: ex.steps, attempts: r.attempts, nudged: !!r.nudged, gate_denials: r.gate_denials ?? null, gate_calls: r.gate_calls ?? null, secs: r.secs };
 }
 for (const [od, ms] of Object.entries(meters)) fs.writeFileSync(path.join(od, '_meter.jsonl'), ms.map(m => JSON.stringify(m)).join('\n') + '\n');
 const out = path.join(J, `scored-${ROUND}`);
@@ -74,7 +74,9 @@ const row = { round: ROUND, lever: LEVER, set: SET, n: per.length,
   over_half_wrong: per.filter(p => p.cer > 0.5).length,
   mean_cer_failed20: mean(per.filter(p => p.group === 'failed').map(p => p.cer)), mean_cer_good10: mean(per.filter(p => p.group === 'good').map(p => p.cer)),
   mean_cer_all: mean(per.map(p => p.cer)), retried: per.filter(p => (p.attempts || 1) > 1).length, nudged: per.filter(p => p.nudged).length,
-  gate_denials: per.reduce((s, p) => s + (p.gate_denials || 0), 0), extractor_changed: per.filter(p => p.removed?.length).length };
+  gate_denials: per.reduce((s, p) => s + (p.gate_denials || 0), 0),
+  // with the gate: reads with text where the model never opened the image (view_file), a sign of an answer from memory
+  text_without_view: per.filter(p => Array.isArray(p.gate_calls) && !p.empty && !p.gate_calls.includes('view_file')).length, extractor_changed: per.filter(p => p.removed?.length).length };
 fs.writeFileSync(path.join(J, `per-page-${ROUND}.json`), JSON.stringify(per, null, 1));
 if (!args.includes('--no-log')) fs.appendFileSync(path.join(J, 'rounds.jsonl'), JSON.stringify(row) + '\n');
 console.log(JSON.stringify(row));

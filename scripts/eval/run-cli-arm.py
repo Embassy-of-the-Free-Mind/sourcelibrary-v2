@@ -85,11 +85,12 @@ def install_gate(cwd):
     return log
 
 
-def gate_denials(log):
+def gate_calls(log):
+    # the tool calls the model made, in order, as "view_file" or "run_command:deny"
     try:
-        return sum(1 for l in open(log) if '"deny"' in l)
-    except OSError:
-        return 0
+        return [(r.get('tool') or '?') + ('' if r.get('decision') == 'allow' else ':deny') for r in map(json.loads, open(log))]
+    except (OSError, ValueError):
+        return []
 
 
 NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.'
@@ -202,7 +203,8 @@ def main():
                 return
             if cls in (None, 'safety_filter'):
                 break
-        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': a.cli_mode or 'default', 'tool_gate': bool(gate_log), 'gate_denials': gate_denials(gate_log) if gate_log else None, 'denied_actions': meta.get('denied'), 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
+        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': a.cli_mode or 'default', 'tool_gate': bool(gate_log), 'gate_calls': gate_calls(gate_log) if gate_log else None,
+               'gate_denials': sum(c.endswith(':deny') for c in gate_calls(gate_log)) if gate_log else None, 'denied_actions': meta.get('denied'), 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
                'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
         with lock, open(a.out, 'a', encoding='utf-8') as f:
             f.write(json.dumps(row, ensure_ascii=False) + '\n')
