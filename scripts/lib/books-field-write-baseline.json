@@ -21,14 +21,9 @@
     "scripts/analysis/work-coverage.mjs::original_coverage_source",
     "scripts/enrichment/wikidata-books.mjs::wikidata_label",
     "scripts/enrichment/wikidata-books.mjs::wikidata_match",
-    "scripts/import/setup-1041-collections.mjs::color",
-    "scripts/import/setup-1041-collections.mjs::name",
-    "scripts/import/setup-1041-collections.mjs::order",
-    "scripts/import/setup-1041-collections.mjs::subtitle",
     "scripts/maintenance/audit-upgraded-artwork-images.mjs::image_mismatch_suspected",
     "scripts/maintenance/batch-cover-selection.mjs::cover_confidence",
     "scripts/maintenance/batch-cover-selection.mjs::cover_rationale",
-    "scripts/maintenance/dedup-canonical-authors.mjs::is_person",
     "scripts/maintenance/kloss-hidden-reason-backfill.mjs::hidden_reason_backfilled_at",
     "scripts/maintenance/kloss-hidden-reason-backfill.mjs::hidden_reason_prior",
     "scripts/maintenance/reorganize-collections.mjs::name",
@@ -37,8 +32,6 @@
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_adopted_at",
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_sponsor",
     "src/app/api/books/[id]/dedicate/route.ts::dedication",
-    "src/app/api/stripe/webhook/route.ts::digitization_adopted_at",
-    "src/lib/identity-review-apply.ts::reviewed_at",
-    "src/lib/identity-review-apply.ts::reviewed_by"
+    "src/app/api/stripe/webhook/route.ts::digitization_adopted_at"
   ]
 }
