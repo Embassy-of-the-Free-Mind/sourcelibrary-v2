@@ -30,6 +30,7 @@ APPLY=""; [ "${1:-}" = "--apply" ] && APPLY=1
 VOL=${DISK_STEWARD_VOL:-/mnt/HC_Volume_105839809}
 DEST=$VOL/root-moved
 SL=${DISK_STEWARD_SL:-/root/sourcelibrary}
+ROOT=${DISK_STEWARD_ROOT:-/root}
 MIN_GB=${DISK_STEWARD_MIN_GB:-1}
 IDLE_DAYS=${DISK_STEWARD_IDLE_DAYS:-3}
 # Never moved: the live checkout, the job wrapper's state, and tool/config homes.
@@ -45,7 +46,7 @@ fi
 # 2. Move idle /root folders to the volume.
 if [ ! -d "$VOL" ]; then echo "$(now) no volume at $VOL: step 2 skipped"; exit 0; fi
 mkdir -p "$DEST"
-for S in /root/* /root/.[!.]*; do
+for S in "$ROOT"/* "$ROOT"/.[!.]*; do
   [ -d "$S" ] && [ ! -L "$S" ] || continue
   n=$(basename "$S")
   case "$KEEP" in *" $n "*) continue ;; esac
@@ -55,7 +56,19 @@ for S in /root/* /root/.[!.]*; do
     echo "  keep $n ($((kb / 1048576)) GB): written in the last ${IDLE_DAYS} days"; continue; fi
   if lsof +D "$S" >/dev/null 2>&1; then echo "  keep $n: has open files"; continue; fi
   T=$DEST/$n
-  [ -e "$T" ] && { echo "  keep $n: $T already exists, look by hand"; continue; }
+  if [ -e "$T" ]; then
+    # An earlier move left a copy here (a hand move, or the folder was re-created on root after a move).
+    # If every root file is already in it with the same checksum, root is a stale duplicate: swap in the
+    # symlink and lose nothing. Otherwise move to a fresh name beside it, so neither copy is overwritten.
+    if [ -d "$T" ] && [ ! -L "$T" ] && [ -z "$(rsync -an --checksum --out-format='%n' "$S/" "$T/" | grep -v '/$' | head -1)" ]; then
+      if [ -z "$APPLY" ]; then echo "  would link $n ($((kb / 1048576)) GB) → $T (every file already there)"; continue; fi
+      mv "$S" "$S.moving" && ln -s "$T" "$S" && rm -rf "$S.moving" && echo "  linked $n → $T (every file already there, checksum-verified)"
+      continue
+    fi
+    i=2; while [ -e "$DEST/$n.$i" ]; do i=$((i + 1)); done
+    echo "  $n: $T already exists and differs; moving to $DEST/$n.$i (reconcile the two by hand)"
+    T=$DEST/$n.$i
+  fi
   if [ -z "$APPLY" ]; then echo "  would move $n ($((kb / 1048576)) GB) → $T"; continue; fi
   rsync -a "$S/" "$T/" || { echo "  $n rsync FAILED, original untouched"; continue; }
   a=$(find "$S" -type f | wc -l); b=$(find "$T" -type f | wc -l)
