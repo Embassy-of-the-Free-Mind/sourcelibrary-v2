@@ -166,8 +166,11 @@ describe('clean serving — visible marks come off only for a capable key', () =
   const cleanUrl = 'https://sourcelibrary.org/api/image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2Fb1%2F1.jpg&w=400&clean=1';
 
   it('capability: full-scope tiers and the admin grant, nothing else', () => {
-    expect(keyAllowsCleanImages({ tier: 'full', permissions: { languages: '*', clusters: '*' } })).toBe(true);
-    expect(keyAllowsCleanImages({ tier: 'enterprise', permissions: { languages: '*', clusters: '*' } })).toBe(true);
+    // Tier alone is not payment: a free full/enterprise partner key stays marked.
+    expect(keyAllowsCleanImages({ tier: 'full', permissions: { languages: '*', clusters: '*' } })).toBe(false);
+    expect(keyAllowsCleanImages({ tier: 'enterprise', permissions: { languages: '*', clusters: '*' } })).toBe(false);
+    expect(keyAllowsCleanImages({ tier: 'full', permissions: { languages: '*', clusters: '*' }, stripe_subscription_id: 'sub_123' })).toBe(true);
+    expect(keyAllowsCleanImages({ tier: 'language', permissions: { languages: [], clusters: '*' }, stripe_subscription_id: 'sub_123' })).toBe(false);
     expect(keyAllowsCleanImages({ tier: 'explorer', permissions: { languages: '*', clusters: '*' } })).toBe(false);
     expect(keyAllowsCleanImages({ tier: 'language', permissions: { languages: [], clusters: '*' } })).toBe(false);
     expect(keyAllowsCleanImages({ tier: 'explorer', permissions: { languages: '*', clusters: '*', clean_images: true } })).toBe(true);
@@ -188,8 +191,15 @@ describe('clean serving — visible marks come off only for a capable key', () =
     expect(decision.status).toBe(403);
   });
 
-  it('clean=1 with a full-tier key passes, flagged clean, and is logged', async () => {
+  it('clean=1 with a free (unpaid) full-tier key is 403', async () => {
     vi.mocked(validateApiKey).mockResolvedValue({ _id: 'k1', user_id: 'u1', tier: 'full', permissions: { languages: '*', clusters: '*' } } as never);
+    const decision = await checkImageAccess(req({ url: cleanUrl, headers: { authorization: 'Bearer sl_data_x' } }));
+    expect(decision.allowed).toBe(false);
+    expect(decision.status).toBe(403);
+  });
+
+  it('clean=1 with a paid full-tier key passes, flagged clean, and is logged', async () => {
+    vi.mocked(validateApiKey).mockResolvedValue({ _id: 'k1', user_id: 'u1', tier: 'full', permissions: { languages: '*', clusters: '*' }, stripe_subscription_id: 'sub_123' } as never);
     const decision = await checkImageAccess(req({ url: cleanUrl, headers: { authorization: 'Bearer sl_data_x' } }));
     expect(decision.allowed).toBe(true);
     expect(decision.clean).toBe(true);

@@ -77,7 +77,8 @@ export interface ApiKeyDoc {
     languages: string[] | '*';
     clusters: string[] | '*';
     /** Serve images without VISIBLE provenance marks (?clean=1 on the image
-     *  proxy). Implied by full-scope tiers; admin-grantable on any key.
+     *  proxy). Implied by full-scope tiers WITH a Stripe subscription;
+     *  admin-grantable on any key (offline-paid contracts only).
      *  Invisible marks (EXIF, keyed watermark) stay regardless — see
      *  src/lib/image-marks.ts. */
     clean_images?: boolean;
