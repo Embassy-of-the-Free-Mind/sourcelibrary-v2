@@ -53,7 +53,7 @@ async function lastRunPosition(volunteerId: string): Promise<{ book: string; pag
     .from('volunteer_ratings')
     .select('detail')
     .eq('volunteer_id', volunteerId)
-    .eq('detail->>mode', 'book-run')
+    .eq('queue', 'book-run')
     .order('created_at', { ascending: false })
     .limit(1);
   if (error || !data?.length) return null;

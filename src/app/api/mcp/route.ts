@@ -1057,8 +1057,10 @@ const BOOK_RUN_STEPS =
   'For this page: (1) read the scan and compare the transcription with it, line by line and mark by mark ' +
   '(long s vs f, u/v, abbreviation marks, the margins); (2) compare the English with the transcription: ' +
   'omissions ("…" where the original runs on), additions, misreadings, and text carried over from the ' +
-  'previous page (use previous_page_tail); (3) tell the user in two or three plain sentences what the page ' +
-  'says and what you found, with exact quotes; they do not need to read the language; (4) call ' +
+  'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
+  '(3) tell the user in two or three plain sentences what the page says and what you found, quoting only ' +
+  'the words at issue; do not paste the full transcription or translation unless asked; they do not need ' +
+  'to read the language; (4) call ' +
   'submit_page_review with mode "book-run" and YOUR verdict and findings; (5) for each error you can see ' +
   'on the scan or in the original, call propose_correction with drafted_by "assistant" (transcription ' +
   'before translation); (6) ask whether to continue, and on yes call continue_review_shift with next.book ' +
@@ -1146,7 +1148,7 @@ async function submitPageReview(args: Record<string, unknown>) {
   // blind: the verdict is the person's own, given before the assistant's reading.
   const mode = args.mode === 'blind' ? 'blind' : 'book-run';
   await apiPost('/review/submit', {
-    queue: 'translation-check',
+    queue: mode === 'blind' ? 'translation-check' : 'book-run',
     item_id: args.item_id,
     rating: verdict,
     note: clipStr(args.note, 2000),
