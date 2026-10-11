@@ -179,6 +179,28 @@ async function downloadToFile(url, destPath, timeoutMs = 600000) {
   return bytes;
 }
 
+// IIIF-imported IA books (#4835) carry their identifier only in the manifest URL —
+// `https://iiif.archive.org/iiif/<id>/manifest.json` (or `/iiif/3/<id>/...`) in
+// `image_source.manifest_url` / `source_url` — never in `ia_identifier`.
+const IA_MANIFEST_ID_RE = /^https?:\/\/iiif\.archive\.org\/iiif\/(?:3\/)?([^/?#]+)\/manifest/;
+const IA_MANIFEST_FIELDS = ['image_source.iiif_manifest', 'image_source.manifest_url', 'image_source.source_url', 'source_url'];
+// The reason #4989 wrote before the manifest fallback existed. Books carrying it are
+// re-admitted when a manifest URL is present; a book that still fails gets
+// NO_ID_REASON instead, so it cannot re-enter the window and livelock it again.
+const LEGACY_NO_ID_REASON = 'no IA identifier (ia_identifier and image_source.identifier both empty)';
+const NO_ID_REASON = 'no IA identifier (ia_identifier, image_source.identifier and manifest URL all empty)';
+
+function resolveIaIdentifier(book) {
+  const direct = book.ia_identifier || book.image_source?.identifier;
+  if (direct) return direct;
+  for (const field of IA_MANIFEST_FIELDS) {
+    const value = field.split('.').reduce((o, k) => o?.[k], book);
+    const m = typeof value === 'string' && value.match(IA_MANIFEST_ID_RE);
+    if (m) return decodeURIComponent(m[1]);
+  }
+  return null;
+}
+
 async function resolveDownloadUrl(iaId) {
   const metaRes = await fetch(`https://archive.org/metadata/${iaId}/files`, {
     headers: { 'User-Agent': USER_AGENT },
@@ -291,7 +313,7 @@ async function jp2ToJpeg(jp2Path) {
 }
 
 async function processBook(book, db) {
-  const iaId = book.ia_identifier || book.image_source?.identifier;
+  const iaId = resolveIaIdentifier(book);
   if (!iaId) {
     // LIVELOCK (#4966, 2026-09-23): a book can match the selection query on
     // `image_source.provider: 'internet_archive'` alone while carrying no identifier on either
@@ -306,7 +328,7 @@ async function processBook(book, db) {
       { $set: {
         'archive_metadata.bulk_unsuitable': true,
         'archive_metadata.bulk_unsuitable_at': new Date(),
-        'archive_metadata.bulk_unsuitable_reason': 'no IA identifier (ia_identifier and image_source.identifier both empty)',
+        'archive_metadata.bulk_unsuitable_reason': NO_ID_REASON,
         updated_at: new Date(),
       } },
     );
@@ -691,10 +713,18 @@ async function main() {
         'archive_metadata.blocked': { $ne: true },
         // bulk_unsuitable books have IA JP2 zips that don't align with photo URLs
         // (archive drift, #1504) — leave them to archive-ocr's per-page IIIF path.
-        'archive_metadata.bulk_unsuitable': { $ne: true },
-        $or: [
-          { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
-          { 'image_source.provider': 'internet_archive' },
+        // Exception: books marked only for lacking an identifier, which a manifest URL now
+        // supplies (#4835).
+        $and: [
+          { $or: [
+            { 'archive_metadata.bulk_unsuitable': { $ne: true } },
+            { 'archive_metadata.bulk_unsuitable_reason': LEGACY_NO_ID_REASON,
+              $or: IA_MANIFEST_FIELDS.map((f) => ({ [f]: IA_MANIFEST_ID_RE })) },
+          ] },
+          { $or: [
+            { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
+            { 'image_source.provider': 'internet_archive' },
+          ] },
         ],
         // Selective-unpause scope: confine to allowlisted books while paused.
         ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
@@ -714,7 +744,7 @@ async function main() {
         },
       }},
       { $sort: { _priority: 1, hidden: 1, _id: -1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
+      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, source_url: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
     .toArray();
