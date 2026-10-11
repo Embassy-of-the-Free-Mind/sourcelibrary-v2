@@ -1,0 +1,335 @@
+{
+ "_about": "One entry per chart::engine whose over-half-wrong share exceeds 10% on any panel of src/data/ocr-pareto.json. Checked by scripts/eval/check-pareto-failure-reads.mjs. A finding records what was seen when the raw outputs of the worst pages were opened; pending means not yet read and expires 14 days after pending_since. Translation has no failure share and is not covered. Origin: #6523.",
+ "entries": {
+  "armenian::deepseek-ocr": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "armenian::gemini-3.6-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "armenian::gemini-3.7-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "armenian::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "armenian::mistral-ocr-4-1": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "armenian::qwen3-vl-8b": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "chinese-manuscript::deepseek-ocr": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "chinese-manuscript::gemini-3.1-flash-lite": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "chinese-manuscript::gemini-3.6-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "chinese-manuscript::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "chinese-print::deepseek-ocr": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "english::gemini-3.7-flash+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "english::gemini-3.8-flash+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "english::gemini-3.8-flash-high+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "greek::deepseek-ocr": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "greek::gemini-3-flash-preview": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "greek::gemini-3.1-flash-lite": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "greek::gemini-3.6-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "greek::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "greek::qwen3-vl-8b": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "latin-script-other::gemini-3.7-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "latin-script-other::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "latin::gemini-3.7-flash+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "latin::gemini-3.8-flash+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "latin::gemini-3.8-flash-high+antigravity-cli": {
+   "read_at": "2026-10-11",
+   "reader": "JDerekLomas (by eye, heads and tails of each failure class) and job cli-ocr-fix-6523c (raw replies)",
+   "pages_opened": 93,
+   "finding": "Of 93 failed Latin and Early English CLI pages only 3 are real misreads; the rest are recitation-filter cuts followed by a refusal or summary offer (35), empty replies after a tool request (34), timeouts (5), doubled replies (5), appended chat or plan notes.",
+   "link": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112299485 (step-1 table: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6523#issuecomment-6112460154)"
+  },
+  "syriac-print::gemini-3.1-flash-lite": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac-print::gemini-3.6-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac-print::gemini-3.7-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac-print::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::chandra-ocr-2": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::deepseek-ocr": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::gemini-3-flash-preview": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::gemini-3.1-flash-lite": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::gemini-3.6-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::gemini-3.7-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::gemini-3.8-flash+antigravity-cli": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::mistral-ocr-4-1": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  },
+  "syriac::qwen3-vl-8b": {
+   "read_at": null,
+   "reader": null,
+   "pages_opened": 0,
+   "finding": null,
+   "pending": true,
+   "pending_since": "2026-10-11",
+   "link": null
+  }
+ }
+}

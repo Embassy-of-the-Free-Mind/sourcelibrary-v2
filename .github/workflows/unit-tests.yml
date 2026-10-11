@@ -67,6 +67,11 @@ jobs:
       # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
       - name: No new em dashes in reader-facing copy
         run: node scripts/maintenance/check-em-dashes.mjs
+      # A Pareto row with more than 10% "over half wrong" pages needs a recorded
+      # read of its raw outputs (#6536; origin #6523: a 41% score was 3 real
+      # misreads). Static check over src/data/ocr-pareto.json and the registry.
+      - name: Pareto failures have been read
+        run: node scripts/eval/check-pareto-failure-reads.mjs
       # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
       # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
       # other classes compare the code with the decisions ledger and are filed as issues by
