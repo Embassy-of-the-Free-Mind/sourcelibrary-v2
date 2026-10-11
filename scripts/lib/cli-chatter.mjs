@@ -55,3 +55,71 @@ export function ocrReadProblem(text) {
   }
   return null;
 }
+
+// #6523: the CLI's reply around a transcription, read by eye on the 93 failed Latin / Early English pages. These
+// are the agent's own sentences; none is a line of a printed page (checked on every stored API read, which carry none).
+const CHAT_START = /^\s*(?:(?:I apologi[sz]e|Unfortunately)[,.]|I (?:am|'m) (?:unable|not able)|I (?:cannot|can't|can not) (?:provide|reproduce|transcribe|output|generate|continue)|However, (?:I can|if you)|Would you like|If (?:you (?:need|would like|'d like)|helpful)|Since generating|Please (?:review|confirm|let me know)|Let me know|I have (?:prepared|created|written) (?:the |an |a )?(?:transcription|implementation|plan)|#{1,4} (?:Summary|Overview|Note)|\*\*(?:Summary|Overview|Note)\b)/i;
+const CHAT_LEAD = /^\s*(?:(?:Here is|Here's|Below is) (?:the |a )?(?:full |exact |complete |diplomatic )*transcription\b.*|(?:Sure|Okay|Certainly)[,.!].*|```\w*)\s*$/i;
+const LEAD_NOTE = /^\s*(?:I have|I've)\b.*\b(?:plan|artifact|transcri\w*|image|manuscript)\b/i;
+const LEAD_PROSE = /^\s*(?:I have|I've|I will|I'll|Please|Let me|You can|Once (?:you|approved)|If you)\b|\b(?:plan|artifact|approve|proceed|file:\/\/)\b/i;
+const PLAN_TAIL = /file:\/\/|please (?:review|confirm|approve)|let me know|once (?:you )?approv|ready to proceed|approve to proceed/i;
+const BLOCK_SENTINEL = /<<<\s*BEGIN\s*>>>([\s\S]*?)(?:<<<\s*END\s*>>>|$)/;
+const letterCount = (s) => (stripMarkupTags(s).match(/\p{L}/gu) || []).length;
+
+/**
+ * The transcription inside a CLI reply, with the agent's wrapper removed (#6523). Steps, in order:
+ *   1. a reply that uses the <<<BEGIN>>> … <<<END>>> sentinels gives the first such block (or the rest of the reply
+ *      when END never came);
+ *   2. leading chat ("Here is the transcription:", a plan note, a ``` fence) and every ``` fence line are dropped;
+ *   3. the reply is cut at the first line of trailing chat (a refusal sentence, "Would you like…", a "### Summary");
+ *   4. a restarted or doubled reply (a second <scan-quality> header, or the opening 60 letters of the body starting a
+ *      later line) is split into its copies, and the copy with the most letters is kept.
+ * Returns { text, changed, steps } — `steps` names what was removed, for the disclosure. A reply that is all chat
+ * returns ''. Pure; the same function scores every engine's stored output (API arms included) for the Pareto charts.
+ */
+export function extractTranscription(raw) {
+  const steps = [];
+  let t = String(raw || '');
+  const s = t.match(BLOCK_SENTINEL);
+  if (s) { t = s[1]; steps.push('sentinels'); }
+  let lines = t.split('\n');
+  // leading chat: plan notes and "Here is…" lines before the first line of text
+  // (a reply that OPENS with chat: then every following line of agent prose goes too, as rescore-plan-note.mjs does)
+  let i = 0;
+  while (i < lines.length && /^\s*$/.test(lines[i])) i++;
+  if (i < lines.length && (CHAT_LEAD.test(lines[i]) || CHAT_START.test(lines[i]) || LEAD_NOTE.test(lines[i]))) {
+    // The note can carry a bulleted "summary of findings"; it ends at its request for approval (a file:// link,
+    // "please review", "let me know"), or where the prompt's header tags begin, whichever is later.
+    const zone = lines.slice(i, i + 30);
+    const ask = zone.reduce((last, l, k) => (PLAN_TAIL.test(l) ? k : last), -1);
+    const tag = zone.findIndex((l) => /^\s*<scan-quality>/.test(l));
+    if (ask >= 0 || tag >= 0) i += Math.max(ask + 1, tag);
+    while (i < lines.length && (/^\s*$/.test(lines[i]) || CHAT_LEAD.test(lines[i]) || CHAT_START.test(lines[i]) || LEAD_NOTE.test(lines[i]) || LEAD_PROSE.test(lines[i]))) i++;
+  }
+  if (lines.slice(0, i).some((l) => l.trim())) steps.push('leading chat');
+  lines = lines.slice(i);
+  const fences = lines.filter((l) => /^\s*```\w*\s*$/.test(l)).length;
+  if (fences) { lines = lines.filter((l) => !/^\s*```\w*\s*$/.test(l)); steps.push('code fences'); }
+  const cut = lines.findIndex((l) => CHAT_START.test(l));
+  if (cut >= 0) { lines = lines.slice(0, cut); steps.push('trailing chat'); }
+  while (lines.length && /^\s*(?:\*{3,}|-{3,}|_{3,})?\s*$/.test(lines.at(-1))) { if (lines.at(-1).trim()) steps.push('trailing rule'); lines.pop(); }
+  // restarts: split at a second header, or where the opening of the body starts again
+  const starts = [0];
+  const hdr = lines.findIndex((l) => /<scan-quality>/.test(l));
+  if (hdr >= 0) for (let k = hdr + 1; k < lines.length; k++) if (/<scan-quality>/.test(lines[k])) starts.push(k);
+  const fold = (x) => stripMarkupTags(x).replace(/[^\p{L}]+/gu, '').toLowerCase();
+  const bodyStart = lines.findIndex((l) => fold(l).length >= 20 && !/^\s*</.test(l));
+  if (starts.length === 1 && bodyStart >= 0) {
+    const head = fold(lines.slice(bodyStart, bodyStart + 6).join('')).slice(0, 60);
+    if (head.length >= 60) for (let k = bodyStart + 1; k < lines.length; k++) if (fold(lines.slice(k, k + 6).join('')).startsWith(head)) { starts.push(k); break; }
+  }
+  if (starts.length > 1) {
+    const copies = starts.map((a, n) => lines.slice(a, starts[n + 1] ?? lines.length).join('\n'));
+    let best = copies[0];
+    for (const c of copies) if (letterCount(c) > letterCount(best)) best = c;
+    lines = best.split('\n');
+    steps.push(`restart (${copies.length} copies, kept the longest)`);
+  }
+  const text = lines.join('\n').trim();
+  return { text, changed: text !== String(raw || '').trim(), steps };
+}

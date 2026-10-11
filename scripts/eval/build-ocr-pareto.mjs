@@ -13,8 +13,8 @@
  * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
  * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
  *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6011 / #6293 engine runs,
- *              the #6295 Syriac print panel and the Syriac ground-truth retest; the #6293 CLI reads re-scored with
- *              the CLI's preamble removed (results/ocr-pareto-6293/plan-note-rescored.json)
+ *              the #6295 Syriac print panel and the Syriac ground-truth retest; every #6293 Latin-script read re-scored with
+ *              the CLI's wrapper removed (results/ocr-pareto-6293/extract-rescored.json, #6523)
  *   works      results/pareto-works.json (build-pareto-works.mjs: book → work_id), for the intervals
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (metered Batch spend); self-hosted and
  *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
@@ -204,10 +204,12 @@ const benchRows = [];
     }
   }
 }
-// The CLI's preamble ("I have created the transcription plan…") is the route talking, not the page being read; the
-// #6293 reads that carried it are re-scored without it (rescore-plan-note.mjs, with its positive control).
-const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'plan-note-rescored.json'), 'utf8'))
-  .rows.map(r => [`${r.page}|${r.engine}`, r.stripped]));
+// The CLI's wrapper (a plan note, trailing chat after a partial read, a restarted or doubled reply, ``` fences) is the
+// route talking, not the page being read. Every engine's read in the Latin-script strata is re-scored with ONE
+// extractor (rescore-extract.mjs, cli-chatter.mjs extractTranscription, with its positive control; #6523). It
+// supersedes the #6386 plan-note re-score, which removed only the leading note.
+const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'extract-rescored.json'), 'utf8'))
+  .rows.map(r => [`${r.page}|${r.engine}`, r.extracted]));
 // ONE FAILURE RULE: a refused, unaligned or unscored read is CER 1.0, for every engine alike; CER is capped at 1.
 const toRow = (r, page, extra = {}) => {
   const fixed = RESCORED.get(`${page}|${r.engine}`);

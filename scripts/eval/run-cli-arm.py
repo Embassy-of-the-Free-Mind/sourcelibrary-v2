@@ -70,10 +70,32 @@ def wait_for_gap(own_dir, max_wait=20):
         time.sleep(0.02)
 
 
+GATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'lib', 'agy-tool-gate.py')
+
+
+def install_gate(cwd):
+    # #6523: a PreToolUse hook in the call's one-image workspace. It lets the model open files in that workspace and
+    # denies every other tool WITH A REASON, so the turn goes on to the transcription instead of ending empty on a
+    # denied shell request. It approves nothing plan mode would not (#6345). Its log counts the denials per call.
+    os.makedirs(os.path.join(cwd, '.agents'), exist_ok=True)
+    log = os.path.join(cwd, '.agents', 'gate.jsonl')
+    cmd = f"AGY_GATE_ROOT='{cwd}' AGY_GATE_LOG='{log}' python3 '{os.path.realpath(GATE)}'"
+    with open(os.path.join(cwd, '.agents', 'hooks.json'), 'w') as f:
+        json.dump({'ocr-tool-gate': {'PreToolUse': [{'matcher': '*', 'hooks': [{'type': 'command', 'command': cmd, 'timeout': 10}]}]}}, f)
+    return log
+
+
+def gate_denials(log):
+    try:
+        return sum(1 for l in open(log) if '"deny"' in l)
+    except OSError:
+        return 0
+
+
 NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.'
 
 
-def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conversation=None):
+def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conversation=None, mode='plan', json_schema=None):
     # The CLI is an AGENT. Plan mode stops the model running tools, and never auto-approve (#6345): the image is
     # attached as `@./file` relative to cwd, so no tool is needed to open it. Even in plan mode the model sometimes
     # asks for a shell command (e.g. python to crop the image); headless mode denies it and the turn ends with an
@@ -81,7 +103,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     waited = (0, 0)
     if add_dir:
         waited = wait_for_gap(os.path.dirname(add_dir), gap_wait)
-    args = ['agy', '-p', prompt, '--model', model, '--mode', 'plan', '--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
+    args = ['agy', '-p', prompt, '--model', model] + (['--mode', mode] if mode else []) + ['--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
+    if json_schema:
+        args += ['--json-schema', json_schema]
     if conversation:
         args += ['--conversation', conversation]
     t0 = time.time()
@@ -121,6 +145,11 @@ def main():
     ap.add_argument('--workdir', default=os.environ.get('JOB_SCRATCH', '/tmp') + '/cli-ws'); ap.add_argument('--limit', type=int)
     ap.add_argument('--gap-wait', type=float, default=20, help='seconds to wait for a gap in other jobs\' image calls before going alongside one')
     ap.add_argument('--print-timeout', type=int, default=120, help='agy --print-timeout in seconds; the process is killed 60 s later')
+    ap.add_argument('--tool-gate', action='store_true', help='#6523: install agy-tool-gate.py as a PreToolUse hook in each workspace')
+    ap.add_argument('--no-nudge', action='store_true', help='never continue a turn that ended on a denied tool')
+    ap.add_argument('--prompt-suffix', default='', help='text appended to every prompt, before the @file attachment')
+    ap.add_argument('--json-schema', help='passed to agy --json-schema (a schema file or string)')
+    ap.add_argument('--cli-mode', default='plan', help="agy --mode ('plan'; '' for none)")
     a = ap.parse_args()
 
     if a.probe:
@@ -152,14 +181,17 @@ def main():
             cwd = add_dir = os.path.join(a.workdir, f"{a.arm}-{stem}")
             os.makedirs(cwd, exist_ok=True)
             shutil.copyfile(req['image'], os.path.join(cwd, stem + ext))
-            prompt = f"{prompt} @./{stem}{ext}"
+            prompt = f"{prompt}{a.prompt_suffix} @./{stem}{ext}"
+        elif a.prompt_suffix:
+            prompt = f"{prompt}{a.prompt_suffix}"
+        gate_log = install_gate(cwd) if (a.tool_gate and cwd) else None
         out, cls, total, tries, err, overlaps, waits, nudged, meta = '', None, 0.0, 0, '', 0, 0.0, False, {}
         for tries in range(1, a.attempts + 1):
-            if cls == 'denied_tool' and meta.get('conversation'):
+            if cls == 'denied_tool' and meta.get('conversation') and not a.no_nudge:
                 nudged = True
-                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, conversation=meta['conversation'])
+                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, conversation=meta['conversation'], mode=a.cli_mode, json_schema=a.json_schema)
             else:
-                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, timeout=a.print_timeout + 60, gap_wait=a.gap_wait)
+                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, mode=a.cli_mode, json_schema=a.json_schema)
             overlaps += waited[1] > 0; waits += waited[0]
             total += secs
             log_call(a.job, a.model, a.kind, secs, cls in (None, 'safety_filter'), cls)
@@ -170,7 +202,7 @@ def main():
                 return
             if cls in (None, 'safety_filter'):
                 break
-        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': 'plan', 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
+        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': a.cli_mode or 'default', 'tool_gate': bool(gate_log), 'gate_denials': gate_denials(gate_log) if gate_log else None, 'denied_actions': meta.get('denied'), 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
                'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
         with lock, open(a.out, 'a', encoding='utf-8') as f:
             f.write(json.dumps(row, ensure_ascii=False) + '\n')
