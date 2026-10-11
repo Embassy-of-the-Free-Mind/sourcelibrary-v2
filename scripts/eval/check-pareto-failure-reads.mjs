@@ -52,6 +52,7 @@ for (const [key, share] of worst) {
 if (problems.length) {
   console.error(`Pareto failure reads: ${problems.length} of ${checked} engines above ${THRESHOLD * 100}% over-half-wrong have no current read.`);
   for (const p of problems) console.error('  - ' + p);
+  if (process.argv.includes('--annotate')) for (const p of problems) console.log(`::warning title=Pareto failure read missing::${p}`);
   console.error('Open the raw outputs of its worst pages and record what you saw in scripts/eval/pareto-failure-reads.json (#6523: a 41% score was 3 real misreads).');
   process.exit(1);
 }
