@@ -108,6 +108,10 @@ export interface SharedLibraryViewProps {
   tenantSlug?: string | null;
   /** Force embed behavior from the server (used by /embed routes) */
   forceEmbedded?: boolean;
+  /** Hide book counts (used by the public /libraries/[slug] pages). A
+   *  per-source tally reads as a shopping list for anyone re-assembling the
+   *  corpus; partner reading rooms keep their counts. */
+  hideCounts?: boolean;
 }
 
 export default function SharedLibraryView({
@@ -131,6 +135,7 @@ export default function SharedLibraryView({
   catalogTotal = 0,
   tenantSlug,
   forceEmbedded = false,
+  hideCounts = false,
 }: SharedLibraryViewProps) {
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
@@ -226,12 +231,12 @@ export default function SharedLibraryView({
                 <span className="w-px h-4 bg-white/20" />
                 <span>{total.toLocaleString('en-US')} digitised on Source Library</span>
               </>
-            ) : (
+            ) : hideCounts ? null : (
               <span>{total.toLocaleString('en-US')} translated books</span>
             )}
             {languages.length > 0 && (
               <>
-                <span className="w-px h-4 bg-white/20" />
+                {(!hideCounts || (usesUnifiedCatalogue && catalogTotal > 0)) && <span className="w-px h-4 bg-white/20" />}
                 <span>{languages.slice(0, 5).map(l => l.lang).join(', ')}</span>
               </>
             )}
@@ -339,7 +344,7 @@ export default function SharedLibraryView({
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary"
                 >
                   {lib.name}
-                  <span className="text-xs text-muted">({lib.count})</span>
+                  {!hideCounts && <span className="text-xs text-muted">({lib.count})</span>}
                 </span>
               ))}
             </div>
@@ -389,9 +394,11 @@ export default function SharedLibraryView({
                   >
                     All Books
                   </h2>
-                  <p className="text-sm text-muted mt-1">
-                    {total.toLocaleString('en-US')} books from {partner.name}
-                  </p>
+                  {!hideCounts && (
+                    <p className="text-sm text-muted mt-1">
+                      {total.toLocaleString('en-US')} books from {partner.name}
+                    </p>
+                  )}
                 </div>
 
                 <CollectionFilters

@@ -243,8 +243,6 @@ export default async function LibrariesPage() {
     .map(({ languageSet, ...p }) => ({ ...p, languages: [...languageSet].sort() }))
     .sort((a, b) => b.count - a.count) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 
-  const totalBooks = partners.reduce((s, p) => s + p.count, 0);
-  const totalInstitutions = contributingLibraries.length;
 
   // The page credits two different kinds of source, in two sections: HOLDING
   // institutions (they own and digitized what we show) and digital PLATFORMS
@@ -279,8 +277,7 @@ export default async function LibrariesPage() {
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 py-20 md:py-28" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
-            {totalBooks.toLocaleString('en-US')} books sourced from {partners.length} libraries and archives
-            {totalInstitutions > 0 ? ` across ${totalInstitutions} contributing institutions` : ''} worldwide.
+            Rare books and manuscripts from libraries and archives around the world, read, transcribed and translated on Source Library.
           </p>
         </div>
       </div>
