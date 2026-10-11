@@ -233,6 +233,28 @@ async function run() {
     });
   }
 
+  // 7b. Stage-coverage snapshot freshness (#4708): the nightly 04:15 snapshot
+  // wrote one row ever (2026-08-08) and then timed out every night for two
+  // months, so the line page, its STALLED detector and its alerts were all
+  // blind while nothing said so. The job that watches other stages for going
+  // quiet must itself be watched.
+  try {
+    const snap = await db.collection('stage_coverage_snapshots')
+      .find({}, { projection: { timestamp: 1 } }).sort({ timestamp: -1 }).limit(1).next();
+    const snapAgeHours = snap ? (now - new Date(snap.timestamp)) / 3600000 : Infinity;
+    if (snapAgeHours > 36) {
+      alerts.push({
+        level: 'warning',
+        check: 'stage_coverage_stale',
+        message: `Newest stage_coverage_snapshots row is ${snap ? `${snapAgeHours.toFixed(0)}h old (${new Date(snap.timestamp).toISOString()})` : 'MISSING'} — the 04:15 nightly snapshot is not completing, so /platform/admin/line and its STALLED/collector alerts are blind. Check /var/log/sourcelibrary/stage-coverage.log on Hetzner.`,
+      });
+    } else {
+      console.log(`[health] Stage-coverage snapshot: newest ${snapAgeHours.toFixed(1)}h old`);
+    }
+  } catch (e) {
+    alerts.push({ level: 'warning', check: 'stage_coverage_stale', message: `could not check (${e.message}) — UNKNOWN is not clear` });
+  }
+
   // 8. Pause-age check (#2455): paused_phases sat for 6 days behind a "healthy"
   // status while 1,759 books piled up at archive_complete. Warn after 48h.
   try {

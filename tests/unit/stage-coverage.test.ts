@@ -11,10 +11,13 @@
  *    and delta===0. null deltas and broken probes are excluded: null is not
  *    zero, and flagging a broken probe as "stalled" would misdirect triage.
  *  - parseContentRangeCount: the Supabase REST count parser.
+ *  - page stages (#4708): summed per-book counters, trusted only while an
+ *    exact recount of random books agrees with them — drift beyond the
+ *    tolerance is probe_broken, never coverage.
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs helper, no types
-import { finalizeMeasurement, computeStageDeltas, findStalled, parseContentRangeCount } from '../../scripts/lib/stage-coverage.mjs';
+import { finalizeMeasurement, computeStageDeltas, findStalled, parseContentRangeCount, compareCounters, pageStagesFromCounters } from '../../scripts/lib/stage-coverage.mjs';
 
 type Stage = {
   stage: string;
@@ -136,5 +139,48 @@ describe('parseContentRangeCount', () => {
     expect(parseContentRangeCount('')).toBeNull();
     expect(parseContentRangeCount('0-24/*')).toBeNull(); // count not computed
     expect(parseContentRangeCount('bytes 0-99/100x')).toBeNull();
+  });
+});
+
+describe('page stages from verified counters (#4708)', () => {
+  const c = (pages_count: number, pages_ocr = 0, pages_translated = 0, pages_blank = 0, pages_archived = 0) =>
+    ({ pages_count, pages_ocr, pages_translated, pages_blank, pages_archived });
+  const agree = (id: string) => ({ id, stored: c(10, 5, 2), actual: c(10, 5, 2) });
+
+  it('compareCounters: agreement passes, any differing counter is drift', () => {
+    expect(compareCounters([agree('a'), agree('b')])).toMatchObject({ checked: 2, drifted: 0, ok: true });
+    const r = compareCounters([agree('a'), { id: 'b', stored: c(10, 5, 2), actual: c(10, 6, 2) }]);
+    expect(r).toMatchObject({ checked: 2, drifted: 1, ok: false, examples: ['b'] });
+  });
+
+  it('compareCounters: tolerates up to 5% drifted books (pipeline writes race the recount)', () => {
+    const rows = Array.from({ length: 100 }, (_, i) => agree(String(i)));
+    for (let i = 0; i < 5; i++) rows[i] = { id: String(i), stored: c(10), actual: c(11) };
+    expect(compareCounters(rows).ok).toBe(true);
+    rows[5] = { id: '5', stored: c(10), actual: c(11) };
+    expect(compareCounters(rows).ok).toBe(false);
+  });
+
+  it('compareCounters: nothing checked is a broken probe, not a pass', () => {
+    expect(compareCounters([]).ok).toBe(false);
+  });
+
+  it('pageStagesFromCounters: covered/total/queue per stage; blank leaves out of both translated sides', () => {
+    const check = { checked: 100, drifted: 1, ok: true, examples: ['x'] };
+    const [archived, ocr, translated] = pageStagesFromCounters(c(1000, 700, 400, 100, 950), check);
+    expect(archived).toMatchObject({ stage: 'archived', status: 'ok', covered: 950, total: 1000, queue_depth: 50 });
+    expect(ocr).toMatchObject({ stage: 'ocr', status: 'ok', covered: 700, total: 1000, queue_depth: 300 });
+    expect(translated).toMatchObject({ stage: 'translated', status: 'ok', covered: 400, total: 900, queue_depth: 500 });
+    expect(ocr.detail).toEqual({ counters_checked: 100, counters_drifted: 1 });
+  });
+
+  it('pageStagesFromCounters: counters that fail the recount are probe_broken, never coverage', () => {
+    const check = { checked: 100, drifted: 30, ok: false, examples: ['a', 'b'] };
+    const stages = pageStagesFromCounters(c(1000, 700, 400, 100, 950), check);
+    for (const s of stages) {
+      expect(s.status).toBe('probe_broken');
+      expect(s.covered).toBeNull();
+      expect(s.detail).toMatchObject({ counters_drifted: 30, drift_examples: 'a,b' });
+    }
   });
 });
