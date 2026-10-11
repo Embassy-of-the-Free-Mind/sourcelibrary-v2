@@ -29,6 +29,7 @@ import {
   BOOK_INDEX_EMBEDDING_PROJECTION,
 } from '../lib/book-embedding-text.mjs';
 import { assertStoreVector } from '../lib/vector-truth.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, usdForTokens } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -51,6 +52,14 @@ const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') ||
 const BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100
 const DIMS = 768;
 const MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
+/**
+ * Flush one aggregated `gemini_usage` row per this many embedded texts (#4902).
+ * A full pass is ~30K books; one row per 50-text batch would be ~600 rows, and
+ * the spend guard fails closed past 40,000 rows a day — recording spend must
+ * never be able to halt the pipeline.
+ */
+const USAGE_FLUSH_EVERY = 1000;
+const USAGE_ENDPOINT = 'migration/backfill-book-embeddings';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
@@ -195,6 +204,11 @@ async function main() {
   // Process in batches — fetch book_indexes per batch to avoid OOM
   let embedded = 0, skipped = 0, errors = 0;
   const startTime = Date.now();
+  // Paid call site: record what it spends, or the dial is measuring a corpus
+  // this job is not part of (#4162, #4902). The 15 Sep 2026 full pass (30,246
+  // books) wrote no row. Accumulate, flush periodically, flush the tail.
+  const usage = newEmbedUsage();
+  let usageTexts = 0, usageTokens = 0, lastFlushAt = 0;
 
   for (let i = 0; i < bookIds.length; i += BATCH_SIZE) {
     const batchIds = bookIds.slice(i, i + BATCH_SIZE);
@@ -233,6 +247,17 @@ async function main() {
       errors += batchTexts.length;
       console.error(`  Failed to embed batch at offset ${i}`);
       continue;
+    }
+
+    // Billed the moment Gemini returns vectors — record it here, before the
+    // upsert, so a Supabase failure does not also hide the spend.
+    const tokensBefore = usage.tokens;
+    addEmbedUsage(usage, batchTexts);
+    usageTokens += usage.tokens - tokensBefore;
+    usageTexts += batchTexts.length;
+    if (usageTexts - lastFlushAt >= USAGE_FLUSH_EVERY) {
+      lastFlushAt = usageTexts;
+      await logEmbeddingUsage(usage, { model: MODEL, endpoint: USAGE_ENDPOINT, db });
     }
 
     // Upsert to Supabase
@@ -286,11 +311,15 @@ async function main() {
     await sleep(200);
   }
 
+  // Flush the tail. A run that dies before here still has every earlier flush.
+  await logEmbeddingUsage(usage, { model: MODEL, endpoint: USAGE_ENDPOINT, db });
+
   console.log(`\n\nDone!`);
   console.log(`  Embedded: ${embedded}`);
   console.log(`  Skipped: ${skipped}`);
   console.log(`  Errors: ${errors}`);
   console.log(`  Time: ${((Date.now() - startTime) / 1000).toFixed(0)}s`);
+  console.log(`  Recorded spend: ~$${usdForTokens(usageTokens).toFixed(4)} over ${usageTexts.toLocaleString()} texts, ${usageTokens.toLocaleString()} tokens (estimated, see embedding-usage.mjs)`);
 
   await mongo.close();
 }

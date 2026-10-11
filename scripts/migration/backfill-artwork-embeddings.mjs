@@ -14,6 +14,7 @@
  */
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, usdForTokens } from '../lib/embedding-usage.mjs';
 
 const INCREMENTAL = process.argv.includes('--incremental');
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -22,6 +23,13 @@ const BATCH_SIZE = 50;
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
+/**
+ * Flush one aggregated `gemini_usage` row per this many embedded texts (#4902).
+ * One row per 50-text batch could push the day past the spend guard's 40,000-row
+ * fail-closed line; recording spend must never be able to halt the pipeline.
+ */
+const USAGE_FLUSH_EVERY = 1000;
+const USAGE_ENDPOINT = 'migration/backfill-artwork-embeddings';
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_DB_URL = process.env.SUPABASE_DB_URL;
 
@@ -133,6 +141,10 @@ async function main() {
 
   let embedded = 0, errors = 0;
   const startTime = Date.now();
+  // Paid call site: record what it spends, or the dial is measuring a corpus
+  // this job is not part of (#4162, #4902). Accumulate, flush periodically.
+  const usage = newEmbedUsage();
+  let usageTexts = 0, usageTokens = 0, lastFlushAt = 0;
 
   for (let i = 0; i < toProcess.length; i += BATCH_SIZE) {
     const batch = toProcess.slice(i, i + BATCH_SIZE);
@@ -140,6 +152,12 @@ async function main() {
 
     try {
       const embeddings = await embedBatch(texts);
+      // Billed the moment Gemini returns vectors — record before the inserts,
+      // so a Postgres failure does not also hide the spend.
+      const tokensBefore = usage.tokens;
+      addEmbedUsage(usage, texts);
+      usageTokens += usage.tokens - tokensBefore;
+      usageTexts += texts.length;
 
       for (let idx = 0; idx < batch.length; idx++) {
         const art = batch[idx];
@@ -176,6 +194,11 @@ async function main() {
       console.log(`  Batch error: ${e.message?.substring(0, 80)}`);
     }
 
+    if (usageTexts - lastFlushAt >= USAGE_FLUSH_EVERY) {
+      lastFlushAt = usageTexts;
+      await logEmbeddingUsage(usage, { model: GEMINI_MODEL, endpoint: USAGE_ENDPOINT, db });
+    }
+
     if ((i + BATCH_SIZE) % 500 === 0 || i + BATCH_SIZE >= toProcess.length) {
       const rate = embedded / ((Date.now() - startTime) / 1000);
       const left = Math.round((toProcess.length - i - BATCH_SIZE) / Math.max(rate, 0.1));
@@ -184,7 +207,11 @@ async function main() {
     await sleep(100);
   }
 
+  // Flush the tail. A run that dies before here still has every earlier flush.
+  await logEmbeddingUsage(usage, { model: GEMINI_MODEL, endpoint: USAGE_ENDPOINT, db });
+
   console.log(`\nDone. ${embedded} embedded, ${errors} errors.`);
+  console.log(`Recorded spend: ~$${usdForTokens(usageTokens).toFixed(4)} over ${usageTexts.toLocaleString()} texts, ${usageTokens.toLocaleString()} tokens (estimated, see embedding-usage.mjs)`);
   await pgClient.end();
   await mongo.close();
 }
