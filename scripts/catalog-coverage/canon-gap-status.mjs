@@ -190,7 +190,7 @@ const corpora = map.rows.map((r) => {
 // (pages_translated) — and the open typed canon converted to page-equivalents at our own average
 // characters per page in that language (map.rates), so held pages and canon size share one unit.
 const TRADITIONS = [
-  { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'], languages: /^Tibetan$/ },
+  { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'], scope: 'Kangyur and Tengyur editions (Derge and others), matched by title/BDRC id' },
   { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'], languages: /Chinese/ },
   { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo', 'chinese_other'], rows: ['kanripo'], languages: /Chinese/ },
   { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'], languages: /^Pali$/ },
