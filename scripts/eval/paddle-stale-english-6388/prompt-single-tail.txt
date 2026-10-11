@@ -1,0 +1,3 @@
+
+Answer with ONE JSON object and nothing else:
+{"errors":[{"english":"...","image_says":"...","cause":"OCR|TRANSLATION|BOTH","b_right":true,"severity":"minor|material"}],"verdict":"keep|retranslate-would-fix|bad-regardless"}
