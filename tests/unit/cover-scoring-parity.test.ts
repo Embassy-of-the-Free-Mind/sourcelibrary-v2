@@ -71,6 +71,26 @@ const FIXTURES: Fixture[] = [
     page: { page_number: 3, page_type: 'title-page', ocr_head: 'DE PROVIDENTIA ET FATO, typis excudebat, ornamental border' },
   },
   { name: 'deep interior text page', page: { page_number: 40, page_type: 'text', ocr: { data: 'Caput primum. De rerum natura.' } } },
+  {
+    name: 'decorated front cover (gold tooling, armorial)',
+    page: { page_number: 1, ocr: { data: 'The front cover of a book bound in red morocco with ornate gold tooling and a gilt-stamped coat of arms.' } },
+  },
+  {
+    name: 'worn front cover stays a binding photo',
+    page: { page_number: 1, ocr: { data: 'Front cover with gold tooling, heavily worn and peeling, with a library sticker.' } },
+  },
+  {
+    name: 'Siku Quanshu series wrapper',
+    page: { page_number: 1, ocr: { data: '<language>Chinese</language> <page-type>title-page</page-type> <margin>一</margin> 四庫全書 經部' } },
+  },
+  {
+    name: 'Siku Quanshu text leaf is not a wrapper',
+    page: { page_number: 3, ocr: { data: '<page-type>title-page</page-type> 欽定四庫全書 子部十 雜家類 說郛卷一百六上 元陶宗儀撰 菌譜 宋陳仁玉 芝菌皆氣茁也靈華三秀稱瑞尚矣朝菌晦朔莊生' } },
+  },
+  {
+    name: 'decorative marbled endpaper stays a binding photo',
+    page: { page_number: 2, ocr: { data: 'Front cover interior: decorative marbled endpaper.' } },
+  },
 ];
 
 describe('cover scorer TS/mjs parity', () => {

@@ -521,42 +521,47 @@ function isNonLatin(language) {
   return language && NON_LATIN_LANGUAGES.has(language.toLowerCase());
 }
 
-// Cover scoring — imported from shared module
-import { scorePageForCover } from '../lib/cover-scoring.mjs';
+// Cover choice — book-level policy over the shared page scorer
+// (scripts/lib/cover-choice.mjs: illustrated titles wear a plate, then the best
+// opening page, then a representative plate, then the first non-junk page).
+import { chooseCover, loadCoverCandidates, isManualCover, isJunkCover, currentCoverPageNumber } from '../lib/cover-choice.mjs';
+import { buildCoverUpdate } from '../lib/cover-write.mjs';
 
 /**
- * Select the best cover page for a book from its first N pages.
- * Uses scorePageForCover() for OCR-based intelligent scoring.
+ * Choose and write a book's cover. Never touches a hand-picked (manual*) cover
+ * and never writes when the choice equals the current cover.
  *
- * @param {Object} db - MongoDB database instance
- * @param {string} bookId - Book ID
- * @param {number} maxPages - Max pages to consider (default 20)
- * @returns {Promise<{page: Object, score: number, reason: string} | null>}
+ * @returns {Promise<{page_number: number, rule: string, reason: string} | null>}
  */
-async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) {
-  const pages = await db.collection('pages').find(
-    { book_id: bookId, page_number: { $lte: maxPages } },
-    { projection: {
-      page_number: 1, page_type: 1, hidden: 1,
-      cropped_photo: 1, archived_photo: 1, photo: 1,
-      'ocr.data': 1, detected_images: 1,
-    }}
-  ).sort({ page_number: 1 }).toArray();
-
-  if (!pages.length) return null;
-
-  const scored = pages
-    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle }) }))
-    .sort((a, b) => b.score - a.score);
-
-  const best = scored[0];
-  if (best.score < 30) return null;
-
-  // Get the best image URL (prefer R2)
-  const url = best.page.cropped_photo || best.page.archived_photo || best.page.photo;
-  if (!url || !url.startsWith('http')) return null;
-
-  return { page: best.page, score: best.score, reason: best.reason, url };
+async function applyChosenCover(db, bookId) {
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { id: 1, title: 1, display_title: 1, thumbnail: 1, image_display: 1, thumbnail_source: 1, cover_page: 1 } },
+  );
+  if (!book || isManualCover(book)) return null;
+  const { pages, plates, platePages } = await loadCoverCandidates(db, bookId);
+  const choice = chooseCover(book, pages, plates, platePages);
+  if (!choice) return null;
+  // The last-resort pick only displaces a cover known to be junk; an existing
+  // cover we cannot tie to a page is left alone.
+  if (choice.rule === 'first-ordinary-page' && (book.image_display || book.thumbnail)) {
+    const curNo = currentCoverPageNumber(book);
+    const current = curNo === null ? null : pages.find(p => p.page_number === curNo);
+    if (!current || !isJunkCover(current, book)) return null;
+  }
+  const update = buildCoverUpdate(choice.page, {
+    source: 'smart_ocr',
+    method: 'cover-choice',
+    actor: 'pipeline',
+    confidence: choice.rule === 'first-ordinary-page' ? 0.5 : 0.85,
+    detail: `${choice.rule}: ${choice.reason} (score ${choice.score})`,
+  });
+  if (!update || update.image_display === (book.image_display || book.thumbnail)) return null;
+  // Flatten provenance so this write cannot clobber other field_provenance keys.
+  const { field_provenance, ...fields } = update;
+  if (field_provenance?.thumbnail) fields['field_provenance.thumbnail'] = field_provenance.thumbnail;
+  await db.collection('books').updateOne({ id: bookId }, { $set: { ...fields, updated_at: new Date() } });
+  return { page_number: choice.page.page_number, rule: choice.rule, reason: choice.reason };
 }
 
 function languageToScript(language) {
@@ -4422,20 +4427,11 @@ Rules:
               // Early cover selection — pick a good cover now that OCR page_type is available.
               // This runs again in Phase 8.9 after image extraction, but gives books a decent
               // cover immediately instead of waiting for the full pipeline to complete.
-              if (book.thumbnail_source !== 'manual') {
+              {
                 try {
-                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
-                  if (coverResult) {
-                    await db.collection('books').updateOne(
-                      { id: book.id },
-                      { $set: {
-                        thumbnail: coverResult.url,
-                        thumbnail_source: 'smart_ocr',
-                        cover_page: coverResult.page.page_number,
-                        cover_selected_at: new Date(),
-                      }}
-                    );
-                    console.log(`    Cover: page ${coverResult.page.page_number} (${coverResult.reason})`);
+                  const chosen = await applyChosenCover(db, book.id);
+                  if (chosen) {
+                    console.log(`    Cover: page ${chosen.page_number} (${chosen.rule}: ${chosen.reason})`);
                   }
                 } catch (e) {
                   // Non-fatal — cover will be selected in Phase 8.9
@@ -5740,31 +5736,8 @@ Rules:
             pagesHidden++;
           }
 
-          // 2. Select best cover (skip if manually set)
-          if (book.thumbnail_source === 'manual') {
-            await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
-            coversSelected++;
-            continue;
-          }
-
-          // Smart OCR-based cover selection
-          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
-          if (coverResult && coverResult.url !== book.thumbnail) {
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: {
-                thumbnail: coverResult.url,
-                thumbnail_source: 'smart_ocr',
-                cover_page: coverResult.page.page_number,
-                cover_selected_at: new Date(),
-                'field_provenance.thumbnail': {
-                  source: 'pipeline', method: 'smart-ocr-cover-selection',
-                  confidence: 0.85, date: new Date(),
-                  detail: `${coverResult.reason} (score: ${coverResult.score})`,
-                },
-              }}
-            );
-          }
+          // 2. Choose the cover (applyChosenCover leaves manual covers alone)
+          await applyChosenCover(db, book.id);
 
           await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
           coversSelected++;
