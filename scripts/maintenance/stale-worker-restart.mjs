@@ -30,8 +30,10 @@
  * stale, and the checkout is not behind main. Anything else pages, high.
  *
  * Every decision (restart, verified, held + why) is one JSON line in --log. Pages go to ntfy
- * sourcelibrary-uptime, one message per changed set, at most every 6 h: priority high only when a
- * restart left a worker down or unverified (work at risk); default for "held, needs you".
+ * sourcelibrary-uptime, each worker pid at most once a day (a failed restart at most every 6 h):
+ * priority high only when a restart left a worker down or unverified (work at risk); default for
+ * "held, needs you". The dedup is per pid, not per set: keyed on the whole set, a third worker
+ * coming and going re-paged the same two held pids four times in six hours (2026-10-11).
  *
  * USAGE (dry run by default: prints what it would do, restarts nothing)
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/stale-worker-restart.mjs \
@@ -53,7 +55,8 @@ const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
 const ALERT_STATE = '/tmp/sl-stale-worker-restart.alert.json';
 const RESTART_STATE = '/tmp/sl-stale-worker-restart.restarts.json';
 const DEFAULT_LOG = '/var/log/sourcelibrary/stale-worker-restart.jsonl';
-const REALERT_MS = 6 * 3600 * 1000;
+export const REPAGE_HELD_MS = 24 * 3600 * 1000;
+export const REPAGE_FAILED_MS = 6 * 3600 * 1000;
 export const MIN_RESTART_INTERVAL_MS = 6 * 3600 * 1000;
 export const BUSY_PAGE_AFTER_MS = 24 * 3600 * 1000;
 const BATCH_LOOKBACK_MS = 14 * 24 * 3600 * 1000;
@@ -207,18 +210,39 @@ async function unitShow(name) {
   return { name, mainPid: Number(p.MainPID), active: p.ActiveState };
 }
 
+/**
+ * Which page lines are news. A line's key is its text before " — " (worker + pid, or the checkout
+ * line); a key already paged inside its window stays quiet. Returns the lines to send, how many were
+ * left quiet, and the sent-state to store (entries past the longest window dropped).
+ */
+export function selectPageLines(lines, sent = {}, now = Date.now()) {
+  const keep = Object.fromEntries(Object.entries(sent).filter(([, at]) => now - at < REPAGE_HELD_MS));
+  const fresh = [];
+  let quiet = 0;
+  for (const line of lines) {
+    const key = line.split(' — ')[0];
+    const span = / — restart FAILED/.test(line) ? REPAGE_FAILED_MS : REPAGE_HELD_MS;
+    if (keep[key] != null && now - keep[key] < span) { quiet++; continue; }
+    fresh.push(line);
+  }
+  return { fresh, quiet, sent: keep };
+}
+
 async function page(lines, high) {
-  const key = lines.map((l) => l.split(' — ')[0]).sort().join('\n');
   let prev = {};
-  try { prev = JSON.parse(readFileSync(ALERT_STATE, 'utf8')); } catch { /* first run */ }
-  if (prev.key === key && Date.now() - (prev.at || 0) < REALERT_MS) { console.log('[stale-worker-restart] page suppressed (same set within 6 h)'); return; }
+  try { prev = JSON.parse(readFileSync(ALERT_STATE, 'utf8')).sent || {}; } catch { /* first run, or the old per-set format */ }
+  const { fresh, quiet, sent } = selectPageLines(lines, prev);
+  if (!fresh.length) { console.log(`[stale-worker-restart] page suppressed (all ${quiet} already paged today)`); return; }
+  const isHigh = high && fresh.some((l) => / — restart FAILED/.test(l));
   try {
     await fetch(NTFY_TOPIC, {
       method: 'POST',
-      headers: { Title: high ? `Worker restart FAILED (${lines.length})` : `Stale worker needs you (${lines.length})`, Priority: high ? 'high' : 'default', Tags: high ? 'warning' : 'hourglass' },
-      body: `${lines.join('\n')}\n\nThe safe ones were restarted automatically. Owner: #6360 · scripts/maintenance/stale-worker-restart.mjs`,
+      headers: { Title: isHigh ? `Worker restart FAILED (${fresh.length})` : `Stale worker needs you (${fresh.length})`, Priority: isHigh ? 'high' : 'default', Tags: isHigh ? 'warning' : 'hourglass' },
+      body: `${fresh.join('\n')}${quiet ? `\n(+${quiet} still held, paged earlier today)` : ''}\n\nThe safe ones were restarted automatically. Owner: #6360 · scripts/maintenance/stale-worker-restart.mjs`,
     });
-    writeFileSync(ALERT_STATE, JSON.stringify({ key, at: Date.now() }));
+    const at = Date.now();
+    for (const l of fresh) sent[l.split(' — ')[0]] = at;
+    writeFileSync(ALERT_STATE, JSON.stringify({ sent }));
   } catch (e) { console.error(`[stale-worker-restart] ntfy failed: ${e.message}`); }
 }
 
