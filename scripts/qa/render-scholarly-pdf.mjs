@@ -9,7 +9,11 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf] [--dedication text | --dedication-file path]
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--no-plates] [--no-original] [--out path.pdf] [--dedication text | --dedication-file path]
+ *
+ * Illustrations (gallery_images crops) are fetched fresh on every run — they
+ * need MONGODB_URI even when the book is cached; --no-plates skips them. Run
+ * scripts/qa/plate-captions.mjs first for tight crops and translated captions.
  *
  * The book + pages are cached under scripts/output/scholarly-cache/ after the
  * first fetch, so design iteration needs no database (pass --refresh to
@@ -19,7 +23,7 @@
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, fetchIllustrations, fetchOrnaments, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -68,9 +72,12 @@ if (range) {
 
 // Front matter as the mint would pass it: the newest edition that has any
 const edition = [...(book.editions || [])].reverse().find(e => e.front_matter?.introduction);
+// A rewritten, fact-checked draft in scripts/qa/edition-texts/<id>/ wins over
+// the stored front matter, so it can be read in a render before it is adopted
+const draft = name => { const f = join('scripts', 'qa', 'edition-texts', bookId, `${name}.md`); return existsSync(f) ? readFileSync(f, 'utf-8') : null; };
 const options = {
-  introduction: edition?.front_matter?.introduction,
-  methodology: edition?.front_matter?.methodology,
+  introduction: draft('introduction') ?? edition?.front_matter?.introduction,
+  methodology: draft('methodology') ?? edition?.front_matter?.methodology,
   doi: edition?.doi,
   version: edition?.version,
   frontispiece: await fetchFrontispiece(book),
@@ -78,11 +85,27 @@ const options = {
   // --dedication "text" previews wording without writing it anywhere
   dedication: opt('dedication') || (opt('dedication-file') ? readFileSync(opt('dedication-file'), 'utf-8') : resolveDedication(book, collections)),
 };
+// --no-original leaves out the source transcription at the back (each page still links its facsimile)
+if (flag('no-original')) options.includeOriginal = false;
+if (!flag('no-plates')) {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  // Caption-pass output (scripts/qa/plate-captions.mjs), when it has been run for this book
+  const capFile = join('scripts', 'output', 'plate-captions', `${book.id}.json`);
+  const captions = existsSync(capFile) ? JSON.parse(readFileSync(capFile, 'utf-8')).pages : null;
+  try { options.illustrations = await fetchIllustrations(client.db('bookstore'), book, { captions }); } finally { await client.close(); }
+  console.log(`${options.illustrations.length} illustrations${captions ? `, ${Object.keys(captions).length} captioned pages` : ''}`);
+  // The book's own headpieces and tailpieces (scripts/qa/plate-ornaments.mjs), verified ones only
+  const ornFile = join('scripts', 'output', 'plate-ornaments', `${book.id}.json`);
+  if (existsSync(ornFile)) {
+    options.ornaments = await fetchOrnaments(book, JSON.parse(readFileSync(ornFile, 'utf-8')).pages);
+    console.log(`${options.ornaments.length} ornaments`);
+  }
+}
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 
 const out = opt('out') || join('scripts', 'output', `${book.id}-scholarly${range ? `-p${range}` : ''}.pdf`);
 mkdirSync(dirname(out), { recursive: true });
-if (flag('keep-typ')) writeFileSync(out.replace(/\.pdf$/, '.typ'), generateTypstSource(book, body, options));
+if (flag('keep-typ')) writeFileSync(out.replace(/\.pdf$/, '.typ'), generateTypstSource(book, body, { ...options, illustrations: (options.illustrations || []).map((il, i) => ({ ...il, file: `plate-${i + 1}.jpg` })) }));
 
 const started = Date.now();
 const pdf = await generateScholarlyPdf(book, body, options);

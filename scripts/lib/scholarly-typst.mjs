@@ -65,6 +65,38 @@ function cleanForNote(text) {
 // footnote labelled as marginal instead.
 const MARGIN_NOTE_MAX_CHARS = 220;
 
+// A gloss longer than this is a quotation, not a term: it stays a footnote
+// rather than interrupt the sentence
+const ORIGINAL_TERM_MAX_WORDS = 5;
+
+/**
+ * A third of a translation's notes are `original: "ardorem," meaning heat…` —
+ * the source word behind an English rendering, sometimes with a gloss. Split
+ * into the term (set inline, see #orig) and the explanation (still a note).
+ * Null when the note is not of that shape or the term is a whole quotation.
+ */
+export function splitOriginalTerm(content) {
+  const m = String(content).match(/^\s*original(?:\s+(?:latin|greek|hebrew|german|french|italian|text|word|term))?\s*:\s*([\s\S]+)$/i);
+  if (!m) return null;
+  let s = m[1].trim();
+  let term, rest;
+  const quoted = s.match(/^["“'‘]([^"”'’]+)["”'’]\s*([\s\S]*)$/);
+  if (quoted) {
+    term = quoted[1];
+    rest = quoted[2];
+  } else {
+    // Unquoted: the term runs to the first sentence break or dash
+    const cut = s.match(/^([^.;:—–(]+?)(?:\s*[.;:—–]\s+|\s*(?=\())([\s\S]*)$/);
+    term = cut ? cut[1] : s;
+    rest = cut ? cut[2] : '';
+  }
+  term = term.replace(/[\s,.;:]+$/, '').trim();
+  rest = rest.replace(/^[\s,.;:—–-]+/, '').trim();
+  if (!term || term.split(/\s+/).length > ORIGINAL_TERM_MAX_WORDS) return null;
+  if (rest) rest = rest[0].toUpperCase() + rest.slice(1);
+  return { term, rest };
+}
+
 /**
  * The source's printed running head, when the model transcribed it as the
  * page's first line instead of tagging it: "**Cap. V. On the globe of the
@@ -170,7 +202,66 @@ export function findRunningHeads(pages) {
  *   which reads as noise in print)
  * - running heads, metadata tags, HTML remnants and entities stripped
  */
-export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
+/**
+ * When a spread is cut into single pages, the crop can keep a sliver of the
+ * facing page, and its clipped line-ends are transcribed one per line: "sph |
+ * la l | te | dir" (Bovelles, Geometrie practique, p. 100). A run of five or
+ * more lines of five characters or fewer goes — unless it is a table or a
+ * letter key (kept), or words the book uses elsewhere (`vocab`), which are real
+ * text set narrow beside a figure and are joined into one line.
+ * A one-term list ("Line | Straight, | Oblique.") mixes in longer entries and
+ * is never a run.
+ */
+export function dropEdgeFragments(text, vocab = null) {
+  const lines = String(text).split('\n');
+  const tiny = l => { const t = l.trim(); return t.length > 0 && t.length <= 5 && !/^[#<>*-]/.test(t); };
+  const keep = lines.map(() => true);
+  for (let i = 0; i < lines.length;) {
+    if (!tiny(lines[i])) { i++; continue; }
+    let j = i; const run = [];
+    while (j < lines.length && (tiny(lines[j]) || !lines[j].trim())) { if (lines[j].trim()) run.push(j); j++; }
+    if (run.length >= 5) {
+      const t = run.map(k => lines[k].trim());
+      const share = re => t.filter(x => re.test(x)).length / t.length;
+      // A table or a letter key, one entry to a line (Fludd UCH I: "24 | 12 | 6", "gg | ff | ee"): keep
+      if (share(/^[\d\s().,;:ℓ]+$|^(\p{L})\1?\.?(\s+\d+)?$/u) >= 0.5) { i = j; continue; }
+      // Real words set narrow beside a figure ("par- | al- | lel- | o- | gram", "and | one | said")
+      // are words the book uses elsewhere; clipped syllables ("sph | dir | esg") are not.
+      // Without the book's vocabulary nothing is dropped, only joined.
+      const words = t.join(' ').replace(/(\p{L})- (?=\p{Ll})/gu, '$1').toLowerCase().match(/\p{L}{3,}/gu) || [];
+      // Words of three letters or more: a French edge sliver's "de | la | en" also
+      // occur in the translation's own glosses of source terms
+      const known = vocab ? words.filter(w => (vocab.get(w) || 0) >= 3).length / (words.length || 1) : 1;
+      if (known >= 0.7) {
+        lines[run[0]] = t.join(' ').replace(/(\p{L})- (?=\p{Ll})/gu, '$1');
+        for (const k of run.slice(1)) keep[k] = false;
+      } else for (const k of run) keep[k] = false;
+    }
+    i = j;
+  }
+  return lines.filter((_, k) => keep[k]).join('\n');
+}
+
+/**
+ * The translation sometimes talks in its own voice inside the text, and that
+ * prints as if it were the author's (Fludd UCH I, 25 passages):
+ *   "[An engraving occupies the lower half of the page …]", "[Diagram of a 3x3 square]"
+ *     → made a note, so dropDescriptiveNotes treats it like any figure description
+ *   "[?The following lines are centered but the ink has faded … likely …]" → [illegible]
+ *   "[This page is blank.]" and "Vocabulary used in this section: * Tower — …" → gone
+ */
+const FIGURE_NOUN = '(?:diagram|illustration|woodcut|engraving|figure|image|table|chart|drawing|map|emblem|portrait|ornament|plate|vignette|picture|depiction|scheme|schematic)';
+const BRACKET_FIGURE = new RegExp(`\\[\\s*((?:(?:A|An|The|This|Two|Three|Several)\\s+(?:[\\w-]+\\s+){0,4}${FIGURE_NOUN}s?\\b|${FIGURE_NOUN}\\s*(?::|(?:of|showing|illustrating|depicting)\\b))[^\\[\\]]{20,})\\]`, 'gi');
+export const isIllegibleGuess = c => String(c).length > 40 && /\b(illegible|faded|legible|unreadable|likely|probably|ink|letters|shapes|cannot be read)\b/i.test(c);
+export function separateModelText(text) {
+  return String(text)
+    .replace(BRACKET_FIGURE, (_, c) => `<note>${c.trim()}</note>`)
+    .replace(/\[\?([^\[\]]{40,})\]/g, (m, c) => (isIllegibleGuess(c) ? '[illegible]' : m))
+    .replace(/[\[(]\s*\*?(?:This|The) page is (?:blank|empty)[^\])]*[\])]/gi, '')
+    .replace(/^[ \t]*\**(?:Vocabulary used in this section|Key (?:terms|vocabulary)(?: used)?(?: in this section)?|Glossary(?: of terms)?)\**\s*:[\s\S]*?(?=\n[ \t]*\n|(?![\s\S]))/gim, '');
+}
+
+export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false, vocab = null } = {}) {
   if (!text) return { body: '', printedPage: null };
 
   let out = repairLeakedMarkup(text, { plain: true });
@@ -181,6 +272,8 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   out = out.replace(/<page-num>[\s\S]*?<\/page-num>/gi, '');
 
   out = out.replace(new RegExp(`<(${DROP_TAGS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), '');
+  out = dropEdgeFragments(out, vocab);
+  out = separateModelText(out);
 
   // Remove AI preambles — the canonical guard (#3108) catches conversational
   // openers ("Note: the text in the image is in French...") that the narrow
@@ -211,7 +304,13 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   // Notes become placeholders now and Typst calls after escaping
   const inserts = [];
   const hold = typst => { inserts.push(typst); return `%%IN${inserts.length - 1}%%`; };
-  const footnote = content => hold(`#footnote[${escapeTypst(content)}];`);
+  const footnote = content => {
+    // "original: «term»" names the word the translation renders: set it in the
+    // line, after that word, and keep only any explanation as a note
+    const orig = splitOriginalTerm(content);
+    if (orig) return hold(`#orig[${escapeTypst(orig.term)}]${orig.rest ? `#footnote[${escapeTypst(orig.rest)}]` : ''};`);
+    return hold(`#footnote[${escapeTypst(content)}];`);
+  };
   const marginal = content => {
     const clean = cleanForNote(content);
     if (!clean || clean.length < 3) return '';
@@ -226,13 +325,27 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   // "[Marginal note:]" followed by its lines up to the next blank line
   out = extractLabelledMarginalia(out, marginal);
 
+  // A note inside a note ("<note>A circular diagram or mirror <note>original:
+  // \"speculum\"</note> represents …</note>") closed at the inner end and leaked the
+  // rest of the outer note into the text (Fludd UCH I p. 280; 116 in that book).
+  // The inner one becomes a parenthesis inside the outer.
+  for (let i = 0; i < 5 && /<note>(?:(?!<\/note>)[\s\S])*?<(?:note|gloss)>/i.test(out); i++) {
+    out = out.replace(/(<note>(?:(?!<\/?note>)[\s\S])*?)<(note|gloss)>([\s\S]*?)<\/\2>/gi, (_, before, __, inner) => `${before}(${inner.replace(/^original:\s*/i, '').trim()})`);
+  }
   out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, c) => {
     const clean = cleanForNote(c);
     return clean ? footnote(clean) : '';
   });
-  out = out.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, (_, c) => {
-    const clean = cleanForNote(c);
-    return clean.length >= 3 ? footnote(`Gloss: ${clean}`) : '';
+  // A gloss of a word or two ("clock-making" for Horology) is set in the
+  // line, in grey; a footnote for each made half of Fludd UCH I's 6,300 notes.
+  // A gloss that only repeats the word before it is dropped, and a longer
+  // explanation stays a footnote.
+  out = out.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, (_, c, at, whole) => {
+    const clean = cleanForNote(c).replace(/[.;,]$/, '');
+    if (clean.length < 3) return '';
+    const before = whole.slice(Math.max(0, at - 60), at).replace(/<[^>]*>/g, ' ').trim().toLowerCase();
+    if (before.endsWith(clean.toLowerCase())) return '';
+    return isShortGloss(clean) ? hold(`#gl[${escapeTypst(clean)}];`) : footnote(`Gloss: ${clean}`);
   });
   // <term> is used two ways: wrapping a word (keep the word) or carrying an
   // explanation of the preceding word ("hypophetas: from the Greek…") — a note
@@ -241,7 +354,7 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     return clean.length > 40 || /:\s/.test(clean) ? footnote(clean) : clean;
   });
 
-  out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
+  out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, (_, c) => (isIllegibleGuess(c) ? '[illegible]' : `[?${c}]`));
   out = out.replace(/<column-break\s*\/?>/gi, '\n\n');
   // <leaf-break/> (#5260): two leaves on one page image, not continuous — a paragraph break.
   out = out.replace(/<leaf-break\s*\/?>/gi, '\n\n');
@@ -297,7 +410,9 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     const display = para.match(/^%%DL(\d)%%([\s\S]*?)%%\/DL%%$/);
     if (display && !/[\p{L}\p{N}]/u.test(display[2].replace(/%%IN\d+%%/g, ''))) continue; // "***" ornaments
     if (display) {
-      rendered.push(`#dline(${display[1]})[${takeAnchor()}${display[2]}]`);
+      // "BOOK TWO", "TREATISE ONE": the source opens a book here, and sets it larger than a chapter
+      const level = /^(?:\*|_)*(?:the\s+)?(?:book|treatise|tractate)\s+(?:[ivxlc]+\b|the\s+\w+|\w+)\.?(?:\*|_)*\s*$/i.test(display[2].replace(/%%[^%]*%%/g, '').trim()) ? 0 : display[1];
+      rendered.push(`#dline(${level})[${takeAnchor()}${display[2]}]`);
       continue;
     }
     para = para.replace(/%%\/?DL\d?%%/g, '');
@@ -322,9 +437,13 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   for (let pass = 0; pass < 3 && /%%IN\d+%%/.test(body); pass++) {
     body = body.replace(/%%IN(\d+)%%/g, (_, i) => inserts[Number(i)]);
   }
+  // An inline source term reads as a word: exactly one space before it
+  body = body.replace(/[ \t]*#(orig|gl)\[/g, ' #$1[');
 
   return { body: body.trim(), printedPage };
 }
+
+export const isShortGloss = text => String(text).trim().split(/\s+/).length <= 6 && String(text).length <= 45;
 
 function escapeTypst(text) {
   // Escape characters special in Typst content mode
@@ -398,7 +517,54 @@ function markdownToTypst(md) {
 
 // ── Page filtering ──────────────────────────────────────────────────
 
-const SKIP_PAGE_TYPES = new Set(['blank']);
+const SKIP_PAGE_TYPES = new Set(['blank', 'digitizer-insert']);
+
+// Leaves that belong to the COPY, not the work: flyleaves, a dealer's
+// catalogue slip, shelfmarks, bookplates, the digitiser's colour chart. Fludd
+// UCH I opened its translation with 'Vault (6-6) Book # 71 … Collated'. The
+// words alone are not enough (real pages mention a flyleaf), so this applies
+// only before the work's title page, and to very short pages at the back.
+const COPY_MATTER = /\b(fly-?leaf|end-?paper|paste-?down|shelf-?mark|bookplate|ex-?libris|library stamp|catalog(ue)? (description|slip|entry|clipping)|collation (mark|note)|digiti[sz]ation (target|card)|colou?r (chart|checker|calibration)|scale bar|call number)\b/i;
+const bodyText = page => String(page.translation?.data || '').replace(/<(note|gloss|image-desc|summary|keywords|meta|page-num|header|sig|vocab|lang|language|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+/**
+ * A split book keeps its original two-page photographs as `archived-spread`
+ * pages (numbered below 1) beside the single pages cut from them, and both
+ * carry a translation: an edition of Indagine's Chiromantzey printed 74
+ * spreads before the 146 pages that repeat them. The spreads are the text only
+ * when there is nothing else.
+ */
+/**
+ * A translation with nothing under it. Where the transcription of a page has
+ * no text — a full-page engraving, a blank leaf with show-through — the model
+ * still wrote a "translation": a description of the picture, the next page's
+ * chapter, index entries, the show-through. Fludd UCH I had 22 such pages
+ * (pp. 228, 383, 483, 591, 648 …, each checked against the scan). The page
+ * keeps its place, so its plate still prints, but the text goes.
+ */
+const sourceText = s => String(s || '').replace(/->|<-/g, ' ')
+  .replace(/<detected-images>[\s\S]*?<\/detected-images>/g, '')
+  .replace(/<(note|meta|vocab|summary|keywords|image-desc|lang|language|page-num|header|sig|page-type|scan-quality|script|warning|columns|gloss|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '')
+  .replace(/<[^>]+>/g, '').replace(/[#*|:\-\s>]+/g, ' ').trim();
+export function isUngroundedTranslation(page) {
+  if (!page.ocr?.data || !page.translation?.data) return false;
+  return sourceText(page.ocr.data).length < 30 && sourceText(page.translation.data).length > 200;
+}
+
+export function dropArchivedSpreads(pages) {
+  const isSpread = p => p.page_type === 'archived-spread';
+  return pages.some(p => !isSpread(p) && p.translation?.data) ? pages.filter(p => !isSpread(p)) : pages;
+}
+
+export function dropCopyMatter(pages, titlePageNumber) {
+  const lastN = pages.length ? pages[pages.length - 1].page_number : 0;
+  return pages.filter(p => {
+    const body = bodyText(p);
+    const copyish = COPY_MATTER.test(p.translation?.data || '') || !body;
+    if (titlePageNumber != null && p.page_number < titlePageNumber) return !(copyish && body.length < 600);
+    if (p.page_number > lastN - 4) return !(copyish && body.length < 200);
+    return true;
+  });
+}
 
 function isContentPage(page) {
   if (!page.translation?.data) return false;
@@ -439,7 +605,9 @@ const FONT_STACK = '("Libertinus Serif", "Noto Naskh Arabic", "Noto Serif Hebrew
 const LANG_CODES = { latin: 'la', german: 'de', french: 'fr', italian: 'it', greek: 'el', dutch: 'nl', spanish: 'es', english: 'en', portuguese: 'pt' };
 
 // Standing credits, printed on the imprint page of every edition
-const STANDING_CREDITS = ['Creative direction: Derek Lomas'];
+const STANDING_CREDITS = ['Editor and creative director: Derek Lomas'];
+// Named in the citation itself, so a reference to the edition carries its editor
+const EDITION_EDITOR = 'Derek Lomas';
 
 const TYPST_PREAMBLE = `
 #let rust = rgb("#9e4a3a")
@@ -490,7 +658,13 @@ const TYPST_PREAMBLE = `
 // links to that page's facsimile on the site; the small line under it jumps to
 // the same page on the other side, when the edition has one.
 #let current-src = state("current-src", none)
-#let src(n, printed: none, side: "t", other: none) = in-margin(drop: -0.7em, {
+// A chapter that would run past 99 notes (sparse chapter lists: one Fludd book
+// carries 470) restarts them at the source page that would cross 99 instead, so
+// a marker stays two digits; every number on the page it lands on is still
+// distinct (… 97 98 1 2). The generator decides where (reset: true): a reset
+// computed here from the counter chains one layout pass per reset, and a
+// 1,000-page book stopped converging (a tailpiece then dropped at random).
+#let src(n, printed: none, side: "t", other: none, reset: false) = { if reset { counter(footnote).update(0) }; in-margin(drop: -0.7em, {
   set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
   [#metadata(n)#label(side + "-" + n)]
   current-src.update(n)
@@ -502,16 +676,125 @@ const TYPST_PREAMBLE = `
     linebreak()
     link(label((if side == "t" { "o" } else { "t" }) + "-" + n), text(size: 7pt, fill: muted)[#other #sym.arrow.r])
   }
-})
+})}
 
 // Headings of the source itself — display lines, never outline entries
 #let dline(level, body) = block(above: if level <= 2 { 1.6em } else { 1.2em }, below: 0.9em, width: 100%, sticky: true, {
   set align(center)
   set par(justify: false, first-line-indent: 0pt, leading: 0.55em)
-  if level == 1 { text(size: 13pt, tracking: 0.02em, body) }
+  // The source's chapter heads, letter-spaced as the printed book sets them
+  // A book or treatise opening, set large like the original's LIBER SECUNDUS
+  if level == 0 { v(2mm); text(size: 17pt, tracking: 0.2em, upper(body)); v(1mm) }
+  else if level == 1 { text(size: 11.5pt, tracking: 0.16em, upper(body)) }
   else if level == 2 { text(size: 11.5pt, style: "italic", body) }
   else { text(size: 10.5pt, style: "italic", body) }
 })
+
+// The book's own printer's ornaments, where the book prints them: a headpiece
+// opens a book on a fresh page, a tailpiece closes a section
+#let headpiece(file) = {
+  pagebreak(weak: true)
+  align(center, block(above: 0pt, below: 5mm, image(file, width: text-w)))
+}
+// A tailpiece belongs to the end of its section: where the page has no room
+// left for it, it is dropped rather than given a page of its own
+#let tailpiece(file, width, id, height: none) = {
+  // Measured from where the section's text ENDS (this marker), not from where
+  // the ornament would land: once spilled to the next page it always "fits"
+  [#metadata(none)#label(id)]
+  context {
+    let at = locate(label(id)).position()
+    let notes = query(footnote).filter(f => f.location().page() == at.page).len()
+    let room = page.height - 30mm - at.y - notes * 4.6mm - if notes > 0 { 6mm } else { 0mm }
+    let orn = align(center, block(above: 1.6em, below: 1.6em, image(file, width: width)))
+    // An ornament never opens a page: if the text ended at the foot of the
+    // last one, the marker itself lands at the top of this one
+    let opens-page = at.y < 30mm + 12mm
+    // Height from the image's known proportions when the generator passes it
+    let need = if height != none { (height + 3.2em + 8mm).to-absolute() } else { measure(block(width: text-w, orn)).height + 8mm }
+    let fits = not opens-page and need <= room
+    // Never an empty result: when this context rendered nothing, Fludd UCH I's
+    // p. 23 tailpiece was dropped on a page with 80 mm free (its values read
+    // 'fits' the moment anything else was rendered here). Measured, not
+    // explained; keep the box.
+    box(width: 0pt, height: 0pt)
+    if fits { orn }
+  }
+}
+
+// The source's own word for what the translation just said, after it in the line
+#let orig(body) = text(size: 0.86em, fill: muted, style: "italic", hyphenate: false)[(#body)]
+// A short gloss of the word before it: grey and upright, so it never reads as
+// the source's own term (grey italic)
+#let gl(body) = text(size: 0.86em, fill: muted, hyphenate: false)[(#body)]
+
+// The book's own illustrations, cropped from the page images. The image keeps
+// the hairline frame of a tipped-in plate; the caption names the source page,
+// which links to the facsimile like the margin numbers do.
+// A plate's caption carries its title AND the translation of every word on
+// it; the list of illustrations shows the title alone
+#let in-outline = state("in-outline", false)
+#show outline: it => { in-outline.update(true); it; in-outline.update(false) }
+#let plate-caption-w = state("plate-caption-w", 100mm)
+// A full-page plate is centred on the PAGE, not the text column: the column
+// sits left of centre to make room for the margin notes
+#let plate-shift = state("plate-shift", 0mm)
+#show figure.where(kind: "plate"): it => context move(dx: plate-shift.get(), block(above: 1.6em, below: 1.6em, width: 100%, breakable: false, {
+  set align(center)
+  it.body
+  v(0.7em)
+  block(width: plate-caption-w.get(), {
+    set par(justify: false, first-line-indent: 0pt, leading: 0.5em, spacing: 0.55em)
+    set text(size: 8.8pt, number-type: "lining", hyphenate: false)
+    it.caption.body
+  })
+}))
+#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: (), full: false, follows: false, words: false) = {
+  plate-caption-w.update(calc.max(width, 100mm))
+  plate-shift.update(if full { 105mm - margin-l - text-w / 2 } else { 0mm })
+  let head = [#text(fill: rust, tracking: 0.04em, smallcaps[Fig. #context counter(figure.where(kind: "plate")).display()])#h(0.6em)#if title != none [#emph(title)] else [#kind]]
+  let src-link = text(fill: muted, size: 7.8pt)[source page #link(page-url + n)[#n]]
+  // The words on the plate: under it, or — when they would push plate and
+  // caption past the foot of a page (a float cannot break) — in the text
+  // straight after it, where they may run on (words: true)
+  let words-on = {
+    // Labels: the English, with the word as engraved after it
+    if labels.len() > 0 {
+      align(center, labels.map(((o, e)) => box[#e#if o != none [ #text(fill: muted, style: "italic")[(#o)]]]).join([#h(0.5em)·#h(0.5em)]))
+    }
+    // Mottoes and sentences engraved on the plate, one to a line
+    for (o, e) in lines {
+      align(left, par(hanging-indent: 1em)[#e#if o != none [ #text(fill: muted, style: "italic", size: 0.92em)[(#o)]]])
+    }
+    // The page's own key to the letters on the plate
+    if key.len() > 0 {
+      align(left, par(hanging-indent: 1em, key.map(((m, e)) => [#text(fill: rust)[#m]#h(0.35em)#e]).join([#h(0.4em)·#h(0.4em)])))
+    }
+  }
+  let details = {
+    align(center)[#head#h(0.8em)#src-link]
+    if not words { words-on }
+    if follows { align(center, text(fill: muted, style: "italic")[Its text is translated on the following page.]) }
+  }
+  // A frontispiece or title page has a page to itself, as in the book
+  if full { pagebreak(weak: true) }
+  figure(
+    kind: "plate",
+    supplement: [Fig.],
+    placement: if full { none } else { auto },
+    caption: context if in-outline.get() { if title != none { title } else [#kind, source page #n] } else { details },
+    box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width)),
+  )
+  if words {
+    block(above: 1em, below: 1.2em, breakable: true, {
+      set par(justify: false, first-line-indent: 0pt, leading: 0.5em, spacing: 0.55em)
+      set text(size: 8.8pt, number-type: "lining", hyphenate: false)
+      align(center, text(fill: rust, tracking: 0.04em, smallcaps[Words on Fig. #context counter(figure.where(kind: "plate")).display()]))
+      words-on
+    })
+  }
+  if full { pagebreak(weak: true) }
+}
 
 // Lists the source sets in short lines (indexes, plant names): two columns
 #let listcols(body) = block(width: 100%, above: 1em, below: 1em, {
@@ -594,6 +877,17 @@ const CATALOGUE_PARENTHETICAL = new RegExp(
  * and existing hyphens made non-breaking so a name like `Ghāyat al-Ḥakīm`
  * cannot be split across two lines of a cover.
  */
+/**
+ * The running head's title: the work's own name, before a volume or part
+ * designation ("Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)" →
+ * "Utriusque Cosmi Historia"), so it is never cut off mid-word with an ellipsis.
+ */
+export function runningTitle(title) {
+  const t = String(title || '').trim();
+  const head = t.split(/\s+[-–—:]\s+|\s*\(/)[0].trim();
+  return shorten(head.length >= 8 ? head : t, 52);
+}
+
 export function displayTitle(title, { author = '' } = {}) {
   let t = String(title ?? '').trim();
   // A trailing imprint tail — ", Augsburg 1518", ", London, 1653"
@@ -627,27 +921,34 @@ export function translationLine(language) {
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
-  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book) } = options;
+  // illustrations: [{ page_number, file, type, width, height }] beside the .typ
+  // (see fetchIllustrations); each is set as a figure at its source page
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book), illustrations = [], ornaments = [] } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
   const now = new Date().toISOString().split('T')[0];
   const year = now.slice(0, 4);
-  const translatedPages = pages.filter(isContentPage);
+  // The first title page: a page typed so, or the first full-page plate
+  const titleAt = [pages.find(p => p.page_type === 'title-page')?.page_number, ...illustrations.filter(il => il.full).map(il => il.page_number)].filter(n => n != null).sort((a, b) => a - b)[0];
+  const translatedPages = dropCopyMatter(dropArchivedSpreads(pages).filter(isContentPage), titleAt)
+    .map(p => (isUngroundedTranslation(p) ? { ...p, translation: { ...p.translation, data: '' } } : p));
   const author = String(book.author || 'Anonymous').replace(/\s*\|\s*/g, ', ');
   const language = book.language || 'source language';
 
   // "Title: Subtitle" reads better on a title page as two lines of different weight
   const coverDisplay = displayTitle(bookTitle, { author });
-  const colon = coverDisplay.indexOf(': ');
-  const mainTitle = colon > 0 ? coverDisplay.slice(0, colon) : coverDisplay;
-  const subTitle = colon > 0 ? coverDisplay.slice(colon + 2) : '';
+  // A catalogue title often joins work and volume with a spaced dash
+  // ("Utriusque Cosmi Historia - Tomus Primus"): that is a subtitle too
+  const sep = coverDisplay.match(/: | [-–—] /);
+  const mainTitle = sep ? coverDisplay.slice(0, sep.index) : coverDisplay;
+  const subTitle = sep ? coverDisplay.slice(sep.index + sep[0].length) : '';
   // The original-language line above the title, when it says something the
   // English title does not
   const coverOriginal = displayTitle(book.title, { author });
 
   const place = book.place_published || book.publication_place;
-  const imprintLine = [[place, book.publisher].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
+  const imprintLine = [[place, book.publisher && String(book.publisher).replace(/\s*\|\s*/g, ' and ')].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
   const holder = book.image_source?.contributing_library || book.contributing_library;
   const provider = book.image_source?.provider_name;
   const { url: sourceUrl, label: sourceLabel } = resolveSourceImages(book);
@@ -667,7 +968,7 @@ export function generateTypstSource(book, pages, options = {}) {
 )
 #let page-url = ${typstString(`${bookUrl}/page-number/`)}
 ${TYPST_PREAMBLE}
-#running-title.update(${typstString(shorten(mainTitle, 52))})
+#running-title.update(${typstString(runningTitle(mainTitle))})
 
 #set page(
   paper: "a4",
@@ -679,10 +980,13 @@ ${TYPST_PREAMBLE}
     let opens = query(heading.where(level: 1)).filter(h => h.location().page() == pg)
     if opens.len() == 0 {
       set text(size: 8pt, fill: muted, number-type: "lining")
-      let chapter = running-chapter.get()
+      // The state holds what was current at the top of the page; a chapter that
+      // opens on this page (a book opening under its headpiece) names the page
+      let starts = query(<chapter-start>).filter(m => m.location().page() == pg)
+      let chapter = if starts.len() > 0 { starts.first().value } else { running-chapter.get() }
       box(width: text-w + gutter + mcol, grid(
         columns: (text-w, gutter, mcol),
-        [#emph(running-title.get())#h(1fr)#chapter], [],
+        [#text(tracking: 0.12em, smallcaps(running-title.get()))#h(1fr)#emph(chapter)], [],
         align(left, counter(page).display(page.numbering)),
       ))
     }
@@ -696,7 +1000,8 @@ ${TYPST_PREAMBLE}
     // 940-page book take five minutes to compile instead of thirty seconds
     let n = current-src.get()
     if n != none {
-      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}/page-number/`))}#n]]
+      // The link carries the full address; the line shows only what a reader needs
+      align(center)[#box(baseline: 0.6mm, sl-mark(2.8mm, muted))#h(0.4em)Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[facsimile of source page #n #sym.arrow.tr]]
     } else {
       align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
     }
@@ -713,8 +1018,8 @@ ${TYPST_PREAMBLE}
 
 #set par(
   justify: true,
-  leading: 0.68em,
-  spacing: 0.68em,
+  leading: 0.62em,
+  spacing: 0.62em,
   first-line-indent: 1.3em,
 )
 
@@ -766,14 +1071,15 @@ ${TYPST_PREAMBLE}
   }
 }
 #show heading.where(level: 3): it => context {
+  restart-notes
   if in-body.get() { place(hide(box(width: 0pt, height: 0pt))) } else {
     block(above: 1.3em, below: 0.6em, sticky: true, text(size: 10.5pt, weight: "regular", tracking: 0.04em, smallcaps(it.body)))
   }
 }
 
 #set footnote.entry(separator: line(length: 18mm, stroke: 0.4pt + hairline), gap: 0.45em, clearance: 1.2em)
-#show footnote.entry: set text(size: 8.3pt)
-#show footnote.entry: set par(leading: 0.5em)
+#show footnote.entry: set text(size: 7.9pt)
+#show footnote.entry: set par(leading: 0.45em)
 // A URL must never be hyphenated: Typst breaks at the hyphens already in a
 // slug, so ...commentarii-insignes-fuchs-2 acquired a line break mid-slug and
 // the printed reference read as two broken URLs.
@@ -798,11 +1104,11 @@ ${TYPST_PREAMBLE}
   #set par(first-line-indent: 0pt, justify: false, leading: 0.42em)
   #set text(fill: gold, hyphenate: false)
   #align(center, block(width: 140mm, {
-    v(${frontispieceFile ? 30 : 58}mm)
+    v(${frontispieceFile ? 24 : 58}mm)
     ${frontispieceFile
-      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 100mm, fit: "contain")))`
+      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 122mm, fit: "contain")))`
       : 'sl-mark(40mm, gold)'}
-    v(15mm)
+    v(${frontispieceFile ? 10 : 15}mm)
     ${coverOriginal && coverOriginal !== coverDisplay ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(coverOriginal, 90))}]
     v(7mm)` : ''}
     text(size: ${coverTitleSize}pt, weight: "bold", tracking: 0.1em, fill: foil, upper[${escapeTypst(coverTitle)}])
@@ -831,7 +1137,9 @@ ${TYPST_PREAMBLE}
 
   // ── Imprint page ──
   const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
-  const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted). Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''} ${persistentUrl}`;
+  // The persistent link goes on a line of its own, unbroken: a DOI split
+  // across lines ("https:// / doi.org/…") is the one thing a reader copies
+  const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted), edited by ${EDITION_EDITOR}. Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''}`;
   doc.push(`
 #page(header: none, footer: none)[
   #set par(first-line-indent: 0pt, justify: false, leading: 0.55em, spacing: 1.1em)
@@ -842,10 +1150,13 @@ ${TYPST_PREAMBLE}
 
   ${holder || provider ? `Translated from the copy ${holder ? `held by ${escapeTypst(holder)}` : ''}${provider && provider !== holder ? `${holder ? ', ' : ''}digitized by ${escapeTypst(provider)}` : ''}${sourceUrl ? `: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}.` : ''}
 
-  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}. ${doi ? `DOI #link(${typstString(persistentUrl)})[${escapeTypst(doi)}]. ` : ''}Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}].
+  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}.${doi ? ` \\
+  DOI #box(link(${typstString(persistentUrl)})[${escapeTypst(doi)}]) \\
+ ` : ''} Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}].
 
   #text(fill: rust, tracking: 0.08em, size: 7.8pt)[#upper[Cite as]] \\
-  ${escapeTypst(citation)}
+  ${escapeTypst(citation)} \\
+  #box(link(${typstString(persistentUrl)})[${escapeTypst(persistentUrl)}])
 
   To cite a passage, give the page number printed in the margin, e.g. "p. ${translatedPages[Math.min(10, translatedPages.length - 1)]?.page_number ?? 1}".
 
@@ -871,6 +1182,21 @@ ${TYPST_PREAMBLE}
   outline(title: none, depth: ${outlineDepth}, indent: 1.2em)
 }
 `);
+  // Only figures whose page made it into the body: the list must not point
+  // at a plate a --pages render left out
+  const bodyPageNumbers = new Set(translatedPages.map(p => p.page_number));
+  const plates = illustrations.filter(il => bodyPageNumbers.has(il.page_number));
+  if (plates.length) {
+    doc.push(`
+#heading(level: 1, outlined: false)[Illustrations]
+
+#{
+  set par(first-line-indent: 0pt, justify: false)
+  set text(number-type: "lining")
+  outline(title: none, target: figure.where(kind: "plate"))
+}
+`);
+  }
 
   // ── About this edition ──
   doc.push(`
@@ -895,7 +1221,7 @@ This AI-assisted translation has *not* been reviewed by human editors or transla
 
 The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and it is a link: it opens that page's facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/_n_, where the translation can be checked against the original. Where the source prints a page number of its own, it follows in grey.
 
-${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
+${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. A word in grey italics, in parentheses, is the source's own term for what the translation has just said; one in grey upright type glosses the word before it. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
 This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 `);
@@ -935,11 +1261,15 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const asText = field => p => ({ page_number: p.page_number, translation: { data: p[field]?.data || '' } });
   const render = (list, side) => {
     const runningHeads = findRunningHeads(list);
+    // The book's own words, to tell narrow text beside a figure from clipped debris
+    const vocab = new Map();
+    for (const p of list) for (const w of String(p.translation.data).toLowerCase().match(/\p{L}+/gu) || []) vocab.set(w, (vocab.get(w) || 0) + 1);
     const out = new Map();
     for (const p of list) {
       const { body } = translationToTypst(p.translation.data, {
         runningHeads,
         reflow: side === 'o',
+        vocab,
         anchor: printedPage => `%%SRC:${side}:${p.page_number}:${printedPage ? typstString(printedPage) : 'none'}%%`,
       });
       if (body) out.set(p.page_number, body);
@@ -955,7 +1285,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // are set as one paragraph. The translation marks its halves with an
   // ellipsis; the transcription simply stops without a full stop.
   const textOf = body => stripLeadingApparatus(
-    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, ''),
+    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote|orig|gl)\[[^\]]*\](?:#footnote\[[^\]]*\])?;?/g, ''),
   );
   const endsMidSentence = body => {
     // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
@@ -972,10 +1302,31 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const joinedForm = body => body.replace(/^((?:%%SRC:[^%]*%%)?\s*)(?:\.\.\.|…)\s*/, '$1');
 
   const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
-    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
+    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''}${resetNotes(body) ? ', reset: true' : ''});`);
+  // Notes since the last restart, mirrored from the Typst side: a chapter
+  // heading restarts them, and so does a source page that would cross 99
+  let noteCount = 0;
+  const resetNotes = body => {
+    const n = (body.match(/#footnote\[/g) || []).length;
+    const reset = noteCount + n > 99;
+    noteCount = reset ? n : noteCount + n;
+    return reset;
+  };
+  const placeHeads = list => { if (list.some(h => /^#heading\(level: [23]\)/.test(h))) noteCount = 0; return list; };
+
+  // A plate floats to the top or bottom of a nearby page; it is emitted
+  // between paragraphs, never inside one, so a page whose text continues the
+  // previous sentence hands its plates on to the next paragraph start.
+  const platesByPage = new Map();
+  for (const il of plates) platesByPage.set(il.page_number, [...(platesByPage.get(il.page_number) || []), il]);
+  let pendingPlates = [];
+  const ornamentsByPage = new Map();
+  for (const o of ornaments) if (bodyPageNumbers.has(o.page_number)) ornamentsByPage.set(o.page_number, [...(ornamentsByPage.get(o.page_number) || []), o]);
+  const flushPlates = () => { const out = pendingPlates.map(plateTypst); pendingPlates = []; return out; };
 
   let chapterIdx = 0;
   let prevBody = null;
+  let prevIdx = -1;
   let pendingHeads = [];
   for (const page of translatedPages) {
     // Every chapter that starts at or before this page and has not been
@@ -989,16 +1340,41 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       const ch = chapters[chapterIdx++];
       const title = ch.titleEn || ch.title;
       heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
-      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
+      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})#metadata(${typstString(shorten(title, 46))})<chapter-start>`);
     }
+    // A full-page plate whose page is translated in the body (a title page)
+    // does not repeat that text in its caption
+    const pagePlates = (platesByPage.get(page.page_number) || []).map(il => ({ ...il, textFollows: il.full && english.has(page.page_number) }));
+    pendingPlates.push(...pagePlates);
     if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
-    const body = english.get(page.page_number);
-    if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
-    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    let body = english.get(page.page_number);
+    body = dropDescriptiveNotes(body, { figures: (platesByPage.get(page.page_number) || []).length > 0 });
+    body = attachOrphanNotes(body);
+    if (pagePlates.length) {
+      const taken = takeInscriptions(body);
+      // A page that was ALL inscription keeps its anchor and loses only the notes
+      if (taken.inscriptions.length && taken.body.trim()) { body = taken.body; pagePlates[0].inscriptions = taken.inscriptions; }
+    }
+    const orn = ornamentsByPage.get(page.page_number) || [];
+    const head = orn.filter(o => o.kind === 'headpiece').slice(0, 1).map(o => `#headpiece(${typstString(o.file)})`);
+    const tail = orn.filter(o => o.kind === 'tailpiece').map((o, k) => `#tailpiece(${typstString(o.file)}, ${Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))).toFixed(0)}mm, "tp-${page.page_number}-${k}", height: ${(Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))) * o.height / o.width).toFixed(1)}mm)`);
+    // A headpiece opens a new paragraph by nature; on a continued sentence it waits
+    if (continues(prevBody, body)) {
+      doc[prevIdx] = closeSplitWord(doc[prevIdx], textOf(prevBody), textOf(body));
+      prevIdx = doc.push(anchored(joinedForm(body), original, language)) - 1; pendingHeads.push(...heads);
+    }
+    else if (head.length) {
+      // A book opening reads headpiece, book title, contents — and then its
+      // plate (the contents table): the plates follow the opening text
+      doc.push(''); doc.push(...head); doc.push(...placeHeads([...pendingHeads, ...heads])); pendingHeads = []; doc.push(''); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; doc.push(''); doc.push(...flushPlates());
+    }
+    else { doc.push(''); doc.push(...placeHeads([...pendingHeads, ...heads])); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; }
+    if (tail.length) { doc.push(''); doc.push(...tail); }
     prevBody = body;
   }
   doc.push('');
   doc.push(...pendingHeads);
+  doc.push(...flushPlates());
 
   doc.push(`#in-body.update(false)\n#running-chapter.update("")`);
 
@@ -1007,6 +1383,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // without leaving the PDF. It is the OCR transcription, unreviewed, and says so.
   if (original.size) {
     const code = LANG_CODES[String(language).toLowerCase()];
+    noteCount = 0; // its part heading restarts the notes
     doc.push(`
 = The ${escapeTypst(language)} Text
 
@@ -1174,6 +1551,52 @@ export function urlDisplay(url) {
  */
 const APPARATUS_PHRASE = /^\[[^\]]{0,80}?(?:catchword|signature mark|sig\.? mark|page number|folio number|running head|(?:bottom|top)\s+(?:center|centre|left|right))[^\]]{0,40}\]/i;
 
+/**
+ * A word the printer split across a page break ("py-" | "ramids") reaches the
+ * translation as two pages, each translated alone: the first ends on the
+ * fragment, and the second usually renders the whole word ("…of the pyramids").
+ * Joined into one paragraph that reads "each py- of the pyramids". When one of
+ * the next page's first words starts with the fragment, the fragment goes;
+ * otherwise it stays, since guessing the word would be inventing it.
+ * `typ` is the earlier page's Typst; the two texts are the pages' plain prose.
+ */
+export function closeSplitWord(typ, prevText, nextText) {
+  const m = String(prevText).trimEnd().match(/(?:^|[^\p{L}])(\p{L}+)-$/u);
+  if (!m) return typ;
+  const frag = m[1].toLowerCase();
+  const words = String(nextText).replace(/^(?:\.\.\.|…)\s*/, '').replace(/[\[\]*_\\]/g, '').split(/\s+/).slice(0, 4);
+  if (!words.some(w => { const l = w.toLowerCase().replace(/^\P{L}+/u, ''); return l.length > frag.length && l.startsWith(frag); })) return typ;
+  const at = typ.lastIndexOf(`${m[1]}-`);
+  return at < 0 ? typ : typ.slice(0, at).replace(/\s+$/, '') + typ.slice(at + m[1].length + 1);
+}
+
+/**
+ * The translation describes what it sees as well as translating it: "This page
+ * is blank … foxing", "An engraving shows a seven-tiered pedestal". The first
+ * is never the author's and always goes. The second is the only sign of a
+ * figure in a text-only edition, so it goes only where the plate itself is
+ * printed (`figures`): Fludd UCH I carried 342 such notes beside its plates.
+ */
+const PAGE_DESC_NOTE = /^(This|The) (page|leaf|flyleaf|verso|recto|page surface)\b[\s\S]*\b(blank|foxing|stain|faded|bleed-?through|torn|worn|damaged|no (legible |primary )?(printed |handwritten )?text|ink transfer|ghosting|spotting|discolou?r)/i;
+const FIGURE_DESC_NOTE = /^(?:(A|An|This|The|Two|Three|Several)\s+(?:[\w-]+\s+){0,4}(engraving|woodcut|illustration|diagram|image|ornament|tailpiece|headpiece|figure|vignette|plate|cut|border|table|chart|drawing|map|emblem|portrait|picture|depiction|scheme|schematic)s?\b|(diagram|illustration|woodcut|engraving|figure|image|table|chart|drawing|emblem|picture)\s*(?::|(?:of|showing|illustrating|depicting)\b))/i;
+export function dropDescriptiveNotes(body, { figures = false } = {}) {
+  let out = '', i = 0;
+  for (let at = body.indexOf('#footnote[', i); at >= 0; at = body.indexOf('#footnote[', i)) {
+    let d = 0, j = at + 10;
+    for (; j < body.length; j++) {
+      if (body[j] === '\\') { j++; continue; }
+      if (body[j] === '[') d++;
+      else if (body[j] === ']') { if (d === 0) break; d--; }
+    }
+    const note = body.slice(at + 10, j);
+    const end = body[j + 1] === ';' ? j + 2 : j + 1;
+    const drop = PAGE_DESC_NOTE.test(note) || (figures && FIGURE_DESC_NOTE.test(note));
+    out += body.slice(i, at) + (drop ? '' : body.slice(at, end));
+    i = end;
+  }
+  return out + body.slice(i);
+}
+
 export function stripLeadingApparatus(text) {
   let t = String(text ?? '');
   for (let i = 0; i < 6; i++) {
@@ -1202,6 +1625,7 @@ const INDEX_MAX_ENTRIES = 240;
  * a 940-page herbal `botany` carries 300 locators, which is the subject of
  * the book rather than an index entry.
  */
+const PAGE_CONDITION_TERM = /^(blank( page| leaf| verso| recto)?|bleed-?through|show-?through|foxing|stain(s|ing)?|water ?damage|fly-?leaf|end-?paper|paste-?down|binding|bookplate|shelf-?mark|ink transfer|ghosting|scan(ning)?|digiti[sz]ation|marginalia|catchword|signature mark|page number|running head)$/i;
 export function indexEntries(entries, pageCount = 0) {
   if (!entries?.length) return [];
   // A term on more than a quarter of the pages is the book's subject, not a
@@ -1211,7 +1635,9 @@ export function indexEntries(entries, pageCount = 0) {
   const merged = new Map();
   for (const entry of entries) {
     const term = String(entry?.term ?? '').trim();
-    if (!term) continue;
+    // The index is built from page metadata, which also records the state of
+    // the PAGE (Fludd UCH I indexed 'blank page' and 'bleed-through')
+    if (!term || PAGE_CONDITION_TERM.test(term)) continue;
     const key = term.toLocaleLowerCase();
     const existing = merged.get(key);
     if (existing) {
@@ -1347,8 +1773,351 @@ export async function fetchFrontispiece(book) {
   }
 }
 
+// gallery_images.type → the caption's word for it
+const PLATE_KINDS = {
+  engraving: 'Engraving', woodcut: 'Woodcut', diagram: 'Diagram', frontispiece: 'Frontispiece',
+  emblem: 'Emblem', portrait: 'Portrait', map: 'Map', chart: 'Chart', table: 'Table',
+  botanical: 'Botanical illustration', anatomical: 'Anatomical illustration',
+};
+// The text block is 125mm wide; a plate taller than this would leave no room
+// on its page for the caption and running head
+const PLATE_MAX_W_MM = 125;
+const SMALL_CUT_MIN_W_MM = 35;
+// 140mm, not the 175mm the page allows: a 1,000-page book with 600 plates ran
+// to 1,800 pages, and a smaller plate still reads at print size
+const PLATE_MAX_H_MM = 140;
+// A frontispiece or title page gets a page of its own, centred on the page and
+// wider than the text column (A4 is 210mm; this leaves 20mm a side)
+const FULL_PLATE_MAX_W_MM = 170;
+const FULL_PLATE_MAX_H_MM = 188;
+const FULL_PAGE_TYPES = new Set(['frontispiece', 'title-page']);
+// Kinds that are always worth printing, whatever their gallery score: a
+// typographic table or a faint diagram scores low as a gallery picture but is
+// part of the argument
+const ALWAYS_PLATE_TYPES = ['diagram', 'frontispiece', 'title-page', 'map', 'chart', 'table'];
+
+/** The gallery_images query for an edition's plates (shared with the caption pass). */
+export function illustrationQuery(book) {
+  return { book_id: book.id, type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ALWAYS_PLATE_TYPES } }] };
+}
+
 /**
- * options: { introduction, methodology, doi, version, frontispiece }
+ * One caption value as Typst content. A value is its own content block, so a
+ * leading "13." opens a numbered list and "- " a bullet: the Peter/Pierre
+ * plate of Fludd UCH I (p. 266) lost its number lines that way.
+ */
+export function captionCell(text) {
+  return escapeTypst(text).replace(/^(\s*)(\d+)\./, '$1$2\\.').replace(/^(\s*)([-+=])(?=\s|$)/, '$1\\$2');
+}
+
+// A plate and its caption float as one unbreakable block, so together they
+// must fit the 237mm text height. The caption's height is estimated from its
+// characters (8.8pt: ~1.75mm a character, 4.6mm a line); a Fludd contents
+// table with a long caption ran past the foot of its page (UCH I, p. 1020).
+const PLATE_PAGE_MM = 222;
+const PLATE_MIN_H_MM = 100;
+export function captionHeightMm({ labels = [], lines = [], key = [], follows = false }, widthMm) {
+  const cpl = Math.max(100, widthMm) / 1.75;
+  const rows = chars => Math.ceil(chars / cpl);
+  const text = v => String(v ?? '').length;
+  let h = 4.6 + 2.2; // title line, gap under the image
+  h += rows(labels.reduce((n, [o, e]) => n + text(o) + text(e) + 6, 0)) * 4.6;
+  for (const [o, e] of lines) h += rows(text(e) + (o ? text(o) + 3 : 0)) * 4.6 + 1.7;
+  h += rows(key.reduce((n, [m, e]) => n + text(m) + text(e) + 4, 0)) * 4.6;
+  return h + (follows ? 4.6 : 0);
+}
+
+function plateTypst(il) {
+  const aspect = il.height / il.width;
+  let widthMm = il.full
+    ? Math.min(FULL_PLATE_MAX_W_MM, FULL_PLATE_MAX_H_MM / aspect)
+    : Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
+  // A small cut prints small: scaled by how much of the source page's width it
+  // takes (the 1617 text block is ~80% of the page, ours 125mm), never below
+  // 35mm. A plate that filled the page is held by the caps above.
+  if (!il.full && il.pageShare) widthMm = Math.min(widthMm, Math.max(SMALL_CUT_MIN_W_MM, (il.pageShare / 0.8) * PLATE_MAX_W_MM));
+  const kind = PLATE_KINDS[il.type] || 'Illustration';
+  const c = plateCaption(il.caption);
+  const pairs = list => `(${list.map(([a, b]) => `([${captionCell(a)}], [${captionCell(b)}])`).join(', ')},)`;
+  const parts = [`kind: [${kind}]`];
+  if (il.full) parts.push('full: true');
+  if (c?.title) parts.push(`title: [${escapeTypst(c.title)}]`);
+  // A label that reads the same in English (a number, a name) prints once
+  if (c?.labels.length) parts.push(`labels: (${c.labels.map(([o, e]) => `(${String(o).trim() === String(e).trim() ? 'none' : `[${captionCell(o)}]`}, [${captionCell(e)}])`).join(', ')},)`);
+  // Glosses the translation set as notes on this page are the same words; the
+  // caption pass read them from the plate itself, so they are used only without it
+  const lines = il.textFollows ? [] : c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
+  if (il.textFollows) parts.push('follows: true');
+  if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${captionCell(o)}]` : 'none'}, [${o ? captionCell(e) : e}])`).join(', ')},)`);
+  if (c?.key.length) parts.push(`key: ${pairs(c.key)}`);
+  // Shrink the plate to make room for its words; when even the smallest
+  // plate leaves no room, the words follow it in the text instead
+  const capH = captionHeightMm({ labels: c?.labels || [], lines, key: c?.key || [], follows: il.textFollows }, widthMm);
+  const imgH = w => w * aspect + 2.4;
+  if (imgH(widthMm) + capH > PLATE_PAGE_MM) {
+    if (PLATE_PAGE_MM - capH >= PLATE_MIN_H_MM) widthMm = (PLATE_PAGE_MM - capH - 2.4) / aspect;
+    else parts.push('words: true');
+  }
+  return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
+}
+
+/**
+ * The caption pass's model output, keys repaired: it sometimes writes
+ * "box_ 2d" or "label" for "box_2d" and "title". A box must be four numbers
+ * on the 0–1000 scale with positive area, or it is dropped (null).
+ */
+export function normalizeCaptionFigure(fig) {
+  const out = {};
+  for (const [k, v] of Object.entries(fig || {})) {
+    const key = k.replace(/\s+/g, '').toLowerCase();
+    if (/^box/.test(key)) out.box_2d = v;
+    else if (key === 'title' || key === 'label' || key === 'caption') out.title ??= v;
+    else out[key] = v;
+  }
+  const b = Array.isArray(out.box_2d) ? out.box_2d.map(Number) : null;
+  out.box_2d = b && b.length === 4 && b.every(n => n >= 0 && n <= 1000) && b[2] > b[0] && b[3] > b[1] ? b : null;
+  return out;
+}
+
+const isBareMark = s => /^[\p{L}\p{N}]{1,2}[.,]?$/u.test(String(s).trim());
+
+/**
+ * A caption-pass figure (scripts/qa/plate-captions.mjs) → what the plate
+ * prints: a title, short labels run together, longer inscriptions one to a
+ * line, and the page's letter key. Bare letters and numbers are reference
+ * marks, not words, and repeats (a label printed on both sides) print once.
+ */
+export function plateCaption(fig) {
+  if (!fig) return null;
+  const seen = new Set();
+  const labels = [], lines = [];
+  for (const { original, english } of fig.inscriptions || []) {
+    const o = String(original || '').trim(), e = String(english || '').trim();
+    if (!o || !e || isBareMark(o) || seen.has(o.toLowerCase())) continue;
+    seen.add(o.toLowerCase());
+    (o.split(/\s+/).length <= 3 && e.split(/\s+/).length <= 5 ? labels : lines).push([o, e]);
+  }
+  const key = (fig.key || []).filter(k => k.mark && k.english).map(k => [String(k.mark).trim(), String(k.english).trim().replace(/\.$/, '')]);
+  const title = String(fig.title || '').trim().replace(/\.$/, '') || null;
+  return { title, labels, lines, key };
+}
+
+/** The content of each `#footnote[…];` at the start of `s`, bracket-balanced, and where they end. */
+function leadingFootnotes(s) {
+  const notes = [];
+  let i = 0;
+  while (s.startsWith('#footnote[', i)) {
+    let depth = 0, j = i + '#footnote'.length;
+    for (; j < s.length; j++) {
+      if (s[j] === '\\') { j++; continue; }
+      if (s[j] === '[') depth++;
+      else if (s[j] === ']' && --depth === 0) break;
+    }
+    if (depth !== 0) return null;
+    notes.push(s.slice(i + '#footnote['.length, j));
+    i = j + 1;
+    if (s[i] === ';') i++;
+    while (/\s/.test(s[i] || '')) i++;
+  }
+  return i === s.length && notes.length ? notes : null;
+}
+
+/**
+ * A paragraph that is nothing but footnotes prints as a bare superscript on a
+ * line of its own. On a page with a plate it is almost always the translated
+ * text engraved on the plate (labels, mottoes) — the model has nowhere else
+ * to put it — so it moves under the image, when the translation labels it so
+ * ("Gloss:", "Inscription:"…; the label itself is dropped). A note nested
+ * inside one (a gloss on the gloss) is kept in parentheses.
+ */
+/**
+ * A paragraph that is nothing but footnotes prints as a bare superscript on a
+ * line of its own; its notes go to the end of the paragraph before, where the
+ * marker reads as belonging to that text. A labelled gloss is left in place
+ * for takeInscriptions, and the page's first paragraph has nothing before it.
+ */
+export function attachOrphanNotes(body) {
+  const paras = body.split(/\n{2,}/);
+  const out = [];
+  for (const para of paras) {
+    const notes = leadingFootnotes(para.trim());
+    if (notes && out.length && !notes.some(n => INSCRIPTION_LABEL.test(n))) out[out.length - 1] = out[out.length - 1].trimEnd() + para.trim();
+    else out.push(para);
+  }
+  return out.join('\n\n');
+}
+
+const INSCRIPTION_LABEL = /^\s*(?:gloss|inscription|label|motto|legend)\s*:\s*/i;
+
+export function takeInscriptions(body) {
+  const inscriptions = [];
+  const kept = body.split(/\n{2,}/).filter(para => {
+    const notes = leadingFootnotes(para.trim());
+    // Only what the translation itself labels as text on the image: a bare
+    // note is as often the model describing the picture, which is not the
+    // plate's to carry
+    if (!notes || !notes.every(n => INSCRIPTION_LABEL.test(n))) return true;
+    for (const n of notes) {
+      const text = n.replace(/#footnote\[([^\[\]]*)\];?/g, ' ($1)')
+        .replace(INSCRIPTION_LABEL, '').replace(/\s+\(/g, ' (').trim();
+      if (text) inscriptions.push(text);
+    }
+    return false;
+  });
+  return { body: kept.join('\n\n'), inscriptions };
+}
+
+/**
+ * The book's illustrations from `gallery_images`, fetched as JPEG buffers for
+ * the edition's figures. Same selection as the scholarly EPUB (download route,
+ * generateScholarlyEpubDownload): quality ≥ 0.7, no decorative initials or
+ * headpieces — plus every diagram, map, table, frontispiece and title page
+ * whatever its score (illustrationQuery). Frontispieces and title pages are
+ * marked `full` and print at full page.
+ * Like the frontispiece, every failure is soft (a missing plate is left out,
+ * never substituted), and a crop URL must carry the book's own id (#3362).
+ */
+/** Page numbers of a split book's archived spreads (empty when the book was never split). */
+export async function spreadPageNumbers(db, bookId) {
+  const spreads = await db.collection('pages').distinct('page_number', { book_id: bookId, page_type: 'archived-spread' });
+  if (!spreads.length) return new Set();
+  const singles = await db.collection('pages').countDocuments({ book_id: bookId, page_type: { $ne: 'archived-spread' }, 'translation.data': { $exists: true, $ne: '' } });
+  return singles ? new Set(spreads) : new Set();
+}
+
+export async function fetchIllustrations(db, book, { concurrency = 6, captions = null } = {}) {
+  const docs = await db.collection('gallery_images')
+    .find(illustrationQuery(book), { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
+    .sort({ page_number: 1, detection_index: 1 })
+    .toArray();
+  // A figure on an archived spread is the same figure as on the page cut from it
+  const spreads = await spreadPageNumbers(db, book.id);
+  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)) && !spreads.has(d.page_number));
+  // Title pages print whole, at full page, even where the gallery holds no
+  // record for them (a typeset title page is not a "picture" to the detector)
+  const titlePages = await db.collection('pages')
+    .find({ book_id: book.id, page_type: 'title-page' }, { projection: { page_number: 1, archived_photo: 1 } })
+    .toArray();
+  const titleNumbers = new Set(titlePages.map(p => p.page_number));
+  for (const p of titlePages) {
+    if (!wanted.some(d => d.page_number === p.page_number) && p.archived_photo?.includes(String(book.id))) {
+      wanted.push({ page_number: p.page_number, detection_index: 0, type: 'title-page', extracted_url: p.archived_photo });
+    }
+  }
+  wanted.sort((a, b) => a.page_number - b.page_number || a.detection_index - b.detection_index);
+  const isFull = d => FULL_PAGE_TYPES.has(d.type) || titleNumbers.has(d.page_number);
+
+  // A page the caption pass has read is cut again from the full scan with its
+  // tighter box, one plate per figure it found; the rest use the gallery crop
+  const jobs = [];
+  const captioned = new Set();
+  for (const d of wanted) {
+    const cap = captions?.[d.page_number];
+    const figs = (cap?.figures || []).map(normalizeCaptionFigure);
+    // Every figure needs a usable box, or the page keeps its gallery crop: a
+    // missing box would otherwise print the whole page, text and all
+    if (figs.length && figs.every(f => f.box_2d) && cap.scan_url?.includes(String(book.id))) {
+      if (captioned.has(d.page_number)) continue;
+      captioned.add(d.page_number);
+      figs.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, full: isFull(d), url: cap.scan_url, box: fig.box_2d, caption: fig }));
+    } else {
+      jobs.push({ page_number: d.page_number, type: d.type, full: isFull(d), url: d.extracted_url });
+    }
+  }
+
+  const { default: sharp } = await import('sharp');
+  const scans = new Map(); // one fetch per page, however many figures it holds
+  const getImage = url => {
+    if (!scans.has(url)) {
+      // Full page scans run to several MB and arrive six at a time: the
+      // timeout covers the body too, and 30s dropped a fifth of the plates
+      scans.set(url, fetch(url, { signal: AbortSignal.timeout(120000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } })
+        .then(res => (res.ok ? res.arrayBuffer() : null)).then(b => (b ? Buffer.from(b) : null)));
+    }
+    return scans.get(url);
+  };
+  const out = new Array(jobs.length).fill(null);
+  let next = 0;
+  await Promise.all(Array.from({ length: concurrency }, async () => {
+    while (next < jobs.length) {
+      const i = next++;
+      const j = jobs[i];
+      try {
+        const raw = await getImage(j.url);
+        if (!raw) { console.warn(`plate on source page ${j.page_number} left out: image fetch failed`); continue; }
+        let img = sharp(raw).rotate();
+        let pageShare = null;
+        if (j.box) {
+          // box_2d is [ymin, xmin, ymax, xmax] on 0–1000 of the whole page
+          const { width: W, height: H } = await sharp(raw).rotate().metadata();
+          // A model's box hugs the ink and clips a corner; give it a little paper,
+          // in proportion: a fixed 12/1000 around a cut 90/1000 wide took in the
+          // words beside it (Fludd UCH I, pp. 248–249)
+          const [by0, bx0, by1, bx1] = j.box.map(Number);
+          const padY = Math.min(12, 0.06 * (by1 - by0)), padX = Math.min(12, 0.06 * (bx1 - bx0));
+          const [y0, x0, y1, x1] = [Math.max(0, by0 - padY), Math.max(0, bx0 - padX), Math.min(1000, by1 + padY), Math.min(1000, bx1 + padX)];
+          const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
+          const w = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), h = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
+          if (!(w > 20 && h > 20)) continue;
+          img = sharp(await img.extract({ left, top, width: w, height: h }).toBuffer());
+          pageShare = (x1 - x0) / 1000;
+        }
+        const { data, info } = await img.resize(1800, 1800, { fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 84 }).toBuffer({ resolveWithObject: true });
+        out[i] = { page_number: j.page_number, type: j.type, full: Boolean(j.full), caption: j.caption || null, buffer: data, width: info.width, height: info.height, pageShare };
+      } catch (err) {
+        // Soft — the edition is complete without it — but never silent
+        console.warn(`plate on source page ${j.page_number} left out: ${err.message}`);
+      }
+    }
+  }));
+  return out.filter(Boolean);
+}
+
+/**
+ * The book's own headpieces and tailpieces (scripts/qa/plate-ornaments.mjs),
+ * cut from the page scans. Only ornaments marked `verified` are used: the
+ * finder also boxes rules and lines of type, which nothing about the box
+ * shape separates from a woodcut, so a person (or a by-eye pass) signs off.
+ * Soft like the plates: a failed fetch leaves the ornament out.
+ */
+export async function fetchOrnaments(book, cache) {
+  const { default: sharp } = await import('sharp');
+  const out = [];
+  for (const [n, p] of Object.entries(cache || {})) {
+    const verified = (p.ornaments || []).filter(o => o.verified);
+    if (!verified.length || !p.scan_url?.includes(String(book.id))) continue;
+    try {
+      const res = await fetch(p.scan_url, { signal: AbortSignal.timeout(120000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = Buffer.from(await res.arrayBuffer());
+      const { width: W, height: H } = await sharp(raw).metadata();
+      for (const o of verified) {
+        // The finder's tailpiece boxes stop at the tip of the cul-de-lampe and
+        // clip it (Fludd UCH I, p. 23); a tailpiece stands in blank paper, which
+        // levels to white, so a margin costs nothing. A headpiece sits on text.
+        const pad = o.kind === 'tailpiece' ? 12 : 0;
+        const [y0, x0, y1, x1] = o.box_2d.map(Number).map((v, i) => Math.min(1000, Math.max(0, v + (i < 2 ? -pad : pad))));
+        const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
+        const width = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), height = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
+        // Printed, not pasted: the scanned paper is levelled to the page's
+        // white and the woodcut kept as ink, so the ornament sits on the page
+        // the way the original's sits on its paper
+        const { data, info } = await sharp(raw).extract({ left, top, width, height }).resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+          .grayscale().normalise({ lower: 1, upper: 55 }).gamma(1.4)
+          .jpeg({ quality: 88 }).toBuffer({ resolveWithObject: true });
+        out.push({ page_number: Number(n), kind: o.kind, buffer: data, width: info.width, height: info.height });
+      }
+    } catch (err) {
+      console.warn(`ornaments on source page ${n} left out: ${err.message}`);
+    }
+  }
+  return out;
+}
+
+/**
+ * options: { introduction, methodology, doi, version, frontispiece, illustrations }
+ * `illustrations` is the output of fetchIllustrations; omit for none.
  * `frontispiece` is a JPEG/PNG buffer (see fetchFrontispiece); omit for none.
  */
 export async function generateScholarlyPdf(book, pages, options = {}) {
@@ -1364,6 +2133,16 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
     writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
     rest.frontispieceFile = `frontispiece.${ext}`;
   }
+  rest.ornaments = (options.ornaments || []).map((o, i) => {
+    const file = `ornament-${i + 1}.jpg`;
+    writeFileSync(join(tmpDir, file), o.buffer);
+    return { page_number: o.page_number, kind: o.kind, width: o.width, height: o.height, file };
+  });
+  rest.illustrations = (options.illustrations || []).map((il, i) => {
+    const file = `plate-${i + 1}.jpg`;
+    writeFileSync(join(tmpDir, file), il.buffer);
+    return { page_number: il.page_number, type: il.type, full: il.full, caption: il.caption, width: il.width, height: il.height, pageShare: il.pageShare, file };
+  });
 
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
 
@@ -1372,7 +2151,10 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
       // Large books legitimately take minutes, and a loaded machine (this box
       // often runs concurrent pipeline jobs) stretches that further
       timeout: 300000,
-      stdio: ['pipe', 'pipe', 'pipe'],
+      // stderr passes through: a 'layout did not converge' warning means a
+      // context-measured element (a tailpiece's room check) may have been set
+      // on a stale measurement, and must not go unseen
+      stdio: ['pipe', 'pipe', 'inherit'],
     });
 
     return readFileSync(pdfFile);
