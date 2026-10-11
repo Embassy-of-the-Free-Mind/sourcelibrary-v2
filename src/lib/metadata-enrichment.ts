@@ -340,9 +340,14 @@ export async function enrichBookMetadata(
   // 3,019 / 3,019 / 1,733 books and were read by NOTHING — a decision recorded where no one would
   // find it. `field_provenance.language` is the canonical home (src/lib/resolve-language.ts), and
   // `.conflict` is the documented way to find disagreements after a bulk run.
+  // Held here and folded into the whole `field_provenance` object below: a dotted
+  // 'field_provenance.language' in the same $set as 'field_provenance' is a Mongo path conflict, so
+  // the write throws and the book is never marked enriched. The live twin in pipeline-orchestrator.mjs
+  // re-asked ~40 books every 2 minutes for ten days that way (#4599, fixed in #6467).
+  let languageProvenance: Record<string, unknown> | null = null;
   if (aiLang && currentLang === 'Unknown') {
     updates.language = aiLang;
-    updates['field_provenance.language'] = {
+    languageProvenance = {
       source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
       claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
     };
@@ -352,7 +357,7 @@ export async function enrichBookMetadata(
     // Deliberately not setting `language_review`: that queue already holds ~1,519 live books with
     // nothing draining it and a weekly cron refilling it, so adding machine-generated volume makes
     // it less usable, not more. A conflict here is found by querying field_provenance.language.conflict.
-    updates['field_provenance.language'] = {
+    languageProvenance = {
       source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
       claims: [
         { source: 'catalogue', value: currentLang },
@@ -473,16 +478,14 @@ export async function enrichBookMetadata(
     pages_checked: ocrSamples.length,
   };
   const provenance = (book.field_provenance as Record<string, unknown>) || {};
-  if (parsed.language) {
-    if (updates.language) {
-      provenance.language = { ...aiSource, previous_value: book.language };
-    } else if (!provenance.language) {
-      provenance.language = {
-        source: 'import',
-        note: `AI confirmed as "${parsed.language}" (${confidence})`,
-        ai_confirmed_at: now,
-      };
-    }
+  if (languageProvenance) {
+    provenance.language = languageProvenance;
+  } else if (parsed.language && !provenance.language) {
+    provenance.language = {
+      source: 'import',
+      note: `AI confirmed as "${parsed.language}" (${confidence})`,
+      ai_confirmed_at: now,
+    };
   }
   if (updates.author) provenance.author = { ...aiSource, previous_value: currentAuthor };
   if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
