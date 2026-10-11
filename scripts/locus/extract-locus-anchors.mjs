@@ -6,6 +6,7 @@
  *   npx tsx scripts/locus/extract-locus-anchors.mjs --apply
  *   npx tsx scripts/locus/extract-locus-anchors.mjs --book=<id>      # one edition
  *   npx tsx scripts/locus/extract-locus-anchors.mjs --residuals      # print what was dropped
+ *   ... --apply --force   # replace even if the store holds rows another writer left (#3714)
  *
  * ## What this is for (#3661)
  *
@@ -153,6 +154,49 @@ for (const [id, why] of refused) console.log(`  skipped ${id}: ${why}`);
 console.log(`  mechanism A (own pagination): ${publishable.filter((r) => r.ed.frame).reduce((n, r) => n + r.anchors.length, 0)} anchors in ${publishable.filter((r) => r.ed.frame).length} editions`);
 console.log(`  mechanism B (marginal refs) : ${publishable.filter((r) => !r.ed.frame).reduce((n, r) => n + r.anchors.length, 0)} anchors in ${publishable.filter((r) => !r.ed.frame).length} editions`);
 
+// ── what --apply would replace (#3714) ─────────────────────────────
+//
+// On 2026-08-07 two sessions wrote `locus_anchors` with different schemas and
+// ordering alone decided which survived. The read-side shape check in
+// `scripts/audit/locus-anchor-staleness.mjs` catches the clobber after the fact;
+// this is the write side of the same contract, for when THIS script is the
+// second writer. It prints what each edition's rows are about to be replaced by,
+// and refuses to touch a store holding rows that are not ours unless --force.
+// Runs in the dry run too, so the report is visible before anyone applies.
+
+const FORCE = process.argv.includes('--force');
+const anchorsCol = db.collection('locus_anchors');
+const booksCol = db.collection('locus_books');
+
+const OURS = { ref_page: { $exists: true }, extractor_version: { $regex: '^locus-anchors/' } };
+const foreignAnchors = await anchorsCol.countDocuments({ $nor: [OURS] });
+const foreignBooks = await booksCol.countDocuments({ $nor: [{ extractor_version: { $regex: '^locus-anchors/' } }] });
+
+console.log(`\n${'-'.repeat(78)}\nwhat --apply replaces`);
+for (const r of publishable) {
+  const [prev] = await anchorsCol.aggregate([
+    { $match: { book_id: r.ed.book_id } },
+    { $group: { _id: null, n: { $sum: 1 }, versions: { $addToSet: '$extractor_version' }, written: { $max: '$extracted_at' } } },
+  ]).toArray();
+  const was = prev
+    ? `${prev.n} rows (extractor ${prev.versions.map((v) => v ?? 'none').join(', ')}, written ${prev.written?.toISOString?.() ?? 'unknown'})`
+    : 'nothing';
+  console.log(`  ${r.ed.book_id}  ${was} → ${r.anchors.length} rows (${EXTRACTOR_VERSION})`);
+}
+
+if (foreignAnchors || foreignBooks) {
+  console.log(`\n✗ FOREIGN ROWS: ${foreignAnchors} in locus_anchors, ${foreignBooks} in locus_books lack this extractor's shape`);
+  console.log(`    (ref_page + extractor_version 'locus-anchors/*'). Another writer is using these collections.`);
+  const stray = await anchorsCol.findOne({ $nor: [OURS] }, { projection: { _id: 0 } })
+    ?? await booksCol.findOne({ $nor: [{ extractor_version: { $regex: '^locus-anchors/' } }] }, { projection: { _id: 0, segments: 0 } });
+  console.log(`    example row: ${JSON.stringify(stray).slice(0, 200)}`);
+  if (APPLY && !FORCE) {
+    console.log(`    REFUSED — find out whose they are before replacing them. Re-run with --force once you know.`);
+    await client.close();
+    process.exit(2);
+  }
+}
+
 if (!APPLY) {
   console.log(`\nDRY RUN — nothing written. Pass --apply.`);
   await client.close();
@@ -160,9 +204,6 @@ if (!APPLY) {
 }
 
 // ── write ──────────────────────────────────────────────────────────
-
-const anchorsCol = db.collection('locus_anchors');
-const booksCol = db.collection('locus_books');
 
 await anchorsCol.createIndex({ system: 1, ref_page: 1, ref_section: 1 });
 await anchorsCol.createIndex({ book_id: 1, page_number: 1 });
