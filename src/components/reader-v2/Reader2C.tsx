@@ -3357,7 +3357,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // running: see WIDE_LEAF_PREPAINT_SCRIPT. The ratio is left off until the
   // reader has one of its own, so the script's value on <html> shows through.
   const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
-  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  // A text edition with no facsimile and no witness photo (the ETCSL corpus
+  // books, #5951) gave a full column to a page-shaped "No facsimile" block,
+  // which readers took for a scan that failed to load. With a text pane
+  // beside it, drop the column; the phone layout already shrinks it to a line.
+  const scanPaneShown = r.views.scan && (!!scan.display || !!witness || textPaneCount === 0);
+  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3384,7 +3389,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     ro.observe(el);
     panesObserver.current = ro;
   }, []);
-  const scanPaneWidth = r.views.scan && textPaneCount > 0 && !stackWideLeaf && panesBox
+  const scanPaneWidth = scanPaneShown && textPaneCount > 0 && !stackWideLeaf && panesBox
     ? Math.round(Math.min(
         panesBox.w * SCAN_PANE_MAX_SHARE,
         Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
@@ -3729,7 +3734,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {r.views.scan && (
+          {scanPaneShown && (
             <section
               data-scan-pane
               className="flex-1 min-w-0 min-h-0 flex flex-col border-r"
