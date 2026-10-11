@@ -23,6 +23,7 @@
 // from the strict screen's own flags, so recall on invented pages the loop gate never raises is NOT measured.
 import { textVerdict } from './first-ocr-guard.mjs';
 import { longestCharRun, MAX_CHAR_RUN } from './paddle-zh-lane.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 const HAN = /\p{Script=Han}/u;
 const STRICT_FLAGS = new Set(['local_loop', 'line_loop', 'exact_loop']);
@@ -35,11 +36,9 @@ export const T = { gateRun: 5, shapeRun: 4, distinctMax: 0.3 };
 
 /** The page body a reader is served: envelope, margin marks and tags removed. */
 export function servedBody(text) {
-  return String(text || '')
+  return stripMarkupTags(String(text || '')
     .replace(/<language>[\s\S]*?<\/language>|<script>[\s\S]*?<\/script>/g, '')
-    .replace(/<(header|page-num)>[\s\S]*?<\/\1>/g, '')
-    .replace(/<[^>]+>/g, '')
-    .trim();
+    .replace(/<(header|page-num)>[\s\S]*?<\/\1>/g, ''), '').trim();
 }
 
 /** Text-shape features of a stored Paddle page. */
@@ -61,7 +60,7 @@ export function pageShape(text) {
 export function paddleTableRisk(text, { title = '' } = {}, t = T) {
   const f = pageShape(text);
   const raw = String(text || '').replace(/<language>[\s\S]*?<\/language>|<script>[\s\S]*?<\/script>/g, '').trim();
-  const v = textVerdict(raw.replace(/<[^>]+>/g, ''));
+  const v = textVerdict(stripMarkupTags(raw, ''));
   const strict = v.flags.some((x) => STRICT_FLAGS.has(x)) || longestCharRun(raw) > MAX_CHAR_RUN;
   const repLoop = v.flags.includes('repeated_line') && f.run >= t.gateRun && f.dup_lines > 0;
   const reasons = [];
