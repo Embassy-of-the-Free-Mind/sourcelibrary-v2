@@ -641,6 +641,19 @@ async function transliteratePage(db, page, sourceScript) {
   const inputTokens = usage.promptTokenCount || 0;
   const outputTokens = outputTokensFrom(usage);
 
+  // Priced by the shared table. A hardcoded $0.10/$0.40 here recorded flash-lite at ~30% of
+  // the $0.25/$1.50 Google bills: $6.32 metered for $21.45 billed, 2026-09-27..10-03 (#5499).
+  // Metered BEFORE the empty-text return (#4599): an empty answer is billed too, and the page,
+  // left untransliterated, is asked again every run (~350 unmetered calls/day in 2026-10).
+  const costUsd = calculateUsageCost(TRANSLITERATION_MODEL, inputTokens, outputTokens, false);
+  logUsageAsync({
+    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, endpoint: 'hetzner/pipeline-orchestrator',
+    ...(text ? { status: 'success' } : { status: 'failed', error_category: 'empty_response' }),
+  }, db);
+
   if (!text) return null;
 
   const ocrHash = hashString(page.ocr.data);
@@ -657,17 +670,6 @@ async function transliteratePage(db, page, sourceScript) {
       },
     }
   );
-
-  // Log usage (fire-and-forget)
-  // Priced by the shared table. A hardcoded $0.10/$0.40 here recorded flash-lite at ~30% of
-  // the $0.25/$1.50 Google bills: $6.32 metered for $21.45 billed, 2026-09-27..10-03 (#5499).
-  const costUsd = calculateUsageCost(TRANSLITERATION_MODEL, inputTokens, outputTokens, false);
-  logUsageAsync({
-    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
-    book_id: page.book_id, page_ids: [page.id],
-    input_tokens: inputTokens, output_tokens: outputTokens,
-    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
-  }, db);
 
   return { inputTokens, outputTokens, costUsd };
 }
@@ -3078,6 +3080,16 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             // looked at again.
             if (!geminiRes.ok) throw new Error(`Gemini HTTP ${geminiRes.status}`);
             const geminiData = await geminiRes.json();
+            // This call wrote no usage row at all (#4599): 50-550 calls a day on the soma key.
+            const splitUsage = geminiData.usageMetadata || {};
+            const splitIn = splitUsage.promptTokenCount || 0;
+            const splitOut = outputTokensFrom(splitUsage);
+            logUsageAsync({
+              type: 'split_confirm', mode: 'realtime', model: SPLIT_CONFIRM_MODEL,
+              book_id: book.id, input_tokens: splitIn, output_tokens: splitOut,
+              cost_usd: calculateUsageCost(SPLIT_CONFIRM_MODEL, splitIn, splitOut, false),
+              status: 'success', endpoint: 'hetzner/pipeline-split-confirm',
+            }, db);
             const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
             const jsonMatch = rawText.match(/\{[\s\S]*\}/);
             if (!jsonMatch) throw new Error(`Gemini returned no JSON: ${rawText.slice(0, 40)}`);
@@ -3617,6 +3629,20 @@ Rules:
           const inputTokens = usage.promptTokenCount || 0;
           const outputTokens = outputTokensFrom(usage);
 
+          // Meter the call the moment Google has billed it (#4599). This row used to be written after
+          // the parse and the books write, so a call whose write threw was paid for and never recorded,
+          // and the book, never marked enriched, was asked again every run. From 2026-10-01 that loop
+          // was ~6,000 unmetered calls a day on the soma key (a field_provenance $set conflict, ~40
+          // books, two scheduler processes every 2 min). Priced by the shared table, not a constant.
+          logUsageAsync({
+            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
+            book_id: book.id, book_title: book.display_title || book.title,
+            input_tokens: inputTokens, output_tokens: outputTokens,
+            cost_usd: calculateUsageCost(metadataModel, inputTokens, outputTokens, false),
+            duration_ms: durationMs, status: 'success',
+            endpoint: 'hetzner/pipeline-metadata',
+          }, db);
+
           let parsed;
           try {
             parsed = JSON.parse(rawText);
@@ -3784,16 +3810,6 @@ Rules:
           } catch (catalogErr) {
             // Non-fatal — catalog lookup is best-effort
           }
-
-          // Log usage
-          const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-          logUsageAsync({
-            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
-            book_id: book.id, book_title: book.display_title || book.title,
-            input_tokens: inputTokens, output_tokens: outputTokens,
-            cost_usd: costUsd, duration_ms: durationMs, status: 'success',
-            endpoint: 'hetzner/pipeline-metadata',
-          }, db);
 
           // Log to audit_log if changes were made
           if (changes.length > 0) {
