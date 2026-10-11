@@ -16,6 +16,7 @@ import {
   type PagePrecision,
 } from '@/lib/entity-page-match';
 import { isHeldSurname } from '../../../../../../../scripts/lib/shared-surname-hold.mjs';
+import { declinedRegion } from '../../../../../../../scripts/lib/declined-region.mjs';
 import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 import { getGeminiClient } from '@/lib/gemini-client';
 
@@ -1015,10 +1016,11 @@ function groundQuotes(
   pages: PageData[]
 ): Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> {
   // Build lookup of clean translation text by page number, preserving page_id
-  // Exclude non-content pages (index, TOC, etc.) to avoid quoting index entries
+  // Exclude non-content pages (index, TOC, etc.) to avoid quoting index entries, and pages whose
+  // OCR declined a region: their translation had no source for it (#4584, Urkunden IV p.24).
   const pageIndex = new Map<number, { text: string; page_id: string }>();
   for (const page of pages) {
-    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '')) {
+    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '') && !declinedRegion(page.ocr?.data)) {
       pageIndex.set(page.page_number, {
         text: cleanTranslationText(page.translation.data),
         page_id: page.id,

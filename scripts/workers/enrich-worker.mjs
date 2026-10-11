@@ -950,7 +950,8 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex,
 // the consumers, not guessed: processBatch/createBatches/createBatchesFromChapters
 // (page_number, translation.data), buildConceptIndexFromBatches + buildPageTexts
 // (page_number, ocr.data, translation.data), buildPageIndex in quote-grounding
-// (id, page_number, page_type, translation.data). Unprojected, this read shipped
+// (id, page_number, page_type, ocr.data, translation.data — ocr.data keeps a page whose
+// OCR declined a region out of the featured quotes, #4584). Unprojected, this read shipped
 // the whole ~12.6 KB page doc (transliteration, image fields, OCR/translation
 // provenance) for every page of up to 30 books per 5-minute tick. If you add a
 // consumer that reads another page field, add it HERE — a missing field does not
