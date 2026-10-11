@@ -27,6 +27,10 @@
  *   - It attributes a `$set` to `books` by proximity to a `collection('books')`
  *     call in the same file, so a file touching several collections can
  *     over-report. Over-reporting is the safe direction for a lint.
+ *   - It also follows a hoisted handle (`const books = db.collection('books')`)
+ *     to its `updateOne`/`updateMany`/`findOneAndUpdate`/`bulkWrite`/
+ *     `replaceOne` calls (#4493). It does NOT follow an update document or a
+ *     bulkWrite ops array built in a variable first and passed in by name.
  *
  * USAGE
  *   node scripts/audit/new-field-writes.mjs                 # exit 1 on unknown keys
@@ -79,13 +83,35 @@ function readBraces(src, open) {
   return null;
 }
 
+/** Read a balanced ( … ) starting at `open`, skipping strings/templates. */
+function readParens(src, open) {
+  let d = 0;
+  for (let i = open; i < src.length; i++) {
+    const c = src[i];
+    if (c === "'" || c === '"') { const q = c; i++; while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; } continue; }
+    if (c === '`') { i++; while (i < src.length && src[i] !== '`') { if (src[i] === '\\') { i += 2; continue; } i++; } continue; }
+    if (c === '(') d++;
+    else if (c === ')') { d--; if (!d) return src.slice(open + 1, i); }
+  }
+  return null;
+}
+
 /** Top-level keys of an object-literal body. */
 function topKeys(body) {
-  const keys = []; let d = 0;
+  // A key can only START the body or follow a top-level comma. Without this,
+  // the `'a' : 'b'` of a ternary value read as a key named 'a' — invisible
+  // while the guard only saw inline writes, two false positives once it saw
+  // hoisted handles too (#4493).
+  const keys = []; let d = 0; let atKey = true;
   for (let i = 0; i < body.length; i++) {
     const c = body[i];
+    if (c === '/' && body[i + 1] === '/') { while (i < body.length && body[i] !== '\n') i++; continue; }
+    if (c === '/' && body[i + 1] === '*') { const e = body.indexOf('*/', i + 2); i = e < 0 ? body.length : e + 1; continue; }
+    if (/\s/.test(c)) continue;
+    const keyPos = d === 0 && atKey;
+    if (d === 0) atKey = c === ',';
     if (c === "'" || c === '"') {
-      if (d === 0) {
+      if (keyPos) {
         const m = /^(['"])([^'"]+)\1\s*:/.exec(body.slice(i));
         if (m) { keys.push(m[2]); i += m[0].length - 1; continue; }
       }
@@ -95,9 +121,9 @@ function topKeys(body) {
     if (c === '`') { i++; while (i < body.length && body[i] !== '`') { if (body[i] === '\\') { i += 2; continue; } i++; } continue; }
     if (c === '{' || c === '[' || c === '(') { d++; continue; }
     if (c === '}' || c === ']' || c === ')') { d--; continue; }
-    if (d === 0) {
+    if (keyPos) {
       const m = /^([A-Za-z_$][\w$]*)\s*:/.exec(body.slice(i));
-      if (m && (i === 0 || /[\s,{]/.test(body[i - 1]))) { keys.push(m[1]); i += m[0].length - 1; }
+      if (m) { keys.push(m[1]); i += m[0].length - 1; }
     }
   }
   return keys;
@@ -110,7 +136,7 @@ let scanned = 0, setBlocks = 0;
 for (const root of ROOTS) {
   for (const file of walk(root)) {
     const src = readFileSync(file, 'utf8');
-    if (!/collection\(\s*['"]books['"]\s*\)/.test(src)) continue;
+    if (!/collection(?:<[^>\n]*>)?\(\s*['"]books['"]\s*\)/.test(src)) continue;
     scanned++;
 
     // Attribute each $set to the collection of ITS OWN update call. A
@@ -125,6 +151,35 @@ for (const root of ROOTS) {
     const regions = [];
     let cm;
     while ((cm = collRe.exec(src))) regions.push([cm.index, cm.index + WINDOW]);
+
+    // Hoisted handles (#4493). `const books = db.collection('books')` at the
+    // top of a script, then `books.updateOne(…)` 45 lines later, sits far
+    // outside the window above — and that is the DOMINANT style in scripts/.
+    // So also attribute by BINDING: every update call on an identifier bound
+    // to collection('books') is a books write, wherever it is in the file. A
+    // name re-bound to another collection is resolved to its nearest
+    // preceding binding, so `pages`/`batch_jobs` handles stay out.
+    const bindRe = /\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*(?::[^=;\n]+)?=\s*(?:await\s+)?[A-Za-z_$][\w$.()]*?collection(?:<[^>\n]*>)?\(\s*['"]([\w.-]+)['"]\s*\)\s*(?=[;,\n)])/g;
+    const bindings = new Map(); // name -> [{ at, coll }]
+    let bm;
+    while ((bm = bindRe.exec(src))) {
+      if (!bindings.has(bm[1])) bindings.set(bm[1], []);
+      bindings.get(bm[1]).push({ at: bm.index, coll: bm[2] });
+    }
+    for (const [name, binds] of bindings) {
+      if (!binds.some((x) => x.coll === 'books')) continue;
+      const esc = name.replace(/\$/g, '\\$');
+      const callRe = new RegExp(`(?<![\\w$.])${esc}\\s*\\.\\s*(?:updateOne|updateMany|findOneAndUpdate|bulkWrite|replaceOne)\\s*\\(`, 'g');
+      let c;
+      while ((c = callRe.exec(src))) {
+        const owner = binds.filter((x) => x.at < c.index).pop();
+        if (owner?.coll !== 'books') continue;
+        const open = c.index + c[0].length - 1;
+        const args = readParens(src, open);
+        if (args === null) continue;
+        regions.push([open, open + args.length + 1]);
+      }
+    }
 
     const re = /\$set(?:OnInsert)?\s*:\s*\{/g;
     let m;
