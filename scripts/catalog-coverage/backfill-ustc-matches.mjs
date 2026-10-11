@@ -35,7 +35,7 @@ const providerIdx = args.indexOf('--provider');
 const provider = providerIdx >= 0 ? args[providerIdx + 1] : null;
 
 // Dynamic import of the TS module via tsx
-const { matchToUstc } = await import('../../src/lib/ustc-matcher.ts');
+const { matchToUstc, ustcMatchInput, USTC_MATCH_PROJECTION } = await import('../../src/lib/ustc-matcher.ts');
 
 async function main() {
   const client = new MongoClient(MONGO_URI);
@@ -63,7 +63,7 @@ async function main() {
   if (dryRun) console.log('DRY RUN — no writes');
 
   const cursor = db.collection('books')
-    .find(query, { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, original_language: 1 } })
+    .find(query, { projection: USTC_MATCH_PROJECTION })
     .limit(toProcess);
 
   let processed = 0, matched = 0, fastMatched = 0, aiMatched = 0, noMatch = 0, errors = 0;
@@ -71,18 +71,13 @@ async function main() {
 
   for await (const book of cursor) {
     processed++;
-    const title = book.display_title || book.title;
-    const year = book.year || book.published;
-    const lang = book.language || book.original_language;
+    // Never match on an artwork's AI-written caption — ustcMatchInput() takes
+    // the source record's title (#4326).
+    const input = ustcMatchInput(book);
+    const title = input.title;
 
     try {
-      const result = await matchToUstc(db, {
-        title,
-        author: book.author,
-        year,
-        language: lang,
-        id: book.id,
-      }, { force, skipFastPath: skipFast });
+      const result = await matchToUstc(db, input, { force, skipFastPath: skipFast });
 
       if (result.success && result.match) {
         matched++;
