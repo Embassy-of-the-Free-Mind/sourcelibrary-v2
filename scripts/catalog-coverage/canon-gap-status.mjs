@@ -30,6 +30,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { MongoClient } from 'mongodb';
 import { pgClient } from '../works-catalog/lib.mjs';
+import { checkTraditionTotals } from '../lib/tradition-total-check.mjs';
 import { loadHoldingCandidates, corpusBookSets, isLive, ROW_SET } from '../lib/canon-holdings.mjs';
 import { isReadableInEnglish, buildVisiblePageCountPipeline, pageCountersFromStats, computeTranslationState } from '../lib/page-counts.mjs';
 
@@ -189,19 +190,19 @@ const corpora = map.rows.map((r) => {
 // (pages_translated) — and the open typed canon converted to page-equivalents at our own average
 // characters per page in that language (map.rates), so held pages and canon size share one unit.
 const TRADITIONS = [
-  { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'] },
-  { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'] },
-  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo', 'chinese_other'], rows: ['kanripo'] },
-  { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'] },
-  { id: 'sanskrit', name: 'Sanskrit', sets: ['gretil'], rows: ['gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya'] },
-  { id: 'kabbalah', name: 'Kabbalah', sets: ['kabbalah'], rows: ['sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero'] },
-  { id: 'sufi', name: 'Sufi texts (Arabic and Persian)', sets: ['openiti_sufi'], rows: ['openiti-sufi'] },
-  { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'] },
-  { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'] },
+  { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'], languages: /^Tibetan$/ },
+  { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'], languages: /Chinese/ },
+  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo', 'chinese_other'], rows: ['kanripo'], languages: /Chinese/ },
+  { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'], languages: /^Pali$/ },
+  { id: 'sanskrit', name: 'Sanskrit', sets: ['gretil'], rows: ['gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya'], languages: /^Sanskrit$/ },
+  { id: 'kabbalah', name: 'Kabbalah', sets: ['kabbalah'], rows: ['sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero'], scope: 'subject: the Kabbalah shelf rule (a tradition signal, plus reviewed exceptions in canon-shelf-review-5916.json), not every book in the kabbalah collections' },
+  { id: 'sufi', name: 'Sufi texts (Arabic and Persian)', sets: ['openiti_sufi'], rows: ['openiti-sufi'], scope: 'subject: the Sufi shelf rule (a tradition signal, plus reviewed exceptions in canon-shelf-review-5916.json), not every book in the sufism collections' },
+  { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'], scope: 'subject: Persian-language poetry (divans, masnavis, named poets) in the persian-literary-tradition collection' },
+  { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'], languages: /^Mongolian$/ },
   // #6220. Latin is picked by collection, since all ≈52K Latin books would be most of the library;
   // Greek is every Greek-language book. Latin books in `kabbalah` that pass the Kabbalah shelf rule are also counted under Kabbalah.
-  { id: 'latin', name: 'Latin: Hermetica, alchemy, Kabbalah and natural philosophy', sets: ['latin'], rows: ['patrologia-latina', 'camena-poemata', 'perseus-latin'] },
-  { id: 'greek', name: 'Greek', sets: ['greek'], rows: ['perseus-greek', 'first1k-greek'] },
+  { id: 'latin', name: 'Latin: Hermetica, alchemy, Kabbalah and natural philosophy', sets: ['latin'], rows: ['patrologia-latina', 'camena-poemata', 'perseus-latin'], scope: 'collections: hermetica, alchemy, kabbalah, natural philosophy (not all Latin books)' },
+  { id: 'greek', name: 'Greek', sets: ['greek'], rows: ['perseus-greek', 'first1k-greek'], languages: /^(Greek|Ancient Greek)$/ },
 ];
 // Which engine read each page and which model drafted its English, per book, from the page
 // records themselves (ocr.model / ocr.source, translation.model). Read-only; one pass over the
@@ -268,6 +269,11 @@ const traditions = TRADITIONS.map((t, ti) => {
 const latin_books_all = await db.collection('books').countDocuments({ language: 'Latin' });
 
 await mc.close();
+
+// Fail loudly when a language-defined row is a floor, not a total (#6528). --allow-partial=<id>[,<id>] bypasses.
+const totalChecks = checkTraditionTotals(TRADITIONS, Object.fromEntries(TRADITIONS.map((t, ti) => [t.id, { books: tradBooks[ti].length, set_names: t.sets.join(', ') }])),
+  books, { allowPartial: typeof args['allow-partial'] === 'string' ? args['allow-partial'].split(',') : [] });
+for (const t of traditions) Object.assign(t, totalChecks[t.id]);
 
 const missing = Object.keys(STATUS).filter((k) => !map.rows.some((r) => r.id === k));
 if (missing.length) throw new Error(`STATUS has ids the gap map does not: ${missing.join(', ')}`);
