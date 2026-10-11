@@ -79,6 +79,16 @@ describe('books $set attribution', () => {
     expect(keysOf(mixed)).toEqual(['title']);
   });
 
+  it('does not blame a write through another handle on a books handle bound just above (#6498)', () => {
+    // The shape of src/lib/identity-review-apply.ts at 46a9ce3c6.
+    const src = `
+      const queue = db.collection('work_merge_queue');
+      const booksCol = db.collection('books');
+      await queue.updateOne({ _id: id, status: 'pending' }, { $set: { status: 'stale', stale_reason: r } });
+      await booksCol.updateOne({ work_id: a }, { $set: { work_id: b } });`;
+    expect(keysOf(src)).toEqual(['work_id']);
+  });
+
   it('follows the binding nearest above the call when a name is reused', () => {
     const rebound = `
       async function a() { const col = db.collection('books'); await col.updateOne({}, { $set: { in_books: 1 } }); }
