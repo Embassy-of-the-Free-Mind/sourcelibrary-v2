@@ -163,7 +163,7 @@ function lowQuality(text) {
 
 // getPageSource first: on a page split from a spread, archived_photo (and on ~18K split
 // pages display_photo too) is the WHOLE spread, and a read of it puts two pages on one.
-const imgUrl = (p) => getPageSource(p) || p.display_photo || null;
+const imgUrl = (p) => getPageSource(p) || p.display_photo || null; // image-pick-ok: resolver first; display_photo only when it finds nothing
 const sh = (cmd, args) => execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 28 });
 
 async function downloadImage(url, dest) {
