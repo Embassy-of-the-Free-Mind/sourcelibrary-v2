@@ -1,4 +1,5 @@
 import { displayLanguage, sameLanguage } from '@/lib/language-utils';
+import { languageCode, languageRow } from '@/lib/language-normalize';
 import type { FieldProvenanceEntry } from '@/lib/types/book';
 
 /**
@@ -25,6 +26,76 @@ export interface LanguageSignal {
   value: string | null | undefined;
   /** Provenance label, e.g. 'ia_ocr_detected', 'ia_metadata', 'iiif_manifest'. */
   source: string;
+  /**
+   * Why this signal cannot be trusted on this item (see assessIaOcrLanguage).
+   * A discounted signal is still recorded in the claims, but never picked.
+   */
+  discounted?: string | null;
+}
+
+/** IA's `ocr_detected_script` names → ISO 15924, folded to comparable groups. */
+const IA_SCRIPT: Record<string, string> = {
+  latin: 'Latn', fraktur: 'Latn', greek: 'Grek', cyrillic: 'Cyrl', arabic: 'Arab', hebrew: 'Hebr',
+  devanagari: 'Deva', tibetan: 'Tibt', han: 'CJK', hans: 'CJK', hant: 'CJK',
+  hangul: 'CJK', japanese: 'CJK', katakana: 'CJK', hiragana: 'CJK',
+};
+const SCRIPT_GROUP: Record<string, string> = { Cyrs: 'Cyrl', Hani: 'CJK', Jpan: 'CJK', Kore: 'CJK' };
+const scriptGroup = (s: string) => SCRIPT_GROUP[s] || s;
+
+/**
+ * Should IA's `ocr_detected_lang` be believed on this item? Returns the reason it
+ * should NOT, or null when it may lead (#4582).
+ *
+ * The signal is derived FROM IA's OCR, so it is noise on exactly the material
+ * where that OCR fails — and it fails silently, at `ocr_detected_lang_conf: 1.0`:
+ * Arabic script comes back as Latin-letter garbage that reads as "Latin", a
+ * hieroglyphic lithograph as Kyrgyz, Latin Google scans as Russian, Sanskrit as
+ * Hindi/Marathi/Nepali, Tibetan as Dzongkha. It still beats the catalogue when
+ * it is coherent — on Latin-script books it was right 5/5 against a wrong
+ * catalogue record (scripts/lib/ia-language.mjs) — so this does not demote it
+ * wholesale; it names the four measured failure shapes:
+ *
+ *   ocr-multi-script        IA saw 3+ scripts: it was guessing (Urkunden: 6, "ky").
+ *   ocr-unknown-language    a code our registry cannot place (ky, ne, dz) against
+ *                           a language some other signal does name.
+ *   ocr-script-mismatch     the language is not written in the script IA itself
+ *                           detected (ru/el/hi on a "Latin"-script scan).
+ *   ocr-cannot-read-script  a Latin-script reading of a book the catalogue (or,
+ *                           failing that, the caller) puts in a non-Latin script.
+ *   ocr-same-script-cousin  a different language in the catalogue's own non-Latin
+ *                           script: IA has no Sanskrit/Tibetan model and answers
+ *                           with the nearest modern neighbour.
+ *
+ * `ocrScripts` is IA's raw `ocr_detected_script` (string or array), unsliced.
+ */
+export function assessIaOcrLanguage(opts: {
+  ocrLang?: string | null;
+  ocrScripts?: string | string[] | null;
+  catalogLang?: string | null;
+  callerLang?: string | null;
+}): string | null {
+  const ocrCode = languageCode(opts.ocrLang);
+  if (!ocrCode && !displayLanguage(opts.ocrLang)) return null; // no signal to judge
+  const scripts = (Array.isArray(opts.ocrScripts) ? opts.ocrScripts : [opts.ocrScripts])
+    .filter((s): s is string => typeof s === 'string' && !!s.trim());
+  if (scripts.length >= 3) return 'ocr-multi-script';
+
+  const catalogRow = languageRow(languageCode(opts.catalogLang));
+  const refRow = catalogRow || languageRow(languageCode(opts.callerLang));
+  const ocrRow = languageRow(ocrCode);
+  if (!ocrRow) return displayLanguage(opts.catalogLang) || displayLanguage(opts.callerLang) ? 'ocr-unknown-language' : null;
+
+  const seen = scripts.length ? IA_SCRIPT[scripts[0].trim().toLowerCase()] : undefined;
+  if (seen && !ocrRow.ambiguous_script && scriptGroup(ocrRow.script) !== seen) return 'ocr-script-mismatch';
+
+  if (refRow && !refRow.ambiguous_script && ocrRow.script === 'Latn' && refRow.script !== 'Latn') {
+    return 'ocr-cannot-read-script';
+  }
+  if (catalogRow && catalogRow.script !== 'Latn' && scriptGroup(catalogRow.script) === scriptGroup(ocrRow.script)
+      && catalogRow.family !== ocrRow.family) {
+    return 'ocr-same-script-cousin';
+  }
+  return null;
 }
 
 export interface ResolveLanguageInput {
@@ -49,7 +120,8 @@ export interface ResolveLanguageResult {
   conflict: boolean;
   /**
    * True when the record must NOT auto-publish pending human review.
-   * Set on any caller-vs-source conflict.
+   * Set on any caller-vs-source conflict, and when the caller's value alone
+   * overrode a discounted source signal (#4582).
    */
   language_review: boolean;
   /** Ready to store at `field_provenance.language`. */
@@ -60,7 +132,7 @@ export interface ResolveLanguageResult {
  * Resolve the manifestation language for an imported book, recording provenance.
  *
  * Precedence:
- *   1. First non-empty SOURCE signal (in the order given) wins the manifestation language.
+ *   1. First non-empty, non-discounted SOURCE signal (in the order given) wins the manifestation language.
  *   2. If the source is silent, fall back to the caller's value.
  *   3. If both are silent, 'Unknown'.
  *
@@ -75,17 +147,19 @@ export function resolveLanguage(input: ResolveLanguageInput): ResolveLanguageRes
   const callerOriginal = displayLanguage(input.callerOriginalLanguage);
 
   // First usable source signal, preserving the caller's intended priority order.
-  const usableSignals = (input.sourceSignals || [])
-    .map((s) => ({ source: s.source, value: displayLanguage(s.value), raw: s.value }))
+  // A DISCOUNTED signal (#4582) is evidence we record but never let decide.
+  const presentSignals = (input.sourceSignals || [])
+    .map((s) => ({ source: s.source, value: displayLanguage(s.value), raw: s.value, discounted: s.discounted || null }))
     .filter((s) => s.value);
+  const usableSignals = presentSignals.filter((s) => !s.discounted);
   const sourcePick = usableSignals[0] || null;
 
   // All distinct claims, for provenance.
-  const claims: Array<{ source: string; value: string }> = [];
+  const claims: Array<{ source: string; value: string; discounted?: string }> = [];
   if (caller) claims.push({ source: callerSource, value: caller });
-  for (const s of usableSignals) {
+  for (const s of presentSignals) {
     if (!claims.some((c) => c.source === s.source && sameLanguage(c.value, s.value!))) {
-      claims.push({ source: s.source, value: s.value! });
+      claims.push({ source: s.source, value: s.value!, ...(s.discounted ? { discounted: s.discounted } : {}) });
     }
   }
 
@@ -131,7 +205,12 @@ export function resolveLanguage(input: ResolveLanguageInput): ResolveLanguageRes
     date: new Date().toISOString(),
   };
 
-  return { language, original_language, is_translation, conflict, language_review: conflict, provenance };
+  // The caller's word alone overrode a source signal we discounted: that is a
+  // judgment call, not a conflict — no is_translation — but a person should look.
+  const discountedDisagrees = presentSignals.some((s) => s.discounted && !sameLanguage(s.value, language));
+  const language_review = conflict || (chosenSource === callerSource && discountedDisagrees);
+
+  return { language, original_language, is_translation, conflict, language_review, provenance };
 }
 
 /**
