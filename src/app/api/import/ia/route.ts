@@ -8,7 +8,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
-import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
+import { resolveLanguage, resolveDate, publishedToYear, iaOcrLanguageDoubt, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -293,7 +293,9 @@ export const POST = withCuratorAuth(async (request, session) => {
       .map((c) => /^booksbylanguage_(.+)$/i.exec(String(c))?.[1])
       .find(Boolean) || null;
     const sourceSignals: LanguageSignal[] = [
-      { value: iaCatalog.ocr_detected_lang as string, source: 'ia_ocr_detected' },
+      // IA's detector reads IA's own OCR, so on a scan that OCR could not read it names noise at
+      // full confidence (#4582). The doubt keeps it on record and stops it deciding.
+      { value: iaCatalog.ocr_detected_lang as string, source: 'ia_ocr_detected', doubt: iaOcrLanguageDoubt(iaMetadata) },
       { value: Array.isArray(iaMetadataRaw.language) ? iaMetadataRaw.language[0] : iaMetadataRaw.language, source: 'ia_metadata' },
       { value: iaLangCollection, source: 'ia_collection' },
     ];

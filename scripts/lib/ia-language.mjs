@@ -29,17 +29,80 @@
  * .claude/docs/invariants/language-fields.md. A caller value that loses to a source signal is a
  * work hint and belongs in `original_language`, which is what the route does and what this returns.
  */
-import { normalizeLanguageToken } from './language-normalize.mjs';
+import { normalizeLanguageToken, languageCode, languageRow, sameLanguage, sameLanguageFamily } from './language-normalize.mjs';
 
 const first = (v) => (Array.isArray(v) ? v[0] : v);
+const list = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]).map((x) => String(x).trim()).filter(Boolean);
+
+/**
+ * Tesseract's script names (what IA publishes in `ocr_detected_script`) and the ISO 15924 codes of
+ * the language table, folded to one key per writing system. Han, kana and hangul are one group on
+ * purpose: IA reports a Chinese book as `Japanese` and a Korean one as `Han` often enough that the
+ * distinction carries nothing here.
+ */
+const SCRIPT_GROUP = {
+  latin: 'Latn', fraktur: 'Latn', vietnamese: 'Latn', latn: 'Latn',
+  greek: 'Grek', grek: 'Grek',
+  cyrillic: 'Cyrl', cyrl: 'Cyrl', cyrs: 'Cyrl',
+  arabic: 'Arab', arab: 'Arab',
+  hebrew: 'Hebr', hebr: 'Hebr',
+  han: 'CJK', hans: 'CJK', hant: 'CJK', japanese: 'CJK', katakana: 'CJK', hiragana: 'CJK',
+  hangul: 'CJK', hani: 'CJK', jpan: 'CJK', kore: 'CJK',
+  devanagari: 'Deva', deva: 'Deva',
+  bengali: 'Beng', beng: 'Beng', tamil: 'Taml', taml: 'Taml', telugu: 'Telu', telu: 'Telu',
+  kannada: 'Knda', knda: 'Knda', malayalam: 'Mlym', mlym: 'Mlym', gujarati: 'Gujr', gujr: 'Gujr',
+  gurmukhi: 'Guru', guru: 'Guru', sinhala: 'Sinh', sinh: 'Sinh',
+  thai: 'Thai', tibetan: 'Tibt', tibt: 'Tibt', khmer: 'Khmr', khmr: 'Khmr', myanmar: 'Mymr', mymr: 'Mymr',
+  syriac: 'Syrc', syrc: 'Syrc', armenian: 'Armn', armn: 'Armn', georgian: 'Geor', geor: 'Geor',
+  ethiopic: 'Ethi', ethi: 'Ethi',
+};
+const scriptGroup = (name) => SCRIPT_GROUP[String(name || '').toLowerCase()] || null;
+
+/**
+ * Why IA's `ocr_detected_lang` cannot be relied on for this item, or null when nothing says so.
+ *
+ * `ocr_detected_lang` is a language detector run over IA's OWN OCR output, so where that OCR failed
+ * (a script it has no model for, lithography, handwriting, hieroglyphs) the detector is classifying
+ * noise, and it does so at `ocr_detected_lang_conf: 1.0000` (#4582: Sethe's hieroglyphic *Urkunden*
+ * stored as Kyrgyz; six Latin classics likewise; de Goeje's Arabic geographers as Latin). The
+ * confidence field cannot tell the two apart. Two things on the same record can:
+ *
+ *   1. the value is not a language the vocabulary knows. The detector's long tail (`an` Aragonese,
+ *      `ky`, `lb`, `ga`, `qu`, `dz`...) is where noise and unfamiliar Latin land;
+ *   2. the detected language is written in a script IA's OCR did not see on the pages
+ *      (`ru` over `Latin`/`Fraktur`, `la` over `Arabic`).
+ *
+ * Measured 2026-10-11 on the books that carry an `ia_ocr_detected` claim AND a later page-level
+ * verdict (n=114): rule 1 fired on 54, the detected value was wrong on 47 and unchecked on the
+ * other 7 (page detection kept the same unknown code); rule 2 fired on 50, wrong on 49. Of the 10
+ * neither rule touched, 6 were right. A count of scripts ("six scripts on one lithograph") was
+ * tried and dropped: 3+ scripts was right 6 times and wrong 3.
+ *
+ * It answers null (no doubt) whenever it cannot judge: no script published, a script name it does
+ * not know, or a language printed in more than one script (Sanskrit, Egyptian, Yiddish).
+ */
+export function iaOcrLanguageDoubt(meta = {}) {
+  const raw = first(meta.ocr_detected_lang);
+  if (raw == null || !normalizeLanguageToken(raw)) return null;
+  const code = languageCode(raw);
+  if (!code) return `"${String(raw).trim()}" is not a language in the vocabulary`;
+  const row = languageRow(code);
+  const want = row && !row.ambiguous_script ? scriptGroup(row.script) : null;
+  const seen = list(meta.ocr_detected_script);
+  if (!want || !seen.length) return null;
+  const groups = seen.map(scriptGroup);
+  if (groups.includes(null) || groups.includes(want)) return null;
+  return `detected ${row.name} but the OCR saw only ${seen.join(', ')} script`;
+}
 
 /**
  * IA's language claims, most empirical first. `ocr_detected_lang` is IA's own OCR reading the pages;
  * `language` is its catalogue record. Order matters and is the whole point.
  */
 export function iaLanguageSignals(meta = {}) {
+  const doubt = iaOcrLanguageDoubt(meta);
   return [
-    { source: 'ia_ocr_detected', value: normalizeLanguageToken(first(meta.ocr_detected_lang)) },
+    { source: 'ia_ocr_detected', value: normalizeLanguageToken(first(meta.ocr_detected_lang)), ...(doubt ? { doubt } : {}) },
     { source: 'ia_metadata', value: normalizeLanguageToken(first(meta.language)) },
   ].filter((s) => s.value);
 }
@@ -50,6 +113,9 @@ export function iaLanguageSignals(meta = {}) {
  * Precedence, matching src/lib/resolve-language.ts: the first usable SOURCE signal wins; the caller
  * is the fallback. On disagreement the source wins the manifestation and the caller is demoted to
  * `original_language` (a work hint), with `conflict` set so nothing auto-publishes on it.
+ * A signal carrying a `doubt` (see iaOcrLanguageDoubt) is never chosen and never makes a conflict:
+ * the catalogue, then the caller, decide, and with neither the language is left unset. It is still
+ * recorded, under `provenance.doubted`, with the reason.
  *
  * @param {object} meta            IA `metadata` block
  * @param {string|null} caller     the importer's hardcoded language, if any
@@ -59,16 +125,20 @@ export function iaLanguageSignals(meta = {}) {
 export function resolveIaLanguage(meta = {}, caller = null) {
   const signals = iaLanguageSignals(meta);
   const callerLang = normalizeLanguageToken(caller);
-  const pick = signals[0] || null;
+  const pick = signals.find((s) => !s.doubt) || null;
+  const doubted = signals.filter((s) => s.doubt).map((s) => ({ source: s.source, value: s.value, why: s.doubt }));
 
   const claims = [];
   if (callerLang) claims.push({ source: 'caller', value: callerLang });
   for (const s of signals) {
-    if (!claims.some((c) => c.source === s.source && c.value === s.value)) claims.push(s);
+    if (!claims.some((c) => c.source === s.source && c.value === s.value)) claims.push({ source: s.source, value: s.value });
   }
 
   let language = null, original_language = null, conflict = false, chosen_from = 'none';
-  if (pick && callerLang && pick.value !== callerLang) {
+  // Agreement by name family ("Old French" ~ "French") or by the table ("Egyptian hieroglyphs" ~
+  // `egy`), as src/lib/resolve-language.ts does: the same language in other words is not a conflict.
+  const agrees = pick && callerLang && (sameLanguageFamily(pick.value, callerLang) || sameLanguage(pick.value, callerLang));
+  if (pick && callerLang && !agrees) {
     language = pick.value;
     original_language = callerLang;   // the caller was describing the work, not this printing
     conflict = true;
@@ -89,6 +159,7 @@ export function resolveIaLanguage(meta = {}, caller = null) {
     provenance: {
       source: 'import', value: language, chosen_from, claims,
       ...(conflict ? { conflict: true } : {}),
+      ...(doubted.length ? { doubted } : {}),
       date: new Date().toISOString(),
     },
   };

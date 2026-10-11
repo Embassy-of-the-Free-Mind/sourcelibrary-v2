@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { iaLanguageSignals, resolveIaLanguage } from '../../scripts/lib/ia-language.mjs';
+import { iaLanguageSignals, iaOcrLanguageDoubt, resolveIaLanguage } from '../../scripts/lib/ia-language.mjs';
+import { iaOcrLanguageDoubt as iaOcrLanguageDoubtTs, resolveLanguage } from '@/lib/resolve-language';
+import { applyTextRole } from '@/lib/text-role';
+import COMBOS_JSON from './fixtures/ia-ocr-lang-script-combos.json';
+
+const COMBOS = COMBOS_JSON as Array<[string | string[], string | string[] | null, number]>;
 
 /**
  * Pins the precedence the direct IA importers now follow: IA's own OCR reading beats IA's catalogue
@@ -81,5 +86,119 @@ describe('resolveIaLanguage', () => {
       { source: 'ia_metadata', value: 'English' },
     ]);
     expect(r.provenance.conflict).toBe(true);
+  });
+});
+
+/**
+ * #4582. IA's `ocr_detected_lang` is a detector run over IA's own OCR, so on a scan that OCR could
+ * not read it names noise at `ocr_detected_lang_conf: 1.0000`. These are the records that surfaced
+ * it, as IA publishes them (fetched 2026-10-11).
+ */
+describe('iaOcrLanguageDoubt', () => {
+  const SETHE = {
+    ocr_detected_lang: 'ky', ocr_detected_lang_conf: '1.0000',
+    ocr_detected_script: ['Arabic', 'Latin', 'Cyrillic', 'HanS', 'HanT', 'Hangul'], language: 'egy',
+  };
+  const BGA_V = { ocr_detected_lang: 'la', ocr_detected_script: 'Arabic', language: ['ara', 'lat'] };
+
+  it('doubts a detected code the vocabulary cannot name', () => {
+    expect(iaOcrLanguageDoubt(SETHE)).toMatch(/not a language in the vocabulary/);
+    for (const junk of ['an', 'lb', 'ga', 'qu', 'dz']) {
+      expect(iaOcrLanguageDoubt({ ocr_detected_lang: junk, ocr_detected_script: 'Latin' })).toBeTruthy();
+    }
+  });
+
+  it('doubts a language whose script the OCR did not see', () => {
+    expect(iaOcrLanguageDoubt(BGA_V)).toMatch(/Latin but the OCR saw only Arabic/);
+    // 48 Latin books were stored Russian this way: `ru` detected over Latin or Fraktur type.
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'ru', ocr_detected_script: 'Fraktur' })).toBeTruthy();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'ru', ocr_detected_script: 'Cyrillic' })).toBeNull();
+  });
+
+  it('accepts the script anywhere in the list, and Fraktur as Latin script', () => {
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'el', ocr_detected_script: ['Latin', 'Greek'] })).toBeNull();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'de', ocr_detected_script: ['Fraktur', 'Arabic'] })).toBeNull();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'zh', ocr_detected_script: 'Japanese' })).toBeNull();
+  });
+
+  it('does not judge what it cannot: no script, an unknown script name, a many-script language', () => {
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'la' })).toBeNull();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'la', ocr_detected_script: 'Ogham' })).toBeNull();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'sa', ocr_detected_script: 'Latin' })).toBeNull();
+    expect(iaOcrLanguageDoubt({})).toBeNull();
+    expect(iaOcrLanguageDoubt({ ocr_detected_lang: 'und' })).toBeNull();
+  });
+
+  it('is the same rule on the route side as on the script side, over every combination IA sent us', () => {
+    // 146 distinct (ocr_detected_lang, ocr_detected_script) pairs from 2,297 imported IA items.
+    expect(COMBOS.length).toBeGreaterThan(100);
+    for (const [lang, script] of COMBOS) {
+      const meta = { ocr_detected_lang: lang, ocr_detected_script: script ?? undefined };
+      expect(iaOcrLanguageDoubtTs(meta), JSON.stringify(meta)).toBe(iaOcrLanguageDoubt(meta));
+    }
+  });
+
+  it('lets the catalogue decide when the OCR reading is doubted (Sethe: Kyrgyz -> Egyptian)', () => {
+    const r = resolveIaLanguage(SETHE, 'Egyptian hieroglyphs');
+    expect(r.language).toBe('Egyptian');
+    expect(r.chosen_from).toBe('ia_metadata');
+    expect(r.provenance.doubted).toEqual([
+      { source: 'ia_ocr_detected', value: 'Ky', why: '"ky" is not a language in the vocabulary' },
+    ]);
+    expect(resolveIaLanguage(BGA_V, 'Arabic')).toMatchObject({ language: 'Arabic', conflict: false, original_language: null });
+  });
+
+  it('lets the caller decide when a doubted reading is all IA has, without calling it a conflict', () => {
+    // The six Latin classics stored as Kyrgyz had no catalogue language at all.
+    const r = resolveIaLanguage({ ocr_detected_lang: 'ky', ocr_detected_script: 'Fraktur' }, 'Latin');
+    expect(r).toMatchObject({ language: 'Latin', chosen_from: 'caller', conflict: false, original_language: null });
+    expect(resolveIaLanguage({ ocr_detected_lang: 'ky', ocr_detected_script: 'Fraktur' }, null).language).toBeNull();
+  });
+});
+
+describe('resolveLanguage with a doubted signal (the import routes)', () => {
+  const sethe = () => resolveLanguage({
+    callerLanguage: 'Egyptian hieroglyphs',
+    sourceSignals: [
+      { value: 'ky', source: 'ia_ocr_detected', doubt: iaOcrLanguageDoubtTs({ ocr_detected_lang: 'ky', ocr_detected_script: ['Arabic', 'Latin', 'Cyrillic'] }) },
+      { value: 'egy', source: 'ia_metadata' },
+      { value: null, source: 'ia_collection' },
+    ],
+  });
+
+  it('does not store Kyrgyz, and does not cascade into a translation', () => {
+    const r = sethe();
+    expect(r.language).toBe('Egyptian');
+    expect(r.provenance.chosen_from).toBe('ia_metadata');
+    // The caller's "Egyptian hieroglyphs" and the catalogue's `egy` are one language: no conflict,
+    // so no is_translation, no language_review, and applyTextRole reads an original.
+    expect(r).toMatchObject({ conflict: false, is_translation: false, language_review: false, original_language: null });
+    const doc: Record<string, unknown> = { language: r.language, title: 'Urkunden des Alten Reichs', ...(r.is_translation ? { is_translation: true } : {}) };
+    applyTextRole(doc);
+    expect(doc.text_role).toBe('original');
+  });
+
+  it('keeps the doubted reading on record with its reason', () => {
+    const p = sethe().provenance as { claims: unknown[]; doubted: unknown[] };
+    expect(p.claims).toContainEqual({ source: 'ia_ocr_detected', value: 'Ky' });
+    expect(p.doubted).toEqual([{ source: 'ia_ocr_detected', value: 'Ky', why: '"ky" is not a language in the vocabulary' }]);
+  });
+
+  it('falls to the caller, then to Unknown, when a doubted reading is the only source signal', () => {
+    const sig = [{ value: 'ky', source: 'ia_ocr_detected', doubt: 'x' }];
+    expect(resolveLanguage({ callerLanguage: 'Latin', sourceSignals: sig })).toMatchObject({ language: 'Latin', conflict: false, is_translation: false });
+    expect(resolveLanguage({ sourceSignals: sig }).language).toBe('Unknown');
+  });
+
+  it('still lets an undoubted OCR reading beat the catalogue and the caller (#2184)', () => {
+    const r = resolveLanguage({
+      callerLanguage: 'Latin',
+      sourceSignals: [
+        { value: 'ru', source: 'ia_ocr_detected', doubt: iaOcrLanguageDoubtTs({ ocr_detected_lang: 'ru', ocr_detected_script: 'Cyrillic' }) },
+        { value: 'lat', source: 'ia_metadata' },
+      ],
+    });
+    expect(r).toMatchObject({ language: 'Russian', original_language: 'Latin', conflict: true, language_review: true });
+    expect(r.provenance.doubted).toBeUndefined();
   });
 });
