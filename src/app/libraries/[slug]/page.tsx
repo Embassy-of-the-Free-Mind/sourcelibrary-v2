@@ -294,6 +294,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const basePath = `/libraries/${slug}`;
 
   const viewProps: SharedLibraryViewProps = {
+    hideCounts: true,
     partner: {
       name: partner.name,
       description: partner.description,
@@ -325,7 +326,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         name={partner.name}
         description={partner.description}
         url={partner.url}
-        bookCount={total}
+        bookCount={0}
       />
       <SharedLibraryView {...viewProps} />
     </>
