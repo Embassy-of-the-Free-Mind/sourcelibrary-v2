@@ -3,7 +3,10 @@
 
 A subscription's weekly allowance is lost at its reset. When the account this box is
 logged in as is running under its fair share of the week, this starts a headless
-claude-job on the next small open issue (bug, then user-feedback, then data-quality).
+claude-job on the next small open issue. Three picks in four come from the needs maps
+(scripts/workers/needs/<area>.json, #6359: ranked by reader impact, areas taken in turn);
+every fourth, or when no map has an eligible item, comes from label order (bug, then
+user-feedback, then data-quality) — purpose first, with room for opportunity.
 Each job either fixes its issue end to end (PR with `Closes #n`) or comments why it
 can't and labels it `spare-skip`. Nothing it does adds to Derek's decision queue:
 hold-list work is skipped, not asked about.
@@ -16,7 +19,8 @@ can't reach it, so each run on main publishes its poll to Mongo (ops_reports
 
 Cron, every 30 min (guests offset by 15 min so they read a poll main just published):
   main        */30 * * * *      ... spare-lane.py >> /var/log/sourcelibrary/spare-lane.log 2>&1
-  guests      15,45 * * * *     ... spare-lane.py >> /data/scratch/sl/logs/spare-lane.log 2>&1
+  guests      cloudlayer 5,35 and l7a 25,55 ... spare-lane.py >> /data/scratch/sl/logs/spare-lane.log 2>&1
+              (staggered 2026-10-11: on the same minute two boxes took the same issue before either claimed it)
 
   spare-lane.py            decide, and start or stop jobs
   spare-lane.py --dry-run  print the decision, change nothing
@@ -48,6 +52,8 @@ REPO = "Embassy-of-the-Free-Mind/sourcelibrary-v2"
 
 MAX_JOBS = 1 if GUEST else 2  # guests share the box with a live public service
 LABEL_ORDER = ("bug", "user-feedback", "data-quality")
+NEEDS_DIR = os.path.join(SL, "scripts", "workers", "needs")
+OPPORTUNITY_EVERY = 4  # every 4th start ignores the maps and takes label order
 SKIP_LABELS = {"epic", "spare-skip", "spare-lane", "blocked", "hold", "tier:hold"}
 WEEK_S = 7 * 86400
 LAST_STRETCH_S = 2 * 86400
@@ -138,6 +144,42 @@ def decide(limits: dict) -> tuple[str, str]:
     return "idle", f"weekly {w}% vs fair share {fair:.0f}%, session {s}% — on pace, nothing spare"
 
 
+def eligible(it: dict, tried: set[int]) -> bool:
+    labels = {l["name"] for l in it["labels"]}
+    if it["number"] in tried or it["assignees"] or labels & SKIP_LABELS:
+        return False
+    return (NOW - parse_iso(it["updatedAt"])).total_seconds() >= 86400  # someone may be on it right now
+
+
+def pick_from_needs(tried: set[int], start_area: int) -> tuple[dict, str] | None:
+    """The first eligible lane_ok item, taking the areas in turn from start_area."""
+    try:
+        files = sorted(f for f in os.listdir(NEEDS_DIR) if f.endswith(".json"))
+    except OSError:
+        return None
+    for k in range(len(files)):
+        f = files[(start_area + k) % len(files)]
+        try:
+            items = json.load(open(os.path.join(NEEDS_DIR, f)))
+        except (OSError, ValueError):
+            log(f"warn: needs map {f} does not parse")
+            continue
+        for item in items if isinstance(items, list) else []:
+            n = item.get("issue")
+            if not item.get("lane_ok") or not isinstance(n, int) or n in tried:
+                continue
+            raw = sh("gh", "issue", "view", str(n), "-R", REPO,
+                     "--json", "number,title,labels,assignees,updatedAt,state", timeout=60)
+            try:
+                it = json.loads(raw)
+            except ValueError:
+                continue
+            if it.get("state") == "OPEN" and eligible(it, tried):
+                area = f[:-len(".json")]
+                return it, f"{area} map: {item.get('why', '')} (moves {item.get('measure', '?')})"
+    return None
+
+
 def pick_issue(tried: set[int]) -> dict | None:
     for label in LABEL_ORDER:
         raw = sh("gh", "issue", "list", "-R", REPO, "--state", "open", "--label", label, "--limit", "100",
@@ -147,12 +189,8 @@ def pick_issue(tried: set[int]) -> dict | None:
         except ValueError:
             continue
         for it in sorted(issues, key=lambda i: i["number"], reverse=True):
-            labels = {l["name"] for l in it["labels"]}
-            if it["number"] in tried or it["assignees"] or labels & SKIP_LABELS:
-                continue
-            if (NOW - parse_iso(it["updatedAt"])).total_seconds() < 86400:
-                continue  # someone may be on it right now
-            return it
+            if eligible(it, tried):
+                return it
     return None
 
 
@@ -162,6 +200,7 @@ PR: if it fixes the issue (a skip commits nothing and expects no PR)
 Spare-lane job (#6395): you are using Claude subscription allowance that would otherwise expire.
 Issue #{n}: {title}
 https://github.com/{repo}/issues/{n}
+Why this issue: {why}
 
 1. Read the issue and its comments (`gh issue view {n} -R {repo} --comments`). Check nobody has it:
    `gh pr list -R {repo} --state all --search "{n}"` and recent comments. If a PR or a claim exists, comment
@@ -216,20 +255,28 @@ def main():
         state = json.load(open(STATE))
     except (OSError, ValueError):
         state = {"tried": {}}
-    issue = pick_issue({int(k) for k in state["tried"]})
+    tried = {int(k) for k in state["tried"]}
+    starts = state.get("starts", 0)
+    picked = None if starts % OPPORTUNITY_EVERY == OPPORTUNITY_EVERY - 1 else pick_from_needs(tried, state.get("area", 0))
+    if picked:
+        issue, reason = picked
+        state["area"] = state.get("area", 0) + 1
+    else:
+        issue, reason = pick_issue(tried), "opportunity: next small open issue by label (bug, user-feedback, data-quality)"
     if not issue:
         log(f"idle: {why}, but no eligible issue")
         return
     n = issue["number"]
     name = f"spare-{n}"
-    log(f"start {name} ({email}): {why} — #{n} {issue['title'][:80]}")
+    log(f"start {name} ({email}): {why} — #{n} {issue['title'][:80]} — {reason}")
     if DRY:
         return
     with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as fh:
-        fh.write(BRIEF.format(n=n, title=issue["title"], repo=REPO))
+        fh.write(BRIEF.format(n=n, title=issue["title"], repo=REPO, why=reason))
     # The label is the cross-box claim: three boxes run this lane, each with its own state file.
     sh("gh", "issue", "edit", str(n), "-R", REPO, "--add-label", "spare-lane")
     state["tried"][str(n)] = NOW.isoformat()
+    state["starts"] = starts + 1
     tmp = STATE + ".tmp"
     json.dump(state, open(tmp, "w"), indent=1)
     os.replace(tmp, STATE)
