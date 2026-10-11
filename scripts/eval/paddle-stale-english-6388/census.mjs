@@ -61,7 +61,7 @@ for (const p of pages) {
   counts.english_present++;
   const pp = p.ocr?.engine?.postprocess || {};
   const rev = revs.get(p.id);
-  const r = { page_id: p.id, book_id: p.book_id, title: String(books.get(p.book_id) || '').slice(0, 80), page_number: p.page_number, image: p.ocr?.engine?.input?.image_url || p.archived_photo, tables: pp.tables_flattened || 0, imgs: pp.img_dropped || 0, rev_model: rev?.model || null, rev_reason: rev?.reason || null, tr_model: p.translation?.model || null, old: rev?.data ?? null, paddle: p.ocr?.data || '', english: en };
+  const r = { page_id: p.id, book_id: p.book_id, title: String(books.get(p.book_id) || '').slice(0, 80), page_number: p.page_number, image: p.ocr?.engine?.input?.image_url || p.archived_photo, tables: pp.tables_flattened || 0, imgs: pp.img_dropped || 0, rev_model: rev?.model || null, rev_reason: rev?.reason || null, tr_model: p.translation?.model || null, old: rev?.data ?? null, paddle: p.ocr?.data || '', english: en }; // image-pick-ok: the image the Paddle lane itself read (ocr.engine.input.image_url), archived_photo only as fallback
   if (p.ocr?.source !== 'paddle') { counts.not_paddle_now++; r.excluded = 'not_paddle_now'; }
   else if (!rev) { counts.no_revision++; r.excluded = 'no_revision'; }
   Object.assign(r, rev ? oldNewCer(rev.data, r.paddle) : {});
