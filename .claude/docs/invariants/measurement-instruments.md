@@ -2,6 +2,8 @@
 
 **Read this when:** Quoting any usage number, building an analytics read path, adding an alarm or health probe, adding a search/analytics write path, answering "how many readers…", or building any RANKED or RELATED list a reader will read as meaningful (connections, recommendations, "see also").
 
+**Quality measures (CER, judged rates, gates, detectors, readable counts):** each one's validity verdict, its evidence and the cheapest fix are in `.claude/docs/measurement-validity.md` (#6203). Check its row before quoting the number.
+
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
 ---
