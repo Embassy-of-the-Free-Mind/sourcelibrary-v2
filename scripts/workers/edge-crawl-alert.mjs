@@ -9,8 +9,8 @@
  * different credential and data source; it copies that file's alerting
  * conventions (state-change push, say what to do).
  *
- * Why it exists: from 2026-09-29 to 10-04 a crawler calling itself
- * "thegreeklibrary.org (accord de D. Lomas)" fetched ~500,000 reader pages
+ * Why it exists: from 2026-09-29 to 10-04 a crawler with an honest third-party
+ * user agent (falsely claiming our agreement) fetched ~500,000 reader pages
  * (56% of Vercel's origin bytes that week, roughly $60-100) from one French
  * home connection. Every defence missed it:
  *   - the Cloudflare rules target disguised scrapers on datacenter networks;
