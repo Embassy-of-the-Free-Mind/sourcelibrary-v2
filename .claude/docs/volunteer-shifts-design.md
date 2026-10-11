@@ -5,11 +5,49 @@ rules. src/app/api/contribute/process/route.ts — the existing bring-your-own-G
 copy it (see "What we already have"). -->
 # Volunteer shifts: people contributing their own Claude to the library (design)
 
-Status: **Phase 1 built (2026-10-10)**: the MCP tools `start_review_shift` / `submit_page_review`
-and `GET /api/review/translation-check/shift`. Written 2026-10-10 from Derek's question "could people contribute
-the remaining tokens of their subscriptions, and could we package up jobs for them?" Prior-art
-notes and the repository map that fed this are summarised inline. The tracking issue carries the
-decisions.
+Status: **revised 2026-10-11, see the next section first.** Book runs built: MCP tools
+`start_review_shift` / `continue_review_shift` over `GET /api/review/book-run`; the earlier
+five-page verdict-first shift survives as the opt-in `start_blind_check`
+(`GET /api/review/translation-check/shift`). Corrections built 2026-10-10. Written 2026-10-10 from
+Derek's question "could people contribute the remaining tokens of their subscriptions, and could
+we package up jobs for them?" The tracking issue (#6418) carries the decisions.
+
+## Revision 2026-10-11: the volunteer lends their Claude; the model does the checking
+
+The first live shift (claude.ai, Latin) asked a non-Latinist for a blind verdict on Latin. Derek:
+"95% of users wont know another language, they are just trying to contribute their claude
+accounts to help with translation and quality control — its like what open source participation
+looks like in 2026." The sections below were written around the volunteer's *judgement*; the
+contribution is their **Claude** (a vision model on their own subscription), and the person is the
+operator: starts the shift, agrees once that findings are submitted, watches, asks, says
+"continue". The terms analysis below still holds: one person, their own unmodified client,
+interactive, one page per message.
+
+Why this is worth more than it sounds: our transcriptions and translations are Gemini's. A Claude
+reading them against the scan is a reader from another model family (the family rule), which we
+otherwise buy with our own subscription time.
+
+**Options weighed.**
+
+| Choice | Options | Decision, and why |
+|---|---|---|
+| Who judges | the person (needs the language) / the volunteer's Claude, person optional | **Claude.** Fits the 95%; the person's own judgement stays as the blind lane. |
+| Unit | random pages across books / 2 pages × 3 books / **one book walked in order** | **Book run.** The model and the person keep the book's context (abbreviations, hand, argument); page-join defects (text carried across a page boundary, the commonest "invention" flag) are visible only across two pages; it reads as a book, which is what brings people back. Cost: pages of one book are one observation for corpus estimates, which the blind lane and our own audits supply. |
+| Pacing | five pages in one result / **one page, then "continue"** | One page: lighter on the volunteer's limits, every scan fits the inline cap, and the human stays in the loop per page. |
+| Selection | random pool / volunteer's choice / most-read / detector-flagged | Volunteer's choice if they name a book; else resume their last run; else start at a page the translation-check pool is waiting on (`nextCandidate`), so runs spread over the books the pool samples. Most-read and detector-flagged starts are next. |
+| Output | rating / correction | Both, per page: a `volunteer_ratings` row (`detail.mode='book-run'`) and span-edit proposals (`drafted_by:'assistant'`). |
+| Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Not yet built:** apply a correction when two independent runs propose the same edit, or our own adjudicator confirms one; planted-error pages to weight each volunteer's setup by measured accuracy rather than claimed model. Until then corrections wait for a second reader as before. |
+
+**What a book run returns per page:** the scan (proxied at 1,600 px so it fits the 1MB inline
+cap; the first live shift lost two of five scans to it), transcription and English with editorial
+wrappers stripped, the last 400 characters of the previous page, `text_version` hashes, and
+`next` for `continue_review_shift`. Resume across chats reads the volunteer's last
+`detail.mode='book-run'` row. Contributions are offered under CC BY-SA 4.0, the licence of the
+translations, in the first-time message.
+
+**Open:** the size of a run on a Pro account before its limit (measure on the first real runs);
+whether the volunteer's Claude follows the "no invented problems" line (planted clean pages test
+it); retiring `/contribute`.
 
 ## The question, reframed
 
