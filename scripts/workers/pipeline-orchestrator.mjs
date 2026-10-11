@@ -32,6 +32,7 @@ import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
+import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
@@ -4928,6 +4929,8 @@ Rules:
                 page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
                 'ocr.data': { $exists: true, $nin: [null, ''] },
                 page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+                // translate-worker skips these, so a job for them does nothing (#5108).
+                'translation.health_blocked': { $exists: false },
                 $or: [
                   { 'translation.data': { $exists: false } },
                   { 'translation.data': null },
@@ -4940,6 +4943,10 @@ Rules:
               .toArray();
 
             if (pages.length === 0) {
+              // Name what is left instead of dispatching a job that cannot touch it (#5108). A block is
+              // lifted by the lane that re-reads the page, or by hand — never by re-dispatching.
+              const blocked = await healthBlockedResidue(db, { bookId: book.id });
+              if (blocked.length > 0) console.log(`  Not dispatched — health-blocked, untranslated: ${nameBlockedPages(blocked)}: ${book.title}`);
               // Guard: don't mark translate_complete if OCR isn't done yet
               // (preview OCR does 25 pages, translate-worker translates them, but full OCR hasn't run)
               const totalOcr = book.pages_ocr || 0;
@@ -5061,6 +5068,7 @@ Rules:
           book_id: book.id,
           'ocr.data': { $exists: true, $nin: [null, ''] },
           page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+          'translation.health_blocked': { $exists: false }, // not owed to this lane — Phase 4 names them (#5108)
           $or: [
             { 'translation.data': { $exists: false } },
             { 'translation.data': null },
@@ -5078,7 +5086,7 @@ Rules:
           if (jobId) {
             const job = await db.collection('jobs').findOne({
               id: jobId,
-              status: { $in: ['completed', 'completed_with_errors', 'failed'] },
+              status: { $in: ['completed', 'completed_with_errors', 'failed', BLOCKED_JOB_STATUS] },
             });
             if (job) {
               // Lambda job finished but pages remain — send back to Phase 4 for direct translation
