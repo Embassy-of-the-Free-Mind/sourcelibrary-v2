@@ -60,7 +60,7 @@ const log = { seed: SEED, at: new Date().toISOString(), frame: { call_site: CALL
 const bookIds = await runs.distinct('book_id', { mode: 'chained' });
 const bookRows = await books.find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, author: 1, published: 1, pages_count: 1, provider: 1, language: 1, visible: 1, hidden: 1 } }).toArray();
 const byBook = Object.fromEntries(bookRows.map((b) => [b.id, b]));
-const PROJ = { page_number: 1, page_type: 1, ol: { $strLenCP: '$ocr.data' }, tl: { $strLenCP: '$translation.data' }, tm: '$translation.model', ted: '$translation.edited_by', seeded: '$translation.engine.input.context.previous_translation', first: '$translation.engine.input.context.block.first_page' };
+const PROJ = { page_number: 1, page_type: 1, ol: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, tl: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, tm: '$translation.model', ted: '$translation.edited_by', seeded: '$translation.engine.input.context.previous_translation', first: '$translation.engine.input.context.block.first_page' };
 const lanePages = {}; // book_id → candidate rows the lane wrote (filtered)
 for (const b of bookRows) {
   const rows = await pages.aggregate([

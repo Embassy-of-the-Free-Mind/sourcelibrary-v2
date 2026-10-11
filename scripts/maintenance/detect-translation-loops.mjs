@@ -77,8 +77,8 @@ const offenders = await pages.aggregate([
   { $match: match },
   { $project: {
       book_id: 1, page_number: 1,
-      tl: { $strLenCP: '$translation.data' },
-      ol: { $strLenCP: { $ifNull: ['$ocr.data', ''] } },
+      tl: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } },
+      ol: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
   } },
   { $match: { $expr: { $or: [
       { $gt: ['$tl', ABS_CHARS] },

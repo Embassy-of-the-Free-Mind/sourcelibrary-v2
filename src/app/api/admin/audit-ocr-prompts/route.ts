@@ -56,7 +56,7 @@ export const GET = withAdminAuth(async (request, session) => {
             total: { $sum: 1 },
             with_ocr: {
               $sum: {
-                $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0]
+                $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, 1, 0]
               }
             },
             rich_pages: {
@@ -64,7 +64,7 @@ export const GET = withAdminAuth(async (request, session) => {
                 $cond: [
                   {
                     $and: [
-                      { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+                      { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] },
                       {
                         $or: [
                           { $gte: [{ $indexOfCP: [{ $ifNull: ['$ocr.data', ''] }, '<vocab>'] }, 0] },
@@ -79,7 +79,7 @@ export const GET = withAdminAuth(async (request, session) => {
             },
             has_prompt_version: {
               $sum: {
-                $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.prompt_version', ''] } }, 0] }, 1, 0]
+                $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.prompt_version' }, 'string'] }, '$ocr.prompt_version', ''] } }, 0] }, 1, 0]
               }
             }
           }

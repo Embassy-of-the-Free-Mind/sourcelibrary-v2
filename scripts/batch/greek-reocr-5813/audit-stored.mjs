@@ -18,7 +18,7 @@ const t = { answers: rows.length, multipart: 0, still_this_write: 0, complete: 0
 const cut = [];
 for (let i = 0; i < rows.length; i += 1000) {
   const slice = rows.slice(i, i + 1000);
-  const pages = new Map((await db.collection('pages').find({ id: { $in: slice.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.batch_job_id': 1, len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } } } }).toArray()).map((p) => [p.id, p]));
+  const pages = new Map((await db.collection('pages').find({ id: { $in: slice.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.batch_job_id': 1, len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } } } }).toArray()).map((p) => [p.id, p]));
   for (const r of slice) {
     if (r.text_parts > 1) t.multipart++;
     const p = pages.get(r.page_id);

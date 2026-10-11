@@ -19,8 +19,8 @@ for (let i = 0; i < ids.length; i += CH) {
   const rows = await db.collection('pages').aggregate([
     { $match: { book_id: { $in: ids.slice(i, i + CH) } } },
     { $group: { _id: '$book_id', n: { $sum: 1 },
-      ocr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 20] }, 1, 0] } },
-      tr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 20] }, 1, 0] } },
+      ocr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 20] }, 1, 0] } },
+      tr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 20] }, 1, 0] } },
       wh: { $sum: { $cond: [{ $ifNull: ['$translation_withheld', false] }, 1, 0] } },
       ocrModels: { $addToSet: '$ocr.model' },
     } }

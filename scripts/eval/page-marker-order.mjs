@@ -247,7 +247,9 @@ async function main() {
   console.error(`${targets.length} books; ${done.size} done; ${todo.length} to go`);
   const out = fs.createWriteStream(FILE, { flags: 'a' });
   let n = 0;
-  const ocr = { $ifNull: ['$ocr.data', ''] };
+  // A non-string ocr.data makes $strLenCP/$substrCP throw and aborts the book (#4272);
+  // $ifNull lets it through, only a $type check stops it.
+  const ocr = { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] };
   async function worker() {
     for (;;) {
       const t = todo.shift();
@@ -261,6 +263,7 @@ async function main() {
             // like a book stored back to front (v2 review: 9 of 16 "true" flags were this).
             { $match: { book_id: t.book_id, page_number: { $gte: 0 } } },
             { $sort: { page_number: 1 } },
+            // strlen-safe: `ocr` is the $type-guarded expression above
             { $project: { _id: 0, page_number: 1, head: { $substrCP: [ocr, 0, 700] },
               tail: { $substrCP: [ocr, { $max: [0, { $subtract: [{ $strLenCP: ocr }, 800] }] }, 800] } } },
           ], { hint: { book_id: 1, page_number: 1 }, maxTimeMS: 300000 }).toArray();

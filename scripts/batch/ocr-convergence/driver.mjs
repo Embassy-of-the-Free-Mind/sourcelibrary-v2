@@ -125,7 +125,7 @@ async function select() {
   for (const b of picks) {
     const pages = await db.collection('pages').find(
       { book_id: b.book_id, page_number: { $gt: 0 }, 'ocr.data': { $type: 'string' }, archived_photo: { $type: 'string' }, page_type: { $nin: ['blank', 'cover', 'illustration', 'image-only'] } },
-      { projection: { _id: 1, id: 1, page_number: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.model': 1, len: { $strLenCP: '$ocr.data' } } },
+      { projection: { _id: 1, id: 1, page_number: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.model': 1, len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } } } },
     ).toArray();
     // A human-edited page is never re-read for a write; a page with under 200 chars has too little to compare.
     const ok = pages.filter((p) => !p.ocr?.edited_by && p.ocr?.source !== 'manual' && p.len >= 200);
