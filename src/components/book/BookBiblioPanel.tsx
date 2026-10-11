@@ -3,6 +3,7 @@ import { ExternalLink } from 'lucide-react';
 import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { resolveHoldingLibrary } from '@/lib/library-partners';
 
 /**
  * Light-themed bibliographic panel for the book page's "Bibliographic
@@ -34,6 +35,7 @@ export default function BookBiblioPanel({
   showExternalLinks?: boolean;
 }) {
   const src = book.image_source;
+  const holder = resolveHoldingLibrary(src);
   const layers = (book.source_work_dates ?? []) as SourceWorkDateLayer[];
   const place = resolveImprintPlace(book)?.display; // family resolver, #4043
   const publisher = book.publisher?.trim();
@@ -90,12 +92,17 @@ export default function BookBiblioPanel({
         </>
       )}
 
-      {src && (src.provider_name || src.source_url || src.contributing_library) && (
+      {src && (src.provider_name || src.source_url || holder) && (
         <>
-          <SectionLabel>Image Source</SectionLabel>
+          <SectionLabel>Provenance</SectionLabel>
           <div className="divide-y" style={{ borderColor: '#ece6da' }}>
+            {holder && (
+              <Row label="Held by">
+                <span className="font-semibold" style={{ color: '#2b2620' }}>{holder}</span>
+              </Row>
+            )}
             {(src.provider_name || src.source_url) && (
-              <Row label="Source">
+              <Row label="Scans from">
                 {showExternalLinks && src.source_url ? (
                   <Link href={src.source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline" style={{ color: '#a5503d' }}>
                     {src.provider_name || 'Original record'}<ExternalLink className="w-3 h-3" />
@@ -103,7 +110,6 @@ export default function BookBiblioPanel({
                 ) : (src.provider_name || '–')}
               </Row>
             )}
-            {src.contributing_library && <Row label="Provided by">{src.contributing_library}</Row>}
             {src.digitized_by && <Row label="Digitized by">{src.digitized_by}</Row>}
             {src.shelfmark && <Row label="Shelfmark">{src.shelfmark}</Row>}
             {src.license && <Row label="License">{src.license}</Row>}
