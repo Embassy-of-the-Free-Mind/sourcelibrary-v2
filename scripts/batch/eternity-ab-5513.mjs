@@ -197,7 +197,7 @@ async function selectTraditionShelves(db, s) {
     const trust = await ocrTrustVerdictForBook(db, b);
     if (!trust.ok) { s.skipped.push({ id: b.id, title: b.title, language: b.language, why: trust.reason }); continue; }
     const pages = await db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 } },
-      { projection: { _id: 0, id: 1, page_number: 1, hasOcr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, hasEn: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } } }).sort({ page_number: 1 }).toArray();
+      { projection: { _id: 0, id: 1, page_number: 1, hasOcr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, hasEn: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] } } }).sort({ page_number: 1 }).toArray();
     per.push({ id: b.id, title: b.title, language: b.language, visible: b.visible, status: b.pipeline_auto?.status ?? null,
       target_ids: pages.filter((p) => !p.hasOcr).map((p) => p.id),
       measured: { pages: pages.length, ocr_no_english: pages.filter((p) => p.hasOcr && !p.hasEn).length,

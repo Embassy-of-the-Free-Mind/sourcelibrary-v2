@@ -544,7 +544,7 @@ async function main() {
           { $multiply: ['$gallery_quality', 50] },
           { $cond: [{ $and: [
             { $ne: ['$museum_description', null] },
-            { $gt: [{ $strLenCP: { $ifNull: ['$museum_description', ''] } }, 50] },
+            { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$museum_description' }, 'string'] }, '$museum_description', ''] } }, 50] },
           ]}, 10, 0] },
         ]},
       }},

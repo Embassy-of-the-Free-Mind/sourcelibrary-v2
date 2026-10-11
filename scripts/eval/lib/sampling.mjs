@@ -240,7 +240,7 @@ export async function sampleOnePagePerBook({ bookFilter, pageFilter = {}, n, min
       { $match: { book_id: book.id, ...pageFilter } },
       { $sample: { size: 8 } },   // a few, so a short one can be skipped without a second round-trip
       { $project: { page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.language': 1 } },
-      { $match: { $expr: { $gte: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, minOcrChars] } } },
+      { $match: { $expr: { $gte: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, minOcrChars] } } },
       { $limit: 1 },
     ], { maxTimeMS: 60000 }).toArray();
     if (!page) continue;

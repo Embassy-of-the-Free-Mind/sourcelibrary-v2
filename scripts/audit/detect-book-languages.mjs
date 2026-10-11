@@ -112,6 +112,7 @@ async function tagCounts(pages, bookId) {
         head: { $substrCP: ['$ocr.data', 0, 300] },
         // Length of what remains once the metadata block is gone. A leaf with a
         // language tag and no transcription must not vote on the book's mix.
+        // strlen-safe: the $match above admits only string ocr.data
         bodyLen: {
           $strLenCP: {
             $trim: {
@@ -132,6 +133,7 @@ async function tagCounts(pages, bookId) {
                           { $and: [{ $gte: ['$$s', 0] }, { $gt: ['$$e', '$$s'] }] },
                           { $concat: [
                             { $substrCP: ['$$value', 0, '$$s'] },
+                            // strlen-safe: $$value is the string being reduced; $$this[1] a literal
                             { $substrCP: ['$$value',
                               { $add: ['$$e', { $strLenCP: { $arrayElemAt: ['$$this', 1] } }] },
                               { $strLenCP: '$$value' }] },

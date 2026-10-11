@@ -34,7 +34,7 @@ let n = 0;
 for (const b of books) {
   const pages = await db.collection('pages').find(
     { book_id: b.id, 'ocr.model': { $in: LITE_MODELS }, 'ocr.data': { $exists: true, $nin: [null, ''] } },
-    { projection: { _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, script_type: 1, page_type: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.edited_by': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1, 'ocr.output_tokens': 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.model': 1, ocr_len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } } } },
+    { projection: { _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, script_type: 1, page_type: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.edited_by': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1, 'ocr.output_tokens': 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.model': 1, ocr_len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } } } },
   ).toArray();
   if (++n % 200 === 0) console.error(`  ${n}/${books.length}`);
   if (!pages.length) continue;

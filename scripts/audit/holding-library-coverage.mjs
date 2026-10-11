@@ -39,6 +39,7 @@ const [row] = await books.aggregate([
   { $project: { lib: { $toLower: { $toString: LIB_EXPR } }, mark: MARK_EXPR } },
   { $group: {
     _id: null,
+    // strlen-safe: $lib is $toLower output and $toString yields a string (or throws first)
     withLibrary: { $sum: { $cond: [{ $gt: [{ $strLenCP: '$lib' }, 0] }, 1, 0] } },
     withShelfmark: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $toString: '$mark' } }, 0] }, 1, 0] } },
     aggregator: { $sum: { $cond: [{ $in: ['$lib', AGGREGATOR_VALUES] }, 1, 0] } },

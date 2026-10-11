@@ -30,7 +30,7 @@ const out = {}; const cell = {}; const retr = { retranslated: 0, stale_left: 0, 
 const ids = rows.map((r) => r.page_id); const meta = new Map(rows.map((r) => [r.page_id, r]));
 const flashBooks = new Set();
 for (let i = 0; i < ids.length; i += 5000) {
-  for (const p of await P.find({ id: { $in: ids.slice(i, i + 5000) } }, { projection: { _id: 0, id: 1, book_id: 1, 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.restored.reason': 1, 'ocr.recitation_count': 1, 'translation.updated_at': 1, 'translation.restored': 1, hasTr: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 20] } } }).toArray()) {
+  for (const p of await P.find({ id: { $in: ids.slice(i, i + 5000) } }, { projection: { _id: 0, id: 1, book_id: 1, 'ocr.model': 1, 'ocr.updated_at': 1, 'ocr.restored.reason': 1, 'ocr.recitation_count': 1, 'translation.updated_at': 1, 'translation.restored': 1, hasTr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 20] } } }).toArray()) {
     const m = meta.get(p.id), r = lastRaw.get(p.id);
     let o;
     if (p.ocr?.model === 'gemini-3-flash-preview') { o = 'flash'; flashBooks.add(p.book_id); if (!p.hasTr) retr.untranslated++; else if (p.translation.updated_at > p.ocr.updated_at) retr.retranslated++; else retr.stale_left++; }

@@ -13,7 +13,7 @@ const out = {};
 for (const b of strata) {
   const rows = await pages.aggregate([
     { $match: { book_id: b.id, page_number: { $gt: 0 } } },
-    { $project: { tr: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, tu: '$translation.updated_at', ou: '$ocr.updated_at',
+    { $project: { tr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] }, tu: '$translation.updated_at', ou: '$ocr.updated_at',
       unr: { $ifNull: ['$ocr.unreadable', false] }, om: '$ocr.model', tm: '$translation.model' } },
     { $group: { _id: { tr: '$tr', after: { $cond: [{ $and: ['$tr', { $gte: ['$tu', '$ou'] }] }, true, false] }, unr: { $cond: ['$unr', true, false] }, tm: '$tm' }, n: { $sum: 1 } } },
   ]).toArray();

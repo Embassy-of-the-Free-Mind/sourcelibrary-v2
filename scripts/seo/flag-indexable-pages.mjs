@@ -225,7 +225,7 @@ if (INCLUDE_QUALITY) {
         // trustworthy transcription (#4850, #4149) — never open those to search.
         { $match: { book_id: b.id, page_number: { $gte: 0 }, 'translation.data': { $type: 'string' }, 'ocr.unreadable': { $in: [null, false] } } },
         { $sort: { page_number: 1 } },
-        { $project: { _id: 0, id: 1, page_type: 1, tlen: { $strLenCP: { $trim: { input: '$translation.data' } } } } },
+        { $project: { _id: 0, id: 1, page_type: 1, tlen: { $strLenCP: { $trim: { input: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } } } } } },
         { $match: { tlen: { $gte: MIN_TRANSLATION_CHARS }, page_type: { $nin: ['digitizer-insert', 'archived-spread'] } } },
         { $limit: QUALITY_CAP },
       ]).toArray();

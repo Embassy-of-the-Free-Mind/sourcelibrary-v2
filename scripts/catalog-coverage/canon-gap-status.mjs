@@ -220,8 +220,8 @@ for (let i = 0; i < allIds.length; i += 25) engineRows.push(...await db.collecti
   { $group: {
     _id: {
       b: '$book_id',
-      o: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, { $ifNull: ['$ocr.model', { $ifNull: ['$ocr.source', 'unrecorded'] }] }, null] },
-      t: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unrecorded'] }, null] },
+      o: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, { $ifNull: ['$ocr.model', { $ifNull: ['$ocr.source', 'unrecorded'] }] }, null] },
+      t: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unrecorded'] }, null] },
     },
     n: { $sum: 1 },
   } },

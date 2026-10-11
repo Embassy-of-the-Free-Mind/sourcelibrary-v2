@@ -136,8 +136,8 @@ try {
         book_id: 1, page_number: 1,
         model: '$translation.model',
         lang: '$ocr.language',
-        ocrLen: { $strLenCP: '$ocr.data' },
-        trLen: { $strLenCP: '$translation.data' },
+        ocrLen: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
+        trLen: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } },
     } },
     { $match: { $expr: { $and: [
       { $gte: ['$ocrLen', MIN_OCR_RAW] },
