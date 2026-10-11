@@ -8,7 +8,7 @@ n_books: null
 n_pages: 3652
 verdict: "Of 3,652 stored Gemini-CLI outputs, 591 fail the CLI checks. A cut-only rescue recovers 481 (461 by the deterministic extractor, 20 by a text-only CLI pass); 110 stay failed (87 empty or nothing left, 23 rejected by the verbatim guard). No translation arm needed rescue, so nothing is rejudged. On OCR the rescue lowers the 3.6 CLI CER on EEBO 0.325 → 0.068 and on Greek-ext 0.225 → 0.142, and does not fix 3.8: its failures are empties and recitation cuts."
 status: informational
-decision: "Rescued records committed beside the raw outputs (results/cli-rescue-6523/); 6523c folds them into its single ocr-pareto.json rebuild."
+decision: "Rescued records committed beside the raw outputs (results/cli-rescue-6523/); 6523c folds them into its single ocr-pareto.json rebuild. 3 Tengyur CLI pages cut; the write door refuses an announcing line that echoes the request."
 superseded_by: null
 issue: [6523, 6293, 6295, 6375, 6388, 6182, 6331, 6338]
 ---
@@ -125,19 +125,42 @@ were rejected by the guard. These are reads cut by the recitation filter where a
 kept copy lacks, Syriac replies the model would not copy, and Chinese reads the second pass cut to under 20
 letters. They stay failed. The forward fix (a structured reply, the tool gate) is 6523c's.
 
-**Production pages (Tengyur CLI lane, sweep tengyur-cli-6361).** Two pages carried chat in readers' English. Both
-were cut through `writePageTranslation`, which kept the old text in `page_revisions` (`job_id: cli-past-data-6523`,
-reason `cli-chatter-cut-6523`). The engine block that produced each text is kept, with a `repair` record added.
-Both cuts pass guard v2. `scripts/maintenance/cli-chatter-cut-6523/repair-pages.mjs` did the cuts.
+**Production pages (Tengyur CLI lane, sweep tengyur-cli-6361).** Three pages carried chat in readers' English: the
+two named on #6523, and a third the corpus walk below found. All three were cut through `writePageTranslation`,
+which kept the old text in `page_revisions` (`job_id: cli-past-data-6523`, reason `cli-chatter-cut-6523`). The
+engine block that produced each text is kept, with a `repair` record added. All pass guard v2.
+`scripts/maintenance/cli-chatter-cut-6523/repair-pages.mjs` did the cuts.
 - `6abed76c896ea18127c8ee40` p154: dropped the opening line "…here is the translation adhering strictly to all
   your formatting, tagging, and style rules:" (93 % of letters kept).
 - `6abeb35b896ea18127c83af5` p261: kept the text after "Here is the translation:". The text before it was a
   separate paraphrase reply. I checked the kept span against the page's Tibetan OCR: it opens with "To elucidate
   the meaning of the teaching by way of an example" (བསྟན་པའི་དོན་དཔེ་ཉེ་བར་བསྟན་པའི་སྒོ་ནས་) and runs through bampo
   11 to the page's end (75 % kept).
+- `6abed76c896ea18127c8ee40` p516 (same volume as p154): a preface reply, then "Here is the exact translation adhering
+  strictly to the contract:". The kept span runs from "To show the meaning, [the text] states" (འདི་ཉིད་སྟོན་པ་ནི་)
+  to "regarding this…" (འདི་ལ་), the OCR's first and last clauses (87 % kept). My first scan of the 23,625
+  CLI-written Tengyur pages missed it: its pattern did not allow "exact".
 
-None of the other 23,623 CLI-written Tengyur pages carries the shape. The write door now refuses it anywhere on a
-page: the `TRANSLATION_REPLY_RULE` in `scripts/lib/page-integrity.mjs`, the always-on `refusableReasoningLeak` gate.
-WRITE_DOOR_COUNT
+**Write door.** `TRANSLATION_REPLY_RULE` in `scripts/lib/page-integrity.mjs` is the always-on `refusableReasoningLeak`
+gate that every translation writer passes. It now refuses an announcing "here is the … translation …:" line
+anywhere on a page, **but only when the line also echoes the request**: provided, preserving, formatting,
+instructions, contract, continuity, paragraph breaks, adhering, requested, from the image.
+
+The first version refused the bare line too. A walk of every `pages` record
+(`scripts/audit/translation-reasoning-leak.mjs walk`, 9,382 prefilter candidates) found that bare form in **real
+book text**: a 19th-century study introducing Cyprian's prayer with "Here is the translation:", Huygens's notes,
+"here is a free translation:", "of this short epistle, here is the translation:". These are now unit negatives.
+
+The narrowed clause refuses **26 stored pages in 15 books**, every one a model's reply (ids and phrases in
+`results/cli-rescue-6523/announce-hits.json`):
+- 1 is p516, repaired above.
+- The other **25 are older API pages**, not CLI: gemini-2.5-flash 18, 3-flash-preview 4, 2.0-flash 3. 24 of them
+  are on visible books, for example *Plotini Enneades* (7 pages), *Sylva sylvarum* (3) and *Basilica chymica* (2).
+  They are listed, not repaired: a detector's output goes through a by-eye sample and approval
+  (containment-on-finding.md).
+
+The cost of the narrowing: **p261's shape is not refused at write time.** A bare "Here is the translation:" after a
+paraphrase cannot be told from a book quoting a translation by wording alone. The forward fix for the CLI lane
+(sentinel-delimited replies) is 6523c's.
 
 **Replicated?** No. The control is the check; the rescore numbers are deterministic from committed reads.

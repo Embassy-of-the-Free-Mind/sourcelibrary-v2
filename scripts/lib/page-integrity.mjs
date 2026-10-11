@@ -664,7 +664,7 @@ export const TRANSLATION_LEAK_PREFILTER = new RegExp([
   'once you provide',
   "(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|the provided (?:text|ocr|transcription|input)",
   'ready to translate',
-  "here(?:'s| is) (?:the |my |your )?(?:[\\w-]+ ){0,3}translation",
+  "here(?:'s| is) (?:the |a |my |your )?(?:[\\w-]+ ){0,3}translation",
 ].join('|'), 'i');
 /** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
  *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
@@ -687,10 +687,12 @@ const TRANSLATION_LEAK_RULE = new RegExp([
   "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|wrap)[^.\\n]{0,100}(?:the ocr|the prompt|the user|`<|museum|xml|markdown|as requested)",
 ].join('|'), 'i');
 /** The model answering whoever sent the request instead of translating: the whole page is a chat reply. Last
- *  alternative (#6523): a line that ANNOUNCES the translation ("…here is the translation adhering to all your
- *  rules:", "Here is the translation:"), anywhere on the page, not only at its head. Two Tengyur CLI pages carried
- *  it, one after a separate paraphrase reply; none of the other 23,623 CLI-written Tengyur pages does. */
-const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |my |your )?(?:[\w-]+ ){0,3}translation\b[^\n]{0,160}:[ \t]*(?:\n|$)/i;
+ *  alternative (#6523): a line that ANNOUNCES the translation AND echoes the request ("…here is the translation
+ *  adhering strictly to all your formatting, tagging, and style rules:", "Here is the English translation of the
+ *  provided Latin text, preserving formatting and paragraph breaks:"), anywhere on the page. The bare line ("Here is
+ *  the translation:") is NOT refused: the 2026-10-11 corpus walk found it in real book text (a study quoting a
+ *  prayer, Huygens's notes, "here is a free translation:"), where it cannot be told from a reply by wording. */
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
 /** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
 const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
 /** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
