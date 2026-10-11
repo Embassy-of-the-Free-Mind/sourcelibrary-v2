@@ -131,7 +131,7 @@ else
 fi
 echo "▸ Deploying to production (${VERCEL[*]} --prod)…"
 DEPLOY_EXIT=0
-DEPLOY_LOG="$(mktemp -t deploy-prod)"
+DEPLOY_LOG="$(mktemp "${TMPDIR:-/tmp}/deploy-prod.XXXXXX")"   # explicit template: GNU mktemp rejects `-t deploy-prod`
 trap 'rm -f "$DEPLOY_LOG"' EXIT
 "${VERCEL[@]}" --prod 2>&1 | tee "$DEPLOY_LOG" || DEPLOY_EXIT=${PIPESTATUS[0]}
 
@@ -146,21 +146,63 @@ trap 'rm -f "$DEPLOY_LOG"' EXIT
 #
 # Ask Vercel about the deployment we just created instead. `vercel --prod` prints
 # its URL, so inspect that specific deployment rather than the alias.
+#
+# "No readable state" is NOT "shipped" (#5230). On 2026-09-28 the CLI died on a
+# mid-build `write EPIPE`, inspect returned nothing parseable, and the old code
+# fell through to purge + warm + "✓ Deploy shipped" while the build sat at
+# ● Building for another 25 minutes — the purge refreshed the OLD HTML and the
+# summary line was false. So: poll until the deployment reaches a terminal
+# state, and purge only when it is Ready AND the production alias actually
+# points at it. Anything else exits nonzero without purging.
+PROD_ALIAS="${PROD_ALIAS:-sourcelibrary.org}"
+DEPLOY_WAIT_SECS="${DEPLOY_WAIT_SECS:-1800}"   # build ceiling; builds take 5–6 min, sick ones 25+
+DEPLOY_POLL_SECS="${DEPLOY_POLL_SECS:-30}"
+
+# Prints Ready / Error / Canceled / Building / … or nothing, for one deployment.
+deployment_state() {
+  "${VERCEL[@]}" inspect "$1" 2>&1 | grep -oE '●[[:space:]]*[A-Za-z]+' | head -1 | sed -E 's/●[[:space:]]*//' || true
+}
+# Prints the deployment URL the production alias currently resolves to.
+alias_target() {
+  "${VERCEL[@]}" inspect "$PROD_ALIAS" 2>&1 | grep -oE 'https://[a-z0-9-]+\.vercel\.app' | head -1 || true
+}
+
 DEPLOY_SHIPPED="unknown"
 DEPLOY_URL="$(grep -oE 'https://[a-z0-9-]+\.vercel\.app' "$DEPLOY_LOG" | tail -1 || true)"
 if [ "$DEPLOY_EXIT" -ne 0 ]; then
   echo "  ⚠ vercel exited $DEPLOY_EXIT — asking Vercel whether the deployment shipped…" >&2
   if [ -n "$DEPLOY_URL" ]; then
-    INSPECT="$("${VERCEL[@]}" inspect "$DEPLOY_URL" 2>&1 || true)"
-    if grep -qE '●[[:space:]]*Ready' <<<"$INSPECT"; then
-      DEPLOY_SHIPPED="yes"
-      echo "  → $DEPLOY_URL is Ready: it SHIPPED despite the nonzero exit (post-deploy poll timeout)." >&2
-    elif grep -qE '●[[:space:]]*(Error|Canceled)' <<<"$INSPECT"; then
-      DEPLOY_SHIPPED="no"
-      echo "  → $DEPLOY_URL reports Error/Canceled: the build FAILED, nothing new is live." >&2
-    else
-      echo "  → could not read a state from 'vercel inspect $DEPLOY_URL'." >&2
-    fi
+    WAITED=0
+    LAST_STATE="-"
+    while :; do
+      STATE="$(deployment_state "$DEPLOY_URL")"
+      case "$STATE" in
+        Ready)
+          TARGET="$(alias_target)"
+          if [ "$TARGET" = "$DEPLOY_URL" ]; then
+            DEPLOY_SHIPPED="yes"
+            echo "  → $DEPLOY_URL is Ready and $PROD_ALIAS points at it: it SHIPPED despite the nonzero exit." >&2
+            break
+          fi
+          STATE="Ready, but $PROD_ALIAS → ${TARGET:-<unreadable>}"
+          ;;
+        Error|Canceled)
+          DEPLOY_SHIPPED="no"
+          echo "  → $DEPLOY_URL reports $STATE: the build FAILED, nothing new is live." >&2
+          break
+          ;;
+      esac
+      if [ "$WAITED" -ge "$DEPLOY_WAIT_SECS" ]; then
+        echo "  → still not shipped after ${WAITED}s (last state: ${STATE:-<no readable state>})." >&2
+        break
+      fi
+      if [ "$STATE" != "$LAST_STATE" ]; then
+        echo "  … $DEPLOY_URL: ${STATE:-<no readable state>} — polling every ${DEPLOY_POLL_SECS}s (ceiling ${DEPLOY_WAIT_SECS}s)" >&2
+        LAST_STATE="$STATE"
+      fi
+      sleep "$DEPLOY_POLL_SECS"
+      WAITED=$((WAITED + DEPLOY_POLL_SECS))
+    done
   else
     echo "  → no deployment URL in the CLI output to inspect." >&2
   fi
@@ -182,6 +224,14 @@ if [ "$DEPLOY_SHIPPED" = "no" ]; then
   echo "  would evict good cached pages for no benefit." >&2
   echo "  Inspect the failure:  ${VERCEL[*]} inspect --logs $DEPLOY_URL" >&2
   exit "$DEPLOY_EXIT"
+fi
+if [ "$DEPLOY_SHIPPED" != "yes" ]; then
+  echo "" >&2
+  echo "✗ Could not confirm the deployment shipped — skipping the Cloudflare purge and the warm." >&2
+  echo "  Purging now would refresh the OLD deployment's HTML and report a ship that hasn't happened." >&2
+  echo "  Check it:  ${VERCEL[*]} inspect ${DEPLOY_URL:-<deployment-url>}   and   ${VERCEL[*]} inspect $PROD_ALIAS" >&2
+  echo "  Once it is Ready and $PROD_ALIAS points at it (promote by hand if needed):  ./scripts/purge-warm.sh" >&2
+  exit 1
 fi
 # 6. Purge + warm, behind an origin-health gate.
 #
