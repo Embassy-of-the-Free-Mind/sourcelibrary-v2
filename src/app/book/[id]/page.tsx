@@ -15,7 +15,7 @@ import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
+import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
@@ -1186,6 +1186,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
       const partner = provider ? getPartnerByProvider(provider) : undefined;
       if (!partner || !embedPolicy.showBookRelatedBooks) return null;
+      // Only a HOLDING institution gets this callout. A platform (Internet
+      // Archive, Google Books…) does not hold the book, and "From the
+      // collection of Internet Archive" would credit the wrong party; the
+      // provenance panel names both the holder and the scan source.
+      if (partner.kind === 'platform') return null;
       // Each query is timeout-guarded and independently caught so a slow/failing
       // one (e.g. an exact count over a huge provider like Internet Archive)
       // never nulls the whole section — we degrade a stat, not the feature.
@@ -1197,11 +1202,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // ever hiding the section on a big provider.
       const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 24 }), { books: [] as CatalogBook[], total: 0 });
       if (all.total < 2) return null; // not worth a "collection" callout for a lone book
-      const [exactBooks, translated, languages] = await Promise.all([
-        guard(browseBooks({ provider: partner.providerKey, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: all.total, books: [] as CatalogBook[] }),
-        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: 0, books: [] as CatalogBook[] }),
-        guard(getLanguageCounts({ provider: partner.providerKey }), [] as Array<{ lang: string; count: number }>),
-      ]);
       const covers = all.books
         .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
         .slice(0, 14)
@@ -1216,7 +1216,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         color: partner.color,
         image,
         logo: partner.logo,
-        stats: { books: exactBooks.total || all.total, languages: languages.length, translated: translated.total },
         covers,
       };
     })();
