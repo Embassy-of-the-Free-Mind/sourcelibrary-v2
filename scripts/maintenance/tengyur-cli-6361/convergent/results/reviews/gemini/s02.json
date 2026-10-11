@@ -1,0 +1,56 @@
+[
+ {
+  "book_id": "6abeb1dc896ea18127c828bc",
+  "slot": 2,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཚ (Derge Tengyur, vol. 97)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic canonical Madhyamaka treatise from the Derge Tengyur (volume ཚ, folio 255).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 255,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "མྱོང་#",
+      "image": "མྱོང་",
+      "problem": "extraneous hash symbol in transcription at line wrap",
+      "severity": "minor"
+     },
+     {
+      "ocr": "གྱིས་#སྐྱེ་མཆེད་",
+      "image": "གྱིས་སྐྱེ་མཆེད་",
+      "problem": "extraneous hash symbol in transcription",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "དོན་དམ་པར་ལྷས་བྱིན་གྱི་ལྟ་བ་ལ་སོགས་པ་ནི་... ལྟ་བ་ལ་སོགས་པ་ཡིན་པའི་ཕྱིར་དཔེར་ན། མཆོད་སྦྱིན་གྱི་ལྟ་བ་ལ་སོགས་པའི་བདག་ཉིད་བཞིན་ནོ།",
+      "english": "In the ultimate sense, the views and other attributes belonging to Devadatta are not the appropriated objects... because they are views and so forth. For example, they are just like the nature of the views belonging to Yajnadatta.",
+      "problem": "Mistranslates 'lta ba' (darśana, visual perception / seeing) as philosophical 'views' in the context of the six sense faculties.",
+      "severity": "moderate"
+     },
+     {
+      "source": "བདག་གི་ཡིན་པར་བརྗོད་པའི་ཕྱིར་",
+      "english": "because you still describe the self as the owner",
+      "problem": "Translates 'bdag gi' (of the self / ātmatva) loosely as 'the owner' (svāmin/bdag po).",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B correctly translates 'lta ba' (darśana) as sensory seeing rather than philosophical views, supplies accurate technical Sanskrit glosses, and faithfully preserves the trailing incomplete clause at the folio boundary.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, authentic woodblock folio from the Derge Tengyur containing Madhyamaka commentary on Mūlamadhyamakakārikā chapter 9, accurately transcribed."
+ }
+]

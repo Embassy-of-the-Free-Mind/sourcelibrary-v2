@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abed76c896ea18127c8ee40", "slot": 29,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa commentary folio (refutation of establishing prior cognition through memory and arthāpatti, svasaṃvedana argument) in the Derge Tengyur Tshad ma section, as catalogued.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 653,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སྐྱེས་བུ་གཞན་གྱིས་མྱོང་བར་གྱུར་པ་ནི་དོན་ཉམས་སུ་མྱོང་བར་མི་འགྱུར་བ", "image": "སྐྱེས་བུ་གཞན་གྱིས་མྱོང་བར་གྱུར་པའི་དོན་ཉམས་སུ་མྱོང་བར་མི་འགྱུར་བ", "problem": "genitive འི read as ནི (line 5); both translations still construe it correctly", "severity": "minor" },
+          { "ocr": "ཕྱིས་ཀྱང་དོན་གྱིས་གོ་བ་མ་ཡིན་ཏེ", "image": "ཕྱིས་ཀྱང་དོན་གྱིས་གོ་བས་མ་ཡིན་ཏེ (as far as the print can be read)", "problem": "possible dropped instrumental ས; no change of sense", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "གཞན་གྱིས་ཉམས་སུ་མྱོང་བར་འགྱུར་ཡང་གཞན་དེས་ཉམས་སུ་མྱོང་བ་ནི། སྐྱེས་བུ་གཞན་ཉམས་སུ་མྱོང་བ་མེད་པའི་ཕྱིར་སྐྱེས་བུ་ཕ་རོལ་པོས་དོན་ཉམས་སུ་མ་མྱོང་བ", "english": "Even if experienced by another, that experience by another does not belong to another person because there is no experience; just as an external person has not experienced the object", "problem": "the closing example is garbled: 'does not belong to another person' and 'external person' (for ཕ་རོལ་པོ, 'the other person') obscure the point that the other's experience is not one's own", "severity": "moderate" },
+          { "source": "དོན་ལྐོག་ཏུ་གྱུར་པའི་ཕྱིར", "english": "because the external object is hidden", "problem": "'external' added; small interpretive gloss", "severity": "minor" },
+          { "source": "འདི་ལ་བརྗོད་པ་ནི་དེ་ཡང་ཞེས་བྱ་བ", "english": "To this, the commentary states: \"That too...\"", "problem": "the lemma is from the text being commented on, not 'the commentary'", "severity": "minor" },
+          { "source": "དྲན་པ་ཙམ་གྱིས་འཇུག་པའི་ཕྱིར", "english": "because memory operates merely by its own occurrence", "problem": "loose: it proceeds by mere memory (as a recollection), not 'by its own occurrence'", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "དྲན་པ་ཙམ་གྱིས་འཇུག་པའི་ཕྱིར", "english": "because memory occurs as a mere mental event", "problem": "loose: the point is that it proceeds as mere memory, not as an inference", "severity": "minor" },
+          { "source": "དྲན་པ་ལས་གཞན་པའི་དོན་གྱིས་གོ་བ་ཡང་མྱོང་བ་མེད་དེ", "english": "there is no experience established by implication other than the memory itself", "problem": "construal of a terse clause is somewhat muddled (A is equally so)", "severity": "minor" },
+          { "source": "summary", "english": "arguing instead that an experience must be self-aware to be valid", "problem": "summary slightly mis-states the thesis (cognition must be self-experienced for memory to be possible, not 'to be valid')", "severity": "minor" }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Both are faithful with no serious errors, but B renders the closing analogy of another person's experience coherently where A garbles it.",
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean Derge woodblock folio with a near-exact transcription; both English versions follow the argument faithfully, B being slightly clearer at the end of the page."
+  }
+]

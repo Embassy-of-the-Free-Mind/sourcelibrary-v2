@@ -1,0 +1,44 @@
+[
+ {
+  "book_id": "6abed7f8896ea18127c8f2ca",
+  "slot": 31,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Buddhist philosophical commentary on Pramana (logic and epistemology) from the Derge Tengyur collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 471,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "གང་ཡང་རུང་བ་གཅིག་ཟའོ་ཞེས་བྱ་བ་གཅིག་ཅིག་སོད་དམ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+      "english": "then the question \"is one of them eating?\" or \"is it one or the other?\" would be meaningless.",
+      "problem": "Misinterprets the classical Sanskrit logical example involving 'kill one of the two' (ekataraṁ māraya / gcig cig sod dam) and invents 'would be meaningless'",
+      "severity": "moderate",
+      "class": "T4"
+     },
+     {
+      "source": "དུ་མའི་གཉིས་པ་ཅན་སེམས་པའི་གནས་སྐབས་ཡིན་པའི་ཕྱིར་རོ།",
+      "english": "because this is an instance of considering the consciousness accompanied by a plurality.",
+      "problem": "Mistranslates the verbal participle sems pa (considering / reflecting, parallel to bsam pa) as the noun 'consciousness'",
+      "severity": "minor"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A is faithful to the Pramāṇa terminology and accurately renders the classical logical debate formulas, whereas Translation B garbles the stock example of 'killing one' (sod).",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear woodblock print of the Derge Tengyur Pramāṇa section with completely accurate OCR; Translation A is precise and faithful to the epistemological text."
+ }
+]

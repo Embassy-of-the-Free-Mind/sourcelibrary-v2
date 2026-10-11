@@ -1,0 +1,59 @@
+[
+ {
+  "book_id": "6abeb51b896ea18127c84c67",
+  "slot": 17,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Buddhist treatise from the Madhyamaka (dbu ma) section of the Derge Tengyur (volume gi / 112).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "#",
+      "image": "[none]",
+      "problem": "Stray hash characters (#) inserted at five points across the transcription",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 3,
+    "tr_errors_A": [
+     {
+      "source": "སེམས་ཅན་དགའ་བ་ཡང་སྦྱིན་པའམ། སྙན་པར་སྨྲ་བའམ། དོན་སྤྱོད་པའམ། དོན་མཐུན་པས་སྡུད་པར་མི་བྱེད་པ་ནས། དེ་དག་ནི་ཚིག་ཙམ་གྱི་དངོས་པོའི་བར་དུ་འགྱུར་བ་དེ་དག",
+      "english": "if one provides joy to sentient beings, or speaks pleasantly, or acts purposefully, or gathers them through consistency of purpose, but does not do so from the state of merely being words ... up to the point of transformation",
+      "problem": "Misparses negative syntax regarding the four means of gathering disciples (saṃgrahavastu), inverting the condition and inventing 'up to the point of transformation' for 'tshig tsam gyi dngos po'i bar du 'gyur ba'",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": true
+     },
+     {
+      "source": "བཀོད་པའི་རྒྱལ་པོ་ཞེས་བྱའི་གྲོང་ཁྱེར་",
+      "english": "a city called Arranged",
+      "problem": "Omits 'King' (rgyal po) in the city name Vyūharāja (Bkod pa'i rgyal po)",
+      "severity": "moderate",
+      "class": "T3"
+     },
+     {
+      "source": "གཟིངས་པའི་བློས་",
+      "english": "with a mind inflated",
+      "problem": "Translates 'gzings pa' (disturbed/turbulent) as 'inflated'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately parses the opening conditional statement on the four means of gathering disciples which Translation A distorts, correctly translates proper names and technical terminology, and formats the verse quotations with appropriate line breaks.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Derge Tengyur Madhyamaka folio 20 correctly scanned and transcribed aside from stray hash markers; Translation B is faithful, precise, and properly formatted, whereas Translation A misparses the opening doctrinal passage."
+ }
+]

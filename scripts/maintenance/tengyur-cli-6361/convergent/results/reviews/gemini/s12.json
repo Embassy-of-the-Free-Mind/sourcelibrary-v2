@@ -1,0 +1,62 @@
+[
+ {
+  "book_id": "6abeb3d6896ea18127c83fed",
+  "slot": 12,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur Madhyamaka section (volume sa / 107), containing canonical Tibetan translation of classical Indian Madhyamaka treatise.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 515,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "{བརྫུན་,རྫུན་}པ་",
+      "image": "བརྫུན་པ་",
+      "problem": "OCR uncertainty braces and variant notation inserted into word",
+      "severity": "minor"
+     },
+     {
+      "ocr": "#བྱ་བ་ལ། ... ཐམས་ཅད་ཀྱིས#། ... ད་#ནི་",
+      "image": "བྱ་བ་ལ། ... ཐམས་ཅད་ཀྱིས། ... ད་ནི་",
+      "problem": "Spurious hash markers (#) inserted into text and punctuation",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "དེ་དག་ཁོ་ན་དོན་དམ་པ། །མཐོང་བ་གང་ཡིན་མཐོང་མེད་ཡིན།",
+      "english": "That alone is the ultimate truth. Whatever seeing there is, is a non-seeing.",
+      "problem": "Splits a single relative clause ('seeing ultimate truth itself is non-seeing') into two disjoint sentences",
+      "severity": "minor"
+     },
+     {
+      "source": "འགྲོ་བའི་ཆོས་རྣམས་ཤེས་རབ་ཀྱི། །ཐམས་ཅད་ཇི་བཞིན་མཐོང་བ་མིན།",
+      "english": "The wisdom that perceives worldly phenomena does not see everything exactly as it is.",
+      "problem": "Construes wisdom as the agent perceiving worldly phenomena rather than the instrument ('by discernment, all phenomena of transmigrating beings are not seen as they are')",
+      "severity": "minor"
+     },
+     {
+      "source": "དེ་ཡང་དེས་ན་འདི་དག་ལ། །མ་འཁྲུལ་པ་ཡིས་བརྗོད་པ་ཡིན།",
+      "english": "Therefore, for those practitioners, this is described as being non-deluded.",
+      "problem": "Misconstrues the instrumental agent 'by the non-deluded' (ma 'khrul pa yis) as a passive descriptor of practitioners",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately renders technical Madhyamaka and Pramāṇa terminology and faithfully preserves Tibetan syntactic structures including relative clauses and instrumental agent constructions.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur Madhyamaka blockprint page with accurate OCR and faithful translations, with Translation B offering superior philosophical and grammatical precision."
+ }
+]

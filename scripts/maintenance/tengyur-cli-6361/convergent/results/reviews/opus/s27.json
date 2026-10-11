@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6abed698896ea18127c8e9f4",
+    "slot": 27,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa commentary folio (a commentary on the pramāṇa definition: arthakriyā, the relation to the object to be attained, svasaṃvedana) in the Derge Tengyur Tshad ma section, as catalogued.",
+    "rights_flag": null,
+    "structure_note": "The reprint number in the margin is '544' but the record is page 543. That is probably just an offset between the record index and the reprint pagination: the transcription matches this leaf.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 543,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "ཅི་ལྟར་འབྱུང་བར་འགྱུར་བ་ཡིན་པའི་ཕྱིར།", "image": "probably ཇི་ལྟར (correlative with དེ་བཞིན་དུ); glyph unclear at this resolution", "problem": "possible ཅ/ཇ confusion at the start of line 7", "severity": "minor" },
+          { "ocr": "དེ་ལས་ཤེས་པའི་ཞེས་བྱ་བ་ནི།", "image": "appears to read ཞེས་བྱ་བའི། or similar", "problem": "particle variant, no change in meaning", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "དེ་ལས་ནི་རྣམ་པར་རྟོག་པས་སོ།", "english": "This refers to the conceptual thought arising from that.", "problem": "The source glosses the lemma 'from that' as 'by conceptual thought'. A turns the gloss into 'thought arising from that'.", "severity": "minor" },
+          { "source": "རང་གི་རང་བཞིན་རིག་པ་གང་ལ་འཇུག་པ་དང་ལྡོག་པ་མེད་པ་དེ་ལ་དེ་སྐད་ཅེས་བྱའོ།", "english": "This refers to that in which there is no engagement or withdrawal through the awareness of its own nature.", "problem": "Self-awareness is the subject that lacks engagement and withdrawal. A makes it the means ('through the awareness'), which blurs the point.", "severity": "moderate" },
+          { "source": "དོན་བྱ་བ", "english": "functional goal / future goal", "problem": "arthakriyā (causal efficacy) is rendered loosely as 'goal', which obscures the technical term.", "severity": "minor" },
+          { "source": "དེ་ནི་ཞེས་བྱ་བ", "english": "(omitted)", "problem": "The lemma 'that' is dropped before the explanation.", "severity": "minor" }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          { "source": "རྗེས་སུ་དཔག་པ་ལས་ཚད་མར་རྟོག་པ་མེད་དོ་ཞེས་སྟོན་པ་ནི།", "english": "in order to show that valid cognition cannot be conceived apart from inference", "problem": "The source says that inference also cannot establish validity: there is no conceiving it as pramāṇa from inference. B's 'apart from inference' makes inference the one route to validity, which reverses the claim. The summary repeats the error ('leaving external relations to be established through inference').", "severity": "serious", "class": "T8", "reversal": true }
+        ],
+        "other": [
+          { "note": "B's <summary> states the reversed thesis about inference as the point of the page.", "severity": "moderate", "class": "E1" }
+        ],
+        "prefer": "A",
+        "prefer_reason": "B reverses the key claim that inference cannot establish validity. A's slips are minor or moderate, though B is otherwise more precise (arthakriyā, the lemma glosses).",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this Derge pramāṇa folio is accurate. Translation B is technically sharper but reverses the claim about inference, so A is the safer English for readers."
+  }
+]

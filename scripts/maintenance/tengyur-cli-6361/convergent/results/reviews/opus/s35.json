@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "6abed95d896ea18127c8fcd2",
+    "slot": 35,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio of Pramāṇa verse. The page discusses upamāna (comparison): the gavaya/cow example, why it is neither perception nor inference, and the dispute over whether universals are real. That matches the Tattvasaṃgraha material in Tshad ma ze.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "དམ་བཅའི་དོན་དུ་ཡུལ་གཅིག་ཉིད།", "image": "Line 7 reads most like དམ་བཅའི་དོན་དང་ཡུལ་གཅིག་ཉིད (compare the earlier དམ་བཅའི་དོན་དང་ཡུལ་གཅིག་ཕྱིར), but the image is not clear at this resolution", "problem": "Possible misread of the particle (དུ for དང); the meaning barely changes", "severity": "minor" },
+          { "ocr": "བ་མིན་", "image": "The last syllables of the folio look like བ་མེན་, the spelling used elsewhere on the page", "problem": "Possible spelling normalisation at the page end", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "དམ་བཅའི་དོན་དང་ཡུལ་གཅིག་ཕྱིར།", "english": "because it shares the same sphere of reference with the thesis", "problem": "ཡུལ་གཅིག here renders ekadeśa ('a part of the thesis'), not 'same sphere'. The reason is blurred, though the argument can still be followed", "severity": "moderate" },
+          { "source": "གཞལ་བྱ་དངོས་པོ་མེད་པས་ན། །འདི་ནི་ཚད་མར་མངོན་འདོད་མིན།", "english": "If one objects: because the object of comprehension lacks real existence, this is not accepted as a valid instrument", "problem": "The Tibetan has no 'if one objects' marker. Adding one frames this statement as an opponent's objection rather than a plain assertion", "severity": "minor" },
+          { "source": "དེ་ཡི་ཕྱུགས་ཉིད་དུ། །མཚུངས་པའི་རྣམ་ཤེས་", "english": "the cognition of similarity that arises regarding that wild cattle", "problem": "'Wild cattle' for ཕྱུགས is an interpretive rendering; acceptable", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "མེ་ཉིད་ཀྱང་ནི་དྲན་བཞིན་པའི། །ཁྱད་པར་ཅན་གྱི་ཡུལ་ཉིད་ཀྱིས། །རྗེས་དཔག་ཚད་མ་མ་ཡིན་མིན།", "english": "is it not the case that it becomes the object of a distinguished valid cognition of inference", "problem": "The source says inference is not a non-pramāṇa because its object is qualified. B turns this into a garbled rhetorical question about 'becoming the object of' inference. The point is still recoverable", "severity": "moderate" },
+          { "source": "དེ་ཡི་ཕྱུགས་ཉིད་དུ། །མཚུངས་པའི་རྣམ་ཤེས་གང་སྐྱེས་པ། །དེ་ཡི་དཔེ་ནི་བ་ལང་གཟུགས།", "english": "any consciousness that arises as a similarity to that cow is exemplified by the form of the ox", "problem": "The roles are muddled: the similarity is said to be 'to that cow', and the cow-form example becomes 'the ox'", "severity": "moderate" },
+          { "source": "དམ་བཅའི་དོན་དང་ཡུལ་གཅིག་ཕྱིར།", "english": "because the object and the subject of the thesis are the same", "problem": "Misreads ekadeśa ('a part of the thesis') as an identity of object and subject", "severity": "moderate" },
+          { "source": "ཡན་ལག་མང་པོ་ཐུན་མོང་བས། །འབྲེལ་པའི་འདྲ་བ་ཡོད་ཅེ་ན།", "english": "If one asks how there can be a connection of similarity through many common parts", "problem": "The source is a claim ('if you say there is a similarity…'). B turns it into a question", "severity": "minor" },
+          { "source": "བ་མེན་", "english": "gayal <gloss>a wild ox-like animal, Bos gaurus</gloss>", "problem": "The gloss gives the wrong species: Bos gaurus is the gaur, while the gayal is Bos frontalis", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error, but A renders the inference-is-a-pramāṇa parallel and the cow/gavaya example correctly, where B garbles both and also gets the gavaya gloss wrong.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge Pramāṇa folio on upamāna. The transcription is close to the block print. Both English versions are serviceable; A is the more faithful."
+  }
+]

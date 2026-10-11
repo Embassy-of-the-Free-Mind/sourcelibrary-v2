@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abed9f5896ea18127c90242",
+    "slot": 37,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa-section commentary passage on jāti (futile rejoinders: utkarṣa/apakarṣa/varṇya/avarṇya-sama), exactly what the Tshad ma volume of the Derge Tengyur holds.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 611,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཡང་ན་བུམ་པ་བསྒྲགས་བྱ་མ་ཡིན་པ་དེ་ལྟར་ཡང་ངོ", "image": "ཡང་ན་བུམ་པ་བསྒ྄...བྱ་མ་ཡིན་པ་དེ་ལྟར་སྒྲ་ཡང་ངོ", "problem": "'སྒྲ' (sound) dropped from the avarṇyasama example; sense still recoverable from context", "severity": "minor", "class": "O5" },
+          { "ocr": "ཡང་སོགས་པའི་སྒྲ་བསྒྲགས་བྱ་དང་", "image": "ཡང་སོགས་པའི་སྒྲས་བསྒྲགས་བྱ་དང་", "problem": "instrumental -s apparently dropped", "severity": "minor" }
+        ],
+        "tr_score_A": 5,
+        "tr_errors_A": [
+          { "source": "འཐད་པ་...མཚུངས་པ", "english": "balancing the suitability", "problem": "upapattisama better 'plausibility/justification'; wording only", "severity": "minor" },
+          { "source": "བརྩལ་མ་ཐག་ཏུ་བྱུང་བ", "english": "produced by effort", "problem": "'immediately after effort' compressed", "severity": "minor" },
+          { "source": "(meta)", "english": "It likely follows Dignāga or Dharmakīrti’s systems", "problem": "speculative attribution in the meta, not on the page", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཡང་ན་བུམ་པ་བསྒྲགས་བྱ་མ་ཡིན་པ་དེ་ལྟར་[སྒྲ་]ཡང་ངོ", "english": "just as the clay pot is already established and not something to be proved", "problem": "'already established' interpolated into the quoted rejoinder", "severity": "minor" },
+          { "source": "ཆོས་གཞན་འགྲིབ་པར་བྱེད་པ", "english": "subtracts an intrinsic attribute", "problem": "Tibetan says 'another property'; 'intrinsic' is an added characterisation", "severity": "moderate" },
+          { "source": "དཔེའི་ཆོས་འཕེལ་བར་བྱེད་པ", "english": "adds an extraneous attribute of the example", "problem": "'extraneous' added", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Both are faithful with no serious errors, but A renders the apakarṣa and avarṇya definitions literally while B adds 'intrinsic' and 'already established' that are not in the Tibetan.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Correct leaf (printed folio 612), clean woodblock transcription with only small slips, and two sound translations of a jāti passage; A is slightly more literal than B."
+  }
+]

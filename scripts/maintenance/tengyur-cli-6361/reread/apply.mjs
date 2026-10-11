@@ -36,6 +36,8 @@ const REFUSAL = /^\s*(I'?m sorry|I am sorry|I cannot|I can'?t|I am unable|I'?m u
 const BLOCK_MSG = "This request was blocked by Gemini's filters";
 const PLAN_MODE = /file:\/\/\/|\.gemini\/|implementation plan|translation_plan|plan\.md|(?:please (?:review|confirm|let me know|approve)|let me know (?:if|whether)|would you like (?:me )?to|once (?:you )?approv|output contract|\/plan\b|the user(?:'s)? (?:prompt|request|instruction)|my (?:task|instructions)|the prompt (?:says|asks|requires))/i; // gates.mjs
 const MIN_SRC = 100;
+const SNAPSHOT_AT = new Date('2026-10-10T14:20:00Z'); // stage 2 took stored-before.jsonl.gz after this (its "taking this", #6361)
+const ACCEPTED_SINCE = new Set(['cleanup-markup-5700']);
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? d;
 const DIR = arg('dir'), STORED = arg('stored'), OUT = arg('out');
@@ -138,7 +140,12 @@ for (let i = 0; i < todo.length; i += 200) {
     const page = pages.get(r.page_id);
     if (!page) { skip('page not found'); continue; }
     if (sha(page.ocr?.data || '') !== m.ocr_sha256) { skip('OCR changed since staging'); continue; }
-    if ((page.translation?.data || '') !== (stored.get(r.page_id)?.translation?.data || '')) { skip('stored English changed since the stage-2 snapshot'); continue; }
+    if ((page.translation?.data || '') !== (stored.get(r.page_id)?.translation?.data || '')) {
+      // The one change accepted: the deterministic markup cleanup of the OLD English (#5700, decisions-data,
+      // 2026-10-10 16:52; no model). Any other revision since the snapshot (a person, another run) refuses the page.
+      const since = await db.collection('page_revisions').find({ page_id: r.page_id, field: 'translation', created_at: { $gt: SNAPSHOT_AT } }, { projection: { source: 1 } }).toArray();
+      if (!since.length || since.some((x) => !ACCEPTED_SINCE.has(x.source))) { skip('stored English changed since the stage-2 snapshot'); continue; }
+    }
     if (!books.has(page.book_id)) books.set(page.book_id, await db.collection('books').findOne({ id: page.book_id }));
     const book = books.get(page.book_id);
     if (!APPLY) { tally.written++; continue; }

@@ -1,0 +1,77 @@
+[
+ {
+  "book_id": "6abeb39f896ea18127c83db1",
+  "slot": 11,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཤ (Derge Tengyur, vol. 106)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Derge Tengyur Madhyamaka commentary volume (vol. 106 / ཤ), correctly catalogued.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 301,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "གང་གིས་ན་ཉིད་ཉམས་སུ་མྱོང་།",
+      "image": "གང་གིས་གང་ཉིད་ཉམས་སུ་མྱོང་།",
+      "problem": "syllable གང་ (what/which) misread as ན་ in canonical verse quotation",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "རྟེན་ཐ་དད་པ་མ་ཡིན་ཏེ",
+      "image": "རྟེན་ཐ་དད་པ་མེད་དེ",
+      "problem": "phrase མེད་དེ (has no) misread as མ་ཡིན་ཏེ (is not)",
+      "severity": "minor",
+      "class": "O3"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "ཚོར་བ་ཉམས་མྱོང་ཞེས་བརྗོད་པ།",
+      "english": "[omitted]",
+      "problem": "first line of the Dharmasaṃgīti sūtra verse quotation ('When feeling is described as experience') omitted",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": false
+     }
+    ],
+    "tr_score_B": 2,
+    "tr_errors_B": [
+     {
+      "source": "གཞན་གྱིས་བདེན་པ་གཉིས་མི་འཐད་པར་བརྩད་པར་འདོད་ནས་གལ་ཏེ་ཞེས་སྨོས་ཏེ།",
+      "english": "Wishing to address an opponent's argument that the two truths are untenable, he says if.",
+      "problem": "dialectical speaker reversal: attributes the opponent's opening objection to the author answering an opponent",
+      "severity": "serious",
+      "class": "T7",
+      "reversal": true
+     },
+     {
+      "source": "གང་གིས་གང་ཉིད་ཉམས་སུ་མྱོང་། །",
+      "english": "By what can the self experience anything?",
+      "problem": "doctrinal distortion: misreads གང་ཉིད་/ན་ཉིད་ to invent 'the self' into a verse demonstrating the absence of any substantial experiencer",
+      "severity": "serious",
+      "class": "T1",
+      "reversal": true
+     },
+     {
+      "source": "དངོས་པོ་ཅུང་ཟད་ཀྱང་ཡོད་པ་མ་ཡིན་ནོ། །",
+      "english": "it does not exist as any kind of material thing",
+      "problem": "philosophical term dngos po (bhāva / real entity / substantial existent) mistranslated narrowly as 'material thing'",
+      "severity": "minor"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly preserves technical Madhyamaka terminology and dialectical debate structure, whereas Translation B reverses the speaker introducing the objection and distorts the Dharmasaṃgīti verse to invent 'the self'.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clean, authentic woodblock page from the Derge Tengyur Madhyamaka section with high-quality transcription and strong translation in Version A."
+ }
+]

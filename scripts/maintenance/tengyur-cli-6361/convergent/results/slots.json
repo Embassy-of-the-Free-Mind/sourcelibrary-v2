@@ -1,0 +1,247 @@
+{
+ "seed": 6420,
+ "at": "2026-10-10T17:07:40.359Z",
+ "min_ocr_chars": 300,
+ "slots": [
+  {
+   "slot": 1,
+   "vol": 96,
+   "set": "stage1",
+   "page_seed": 803880931
+  },
+  {
+   "slot": 2,
+   "vol": 97,
+   "set": "stage1",
+   "page_seed": 1009257159
+  },
+  {
+   "slot": 3,
+   "vol": 98,
+   "set": "reread",
+   "page_seed": 193494527
+  },
+  {
+   "slot": 4,
+   "vol": 99,
+   "set": "stage1",
+   "page_seed": 594839369
+  },
+  {
+   "slot": 5,
+   "vol": 100,
+   "set": "stage1",
+   "page_seed": 1446138225
+  },
+  {
+   "slot": 6,
+   "vol": 101,
+   "set": "stage1",
+   "page_seed": 2044424325
+  },
+  {
+   "slot": 7,
+   "vol": 102,
+   "set": "reread",
+   "page_seed": 1535227546
+  },
+  {
+   "slot": 8,
+   "vol": 103,
+   "set": "stage1",
+   "page_seed": 506710652
+  },
+  {
+   "slot": 9,
+   "vol": 104,
+   "set": "stage1",
+   "page_seed": 309128530
+  },
+  {
+   "slot": 10,
+   "vol": 105,
+   "set": "stage1",
+   "page_seed": 285959220
+  },
+  {
+   "slot": 11,
+   "vol": 106,
+   "set": "stage1",
+   "page_seed": 1696101418
+  },
+  {
+   "slot": 12,
+   "vol": 107,
+   "set": "stage1",
+   "page_seed": 834440256
+  },
+  {
+   "slot": 13,
+   "vol": 108,
+   "set": "reread",
+   "page_seed": 877088159
+  },
+  {
+   "slot": 14,
+   "vol": 109,
+   "set": "stage1",
+   "page_seed": 1282230383
+  },
+  {
+   "slot": 15,
+   "vol": 110,
+   "set": "reread",
+   "page_seed": 27160182
+  },
+  {
+   "slot": 16,
+   "vol": 111,
+   "set": "stage1",
+   "page_seed": 1277188338
+  },
+  {
+   "slot": 17,
+   "vol": 112,
+   "set": "stage1",
+   "page_seed": 1134356883
+  },
+  {
+   "slot": 18,
+   "vol": 174,
+   "set": "reread",
+   "page_seed": 1279584353
+  },
+  {
+   "slot": 19,
+   "vol": 175,
+   "set": "reread",
+   "page_seed": 710097767
+  },
+  {
+   "slot": 20,
+   "vol": 176,
+   "set": "stage1",
+   "page_seed": 394494837
+  },
+  {
+   "slot": 21,
+   "vol": 177,
+   "set": "stage1",
+   "page_seed": 1906684299
+  },
+  {
+   "slot": 22,
+   "vol": 178,
+   "set": "reread",
+   "page_seed": 593049962
+  },
+  {
+   "slot": 23,
+   "vol": 179,
+   "set": "reread",
+   "page_seed": 1149585344
+  },
+  {
+   "slot": 24,
+   "vol": 180,
+   "set": "stage1",
+   "page_seed": 40711032
+  },
+  {
+   "slot": 25,
+   "vol": 181,
+   "set": "stage1",
+   "page_seed": 953809255
+  },
+  {
+   "slot": 26,
+   "vol": 182,
+   "set": "stage1",
+   "page_seed": 1485109979
+  },
+  {
+   "slot": 27,
+   "vol": 183,
+   "set": "stage1",
+   "page_seed": 261042092
+  },
+  {
+   "slot": 28,
+   "vol": 184,
+   "set": "stage1",
+   "page_seed": 1096781249
+  },
+  {
+   "slot": 29,
+   "vol": 185,
+   "set": "stage1",
+   "page_seed": 615937000
+  },
+  {
+   "slot": 30,
+   "vol": 186,
+   "set": "reread",
+   "page_seed": 769616806
+  },
+  {
+   "slot": 31,
+   "vol": 187,
+   "set": "stage1",
+   "page_seed": 1836705620
+  },
+  {
+   "slot": 32,
+   "vol": 188,
+   "set": "stage1",
+   "page_seed": 322450762
+  },
+  {
+   "slot": 33,
+   "vol": 189,
+   "set": "stage1",
+   "page_seed": 1511284947
+  },
+  {
+   "slot": 34,
+   "vol": 190,
+   "set": "stage1",
+   "page_seed": 658112117
+  },
+  {
+   "slot": 35,
+   "vol": 191,
+   "set": "reread",
+   "page_seed": 382303252
+  },
+  {
+   "slot": 36,
+   "vol": 192,
+   "set": "stage1",
+   "page_seed": 1248123554
+  },
+  {
+   "slot": 37,
+   "vol": 193,
+   "set": "stage1",
+   "page_seed": 1516015561
+  },
+  {
+   "slot": 38,
+   "vol": 185,
+   "set": "stage1",
+   "page_seed": 596201583
+  },
+  {
+   "slot": 39,
+   "vol": 176,
+   "set": "stage1",
+   "page_seed": 806269489
+  },
+  {
+   "slot": 40,
+   "vol": 111,
+   "set": "stage1",
+   "page_seed": 350558222
+  }
+ ]
+}

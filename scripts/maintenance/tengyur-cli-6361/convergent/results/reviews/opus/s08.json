@@ -1,0 +1,79 @@
+[
+  {
+    "book_id": "6abeb2ec896ea18127c83529",
+    "slot": 8,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཡ (Derge Tengyur, vol. 103)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Madhyamaka commentary on dependent origination and ignorance (it reads like Candrakirti's commentary on the Yuktisastika, which sits in Derge dbu ma vol. ya). It belongs in the Tengyur Madhyamaka section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 740,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 2,
+        "tr_errors_A": [
+          {
+            "source": "དངོས་པོ་རྣམས་ལ་ཡང་དག་པ་ཉིད་དུ་སྟེ། དེ་ཁོ་ན་ཉིད་ཀྱི་ངོ་བོར་རྟོགས་པ་གང་ ... རྫུན་པའི་རྣམ་པ་རྣམས་ལ་ཡང་རྫུན་པ་མ་ཡིན་པའི་རྣམ་པ་ཉིད་དུ་ཁོང་དུ་ཆུད་པ་གང་ཡིན་པ་དེ་ནི་ ... སྟོན་པས་མ་རིག་པར་གསུངས་ཏེ",
+            "english": "there is a realization of them as they truly are. This means understanding their fundamental nature. Even for the various false forms ... the Teacher spoke of \"ignorance\" in order to demonstrate to all sentient beings the nature of that which is not false.",
+            "problem": "In the source, taking dependently arisen things as real, as ultimate essence, and taking false (illusion-like) forms as not false, is what the Teacher CALLED ignorance (the gloss on the verse 'whatever conceives things born of causes and conditions as real, the Teacher called that ignorance'). A turns that misconception into a correct 'realization of them as they truly are' and makes 'ignorance' a teaching device for showing what is not false. The definition of ignorance is reversed.",
+            "severity": "serious",
+            "class": "T8",
+            "reversal": true
+          },
+          {
+            "source": "སྡུག་བསྔལ་གྱི་ཕུང་པོ་ཆེན་པོ་ཀུན་རྫོབ་འདིའི་རྐྱེན་ཉིད་དུ་བསྟན་པ་ན",
+            "english": "this great mass of suffering is shown to be the very condition of the samvrti",
+            "problem": "Ignorance is taught as the condition of this great conventional mass of suffering. A makes suffering the condition of conventional reality, so the causal relation is wrong.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "རྟེན་ཅིང་འབྲེལ་པར་འབྱུང་བའི་རིམ་པ་གཉིས་སུ་དེ་ཉིད་ཀྱིས་ཡོད་པར་ཞལ་གྱིས་བཞེས་པར་མཛད་པའི་ཕྱིར་རོ",
+            "english": "the Buddha has affirmed that reality exists in two stages of Pratityasamutpada",
+            "problem": "In the source he himself (de nyid kyis) accepted that things exist in terms of the two sequences of dependent origination. A turns this into 'reality exists', a stronger ontological claim than the source makes.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཡན་ལག་བཅུ་གཉིས་ཀྱིས་སྲིད",
+            "english": "the twelve links of existence",
+            "problem": "Should be 'existence made of the twelve links'. A small slip, since the page breaks off here.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "དེ་ཉིད་ཀྱིས་ཡོད་པར་ཞལ་གྱིས་བཞེས་པར་མཛད་པ",
+            "english": "he acknowledged their existence through reality itself",
+            "problem": "B reads de nyid kyis ('he himself') as 'through reality itself'. The verb's subject is the Buddha, so the clause is muddled, but the argument can still be recovered.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "གང་གི་ཕྱིར་མ་རིག་པ་དེ་ཉིད་ལ་ཡན་ལག་བཅུ་གཉིས་ཀྱི་ཆ་གང་ལ་ཡོད་པ་དེ་ནི་ཡན་ལག་བཅུ་གཉིས་ཡིན་ཏེ",
+            "english": "Because whatever has the parts of the twelve links based on that very ignorance is the twelve links.",
+            "problem": "The English is ungrammatical (a sentence fragment), but the sense comes through.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The transcription carries editorial variant braces '{བརྫུན་,རྫུན་}' twice. The block print shows one reading, so these are apparatus braces leaking into the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "prefer": "B",
+        "prefer_reason": "A reverses the passage's central claim: it presents the grasping of dependently arisen things as real, which the Teacher calls ignorance, as a true realization. B renders that definition correctly and has only moderate slips.",
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches this folio (the print is marked 741) with no misreadings that matter. Translation A reverses the commentary's definition of ignorance; B is faithful apart from minor-to-moderate slips and should be the one served."
+  }
+]

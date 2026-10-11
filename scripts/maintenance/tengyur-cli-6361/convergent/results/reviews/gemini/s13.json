@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abeb404896ea18127c84235",
+  "slot": 13,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཧ (Derge Tengyur, vol. 108)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Folio 167 (volume ha, Madhyamaka section) of the Derge Tengyur; text is a classical Madhyamaka commentary explaining conventional truth, ultimate gnosis, and overcoming fear through realizing emptiness.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 167,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately renders 'nyams' as the ruin and fruitlessness of the path's enterprise rather than psychological discouragement.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, legible woodblock folio from the Derge Tengyur Madhyamaka section with flawless OCR transcription and two highly accurate, faithful English translations."
+ }
+]

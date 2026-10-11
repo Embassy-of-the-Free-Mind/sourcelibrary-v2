@@ -1,0 +1,402 @@
+{
+ "s01": {
+  "slot": 1,
+  "vol": 96,
+  "section": "Madhyamaka",
+  "page_id": "6abeb159896ea18127c82806",
+  "page_number": 386,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s02": {
+  "slot": 2,
+  "vol": 97,
+  "section": "Madhyamaka",
+  "page_id": "6abeb1dd896ea18127c829bd",
+  "page_number": 255,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s04": {
+  "slot": 4,
+  "vol": 99,
+  "section": "Madhyamaka",
+  "page_id": "6abeb247896ea18127c82e2d",
+  "page_number": 148,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s05": {
+  "slot": 5,
+  "vol": 100,
+  "section": "Madhyamaka",
+  "page_id": "6abeb289896ea18127c83119",
+  "page_number": 320,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s06": {
+  "slot": 6,
+  "vol": 101,
+  "section": "Madhyamaka",
+  "page_id": "6abeb2b4896ea18127c83465",
+  "page_number": 486,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s08": {
+  "slot": 8,
+  "vol": 103,
+  "section": "Madhyamaka",
+  "page_id": "6abeb2ee896ea18127c8380f",
+  "page_number": 740,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s09": {
+  "slot": 9,
+  "vol": 104,
+  "section": "Madhyamaka",
+  "page_id": "6abeb331896ea18127c83a7b",
+  "page_number": 608,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s10": {
+  "slot": 10,
+  "vol": 105,
+  "section": "Madhyamaka",
+  "page_id": "6abeb361896ea18127c83c96",
+  "page_number": 415,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s11": {
+  "slot": 11,
+  "vol": 106,
+  "section": "Madhyamaka",
+  "page_id": "6abeb3a1896ea18127c83ee0",
+  "page_number": 301,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s12": {
+  "slot": 12,
+  "vol": 107,
+  "section": "Madhyamaka",
+  "page_id": "6abeb3d8896ea18127c841f2",
+  "page_number": 515,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s14": {
+  "slot": 14,
+  "vol": 109,
+  "section": "Madhyamaka",
+  "page_id": "6abeb442896ea18127c84576",
+  "page_number": 195,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s16": {
+  "slot": 16,
+  "vol": 111,
+  "section": "Madhyamaka",
+  "page_id": "6abeb4e8896ea18127c84b33",
+  "page_number": 318,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s17": {
+  "slot": 17,
+  "vol": 112,
+  "section": "Madhyamaka",
+  "page_id": "6abeb51e896ea18127c84c7d",
+  "page_number": 20,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s20": {
+  "slot": 20,
+  "vol": 176,
+  "section": "Pramana",
+  "page_id": "6abed47c896ea18127c8d845",
+  "page_number": 35,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s21": {
+  "slot": 21,
+  "vol": 177,
+  "section": "Pramana",
+  "page_id": "6abed4cf896ea18127c8dbd4",
+  "page_number": 288,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s24": {
+  "slot": 24,
+  "vol": 180,
+  "section": "Pramana",
+  "page_id": "6abed5e1896ea18127c8e2ab",
+  "page_number": 289,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s25": {
+  "slot": 25,
+  "vol": 181,
+  "section": "Pramana",
+  "page_id": "6abed61a896ea18127c8e616",
+  "page_number": 432,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s26": {
+  "slot": 26,
+  "vol": 182,
+  "section": "Pramana",
+  "page_id": "6abed661896ea18127c8e838",
+  "page_number": 352,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s27": {
+  "slot": 27,
+  "vol": 183,
+  "section": "Pramana",
+  "page_id": "6abed69b896ea18127c8ec15",
+  "page_number": 543,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s28": {
+  "slot": 28,
+  "vol": 184,
+  "section": "Pramana",
+  "page_id": "6abed72a896ea18127c8ed77",
+  "page_number": 321,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s29": {
+  "slot": 29,
+  "vol": 185,
+  "section": "Pramana",
+  "page_id": "6abed76e896ea18127c8f0cf",
+  "page_number": 653,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s31": {
+  "slot": 31,
+  "vol": 187,
+  "section": "Pramana",
+  "page_id": "6abed81b896ea18127c8f4a3",
+  "page_number": 471,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s32": {
+  "slot": 32,
+  "vol": 188,
+  "section": "Pramana",
+  "page_id": "6abed87d896ea18127c8f67c",
+  "page_number": 352,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s33": {
+  "slot": 33,
+  "vol": 189,
+  "section": "Pramana",
+  "page_id": "6abed8d1896ea18127c8f9b8",
+  "page_number": 600,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s34": {
+  "slot": 34,
+  "vol": 190,
+  "section": "Pramana",
+  "page_id": "6abed914896ea18127c8fb0e",
+  "page_number": 286,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s36": {
+  "slot": 36,
+  "vol": 192,
+  "section": "Pramana",
+  "page_id": "6abed9ad896ea18127c901c5",
+  "page_number": 537,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s37": {
+  "slot": 37,
+  "vol": 193,
+  "section": "Pramana",
+  "page_id": "6abed9ff896ea18127c904a7",
+  "page_number": 611,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s38": {
+  "slot": 38,
+  "vol": 185,
+  "section": "Pramana",
+  "page_id": "6abed76e896ea18127c8eeea",
+  "page_number": 168,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s39": {
+  "slot": 39,
+  "vol": 176,
+  "section": "Pramana",
+  "page_id": "6abed47c896ea18127c8d91e",
+  "page_number": 252,
+  "set": "stage1",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s40": {
+  "slot": 40,
+  "vol": 111,
+  "section": "Madhyamaka",
+  "page_id": "6abeb4e8896ea18127c84b9d",
+  "page_number": 424,
+  "set": "stage1",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s03": {
+  "slot": 3,
+  "vol": 98,
+  "section": "Madhyamaka",
+  "page_id": "6abeb20c896ea18127c82d62",
+  "page_number": 607,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s07": {
+  "slot": 7,
+  "vol": 102,
+  "section": "Madhyamaka",
+  "page_id": "6abe825259b86b7d32a65a54",
+  "page_number": 216,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": true
+ },
+ "s13": {
+  "slot": 13,
+  "vol": 108,
+  "section": "Madhyamaka",
+  "page_id": "6abeb406896ea18127c842de",
+  "page_number": 167,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": true
+ },
+ "s15": {
+  "slot": 15,
+  "vol": 110,
+  "section": "Madhyamaka",
+  "page_id": "6abeb4ba896ea18127c8487d",
+  "page_number": 342,
+  "set": "reread",
+  "new_is": "A",
+  "nudged": true
+ },
+ "s18": {
+  "slot": 18,
+  "vol": 174,
+  "section": "Pramana",
+  "page_id": "6abed3fd896ea18127c8d2ca",
+  "page_number": 86,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": true
+ },
+ "s19": {
+  "slot": 19,
+  "vol": 175,
+  "section": "Pramana",
+  "page_id": "6abed42d896ea18127c8d694",
+  "page_number": 323,
+  "set": "reread",
+  "new_is": "A",
+  "nudged": false
+ },
+ "s22": {
+  "slot": 22,
+  "vol": 178,
+  "section": "Pramana",
+  "page_id": "6abed51b896ea18127c8dd7e",
+  "page_number": 148,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s23": {
+  "slot": 23,
+  "vol": 179,
+  "section": "Pramana",
+  "page_id": "6abed582896ea18127c8dfb3",
+  "page_number": 95,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s30": {
+  "slot": 30,
+  "vol": 186,
+  "section": "Pramana",
+  "page_id": "6abed7ae896ea18127c8f2a2",
+  "page_number": 462,
+  "set": "reread",
+  "new_is": "B",
+  "nudged": false
+ },
+ "s35": {
+  "slot": 35,
+  "vol": 191,
+  "section": "Pramana",
+  "page_id": "6abed96d896ea18127c8fd43",
+  "page_number": 111,
+  "set": "reread",
+  "new_is": "A",
+  "nudged": false
+ }
+}

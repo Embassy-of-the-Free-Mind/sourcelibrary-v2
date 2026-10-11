@@ -1,0 +1,85 @@
+[
+  {
+    "book_id": "6abeb20a896ea18127c82b01",
+    "slot": 3,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio, Madhyamaka section vol. ཛ; the page is a Buddhist refutation of hereditary Brahmin caste (consistent with Bhāviveka's Tarkajvālā in this volume).",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 607,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          {
+            "source": "དྲང་སྲོང་ཤེད་ཀྱིས་བསྟན་པ",
+            "english": "This was taught by the <term>Rishi</term> <gloss>Sage</gloss> Shanti.",
+            "problem": "ཤེད is Manu (the lawgiver); 'Shanti' is a wrong name, so the cited authority of the donkey/pig/dog verse is misidentified",
+            "severity": "moderate"
+          },
+          {
+            "source": "བྲམ་ཟེའི་རིགས་ཡིན་ཡང་ཡུལ་འཁོར་འཛིན་ལ་སོགས་པ་རྒྱལ་རིགས་ཉིད་དུ་གྱུར་པ",
+            "english": "there are those of Brahmin lineage who became Kshatriyas by holding territory",
+            "problem": "ཡུལ་འཁོར་འཛིན is the proper name Dhṛtarāṣṭra; read as a common phrase, the named example is lost and an invented mechanism ('by holding territory') is supplied",
+            "severity": "moderate"
+          },
+          {
+            "source": "གྲོང་ཁྱེར་བཅུ་པའི་བྲན་བཅུ",
+            "english": "Ten servants of the tenth city",
+            "problem": "place name Daśapura rendered literally as 'the tenth city'",
+            "severity": "minor"
+          },
+          {
+            "source": "ཞེས་བྱ་བས་རིགས་དག་པ་ཉིད་དུ་ཡང་བསྒྲུབ་པར་ཤིན་ཏུ་དཀའ་སྟེ",
+            "english": "It is extremely difficult to prove the purity of a lineage.",
+            "problem": "the causal link 'because of this [verse]' is dropped, detaching the conclusion from the verse",
+            "severity": "minor"
+          },
+          {
+            "source": "སྐྱོན་དུ་བརྩི་བ་མ་ཡིན་པས",
+            "english": "it is often not counted as a fault",
+            "problem": "'often' is added; the source says it is not counted as a fault",
+            "severity": "minor"
+          },
+          {
+            "source": "འོན་ཏེ་རིགས་བྲམ་ཟེ་ཡིན་ནོ་ཞེ་ན",
+            "english": "If you claim that caste is inherent to a Brahmin",
+            "problem": "the thesis is that birth-caste is what makes one a Brahmin; 'inherent to a Brahmin' slightly skews it",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "ཚལ་གྱི་དཱུར་བ་དག",
+            "english": "And nine sprigs of <term>dūrvā</term> <gloss>sacred ritual</gloss> grass in the pleasure grove",
+            "problem": "the print reads དག (plural marker), not དགུ 'nine'; the number appears to be added (low confidence at this resolution)",
+            "severity": "moderate"
+          },
+          {
+            "source": "ཞེས་བྱ་བ་ལ་སོགས་པ་དྲང་སྲོང་ཤེད་ཀྱིས་བསྟན་པ",
+            "english": "Such verses were taught by Sage Manu and others.",
+            "problem": "ལ་སོགས་པ qualifies the verses ('these and similar verses'), not Manu; 'and others' is misattached",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A's <summary> says the author argues 'behavior and character ... should define one's status', which is more than this page states (it only refutes birth as the cause of Brahminhood)",
+            "severity": "minor"
+          }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error, but B correctly identifies Manu, Daśapura, Dhṛtarāṣṭra, Vyāsa and Viśvāmitra and keeps the verse structure and causal links, while A misnames the authority and turns Dhṛtarāṣṭra into a vague phrase.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean, accurately transcribed Derge folio of a Buddhist critique of hereditary caste; both translations get the argument right, and B is better on proper names and structure."
+  }
+]

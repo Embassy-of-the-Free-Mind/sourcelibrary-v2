@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abeb158896ea18127c82682",
+  "slot": 1,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Madhyamaka treatise from volume Tsa (ཙ) of the Derge Tengyur, perfectly fitting the collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 386,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "other": [],
+    "prefer": "A",
+    "prefer_reason": "Translation A renders the Madhyamaka philosophical terminology more precisely and reads more naturally than Translation B.",
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic folio from the Derge Tengyur Madhyamaka section with accurate OCR and two faithful English translations."
+ }
+]

@@ -1,0 +1,74 @@
+[
+ {
+  "book_id": "6abed5db896ea18127c8e188",
+  "slot": 24,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། དེ (Derge Tengyur, vol. 180)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Folio from the Pramāṇa (logic and epistemology) section of the Derge Tengyur (volume དེ, de), containing a classical commentary on Dharmakīrti's Pramāṇavārttika refuting Īśvara and Pradhāna.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 289,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "བྱ་བའི་བྲེ་བྲག་",
+      "image": "བྱའི་བྱེ་བྲག་",
+      "problem": "misread ya-btags with e-vowel (bye brag) as ra-btags (bre brag), and inserted extra syllable ba",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "སྙིང་རྗེས་",
+      "image": "སྙིང་རྗེ་",
+      "problem": "inserted spurious suffix sa",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "དབང་ཕྱུག་པ་ལ་",
+      "image": "དབང་ཕྱུག་ལ་",
+      "problem": "inserted spurious syllable pa",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "ཕྱོགས་དང་མཐུན་པའི་ཕྱོགས་གང་ཡང་རུང་བ་",
+      "english": "simply anything compatible with the subject",
+      "problem": "Conflates the two distinct logical terms for subject (pakṣa, ཕྱོགས་) and similar instances (sapakṣa, མཐུན་པའི་ཕྱོགས་), misconstruing 'either the subject or similar instances' as merely 'compatible with the subject'.",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "རྗེས་སུ་འགྲོ་ལྡོག་མེད་པ་ཡིན་ན་ཇི་ལྟར་ལས་རྟོགས་པ་ཡིན་ནོ་",
+      "english": "if there is no positive or negative concomitance... how can it be understood through karma?",
+      "problem": "Misinterprets ལས་ (karma) as an instrumental/ablative particle ('through karma') rather than the direct object of རྟོགས་པ་ ('how karma is cognized').",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "རྣམ་པར་དཔྱོད་པ་དང་། སྙིང་རྗེ་ལ་སོགས་པ་དང་ལྡན་པའི་དབང་ཕྱུག་",
+      "english": "leads to an analysis. If a creator Lord possesses compassion and similar qualities",
+      "problem": "Syntactically misparses རྣམ་པར་དཔྱོད་པ་ (discernment) as an independent clause rather than a quality coordinated with compassion qualifying Īśvara, breaking the parallel with the following devoid-of-discernment clause.",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A accurately preserves core Buddhist Pramāṇa logical terminology (pakṣa and sapakṣa), correctly identifies karma as the object of cognition, and properly structures the parallel arguments regarding Īśvara's attributes.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic woodblock folio from the Pramāṇa section of the Derge Tengyur with a clean, highly legible scan. Transcription accuracy is high with only minor character slips, and Translation A provides a precise and contextually sound English rendering of the philosophical argument."
+ }
+]

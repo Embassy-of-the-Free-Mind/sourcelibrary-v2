@@ -1,0 +1,35 @@
+[
+  {
+    "book_id": "6abeb4ad896ea18127c84725",
+    "slot": 15,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio in the Madhyamaka section quoting the Vimalakīrtinirdeśa (Vimalakīrti's sermon on the body), the kind of sūtra citation Madhyamaka anthologies carry; it belongs on this shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 342,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 5,
+        "tr_errors_A": [
+          { "source": "ལུས་འདི་ནི་ནད་མང་པོའི་སྣོད་དེ", "english": "this body is a vessel of many afflictions", "problem": "ནད is 'disease'; 'afflictions' blurs it with ཉོན་མོངས, which appears two lines later", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཡངས་པའི་གྲོང་ཁྱེར་ཆེན་པོ་ནས", "english": "came from the great city", "problem": "drops the city's name, Vaiśālī (ཡངས་པ)", "severity": "moderate" },
+          { "source": "ལུས་འདི་ནི་ཅང་མི་བཟོད་པ་སྟེ། དབུ་བ་རྡོས་པ་ལྟ་བུའོ", "english": "this body is unbearable, like a mass of foam", "problem": "ཅང་མི་བཟོད་པ here means 'cannot withstand (pressure)', i.e. frail, not 'unbearable'; the simile loses its point", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Both are faithful and complete, but B drops the name Vaiśālī and renders ཅང་མི་བཟོད་པ as 'unbearable', while A has only a minor wording slip.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The folio's transcription matches the woodblock line for line, from the opening ཐབས་ལ་མཁས་པས to the final ཡང, and both translations render Vimalakīrti's similes for the body faithfully; A is the slightly better of the two."
+  }
+]

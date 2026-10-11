@@ -1,0 +1,53 @@
+[
+ {
+  "book_id": "6abeb4e5896ea18127c849f3",
+  "slot": 40,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Madhyamaka treatise in the Derge Tengyur (vol. 111, dBu ma, Khi).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 424,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "གོམ་པ་གཉི་ག་",
+      "image": "གོམས་པ་གཉི་ག་",
+      "problem": "misread གོམས་པ་ (habituation) as གོམ་པ་ (step)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ཐོག་མ་མེད་པ་ནས་",
+      "image": "ཐོག་མ་མེད་ནས་",
+      "problem": "interpolated extra syllable པ་ into the phrase",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "གཞན་ལ་དངོས་སུ་བརྙས་བྱེད་ལྟར",
+      "english": "just as one openly treats others with respect",
+      "problem": "translated བརྙས་ (contempt/disparagement) as respect, reversing the meaning",
+      "severity": "serious",
+      "class": "T1",
+      "reversal": true
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly translates བརྙས་ as contempt rather than reversing its meaning to respect as B does.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A well-preserved Derge Tengyur woodblock folio from the Madhyamaka section concerning the purification of the bodhisattva's body and resources."
+ }
+]

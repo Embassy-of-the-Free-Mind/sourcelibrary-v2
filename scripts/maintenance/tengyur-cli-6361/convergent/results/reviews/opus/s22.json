@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6abed518896ea18127c8dce8",
+    "slot": 22,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཏེ (Derge Tengyur, vol. 178)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio (margin 'ཏེ', Pramana section) from a commentary refuting materialism with the lamp/light analogy (support and supported, mind-body, rebirth): squarely Pramana Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "འོད་དེ་ནི་སྒྲོན་མའམ་དེ་མ་ཡིན་པ་གཞན་དུ་འཕོ་བ", "image": "possibly 'སྒྲོན་མ་ལས་དེ་མ་ཡིན་པ' (the glyph after མ looks like ལས at this resolution)", "problem": "if the print has ལས, the sense is 'light does not move FROM the lamp to something else', and both translations stumble on 'or'", "severity": "minor" },
+          { "ocr": "འདུག་པའང་ / དེར་འགྱུར་ན", "image": "འདུག་པ་ཡང་ / དེ་འགྱུར་ན (as far as can be read)", "problem": "small orthographic normalisations that do not change the meaning", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "འོད་དང་སྒྲོན་མ་དག་གཞི་དང་གནས་པའི་རྟེན་དང་བརྟེན་པ་མ་ཡིན་ཡང་", "english": "even though they do not share the same foundation or location", "problem": "the 'base and what abides in it' (container/contained) sense of support is turned into 'sharing a foundation or location'", "severity": "moderate" },
+          { "source": "འོན་ཀྱང་ཤེས་རབ་ལ་སོགས་པ་བློ་ཉིད་དོ", "english": "rather, it is the intellect itself, such as wisdom and so on, that changes", "problem": "the claim 'wisdom and the rest are the mind itself' is recast: wisdom becomes an example of intellect, and 'that changes' is added", "severity": "moderate" },
+          { "source": "སྒྲོན་མའམ་དེ་མ་ཡིན་པ་གཞན་དུ་འཕོ་བ་ནི་མ་ཡིན", "english": "does not transfer elsewhere, whether to another lamp or anything else", "problem": "adds 'another' lamp; the source is about light not moving from or apart from the lamp", "severity": "minor" },
+          { "source": "summary verses (རྟེན་བཅས་ཐམས་ཅད་... / གལ་ཏེ་རང་འཇིག་ངང་ཚུལ་བདག ...)", "english": "rendered as running prose", "problem": "verse form lost (T16), and the conditional 'if everything with a support ... then' is given as flat assertions", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ལུས་ལ་བརྟེན་པའི་རྣམ་པར་ཤེས་པ་ཡུལ་གཞན་ལ་གནས་པ་ཡང་འཇིག་པར་འགྱུར", "english": "consciousness supported by the body, even if directed toward another object, will also be destroyed", "problem": "ཡུལ་གཞན་ལ་གནས་པ here parallels the lamp-light 'located in another place'; 'directed toward another object' loses the spatial analogy", "severity": "moderate" },
+          { "source": "འོད་དེ་ནི་སྒྲོན་མའམ་དེ་མ་ཡིན་པ་གཞན་དུ་འཕོ་བ་ནི་མ་ཡིན", "english": "that light does not migrate to the lamp or to anything else", "problem": "'migrate to the lamp' makes little sense; the point is that light does not move off from the lamp to something else", "severity": "minor" },
+          { "source": "<keywords>", "english": "Dharmakirti", "problem": "attributes the page to Dharmakirti, although the page is a commentary that cites verses and the book metadata names no author", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error, but B gets the container/contained relation and the 'wisdom etc. are the mind itself' clause right, and it keeps the summary verses as verse; its own slips are smaller.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge Pramana folio with a good transcription. Both English versions are faithful in outline. Each has a moderate slip in the lamp/light argument, and B is the better reading."
+  }
+]

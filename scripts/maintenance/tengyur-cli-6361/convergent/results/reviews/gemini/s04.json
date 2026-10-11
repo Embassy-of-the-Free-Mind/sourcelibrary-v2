@@ -1,0 +1,50 @@
+[
+ {
+  "book_id": "6abeb246896ea18127c82d97",
+  "slot": 4,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཝ (Derge Tengyur, vol. 99)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic canonical Tibetan Buddhist scholastic treatise from the Madhyamaka section (volume Wa / 99) of the Derge Tengyur, containing Avalokitavrata's commentary on Bhāviveka's Prajñāpradīpa.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 148,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "སྦྱར་བ་པ་ལ་",
+      "image": "སྦྱར་བ་ལ་",
+      "problem": "redundant syllable པ་ inserted in the lemma citation",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "དམ་བཅས་པ་དང་། གཏན་ཚིགས་དང་དཔེ་བསྟན་པས་",
+      "english": "syllogistic statement made by the Madhyamaka practitioner who asserts...",
+      "problem": "omits explicit mention of the three components of the formal syllogism (thesis, logical reason, and example)",
+      "severity": "minor"
+     },
+     {
+      "source": "སུན་དབྱུང་བའི་ཕྱོགས་སྔ་མ་",
+      "english": "position previously refuted by the Madhyamaka",
+      "problem": "translates future passive participle སུན་དབྱུང་བའི་ ('to be refuted') as past tense ('previously refuted')",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high",
+    "prefer": "A",
+    "prefer_reason": "Translation A captures the folio continuation markers seamlessly, accurately translates grammatical aspects of the debate terminology, and fully conveys all formal syllogistic components."
+   }
+  ],
+  "book_verdict": "Clear woodblock print folio of the Derge Tengyur with a highly accurate transcription and excellent scholarly translation in Version A."
+ }
+]

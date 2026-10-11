@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abeb325896ea18127c83819",
+  "slot": 9,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ར (Derge Tengyur, vol. 104)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Buddhist commentary belonging to the Madhyamaka section of the Derge Tengyur.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 608,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "A",
+    "prefer_reason": "Translation A cleanly preserves the commentary's lemma-exegesis structure with distinct paragraph breaks, avoiding intrusive extraneous commentary notes.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Flawless OCR transcription and faithful English translations of a classical Derge Tengyur Madhyamaka commentary folio."
+ }
+]

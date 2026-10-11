@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "6abed9a6896ea18127c8ffaa",
+    "slot": 36,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary on omniscience (staff/staff-bearer argument, non-perception of the pervader), consistent with the Tshad ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 537,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཐམས་ཅད་མཁྱེན་པའི་ཤེས་པའི་ཞེས་བྱ་ཁྱད་པར་ཅན་", "image": "ཐམས་ཅད་མཁྱེན་པའི་ཤེས་པའི་ཤེས་བྱ་ཁྱད་པར་ཅན་ (as far as I can read it)", "problem": "ཤེས་བྱ 'knowable' apparently written as homophone ཞེས་བྱ 'called'; both translations follow the OCR ('called the cognition' / garbled phrase)", "severity": "minor" },
+          { "ocr": "དེའི་སྟེ་ཐམས་ཅད་མཁྱེན་པའི་ཤེས་པ་ནི་དེའི་ཤེས་པའོ", "image": "particles in this gloss are hard to read; ordering of སྟེ/ནི may differ", "problem": "possible particle slip; does not change meaning", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "སྐྱེ་བ་མི་སྲིད་པའི་ཕྱིར་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ་བར་འགྱུར་རོ།", "english": "<meta>continues from previous page: since birth is impossible, it would absurdly follow that one must investigate them as omniscient.</meta>", "problem": "the page's first sentence is translated only inside the <meta> wrapper, so a reader who does not see meta loses it", "severity": "moderate", "class": "T3" },
+          { "source": "འདི་ནི་ཀུན་མཁྱེན་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨོས་ཏེ", "english": "it is said: \"Because this is omniscient,\" and so forth", "problem": "the quoted root lemma is 'This one is omniscient'; 'Because' is added and misframes the lemma", "severity": "moderate" },
+          { "source": "དངོས་པོ་མཐའ་དག་གི་ཡུལ་ཅན་དེ་ཡང་...ངེས་པར་མི་ནུས་ཏེ", "english": "an observer who has all phenomena as their object cannot ascertain it", "problem": "the subject is the cognition that has all things as object (which cannot be ascertained), not an 'observer'", "severity": "minor" },
+          { "source": "ཁྱད་པར་འཛིན་པས་ཁྱད་པར་ཅན་ཡིན་པ་ལ་ཁྱབ་པའི་ཕྱིར་དེ་ཡང་འདི་ལ་མེད་དོ", "english": "that qualifier is also absent in this case", "problem": "what is absent is the apprehension of the qualifier (the pervader), not the qualifier itself", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ", "english": "it would follow that everything must be examined as being omniscience itself", "problem": "ཐམས་ཅད་ is part of the compound ཐམས་ཅད་མཁྱེན་པ 'omniscient' and is also rendered separately as 'everything'", "severity": "minor" },
+          { "source": "དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ", "english": "being empty of that means being an omniscient being", "problem": "literal rendering of an elliptical gloss reads as a self-contradiction (one empty of the omniscient's knowledge is 'an omniscient being'); the sense is that the knowledge one is empty of is that of the omniscient", "severity": "moderate" },
+          { "source": "ད་ལྟ་ཉེ་བའི་ཐམས་ཅད་རིག་པ་མ་ཡིན་པ་གང་གིས་ཐམས་ཅད་མཁྱེན་པ་མ་ངེས་པ", "english": "for anyone who does not determine the omniscient one because they do not presently perceive everything", "problem": "drops ཉེ་བ 'near/present' (the person in the omniscient's presence) and recasts the clause as a causal one", "severity": "minor" },
+          { "source": "དེ་ནི་དེ་ཡང་ཡིན་ལ་ཤེས་པ་ཡང་ཡིན་པས", "english": "Since that individual is both that very person and that very knowledge", "problem": "awkward misparse of the karmadhāraya gloss; still recoverable", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "same",
+        "prefer_reason": "Neither has a serious error; A hides the first sentence in <meta> and misframes the root lemma, while B garbles the 'empty of that' gloss and drops 'near' in the last clause, so they come out roughly even.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A correct Derge Tengyur pramāṇa folio. The OCR is close to the print. Both English versions follow the argument faithfully, with only moderate and minor slips; no on-sight defect."
+  }
+]

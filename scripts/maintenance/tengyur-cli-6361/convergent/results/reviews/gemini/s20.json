@@ -1,0 +1,54 @@
+[
+ {
+  "book_id": "6abed47a896ea18127c8d820",
+  "slot": 20,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic volume of the Pramāṇa (logic and epistemology) section of the Derge Tengyur (volume 176, marker 'je').",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 35,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "དེའི་ངོ་བོ་ནི་ཉིད་དེ་",
+      "image": "དེའི་ངོ་བོ་ཉིད་དེ་",
+      "problem": "Spurious syllable 'ནི་' inserted into the compound 'ངོ་བོ་ཉིད་'",
+      "severity": "minor",
+      "class": "O7"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "མཚན་ལ་འགལ་བ་མེད་དོ། །",
+      "english": "There is no contradiction in the definition.",
+      "problem": "Mistranslates 'མཚན་' as 'definition' rather than recognizing the continuation of 'རྒྱུ་མཚན་' (cause/ground) from the previous folio",
+      "severity": "moderate",
+      "class": "T4"
+     },
+     {
+      "source": "སྐྱེས་བུ་འདི་ལ་བ་སྤུ་ལངས་པ་ལ་སོགས་པ་ཁྱད་པར་མེད་དེ།",
+      "english": "in a person who exhibits symptoms such as goosebumps",
+      "problem": "Reverses the logical negation ('མེད་དེ' / there are no...) by translating as if the person exhibits the symptoms rather than lacking them",
+      "severity": "serious",
+      "class": "T1",
+      "reversal": true
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A accurately preserves the essential negation in the logical thesis and correctly handles Pramāṇa technical terminology, whereas Translation B reverses the negation and misinterprets the opening phrase.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear Derge Tengyur Pramāṇa woodblock folio with highly accurate transcription and an excellent, precise translation in Version A."
+ }
+]
