@@ -157,20 +157,7 @@ export function booksSetBlocks(src) {
   BOOKS_CALL.lastIndex = 0;
   let cm;
   const inlineStarts = [];
-  while ((cm = BOOKS_CALL.exec(src))) inlineStarts.push(cm.index);
-  SET_RE.lastIndex = 0;
-  let sm;
-  while ((sm = SET_RE.exec(src))) {
-    const at = sm.index, valueAt = SET_RE.lastIndex;
-    const start = inlineStarts.find((a) => at > a && at < a + WINDOW);
-    if (start === undefined) continue;
-    if (OTHER_CALL.test(src.slice(start + 1, at))) continue;
-    const keep = SET_RE.lastIndex;
-    takeSet(at, valueAt, 'inline', false);
-    SET_RE.lastIndex = keep;
-  }
-
-  // handle + built — follow the write call, wherever its handle was bound.
+  // Every write call and the collection its handle resolves to (null/undefined = unknown).
   const binds = bindings(src);
   const writeRe = new RegExp(String.raw`(?:(?:^|[^\w$.])(${IDENT})|(${COLL}['"\`]([^'"\`]+)['"\`]\s*\)))\s*\.\s*(${WRITE_METHODS})\s*\(`, 'gm');
   const calls = [];
@@ -182,6 +169,26 @@ export function booksSetBlocks(src) {
     const coll = wm[1] ? resolve(binds, wm[1], wm.index) : wm[3];
     calls.push({ coll, method: wm[4], open, close, args: bareArgs(src.slice(open + 1, close)) });
   }
+  // A $set inside a write whose handle is KNOWN to be another collection is never books', however
+  // close a `collection('books')` sits above it (#6498: `const booksCol = …` one line below
+  // `const queue = db.collection('work_merge_queue')` blamed queue.updateOne's stale_reason on books).
+  const inOtherWrite = (at) => calls.some((c) => c.coll && c.coll !== 'books' && at > c.open && at < c.close);
+
+  while ((cm = BOOKS_CALL.exec(src))) inlineStarts.push(cm.index);
+  SET_RE.lastIndex = 0;
+  let sm;
+  while ((sm = SET_RE.exec(src))) {
+    const at = sm.index, valueAt = SET_RE.lastIndex;
+    const start = inlineStarts.find((a) => at > a && at < a + WINDOW);
+    if (start === undefined) continue;
+    if (OTHER_CALL.test(src.slice(start + 1, at))) continue;
+    if (inOtherWrite(at)) continue;
+    const keep = SET_RE.lastIndex;
+    takeSet(at, valueAt, 'inline', false);
+    SET_RE.lastIndex = keep;
+  }
+
+  // handle + built — follow the write call, wherever its handle was bound.
   for (const call of calls) {
     if (call.coll !== 'books') continue;
     scan(call.open, call.close, 'handle');
