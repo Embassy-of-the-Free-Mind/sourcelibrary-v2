@@ -41,13 +41,15 @@ if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/
   \`sl-tsc\` (one at a time, box-wide), never a bare \`npx tsc\`.
 - The box is ARM64: Python ML tools (kraken, CLIP, onnx venvs) are NOT installed here; if the brief needs
   them, say so on the issue and stop."
-  claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- /root/.local/bin/claude "$@"; }
+  CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
+  claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=$SL/.claude/worktrees; DATA=/data/scratch/sl/jobs
 else
   HOST=hetzner; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs
   HOST_RULES="- This box has 16 GB shared by every worker. node_modules is shared with the main checkout: NEVER run
   npm ci / npm install. To type-check run \`sl-tsc\` (one at a time, box-wide), never a bare \`npx tsc\`."
-  claude_capped() { claude "$@"; }
+  CLAUDE_BIN=${CLAUDE_BIN:-claude}
+  claude_capped() { "$CLAUDE_BIN" "$@"; }
   # Disk (#6223): the 150 GB root filled to 100% on 10-01 and again on 10-07 (job worktrees + experiment
   # output in /root) while the 492 GB volume sat half empty. New worktrees and all job output go to the volume.
   VOL=/mnt/HC_Volume_105839809; WT=$VOL/worktrees; DATA=$VOL/jobs
@@ -333,6 +335,32 @@ ntfy_job() {  # $1 priority (min|low|default|high|urgent)  $2 tags  $3 title  $4
   curl -s -m 10 -H "Title: $3" -H "Priority: $1" -H "Tags: $2" -d "$4" "$NTFY_TOPIC" >/dev/null 2>&1 || true
 }
 
+# Auth preflight (#5627). On 2026-10-02 two cloudlayer jobs hit "Not logged in · Please run /login": the
+# wrapper resumed each 8 times in 4 minutes, logged GAVE UP, and nothing said so for two hours (jobs report
+# by issue comment, and these never ran). Before start/resume/sweep, one tiny `claude -p` must answer OK,
+# run from the checkout so a workspace-trust or settings failure shows here too. A usage-limit answer
+# passes: that is a wait, and the run loop handles it. Prints the failing output; returns 1 on failure.
+# Skip: JOB_SKIP_PREFLIGHT=1.
+AUTH_FAIL_RE='not logged in|please run /login|invalid api key|oauth token (has expired|revoked)|authentication_error'
+LIMIT_RE="hit your (session|usage|weekly|monthly) limit|usage limit reached|rate limit"
+preflight_auth() {
+  [ -n "${JOB_SKIP_PREFLIGHT:-}" ] && return 0
+  local out rc
+  out=$(cd "$SL" && export -f claude_capped && export CLAUDE_BIN && timeout 120 bash -c 'claude_capped -p "Reply with exactly: OK" --model sonnet' < /dev/null 2>&1); rc=$?
+  echo "$out" | grep -qE '(^|[^A-Za-z])OK([^A-Za-z]|$)' && ! echo "$out" | grep -qiE "$AUTH_FAIL_RE" && return 0
+  echo "$out" | grep -qiE "$LIMIT_RE" && return 0
+  [ $rc -eq 124 ] && out="timed out after 120 s${out:+: $out}"
+  echo "${out:-no output, exit $rc}" | tr '\n' ' ' | cut -c1-200
+  return 1
+}
+# Say an auth failure loudly: a high page, and a comment on the brief's issue when it names one.
+auth_fail_report() {  # $1 name, $2 brief file, $3 what happened
+  ntfy_job high warning "Job NOT LOGGED IN: $1 ($HOST)" "$3 — log in on $HOST (claude, then /login), then \`claude-job.sh resume $1\` or start it again (#5627)."
+  landing_contract "$1" "$2"
+  case "$LC_ISSUE" in ""|none) return 0 ;; esac
+  gh issue comment "$LC_ISSUE" --repo "$REPO" --body "claude-job: job \`$1\` on **$HOST** did not run: Claude is not logged in there ($3). Nothing was done on this issue. Fix: log in on $HOST, then \`claude-job.sh resume $1\` (or start it again). (#5627)" >/dev/null 2>&1 || true
+}
+
 # A job owns its PR until the checks are green (Derek 2026-10-08). PR #5832 sat red for four days and
 # 304 commits behind because the job that opened it had exited DONE. After DONE, from outside: find the
 # job's OPEN PR, wait for its checks in bash (never in the model), and if one failed, resume the job
@@ -375,8 +403,13 @@ Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, 
     claude_capped -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
   fi
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
-  i=0; capped=""
+  i=0; capped=""; authfail=""
   while [ ! -f "$JD/$name.done" ] && [ $i -lt $MAX_RESUMES ]; do
+    # Not logged in is not resumable (#5627): every resume fails the same way in seconds. Stop and say so.
+    authfail=$(grep -v '^\[claude-job\]' "$log" | tail -n 2 | grep -iE -m1 "$AUTH_FAIL_RE" | cut -c1-160)
+    if [ -n "$authfail" ]; then
+      echo "[claude-job] NOT LOGGED IN: not resuming ($authfail) $(date -u +%FT%TZ)" >> "$log"; break
+    fi
     # A usage/session limit is a wait, not a failure (2026-10-03: all 8 resumes burned in 3 min on
     # "You've hit your session limit", then GAVE UP for 7 h). When the last claude output is a
     # limit message, sleep 20 min and retry WITHOUT spending a resume, for up to 18 waits (6 h).
@@ -412,10 +445,12 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
       *) ntfy_job low mag "Job done, report not found: $name ($HOST)" "${land#REPORT:}" ;;
     esac
   else
-    echo "[claude-job] GAVE UP${capped:+ on the $capped cap} after $i resumes $(date -u +%FT%TZ)" >> "$log"
-    cp=$(checkpoint "$name" "${capped:+$capped cap}${capped:-gave up}")
+    echo "[claude-job] GAVE UP${capped:+ on the $capped cap}${authfail:+ (not logged in)} after $i resumes $(date -u +%FT%TZ)" >> "$log"
+    cp=$(checkpoint "$name" "${authfail:+not logged in}${authfail:-${capped:+$capped cap}${capped:-gave up}}")
     moved=""; [ -n "${capped:-}" ] && moved=$(move_job "$name" "${cp:-}")
-    if [ -n "$moved" ]; then
+    if [ -n "$authfail" ]; then
+      auth_fail_report "$name" "$JD/$name.brief.txt" "$authfail${cp:+; work checkpointed to $cp}"
+    elif [ -n "$moved" ]; then
       ntfy_job low arrow_right "Job moved on the weekly cap: $name ($HOST -> $moved)" "Continues as ${name%-mv}-mv on $moved from branch ${cp:-job-$name}."
     else
       move=""; [ -n "${capped:-}" ] && move=" No box could take it (box.sh pick). Move it by hand: job-where.sh on the laptop; branch ${cp:-job-$name} holds the work."
@@ -474,6 +509,11 @@ case "${1:-status}" in
       echo "REFUSED: this box's Claude account is at ${wk}% of its weekly limit (>= ${MAX_WEEKLY_PCT}%). Place it elsewhere (scripts/workers/job-where.sh), or JOB_IGNORE_LIMIT=1."
       exit 6
     fi
+    if ! why=$(preflight_auth); then
+      echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
+      auth_fail_report "$name" "$brief" "refused at start: $why"
+      exit 7
+    fi
     d="$(wt_dir "$name")"
     if [ ! -d "$d" ]; then
       git -C "$SL" fetch -q origin main && git -C "$SL" worktree add -q "$d" -b "job-$name" origin/main || exit 3
@@ -490,7 +530,12 @@ case "${1:-status}" in
       echo "started job-$name (tmux) → $LOGD/$name.log"
     else echo "job-$name DIED within 20 s:"; tail -5 "$LOGD/$name.log"; exit 4; fi ;;
   resume)
-    name="$2"; rm -f "$JD/$name.done"
+    name="$2"
+    if ! why=$(preflight_auth); then
+      echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
+      exit 7
+    fi
+    rm -f "$JD/$name.done"
     tmux new -d -s "job-$name" "MAX_RESUMES=${MAX_RESUMES} $0 _run_resume $name"
     echo "resuming job-$name (tmux) → $LOGD/$name.log" ;;
   _run) run "$2" ;;
@@ -516,6 +561,14 @@ case "${1:-status}" in
         echo "[claude-job] sweep gave up after 2 resumes $(date -u +%FT%TZ)" >> "$LOGD/$n.log"; rm -f "$hb"
         cp=$(checkpoint "$n" "died twice")
         ntfy_job high warning "Job DIED twice, not resumed: $n" "Check dmesg/df on the box; \`claude-job.sh resume $n\` by hand.${cp:+ Work checkpointed to $cp.}"; continue; fi
+      # Not logged in: a resume would die the same way and spend one of the two (#5627). Wait for a login.
+      if [ -z "${swept_auth:-}" ]; then swept_auth=ok; why=$(preflight_auth) || swept_auth="$why"; fi
+      if [ "$swept_auth" != ok ]; then
+        grep -q '\[claude-job\] sweep held: not logged in' "$LOGD/$n.log" 2>/dev/null || {
+          echo "[claude-job] sweep held: not logged in ($swept_auth) $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
+          auth_fail_report "$n" "$JD/$n.brief.txt" "sweep could not resume it: $swept_auth"; }
+        continue
+      fi
       echo "[claude-job] sweep-resume $((k+1))/2: no tmux, no done file, heartbeat $(( ($(date +%s)-$(cat "$hb"))/60 ))m old $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
       dmesg -T 2>/dev/null | grep -i 'killed process' | tail -1 >> "$LOGD/$n.log"
       tmux new -d -s "job-$n" "$0 _run_resume $n"
