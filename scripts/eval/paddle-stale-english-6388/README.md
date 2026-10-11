@@ -70,3 +70,14 @@ Also reported, separately: the **TRANSLATION-material** rate, meaning pages with
 
 **Cost of each option**: Gemini CLI calls at one page per call, from the census page counts. The time each
 would take comes from the measured `agy` rate on this box (`/root/agy-quota/summary.txt`).
+
+## As run (2026-10-11, job english-eval-6388)
+
+- O: 17/17 calls parsed. G: 85/85 pages answered in 98 `agy` calls. 12 pages first ended with a denied tool
+  request; they were re-run with the runner's nudge.
+- Controls: O 5/5, G 5/5; the gate passed.
+- Disagreements: 38 of 80 pages (29 random). The 30-call Opus cap allowed 13 ADJ calls, all on random pages in
+  qid order, which is the seeded packet order. That leaves 16 random pages unresolved, reported as bounds.
+- Added after the run, as a $0 check of the reviewers' cause tags: `attribution-check.mjs`. It asks whether the
+  Chinese a reviewer quotes for an OCR-caused error is in the Paddle reading but not in the old one.
+- Write-up: `scripts/eval/experiments/2026-10-11-paddle-stale-english-retranslate-6388.md`.
