@@ -1,0 +1,211 @@
+{
+ "about": "#6203: re-read of 10 pages of quality_gates qg_translate_202610101657_1rqt (#5826) against the image, by a blind-to-nothing Opus subagent (it saw the gate findings, to check them).",
+ "date": "2026-10-11",
+ "rows": [
+  {
+   "item": "g01",
+   "claims_checked": [
+    {
+     "claim": "O1 blocking: Hebrew Sephardic cursive MS 69c1bb13 p197 is invented text / word salad; only the first words of p197 match the image",
+     "verdict": "PARTLY",
+     "evidence": "The text is unusable as Hebrew, so 'word salad' and blocking both hold. But the OCR is not free invention. It follows the manuscript line by line, with many letters right and roughly half the words wrong, through at least lines 1-4 and the middle block. Image L2 reads about 'אדם וחיים ומה קראו שוב ... שררה ... על ... היות הם'; OCR L2 has 'אדם וירש ומה קראו שוב לך שררה ... היה הם'. Image 'דשתח שבות כל הרוח ... ונקראת ... למעלה ולמעלה'; OCR 'דשתח שקול כל הרוח וקאת ונקרא לה המעלה ובעלה המעלה'. The image has about 30 lines and the OCR 27, so a few lines are dropped or merged. 'Only the first words match' overstates it."
+    },
+    {
+     "claim": "T7 blocking: translation renders the invented OCR as fluent English with no uncertainty floor",
+     "verdict": "CANNOT-CHECK",
+     "evidence": "The English is now withheld (empty), so the translation the gate read is not in the packet."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "medium (I read Sephardic cursive only partly; the line-level tracking is clear, but I cannot give a word error rate)",
+   "book_id": "69c1bb138522835be845ca86",
+   "page_number": 197,
+   "page_id": "69c1bb138522835be845cb4b"
+  },
+  {
+   "item": "g02",
+   "claims_checked": [
+    {
+     "claim": "O1 blocking: blank verso 6a4e3834 p28 has Latin verse made up from mirrored show-through",
+     "verdict": "CONFIRMED",
+     "evidence": "The leaf carries only show-through of the facing verse, about 14 lines plus FINIS and fleurons. That text is quite legible: 'O te felicem, talis cui post hunc proles / Est data ... ut ueneranda mihi / Iam restat, cur te foelicem dicere possis / Coniuge cum chara ... / Faxit & Omnipotens Deus, ut quoque filius alter / ... Floreat ut uere Maini magna propago / ... Hoc ut contingat, demissa uoce precamur / Aeterno sit iam gloria, lausq; Deo'. The OCR keeps the line skeleton and a few anchor words (Iam, Coniuge cum cha-, Omnipotens, Id, Perd-, Fl-, precamur, gloria laus Deo) and invents the rest: 'Confiteor tibi', 'Perdite fructus inpietatis panis', 'Et redime in me amans'. Nearly every word is wrapped in <unclear>, but that does not make it a reading. It is also not a blank page in the plain sense: the show-through belongs to the neighbouring page."
+    },
+    {
+     "claim": "T7 blocking: invented OCR translated fluently",
+     "verdict": "CANNOT-CHECK",
+     "evidence": "The English is withheld (empty)."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "high",
+   "book_id": "6a4e3834806e65f390cf129b",
+   "page_number": 28,
+   "page_id": "6a4e3834806e65f390cf12b8"
+  },
+  {
+   "item": "g03",
+   "claims_checked": [
+    {
+     "claim": "O1 blocking: Kurrent flyleaf 69b51e5b p779 has titles and places guessed, e.g. 'Rüst, Geschichte der Pädagogik, Leipzig' for 'Ruhkopf, Geschichte des Schul- und Erziehungswesens ... Bremen'",
+     "verdict": "CONFIRMED",
+     "evidence": "Entry 2 in the image reads 'Fr. H. Ruhkopf Geschichte d. Schul- u. Erziehungswesens in Deutschl. Bremen 1794'. The OCR gives 'Gr. F. Rüst Geschichte der Pädagogik Leipzig 1794'. Other entries are guessed the same way. Entry 7 is 'Geschichte meines Schul...' or similar, but the OCR has 'Geschichte der Kinder Leipzig'. Entry 4 should carry '4 Aufl. Halle 1801' (or similar), but the OCR gives 'Grundzüge ... Halle' with no date. The OCR's entry 3, 'Grundsätze der Erziehung und Unterricht', is pulled from entry 4."
+    },
+    {
+     "claim": "T7 blocking: the English drops the OCR's <unclear> marks",
+     "verdict": "CONFIRMED",
+     "evidence": "Almost every word of the OCR is marked <unclear>. The English is clean, unhedged prose ('G. F. Rüst, History of Pedagogy, Leipzig 1794')."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": "Not recorded by the gate: handwritten entry 1 (about 'Beispiel/Versuch einer ... Schul-...'), under the heading 'Schul', is dropped entirely. The OCR turns the heading itself into '1. Schul', so the numbering is still 1-15 and nothing looks missing.",
+   "overall_agree": true,
+   "confidence": "medium-high",
+   "book_id": "69b51e5b768235dc65991b4e",
+   "page_number": 779,
+   "page_id": "69b51e5b768235dc65991e59"
+  },
+  {
+   "item": "g04",
+   "claims_checked": [
+    {
+     "claim": "O17 major: 6a3cef03 p18, a plain vertical woodblock page, transcribed as a 16-column markdown grid of single characters in scrambled order",
+     "verdict": "CONFIRMED",
+     "evidence": "ocr_at_gate is a markdown table. Its header declares 10 columns, but rows hold up to 16 cells, one character each. Row 4 mixes heads and text from different columns (齊 魯 馬 楚 子 嵇), so reading order is lost. The image is an ordinary vertical woodblock page with entries 獻芹 / 奉麋 / 獻雉 / 左牽 / 右牽 / 致馬資 / 佛鳥首 / 執以將命 / 受乃問名 / 不獻魚鼈 / 不及車馬 / 不以爲禮 / 不敢以聞. Today's replacement OCR is a correct linear reading (one small variant: 委 for the glyph the gate grid read as 妾)."
+    },
+    {
+     "claim": "T16 major: the grid is translated cell by cell (佛 rendered 'Buddha'), unreadable",
+     "verdict": "CONFIRMED",
+     "evidence": "The English is a table of word fragments, with **Buddha** **Bird** **Head**. 佛 here stands for 拂, 'to turn aside' (獻鳥者佛其首). The English also has 'Concubine' from the grid's misread 妾."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": "Not an error on the image itself, but a live problem today: the stored English is still the cell-by-cell grid translation, while the OCR under it has been replaced with a correct one. A reader sees good Chinese next to unreadable English. Arguably this deserves blocking, since 'Buddha bird' misleads.",
+   "overall_agree": true,
+   "confidence": "high",
+   "book_id": "6a3cef034701a906f10ecc19",
+   "page_number": 18,
+   "page_id": "6a3cef034701a906f10ecc2b"
+  },
+  {
+   "item": "g05",
+   "claims_checked": [
+    {
+     "claim": "O6 minor: 'Osnabrugensis' read 'Ofhabrugenfis', translated 'Offenburg' (Solger p315)",
+     "verdict": "CONFIRMED",
+     "evidence": "The image reads 'synodalia Ofnabrugen-fis Ecclesiae' (long s), i.e. Osnabrugensis. The OCR has 'Ofhabrugenfis' and the English 'synodal of the Church of Offenburg'. Wrong city."
+    },
+    {
+     "claim": "O7 minor: 'p. 239 n. 25' read 'p. 232'",
+     "verdict": "CONFIRMED",
+     "evidence": "A zoomed crop clearly shows 'MSC. p. 239 n. 25'. Both OCR and English give p. 232."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "high (side issues are trivial: 'Augusten,' for 'Augustensis', and Alvarez n. 1049 vs a damaged 1059?)",
+   "book_id": "69b51df547b06ecd58187a4b",
+   "page_number": 315,
+   "page_id": "69b51df547b06ecd58187b86"
+  },
+  {
+   "item": "g06",
+   "claims_checked": [
+    {
+     "claim": "O6 minor: 'ad Iodocum Ionam' read 'ad locum Ionam', translated 'to the passage in Jonah' (Nösselt p777)",
+     "verdict": "CONFIRMED",
+     "evidence": "The image has 'Brief ad Io-|docum Ionam' across a line break, i.e. Erasmus's letter to Jodocus Jonas. The OCR collapses this to 'ad locum Ionam', and the English adds the note 'to the passage in Jonah'. The rest of the page checks out against the image."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "high (minor fits only just: the error misidentifies the work cited, a reader-facing wrong reference)",
+   "book_id": "69b51e5b768235dc65991b4e",
+   "page_number": 777,
+   "page_id": "69b51e5b768235dc65991e57"
+  },
+  {
+   "item": "g07",
+   "claims_checked": [
+    {
+     "claim": "O5 minor: Fontanini p253 drops the HESYCHIUS Lexicon entry and attaches its imprint to Hesterberg (English follows)",
+     "verdict": "CONFIRMED",
+     "evidence": "The image has 'HESYCHIUS. Lexicon graecum cum notis variorum. Lugduni Batavorum per Hackios 1668. in 4.' between Hesterberg and Hesychius Hierosolymitanus. The OCR and English drop the heading and title and give '— Leiden, by the Hack family, 1668' as a second Hesterberg edition."
+    }
+   ],
+   "severity_fits": false,
+   "missed_serious": "Not recorded by the gate, all small: 'Historiae GL.' (Graece-Latine) rendered 'Graece' / 'in Greek' for Herodian and Herodotus, losing the Latin; 'Ecclesiasticorum disciplina' read 'Ecclesiastica'; 'Germanicorum' read 'Germanorum'. Nothing else serious. On severity: a lost entry plus a false attribution (Hesterberg credited with a Leiden 1668 Lexicon edition) in a bibliographic index is closer to major than minor.",
+   "overall_agree": true,
+   "confidence": "high",
+   "book_id": "69b51e539a81ef7feb3d3478",
+   "page_number": 253,
+   "page_id": "69b51e539a81ef7feb3d3575"
+  },
+  {
+   "item": "g08",
+   "claims_checked": [
+    {
+     "claim": "O5 minor: Arabic p62 drops حتى",
+     "verdict": "CONFIRMED",
+     "evidence": "The image reads 'وكيف حتى حصّلت هذه'; the OCR has 'وكيف حصلت هذه'. Meaning is barely affected."
+    },
+    {
+     "claim": "O6 minor: دلّ read ذل (Arabic p62)",
+     "verdict": "CONFIRMED",
+     "evidence": "Both the text ('إلى أنْ دَلَّ(٩) عليه') and footnote 9 ('دَلّ (عليه)') in the image have dāl with shadda. The OCR has ذل in both."
+    },
+    {
+     "claim": "T10 minor: footnote 9 glossed from the misread ('Sent for me: literally, incited me to it')",
+     "verdict": "CONFIRMED",
+     "evidence": "Footnote 9 in the image reads 'دَلّ (عليه): مَنّ بعطائه عليه' (he presumed on him / bestowed his gift on him). The OCR misreads it as 'من بعثانه عليه', and the English invents 'Sent for me: literally, incited me to it'. The body English 'until he sent for me' follows the same misreading."
+    }
+   ],
+   "severity_fits": true,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "medium-high",
+   "book_id": "6a06cddfc749b698e5b2cb29",
+   "page_number": 62,
+   "page_id": "6a06cddfc749b698e5b2cb67"
+  },
+  {
+   "item": "g09",
+   "claims_checked": [
+    {
+     "claim": "(no finding: implicitly free of serious errors)",
+     "verdict": "CONFIRMED",
+     "evidence": "I read all 9 lines of the approbatio against the image and the OCR is accurate. The English is faithful (it drops 'religioni', which is harmless). The one error: the censor's name is printed 'Dungaeus' (Henricus Dungaeus, the known Antwerp censor), and both OCR and English give 'Dungens'. That is a minor name misread."
+    }
+   ],
+   "severity_fits": null,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "high",
+   "book_id": "69ef285a85daccce30f2c836",
+   "page_number": 453,
+   "page_id": "69ef285a85daccce30f2c9fb"
+  },
+  {
+   "item": "g10",
+   "claims_checked": [
+    {
+     "claim": "(no finding: implicitly free of serious errors)",
+     "verdict": "PARTLY",
+     "evidence": "The OCR of entries 169-177 matches the image closely: numbers, dates (Fasciculus 500 = 1500 checked by zoom) and imprints are right. One small slip: 'St. Riuerium' read 'Rierium'. The English is faithful in substance but invents glosses for the binding abbreviations: 'Sl. Cl.' (Schweinsleder, Clausuren = pigskin with clasps) becomes 'Cloth binding, worn', and 'gschr. Pg.' becomes 'Written in parchment'. 'RC' as 'Red leather' is a guess. This is the same T10 class the gate recorded at minor on Wittwer p35, but it was not recorded for this page."
+    }
+   ],
+   "severity_fits": null,
+   "missed_serious": null,
+   "overall_agree": true,
+   "confidence": "medium (no serious error, but minor T10 glosses were left unrecorded)",
+   "book_id": "69b51dfd768235dc6598af5b",
+   "page_number": 36,
+   "page_id": "69b51dfd768235dc6598af7f"
+  }
+ ]
+}

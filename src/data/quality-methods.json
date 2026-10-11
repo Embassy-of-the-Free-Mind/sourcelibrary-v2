@@ -65,6 +65,7 @@
       "on_finding": "Defect classes become issues. Pages are not held automatically.",
       "blind_to": "The page image (a wrong leaf passes), page ends, and anything about the book as a whole",
       "issue": 5301,
+      "validity": {"verdict": "valid-with-caveat", "note": "A judged rate, not accuracy: the judge never sees the page image, so a wrong leaf or a faithfully translated misread passes. \"Major\" pools omission, invention, reversal and wrong page; of 45 invention flags, 6 were fabrication. Planted controls pass; no human has checked the judge.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "running"
     },
     {
@@ -78,6 +79,7 @@
       "on_finding": "Broken and in-copyright books are hidden the same day; each defect class becomes an issue.",
       "blind_to": "Rates for single languages (30 books is too few)",
       "issue": 5914,
+      "validity": {"verdict": "valid-with-caveat", "note": "Reads against the image, but month 0 drew books of any visibility and counts 3 consecutive pages as 3 observations (30 books, not 91 pages). No planted controls. Opus agrees with itself (kappa about 0.9) but not with Gemini Pro (kappa -0.13, 16 pages).", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "running"
     },
     {
@@ -91,6 +93,7 @@
       "on_finding": "Ranks the levers in the decision ledger; changes to models and prompts must beat it.",
       "blind_to": "Texts nobody has translated, which is most of what we hold",
       "issue": 5695,
+      "validity": {"verdict": "valid-with-caveat", "note": "Two blind AI judges against a published translation measure fidelity, not accuracy, so \"judged\" fits better than \"accuracy\". The frame is texts someone has translated. A run against itself moves reversals by 11 to 19 per 100 pages.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "per-study"
     },
     {
@@ -104,6 +107,7 @@
       "on_finding": "Flagged pages are listed; not yet held from translation (proposed in #5915).",
       "blind_to": "Genuine textual variants between editions, until the by-eye floor is measured",
       "issue": 5935,
+      "validity": {"verdict": "valid-with-caveat", "note": "Accuracy where the typed edition is the scanned edition. On the worst pages, 40% (Kanripo) and 68% (VRI) of differences are edition variants. The 6.6% Kanripo figure is disagreement (a screen). The Latin-script scorer drops digits, so wrong numbers are not counted.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "running"
     },
     {
@@ -117,6 +121,7 @@
       "on_finding": "Repair lists only. Nothing yet holds a flagged book from view.",
       "blind_to": "Scans spliced from different copies where the numbering still runs",
       "issue": 5059,
+      "validity": {"verdict": "misleading", "note": "The \"about 45% real\" headline is page-number breaks. In the read of 20, 9 were real but only 4 were missing pages; most were duplicate scans. Other classes have their own precision (duplicates 20 of 20, catchword 1 of 20).", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "per-run"
     },
     {
@@ -130,6 +135,7 @@
       "on_finding": "Each class names its detector or issue.",
       "blind_to": "How often each class occurs (that is the audits' job)",
       "issue": 5700,
+      "validity": {"verdict": "valid-with-caveat", "note": "Names classes from pages opened and read; it gives no rates. Reported counts often pool its classes, e.g. \"invented\" covers confabulation, carry-over, show-through and misreads.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "running",
       "link": "/research/page-errors"
     },
@@ -144,6 +150,7 @@
       "on_finding": "The book is hidden, with a reason that stops it being republished in bulk.",
       "blind_to": "Books with no transcribed front matter",
       "issue": 4809,
+      "validity": {"verdict": "valid-with-caveat", "note": "The screen alone is a worklist (49 of 146 flags were in copyright). Every flag is read before a book is hidden, so the action stands. It does not see books whose front matter was never transcribed.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "per-run"
     },
     {
@@ -157,6 +164,7 @@
       "on_finding": "Checks the AI judge: where a reader and the judge disagree, the judge's rates are corrected.",
       "blind_to": "Languages no volunteer reads",
       "issue": 5406,
+      "validity": {"verdict": "unvalidated", "note": "Not yet run: 0 verdicts. Until it runs, no instrument in this register has a human reference.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
       "status": "planned"
     }
   ],

@@ -38,6 +38,18 @@ describe('quality-methods register', () => {
     }
   });
 
+  // #6203: the validity audit's verdict per instrument (.claude/docs/measurement-validity.md). Not rendered.
+  it('every validity verdict uses the audit scale and points at its evidence', () => {
+    const VERDICTS = ['valid', 'valid-with-caveat', 'proxy-only', 'unvalidated', 'misleading'];
+    for (const m of methods.instruments as Array<{ id: string; validity?: { verdict: string; note: string; source: string; as_of: string } }>) {
+      if (!m.validity) continue;
+      expect(VERDICTS, m.id).toContain(m.validity.verdict);
+      expect(m.validity.note.length, m.id).toBeGreaterThan(20);
+      expect(m.validity.as_of, m.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(sourceExists(m.validity.source), `${m.id}: ${m.validity.source}`).toBe(true);
+    }
+  });
+
   it('the improvement board names a sourced window and an owner for every item', () => {
     expect(methods.board.window.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(sourceExists(methods.board.window.source)).toBe(true);
