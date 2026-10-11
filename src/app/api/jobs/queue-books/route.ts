@@ -94,11 +94,11 @@ export const POST = withAuth(async (request, session) => {
       }
     }
 
-    // Check for active job (exclude terminal statuses: completed, failed, cancelled, partial)
+    // Check for active job (exclude terminal statuses: completed, failed, cancelled, partial, blocked)
     if (book.job) {
       const activeJob = await db.collection('jobs').findOne({
         id: book.job.job_id,
-        status: { $nin: ['completed', 'failed', 'cancelled', 'partial'] as JobStatus[] }
+        status: { $nin: ['completed', 'failed', 'cancelled', 'partial', 'blocked'] as JobStatus[] }
       });
       if (activeJob) {
         return NextResponse.json(

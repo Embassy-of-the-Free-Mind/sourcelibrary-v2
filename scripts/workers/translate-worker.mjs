@@ -62,6 +62,7 @@ import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON }
 import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS, translateJobOutcome, blockedJobFields } from '../lib/translate-job-outcome.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -536,6 +537,7 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
   await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload, $unset: CLEAR_STALE_UNSET });
   // Dual-write to Supabase (fire-and-forget)
   syncPageUpdate(page.id, setPayload);
+  return { written: true };
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -572,9 +574,11 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       console.log(`  [health-gate] ${u.page.id} p${u.page.page_number}: ${u.reason} (${u.len} chars) — write refused, evidence kept`);
     }
   }
-  if (entries.length === 0) return;
+  // `refused` = pages the health gate kept out, so the caller does not count them translated (#5108).
+  if (entries.length === 0) return { refused: unhealthy.length };
   if (entries.length === 1) {
-    return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
+    const one = await writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef, call);
+    return { refused: unhealthy.length + (one.written ? 0 : 1) };
   }
   // Build every page's record BEFORE any write: a missing call record fails the whole block here
   // rather than after some pages are stored.
@@ -634,6 +638,7 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
       updated_at: now,
     },
   })));
+  return { refused: unhealthy.length };
 }
 
 // Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
@@ -787,11 +792,15 @@ async function processBook(db, book, job, globalCounter, deadline) {
   }
 
   if (pages.length === 0) {
-    // Book is fully translated — advance pipeline
+    // Nothing left this lane can translate — advance pipeline. If what is left is health-blocked,
+    // the job says so: counted, named, and `blocked` when that is ALL it was for (#5108).
+    const blocked = await healthBlockedResidue(db, { bookId: book.id, pageIds: job.config?.page_ids });
+    const didNothing = blocked.length > 0 && !job.progress?.completed && !job.progress?.failed;
     await db.collection('jobs').updateOne(
       { id: job.id },
-      { $set: { status: 'completed', updated_at: new Date(), completed_at: new Date() } },
+      { $set: { status: didNothing ? BLOCKED_JOB_STATUS : 'completed', ...blockedJobFields(blocked), updated_at: new Date(), completed_at: new Date() } },
     );
+    if (blocked.length > 0) console.log(`  [${label}] HEALTH-BLOCKED, not translated: ${nameBlockedPages(blocked)} (#5108)`);
     await db.collection('books').updateOne(
       { id: book.id, ...NOT_HELD },
       { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
@@ -892,7 +901,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       try {
         const result = await translatePageGuarded(db, page, book, prevTranslation);
         prevTranslation = result.text;
-        await writePageTranslation(db, page, result.text, book, result.promptRef, result.call);
+        const write = await writePageTranslation(db, page, result.text, book, result.promptRef, result.call);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await logUsage({
@@ -904,7 +913,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           batch_size: 1,
         }, db);
 
-        translated++;
+        if (write.written) translated++; // a health-gate refusal is billed, not translated (#5108)
         globalCounter.count++;
         consecutiveErrors = 0;
         totalInputTokens += result.inputTokens;
@@ -1000,9 +1009,9 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
+              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
               batchTranslated++;
-              translated++;
+              if (write.written) translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;
               totalOutputTokens += singleResult.outputTokens;
@@ -1040,7 +1049,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Bulk-write all successfully parsed translations in one round trip
         if (bulkEntries.length > 0) {
-          await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef, result.call);
+          const { refused } = await bulkWritePageTranslations(db, bulkEntries, book, result.promptRef, result.call);
+          translated -= refused; // counted above when parsed; the health gate kept them out (#5108)
         }
 
         // Log batch usage
@@ -1076,8 +1086,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
             try {
               const singleResult = await translatePageGuarded(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
-              translated++;
+              const write = await writePageTranslation(db, page, singleResult.text, book, singleResult.promptRef, singleResult.call);
+              if (write.written) translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;
               totalOutputTokens += singleResult.outputTokens;
@@ -1128,7 +1138,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
   // Final job progress update
   const newCompleted = job.progress.completed + translated;
   const newFailed = (job.progress.failed || 0) + failed;
-  const isComplete = newCompleted + newFailed >= job.progress.total;
+  // Health-blocked pages in the job's scope (refused before the call or after it) are the third
+  // counter: without it a job of refusals reads `completed 0/0, 0 failed` (#5108).
+  const blocked = await healthBlockedResidue(db, { bookId: book.id, pageIds: job.config?.page_ids });
+  const { isComplete, status } = translateJobOutcome({ total: job.progress.total, completed: newCompleted, failed: newFailed, skipped: blocked.length });
+  if (blocked.length > 0) console.log(`  [${label}] HEALTH-BLOCKED, not translated: ${nameBlockedPages(blocked)} (#5108)`);
 
   await db.collection('jobs').updateOne(
     { id: job.id },
@@ -1136,7 +1150,8 @@ async function processBook(db, book, job, globalCounter, deadline) {
       $set: {
         'progress.completed': newCompleted,
         'progress.failed': newFailed,
-        status: isComplete ? (newFailed > 0 ? 'completed_with_errors' : 'completed') : 'processing',
+        ...blockedJobFields(blocked),
+        status,
         updated_at: new Date(),
         ...(isComplete && { completed_at: new Date() }),
       },
