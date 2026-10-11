@@ -50,6 +50,7 @@ import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd, calcul
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
+import { filterCompletedCopies } from './lib/work-copy-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
@@ -3932,26 +3933,12 @@ Rules:
       const requireDedup = !PAUSED_PHASES.has(1.97);
       const dedupGate = requireDedup ? { 'pipeline_auto.dedup_complete': true } : {};
 
-      // Work-ID dedup: skip books if another copy of the same work is already complete
+      // Work-ID dedup: skip a book only if a FULL-TEXT copy of the same volume
+      // is already complete — not a 25-page preview, not vol. 1 of a set (#4833).
       async function filterDuplicateWorks(db, candidates) {
-        const withWorkId = candidates.filter(b => b.work_id);
-        if (withWorkId.length === 0) return candidates;
-
-        const workIds = [...new Set(withWorkId.map(b => b.work_id))];
-        const completedWorks = await db.collection('books').distinct('work_id', {
-          work_id: { $in: workIds },
-          'pipeline_auto.status': { $in: ['complete', 'translate_complete', 'chapters_complete', 'images_complete', 'enriched'] },
-          hidden: { $ne: true },
-        });
-        const completedSet = new Set(completedWorks);
-
-        if (completedSet.size > 0) {
-          const before = candidates.length;
-          candidates = candidates.filter(b => !b.work_id || !completedSet.has(b.work_id));
-          const skipped = before - candidates.length;
-          if (skipped > 0) console.log(`  Work-ID dedup: skipped ${skipped} books (completed copy exists)`);
-        }
-        return candidates;
+        const { kept, skipped } = await filterCompletedCopies(db, candidates);
+        if (skipped.length > 0) console.log(`  Work-ID dedup: skipped ${skipped.length} books (completed full-text copy exists)`);
+        return kept;
       }
 
       // Check real Gemini-side active job count per key for load-aware routing
@@ -4017,7 +4004,7 @@ Rules:
             // "unknown script" and routes EVERY book to flash-preview (~2.75x).
             // created_at + processing_priority are carried only for the dry-run
             // queue-order printout below (#5082).
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, edition_key: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -4136,7 +4123,7 @@ Rules:
           { $sort: { processing_priority: -1, _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           // language + image_source.provider must survive the projection (see Pass 1).
           // created_at + processing_priority are for the dry-run queue-order printout (#5082).
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, edition_key: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
