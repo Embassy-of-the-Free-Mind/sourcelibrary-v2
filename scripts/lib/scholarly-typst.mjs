@@ -1167,7 +1167,7 @@ export function urlDisplay(url) {
  * ("[Bottom center signature mark] A [Bottom right catchword]"), so a short
  * run of them is consumed too.
  *
- * Related: `LEADING_FURNITURE` in src/lib/page-continuity.ts does the same job
+ * Related: `stripLeadingFurniture` in src/lib/page-continuity.ts does the same job
  * for the reader's continuity flags, but only for TAGGED furniture and bare
  * uppercase lines — it does not know this bracketed form. Teaching it that is
  * a change to a live reading surface and belongs in its own PR.

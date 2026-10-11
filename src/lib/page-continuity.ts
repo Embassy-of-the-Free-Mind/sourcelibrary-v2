@@ -104,11 +104,76 @@ const HAS_CASED_SCRIPT = /[\p{Ll}\p{Lu}]/u;
  * printed for the binder, so it both hides the run-on ending and is itself proof
  * of one.
  */
-const LEADING_FURNITURE =
-  /^(?:\s*<(header|page-num|sig|margin|catchword)>[\s\S]*?<\/\1>\s*|\s*[\p{Lu}\p{N}][\p{Lu}\p{N}\s.,'’:-]{0,38}\n)+/u;
+/**
+ * Besides the printed marks, an inline `<note>` or `<gloss>` at the very edge is
+ * the same kind of thing: apparatus beside the sentence, not the sentence. The
+ * second Atalanta scan's p.98 is a complete six-line epigram, ending "…zu
+ * verstehn sey geflissen.", followed by a translator's `<note>` on the geometry.
+ * The edge test saw `</note>` — or rather `/note`, once `>` had been stripped as
+ * a blockquote marker — found no full stop, and reported the epigram as running
+ * on (#3721, the case #3723 left open).
+ *
+ * Measured 2026-10-11 on 4,152 adjacent prose pairs from 200 books
+ * (scripts/audit/continuity-pair-invariant.ts): 368 pages end on a `</note>` or
+ * `</gloss>`, and 269 of them said "runs on" above a next page that opened
+ * clean. With the two tags treated as furniture, 120.
+ */
+const FURNITURE_TAGS = ['header', 'page-num', 'sig', 'margin', 'catchword', 'note', 'gloss'];
 
-const TRAILING_FURNITURE =
-  /(?:\s*<(header|page-num|sig|margin|catchword)>[\s\S]*?<\/\1>\s*|\n\s*[\p{Lu}\p{N}][\p{Lu}\p{N}\s.,'’:-]{0,38}\s*)+$/u;
+/** A short line of capitals and numerals standing alone: "BOOK ONE", "COL. IV", "276". */
+const FURNITURE_LINE = /^[\p{Lu}\p{N}][\p{Lu}\p{N}\s.,'’:-]{0,38}$/u;
+
+/**
+ * These two were single regexes, `^(?:tag-block|caps-line)+` and its mirror
+ * anchored on `$`. THE TRAILING ONE COULD TAKE A MINUTE ON ONE PAGE. Its
+ * caps-line alternative was `\n\s*[…][…\s…]{0,38}\s*` under a `+`: three
+ * overlapping ways to consume the same whitespace, repeated, then a `$` that
+ * fails whenever the page ends on anything else. On a page that is mostly short
+ * capital lines — the transcription of a Herculaneum papyrus, 1,018 characters —
+ * that is exponential: 53.7 s for `pageContinuity`, measured, in the request
+ * path of `get_quote` and once per page in `get_quotes`.
+ *
+ * The same regex had a second fault, in the tag alternative: a lazy
+ * `<margin>[\s\S]*?</margin>` that fails to reach `$` backtracks by GROWING, so
+ * it could run from the first margin note on a page to the last and take the
+ * body between them as furniture.
+ *
+ * So: a loop, one block or one line at a time, nearest opener only. Linear, and
+ * there is nothing to backtrack into.
+ */
+function stripLeadingFurniture(text: string): string {
+  let t = text;
+  for (;;) {
+    t = t.trimStart();
+    const tag = FURNITURE_TAGS.find((name) => t.startsWith(`<${name}>`));
+    if (tag) {
+      const close = t.indexOf(`</${tag}>`);
+      if (close === -1) return t;
+      t = t.slice(close + tag.length + 3);
+      continue;
+    }
+    const eol = t.indexOf('\n');
+    if (eol === -1 || !FURNITURE_LINE.test(t.slice(0, eol).trimEnd())) return t;
+    t = t.slice(eol + 1);
+  }
+}
+
+function stripTrailingFurniture(text: string): string {
+  let t = text;
+  for (;;) {
+    t = t.trimEnd();
+    const tag = FURNITURE_TAGS.find((name) => t.endsWith(`</${name}>`));
+    if (tag) {
+      const open = t.lastIndexOf(`<${tag}>`);
+      if (open === -1) return t;
+      t = t.slice(0, open);
+      continue;
+    }
+    const eol = t.lastIndexOf('\n');
+    if (eol === -1 || !FURNITURE_LINE.test(t.slice(eol + 1).trimStart())) return t;
+    t = t.slice(0, eol);
+  }
+}
 
 /**
  * Zero-width characters, which `markForExport` (src/lib/provenance.ts) threads
@@ -125,12 +190,21 @@ const TRAILING_FURNITURE =
 const ZERO_WIDTH = /[​-‏⁠-⁤﻿]/g;
 
 /**
+ * What is left after the furniture strip is inline markup around the author's
+ * own words — `<term>`, `<unclear>`, `<insert>`. Drop the tag, keep the word:
+ * a page ending "…the <term>lapis</term>" ends on "lapis", not on "/term".
+ * Applied at the two edges only, and before `stripInlineNoise` for the reason
+ * given above it; the 200-character prose floor counts what it always counted.
+ */
+const INLINE_TAG = /<\/?[a-z][a-z-]*>/gi;
+
+/**
  * ORDER IS LOAD-BEARING: furniture first, then inline noise.
  *
  * `stripInlineNoise` removes `>` to kill markdown blockquote markers — and `>`
  * is also the closing bracket of every tag. Running it first turns
  * `<page-num>276</page-num>` into `<page-num276</page-num`, after which
- * LEADING_FURNITURE cannot match a tagged block at all and the head is never
+ * the furniture strip cannot match a tagged block at all and the head is never
  * reached.
  *
  * That shipped. `get_quote` on p.269 of the Taylor Ethics reported
@@ -150,12 +224,12 @@ function stripInlineNoise(text: string): string {
 
 /** The text as it flows INTO this page — furniture at the top removed. */
 function headOf(text: string): string {
-  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(LEADING_FURNITURE, '')).trim();
+  return stripInlineNoise(stripLeadingFurniture(text.replace(ZERO_WIDTH, '')).replace(INLINE_TAG, '')).trim();
 }
 
 /** The text as it flows OUT of this page — furniture at the foot removed. */
 function tailOf(text: string): string {
-  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(TRAILING_FURNITURE, '')).trim();
+  return stripInlineNoise(stripTrailingFurniture(text.replace(ZERO_WIDTH, '')).replace(INLINE_TAG, '')).trim();
 }
 
 export interface PageContinuity {
