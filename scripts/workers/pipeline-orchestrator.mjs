@@ -51,6 +51,7 @@ import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { filterCompletedCopies } from './lib/work-copy-dedup.mjs';
+import { partitionPreviewCandidates } from './lib/ocr-preview-eligibility.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
@@ -4008,7 +4009,15 @@ Rules:
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, pages_ocr: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
+        // --book replaces the list after the "no OCR yet" $match, so re-apply it
+        // here — else every --book run takes another 25-page preview and Pass 2
+        // skips on that fresh batch, never the full pass (#4624).
+        if (BOOK_OVERRIDE) {
+          const { eligible, dropped } = partitionPreviewCandidates(previewCandidates);
+          for (const { book, reason } of dropped) console.log(`  Preview pass: skipping ${(book.title || book.id || '').substring(0, 50)} — ${reason}`);
+          previewCandidates = eligible;
+        }
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
