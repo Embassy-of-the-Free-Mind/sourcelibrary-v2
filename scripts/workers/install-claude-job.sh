@@ -39,5 +39,4 @@ dst="${1:-/root/bin/claude-job.sh}"; bin=$(dirname "$dst"); rc=0
 install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
-install_one job-inbox-hook.sh "$bin/job-inbox-hook.sh" || rc=1  # #6534; the settings.json entry is added once by hand
 exit $rc

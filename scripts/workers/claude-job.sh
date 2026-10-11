@@ -85,10 +85,10 @@ $HOST_RULES
 - A real decision: end your FINAL message with one line each:
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
   $JD/decisions.txt for the morning digest; they do not page.
-- INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`. New notes arrive
-  in your context after a tool call (job-inbox-hook.sh); whether or not you have seen any, run
-  \`cat $JD/$1.inbox\` before each report you post and before the done file. A note overrides the brief
-  where they conflict. Name the notes you acted on in your next issue/PR comment (#6534).
+- INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`, which appends to
+  $JD/$1.inbox. Run \`cat $JD/$1.inbox 2>/dev/null\` at the start of each new step, before each report you
+  post, and before the done file. A note overrides the brief where they conflict. Name the notes you acted
+  on in your next issue/PR comment (#6534).
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
@@ -326,7 +326,6 @@ Your PR $url has failing checks: $bad. A job owns its PR until it is green. Read
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
   export JOB_SCRATCH="$DATA/$name" TMPDIR="$DATA/$name/tmp"; mkdir -p "$TMPDIR"
-  export JOB_INBOX="$JD/$name.inbox"  # read by job-inbox-hook.sh after each tool call (#6534)
   # Heartbeat (2026-10-04, #5709): `claude -p` writes nothing to the log until it exits, so an empty
   # log cannot tell a working job from one the OOM killer took with its tmux. This file can.
   ( while :; do date +%s > "$JD/$name.hb"; sleep 60; done ) & hb=$!
@@ -487,7 +486,7 @@ case "${1:-status}" in
       tmux new -d -s "job-$n" "$0 _run_resume $n"
     done ;;
   log) tail -"${3:-40}" "$LOGD/$2.log" ;;
-  note)  # steer a running job (#6534): its inbox hook delivers the line after the job's next tool call
+  note)  # steer a running job (#6534): the job reads its inbox at each step (HEADLESS RULES)
     [ -n "${2:-}" ] && [ -n "${3:-}" ] || { echo "usage: claude-job.sh note <name> \"<message>\""; exit 2; }
     [ -f "$JD/$2.brief.txt" ] || { echo "no job named $2 on $HOST"; exit 1; }
     printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$3" >> "$JD/$2.inbox"

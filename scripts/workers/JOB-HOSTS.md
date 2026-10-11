@@ -60,7 +60,7 @@ PR: yes
 ssh root@<box> /root/bin/claude-job.sh note <name> "score recitation cuts as unscored, not 100% error"
 ```
 
-A headless job's prompt is fixed when it starts, so before this the only way to add an instruction was to stop and restart it (three dispatches of the #6523 fix on 2026-10-11). `note` appends a timestamped line to `$JD/<name>.inbox`. The wrapper exports `JOB_INBOX`, and `job-inbox-hook.sh`, a PostToolUse hook in the box's `/root/.claude/settings.json`, hands the job each new line once, after its next tool call. The headless rules also tell the job to read the inbox before each report and before the done file, and to name the notes it acted on. A note to a job that is not running is read when the job resumes. Prefer a note to a restart, unless the job has gone the wrong way so far that its work is better discarded.
+A headless job's prompt is fixed when it starts, so before this the only way to add an instruction was to stop and restart it (three dispatches of the #6523 fix on 2026-10-11). `note` appends a timestamped line to `$JD/<name>.inbox`. The headless rules tell the job to read its inbox at the start of each step, before each report and before the done file, and to name the notes it acted on. There is deliberately no hook: a PostToolUse hook would run in every Claude session on the box, which is more exposure than the gain is worth (#6534). A note therefore lands at the job's next step, not mid-step. A note to a job that is not running is read when the job resumes. Prefer a note to a restart, unless the job has gone the wrong way so far that its work is better discarded.
 
 ## What the landing check says when a job finishes
 
