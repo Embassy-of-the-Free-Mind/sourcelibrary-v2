@@ -87,6 +87,10 @@ $HOST_RULES
 - A real decision: end your FINAL message with one line each:
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
   $JD/decisions.txt for the morning digest; they do not page.
+- INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`, which appends to
+  $JD/$1.inbox. Run \`cat $JD/$1.inbox 2>/dev/null\` at the start of each new step, before each report you
+  post, and before the done file. A note overrides the brief where they conflict. Name the notes you acted
+  on in your next issue/PR comment (#6534).
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
@@ -574,6 +578,11 @@ case "${1:-status}" in
       tmux new -d -s "job-$n" "$0 _run_resume $n"
     done ;;
   log) tail -"${3:-40}" "$LOGD/$2.log" ;;
+  note)  # steer a running job (#6534): the job reads its inbox at each step (HEADLESS RULES)
+    [ -n "${2:-}" ] && [ -n "${3:-}" ] || { echo "usage: claude-job.sh note <name> \"<message>\""; exit 2; }
+    [ -f "$JD/$2.brief.txt" ] || { echo "no job named $2 on $HOST"; exit 1; }
+    printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$3" >> "$JD/$2.inbox"
+    if tmux has-session -t "=job-$2" 2>/dev/null; then echo "noted for job-$2 (live)"; else echo "noted for job-$2 (not running; read on resume)"; fi ;;
   stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2"
     cp=$(checkpoint "$2" stopped); [ -n "$cp" ] && echo "work checkpointed to $cp" ;;
   _reap) reap_if_clean "$2"; tail -1 "$LOGD/$2.log" ;;  # test/one-off: apply the reap rule to one job
