@@ -94,6 +94,14 @@ describe('isTrivialGalleryDetection', () => {
     ['"initially" is not "initial"', { type: 'diagram', description: 'The apparatus as initially assembled', bbox: small }, false],
     ['no bbox — nothing to judge, admit', { type: 'decorative', description: 'initial', bbox: null }, false],
     ['type asserted but unusable is not decorative', { type: 'ornamental drop', description: 'an ornament', bbox: small }, false],
+    // #5200: ownership marks, at any size and quality.
+    ['BPH pelican plate typed emblem', { type: 'emblem', description: "A circular emblem on a square slip of paper pasted to the center of the page. The emblem is bordered by the text 'PHILOSOPHIA HERMETICA'.", bbox: large }, true],
+    ['typed exlibris, large', { type: 'exlibris', description: 'An ornate engraved plate with two reading putti', bbox: large }, true],
+    ['typed bookplate, no bbox', { type: 'bookplate', description: '', bbox: null }, true],
+    ['described as ex-libris, typed engraving', { type: 'engraving', description: 'Heraldic ex-libris of the Electoral Library of Bavaria', bbox: large }, true],
+    ['described as a bookplate, typed emblem', { type: 'emblem', description: 'The personal bookplate of Carl Gustav Jung featuring an angel', bbox: large }, true],
+    ['a real pelican emblem stays', { type: 'emblem', description: 'A pelican in her piety above an alchemical vessel', bbox: large }, false],
+    ['"Liber" is not "ex libris"', { type: 'woodcut', description: 'Title woodcut of the Liber de arte distillandi', bbox: large }, false],
   ];
 
   for (const [name, img, expected] of cases) {

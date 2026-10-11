@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
+import { OWNERSHIP_IMAGE_TYPES } from '@/lib/gallery-image-types';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { resolveSearchScope, matchClip, matchGalleryText, scopeAdmits, type SearchScope } from '@/lib/tenant-search-scope';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
@@ -399,7 +400,8 @@ export async function GET(request: NextRequest) {
             : collectionBookIds ? { book_id: { $in: collectionBookIds } }
             : libraryBookIds ? { book_id: { $in: libraryBookIds } }
             : {}),
-          ...(imageType ? { type: imageType } : {}),
+          // Ownership marks out unless asked for by type — as galleryFilter (#5200).
+          type: imageType || { $nin: [...OWNERSHIP_IMAGE_TYPES] },
           ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
           ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
           ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
@@ -537,7 +539,8 @@ export async function GET(request: NextRequest) {
             book_visible: true,
             extracted_url: { $ne: null },
             ...(bookId ? { book_id: bookId } : {}),
-            ...(imageType ? { type: imageType } : {}),
+            // Ownership marks out unless asked for by type — as galleryFilter (#5200).
+            type: imageType || { $nin: [...OWNERSHIP_IMAGE_TYPES] },
             ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
             ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
             ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
