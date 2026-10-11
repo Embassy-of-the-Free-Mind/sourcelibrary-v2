@@ -19,28 +19,27 @@
  *
  * Query discipline: countDocuments with simple predicates only;
  * estimatedDocumentCount where exact totals aren't needed; every query
- * carries maxTimeMS. No unbounded aggregations over `pages`.
+ * carries maxTimeMS. No unindexed queries over `pages` at all — the page
+ * stages read the verified per-book counters instead (#4708).
  *
  * Conventions reused:
  *   - visible pages: page_number > 0 (scripts/lib/page-counts.mjs, #3293)
  *   - live books: visible:true && pages_count>0 (canonical public filter)
- *   - archive failure markers: archived_photo starting 'failed:'
+ *   - page stages: the per-book counters (scripts/lib/page-counts.mjs, #5325),
+ *     verified against an exact recount of random books every run (#4708)
  *   - #2430 canary: gallery_images rows with a detection above the
  *     thumbnail-quality bar but no extracted_url — the batch collector writes
  *     bbox-only rows and generate-thumbnails materializes them; rows stuck in
  *     that state are the images queue.
  */
 
-import { VISIBLE_PAGE_MATCH } from './page-counts.mjs';
+import { buildVisiblePageCountPipeline, pageCountersFromStats, PAGE_COUNTERS } from './page-counts.mjs';
 
-const COUNT_MAX_TIME_MS = 10 * 60_000; // nightly job; pages is ~5M docs
+const COUNT_MAX_TIME_MS = 10 * 60_000; // nightly job
 const CONTROL_MAX_TIME_MS = 60_000;
 
 /** Canonical "live" book filter used across public APIs. */
 export const LIVE_BOOK_MATCH = { visible: true, pages_count: { $gt: 0 } };
-
-/** Non-empty string, not an archive-failure marker. */
-const ARCHIVED_OK = { $type: 'string', $ne: '', $not: /^failed:/ };
 
 /**
  * Pure: fold the positive-control outcome into a measurement.
@@ -111,30 +110,6 @@ export function parseContentRangeCount(header) {
 
 // ── Mongo helpers ───────────────────────────────────────────────────────────
 
-/**
- * Scoped positive control for `pages` probes: an unscoped findOne on an
- * unindexed predicate collscans ~19M docs and times out, which reads as
- * probe_broken (observed on the first supervised run, 2026-08-08 — the
- * control caught its own cost). Scope the control to ONE live processed
- * book's pages (book_id is indexed) so it answers in milliseconds.
- */
-async function pagesControlFound(db, predicate) {
-  try {
-    const book = await db.collection('books').findOne(
-      { visible: true, pages_ocr: { $gt: 0 }, pages_translated: { $gt: 0 } },
-      { projection: { id: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS },
-    );
-    if (!book?.id) return false;
-    const doc = await db.collection('pages').findOne(
-      { book_id: book.id, ...predicate },
-      { projection: { _id: 1 }, maxTimeMS: CONTROL_MAX_TIME_MS },
-    );
-    return doc != null;
-  } catch {
-    return false;
-  }
-}
-
 async function controlFound(coll, predicate) {
   try {
     const doc = await coll.findOne(predicate, {
@@ -154,70 +129,116 @@ function count(coll, predicate) {
 
 // ── Stage measurements ──────────────────────────────────────────────────────
 
-/** archived — pages whose archived_photo is a real URL (not a failure marker). */
-export async function measureArchived(db) {
-  const pages = db.collection('pages');
-  const coveredPredicate = { archived_photo: ARCHIVED_OK };
-  if (!(await pagesControlFound(db, coveredPredicate))) {
-    return finalizeMeasurement({ stage: 'archived' }, false);
+// ── Page stages (#4708) ─────────────────────────────────────────────────────
+//
+// `pages` is ~29M docs and none of the coverage predicates is indexed: one
+// countDocuments({page_number:{$gt:0}}) did not finish in 10 minutes
+// (measured 2026-10-11), and the six exact page counts that used to live here
+// put this nightly job past its 1800s ceiling every night from 2026-08-09 —
+// one snapshot row ever. A $sample is no substitute: on 2026-10-11 it put
+// pages-with-ocr.updated_at at 23.0M against an exact indexed count of 9.5M
+// (WiredTiger's random cursor is not uniform here).
+//
+// So the page stages SUM the per-book page counters — but those are written
+// from page data by exactly one aggregation (PAGE_COUNT_ACCUMULATORS in
+// page-counts.mjs, via recountBook() and the reconciler), not by job status.
+// The positive control is therefore a TRUTH check on the counters: recount a
+// random handful of books exactly from their pages (book_id is indexed) and
+// compare. If more than COUNTER_DRIFT_TOLERANCE of them disagree, the stages
+// report probe_broken — a counter that lies must not read as coverage.
+
+const COUNTER_CHECK_BOOKS = 100;
+const COUNTER_DRIFT_TOLERANCE = 0.05;
+
+/** Pure: compare stored counters with exact recounts; drifted = any counter differs. */
+export function compareCounters(rows) {
+  const drifted = rows.filter(({ stored, actual }) =>
+    ['pages_count', 'pages_ocr', 'pages_translated', 'pages_blank', 'pages_archived'].some(
+      (k) => (stored?.[k] ?? 0) !== (actual?.[k] ?? 0),
+    ),
+  );
+  return {
+    checked: rows.length,
+    drifted: drifted.length,
+    ok: rows.length > 0 && drifted.length / rows.length <= COUNTER_DRIFT_TOLERANCE,
+    examples: drifted.slice(0, 3).map((r) => r.id),
+  };
+}
+
+/** Recount COUNTER_CHECK_BOOKS random books exactly from `pages`; compare to their counters. */
+async function checkPageCounters(db, sampleSize = COUNTER_CHECK_BOOKS) {
+  const books = await db.collection('books').aggregate(
+    [
+      { $match: { pages_count: { $gt: 0 } } },
+      { $sample: { size: sampleSize } },
+      { $project: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } },
+    ],
+    { maxTimeMS: CONTROL_MAX_TIME_MS },
+  ).toArray();
+  const rows = [];
+  for (const { id, ...stored } of books) {
+    if (!id) continue;
+    // Read the books row again right before its recount, so a book the pipeline
+    // advanced between the sample and the recount is not reported as drift.
+    const [fresh, [stats]] = await Promise.all([
+      db.collection('books').findOne({ id }, { projection: { _id: 0, ...Object.fromEntries(PAGE_COUNTERS.map((k) => [k, 1])) }, maxTimeMS: CONTROL_MAX_TIME_MS }),
+      db.collection('pages').aggregate(buildVisiblePageCountPipeline(id), { maxTimeMS: CONTROL_MAX_TIME_MS }).toArray(),
+    ]);
+    rows.push({ id, stored: fresh ?? stored, actual: pageCountersFromStats(stats) });
   }
-  const [total, covered, failed] = await Promise.all([
-    pages.estimatedDocumentCount(),
-    count(pages, coveredPredicate),
-    count(pages, { archived_photo: /^failed:/ }),
-  ]);
-  return finalizeMeasurement(
-    {
-      stage: 'archived',
-      covered,
-      total,
-      // Failure markers are not queue — an archiver selects on the field being
-      // empty, so marked pages are invisible to it (see Data Protection
-      // corollary in CLAUDE.md). They're surfaced in detail instead.
-      queue_depth: Math.max(0, total - covered - failed),
-      detail: { failed_markers: failed },
-    },
-    true,
+  return compareCounters(rows);
+}
+
+/** Pure: page-stage measurements from summed counters (+ the counter check). */
+export function pageStagesFromCounters(sums, check) {
+  const total = sums?.pages_count ?? 0;
+  const checkDetail = { counters_checked: check.checked, counters_drifted: check.drifted };
+  const nonBlank = Math.max(0, total - (sums?.pages_blank ?? 0));
+  const measurements = [
+    // pages_archived counts a `failed:` marker as archived (isArchivedPage —
+    // the reconciler's long-standing definition); the queue is pages with no
+    // archived_photo at all, which is what an archiver selects on.
+    { stage: 'archived', covered: sums?.pages_archived ?? 0, total },
+    { stage: 'ocr', covered: sums?.pages_ocr ?? 0, total },
+    // Blank leaves are out of BOTH sides, as isTranslatedPage() (#3747):
+    // they can never be translated, so as queue they would never drain.
+    { stage: 'translated', covered: sums?.pages_translated ?? 0, total: nonBlank },
+  ];
+  return measurements.map((m) =>
+    finalizeMeasurement(
+      {
+        ...m,
+        queue_depth: Math.max(0, m.total - m.covered),
+        detail: check.ok ? checkDetail : { ...checkDetail, drift_examples: check.examples.join(',') },
+      },
+      check.ok,
+    ),
   );
 }
 
-/** ocr — visible pages carrying non-empty ocr.data (page-level, not books.pages_ocr). */
-export async function measureOcr(db) {
-  const pages = db.collection('pages');
-  const coveredPredicate = { ...VISIBLE_PAGE_MATCH, 'ocr.data': { $type: 'string', $ne: '' } };
-  if (!(await pagesControlFound(db, coveredPredicate))) {
-    return finalizeMeasurement({ stage: 'ocr' }, false);
-  }
-  const [total, covered] = await Promise.all([
-    count(pages, VISIBLE_PAGE_MATCH),
-    count(pages, coveredPredicate),
-  ]);
-  return finalizeMeasurement(
-    { stage: 'ocr', covered, total, queue_depth: Math.max(0, total - covered) },
-    true,
-  );
-}
-
-/** translated — visible NON-BLANK pages carrying a real translation.
- *  Mirrors isTranslatedPage() (#3747): blank leaves carry the literal
- *  placeholder, not a translation, and are excluded from BOTH sides —
- *  they can never be translated, so counting them as queue would show a
- *  permanently unreachable backlog. */
-export async function measureTranslated(db) {
-  const pages = db.collection('pages');
-  const nonBlank = { ...VISIBLE_PAGE_MATCH, page_type: { $ne: 'blank' } };
-  const coveredPredicate = { ...nonBlank, 'translation.data': { $type: 'string', $ne: '' } };
-  if (!(await pagesControlFound(db, coveredPredicate))) {
-    return finalizeMeasurement({ stage: 'translated' }, false);
-  }
-  const [total, covered] = await Promise.all([
-    count(pages, nonBlank),
-    count(pages, coveredPredicate),
-  ]);
-  return finalizeMeasurement(
-    { stage: 'translated', covered, total, queue_depth: Math.max(0, total - covered) },
-    true,
-  );
+/**
+ * archived / ocr / translated — visible pages (page_number > 0) across every
+ * book, from the summed page counters, guarded by an exact recount of random
+ * books (see the section comment above).
+ */
+export async function measurePageStages(db) {
+  const check = await checkPageCounters(db);
+  const [sums] = await db.collection('books').aggregate(
+    [
+      {
+        $group: {
+          _id: null,
+          pages_count: { $sum: '$pages_count' },
+          pages_ocr: { $sum: '$pages_ocr' },
+          pages_translated: { $sum: '$pages_translated' },
+          pages_blank: { $sum: '$pages_blank' },
+          pages_archived: { $sum: '$pages_archived' },
+        },
+      },
+    ],
+    { maxTimeMS: COUNT_MAX_TIME_MS },
+  ).toArray();
+  return pageStagesFromCounters(sums, check);
 }
 
 /** summaries — live books with a summary (object with data, or legacy string). */
@@ -384,9 +405,7 @@ export async function measureIdentity(db) {
  *  as probe_broken rather than sinking the whole snapshot. */
 export async function measureAllStages(db, { fetchImpl = fetch } = {}) {
   const measurements = [
-    ['archived', () => measureArchived(db)],
-    ['ocr', () => measureOcr(db)],
-    ['translated', () => measureTranslated(db)],
+    [['archived', 'ocr', 'translated'], () => measurePageStages(db)],
     ['summaries', () => measureSummaries(db)],
     ['chapters', () => measureChapters(db)],
     ['images', () => measureImages(db)],
@@ -396,12 +415,13 @@ export async function measureAllStages(db, { fetchImpl = fetch } = {}) {
   const out = [];
   for (const [stage, fn] of measurements) {
     try {
-      out.push(await fn());
+      const result = await fn();
+      out.push(...(Array.isArray(result) ? result : [result]));
     } catch (err) {
-      out.push({
-        ...finalizeMeasurement({ stage }, false),
-        detail: { error: String(err?.message || err).slice(0, 300) },
-      });
+      const error = String(err?.message || err).slice(0, 300);
+      for (const s of [stage].flat()) {
+        out.push({ ...finalizeMeasurement({ stage: s }, false), detail: { error } });
+      }
     }
   }
   return out;
