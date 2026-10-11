@@ -23,7 +23,8 @@ import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
  * Book — this handler: id, slug, title, display_title, author, published,
  * language, visible (isBookReadable), pages_count (botMaxPage), editions
  * (published edition → DOI/version/date); languageApparatusFields:
- * language, original_language, text_role, is_translation; generateCitations:
+ * language, original_language, text_role, text_role_source, is_translation;
+ * generateCitations:
  * author, doi, format, language, published, publisher, slug, ustc_id +
  * citationTitle (title, display_title, content_type, resource_type,
  * field_provenance), resolveImprintPlace (IMPRINT_PLACE_FIELDS),
@@ -32,7 +33,7 @@ import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
  */
 const QUOTE_BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-  language: 1, original_language: 1, text_role: 1, is_translation: 1,
+  language: 1, original_language: 1, text_role: 1, text_role_source: 1, is_translation: 1,
   visible: 1, pages_count: 1, doi: 1, format: 1, publisher: 1, ustc_id: 1,
   content_type: 1, resource_type: 1, field_provenance: 1,
   ...IMPRINT_PLACE_PROJECTION,
@@ -130,7 +131,7 @@ interface QuoteResponse {
     language: string;
     /** Language of the work, when it differs from `language`. */
     work_language?: string;
-    /** original | period-translation | modern-translation, when classified. */
+    /** original | period-translation | modern-translation | unclassified (#4441). */
     text_role?: string;
     /**
      * Set only where `original` below is a translator's text rather than the
