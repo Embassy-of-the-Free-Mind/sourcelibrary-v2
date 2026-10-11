@@ -14,7 +14,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { evaluatePrior, withoutStudyPriors, type BookInput, type CitedPriorInput } from '@/lib/ft-prior-guard';
+import { evaluatePrior, withoutStudyPriors, isUnanchoredAuditAlternative, displayablePriorPicks, type BookInput, type CitedPriorInput } from '@/lib/ft-prior-guard';
 
 // ── Shared expectation helpers ────────────────────────────────────────────────
 
@@ -507,5 +507,35 @@ describe('STUDY guard — a monograph that quotes the work is not a translation 
     ];
     expect(withoutStudyPriors(kircher, picks)).toEqual([picks[1]]);
     expect(withoutStudyPriors(kircher, undefined)).toEqual([]);
+  });
+});
+
+describe('Unanchored audit alternatives (#4634)', () => {
+  const nynauld = { title: 'De la Lycanthropie, Transformation et Extase des Sorciers', author: 'Jean de Nynauld' };
+  // Live shape on /book/699067e2249ce014347d46a9 (2026-10-11): the audit
+  // contradicted a claim and substituted this credit with an empty evidence array.
+  const hexen = {
+    english_title: 'On Lycanthropy, Transformation & Ecstasy of Sorcerers',
+    translator: 'Marina Rivas García',
+    pub_year: 'unknown',
+    publisher: 'Hexen Press',
+    completeness: 'complete',
+    evidence_source: 'gemini_grounding_audit_alternative',
+  };
+
+  it('drops an audit substitute with no year, url or catalogue id', () => {
+    expect(isUnanchoredAuditAlternative(hexen)).toBe(true);
+    expect(displayablePriorPicks(nynauld, [hexen])).toEqual([]);
+  });
+
+  it('keeps an audit substitute that carries a year, url or catalogue id', () => {
+    expect(isUnanchoredAuditAlternative({ ...hexen, pub_year: '1570' })).toBe(false);
+    expect(isUnanchoredAuditAlternative({ ...hexen, url: 'https://example.org/x' })).toBe(false);
+    expect(isUnanchoredAuditAlternative({ ...hexen, catalog_id: 'OL1W' })).toBe(false);
+  });
+
+  it('never drops an undated pick from any other evidence source', () => {
+    const discovery = { ...hexen, evidence_source: 'gemini_grounding_discovery' };
+    expect(displayablePriorPicks(nynauld, [discovery, hexen])).toEqual([discovery]);
   });
 });

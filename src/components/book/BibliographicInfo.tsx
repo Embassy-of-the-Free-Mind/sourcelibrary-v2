@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
-import { withoutStudyPriors } from '@/lib/ft-prior-guard';
+import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import { licenseDisplay } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
@@ -359,7 +359,7 @@ export default function BibliographicInfo({
                       : book.translation_verification!.translations_found?.length
                         ? book.translation_verification!.translations_found
                         : book.translation_verification!.translations || [];
-                    return withoutStudyPriors(book, translations)
+                    return displayablePriorPicks(book, translations)
                       .filter(t => t.english_title || t.translator)
                       .map((t, i) => (
                         <div key={i} className="text-sm">
@@ -403,7 +403,7 @@ export default function BibliographicInfo({
                   })()}
                   {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (() => {
                     // A study that quotes the work is not an earlier translation of it (#4639).
-                    const earlier = withoutStudyPriors(book, book.translation_verification!.translations_found);
+                    const earlier = displayablePriorPicks(book, book.translation_verification!.translations_found);
                     return (
                     <div className="text-stone-500 text-xs space-y-1">
                       <p>
