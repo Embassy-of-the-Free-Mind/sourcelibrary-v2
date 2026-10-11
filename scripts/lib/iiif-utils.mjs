@@ -233,6 +233,7 @@ export async function rateLimitedFetch(url, opts = {}) {
 
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), timeout);
+    let refused = null;
     try {
       const res = await fetch(url, {
         signal: controller.signal,
@@ -241,14 +242,16 @@ export async function rateLimitedFetch(url, opts = {}) {
       clearTimeout(t);
       if (!res.ok) {
         // 4xx is unlikely to recover; bail without retrying. 5xx and 429 are
-        // worth retrying with backoff.
+        // worth retrying with backoff. Not a `throw` here: it would land in the
+        // catch below, which treats everything as transient — every 404 cost
+        // four requests and ~3.5 s of backoff (#5084).
         if (res.status >= 400 && res.status < 500 && res.status !== 429) {
-          throw new Error(`HTTP ${res.status}`);
+          refused = new Error(`HTTP ${res.status}`);
         }
         // A 429 is the host telling us our RATE is wrong. Retrying at the same
         // rate is the one response guaranteed not to work — slow this host down
         // for every subsequent caller, not just this retry.
-        if (res.status === 429) {
+        else if (res.status === 429) {
           const ra = Number(res.headers.get('retry-after'));
           noteRateLimited(url, ra);
         }
@@ -261,6 +264,7 @@ export async function rateLimitedFetch(url, opts = {}) {
       lastErr = e;
       // Abort, ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
     }
+    if (refused) throw refused;
     if (attempt < retries) {
       const backoff = 500 * Math.pow(2, attempt); // 500ms, 1s, 2s
       await new Promise(r => setTimeout(r, backoff));
