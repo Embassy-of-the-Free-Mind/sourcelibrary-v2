@@ -381,6 +381,37 @@ export function withoutStudyPriors<T>(
   });
 }
 
+/**
+ * Is this pick a translation the 2026-05-30 grounding audit substituted for a
+ * claim it contradicted, with nothing a reader could check it against — no
+ * dated year, no URL, no catalogue id? The audit model returned these with an
+ * empty evidence array, so the translator and publisher are the model's word
+ * alone. On a reader surface treat such a credit as absent, not as a credit
+ * (#4634; e.g. Nynauld's *De la Lycanthropie* → "Marina Rivas García, Hexen
+ * Press", year "unknown").
+ *
+ * Deliberately narrow: an alternative WITH a year (Billingsley's Euclid 1570,
+ * Twyne's Petrarch 1579 …) is usually a real early edition and stays.
+ */
+export function isUnanchoredAuditAlternative(prior: unknown): boolean {
+  const o = (prior ?? {}) as Record<string, unknown>;
+  if (o.evidence_source !== 'gemini_grounding_audit_alternative') return false;
+  const hasYear = /\d{3,4}/.test(String(o.pub_year ?? ''));
+  return !hasYear && !o.url && !o.catalog_id;
+}
+
+/**
+ * The `translation_verification` picks a reader surface may list as earlier
+ * English translations: drops studies that quote the work (#4639) and
+ * unanchored audit substitutes (#4634), keeping the rest in order.
+ */
+export function displayablePriorPicks<T>(
+  book: { title?: string | null; author?: string | null },
+  priors: readonly T[] | null | undefined,
+): T[] {
+  return withoutStudyPriors(book, priors).filter((p) => !isUnanchoredAuditAlternative(p));
+}
+
 // ── Guard 3: Volume / container mismatch (#3044) ──────────────────────────────
 
 /**
