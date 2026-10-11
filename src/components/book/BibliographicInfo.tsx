@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
+import { withoutStudyPriors } from '@/lib/ft-prior-guard';
 import { licenseDisplay } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
@@ -358,7 +359,7 @@ export default function BibliographicInfo({
                       : book.translation_verification!.translations_found?.length
                         ? book.translation_verification!.translations_found
                         : book.translation_verification!.translations || [];
-                    return translations
+                    return withoutStudyPriors(book, translations)
                       .filter(t => t.english_title || t.translator)
                       .map((t, i) => (
                         <div key={i} className="text-sm">
@@ -400,15 +401,18 @@ export default function BibliographicInfo({
                         </div>
                       ));
                   })()}
-                  {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (
+                  {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (() => {
+                    // A study that quotes the work is not an earlier translation of it (#4639).
+                    const earlier = withoutStudyPriors(book, book.translation_verification!.translations_found);
+                    return (
                     <div className="text-stone-500 text-xs space-y-1">
                       <p>
                         {firstTranslationDescription(book.translation_verification.disposition)}
                       </p>
-                      {(book.translation_verification.translations_found?.length ?? 0) > 0 && (
+                      {earlier.length > 0 && (
                         <div className="space-y-1 pt-1">
                           <span className="text-stone-400">Earlier translations</span>
-                          {book.translation_verification.translations_found!.map((t, i: number) => (
+                          {earlier.map((t, i: number) => (
                             <div key={i} className="pl-2">
                               <span className="text-stone-300 italic">{t.english_title}</span>
                               {t.translator && <span className="text-stone-400">, trans. {t.translator}</span>}
@@ -448,7 +452,8 @@ export default function BibliographicInfo({
                         </details>
                       )}
                     </div>
-                  )}
+                    );
+                  })()}
                 </div>
               </div>
             )}
