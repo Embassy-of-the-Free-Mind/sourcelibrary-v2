@@ -17,6 +17,8 @@ import {
   budgetAllowsDispatch,
   budgetAllowsDispatchScoped,
   readScopeEnvelopes,
+  nextEnvelopeExpiry,
+  ENVELOPE_TTL_DAYS,
   _setSupabaseSpendReaderForTests,
   _setSupabaseScopeSpendReaderForTests,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -157,6 +159,61 @@ describe('readScopeEnvelopes — only positive finite budgets are envelopes', ()
   it('empty/missing allow_scopes → no envelopes', () => {
     expect(readScopeEnvelopes({})).toEqual([]);
     expect(readScopeEnvelopes(undefined)).toEqual([]);
+  });
+});
+
+describe('envelope expiry (#4599) — every envelope expires, and an expired one is closed', () => {
+  const now = new Date('2026-10-11T12:00:00Z');
+  const control = {
+    allow_scopes: {
+      live: { book_ids: ['a'], budget_usd: 5, expires_at: new Date('2026-10-20T00:00:00Z') },
+      lapsed: { book_ids: ['b'], budget_usd: 5, expires_at: new Date('2026-10-11T11:59:59Z') },
+      garbled: { book_ids: ['c'], budget_usd: 5, expires_at: 'not a date' },
+      legacy: { book_ids: ['d'], budget_usd: 5 },
+    },
+  };
+
+  it('a past or unparseable expires_at is left out; none at all is the legacy shape, still open', () => {
+    expect(readScopeEnvelopes(control, { now }).map((e: { tag: string }) => e.tag)).toEqual(['live', 'legacy']);
+  });
+
+  it('includeExpired lists them, each marked', () => {
+    const all = readScopeEnvelopes(control, { now, includeExpired: true });
+    expect(all.map((e: { tag: string; expired: boolean }) => [e.tag, e.expired])).toEqual([
+      ['live', false], ['lapsed', true], ['garbled', true], ['legacy', false],
+    ]);
+  });
+
+  it('the gate never opens an expired envelope, even with room in its budget', async () => {
+    const ctl = (expires_at: Date) => ({
+      _id: 'processing_control', daily_budget_usd: 5,
+      allow_scopes: { lane: { book_ids: ['b1'], budget_usd: 10, created_at: new Date('2026-09-01T00:00:00Z'), expires_at } },
+    });
+    const shut = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 1, control: ctl(new Date(Date.now() - 1000)) }), 'test');
+    expect(shut.allowed).toBe(false);
+    // Positive control: the same envelope a day from expiry opens.
+    const open = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 1, control: ctl(new Date(Date.now() + 864e5)) }), 'test');
+    expect(open.allowed).toBe(true);
+    expect([...open.envelopeIds!]).toEqual(['b1']);
+  });
+
+  it('nextEnvelopeExpiry: new or unstamped → now + 14 d; stored value kept; --expires wins', () => {
+    expect(nextEnvelopeExpiry({ now })).toEqual(new Date('2026-10-25T12:00:00Z'));
+    expect(ENVELOPE_TTL_DAYS).toBe(14);
+    const stored = new Date('2026-10-15T00:00:00Z');
+    expect(nextEnvelopeExpiry({ existing: stored, now })).toEqual(stored);
+    // A lapsed stored value is KEPT: a budget top-up must not silently reopen an expired envelope.
+    const lapsed = new Date('2026-10-01T00:00:00Z');
+    expect(nextEnvelopeExpiry({ existing: lapsed, now })).toEqual(lapsed);
+    expect(nextEnvelopeExpiry({ existing: stored, now, expires: '2026-11-01T00:00:00Z' })).toEqual(new Date('2026-11-01T00:00:00Z'));
+    expect(() => nextEnvelopeExpiry({ now, expires: 'soon' })).toThrow();
+  });
+
+  it('nextEnvelopeExpiry --extend: from the stored expiry, or from now once it has lapsed', () => {
+    expect(nextEnvelopeExpiry({ existing: new Date('2026-10-15T00:00:00Z'), now, extendDays: 7 })).toEqual(new Date('2026-10-22T00:00:00Z'));
+    expect(nextEnvelopeExpiry({ existing: new Date('2026-10-01T00:00:00Z'), now, extendDays: 7 })).toEqual(new Date('2026-10-18T12:00:00Z'));
+    expect(() => nextEnvelopeExpiry({ now, extendDays: 0 })).toThrow();
+    expect(() => nextEnvelopeExpiry({ now, extendDays: Number('x') })).toThrow();
   });
 });
 
