@@ -1,0 +1,3832 @@
+{
+ "issue": 6523,
+ "generated_by": "scripts/eval/ocr-pareto-6293/rescore-extract.mjs",
+ "extractor": "scripts/lib/cli-chatter.mjs extractTranscription",
+ "strata": [
+  "ref-ws",
+  "ref-pinned",
+  "latin-period-5126",
+  "eebo-tcp-5488"
+ ],
+ "engines": {
+  "chandra-ocr-2": {
+   "checked": 232,
+   "changed": 1
+  },
+  "claude-sonnet-5-5": {
+   "checked": 219,
+   "changed": 0
+  },
+  "deepseek-ocr": {
+   "checked": 232,
+   "changed": 0
+  },
+  "gemini-3-flash-preview": {
+   "checked": 174,
+   "changed": 0
+  },
+  "gemini-3.1-flash-lite": {
+   "checked": 231,
+   "changed": 0
+  },
+  "gemini-3.1-flash-lite-b": {
+   "checked": 152,
+   "changed": 0
+  },
+  "gemini-3.6-flash+antigravity-cli": {
+   "checked": 232,
+   "changed": 112
+  },
+  "gemini-3.7-flash+antigravity-cli": {
+   "checked": 232,
+   "changed": 37
+  },
+  "gemini-3.8-flash+antigravity-cli": {
+   "checked": 231,
+   "changed": 45
+  },
+  "gemini-3.8-flash-high+antigravity-cli": {
+   "checked": 191,
+   "changed": 0
+  },
+  "kraken-greek-cllg": {
+   "checked": 13,
+   "changed": 0
+  },
+  "mistral-ocr-4-1": {
+   "checked": 232,
+   "changed": 0
+  },
+  "olmocr-2-7b-fp8": {
+   "checked": 139,
+   "changed": 0
+  },
+  "paddleocr-vl-1.6": {
+   "checked": 139,
+   "changed": 0
+  },
+  "qwen3-vl-8b": {
+   "checked": 232,
+   "changed": 0
+  },
+  "tesseract-deu": {
+   "checked": 23,
+   "changed": 0
+  },
+  "tesseract-frk": {
+   "checked": 23,
+   "changed": 0
+  },
+  "tesseract-grc": {
+   "checked": 13,
+   "changed": 0
+  },
+  "tesseract-hye": {
+   "checked": 5,
+   "changed": 0
+  },
+  "tesseract-hye_calfa": {
+   "checked": 5,
+   "changed": 0
+  },
+  "tesseract-lat": {
+   "checked": 51,
+   "changed": 0
+  }
+ },
+ "rows": [
+  {
+   "page": "eebo-tcp-5488|ed-0425b5da276941ae93dd76624ba8236a-p86",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1347,
+    766
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.764
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.042
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69526046ab34727b1f04660c-p342",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "trailing chat"
+   ],
+   "chars": [
+    2634,
+    1946
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.505
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.492
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69526046ab34727b1f04660c-p342",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "code fences"
+   ],
+   "chars": [
+    5874,
+    5862
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.62
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.62
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1767,
+    1336
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.301
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.025
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1624,
+    1337
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.199
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.025
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2222,
+    1977
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.402
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.244
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1336,
+    335
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.597
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.807
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    878,
+    245
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.647
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.86
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1650,
+    1233
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.469
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.17
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1547,
+    1243
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.381
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.169
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906056ef12272ffdc8cdee-p43",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3767,
+    2012
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.607
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.172
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2763,
+    2409
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.153
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.015
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2983,
+    2459
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.224
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.015
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990618a322e01b1349a5136-p49",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2841,
+    2541
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.136
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.025
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990618a322e01b1349a5136-p49",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1493,
+    890
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.533
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.68
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-699061933d9181cce82fb5aa-p55",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1967,
+    1622
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.225
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.028
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990619d3d9181cce82fb688-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1287,
+    982
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.322
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.063
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906319ef12272ffdc8f380-p107",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1556,
+    1253
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.266
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.03
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906537726f64800c10a08c-p8",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1704,
+    1313
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.274
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.043
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1572,
+    1272
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.243
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.026
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1601,
+    871
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.478
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.342
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1596,
+    1315
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.231
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.025
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6508c1030b12444acd8-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2090,
+    1721
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.257
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.046
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d65e8c1030b12444ae97-p118",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    355,
+    222
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.705
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.809
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1715,
+    1186
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.464
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.027
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1502,
+    1188
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.274
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.027
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6778c1030b12444b4d4-p43",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1072,
+    757
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.412
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.046
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991e175b53cae6bb602470e-p28",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1098,
+    813
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.354
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.04
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991e194339ebc850994a230-p98",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1401,
+    1061
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.316
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.027
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1548,
+    1269
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.241
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.03
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1675,
+    480
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.725
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.643
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1748,
+    1021
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.74
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.458
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-699fcd429ff0f1d2c4517fff-p28",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    873,
+    585
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.656
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.187
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ac7f0f20878c5c9ba524b5-p366",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2936,
+    2742
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.082
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.02
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ac7f0f20878c5c9ba524b5-p366",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1470,
+    1009
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.664
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.711
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebe60c0472fef6455a8f2-p14",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    3067,
+    1802
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.538
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.5
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebe60c0472fef6455a8f2-p14",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2452,
+    1739
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.393
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.47
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdea41a7e10e5a71d19-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1468,
+    1163
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.273
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.036
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdea41a7e10e5a71d19-p27",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    449,
+    218
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.676
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.819
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2748,
+    2445
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.132
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.018
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2709,
+    2360
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.152
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.015
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfeb36a4ffb2dcfb62e3-p100",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2292,
+    1953
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.171
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.02
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69b18619c4be2cdd0edc524e-p6",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1324,
+    1017
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.33
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.064
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69b18619c4be2cdd0edc524e-p6",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1200,
+    982
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.209
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.051
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69bf60fd065df5d87d778bb3-p153",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1140,
+    844
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.365
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.043
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69bf60fd065df5d87d778bb3-p153",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1298,
+    825
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.509
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.053
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69cfa93f80eb0ccd3e739280-p101",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3912,
+    3114
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.252
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.013
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69cfa93f80eb0ccd3e739280-p101",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2373,
+    2288
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.494
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.491
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69de0cf180210ba13d79fa39-p98",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1789,
+    1340
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.391
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.072
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69de0cf180210ba13d79fa39-p98",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2697,
+    1348
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 1.03
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.071
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1770,
+    1426
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.27
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.045
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    672,
+    314
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.643
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.793
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    513,
+    268
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.701
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.826
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e7833a0fc6fc955e36317c-p94",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1612,
+    1260
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.306
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.038
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2717,
+    2422
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.155
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.054
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2727,
+    2429
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.155
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.053
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a08fd2e25e3a402b23b3bca-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2040,
+    1408
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.467
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.028
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a3d29e1af872ba37a51ab17-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1163,
+    853
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.384
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.071
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a3d29e1af872ba37a51ab17-p22",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1703,
+    872
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.977
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.068
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a425310343d756d34e34ea7-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1682,
+    1344
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.271
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.035
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a425634dfbbb4d07aa5382e-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1386,
+    1071
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.352
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.08
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1836,
+    1317
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.438
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.063
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2807,
+    1283
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 1.172
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.063
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1466,
+    1159
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.274
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.051
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42aecb5207af7c42f5333c-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1688,
+    1322
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.512
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.252
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42d56d1894955eb725e97f-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1489,
+    953
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.575
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.082
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42ec4006e6ead3ac544b8f-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1854,
+    1327
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.413
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.054
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a43001a4e06bc233ecf5ef6-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    846,
+    506
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.643
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.096
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4300764e06bc233ecf660a-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2008,
+    1691
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.194
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.059
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4300764e06bc233ecf660a-p15",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3144,
+    1682
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.819
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.067
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a430a2a22c0c8edb0f8c8d4-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1865,
+    1509
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.241
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.042
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a43851557a09c2c0fcc0005-p17",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1967,
+    1651
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.236
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.048
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a48d985df05f7ea342b77fb-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1268,
+    945
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.363
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.059
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4a26ba9dda7124b26753a5-p38",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2422,
+    1995
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.225
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.025
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4a26ba9dda7124b26753a5-p38",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3154,
+    1256
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.734
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.395
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4ad920d6371d99e766879c-p83",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1663,
+    1123
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.498
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.034
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4f71ca1cba01ec54e763c3-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    977,
+    652
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.516
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.125
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a506fd980b7658fae261d6e-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1770,
+    1431
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.285
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.09
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a58ecbfc6cd8f98710688e0-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2451,
+    2162
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.136
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.027
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a8f6267e408ab73f484d28b-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2989,
+    1706
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 2.265
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.888
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a8f6267e408ab73f484d28b-p15",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1156,
+    794
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.416
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.342
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2514,
+    2154
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.175
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.022
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1525,
+    218
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.68
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.907
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6953e4fa77f38f6761bef1dc-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3095,
+    2317
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.245
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.024
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6958e912d3a8928334814c19-p8",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    5268,
+    5007
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.104
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.066
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6958e912d3a8928334814c19-p8",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3708,
+    1274
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.569
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.777
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6970e3599b09d309d780a252-p61",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (4 copies, kept the longest)"
+   ],
+   "chars": [
+    7977,
+    1827
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 2.141
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.165
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6970e3599b09d309d780a252-p61",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "restart (3 copies, kept the longest)"
+   ],
+   "chars": [
+    5798,
+    2172
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 1.731
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.119
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-697a6e5cb981745f5fac1d7e-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    3639,
+    3086
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.255
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.053
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-697a8014e680cef7cedae395-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    3823,
+    3279
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.295
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.125
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b51e49cf111105c4299e5d-p40",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (4 copies, kept the longest)"
+   ],
+   "chars": [
+    4528,
+    1361
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.598
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.629
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b63e841c1c21a3738655d6-p40",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1766,
+    1406
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.405
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.105
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b64c9618b87551bfc76fcf-p20",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1427,
+    665
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.74
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.826
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b6542618b87551bfcc6072-p119",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2963,
+    2440
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.299
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.079
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b6f32ab1a3146c05278d5a-p72",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2802,
+    2229
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.38
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.138
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69c821446c6f3cc53c84aa06-p433",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    6014,
+    5638
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.179
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.111
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26bc6cd6b178e5aad8300b-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2294,
+    1702
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.447
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.045
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26beae0e247ebad6de8612-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    5277,
+    4718
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.232
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.115
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26c136aad44c98627bfb47-p21",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2206,
+    442
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.687
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.914
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26c136aad44c98627bfb47-p21",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    858,
+    464
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.918
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.99
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a425bef744db9e3105a3b00-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2250,
+    1880
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.308
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.075
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a425df3dfbbb4d07aa634cb-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    4073,
+    3526
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.195
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.063
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a42abe85207af7c42f4b6d7-p10",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2700,
+    1831
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.804
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.068
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a434784201f98f53c3eff29-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2833,
+    1416
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 1.035
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.092
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a43779193aef4a7d61477df-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2134,
+    1795
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.378
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.124
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a48d782df05f7ea342b7309-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1771,
+    1397
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.476
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.166
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a4e46a4dc886f1f5abb5d80-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1927,
+    1484
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.425
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.164
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a906153ce57ddf536207e42-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (3 copies, kept the longest)"
+   ],
+   "chars": [
+    1437,
+    506
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.487
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.402
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a906153ce57ddf536207e42-p9",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1957,
+    461
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 2.248
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.492
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a90675ceb8fb726ee3b7f5a-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    4082,
+    1000
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 1.186
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.589
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a909914b7feee6e9c427a2a-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1481,
+    1132
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.701
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.234
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a90991fb7feee6e9c427bf0-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2680,
+    1604
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.62
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.09
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a909b5ab7feee6e9c429605-p18",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1985,
+    1287
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.53
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.082
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a94341a7680120fac24d808-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1814,
+    1539
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.248
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.05
+   }
+  },
+  {
+   "page": "ref-pinned|armenian-eznik-elc-alandoc-109",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1103,
+    784
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.049
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.049
+   }
+  },
+  {
+   "page": "ref-pinned|armenian-xorenatsi-patmutiwn-2-60",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    810,
+    421
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.642
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.642
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-1",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2661,
+    2123
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.071
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.071
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-1",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2463,
+    2151
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.057
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.057
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-5-genealogy",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    4358,
+    4052
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.023
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.023
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1351,
+    258
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.64
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.873
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2030,
+    1383
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.004
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.004
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1427,
+    1118
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    825,
+    766
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.596
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.597
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ah-ca-ira-pdf-p2",
+   "engine": "chandra-ocr-2",
+   "removed": [
+    "trailing rule"
+   ],
+   "chars": [
+    892,
+    887
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.035
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.035
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ah-ca-ira-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1400,
+    888
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.007
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.007
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ah-ca-ira-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1417,
+    405
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.421
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.562
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    4584,
+    4097
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.003
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.003
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3086,
+    1508
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "code fences",
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    4157,
+    1526
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.503
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.514
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1525,
+    900
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1331,
+    1022
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1433,
+    727
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.21
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.296
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1277,
+    986
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.002
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.002
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-anmerkungen-bers-theater-pdf-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1465,
+    1180
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    3847,
+    3613
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1237,
+    787
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.382
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.516
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2051,
+    1483
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.008
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.008
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    5949,
+    5469
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.002
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.002
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1400,
+    1070
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1467,
+    1126
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.002
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.002
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1496,
+    1409
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.093
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.093
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1772,
+    913
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.144
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.194
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1004,
+    263
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.557
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.742
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    3290,
+    2887
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.047
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.047
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1610,
+    603
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.517
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.703
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2184,
+    553
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.538
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.728
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--1-1843-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1807,
+    1436
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.011
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.011
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--1-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    3493,
+    3130
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.051
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.051
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--520-djvu-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    4853,
+    4363
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--djvu-p19",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1459,
+    1080
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--djvu-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1300,
+    984
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.007
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.007
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--pdf-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1834,
+    1417
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.005
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.005
+   }
+  },
+  {
+   "page": "ref-ws|ws-el-athides-aurai-georgios-vizyinos-djvu-p200",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    986,
+    696
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-el-platonis-opera-ed-burnet-tomus-i-djvu-p329",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2219,
+    1667
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.003
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.003
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-28233-pdf-pdf-p4",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    3187,
+    2835
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.002
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.002
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-28233-pdf-pdf-p4",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1781,
+    731
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.464
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.639
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-agricola-de-re-metallica-djvu-p406",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1086,
+    491
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.541
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.724
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-alegrii-opera-minora-castellana-et-latina-pdf-p232",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2269,
+    1637
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.011
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.011
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-allorquando-vi-annunziammo-djvu-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2174,
+    1626
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-allorquando-vi-annunziammo-djvu-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1108,
+    174
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.664
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.897
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-allorquando-vi-annunziammo-djvu-p2",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    542,
+    0
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.796
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 1
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cabaret-dupaty-poetae-minores-1842-djvu-p416",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1537,
+    655
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.13
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.174
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1784,
+    1467
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.01
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.01
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    801,
+    628
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.489
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.584
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-columbus-carmen-epicum-pdf-p7",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2109,
+    1588
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-columellae-opera-djvu-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1801,
+    1541
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.007
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.007
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-coppernicus-monete-djvu-p4",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    940,
+    567
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.674
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.745
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1649,
+    1326
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cshb48-corpusscriptorum30niebuoft-pdf-p182",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    3058,
+    2681
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.01
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.01
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1238,
+    930
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.05
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.05
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1933,
+    1334
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.053
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.053
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-dimitrie-cantemir-operele-principelui-demetriu-c-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    4189,
+    2146
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1138,
+    766
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.015
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.015
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-easy-latin-stories-djvu-p16",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    398,
+    160
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.802
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.911
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-ecclesiam-a-iesu-christo-djvu-p3",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    804,
+    252
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.495
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.668
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2002,
+    1657
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.005
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.005
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    417,
+    265
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.761
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.847
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2434,
+    1830
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.003
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.003
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    768,
+    414
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.641
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.778
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    532,
+    218
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.756
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.882
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-foliot-canticum-pdf-p32",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2021,
+    1510
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.011
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.011
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2077,
+    1734
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1501,
+    1033
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.001
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.001
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gallia-christiana-1715-t1-djvu-p29",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    4287,
+    1470
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gallia-christiana-1720-t2-djvu-p2",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    2466,
+    754
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.565
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.674
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "removed": [
+    "trailing chat",
+    "restart (2 copies, kept the longest)"
+   ],
+   "chars": [
+    1411,
+    1221
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.634
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.634
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    575,
+    188
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.72
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.882
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    2419,
+    2094
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.002
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.002
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    2451,
+    1630
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.536
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.732
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hortus-malabaricus-volume-1-pdf-p4",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    926,
+    358
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.66
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.829
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1479,
+    919
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.008
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.008
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1332,
+    178
+   ],
+   "as_returned": {
+    "aligned": false,
+    "cer": 0.571
+   },
+   "extracted": {
+    "aligned": false,
+    "cer": 0.805
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-joseph-piechowski-de-ironia-iliadis-pdf-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1775,
+    1455
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.006
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.006
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "removed": [
+    "leading chat"
+   ],
+   "chars": [
+    1419,
+    1104
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.005
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.005
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor-p46",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "removed": [
+    "trailing chat"
+   ],
+   "chars": [
+    1975,
+    1345
+   ],
+   "as_returned": {
+    "aligned": true,
+    "cer": 0.171
+   },
+   "extracted": {
+    "aligned": true,
+    "cer": 0.233
+   }
+  }
+ ]
+}

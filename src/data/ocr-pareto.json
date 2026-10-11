@@ -359,11 +359,11 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.422,
-       "accuracy": 0.578,
+       "mean_cer": 0.424,
+       "accuracy": 0.576,
        "accuracy_ci95": [
-        0.442,
-        0.717
+        0.44,
+        0.716
        ],
        "fail_share": 0.409,
        "failed_reads": 18,
@@ -375,10 +375,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": -0.384,
+        "diff": -0.386,
         "ci95": [
-         -0.525,
-         -0.243
+         -0.528,
+         -0.246
         ],
         "n_pages": 44,
         "n_works": 44
@@ -730,16 +730,76 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.121,
+       "accuracy": 0.879,
+       "accuracy_ci95": [
+        0.849,
+        0.904
+       ],
+       "fail_share": 0.043,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.155,
+       "cost": {
+        "usd_per_1k": 3.501,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.031,
+        "ci95": [
+         -0.064,
+         -0.001
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.127,
+       "accuracy": 0.873,
+       "accuracy_ci95": [
+        0.834,
+        0.904
+       ],
+       "fail_share": 0.043,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.201,
+       "cost": {
+        "usd_per_1k": 3.594,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.036,
+        "ci95": [
+         -0.078,
+         -0.002
+        ],
+        "n_pages": 93,
+        "n_works": 93
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.141,
-       "accuracy": 0.859,
+       "mean_cer": 0.128,
+       "accuracy": 0.872,
        "accuracy_ci95": [
-        0.812,
-        0.898
+        0.833,
+        0.904
        ],
-       "fail_share": 0.065,
+       "fail_share": 0.043,
        "failed_reads": 0,
        "words_not_in_ref": 0.163,
        "cost": {
@@ -749,10 +809,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": -0.051,
+        "diff": -0.037,
         "ci95": [
-         -0.099,
-         -0.011
+         -0.078,
+         -0.004
         ],
         "n_pages": 93,
         "n_works": 93
@@ -790,36 +850,6 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "mean_cer": 0.154,
-       "accuracy": 0.846,
-       "accuracy_ci95": [
-        0.803,
-        0.887
-       ],
-       "fail_share": 0.086,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.155,
-       "cost": {
-        "usd_per_1k": 3.501,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.063,
-        "ci95": [
-         -0.11,
-         -0.021
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
@@ -843,36 +873,6 @@
         "ci95": [
          -0.102,
          -0.036
-        ],
-        "n_pages": 93,
-        "n_works": 93
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "mean_cer": 0.165,
-       "accuracy": 0.835,
-       "accuracy_ci95": [
-        0.787,
-        0.875
-       ],
-       "fail_share": 0.065,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.201,
-       "cost": {
-        "usd_per_1k": 3.594,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.075,
-        "ci95": [
-         -0.124,
-         -0.029
         ],
         "n_pages": 93,
         "n_works": 93
@@ -948,6 +948,36 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.082,
+       "accuracy": 0.918,
+       "accuracy_ci95": [
+        0.887,
+        0.94
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.264,
+       "cost": {
+        "usd_per_1k": 3.594,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": 0.015,
+        "ci95": [
+         0.007,
+         0.024
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
@@ -970,6 +1000,36 @@
         "diff": 0.015,
         "ci95": [
          0.008,
+         0.022
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash+antigravity-cli",
+       "label": "Gemini 3.7 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.083,
+       "accuracy": 0.917,
+       "accuracy_ci95": [
+        0.888,
+        0.939
+       ],
+       "fail_share": 0,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.096,
+       "cost": {
+        "usd_per_1k": 3.501,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
+       },
+       "vs_in_use": {
+        "diff": 0.014,
+        "ci95": [
+         0.007,
          0.022
         ],
         "n_pages": 14,
@@ -1089,36 +1149,6 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "mean_cer": 0.097,
-       "accuracy": 0.903,
-       "accuracy_ci95": [
-        0.86,
-        0.936
-       ],
-       "fail_share": 0,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.264,
-       "cost": {
-        "usd_per_1k": 3.594,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.081 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": 0,
-        "ci95": [
-         -0.037,
-         0.023
-        ],
-        "n_pages": 14,
-        "n_works": 14
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
@@ -1171,36 +1201,6 @@
         "diff": -0.048,
         "ci95": [
          -0.172,
-         0.02
-        ],
-        "n_pages": 14,
-        "n_works": 14
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.7-flash+antigravity-cli",
-       "label": "Gemini 3.7 Flash (CLI)",
-       "production": false,
-       "mean_cer": 0.203,
-       "accuracy": 0.797,
-       "accuracy_ci95": [
-        0.616,
-        0.928
-       ],
-       "fail_share": 0.143,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.096,
-       "cost": {
-        "usd_per_1k": 3.501,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.7-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.035 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.106,
-        "ci95": [
-         -0.295,
          0.02
         ],
         "n_pages": 14,
@@ -1507,6 +1507,36 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.6-flash+antigravity-cli",
+       "label": "Gemini 3.6 Flash (CLI)",
+       "production": false,
+       "mean_cer": 0.08,
+       "accuracy": 0.92,
+       "accuracy_ci95": [
+        0.867,
+        0.956
+       ],
+       "fail_share": 0.023,
+       "failed_reads": 0,
+       "words_not_in_ref": 0.225,
+       "cost": {
+        "usd_per_1k": 3.851,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.208 by this arm's text length)",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
+       },
+       "vs_in_use": {
+        "diff": -0.021,
+        "ci95": [
+         -0.066,
+         0.013
+        ],
+        "n_pages": 44,
+        "n_works": 43
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
@@ -1537,46 +1567,16 @@
        "on_frontier": false
       },
       {
-       "engine": "gemini-3.6-flash+antigravity-cli",
-       "label": "Gemini 3.6 Flash (CLI)",
-       "production": false,
-       "mean_cer": 0.092,
-       "accuracy": 0.908,
-       "accuracy_ci95": [
-        0.852,
-        0.946
-       ],
-       "fail_share": 0.023,
-       "failed_reads": 0,
-       "words_not_in_ref": 0.225,
-       "cost": {
-        "usd_per_1k": 3.851,
-        "basis": "quota",
-        "detail": "run through the Antigravity CLI on the Google subscription, $0 billed; placed at gemini-3.6-flash's API Batch price by the #6293 preregistered formula (output scaled ×1.208 by this arm's text length)",
-        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
-       },
-       "vs_in_use": {
-        "diff": -0.032,
-        "ci95": [
-         -0.08,
-         0.005
-        ],
-        "n_pages": 44,
-        "n_works": 43
-       },
-       "on_frontier": false
-      },
-      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.203,
-       "accuracy": 0.797,
+       "mean_cer": 0.169,
+       "accuracy": 0.831,
        "accuracy_ci95": [
-        0.71,
-        0.875
+        0.75,
+        0.9
        ],
-       "fail_share": 0.227,
+       "fail_share": 0.136,
        "failed_reads": 0,
        "words_not_in_ref": 0.026,
        "cost": {
@@ -1586,10 +1586,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
        },
        "vs_in_use": {
-        "diff": -0.143,
+        "diff": -0.11,
         "ci95": [
-         -0.231,
-         -0.065
+         -0.189,
+         -0.037
         ],
         "n_pages": 44,
         "n_works": 43
@@ -1600,13 +1600,13 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.269,
-       "accuracy": 0.731,
+       "mean_cer": 0.248,
+       "accuracy": 0.752,
        "accuracy_ci95": [
-        0.638,
-        0.819
+        0.653,
+        0.84
        ],
-       "fail_share": 0.295,
+       "fail_share": 0.227,
        "failed_reads": 0,
        "words_not_in_ref": 0.121,
        "cost": {
@@ -1616,10 +1616,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": -0.209,
+        "diff": -0.189,
         "ci95": [
-         -0.306,
-         -0.118
+         -0.281,
+         -0.097
         ],
         "n_pages": 44,
         "n_works": 43
@@ -1995,11 +1995,11 @@
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.281,
-       "accuracy": 0.719,
+       "mean_cer": 0.284,
+       "accuracy": 0.716,
        "accuracy_ci95": [
-        0.525,
-        0.899
+        0.518,
+        0.897
        ],
        "fail_share": 0.273,
        "failed_reads": 6,
@@ -2011,10 +2011,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": -0.272,
+        "diff": -0.274,
         "ci95": [
          -0.486,
-         -0.097
+         -0.102
         ],
         "n_pages": 22,
         "n_works": 22
@@ -2026,11 +2026,11 @@
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
        "production": false,
-       "mean_cer": 0.29,
-       "accuracy": 0.71,
+       "mean_cer": 0.294,
+       "accuracy": 0.706,
        "accuracy_ci95": [
-        0.524,
-        0.885
+        0.518,
+        0.88
        ],
        "fail_share": 0.273,
        "failed_reads": 6,
@@ -2042,10 +2042,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
        },
        "vs_in_use": {
-        "diff": -0.281,
+        "diff": -0.285,
         "ci95": [
-         -0.468,
-         -0.101
+         -0.475,
+         -0.105
         ],
         "n_pages": 22,
         "n_works": 22
