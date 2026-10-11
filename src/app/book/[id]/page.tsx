@@ -85,6 +85,7 @@ import { getPageImageUrl } from '@/lib/page-image-url';
 import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel, collectPriorTranslations } from '@/lib/prior-translation';
+import { withoutStudyPriors } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -1365,8 +1366,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
     const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
+    // A study that quotes the work is not an earlier translation of it (#4639).
     const verificationPicks = timelineVerification?.disposition === 'translation_found'
-      ? (timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
+      ? withoutStudyPriors(book, timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
       : [];
 
     collectPriorTranslations(timelinePrior, verificationPicks).forEach((row, i) => {
