@@ -93,6 +93,11 @@ def gate_calls(log):
         return []
 
 
+# #6523: a reply cut by Gemini's recitation or safety filter. The agent then apologises ("I am unable to provide a
+# full verbatim transcription … content filter") or the CLI prints the block message. With --retry-refusal such a reply
+# is read once more from scratch, and the row says so (`refusal_retry`).
+REFUSAL = re.compile(r"\bI (?:cannot|can't|am unable to) (?:provide|transcribe|reproduce|output)|content (?:safety )?filter|\bverbatim\b|" + re.escape(BLOCK_MSG), re.I)
+
 NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.'
 
 
@@ -147,6 +152,7 @@ def main():
     ap.add_argument('--gap-wait', type=float, default=20, help='seconds to wait for a gap in other jobs\' image calls before going alongside one')
     ap.add_argument('--print-timeout', type=int, default=120, help='agy --print-timeout in seconds; the process is killed 60 s later')
     ap.add_argument('--tool-gate', action='store_true', help='#6523: install agy-tool-gate.py as a PreToolUse hook in each workspace')
+    ap.add_argument('--retry-refusal', action='store_true', help='#6523: read once more when the reply is a refusal or a filter cut')
     ap.add_argument('--no-nudge', action='store_true', help='never continue a turn that ended on a denied tool')
     ap.add_argument('--prompt-suffix', default='', help='text appended to every prompt, before the @file attachment')
     ap.add_argument('--json-schema', help='passed to agy --json-schema (a schema file or string)')
@@ -187,6 +193,7 @@ def main():
             prompt = f"{prompt}{a.prompt_suffix}"
         gate_log = install_gate(cwd) if (a.tool_gate and cwd) else None
         out, cls, total, tries, err, overlaps, waits, nudged, meta = '', None, 0.0, 0, '', 0, 0.0, False, {}
+        refusal_retry = False
         for tries in range(1, a.attempts + 1):
             if cls == 'denied_tool' and meta.get('conversation') and not a.no_nudge:
                 nudged = True
@@ -202,10 +209,14 @@ def main():
                     f.write(f"{now()} {a.arm} {req['uid']}\n{out}\n{err}\n")
                 return
             if cls in (None, 'safety_filter'):
+                if a.retry_refusal and not refusal_retry and tries < a.attempts and REFUSAL.search(out or ''):
+                    refusal_retry = True
+                    cls = 'refusal'
+                    continue
                 break
         row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': a.cli_mode or 'default', 'tool_gate': bool(gate_log), 'gate_calls': gate_calls(gate_log) if gate_log else None,
                'gate_denials': sum(c.endswith(':deny') for c in gate_calls(gate_log)) if gate_log else None, 'denied_actions': meta.get('denied'), 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
-               'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
+               'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'refusal_retry': refusal_retry, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
         with lock, open(a.out, 'a', encoding='utf-8') as f:
             f.write(json.dumps(row, ensure_ascii=False) + '\n')
         print(f"  {req['uid']} {cls or 'ok'}{' (nudged)' if nudged else ''} {len(row['text'])} chars {round(total)}s x{tries}", flush=True)

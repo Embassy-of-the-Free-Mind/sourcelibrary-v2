@@ -64,6 +64,26 @@ const LEAD_NOTE = /^\s*(?:I have|I've)\b.*\b(?:plan|artifact|transcri\w*|image|m
 const LEAD_PROSE = /^\s*(?:I have|I've|I will|I'll|Please|Let me|You can|Once (?:you|approved)|If you)\b|\b(?:plan|artifact|approve|proceed|file:\/\/)\b/i;
 const PLAN_TAIL = /file:\/\/|please (?:review|confirm|approve)|let me know|once (?:you )?approv|ready to proceed|approve to proceed/i;
 const BLOCK_SENTINEL = /<<<\s*BEGIN\s*>>>([\s\S]*?)(?:<<<\s*END\s*>>>|$)/;
+// #6523: the instruction that asks for the sentinels (the winning dev-round config; cli-ocr.mjs and run-cli-arm.py
+// --kind ocr append it to the OCR prompt). Kept here so the writer, the eval runner and the extractor share one copy.
+export const OCR_SENTINEL_INSTRUCTION = 'Write the transcription between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.';
+
+/**
+ * Split a reply into what is between the <<<BEGIN>>> / <<<END>>> markers and what is outside them. `inside` is null
+ * when the reply has no BEGIN marker; `outside` is the non-whitespace text before BEGIN or after END (a writer treats
+ * any as chatter); `closed` is false when END never came (a cut reply).
+ */
+export function unwrapSentinels(raw) {
+  const t = String(raw || '');
+  const b = t.search(/<<<\s*BEGIN\s*>>>/);
+  if (b < 0) return { inside: null, outside: t.trim(), closed: false };
+  const rest = t.slice(b).replace(/^<<<\s*BEGIN\s*>>>/, '');
+  const e = rest.search(/<<<\s*END\s*>>>/);
+  const inside = (e < 0 ? rest : rest.slice(0, e)).trim();
+  const after = e < 0 ? '' : rest.slice(e).replace(/^<<<\s*END\s*>>>/, '');
+  return { inside, outside: (t.slice(0, b) + after).trim(), closed: e >= 0 };
+}
+
 const letterCount = (s) => (stripMarkupTags(s).match(/\p{L}/gu) || []).length;
 
 /**

@@ -31,6 +31,10 @@ describe('ocr-pareto.json', () => {
   it('reads a CLI re-score that is current and passes its positive control', () => {
     expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-plan-note.mjs', '--check'], { encoding: 'utf8' })).toContain('current');
   }, 120_000);
+  // #6523: the extractor re-score the builder reads (CI has no bench: the CLI rows are re-derived, the rest kept).
+  it('reads an extractor re-score that is current and passes its positive control', () => {
+    expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-extract.mjs', '--check', '--bench', '/nonexistent'], { encoding: 'utf8' })).toContain('current');
+  }, 120_000);
 
   it('has charts, each panel on at least 5 shared pages, the first one primary', () => {
     expect(charts.length).toBeGreaterThanOrEqual(3);
