@@ -259,3 +259,60 @@ describe('pageContinuity — an edge ellipsis is a continuation marker', () => {
     expect(pageContinuity(self_contained).continues_on_next).toBe(false);
   });
 });
+
+/**
+ * The case #3723 left open on #3721: a page that ENDS, followed by a note.
+ *
+ * Fixtures captured from production on 2026-10-11 (see _trailing_note_note in
+ * the fixture file) before these assertions were written.
+ */
+describe('pageContinuity — a note at the foot is not the end of the sentence', () => {
+  const { p98, p99 } = fixtures.trailing_note;
+
+  it('the fixture really ends on a note, after a full stop', () => {
+    // If a re-translation ever drops the note, the tests below pass for a
+    // different reason and stop guarding anything.
+    expect(p98.translation.endsWith('</note>')).toBe(true);
+    expect(p98.translation).toMatch(/the teachings of Geometry\. <note>[^<]*<\/note>$/);
+  });
+
+  it('reads a complete epigram above a translator note as complete', () => {
+    const c = pageContinuity(p98.translation, p98.original);
+    expect(c.continues_on_next).toBe(false);
+    expect(continuityHint(c, 98)).toBeNull();
+  });
+
+  it('agrees with the page that follows', () => {
+    const c98 = pageContinuity(p98.translation, p98.original);
+    const c99 = pageContinuity(p99.translation, p99.original);
+    expect(c98.continues_on_next).toBe(c99.continues_from_previous);
+  });
+
+  it('still reports a sentence that breaks off above a note', () => {
+    // The guard against "a note means the page ended". The note is removed and
+    // the words before it are judged; they are not assumed to be a sentence.
+    const cut = p98.translation.replace('the teachings of Geometry. <note>', 'the teachings of <note>');
+    expect(cut).not.toBe(p98.translation);
+    expect(pageContinuity(cut, p98.original).continues_on_next).toBe(true);
+  });
+
+  it('keeps the word inside an inline tag, and drops the tag', () => {
+    const body = self_contained.replace(/\s+\S+$/, '');
+    expect(pageContinuity(`${body} the <term>lapis</term>.`).continues_on_next).toBe(false);
+    expect(pageContinuity(`${body} the <term>lapis</term>`).continues_on_next).toBe(true);
+  });
+});
+
+describe('pageContinuity — cost', () => {
+  it('judges a page of short capital lines in linear time', () => {
+    // Herculaneum papyrus transcription, 1,018 characters. The trailing
+    // furniture regex backtracked exponentially on it: 53.7 s for this one
+    // call, in the request path of get_quote. Checked with the regex restored:
+    // this test fails after 53.6 s, and nothing else in the file notices.
+    const { p41 } = fixtures.caps_lines;
+    const started = performance.now();
+    const c = pageContinuity(p41.translation, p41.original);
+    expect(performance.now() - started).toBeLessThan(250);
+    expect(c.hyphen_split_at_end).toBe(false);
+  });
+});
