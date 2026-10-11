@@ -210,7 +210,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
   const sent = base + imageInstruction(workspaceImage(m.key));
   if (contentHash(sent) !== m.prompt_sent_hash) { skip(m, 'prompt sent cannot be reconstructed (hash mismatch)'); continue; }
-  const imageUrl = m.image_url || page.archived_photo;
+  const imageUrl = m.image_url || getPageSource(page);
   const engine = geminiEngine({
     call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
