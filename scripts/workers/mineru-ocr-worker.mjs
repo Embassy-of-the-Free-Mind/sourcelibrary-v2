@@ -36,6 +36,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 import { contentHash, codeVersion, host, notRecorded } from '../lib/write-provenance.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -160,7 +161,9 @@ function lowQuality(text) {
   return meanWordLen > 8 || spaceRatio < 0.10;
 }
 
-const imgUrl = (p) => p.display_photo || p.archived_photo || p.photo || null;
+// getPageSource first: on a page split from a spread, archived_photo (and on ~18K split
+// pages display_photo too) is the WHOLE spread, and a read of it puts two pages on one.
+const imgUrl = (p) => getPageSource(p) || p.display_photo || null;
 const sh = (cmd, args) => execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 28 });
 
 async function downloadImage(url, dest) {
@@ -231,7 +234,7 @@ async function processBook(db, book) {
       // refusal stamp on an otherwise empty page) must be fillable as well.
       { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': '' }, { 'ocr.data': null }] },
     ],
-  }).project({ _id: 1, id: 1, page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, ocr: 1 }).sort({ page_number: 1 }).toArray();
+  }).project({ _id: 1, id: 1, page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, ocr: 1 }).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { id, title: book.title, skipped: 'no-empty-imaged-pages' };
 
