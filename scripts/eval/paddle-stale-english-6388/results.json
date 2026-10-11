@@ -1,0 +1,2691 @@
+{
+ "computed_at": "2026-10-11T17:14:47.525Z",
+ "calls": {
+  "opus_review": 17,
+  "opus_adj": 13,
+  "agy_rows": 97
+ },
+ "controls": {
+  "O": "5/5",
+  "G": "5/5",
+  "gate_passed": true,
+  "items": [
+   {
+    "qid": "p02",
+    "kind": "name",
+    "key": "yan",
+    "O": true,
+    "G": true,
+    "O_severity": "material",
+    "G_severity": "material"
+   },
+   {
+    "qid": "p13",
+    "kind": "number",
+    "key": "eight",
+    "O": true,
+    "G": true,
+    "O_severity": "material",
+    "G_severity": "material"
+   },
+   {
+    "qid": "p17",
+    "kind": "negation",
+    "key": "neither",
+    "O": true,
+    "G": true,
+    "O_severity": "material",
+    "G_severity": "material"
+   },
+   {
+    "qid": "p28",
+    "kind": "name",
+    "key": "thunder",
+    "O": true,
+    "G": true,
+    "O_severity": "material",
+    "G_severity": "material"
+   },
+   {
+    "qid": "p53",
+    "kind": "number",
+    "key": "72,000",
+    "O": true,
+    "G": true,
+    "O_severity": "material",
+    "G_severity": "material"
+   }
+  ]
+ },
+ "headline_random_ocr_material": {
+  "k": 30,
+  "n": 44,
+  "p": 0.682,
+  "lo": 0.534,
+  "hi": 0.8,
+  "unresolved": 16
+ },
+ "bounds_if_unresolved": {
+  "lo_all_unresolved_clean": 0.5,
+  "hi_all_unresolved_material": 0.767
+ },
+ "random_translation_material": {
+  "k": 13,
+  "n": 44,
+  "p": 0.295,
+  "lo": 0.182,
+  "hi": 0.442,
+  "unresolved": 16
+ },
+ "random_would_fix": {
+  "k": 26,
+  "n": 44,
+  "p": 0.591,
+  "lo": 0.444,
+  "hi": 0.723,
+  "unresolved": 16
+ },
+ "random_any_material": {
+  "k": 36,
+  "n": 44,
+  "p": 0.818,
+  "lo": 0.68,
+  "hi": 0.905,
+  "unresolved": 16
+ },
+ "per_reviewer_random_ocr_material": {
+  "O": {
+   "k": 30,
+   "n": 60,
+   "p": 0.5,
+   "lo": 0.377,
+   "hi": 0.623,
+   "unresolved": 0
+  },
+  "G": {
+   "k": 48,
+   "n": 60,
+   "p": 0.8,
+   "lo": 0.682,
+   "hi": 0.882,
+   "unresolved": 0
+  }
+ },
+ "agreement": {
+  "verdict": {
+   "n": 80,
+   "same": 42
+  },
+  "ocr_material": {
+   "n": 80,
+   "same": 53
+  },
+  "disagreements": 38,
+  "adjudicated": 13
+ },
+ "verdicts_random": {
+  "keep": 8,
+  "retranslate-would-fix": 26,
+  "bad-regardless": 10
+ },
+ "verdicts_top": {
+  "retranslate-would-fix": 7,
+  "bad-regardless": 3,
+  "keep": 1
+ },
+ "by_bin": [
+  {
+   "bin": "0–0.05",
+   "eligible_pages": 34728,
+   "sample": 25,
+   "random": 25,
+   "ocr_material": {
+    "k": 7,
+    "n": 15,
+    "p": 0.467,
+    "lo": 0.248,
+    "hi": 0.699,
+    "unresolved": 10
+   },
+   "translation_material": {
+    "k": 6,
+    "n": 15,
+    "p": 0.4,
+    "lo": 0.198,
+    "hi": 0.643,
+    "unresolved": 10
+   },
+   "would_fix": {
+    "k": 6,
+    "n": 15,
+    "p": 0.4,
+    "lo": 0.198,
+    "hi": 0.643,
+    "unresolved": 10
+   }
+  },
+  {
+   "bin": "0.05–0.1",
+   "eligible_pages": 15961,
+   "sample": 15,
+   "random": 15,
+   "ocr_material": {
+    "k": 10,
+    "n": 12,
+    "p": 0.833,
+    "lo": 0.552,
+    "hi": 0.953,
+    "unresolved": 3
+   },
+   "translation_material": {
+    "k": 5,
+    "n": 12,
+    "p": 0.417,
+    "lo": 0.193,
+    "hi": 0.68,
+    "unresolved": 3
+   },
+   "would_fix": {
+    "k": 10,
+    "n": 12,
+    "p": 0.833,
+    "lo": 0.552,
+    "hi": 0.953,
+    "unresolved": 3
+   }
+  },
+  {
+   "bin": "0.1–0.2",
+   "eligible_pages": 9940,
+   "sample": 6,
+   "random": 6,
+   "ocr_material": {
+    "k": 6,
+    "n": 6,
+    "p": 1,
+    "lo": 0.61,
+    "hi": 1,
+    "unresolved": 0
+   },
+   "translation_material": {
+    "k": 1,
+    "n": 6,
+    "p": 0.167,
+    "lo": 0.03,
+    "hi": 0.564,
+    "unresolved": 0
+   },
+   "would_fix": {
+    "k": 5,
+    "n": 6,
+    "p": 0.833,
+    "lo": 0.436,
+    "hi": 0.97,
+    "unresolved": 0
+   }
+  },
+  {
+   "bin": "0.2–0.5",
+   "eligible_pages": 5596,
+   "sample": 7,
+   "random": 7,
+   "ocr_material": {
+    "k": 3,
+    "n": 5,
+    "p": 0.6,
+    "lo": 0.231,
+    "hi": 0.882,
+    "unresolved": 2
+   },
+   "translation_material": {
+    "k": 1,
+    "n": 5,
+    "p": 0.2,
+    "lo": 0.036,
+    "hi": 0.624,
+    "unresolved": 2
+   },
+   "would_fix": {
+    "k": 3,
+    "n": 5,
+    "p": 0.6,
+    "lo": 0.231,
+    "hi": 0.882,
+    "unresolved": 2
+   }
+  },
+  {
+   "bin": "0.5–1",
+   "eligible_pages": 9426,
+   "sample": 27,
+   "random": 7,
+   "ocr_material": {
+    "k": 13,
+    "n": 17,
+    "p": 0.765,
+    "lo": 0.527,
+    "hi": 0.904,
+    "unresolved": 10
+   },
+   "translation_material": {
+    "k": 2,
+    "n": 17,
+    "p": 0.118,
+    "lo": 0.033,
+    "hi": 0.343,
+    "unresolved": 10
+   },
+   "would_fix": {
+    "k": 9,
+    "n": 17,
+    "p": 0.529,
+    "lo": 0.31,
+    "hi": 0.738,
+    "unresolved": 10
+   }
+  }
+ ],
+ "recommendation": "retranslate every stale page",
+ "threshold_bin": null,
+ "pages_to_retranslate": 75701,
+ "pages": [
+  {
+   "qid": "p01",
+   "arm": "random",
+   "book_id": "6992ce8e673ee1e40e32103c",
+   "title": "三才圖會(一百六)",
+   "page_number": 95,
+   "cer": 0.2,
+   "bin": "0.2–0.5",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "keep",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p03",
+   "arm": "top_decile",
+   "book_id": "6a3c677eaf3c49b59c5d3ea6",
+   "title": "御定孝經衍義·卷五十五~卷五十六 (vol 15)",
+   "page_number": 68,
+   "cer": 0.8218,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "The three elders ascended from the host’s stairs, the five changers from the guest’s stairs.",
+     "image_says": "交禮道自阼階三老升自賓階 — after exchanging rites, the emperor led the way from the east (host's) stairs, and the three elders went up by the guest stairs; the five changers are not mentioned here",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Cleanliness <margin>Refers to cleansing the mouth to prevent choking, which is the middle path.</margin> is at the front",
+     "image_says": "漱以潔口 祝哽在前 (食留咽中也) — rinsing to clean the mouth; the official who prays against choking stands in front (哽 = food stuck in the throat)",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Before eating, one offers sweet wine. The air in the eating chamber does not circulate well.",
+     "image_says": "未食前 祝饐在後 (食窒氣不通也) 已食後 — 'before eating'; the official who prays against food blockage stands behind (饐 = food blocking the breath); 'after eating'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "The five changers are at the back. [They] change and face south.",
+     "image_says": "五更南面 — the five changers face south (五 begins the next main-text clause)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "personally acted as the disciples' examiner, asking questions and debating before them",
+     "image_says": "上自為下說(天子自為其下說書) 諸儒執經問難於前 — the emperor himself lectured; the Confucian scholars held the classics and put questions to him",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p04",
+   "arm": "random",
+   "book_id": "6992cda4ae978f7d415987b1",
+   "title": "三才圖會(四十二)",
+   "page_number": 23,
+   "cer": 0.2959,
+   "bin": "0.2–0.5",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "the silkworms",
+     "image_says": "田蚕歲歲多耗散 (fields and silkworms suffer heavy losses year after year; Reading A has 卧蚕)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p05",
+   "arm": "random",
+   "book_id": "6992cea677d26f9321777550",
+   "title": "武備志(七十三)",
+   "page_number": 89,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "<gloss>Twelve</gloss> 10",
+     "image_says": "二十 — twenty (number under 癸未)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "<gloss>Nine</gloss> 20",
+     "image_says": "九十二 — ninety-two (number under 乙未)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Mao Wood: High Thicket <gloss>Fixed Plan</gloss>",
+     "image_says": "定計 belongs with 辰土大陽, and 四宮 / 文昌 belong with 卯木高叢",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p06",
+   "arm": "random",
+   "book_id": "6a3c5e9a40c88a541d8e3d85",
+   "title": "御定康熙字典·卷六 (vol 41)",
+   "page_number": 9,
+   "cer": 0.2538,
+   "bin": "0.2–0.5",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "The note for the character *Hun* <gloss>Marriage</gloss> is detailed in the section for seven strokes.",
+     "image_says": "古文夏字註詳七畫 — the full note on 夏 is under seven strokes; 婚 belongs to the previous entry",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "## Section 16: Kui <note>夔 - A legendary beast</note>",
+     "image_says": "十六 夒 — the headword is 夒 (nao, a macaque), not 夔",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "resembles a hand and a father, with the foot portion omitted to create the character",
+     "image_says": "象手，夊象足，省作猱 — represents the hands; 夊 represents the feet; the abbreviated form is written 猱",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "destroyed the state of Kui. The ruler of Kui returned.",
+     "image_says": "楚人滅夔以夔子歸 — Chu destroyed Kui and took the Viscount of Kui back with them",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p07",
+   "arm": "random",
+   "book_id": "6992ceef673ee1e40e321c54",
+   "title": "武備志(八十九)",
+   "page_number": 33,
+   "cer": 0.0072,
+   "bin": "0–0.05",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "Shizong Sub-prefecture",
+     "image_says": "州界五十里自府治至京師一萬九百六十五里限一百二十六日至南京七千五百二十里 — opening lines (50 li to the sub-prefecture border; 10,965 li to the capital, a 126-day limit; 7,520 li to Nanjing) are left out",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "located 90 li northwest of the prefecture.",
+     "image_says": "府城西九十里 — 90 li west of the prefectural city",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p08",
+   "arm": "random",
+   "book_id": "69dff239f1812b19c55f23c7",
+   "title": "元曲選 (Selected Yuan Plays), Vol. 5",
+   "page_number": 131,
+   "cer": 0.0919,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "I said, \"You can eat that?\" <note>He sings</note>",
+     "image_says": "我道你吃得淡粥麼他道我吃得 — I said: 'Can you eat thin porridge?' He said: 'I can eat it.' (his reply is left out)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p09",
+   "arm": "random",
+   "book_id": "6992ce113ea667fbac827ebf",
+   "title": "武備志(四十一)",
+   "page_number": 99,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Trial Banner Head, Mao Deity",
+     "image_says": "The margin title is faded; it seems to name a lunar-mansion banner (…旗一面 / 房日兔星?, rabbit of the Fang mansion). It is not 司試旗一首 卯神",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "Seal script inside the banner cartouche: Mao Deity",
+     "image_says": "The seal characters in the cartouche are not 卯神 (they look like 房日… / a mansion name)",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p10",
+   "arm": "top_decile",
+   "book_id": "6a3c5e9540c88a541d8e39c6",
+   "title": "御定康熙字典·卷四 (vol 39)",
+   "page_number": 4,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p11",
+   "arm": "random",
+   "book_id": "6a3c5e9940c88a541d8e3c45",
+   "title": "御定康熙字典·卷八 (vol 43)",
+   "page_number": 5,
+   "cer": 0.0545,
+   "bin": "0.05–0.1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "the Center Peak is Mount Song in Henan, the West Peak is Mount Hua",
+     "image_says": "河南華，河西嶽 — Mount Hua is south of the River and Mount Yue is west of it; the page mentions no Mount Song and no Central Peak",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "the West Peak is Mount Hua in Huaxi",
+     "image_says": "河西嶽 — west of the River is Mount Yue (嶽); Mount Yue is left out",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p12",
+   "arm": "random",
+   "book_id": "6a3c68c8af3c49b59c5dc645",
+   "title": "巢氏諸病源候總論·卷四十七~卷五十 (vol 9)",
+   "page_number": 25,
+   "cer": 0.0763,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "suffer from demon-affliction <term>mei</term> <gloss>demonic influence or haunting</gloss>",
+     "image_says": "被魃候 / 有魃病者: the condition is the ba (魃) illness, not mei 魅. The same applies to every later 'demon' on this page.",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "often manifests with slight chills and fevers that come and go",
+     "image_says": "喜微微下，寒熱有去來: tends to cause slight diarrhoea; chills and fever come and go. The diarrhoea clause is lost.",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "It is not the case that every pregnant woman can control such demons;",
+     "image_says": "任娠婦人不必悉能制魃人: not every pregnant woman will cause ba affliction in (another) child. 制魃人 means to suppress others through ba, not to control demons.",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p14",
+   "arm": "top_decile",
+   "book_id": "6992ce6d77d26f9321776d69",
+   "title": "三才圖會(九十七)",
+   "page_number": 6,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p15",
+   "arm": "top_decile",
+   "book_id": "6a3c61d840c88a541d8f057c",
+   "title": "四書釋地補(二) (vol 2)",
+   "page_number": 7,
+   "cer": 0.7778,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Da Mi, either Wu or Song",
+     "image_says": "大宰或吳或宋 — the Grand Steward (taizai), either of Wu or of Song",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p16",
+   "arm": "random",
+   "book_id": "6a3c5e5040c88a541d8e0d55",
+   "title": "駁五經異義疏證(三) (vol 3)",
+   "page_number": 102,
+   "cer": 0.0717,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Based on the Modern Script theory and the Ancient Script theory, this and",
+     "image_says": "據今文說駁古文也 — he relied on the Modern Script theory to refute the Ancient Script theory",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "the distance between Tai Bo of Wu and the current descendants is great",
+     "image_says": "吳之太伯下及魯昭於親遠矣 — from Taibo of Wu down to Duke Zhao of Lu, the kinship is distant",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p18",
+   "arm": "random",
+   "book_id": "6992cbfe018b80967354ca17",
+   "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 7",
+   "page_number": 48,
+   "cer": 0.1234,
+   "bin": "0.1–0.2",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "For the total money, gather the surplus amount,",
+     "image_says": "取錢適足乘盈數 — multiply the surplus amount",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Multiply by the denominators to find the",
+     "image_says": "乘子除為錢實 — multiply by the numerators",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p19",
+   "arm": "top_decile",
+   "book_id": "6992ce233ea667fbac828452",
+   "title": "武備志(四十五)",
+   "page_number": 69,
+   "cer": 0.9565,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p20",
+   "arm": "random",
+   "book_id": "6992cfd0f5b4f75c1a4c994c",
+   "title": "海國圖志(36)",
+   "page_number": 48,
+   "cer": 0.0944,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "It was built on the banks of the **Paraná River**, from which",
+     "image_says": "建于巴拉乖河岸 — built on the bank of the Paraguay River",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p21",
+   "arm": "random",
+   "book_id": "6992cdfb81c9d7efb84d129c",
+   "title": "本草綱目·卷五十二",
+   "page_number": 89,
+   "cer": 0.2292,
+   "bin": "0.2–0.5",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "bad-regardless",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "<note>Complete Pediatric Formulas</note> **Heart Mirror: To Preemptively Dissipate Fetal Toxins:**",
+     "image_says": "摻之全幼心鑑 (the source citation for the first formula is the single book Quanyou xinjian 全幼心鑑; it is not a heading of the next formula)",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p22",
+   "arm": "random",
+   "book_id": "6992cd0cff51f968cf078633",
+   "title": "三才圖會(二)",
+   "page_number": 58,
+   "cer": 0.1212,
+   "bin": "0.1–0.2",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "or if there is a solar or lunar eclipse <gloss>pronounced *yu-fan*</gloss>",
+     "image_says": "日月食孛侵 — sun or moon is eclipsed, or a comet intrudes; the page has no pronunciation note",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "from its normal state to a pale blue-white, it is inauspicious",
+     "image_says": "微變常色則不吉 — if it changes slightly from its usual colour, then it is inauspicious; no colour is named",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p23",
+   "arm": "random",
+   "book_id": "6992ca3dd4d545ae73fedab5",
+   "title": "五百石洞天揮塵 (Wubai Shi Dongtian Huidun) Vol 6",
+   "page_number": 196,
+   "cer": 0.0314,
+   "bin": "0–0.05",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "Taking advantage of the alarm caused by the uprisings in Sichuan and Hubei",
+     "image_says": "乃托於騃，値川楚匪起 — he then feigned foolishness/madness; when the Sichuan–Chu bandits rose up (he memorialized on military affairs)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Only Wang Tan, because he had previously used the excuse",
+     "image_says": "某公獨先以言事騃去官保躬 — a certain lord (the patron who recommended Wang) alone had already left office and kept himself safe; meanwhile Zhongqu got a bad name",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "While serving as a co-examiner for the Ministry of Rites",
+     "image_says": "禮部試，同考官、考官揣某卷似浙王某 — at the Ministry of Rites examination, the associate and chief examiners guessed that a certain paper was by Wang of Zhejiang (Wang was a candidate, not an examiner)",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "his recommendations were rejected and those candidates did not pass",
+     "image_says": "必不薦，不取中式 — they made sure not to recommend it, so Wang was not passed",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "has learned over one hundred and fifty characters",
+     "image_says": "識得二百五十餘字 — knows over two hundred and fifty characters",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p24",
+   "arm": "random",
+   "book_id": "6992cf4cf5b4f75c1a4c887b",
+   "title": "植物名實圖考(二十二)",
+   "page_number": 115,
+   "cer": 0.129,
+   "bin": "0.1–0.2",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "The root tastes like the meat of a young deer",
+     "image_says": "根味如雞腿 — the root tastes like a chicken leg",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p25",
+   "arm": "random",
+   "book_id": "6992ce83673ee1e40e320d58",
+   "title": "三才圖會(一百三)",
+   "page_number": 75,
+   "cer": 0.0217,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "bad-regardless",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "attributed to harmful spirits</note>. It is also used to remove \"white worms\"",
+     "image_says": "中惡腹痛 — 腹痛 (abdominal pain) is listed on the page as its own indication, after 中惡. The English leaves it out of the main text and only mentions abdominal pain inside the note defining 中惡.",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p26",
+   "arm": "random",
+   "book_id": "6992cde281c9d7efb84d096b",
+   "title": "武備志(三十二)",
+   "page_number": 98,
+   "cer": 0.0455,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "keep",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p27",
+   "arm": "random",
+   "book_id": "6992cf3327dcac3f8ca1b6bd",
+   "title": "植物名實圖考(十五)",
+   "page_number": 77,
+   "cer": 0.0667,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "keep",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": false,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "It reaches a height of one or two feet.",
+     "image_says": "高二尺許 — about two feet tall",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p29",
+   "arm": "random",
+   "book_id": "6a09ea573ca4edcd1ef01f1c",
+   "title": "周元公集·卷一~卷四 (Collected Works of Zhou Dunyi, juan 1-4): Siku Quanshu",
+   "page_number": 22,
+   "cer": 0,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "bad-regardless",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "Each element has its own distinct nature",
+     "image_says": "各一其○ (each of the five elements has its own ○, i.e. its own Taiji/Supreme Ultimate; the page writes the circle, not 性 'nature')",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p30",
+   "arm": "random",
+   "book_id": "6a3c5e4240c88a541d8e0641",
+   "title": "羣書治要(一) (vol 1)",
+   "page_number": 10,
+   "cer": 0.6271,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": "keep",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p31",
+   "arm": "random",
+   "book_id": "6992cedc673ee1e40e321ad7",
+   "title": "武備志(八十五)",
+   "page_number": 5,
+   "cer": 0.0122,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "keep",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p32",
+   "arm": "random",
+   "book_id": "6992cf44f5b4f75c1a4c8640",
+   "title": "海國圖志(5)",
+   "page_number": 53,
+   "cer": 0.0775,
+   "bin": "0.05–0.1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": "retranslate-would-fix",
+   "disagree": true,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "they led Chang Jun and the others to sit and perform Indian music",
+     "image_says": "引駿等坐奏天竺樂 — led Jun and the others to their seats, and [the hosts] played Indian music",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Later, a few people requested to enter for a feast",
+     "image_says": "後數日（printed like 口）請入宴 — a few days later [they] were invited in to a banquet",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "eaglewood incense",
+     "image_says": "龍腦香 — borneol (camphor) incense",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "palm leaves engraved with gold patterns as a sign of respect",
+     "image_says": "以鑄金為多羅葉隱起成文以為表 — gold cast into pattra leaves with raised writing, serving as the memorial to the throne",
+     "cause": "BOTH",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "arrived at the mountain of Yashi, southeast of Linyi",
+     "image_says": "至林邑東南並山而行 — reached the sea southeast of Linyi and sailed along the mountains (no place called Yashi)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "seven thousand li south of Rinan",
+     "image_says": "在日本之南七千里 — seven thousand li south of 日本 (the page reads 本, not 南)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "They use ivory and horn for killing.",
+     "image_says": "扣以羖角乃泮 — if struck with a ram's horn, it shatters",
+     "cause": "BOTH",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "They pay taxes in gold, pearls, and incense. [The kingdom] was later annexed",
+     "image_says": "治特牧城 — its capital is the city of Temu (clause left out)",
+     "cause": "BOTH",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p33",
+   "arm": "top_decile",
+   "book_id": "6992cd8f43713c66ea63737f",
+   "title": "三才圖會(三十六)",
+   "page_number": 47,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p34",
+   "arm": "top_decile",
+   "book_id": "6a3cc185ec254ff6cae0d051",
+   "title": "遵生八牋·卷十一~卷十二 (vol 9)",
+   "page_number": 57,
+   "cer": 0.807,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Amomum <gloss>grains of paradise</gloss> powder",
+     "image_says": "硇砂末 — sal ammoniac powder",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "### White Plum Meat",
+     "image_says": "白梅肉四兩 is the fourth ingredient of Orange Broth (橙湯), not a separate recipe",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Mash until smooth, roast until dry, and pinch into small cakes.",
+     "image_says": "右搗爛焙乾捏成餅子白湯用 — the method for Orange Broth (all its ingredients), not for the plum alone",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p35",
+   "arm": "random",
+   "book_id": "6a3cc120ec254ff6cae09924",
+   "title": "御纂周易折中·卷二十一~卷二十二 (vol 26)",
+   "page_number": 113,
+   "cer": 0.4416,
+   "bin": "0.2–0.5",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "The calculation of the month, three hundred.",
+     "image_says": "月之經數三百六十 — the month's standard number is 360",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "remainder of the solar energy, fifty-four units",
+     "image_says": "氣盈之餘數五日四分日之一 — the solar surplus remainder is 5¼ days",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "The suspended stalk corresponds to...",
+     "image_says": "掛策應氣盈五日四分日之一於日法為十分弦之七 — the hung stalk matches the surplus of 5¼ days, which is 7 of the 10-unit quarter in the day-method (left out)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "What is the result? Four is the yang response.",
+     "image_says": "扐策合陰陽共十二，得少則四為陽，得多則八為陰 — the remainder stalks of yin and yang total 12; few gives 4 (yang), many gives 8 (yin)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Twelve new moons, each nine days...",
+     "image_says": "應十二朔每朔二十九日九百四十分日之四百九十九 — 12 new moons, each 29 499/940 days",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "thirteen hundred fifty-four days and nine hundred eighty units",
+     "image_says": "三百五十四日九百四十分日之三百四十八 — 354 348/940 days",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "remainder of the lunar void, eight hundred twenty-seven units",
+     "image_says": "朔虛之餘數十日九百四十分日之八百二十七 — 10 827/940 days",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "The suspended method...",
+     "image_says": "掛策應朔虛十日九百四十分日之八百二十七於月法 — the hung stalk matches the lunar deficit of 10 827/940 days in the month-method",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p36",
+   "arm": "random",
+   "book_id": "6a1d6873013dfd9d9e18ef3a",
+   "title": "泰定養生主論 (三): Treatise on Nurturing Life, vol.3",
+   "page_number": 4,
+   "cer": 0.0755,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "White Poria <gloss>skin removed; four parts</gloss>",
+     "image_says": "白茯苓 去皮 四兩 — four liang (taels), not four fen/parts",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p37",
+   "arm": "top_decile",
+   "book_id": "6992ce8a673ee1e40e320f60",
+   "title": "三才圖會(一百五)",
+   "page_number": 24,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "...this fruit.",
+     "image_says": "The page has no text other than the title 橊, the gutter title and the page number. It does not end any sentence from the previous page.",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p38",
+   "arm": "random",
+   "book_id": "6992ce65673ee1e40e32070d",
+   "title": "武備志(五十九)",
+   "page_number": 48,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p39",
+   "arm": "random",
+   "book_id": "6a3c61d0879008ba7e160a6e",
+   "title": "禮記要義(二) (vol 2)",
+   "page_number": 108,
+   "cer": 0.0851,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "refers to the legal system of grain-tithes",
+     "image_says": "謂殷法也 — this was the method of the Yin (Shang) dynasty",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "On conferring titles in the court, in the ancestral temple",
+     "image_says": "殷爵人於朝周於祖廟 — the Yin conferred ranks at court; the Zhou did so in the ancestral temple",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "at the time [he] performed the second conferment",
+     "image_says": "一時冊命周公 — at that time the Duke of Zhou was appointed by written command (冊命, not 再命 'second')",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "the Duke of Zhou specifically sacrificed to King Wen and King Wu",
+     "image_says": "冊命周公故特祭文武 — because the Duke of Zhou was being appointed, a special sacrifice was made to Wen and Wu; the Duke is the one appointed, not the one who sacrifices",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p40",
+   "arm": "random",
+   "book_id": "6992cdf381c9d7efb84d0f2f",
+   "title": "武備志(三十五)",
+   "page_number": 20,
+   "cer": 0.0303,
+   "bin": "0–0.05",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "synonymous with the Right Robbing Strike <term>刼擊, Jiejie</term>",
+     "image_says": "即右畐(?)擊也 — the strike's name is written with a character shaped like 畐/畺, not 刼 'rob'; it is uncertain, but it is not 'robbing'",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p41",
+   "arm": "random",
+   "book_id": "6a3c5ea840c88a541d8e4567",
+   "title": "御定康熙字典·卷十九 (vol 54)",
+   "page_number": 5,
+   "cer": 0.0369,
+   "bin": "0–0.05",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Receiving the mandate from the Mysterious Center",
+     "image_says": "受命上玄 — received the mandate from High Heaven (上玄)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p42",
+   "arm": "top_decile",
+   "book_id": "6992cbe7018b80967354c4ae",
+   "title": "夢溪筆談 (Mengxi Bitan: Dream Pool Essays) Vols 12-18",
+   "page_number": 2,
+   "cer": 0.9643,
+   "bin": "0.5–1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Dream Pool Essays, Volume 17 and following",
+     "image_says": "夢溪筆談卷十二至十七 — volumes 12 to 17",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p43",
+   "arm": "random",
+   "book_id": "6a3ceb1295fcd455630532ed",
+   "title": "法書要錄·卷七~卷九 (vol 3)",
+   "page_number": 141,
+   "cer": 0.0397,
+   "bin": "0–0.05",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p44",
+   "arm": "random",
+   "book_id": "6a3ceb2295fcd45563053d6a",
+   "title": "宣和書譜·卷七~卷十四 (vol 2)",
+   "page_number": 136,
+   "cer": 0.5385,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "keep",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p45",
+   "arm": "top_decile",
+   "book_id": "6a3c68c8af3c49b59c5dc58b",
+   "title": "巢氏諸病源候總論·卷三十五~卷四十 (vol 7)",
+   "page_number": 25,
+   "cer": 0.8533,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p46",
+   "arm": "random",
+   "book_id": "6a1d60b6d274b9630ccf8de9",
+   "title": "抱朴子外篇 (卷二): Baopuzi, Outer Chapters, vol.2",
+   "page_number": 39,
+   "cer": 0.1667,
+   "bin": "0.1–0.2",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "In the morning, it was worth a string of cities.",
+     "image_says": "曩直連城 — 'formerly it was worth a string of cities'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Today, a scholar of the mountains and forests is considered an incompetent and weak loser.",
+     "image_says": "今以山林之儒為不肖，故聖人之良幹乃闇俗之罪人也，往者之介石乃末葉之羸劣也 — 'today the mountain-and-forest scholar is thought worthless; so the sage's fine timber becomes a criminal to the benighted age, and the steadfast men of the past become feeble weaklings to a later age' (a whole sentence is left out)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p47",
+   "arm": "top_decile",
+   "book_id": "6992d006f5b4f75c1a4c9fb4",
+   "title": "海國圖志(47)",
+   "page_number": 74,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p48",
+   "arm": "top_decile",
+   "book_id": "6a3cc187ec254ff6cae0d17b",
+   "title": "遵生八牋·卷十四 (vol 11)",
+   "page_number": 131,
+   "cer": 0.913,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Eulogy on the Portraits of the Ten Disciples of Liyuan",
+     "image_says": "玄元十子像贊 — Eulogy on the portraits of the Ten Disciples of Xuanyuan (Laozi)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Stele of Bishan Temple",
+     "image_says": "沈山寺碑 — Stele of Shenshan Temple",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p49",
+   "arm": "random",
+   "book_id": "6992ce163ea667fbac8280f0",
+   "title": "本草綱目拾遺(八)",
+   "page_number": 116,
+   "cer": 0.0368,
+   "bin": "0–0.05",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "The tubers begin to form in the ninth month",
+     "image_says": "卵八九月始生 — 'the tubers begin to form in the 8th–9th months'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p50",
+   "arm": "random",
+   "book_id": "6a3cec1e8642f0445b159a8c",
+   "title": "文房四譜·卷一 (vol 1)",
+   "page_number": 52,
+   "cer": 0,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "keep",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p51",
+   "arm": "top_decile",
+   "book_id": "6992cbfb018b80967354c976",
+   "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 5",
+   "page_number": 46,
+   "cer": 0.9928,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p52",
+   "arm": "random",
+   "book_id": "6992ce363ea667fbac828821",
+   "title": "武備志(四十九)",
+   "page_number": 62,
+   "cer": 0.0353,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p54",
+   "arm": "top_decile",
+   "book_id": "69af0e45be5fc7f363546782",
+   "title": "周髀算經 (Zhou Bi Suanjing: Arithmetical Classic of the Gnomon, Vol. 1)",
+   "page_number": 2,
+   "cer": 0.8871,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p55",
+   "arm": "random",
+   "book_id": "6992cd8643713c66ea6370ff",
+   "title": "武備志(十三)",
+   "page_number": 55,
+   "cer": 0.0181,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p56",
+   "arm": "top_decile",
+   "book_id": "6992cdec81c9d7efb84d0cea",
+   "title": "三才圖會(六十二)",
+   "page_number": 70,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "keep",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p57",
+   "arm": "random",
+   "book_id": "6992cf1c70ab3737555459c6",
+   "title": "植物名實圖考(十)",
+   "page_number": 18,
+   "cer": 0,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "keep",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p58",
+   "arm": "random",
+   "book_id": "6992cbfc018b80967354c9d1",
+   "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 6",
+   "page_number": 19,
+   "cer": 0.2234,
+   "bin": "0.2–0.5",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p59",
+   "arm": "random",
+   "book_id": "6992cea1673ee1e40e32139f",
+   "title": "武備志(七十二)",
+   "page_number": 58,
+   "cer": 0.0247,
+   "bin": "0–0.05",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p60",
+   "arm": "random",
+   "book_id": "6a40efc57f8d954eada8b853",
+   "title": "儒林外史(十九): The Scholars, vol 19",
+   "page_number": 29,
+   "cer": 0.0422,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p61",
+   "arm": "random",
+   "book_id": "6a1d612bd274b9630ccf9870",
+   "title": "養生類纂: Classified Compendium on Nurturing Life",
+   "page_number": 23,
+   "cer": 0.0449,
+   "bin": "0–0.05",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "travel through the gates of the two lives",
+     "image_says": "當由所生之門 — go by the gate from which one was born",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "People often lose the Way, and the Way loses the person.",
+     "image_says": "人常失道，非道失人 — people often lose the Way; it is not the Way that loses people",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p62",
+   "arm": "top_decile",
+   "book_id": "6992cde181c9d7efb84d0920",
+   "title": "三才圖會(五十九)",
+   "page_number": 9,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Its taste is bitter. Its pulse is floating, large, and scattered.",
+     "image_says": "Two separate sectors: 傷暑得之，惡臭，脈浮大而散，身熱而煩心痛 (summer heat: dislikes foul smells, scattered pulse) and 飲食勞倦得之，喜苦味，脈浮大而緩，身熱體重嗜臥四肢不收 (food and fatigue: likes bitter taste, relaxed pulse, heavy body, wants to lie down, limbs won't obey)",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "Incurred by Dampness. Its color is yellow. Its pulse is floating, large, and relaxed",
+     "image_says": "中濕得之，汗出不可止，脈沉濡而大，身熱小腹痛足脛寒而逆 — dampness: sweating that won't stop, deep soggy pulse, lower-belly pain, cold shins",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "Incurred by Cold. Its color is black. Its pulse is floating, large, and deep and soggy",
+     "image_says": "傷寒得之，譫言妄語，脈浮大而濇，喘欬洒洒惡寒 — cold: raving speech, choppy pulse, panting cough, shivering",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    },
+    {
+     "english": "Incurred by Summer Heat. Its color is white. Its pulse is floating, large, and choppy",
+     "image_says": "傷暑得之，惡臭，脈浮大而散 — summer heat: dislikes foul smells, scattered pulse; no colour is given",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p63",
+   "arm": "random",
+   "book_id": "6992ce0100f13b15f3ca3c46",
+   "title": "本草綱目拾遺(二)",
+   "page_number": 118,
+   "cer": 0.0778,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "though in reddish-colored wood",
+     "image_says": "著木處燦如黃金 — where it touches the wood it glitters like gold",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p64",
+   "arm": "random",
+   "book_id": "6992cd6b43713c66ea63650d",
+   "title": "武備志(七)",
+   "page_number": 52,
+   "cer": 0.1237,
+   "bin": "0.1–0.2",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "possess a **Lazy Head**; they are gloomy and narrow-minded",
+     "image_says": "獺頭悶狹 — otter head, closed and narrow",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p65",
+   "arm": "random",
+   "book_id": "6a3cc1d0f9474f825c172a4b",
+   "title": "五燈會元·卷十六 (vol 16)",
+   "page_number": 30,
+   "cer": 0.0252,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p66",
+   "arm": "random",
+   "book_id": "69de986b1b234a773e438787",
+   "title": "新校注古本西廂記 (Romance of the Western Chamber, annotated)",
+   "page_number": 46,
+   "cer": 0.8182,
+   "bin": "0.5–1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "bad-regardless",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Portraits of the Commentators on the Annotated Ancient Edition",
+     "image_says": "校注古本西廂記…圖 — illustration to the annotated ancient edition of the Xixiang ji (Romance of the Western Chamber), not portraits of commentators",
+     "cause": "OCR",
+     "b_right": false,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p67",
+   "arm": "random",
+   "book_id": "6a3c5e5e40c88a541d8e1697",
+   "title": "周易義海撮要·卷七 (vol 7)",
+   "page_number": 3,
+   "cer": 0.0603,
+   "bin": "0.05–0.1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p68",
+   "arm": "top_decile",
+   "book_id": "6992c9ef54b3f8b16b4afeb4",
+   "title": "洞天奧旨 (Dongtian Aozhi: Esoteric Meanings of the Grotto Heavens) Vol 3",
+   "page_number": 57,
+   "cer": 0.8902,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "**Sweet Chrysanthemum** <gloss>1 mace</gloss>",
+     "image_says": "甘菊二錢 — chrysanthemum, 2 qian",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "**White Poria** <gloss>2 mace</gloss>",
+     "image_says": "白蒺藜二錢 — white tribulus (Tribulus fruit), 2 qian",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p69",
+   "arm": "top_decile",
+   "book_id": "6a3c61b5879008ba7e15fd28",
+   "title": "四書大全論語集註大全·卷四~卷五 (vol 3)",
+   "page_number": 60,
+   "cer": 1,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "| That | Special | Peace | Thus | Act | At | Affairs | In | O |",
+     "image_says": "Whole page: 南軒張氏曰學者莫先於義利之辨… — commentaries by Zhang Nanxuan, Lu Xiangshan, Rao Shuangfeng, Wang, Chen and Xin'an Chen on the line 'the superior man understands righteousness, the petty man profit'. The English is a meaningless word-by-word grid built from a scrambled transcription, and none of the content comes through",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p70",
+   "arm": "random",
+   "book_id": "6992cf5bf5b4f75c1a4c8b6a",
+   "title": "植物名實圖考(二十五)",
+   "page_number": 60,
+   "cer": 0.7895,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Numerous Fragrant Flowers, Volume 36",
+     "image_says": "羣芳卷之二十六 — Qunfang (flowers) section, juan 26",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p71",
+   "arm": "random",
+   "book_id": "6992ce073ea667fbac827abe",
+   "title": "武備志(三十九)",
+   "page_number": 9,
+   "cer": 0.013,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p72",
+   "arm": "random",
+   "book_id": "6992cef3673ee1e40e321cc5",
+   "title": "武備志(九十)",
+   "page_number": 17,
+   "cer": 0.0225,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p73",
+   "arm": "random",
+   "book_id": "6992cd1fae978f7d415984c6",
+   "title": "三才圖會(六)",
+   "page_number": 44,
+   "cer": 0.0464,
+   "bin": "0–0.05",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "Its name was Qingjiang (Clear River) during the Later dynasties",
+     "image_says": "清江（後周）— Qingjiang under the Later Zhou",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Tongtaping is called Shiliang Lower Valley",
+     "image_says": "…曰通塔平曰石梁下峒 — the end of a list: '(one is) Tongtaping, (one is) Shiliang Xiadong', two separate offices",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "and Cangxi during the Song dynasty",
+     "image_says": "會溪（宋）— Huixi under the Song",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p74",
+   "arm": "top_decile",
+   "book_id": "6a3cc13fec254ff6cae0aa41",
+   "title": "田間易學·卷五 (vol 7)",
+   "page_number": 129,
+   "cer": 0.9968,
+   "bin": "0.5–1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Time and place are the same.",
+     "image_says": "蔡虛齋曰時與所只一般 — 'Cai Xuzhai says: time and place are one and the same' (the attribution is left out)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Time and place are the same.",
+     "image_says": "時乎當止則止也者即其當止之所也 — 'stopping when it is time to stop is itself the place where one should stop' (clause left out)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "The teaching/editing uses \"stopping at the back\"; this is the method",
+     "image_says": "訂詁曰人精神盡乎面不在乎背聖人於未能止者教以艮其背 — 'Dinggu says: a person's spirit is all in the face, not the back; for those who cannot yet stop, the sage teaches them to keep the back still'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "If one makes it silent, its beginning is exactly like its back",
+     "image_says": "使其面之所向一如其背則應用交錯擾擾萬緒未始不寂然矣 — 'if where the face turns is just like the back, then amid ten thousand tangled affairs one is still calm'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "It has never been that its beginning is not silent. If one can",
+     "image_says": "然其初未能也故必自艮背而入 — 'but at first one cannot; so one must begin from keeping the back still'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "then this Gen response has never ceased its merit",
+     "image_says": "時止則止時行則行此是艮止之極功 — 'stop when it is time to stop, act when it is time to act: this is the highest achievement of Gen-stopping'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "Upper and lower Gen response, and for the moment, the objects",
+     "image_says": "上下敵應未嘗絕物也不相與者无心於物也不惟我不與物且令物不與我 — 'upper and lower lines answer as opponents, yet one never cuts off things; not joining means having no mind toward things; not only do I not join things, I also keep things from joining me'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "That my body, myself, and things—this is called stopping. His person",
+     "image_says": "物不與我是謂不獲其身我不與物是謂不見其人 — 'things not joining me is \"not getting his body\"; I not joining things is \"not seeing his person\"'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "those who are not pure hexagrams all speak of responding to things",
+     "image_says": "八純卦皆敵應 — 'all eight pure hexagrams have opposed correspondence'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "if a person does not respond, they become \"interconnected.\"",
+     "image_says": "敵而不應則為絕物應而不敵則為狗物 — 'opposed but not answering means cutting off things; answering but not opposed means following after things'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "it is like once having responded but being insufficient, it becomes \"interconnected.\"",
+     "image_says": "惟敵應而不相與是終日交接而无心於其間猶未嘗交接也是之謂背是之謂所 — 'dealing with things all day with no mind among them is as if one never dealt with them; this is called \"the back\", this is called \"the place\"'",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p75",
+   "arm": "top_decile",
+   "book_id": "6992cdd381c9d7efb84d0778",
+   "title": "武備志(二十九)",
+   "page_number": 60,
+   "cer": 0.7931,
+   "bin": "0.5–1",
+   "o_verdict": "keep",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p76",
+   "arm": "random",
+   "book_id": "6992cec7673ee1e40e321834",
+   "title": "御纂醫宗金鑑",
+   "page_number": 104,
+   "cer": 0.007,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "keep",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "keep",
+   "ocr_material": false,
+   "translation_material": false,
+   "material_errors": []
+  },
+  {
+   "qid": "p77",
+   "arm": "random",
+   "book_id": "6992cd9843713c66ea637791",
+   "title": "武備志(十七)",
+   "page_number": 57,
+   "cer": 0.0643,
+   "bin": "0.05–0.1",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p78",
+   "arm": "random",
+   "book_id": "6a40ef5c3a63957730efee33",
+   "title": "儒林外史(九): The Scholars, vol 9",
+   "page_number": 67,
+   "cer": 0.0458,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p79",
+   "arm": "random",
+   "book_id": "6992ca83d4d545ae73fee34e",
+   "title": "救荒本草 (Jiuhuang Bencao: Famine Relief Herbal) Vol 1",
+   "page_number": 70,
+   "cer": 0.039,
+   "bin": "0–0.05",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "In medicinal preparation, the jointed bark is used.",
+     "image_says": "節皮為之使 — Jiepi (a drug) serves as its 'envoy' (assistant drug); the text does not say the plant's jointed bark is used",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p80",
+   "arm": "random",
+   "book_id": "6992cda043713c66ea637aa0",
+   "title": "三才圖會(四十一)",
+   "page_number": 7,
+   "cer": 0.0612,
+   "bin": "0.05–0.1",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "sitting just over two hundred paces from the Master's old residence",
+     "image_says": "西接魯城二百餘步之舊宅也 — the temple IS the old residence, which borders the Lu city wall at a distance of 200-odd paces to the west",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    },
+    {
+     "english": "the transcription reads \"Libo Hall,\" likely an error for \"Proclaiming the Sage Hall\"",
+     "image_says": "仁宗御書飛帛殿榜之殿 — the hall whose plaque Renzong wrote in 'flying-white' (feibai) calligraphy",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p81",
+   "arm": "random",
+   "book_id": "6992ceaa673ee1e40e321546",
+   "title": "武備志(七十四)",
+   "page_number": 32,
+   "cer": 0.3714,
+   "bin": "0.2–0.5",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p82",
+   "arm": "random",
+   "book_id": "6a3cc1ccf9474f825c1728bb",
+   "title": "五燈會元·卷十四 (vol 14)",
+   "page_number": 4,
+   "cer": 0.0547,
+   "bin": "0.05–0.1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": false,
+   "g_ocr": false,
+   "verdict": "bad-regardless",
+   "ocr_material": false,
+   "translation_material": true,
+   "material_errors": [
+    {
+     "english": "Dharma Heirs of Zen Master Zhifeng of Jinfeng",
+     "image_says": "金峯志禪師法嗣 (Dharma heirs of Chan Master Zhi of Jinfeng; his name is Zhi, not Zhifeng)",
+     "cause": "TRANSLATION",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p83",
+   "arm": "random",
+   "book_id": "6a3c775901fe4f593c2016c5",
+   "title": "葉八白易傳·卷十一~卷十二 (vol 6)",
+   "page_number": 94,
+   "cer": 0.1375,
+   "bin": "0.1–0.2",
+   "o_verdict": "retranslate-would-fix",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": false,
+   "resolved": true,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": "retranslate-would-fix",
+   "ocr_material": true,
+   "translation_material": false,
+   "material_errors": [
+    {
+     "english": "Baohui was somewhat put at ease. Li Mi and Ma Sui arrived fifteen miles",
+     "image_says": "泌與馬燧疾驅而前將佐不俟抱暉之命來迎泌笑曰吾事濟矣去城十五里 (Mi and Ma Sui rode fast ahead; the officers came out to meet Mi without waiting for Baohui's order; Mi laughed and said 'My business is accomplished.' Fifteen li from the city…)",
+     "cause": "OCR",
+     "b_right": true,
+     "severity": "material"
+    }
+   ]
+  },
+  {
+   "qid": "p84",
+   "arm": "random",
+   "book_id": "6a3cebe08642f0445b157ef6",
+   "title": "易原·卷四~卷五 (vol 2)",
+   "page_number": 76,
+   "cer": 0.0119,
+   "bin": "0–0.05",
+   "o_verdict": "keep",
+   "g_verdict": "bad-regardless",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": false,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  },
+  {
+   "qid": "p85",
+   "arm": "random",
+   "book_id": "6a40ef5a3a63957730efedd1",
+   "title": "儒林外史(八): The Scholars, vol 8",
+   "page_number": 26,
+   "cer": 0.0872,
+   "bin": "0.05–0.1",
+   "o_verdict": "bad-regardless",
+   "g_verdict": "retranslate-would-fix",
+   "adj_verdict": null,
+   "disagree": true,
+   "resolved": false,
+   "o_ocr": true,
+   "g_ocr": true,
+   "verdict": null,
+   "ocr_material": null,
+   "translation_material": null,
+   "material_errors": null
+  }
+ ],
+ "attribution_check": {
+  "errors": 59,
+  "quoted": 58,
+  "in_new_not_old": 41,
+  "in_both": 1,
+  "in_old_only": 0,
+  "in_neither": 16,
+  "pages_ocr_material": 30,
+  "pages_with_a_confirmed_error": 24
+ }
+}
