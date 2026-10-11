@@ -1,0 +1,205 @@
+{
+ "issue": 6523,
+ "generated_by": "scripts/eval/cli-rescue-6523/rescore-other.mjs",
+ "syriac_6295": {
+  "scorer": "scripts/eval/syriac-pareto-6295/score-ocr.mjs --fixed-refs (unchanged)",
+  "control": {
+   "checked": 120,
+   "reproduced": 120,
+   "mismatches": []
+  },
+  "arms": {
+   "C36-ocr-b": {
+    "pages": 20,
+    "cer_capped_stored": 0.6695,
+    "cer_capped_rescued": 0.646,
+    "over_half_stored": 14,
+    "over_half_rescued": 14,
+    "changed": 3
+   },
+   "C36-ocr": {
+    "pages": 20,
+    "cer_capped_stored": 0.6043,
+    "cer_capped_rescued": 0.6043,
+    "over_half_stored": 12,
+    "over_half_rescued": 12,
+    "changed": 1
+   },
+   "C37-ocr-b": {
+    "pages": 20,
+    "cer_capped_stored": 0.5509,
+    "cer_capped_rescued": 0.5509,
+    "over_half_stored": 7,
+    "over_half_rescued": 7,
+    "changed": 1
+   },
+   "C37-ocr": {
+    "pages": 20,
+    "cer_capped_stored": 0.5117,
+    "cer_capped_rescued": 0.5117,
+    "over_half_stored": 6,
+    "over_half_rescued": 6,
+    "changed": 1
+   },
+   "C38-ocr-b": {
+    "pages": 20,
+    "cer_capped_stored": 0.5666,
+    "cer_capped_rescued": 0.5666,
+    "over_half_stored": 8,
+    "over_half_rescued": 8,
+    "changed": 0
+   },
+   "C38-ocr": {
+    "pages": 20,
+    "cer_capped_stored": 0.5491,
+    "cer_capped_rescued": 0.5491,
+    "over_half_stored": 8,
+    "over_half_rescued": 8,
+    "changed": 0
+   }
+  },
+  "rows": [
+   {
+    "arm": "C36-ocr-b",
+    "page": "6994400f_296",
+    "method": "cli-restructure",
+    "cer_capped_stored": 1,
+    "cer_capped_rescued": 1
+   },
+   {
+    "arm": "C36-ocr",
+    "page": "6994400f_296",
+    "method": "cli-restructure",
+    "cer_capped_stored": 1,
+    "cer_capped_rescued": 1
+   },
+   {
+    "arm": "C37-ocr-b",
+    "page": "6994400f_296",
+    "method": "deterministic",
+    "cer_capped_stored": 0.9682,
+    "cer_capped_rescued": 0.9682
+   },
+   {
+    "arm": "C37-ocr",
+    "page": "6994400f_296",
+    "method": "deterministic",
+    "cer_capped_stored": 1,
+    "cer_capped_rescued": 1
+   },
+   {
+    "arm": "C36-ocr-b",
+    "page": "69a5eb6b_205",
+    "method": "deterministic",
+    "cer_capped_stored": 0.5957,
+    "cer_capped_rescued": 0.5632
+   },
+   {
+    "arm": "C36-ocr-b",
+    "page": "69a5eb4d_529",
+    "method": "deterministic",
+    "cer_capped_stored": 1,
+    "cer_capped_rescued": 0.5634
+   }
+  ]
+ },
+ "ocr_prereg_6388_G": {
+  "scorer": "scripts/eval/ocr-prereg-6388/score.mjs (unchanged)",
+  "control_reproduces_committed": true,
+  "strata": {
+   "latin-print": {
+    "changed": 1,
+    "stored": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.0423,
+      "mean_d": -0.0022,
+      "verdict": "cannot be told apart"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.0423,
+      "mean_d": -0.0134,
+      "verdict": "cannot be told apart"
+     }
+    ],
+    "rescued": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.0475,
+      "mean_d": -0.0074,
+      "verdict": "cannot be told apart"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.0475,
+      "mean_d": -0.0186,
+      "verdict": "cannot be told apart"
+     }
+    ]
+   },
+   "zh-manuscript": {
+    "changed": 0,
+    "stored": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.2026,
+      "mean_d": 0.1951,
+      "verdict": "switch"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.2026,
+      "mean_d": -0.0084,
+      "verdict": "no change"
+     }
+    ],
+    "rescued": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.2026,
+      "mean_d": 0.1951,
+      "verdict": "switch"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.2026,
+      "mean_d": -0.0084,
+      "verdict": "no change"
+     }
+    ]
+   },
+   "english-print": {
+    "changed": 5,
+    "stored": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.194,
+      "mean_d": -0.1421,
+      "verdict": "no change"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.194,
+      "mean_d": -0.0624,
+      "verdict": "no change"
+     }
+    ],
+    "rescued": [
+     {
+      "baseline": "L1",
+      "mean_cer_G": 0.1416,
+      "mean_d": -0.0897,
+      "verdict": "no change"
+     },
+     {
+      "baseline": "P",
+      "mean_cer_G": 0.1416,
+      "mean_d": -0.0101,
+      "verdict": "cannot be told apart"
+     }
+    ]
+   }
+  }
+ }
+}
