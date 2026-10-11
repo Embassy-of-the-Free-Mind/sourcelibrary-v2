@@ -11,6 +11,13 @@
  * widely supported default (viewers read info.json for the truth). Plain re-hosted
  * JPEGs (our R2 derivatives) don't match and correctly return null — we don't run an
  * Image API server over those.
+ *
+ * Internet Archive BookReader URLs (`archive.org/download/{id}/page/n{N}/…`) are
+ * IIIF-shaped but are NOT an Image API service: `{base}/info.json` answers 404, or a
+ * 302 to BookReaderImages.php that serves a JPEG (checked 2026-10-11). Declaring a
+ * service there breaks Mirador/UV/Allmaps, so they return null and the image is
+ * painted without one (#5079). IA's real service lives on iiif.archive.org and needs
+ * the jp2 path, which the BookReader URL doesn't carry.
  */
 
 export interface IiifImageService {
@@ -34,7 +41,11 @@ export const KNOWN_IIIF_HOSTS: Array<{ test: RegExp; type: string; profile: stri
   { test: /images\.lib\.cam\.ac\.uk\//, type: 'ImageService2', profile: 'http://iiif.io/api/image/2/level2.json' },
 ];
 
+// Hosts whose URLs look like Image API requests but have no info.json behind them.
+export const NOT_AN_IMAGE_SERVICE = /^https?:\/\/(?:[\w-]+\.)*archive\.org\/download\//i;
+
 export function extractImageService(url: string): IiifImageService | null {
+  if (NOT_AN_IMAGE_SERVICE.test(url)) return null;
   const m = url.match(
     /^(https?:\/\/.+?)\/(full|square|\d+,\d+,\d+,\d+|pct:[\d.,]+)\/(max|full|\^?!?\d*,\d*|pct:[\d.]+)\/(!?-?\d+(?:\.\d+)?)\/(default|color|gray|bitonal)\.(jpg|jpeg|png|tif|tiff|gif|jp2|webp)$/i
   );

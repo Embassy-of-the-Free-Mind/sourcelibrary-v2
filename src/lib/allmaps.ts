@@ -38,10 +38,8 @@ export interface AllmapsSource {
 export function allmapsTargetUrl(src: AllmapsSource): string | null {
   for (const url of src.pageImageUrls) {
     if (!url) continue;
-    // archive.org/download/{id}/page/nN/… is IIIF-shaped but is the BookReader image
-    // endpoint, not an Image API service: its info.json answers 404 (checked 2026-09-25).
-    // The IA manifest below is the working entry for those books.
-    if (/archive\.org\/download\//.test(url)) continue;
+    // archive.org/download/… (BookReader) yields no service here (#5079); the IA
+    // manifest below is the working entry for those books.
     const service = extractImageService(url);
     if (service) return `${service.id}/info.json`;
   }

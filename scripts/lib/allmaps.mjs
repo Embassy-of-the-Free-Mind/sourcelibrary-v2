@@ -48,9 +48,13 @@ export function allmapsViewerUrl(annotationId) {
 const IIIF_IMAGE_REQUEST =
   /^(https?:\/\/.+?)\/(full|square|\d+,\d+,\d+,\d+|pct:[\d.,]+)\/(max|full|\^?!?\d*,\d*|pct:[\d.]+)\/(!?-?\d+(?:\.\d+)?)\/(default|color|gray|bitonal)\.(jpg|jpeg|png|tif|tiff|gif|jp2|webp)$/i;
 
+// IA BookReader URLs are IIIF-shaped but have no info.json behind them (#5079).
+const NOT_AN_IMAGE_SERVICE = /^https?:\/\/(?:[\w-]+\.)*archive\.org\/download\//i;
+
 /** The IIIF Image API service base of a stored page-image URL, or null. */
 export function imageServiceId(url) {
-  const m = typeof url === 'string' ? url.match(IIIF_IMAGE_REQUEST) : null;
+  if (typeof url !== 'string' || NOT_AN_IMAGE_SERVICE.test(url)) return null;
+  const m = url.match(IIIF_IMAGE_REQUEST);
   return m ? m[1] : null;
 }
 
@@ -65,7 +69,6 @@ export function imageServiceId(url) {
 export function allmapsTargetUrl(src) {
   for (const url of src.pageImageUrls || []) {
     if (!url) continue;
-    if (/archive\.org\/download\//.test(url)) continue; // BookReader endpoint: info.json 404s
     const service = imageServiceId(url);
     if (service) return `${service}/info.json`;
   }
