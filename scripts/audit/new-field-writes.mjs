@@ -24,9 +24,13 @@
  * DELIBERATE LIMITS — this is a lint, not a proof:
  *   - It cannot see computed keys (`$set: { [name]: v }`); those are reported
  *     separately as unverifiable rather than passed silently.
- *   - It attributes a `$set` to `books` by proximity to a `collection('books')`
- *     call in the same file, so a file touching several collections can
- *     over-report. Over-reporting is the safe direction for a lint.
+ *   - It attributes a `$set` to `books` by the HANDLE the write goes through:
+ *     an inline `collection('books').updateOne(…)`, a hoisted
+ *     `const books = db.collection('books')` used any distance below (#4493 —
+ *     the old 900-character proximity rule never saw this, the dominant idiom
+ *     in scripts/), or an update/ops array built one hop from the call. What
+ *     it still cannot see is listed in scripts/lib/books-set-attribution.mjs.
+ *   - `--list` also prints `$set: someVariable` sites it could not resolve.
  *
  * USAGE
  *   node scripts/audit/new-field-writes.mjs                 # exit 1 on unknown keys
@@ -35,6 +39,7 @@
 
 import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { booksSetBlocks, topKeys } from '../lib/books-set-attribution.mjs';
 
 const LIST = process.argv.includes('--list');
 // --baseline <file>: a recorded set of violations that already exist. The gate
@@ -66,77 +71,30 @@ function walk(dir, out = []) {
   return out;
 }
 
-/** Read a balanced { … } starting at `open`, skipping strings/templates. */
-function readBraces(src, open) {
-  let d = 0;
-  for (let i = open; i < src.length; i++) {
-    const c = src[i];
-    if (c === "'" || c === '"') { const q = c; i++; while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; } continue; }
-    if (c === '`') { i++; while (i < src.length && src[i] !== '`') { if (src[i] === '\\') { i += 2; continue; } i++; } continue; }
-    if (c === '{') d++;
-    else if (c === '}') { d--; if (!d) return src.slice(open + 1, i); }
-  }
-  return null;
-}
-
-/** Top-level keys of an object-literal body. */
-function topKeys(body) {
-  const keys = []; let d = 0;
-  for (let i = 0; i < body.length; i++) {
-    const c = body[i];
-    if (c === "'" || c === '"') {
-      if (d === 0) {
-        const m = /^(['"])([^'"]+)\1\s*:/.exec(body.slice(i));
-        if (m) { keys.push(m[2]); i += m[0].length - 1; continue; }
-      }
-      const q = c; i++; while (i < body.length && body[i] !== q) { if (body[i] === '\\') i++; i++; }
-      continue;
-    }
-    if (c === '`') { i++; while (i < body.length && body[i] !== '`') { if (body[i] === '\\') { i += 2; continue; } i++; } continue; }
-    if (c === '{' || c === '[' || c === '(') { d++; continue; }
-    if (c === '}' || c === ']' || c === ')') { d--; continue; }
-    if (d === 0) {
-      const m = /^([A-Za-z_$][\w$]*)\s*:/.exec(body.slice(i));
-      if (m && (i === 0 || /[\s,{]/.test(body[i - 1]))) { keys.push(m[1]); i += m[0].length - 1; }
-    }
-  }
-  return keys;
-}
-
 const unknown = [];
 const computed = [];
-let scanned = 0, setBlocks = 0;
+const opaque = [];
+let scanned = 0, setBlocks = 0, hoisted = 0;
 
 for (const root of ROOTS) {
   for (const file of walk(root)) {
     const src = readFileSync(file, 'utf8');
-    if (!/collection\(\s*['"]books['"]\s*\)/.test(src)) continue;
+    if (!/collection(?:<[^>()]*>)?\(\s*['"`]books['"`]\s*\)/.test(src)) continue;
     scanned++;
 
     // Attribute each $set to the collection of ITS OWN update call. A
     // file-wide sweep blamed `pages`, `analytics_events` and `batch_jobs`
     // writes on `books` and produced 814 false positives — a lint that cries
     // wolf is worse than no lint, and is exactly how the worktree reaper
-    // trained everyone to pass --force. So: walk forward from each
-    // collection('books') call only, within one statement's reach, and bail
-    // if another collection() intervenes.
-    const WINDOW = 900;
-    const collRe = /collection\(\s*['"]books['"]\s*\)/g;
-    const regions = [];
-    let cm;
-    while ((cm = collRe.exec(src))) regions.push([cm.index, cm.index + WINDOW]);
-
-    const re = /\$set(?:OnInsert)?\s*:\s*\{/g;
-    let m;
-    while ((m = re.exec(src))) {
-      const region = regions.find(([a, b]) => m.index > a && m.index < b);
-      if (!region) continue;
-      const between = src.slice(region[0] + 1, m.index);
-      if (/collection\(\s*['"](?!books['"])/.test(between)) continue;
-      const body = readBraces(src, m.index + m[0].length - 1);
-      if (body === null) continue;
+    // trained everyone to pass --force. The rules (inline window, hoisted
+    // handle, one-hop built update) live in scripts/lib/books-set-attribution.mjs
+    // so tests/unit/new-field-writes-attribution.test.ts can pin each idiom.
+    const { sets, opaque: opq } = booksSetBlocks(src);
+    for (const at of opq) opaque.push(`${file}:${src.slice(0, at).split('\n').length}`);
+    for (const { index, body, via } of sets) {
       setBlocks++;
-      const line = src.slice(0, m.index).split('\n').length;
+      const line = src.slice(0, index).split('\n').length;
+      if (via !== 'inline') hoisted++;
       if (/\[\s*[A-Za-z_$]/.test(body)) computed.push(`${file}:${line}`);
       for (const k of topKeys(body)) {
         const root2 = k.split('.')[0];
@@ -149,9 +107,11 @@ for (const root of ROOTS) {
 }
 
 console.log(`files touching books : ${scanned}`);
-console.log(`$set blocks examined : ${setBlocks}`);
+console.log(`$set blocks examined : ${setBlocks} (${hoisted} reached through a hoisted handle or a built update)`);
 console.log(`computed-key blocks  : ${computed.length}${computed.length ? ' (cannot be checked statically)' : ''}`);
+console.log(`opaque $set blocks    : ${opaque.length}${opaque.length ? ' ($set: someVariable — built elsewhere, not checked)' : ''}`);
 console.log(`UNKNOWN field writes : ${unknown.length}`);
+if (LIST) for (const o of opaque) console.log(`  opaque  ${o}`);
 for (const u of unknown) console.log(`   !! ${u.file}:${u.line}  $set '${u.key}'  (${u.retired ? `root '${u.root}' is RETIRED — re-growing a deleted field` : `root '${u.root}' is not a known books field`})`);
 
 // A violation's identity is file+key, NOT the line number — otherwise every
