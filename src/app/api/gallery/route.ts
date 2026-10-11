@@ -8,6 +8,7 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
+import { getPartnerByProvider, getProviderKeys } from '@/lib/library-partners';
 import { queryTerms, termVariants, isNoSpaceTerm, evidenceScore, plateFields, artworkFields, EVIDENCE_WEIGHTS } from '@/lib/search-grounding';
 import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
@@ -270,10 +271,13 @@ export async function GET(request: NextRequest) {
     // If filtering by library/provider, resolve to book IDs
     let libraryBookIds: string[] | null = null;
     if (libraryFilter) {
+      // A partner's books can sit under alias keys too (mdz/bsb, ndl_japan/ndl).
+      const libraryPartner = getPartnerByProvider(libraryFilter);
+      const providerKeys = libraryPartner ? getProviderKeys(libraryPartner) : [libraryFilter];
       libraryBookIds = await galleryMemo(`lib-ids:${tenantId || ''}:${libraryFilter}`, () =>
         db.collection('books').distinct('id', {
           ...(tenantId ? { tenantId } : {}),
-          'image_source.provider': libraryFilter,
+          'image_source.provider': { $in: providerKeys },
           visible: true,
           pages_count: { $gt: 0 },
         }, { maxTimeMS: 10000 }) as Promise<string[]>);
