@@ -13,8 +13,8 @@
  * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
  * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
  *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6011 / #6293 engine runs,
- *              the #6295 Syriac print panel and the Syriac ground-truth retest; the #6293 CLI reads re-scored with
- *              the CLI's preamble removed (results/ocr-pareto-6293/plan-note-rescored.json)
+ *              the #6295 Syriac print panel and the Syriac ground-truth retest; every #6293 Latin-script read re-scored with
+ *              the CLI's wrapper removed (results/ocr-pareto-6293/extract-rescored.json, #6523)
  *   works      results/pareto-works.json (build-pareto-works.mjs: book → work_id), for the intervals
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (metered Batch spend); self-hosted and
  *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
@@ -204,10 +204,12 @@ const benchRows = [];
     }
   }
 }
-// The CLI's preamble ("I have created the transcription plan…") is the route talking, not the page being read; the
-// #6293 reads that carried it are re-scored without it (rescore-plan-note.mjs, with its positive control).
-const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'plan-note-rescored.json'), 'utf8'))
-  .rows.map(r => [`${r.page}|${r.engine}`, r.stripped]));
+// The CLI's wrapper (a plan note, trailing chat after a partial read, a restarted or doubled reply, ``` fences) is the
+// route talking, not the page being read. Every engine's read in the Latin-script strata is re-scored with ONE
+// extractor (rescore-extract.mjs, cli-chatter.mjs extractTranscription, with its positive control; #6523). It
+// supersedes the #6386 plan-note re-score, which removed only the leading note.
+const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'extract-rescored.json'), 'utf8'))
+  .rows.map(r => [`${r.page}|${r.engine}`, r.extracted]));
 // ONE FAILURE RULE: a refused, unaligned or unscored read is CER 1.0, for every engine alike; CER is capped at 1.
 const toRow = (r, page, extra = {}) => {
   const fixed = RESCORED.get(`${page}|${r.engine}`);
@@ -270,13 +272,16 @@ const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.
 const CAP_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'capped-set.json');
 const SEL_6293 = fs.existsSync(SEL_6293_FILE) ? JSON.parse(fs.readFileSync(SEL_6293_FILE, 'utf8')) : null;
 const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSync(CAP_6293_FILE, 'utf8')).uids) : null;
+// #6523 (scripts/eval/experiments/2026-10-12-cli-ocr-route-fix-6523.md): how the Latin / Early English CLI pages were read
+const ROUTE_6523 = 'reply asked for between <<<BEGIN>>>/<<<END>>> markers; a PreToolUse hook allows view_file on the page image and refuses every other tool with a reason; plan mode; up to 2 attempts, on an empty reply only (1 of 573 reads retried); print timeout 300 s (120 s for the 3.8 low held-out pages)';
 for (const t of CLI_6293_TIERS) {
   if (!fs.existsSync(t.costFile)) continue;
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
     charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota',
-    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`,
+    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`
+      + ((cc.charts_reread_6523 || []).includes(chart) ? `; these pages re-read with the #6523 route config (${ROUTE_6523})` : ''),
     source: path.relative(REPO, t.costFile) });
 }
 const cli6293Coverage = {}, cli6293Subsample = {};
@@ -408,6 +413,9 @@ const CAPTION = {
   'syriac-print': 'Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.',
   syriac: 'Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.',
   'chinese-manuscript': 'On many pages the reference runs longer than the page, so every engine carries some unavoidable error.',
+  // #6523: the route config of the 3.7 / 3.8 command-line reads on these two charts, and the scoring change
+  latin: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
+  english: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
 };
 
 const charts = [], noChart = [], primarySets = {}, chartRows = {};

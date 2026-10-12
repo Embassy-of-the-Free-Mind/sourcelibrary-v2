@@ -13,9 +13,18 @@ Run one Gemini CLI arm (`agy -p`, subscription, $0) over a list of eval requests
 REQ.jsonl rows: {uid, prompt?, image?}. `prompt` is sent verbatim; with --prompt-file every row gets that file's text.
 If `image` is set, the image is copied into a one-file workspace and attached as `@./<uid>.<ext>` at the end of the
 prompt (the #6295 export's command shape), with that directory as the CLI's cwd. Every call runs with
-`--mode plan --print-timeout 120s` (no tools; #6345); --print-timeout changes the 120.
+`--mode plan --print-timeout 300s` (no tools; #6345); --print-timeout changes the 300 (120 before #6523: 3.8 Flash at high
+thinking runs 70–240 s on a dense page, and at the limit agy returns the partial reply with exit 0, now a `timeout`).
 
-OUT.jsonl rows: {uid, arm, model, route: "cli", date, text, secs, attempts, blocked, empty, error}. A uid already
+#6523 (scripts/eval/experiments/2026-10-12-cli-ocr-route-fix-6523.md), the defaults that came out of the dev rounds:
+  - TOOL GATE: an image request's workspace gets .agents/hooks.json running scripts/lib/agy-tool-gate.py, which allows
+    view_file inside the workspace and refuses every other tool WITH A REASON, so the turn continues to the answer
+    instead of ending empty on a denied shell / web request. Approves nothing plan mode would not. --no-tool-gate.
+  - MARKERS (--kind ocr): the prompt ends with SENTINEL_INSTRUCTION; `text` is what is between <<<BEGIN>>> and
+    <<<END>>>, `raw` the whole reply, `wrapper` why the reply was not clean (text outside, no END). --no-sentinels.
+
+OUT.jsonl rows: {uid, arm, model, route: "cli", date, text, raw, wrapper, tool_gate, gate_calls, secs, attempts, blocked,
+empty, error}. A uid already
 written with non-empty text is skipped on restart; a row without text is retried on restart (its last row wins).
 Every CLI call (each attempt) is appended to /var/log/sourcelibrary/agy-calls.jsonl as
 {ts, job, model, kind, seconds, ok, error_class}. A quota error stops the run with exit 3.
@@ -70,10 +79,55 @@ def wait_for_gap(own_dir, max_wait=20):
         time.sleep(0.02)
 
 
+# #6523: the OCR reply is asked for between markers (scripts/lib/cli-chatter.mjs OCR_SENTINEL_INSTRUCTION, same words;
+# tests/unit/cli-ocr-extract-6523.test.ts pins the two copies equal).
+SENTINEL_INSTRUCTION = 'Write the transcription between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.'
+
+
+def unwrap(raw):
+    # (text between the markers, why the reply is not clean or None); a reply with no BEGIN marker is returned whole
+    m = re.search(r'<<<\s*BEGIN\s*>>>', raw or '')
+    if not m:
+        return (raw or '').strip(), ('no <<<BEGIN>>> marker' if (raw or '').strip() else None)
+    rest = raw[m.end():]
+    e = re.search(r'<<<\s*END\s*>>>', rest)
+    inside = (rest[:e.start()] if e else rest).strip()
+    outside = (raw[:m.start()] + (rest[e.end():] if e else '')).strip()
+    return inside, ('text outside the markers' if outside else None if e else 'reply cut before <<<END>>>')
+
+
+GATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'lib', 'agy-tool-gate.py')
+
+
+def install_gate(cwd):
+    # #6523: a PreToolUse hook in the call's one-image workspace. It lets the model open files in that workspace and
+    # denies every other tool WITH A REASON, so the turn goes on to the transcription instead of ending empty on a
+    # denied shell request. It approves nothing plan mode would not (#6345). Its log counts the denials per call.
+    os.makedirs(os.path.join(cwd, '.agents'), exist_ok=True)
+    log = os.path.join(cwd, '.agents', 'gate.jsonl')
+    cmd = f"AGY_GATE_ROOT='{cwd}' AGY_GATE_LOG='{log}' python3 '{os.path.realpath(GATE)}'"
+    with open(os.path.join(cwd, '.agents', 'hooks.json'), 'w') as f:
+        json.dump({'ocr-tool-gate': {'PreToolUse': [{'matcher': '*', 'hooks': [{'type': 'command', 'command': cmd, 'timeout': 10}]}]}}, f)
+    return log
+
+
+def gate_calls(log):
+    # the tool calls the model made, in order, as "view_file" or "run_command:deny"
+    try:
+        return [(r.get('tool') or '?') + ('' if r.get('decision') == 'allow' else ':deny') for r in map(json.loads, open(log))]
+    except (OSError, ValueError):
+        return []
+
+
+# #6523: a reply cut by Gemini's recitation or safety filter. The agent then apologises ("I am unable to provide a
+# full verbatim transcription … content filter") or the CLI prints the block message. With --retry-refusal such a reply
+# is read once more from scratch, and the row says so (`refusal_retry`).
+REFUSAL = re.compile(r"\bI (?:cannot|can't|am unable to) (?:provide|transcribe|reproduce|output)|content (?:safety )?filter|\bverbatim\b|" + re.escape(BLOCK_MSG), re.I)
+
 NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.'
 
 
-def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conversation=None):
+def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conversation=None, mode='plan', json_schema=None):
     # The CLI is an AGENT. Plan mode stops the model running tools, and never auto-approve (#6345): the image is
     # attached as `@./file` relative to cwd, so no tool is needed to open it. Even in plan mode the model sometimes
     # asks for a shell command (e.g. python to crop the image); headless mode denies it and the turn ends with an
@@ -81,7 +135,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     waited = (0, 0)
     if add_dir:
         waited = wait_for_gap(os.path.dirname(add_dir), gap_wait)
-    args = ['agy', '-p', prompt, '--model', model, '--mode', 'plan', '--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
+    args = ['agy', '-p', prompt, '--model', model] + (['--mode', mode] if mode else []) + ['--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
+    if json_schema:
+        args += ['--json-schema', json_schema]
     if conversation:
         args += ['--conversation', conversation]
     t0 = time.time()
@@ -100,7 +156,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     blob = raw + '\n' + err
     if any(q in blob for q in QUOTA):
         cls = 'quota'
-    elif code == -9:
+    elif code == -9 or 'print timeout' in blob:
+        # #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout after 2m0s with turn in
+        # progress; returning partial output"). That is a cut read, not a transcription: an empty attempt.
         cls = 'timeout'
     elif code != 0:
         cls = f'exit_{code}'
@@ -120,7 +178,15 @@ def main():
     ap.add_argument('--prompt-file'); ap.add_argument('--attempts', type=int, default=2); ap.add_argument('--probe', action='store_true')
     ap.add_argument('--workdir', default=os.environ.get('JOB_SCRATCH', '/tmp') + '/cli-ws'); ap.add_argument('--limit', type=int)
     ap.add_argument('--gap-wait', type=float, default=20, help='seconds to wait for a gap in other jobs\' image calls before going alongside one')
-    ap.add_argument('--print-timeout', type=int, default=120, help='agy --print-timeout in seconds; the process is killed 60 s later')
+    ap.add_argument('--print-timeout', type=int, default=300, help='agy --print-timeout in seconds; the process is killed 60 s later')
+    ap.add_argument('--tool-gate', action='store_true', help='(the default for image requests since #6523; kept so older commands still parse)')
+    ap.add_argument('--no-tool-gate', action='store_true', help='do not install agy-tool-gate.py (#6523) in the workspace')
+    ap.add_argument('--no-sentinels', action='store_true', help='--kind ocr: do not ask for the <<<BEGIN>>>/<<<END>>> markers (#6523)')
+    ap.add_argument('--retry-refusal', action='store_true', help='#6523: read once more when the reply is a refusal or a filter cut')
+    ap.add_argument('--no-nudge', action='store_true', help='never continue a turn that ended on a denied tool')
+    ap.add_argument('--prompt-suffix', default='', help='text appended to every prompt, before the @file attachment')
+    ap.add_argument('--json-schema', help='passed to agy --json-schema (a schema file or string)')
+    ap.add_argument('--cli-mode', default='plan', help="agy --mode ('plan'; '' for none)")
     a = ap.parse_args()
 
     if a.probe:
@@ -130,6 +196,11 @@ def main():
         sys.exit(3 if cls == 'quota' else 0 if cls is None else 1)
 
     fixed = open(a.prompt_file, encoding='utf-8').read() if a.prompt_file else None
+    # #6523 dev rounds: markers + the tool gate took the 3.8 Flash Latin dev pages from 11 of 60 reads over half wrong
+    # to 0. Both are the default for OCR; a run that must replay an older request exactly opts out.
+    sentinels = a.kind == 'ocr' and not a.no_sentinels
+    if sentinels:
+        a.prompt_suffix = f"{a.prompt_suffix}\n\n{SENTINEL_INSTRUCTION}" if SENTINEL_INSTRUCTION not in a.prompt_suffix else a.prompt_suffix
     reqs = [json.loads(l) for l in open(a.requests, encoding='utf-8') if l.strip()]
     done = {}
     if os.path.exists(a.out):
@@ -152,14 +223,18 @@ def main():
             cwd = add_dir = os.path.join(a.workdir, f"{a.arm}-{stem}")
             os.makedirs(cwd, exist_ok=True)
             shutil.copyfile(req['image'], os.path.join(cwd, stem + ext))
-            prompt = f"{prompt} @./{stem}{ext}"
+            prompt = f"{prompt}{a.prompt_suffix} @./{stem}{ext}"
+        elif a.prompt_suffix:
+            prompt = f"{prompt}{a.prompt_suffix}"
+        gate_log = install_gate(cwd) if (cwd and not a.no_tool_gate) else None
         out, cls, total, tries, err, overlaps, waits, nudged, meta = '', None, 0.0, 0, '', 0, 0.0, False, {}
+        refusal_retry = False
         for tries in range(1, a.attempts + 1):
-            if cls == 'denied_tool' and meta.get('conversation'):
+            if cls == 'denied_tool' and meta.get('conversation') and not a.no_nudge:
                 nudged = True
-                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, conversation=meta['conversation'])
+                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, conversation=meta['conversation'], mode=a.cli_mode, json_schema=a.json_schema)
             else:
-                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, timeout=a.print_timeout + 60, gap_wait=a.gap_wait)
+                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, mode=a.cli_mode, json_schema=a.json_schema)
             overlaps += waited[1] > 0; waits += waited[0]
             total += secs
             log_call(a.job, a.model, a.kind, secs, cls in (None, 'safety_filter'), cls)
@@ -169,9 +244,18 @@ def main():
                     f.write(f"{now()} {a.arm} {req['uid']}\n{out}\n{err}\n")
                 return
             if cls in (None, 'safety_filter'):
+                if a.retry_refusal and not refusal_retry and tries < a.attempts and REFUSAL.search(out or ''):
+                    refusal_retry = True
+                    cls = 'refusal'
+                    continue
                 break
-        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': 'plan', 'date': now(), 'text': out if cls in (None, 'safety_filter') else '',
-               'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
+        text = out if cls in (None, 'safety_filter') else ''
+        wrapper = None
+        if sentinels and text:
+            text, wrapper = unwrap(text)
+        row = {'uid': req['uid'], 'arm': a.arm, 'model': a.model, 'route': 'cli', 'cli_mode': a.cli_mode or 'default', 'tool_gate': bool(gate_log), 'gate_calls': gate_calls(gate_log) if gate_log else None,
+               'gate_denials': sum(c.endswith(':deny') for c in gate_calls(gate_log)) if gate_log else None, 'denied_actions': meta.get('denied'), 'date': now(), 'text': text, 'raw': out if sentinels else None, 'wrapper': wrapper,
+               'secs': round(total, 1), 'attempts': tries, 'blocked': cls == 'safety_filter', 'empty': cls in ('empty', 'denied_tool', 'timeout'), 'nudged': nudged, 'refusal_retry': refusal_retry, 'gap_wait_s': round(waits, 1), 'overlapped_other_job': overlaps, 'error': None if cls in (None, 'safety_filter') else f'{cls}: {err[-300:]}'}
         with lock, open(a.out, 'a', encoding='utf-8') as f:
             f.write(json.dumps(row, ensure_ascii=False) + '\n')
         print(f"  {req['uid']} {cls or 'ok'}{' (nudged)' if nudged else ''} {len(row['text'])} chars {round(total)}s x{tries}", flush=True)
