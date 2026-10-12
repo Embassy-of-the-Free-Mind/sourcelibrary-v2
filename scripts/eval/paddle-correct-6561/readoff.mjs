@@ -10,7 +10,7 @@
 // at a spot where Paddle, the leaf and every arm agree, against a look-alike character (the right answer is known).
 //
 //   node readoff.mjs build   → ro-req-gem.jsonl (agy), ro-req-opus.jsonl (claude), ro-items.json
-//   node readoff.mjs score   → readoff.json   (reads ro-out-gem.jsonl, ro-out-opus.jsonl)
+//   node readoff.mjs score   → readoff.json   (reads ro-out-gem.jsonl + ro-out-gem-b.jsonl, the gem requests run as two halves, and ro-out-opus.jsonl)
 import fs from 'node:fs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { bodyText, foldHan } from '../ground-truth-5935/lib.mjs';
@@ -68,7 +68,7 @@ if (MODE === 'build') {
 } else if (MODE === 'score') {
   const items = JSON.parse(fs.readFileSync('ro-items.json', 'utf8'));
   const outs = new Map();
-  for (const [fam, f] of [['gem', 'ro-out-gem.jsonl'], ['opus', 'ro-out-opus.jsonl']]) for (const r of readJsonl(f)) {
+  for (const [fam, f] of [['gem', 'ro-out-gem.jsonl'], ['gem', 'ro-out-gem-b.jsonl'], ['opus', 'ro-out-opus.jsonl']]) for (const r of readJsonl(f)) {
     if (!r.text) continue; const m = r.text.match(/\{[\s\S]*\}/); let j = null; try { j = JSON.parse(m[0]); } catch { /* unparseable */ }
     if (j?.items) outs.set(r.uid, new Map(j.items.map((x) => [x.n, x.choice])));
   }

@@ -13,17 +13,17 @@
    "B": 17.9325
   },
   "pro-correct": {
-   "all": 103.8,
+   "all": 102.35,
    "A": 151.2,
    "B": 84.4
   },
   "flashhigh-correct": {
-   "all": 136,
+   "all": 135,
    "A": 157.85,
-   "B": 117.6
+   "B": 118.94999999999999
   },
   "flashlow-second": {
-   "B": 12.4
+   "B": 13.95
   }
  },
  "meter": {
@@ -118,21 +118,21 @@
    }
   },
   "flashhigh-correct": {
-   "throughput": 10286,
+   "throughput": 10169,
    "quota_bound": 33600,
-   "pages_per_week": 10286,
+   "pages_per_week": 10169,
    "binding": "throughput",
-   "secs_per_page": 117.6,
+   "secs_per_page": 118.94999999999999,
    "by_rule": {
     "table detector (gate AND shape)": 0.4,
-    "qa_screen dice < 0.80": 14.8,
-    "qa_screen dice < 0.85": 23,
-    "qa_screen dice < 0.90": 40.2,
-    "qa_screen dice < 0.95": 85.4,
-    "no trusted qa_screen (not screened)": 9.5,
-    "whole lane": 152.5
+    "qa_screen dice < 0.80": 15,
+    "qa_screen dice < 0.85": 23.3,
+    "qa_screen dice < 0.90": 40.7,
+    "qa_screen dice < 0.95": 86.4,
+    "no trusted qa_screen (not screened)": 9.6,
+    "whole lane": 154.2
    }
   }
  },
- "second_read_whole_lane_weeks": 16.1
+ "second_read_whole_lane_weeks": 18.1
 }
