@@ -38,7 +38,7 @@ import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { geminiEngine, imageInput, ocrProvenance, notRecorded, contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, engineNameForCli, imageInput, ocrProvenance, notRecorded, contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
 import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
@@ -47,6 +47,7 @@ import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs
 import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
+import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -56,7 +57,6 @@ const MODEL = arg('model') || 'gemini-3.8-flash-low';
 const APPLY = process.argv.includes('--apply');
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
-const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
 // The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
 // #6523: the reply is asked for between <<<BEGIN>>> / <<<END>>> markers (the dev rounds' winning config). A read made
@@ -88,12 +88,10 @@ const db = client.db('bookstore');
 
 if (STAGE === 'read') {
   const ids = readPageIdsFile(arg('page-ids-file'));
-  const prompt = await db.collection('prompts').findOne({ type: 'ocr', is_default: true }, { sort: { version: -1 } });
-  if (!prompt?.content) throw new Error('No default OCR prompt found in DB');
-  const base = prompt.content.replace('{language_instruction}', LANGUAGE_INSTRUCTION).replace('{language}', '');
+  const { base, ref } = await liveOcrPrompt(db);
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(path.join(OUT, 'prompt-base.txt'), base);
-  fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify({ id: prompt._id?.toString(), name: prompt.name, version: String(prompt.version ?? ''), hash: prompt.content_hash ?? null }));
+  fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify(ref));
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 } }).toArray();
@@ -158,7 +156,10 @@ if (STAGE === 'read') {
 // ── apply ──
 const REASON = arg('reason');
 if (!REASON) { console.error('--reason is required: say why these pages are being re-read'); process.exit(2); }
-const base = fs.readFileSync(path.join(OUT, 'prompt-base.txt'), 'utf8');
+// A Gemini read dir has prompt-base.txt (one prompt for every page); a claude-ocr.mjs read dir has none, because each
+// call's prompt names its own page count and language: its meta points at the exact text sent (`prompt_sent_file`).
+const basePath = path.join(OUT, 'prompt-base.txt');
+const base = fs.existsSync(basePath) ? fs.readFileSync(basePath, 'utf8') : null;
 const ref = JSON.parse(fs.readFileSync(path.join(OUT, 'prompt-ref.json'), 'utf8'));
 // --only=FILE: apply just these page ids (a JSON array, as --page-ids-file) out of a read directory, e.g. the pages an
 // adjudicator picked (scripts/batch/ocr-convergence/driver.mjs). Without it every read in OUT is a candidate.
@@ -207,14 +208,15 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
-  const sent = base + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy');
+  const sent = m.prompt_sent_file ? fs.readFileSync(path.join(OUT, m.prompt_sent_file), 'utf8') : base != null ? base + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy') : '';
   if (contentHash(sent) !== m.prompt_sent_hash) { skip(m, 'prompt sent cannot be reconstructed (hash mismatch)'); continue; }
   const imageUrl = m.image_url || getPageSource(page);
   const engine = geminiEngine({
-    call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
+    // `cli: 'claude'` is Anthropic's model through the Claude CLI on the subscription (scripts/batch/claude-ocr.mjs).
+    name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, reason: REASON },
+    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256 },
   });
   const tags = liftOcrTags(text);

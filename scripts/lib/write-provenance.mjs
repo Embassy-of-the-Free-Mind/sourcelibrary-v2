@@ -90,6 +90,16 @@ export const MODEL_DEFAULTS = {
   'gemini-2.5-flash': { temperature: 1, top_p: 0.95, top_k: 64, max_output_tokens: 65536, thinking: 'dynamic', version: '001', looked_up: '2026-09-28' },
 };
 
+/**
+ * Which vendor's model a `gemini-engine/1` block may name. The schema is the SHAPE of the record (model, prompt
+ * sent, run, input); `name` says whose model it was. Gemini is every API, batch and CLI writer; `anthropic` is
+ * allowed only through a subscription CLI (`api: 'cli'`, `cli.name: 'claude'`: scripts/batch/claude-ocr.mjs, Opus
+ * reading the Nahuatl and Mayan books, #6559). There is no Anthropic API writer, by rule (subscription only).
+ */
+export const ENGINE_NAMES = new Set(['gemini', 'anthropic']);
+/** The engine name for a read made through a vendor CLI: `claude` is Anthropic's, `agy` (and any other) Gemini's. */
+export const engineNameForCli = (cli) => (cli === 'claude' ? 'anthropic' : 'gemini');
+
 /** The `ocr.source` / `translation.source` values a Gemini engine block is REQUIRED on. */
 export const GEMINI_SOURCES = new Set(['ai', 'batch_api', 'pipeline_preview']);
 
@@ -248,6 +258,7 @@ function runBlock(run) {
  * version }`. The CLI does not expose temperature, token caps or thinking, so `generation` is the
  * explicit `notRecorded(...)` marker; the writer passes it, this builder does not invent values.
  * @param {object} a
+ * @param {'gemini'|'anthropic'} [a.name]  whose model; 'anthropic' only with api 'cli' (ENGINE_NAMES)
  * @param {string} a.call_site  repo-relative path of the writer, e.g. 'scripts/batch/realtime-ocr.mjs'
  * @param {'realtime'|'batch'|'cli'} a.api
  * @param {object} [a.cli]      { name, version } of the subscription CLI; required when api is 'cli'
@@ -258,7 +269,9 @@ function runBlock(run) {
  * @param {object} a.input      imageInput(...) | translationInput(...) | notRecorded(reason)
  * @param {object} [a.response] the raw API response (for `modelVersion`) when available
  */
-export function geminiEngine({ call_site, api, cli, model, prompt, generationConfig, run, input, response } = {}) {
+export function geminiEngine({ name = 'gemini', call_site, api, cli, model, prompt, generationConfig, run, input, response } = {}) {
+  if (!ENGINE_NAMES.has(name)) throw new Error(`write-provenance: engine name must be one of ${[...ENGINE_NAMES].join(', ')} (got ${name})`);
+  if (name !== 'gemini' && api !== 'cli') throw new Error(`write-provenance: a ${name} engine is recorded only for a subscription CLI read (api 'cli')`);
   if (!call_site || typeof call_site !== 'string') throw new Error('write-provenance: call_site is required — name the writer');
   if (api !== 'realtime' && api !== 'batch' && api !== 'cli') throw new Error(`write-provenance: api must be 'realtime', 'batch' or 'cli' (got ${api})`);
   if (api === 'cli' && !(cli && cli.name && cli.version)) throw new Error('write-provenance: api \'cli\' needs cli: { name, version }');
@@ -267,7 +280,7 @@ export function geminiEngine({ call_site, api, cli, model, prompt, generationCon
   if (!input || typeof input !== 'object') throw new Error('write-provenance: input is required (imageInput / translationInput / notRecorded)');
   return {
     schema: ENGINE_SCHEMA,
-    name: 'gemini',
+    name,
     model,
     ...modelVersion(model, response),
     api,
@@ -393,7 +406,7 @@ export function missingProvenance(field, sub) {
     // A restore of pre-#4613 text says so explicitly: a marker, not a gap.
     if (isNotRecorded(e)) { markers.push(`${field}.engine`); return { missing, markers }; }
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
-    if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
+    if (e.name !== 'gemini' && !(e.name === 'anthropic' && e.api === 'cli')) missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);
     if (e.api !== 'realtime' && e.api !== 'batch' && e.api !== 'cli') missing.push(`${field}.engine.api`);
     if (e.api === 'cli' && !(e.cli && e.cli.name && e.cli.version)) missing.push(`${field}.engine.cli`);
