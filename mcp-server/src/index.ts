@@ -157,14 +157,14 @@ const TOOLS: Tool[] = [
     name: "list_books",
     title: "List Books",
     description:
-      "Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
+      "Browse the catalog by metadata — filter by title/author/summary words, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
     annotations: { title: "List Books", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
         search: {
           type: "string",
-          description: "Filter by title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
+          description: "Relevance-ranked word match over title, author, original-script name forms AND the book's AI summary — a hit may name your term only in its summary, not its title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
         },
         language: {
           type: "string",
