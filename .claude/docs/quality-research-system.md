@@ -45,6 +45,39 @@ explore/exploit structure of a multi-armed bandit, run over a hierarchy of page 
 | 6. Router | the routing table as data that lanes read; a background canary sends a few % of pages to a challenger | routing hard-coded per lane; decisions in issues | `routing_rules` table, lane integration, canary |
 | Quality Center | the windows onto it: internal (evidence browser, uncertainty map, decisions) and public (honest quality statements per shelf and language) | `/quality/*`, `/platform/admin/ocr-evidence`, `/platform/admin/quality-methods` | views over the store and the posterior |
 
+## How the data is organised: five layers
+
+| layer | holds | rule |
+|---|---|---|
+| L0 raw | every model reply, prompt as sent, settings, the image or source it saw (by content hash) | immutable; job scratch then R2; any number can be re-derived from it |
+| L1 observations | one row per page × engine × instrument (§1) | the only thing the estimator reads |
+| L2 instruments | every measuring tool and its measured properties (below) | an instrument without measured properties is marked unvalidated and down-weighted |
+| L3 documents | write-ups, preregistrations, briefs, issue bodies, decision rows, embedded (§2) | "have we tested this?"; prior art attached to every new brief |
+| L4 derived | dated posterior snapshots, the routing table | regenerated, never hand-edited; a Quality Center page is a view over L1/L4 |
+
+**Past materials become data by backfill:**
+- page-level result files (the xlref series, #6182, #6331, the pareto data, the 2026-10-11 replications);
+- the 255 experiment write-ups (study-level L1 rows + L3 documents);
+- production evidence: `page_revisions` before/after pairs, the #6420 convergence lane's adjudications, the #6361 40-page two-reader check.
+
+Each row keeps its original judge, prompt and route, so the estimator models the differences instead of mixing them.
+
+## Instruments: measuring the measurement tools
+
+Every judge, scorer, detector and human reference is an **instrument** with measured properties. They are stored in
+L2 and used by the estimator as noise and bias terms:
+
+- **catch rate** on planted errors (span-level, with no count anchoring in the prompt);
+- **test–retest** agreement (an A-vs-A repeat);
+- **cross-instrument agreement** (Krippendorff's alpha; pairwise ranking agreement);
+- **bias:** self-preference toward its own model family;
+- **reference error** for human references (#6552);
+- the **validity verdict** from `measurement-validity.md` (#6203).
+
+A noisy judge counts for less, and a biased one is corrected. The Quality Center shows instrument health beside every
+result. Sources so far: #6545 (judge catch rates, Fable as third judge), #6552 (reference error), #6203 (validity
+audit), #6547 (corrector anchoring on Greif: Opus 0/33 planted errors survived, Pro 2/33).
+
 ## 1. Evidence store (Supabase Postgres)
 
 One row per **observation**: one page, read or translated by one engine, scored by one instrument.
