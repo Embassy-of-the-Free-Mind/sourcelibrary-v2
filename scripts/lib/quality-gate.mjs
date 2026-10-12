@@ -17,8 +17,11 @@
 //
 // THE RECORD (`quality_gates`):
 //   { id, step, window: { label, from, to, books, pages, ... }, seed, sample_ids: [{ book_id, language,
-//     page_ids, page_numbers }], verdict: 'GO'|'NO-GO', failure_classes: [{ code, pages, books, severity,
-//     note }] (codes from .claude/docs/page-error-taxonomy.md), screens, findings?, by, fix?, notes?, at,
+//     page_ids, page_numbers, exposure: [{ page_number, exposure }] }], verdict: 'GO'|'NO-GO',
+//     failure_classes: [{ code, kind, pages, books, severity, note }] (codes from
+//     .claude/docs/page-error-taxonomy.md; kind and exposure from scripts/lib/review-vocabulary.mjs, #6203: the
+//     kind is the reader's, else the code's default; exposure says whether each sampled page was served,
+//     withheld, without English or hidden when it was read), screens, findings?, by, fix?, notes?, at,
 //     actuation: { enrol_paused?, enrol_resumed?, ntfy } }
 //
 // THE BRAKE: `system_config.processing_control.lane_budgets.<step>.enrol_paused = { gate_id, at, by }`.
@@ -35,6 +38,8 @@
 // since the last gate. Overdue (due + GRACE_BOOKS more books, or no gate ever) is what the standing driver
 // (R6, #5825, not yet landed) idles on — a missing check fails closed THERE. The live enrolers read only
 // the NO-GO brake: counting the window is an 18 s scan of translate_batch_runs, too slow for every tick.
+
+import { kindOfClass, kindProblems, exposureProblems } from './review-vocabulary.mjs';
 
 export const GATE_STEPS = Object.freeze(['ocr', 'translate']);
 export const DUE_BOOKS = 300;
@@ -65,12 +70,12 @@ export const TAXONOMY_CLASSES = Object.freeze([
 ]);
 export const SEVERITIES = Object.freeze(['minor', 'major', 'blocking']);
 
-/** Parse `O6:3,T7:2` (code:pages) into failure-class rows. */
+/** Parse `O6:3,T7:2` (code:pages) or `O1:2:recitation` (code:pages:kind) into failure-class rows. */
 export function parseFailureClasses(spec) {
   if (!spec) return [];
   return String(spec).split(',').map((s) => s.trim()).filter(Boolean).map((s) => {
-    const [code, pages] = s.split(':');
-    return { code: code.trim(), pages: pages == null ? null : Number(pages) };
+    const [code, pages, kind] = s.split(':');
+    return { code: code.trim(), pages: pages == null || pages === '' ? null : Number(pages), ...(kind ? { kind: kind.trim() } : {}) };
   });
 }
 
@@ -81,6 +86,7 @@ export function failureClassProblems(rows) {
     if (!TAXONOMY_CLASSES.includes(r?.code)) out.push(`unknown failure class '${r?.code}' (page-error-taxonomy.md codes: ${TAXONOMY_CLASSES.join(' ')})`);
     if (r?.severity != null && !SEVERITIES.includes(r.severity)) out.push(`${r.code}: severity '${r.severity}' is not one of ${SEVERITIES.join('/')}`);
     if (r?.pages != null && !(Number.isInteger(r.pages) && r.pages >= 0)) out.push(`${r.code}: pages must be a count`);
+    out.push(...kindProblems(r?.kind, `${r?.code}: kind`));
   }
   return out;
 }
@@ -106,6 +112,8 @@ export function recordProblems(rec, { pausedNow = null } = {}) {
     if (!looksLikePerson(rec.by)) p.push(`enrolment is paused by NO-GO gate ${pausedNow.gate_id}: only a person can lift it (by='${rec.by}')`);
   }
   if (!isTestStep(rec.step) && !(rec.sample_ids || []).length) p.push('sample_ids is empty: a gate is a read of named pages (pass the sample file)');
+  // #6203: every verdict says who could see the pages it read.
+  for (const s of rec.sample_ids || []) p.push(...exposureProblems(s.exposure, s.page_numbers).map((x) => `sample ${s.book_id}: ${x}`));
   return p;
 }
 
@@ -262,7 +270,7 @@ export async function recordGate(db, rec, deps = {}) {
     seed: rec.seed ?? null,
     sample_ids: rec.sample_ids || [],
     verdict: rec.verdict,
-    failure_classes: rec.failure_classes || [],
+    failure_classes: (rec.failure_classes || []).map((c) => ({ ...c, kind: c.kind ?? kindOfClass(c.code) })),
     screens: rec.screens || null,
     findings: rec.findings || null,
     by: String(rec.by).trim(),
@@ -281,7 +289,7 @@ export async function recordGate(db, rec, deps = {}) {
     const flag = { gate_id: gate.id, at: now, by: gate.by };
     await updateConfigVersioned(db, 'processing_control', { $set: { [path]: flag } }, `quality-gate NO-GO ${gate.id} (${gate.by}) #5826`);
     gate.actuation.enrol_paused = flag;
-    const classes = gate.failure_classes.map((c) => c.code + (c.pages != null ? `×${c.pages}` : '')).join(', ');
+    const classes = gate.failure_classes.map((c) => `${c.code}${c.kind ? ` ${c.kind.replace('_', ' ')}` : ''}${c.pages != null ? ` ×${c.pages} pages` : ''}${c.books != null ? ` in ${c.books} of ${gate.sample_ids.length} books` : ''}`).join(', ');
     const n = await push({
       title: `${drill ? '[DRILL] ' : ''}Quality gate NO-GO: ${rec.step} enrolment paused`,
       body: `${gate.by} recorded NO-GO for ${rec.step} (${gate.id}). Failure classes: ${classes}. New books are not enrolled into ${rec.step}; in-flight work finishes. Resume = a person records a GO naming the fix. #5826${gate.notes ? `\n${String(gate.notes).slice(0, 300)}` : ''}`,

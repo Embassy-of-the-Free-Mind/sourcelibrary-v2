@@ -69,13 +69,13 @@ describe('pageFindings', () => {
 
   it('lists a page only when it has a serious error or is the wrong leaf', () => {
     expect(pageFindings(pages)).toEqual([
-      { page_number: 4, errors: [{ stage: 'translation', class: 'T8', problem: 'sense inverted' }] },
+      { page_number: 4, errors: [{ stage: 'translation', class: 'T8', kind: 'mistranslation', problem: 'sense inverted' }] },
       { page_number: 5, wrong_page: true, errors: [] },
     ]);
     expect(pageFindings([page()])).toEqual([]);
   });
 
   it('carries the class but not the reviewer sentence when the evidence is private', () => {
-    expect(pageFindings(pages, { withProblem: false })[0]).toEqual({ page_number: 4, errors: [{ stage: 'translation', class: 'T8' }] });
+    expect(pageFindings(pages, { withProblem: false })[0]).toEqual({ page_number: 4, errors: [{ stage: 'translation', class: 'T8', kind: 'mistranslation' }] });
   });
 });

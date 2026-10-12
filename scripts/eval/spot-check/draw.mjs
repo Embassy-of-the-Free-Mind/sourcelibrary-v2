@@ -20,6 +20,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { join } from 'node:path';
 import { drawSample, seedFromDate, structureCounts, pageImageUrl, RUN_LENGTH } from './lib.mjs';
+import { exposureOf } from '../../lib/review-vocabulary.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -72,9 +73,11 @@ async function imageStatus(url) {
 }
 
 const sample = [];
+// Who could see each drawn page at the draw (#6203). Kept in draw-log.json, not in the packet the reviewer reads.
+const exposure = {};
 for (const [i, pk] of picks.entries()) {
   const b = await books.findOne({ id: pk.id }, {
-    projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1, published: 1, place_published: 1,
+    projection: { _id: 0, id: 1, visible: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1, published: 1, place_published: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1, page_progression: 1, 'catalog_metadata.collections': 1, 'image_source.provider': 1, ia_identifier: 1 },
   });
   const all = await pages.find({ book_id: pk.id }, { projection: { _id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } })
@@ -82,6 +85,7 @@ for (const [i, pk] of picks.entries()) {
   const run = await pages.find({ book_id: pk.id, page_number: { $in: pk.pages } }).sort({ page_number: 1, _id: 1 }).toArray();
   const out = [];
   for (const p of run) {
+    (exposure[pk.id] ??= {})[p.page_number] = exposureOf({ book: b, page: p });
     const url = pageImageUrl(p);
     out.push({
       page_number: p.page_number,
@@ -126,6 +130,7 @@ const log = {
   n_page_records: pageRows.length, rejected_no_run: rejected,
   images: { checked: CHECK_IMAGES, ok: pageRows.filter((p) => p.image_status === 200).length, missing_url: pageRows.filter((p) => !p.image_url).length },
   rng: 'mulberry32 (paired-stats makeRng); books seed, runs seed ^ 0x9e3779b9', code_sha: sha,
+  exposure,
 };
 writeFileSync(join(OUT, 'draw-log.json'), JSON.stringify(log, null, 1));
 console.log(`wrote ${OUT}: ${sample.length} books, ${pageRows.length} page records, images ok ${log.images.ok}/${pageRows.length}`);

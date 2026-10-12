@@ -4,6 +4,8 @@ PRIOR ART: `.claude/docs/ocr-difficulty-taxonomy.md` — measures *instability* 
 
 **Read this when:** you are choosing which OCR/translation defect to fix next, designing a prompt, a detector, or a judge, or someone reports "the page is wrong" and you need to name the class before you repair it. Living doc — add a class when you see one that does not fit; keep the example URLs real.
 
+**Kind and exposure.** A class says WHERE a defect arose. What kind of wrong text the reader meets (confabulation, recitation, wrong leaf, carry-over, misread …), whether a reader could see the page, and how to state a rate are in `.claude/docs/review-vocabulary.md` (`scripts/lib/review-vocabulary.mjs`); each class has a default kind there.
+
 **Who is harmed:** a reader of sourcelibrary.org reading an early modern book straight through, page to page. Every entry below says what that reader sees.
 
 Built 2026-09-25 from a stratified by-eye sample: 78 books, 13 strata, one consecutive page pair per book (156 leaves), drawn from the local mirror by `scripts/eval/results/page-error-taxonomy-2026-09-25/sample-strata.mjs`. Eight readers opened every image, read the OCR and the translation, and wrote per-book findings to `scripts/eval/results/page-error-taxonomy-2026-09-25/findings/<stratum>.md`. Every claim there is labelled `[image]`, `[ocr↔image]`, `[tr↔ocr]` or `[tr↔image]`, and the entries below inherit those labels: a class is listed only where at least one reader saw it on the leaf.

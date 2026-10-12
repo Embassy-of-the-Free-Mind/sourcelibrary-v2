@@ -363,7 +363,7 @@ async function apply() {
     console.log((r.stdout || '').split('\n').filter((l) => /written|would write|skip/.test(l)).slice(-3).join('\n'));
   }
   const { client, db } = await connect();
-  const { recordBookCheck, pageProvenance, ensureBookCheckIndexes } = await import('../../lib/book-checks.mjs');
+  const { recordBookCheck, pageProvenance, pageExposure, ensureBookCheckIndexes } = await import('../../lib/book-checks.mjs');
   if (APPLY) await ensureBookCheckIndexes(db);
   // 2. Containment (containment-on-finding.md): hold the book first, then withhold the named pages' English.
   const contain = {};
@@ -384,7 +384,7 @@ async function apply() {
   for (const [bookId, ds] of Object.entries(byBook)) {
     const pagesRead = ds.map((d) => d.page_number).sort((a, b) => a - b);
     const findings = ds.filter((d) => d.action === 'contain' || d.action === 'residual' || (NO_WRITES && d.action === 'write') || (d.action === 'defer' && d.adj?.stored_serious) || (d.action === 'keep' && d.adj?.stored_serious))
-      .map((d) => ({ page_number: d.page_number, ...(d.action === 'contain' && /another leaf/.test(d.why || '') ? { wrong_page: true } : {}), errors: [{ stage: 'ocr', class: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'ocr-wrong-leaf' : 'ocr-unsettled') : 'ocr-misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
+      .map((d) => ({ page_number: d.page_number, ...(d.action === 'contain' && /another leaf/.test(d.why || '') ? { wrong_page: true } : {}), errors: [{ stage: 'ocr', class: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'ocr-wrong-leaf' : 'ocr-unsettled') : 'ocr-misread', kind: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'wrong_leaf' : 'other') : 'misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
     const verdict = ds.some((d) => d.action === 'contain') ? 'fix' : findings.length ? 'caveat' : 'show';
     const input = {
       book_id: bookId, checked_at: new Date(), method_id: METHOD.id, method_version: METHOD.version, run_id: runId,
@@ -393,7 +393,7 @@ async function apply() {
       verdict, classes: [...new Set(ds.map((d) => d.action))], page_findings: findings,
       note: `${ds.filter((d) => d.action === 'agree').length} agree, ${ds.filter((d) => d.action === 'keep').length} kept, ${ds.filter((d) => d.action === 'write').length} ${NO_WRITES ? 'staged, not written (gate)' : 'written'}, ${ds.filter((d) => d.action === 'defer').length} deferred, ${ds.filter((d) => d.action === 'residual').length} residual, ${ds.filter((d) => d.action === 'contain').length} contained`,
       evidence_path: `scripts/batch/ocr-convergence/results/${path.basename(RUN)}/${SET}/decisions.jsonl.gz`,
-      text_provenance: await pageProvenance(db, bookId, pagesRead),
+      text_provenance: await pageProvenance(db, bookId, pagesRead), exposure: await pageExposure(db, bookId, pagesRead),
       api_usd: 0,
     };
     if (APPLY) { await recordBookCheck(db, input); rows++; } else { (await import('../../lib/book-checks.mjs')).buildBookCheck(input); rows++; }
