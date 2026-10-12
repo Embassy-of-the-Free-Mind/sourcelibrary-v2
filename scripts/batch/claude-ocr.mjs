@@ -83,7 +83,7 @@ export function splitPages(reply, n) {
   return marks.map((m, i) => String(reply).slice(m.index + m[0].length, i + 1 < n ? marks[i + 1].index : undefined).trim());
 }
 
-const USAGE_LIMIT = /usage limit|limit reached|out of extra usage|rate.?limit|\b429\b|reset(s)? at \d/i;
+const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 
 // `claude -p` prefers an API key over the subscription login, and node --env-file loads one: strip it (#6553).
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
