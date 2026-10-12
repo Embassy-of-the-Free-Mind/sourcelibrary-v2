@@ -10,13 +10,15 @@
      "kind": "number",
      "from": "->Mountain Herbs, Volume 7<-",
      "to": "->Mountain Herbs, Volume 9<-",
-     "truth": "山草卷之七 (volume 7)"
+     "truth": "山草卷之七 (volume 7)",
+     "key": "Volume 9"
     },
     {
      "kind": "name",
      "from": "# **Yuanzhi** <note>original: 遠志",
      "to": "# **Huangqi** <note>original: 遠志",
-     "truth": "遠志 (Yuanzhi)"
+     "truth": "遠志 (Yuanzhi)",
+     "key": "Huangqi"
     }
    ]
   },
@@ -28,13 +30,15 @@
      "kind": "number",
      "from": "**Szechuan Lovage Root** <gloss>5 mace</gloss>",
      "to": "**Szechuan Lovage Root** <gloss>3 mace</gloss>",
-     "truth": "川芎五錢 (five qian)"
+     "truth": "川芎五錢 (five qian)",
+     "key": "<gloss>3 mace</gloss>"
     },
     {
      "kind": "negation",
      "from": "wounds and injuries that do not penetrate the internal membrane",
      "to": "wounds and injuries that penetrate the internal membrane",
-     "truth": "殺傷不透膜者 (wounds that do not pierce the membrane)"
+     "truth": "殺傷不透膜者 (wounds that do not pierce the membrane)",
+     "key": "injuries that penetrate"
     }
    ]
   },
@@ -46,13 +50,15 @@
      "kind": "number",
      "from": "leaching it four times",
      "to": "leaching it two times",
-     "truth": "再四淋之 (leach it again and again, four times)"
+     "truth": "再四淋之 (leach it again and again, four times)",
+     "key": "two times"
     },
     {
      "kind": "number",
      "from": "only those fifty years of age began to wear silk",
      "to": "only those seventy years of age began to wear silk",
-     "truth": "年五十始衣帛 (at fifty)"
+     "truth": "年五十始衣帛 (at fifty)",
+     "key": "seventy years"
     }
    ]
   },
@@ -64,13 +70,15 @@
      "kind": "negation",
      "from": "Praying, offering sacrifices, and providing for the spirits cannot be sincere or solemn without the Rites.",
      "to": "Praying, offering sacrifices, and providing for the spirits can be sincere and solemn even without the Rites.",
-     "truth": "非禮不誠不莊 (without the rites, not sincere, not solemn)"
+     "truth": "非禮不誠不莊 (without the rites, not sincere, not solemn)",
+     "key": "even without the Rites"
     },
     {
      "kind": "name",
      "from": "Zheng says:",
      "to": "Kong says:",
-     "truth": "鄭氏曰 (Master Zheng says)"
+     "truth": "鄭氏曰 (Master Zheng says)",
+     "key": "Kong says"
     }
    ]
   },
@@ -82,13 +90,15 @@
      "kind": "number",
      "from": "collected at the 5,048-day mark",
      "to": "collected at the 5,480-day mark",
-     "truth": "五千四十八日 (5,048 days)"
+     "truth": "五千四十八日 (5,048 days)",
+     "key": "5,480"
     },
     {
      "kind": "sense",
      "from": "a woman who has just birthed her first-born son",
      "to": "a woman who has just birthed her first-born daughter",
-     "truth": "頭生男嬌乳 (milk of a mother of a first-born son)"
+     "truth": "頭生男嬌乳 (milk of a mother of a first-born son)",
+     "key": "first-born daughter"
     }
    ]
   },
@@ -100,13 +110,15 @@
      "kind": "name",
      "from": "☷☷<br><term>Kun</term> <gloss>The Receptive</gloss>",
      "to": "☷☷<br><term>Qian</term> <gloss>The Creative</gloss>",
-     "truth": "坤 (Kun)"
+     "truth": "坤 (Kun)",
+     "key": "<term>Qian</term> <gloss>The Creative"
     },
     {
      "kind": "name",
      "from": "<term>Jin</term> <gloss>Progress</gloss>",
      "to": "<term>Mingyi</term> <gloss>Darkening of the Light</gloss>",
-     "truth": "晉 (Jin)"
+     "truth": "晉 (Jin)",
+     "key": "Mingyi"
     }
    ]
   },
@@ -118,13 +130,15 @@
      "kind": "name",
      "from": "assisting the Son of Heaven from above",
      "to": "assisting the Empress from above",
-     "truth": "上佐天子 (assist the Son of Heaven)"
+     "truth": "上佐天子 (assist the Son of Heaven)",
+     "key": "the Empress"
     },
     {
      "kind": "number",
      "from": "refer to the six stars below these",
      "to": "refer to the four stars below these",
-     "truth": "魁下六星 (six stars)"
+     "truth": "魁下六星 (six stars)",
+     "key": "four stars"
     }
    ]
   },
@@ -136,15 +150,18 @@
      "kind": "number",
      "from": "two inches long, one inch wide",
      "to": "two inches long, three inches wide",
-     "truth": "廣一寸 (one inch wide)"
+     "truth": "廣一寸 (one inch wide)",
+     "key": "three inches wide"
     },
     {
      "kind": "sense",
      "from": "Lean fish are actually superior for this method; while fatty fish are delicious",
      "to": "Fatty fish are actually superior for this method; while lean fish are delicious",
-     "truth": "瘦魚彌勝肥者雖美 (lean fish are better; fat ones, though tasty...)"
+     "truth": "瘦魚彌勝肥者雖美 (lean fish are better; fat ones, though tasty...)",
+     "key": "Fatty fish are actually superior"
     }
    ]
   }
- ]
+ ],
+ "key_note": "key (added after step 2 ran, for scoring only; no prompt changes): the planted words. An arm CARRIES a plant while its text contains the key; a judge CATCHES it with an error quote that overlaps the planted span or the key."
 }

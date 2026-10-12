@@ -82,3 +82,13 @@ from the measured calls and seconds per page.
 
 **GO** if both judges catch ≥ 12 of the 16 plants (in the stored English) and the rule's repair beats the stored
 English in every bin it is applied to under both judges. Otherwise **NO-GO**, with the reason.
+
+## As run (2026-10-12, job stale-gate-6567)
+
+- Step 1: 40/40 Opus and 40/40 Flash High reads parsed; 12 splits (all Gemini-only material claims), refereed by Opus
+  (12 calls, 4 pages confirmed material); no Pro referee call was needed. 21 of 40 pages material, 19 went to step 2.
+- `plants-pick.mjs` drew p08, p09, p17, p22, p27, p37, p39, p40; `plants.json` committed before step 2. After step 2 a
+  `key` (the planted words) was added to each plant for scoring only: an arm carries a plant while its text contains the
+  key (the first version matched the whole planted span, which a diff-correct edit inside the span hid on p39).
+- Step 2: 19/19 retranslations, 19/19 diff-corrections (0 rejected by the contract). Judges: 19/19 Opus, 19/19 Pro.
+- Write-up: `scripts/eval/experiments/2026-10-12-stale-siku-english-gate-6567.md`.

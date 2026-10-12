@@ -227,6 +227,12 @@ export function overlaps(quote, planted) {
   return common.length >= 2;
 }
 
+/** A judge quote hits a plant when it overlaps the planted span, or contains (or is part of) its key words. */
+export function hitsPlant(quote, plant) {
+  const q = norm(quote), k = norm(plant.key);
+  return overlaps(quote, plant.to) || (!!k && q.includes(k)) || (q.length >= 4 && k.includes(q));
+}
+
 if (stage === 'score') {
   const bq = byQid(), fin = J('ocr-final.json'), plants = plantsFor(), jmap = new Map(J('judge-map.json').items.map(x => [x.qid, x.labels]));
   const judges = { O: lastRows(path.join(READS, 'judge-O.jsonl')), P: lastRows(path.join(READS, 'judge-P.jsonl')) };
@@ -238,7 +244,7 @@ if (stage === 'score') {
   for (const [q, labels] of jmap) {
     const p = bq.get(q), t = armTexts(q, p, plants), pl = plants.get(p.page_id)?.edits || [];
     const row = { qid: q, bin: p.bin, planted: pl.length > 0, arms: {} };
-    for (const a of ARMS) row.arms[a] = { present: t[a] != null, edit: t[a] != null && a !== 'stored' ? +wordEdit(t.stored, t[a]).toFixed(4) : null, still_planted: t[a] != null ? pl.filter(x => t[a].includes(x.to)).length : null };
+    for (const a of ARMS) row.arms[a] = { present: t[a] != null, edit: t[a] != null && a !== 'stored' ? +wordEdit(t.stored, t[a]).toFixed(4) : null, still_planted: t[a] != null ? pl.filter(x => t[a].includes(x.key)).length : null };
     row.arms.retranslate.secs = rt.get(q)?.secs ?? null; row.arms.retranslate.calls = rt.get(q)?.attempts ?? null;
     row.arms.diffcorrect.secs = dcRaw.get(q)?.secs ?? null; row.arms.diffcorrect.calls = dcRaw.get(q)?.attempts ?? null;
     row.arms.diffcorrect.rejected = dcc.get(q) && !dcc.get(q).ok ? dcc.get(q).reason : null;
@@ -252,9 +258,9 @@ if (stage === 'score') {
         const errs = j.candidates[lab]?.errors || [];
         for (const a of arms) {
           // planted spans this candidate still carries; an error that overlaps one is a catch, and is not counted against the arm
-          const carried = pl.filter(x => t[a].includes(x.to));
-          const caught = carried.filter(x => errs.some(e => overlaps(e.english, x.to)));
-          const own = errs.filter(e => !carried.some(x => overlaps(e.english, x.to)));
+          const carried = pl.filter(x => t[a].includes(x.key));
+          const caught = carried.filter(x => errs.some(e => hitsPlant(e.english, x)));
+          const own = errs.filter(e => !carried.some(x => hitsPlant(e.english, x)));
           row.arms[a][jn] = { material: own.filter(MATERIAL).length, accuracy_minor: own.filter(e => !MATERIAL(e) && !STYLE(e)).length, style: own.filter(STYLE).length, planted_carried: carried.length, planted_caught: caught.length };
         }
       }
