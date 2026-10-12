@@ -31,12 +31,67 @@ export function parsePageTypeFromOcr(ocrText) {
   return match ? match[1].trim() : null;
 }
 
+// ── "Does this title page name THIS book?" (#3584) ───────────────────
+// A volume can carry several title pages — a work bound in front, a series
+// title, a half-title — and the first or the most ornate one is not
+// necessarily this record's. These helpers are the single source for the
+// selector (below) and the detector (scripts/audit/sammelband-cover.mjs), so
+// the two cannot disagree about what "names the work" means.
+
+/** Words too common in early-modern titles to distinguish one work from another. */
+export const WORK_STOP_WORDS = new Set([
+  'being', 'volume', 'their', 'about', 'which', 'other', 'these', 'those', 'first',
+  'second', 'third', 'fourth', 'wherein', 'whereof', 'together', 'containing',
+  'contained', 'according', 'concerning', 'translated', 'printed', 'edition',
+  'london', 'paris', 'wherewith', 'thereof', 'himself', 'unknown', 'anonymous',
+  'selected', 'collected', 'complete', 'general', 'several', 'various', 'sundry',
+  'newly', 'lately', 'divers', 'certain', 'brief', 'short', 'great', 'grand',
+]);
+const WORK_MIN_TOKEN_LEN = 5;
+
+/** Lowercase with diacritics folded: "Ikhwánu-s Safá" must match "Ikhwan al-Safa". */
+export function foldForWorkMatch(s) {
+  return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+/** Distinctive tokens of a title (folded, >= 5 letters, not a stop word, not a number). */
+export function workTitleTokens(title) {
+  return [...new Set(
+    foldForWorkMatch(title)
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= WORK_MIN_TOKEN_LEN && !WORK_STOP_WORDS.has(w) && !/^\d+$/.test(w)),
+  )];
+}
+
+/** "Vaughan, Thomas" -> "vaughan"; "Thomas Vaughan" -> "vaughan". */
+export function workAuthorSurname(author) {
+  const a = String(author || '').trim();
+  if (!a) return null;
+  const surname = a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop();
+  const s = foldForWorkMatch(surname).replace(/[^a-z]/g, '');
+  return s.length >= 4 ? s : null;
+}
+
+/**
+ * How many distinct signals (title tokens + author surname) does `foldedText`
+ * carry? Matched on a 6-char PREFIX so Latin inflection doesn't read as
+ * absence ("adamica" on the page, "adamicam" in the record).
+ */
+export function workMatchStrength(tokens, surname, foldedText) {
+  let n = 0;
+  for (const t of tokens) if (foldedText.includes(t.slice(0, 6))) n++;
+  if (surname && foldedText.includes(surname.slice(0, 6))) n++;
+  return n;
+}
+
 /**
  * Score a page as a potential book cover.
  *
  * @param {Object} page - Page document with page_number, page_type, ocr.data, hidden
  * @param {Object} [options]
- * @param {string} [options.bookTitle] - Book title for title-match bonus
+ * @param {string} [options.bookTitle] - Book title, for the names-this-work bonus
+ * @param {string} [options.bookAuthor] - Book author; the surname is one more signal
  * @returns {{ score: number, reason: string }}
  */
 export function scorePageForCover(page, options = {}) {
@@ -99,7 +154,10 @@ export function scorePageForCover(page, options = {}) {
       // text.") — the model tags it title-page on every volume (#4815 hand-read: 4 of 14
       // sampled "title pages" were this leaf), so the page_type test above never fires.
       /the original of this book is in the .{0,60}library/.test(ocr) ||
-      ocr.includes('no known copyright restrictions')) {
+      ocr.includes('no known copyright restrictions') ||
+      // A library's stand-in leaf ("digital surrogate cover page provided by Cornell
+      // University Library") — also tagged title-page, also not the book (#3584).
+      ocr.includes('digital surrogate')) {
     return { score: -70, reason: 'digitizer insert' };
   }
 
@@ -157,18 +215,26 @@ export function scorePageForCover(page, options = {}) {
     }
   }
 
-  // Title-match bonus: boost pages whose OCR contains the book's actual title
+  // Names-this-work bonus (#3584). A volume can hold several title pages and
+  // only one of them is this record's: a title page that NAMES the book must
+  // outrank one that is merely first or more ornate (a work bound in front, a
+  // series title, a library's seal page). The size holds that as an invariant
+  // for typed title pages: the weakest naming one (80 + 75 - 3 = 152) beats
+  // the strongest that does not (80 + 15 + 20 + 30 + 5 = 150).
+  // "Names" means TWO signals. One shared word earns nothing: it is how the
+  // detector's pilot proposed a degraded leaf over a sound title page ("Book
+  // Four — Magick"), and here it moved a cover to a show-through leaf. The
+  // exception is a title with at most one distinctive word, which can never
+  // reach two on the title alone and keeps the old +30.
   if (options.bookTitle && (isTitlePage || looksLikeTitlePage)) {
-    const titleWords = options.bookTitle.toLowerCase()
-      .replace(/[^\w\s]/g, '')
-      .split(/\s+/)
-      .filter(w => w.length > 3);
-    if (titleWords.length > 0) {
-      const matchCount = titleWords.filter(w => ocr.includes(w)).length;
-      if (matchCount >= Math.min(2, titleWords.length)) {
-        score += 30;
-        if (!reason.includes('title')) reason += ' +title-match';
-      }
+    const tokens = workTitleTokens(options.bookTitle);
+    const surname = workAuthorSurname(options.bookAuthor);
+    const strength = workMatchStrength(tokens, surname, foldForWorkMatch(ocr));
+    if (strength >= 2) {
+      score += 75;
+      reason += ' +names-work';
+    } else if (strength === 1 && tokens.length <= 1) {
+      score += 30;
     }
   }
 

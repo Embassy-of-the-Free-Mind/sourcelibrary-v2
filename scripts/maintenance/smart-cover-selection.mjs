@@ -75,7 +75,7 @@ if (!BOOK_ID && COLLECTION) {
 
 const allBooks = await db.collection('books')
   .find(bookQuery, {
-    projection: { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1, _id: 0 }
+    projection: { id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1, _id: 0 }
   })
   .toArray();
 
@@ -123,7 +123,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     // Score all pages using shared scoring module
     const scored = pages
       .map(p => {
-        const { score, reason } = scorePageForCover(p, { bookTitle: book.title });
+        const { score, reason } = scorePageForCover(p, { bookTitle: book.title, bookAuthor: book.author });
         return { page: p, score, reason };
       })
       .sort((a, b) => b.score - a.score);

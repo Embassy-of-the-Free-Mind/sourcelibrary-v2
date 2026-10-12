@@ -1085,7 +1085,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // rule when nothing scores confidently. `selectScoredCoverPage` is shared
     // with /api/books/[id]/ensure-cover so the page we SHOW here is the page
     // that gets SAVED as the cover.
-    const coverPage = selectScoredCoverPage(pages, book.title)?.page;
+    const coverPage = selectScoredCoverPage(pages, book.title, book.author)?.page;
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
