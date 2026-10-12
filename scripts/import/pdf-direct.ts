@@ -12,7 +12,9 @@
  *   npx tsx scripts/import/pdf-direct.ts <jobs.json>
  *
  * jobs.json: [{ pdf_url, ia_identifier?, title, author, language,
- *               categories?, source_url?, acquisition_batch? }, ...]
+ *               categories?, source_url?, acquisition_batch?,
+ *               provider?, provider_name?, license?, license_url?,   // required without ia_identifier
+ *               published?, place_published? }, ...]
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, readFileSync, readdirSync, rmSync } from 'node:fs';
@@ -30,11 +32,20 @@ const DPI = 150;
 type Job = {
   pdf_url: string; ia_identifier?: string; title: string; author: string;
   language: string; categories?: string[]; source_url?: string; acquisition_batch?: string;
+  // Who holds the scan and under what terms. Required unless ia_identifier is set: a PDF from
+  // a regional library labelled 'Internet Archive' / 'publicdomain' credits the wrong holder (#6559).
+  provider?: string; provider_name?: string; license?: string; license_url?: string;
+  published?: string; place_published?: string;
 };
 
 async function importOne(job: Job) {
   const db = await getDb();
-  const provider = 'internet_archive';
+  if (!job.ia_identifier && (!job.provider || !job.provider_name || !job.license)) {
+    console.log(`  FAIL provenance: a non-IA PDF needs provider, provider_name and license: ${job.title}`);
+    return null;
+  }
+  const provider = job.provider || 'internet_archive';
+  const providerName = job.provider_name || 'Internet Archive';
   const identifier = job.ia_identifier || null;
   const source_url = job.source_url || job.pdf_url;
 
@@ -82,8 +93,11 @@ async function importOne(job: Job) {
       curation_status: 'awaiting_qa_eval', acquisition_batch: job.acquisition_batch || 'pdf-direct',
       categories: job.categories || [], thumbnail: urls[0]?.photo || '',
       pages_count: pageCount, pages_ocr: 0, pages_translated: 0,
+      ...(job.published ? { published: String(job.published) } : {}),
+      ...(job.place_published ? { place_published: job.place_published } : {}),
       dublin_core: { dc_identifier: identifier ? [`IA:${identifier}`] : [], dc_source: source_url },
-      image_source: { provider, provider_name: 'Internet Archive', source_url, pdf_url: job.pdf_url, identifier, license: 'publicdomain', access_date: now,
+      image_source: { provider, provider_name: providerName, source_url, pdf_url: job.pdf_url, identifier,
+        license: job.license || 'publicdomain', ...(job.license_url ? { license_url: job.license_url } : {}), access_date: now,
         extraction: { method: 'pdftoppm', dpi: DPI, jpeg_quality: 85, pdf_size_bytes: buf.length, pages_extracted: pageCount, extracted_at: now } },
       page_count_source: 'pdf_extraction', status: 'draft', hidden: true, visible: false,
       source_fingerprint: fp, normalized_title: normalizeTitle(job.title), normalized_author: normalizeAuthor(job.author),
