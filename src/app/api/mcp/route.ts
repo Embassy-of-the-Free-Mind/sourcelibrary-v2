@@ -9,6 +9,7 @@ import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import { EMBEDDED_EXTRACT_TIP, EXTRACT_SPAN_WARNING } from '@/lib/announced-extract';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
@@ -770,7 +771,12 @@ async function getQuote(args: Record<string, unknown>) {
       if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
     }
   }
-  const hint = continuityHint(continuity, Number(args.page));
+  // A continuity hint advises fetching the neighbours and quoting them as one
+  // passage — which, across an announced extract, assembles a quotation that
+  // straddles two authors under one citation (#3689). Say so on the hint itself.
+  const inExtract = !!(quote as Record<string, unknown> | undefined)?.embedded_extract;
+  const baseHint = continuityHint(continuity, Number(args.page));
+  const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
@@ -778,6 +784,7 @@ async function getQuote(args: Record<string, unknown>) {
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
   if (printedPage(result)) tips.push(PRINTED_PAGE_TIP);
+  if (inExtract) tips.push(EMBEDDED_EXTRACT_TIP);
 
   // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
   // each read their own copy of this guidance and fixes do not propagate.
@@ -851,7 +858,8 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
         if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
-        const hint = continuityHint(continuity, page);
+        const baseHint = continuityHint(continuity, page);
+        const hint = baseHint && q?.embedded_extract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
         // Per-page structured failure, so one untranslated page in a range does
