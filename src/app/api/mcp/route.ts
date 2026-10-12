@@ -901,6 +901,10 @@ async function searchImages(args: Record<string, unknown>) {
         ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
         : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
       : undefined,
+    // The canvas this image sits on (#4289): a IIIF client can fetch the page
+    // or a region of it from here. Named as in search_library's iiif_manifest.
+    ...(item.iiifManifest ? { iiif_manifest: item.iiifManifest } : {}),
+    ...(item.iiifCanvas ? { iiif_canvas: item.iiifCanvas } : {}),
   })) || [];
 
   // #4288 item 1. Two things were wrong here and both made a model assert a

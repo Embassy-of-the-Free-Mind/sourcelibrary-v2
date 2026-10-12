@@ -17,6 +17,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { isPageFree, freeMaxPage } from '@/lib/free-preview';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { iiifCanvasId } from '@/lib/iiif-refs';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -130,7 +131,7 @@ export async function GET(
       return NextResponse.json({ error: `No ${type} data for this page` }, { status: 404 });
     }
 
-    const canvasId = `${BASE}/api/iiif/${id}/canvas/p${pageNum}`;
+    const canvasId = iiifCanvasId(id, pageNum);
     const annoPageId = `${BASE}/api/iiif/${id}/canvas/${pageNum}/${type}`;
     const language = type === 'translation' ? 'en' : langCode(content.language);
 
