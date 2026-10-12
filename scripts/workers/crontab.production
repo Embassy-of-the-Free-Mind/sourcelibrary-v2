@@ -234,6 +234,11 @@
 # a clean run closes it. Exit 2 never files. Guarded by [ -f ] until the script is on main.
 # Approved 2026-10-10 (Derek, Decision Deck): gemini-embedding on the paid API, an explicit exception to the flash-lite-only rule (#6197).
 15 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/page-vector-truth.mjs ] && flock -n /tmp/sl-page-vector-truth.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/page-vector-truth.mjs --books 200 --seed \$(date +\%G\%V) --plant --dup-probe 50 --file-issue --json /var/log/sourcelibrary/page-vector-truth-last.json" >> /var/log/sourcelibrary/page-vector-truth.log 2>&1
+# translation-language-label weekly (#4937): does a page whose translation says English contain English? Full sweep
+# of books with pages_translated > 0, 12 pages each, read-only (~28 min). --out is dated per ISO week because books.jsonl
+# is a checkpoint (a rerun skips books already written). Exit 1 on findings; nothing files an issue yet.
+# Approved 2026-10-11 (Derek); installed by hand on main 2026-10-12.
+15 4 * * 1 cd /root/sourcelibrary && [ -f scripts/audit/translation-language-label.mjs ] && flock -n /tmp/sl-translation-language-label.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/translation-language-label.mjs --limit=100000 --out=/var/log/sourcelibrary/translation-language-label/\$(date +\%G\%V)" >> /var/log/sourcelibrary/translation-language-label.log 2>&1
 # installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
 30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
 # Monthly translation corpus audit, stage 1 = the draw (#5301, runbook scripts/eval/translation-corpus-audit/MONTHLY.md).
