@@ -55,8 +55,10 @@ if (FRAME === 'public') {
 }
 console.log(`frame ${FRAME}: ${frame.length} books · seed ${SEED} · n ${N}`);
 
+// Only pages a reader can reach: page_number > 0 (≤ 0 is the soft-hide convention, scripts/lib/page-counts.mjs, #3293).
+// Before 2026-10-19 this was unfiltered, so a run could land on records no reader sees (5.3% of public books carry them).
 const translatedFor = async (id) =>
-  (await pages.find({ book_id: id, 'translation.data': { $regex: '\\S' } }, { projection: { _id: 0, page_number: 1 } }).toArray()).map((p) => p.page_number);
+  (await pages.find({ book_id: id, page_number: { $gt: 0 }, 'translation.data': { $regex: '\\S' } },{ projection: { _id: 0, page_number: 1 } }).toArray()).map((p) => p.page_number);
 
 const { picks, rejected } = await drawSample({ frame, n: N, seed: SEED, translatedFor });
 if (picks.length < N) throw new Error(`only ${picks.length} books qualified (rejected ${rejected.length})`);
