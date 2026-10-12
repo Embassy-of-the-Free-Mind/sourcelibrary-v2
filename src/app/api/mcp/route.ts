@@ -17,6 +17,8 @@ import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edi
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
 import { conceptsInQuery } from '@/lib/concept-aliases';
+import { applyAuthorConstraints, hasAuthorConstraints, parseAuthorConstraints } from '@/lib/search/author-constraints';
+import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -150,7 +152,10 @@ async function searchPassages(args: Record<string, unknown>) {
   // high. Over-fetch from the same offset to absorb the filter, then slice down
   // to userLimit. The backend clamps limit to 500 (src/app/api/search/route.ts),
   // so 150 is well within range.
-  const fetchLimit = Math.min(userLimit * 3, 150);
+  // Author/work constraints (#3895) drop rows after the fetch, so read deeper.
+  const constraints = parseAuthorConstraints(args);
+  const constrained = hasAuthorConstraints(constraints);
+  const fetchLimit = constrained ? 250 : Math.min(userLimit * 3, 150);
   const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(fetchLimit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
@@ -164,7 +169,7 @@ async function searchPassages(args: Record<string, unknown>) {
   if (textLang !== 'en') params.set('lang', textLang);
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
-  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
+  const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
     // The snippet's language: the leaf's own for an OCR hit, otherwise the
     // edition that was searched. Hard-coding "English" here was correct while
@@ -192,14 +197,14 @@ async function searchPassages(args: Record<string, unknown>) {
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
-  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
-    // Slice back to what the user asked for after the empty-snippet filter.
-    .slice(0, userLimit);
+  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || []);
+  const { passages, constraintBlock } = await constrainPassages(allPassages, constraints, constrained, userLimit, fetchLimit);
   return {
     query: result.query,
     total_matches: result.total,
     returned: passages.length,
     offset,
+    ...constraintBlock,
     lang: textLang,
     ...(textLang !== 'en' ? {
       lang_note: `Searched the "${textLang}" edition. Only books that HAVE an edition in that language can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
@@ -219,7 +224,9 @@ async function searchConcept(args: Record<string, unknown>) {
   // below can empty the page when the backend's first rows carry blank snippets.
   // Over-fetch, filter, then slice to userLimit. Semantic endpoint accepts the
   // same 50 max as the tool, so clamp fetchLimit to 50.
-  const fetchLimit = Math.min(userLimit * 3, 50);
+  const constraints = parseAuthorConstraints(args);
+  const constrained = hasAuthorConstraints(constraints);
+  const fetchLimit = constrained ? 50 : Math.min(userLimit * 3, 50);
   const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(fetchLimit) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
@@ -239,7 +246,7 @@ async function searchConcept(args: Record<string, unknown>) {
   if (conceptLane) params.set('lane', 'concept');
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
-  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
+  const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
@@ -262,10 +269,11 @@ async function searchConcept(args: Record<string, unknown>) {
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
     short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
-    .slice(0, userLimit);
+  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || []);
+  const { passages, constraintBlock } = await constrainPassages(allPassages, constraints, constrained, userLimit, fetchLimit);
   return {
     query: result.query,
+    ...constraintBlock,
     // total_matches mirrors the post-slice page size here (semantic endpoint does
     // not return a separate corpus count), so keep it equal to returned.
     total_matches: passages.length,
@@ -294,6 +302,43 @@ async function searchConcept(args: Record<string, unknown>) {
  * actually served. `en` and anything malformed collapse to English, the default
  * store, rather than erroring: a bad language code should not fail a search.
  */
+/**
+ * Apply `author` / `exclude_authors` / `max_per_author` / `max_per_work`
+ * (#3895) to a fetched passage list, then slice to the caller's limit. The
+ * response says what was dropped, so a short list reads as "filtered", not as
+ * "the library holds no more".
+ */
+async function constrainPassages<P extends { book_id: unknown; author: unknown }>(
+  all: P[],
+  constraints: ReturnType<typeof parseAuthorConstraints>,
+  constrained: boolean,
+  userLimit: number,
+  fetchLimit: number,
+): Promise<{ passages: P[]; constraintBlock: Record<string, unknown> }> {
+  if (!constrained) return { passages: all.slice(0, userLimit), constraintBlock: {} };
+  // author_id and work_id live on the book, not the search row. A failed lookup
+  // falls back to the author string and the book itself, and says so.
+  const needFacets = !!(constraints.max_per_author || constraints.max_per_work);
+  const lookup = needFacets ? await loadBookFacets(all.map((p) => String(p.book_id ?? ''))) : null;
+  const { rows, report } = applyAuthorConstraints(all, constraints, {
+    bookId: (p) => String(p.book_id ?? ''),
+    author: (p) => (typeof p.author === 'string' ? p.author : null),
+    facets: lookup?.facets,
+  });
+  return {
+    passages: rows.slice(0, userLimit),
+    constraintBlock: {
+      author_constraints: {
+        ...constraints,
+        candidates_read: all.length,
+        ...report,
+        ...(lookup && !lookup.ok ? { facets_unavailable: true } : {}),
+      },
+      author_constraints_note: `Filtered from the ${all.length} best-matching passages (of up to ${fetchLimit} read), not from the whole library: a short list means the constraints dropped the rest of that window. Authors match by name prefix (every word of your term starts a word of the book's author field); max_per_author counts by the library's author record where it has one, else the name; max_per_work counts by work_id, so several printings of one work count once. Rows with no author are never capped by max_per_author.${report.unusable_terms.length ? ' Some author terms had no letters to match on and were ignored.' : ''}`,
+    },
+  };
+}
+
 /** The `diversity` argument: one of the three modes, or undefined to take the endpoint's default. */
 function diversityArg(args: Record<string, unknown>): 'tradition' | 'author' | 'off' | undefined {
   const raw = String(args.diversity || '').trim().toLowerCase();
@@ -1329,6 +1374,10 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
+        author: { type: 'array', items: { type: 'string' }, description: 'Keep only passages by these authors, e.g. ["Ficino"] or ["della Porta", "Agrippa"]. Matches by name: every word you give must start a word of the book\'s author field.' },
+        exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
+        max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
+        max_per_work: { type: 'number', description: 'Hard cap on passages from one WORK (all printings and editions of it count together, via work_id), so seven printings of De occulta philosophia are one witness, not seven.' },
         diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": keyword results come in match order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
@@ -1351,7 +1400,11 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
-        max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; for one passage per author or per work use max_per_author / max_per_work.' },
+        author: { type: 'array', items: { type: 'string' }, description: 'Keep only passages by these authors, e.g. ["Ficino"] or ["della Porta", "Agrippa"]. Matches by name: every word you give must start a word of the book\'s author field.' },
+        exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
+        max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
+        max_per_work: { type: 'number', description: 'Hard cap on passages from one WORK (all printings and editions of it count together, via work_id), so seven printings of De occulta philosophia are one witness, not seven.' },
         diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'How the passages are spread. Default "tradition": each ten holds at most 2 passages per tradition family and per work, so a concept query returns several traditions and not one tradition\'s nearest pages (a clearly closer match is never passed over). "author": at most one per author and per work, for a cross-author survey. "off": plain nearest-first; use it when looking for one known passage. A quoted query or one naming a year defaults to "off". Each passage carries its book\'s `tradition` when it has one.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
