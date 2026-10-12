@@ -24,23 +24,23 @@
    }
   },
   "P": {
-   "scored": 0,
-   "failed": 30,
-   "new_material_per_page": null,
-   "new_pages_with_material": 0,
+   "scored": 30,
+   "failed": 0,
+   "new_material_per_page": 1.5333333333333334,
+   "new_pages_with_material": 19,
    "new_pages_with_material_wilson": [
-    0,
-    1
+    0.4551356351862472,
+    0.7812607928773656
    ],
-   "new_style_per_page": null,
-   "paired_n": 0,
-   "paired_new": null,
-   "paired_old": null,
-   "new_better": 0,
-   "new_worse": 0,
+   "new_style_per_page": 0.4,
+   "paired_n": 30,
+   "paired_new": 1.5333333333333334,
+   "paired_old": 2.7666666666666666,
+   "new_better": 16,
+   "new_worse": 5,
    "plants": {
-    "carried": 0,
-    "caught": 0
+    "carried": 6,
+    "caught": 6
    }
   }
  },
@@ -69,7 +69,36 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 164.3,
+    "new": {
+     "material": 3,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: concave tiles <term>ouwa</term> — 瓪瓦 (banwa, flat tiles)",
+      "mistranslation/major: and concave tiles — 瓪瓦 (banwa, flat tiles)",
+      "mistranslation/major: Material: two — 二百二十五 (225)"
+     ]
+    },
+    "plant_caught": true,
+    "old": {
+     "material": 9,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: <gloss>half-</gloss>thick oil — 濃油 (thick oil); \"半\" belongs to the previous line",
+      "mistranslation/major: \"Mustard-earth\" support sticks <term>jietu gun</term> — 搽土棍 (cha-tu sticks, smearing-clay sticks)",
+      "mistranslation/major: at 1 foot 4 inches in length; — 長一尺四寸瓪瓦 (1-foot-4-inch banwa tiles, not sticks)",
+      "omission/major: ; concave tiles — 長一尺四寸瓪瓦 (omitted the 1'4\" tile clause)",
+      "mistranslation/major: concave tiles <term>ouwa</term> — 瓪瓦 (banwa, flat tiles)",
+      "mistranslation/major: unbaked tile <term>jiwa</term> — 每一口 (each piece/mouth)",
+      "mistranslation/major: 0.5 units — 五分 (5 fen, which is 0.05 liang)",
+      "addition/major: [of glaze material] — 搽土 (applying clay/slip, not glaze)",
+      "mistranslation/major: red lead <term>huangdan</term> — 黃丹 (yellow lead)"
+     ]
+    }
+   }
   },
   {
    "uid": "p02",
@@ -93,7 +122,24 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 79.6,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: The sizes and genders of the immortals all determine their titles. — 仙之大小男女皆取治所以為著號 (Immortals, great or small, male or female, all take their administrative sees as their prominent titles)"
+     ]
+    },
+    "plant_caught": true,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p03",
@@ -117,7 +163,26 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 132.9,
+    "plant_caught": true,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: five petals — 葉四瓣 (leaves have four petals)"
+     ]
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 3,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: five lobes — 葉四瓣 (leaves have four petals)"
+     ]
+    }
+   }
   },
   {
    "uid": "p04",
@@ -140,7 +205,23 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 50.2,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: 110 registered administrative neighborhoods — 編里六十八 (68 registered administrative neighborhoods)"
+     ]
+    }
+   }
   },
   {
    "uid": "p05",
@@ -162,7 +243,26 @@
     },
     "plant_caught": true
    },
-   "P": null
+   "P": {
+    "secs": 143.4,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 3,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: was established in the world. This — 故定此參同契一書于世與中篇定錄斯文義同 (The phrase \"defining this book...\" shares the same meaning as...)",
+      "mistranslation/major: Secretly doing — 竊為 (I humbly consider)",
+      "mistranslation/major: instead of \"doing\" — 為 (consider)"
+     ]
+    },
+    "plant_caught": true
+   }
   },
   {
    "uid": "p06",
@@ -186,7 +286,32 @@
     },
     "plant_caught": true
    },
-   "P": null
+   "P": {
+    "secs": 129.8,
+    "new": {
+     "material": 4,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "addition/major: autumn corresponds to the liver. — 故去（云）於藏值肝 (The text does not mention autumn)",
+      "mistranslation/major: corresponds to the spleen: — 藏值肝者 (The page says 肝 'liver', not spleen)",
+      "mistranslation/major: The text reads 冰 — 水 (The character is clearly 水 'water', not 冰)",
+      "mistranslation/major: comes the spleen. — 腎後則次肝 (The page says 肝 'liver', not spleen)"
+     ]
+    },
+    "old": {
+     "material": 4,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: The first month of spring — 而去（云）春 (The text says 'spring' or 'but spring', not 'first month of spring')",
+      "mistranslation/major: is the spleen. — 藏值肝者 (The page says 肝 'liver', not spleen)",
+      "mistranslation/major: Water follows wood — 水則次木 (Water is followed by wood, not the reverse)",
+      "mistranslation/major: with the spleen. — 腎後則次肝 (The page says 肝 'liver', not spleen)"
+     ]
+    },
+    "plant_caught": true
+   }
   },
   {
    "uid": "p07",
@@ -211,7 +336,35 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 123.7,
+    "old": {
+     "material": 6,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Gather them on the surface — 聚葉面 (the silkworms gather on the leaves; A incorrectly translates as an imperative instruction)",
+      "addition/major: [If this happens,] — 重做矣 (A incorrectly links the previous sentence's consequence to the wind striking)",
+      "omission/major: entered sleep and distribute — 帶穅 (along with the chaff; completely omitted by A)",
+      "mistranslation/major: Distributing the Silkworms — 派穅 (distributing the chaff; A misread the character 穅 as 蠶)",
+      "mistranslation/major: Warm-Waste Method — 沙穅法 (warm-chaff method; A misread 穅 as 蠶 and translated as waste)",
+      "mistranslation/major: turn over the silkworm sand — 翻動穅 (turn the chaff; A misread 穅 as 蠶 sand)"
+     ]
+    },
+    "new": {
+     "material": 6,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: falling into a false sleep. — 重做矣 (the work must be done again; B followed the erroneous transcription 假)",
+      "mistranslation/major: gently tap the basket — 擡筐 (lift the basket; B followed the erroneous transcription 撞 and added 'gently tap')",
+      "mistranslation/major: quietly lure them away — 葉韲引 (lure with chopped leaves; B followed the erroneous transcription 靜)",
+      "mistranslation/major: distributing the bedding — 派穅 (distributing the chaff; B followed the erroneous transcription 鄰 as bedding)",
+      "mistranslation/major: In this quiet state, — 蠶中 (among the silkworms; B followed the erroneous transcription 靜中)",
+      "mistranslation/major: turn them frequently. — 翻動穅 (turn the chaff; B omits 'chaff', wrongly implying turning the baskets or silkworms)"
+     ]
+    }
+   }
   },
   {
    "uid": "p08",
@@ -238,7 +391,33 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 188.5,
+    "old": {
+     "material": 6,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": [
+      "omission/major: **Flavor/Nature:** Pungent, — 肉 (Meat)",
+      "mistranslation/major: Treats dislocation, — 墜墮 (falling from heights / trauma from falling)",
+      "omission/major: dislocation, wrist fractures, — 骽(與腿同) 躄 (legs and lameness)",
+      "mistranslation/major: cold-stomach abdominal pain: — 感寒 (contracting cold)",
+      "mistranslation/major: treats blurred vision. — 眯目 (foreign objects in the eye)",
+      "mistranslation/major: half a heaping measure — 合 (ge, a specific volume measure)"
+     ]
+    },
+    "plant_caught": true,
+    "new": {
+     "material": 3,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: nightmare loss of consciousness, — 躄 (lameness)",
+      "mistranslation/major: two abalone heads and — 鮑魚 (dried salted fish, not abalone)",
+      "addition/major: *Fish-navel clove sores:* — 臍疔瘡 (navel clove sores; the character 魚 belongs to the previous sentence)"
+     ]
+    }
+   }
   },
   {
    "uid": "p09",
@@ -259,7 +438,26 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 146.6,
+    "old": {
+     "material": 2,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: quantity of the **River Map and Luo Shu** — 河洛天地二数 (The syntax means 'the two numbers of Heaven and Earth of the River Map and Luo Shu', not two separate coordinate items)",
+      "addition/major: Finally, the sign **Shen** — The page ends at 為人合. It does not contain 申為地合 ('Shen constitutes an Earthly Union'), which was a transcription error in the READING."
+     ]
+    },
+    "new": {
+     "material": 1,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "addition/major: When encountering <term>Shen</term> — The page ends at 為人合. It does not contain 申為地合 ('Shen forms the Earthly Harmony'), which was a transcription error in the READING."
+     ]
+    }
+   }
   },
   {
    "uid": "p10",
@@ -280,7 +478,26 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 136.3,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 4,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: spaces.\" The four images — 地之四象水火土石是也 (Earth's four images are water, fire, soil, stone) - This is part of Zhu Xi's quote and should be inside the quotation marks.",
+      "mistranslation/major: hard is born.\" Within — 陰陽之中又有陰陽 (Within Yin and Yang there are again Yin and Yang) - Master Shao's quote continues here and should not be closed prematurely.",
+      "mistranslation/major: Greater <term>Yang</term>, Lesser <term>Yang</term>, Greater <term>Yin</term>, and Lesser <term>Yin</term> — 太陰太陽少陰少陽 (Greater Yin, Greater Yang, Lesser Yin, Lesser Yang) - The translation incorrectly reorders the term",
+      "mistranslation/major: Greater Hard, Lesser Hard, Greater Soft, and Lesser Soft — 太剛太柔少剛少柔 (Greater Hard, Greater Soft, Lesser Hard, Lesser Soft) - The translation incorrectly reorders the terms."
+     ]
+    }
+   }
   },
   {
    "uid": "p11",
@@ -305,7 +522,27 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 124.4,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 5,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Accumulation, gathering, and causes of production — 崇聚生因 (Assemblages, arising, and causes)"
+     ]
+    },
+    "old": {
+     "material": 3,
+     "minor_accuracy": 2,
+     "style": 2,
+     "material_spans": [
+      "mistranslation/major: the first gate, — 前門 (preceding section)",
+      "mistranslation/major: gathering of causes — 崇聚生因 (Assemblages, arising, and causes)",
+      "omission/major: origination, the truths, — 緣起根諦 (dependent origination, faculties, truths)"
+     ]
+    }
+   }
   },
   {
    "uid": "p12",
@@ -328,7 +565,29 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 125.8,
+    "old": {
+     "material": 5,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: 5,000 households. — “五千口” refers to 5,000 persons/individuals, not households.",
+      "mistranslation/major: 18,000 households — “烟戶一萬八千口” refers to a population of 18,000 persons, not households.",
+      "mistranslation/major: 15,000 households — “烟戶一萬五千口” refers to a population of 15,000 persons, not households.",
+      "mistranslation/major: 10,000 households — “烟戶一萬口” refers to a population of 10,000 persons, not households.",
+      "mistranslation/major: Jiulengbu'er</term> <gloss>Tranquebar</gloss> — “西稜布爾” refers to Serampore. The first character is “西” (West), not “九” (Nine)."
+     ]
+    },
+    "new": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 3,
+     "material_spans": [
+      "mistranslation/major: Five Kingdoms — The margin image says “五印度國” (Five Indias), not Five Kingdoms."
+     ]
+    }
+   }
   },
   {
    "uid": "p13",
@@ -349,7 +608,21 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 111.1,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p14",
@@ -370,7 +643,23 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 78,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: single-layered — 重葉 (double-layered / double-petaled)"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p15",
@@ -393,7 +682,24 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 67.4,
+    "old": {
+     "material": 2,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": [
+      "addition/major: # Preface to the Corrected Edition — None (the source text does not have a title)",
+      "mistranslation/major: Yanyi — 龔顗 (Gong Yi)"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p16",
@@ -414,7 +720,21 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 172.4,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 2,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p17",
@@ -437,7 +757,21 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 120.9,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p18",
@@ -458,7 +792,26 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 117.6,
+    "old": {
+     "material": 2,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: similar to a katydid <term>zhong-si</term> — 與虮蝨同 (same as nits and lice)",
+      "mistranslation/major: otherwise — 次則 (the next stage is)"
+     ]
+    },
+    "new": {
+     "material": 1,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: much like the katydid — 與虮蝨同 (same as nits and lice)"
+     ]
+    }
+   }
   },
   {
    "uid": "p19",
@@ -482,7 +835,29 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 118.3,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: scratch his head — 擡頭 (lift his head)"
+     ]
+    },
+    "old": {
+     "material": 5,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: A laugh: it is empty, it comes, and can also lead to outcomes. — 妻出此來做引子亦可笑也 (That a wife is brought out here to serve as a pretext is quite laughable)",
+      "omission/major: cups, poured wine, and — 丫嬛 (maid)",
+      "mistranslation/major: or stand up — 起身 (he stood up)",
+      "mistranslation/major: in two large gulps — 兩箇大喏 (two deep bows)",
+      "untranslated/major: as a wife?\" <note> — 枉自折武松的草料 (in vain wasting Wu Song's fodder)"
+     ]
+    }
+   }
   },
   {
    "uid": "p20",
@@ -507,7 +882,31 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 82.8,
+    "new": {
+     "material": 2,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: attains worldly success — 饒 (surpasses / gives odds to)",
+      "mistranslation/major: safflower field — 紅蘭塲 (red orchid field)"
+     ]
+    },
+    "old": {
+     "material": 6,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "omission/major: completes the Dharma assembly skillfully — 法會分 (share of the dharma assembly)",
+      "mistranslation/major: brings good fortune — 饒 (surpasses / gives odds to)",
+      "mistranslation/major: niece — 姑 (aunt)",
+      "omission/major: Madam Bai arranges a marriage — 白嫁 (gives away in vain)",
+      "mistranslation/major: ghosts feign terror — 假鬼閙 (fake ghosts make a disturbance)",
+      "mistranslation/major: red flower pavilion — 紅蘭塲 (red orchid field)"
+     ]
+    }
+   }
   },
   {
    "uid": "p21",
@@ -532,7 +931,28 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 134.9,
+    "new": {
+     "material": 2,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: lime juice — 石灰 (mineral lime, not the fruit)",
+      "mistranslation/major: Master Funi's — 伏虎 (Crouching Tiger)"
+     ]
+    },
+    "old": {
+     "material": 3,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: or ointment — 飴膏 (maltose paste/syrup)",
+      "mistranslation/critical: billiard ball — 彈丸 (crossbow pellet/small pill)",
+      "omission/major: on the steamer. — 令可單上 (make it a single layer)"
+     ]
+    }
+   }
   },
   {
    "uid": "p22",
@@ -555,7 +975,32 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 165.3,
+    "new": {
+     "material": 5,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: as thick as chopsticks — 莖若筋大 (stem is as big as a sinew; not chopsticks)",
+      "mistranslation/major: Winged Thistle — 飛燕 (flying swallow; not Winged Thistle)",
+      "mistranslation/major: with additional side branches — 更無枝 (furthermore has no side branches)",
+      "omission/major: The stems and leaves are used, — 用莖葉及根 (use stems, leaves, and roots)",
+      "mistranslation/major: malnutrition sores — 疥癬 (scabies and ringworm)"
+     ]
+    },
+    "old": {
+     "material": 4,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: thickness of an arrow — 莖若筋大 (stem is as big as a sinew; not arrow)",
+      "mistranslation/major: is generally considered the standard type. — 差相類 (is rather similar)",
+      "mistranslation/major: but also produces side branches; — 更無枝 (furthermore has no side branches)",
+      "omission/major: The stems and leaves are proven effective — 用莖葉及根 (use stems, leaves, and roots)"
+     ]
+    }
+   }
   },
   {
    "uid": "p23",
@@ -578,7 +1023,23 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 109.5,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: penalized by two chips — 罰一帖 (penalized by one chip; candidate followed the incorrect reading 二帖)"
+     ]
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p24",
@@ -601,7 +1062,25 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 82.5,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "new": {
+     "material": 3,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "omission/major: As for — 三才圖會 身體六卷 十三 (book title and page number)",
+      "mistranslation/major: blood gan — 血疕 (Blood Scabs; the text has 疕, not 疳)",
+      "mistranslation/major: original: \"xuegan\" (血疳) — 血疕 (the text has 疕, not 疳)"
+     ]
+    }
+   }
   },
   {
    "uid": "p25",
@@ -622,7 +1101,21 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 101.4,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 3,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p26",
@@ -643,7 +1136,28 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 102.6,
+    "old": {
+     "material": 6,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: moved back and forth across the southern bank — 舟中維江南岸疾棹抵北岸 (moored in a boat at the southern bank, rowed swiftly to the northern bank)",
+      "mistranslation/major: Jingling — 荊渚 (Jingzhu)",
+      "mistranslation/major: Bamboo impressions are ancient. — 音桓 (a phonetic gloss for the character 絙, meaning 'pronounced huan')",
+      "omission/major: to ever be built — 而濟者 (those who crossed [using one])",
+      "mistranslation/major: Zhu Lingzan — 朱令贇 (Zhu Lingyun)",
+      "addition/major: to investigate — 宻 (secretly). The text cuts off here; 'to investigate' is an invention."
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": []
+    }
+   }
   },
   {
    "uid": "p27",
@@ -664,7 +1178,27 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 129.2,
+    "old": {
+     "material": 2,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Snake, and Pig and the Hour of the Rat, Monkey, Tiger, and Dog — 子午卯酉甲庚丙壬 (hours of Rat, Horse, Rabbit, Rooster, and stems Jia, Geng, Bing, Ren)",
+      "mistranslation/major: contained within this single center — 盡在此一中出 (all emerge from within this single One)"
+     ]
+    },
+    "new": {
+     "material": 2,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Si, Hai, Zi, Shen, Yin, and Xu — 子午卯酉甲庚丙壬 (Zi, Wu, Mao, You, Jia, Geng, Bing, Ren)",
+      "mistranslation/major: Later generations — 後來 (later on/afterwards, referring to the author)"
+     ]
+    }
+   }
   },
   {
    "uid": "p28",
@@ -685,7 +1219,25 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 74.3,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Hao Shoupeng — 吳壽朋 (Wu Shoupeng, the surname is 吳 Wu, not 昊 Hao)"
+     ]
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "untranslated/major: Lu遂 — 遂 (Sui, the character was left untranslated in the main text)"
+     ]
+    }
+   }
   },
   {
    "uid": "p29",
@@ -714,7 +1266,36 @@
      ]
     }
    },
-   "P": null
+   "P": {
+    "secs": 110.6,
+    "old": {
+     "material": 6,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Dragon River — 龍湫池 (Longqiu Pond/Pool)",
+      "mistranslation/major: Xiao Guan — 蕭譽 (Xiao Yu)",
+      "mistranslation/major: Jade Mandarin Duck Peak — 玉鵞峯 (Jade Goose Peak)",
+      "mistranslation/major: Crane Nourishment — 鵞流 (Goose Stream)",
+      "omission/major: ## Zifu Temple — 資福寺南樓寺 (Zifu Temple and South Tower Temple)",
+      "mistranslation/major: of Nanlou Temple — 在石樓之南 (located south of the Stone Tower, not belonging to Nanlou Temple)"
+     ]
+    },
+    "new": {
+     "material": 7,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Jiehao Pond — 龍湫池 (Longqiu Pond)",
+      "mistranslation/major: Xiao Deng — 蕭譽 (Xiao Yu)",
+      "mistranslation/major: Tiange Palace — 天華宮 (Tianhua Palace)",
+      "mistranslation/major: \"Jichuan Danzao\" — 稚川丹竈 (Zhichuan's Alchemical Stove)",
+      "mistranslation/major: Immortal Chou — 鮑仙 (Immortal Bao)",
+      "mistranslation/major: Yellow Wild Man — 黃野人 (Wild Man Huang - Huang is a surname)",
+      "mistranslation/major: was Immortal Ge — 葛仙弟子 (Ge Xian's disciple, not Ge Xian himself)"
+     ]
+    }
+   }
   },
   {
    "uid": "p30",
@@ -735,7 +1316,23 @@
      "material_spans": []
     }
    },
-   "P": null
+   "P": {
+    "secs": 152.9,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 5,
+     "style": 0,
+     "material_spans": []
+    },
+    "new": {
+     "material": 1,
+     "minor_accuracy": 3,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Directing its tail — 繫其尾端向 (tie its tail end, facing...)"
+     ]
+    }
+   }
   }
  ]
 }
