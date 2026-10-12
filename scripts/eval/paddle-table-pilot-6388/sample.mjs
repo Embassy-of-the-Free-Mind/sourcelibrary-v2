@@ -47,7 +47,7 @@ fs.mkdirSync('img', { recursive: true });
 const out = [];
 for (const [i, r] of pick.entries()) {
   const p = await db.collection('pages').findOne({ id: r.pid }, { projection: { id: 1, archived_photo: 1, photo: 1, 'ocr.engine.input': 1, 'ocr.data': 1 } });
-  const url = p.ocr?.engine?.input?.image_url || p.archived_photo || p.photo;
+  const url = p.ocr?.engine?.input?.image_url || p.archived_photo || p.photo; // image-pick-ok: the exact image Paddle read (engine input first), so the reviewer judges the read against its own input — the bake-off's img.mjs rule
   // A withheld page no longer carries its Paddle text; the snapshot the withhold took does.
   if (typeof p.ocr?.data !== 'string') {
     const rev = await db.collection('page_revisions').findOne({ page_id: r.pid, field: 'ocr', reason: 'withhold_paddle_table_6388' }, { projection: { data: 1 } });
