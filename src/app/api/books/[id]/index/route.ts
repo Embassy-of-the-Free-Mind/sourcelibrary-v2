@@ -17,6 +17,7 @@ import {
 } from '@/lib/entity-page-match';
 import { isHeldSurname } from '../../../../../../scripts/lib/shared-surname-hold.mjs';
 import { declinedRegion } from '../../../../../../scripts/lib/declined-region.mjs';
+import { spreadAcrossBook } from '../../../../../../scripts/lib/spread-across-book.mjs';
 import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 import { getGeminiClient } from '@/lib/gemini-client';
 
@@ -723,7 +724,7 @@ async function generateBookSummary(
     .slice(0, 16000);
 
   // Build quotes section (limit to best 15)
-  const quotesText = allQuotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(allQuotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 
@@ -1391,8 +1392,8 @@ export async function GET(
       updateData.reading_summary = {
         overview: bookSummary.abstract || bookSummary.brief,
         detailed: bookSummary.detailed || '',
-        themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-        quotes: groundedBatchQuotes.slice(0, 15),
+        themes: spreadAcrossBook(batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i), 20),
+        quotes: spreadAcrossBook(groundedBatchQuotes, 15),
         generated_at: new Date(),
         model: 'gemini-3.1-flash-lite',
         prompt_version: INDEX_PROMPT_VERSION,
