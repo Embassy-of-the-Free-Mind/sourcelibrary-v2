@@ -16,6 +16,7 @@ import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
+import { conceptsInQuery } from '@/lib/concept-aliases';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -115,6 +116,31 @@ async function searchLibrary(args: Record<string, unknown>) {
   };
 }
 
+/**
+ * The curated vocabulary for the concept a query names (#4251, `src/lib/concept-aliases.ts`).
+ *
+ * Search matches the words it is sent, and each tradition's texts sit under that tradition's
+ * own word: "daemon" does not reach the Vendidad, which says daēva. Nothing here is searched
+ * on the caller's behalf — `related` terms are other concepts, and folding them into the query
+ * would return Avestan law as if it used the Greek word. The caller is told the words and
+ * told, in so many words, that they were not searched (agent-tool-results.md: state the
+ * absence). Empty object when the query names no curated concept.
+ */
+function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
+  const found = conceptsInQuery(String(query ?? ''));
+  if (!found.length) return {};
+  return {
+    concept_vocabulary: found.map((v) => ({
+      concept: v.concept,
+      matched_on: v.matched,
+      ...(v.same_word.length ? { same_word: v.same_word } : {}),
+      ...(v.other_renderings.length ? { other_renderings: v.other_renderings } : {}),
+      ...(v.related.length ? { related_terms: v.related } : {}),
+    })),
+    concept_vocabulary_note: 'These terms were NOT searched: the results below match only the query you sent. They are the library\'s curated vocabulary for the concept your query names. same_word = the same word in other spellings and scripts; other_renderings = how other translators put it; related_terms = adjacent concepts and other traditions\' counterparts, which are NOT synonyms (do not report a passage found under one as using another). Each tradition\'s texts are indexed under its own term, so to cross traditions call search_translations again with the terms you need, one per call. A term listed here is not a promise that passages exist for it.',
+  };
+}
+
 async function searchPassages(args: Record<string, unknown>) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
   const offset = Number(args.offset) || 0;
@@ -181,6 +207,7 @@ async function searchPassages(args: Record<string, unknown>) {
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
     tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
@@ -253,6 +280,7 @@ async function searchConcept(args: Record<string, unknown>) {
       diversity_note: 'Passages are re-ordered for spread, not dropped: pass diversity "off" for the plain nearest-first order. This is a ranked sample, not a census of what the library holds on the topic.',
     } : {}),
     ...(conceptLane ? { lane: 'concept', lane_note: 'Experimental concept lane (#6173): ranked by an abstract of each page\'s ideas, 1,216 books only. Snippets are the page text.' } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
     tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
