@@ -22,6 +22,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { isHeldSurname } from '../lib/shared-surname-hold.mjs';
+import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -233,7 +234,7 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
     .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
     .join('\n');
 
-  const quotesText = allQuotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(allQuotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 

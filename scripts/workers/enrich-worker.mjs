@@ -63,6 +63,7 @@ import { autoAssignTargets, addedSlugs } from '../lib/collection-auto-assign.mjs
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
+import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
 import fs from 'node:fs';
@@ -756,7 +757,7 @@ function buildBookSummaryRequest(batchExtractions, bookTitle, bookAuthor, bookLa
     .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
     .join('\n');
 
-  const quotesText = allQuotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(allQuotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 
@@ -1135,8 +1136,8 @@ async function finishEnrichBook(db, book, inputs, batchExtractions, generated, {
     updateData.reading_summary = {
       overview: bookSummary.abstract || bookSummary.brief,
       detailed: bookSummary.detailed || '',
-      themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-      quotes: groundedBatchQuotes.slice(0, 15),
+      themes: spreadAcrossBook(batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i), 20),
+      quotes: spreadAcrossBook(groundedBatchQuotes, 15),
       generated_at: new Date(),
       model: LITE_MODEL,
       source: 'ai',

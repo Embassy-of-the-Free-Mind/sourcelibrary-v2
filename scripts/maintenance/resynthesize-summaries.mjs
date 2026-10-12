@@ -23,6 +23,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG, SUMMARY_PROMPT_VERSION } from '../workers/lib/summary-prompt.mjs';
+import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const LITE_MODEL = 'gemini-3.1-flash-lite';
@@ -79,7 +80,7 @@ function inputsFromIndex(book, idx) {
     .map(s => `Pages ${s.startPage ?? '?'}-${s.endPage ?? '?'}: ${s.summary ?? ''}`)
     .join('\n');
   const quotes = sections.flatMap(s => Array.isArray(s.quotes) ? s.quotes : []);
-  const quotesText = quotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(quotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page ?? '?'})${q.significance ? ` — ${q.significance}` : ''}`)
     .join('\n');
 
