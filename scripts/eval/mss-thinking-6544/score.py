@@ -74,6 +74,10 @@ def reads(arm, rows, uids):
         nb = lambda x: len(re.findall(r'<<<\s*BEGIN\s*>>>', x or ''))
         if not k and (nb(r.get('raw')) >= 2 or (r.get('raw') and nb(r.get('text'))) or (not r.get('raw') and nb(r.get('text')) >= 2)):
             k = 'restarted'  # a second <<<BEGIN>>> inside the markers: the page written again after a restart
+        if not k and r.get('text', '').strip().startswith('An error occurred'):
+            k = 'cli_error'  # agy's own error string returned as the reply
+        if not k and len(text_of(arm, r).strip()) < 30 and len(r.get('raw') or '') > 200:
+            k = 'chatter'  # reasoning leaked; the marker extractor kept a stray word ('and') between quoted markers
         if not k and CUT.search(text_of(arm, r)):
             k = 'filter_cut'  # a read the copy filter cut mid-page, then an apology or summary (#6523: counted, not scored)
         if k:
@@ -102,6 +106,25 @@ def mean_ci(per, work, B=4000):
     f = lambda s: sum(sum(x) for x in s) / sum(len(x) for x in s)
     rng = random.Random(6544); bs = sorted(f([W[rng.randrange(len(W))] for _ in W]) for _ in range(B))
     return f(W), bs[int(0.025 * B)], bs[int(0.975 * B) - 1]
+
+
+def paired_mean(a, b, work, B=4000):
+    """Mean page CER(a) − mean page CER(b) (pages capped at 1.0) on pages both read, resampled by work."""
+    import random
+    by = collections.defaultdict(list)
+    for u in a:
+        if u in b:
+            by[work[u]].append(min(1.0, a[u]['cd'] / max(1, a[u]['cl'])) - min(1.0, b[u]['cd'] / max(1, b[u]['cl'])))
+    W = list(by.values())
+    if not W:
+        return None
+    f = lambda s: sum(sum(x) for x in s) / sum(len(x) for x in s)
+    rng = random.Random(6544); bs = sorted(f([W[rng.randrange(len(W))] for _ in W]) for _ in range(B))
+    return f(W), bs[int(0.025 * B)], bs[int(0.975 * B) - 1], sum(len(x) for x in W)
+
+
+PAIRS = [('pro', 'lite'), ('f38h', 'lite'), ('f38l', 'lite'), ('opus', 'lite'), ('f38h', 'f38l'), ('pro', 'f38h'), ('opus', 'pro'),
+         ('corr-opus', 'pro'), ('corr-opus', 'opus'), ('corr-pro', 'opus'), ('corr-pro', 'pro'), ('disagree', 'pro'), ('disagree', 'opus')]
 
 
 def paired(a, b, work):
@@ -133,10 +156,11 @@ def score_set(root, s, refs, work, group, uids, label):
         if u not in T.get('pro', {}) or u not in T.get('opus', {}):
             F['disagree']['primary_or_second_unread'] += 1; continue
         P = toks(T['pro'][u]); sp = disagreement_spans(T['pro'][u], [T['opus'][u]])
-        disputed[u] = (sum(len(''.join(P[s0:e]).strip()) for s0, e in sp), sum(len(x.strip()) for x in P))
+        disputed[u] = (sum(len(P[k].strip()) for s0, e in sp for k in range(s0, e)), sum(len(x.strip()) for x in P))
         if not sp:
             T['disagree'][u] = T['pro'][u]; continue
-        k = failed_kind(res.get(u)) if res.get(u) else 'missing'
+        rt, rf, _ = reads('resolve', {u: res[u]} if u in res else {}, [u])  # same failed-read rules as every arm
+        k = next(iter(rf), None)
         if k:
             F['disagree'][k] += 1
         else:
@@ -165,6 +189,7 @@ def score_set(root, s, refs, work, group, uids, label):
                 row['by_group'][g] = {'read': len(sub), 'unread': unread, 'mcer': mean_ci(sub, work), 'cer': agg(sub, work), 'wer': agg(sub, work, ('wd', 'wl'))}
             row['worst'] = sorted(((c['cd'] / max(1, c['cl']), u) for u, c in C[a].items()), reverse=True)[:10]
             R[a] = row
+        rep.setdefault('pairs', {})[keyname] = {f'{x}-{y}': paired_mean(C[x], C[y], work) for x, y in PAIRS if x in C and y in C}
         # correction: by draft noise tertile; accuracy (folded letters) vs convention/style (strict − folded)
         for a, d in DRAFT_OF.items():
             if a not in C or d not in C:
@@ -209,7 +234,9 @@ def anchoring(root, refs):
                 unread += 1; continue
             t = unwrap(r['text'])[0]
             for x in e[corr]:
-                if x['kind'] == 'dropped_line':
+                if x['kind'] != 'dropped_line' and x.get('planted') == x.get('orig'):
+                    vv = 'invalid_plant'  # the planter changed nothing (its word core missed an apostrophe or a mark)
+                elif x['kind'] == 'dropped_line':
                     vv = dropped_verdict(t, x)
                 else:
                     vv = 'ambiguous' if plant_ambiguous(x, refs[u]) else plant_verdict(t, x)
@@ -229,7 +256,15 @@ def dropped_verdict(out, plant):
     if not words:
         return 'site_not_found'
     k = len(words)
-    best = max((sum(a == b for a, b in zip(o[i:i + k], words)) for i in range(max(1, len(o) - k + 1))), default=0)
+    # restored = >= 60% of the line's words inside one window of k + 3 output words (punctuation, a split or a merged
+    # neighbour line must not hide a restoration)
+    def hit(win):
+        c = collections.Counter(win); n = 0
+        for w in words:
+            if c[w] > 0:
+                c[w] -= 1; n += 1
+        return n
+    best = max((hit(o[i:i + k + 3]) for i in range(max(1, len(o) - k + 1))), default=0)
     return 'corrected' if best >= max(1, round(0.6 * k)) else 'survived'
 
 
@@ -245,7 +280,7 @@ def main():
     else:
         P = json.load(open(os.path.join(a.root, 'setB', 'draw.json')))['picks']
         kd = os.path.join(a.root, 'setB', 'keys')
-        refs = {k: json.load(open(os.path.join(kd, f'{k}.json'))) for k in ('key-o', 'key-g') if os.path.exists(os.path.join(kd, f'{k}.json'))}
+        refs = {k: json.load(open(os.path.join(kd, f'{k}.json'))) for k in ('key-o', 'key-g', 'key-f') if os.path.exists(os.path.join(kd, f'{k}.json'))}
         work = {r['uid']: r['book_id'] for r in P}; group = {r['uid']: r['stratum'] for r in P}
         uids = [r['uid'] for r in P]
     if a.uids:
@@ -269,6 +304,9 @@ def main():
                       f"style part {pc(c['style_part']['draft'])} -> {pc(c['style_part']['corrected'])}; better {c['pages_made_better']} worse {c['pages_made_worse']}")
                 for tn, t in c['by_tertile'].items():
                     print(f"              {tn:7s} draft {ci(t['draft'])} -> {ci(t['corrected'])} delta {t['delta'] and ci(t['delta'][:3])}")
+    for key, pp in rep.get('pairs', {}).items():
+        print(f'== paired mean page CER difference, key {key} (negative = first arm better)')
+        print('   ' + '  '.join(f"{k}: {ci(v[:3])} n={v[3]}" for k, v in pp.items() if v))
     for k, v in rep.get('anchoring', {}).items():
         print(f"ANCHOR {k}: {dict((x, y) for x, y in v.items() if x not in ('detail', 'by_kind'))} by kind {v['by_kind']}")
     print('calls', rep['calls'], 'no-view reads', rep['no_view_reads'])
