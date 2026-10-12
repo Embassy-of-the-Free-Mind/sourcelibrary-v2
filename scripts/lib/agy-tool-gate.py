@@ -15,7 +15,8 @@ deny every other tool call, and say why. It never approves a command, a write or
 install writes <workspace>/.agents/hooks.json pointing here (install_gate in scripts/eval/run-cli-arm.py).
 
 stdin: agy's PreToolUse payload {toolCall: {name, args}, ...}; stdout: {decision, reason}.
-env: AGY_GATE_ROOT (the workspace; required), AGY_GATE_LOG (optional jsonl of every call and decision).
+env: AGY_GATE_ROOT (the workspace; required), AGY_GATE_LOG (optional jsonl of every call and decision), AGY_GATE_TASK
+(ocr | translate: which denial reason; default ocr).
 """
 import json, os, sys
 
@@ -24,16 +25,23 @@ import json, os, sys
 REASON = ('That tool is disabled here. The only tool available is view_file on the attached page image in this '
           'directory. Open it with view_file if you have not yet, then write the transcription of what the image shows '
           'directly in your reply, following the instructions exactly.')
+# AGY_GATE_TASK=translate (scripts/lib/agy-cli.mjs installToolGate, used by scripts/batch/cli-translate.mjs): the text
+# is in the prompt and the workspace is empty, so the reason says no tool is needed at all.
+REASONS = {
+    'ocr': REASON,
+    'translate': ('That tool is disabled here, and no tool or file is needed: the text to translate is in the prompt. '
+                  'Write the translation directly in your reply, following the instructions exactly.'),
+}
 
 
-def decide(call, root):
+def decide(call, root, task='ocr'):
     name = (call or {}).get('name', '')
     args = (call or {}).get('args') or {}
     if name == 'view_file' and root:
         p = os.path.realpath(str(args.get('AbsolutePath') or ''))
         if p.startswith(os.path.realpath(root) + os.sep):
             return {'decision': 'allow'}
-    return {'decision': 'deny', 'reason': REASON}
+    return {'decision': 'deny', 'reason': REASONS.get(task, REASON)}
 
 
 def main():
@@ -41,7 +49,7 @@ def main():
         payload = json.load(sys.stdin)
     except ValueError:
         payload = {}
-    out = decide(payload.get('toolCall'), os.environ.get('AGY_GATE_ROOT'))
+    out = decide(payload.get('toolCall'), os.environ.get('AGY_GATE_ROOT'), os.environ.get('AGY_GATE_TASK') or 'ocr')
     log = os.environ.get('AGY_GATE_LOG')
     if log:
         try:

@@ -67,6 +67,8 @@ const BLOCK_SENTINEL = /<<<\s*BEGIN\s*>>>([\s\S]*?)(?:<<<\s*END\s*>>>|$)/;
 // #6523: the instruction that asks for the sentinels (the winning dev-round config; cli-ocr.mjs and run-cli-arm.py
 // --kind ocr append it to the OCR prompt). Kept here so the writer, the eval runner and the extractor share one copy.
 export const OCR_SENTINEL_INSTRUCTION = 'Write the transcription between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.';
+// The same instruction for a translation (scripts/batch/cli-translate.mjs, #6523 step 8).
+export const TRANSLATION_SENTINEL_INSTRUCTION = 'Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.';
 
 /**
  * Split a reply into what is between the <<<BEGIN>>> / <<<END>>> markers and what is outside them. `inside` is null
