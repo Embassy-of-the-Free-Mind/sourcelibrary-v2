@@ -83,8 +83,13 @@ const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 type RawCost = { usd_per_1k: number; basis: string; detail: string; source: string } | null;
 type OcrPoint = {
   engine: string; label: string; production: boolean; accuracy: number; accuracy_ci95: number[] | null; fail_share: number;
-  words_not_in_ref: number | null; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs; verdict?: Verdict;
+  words_not_in_ref: number | null; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict;
+  did_not_read: { k: number; n: number; kinds: Record<string, number> }; partly_measured?: string;
 };
+// #6523: a failed read is counted, not scored
+const KIND_WORDS: Record<string, string> = { copy_filter: 'copy filter', refusal: 'refused', empty: 'empty', timeout: 'timed out', other: 'no transcription' };
+const didNotRead = (x: OcrPoint) => (x.did_not_read.k === 0 ? '0'
+  : `${x.did_not_read.k} of ${x.did_not_read.n} (${Object.entries(x.did_not_read.kinds).map(([k, n]) => `${KIND_WORDS[k] ?? k} ${n}`).join(', ')})${x.partly_measured ? ', partly measured' : ''}`);
 type RawPanel<P> = {
   kind: string; role?: string; heading: string | null; n_pages: number; n_works: number; reference: string; grade: Grade;
   frontier: boolean; noise: Noise | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
@@ -95,7 +100,7 @@ const base = <P,>(p: RawPanel<P>, i: number) => ({
   kind: p.kind, role: p.role ?? (i === 0 ? 'primary' : 'secondary'), heading: p.heading, n_pages: p.n_pages, n_works: p.n_works,
   reference: p.reference, grade: p.grade, frontier: p.frontier, noise: p.noise, date: p.date, verdict: p.verdict, notes: p.notes ?? [],
 });
-const common = (x: { engine: string; label: string; production: boolean; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs; verdict?: Verdict }) => ({
+const common = (x: { engine: string; label: string; production: boolean; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict }) => ({
   engine: x.engine, label: x.label, production: x.production, cost: x.cost as Cost | null, no_price: x.no_price ?? null,
   on_frontier: !!x.on_frontier, vs: x.vs_in_use ?? null, verdict: x.verdict ?? null,
 });
@@ -105,10 +110,11 @@ export function ocrPanel(p: RawPanel<OcrPoint>, i = 0): Panel {
   return {
     ...base(p, i),
     extraHeads: [
-      { head: 'over half wrong', title: 'share of pages with a character error rate above one half, failed reads included' },
+      { head: 'over half wrong', title: 'share of the pages it read with a character error rate above one half' },
       ...(words ? [{ head: 'words not in ref.', title: "median share of the engine's words found nowhere in the reference; a misspelling counts too" }] : []),
+      { head: 'did not read', title: 'pages the engine refused, left empty, ran out of time on, or declined to copy because it recognised a published text; not scored. Above one page in five, its accuracy is partly measured: it rests on the pages it chose to answer' },
     ],
-    points: all.map((x, order) => ({ ...common(x), order, y: x.accuracy, y_ci95: x.accuracy_ci95, extra: [pctOf(x.fail_share, 0), ...(words ? [pctOf(x.words_not_in_ref, 0)] : [])] }))
+    points: all.map((x, order) => ({ ...common(x), order, y: x.accuracy, y_ci95: x.accuracy_ci95, extra: [pctOf(x.fail_share, 0), ...(words ? [pctOf(x.words_not_in_ref, 0)] : []), didNotRead(x)] }))
       .sort((a, b) => b.y - a.y || a.engine.localeCompare(b.engine)),
   };
 }

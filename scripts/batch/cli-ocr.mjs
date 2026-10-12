@@ -33,7 +33,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
@@ -43,12 +43,12 @@ import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { ocrReadProblem, unwrapSentinels, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
+import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
-const CLI = 'agy';
 const STAGE = process.argv[2];
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const OUT = arg('out') && path.resolve(arg('out'));
@@ -68,59 +68,19 @@ const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === P
 // #6523: a PreToolUse hook in the page's workspace (scripts/lib/agy-tool-gate.py) lets the model open the image with
 // view_file and denies every other tool WITH A REASON, so the turn goes on to the transcription instead of ending empty
 // on a denied shell or web request. It approves nothing plan mode would not; it never auto-approves a command (#6345).
-const TOOL_GATE = path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'lib', 'agy-tool-gate.py');
-function installToolGate(dir) {
-  fs.mkdirSync(path.join(dir, '.agents'), { recursive: true });
-  const log = path.join(dir, '.agents', 'gate.jsonl');
-  const command = `AGY_GATE_ROOT='${dir}' AGY_GATE_LOG='${log}' python3 '${TOOL_GATE}'`;
-  fs.writeFileSync(path.join(dir, '.agents', 'hooks.json'), JSON.stringify({ 'ocr-tool-gate': { PreToolUse: [{ matcher: '*', hooks: [{ type: 'command', command, timeout: 10 }] }] } }));
-  return log;
-}
-const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
-/** The transcription inside the markers, and why the reply is not a clean one (null when it is). */
-function unwrapRead(raw) {
-  const u = unwrapSentinels(raw);
-  if (u.inside == null) return { text: String(raw || '').trim(), problem: String(raw || '').trim() ? 'no <<<BEGIN>>> marker' : null };
-  const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>' : null;
-  return { text: u.inside, problem };
-}
 // The CLI is an AGENT. Plan mode stops it running tools; without it the model sometimes tries a shell command
 // (seen: cropping a Chinese page into columns in /tmp), and the auto-approve flag this script used to pass let it
 // run as root on the box. Never auto-approve; tests/unit/no-cli-auto-approve.test.ts sweeps for the flag.
-// #6523: 300 s, not 120: at high thinking 3.8 Flash takes 70–240 s on a dense page, and at the limit agy returns a cut reply.
-const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '300s', '--output-format', 'json'];
+// The call, the gate and the marker unwrap live in scripts/lib/agy-cli.mjs, shared with cli-translate.mjs.
 const workspaceImage = (key) => path.join(OUT, `ws-${key}`, `${key}.jpg`);
 // Even in plan mode the model sometimes asks for a shell command (to crop the image); headless mode denies it and the
 // turn ends empty with `denied_actions` set. The #6331 fix: continue THAT conversation once with this nudge
 // (scripts/eval/run-cli-arm.py, same words).
 const NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.';
-const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
 // The account's shared call meter (run-cli-arm.py writes the same rows): every job's calls, one line each.
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = arg('job') || 'cli-ocr';
 const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, kind: 'ocr', ...row }) + '\n'); } catch { /* the meter is advisory */ } };
-
-/** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, secs}. */
-function agyCall(args, cwd) {
-  return new Promise((resolve) => {
-    const t0 = Date.now();
-    const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
-    let out = '', err = '';
-    child.stdout.on('data', (d) => { out += d; });
-    child.stderr.on('data', (d) => { err += d; });
-    const timer = setTimeout(() => child.kill('SIGKILL'), 360_000);
-    child.on('close', (code) => {
-      clearTimeout(timer);
-      let j = {};
-      try { j = JSON.parse(out); } catch { /* not JSON: an error or an old CLI */ }
-      const text = String((j && j.response) ?? (Object.keys(j).length ? '' : out)).trim();
-      const denied = (j.denied_actions || []).map((d) => d.action);
-      // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
-      const cls = QUOTA.test(out + err) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
-    });
-  });
-}
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
