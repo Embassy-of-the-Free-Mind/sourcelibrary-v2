@@ -1,0 +1,741 @@
+{
+ "name": "pilot",
+ "go": false,
+ "threshold": 0.5,
+ "summary": {
+  "O": {
+   "scored": 30,
+   "failed": 0,
+   "new_material_per_page": 0.16666666666666666,
+   "new_pages_with_material": 4,
+   "new_pages_with_material_wilson": [
+    0.05309655447112463,
+    0.2968132683539402
+   ],
+   "new_style_per_page": 0.4,
+   "paired_n": 30,
+   "paired_new": 0.16666666666666666,
+   "paired_old": 0.9666666666666667,
+   "new_better": 15,
+   "new_worse": 0,
+   "plants": {
+    "carried": 6,
+    "caught": 6
+   }
+  },
+  "P": {
+   "scored": 0,
+   "failed": 30,
+   "new_material_per_page": null,
+   "new_pages_with_material": 0,
+   "new_pages_with_material_wilson": [
+    0,
+    1
+   ],
+   "new_style_per_page": null,
+   "paired_n": 0,
+   "paired_new": null,
+   "paired_old": null,
+   "new_better": 0,
+   "new_worse": 0,
+   "plants": {
+    "carried": 0,
+    "caught": 0
+   }
+  }
+ },
+ "per_page": [
+  {
+   "uid": "p01",
+   "page_id": "6992c90a453c7175dc1bce4d",
+   "cer": 0.0893,
+   "O": {
+    "secs": 26.922,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": [
+      "omission/major: Converted to Large-scale Material: two — 折大料二百二十五 — converted to large-batch: 225 (the number continues onto the next column: 百二十五)"
+     ]
+    },
+    "plant_caught": true,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 4,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: For each unbaked tile <term>jiwa</term>, use one tael [of glaze material]. — 㼧瓦每一口一兩 — the 1 chi 6 cun length is for concave tiles (㼧瓦); each piece takes 1 liang; the page has no 'unbaked tile' and no 'glaze material'"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p02",
+   "page_id": "6a3cc1b5ec254ff6cae0e7ee",
+   "cer": 0.0099,
+   "O": {
+    "secs": 16.187,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: The sizes and genders of the immortals all determine their titles. — 仙之大小男女皆取治所以為著號 — immortals, great or small, male or female, all take the seat of their administration as their title"
+     ]
+    },
+    "plant_caught": true,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p03",
+   "page_id": "6992ce093ea667fbac827b43",
+   "cer": 0.0248,
+   "O": {
+    "secs": 21.913,
+    "plant_caught": true,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: For all cases of **typhoid and seasonal epidemics** — 傷寒 — 'cold damage' (a TCM class of febrile disease), not typhoid"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p04",
+   "page_id": "6992ced4673ee1e40e321a55",
+   "cer": 0.0301,
+   "O": {
+    "secs": 12.658,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: 110 registered administrative neighborhoods — 編里六十八 — 68 registered li-units (110 is the distance figure)"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p05",
+   "page_id": "6a1d6861013dfd9d9e18eec0",
+   "cer": 0.0163,
+   "O": {
+    "secs": 18.31,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 4,
+     "style": 2,
+     "material_spans": []
+    },
+    "plant_caught": true
+   },
+   "P": null
+  },
+  {
+   "uid": "p06",
+   "page_id": "6a3c61d1879008ba7e160c11",
+   "cer": 0.0123,
+   "O": {
+    "secs": 19.677,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Water follows wood; therefore, spring follows winter. — 冰(水)則次木 — after water comes wood (the order is reversed in the translation)"
+     ]
+    },
+    "plant_caught": true
+   },
+   "P": null
+  },
+  {
+   "uid": "p07",
+   "page_id": "6992cea1673ee1e40e321357",
+   "cer": 0.0767,
+   "O": {
+    "secs": 29.739,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 6,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: [If this happens,] the work will have to be done all over again. — 聚葉面而重做矣 — continues from the previous page (gathering on the leaf surface means the work must be redone); the page does not make it a result of wind"
+     ]
+    },
+    "new": {
+     "material": 1,
+     "minor_accuracy": 7,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: gathering on the surface of the leaves and falling into a false sleep. — 聚葉面而重做矣 — (they) gather on the leaf surface and the work must be redone"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p08",
+   "page_id": "6992cde681c9d7efb84d0b93",
+   "cer": 0.0625,
+   "O": {
+    "secs": 24.18,
+    "old": {
+     "material": 4,
+     "minor_accuracy": 5,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Treats dislocation, wrist fractures — 墜墮 falling from a height (not dislocation)",
+      "omission/major: Treats dislocation, wrist fractures — 骽(與腿同) 魘厥 leg injuries; nightmare fainting",
+      "mistranslation/major: Boiled juice treats blurred vision — 煮汁治眯目 treats foreign matter in the eye",
+      "mistranslation/major: Boil/Carbuncle at the navel — 魚臍疔瘡 the name of a type of clove sore ('fish-navel'), not a sore at the navel"
+     ]
+    },
+    "plant_caught": true,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p09",
+   "page_id": "6992caf8d4d545ae73feec87",
+   "cer": 0.0856,
+   "O": {
+    "secs": 21.403,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p10",
+   "page_id": "6992ce45749d4e56e0690c53",
+   "cer": 0.0179,
+   "O": {
+    "secs": 17.714,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 4,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p11",
+   "page_id": "6a3c5e4340c88a541d8e070f",
+   "cer": 0.0313,
+   "O": {
+    "secs": 24.72,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 3,
+     "minor_accuracy": 2,
+     "style": 2,
+     "material_spans": [
+      "omission/major: \"That is the various marks of phenomena in all sacred teachings.\" — 薀處界等 — the lemma line 'aggregates, bases, elements, and so forth' is left out before this sentence",
+      "mistranslation/major: The \"gathering of causes\" is the meaning of the aggregates, realms, and sense-bases — 崇聚生因是薀處界義 — accumulation, production (of consciousness) and cause are, respectively, the meanings of aggregate, base and element",
+      "omission/major: includes dependent origination, the truths, the states of place — 等取緣起根諦 — includes dependent origination, the faculties (根) and the truths; the faculties are left out"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p12",
+   "page_id": "6992cf5af5b4f75c1a4c8b3a",
+   "cer": 0.0816,
+   "O": {
+    "secs": 20.14,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: the Prefecture of <term>Jiulengbu'er</term> <gloss>Tranquebar</gloss> — 西稜布爾府 Xilengbu'er (Serampore), the place name is misread and wrongly identified"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 2,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p13",
+   "page_id": "6a3c5e6040c88a541d8e18be",
+   "cer": 0.0373,
+   "O": {
+    "secs": 15.782,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p14",
+   "page_id": "6a3cea130a0011cb4bc12527",
+   "cer": 0,
+   "O": {
+    "secs": 18.481,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p15",
+   "page_id": "6992ca84d4d545ae73fee3f0",
+   "cer": 0.0909,
+   "O": {
+    "secs": 19.507,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 4,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Written by **Yanyi** — 龔顗 (Gong Yi): the surname 龔 is dropped and 顗 is misread as 'Yanyi'"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p16",
+   "page_id": "6992ca5bd4d545ae73fede3e",
+   "cer": 0.0385,
+   "O": {
+    "secs": 15.592,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p17",
+   "page_id": "6992cd4243713c66ea635a07",
+   "cer": 0.0189,
+   "O": {
+    "secs": 16.931,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: The **Monument of Madame Ren**. When the Lady was of humble status — 人任氏碑記：[夫]人任氏碑記 — 'the stele inscription of Lady Ren records that…'; it cites a source for the story and does not name a site"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p18",
+   "page_id": "6992ce67673ee1e40e3208ee",
+   "cer": 0.0053,
+   "O": {
+    "secs": 19.718,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 5,
+     "style": 1,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p19",
+   "page_id": "69dea7d051267905f92aac0f",
+   "cer": 0.0455,
+   "O": {
+    "secs": 24.967,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 5,
+     "style": 1,
+     "material_spans": []
+    },
+    "old": {
+     "material": 2,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Wu Song dared not lift his head or stand up — 那里敢擡頭，起身遠遠地接 — he dared not raise his head, but he did stand up and received the cup from a distance",
+      "mistranslation/major: took the wine in two large gulps, and drained it — 唱了相公夫人兩箇大喏，拿起酒來一飲而盡 — made two deep bows (one each) to His Excellency and the lady, then drained the cup in one draught"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p20",
+   "page_id": "69dea80d51267905f92aaef6",
+   "cer": 0.0843,
+   "O": {
+    "secs": 20.759,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 3,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: A young Daoist's single move brings good fortune — 一着饒天下 — with one move outplays (gives a handicap to) all under heaven",
+      "mistranslation/major: feigns recognition of a distant niece — 權認遠鄉姑 — expediently acknowledges an aunt (姑) from a distant village",
+      "mistranslation/major: ghosts feign terror in the red flower pavilion — 紅花場假鬼閙 — at the safflower field, a fake ghost makes a disturbance"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p21",
+   "page_id": "6a1d68a6013dfd9d9e18f165",
+   "cer": 0.0511,
+   "O": {
+    "secs": 24.416,
+    "new": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 2,
+     "material_spans": [
+      "mistranslation/major: Master Funi's chapter on the method for refining pine resin — 伏虎尊師篇 (the image reads 伏虎, 'Tiger-Subduing Venerable Master'; the reading's 伏霓 is wrong)"
+     ]
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 4,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: Take portions the size of a billiard ball three times a day. — 服如彈丸 take a dose the size of a pellet (slingshot pellet)"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p22",
+   "page_id": "6992ce66673ee1e40e320875",
+   "cer": 0.0404,
+   "O": {
+    "secs": 25.284,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 6,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: a variety known as the **\"Flying Swallow\"** <note>Original: *Fēiyàn*</note> — 飛廉 — Feilian (a plumeless thistle), not 飛燕 'flying swallow'"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p23",
+   "page_id": "6992ce0b3ea667fbac827be2",
+   "cer": 0.0764,
+   "O": {
+    "secs": 19.634,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    },
+    "old": {
+     "material": 1,
+     "minor_accuracy": 2,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: This incurs a penalty of one \"chit\" — 罰二帖 — penalty of two tie (chips)"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p24",
+   "page_id": "6992cde581c9d7efb84d0a83",
+   "cer": 0.0159,
+   "O": {
+    "secs": 16.873,
+    "old": {
+     "material": 1,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: As for **Blood Scabs** <note>original: \"Xue Bi\" (血疕). — 血疳 (xuegan, 'blood gan', malnutrition-type sores), not 血疕"
+     ]
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p25",
+   "page_id": "6992cac1d4d545ae73feeacc",
+   "cer": 0.0088,
+   "O": {
+    "secs": 16.335,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 0,
+     "style": 1,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 3,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p26",
+   "page_id": "6992cd9d43713c66ea637972",
+   "cer": 0.0663,
+   "O": {
+    "secs": 22.44,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 8,
+     "style": 1,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p27",
+   "page_id": "6992c92669b777d72c7634c2",
+   "cer": 0.0392,
+   "O": {
+    "secs": 25.153,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 6,
+     "style": 1,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p28",
+   "page_id": "6a3c5e7440c88a541d8e243f",
+   "cer": 0.0484,
+   "O": {
+    "secs": 16.787,
+    "new": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": []
+    },
+    "old": {
+     "material": 0,
+     "minor_accuracy": 1,
+     "style": 1,
+     "material_spans": []
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p29",
+   "page_id": "6992cd4643713c66ea635a59",
+   "cer": 0.0627,
+   "O": {
+    "secs": 29.616,
+    "old": {
+     "material": 4,
+     "minor_accuracy": 3,
+     "style": 1,
+     "material_spans": [
+      "mistranslation/major: also known as the Dragon River — 又名節好池 — also called Jiehao Pool",
+      "mistranslation/major: built by Xiao Guan of the Liang Dynasty — 梁蕭詧建 — built by Xiao Cha of the Liang",
+      "mistranslation/major: Also known as \"Crane Nourishment\" — 一名鵝湖/鵝流 — also called Goose Lake/Stream",
+      "mistranslation/major: Located south of the Stone Tower of Nanlou Temple, from which it derives its name — 資福寺、南樓寺在石樓之南故得名 — Zifu Temple and South Tower Temple; the latter lies south of Stone Tower, hence its name"
+     ]
+    },
+    "new": {
+     "material": 2,
+     "minor_accuracy": 4,
+     "style": 0,
+     "material_spans": [
+      "mistranslation/major: Immortal Chou — 鮑仙 — Immortal Bao",
+      "mistranslation/major: the Wild Man was Immortal Ge — 野人葛仙… — text breaks off (Wild Man was Ge's [disciple]); he was not Ge himself"
+     ]
+    }
+   },
+   "P": null
+  },
+  {
+   "uid": "p30",
+   "page_id": "6992ce2d3ea667fbac828677",
+   "cer": 0.0118,
+   "O": {
+    "secs": 23.311,
+    "old": {
+     "material": 0,
+     "minor_accuracy": 6,
+     "style": 0,
+     "material_spans": []
+    },
+    "new": {
+     "material": 0,
+     "minor_accuracy": 2,
+     "style": 0,
+     "material_spans": []
+    }
+   },
+   "P": null
+  }
+ ]
+}
