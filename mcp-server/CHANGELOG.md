@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.7.1 (2026-10-12)
+
+### `get_quote` with `include_image` attaches the scan again (#3937)
+
+- The quote API returns the reader's display URL, which for most pages is a relative `/api/image?…` path. The server fetched it as-is, the fetch threw, and the scan was skipped without a word: 39 of 40 sampled books returned no image. The URL is now made absolute, in the JSON as well as for the fetch.
+- A scan over the 1MB inline cap is retried at 1000px through the image proxy.
+- When no scan can be attached, the result says so and gives the URL.
+
 ## 4.7.0 (2026-10-06)
 
 ### `check_duplicate` answers "do we hold this?" (#6019)

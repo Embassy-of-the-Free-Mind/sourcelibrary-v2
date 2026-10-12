@@ -10,6 +10,7 @@ import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { getRatingOptions } from '@/lib/review-queue';
 import { stripProvenanceMarks } from '@/lib/provenance';
@@ -692,6 +693,14 @@ function sourceColumnQuote(result: Record<string, unknown>): boolean {
  * the flags would come back all-false on precisely the pages where the caller
  * has nothing but the original to quote from.
  */
+// The quote API returns the reader's display URL, which is usually a
+// same-origin `/api/image?…` path. An MCP client is not on our origin, so the
+// JSON must carry an absolute URL — a relative one is a link the model has to
+// guess the host for (#3937).
+function absolutizeQuoteImage(quote: Record<string, unknown> | undefined): void {
+  if (typeof quote?.page_image_url === 'string') quote.page_image_url = absoluteImageUrl(quote.page_image_url);
+}
+
 function quotableText(quote: Record<string, unknown> | undefined): string | null {
   if (typeof quote?.translation === 'string') return quote.translation;
   if (quote?.text_source === 'ocr_original' && typeof quote.original === 'string') return quote.original;
@@ -720,6 +729,7 @@ async function getQuote(args: Record<string, unknown>) {
   // `text` is not a field on this response and reading it silently produced
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
+  absolutizeQuoteImage(quote);
   const quoteText = quotableText(quote);
   // Hyphen splits live in the ORIGINAL, never in the translation — a translator
   // resolves them. Passing only the translation made hyphen_split_at_end
@@ -811,6 +821,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
+        absolutizeQuoteImage(q);
         const continuity = pageContinuity(
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
@@ -1863,6 +1874,19 @@ interface ImageAttachment {
   urls: Array<string | undefined | null>;
   /** Text block rendered directly after the image — caption + link. */
   caption: string;
+  /** Said in place of the image when no candidate could be attached. Omit to skip silently. */
+  missing?: string;
+}
+
+// The caller asked for the leaf by name (include_image), so an unattached scan
+// is reported, not dropped: for a month this path attached nothing on most
+// books and nothing in the result said so (#3937).
+function leafAttachment(pageImageUrl: string, caption: string): ImageAttachment {
+  return {
+    urls: leafImageCandidates(pageImageUrl),
+    caption,
+    missing: `${caption}\nThe scan could not be attached inline (fetch failed, or over the 1 MB inline limit). View it at ${absoluteImageUrl(pageImageUrl)}`,
+  };
 }
 
 function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
@@ -1901,10 +1925,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
   if (name === 'get_quote') {
     const quote = r.quote as Record<string, unknown> | undefined;
     if (typeof quote?.page_image_url === 'string') {
-      return [{
-        urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
-      }];
+      return [leafAttachment(
+        quote.page_image_url,
+        `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
+      )];
     }
     return [];
   }
@@ -1915,10 +1939,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .slice(0, MAX_INLINE_IMAGES)
       .map((entry) => {
         const q = entry.quote as Record<string, unknown>;
-        return {
-          urls: [q.page_image_url as string | undefined],
-          caption: `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
-        };
+        return leafAttachment(
+          q.page_image_url as string,
+          `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
+        );
       });
   }
 
@@ -2189,6 +2213,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           if (img) {
             content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
             content.push({ type: 'text' as const, text: attachments[i].caption });
+          } else if (attachments[i].missing) {
+            content.push({ type: 'text' as const, text: attachments[i].missing as string });
           }
         }
 
