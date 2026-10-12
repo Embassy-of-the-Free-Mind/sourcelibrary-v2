@@ -1,0 +1,44 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<warning>Handwritten Spanish colonial cursive / chancery-influenced hand</warning>
+<page-type>text</page-type>
+<page-num>12</page-num>
+
+<margin>[Teo]pixqui:</margin>Maxihuallauh Ynti-hueinexicolizti Cazan yehuatl monexi
+coliztica tiqui-quintlapololtiya Yntlatícpactlaca ticnequi ma
+mochintin xiquinhuica Ynlampacmt. Omitzmotlaxiliyez? Yntlatla
+ni mictlan, xiyauh amonican mixpaxíneçi Cain tlanic ne
+quiz Canican nimizilpia tepozmecatica, Yhuan nimizcahuaztuh
+ynmocha Ynic aemo occeppa nican tihuallaz tlalticpac tiquin
+tlapololtiquíuh Yntlaltícpactlaca
+
+<margin>Demo:</margin>Yenimiztlalcahuia Yntiteopixqui Aucatel niquittaz quen tic
+palchuiz Yntla<insert>tô</insert>thuani Ynixquich Cahuitl, Ynau Oquilnamic .
+ynitlatlacol, axcan ye Cempohuali Yhuan macuili Xihuitl Ynçan
+tlatlacolpanemín Yhuan Cazan ílpitinemi Yninonenvil, aoc
+huel Mitzmonanquiliz yep Cayehuatl. Ynitlatlacoltlaman
+mal Quitlatoltac Ynmanel quinequi Moyolcuitis Cayehuatl
+quinontilia, Ynihuei Cenzontlatlatol acmoximoziahuiz Yn
+titeopixqui ynmanel ticmottilia nican mixpantzinco Ycac
+Neçi huey mahuiztic tlacatl, Cazença Oyax, tlatlatolsicayni
+anima Ynmomatia âço aic miquiz çan Oquihuez quilia
+ya Ynmíquiztli auh inaxcan Madel xicmoyeyelahui âço
+zel huelitis mitzmonanquiliz Catitlaçotzin ynt͡s Caye nyauh
+ynnehuatl, maxicmochihuili Yn motiopixcatêquitzin Caqualliyez
+ynka Omitzmonanquili.
+
+---
+
+->Calaquie Demonio; Oncan Mocahuazque teopixqui Yh.n De Omentin<-
+
+---
+
+<margin>[Teo]pixqui:</margin>Quenin çencaninomauhtia, Yniccac ixquich amo quali
+tlatolli, motlachihual Quen Omitzlapololti Yntlacatecolotl. Cuix
+huel neltiliztli Ynixquich nican Omitzíxcomacatchuac; maxi
+nechnanquilli aço huelitiz Nimizpalehuiz Neyolcuítiliztica
+atle qui nenehuiliz âtle caçiz âtle quipanahuiz Ynchipahuacan
+neyolqui
+
+<vocab>teopixqui, Demonio, nexicolizti, tlalticpactlaca, mictlan, tepozmecatica, tlatolli, tlacatecolotl, neyolcuítiliztica, Cempohuali</vocab>

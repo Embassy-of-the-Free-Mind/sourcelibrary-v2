@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<warning>Handwritten Latin cursive</warning>
+<vocab>Demonio, teopixqui, mictlan, tlatlacol, miquiztli</vocab>
+
+<margin>opixqui #</margin> tlaxi huallauh Ynti huei nexicoliztli Ca çan tehuatl monexi
+coliztica tiqui quintlapololtia Yntlalticpac tlaca ticnequi ma
+mochintin xiquinhuica Yn campa Cml. omitz motlaxiliyestz Yntetla
+ni mictlan, xiyauh amo nican nixpan xineci Ca intla nic ne
+quiz Canican nimizilpiz tepoz mecatica, Yhuan nimiz cahuazuh
+yn mocha Ynic aocmo oc Ceppa nican tihuallaz tlalticpac tiquin
+tlapololtiquiuh Yn tlalticpac tlaca
+
+<margin>Demonio. #</margin> Ye nimiz tlalcahuia Ynti teopixqui Au catel niquittaz quen tic
+palchuiz Yn tlato huani Ynix quich Cahuitl, Ynau oquil namic
+yni tlatlacol, axcan ye Cenpohuali Yhuan macuili Xihuitl Yn çan
+tlatlacolpa nemi Yhuan Ca çan ilpiti nemi Yni nenepil, aoc
+huel Mitz mo nan quililiz <unclear>yep</unclear> Ca tehuatl, ynitlatlacol tlama
+mal quitlatoltzac Yn manel quinequi Moyol Cuitiz Ca yehhuatl
+quinontilia, Ynihuei Cenzon tlatlacol aoc moxi mo ciahuizi Yn
+ti teopixqui yn manel tic mottilia nican mix pantzinco Ycac
+neci huey mahuiztic tlacatl, Ca çenca oyox, tlatlacoltica yni
+anima Yn momatia a ço aic miquiz çan oqui huec quilia
+ya yn miquiztli auh in axcan macel xic mo ye yelahui a ço
+zel huelitiz mitz monanquililiz Catilatzin ynts. Caye niauh
+yn nehuatl, maxic mo chipahuili Yn mo teopix catequiztzin Ca qualli ye
+yntla omitz mo nan quilili.
+
+->Calaquie Demonio; Oncan Mocahuazque teopixqui Yhuan Oc Omentin<-
+
+<margin>opixqui #</margin> Quenin çenca ni no mauhtia, Yno niccac ixquich a mo qualli
+tlatolli, mo tlachihual Quen omitz tlapololti yntla ca tecolotl, Cuix
+huel nel ti liztli Ynix quich nican omitz ixcomacatzhuac; maxi
+nech nan quilli a ço huelitiz Nimiz palehuiz Neyol Cui ti liz ti Ca
+atle qui nenehuiliz atle Caçiz atle quipanahuiz Inchi pahuaca
+neyolqui

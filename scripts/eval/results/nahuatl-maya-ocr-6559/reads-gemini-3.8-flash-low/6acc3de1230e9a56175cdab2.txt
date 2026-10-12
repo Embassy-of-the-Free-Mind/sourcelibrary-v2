@@ -1,0 +1,48 @@
+<scan-quality>good</scan-quality>
+<language>Yucatec Maya</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>(33)</page-num>
+<sig>3</sig>
+
+ob, iix ú ɔac ti tulacalóob · le ka-
+zóob.
+
+**K.** ¿Báax á káatic táan á ualic: ci-
+lichcuntabac leti á kaba?
+
+**N.** Cá yanac ti tzicil iix cicithanbi-
+laltáac.
+
+**K.** ¿Báax á káatic táan á ualic: talac
+ti c tóon leti á ahauil?
+
+**N.** Cá yanac ti c tóon tumen gra-
+cia uaix ɔabilah, iix t pachil ú ɔa-
+tóon ú gloria uaix maxul cuxtalé.
+
+**K.** ¿Báax á káatic táan á ualic: men-
+tabac á uolah bay ti le lúum he-
+bic ti leti cáan?
+
+**N.** Cá c mentéex tóon uincóon tuliz
+iix zeblil hebic le angelóob.
+
+**K.** ¿Báax á káatic táan á ualic: leti
+c uah ti zanzamal kinil c ɔatóonhelé?
+
+**N.** Tulacal le báax lay tzenul kanáan
+ti uincil iix pixan.
+
+**K.** ¿Báaxten á káatic utial pel behelé?
+
+**N.** Tioklal cntal kananil ti káatic le
+laili zamal.
+
+**K.** ¿Báax á káatic táan á ualic: c za-
+teztóon c paxóob?
+
+**N.** Záat-zahul ti kebanóob iix ti tze-
+culóob paxanóob tioklal laóobé.
+
+<vocab>kaba, ahauil, gracia, gloria, cuxtalé, lúum, cáan, uincóon, angelóob, kinil, uincil, pixan, kebanóob</vocab>

@@ -1,0 +1,49 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>illustration</page-type>
+<page-num>34-cº</page-num>
+<page-num>f 77</page-num>
+<warning>Handwritten 16th-century Spanish cursive</warning>
+
+<insert>34-cº</insert> <insert>†</insert> <insert>f 77</insert> <insert>+ 5</insert>
+
+Como dauan al bisorey don luys de Velasco y a su hijo ciento y Veynte cargas de yerua cada
+dia para su caualleriza y casas y a doña ana su hija diez cargas despues que vino a esta <unclear>nueba españa</unclear>
+yerua que se traya de indios por repartimiento. para el bisorey y a su hijo. para la qual les pagauan a quar
+tillo. por cada carga . aunque alos maceuales y a los principales de los barios que los tenian al cargo.
+que mas valya a medio real cada carga / como valia el ordinario que se vendia a los vezinos.
+dela cibdad lo qual declararon con juramento. ante my bel de vilches scriuano del dicho pleyto el qual
+alcaldes y regidores desta cibdad de mexico por lengua de Juangomez interprete del dicho <unclear>jusgado</unclear> y en
+en ffee de lo qual lo firmaron de sus nombres
+ante my . Bel de vilches
+Juangomez
+
+<image-desc size="small" type="symbol" significance="low">Two light blue circles arranged vertically on the left edge, and under them, two smaller light blue circles each containing four dots.</image-desc>
+
+<insert>vale re</insert>
+<insert>y dan rres y mº</insert>
+<insert>Don luys de Velasco</insert>
+<insert>Doña ana de Velasco</insert>
+<image-desc size="medium" type="illustration" significance="high">A row of six bundles of grass, each with a Mesoamerican flag symbol (pantli, meaning 20) on top. The fifth bundle has a drawing of a Spanish man's head. The sixth bundle has a drawing of a Spanish woman's head, and four red dots above it.</image-desc>
+
+Como dauan de ordinario cada semana beinte peones . dos aluañies . dos carpinteros y <unclear>tres en</unclear>
+caladores y veynte indios <unclear>que siruen</unclear> para dar agua y barrer para el servicio del bisorey y su
+hijo a los quales <unclear>auia que pagar</unclear> a real y <unclear>se pagauan</unclear> della por repartimiento dela cibdad de mexico
+sin que por ello se les pague cosa alguna lo qual asy mysmo declararon con juramento el dicho
+gouernador y alcaldes y regidores por lengua del dicho interprete
+ante my . Bel de vilches
+Juangomez
+
+<insert>peones . pa cargar</insert>
+<insert>lunes .</insert>
+<insert>aluañies</insert>
+<insert>carpinteros</insert>
+<insert>encaladores</insert>
+<insert>indios pa dar agua / y barrer</insert>
+<image-desc size="medium" type="illustration" significance="high">A row of five figures or groups representing workers, connected by a horizontal line. The first is a figure carrying a staff with a pantli flag. The second shows two heads with a house symbol. The third shows two heads with an axe symbol. The fourth shows two heads with a trowel symbol. The fifth shows a figure carrying a water jug and broom, with a pantli flag.</image-desc>
+
+<insert>don luys de velasco . bisorrey</insert>
+<image-desc size="large" type="portrait" significance="high">A seated Spanish man in a black coat and hat in a chair with curved legs, representing Viceroy Don Luis de Velasco. He is holding a staff and pointing, with a stylized speech scroll coming from his mouth. To his left is a structure with columns and decorative circles.</image-desc>
+
+<vocab>bisorey, caualleriza, maceuales, repartimiento, Juangomez, peones, aluañies, carpinteros, encaladores</vocab>

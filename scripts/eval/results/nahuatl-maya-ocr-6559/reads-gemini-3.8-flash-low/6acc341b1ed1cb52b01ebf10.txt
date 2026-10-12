@@ -1,0 +1,31 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+¶ Auh yyehuanti inqualti yn yecti yye-
+quic neliloni. Quinmopaccanochiliz an-
+molhuiliz ynamehuantin ynan notlaçopil-
+hua ynan notlaço tetlayecolticahua ihuel
+anechmo tlaçoca machitique ynipampa in
+tlalticpac nin onemitico ynic namechno
+maquixtilico yn huel annechmo tlatocatique
+an nech moteotique huel pachiuh inamo
+yollo innamo teuh innamotlatocauh/
+huel annechmoneltoquitique yniniteotl
+yhuan noquichtli çan nocel çanniyo. Auh
+nopampa anquinmotlaocolilique yniz-
+quitlamantli oniquin notenehuili. Auh
+ynaxcan nochantzinco ammotlecahuizque/
+ynic ompa cemicac ammopapaquiltizque
+antlatocatizque ynayc tzonquizaz ynamo
+papaquiliz. ¶ Ocayehuatli. Ynquitoznequi
+ompa hualmohuicaz inquintlatzontequili-
+quiuh yyolque yhuan in mimicque auh ynin
+cuix pachihui in moyollo.
+¶ Auh niccauhtzine. Yniquac tiquitohua
+nic noneltoquitia in dios spiritu sancto. Quemca.
+¶ Nopiltzine tlaticce a caonimitznohui-
+li çacen teotl yyehuatl yney personas quetoz/
+
+<vocab>inqualti, yecti, tlaçopilhuan, tetlayecolticahuan, tlaçocamachitique, maquixtilico, tlatocatique, teuh, tlatocauh, niteotl, noquichtli, nochantzinco, tlatocatizque, papaquiliz, tlatzontequiliquiuh, mimicque, niccauhtzine, noneltoquitia, dios, spiritu sancto, personas</vocab>
