@@ -23,6 +23,21 @@ function upgradeIiifUrl(url: string, width: number): string {
   return url.replace(/\/full\/(full|max|\d+,|pct:\d+)\//, `/full/${width},/`);
 }
 
+/**
+ * Downscale a gallery crop to a grid variant: `width` px wide, but never less
+ * than `width / 2` px tall. A width-only resize turns a wide banner (6:1) into a
+ * 300×50 sliver that blurs in any fixed-height slot — and GalleryClient treats
+ * a thumb under 150px tall as corrupt and discards it (#3229). Tall crops are
+ * unaffected (the width governs); nothing is ever upscaled. Mirrored in
+ * scripts/workers/generate-thumbnails.mjs and scripts/maintenance/backfill-card-thumbs.mjs.
+ */
+export function galleryVariant(buffer: Buffer, width: number, quality: number): Promise<Buffer> {
+  return sharp(buffer)
+    .resize(width, Math.ceil(width / 2), { fit: 'outside', withoutEnlargement: true })
+    .jpeg({ quality })
+    .toBuffer();
+}
+
 interface GenerateGalleryImagesInput {
   sourceImageUrl: string;
   bbox: { x: number; y: number; width: number; height: number };
@@ -155,17 +170,14 @@ export async function generateGalleryImages(
   const extractedWidth = extractedMeta.width || 0;
   const extractedHeight = extractedMeta.height || 0;
 
-  // Generate 300px thumbnail (JPEG 70)
-  const thumbnailBuffer = await sharp(extractedBuffer)
-    .resize(300, null, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: 70 })
-    .toBuffer();
-
-  // Generate 600px card variant (JPEG 72) — matches generate-thumbnails.mjs
-  const cardBuffer = await sharp(extractedBuffer)
-    .resize(600, null, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: 72 })
-    .toBuffer();
+  // Generate the 300px thumbnail (JPEG 70) and the 600px `-card.jpg` (JPEG 72)
+  // that grid cards prefer (#2401). Writing the card here too matters: the grid
+  // derives the card URL from the thumb URL, so a re-crop that rewrote only the
+  // thumb left the OLD crop showing in the grid.
+  const [thumbnailBuffer, cardBuffer] = await Promise.all([
+    galleryVariant(extractedBuffer, 300, 70),
+    galleryVariant(extractedBuffer, 600, 72),
+  ]);
 
   // Compute perceptual hash from thumbnail (small buffer = fast)
   const dhash = await computeDHash(thumbnailBuffer);
