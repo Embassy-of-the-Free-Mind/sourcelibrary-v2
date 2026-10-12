@@ -1,0 +1,245 @@
+{
+ "seed": 6568,
+ "items": [
+  {
+   "qid": "p01",
+   "page_id": "6992cdd381c9d7efb84d0766",
+   "book_id": "6992cdd381c9d7efb84d06ab",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p02",
+   "page_id": "6a3c5e4440c88a541d8e0781",
+   "book_id": "6a3c5e4440c88a541d8e0720",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p03",
+   "page_id": "6a3c679839b4508b04e375ac",
+   "book_id": "6a3c679839b4508b04e37573",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p04",
+   "page_id": "6a3cef714701a906f10efa5f",
+   "book_id": "6a3cef714701a906f10efa0d",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p05",
+   "page_id": "6a1d68a6013dfd9d9e18f14b",
+   "book_id": "6a1d68a6013dfd9d9e18f116",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p06",
+   "page_id": "6992cd5643713c66ea635dfd",
+   "book_id": "6992cd5543713c66ea635de5",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p07",
+   "page_id": "6992cd5243713c66ea635d04",
+   "book_id": "6992cd5243713c66ea635ca7",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p08",
+   "page_id": "6992cf12284cdd19fef47018",
+   "book_id": "6992cf12284cdd19fef46f88",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p09",
+   "page_id": "6992ce7077d26f9321776e69",
+   "book_id": "6992ce6f77d26f9321776dcc",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p10",
+   "page_id": "6992ca96d4d545ae73fee653",
+   "book_id": "6992ca96d4d545ae73fee5c3",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p11",
+   "page_id": "6a3c68c3af3c49b59c5dc314",
+   "book_id": "6a3c68c2af3c49b59c5dc2f5",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p12",
+   "page_id": "6a3c61d0879008ba7e160a9b",
+   "book_id": "6a3c61d0879008ba7e160a6d",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p13",
+   "page_id": "6992cb54d4d545ae73fef040",
+   "book_id": "6992cb54d4d545ae73feefd4",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p14",
+   "page_id": "6992cda4ae978f7d415987da",
+   "book_id": "6992cda4ae978f7d415987b1",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p15",
+   "page_id": "69ee6d79a7fe184f2c3bf734",
+   "book_id": "69ee6d79a7fe184f2c3bf72f",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p16",
+   "page_id": "6a3ceb898642f0445b155281",
+   "book_id": "6a3ceb898642f0445b1551d4",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p17",
+   "page_id": "6992cea1673ee1e40e32138d",
+   "book_id": "6992cea0673ee1e40e32134f",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p18",
+   "page_id": "6992cf3727dcac3f8ca1b7e8",
+   "book_id": "6992cf3727dcac3f8ca1b7a9",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p19",
+   "page_id": "6992ce0b3ea667fbac827bd4",
+   "book_id": "6992ce0a3ea667fbac827b7f",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p20",
+   "page_id": "6992cc10018b80967354cc51",
+   "book_id": "6992cc10018b80967354cbfd",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p21",
+   "page_id": "6a3cc245f9474f825c1763e2",
+   "book_id": "6a3cc245f9474f825c176383",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p22",
+   "page_id": "6a3c61c4879008ba7e160282",
+   "book_id": "6a3c61c4879008ba7e160263",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p23",
+   "page_id": "6992cbfb018b80967354c9a2",
+   "book_id": "6992cbfb018b80967354c976",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p24",
+   "page_id": "6992cbf9018b80967354c953",
+   "book_id": "6992cbf9018b80967354c7b8",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p25",
+   "page_id": "6992cdf081c9d7efb84d0ed3",
+   "book_id": "6992cdf081c9d7efb84d0e9a",
+   "bin": "0.2–0.5"
+  },
+  {
+   "qid": "p26",
+   "page_id": "6a3ceb1495fcd45563053472",
+   "book_id": "6a3ceb1495fcd4556305341b",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p27",
+   "page_id": "6a3cc18aec254ff6cae0d2e6",
+   "book_id": "6a3cc18aec254ff6cae0d2c3",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p28",
+   "page_id": "6992cf2327dcac3f8ca1b59d",
+   "book_id": "6992cf2327dcac3f8ca1b503",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p29",
+   "page_id": "6992cd4f43713c66ea635b9d",
+   "book_id": "6992cd4e43713c66ea635b76",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p30",
+   "page_id": "6992cefbf7519cdd65044b12",
+   "book_id": "6992cefbf7519cdd65044ae0",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p31",
+   "page_id": "69af0ea2067c0c26ee26e64d",
+   "book_id": "69af0ea2067c0c26ee26e607",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p32",
+   "page_id": "6992cf78f5b4f75c1a4c9041",
+   "book_id": "6992cf78f5b4f75c1a4c900a",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p33",
+   "page_id": "6992cd13ae978f7d415983e4",
+   "book_id": "6992cd13ae978f7d4159839a",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p34",
+   "page_id": "6ac774dd541cd556e64f2fed",
+   "book_id": "6ac774dd541cd556e64f2f98",
+   "bin": "0.1–0.2"
+  },
+  {
+   "qid": "p35",
+   "page_id": "6992cdf781c9d7efb84d1127",
+   "book_id": "6992cdf781c9d7efb84d10d9",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p36",
+   "page_id": "6a3c679239b4508b04e3718c",
+   "book_id": "6a3c679239b4508b04e37186",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p37",
+   "page_id": "6a3cc11fec254ff6cae09919",
+   "book_id": "6a3cc11fec254ff6cae098ae",
+   "bin": "0.5–1"
+  },
+  {
+   "qid": "p38",
+   "page_id": "6992cdf881c9d7efb84d1203",
+   "book_id": "6992cdf781c9d7efb84d11bd",
+   "bin": "0–0.05"
+  },
+  {
+   "qid": "p39",
+   "page_id": "6a1d609ed274b9630ccf8b9d",
+   "book_id": "6a1d609ed274b9630ccf8b5a",
+   "bin": "0.05–0.1"
+  },
+  {
+   "qid": "p40",
+   "page_id": "6992cc12018b80967354ccf8",
+   "book_id": "6992cc12018b80967354cc95",
+   "bin": "0.05–0.1"
+  }
+ ]
+}

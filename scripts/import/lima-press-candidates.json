@@ -1,0 +1,205 @@
+{
+  "_comment": [
+    "The second press in the Americas (#6559): Lima, Antonio Ricardo 1584 onward. IA advancedsearch on Lima imprints 1584-1625 (66 hits), hand selection, check-holdings on every pick (all new). Single-sheet ordinances skipped."
+  ],
+  "books": [
+    {
+      "ia": "doctrinachristia00cath",
+      "region": "new-world-press-lima",
+      "title": "Doctrina christiana y catecismo para instrucción de los indios",
+      "author": "Third Council of Lima (Tercer Concilio Limense)",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua",
+        "Aymara"
+      ],
+      "published": "1584",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1584: the first book printed in South America. Trilingual catechism of the Third Council of Lima."
+    },
+    {
+      "ia": "confessionariopa00cath",
+      "region": "new-world-press-lima",
+      "title": "Confessionario para los curas de indios",
+      "author": "Third Council of Lima (Tercer Concilio Limense)",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua",
+        "Aymara"
+      ],
+      "published": "1585",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1585. Includes the instruction against the rites and ceremonies of the Andean gentiles."
+    },
+    {
+      "ia": "arteyvocabulario00unkn",
+      "region": "new-world-press-lima",
+      "title": "Arte y vocabulario en la lengua general del Perú llamada quichua y en la lengua española",
+      "author": "Anonymous (attrib. Blas Valera / Antonio Ricardo)",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua"
+      ],
+      "published": "1586",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1586. First Quechua grammar and dictionary printed in Peru."
+    },
+    {
+      "ia": "primerapartedear00oa",
+      "region": "new-world-press-lima",
+      "title": "Primera parte de Arauco domado",
+      "author": "Pedro de Oña",
+      "language": "Spanish",
+      "published": "1596",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1596. Epic by the first Chilean-born poet."
+    },
+    {
+      "ia": "librogeneraldela00belv",
+      "region": "new-world-press-lima",
+      "title": "Libro general de las reducciones de plata y oro de diferentes leyes y pesos",
+      "author": "Juan de Belveder",
+      "language": "Spanish",
+      "published": "1597",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1597. Assay tables for Potosí silver."
+    },
+    {
+      "ia": "primerapartedela02dval",
+      "region": "new-world-press-lima",
+      "title": "Primera parte de la Miscelánea austral",
+      "author": "Diego Dávalos y Figueroa",
+      "language": "Spanish",
+      "published": "1602",
+      "text_role": "original",
+      "note": "Lima, Antonio Ricardo, 1602. Dialogues on love, Petrarchism and the natural world of Peru."
+    },
+    {
+      "ia": "doctrinachristia00vald",
+      "region": "new-world-press-lima",
+      "title": "Doctrina christiana y catecismo en la lengua allentiac",
+      "author": "Luis de Valdivia",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Allentiac"
+      ],
+      "published": "1607",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1607. The only record of the extinct Allentiac (Huarpe) language."
+    },
+    {
+      "ia": "gramaticayartenu00gonz",
+      "region": "new-world-press-lima",
+      "title": "Gramática y arte nueva de la lengua general de todo el Perú, llamada lengua qquichua o lengua del Inca",
+      "author": "Diego González Holguín",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua"
+      ],
+      "published": "1607",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1607."
+    },
+    {
+      "ia": "vocabulariodelal01gonz",
+      "region": "new-world-press-lima",
+      "title": "Vocabulario de la lengua general de todo el Perú llamada lengua qquichua o del Inca",
+      "author": "Diego González Holguín",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua"
+      ],
+      "published": "1608",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1608. The great colonial Quechua dictionary."
+    },
+    {
+      "ia": "temblordelimaa00oa",
+      "region": "new-world-press-lima",
+      "title": "Temblor de Lima año de 1609",
+      "author": "Pedro de Oña",
+      "language": "Spanish",
+      "published": "1609",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1609. Poem on the 1609 earthquake."
+    },
+    {
+      "ia": "artedelalenguaay00torr",
+      "region": "new-world-press-lima",
+      "title": "Arte de la lengua aymara",
+      "author": "Diego de Torres Rubio",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Aymara"
+      ],
+      "published": "1616",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1616."
+    },
+    {
+      "ia": "artedelalenguaqu00huer",
+      "region": "new-world-press-lima",
+      "title": "Arte de la lengua quechua general de los indios de este reino del Pirú",
+      "author": "Alonso de Huerta",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua"
+      ],
+      "published": "1616",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1616."
+    },
+    {
+      "ia": "artedelalenguaqu04torr",
+      "region": "new-world-press-lima",
+      "title": "Arte de la lengua quichua",
+      "author": "Diego de Torres Rubio",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Quechua"
+      ],
+      "published": "1619",
+      "text_role": "original",
+      "note": "Lima, Francisco Lasso, 1619."
+    },
+    {
+      "ia": "discursomathemat00luci",
+      "region": "new-world-press-lima",
+      "title": "Discurso mathemático sobre los dos cometas que se han parecido este año de 1618",
+      "author": "Antonio Luciano",
+      "language": "Spanish",
+      "published": "1619",
+      "text_role": "original",
+      "note": "Lima 1619. Astronomy and astrological judgement on the comets of 1618."
+    },
+    {
+      "ia": "labyrinthodecome00hevi",
+      "region": "new-world-press-lima",
+      "title": "Labyrintho de comercio terrestre y naval",
+      "author": "Juan de Hevia Bolaños",
+      "language": "Spanish",
+      "published": "1617",
+      "text_role": "original",
+      "note": "Lima, Francisco del Canto, 1617. Commercial and maritime law of the Indies."
+    },
+    {
+      "ia": "historiadelceleb00ramo",
+      "region": "new-world-press-lima",
+      "title": "Historia del célebre santuario de Nuestra Señora de Copacabana",
+      "author": "Alonso Ramos Gavilán",
+      "language": "Spanish",
+      "published": "1621",
+      "text_role": "original",
+      "note": "Lima 1621. Lake Titicaca: Inca sun-island cult, Andean religion and its Christian overwriting."
+    }
+  ]
+}

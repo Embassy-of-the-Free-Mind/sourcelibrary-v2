@@ -1,0 +1,40 @@
+{
+ "computed_at": "2026-10-12T00:54:40.062Z",
+ "lane": "paddle-zh-2026-10",
+ "counts": {
+  "stale_pages": 75543,
+  "no_english": 0,
+  "not_paddle_now": 0,
+  "no_revision": 0,
+  "under_min_han": 30,
+  "table_detector": 0,
+  "eligible": 75513
+ },
+ "bins": {
+  "0–0.05": {
+   "all": 34721,
+   "table_detector": 0,
+   "eligible": 34721
+  },
+  "0.05–0.1": {
+   "all": 15955,
+   "table_detector": 0,
+   "eligible": 15955
+  },
+  "0.1–0.2": {
+   "all": 9933,
+   "table_detector": 0,
+   "eligible": 9933
+  },
+  "0.2–0.5": {
+   "all": 5552,
+   "table_detector": 0,
+   "eligible": 5552
+  },
+  "0.5–1": {
+   "all": 9352,
+   "table_detector": 0,
+   "eligible": 9352
+  }
+ }
+}

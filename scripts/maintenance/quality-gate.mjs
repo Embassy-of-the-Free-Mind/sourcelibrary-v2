@@ -50,6 +50,7 @@ import {
 } from '../lib/quality-gate.mjs';
 import { screenTranslatedPage, screenOcrPage, summariseScreens, drawSample, median } from '../lib/quality-gate-screens.mjs';
 import { transcriptionBody } from '../lib/blank-page-guard.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const argv = process.argv.slice(2);
@@ -112,12 +113,13 @@ async function screenWindow(db, step, entries) {
   return { rows, books };
 }
 
-const imageUrlOf = (p) => p.ocr?.source_url || p.cropped_photo || p.archived_photo || p.photo || null;
+// The image OCR actually read, else the shared resolver (a split page's archived_photo is the whole spread).
+const imageUrlOf = (p) => p.ocr?.source_url || getPageSource(p);
 
 async function fetchImages(sample, db, out) {
   const sharp = (await import('sharp')).default;
   for (const s of sample) {
-    const pages = await db.collection('pages').find({ id: { $in: s.page_ids } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source_url': 1, 'translation.data': 1, 'translation.model': 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }).toArray();
+    const pages = await db.collection('pages').find({ id: { $in: s.page_ids } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source_url': 1, 'translation.data': 1, 'translation.model': 1, archived_photo: 1, cropped_photo: 1, photo: 1, photo_original: 1, enhanced_photo: 1, split_from_spread: 1 } }).toArray();
     pages.sort((a, b) => a.page_number - b.page_number);
     const book = await db.collection('books').findOne({ id: s.book_id }, { projection: { title: 1, author: 1, year: 1, published: 1, language: 1 } });
     let txt = `BOOK ${s.book_id} | ${book?.language} | ${book?.title} | ${book?.author || ''} ${book?.year || book?.published || ''}\n`;
