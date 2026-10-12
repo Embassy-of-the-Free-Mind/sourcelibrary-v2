@@ -9,7 +9,7 @@
  *   FIT                            shelf-overview's fit_to_show → show | caveat | fix
  *   derivedFortnightly             the fortnightly rule (scripts/eval/methods/fortnightly-spot-check.md)
  *   pageFindings                   the serious findings per page, for book_checks.page_findings: what a reader's
- *                                  page-level warning is built from (#6199)
+ *                                  page-level warning is built from (#6199); each carries its KIND (#6203)
  *   pageRecords / packetProvenance the text a run read: the packet's model ids; the packet's TEXT is compared with the
  *                                  page's text now, so a page rewritten after the draw (before or after the review) is
  *                                  changed_since_check, and only an unchanged page gets the page's *_updated_at stamps
@@ -21,6 +21,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { kindOfFinding } from '../../lib/review-vocabulary.mjs';
 
 const allErrors = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e && typeof e === 'object');
 export const seriousPage = (p) => allErrors(p).some((e) => e.severity === 'serious') || p.right_page === 'no';
@@ -41,7 +42,8 @@ export function pageFindings(pages, { withProblem = true } = {}) {
       for (const e of (p[key] || [])) {
         if (!e || typeof e !== 'object' || e.severity !== 'serious') continue;
         const problem = withProblem && typeof e.problem === 'string' && e.problem.trim() ? e.problem.trim().slice(0, PROBLEM_MAX) : null;
-        errors.push({ stage, ...(e.class ? { class: String(e.class) } : {}), ...(problem ? { problem } : {}) });
+        const kind = kindOfFinding(e);   // the reviewer's own kind, else its class's default (review-vocabulary)
+        errors.push({ stage, ...(e.class ? { class: String(e.class) } : {}), ...(kind ? { kind } : {}), ...(problem ? { problem } : {}) });
       }
     }
     const wrongPage = p.right_page === 'no';

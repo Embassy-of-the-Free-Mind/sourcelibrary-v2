@@ -28,6 +28,7 @@ import { MongoClient } from 'mongodb';
 import { structureCounts, pageImageUrl } from '../eval/spot-check/lib.mjs';
 import { validateOutput, wilson, keyOf, redactRecord } from '../eval/second-reader/lib.mjs';
 import { makeRng } from '../eval/lib/paired-stats.mjs';
+import { exposureOf, kindOfFinding, kOfNBooks, kOfNMarkdown } from '../lib/review-vocabulary.mjs';
 
 const argv = process.argv.slice(2);
 const cmd = argv[0];
@@ -66,14 +67,15 @@ if (cmd === 'draw') {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
   fs.mkdirSync(J('images'), { recursive: true });
-  const proj = { page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1, 'translation.source': 1, photo: 1, cropped_photo: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1 };
+  const proj = { page_number: 1, page_type: 1, translation_withheld: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1, 'translation.source': 1, photo: 1, cropped_photo: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1 };
   const records = [];
   const makeRecord = async (bookId, p, stratum, all) => {
     const url = pageImageUrl(p);
     const img = url ? await download(url) : null;
     if (!img) return null;
     const b = await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1, published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, page_progression: 1, visible: 1, 'catalog_metadata.collections': 1 } });
-    return { slot: 0, stratum, book_id: bookId, book_url: `https://sourcelibrary.org/book/${bookId}`, tradition: null, book: b,
+    // Who could see this page when it was drawn (#6203): read before the lane-B placeholder below is put in.
+    return { slot: 0, stratum, exposure: exposureOf({ book: b, page: p }), book_id: bookId, book_url: `https://sourcelibrary.org/book/${bookId}`, tradition: null, book: b,
       structure: { ...structureCounts(all), pages_count_field: b.pages_count, pages_translated_field: b.pages_translated }, run: [p.page_number],
       pages: [{ page_number: p.page_number, page_id: String(p._id), image_url: url, image_file: img.file, image_sha256: img.sha256,
         crop: !p.split_from_spread && !p.cropped_photo && p.crop?.xStart !== undefined ? p.crop : undefined,
@@ -110,9 +112,9 @@ if (cmd === 'draw') {
   // One book, one page per packet: the Gemini path reads one page per call (#6338 amendment 2).
   // Redacted as the #6338 packets are (no engine, model or URL), and the stratum is hidden: a reader cannot tell a
   // page lane B wrote from a random one, or which family made the text.
-  records.forEach((r, i) => write(J('packets', `p${String(i).padStart(3, '0')}.json`), [redactRecord({ ...r, slot: 1, stratum: 'audit' })]));
+  records.forEach((r, i) => write(J('packets', `p${String(i).padStart(3, '0')}.json`), [redactRecord({ ...r, slot: 1, stratum: 'audit', exposure: undefined })]));
   write(J('draw.json'), { seed, drawn_at: new Date().toISOString(), frame_books: frame.length, rejected: reasons, lane_b_written_pages: writtenRows.length,
-    pages: records.map((r, i) => ({ packet: `p${String(i).padStart(3, '0')}`, stratum: r.stratum, book_id: r.book_id, page_number: r.pages[0].page_number, language: r.book?.language, ocr_model: r.pages[0].ocr_model })) });
+    pages: records.map((r, i) => ({ packet: `p${String(i).padStart(3, '0')}`, stratum: r.stratum, exposure: r.exposure, book_id: r.book_id, page_number: r.pages[0].page_number, language: r.book?.language, ocr_model: r.pages[0].ocr_model })) });
   console.log(`drew ${records.length} pages: ${records.filter((r) => r.stratum === 'random').length} random books (frame ${frame.length}), ${records.filter((r) => r.stratum === 'lane-b-written').length} lane-B-written (of ${writtenRows.length}); seed ${seed}`);
 }
 
@@ -134,6 +136,16 @@ else if (cmd === 'score') {
     byReader[name] = got;
   }
   const strata = ['random', 'lane-b-written'];
+  // #6203: the same verdicts typed by KIND and split by EXPOSURE, as k of n BOOKS (one page per book, the seed's
+  // pick where lane B wrote several pages of one book). A reader's own `kind` wins; else the class's default kind.
+  const seriousKinds = (p) => [...new Set([...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e.severity === 'serious').map(kindOfFinding).filter(Boolean)), ...(p.right_page === 'no' ? ['wrong_leaf'] : [])];
+  const typed = {};
+  for (const s of strata) for (const name of READERS) {
+    typed[`${s}/${name}`] = kOfNBooks(draw.pages.filter((d) => d.stratum === s && byReader[name].has(d.packet)).map((d) => {
+      const p = byReader[name].get(d.packet);
+      return { book_id: d.book_id, page_number: d.page_number, exposure: d.exposure ?? 'unrecorded', serious: isSerious(p), kinds: seriousKinds(p) };
+    }), { seed: draw.seed });
+  }
   const rate = (name, stratum, pred) => {
     const pks = draw.pages.filter((d) => d.stratum === stratum && byReader[name].has(d.packet)).map((d) => d.packet);
     const k = pks.filter((pk) => pred(byReader[name].get(pk))).length;
@@ -162,7 +174,7 @@ else if (cmd === 'score') {
     findings.push({ ...d, readers: flags, convergent: flags.length === READERS.length, errors: errs.slice(0, 4) });
   }
   findings.sort((x, y) => Number(y.convergent) - Number(x.convergent));
-  const report = { run: path.basename(R), seed: draw.seed, drawn_at: draw.drawn_at, scored_at: new Date().toISOString(), pages: draw.pages.length, read: Object.fromEntries(READERS.map((r) => [r, byReader[r].size])), table, agreement, findings };
+  const report = { run: path.basename(R), seed: draw.seed, drawn_at: draw.drawn_at, scored_at: new Date().toISOString(), pages: draw.pages.length, read: Object.fromEntries(READERS.map((r) => [r, byReader[r].size])), typed, table, agreement, findings };
   write(J('report.json'), report);
   const pct = (x) => (x == null ? '—' : `${(100 * x).toFixed(0)}%`);
   const cell = (x) => (x.n ? `${x.k}/${x.n} = ${pct(x.rate)} [${pct(x.ci[0])}, ${pct(x.ci[1])}]` : '—');
@@ -170,6 +182,11 @@ else if (cmd === 'score') {
     `**Weekly convergent audit (#6420 lane D)** — run \`${report.run}\`, seed ${draw.seed}, drawn ${draw.drawn_at.slice(0, 10)}`,
     '',
     `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini 3.7 Flash (CLI), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}.`,
+    '',
+    ...READERS.filter((r) => typed[`random/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`random/${r}`], { what: 'random visible non-English books', reader: r })),
+    ...READERS.filter((r) => typed[`lane-b-written/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`lane-b-written/${r}`], { what: 'books lane B wrote a page of', reader: r })),
+    '',
+    'By page, every exposure together (the earlier weeks\' table, kept for the series):',
     '',
     '| stratum | reader | pages with a serious error (any lane) | serious OCR error or wrong leaf |',
     '|---|---|---|---|',
@@ -180,7 +197,7 @@ else if (cmd === 'score') {
     'Top findings (both readers first):',
     ...findings.slice(0, 10).map((f) => `- ${f.convergent ? '**both**' : f.readers.join('')} · ${f.stratum} · \`${f.book_id}\` p.${f.page_number} (${f.language ?? '?'}, OCR ${f.ocr_model ?? '?'}): ${f.errors.slice(0, 2).map((e) => `${e.class ?? '?'} ${String(e.problem ?? '').slice(0, 140)}`).join('; ')}`),
     '',
-    'Rates are by page, Wilson 95% intervals; a model reader\'s finding is a finding, not a verdict (`.claude/docs/quality-statements.md`). Wrong-leaf or invented text found here is contained per `containment-on-finding.md` by the session that reads this.',
+    'Headline rates are by book, one page per book, served text only, Wilson 95% intervals; kinds are scripts/lib/review-vocabulary.mjs (a class with no kind from the reader takes its default); a model reader\'s finding is a finding, not a verdict (`.claude/docs/quality-statements.md`). Wrong-leaf or invented text found here is contained per `containment-on-finding.md` by the session that reads this.',
   ].join('\n');
   fs.writeFileSync(J('report.md'), md + '\n');
   console.log(md);

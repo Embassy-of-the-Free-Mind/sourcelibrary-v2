@@ -21,7 +21,7 @@
  *       .claude/docs/page-error-taxonomy.md.
  *
  *   record  --step=S --verdict=GO|NO-GO --by="Name" --sample=DIR/sample.json [--screens=DIR/screens-summary.json]
- *           [--failure-classes=O6:3,T7:1] [--findings=FILE.json] [--fix="what changed"] [--notes="…"] [--dry-run]
+ *           [--failure-classes=O6:3,T7:1 | O1:2:recitation (code:pages[:kind], kinds in scripts/lib/review-vocabulary.mjs)] [--findings=FILE.json] [--fix="what changed"] [--notes="…"] [--dry-run]
  *       Writes one `quality_gates` row. NO-GO ALSO sets processing_control.lane_budgets.<S>.enrol_paused
  *       (versioned) and pushes ntfy (high). That flag is read by every unattended enroler of the step —
  *       translate: translate-batch-worker --chained --enrol/--enrol-auto (cron :23 hourly), orchestrator
@@ -51,6 +51,7 @@ import {
 import { screenTranslatedPage, screenOcrPage, summariseScreens, drawSample, median } from '../lib/quality-gate-screens.mjs';
 import { transcriptionBody } from '../lib/blank-page-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { pageExposure } from '../lib/review-vocabulary.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const argv = process.argv.slice(2);
@@ -194,7 +195,8 @@ async function cmdRecord(db) {
     notes: arg('notes'),
     seed: sampleFile?.seed ?? null,
     window: sampleFile?.window ?? null,
-    sample_ids: (sampleFile?.sample || []).map((s) => ({ book_id: s.book_id, language: s.language, page_ids: s.page_ids, page_numbers: s.page_numbers })),
+    // exposure is read now, as the verdict is recorded: served | withheld | no_english | hidden per sampled page (#6203)
+    sample_ids: await Promise.all((sampleFile?.sample || []).map(async (s) => ({ book_id: s.book_id, language: s.language, page_ids: s.page_ids, page_numbers: s.page_numbers, exposure: await pageExposure(db, s.book_id, s.page_numbers) }))),
     failure_classes: findings?.failure_classes ?? parseFailureClasses(arg('failure-classes')),
     screens: arg('screens') ? JSON.parse(fs.readFileSync(arg('screens'), 'utf8')) : null,
     findings: findings?.pages ? { pages: findings.pages, summary: findings.summary ?? null } : null,

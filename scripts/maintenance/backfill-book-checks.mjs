@@ -191,7 +191,8 @@ for (const c of cands) {
   if (c.drop) { skipped.push(`${c.source} ${c.book_id}: ${c.drop}`); continue; }
   const { source, packetPages, serious, drop, ...input } = c;
   try {
-    rows.push({ source, row: buildBookCheck({ ...input, method_version: V[c.method_id], text_provenance: provenance(c) }) });
+    // Exposure at check time was not kept by these runs, and today's visibility is not it: 'unrecorded' (#6203).
+    rows.push({ source, row: buildBookCheck({ ...input, method_version: V[c.method_id], text_provenance: provenance(c), exposure: input.pages_read.map((n) => ({ page_number: n, exposure: 'unrecorded' })) }) });
   } catch (e) { skipped.push(`${source} ${c.book_id}: ${e.message}`); }
 }
 
