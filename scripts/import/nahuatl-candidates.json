@@ -1,0 +1,103 @@
+{
+  "_comment": [
+    "Nahuatl texts we lacked (#6559), found on IA with spelling variants after a holdings survey (37 Nahuatl-tagged books, 14 live, mostly codices). check-holdings: all new."
+  ],
+  "books": [
+    {
+      "ia": "hueitlamahuiolti00lass",
+      "region": "nahuatl",
+      "title": "Huei tlamahuiçoltica omonexiti in ilhuicac tlatoca çihuapilli Santa María Totlaçonantzin Guadalupe",
+      "author": "Luis Laso de la Vega",
+      "language": "Nahuatl",
+      "published": "1649",
+      "text_role": "original",
+      "note": "Mexico City 1649. Contains the Nican mopohua, the Nahuatl narrative of the Guadalupe apparitions."
+    },
+    {
+      "ia": "cantaresenidioma00peuoft",
+      "region": "nahuatl",
+      "title": "Cantares en idioma mexicano (facsímile del manuscrito de la Biblioteca Nacional de México)",
+      "author": "Anonymous Nahua singers (ed. Antonio Peñafiel)",
+      "language": "Nahuatl",
+      "published": "1904",
+      "text_role": "original",
+      "note": "Mexico 1904 photographic facsimile of the 16th-c. Cantares mexicanos MS: the largest corpus of Aztec song. Public-domain substitute for the in-copyright 1965 edition we hold hidden."
+    },
+    {
+      "ia": "dictionnairedela00sime",
+      "region": "nahuatl",
+      "title": "Dictionnaire de la langue nahuatl ou mexicaine",
+      "author": "Rémi Siméon",
+      "language": "French",
+      "languages": [
+        "French",
+        "Nahuatl"
+      ],
+      "published": "1885",
+      "text_role": "original",
+      "note": "Paris 1885. Built on Molina 1571; the standard Nahuatl dictionary for a century."
+    },
+    {
+      "ia": "rigvedaamericanu00brin",
+      "region": "nahuatl",
+      "title": "Rig Veda americanus: sacred songs of the ancient Mexicans",
+      "author": "Daniel G. Brinton",
+      "language": "English",
+      "languages": [
+        "English",
+        "Nahuatl"
+      ],
+      "published": "1890",
+      "text_role": "original",
+      "note": "Philadelphia 1890. The twenty sacred hymns Sahagún recorded, Nahuatl text with English and glosses."
+    },
+    {
+      "ia": "histoiredelanati00aubi",
+      "region": "nahuatl",
+      "title": "Histoire de la nation mexicaine depuis le départ d'Aztlan jusqu'à l'arrivée des conquérants espagnols (Codex Aubin 1576)",
+      "author": "Anonymous Nahua annalist (ed. J. M. A. Aubin)",
+      "language": "French",
+      "languages": [
+        "French",
+        "Nahuatl"
+      ],
+      "published": "1893",
+      "text_role": "original",
+      "note": "Paris 1893 facsimile of the Codex Aubin with transcription and French translation."
+    },
+    {
+      "ia": "codice-aubin",
+      "region": "nahuatl",
+      "title": "Códice Aubin 1576 (copia de Antonio de León y Gama)",
+      "author": "Anonymous Nahua annalist",
+      "language": "Nahuatl",
+      "published": "1576",
+      "text_role": "original",
+      "note": "18th-c. copy by Antonio de León y Gama of the 1576 annals, Aztlan to the 1600s. Personal upload; the date is the original's."
+    },
+    {
+      "ia": "historia-de-los-mexicanos-por-sus-pinturas",
+      "region": "nahuatl",
+      "title": "Historia de los mexicanos por sus pinturas",
+      "author": "Anonymous (attrib. Andrés de Olmos; ed. Joaquín García Icazbalceta)",
+      "language": "Spanish",
+      "published": "1891",
+      "text_role": "original",
+      "note": "Mexico 1891, Nueva colección de documentos, tomo 3. The earliest account of the Mexica creation myths."
+    },
+    {
+      "ia": "gegencecomed00brinrich",
+      "region": "nahuatl",
+      "title": "The Güegüence: a comedy ballet in the Nahuatl-Spanish dialect of Nicaragua",
+      "author": "Daniel G. Brinton",
+      "language": "English",
+      "languages": [
+        "English",
+        "Nahuatl"
+      ],
+      "published": "1883",
+      "text_role": "original",
+      "note": "Philadelphia 1883."
+    }
+  ]
+}
