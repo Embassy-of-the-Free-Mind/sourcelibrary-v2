@@ -1,0 +1,1855 @@
+{
+ "source": "scripts/eval/results/pro-translate-6545/r1s1/scores.json",
+ "source_commit": "4588b44d8",
+ "design_note": "#6545 used ONE Opus judge and one Pro judge per page in a new blind 7-arm round; the pins assumed two Opus judges per page and a round of the #6182-style panel.",
+ "pages": {
+  "fa": 23,
+  "sa": 30
+ },
+ "observed": {
+  "fa": {
+   "opus": {
+    "c38": 3.826,
+    "pro": 3.957,
+    "opus": 4.652,
+    "stored": 3.696,
+    "corr38": 3.957,
+    "corrO": 4.087
+   },
+   "pro": {
+    "c38": 3.565,
+    "pro": 3.957,
+    "opus": 4.217,
+    "stored": 3.217,
+    "corr38": 3.522,
+    "corrO": 3.565
+   }
+  },
+  "sa": {
+   "opus": {
+    "c38": 3.833,
+    "pro": 4.167,
+    "opus": 4.767,
+    "stored": 3.533,
+    "corr38": 3.733,
+    "corrO": 4.133
+   },
+   "pro": {
+    "c38": 3.767,
+    "pro": 4.467,
+    "opus": 4.667,
+    "stored": 3.2,
+    "corr38": 3.433,
+    "corrO": 3.833
+   }
+  }
+ },
+ "cells": [
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "c38",
+   "observed": 3.826,
+   "v0": {
+    "pred": [
+     4.02,
+     4.2,
+     4.41
+    ],
+    "covered": false,
+    "error": -0.37
+   },
+   "v1": {
+    "pred": [
+     3.98,
+     4.2,
+     4.39
+    ],
+    "covered": false,
+    "error": -0.37
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.91,
+     4.17,
+     4.43
+    ],
+    "covered": false,
+    "error": -0.34
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.83,
+     4.17,
+     4.52
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.87,
+     4.17,
+     4.52
+    ],
+    "covered": false,
+    "error": -0.34
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "c38",
+   "observed": 3.565,
+   "v0": {
+    "pred": [
+     3.75,
+     4.35,
+     4.94
+    ],
+    "covered": false,
+    "error": -0.78
+   },
+   "v1": {
+    "pred": [
+     3.7,
+     4.35,
+     4.96
+    ],
+    "covered": false,
+    "error": -0.78
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.74,
+     4.35,
+     4.96
+    ],
+    "covered": false,
+    "error": -0.78
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.7,
+     4.35,
+     4.96
+    ],
+    "covered": false,
+    "error": -0.78
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.65,
+     4.35,
+     4.96
+    ],
+    "covered": false,
+    "error": -0.78
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "pro",
+   "observed": 3.957,
+   "v0": {
+    "pred": [
+     3.77,
+     4.18,
+     4.56
+    ],
+    "covered": true,
+    "error": -0.22
+   },
+   "v1": {
+    "pred": [
+     3.67,
+     4.17,
+     4.59
+    ],
+    "covered": true,
+    "error": -0.21
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.65,
+     4.17,
+     4.61
+    ],
+    "covered": true,
+    "error": -0.21
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.61,
+     4.17,
+     4.65
+    ],
+    "covered": true,
+    "error": -0.21
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.61,
+     4.17,
+     4.65
+    ],
+    "covered": true,
+    "error": -0.21
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "pro",
+   "observed": 3.957,
+   "v0": {
+    "pred": [
+     3.62,
+     4.32,
+     5.01
+    ],
+    "covered": true,
+    "error": -0.36
+   },
+   "v1": {
+    "pred": [
+     3.57,
+     4.3,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.57,
+     4.3,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.52,
+     4.3,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.48,
+     4.3,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.34
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "opus",
+   "observed": 4.652,
+   "v0": {
+    "pred": [
+     4.34,
+     4.68,
+     5.04
+    ],
+    "covered": true,
+    "error": -0.03
+   },
+   "v1": {
+    "pred": [
+     4.65,
+     4.83,
+     4.93
+    ],
+    "covered": true,
+    "error": -0.18
+   },
+   "v1-one-judge": {
+    "pred": [
+     4.65,
+     4.83,
+     4.96
+    ],
+    "covered": true,
+    "error": -0.18
+   },
+   "v1-packet-round": {
+    "pred": [
+     4.57,
+     4.83,
+     4.96
+    ],
+    "covered": true,
+    "error": -0.18
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     4.57,
+     4.83,
+     4.96
+    ],
+    "covered": true,
+    "error": -0.18
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "opus",
+   "observed": 4.217,
+   "v0": {
+    "pred": [
+     3.81,
+     4.51,
+     5.2
+    ],
+    "covered": true,
+    "error": -0.29
+   },
+   "v1": {
+    "pred": [
+     4.09,
+     4.67,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.45
+   },
+   "v1-one-judge": {
+    "pred": [
+     4.09,
+     4.7,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.48
+   },
+   "v1-packet-round": {
+    "pred": [
+     4.04,
+     4.7,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.48
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     4.04,
+     4.67,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.45
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "stored",
+   "observed": 3.696,
+   "v0": {
+    "pred": [
+     3.77,
+     3.97,
+     4.16
+    ],
+    "covered": false,
+    "error": -0.27
+   },
+   "v1": {
+    "pred": [
+     3.65,
+     3.89,
+     4.11
+    ],
+    "covered": true,
+    "error": -0.19
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.61,
+     3.91,
+     4.13
+    ],
+    "covered": true,
+    "error": -0.21
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.52,
+     3.87,
+     4.22
+    ],
+    "covered": true,
+    "error": -0.17
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.52,
+     3.87,
+     4.22
+    ],
+    "covered": true,
+    "error": -0.17
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "stored",
+   "observed": 3.217,
+   "v0": {
+    "pred": [
+     3.51,
+     4.09,
+     4.7
+    ],
+    "covered": false,
+    "error": -0.87
+   },
+   "v1": {
+    "pred": [
+     3.43,
+     4.04,
+     4.65
+    ],
+    "covered": false,
+    "error": -0.82
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.43,
+     4.04,
+     4.65
+    ],
+    "covered": false,
+    "error": -0.82
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.39,
+     4.04,
+     4.7
+    ],
+    "covered": false,
+    "error": -0.82
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.35,
+     4.04,
+     4.65
+    ],
+    "covered": false,
+    "error": -0.82
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "corr38",
+   "observed": 3.957,
+   "v0": {
+    "pred": [
+     3.64,
+     4.08,
+     4.47
+    ],
+    "covered": true,
+    "error": -0.12
+   },
+   "v1": {
+    "pred": [
+     3.61,
+     4.07,
+     4.48
+    ],
+    "covered": true,
+    "error": -0.11
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.61,
+     4.04,
+     4.48
+    ],
+    "covered": true,
+    "error": -0.08
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.57,
+     4.04,
+     4.52
+    ],
+    "covered": true,
+    "error": -0.08
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.52,
+     4.04,
+     4.52
+    ],
+    "covered": true,
+    "error": -0.08
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "corr38",
+   "observed": 3.522,
+   "v0": {
+    "pred": [
+     3.46,
+     4.23,
+     4.92
+    ],
+    "covered": true,
+    "error": -0.71
+   },
+   "v1": {
+    "pred": [
+     3.48,
+     4.22,
+     4.92
+    ],
+    "covered": true,
+    "error": -0.7
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.48,
+     4.22,
+     4.91
+    ],
+    "covered": true,
+    "error": -0.7
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.43,
+     4.22,
+     4.91
+    ],
+    "covered": true,
+    "error": -0.7
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.43,
+     4.22,
+     4.91
+    ],
+    "covered": true,
+    "error": -0.7
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "fa",
+   "cell": "corrO",
+   "observed": 4.087,
+   "v0": {
+    "pred": [
+     3.88,
+     4.34,
+     4.91
+    ],
+    "covered": true,
+    "error": -0.25
+   },
+   "v1": {
+    "pred": [
+     3.83,
+     4.48,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.39
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.78,
+     4.48,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.39
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.78,
+     4.48,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.39
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.74,
+     4.48,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.39
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "fa",
+   "cell": "corrO",
+   "observed": 3.565,
+   "v0": {
+    "pred": [
+     3.63,
+     4.31,
+     5.14
+    ],
+    "covered": false,
+    "error": -0.74
+   },
+   "v1": {
+    "pred": [
+     3.61,
+     4.48,
+     5.0
+    ],
+    "covered": false,
+    "error": -0.92
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.61,
+     4.48,
+     5.0
+    ],
+    "covered": false,
+    "error": -0.92
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.61,
+     4.48,
+     5.0
+    ],
+    "covered": false,
+    "error": -0.92
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.61,
+     4.48,
+     5.0
+    ],
+    "covered": false,
+    "error": -0.92
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "c38",
+   "observed": 3.833,
+   "v0": {
+    "pred": [
+     4.08,
+     4.26,
+     4.45
+    ],
+    "covered": false,
+    "error": -0.43
+   },
+   "v1": {
+    "pred": [
+     4.05,
+     4.27,
+     4.47
+    ],
+    "covered": false,
+    "error": -0.44
+   },
+   "v1-one-judge": {
+    "pred": [
+     4.03,
+     4.27,
+     4.5
+    ],
+    "covered": false,
+    "error": -0.44
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.93,
+     4.27,
+     4.6
+    ],
+    "covered": false,
+    "error": -0.44
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.93,
+     4.27,
+     4.57
+    ],
+    "covered": false,
+    "error": -0.44
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "c38",
+   "observed": 3.767,
+   "v0": {
+    "pred": [
+     3.83,
+     4.39,
+     4.98
+    ],
+    "covered": false,
+    "error": -0.62
+   },
+   "v1": {
+    "pred": [
+     3.8,
+     4.43,
+     4.97
+    ],
+    "covered": false,
+    "error": -0.66
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.77,
+     4.43,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.66
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.73,
+     4.4,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.63
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.73,
+     4.4,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.63
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "pro",
+   "observed": 4.167,
+   "v0": {
+    "pred": [
+     4.04,
+     4.42,
+     4.84
+    ],
+    "covered": true,
+    "error": -0.25
+   },
+   "v1": {
+    "pred": [
+     3.98,
+     4.42,
+     4.8
+    ],
+    "covered": true,
+    "error": -0.25
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.93,
+     4.43,
+     4.8
+    ],
+    "covered": true,
+    "error": -0.26
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.87,
+     4.43,
+     4.83
+    ],
+    "covered": true,
+    "error": -0.26
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.87,
+     4.43,
+     4.83
+    ],
+    "covered": true,
+    "error": -0.26
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "pro",
+   "observed": 4.467,
+   "v0": {
+    "pred": [
+     3.83,
+     4.6,
+     5.23
+    ],
+    "covered": true,
+    "error": -0.13
+   },
+   "v1": {
+    "pred": [
+     3.83,
+     4.57,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.1
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.8,
+     4.57,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.1
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.77,
+     4.57,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.1
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.77,
+     4.57,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.1
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "opus",
+   "observed": 4.767,
+   "v0": {
+    "pred": [
+     4.3,
+     4.59,
+     4.85
+    ],
+    "covered": true,
+    "error": 0.18
+   },
+   "v1": {
+    "pred": [
+     4.57,
+     4.77,
+     4.9
+    ],
+    "covered": true,
+    "error": -0.0
+   },
+   "v1-one-judge": {
+    "pred": [
+     4.57,
+     4.77,
+     4.93
+    ],
+    "covered": true,
+    "error": -0.0
+   },
+   "v1-packet-round": {
+    "pred": [
+     4.5,
+     4.77,
+     4.93
+    ],
+    "covered": true,
+    "error": -0.0
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     4.5,
+     4.77,
+     4.93
+    ],
+    "covered": true,
+    "error": -0.0
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "opus",
+   "observed": 4.667,
+   "v0": {
+    "pred": [
+     3.8,
+     4.43,
+     5.13
+    ],
+    "covered": true,
+    "error": 0.24
+   },
+   "v1": {
+    "pred": [
+     3.97,
+     4.63,
+     5.0
+    ],
+    "covered": true,
+    "error": 0.04
+   },
+   "v1-one-judge": {
+    "pred": [
+     4.03,
+     4.63,
+     5.0
+    ],
+    "covered": true,
+    "error": 0.04
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.93,
+     4.63,
+     5.0
+    ],
+    "covered": true,
+    "error": 0.04
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.97,
+     4.63,
+     5.0
+    ],
+    "covered": true,
+    "error": 0.04
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "stored",
+   "observed": 3.533,
+   "v0": {
+    "pred": [
+     3.73,
+     3.93,
+     4.1
+    ],
+    "covered": false,
+    "error": -0.4
+   },
+   "v1": {
+    "pred": [
+     3.67,
+     3.88,
+     4.08
+    ],
+    "covered": false,
+    "error": -0.35
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.6,
+     3.9,
+     4.13
+    ],
+    "covered": false,
+    "error": -0.37
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.53,
+     3.9,
+     4.23
+    ],
+    "covered": true,
+    "error": -0.37
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.53,
+     3.87,
+     4.27
+    ],
+    "covered": true,
+    "error": -0.34
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "stored",
+   "observed": 3.2,
+   "v0": {
+    "pred": [
+     3.45,
+     4.05,
+     4.67
+    ],
+    "covered": false,
+    "error": -0.85
+   },
+   "v1": {
+    "pred": [
+     3.4,
+     4.03,
+     4.63
+    ],
+    "covered": false,
+    "error": -0.83
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.4,
+     4.03,
+     4.63
+    ],
+    "covered": false,
+    "error": -0.83
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.33,
+     4.03,
+     4.67
+    ],
+    "covered": false,
+    "error": -0.83
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.33,
+     4.0,
+     4.67
+    ],
+    "covered": false,
+    "error": -0.8
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "corr38",
+   "observed": 3.733,
+   "v0": {
+    "pred": [
+     3.65,
+     4.11,
+     4.47
+    ],
+    "covered": true,
+    "error": -0.38
+   },
+   "v1": {
+    "pred": [
+     3.63,
+     4.1,
+     4.53
+    ],
+    "covered": true,
+    "error": -0.37
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.63,
+     4.1,
+     4.53
+    ],
+    "covered": true,
+    "error": -0.37
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.57,
+     4.1,
+     4.6
+    ],
+    "covered": true,
+    "error": -0.37
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.57,
+     4.1,
+     4.6
+    ],
+    "covered": true,
+    "error": -0.37
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "corr38",
+   "observed": 3.433,
+   "v0": {
+    "pred": [
+     3.41,
+     4.25,
+     4.95
+    ],
+    "covered": true,
+    "error": -0.82
+   },
+   "v1": {
+    "pred": [
+     3.5,
+     4.23,
+     4.97
+    ],
+    "covered": false,
+    "error": -0.8
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.5,
+     4.23,
+     4.97
+    ],
+    "covered": false,
+    "error": -0.8
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.43,
+     4.23,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.8
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.43,
+     4.23,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.8
+   }
+  },
+  {
+   "kind": "opus_judge",
+   "language": "sa",
+   "cell": "corrO",
+   "observed": 4.133,
+   "v0": {
+    "pred": [
+     3.84,
+     4.27,
+     4.82
+    ],
+    "covered": true,
+    "error": -0.14
+   },
+   "v1": {
+    "pred": [
+     3.8,
+     4.45,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.32
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.77,
+     4.47,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.73,
+     4.47,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.34
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.73,
+     4.43,
+     4.97
+    ],
+    "covered": true,
+    "error": -0.3
+   }
+  },
+  {
+   "kind": "pro_judge",
+   "language": "sa",
+   "cell": "corrO",
+   "observed": 3.833,
+   "v0": {
+    "pred": [
+     3.56,
+     4.26,
+     5.01
+    ],
+    "covered": true,
+    "error": -0.43
+   },
+   "v1": {
+    "pred": [
+     3.57,
+     4.43,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.6
+   },
+   "v1-one-judge": {
+    "pred": [
+     3.6,
+     4.43,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.6
+   },
+   "v1-packet-round": {
+    "pred": [
+     3.57,
+     4.43,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.6
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     3.57,
+     4.43,
+     5.0
+    ],
+    "covered": true,
+    "error": -0.6
+   }
+  }
+ ],
+ "contrasts": [
+  {
+   "kind": "contrast",
+   "language": "fa",
+   "cell": "pro - c38",
+   "observed": 0.131,
+   "v0": {
+    "pred": [
+     -0.41,
+     -0.02,
+     0.35
+    ],
+    "covered": true,
+    "error": 0.15,
+    "p_ahead": 0.45
+   },
+   "v1": {
+    "pred": [
+     -0.5,
+     -0.02,
+     0.39
+    ],
+    "covered": true,
+    "error": 0.15,
+    "p_ahead": 0.46
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.52,
+     -0.04,
+     0.39
+    ],
+    "covered": true,
+    "error": 0.17,
+    "p_ahead": 0.45
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.52,
+     -0.04,
+     0.39
+    ],
+    "covered": true,
+    "error": 0.17,
+    "p_ahead": 0.45
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.52,
+     -0.04,
+     0.39
+    ],
+    "covered": true,
+    "error": 0.17,
+    "p_ahead": 0.45
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "fa",
+   "cell": "opus - c38",
+   "observed": 0.826,
+   "v0": {
+    "pred": [
+     0.15,
+     0.48,
+     0.83
+    ],
+    "covered": true,
+    "error": 0.35,
+    "p_ahead": 0.99
+   },
+   "v1": {
+    "pred": [
+     0.41,
+     0.63,
+     0.83
+    ],
+    "covered": true,
+    "error": 0.2,
+    "p_ahead": 1.0
+   },
+   "v1-one-judge": {
+    "pred": [
+     0.35,
+     0.61,
+     0.87
+    ],
+    "covered": true,
+    "error": 0.22,
+    "p_ahead": 1.0
+   },
+   "v1-packet-round": {
+    "pred": [
+     0.35,
+     0.61,
+     0.91
+    ],
+    "covered": true,
+    "error": 0.22,
+    "p_ahead": 1.0
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     0.35,
+     0.61,
+     0.91
+    ],
+    "covered": true,
+    "error": 0.22,
+    "p_ahead": 1.0
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "fa",
+   "cell": "corr38 - c38",
+   "observed": 0.131,
+   "v0": {
+    "pred": [
+     -0.52,
+     -0.15,
+     0.24
+    ],
+    "covered": true,
+    "error": 0.28,
+    "p_ahead": 0.3
+   },
+   "v1": {
+    "pred": [
+     -0.54,
+     -0.13,
+     0.26
+    ],
+    "covered": true,
+    "error": 0.26,
+    "p_ahead": 0.3
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.57,
+     -0.13,
+     0.3
+    ],
+    "covered": true,
+    "error": 0.26,
+    "p_ahead": 0.32
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.61,
+     -0.13,
+     0.3
+    ],
+    "covered": true,
+    "error": 0.26,
+    "p_ahead": 0.32
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.61,
+     -0.13,
+     0.3
+    ],
+    "covered": true,
+    "error": 0.26,
+    "p_ahead": 0.32
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "fa",
+   "cell": "corrO - c38",
+   "observed": 0.261,
+   "v0": {
+    "pred": [
+     -0.3,
+     0.15,
+     0.74
+    ],
+    "covered": true,
+    "error": 0.11,
+    "p_ahead": 0.67
+   },
+   "v1": {
+    "pred": [
+     -0.37,
+     0.28,
+     0.8
+    ],
+    "covered": true,
+    "error": -0.02,
+    "p_ahead": 0.76
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.39,
+     0.3,
+     0.83
+    ],
+    "covered": true,
+    "error": -0.04,
+    "p_ahead": 0.75
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.39,
+     0.26,
+     0.83
+    ],
+    "covered": true,
+    "error": 0.0,
+    "p_ahead": 0.75
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.39,
+     0.3,
+     0.83
+    ],
+    "covered": true,
+    "error": -0.04,
+    "p_ahead": 0.75
+   }
+  },
+  {
+   "kind": "self_pref",
+   "language": "fa",
+   "cell": "(opus - c38) Opus judge minus Pro judge",
+   "observed": 0.174,
+   "v0": {
+    "pred": [
+     -0.15,
+     0.32,
+     0.81
+    ],
+    "covered": true,
+    "error": -0.15
+   },
+   "v1": {
+    "pred": [
+     -0.15,
+     0.33,
+     0.76
+    ],
+    "covered": true,
+    "error": -0.16
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.17,
+     0.35,
+     0.78
+    ],
+    "covered": true,
+    "error": -0.18
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.18,
+     0.35,
+     0.83
+    ],
+    "covered": true,
+    "error": -0.18
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.22,
+     0.35,
+     0.78
+    ],
+    "covered": true,
+    "error": -0.18
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "sa",
+   "cell": "pro - c38",
+   "observed": 0.334,
+   "v0": {
+    "pred": [
+     -0.19,
+     0.17,
+     0.57
+    ],
+    "covered": true,
+    "error": 0.16,
+    "p_ahead": 0.77
+   },
+   "v1": {
+    "pred": [
+     -0.27,
+     0.15,
+     0.52
+    ],
+    "covered": true,
+    "error": 0.18,
+    "p_ahead": 0.75
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.3,
+     0.17,
+     0.53
+    ],
+    "covered": true,
+    "error": 0.16,
+    "p_ahead": 0.73
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.3,
+     0.17,
+     0.57
+    ],
+    "covered": true,
+    "error": 0.16,
+    "p_ahead": 0.72
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.33,
+     0.17,
+     0.53
+    ],
+    "covered": true,
+    "error": 0.16,
+    "p_ahead": 0.72
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "sa",
+   "cell": "opus - c38",
+   "observed": 0.934,
+   "v0": {
+    "pred": [
+     0.06,
+     0.32,
+     0.58
+    ],
+    "covered": false,
+    "error": 0.61,
+    "p_ahead": 0.98
+   },
+   "v1": {
+    "pred": [
+     0.28,
+     0.5,
+     0.72
+    ],
+    "covered": false,
+    "error": 0.43,
+    "p_ahead": 1.0
+   },
+   "v1-one-judge": {
+    "pred": [
+     0.23,
+     0.5,
+     0.77
+    ],
+    "covered": false,
+    "error": 0.43,
+    "p_ahead": 1.0
+   },
+   "v1-packet-round": {
+    "pred": [
+     0.23,
+     0.47,
+     0.77
+    ],
+    "covered": false,
+    "error": 0.46,
+    "p_ahead": 1.0
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     0.23,
+     0.5,
+     0.77
+    ],
+    "covered": false,
+    "error": 0.43,
+    "p_ahead": 1.0
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "sa",
+   "cell": "corr38 - c38",
+   "observed": -0.1,
+   "v0": {
+    "pred": [
+     -0.61,
+     -0.15,
+     0.17
+    ],
+    "covered": true,
+    "error": 0.05,
+    "p_ahead": 0.25
+   },
+   "v1": {
+    "pred": [
+     -0.6,
+     -0.17,
+     0.23
+    ],
+    "covered": true,
+    "error": 0.07,
+    "p_ahead": 0.25
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.6,
+     -0.17,
+     0.3
+    ],
+    "covered": true,
+    "error": 0.07,
+    "p_ahead": 0.28
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.6,
+     -0.17,
+     0.27
+    ],
+    "covered": true,
+    "error": 0.07,
+    "p_ahead": 0.28
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.63,
+     -0.17,
+     0.3
+    ],
+    "covered": true,
+    "error": 0.07,
+    "p_ahead": 0.28
+   }
+  },
+  {
+   "kind": "contrast",
+   "language": "sa",
+   "cell": "corrO - c38",
+   "observed": 0.3,
+   "v0": {
+    "pred": [
+     -0.41,
+     -0.01,
+     0.56
+    ],
+    "covered": true,
+    "error": 0.31,
+    "p_ahead": 0.49
+   },
+   "v1": {
+    "pred": [
+     -0.47,
+     0.15,
+     0.7
+    ],
+    "covered": true,
+    "error": 0.15,
+    "p_ahead": 0.66
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.5,
+     0.17,
+     0.73
+    ],
+    "covered": true,
+    "error": 0.13,
+    "p_ahead": 0.66
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.47,
+     0.17,
+     0.73
+    ],
+    "covered": true,
+    "error": 0.13,
+    "p_ahead": 0.66
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.5,
+     0.17,
+     0.73
+    ],
+    "covered": true,
+    "error": 0.13,
+    "p_ahead": 0.65
+   }
+  },
+  {
+   "kind": "self_pref",
+   "language": "sa",
+   "cell": "(opus - c38) Opus judge minus Pro judge",
+   "observed": 0.034,
+   "v0": {
+    "pred": [
+     -0.14,
+     0.31,
+     0.73
+    ],
+    "covered": true,
+    "error": -0.28
+   },
+   "v1": {
+    "pred": [
+     -0.13,
+     0.32,
+     0.73
+    ],
+    "covered": true,
+    "error": -0.29
+   },
+   "v1-one-judge": {
+    "pred": [
+     -0.17,
+     0.33,
+     0.73
+    ],
+    "covered": true,
+    "error": -0.3
+   },
+   "v1-packet-round": {
+    "pred": [
+     -0.2,
+     0.3,
+     0.77
+    ],
+    "covered": true,
+    "error": -0.27
+   },
+   "v1-unknown-instrument": {
+    "pred": [
+     -0.17,
+     0.3,
+     0.77
+    ],
+    "covered": true,
+    "error": -0.27
+   }
+  }
+ ],
+ "summary": {
+  "opus_judge": {
+   "v0": "8/12",
+   "v1": "9/12",
+   "v1-one-judge": "9/12",
+   "v1-packet-round": "11/12",
+   "v1-unknown-instrument": "10/12"
+  },
+  "pro_judge": {
+   "v0": "7/12",
+   "v1": "6/12",
+   "v1-one-judge": "7/12",
+   "v1-packet-round": "8/12",
+   "v1-unknown-instrument": "8/12"
+  },
+  "contrast": {
+   "v0": "7/8",
+   "v1": "7/8",
+   "v1-one-judge": "7/8",
+   "v1-packet-round": "7/8",
+   "v1-unknown-instrument": "7/8"
+  },
+  "self_pref": {
+   "v0": "2/2",
+   "v1": "2/2",
+   "v1-one-judge": "2/2",
+   "v1-packet-round": "2/2",
+   "v1-unknown-instrument": "2/2"
+  }
+ }
+}

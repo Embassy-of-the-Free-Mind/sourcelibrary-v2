@@ -175,6 +175,28 @@ out['fit'] = dict(
 out['loo_diagnostics'] = dict(
     fits=len(loo), divergences_total=sum(r['diagnostics']['divergences'] for r in loo),
     max_rhat=max(r['diagnostics']['max_rhat'] for r in loo), min_ess=min(r['diagnostics']['min_ess'] for r in loo))
+# ---------- 4. what a round effect cannot absorb: in-sample residual by round x language ----------
+# observed mean minus fitted expected mean, per (round, language). A round effect moves every language of a
+# round together; a residual that differs by language inside one round is an instrument x language shift.
+e = {k: np.asarray(v) for k, v in ix.enc(df).items()}
+fam_of_m, sf_of_l, _ = (np.asarray(x) for x in ix.maps())
+sub = slice(None, None, 5)
+eta = (post['lang'][sub][:, e['l']] + post['mod'][sub][:, e['m']] + post['route'][sub][:, e['r']]
+       + post['fs'][sub][:, fam_of_m[e['m']], sf_of_l[e['l']]] + post['fl'][sub][:, fam_of_m[e['m']], e['l']]
+       + post['ml'][sub][:, e['m'], e['l']] + post['wk'][sub][:, e['w']] + post['pg'][sub][:, e['p']]
+       + post['rd'][sub][:, e['k']] + post['judge'][sub][:, e['j']])
+df['fitted'] = expected_score(eta, post['cut'][sub]).mean(0)
+res = []
+for (rnd, lang), g in df.groupby(['round', 'language']):
+    if g.pkey.nunique() >= 5:
+        res.append(dict(round=rnd, iclass=ix.class_of_round[rnd], language=lang, pages=int(g.pkey.nunique()),
+                        n=len(g), residual=round(float((g.score - g.fitted).mean()), 3)))
+out['round_language_residual'] = dict(
+    rows=res,
+    sd_by_class={c: round(float(np.std([r['residual'] for r in res if r['iclass'] == c])), 3) for c in ix.classes},
+    max_abs_by_class={c: max((abs(r['residual']), r['round'], r['language']) for r in res if r['iclass'] == c)
+                      for c in ix.classes})
+
 json.dump(out, open(a.out, 'w'), indent=1)
 
 # ---------- markdown ----------
@@ -192,3 +214,5 @@ print(json.dumps({k: out['loo'][k] for k in ['all', 'by_basis', 'by_instrument_c
                                              'v0', 'max_pred']}, indent=1))
 print(json.dumps(out['fit'], indent=1)[:5000])
 print(json.dumps(out['loo_diagnostics']))
+print(json.dumps({k: out['round_language_residual'][k] for k in ('sd_by_class', 'max_abs_by_class')}))
+print([(r['round'], r['language'], r['residual']) for r in out['round_language_residual']['rows'] if r['iclass'] != 'panel'])

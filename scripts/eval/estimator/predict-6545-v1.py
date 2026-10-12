@@ -28,6 +28,9 @@ ap.add_argument('--fit', required=True)
 ap.add_argument('--table', required=True)
 ap.add_argument('--langs', default='fa,sa')
 ap.add_argument('--out', required=True)
+# the pin used the defaults; the other values are for the sensitivity runs in score-6545.py's report
+ap.add_argument('--iclass', default='panel', help='instrument class of the new round')
+ap.add_argument('--opus-reads', type=int, default=2, help='Opus judges per page')
 a = ap.parse_args()
 
 ix, post, diag = pickle.load(open(a.fit, 'rb'))
@@ -56,7 +59,7 @@ for lang in a.langs.split(','):
     n = len(pages)
     prod_model = sub[sub.arm == 'PROD'].model.mode()[0]
     # one fresh panel-class round per judge; the page and work effects are the fitted ones (same pages)
-    opus_round, pro_round = Panel(ix, post, rng, iclass='panel'), Panel(ix, post, rng, iclass='panel')
+    opus_round, pro_round = Panel(ix, post, rng, iclass=a.iclass), Panel(ix, post, rng, iclass=a.iclass)
     base = Panel(ix, post, rng)                       # no round: for moving a prior stated in points
 
     def shifted(cell, points):
@@ -91,7 +94,7 @@ for lang in a.langs.split(','):
         corrO='pooled: correction arms were never fitted; prior only')
     cells, obs_o, obs_p = {}, {}, {}
     for k, v in lat.items():
-        obs_o[k] = opus_round.simulate_mean(opus_round.eta_rows(v, pages, works), reads=2)
+        obs_o[k] = opus_round.simulate_mean(opus_round.eta_rows(v, pages, works), reads=a.opus_reads)
         shift = off_pro + (s_g if fam[k] == 'g' else -s_c if fam[k] == 'c' else 0.5 * (s_g - s_c))
         obs_p[k] = pro_round.simulate_mean(pro_round.eta_rows(shifted(v, shift), pages, works), reads=1)
         cells[k] = dict(opus_judge=q(obs_o[k]), pro_judge=q(obs_p[k]), basis=label[k])
@@ -106,7 +109,7 @@ for lang in a.langs.split(','):
     report[lang] = dict(panel_pages=n, stored_engine=prod_model, cells=cells)
     assert all(c[j][2] <= 5 and c[j][0] >= 1 for c in cells.values() for j in ('opus_judge', 'pro_judge'))
 
-report['_model'] = dict(version='v1', likelihood='ordered logistic', instrument_class='panel',
+report['_model'] = dict(version='v1', likelihood='ordered logistic', instrument_class=a.iclass,
                         diagnostics={k: v for k, v in diag.items() if k != 'hyper'})
 json.dump(report, open(a.out, 'w'), indent=1)
 print(json.dumps(report, indent=1))

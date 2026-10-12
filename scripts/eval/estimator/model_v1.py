@@ -146,10 +146,12 @@ def model_fn(ix, m, l, r, w, p, k, j, u1, y1, u2, y2):
     e1 = eta[u1]
     ll1 = jnp.log(jnp.clip(cdf(y1 + 1, e1) - cdf(y1, e1), 1e-12, 1.0))
     # mean of two judges (canon-ref): P(sum = a + b) is the self-convolution of the category probabilities
-    pr = probs_of(eta[u2], cut)
-    conv = jnp.stack([sum(pr[:, a] * pr[:, t - a] for a in range(5) if 0 <= t - a < 5) for t in range(9)], 1)
-    ll2 = jnp.log(jnp.clip(jnp.take_along_axis(conv, y2[:, None], 1)[:, 0], 1e-12, 1.0))
-    numpyro.factor('loglik', ll1.sum() + ll2.sum())
+    ll2 = 0.0
+    if u2.shape[0]:          # no canon-ref rows in this fit (it is the held-out experiment): nothing to add
+        pr = probs_of(eta[u2], cut)
+        conv = jnp.stack([sum(pr[:, a] * pr[:, t - a] for a in range(5) if 0 <= t - a < 5) for t in range(9)], 1)
+        ll2 = jnp.log(jnp.clip(jnp.take_along_axis(conv, y2[:, None], 1)[:, 0], 1e-12, 1.0)).sum()
+    numpyro.factor('loglik', ll1.sum() + ll2)
 
 
 SITES = ['tau_sf', 'tau_lang', 'tau_fam', 'tau_model', 'tau_fs', 'tau_fl', 'tau_ml', 'tau_w', 'tau_p',
