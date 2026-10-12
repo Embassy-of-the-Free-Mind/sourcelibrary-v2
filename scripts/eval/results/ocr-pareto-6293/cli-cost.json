@@ -16,14 +16,14 @@
  },
  "charts": {
   "latin": {
-   "pages_both_text": 141,
-   "r_out": 0.948,
-   "usd_per_1k_batch": 3.324
+   "pages_both_text": 147,
+   "r_out": 1.021,
+   "usd_per_1k_batch": 3.472
   },
   "english": {
-   "pages_both_text": 42,
-   "r_out": 0.989,
-   "usd_per_1k_batch": 3.408
+   "pages_both_text": 43,
+   "r_out": 1.05,
+   "usd_per_1k_batch": 3.531
   },
   "latin-script-other": {
    "pages_both_text": 18,
@@ -55,5 +55,10 @@
    "r_out": 0.26,
    "usd_per_1k_batch": 1.929
   }
- }
+ },
+ "charts_reread_6523": [
+  "latin",
+  "english"
+ ],
+ "note_6523": "latin and english re-computed after the #6523 re-read (sentinels + tool gate) of their 191 pages; \"all\" is the #6293 figure over every chart, unchanged"
 }

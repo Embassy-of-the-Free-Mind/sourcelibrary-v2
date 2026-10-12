@@ -54,3 +54,12 @@ describe('agy-tool-gate.py', () => {
     expect(gate({ name: 'read_url', args: {} }).decision).toBe('deny');
   });
 });
+
+describe('run-cli-arm.py', () => {
+  it('asks for the markers in the same words as cli-chatter.mjs', async () => {
+    // @ts-expect-error plain .mjs helper
+    const { OCR_SENTINEL_INSTRUCTION } = await import('../../scripts/lib/cli-chatter.mjs');
+    const py = (await import('node:fs')).readFileSync('scripts/eval/run-cli-arm.py', 'utf8');
+    expect(py).toContain(`SENTINEL_INSTRUCTION = '${OCR_SENTINEL_INSTRUCTION}'`);
+  });
+});

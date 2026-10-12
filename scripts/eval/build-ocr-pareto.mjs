@@ -272,13 +272,16 @@ const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.
 const CAP_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'capped-set.json');
 const SEL_6293 = fs.existsSync(SEL_6293_FILE) ? JSON.parse(fs.readFileSync(SEL_6293_FILE, 'utf8')) : null;
 const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSync(CAP_6293_FILE, 'utf8')).uids) : null;
+// #6523 (scripts/eval/experiments/2026-10-12-cli-ocr-route-fix-6523.md): how the Latin / Early English CLI pages were read
+const ROUTE_6523 = 'reply asked for between <<<BEGIN>>>/<<<END>>> markers; a PreToolUse hook allows view_file on the page image and refuses every other tool with a reason; plan mode; up to 2 attempts, on an empty reply only (1 of 573 reads retried); print timeout 300 s (120 s for the 3.8 low held-out pages)';
 for (const t of CLI_6293_TIERS) {
   if (!fs.existsSync(t.costFile)) continue;
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
     charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota',
-    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`,
+    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`
+      + ((cc.charts_reread_6523 || []).includes(chart) ? `; these pages re-read with the #6523 route config (${ROUTE_6523})` : ''),
     source: path.relative(REPO, t.costFile) });
 }
 const cli6293Coverage = {}, cli6293Subsample = {};
@@ -410,6 +413,9 @@ const CAPTION = {
   'syriac-print': 'Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.',
   syriac: 'Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.',
   'chinese-manuscript': 'On many pages the reference runs longer than the page, so every engine carries some unavoidable error.',
+  // #6523: the route config of the 3.7 / 3.8 command-line reads on these two charts, and the scoring change
+  latin: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
+  english: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
 };
 
 const charts = [], noChart = [], primarySets = {}, chartRows = {};
