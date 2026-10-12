@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
       contains: contains || undefined,
       facets: Object.fromEntries(facets.map((f) => [f, facetResult(vocab[f], contains, limit)])),
     }, {
-      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400' },
     });
   } catch (error) {
     console.error('Gallery facets error:', error);
