@@ -8,7 +8,8 @@
    "related": "adjacent concept or cross-tradition analogue — graph only, never expansion"
   },
   "caveat": "single CJK characters (占, 卜, 德, 夢) need word-boundary handling on the search side; never substring-match them",
-  "body": "2026-09-13: 41 body-practice concepts (theme \"body\") from 8 Sonnet judges over scripts/graph/body-vocab-gather.mjs output; finalised by body-vocab-finalize.mjs (floor 0.7)"
+  "body": "2026-09-13: 41 body-practice concepts (theme \"body\") from 8 Sonnet judges over scripts/graph/body-vocab-gather.mjs output; finalised by body-vocab-finalize.mjs (floor 0.7)",
+  "daimon": "2026-10-12: one concept (theme \"spirits\") for #4251 — candidates from the issue's worked node, each checked against live keyword-search rows by one Claude judge; .claude/docs/concept-aliases/add-daimon-2026-10-12.mjs"
  },
  "concepts": [
   {
@@ -10865,6 +10866,267 @@
      "term": "hakafot",
      "confidence": 0.35,
      "reason": "a Jewish ritual of circumambulation ('ceremonial circuits') — an adjacent body practice (circling) but from an unrelated tradition, not a rendering of haka."
+    }
+   ],
+   "rejected": 18
+  },
+  {
+   "concept": "daimōn",
+   "theme": "spirits",
+   "tradition": "Greek",
+   "variants": [
+    {
+     "term": "daimon",
+     "confidence": 0.95,
+     "reason": "Transliteration of the headword: Proclus on the Alcibiades, \"the daimon is the logos ... it moves everything\"."
+    },
+    {
+     "term": "daimones",
+     "confidence": 0.9,
+     "reason": "Plural: Proclus, \"to make daimones parts of the souls\"; scholia gloss \"daimones divine beings\"."
+    },
+    {
+     "term": "δαίμων",
+     "confidence": 0.95,
+     "reason": "The Greek headword: Plotinus, \"spirit daimon original: δαίμων ... guiding principle or guardian\"."
+    },
+    {
+     "term": "δαίμονες",
+     "confidence": 0.9,
+     "reason": "Greek plural: Maximus scholia, \"demons original: δαίμονες (daimones)\"."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "daemon",
+     "confidence": 0.95,
+     "reason": "Latin spelling of the same word: Ficino \"DE ANIMA ET DAEMONE\", Iamblichus \"the daemon of Socrates\".",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "daemons",
+     "confidence": 0.95,
+     "reason": "Plural of daemon: Iamblichus, \"the third are the daemons who distribute the actions of divine souls\".",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "daemones",
+     "confidence": 0.9,
+     "reason": "Latin plural, same passages as daemons (Iamblichus, Pimander with Proclus).",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "dæmon",
+     "confidence": 0.9,
+     "reason": "Ligature spelling: Asclepius volume, \"a divine dæmon spirit or guardian entity\".",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "demon",
+     "confidence": 0.75,
+     "reason": "The later English rendering of the same word: Psellus \"On Demons\" in Ficino's Iamblichus; many translators keep daemon to avoid its malevolent sense, so label the hit."
+    },
+    {
+     "term": "demons",
+     "confidence": 0.75,
+     "reason": "Plural rendering: Maximus scholia translate δαίμονες as \"demons\"; Aquinas De malo on demons and bodies."
+    },
+    {
+     "term": "démon",
+     "confidence": 0.7,
+     "reason": "French rendering: Calmet \"Demon (Démon)\"; French Ficino \"Chasse-Démon Fuga Daemonum\"."
+    },
+    {
+     "term": "guardian spirit",
+     "confidence": 0.75,
+     "reason": "A translator's English for daemon in its tutelary sense: Ficino \"DE ANIMA ET DAEMONE\" rendered \"ON THE SOUL AND THE GUARDIAN SPIRIT\"; Agrippa III.22."
+    }
+   ],
+   "related": [
+    {
+     "term": "daimonion",
+     "confidence": 0.8,
+     "reason": "The neuter/diminutive, a distinct word: Socrates' divine sign in Plato, \"demon\" in the Gospels. Adjacent, not the same term."
+    },
+    {
+     "term": "δαιμόνιον",
+     "confidence": 0.8,
+     "reason": "Greek of daimonion: Gospel lectionary \"the demon original: δαιμόνιον\"; Plotinus \"guiding spirit\"."
+    },
+    {
+     "term": "daemonium",
+     "confidence": 0.75,
+     "reason": "Latin daimonion: Fernel, \"a certain divine thing which he calls a daemonium\" (Cicero on Socrates)."
+    },
+    {
+     "term": "demonio",
+     "confidence": 0.6,
+     "reason": "Latin ablative / Romance form of daemonium: Albertus, \"male a demonio vexatur\"."
+    },
+    {
+     "term": "genius",
+     "confidence": 0.8,
+     "reason": "Beaumont: \"What the Latins called a Genius, the Greeks called a Daemon\"; Perotti \"Genius tutelar spirit\". Kept out of expansion: the word also means talent (Reuchlin, \"genio talent\")."
+    },
+    {
+     "term": "genii",
+     "confidence": 0.8,
+     "reason": "Plural, unambiguous: Boissard after Servius, \"when we are born, we obtain two Genii\"."
+    },
+    {
+     "term": "genie",
+     "confidence": 0.7,
+     "reason": "French genius: French Agrippa, \"the same genie\", glossed personal guardian spirit."
+    },
+    {
+     "term": "cacodaemon",
+     "confidence": 0.85,
+     "reason": "The evil daemon specifically: Crater Hermetis \"cacodaemon evil spirit\"; Agrippa \"Cacodaemones evil spirits\"."
+    },
+    {
+     "term": "kakodaimon",
+     "confidence": 0.8,
+     "reason": "Greek of cacodaemon: Plotinus, \"the evil daimon, or more kakodaimon\"."
+    },
+    {
+     "term": "evil spirit",
+     "confidence": 0.7,
+     "reason": "English for cacodaemon in Agrippa; also the Babylonian utukku limnu (Thompson). A subclass, and a broad phrase."
+    },
+    {
+     "term": "familiar spirit",
+     "confidence": 0.65,
+     "reason": "Beaumont \"Familiar Spirits\"; Proclus \"familiar daemons\". The early-modern personal spirit, adjacent."
+    },
+    {
+     "term": "tutelary spirit",
+     "confidence": 0.6,
+     "reason": "Used for the daemon (Wilkins) and for Chinese altar spirits (Legge's Mencius): two senses under one phrase."
+    },
+    {
+     "term": "shedim",
+     "confidence": 0.85,
+     "reason": "Hebrew analogue: Maimonides, \"ke-shedim like demons\"; Agrippa on demons and the Anakim."
+    },
+    {
+     "term": "se'irim",
+     "confidence": 0.8,
+     "reason": "Hebrew analogue: Gikatilla, \"the Se'irim demons or goat-spirits\"; Zohar citing Isaiah 13:21."
+    },
+    {
+     "term": "jinn",
+     "confidence": 0.9,
+     "reason": "Arabic analogue: Lane, chapter \"Demonology. Angels and Jinn\"; Hughes on Iblis among the Jinn."
+    },
+    {
+     "term": "jinni",
+     "confidence": 0.85,
+     "reason": "Singular of jinn: Conway, \"Jinni ... supernatural spirits in Islamic mythology\"."
+    },
+    {
+     "term": "djinn",
+     "confidence": 0.8,
+     "reason": "French/German spelling of jinn: Wellhausen \"Spirits and Specters\"; de Sacy on the Druze."
+    },
+    {
+     "term": "جن",
+     "confidence": 0.65,
+     "reason": "Arabic script jinn (al-Jahiz, \"بالجن والشياطين\"); the same letters also spell \"went mad\" in a legal text, so not for expansion."
+    },
+    {
+     "term": "shaitan",
+     "confidence": 0.75,
+     "reason": "Qur'an: \"a rebellious Satan (Shaitan)\"; a Sanskrit-Persian glossary pairs bhūta-preta-piśāca with Shaitan."
+    },
+    {
+     "term": "shayatin",
+     "confidence": 0.85,
+     "reason": "al-Jahiz: \"the jinn hidden beings, ghilan ogres/demons, and shayatin devils\"."
+    },
+    {
+     "term": "ifrit",
+     "confidence": 0.8,
+     "reason": "Ikhwan al-Safa: \"Efrit, a powerful class of demons among the Genii\"; Thousand and One Nights."
+    },
+    {
+     "term": "daeva",
+     "confidence": 0.9,
+     "reason": "Avestan analogue: Burnouf, \"the stem daeva demon or false god\"; the Vendidad is the law against them."
+    },
+    {
+     "term": "daevas",
+     "confidence": 0.9,
+     "reason": "Plural: \"the Daevas, which in Zoroastrianism are malevolent spirits or false gods\" (Kleuker's Zend-Avesta)."
+    },
+    {
+     "term": "druj",
+     "confidence": 0.85,
+     "reason": "Justi's Bundahishn: \"Druj, name of a class of evil spirits ranking below the Dews\"; Darmesteter's Druj Nasu."
+    },
+    {
+     "term": "mara",
+     "confidence": 0.7,
+     "reason": "Buddhist analogue: Drukpa Kunley, \"it is a mara. Do not think that a mara must be something with staring eyes\". The string also matches unrelated Latin and Greek."
+    },
+    {
+     "term": "bdud",
+     "confidence": 0.9,
+     "reason": "Tibetan for māra: Khamtrul \"lha yi bu'i bdud\"; Derge Tengyur \"the mara of the aggregates original: phung po'i bdud\"."
+    },
+    {
+     "term": "lha 'dre",
+     "confidence": 0.75,
+     "reason": "Tibetan gods-and-demons: Drukpa Kunley, \"local gods and spirits lha dre cause harm\"."
+    },
+    {
+     "term": "preta",
+     "confidence": 0.75,
+     "reason": "Lotus Sutra: \"a yaksha nature spirit, a rakshasa, a preta hungry ghost\"; a class of the dead rather than a daimon."
+    },
+    {
+     "term": "asura",
+     "confidence": 0.8,
+     "reason": "Shurangama Sutra on the classes of Asura; Burnouf on Zend ahura against Sanskrit asura \"spirit/demon\"."
+    },
+    {
+     "term": "rakshasa",
+     "confidence": 0.85,
+     "reason": "Mahabharata: \"a wicked-natured Rakshasa, who wishes to devour your flesh\"; Ramayana."
+    },
+    {
+     "term": "yaksha",
+     "confidence": 0.8,
+     "reason": "Kathasaritsagara: \"the Yaksha nature-spirit named Dhumaketu\"; guardians of treasure and sacred sites."
+    },
+    {
+     "term": "pishacha",
+     "confidence": 0.85,
+     "reason": "Kleuker: \"pishacha, evil spirits\"; Derge Kangyur rite to summon \"all the Pishachas\"."
+    },
+    {
+     "term": "bhuta",
+     "confidence": 0.7,
+     "reason": "Wilkins: \"Bhuta ... attendants of Siva, Bhuta Natha Lord of Spirits\"; in Abhinavagupta the same word is \"element\"."
+    },
+    {
+     "term": "鬼神",
+     "confidence": 0.85,
+     "reason": "Chinese ghosts-and-gods: Wubei zhi, \"supernatural manifestations original: 鬼神 (guǐshén)\"; Lotus Sutra 天龍鬼神."
+    },
+    {
+     "term": "餓鬼",
+     "confidence": 0.75,
+     "reason": "Chinese for preta: Lotus Sutra \"hungry ghosts\"; Chinŏnjip \"Mantra for Summoning Hungry Ghosts\"."
+    },
+    {
+     "term": "귀신",
+     "confidence": 0.7,
+     "reason": "Korean gwisin: Kukcho kosa, a face \"like a ghost (귀신)\". One vernacular row only."
+    },
+    {
+     "term": "oni",
+     "confidence": 0.65,
+     "reason": "Thunberg: \"Oni is the name for a Devil\". Three letters, so it also matches inside unrelated words."
     }
    ],
    "rejected": 18
