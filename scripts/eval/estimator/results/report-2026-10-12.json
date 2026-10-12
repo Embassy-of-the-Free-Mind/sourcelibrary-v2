@@ -1,0 +1,2388 @@
+{
+ "loo": {
+  "per_experiment": [
+   {
+    "experiment": "5606-ab",
+    "pages": 57,
+    "cells": 6,
+    "coverage90": 0.5,
+    "mae": 0.22,
+    "mean_width": 0.42,
+    "unseen_model_cells": 0,
+    "best_match": "3/3",
+    "best_regret": 0.0,
+    "contrast_pairs": 3,
+    "contrast_coverage90": 1.0,
+    "contrast_mae": 0.092
+   },
+   {
+    "experiment": "6182-claude-tib",
+    "pages": 171,
+    "cells": 4,
+    "coverage90": 1.0,
+    "mae": 0.207,
+    "mean_width": 0.79,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 6,
+    "contrast_coverage90": 0.5,
+    "contrast_mae": 0.282
+   },
+   {
+    "experiment": "6182-claude-xl",
+    "pages": 365,
+    "cells": 58,
+    "coverage90": 0.83,
+    "mae": 0.239,
+    "mean_width": 0.79,
+    "unseen_model_cells": 0,
+    "best_match": "12/14",
+    "best_regret": 0.012,
+    "contrast_pairs": 92,
+    "contrast_coverage90": 0.76,
+    "contrast_mae": 0.352
+   },
+   {
+    "experiment": "6182-tib",
+    "pages": 171,
+    "cells": 10,
+    "coverage90": 1.0,
+    "mae": 0.115,
+    "mean_width": 0.78,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 45,
+    "contrast_coverage90": 0.98,
+    "contrast_mae": 0.154
+   },
+   {
+    "experiment": "6182-xl",
+    "pages": 365,
+    "cells": 138,
+    "coverage90": 0.96,
+    "mae": 0.139,
+    "mean_width": 0.7,
+    "unseen_model_cells": 0,
+    "best_match": "11/14",
+    "best_regret": 0.032,
+    "contrast_pairs": 614,
+    "contrast_coverage90": 0.94,
+    "contrast_mae": 0.155
+   },
+   {
+    "experiment": "6331-canon-ref",
+    "pages": 138,
+    "cells": 8,
+    "coverage90": 0.88,
+    "mae": 0.111,
+    "mean_width": 0.65,
+    "unseen_model_cells": 0,
+    "best_match": "3/3",
+    "best_regret": 0.0,
+    "contrast_pairs": 7,
+    "contrast_coverage90": 0.71,
+    "contrast_mae": 0.197
+   },
+   {
+    "experiment": "6331-cli38-tib113",
+    "pages": 113,
+    "cells": 3,
+    "coverage90": 1.0,
+    "mae": 0.012,
+    "mean_width": 0.44,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 3,
+    "contrast_coverage90": 1.0,
+    "contrast_mae": 0.02
+   },
+   {
+    "experiment": "6331-cli38-tib58",
+    "pages": 58,
+    "cells": 3,
+    "coverage90": 1.0,
+    "mae": 0.105,
+    "mean_width": 0.46,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 3,
+    "contrast_coverage90": 0.33,
+    "contrast_mae": 0.116
+   },
+   {
+    "experiment": "6331-cli38-xl",
+    "pages": 365,
+    "cells": 44,
+    "coverage90": 0.98,
+    "mae": 0.077,
+    "mean_width": 0.53,
+    "unseen_model_cells": 0,
+    "best_match": "4/14",
+    "best_regret": 0.047,
+    "contrast_pairs": 48,
+    "contrast_coverage90": 0.88,
+    "contrast_mae": 0.107
+   },
+   {
+    "experiment": "xlref-t1",
+    "pages": 71,
+    "cells": 5,
+    "coverage90": 1.0,
+    "mae": 0.081,
+    "mean_width": 0.43,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 10,
+    "contrast_coverage90": 1.0,
+    "contrast_mae": 0.085
+   },
+   {
+    "experiment": "xlref-t2",
+    "pages": 75,
+    "cells": 5,
+    "coverage90": 0.8,
+    "mae": 0.164,
+    "mean_width": 0.51,
+    "unseen_model_cells": 0,
+    "best_match": "1/1",
+    "best_regret": 0.0,
+    "contrast_pairs": 10,
+    "contrast_coverage90": 0.5,
+    "contrast_mae": 0.225
+   },
+   {
+    "experiment": "xlref-t3",
+    "pages": 59,
+    "cells": 17,
+    "coverage90": 0.88,
+    "mae": 0.119,
+    "mean_width": 0.58,
+    "unseen_model_cells": 0,
+    "best_match": "5/5",
+    "best_regret": 0.0,
+    "contrast_pairs": 23,
+    "contrast_coverage90": 0.7,
+    "contrast_mae": 0.192
+   },
+   {
+    "experiment": "xlref-t4",
+    "pages": 52,
+    "cells": 16,
+    "coverage90": 0.38,
+    "mae": 0.326,
+    "mean_width": 0.58,
+    "unseen_model_cells": 0,
+    "best_match": "4/4",
+    "best_regret": 0.0,
+    "contrast_pairs": 27,
+    "contrast_coverage90": 0.67,
+    "contrast_mae": 0.312
+   },
+   {
+    "experiment": "xlref-t5",
+    "pages": 68,
+    "cells": 13,
+    "coverage90": 1.0,
+    "mae": 0.147,
+    "mean_width": 0.54,
+    "unseen_model_cells": 0,
+    "best_match": "3/3",
+    "best_regret": 0.0,
+    "contrast_pairs": 22,
+    "contrast_coverage90": 0.68,
+    "contrast_mae": 0.179
+   }
+  ],
+  "cells": 330,
+  "coverage90": 0.897,
+  "coverage50": 0.558,
+  "mae": 0.156,
+  "mae_seen": 0.156,
+  "mae_unseen": null,
+  "coverage_unseen": null,
+  "best_match": "51/66",
+  "best_regret_mean": 0.019,
+  "misses": [
+   {
+    "language": "pi",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 16,
+    "n": 32,
+    "observed": 4.5,
+    "pred": 4.221,
+    "lo": 4.011,
+    "hi": 4.462,
+    "model_seen": true
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 21,
+    "n": 42,
+    "observed": 4.095,
+    "pred": 3.822,
+    "lo": 3.606,
+    "hi": 4.02,
+    "model_seen": true
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "pages": 21,
+    "n": 84,
+    "observed": 3.738,
+    "pred": 3.353,
+    "lo": 3.163,
+    "hi": 3.555,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 24,
+    "n": 48,
+    "observed": 3.521,
+    "pred": 2.795,
+    "lo": 2.242,
+    "hi": 3.372,
+    "model_seen": true
+   },
+   {
+    "language": "de",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 22,
+    "n": 44,
+    "observed": 4.295,
+    "pred": 3.074,
+    "lo": 2.476,
+    "hi": 3.728,
+    "model_seen": true
+   },
+   {
+    "language": "de",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "pages": 18,
+    "n": 36,
+    "observed": 4.556,
+    "pred": 4.292,
+    "lo": 4.051,
+    "hi": 4.533,
+    "model_seen": true
+   },
+   {
+    "language": "es",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 6,
+    "n": 12,
+    "observed": 4.083,
+    "pred": 3.105,
+    "lo": 2.471,
+    "hi": 3.778,
+    "model_seen": true
+   },
+   {
+    "language": "fr",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 14,
+    "n": 28,
+    "observed": 4.571,
+    "pred": 3.197,
+    "lo": 2.613,
+    "hi": 3.879,
+    "model_seen": true
+   },
+   {
+    "language": "grc",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 69,
+    "n": 137,
+    "observed": 3.124,
+    "pred": 2.432,
+    "lo": 1.898,
+    "hi": 3.065,
+    "model_seen": true
+   },
+   {
+    "language": "it",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 10,
+    "n": 20,
+    "observed": 3.95,
+    "pred": 2.956,
+    "lo": 2.304,
+    "hi": 3.59,
+    "model_seen": true
+   },
+   {
+    "language": "la",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 71,
+    "n": 142,
+    "observed": 3.852,
+    "pred": 2.943,
+    "lo": 2.346,
+    "hi": 3.567,
+    "model_seen": true
+   },
+   {
+    "language": "nl",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "pages": 7,
+    "n": 14,
+    "observed": 3.714,
+    "pred": 2.822,
+    "lo": 2.151,
+    "hi": 3.476,
+    "model_seen": true
+   },
+   {
+    "language": "nl",
+    "model": "gemini-3.8-flash",
+    "route": "api",
+    "pages": 7,
+    "n": 14,
+    "observed": 4.929,
+    "pred": 4.569,
+    "lo": 4.288,
+    "hi": 4.901,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 24,
+    "n": 64,
+    "observed": 4.297,
+    "pred": 4.043,
+    "lo": 3.824,
+    "hi": 4.27,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "pages": 24,
+    "n": 32,
+    "observed": 4.156,
+    "pred": 3.725,
+    "lo": 3.5,
+    "hi": 3.999,
+    "model_seen": true
+   },
+   {
+    "language": "arc",
+    "model": "gemini-3.5-flash-lite",
+    "route": "api",
+    "pages": 5,
+    "n": 5,
+    "observed": 2.2,
+    "pred": 2.893,
+    "lo": 2.485,
+    "hi": 3.375,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 23,
+    "n": 60,
+    "observed": 4.0,
+    "pred": 3.737,
+    "lo": 3.503,
+    "hi": 3.956,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3-flash-preview",
+    "route": "stored",
+    "pages": 23,
+    "n": 30,
+    "observed": 4.1,
+    "pred": 3.748,
+    "lo": 3.494,
+    "hi": 3.96,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3.7-flash",
+    "route": "api",
+    "pages": 23,
+    "n": 30,
+    "observed": 4.267,
+    "pred": 3.909,
+    "lo": 3.582,
+    "hi": 4.212,
+    "model_seen": true
+   },
+   {
+    "language": "pi",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 35,
+    "n": 35,
+    "observed": 4.0,
+    "pred": 4.341,
+    "lo": 4.103,
+    "hi": 4.618,
+    "model_seen": true
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3.8-flash",
+    "route": "api",
+    "pages": 30,
+    "n": 60,
+    "observed": 4.367,
+    "pred": 4.112,
+    "lo": 3.875,
+    "hi": 4.34,
+    "model_seen": true
+   },
+   {
+    "language": "grc",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "pages": 10,
+    "n": 10,
+    "observed": 4.0,
+    "pred": 4.418,
+    "lo": 4.043,
+    "hi": 4.817,
+    "model_seen": true
+   },
+   {
+    "language": "es",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "pages": 6,
+    "n": 12,
+    "observed": 4.083,
+    "pred": 4.457,
+    "lo": 4.154,
+    "hi": 4.793,
+    "model_seen": true
+   },
+   {
+    "language": "fr",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "pages": 14,
+    "n": 56,
+    "observed": 4.875,
+    "pred": 4.614,
+    "lo": 4.374,
+    "hi": 4.84,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 20,
+    "n": 62,
+    "observed": 3.726,
+    "pred": 4.168,
+    "lo": 3.937,
+    "hi": 4.388,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3-flash-preview",
+    "route": "stored",
+    "pages": 7,
+    "n": 14,
+    "observed": 3.643,
+    "pred": 4.15,
+    "lo": 3.871,
+    "hi": 4.441,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "pages": 20,
+    "n": 120,
+    "observed": 3.6,
+    "pred": 3.97,
+    "lo": 3.73,
+    "hi": 4.22,
+    "model_seen": true
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "pages": 13,
+    "n": 26,
+    "observed": 3.423,
+    "pred": 4.019,
+    "lo": 3.754,
+    "hi": 4.334,
+    "model_seen": true
+   },
+   {
+    "language": "arc",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 5,
+    "n": 16,
+    "observed": 2.875,
+    "pred": 3.16,
+    "lo": 2.901,
+    "hi": 3.435,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "pages": 5,
+    "n": 10,
+    "observed": 5.0,
+    "pred": 4.393,
+    "lo": 3.996,
+    "hi": 4.772,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 12,
+    "n": 44,
+    "observed": 3.318,
+    "pred": 3.829,
+    "lo": 3.588,
+    "hi": 4.061,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "pages": 12,
+    "n": 72,
+    "observed": 2.778,
+    "pred": 3.213,
+    "lo": 2.946,
+    "hi": 3.463,
+    "model_seen": true
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "pages": 8,
+    "n": 16,
+    "observed": 2.688,
+    "pred": 3.247,
+    "lo": 2.905,
+    "hi": 3.569,
+    "model_seen": true
+   },
+   {
+    "language": "he",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "pages": 15,
+    "n": 66,
+    "observed": 3.636,
+    "pred": 4.022,
+    "lo": 3.802,
+    "hi": 4.2,
+    "model_seen": true
+   }
+  ],
+  "contrast": {
+   "pairs": 913,
+   "coverage90": 0.887,
+   "mae": 0.179,
+   "sign_right_when_obs_gap_ge_0_1": "666/730"
+  },
+  "best_model_level_miss": "5/66",
+  "best_model_level_misses": [
+   {
+    "language": "arc",
+    "pred_best": "gemini-3.8-flash|api",
+    "obs_best": "claude-sonnet-5.5|api",
+    "match": false,
+    "obs_gap_best_vs_predbest": 0.1
+   },
+   {
+    "language": "fr",
+    "pred_best": "gemini-3.8-flash|api",
+    "obs_best": "gemini-3.1-flash-lite|stored",
+    "match": false,
+    "obs_gap_best_vs_predbest": 0.068
+   },
+   {
+    "language": "es",
+    "pred_best": "gemini-3.8-flash|api",
+    "obs_best": "gemini-3.1-pro-t128|api",
+    "match": false,
+    "obs_gap_best_vs_predbest": 0.111
+   },
+   {
+    "language": "it",
+    "pred_best": "gemini-3.8-flash|api",
+    "obs_best": "gemini-3.7-flash|api",
+    "match": false,
+    "obs_gap_best_vs_predbest": 0.166
+   },
+   {
+    "language": "he",
+    "pred_best": "claude-opus-5.5|api",
+    "obs_best": "gemini-3.8-flash|api",
+    "match": false,
+    "obs_gap_best_vs_predbest": 0.171
+   }
+  ]
+ },
+ "what_we_know": [
+  {
+   "language": "ar",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.79,
+   "lo": 3.62,
+   "hi": 3.98,
+   "p_best": 0.0,
+   "pages": 27,
+   "works": 27,
+   "basis": "measured"
+  },
+  {
+   "language": "ar",
+   "engine": "3 Flash",
+   "est": 4.07,
+   "lo": 3.9,
+   "hi": 4.25,
+   "p_best": 0.0,
+   "pages": 27,
+   "works": 27,
+   "basis": "measured"
+  },
+  {
+   "language": "ar",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.4,
+   "lo": 4.24,
+   "hi": 4.59,
+   "p_best": 0.87,
+   "pages": 24,
+   "works": 24,
+   "basis": "measured"
+  },
+  {
+   "language": "ar",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.3,
+   "lo": 4.11,
+   "hi": 4.5,
+   "p_best": 0.12,
+   "pages": 24,
+   "works": 24,
+   "basis": "measured"
+  },
+  {
+   "language": "ar",
+   "engine": "Sonnet 5.5",
+   "est": 4.23,
+   "lo": 4.05,
+   "hi": 4.44,
+   "p_best": 0.01,
+   "pages": 24,
+   "works": 24,
+   "basis": "measured"
+  },
+  {
+   "language": "ar",
+   "engine": "Opus (ceiling)",
+   "est": 5.03,
+   "lo": 4.8,
+   "hi": 5.23,
+   "p_best": null,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.18,
+   "lo": 2.79,
+   "hi": 3.58,
+   "p_best": 0.0,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "3 Flash",
+   "est": 3.53,
+   "lo": 3.12,
+   "hi": 3.88,
+   "p_best": 0.0,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "3.8 Flash (CLI)",
+   "est": 3.79,
+   "lo": 3.39,
+   "hi": 4.15,
+   "p_best": 0.64,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 3.72,
+   "lo": 3.28,
+   "hi": 4.11,
+   "p_best": 0.28,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "Sonnet 5.5",
+   "est": 3.63,
+   "lo": 3.24,
+   "hi": 4.05,
+   "p_best": 0.09,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "arc",
+   "engine": "Opus (ceiling)",
+   "est": 4.45,
+   "lo": 4.02,
+   "hi": 4.88,
+   "p_best": null,
+   "pages": 1,
+   "works": 1,
+   "basis": "pooled"
+  },
+  {
+   "language": "bo",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.96,
+   "lo": 3.74,
+   "hi": 4.18,
+   "p_best": 0.0,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "bo",
+   "engine": "3 Flash",
+   "est": 4.43,
+   "lo": 4.23,
+   "hi": 4.66,
+   "p_best": 0.0,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "bo",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.73,
+   "lo": 4.51,
+   "hi": 4.94,
+   "p_best": 1.0,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "bo",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.52,
+   "lo": 4.3,
+   "hi": 4.74,
+   "p_best": 0.0,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "bo",
+   "engine": "Sonnet 5.5",
+   "est": 4.35,
+   "lo": 4.11,
+   "hi": 4.57,
+   "p_best": 0.0,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "bo",
+   "engine": "Opus (ceiling)",
+   "est": 4.74,
+   "lo": 4.52,
+   "hi": 4.95,
+   "p_best": null,
+   "pages": 171,
+   "works": 10,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.31,
+   "lo": 4.13,
+   "hi": 4.47,
+   "p_best": 0.0,
+   "pages": 22,
+   "works": 22,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "3 Flash",
+   "est": 4.67,
+   "lo": 4.46,
+   "hi": 4.85,
+   "p_best": 0.0,
+   "pages": 22,
+   "works": 22,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.88,
+   "lo": 4.7,
+   "hi": 5.06,
+   "p_best": 0.75,
+   "pages": 22,
+   "works": 22,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.82,
+   "lo": 4.61,
+   "hi": 5.04,
+   "p_best": 0.25,
+   "pages": 22,
+   "works": 22,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "Sonnet 5.5",
+   "est": 4.67,
+   "lo": 4.46,
+   "hi": 4.86,
+   "p_best": 0.0,
+   "pages": 22,
+   "works": 22,
+   "basis": "measured"
+  },
+  {
+   "language": "de",
+   "engine": "Opus (ceiling)",
+   "est": 4.96,
+   "lo": 4.73,
+   "hi": 5.16,
+   "p_best": null,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.32,
+   "lo": 3.98,
+   "hi": 4.68,
+   "p_best": 0.0,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "3 Flash",
+   "est": 4.51,
+   "lo": 4.15,
+   "hi": 4.85,
+   "p_best": 0.0,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.79,
+   "lo": 4.43,
+   "hi": 5.09,
+   "p_best": 0.61,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.75,
+   "lo": 4.37,
+   "hi": 5.12,
+   "p_best": 0.39,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "Sonnet 5.5",
+   "est": 4.54,
+   "lo": 4.17,
+   "hi": 4.91,
+   "p_best": 0.0,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "es",
+   "engine": "Opus (ceiling)",
+   "est": 4.88,
+   "lo": 4.54,
+   "hi": 5.25,
+   "p_best": null,
+   "pages": 2,
+   "works": 2,
+   "basis": "pooled"
+  },
+  {
+   "language": "fa",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.15,
+   "lo": 2.95,
+   "hi": 3.32,
+   "p_best": 0.0,
+   "pages": 24,
+   "works": 24,
+   "basis": "measured"
+  },
+  {
+   "language": "fa",
+   "engine": "3 Flash",
+   "est": 3.84,
+   "lo": 3.67,
+   "hi": 4.02,
+   "p_best": 0.0,
+   "pages": 24,
+   "works": 24,
+   "basis": "measured"
+  },
+  {
+   "language": "fa",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.13,
+   "lo": 3.94,
+   "hi": 4.33,
+   "p_best": 0.94,
+   "pages": 23,
+   "works": 23,
+   "basis": "measured"
+  },
+  {
+   "language": "fa",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 3.99,
+   "lo": 3.76,
+   "hi": 4.24,
+   "p_best": 0.06,
+   "pages": 23,
+   "works": 23,
+   "basis": "measured"
+  },
+  {
+   "language": "fa",
+   "engine": "Sonnet 5.5",
+   "est": 3.7,
+   "lo": 3.49,
+   "hi": 3.89,
+   "p_best": 0.0,
+   "pages": 23,
+   "works": 23,
+   "basis": "measured"
+  },
+  {
+   "language": "fa",
+   "engine": "Opus (ceiling)",
+   "est": 5.12,
+   "lo": 4.85,
+   "hi": 5.4,
+   "p_best": null,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.67,
+   "lo": 4.46,
+   "hi": 4.88,
+   "p_best": 0.0,
+   "pages": 14,
+   "works": 14,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "3 Flash",
+   "est": 4.64,
+   "lo": 4.44,
+   "hi": 4.84,
+   "p_best": 0.0,
+   "pages": 14,
+   "works": 14,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.84,
+   "lo": 4.63,
+   "hi": 5.05,
+   "p_best": 0.59,
+   "pages": 14,
+   "works": 14,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.81,
+   "lo": 4.59,
+   "hi": 5.06,
+   "p_best": 0.41,
+   "pages": 14,
+   "works": 14,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "Sonnet 5.5",
+   "est": 4.65,
+   "lo": 4.4,
+   "hi": 4.85,
+   "p_best": 0.0,
+   "pages": 14,
+   "works": 14,
+   "basis": "thin"
+  },
+  {
+   "language": "fr",
+   "engine": "Opus (ceiling)",
+   "est": 5.04,
+   "lo": 4.79,
+   "hi": 5.28,
+   "p_best": null,
+   "pages": 5,
+   "works": 5,
+   "basis": "thin"
+  },
+  {
+   "language": "grc",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.54,
+   "lo": 3.42,
+   "hi": 3.7,
+   "p_best": 0.0,
+   "pages": 75,
+   "works": 75,
+   "basis": "measured"
+  },
+  {
+   "language": "grc",
+   "engine": "3 Flash",
+   "est": 3.86,
+   "lo": 3.73,
+   "hi": 4.01,
+   "p_best": 0.0,
+   "pages": 75,
+   "works": 75,
+   "basis": "measured"
+  },
+  {
+   "language": "grc",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.21,
+   "lo": 4.09,
+   "hi": 4.36,
+   "p_best": 0.96,
+   "pages": 69,
+   "works": 69,
+   "basis": "measured"
+  },
+  {
+   "language": "grc",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.1,
+   "lo": 3.95,
+   "hi": 4.26,
+   "p_best": 0.04,
+   "pages": 69,
+   "works": 69,
+   "basis": "measured"
+  },
+  {
+   "language": "grc",
+   "engine": "Sonnet 5.5",
+   "est": 4.02,
+   "lo": 3.89,
+   "hi": 4.17,
+   "p_best": 0.0,
+   "pages": 69,
+   "works": 69,
+   "basis": "measured"
+  },
+  {
+   "language": "grc",
+   "engine": "Opus (ceiling)",
+   "est": 4.33,
+   "lo": 4.15,
+   "hi": 4.53,
+   "p_best": null,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "he",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.9,
+   "lo": 3.72,
+   "hi": 4.09,
+   "p_best": 0.0,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "he",
+   "engine": "3 Flash",
+   "est": 4.26,
+   "lo": 4.1,
+   "hi": 4.43,
+   "p_best": 0.0,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "he",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.52,
+   "lo": 4.35,
+   "hi": 4.69,
+   "p_best": 0.97,
+   "pages": 29,
+   "works": 29,
+   "basis": "measured"
+  },
+  {
+   "language": "he",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.36,
+   "lo": 4.16,
+   "hi": 4.57,
+   "p_best": 0.03,
+   "pages": 29,
+   "works": 29,
+   "basis": "measured"
+  },
+  {
+   "language": "he",
+   "engine": "Sonnet 5.5",
+   "est": 4.22,
+   "lo": 4.03,
+   "hi": 4.4,
+   "p_best": 0.0,
+   "pages": 29,
+   "works": 29,
+   "basis": "measured"
+  },
+  {
+   "language": "he",
+   "engine": "Opus (ceiling)",
+   "est": 5.02,
+   "lo": 4.79,
+   "hi": 5.24,
+   "p_best": null,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.18,
+   "lo": 3.9,
+   "hi": 4.46,
+   "p_best": 0.0,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "3 Flash",
+   "est": 4.42,
+   "lo": 4.13,
+   "hi": 4.72,
+   "p_best": 0.0,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.72,
+   "lo": 4.43,
+   "hi": 5.01,
+   "p_best": 0.63,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.69,
+   "lo": 4.39,
+   "hi": 5.03,
+   "p_best": 0.37,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "Sonnet 5.5",
+   "est": 4.47,
+   "lo": 4.18,
+   "hi": 4.76,
+   "p_best": 0.0,
+   "pages": 10,
+   "works": 10,
+   "basis": "thin"
+  },
+  {
+   "language": "it",
+   "engine": "Opus (ceiling)",
+   "est": 4.91,
+   "lo": 4.61,
+   "hi": 5.19,
+   "p_best": null,
+   "pages": 4,
+   "works": 4,
+   "basis": "pooled"
+  },
+  {
+   "language": "la",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.13,
+   "lo": 4.0,
+   "hi": 4.27,
+   "p_best": 0.0,
+   "pages": 71,
+   "works": 71,
+   "basis": "measured"
+  },
+  {
+   "language": "la",
+   "engine": "3 Flash",
+   "est": 4.33,
+   "lo": 4.19,
+   "hi": 4.46,
+   "p_best": 0.0,
+   "pages": 71,
+   "works": 71,
+   "basis": "measured"
+  },
+  {
+   "language": "la",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.63,
+   "lo": 4.51,
+   "hi": 4.77,
+   "p_best": 0.96,
+   "pages": 71,
+   "works": 71,
+   "basis": "measured"
+  },
+  {
+   "language": "la",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.54,
+   "lo": 4.39,
+   "hi": 4.69,
+   "p_best": 0.04,
+   "pages": 71,
+   "works": 71,
+   "basis": "measured"
+  },
+  {
+   "language": "la",
+   "engine": "Sonnet 5.5",
+   "est": 4.47,
+   "lo": 4.33,
+   "hi": 4.62,
+   "p_best": 0.0,
+   "pages": 71,
+   "works": 71,
+   "basis": "measured"
+  },
+  {
+   "language": "la",
+   "engine": "Opus (ceiling)",
+   "est": 4.85,
+   "lo": 4.69,
+   "hi": 5.0,
+   "p_best": null,
+   "pages": 20,
+   "works": 20,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.6,
+   "lo": 3.47,
+   "hi": 3.74,
+   "p_best": 0.0,
+   "pages": 25,
+   "works": 25,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "3 Flash",
+   "est": 4.09,
+   "lo": 3.96,
+   "hi": 4.23,
+   "p_best": 0.0,
+   "pages": 25,
+   "works": 25,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.36,
+   "lo": 4.23,
+   "hi": 4.49,
+   "p_best": 0.6,
+   "pages": 100,
+   "works": 100,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.33,
+   "lo": 4.12,
+   "hi": 4.53,
+   "p_best": 0.39,
+   "pages": 25,
+   "works": 25,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "Sonnet 5.5",
+   "est": 4.23,
+   "lo": 4.1,
+   "hi": 4.37,
+   "p_best": 0.0,
+   "pages": 100,
+   "works": 100,
+   "basis": "measured"
+  },
+  {
+   "language": "lzh",
+   "engine": "Opus (ceiling)",
+   "est": 4.99,
+   "lo": 4.79,
+   "hi": 5.19,
+   "p_best": null,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "Flash-Lite 3.1",
+   "est": 4.14,
+   "lo": 3.78,
+   "hi": 4.42,
+   "p_best": 0.0,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "3 Flash",
+   "est": 4.34,
+   "lo": 3.99,
+   "hi": 4.62,
+   "p_best": 0.0,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.7,
+   "lo": 4.34,
+   "hi": 4.98,
+   "p_best": 0.9,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.56,
+   "lo": 4.14,
+   "hi": 4.85,
+   "p_best": 0.1,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "Sonnet 5.5",
+   "est": 4.26,
+   "lo": 3.91,
+   "hi": 4.58,
+   "p_best": 0.0,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  },
+  {
+   "language": "nl",
+   "engine": "Opus (ceiling)",
+   "est": 4.79,
+   "lo": 4.4,
+   "hi": 5.14,
+   "p_best": null,
+   "pages": 2,
+   "works": 2,
+   "basis": "pooled"
+  },
+  {
+   "language": "pi",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.8,
+   "lo": 3.63,
+   "hi": 3.95,
+   "p_best": 0.0,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "pi",
+   "engine": "3 Flash",
+   "est": 4.22,
+   "lo": 4.07,
+   "hi": 4.37,
+   "p_best": 0.0,
+   "pages": 65,
+   "works": 31,
+   "basis": "measured"
+  },
+  {
+   "language": "pi",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.6,
+   "lo": 4.42,
+   "hi": 4.74,
+   "p_best": 0.14,
+   "pages": 70,
+   "works": 34,
+   "basis": "measured"
+  },
+  {
+   "language": "pi",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.68,
+   "lo": 4.47,
+   "hi": 4.87,
+   "p_best": 0.85,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "pi",
+   "engine": "Sonnet 5.5",
+   "est": 4.51,
+   "lo": 4.35,
+   "hi": 4.68,
+   "p_best": 0.01,
+   "pages": 70,
+   "works": 34,
+   "basis": "measured"
+  },
+  {
+   "language": "pi",
+   "engine": "Opus (ceiling)",
+   "est": 5.04,
+   "lo": 4.82,
+   "hi": 5.28,
+   "p_best": null,
+   "pages": 6,
+   "works": 6,
+   "basis": "thin"
+  },
+  {
+   "language": "sa",
+   "engine": "Flash-Lite 3.1",
+   "est": 3.49,
+   "lo": 3.36,
+   "hi": 3.64,
+   "p_best": 0.0,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "sa",
+   "engine": "3 Flash",
+   "est": 3.91,
+   "lo": 3.77,
+   "hi": 4.07,
+   "p_best": 0.0,
+   "pages": 42,
+   "works": 42,
+   "basis": "measured"
+  },
+  {
+   "language": "sa",
+   "engine": "3.8 Flash (CLI)",
+   "est": 4.27,
+   "lo": 4.14,
+   "hi": 4.42,
+   "p_best": 0.23,
+   "pages": 53,
+   "works": 53,
+   "basis": "measured"
+  },
+  {
+   "language": "sa",
+   "engine": "3.1 Pro (thinking 128)",
+   "est": 4.32,
+   "lo": 4.15,
+   "hi": 4.51,
+   "p_best": 0.77,
+   "pages": 30,
+   "works": 30,
+   "basis": "measured"
+  },
+  {
+   "language": "sa",
+   "engine": "Sonnet 5.5",
+   "est": 4.01,
+   "lo": 3.85,
+   "hi": 4.17,
+   "p_best": 0.0,
+   "pages": 53,
+   "works": 53,
+   "basis": "measured"
+  },
+  {
+   "language": "sa",
+   "engine": "Opus (ceiling)",
+   "est": 4.64,
+   "lo": 4.45,
+   "hi": 4.88,
+   "p_best": null,
+   "pages": 7,
+   "works": 7,
+   "basis": "thin"
+  }
+ ],
+ "contrasts": [
+  {
+   "language": "ar",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.61,
+   "lo": 0.52,
+   "hi": 0.7
+  },
+  {
+   "language": "ar",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.34,
+   "lo": 0.26,
+   "hi": 0.41
+  },
+  {
+   "language": "ar",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.117,
+   "delta": -0.11,
+   "lo": -0.25,
+   "hi": 0.04
+  },
+  {
+   "language": "ar",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.013,
+   "delta": -0.17,
+   "lo": -0.31,
+   "hi": -0.05
+  },
+  {
+   "language": "arc",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.59,
+   "lo": 0.44,
+   "hi": 0.76
+  },
+  {
+   "language": "arc",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.26,
+   "lo": 0.14,
+   "hi": 0.36
+  },
+  {
+   "language": "arc",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.305,
+   "delta": -0.07,
+   "lo": -0.28,
+   "hi": 0.16
+  },
+  {
+   "language": "arc",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.125,
+   "delta": -0.16,
+   "lo": -0.33,
+   "hi": 0.07
+  },
+  {
+   "language": "bo",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.77,
+   "lo": 0.7,
+   "hi": 0.84
+  },
+  {
+   "language": "bo",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.29,
+   "lo": 0.25,
+   "hi": 0.33
+  },
+  {
+   "language": "bo",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.21,
+   "lo": -0.28,
+   "hi": -0.15
+  },
+  {
+   "language": "bo",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.39,
+   "lo": -0.44,
+   "hi": -0.32
+  },
+  {
+   "language": "de",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.57,
+   "lo": 0.49,
+   "hi": 0.66
+  },
+  {
+   "language": "de",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 0.998,
+   "delta": 0.21,
+   "lo": 0.12,
+   "hi": 0.31
+  },
+  {
+   "language": "de",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.247,
+   "delta": -0.06,
+   "lo": -0.21,
+   "hi": 0.08
+  },
+  {
+   "language": "de",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.003,
+   "delta": -0.21,
+   "lo": -0.33,
+   "hi": -0.09
+  },
+  {
+   "language": "es",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.45,
+   "lo": 0.34,
+   "hi": 0.56
+  },
+  {
+   "language": "es",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.26,
+   "lo": 0.14,
+   "hi": 0.38
+  },
+  {
+   "language": "es",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.388,
+   "delta": -0.04,
+   "lo": -0.21,
+   "hi": 0.16
+  },
+  {
+   "language": "es",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.007,
+   "delta": -0.25,
+   "lo": -0.44,
+   "hi": -0.06
+  },
+  {
+   "language": "fa",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.99,
+   "lo": 0.89,
+   "hi": 1.1
+  },
+  {
+   "language": "fa",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.29,
+   "lo": 0.22,
+   "hi": 0.36
+  },
+  {
+   "language": "fa",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.058,
+   "delta": -0.14,
+   "lo": -0.3,
+   "hi": 0.0
+  },
+  {
+   "language": "fa",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.44,
+   "lo": -0.59,
+   "hi": -0.3
+  },
+  {
+   "language": "fr",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 0.985,
+   "delta": 0.18,
+   "lo": 0.06,
+   "hi": 0.29
+  },
+  {
+   "language": "fr",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 0.998,
+   "delta": 0.21,
+   "lo": 0.1,
+   "hi": 0.31
+  },
+  {
+   "language": "fr",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.407,
+   "delta": -0.03,
+   "lo": -0.22,
+   "hi": 0.12
+  },
+  {
+   "language": "fr",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.007,
+   "delta": -0.22,
+   "lo": -0.35,
+   "hi": -0.07
+  },
+  {
+   "language": "grc",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.67,
+   "lo": 0.59,
+   "hi": 0.75
+  },
+  {
+   "language": "grc",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.36,
+   "lo": 0.3,
+   "hi": 0.41
+  },
+  {
+   "language": "grc",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.037,
+   "delta": -0.11,
+   "lo": -0.21,
+   "hi": -0.01
+  },
+  {
+   "language": "grc",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.19,
+   "lo": -0.28,
+   "hi": -0.1
+  },
+  {
+   "language": "he",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.62,
+   "lo": 0.51,
+   "hi": 0.73
+  },
+  {
+   "language": "he",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.26,
+   "lo": 0.18,
+   "hi": 0.33
+  },
+  {
+   "language": "he",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.025,
+   "delta": -0.16,
+   "lo": -0.3,
+   "hi": -0.03
+  },
+  {
+   "language": "he",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.3,
+   "lo": -0.42,
+   "hi": -0.18
+  },
+  {
+   "language": "it",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.54,
+   "lo": 0.43,
+   "hi": 0.66
+  },
+  {
+   "language": "it",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.29,
+   "lo": 0.17,
+   "hi": 0.39
+  },
+  {
+   "language": "it",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.372,
+   "delta": -0.04,
+   "lo": -0.2,
+   "hi": 0.15
+  },
+  {
+   "language": "it",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.26,
+   "lo": -0.41,
+   "hi": -0.1
+  },
+  {
+   "language": "la",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.5,
+   "lo": 0.44,
+   "hi": 0.56
+  },
+  {
+   "language": "la",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.3,
+   "lo": 0.23,
+   "hi": 0.37
+  },
+  {
+   "language": "la",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.037,
+   "delta": -0.1,
+   "lo": -0.2,
+   "hi": -0.01
+  },
+  {
+   "language": "la",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.003,
+   "delta": -0.16,
+   "lo": -0.25,
+   "hi": -0.08
+  },
+  {
+   "language": "lzh",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.76,
+   "lo": 0.67,
+   "hi": 0.85
+  },
+  {
+   "language": "lzh",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.27,
+   "lo": 0.19,
+   "hi": 0.35
+  },
+  {
+   "language": "lzh",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.393,
+   "delta": -0.04,
+   "lo": -0.22,
+   "hi": 0.13
+  },
+  {
+   "language": "lzh",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.022,
+   "delta": -0.13,
+   "lo": -0.22,
+   "hi": -0.02
+  },
+  {
+   "language": "nl",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.56,
+   "lo": 0.42,
+   "hi": 0.68
+  },
+  {
+   "language": "nl",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.36,
+   "lo": 0.24,
+   "hi": 0.49
+  },
+  {
+   "language": "nl",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.105,
+   "delta": -0.15,
+   "lo": -0.34,
+   "hi": 0.04
+  },
+  {
+   "language": "nl",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.43,
+   "lo": -0.61,
+   "hi": -0.24
+  },
+  {
+   "language": "pi",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.79,
+   "lo": 0.71,
+   "hi": 0.88
+  },
+  {
+   "language": "pi",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.37,
+   "lo": 0.3,
+   "hi": 0.43
+  },
+  {
+   "language": "pi",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.858,
+   "delta": 0.09,
+   "lo": -0.05,
+   "hi": 0.23
+  },
+  {
+   "language": "pi",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.09,
+   "delta": -0.08,
+   "lo": -0.17,
+   "hi": 0.02
+  },
+  {
+   "language": "sa",
+   "a": "3.8 Flash (CLI)",
+   "b": "Flash-Lite 3.1",
+   "p": 1.0,
+   "delta": 0.77,
+   "lo": 0.69,
+   "hi": 0.87
+  },
+  {
+   "language": "sa",
+   "a": "3.8 Flash (CLI)",
+   "b": "3 Flash",
+   "p": 1.0,
+   "delta": 0.36,
+   "lo": 0.29,
+   "hi": 0.43
+  },
+  {
+   "language": "sa",
+   "a": "3.1 Pro (thinking 128)",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.767,
+   "delta": 0.06,
+   "lo": -0.08,
+   "hi": 0.19
+  },
+  {
+   "language": "sa",
+   "a": "Sonnet 5.5",
+   "b": "3.8 Flash (CLI)",
+   "p": 0.0,
+   "delta": -0.26,
+   "lo": -0.37,
+   "hi": -0.15
+  }
+ ],
+ "voi": [
+  {
+   "language": "arc",
+   "evpi": 0.032,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.64
+  },
+  {
+   "language": "es",
+   "evpi": 0.032,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.61
+  },
+  {
+   "language": "it",
+   "evpi": 0.03,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.63
+  },
+  {
+   "language": "lzh",
+   "evpi": 0.028,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.6
+  },
+  {
+   "language": "fr",
+   "evpi": 0.025,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.59
+  },
+  {
+   "language": "sa",
+   "evpi": 0.013,
+   "leader": "3.1 Pro (thinking 128)",
+   "runner_up": "3.8 Flash (CLI)",
+   "p_leader_best": 0.77
+  },
+  {
+   "language": "de",
+   "evpi": 0.012,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.75
+  },
+  {
+   "language": "ar",
+   "evpi": 0.006,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.87
+  },
+  {
+   "language": "nl",
+   "evpi": 0.006,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.9
+  },
+  {
+   "language": "pi",
+   "evpi": 0.006,
+   "leader": "3.1 Pro (thinking 128)",
+   "runner_up": "3.8 Flash (CLI)",
+   "p_leader_best": 0.85
+  },
+  {
+   "language": "fa",
+   "evpi": 0.003,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.94
+  },
+  {
+   "language": "grc",
+   "evpi": 0.001,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.96
+  },
+  {
+   "language": "he",
+   "evpi": 0.001,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.97
+  },
+  {
+   "language": "la",
+   "evpi": 0.001,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 0.96
+  },
+  {
+   "language": "bo",
+   "evpi": 0.0,
+   "leader": "3.8 Flash (CLI)",
+   "runner_up": "3.1 Pro (thinking 128)",
+   "p_leader_best": 1.0
+  }
+ ],
+ "judge": {
+  "sonnet_judge_offset": [
+   -0.146,
+   -0.041,
+   0.047
+  ],
+  "note": "Sonnet judged #5606 only (57 pages). No Gemini judge anywhere: self-preference is a prior."
+ },
+ "hyper": {
+  "sigma": [
+   0.509,
+   0.513,
+   0.518
+  ],
+  "tau_lang": [
+   0.186,
+   0.296,
+   0.474
+  ],
+  "tau_sf": [
+   0.021,
+   0.191,
+   0.453
+  ],
+  "tau_fam": [
+   0.34,
+   0.565,
+   0.909
+  ],
+  "tau_model": [
+   0.082,
+   0.141,
+   0.32
+  ],
+  "tau_fs": [
+   0.186,
+   0.237,
+   0.32
+  ],
+  "tau_fl": [
+   0.022,
+   0.068,
+   0.116
+  ],
+  "tau_ml": [
+   0.032,
+   0.053,
+   0.08
+  ],
+  "tau_w": [
+   0.422,
+   0.455,
+   0.493
+  ],
+  "tau_p": [
+   0.204,
+   0.222,
+   0.249
+  ],
+  "tau_round": [
+   0.078,
+   0.115,
+   0.168
+  ]
+ },
+ "route": {
+  "api": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "cli": [
+   0.001,
+   0.033,
+   0.066
+  ],
+  "stored": [
+   0.0,
+   0.024,
+   0.05
+  ]
+ }
+}
