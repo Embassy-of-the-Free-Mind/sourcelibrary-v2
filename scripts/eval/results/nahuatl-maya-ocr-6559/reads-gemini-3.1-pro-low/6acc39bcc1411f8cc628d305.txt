@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>218</page-num>
+<warning>Handwritten manuscript, Nahuatl primary language with Latin incipit.</warning>
+
+¶ In illo tempore.
+Ibat Jesus in ciuitatem que voca
+tur Naim etc.
+Yniquac nican tlalticpac mone
+mitinya tote. i. xc. Ceppa ompa
+mouicaya inaltepetlipan ytoca
+yocan Naim, quimouiquilique ymitla
+machtilhuan yuan occequin cenca mi
+ec tlacatl inquimouilique. Yniquac
+altepetenamitl itlan omaxitito, ipan
+moquixtito micqui, yeui quitoaca que
+ynin micqui cetlacatl icnociuatzintli
+çan icenteconeuz, quichoquilitiuh,
+yuan miequintin cololhuitiuij. Auh in
+quac oquimottili tote. quimocnoitti
+li quimolhuili. Ciuatzintle macaxicho
+ca niman itlan ommaxiti, commotzitz
+quili intlapechtli. Auh in yeuantin qui
+napalotiuia ocmomanque. in tote.
+
+<vocab>Naim, Jesus, ciuitatem, tlalticpac, tote, altepetlipan, icnociuatzintli, tlapechtli</vocab>

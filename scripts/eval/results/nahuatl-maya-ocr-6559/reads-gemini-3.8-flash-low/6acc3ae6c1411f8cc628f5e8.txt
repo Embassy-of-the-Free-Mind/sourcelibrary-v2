@@ -1,0 +1,31 @@
+<scan-quality>fair</scan-quality>
+<language>Classical Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Page is tightly cropped with text cut off at top, right margin, and bottom. Contains parenthetical gloss in Spanish and citation in Latin.</warning>
+
+<unclear>[...]</unclear>
+oppa, nozo nappa niquimixelehuiaya in zazo aquique
+ma Namiquêque, ma Ichpôpochtin, ma zan yuhne-
+mi. Nicnocuitia: Ca cana Cempoalpa onictenquixi
+tzotlatolli, in Ahuilnemiliztlâtolli imixpan in occe
+Nohuampohuan; in Yehuantinin âzo ic oniquimixtlâp<unclear>olo,</unclear>
+oniquinyolizahui; âzo oniquinyoleuh in ihuicpa y<unclear>ehuatl in</unclear>
+colli. Auh ca yuh anquihualtocatiazque, (<unclear>in âzo an-</unclear>
+anquittotiazque in occequi in amotlâtlacol, ihuan y<unclear>uh</unclear>
+quipacholiztica, choquiztica. Auh intla yuh anqui<unclear>chihuacan,</unclear>
+N. P; ma yê yuh ompachihui in amoyollo, ca zan <unclear>cenquizca</unclear>
+amechmopôpolhuiliz in Dios, in zazo iuhquî yez, i<unclear>n amopepe-</unclear>
+tlâtlacol. Auh inic in itechcopai namechcenyolmaxil<unclear>tiz, ca an-</unclear>
+tlacaquican, N. P; ihuan xicmocenyectenehuilican i<unclear>n icenquizca-</unclear>
+quizcateicnoittalitzin in Dios. (*In Vit. PP.*)
+
+Ca ce Mictlan Telpocatl huel oquimicti in Itâtzi<unclear>n, ihuan</unclear>
+in Iteachcauh. (*<gloss>à su hermano mayor</gloss>*) Ihuan zatepan ca âm<unclear>omati</unclear>
+huallî in tlâtlacolli, in oquimotequiuhti. Ic ommomati, <unclear>ca</unclear>
+yê aoc huel momaquixtiz. Tel ceppa oquimocaquiti in <unclear>cenca tla-</unclear>
+machtiani; in quimohuecapanilhuiaya in ixquich in Ite<unclear>icnoitta-</unclear>
+litzin in Dios. Ic in Telpocatl omoyollapan, omoyolchic<unclear>ahuac, inic</unclear>
+moyolcuitiz; inic Dios quimotlapôpolhuiliz. Yuh oq<unclear>uichiuh</unclear>
+
+<vocab>Namiquêque, Ichpôpochtin, Ahuilnemiliztlâtolli, Nohuampohuan, Mictlan Telpocatl, Itâtzin, Iteachcauh, tlâtlacolli, momaquixtiz, tlamachtiani, teicnoittalitzin, moyolcuitiz</vocab>

@@ -1,0 +1,35 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<warning>Handwritten Spanish and Yucatec Maya dictionary vocabulary in a clear 16th/17th-century European cursive hand; show-through visible from verso.</warning>
+
+Descaecido anssi: thonan: thoyan:
+Descalçar çapatos: choch xanab
+Descalçar calças: hos: pul:
+Descalço: ix maxanab:
+Descalabrar: paapol: chinpol
+Descalabrado: paan vpol:
+Descalabradura: cinil: cintanil:
+Descaminada cosa: mabean: Vt: mabean athan:
+Descaminado que ha perdido el camino: catan beh:
+Descanpar la lluuia: tzitzil ha: haual vkaxal haa:
+Descansar y descanso: helel:
+Descanso dar a otra cosa: heleçah
+Descansadero: heleb: lubay: boh cabal vlec
+Descarado sin verguença: chic vuich: coyen vpacat. ☞ Vide
+Desuergonçado: ofiçiento:
+Descargarse de la carga: helçah cuch:
+Descargar a otro: emçah cuch:
+Descargarse de lo que le calunian: tacba: lukçahba: ☞ Vide
+Defenderse: examinarse:
+Descargar su conciencia: emçah vcochpixan:
+Descasarse por algun ynpedimento: chachpahal tubatanba.
+Descasar anssi: lukçah tubatanba:
+Descasarse quoad thorum: nachcunah tubatanba:
+Descaxcarar como naranjas o arbles: ppoopp.
+Descaxcarar como frisoles: ppal:
+Descaxcarado anssi: ppalaan: ppalbil:
+
+<vocab>Descaecido, Descalçar, çapatos, calças, Descalço, Descalabrar, Descalabrado, Descalabradura, Descaminada, Descaminado, Descanpar, lluuia, Descansar, descanso, Descansadero, Descarado, sin verguença, Desuergonçado, ofiçiento, Descargarse, carga, Descargar, calunian, Defenderse, examinarse, conciencia, Descasarse, ynpedimento, quoad thorum, Descaxcarar, naranjas, frisoles, Descaxcarado, thonan, choch xanab, paapol, helel, cuch, tubatanba, ppoopp, ppal</vocab>

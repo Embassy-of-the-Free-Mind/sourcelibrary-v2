@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>Kaqchikel</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten colonial Kaqchikel script</warning>
+<meta>Catchword: ma</meta>
+
+ha tannima ahoxel vacami . ti
+quiban Conohel Christianos vi
+nak, ha ti nimaygovinak vi
+que quinimah, que coqueçah, que
+quilocoh, tiquiluc, tiquipathan
+uipequij thiquivath he Padres, Sa
+çerdotes; he rutotacanimas, al
+gualay quichin chuvach Dios -
+quere ga haroquicam, haga re
+ghetalim, tzih thiquix ma ca
+mo, quix tuhtu, quixyotoyo,
+quix cakpile, quix cakmaha thi
+xibibal yvij tok ti vue tamah y
+mac panigux: rumal vue maqui
+hey nimam, vue maqui heyvo
+queçam quilocolah tzih, vue pe
+
+<vocab>tannima, ahoxel, vacami, Christianos, vinak, Padres, Saçerdotes, animas, Dios, xibibal, panigux, quilocolah tzih</vocab>
