@@ -18,6 +18,8 @@ import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edi
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
 import { conceptsInQuery } from '@/lib/concept-aliases';
+import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
+import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -430,6 +432,12 @@ async function getBook(args: Record<string, unknown>) {
   // rather than a title anyone published. Say so in prose next to the title.
   const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
   const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
+  // #3697: stored `confidence` is the extraction model's self-report (high on
+  // 96% of entries, including the wrong ones). Re-check every list on the way
+  // out so a gap or a sink chapter is visible on books extracted before the
+  // write-side checks existed.
+  const storedChapters = Array.isArray(result.chapters) ? result.chapters as Chapter[] : null;
+  const chapterReport = storedChapters?.length ? checkChapters(storedChapters) : null;
   return {
     id: result.id, title: resolvedTitle.display, author: result.author,
     ...(resolvedTitle.isDescriptive
@@ -452,7 +460,16 @@ async function getBook(args: Record<string, unknown>) {
     // where a localized edition exists. Pass the code as `lang` to get_quote /
     // get_book_text / search_within_book to read that edition.
     editions: editionsForBook(result),
-    reading_summary: result.reading_summary, chapters: result.chapters,
+    reading_summary: result.reading_summary,
+    chapters: chapterReport ? chapterReport.chapters : result.chapters,
+    ...(chapterReport ? {
+      chapter_checks: {
+        checks_run: CHECKS_RUN,
+        flagged_entries: chapterReport.flagged,
+        ...(chapterReport.gaps.length ? { numbering_gaps: chapterReport.gaps } : {}),
+        note: 'confidence on each chapter is the extraction model\'s own estimate, lowered to "low" (original kept as model_confidence, reason in flags) where a check above fails. Unflagged entries are NOT verified, only uncontradicted. A numbering gap means a chapter heading was missed or misassigned: the entry before it probably runs over the missing chapter\'s pages.',
+      },
+    } : {}),
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
     // is the answer to "which book has the Poetics?", which the catalogue title
