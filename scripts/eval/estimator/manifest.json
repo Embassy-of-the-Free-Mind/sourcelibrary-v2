@@ -1,0 +1,52 @@
+{
+ "built_by": "scripts/eval/estimator/build-table.py",
+ "by_experiment": {
+  "6182-claude-tib": 1368,
+  "6182-claude-xl": 2916,
+  "6182-tib": 3762,
+  "6182-xl": 4656,
+  "6331-canon-ref": 323,
+  "6331-cli38-tib113": 678,
+  "6331-cli38-tib58": 348,
+  "6331-cli38-xl": 2186
+ },
+ "by_language": {
+  "ar": 663,
+  "arc": 121,
+  "bo": 6156,
+  "de": 576,
+  "es": 177,
+  "fa": 628,
+  "fr": 371,
+  "grc": 1834,
+  "he": 761,
+  "it": 265,
+  "la": 1882,
+  "lzh": 809,
+  "nl": 180,
+  "pi": 925,
+  "sa": 885
+ },
+ "by_model": {
+  "claude-haiku-4.5|sub": 1071,
+  "claude-opus-5.5|sub": 444,
+  "claude-sonnet-5.5|sub": 1209,
+  "gemini-3-flash-preview|api": 2190,
+  "gemini-3-flash-preview|stored": 1668,
+  "gemini-3.1-flash-lite|api": 934,
+  "gemini-3.1-flash-lite|stored": 584,
+  "gemini-3.1-pro-t128|api": 798,
+  "gemini-3.5-flash-lite|api": 797,
+  "gemini-3.5-flash|api": 798,
+  "gemini-3.6-flash|api": 796,
+  "gemini-3.7-flash|api": 798,
+  "gemini-3.8-flash|api": 2936,
+  "gemini-3.8-flash|cli": 1210
+ },
+ "failed_reads": 4,
+ "judges": {
+  "claude-opus-5.5": 16237
+ },
+ "rows": 16237,
+ "scored": 16233
+}
