@@ -1,8 +1,8 @@
 ---
 stage: ocr
 measure: accuracy
-languages: [Latin, English, German, French, Greek, Chinese, Armenian]
-scripts: [latin, greek, han, armenian]
+languages: [la, en, de, fr, grc, zh, hy]
+scripts: [Latn, Grek, Hani, Armn]
 canons: []
 n_books: null
 n_pages: null
