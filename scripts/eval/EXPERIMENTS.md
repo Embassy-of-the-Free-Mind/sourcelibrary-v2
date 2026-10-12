@@ -128,6 +128,484 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-12 · Stale Siku English: check the new Paddle reading, then retranslate or diff-correct? (#6567)
+
+PRIOR ART: `2026-10-11-paddle-stale-english-retranslate-6388.md` (#6518) decided that the stale English should be
+repaired, and its pre-registered rule said to retranslate all of it. This gate asks the two questions that come first:
+is the Paddle reading right, and is a diff-scoped correction as good as a fresh translation? Code, prompts, reads and
+the pre-registration are in `scripts/eval/stale-gate-6567/`. The README was committed (`8ff393c84`) before any
+reviewer ran. The plants were committed (`52025fa15`) before step 2 ran. Every number below comes from `results.json`,
+`results.md` and `ocr-final.json` (`gate.mjs`). The cost was $0: every call went through a subscription CLI
+(`claude -p`, `agy -p`) and no paid API was called. Nothing was written to `pages` or `books`.
+
+**Frame (census, 2026-10-12).** 75,543 pages still carry `translation_stale.lane = paddle-zh-2026-10`. That is 158
+fewer than #6518 counted.
+- 30 pages have fewer than 8 Han characters and were left out.
+- The #6516 table detector flags **0** of the stale pages, so none were excluded. 44 pages trip its loop gate, but
+  none of them has the table shape.
+- Eligible pages by CER bin: 0–.05: 34,721 · .05–.1: 15,955 · .1–.2: 9,933 · .2–.5: 5,552 · .5–1: 9,352 (total 75,513).
+
+**Draw.** 8 pages per bin, one page per book across all 40 books, seeded.
+
+### Step 1: is the Paddle reading right?
+
+Opus and Gemini 3.8 Flash High each read the Paddle text against the image, independently. They split on 12 pages,
+and every split was a material claim that only Gemini made. Opus refereed those claims and confirmed 4 of the 12 pages.
+There were no failed reads.
+
+| CER bin | material OCR error | Wilson 95% |
+|---|---|---|
+| 0–.05 | 2 / 8 | 7–59% |
+| .05–.1 | 0 / 8 | 0–32% |
+| .1–.2 | 7 / 8 | 53–98% |
+| .2–.5 | 7 / 8 | 53–98% |
+| .5–1 | 5 / 8 | 31–86% |
+| **< .1 pooled** | **2 / 16** | 3.5–36% |
+| **≥ .1 pooled** | **19 / 24** | 60–91% |
+
+**What the errors are.** Mostly a single character misread into a different word: 熱 read as 熟, 不 as 下 (a negation
+lost), 堯 as 克 (a name), and place names in maps. On map and diagram pages, labels are dropped or scattered.
+
+**Where the errors come from.** A heuristic check looked for each error's characters, with their context, in the OLD
+reading:
+- In the ≥ .1 bins almost all the errors are new: only 6 of 63 claims also appear in the old reading.
+- On the two material pages under .1, 5 of 6 claims appear in the old reading as well. So the stored English already
+  carries them, and a retranslation would not add them.
+
+**Who finds the errors.** Opus alone flagged 17 of the 21 material pages. Gemini alone flagged 29, and 21 of them held up.
+- The two material pages under CER .1 were both raised only by Gemini.
+- So a check run by Opus alone would have missed both of them.
+
+### Step 2: retranslate vs diff-correct, on the 19 pages that passed step 1
+
+**The two arms.**
+- **RETRANSLATE**: 3.8 Flash (CLI), with the production single-page prompt.
+- **DIFF-CORRECT**: 3.8 Flash (CLI), given the image, the new reading, the old→new hunks and the stored English. It
+  returns replacements, and those replacements are held to an edit contract.
+
+**Judging.** Opus and Gemini 3.1 Pro judged blind against the image and the new reading, in MQM. A **material error**
+is an accuracy error of major or critical severity. Plants are excluded from these counts.
+
+| CER bin | pages | stored O / P | retranslate O / P | diff-correct O / P | edit size, median word-level (RT / DC) | s per call (RT / DC) |
+|---|---|---|---|---|---|---|
+| 0–.05 | 6 | 1.33 / 3.17 | 0.00 / 0.50 | 1.33 / 3.00 | 0.93 / 0.00 | 12 / 15 |
+| .05–.1 | 8 | 0.63 / 3.25 | 0.00 / 1.00 | 0.38 / 2.50 | 0.79 / 0.01 | 20 / 39 |
+| .1–.2 | 1 | 1.00 / 2.00 | 0.00 / 0.00 | 0.00 / 0.00 | 0.73 / 0.04 | 21 / 12 |
+| .2–.5 | 1 | 11.0 / 18.0 | 0.00 / 1.00 | 0.00 / 0.00 | 0.78 / 0.30 | 16 / 14 |
+| .5–1 | 3 | 2.33 / 4.67 | 0.00 / 2.67 | 2.33 / 4.67 | 0.94 / 0.00 | 15 / 18 |
+| **all 19** | 19 | **1.68 / 4.16** | **0.00 / 1.05** | **0.95 / 2.74** | | 16 / 26 |
+
+**Retranslation against the stored English.** Retranslation was never worse than the stored English on any page,
+under either judge:
+- under Opus, it was better on 11 pages and equal on 8;
+- under Pro, it was better on 16 and equal on 3.
+
+**Diff-correct.** It was better than the stored English on 4 pages under Opus and on 8 under Pro, and worse on none.
+- It made 24 edits in total, and no edit at all on 9 of the 19 pages.
+- Retranslation beat it on 9 pages under Opus and on 12 under Pro. Diff-correct won on 1 page, under Pro.
+
+**Style errors per page** (Opus / Pro): stored 0.79 / 0.42, retranslate 0.53 / 0.16, diff-correct 0.79 / 0.42.
+
+**The two judges.**
+- The cross-family judge (Opus) found no material error in any retranslation.
+- The same-family judge (Pro) found more errors in every arm. That includes the Gemini retranslation (1.05 per page),
+  so Pro shows no sign of favouring its own family's output here.
+
+**The edit contract.** The contract rejected 0 of 19 replies, but it is weaker than its name.
+- It checks that each edit cites a real hunk, quotes a unique span, and stays small. It cannot check that the edit
+  actually renders the hunk it cites.
+- 1 of the 24 edits went outside its tie. On p17 the model changed the planted "seventy" back to "fifty" while citing
+  an unrelated nearby change (今→令).
+- 1 other edit was legitimate. On p08 the planted "Volume 9" sat in English that renders a changed hunk (山草卷之七), so
+  correcting it was allowed.
+
+**Planted errors.** There were 16 plants on 8 pages: numbers, names, negations and senses.
+- Opus caught 16 of 16 in the stored English, and Pro caught 16 of 16.
+- In the diff-corrected English, which still carried 14 of them, each judge caught 14 of 14.
+
+**Calls and time per page.** No read failed. There were no retries, no nudges, and no output left outside the sentinels.
+
+| step | calls per page | s per call |
+|---|---|---|
+| OCR check | 1 Opus + 1 Gemini 3.8 Flash High, plus 0.3 Opus referee | Opus 16, Flash High 119, referee 14 |
+| retranslate | 1 agy (3.8 Flash Low) | 16 |
+| diff-correct | 1 agy (3.8 Flash Low) | 26 |
+| judges | 1 Opus + 1 Gemini 3.1 Pro High | Opus 21, Pro 127 |
+
+### The pre-registered rule, as written
+
+Per bin, pick the arm with fewer material errors averaged over the two judges (a tie within 0.25 goes to
+diff-correct). Any bin with an OCR-error rate of 15% or more gets a per-page OCR check first. Applied to these results:
+
+| bin | repair | OCR check first? |
+|---|---|---|
+| 0–.05 | retranslate | yes (25%) |
+| .05–.1 | retranslate | no |
+| .1–.2 | diff-correct (tie at 0, n = 1) | yes |
+| .2–.5 | diff-correct (0 vs 0.5, n = 1) | yes |
+| .5–1 | retranslate | yes |
+
+The pre-registered GO test passes. Both judges caught 16/16 plants, and the chosen repair beats the stored English in
+every bin under both judges.
+
+**What the literal rule would cost.** It needs an OCR check on 59,558 pages: 59,558 Flash High calls at about 2 minutes
+each, plus about 77K Opus calls. That alone is about 980 hours at 2 calls in flight. It would also choose diff-correct in
+two bins on one page each, which is not evidence.
+
+### Proposed rule
+
+1. **CER < 0.1 (50,676 pages): retranslate with 3.8 Flash and the production prompt, with no OCR check.**
+   - On these pages the Paddle reading had a material error on 2 of 16 pages, and those errors were mostly already in
+     the old reading.
+   - A check that would catch them needs Flash High, at 119 s a page, because Opus alone missed both.
+   - Quota: 50,676 agy calls. That is about 56 h at #6518's box rate of about 900 calls an hour, or about 115 h at 2
+     in flight and 16 s a call.
+2. **CER ≥ 0.1 (24,837 pages): hold.** Do not retranslate from this Paddle reading. 19 of 24 pages have a material
+   Paddle error, and most of those errors are new.
+   - These pages go to the OCR fix first (R2, #6561: correction of flagged pages or an Opus re-read), then to
+     retranslation.
+   - Until then the stored English stays. It is what readers see today, so holding makes nothing worse.
+3. **Diff-scoped correction: do not use it for this repair.** The stored English's errors are mostly
+   translation-caused, and diff-correct cannot touch those.
+   - Retranslation beat it on 9 of 19 pages (Opus) and 12 of 19 (Pro), and lost on 1.
+   - Its contract also cannot fully enforce the tie between an edit and its hunk.
+
+**GO** for retranslating the 50,676 pages under CER 0.1 (3.8 Flash CLI, about 50.7K calls). **NO-GO** for the 24,837 pages at CER ≥ 0.1 until their Paddle reading is fixed.
+
+**Limits.**
+- n is 8 per bin for step 1 and 1 to 8 per bin for step 2. The .1–.5 bins have one step-2 page each.
+- The "< .1: 2/16" rate has a Wilson upper bound of 36%.
+- One pass only.
+- The judges differ by about 2.5 material errors per page on the stored English, so the absolute levels depend on the
+  judge. The ranking stored > diff-correct > retranslate holds under both.
+- The heuristic that attributes OCR errors to the old or new reading is a string match on context, not an alignment.
+
+## 2026-10-12 · Do three published LLM transcription results reproduce through our $0 CLI route?
+
+**Why.** The #6544 manuscript numbers only mean something if our setup reproduces published results on the original data. This replication separates two questions: does the method fail to transfer, or is our pipeline off? It also checks whether the CLI route, which gives no temperature or resolution control, costs accuracy against what the papers ran.
+
+**Data (posted on #6547 before any call).**
+
+| paper | public? | used |
+|---|---|---|
+| Greif, Griesshaber & Greif 2025 (arXiv 2504.00414) | **yes**, MIT: 10 directories × 3 pages, a reference per 3-page document, Transkribus Print M1 drafts, and their own model outputs, including a Gemini 3.1 Pro revision run | all 30 pages |
+| Humphries & Leddy, "Gemini 3 solves handwriting recognition" | no | — |
+| Humphries & Leddy, "When models disagree" | no | — |
+| Humphries et al. 2024, "Unlocking the Archives" (arXiv 2411.03340) | no: "decided not to make the dataset public" | — |
+| *stand-in:* Bentham Dataset R0 (zenodo 44519) | yes, CC BY 4.0 | the 33-page ICFHR-2014 test set: English handwriting 1748–1832, page-level PAGE XML |
+
+The stand-in is **indicative only**. A different set can neither replicate nor refute a number measured on another set. It differs from Humphries' set in three ways:
+- mostly one writer (Bentham and his copyists), not 33 hands;
+- heavy strike-throughs and insertions;
+- the transcriptions are online.
+
+Ids, sources and licences are in `scripts/eval/replicate-6547/manifest.json`. The data stays in `$JOB_SCRATCH` and is not committed.
+
+**Routes and models.**
+- Gemini 3.1 Pro (`gemini-3.1-pro-high`, the CLI's default thinking) and 3.8 Flash (`gemini-3.8-flash-low`, and `-high` as the resolver) through `agy -p`, with the #6523 runner: plan mode, sentinels, tool gate, at most 2 calls in flight.
+- Opus (`claude-opus-5-5`, CLI default effort) through `claude -p --restricted --tools Read`, in a sealed one-image folder (`run-claude-arm.py`).
+- $0 (subscriptions); 213 agy calls and 148 claude calls (plus one model-id probe).
+- The CLI sets no temperature or media resolution. The papers ran temperature 0: Greif with dynamic thinking; Humphries with high resolution and minimal thinking.
+
+**Scoring.** Failed reads are counted and never scored (#6523 rule). A failed read is one of:
+- empty or refusal;
+- **duplicated**: `ocrReadProblem`'s check, ported;
+- **restarted**: new. Three or more 25-character lines written twice. It fires on 5 Gemini reads and on 0 Claude reads and 0 Greif pages. It catches a second copy that has been *respelled*, which the exact probe misses.
+
+Per paper:
+- **Greif.** Their `txt_accuracy.py` definitions: normalised (ASCII, lower case, no punctuation) and non-normalised CER, pooled per 3-page document, plus our `benchmark-score.mjs` letters-only CER. **Scorer control:** rescoring *their* published outputs reproduces their table (3.1 Pro 0.77/1.47, 2.0 Flash + Transkribus 0.84, Transkribus 3.68, all within 0.02 points).
+- **Bentham.** Humphries' strict (case and punctuation count) and modified (both ignored) CER/WER. His modified form also forgives spelling modernisation through enchant + nltk; that part is not ported, so ours is stricter.
+  - The reference's region order is not reading order, so lines are sorted top to bottom.
+  - The reference also omits marginal archive notes. Each number is therefore given twice: **page** (everything counts) and **anchored** (only the reading's words inside some reference line's best window; this forgives omitted marginalia and order, and also forgives invented extra text).
+- **Intervals:** 95%, 10,000 resamples by document (Greif: 10 documents; Bentham: pages).
+- **Anchoring control.** 3 errors not on the page were planted in the draft: one digit change, plus two words swapped for words from the same page, each at a site where the draft was right. Greif: 12 pages (4 whole documents); Bentham: 10 pages. A site is found by a 3-token left context. Plants whose context repeats in the reference are set aside as ambiguous (3 per set).
+
+### (a) Greif et al.: image + Transkribus draft → corrected (30 pages, 10 documents, 0 failed reads)
+
+| arm | route | normalised CER [95% CI] | non-normalised CER | ours | s/page |
+|---|---|---|---|---|---|
+| *their* Transkribus Print M1 (the draft) | — | 3.67% (rescored 3.68% [1.75, 6.23]) | 4.95% | 3.30% | — |
+| *their* Gemini 2.0 Flash, image + draft (**paper headline**) | API, T=0 | 0.84% [0.47, 1.27] | 1.91% | 0.68% | — |
+| *their* Gemini 3.1 Pro, image only (revision) | API, T=0, dynamic thinking | 0.77% [0.40, 1.22] | 1.46% | 0.57% | — |
+| *their* Gemini 3.1 Pro, image + draft (revision) | API, T=0 | 0.80% [0.34, 1.35] | 1.59% | 0.54% | — |
+| **ours** Gemini 3.1 Pro, image only | CLI | **0.79% [0.39, 1.28]** | 1.57% [0.96, 2.24] | 0.59% | 83 |
+| **ours** Gemini 3.1 Pro, image + draft | CLI | **0.75% [0.35, 1.22]** | 1.50% [0.85, 2.28] | 0.52% | 78 |
+| ours Opus, image only | claude -p | 0.71% [0.31, 1.19] | 1.48% [0.80, 2.23] | 0.45% | 13 |
+| ours Opus, image + draft | claude -p | 0.68% [0.32, 1.09] | 1.35% [0.80, 1.90] | 0.48% | 15 |
+
+- **Paired by document, our CLI arm minus their API arm, same model, same pages, same prompt:**
+  - image only: +0.02 points normalised (CI −0.03 to +0.07), +0.10 non-normalised (−0.08 to +0.28);
+  - with draft: −0.05 (−0.21 to +0.09) and −0.09 (−0.29 to +0.07).
+- **Gain from correction:** on a strong reader, correction adds about nothing: Pro 0.79 → 0.75, Opus 0.71 → 0.68. The paper's own gain (1.27 → 0.84) was on Gemini 2.0 Flash.
+- **Anchoring:**
+  - Opus: 0 of 33 planted errors survived.
+  - Pro: 2 of 33 (6%, CI 0–20% by page). Both are on one page, type-6-p2: "Krähenstr. 417" for the image's 412, and "Eisenb." for "Vorst.".
+  - On that page Pro made no `view_file` call. It still made 260 edits to the draft, so the image reached it inline (#6523 saw the same).
+  - The anchoring documents scored separately: Pro 0.65% planted against 0.52% clean; Opus 0.43% against 0.42%.
+- **Setup differences:**
+  - their API at temperature 0, ours CLI with default sampling;
+  - the same prompt (their German prompt, verbatim) plus our sentinel line;
+  - their PNGs come from pdf2image at the default 200 dpi; ours are rendered with pdftoppm at 200 dpi;
+  - one run, not their two.
+
+**REPLICATED.** Our CLI Pro is within their interval and within 0.05 points of their API Pro, and the paper's <1% claim holds for every arm. The route costs nothing measurable here.
+
+### (b) Humphries single reader: Bentham stand-in (33 pages)
+
+| reader | did not read | page strict CER / WER | page modified CER / WER | anchored strict CER / WER | anchored modified CER / WER | s/page |
+|---|---|---|---|---|---|---|
+| *Humphries: Gemini 3 Pro, their 50 docs* | — | — | — | 1.67 / 4.42 | 0.69 / 1.33 | — |
+| Gemini 3.1 Pro (CLI) | 3 restarted | 8.70 / 14.39 | 7.51 / 9.77 | 4.53 [2.04, 9.25] / 9.31 | **3.51 [1.11, 8.13]** / 4.98 | 80 |
+| — without the invented page 071_030_001 | | 6.56 / 11.62 | 5.40 / 6.94 | 2.45 / 6.93 | 1.46 [1.01, 1.97] / 2.55 | |
+| Gemini 3.8 Flash low (CLI) | 2 duplicated | 7.89 / 12.34 | 6.95 / 8.47 | 3.17 / 7.23 | 2.33 [1.14, 4.13] / 3.56 | 43 |
+| Opus (claude -p) | 0 | 5.13 / 9.22 | 4.32 / 5.68 | 2.21 [1.71, 2.79] / 5.86 | 1.50 [1.05, 2.04] / 2.52 | 8 |
+
+- **Pro invented page 071_030_001.** It made no `view_file` call and wrote 198 words of other Bentham prose, from memory ("As a system of procedure then…"). The page is "Of Irreparable Personal Injuries". It is a real misread, so it is scored.
+- **Restarts.** All 5 Gemini restarts are on pages whose text is online. In 116_286_002, Pro's second copy is respelled ("woud", "concepton", "profitible"). This looks like a recitation-filter cut and restart.
+- **Ranking.** Humphries ranked Gemini 3 Pro well ahead of Claude (~4%). Here Opus is at least as good as Pro.
+- **Setup differences:**
+  - other documents and other hands; model 3.1 Pro, not 3 Pro;
+  - CLI default thinking, not minimal; no temperature or resolution control;
+  - one run, not ten;
+  - his transcription prompt (Transcription Pearl, verbatim) plus the sentinel line.
+
+**NOT TESTABLE** (the data is not public).
+
+### (c) Humphries disagreement: Bentham stand-in (29 pages that all three read)
+
+Readers: Pro (primary), 3.8 Flash low and Opus. A flag is a primary word where any other reader differs (modified form). The resolver is 3.8 Flash high, as in #6544. It sees the image and the primary text with each flagged span marked `[[A: … | B: … | C: …]]`.
+
+| measure | Humphries | ours | ours without the invented page |
+|---|---|---|---|
+| share of text flagged | 4% | 10.4% of words (CI 5.9–17.2 by page) | 7.6% |
+| share of the primary's errors inside a flag | 76% (106/139) | 59% (169/286; CI 25–73) | 34% (46/136) |
+| CER if flags resolved correctly (oracle, anchored modified) | 0.23% | 1.32% [0.62, 2.40] from 3.46% | 0.89% from 1.33% |
+| CER with a model resolving the flags | (humans) | 1.65% [1.14, 2.24] | 1.63% (the primary alone: 1.33%) |
+
+- **Flags work as a detector.** Pro's invented page had 188 of its 198 words flagged.
+- **A model does not resolve the flags well.** On the other 28 pages the resolver made the text slightly *worse* than the primary (1.63% against 1.33%).
+- **Why the catch rate is low.** By eye, about half of 30 random unflagged errors are reference conventions that every reader shares:
+  - struck-through words the reference keeps ("seve served");
+  - `&` and `&c` written out;
+  - split hyphenations; folio and article numbers;
+  - reference slips ("grab them up by the root").
+
+  No disagreement among readers can flag these. Humphries' own reference and modified metric forgive more of them.
+- **Setup differences:** our readers are 3.1 Pro, 3.8 Flash and Opus 5.5 (his: 3 Pro, 3.5 Flash, Opus 4.7); word-level flags (his granularity is unstated); a model resolver (his: a human).
+
+**NOT TESTABLE** (the data is not public).
+
+### (d) Unlocking the Archives: HTR draft + image → corrected
+
+- **Their result:** Transkribus Titan + Claude 3.5 Sonnet, 3.0% strict / 1.8% modified CER.
+- **No public data, no Transkribus.** The print half of the method (an LLM corrects a Transkribus draft) is covered on real Transkribus drafts by (a).
+- **Handwriting stand-in:** the draft is the 3.8 Flash read (an LLM draft, not HTR), corrected with Transcription Pearl's correction prompt (verbatim) plus the sentinel line. 31 pages (the 2 duplicated drafts are excluded).
+
+| corrector | draft page strict CER | → corrected | draft anchored modified | → corrected | anchoring survived |
+|---|---|---|---|---|---|
+| Opus | 7.89% | 5.58% [4.02, 7.47] (−29%) | 2.33% | 1.54% [0.99, 2.20] (−34%) | 0 / 26 |
+| Gemini 3.1 Pro | 7.89% | 5.61% [4.07, 7.47] (−29%) | 2.33% | 1.66% [1.13, 2.30] (−29%) | 0 / 26 (1 site rewritten: £5050 for £5000, neither) |
+
+**NOT TESTABLE** (the data is not public). The direction matches: correction cuts about a third of the error, against their −61% from a weaker HTR draft.
+
+### What this means for reading #6544
+
+1. **The CLI route measures the model, not the route.** It runs with the #6523 sentinels + tool gate. On the one paper where model, prompt, pages and scorer all match, CLI Pro equals API Pro to within 0.05 points.
+   - So a gap between #6544's CLI arms and Flash-Lite cannot be blamed on the CLI's missing temperature or resolution controls, at least on print.
+2. **Gemini CLI reads of handwriting fail in two shapes that #6544 must count.**
+   - The page written twice: 5 of 66 Gemini reads, on text that is online. The respelled restart passes the exact-probe check, so #6544 needs the line-repeat check too.
+   - A page invented without opening the image: 1 of 33 Pro reads.
+   - So #6544 should log `view_file` per read and treat a read that never opened the image as suspect.
+3. **Correction arms are unlikely to be dominated by anchoring:** 0–6% of planted errors survived, and Opus survived none. Keep the control.
+4. **Score the disagreement arm two ways.**
+   - As a detector it works: it caught the invented page.
+   - As an accuracy lever a model resolver did not help. #6544 should report flagged share, oracle CER and resolver CER separately, and should not read a resolver gain into a pure accuracy improvement.
+5. **Opus is a strong reader:** best on Bentham, level on Greif. It is a sound draft source and cross-family adjudicator for #6544.
+
+**Artifacts.**
+- Scripts: `scripts/eval/replicate-6547/` (`prep.py`, `run-claude-arm.py`, `textmetrics.py`, `disagree.py`, `score-greif.py`, `score-bentham.py`, `manifest.json`).
+- Scores: `scripts/eval/results/replicate-6547/{greif,bentham}-score.json`.
+- Raw reads: in `$JOB_SCRATCH/{greif,bentham}/out/` on Hetzner (not committed).
+
+**Rerun:**
+1. Fetch the Greif repo and the Bentham Zenodo record into `$JOB_SCRATCH`.
+2. `prep.py greif|bentham`.
+3. `run-cli-arm.py` (6523c branch) / `run-claude-arm.py` per arm.
+4. `prep.py bentham2`, then the resolver and correction arms.
+5. `score-greif.py`, `score-bentham.py`.
+
+*Replicated?* (a) yes, against the paper's own published outputs. (b)–(d) cannot be, on these data.
+
+## 2026-10-12 · Can the translation evidence we already hold be pooled into one estimator that predicts tests before they run? (#6557) — yes, inside the #6182 setup; not yet across instruments
+
+PRIOR ART: `.claude/docs/quality-research-system.md` §3 (the design, PR #6550). The per-experiment scorers are
+`scripts/eval/pareto-6182/score-xl.py` and `score-tib.py`; each one reports its own experiment and nothing pools
+across experiments. `2026-10-07-other-languages-pareto-6182.md`, `2026-10-08-claude-subscription-arms-6182.md` and
+the xlref t1–t5 entries are the source experiments. No model calls; $0.
+
+### What was built
+
+- **The table** (`scripts/eval/estimator/build-table.py`; counts in `manifest.json`, bulk rows on the job box).
+  - Shape: one row per (experiment, page, arm, judge). 20,846 rows, 20,841 scored. 5 failed reads are kept as
+    `scored=false` and never scored.
+  - 1,570 lever-arm rows are kept but not fitted (thinking, context, check-and-fix, fixed OCR), because they are
+    not the engine as routed. That leaves 19,271 rows in the fit: 685 pages from 488 works.
+  - Sources: #6182 xl + Tengyur, the #6331 CLI 3.8 arms (xl, Tengyur 58 and 113, canon-ref), the Claude
+    subscription arms (xl, Tengyur), xlref t1–t5 and #5606.
+  - **Every judge is Claude:** Opus throughout, plus Sonnet on #5606 (171 scores). Every instrument judges against
+    a published human reference.
+- **The model** (`model.py`): Gaussian, hierarchical, fitted with NumPyro NUTS on CPU in about 8 minutes.
+  - Fidelity = global mean
+    + language (nested in script family)
+    + model (pooled in family: Gemini Lite / Flash / Pro, Claude Haiku / Sonnet / Opus)
+    + route (CLI, stored)
+    + family × script family, family × language and model × language interactions (all shrunk)
+    + work + page + judging round + judge model.
+  - The design asks for an ordinal likelihood. Gaussian was used first because the predictions are panel means; one
+    cost is that Opus cells can exceed 5 (see limits).
+- **What the data can and cannot identify:**
+  - **Identified:** the model, language and work effects, and the model × language effects wherever a model was
+    read in that language.
+  - **Identified, small:** the route (CLI +0.03 [0.00, 0.07] over the API; stored +0.02) and the round-to-round
+    shift between judging rounds (τ = 0.12 [0.08, 0.17]).
+  - **Sonnet judge vs Opus judge** (#5606 only): −0.04 [−0.15, +0.05].
+  - **Not identified:** self-preference. No Gemini judge has ever scored a translation here. A self-preference
+    term for Claude is the same thing as the Claude family effect, so its posterior is its prior. Every "Pro judge"
+    number below comes from the prior N(0.15, 0.15) per family, plus a Pro-judge scale offset N(0, 0.30).
+
+### Validation 1: leave one experiment out
+
+Each experiment was hidden in turn, the model was refitted without it, and its cells (language × model × route,
+≥ 5 pages) were predicted. The prediction includes a fresh judging-round effect and the cell's own sampling noise.
+`scripts/eval/estimator/loo.py`; the summary is in `results/report-2026-10-12.json`.
+
+| held out | pages | cells | 90% coverage | MAE | best model right | contrasts covered |
+|---|---|---|---|---|---|---|
+| 6182-xl | 365 | 138 | 0.96 | 0.14 | 11/14 | 0.94 (614 pairs) |
+| 6331-cli38-xl | 365 | 44 | 0.98 | 0.08 | 4/14 (all 3.8 CLI vs 3.8 API, the same model) | 0.88 |
+| 6182-claude-xl | 365 | 58 | 0.83 | 0.24 | 12/14 | 0.76 |
+| 6182-tib | 171 | 10 | 1.00 | 0.12 | 1/1 | 0.98 |
+| 6182-claude-tib | 171 | 4 | 1.00 | 0.21 | 1/1 | 0.50 |
+| 6331-cli38-tib113 | 113 | 3 | 1.00 | 0.01 | 1/1 | 1.00 |
+| 6331-cli38-tib58 | 58 | 3 | 1.00 | 0.11 | 1/1 | 0.33 |
+| 6331-canon-ref | 138 | 8 | 0.88 | 0.11 | 3/3 | 0.71 |
+| xlref-t1 (Latin) | 71 | 5 | 1.00 | 0.08 | 1/1 | 1.00 |
+| xlref-t2 (Greek) | 75 | 5 | 0.80 | 0.16 | 1/1 | 0.50 |
+| xlref-t3 (vernaculars) | 59 | 17 | 0.88 | 0.12 | 5/5 | 0.70 |
+| xlref-t4 (Semitic, Persian) | 52 | 16 | **0.38** | 0.33 | 4/4 | 0.67 |
+| xlref-t5 (Indic, Chinese) | 68 | 13 | 1.00 | 0.15 | 3/3 | 0.68 |
+| #5606 A/B | 57 | 6 | 0.50 | 0.22 | 3/3 | 1.00 |
+| **all** | | **330** | **0.90** (50%: 0.56) | **0.16** | 51/66 by engine, **61/66 by model** | **0.89** (913 pairs) |
+
+- **Where it is calibrated:** inside the #6182 judging setup. It predicted a held-out round's cells at 96–98% and
+  its within-language differences at 88–94%. When it named the wrong best model, the true best was on average only
+  0.02 points better.
+- **Failure 1: a new instrument shifts the whole level.**
+  - xlref-t4 came in about 0.4 below the prediction on every Gemini arm, and #5606 about 0.3 above. Both used
+    pairwise packets with a different judge prompt.
+  - The round effect the model learned (τ ≈ 0.12) is the spread *between #6182-style rounds*. It is too small for
+    a change of instrument.
+  - Contrasts outside the big xl panel were covered about 78% of the time, not 90%.
+- **Failure 2: a model seen in one script family does not transfer.**
+  - Haiku had been read only on the Tengyur, where it was catastrophic. Predicted from that, it came out about 0.9
+    too low in every European language (8 of the 10 misses in 6182-claude-xl).
+  - A model × script-family term exists, but it learned its spread from Gemini, where models move together.
+- **Fixes before the planner:**
+  - one round-effect variance per instrument class;
+  - treat a cell as **pooled**, not measured, unless the model was read in that script family.
+
+### Validation 2: preregistered prediction for #6545 (posted before it ran)
+
+The stage-1 predictions for Persian and Sanskrit are in the
+[#6545 comment](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6545#issuecomment-6115425096),
+pinned at commit `34051670e` (`predictions/6545-stage1.json`).
+- **The headline:** in Persian, Pro with full thinking ties 3.8 Flash CLI (P = 0.45; Δ −0.02 [−0.41, +0.35]). In
+  Sanskrit, Pro leans ahead (P = 0.77; Δ +0.17 [−0.19, +0.57]).
+- **Correction and self-preference** cells are prior-only, and wide.
+- **Scoring:** not yet scored. It gets scored when #6545 reports.
+
+### What we know (full fit, Opus judge against the reference; cell mean for an average work)
+
+`est [90%]` · P(best among Flash-Lite, 3 Flash, 3.8 Flash, 3.1 Pro, Sonnet) · basis: measured (≥ 20 pages in that
+language), thin (5–19), pooled (< 5) · pages/works. Opus is a ceiling only, not a lane.
+
+| lang | Flash-Lite 3.1 | 3 Flash | 3.8 Flash CLI | 3.1 Pro (thinking 128) | Sonnet 5.5 | Opus |
+|---|---|---|---|---|---|---|
+| Sanskrit | 3.49 [3.36, 3.64] · 0 · m 30 | 3.91 [3.77, 4.07] · 0 · m 42 | 4.27 [4.14, 4.42] · 0.23 · m 53 | **4.32** [4.15, 4.51] · **0.77** · m 30 | 4.01 [3.85, 4.17] · 0 · m 53 | 4.64 · thin 7 |
+| Pali | 3.80 [3.63, 3.95] · 0 · m 30 | 4.22 · 0 · m 65/31 | 4.60 [4.42, 4.74] · 0.14 · m 70/34 | **4.68** [4.47, 4.87] · **0.85** · m 30 | 4.51 · 0.01 · m 70/34 | 5.04 · thin 6 |
+| Chinese | 3.60 · 0 · m 25 | 4.09 · 0 · m 25 | **4.36** [4.23, 4.49] · **0.60** · m 100 | 4.33 [4.12, 4.53] · 0.39 · m 25 | 4.23 · 0 · m 100 | 4.99 · thin 7 |
+| Tibetan | 3.96 · 0 · m 171/10 | 4.43 · 0 · m 171/10 | **4.73** [4.51, 4.94] · **1.00** · m 171/10 | 4.52 · 0 · m 171/10 | 4.35 · 0 · m 171/10 | 4.74 · m 171/10 |
+| Persian | 3.15 [2.95, 3.32] · 0 · m 24 | 3.84 · 0 · m 24 | **4.13** [3.94, 4.33] · **0.94** · m 23 | 3.99 [3.76, 4.24] · 0.06 · m 23 | 3.70 · 0 · m 23 | 5.12* · thin 5 |
+| Hebrew | 3.90 · 0 · m 30 | 4.26 · 0 · m 30 | **4.52** [4.35, 4.69] · **0.97** · m 29 | 4.36 · 0.03 · m 29 | 4.22 · 0 · m 29 | 5.02* · thin 7 |
+| Arabic | 3.79 · 0 · m 27 | 4.07 · 0 · m 27 | **4.40** [4.24, 4.59] · **0.87** · m 24 | 4.30 · 0.12 · m 24 | 4.23 · 0.01 · m 24 | 5.03* · thin 7 |
+| Aramaic | 3.18 · 0 · thin 5 | 3.53 · 0 · thin 5 | **3.79** [3.39, 4.15] · **0.64** · thin 5 | 3.72 · 0.28 · thin 5 | 3.63 · 0.09 · thin 5 | 4.45 · pooled 1 |
+| Greek | 3.54 · 0 · m 75 | 3.86 · 0 · m 75 | **4.21** [4.09, 4.36] · **0.96** · m 69 | 4.10 · 0.04 · m 69 | 4.02 · 0 · m 69 | 4.33 · thin 10 |
+| Latin | 4.13 · 0 · m 71 | 4.33 · 0 · m 71 | **4.63** [4.51, 4.77] · **0.96** · m 71 | 4.54 · 0.04 · m 71 | 4.47 · 0 · m 71 | 4.85 · m 20 |
+| German | 4.31 · 0 · m 22 | 4.67 · 0 · m 22 | **4.88** [4.70, 5.06] · **0.75** · m 22 | 4.82 · 0.25 · m 22 | 4.67 · 0 · m 22 | 4.96 · thin 7 |
+| French | 4.67 · 0 · thin 14 | 4.64 · 0 · thin 14 | **4.84** [4.63, 5.05] · **0.59** · thin 14 | 4.81 · 0.41 · thin 14 | 4.65 · 0 · thin 14 | 5.04* · thin 5 |
+| Italian | 4.18 · 0 · thin 10 | 4.42 · 0 · thin 10 | **4.72** [4.43, 5.01] · **0.63** · thin 10 | 4.69 · 0.37 · thin 10 | 4.47 · 0 · thin 10 | 4.91 · pooled 4 |
+| Dutch | 4.14 · 0 · thin 7 | 4.34 · 0 · thin 7 | **4.70** [4.34, 4.98] · **0.90** · thin 7 | 4.56 · 0.10 · thin 7 | 4.26 · 0 · thin 7 | 4.79 · pooled 2 |
+| Spanish | 4.32 · 0 · thin 6 | 4.51 · 0 · thin 6 | **4.79** [4.43, 5.09] · **0.61** · thin 6 | 4.75 · 0.39 · thin 6 | 4.54 · 0 · thin 6 | 4.88 · pooled 2 |
+
+\* above 5 because the likelihood is Gaussian. Read it as "at the ceiling of the scale". The ordinal likelihood
+removes this.
+
+**In plain sentences:**
+- For Sanskrit, 3.8 Flash is better than Flash-Lite with more than 99% probability: +0.77 points, 90% interval
+  +0.69 to +0.87, from 30 works read by both.
+- For Sanskrit, 3.1 Pro is ahead of 3.8 Flash with about 77% probability, but only by +0.06 (−0.08 to +0.19). That
+  is with thinking at 128. #6545 tests full thinking.
+- For Persian, 3.8 Flash beats 3.1 Pro (thinking 128) with about 94% probability: +0.14 (0.00 to +0.30), from 23
+  works.
+- For Chinese, 3.8 Flash and 3.1 Pro are a coin flip (60 / 39). The difference is −0.04 (−0.22 to +0.13), and Pro
+  was read on only 25 works.
+- Sonnet is below 3.8 Flash in every language. In Sanskrit it is 0.26 below (−0.37 to −0.15), from 30 works.
+
+### Where more data would most change a routing decision
+
+The ranking uses the expected value of perfect information among the routable engines. The page volumes come
+from `scripts/catalog-coverage/results/canon-gap-status-2026-10.json`: pages transcribed but not translated, plus
+the open canon in page equivalents.
+
+1. **Chinese: 3.8 Flash vs Pro.** P(3.8 best) = 0.60. About 1.4M classics pages are waiting, plus about 2.4M
+   page-equivalents of open canon, so this is by far the largest decision. #6545 stage 2 tests it.
+2. **Sanskrit: Pro vs 3.8.** P(Pro best) = 0.77, on Pro read with thinking off. About 54K pages are waiting, plus
+   about 50K of open canon. #6545 stage 1 tests it.
+3. **Pali: Pro vs 3.8.** P(Pro best) = 0.85. Only about 3.5K pages are waiting, but about 47K of open canon.
+4. **Aramaic:** 5 pages per engine, so every cell is thin. The volume is small (it sits in the Kabbalah row).
+5. **French, Italian and Spanish: 3.8 vs Pro.** P ≈ 0.6 each, but on 6 to 14 pages, and the volume is not broken
+   out in canon-gap-status. The routing question there is really Flash-Lite vs 3.8, and that one is settled
+   (P > 0.99).
+
+Two more gaps are not routing cells, but every claim above depends on them:
+- **Self-preference:** no Gemini judge has ever read our translations.
+- **Opus:** 5 to 7 pages per language outside Latin and the Tengyur.
+
+### Limits
+
+- **Every judge is Claude.** The "Pro judge" numbers are priors, not estimates.
+- **Gaussian, not ordinal.** It ignores the ceiling at 5, so the means near 5 are biased upward.
+- **One chain.** Divergences and R-hat were not checked; the next run should use four chains.
+- **Pro's thinking prior comes from Flash.** The thinking effect for Pro (+0.10 ± 0.10) is borrowed from
+  xlref-t5's Flash measurement (+0.12 [−0.01, 0.25]).
+- **The table holds what the scorers emitted.** canon-ref-6331 stores only the mean of its two judges.
+
+### Verdict
+
+**TRUST ENOUGH TO EXTEND, to OCR first.**
+- **Why:** inside one instrument it predicts held-out rounds at the target coverage and picks the right model 61 of
+  66 times, at an average cost of 0.02 points when it is wrong.
+- **What must change first:**
+  - instrument-level round variance;
+  - "measured" defined per script family;
+  - an ordinal likelihood.
+- **The planner** waits for #6545 to score the preregistered prediction.
+
+Artifacts:
+- `scripts/eval/estimator/` (`build-table.py`, `model.py`, `loo.py`, `predict-6545.py`, `report.py`,
+  `manifest.json`, `predictions/`, `results/report-2026-10-12.json`).
+- The bulk table and posteriors are on the job box: `/data/scratch/sl/jobs/estimator-core-6557/`.
+
 ## 2026-10-11 · Re-reading the 6,494 not-applicable Tengyur pages with a one-turn nudge, checked by two blind readers
 
 **What Derek decided (2026-10-10, #6420).** The 6,494 not-applicable pages are not left on the stored English. They are

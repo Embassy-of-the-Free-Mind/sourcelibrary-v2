@@ -8,7 +8,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { getRoomPrefixFromPathname } from '@/lib/reading-rooms-paths';
 
 /**
@@ -55,4 +55,21 @@ export function useEmbedContext() {
 export function useIsEmbedded() {
   const { isEmbedded } = useEmbedContext();
   return isEmbedded;
+}
+
+/**
+ * True only on a partner subdomain (bph.sourcelibrary.org), never on the apex,
+ * inside an iframe, or under /embed or /rooms. For hiding a link to a path the
+ * proxy refuses on tenant hosts (`src/lib/tenant-global-paths.ts`) without
+ * changing anything the main site renders. False on the server and during
+ * hydration (the server snapshot), so the markup matches; the host never
+ * changes, so there is nothing to subscribe to.
+ */
+const noSubscription = () => () => {};
+export function useIsTenantHost() {
+  return useSyncExternalStore(
+    noSubscription,
+    () => isTenantSubdomain(window.location.host),
+    () => false
+  );
 }

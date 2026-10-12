@@ -55,6 +55,17 @@
  *   ... --sample=150         calibration sample size for the corpus estimate (default 80)
  *   ... --limit=40           rows to print (default 30)
  *   ... --json=/tmp/out.json write the full result set
+ *   ... --ceiling=25         request proposal: a request whose book tail exceeds N pages
+ *                            queues for a person (default 25)
+ *   ... --per-requester=5    request proposal: open requests per email/ip before the rest
+ *                            are flagged as repeats (default 5)
+ *
+ * REQUEST PROPOSAL (#4482). Section 5 judges every open request — not only the ones on a
+ * nearly-finished book — with scripts/lib/translation-request-eligibility.mjs: refused
+ * (dark book or page), for a person (over the ceiling, a repeat, the pipeline paused),
+ * already done, or auto-eligible. `feedback` is a public write, so the gates sit here on
+ * the read side. It PROPOSES a batch and its cost; approving it is a person running the
+ * printed commands. Nothing reads the proposal and acts on it.
  *
  * LIMITS — read before trusting the output:
  *  - A page with OCR is assumed translatable. If the OCR is itself junk (a failed
@@ -66,9 +77,12 @@
  *    Requests submitted without a page URL, or on a book whose id was re-minted, do
  *    not match and the book simply loses its demand ranking — never its listing.
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { translatablePageFilter, isTranslatablePage } from '../lib/translate-core.mjs';
 import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
+import { translateSubmitBrake, brakeStopsBook } from '../lib/translate-batch-seam.mjs';
+import { bookRefFilter } from '../lib/publication.mjs';
+import { requestVerdict, repeatReasons, DEFAULT_PAGE_CEILING, DEFAULT_PER_REQUESTER } from '../lib/translation-request-eligibility.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => {
@@ -82,6 +96,8 @@ const REQUESTED_ONLY = args.includes('--requested-only');
 const VERIFY = parseInt(getArg('verify', '60'), 10);
 const SAMPLE = parseInt(getArg('sample', '80'), 10);
 const JSON_OUT = getArg('json', null);
+const CEILING = parseInt(getArg('ceiling', String(DEFAULT_PAGE_CEILING)), 10);
+const PER_REQUESTER = parseInt(getArg('per-requester', String(DEFAULT_PER_REQUESTER)), 10);
 
 /** Measured 2026-08-31 over 55 pages of realtime translation. */
 // Translation runs on the realtime lane, not batch — price it as such.
@@ -95,16 +111,18 @@ const db = client.db('bookstore');
 // Open translation-requests carry the page URL the reader was on.
 const requests = await db.collection('feedback')
   .find({ addressed: { $ne: true }, message: /Translation requested for/ })
-  .project({ message: 1, page: 1, email: 1, created_at: 1 })
+  .project({ message: 1, page: 1, email: 1, ip_hash: 1, created_at: 1 })
   .toArray();
 
 const demand = new Map(); // book_id -> [{page_id, email, at}]
+const parsedRequests = []; // every request with a page URL, for the section-5 proposal
 for (const r of requests) {
   const m = (r.page || '').match(/\/book\/([^/?#]+)\/page\/([a-f0-9]{24})/);
   if (!m) continue;
   const list = demand.get(m[1]) || [];
   list.push({ pageId: m[2], email: r.email || null, at: r.created_at });
   demand.set(m[1], list);
+  parsedRequests.push({ feedbackId: String(r._id), bookRef: m[1], pageId: m[2], email: r.email || null, ip_hash: r.ip_hash || null, at: r.created_at });
 }
 console.log(`Open translation-requests with a page URL: ${[...demand.values()].flat().length} across ${demand.size} book(s)\n`);
 
@@ -286,9 +304,69 @@ if (candidates.length) {
   console.log(`  node scripts/workers/sync-books-catalog.mjs`);
 }
 
+// ── 5. Request proposal (#4482) — what a person could approve in one go ───────
+// Every open request, judged on the read side. Read-only: the verdicts are printed and
+// written to --json, never stored, so no job can act on them.
+const brake = await translateSubmitBrake(db);
+const repeats = repeatReasons(parsedRequests, { perRequester: PER_REQUESTER });
+const bookCache = new Map(); // bookRef -> { book, tail, tailPages }
+const proposal = [];
+for (const [i, r] of parsedRequests.entries()) {
+  if (!bookCache.has(r.bookRef)) {
+    const book = await db.collection('books').findOne(
+      { $or: [...bookRefFilter(r.bookRef).$or, { slug: r.bookRef }] },
+      { projection: { id: 1, title: 1, slug: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1, pages_count: 1, pipeline_auto: 1 } },
+    );
+    let tailPages = [];
+    if (book) {
+      const pages = await db.collection('pages')
+        .find({ book_id: book.id || String(book._id), ...translatablePageFilter() })
+        .project({ page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.unreadable': 1, 'translation.data': 1, 'translation.recitation_blocked': 1, 'translation.safety_blocked': 1 })
+        .toArray();
+      tailPages = pages.filter(p => isTranslatablePage(p).ok && (p.translation?.data || '').length <= 30).map(p => p.page_number);
+    }
+    bookCache.set(r.bookRef, { book, tail: tailPages.length, tailPages });
+  }
+  const { book, tail } = bookCache.get(r.bookRef);
+  const bookId = book ? (book.id || String(book._id)) : r.bookRef;
+  // The page must belong to the book the URL names — a page id from another book is not
+  // a request for this one.
+  const page = book ? await db.collection('pages').findOne(
+    { book_id: bookId, $or: [{ id: r.pageId }, { _id: new ObjectId(r.pageId) }] },
+    { projection: { page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.unreadable': 1, 'translation.data': 1, 'translation.recitation_blocked': 1, 'translation.safety_blocked': 1 } },
+  ) : null;
+  const v = requestVerdict({ book, page, tail, brakeStop: brakeStopsBook(brake, bookId), repeat: repeats.get(i), ceiling: CEILING });
+  proposal.push({ ...r, book_id: bookId, title: book?.title ?? null, slug: book?.slug ?? null, page_number: page?.page_number ?? null, ...v });
+}
+
+const byVerdict = v => proposal.filter(p => p.verdict === v);
+// Cost is per BOOK: honouring a request runs the book's whole tail, so two requests in
+// one book cost the tail once.
+const autoBooks = new Map();
+for (const p of byVerdict('auto')) autoBooks.set(p.book_id, p);
+const autoPages = [...autoBooks.values()].reduce((n, p) => n + p.pages, 0);
+
+console.log(`\n=== Request proposal (#4482): ${proposal.length} open request(s) with a page URL ===`);
+console.log(`Pause: ${brake.stop ?? (brake.scopeIds ? `global pause, ${brake.scopeIds.size} book(s) in a selective-unpause scope` : 'not paused')}  ·  ceiling ${CEILING} pages  ·  ${PER_REQUESTER} per requester`);
+for (const [verdict, label] of [['auto', 'AUTO-ELIGIBLE'], ['human', 'FOR A PERSON'], ['refuse', 'REFUSED'], ['done', 'ALREADY DONE']]) {
+  const rows = byVerdict(verdict);
+  if (!rows.length) continue;
+  console.log(`\n  ${label} (${rows.length})`);
+  for (const p of rows) {
+    console.log(`    ${p.book_id}  p.${p.page_number ?? '?'}  ${(p.title || '').slice(0, 44).padEnd(46)}${p.reason ? ` — ${p.reason}` : ` — tail ${p.pages}p`}  [fb ${p.feedbackId.slice(-6)}]`);
+  }
+}
+console.log(`\nAuto-eligible batch: ${autoBooks.size} book(s), ${autoPages} page(s) ≈ $${(autoPages * COST_PER_PAGE).toFixed(2)}`);
+if (autoBooks.size) {
+  console.log(`Approving it is running these — this script does not:`);
+  for (const p of autoBooks.values()) {
+    console.log(`  node --env-file=.env.production.local scripts/batch/realtime-translate.mjs --book-id=${p.book_id} --book-limit=1 --limit=${p.pages}`);
+  }
+}
+
 if (JSON_OUT) {
   const fs = await import('node:fs');
-  fs.writeFileSync(JSON_OUT, JSON.stringify({ generated_at: new Date().toISOString(), threshold: THRESHOLD, max_tail: MAX_TAIL, candidates }, null, 2));
+  fs.writeFileSync(JSON_OUT, JSON.stringify({ generated_at: new Date().toISOString(), threshold: THRESHOLD, max_tail: MAX_TAIL, candidates, request_proposal: { brake: { stop: brake.stop, scope_books: brake.scopeIds?.size ?? null }, ceiling: CEILING, per_requester: PER_REQUESTER, auto_pages: autoPages, auto_cost_usd: +(autoPages * COST_PER_PAGE).toFixed(4), requests: proposal } }, null, 2));
   console.log(`\nWrote ${JSON_OUT}`);
 }
 

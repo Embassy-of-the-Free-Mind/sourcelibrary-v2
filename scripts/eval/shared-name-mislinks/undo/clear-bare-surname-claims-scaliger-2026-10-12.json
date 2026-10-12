@@ -1,0 +1,40 @@
+{
+ "sweep": "clear-bare-surname-claims-5950",
+ "applied_at": {
+  "$date": "2026-10-12T01:16:30.890Z"
+ },
+ "docs": [
+  {
+   "_id": "6952b1a9c263a0240a48f3b0",
+   "name": "Scaliger",
+   "removed": {
+    "wikidata_id": "Q441066",
+    "wikidata_birth_date": "1484-04-23",
+    "wikidata_death_date": "1558-10-21",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "portrait_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Julius_Caesar_Scaliger_-_Imagines_philologorum.jpg/330px-Julius_Caesar_Scaliger_-_Imagines_philologorum.jpg",
+    "description": "A name referring to a family of influential Renaissance scholars, most notably Julius Caesar Scaliger and Joseph Justus Scaliger, known for their work in philology, chronology, and natural philosophy.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Julius_Caesar_Scaliger",
+    "birth_place": {
+     "city": "Riva del Garda",
+     "lat": 45.883333333,
+     "lng": 10.85,
+     "country": "Italy"
+    },
+    "death_place": {
+     "city": "Agen",
+     "lat": 44.203055555,
+     "lng": 0.618611111,
+     "country": "France"
+    },
+    "aliases": [
+     "Julius Caesar Scaliger",
+     "Joseph Justus Scaliger",
+     "Scaligerus"
+    ]
+   }
+  }
+ ]
+}

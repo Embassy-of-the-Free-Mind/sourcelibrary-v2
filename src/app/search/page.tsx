@@ -17,7 +17,7 @@ import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
-import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -111,6 +111,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // Host-based, unlike `embed`: true on a partner subdomain whichever route
   // rendered this page. The Librarian is refused there (tenant-global-paths).
   const isTenantSurface = useIsEmbedded();
+  // Host-only: the known-entity card must not offer a feature the proxy
+  // refuses on this host (the Librarian, #4330); the apex is unchanged.
+  const onTenantHost = useIsTenantHost();
 
   // The locale comes from the URL prefix; the `lang` prop that the `/es/search`
   // twin passes is the explicit form of the same answer. Defaulting to the
@@ -869,8 +872,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // are English editorial copy with no localized map behind them, so the card
   // would be an English block above Spanish results.
   const knownEntity = useMemo(
-    () => (embed || localized ? null : matchKnownEntity(query, { collections: collectionsList })),
-    [embed, localized, query, collectionsList]
+    () => (embed || localized ? null : matchKnownEntity(query, { collections: collectionsList, onTenantHost })),
+    [embed, localized, query, collectionsList, onTenantHost]
   );
 
   // Browse mode: fetch books when no query

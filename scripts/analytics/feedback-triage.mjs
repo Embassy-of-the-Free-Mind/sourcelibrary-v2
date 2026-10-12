@@ -35,8 +35,24 @@ const CLASSIFIERS = [
   ['metadata-correction', /\bnot \d{3,4}\b|wrong|incorrect|should be|actually the|you (claim|are using)|edition|impressum|provenance|\bUBN\b|repeatable|separate field|two separate/i],
   ['feature-request', /feature request|would be (nice|great|good)|please add|could you add|suggestion|i.?d like|i wish|make it easier|add a (button|field|way)/i],
 ];
+// Partner (tenant) feedback. `tenant_slug` is resolved server-side by
+// POST /api/feedback (#4977) — a string is the tenant, null is a positive
+// "global". Rows without the field predate it (17 were backfilled 2026-08-07
+// with tenant_source 'backfill-page-heuristic'); only those fall back to the
+// page path, which the client sends and which says nothing about the host: on
+// bph.sourcelibrary.org the catalogue is '/catalog/…', but so is the global
+// '/catalog/scholar'.
+function tenantOf(r) {
+  if (r.tenant_slug !== undefined) return r.tenant_slug;
+  const page = r.page || '';
+  const m = page.match(/^\/(?:embed\/)?(bph)(?:\/|$)/);
+  if (m) return m[1];
+  if (page.startsWith('/catalog/') && !/^\/catalog\/scholar(?:\/|$)/.test(page)) return 'bph';
+  return null;
+}
+
 function classify(r) {
-  if ((r.page || '').startsWith('/catalog/')) return 'partner-cms';
+  if (tenantOf(r)) return 'partner-cms';
   const m = (r.message || '');
   for (const [label, re] of CLASSIFIERS) if (re.test(m)) return label;
   return 'other';
@@ -98,7 +114,8 @@ await withMongo(async (db) => {
       for (const r of items) {
         const email = (r.email || '').includes('@') ? ` ✉ ${r.email}` : '';
         const state = r.read ? '[read]' : '[unread]';
-        console.log(`- ${r._id}  ${new Date(r.created_at).toISOString().slice(0, 10)} ${state}${email}  ${r.name ? '~' + r.name : ''}`);
+        const tenant = tenantOf(r) ? `  [${tenantOf(r)}${r.tenant_slug === undefined ? '?' : ''}]` : '';
+        console.log(`- ${r._id}  ${new Date(r.created_at).toISOString().slice(0, 10)} ${state}${email}${tenant}  ${r.name ? '~' + r.name : ''}`);
         console.log(`    page: ${r.page || '?'}`);
         console.log(`    ${(r.message || '').replace(/\s+/g, ' ').trim().slice(0, 200)}`);
       }
