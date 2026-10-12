@@ -111,7 +111,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { _id: 0, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_source: 1 } },
+      { projection: { _id: 0, id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_source: 1 } },
     );
     if (!book?.id) return json({ ok: false, reason: 'book-not-found' }, 404);
 
@@ -133,7 +133,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         .slice(0, PAGE_KEEP));
     if (!pages.length) return json({ ok: false, reason: 'no-pages' });
 
-    const pick = selectScoredCoverPage(pages, book.title);
+    const pick = selectScoredCoverPage(pages, book.title, book.author);
     if (!pick) return json({ ok: false, reason: 'no-cover-page' });
 
     let coverPage: CoverCandidatePage = pick.page;
