@@ -222,6 +222,11 @@ async function packets() {
 // ── adjudicate ─────────────────────────────────────────────────────────────────────────────────────────────────────
 // Sealed like scripts/eval/second-reader/run-readers.sh: one folder per chunk holding only the brief, the items and
 // their images; `--restricted --tools Read Write` removes Bash and confines reads to the folder.
+// The adjudicator is Opus on the SUBSCRIPTION. Run under `node --env-file=.env.production.local` (for Mongo), the child
+// inherits ANTHROPIC_API_KEY, and `claude -p` prefers an API key over the subscription login: every chunk then goes to
+// the paid API, or fails 401 when the key is dead (2026-10-12, #6553). Same strip as scripts/eval/stale-gate-6567.
+function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
+
 function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md') {
   const name = path.basename(chunkFile, '.json');
   const sealed = path.join(process.env.TMPDIR || '/tmp', 'ocr-convergence-sealed', path.basename(path.dirname(path.dirname(chunkFile))) + '-' + (SET || 'x') + '-' + brief.replace(/\.md$/, ''), name);
@@ -235,7 +240,7 @@ function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md')
   return new Promise((resolve) => {
     const t0 = Date.now();
     const out = fs.openSync(path.join(metaDir, `${name}.jsonl`), 'w');
-    const child = spawn('claude', ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--output-format', 'stream-json', '--verbose'], { cwd: sealed, stdio: ['ignore', out, out] });
+    const child = spawn('claude', ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--output-format', 'stream-json', '--verbose'], { cwd: sealed, stdio: ['ignore', out, out], env: claudeEnv() });
     const timer = setTimeout(() => child.kill('SIGKILL'), 60 * 60 * 1000);
     child.on('close', (code) => {
       clearTimeout(timer); fs.closeSync(out);
