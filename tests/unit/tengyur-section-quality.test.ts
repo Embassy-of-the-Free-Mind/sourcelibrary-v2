@@ -39,13 +39,24 @@ describe('tengyurSection', () => {
 });
 
 describe('tengyurNoteSentences', () => {
-  it('gives a rated section its own figures and names what goes wrong', () => {
+  it('leads a rated section with its reversal/agent rate, n and date, then names what else goes wrong', () => {
     const q = TENGYUR_QUALITY.sections['Pramāṇa'];
     const s = tengyurNoteSentences({ title: 'བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ' }, t, 'en')!;
     expect(s).toHaveLength(2);
     expect(s[0]).toContain(`${q.n} random Pramāṇa pages`);
-    expect(s[0]).toContain(`${Math.round(q.light!)}% needed only light edits`);
-    expect(s[1]).toContain(`${Math.round(q.rev_agent_per100!)} statements per 100 pages`);
+    expect(s[0]).toContain(`${Math.round(q.rev_agent_per100!)} statements per 100 pages`);
+    expect(s[1]).toMatch(/^Also common: /);
+  });
+
+  // #6203: the light-edit share did not separate the draft from 84000's human English, so no
+  // version of the note may print it as the headline.
+  it('never quotes the light-edit share', () => {
+    for (const word of Object.keys(TENGYUR_QUALITY.section_words)) {
+      for (const loc of ['en', 'es'] as const) {
+        const s = tengyurNoteSentences({ title: `བསྟན་འགྱུར། སྡེ་དགེ། ${word}། ཀ` }, READER_UI_STRINGS[loc].tengyurNote, loc);
+        expect(s?.join(' ') ?? '').not.toMatch(/light edits|retoques/);
+      }
+    }
   });
 
   it('gives no rate for a section below the threshold', () => {

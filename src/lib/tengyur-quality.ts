@@ -90,15 +90,15 @@ export function tengyurNoteSentences(
   const name = t.sectionNames[section] ?? section;
   const date = measuredLabel(locale);
   const r = Math.round;
-  if (!q || !q.rated || q.light == null || q.rev_agent_per100 == null) {
+  if (!q || !q.rated || q.rev_agent_per100 == null) {
     const s = TENGYUR_QUALITY.sample;
-    return [t.tooFew({ section: name, n: q?.n ?? 0, of: s.n, date, light: r(s.light), revAgent: r(s.rev_agent_per100_adjusted) })];
+    return [t.tooFew({ section: name, n: q?.n ?? 0, of: s.n, date, revAgent: r(s.rev_agent_per100_adjusted) })];
   }
   const kinds = namedKinds(q).map((k) =>
     k === 'term' && section === 'Vinaya' ? t.vinayaTerms(r(TENGYUR_QUALITY.defects.vinaya_pali_pct)) : t.kinds[k]);
-  return [
-    t.rated({ section: name, n: q.n, date, light: r(q.light), work: r(q.work ?? 0), specialist: r(q.specialist ?? 0) }),
-    // Pramāṇa: the opponent-voice error the reviewers and the spot check named (#5829 Results 2, 5).
-    t.faults({ kinds, revAgent: r(q.rev_agent_per100), voice: section === 'Pramāṇa' }),
-  ];
+  // The reversal/agent rate leads and the light/work split is left out: it did not separate the
+  // draft from 84000's human English (#5829 Result 3; measurement-validity.md, #6203).
+  // Pramāṇa: the opponent-voice error the reviewers and the spot check named (#5829 Results 2, 5).
+  const rated = t.rated({ section: name, n: q.n, date, revAgent: r(q.rev_agent_per100), voice: section === 'Pramāṇa' });
+  return kinds.length ? [rated, t.faults({ kinds })] : [rated];
 }
