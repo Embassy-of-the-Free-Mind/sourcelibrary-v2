@@ -32,6 +32,75 @@
  */
 export const UNDERSPECIFIED_MIN_EXTENDERS = 5;
 
+/** The fold every author-string matcher here uses: NFD, marks off, lower-case. */
+const foldName = (s) => String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+/**
+ * Corpus evidence for the `underspecified` rule, as the function
+ * `classifyVariant` wants: for a bare (single-token) form, how many DISTINCT
+ * people carry an author string that extends it.
+ *
+ * Lives here, not in the audit, because the audit was the only caller that had
+ * it — so the detector could see "Johannes" and the backfill that actually
+ * writes the links could not (#4313). One builder, so the two cannot drift.
+ *
+ * `authorStrings` is every distinct `books.author` value (texts, not artworks).
+ */
+export function buildExtenderIndex(authorStrings) {
+  const byForm = new Map();
+  for (const raw of authorStrings) {
+    const n = foldName(raw);
+    const head = n.split(/[\s,]+/)[0];
+    if (!head || head === n) continue;          // the bare form is not its own extender
+    if (!byForm.has(head)) byForm.set(head, new Set());
+    // Key by the folded remainder so two spellings of one person count once.
+    byForm.get(head).add(n.replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean).sort().join(' '));
+  }
+  return (v) => byForm.get(foldName(v))?.size ?? 0;
+}
+
+/**
+ * Bare forms the `underspecified` rule refuses that ARE one person's name, each
+ * pinned to the one doc allowed to match on it. Read by eye against a production
+ * dry run (2026-10-12, #4313): the extender count cannot tell "Plato" (8 —
+ * "Plato; Ficino", "Plato (trans. …)") from "Gregor" (5), because a famous
+ * mononym collects compounds exactly as a forename collects surnames. A pattern
+ * is a net, not a verdict, so the exceptions are a reviewed list, not a rule.
+ *
+ * Left OUT on purpose, though anchored docs claim them: Hugo, Apollonius,
+ * Valerius, Adam, Justin, Philo, Athanasius (several people each) and
+ * Theophrastus (in this corpus, as often Paracelsus as the Peripatetic).
+ * Keys are folded (`foldName`); the slug pin means another doc carrying the
+ * same form as an alias stays refused.
+ */
+export const REVIEWED_MONONYMS = {
+  aristoteles: 'aristotle',
+  aristotle: 'aristotle',
+  paracelsus: 'paracelsus',
+  plato: 'plato',
+  vitruvius: 'vitruvius',
+  pausanias: 'pausanias',
+  polybius: 'polybius',
+  vyasa: 'vyasa',
+  regiomontanus: 'regiomontanus-johannes-muller',
+};
+
+/**
+ * May the doc `slug` use the name form `raw` as a MATCH KEY? `classifyVariant`
+ * plus the reviewed-mononym exception — the one question every writer that
+ * links by name has to ask (#4313: the backfill never asked it).
+ *
+ * Returns the classifier's verdict, with `matchable` true for a reviewed mononym
+ * on its own doc.
+ */
+export function matchKeyVerdict(raw, slug, opts = {}) {
+  const c = classifyVariant(raw, opts);
+  if (c.shape === 'underspecified' && REVIEWED_MONONYMS[foldName(raw)] === slug) {
+    return { ...c, matchable: true, reviewed: true };
+  }
+  return c;
+}
+
 /** Separators that mean "and then a different person". */
 const MULTI_SEP = /\s*[|;]\s*|\s+&\s+|\s*,\s+(?:and|et)\s+/;
 
