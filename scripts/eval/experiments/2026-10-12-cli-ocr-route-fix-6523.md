@@ -1,8 +1,8 @@
 ---
 stage: ocr
 measure: accuracy
-languages: [Latin, English]
-scripts: [latin]
+languages: [la, en]
+scripts: [Latn]
 canons: []
 n_books: null
 n_pages: 191
