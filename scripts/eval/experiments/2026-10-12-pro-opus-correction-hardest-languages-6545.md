@@ -7,7 +7,7 @@ canons: []
 n_books: 132
 n_pages: 132
 verdict: "3.1 Pro with full thinking does not beat 3.8 Flash given the same prompt (Opus judge −0.02 [−0.23, +0.19], 53 pages). Opus as a translator beats 3.8 Flash in all five languages under the cross-family Pro judge (+0.47 to +0.52). Correcting the stored English helps, but less than retranslating with Opus."
-status: proposed
+status: undecided
 decision: "Route Persian, Sanskrit, Chinese, Greek and Hebrew translation to Opus (claude -p) where subscription capacity allows; otherwise keep 3.8 Flash. Not 3.1 Pro. No correction pass (#6545)"
 superseded_by: null
 issue: [6545, 6553]
@@ -243,6 +243,7 @@ A judging round has its own level. That is why this experiment compares only wit
   - Pro's default thinking at 60 s a page drew down the Gemini quota quickly.
   - Neither cost is a dollar figure, and neither is measured here as a backlog rate.
 - C38 was run on 8 Oct with no marker suffix. PRO and OPUS are compared fairly only against C38S, which got the same prompt.
+- The correctors' page images were fetched as `display_photo`, which for a page split from a spread is the whole spread. The 3 such pages in the set are all in stage 2, where no corrector was judged, so no reported number is affected. `fetch-images.mjs` now uses `getPageSource`.
 - In 2 of 132 pages the planter found no site; those panels have 9 controls instead of 10. One planted pair swap (two coordinated names) was excluded as not a meaning error.
 
 ### Routing
