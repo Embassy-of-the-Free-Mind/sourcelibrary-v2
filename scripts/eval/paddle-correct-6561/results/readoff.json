@@ -1,0 +1,5930 @@
+{
+ "controls": {
+  "gem": {
+   "no answer": 59
+  },
+  "opus": {
+   "true": 38,
+   "not found": 1,
+   "no answer": 2
+  }
+ },
+ "per_arm": {
+  "opus-correct": {
+   "judged": 111,
+   "answered": 0,
+   "no answer": 111,
+   "unsupported_share": null
+  },
+  "opus-redo": {
+   "judged": 139,
+   "answered": 0,
+   "no answer": 139,
+   "unsupported_share": null
+  },
+  "pro-correct": {
+   "judged": 58,
+   "answered": 55,
+   "kanripo": 34,
+   "paddle": 20,
+   "neither": 1,
+   "no answer": 3,
+   "unsupported_share": 0.364
+  },
+  "flashhigh-correct": {
+   "judged": 54,
+   "answered": 54,
+   "kanripo": 38,
+   "neither": 2,
+   "paddle": 14,
+   "unsupported_share": 0.259
+  }
+ },
+ "items": [
+  {
+   "uid": "A-pil004",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "人為之語",
+   "after": "丨丨丨丨",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil004",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "別及行役初還",
+   "after": "丨丨丨丨時稱",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil004",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "覽弟舉亦有重",
+   "after": "時人為之語曰",
+   "paddle": "舉",
+   "kanripo": "譽",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil004",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "時人為之語曰",
+   "after": "丨丨丨丨丨丨",
+   "paddle": "丨丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil004",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "人為之語",
+   "after": "丨丨丨丨",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil004",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "覽弟舉亦有重",
+   "after": "時人為之語曰",
+   "paddle": "舉",
+   "kanripo": "譽",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "丨丨丨丨丨此",
+   "after": "窠也第三物觳",
+   "paddle": "蠡",
+   "kanripo": "蠭",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "食利在昏夜此",
+   "after": "也舉坐驚喜觳",
+   "paddle": "鼈齏",
+   "kanripo": "鼅鼄",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "乎私乎或對曰",
+   "after": "丨地丨丨丨丨",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "乎或對曰丨丨",
+   "after": "丨丨丨丨地丨",
+   "paddle": "",
+   "kanripo": "地",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "曰丨丨地丨丨",
+   "after": "丨地丨丨牛鬭",
+   "paddle": "地",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "丨地丨丨丨丨",
+   "after": "丨丨牛鬭晉書",
+   "paddle": "",
+   "kanripo": "地",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 7,
+   "control": false,
+   "before": "丨丨地丨丨牛",
+   "after": "晉書殷仲堪傳",
+   "paddle": "鬬",
+   "kanripo": "鬭",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 8,
+   "control": false,
+   "before": "丨丨丨丨丨乃",
+   "after": "馬而祭之赴軒",
+   "paddle": "般",
+   "kanripo": "殺",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 9,
+   "control": true,
+   "before": "草中射獵",
+   "after": "蟲丨丨丨",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "gem",
+   "n": 10,
+   "control": false,
+   "before": "流血敬則惡之",
+   "after": "道士卜道士曰",
+   "paddle": "諸",
+   "kanripo": "詣",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "食利在昏夜此",
+   "after": "也舉坐驚喜觳",
+   "paddle": "鼈齏",
+   "kanripo": "鼅鼄",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "在華林園聞蝦",
+   "after": "聲謂左右曰此",
+   "paddle": "墓",
+   "kanripo": "蟆",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "neither"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "丨丨丨丨丨乃",
+   "after": "馬而祭之赴軒",
+   "paddle": "般",
+   "kanripo": "殺",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "opus",
+   "n": 4,
+   "control": true,
+   "before": "草中射獵",
+   "after": "蟲丨丨丨",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil005",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "流血敬則惡之",
+   "after": "道士卜道士曰",
+   "paddle": "諸",
+   "kanripo": "詣",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil010",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "煎至六分去滓",
+   "after": "服不計時候人",
+   "paddle": "溫",
+   "kanripo": "温",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil010",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "痰壅吐逆",
+   "after": "能下食人",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil010",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "服不計時候人",
+   "after": "散治上氣胃中",
+   "paddle": "參",
+   "kanripo": "参",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil010",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "逆不能下食人",
+   "after": "一兩去蘆麥門",
+   "paddle": "參",
+   "kanripo": "参",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil011",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "胃胃胃婁婁婁",
+   "after": "五胃胃胃昴畢",
+   "paddle": "",
+   "kanripo": "七十",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil011",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "胃胃昴畢畢畢",
+   "after": "參參畢畢畢畢",
+   "paddle": "筠",
+   "kanripo": "觜",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil011",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "參畢畢畢畢七",
+   "after": "六畢畢畢參參",
+   "paddle": "",
+   "kanripo": "十",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil011",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "翼翼翼翼翼七",
+   "after": "九翼翼翼翼翼",
+   "paddle": "",
+   "kanripo": "十",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil011",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "胃胃昴畢畢畢",
+   "after": "參參畢畢畢畢",
+   "paddle": "筠",
+   "kanripo": "觜",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil015",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "初謫左衛",
+   "after": "將軍容州",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil015",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "德狙獷服甲之",
+   "after": "弓弭丨丨陸游",
+   "paddle": "橐",
+   "kanripo": "櫜",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "丨丨小丨丨往",
+   "after": "者皆怪此樹非",
+   "paddle": "來",
+   "kanripo": "来",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "遺言餌术黃精",
+   "after": "丨丨丨丨意甚",
+   "paddle": "丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "採朝蘭何可一",
+   "after": "無此君晉書王",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "但嘯詠指竹曰",
+   "after": "丨丨丨丨耶負",
+   "paddle": "",
+   "kanripo": "丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "為琅邪時所種",
+   "after": "皆已丨丨慨然",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "邪時所種丨皆",
+   "after": "丨丨慨然曰木",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "gem",
+   "n": 7,
+   "control": true,
+   "before": "有聖帝其",
+   "after": "生皮可衣",
+   "paddle": "木",
+   "kanripo": "木",
+   "fake": "本",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "遺言餌术黃精",
+   "after": "丨丨丨丨意甚",
+   "paddle": "丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "有聖帝其",
+   "after": "生皮可衣",
+   "paddle": "木",
+   "kanripo": "木",
+   "fake": "本",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "採朝蘭何可一",
+   "after": "無此君晉書王",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil016",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "但嘯詠指竹曰",
+   "after": "丨丨丨丨耶負",
+   "paddle": "",
+   "kanripo": "丨丨丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "丨丨丨丨",
+   "after": "鹿踰海素",
+   "paddle": "白",
+   "kanripo": "白",
+   "fake": "自",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "映阜宋書樂志",
+   "after": "鳴鳳棲柯同歸",
+   "paddle": "",
+   "kanripo": "丨丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "丨丨丨丨鳴鳳",
+   "after": "柯同歸放勲義",
+   "paddle": "樓",
+   "kanripo": "棲",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "映阜宋書樂志",
+   "after": "鳴鳳棲柯同歸",
+   "paddle": "",
+   "kanripo": "丨丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "丨丨丨丨鳴鳳",
+   "after": "柯同歸放勲義",
+   "paddle": "樓",
+   "kanripo": "棲",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil017",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "丨丨丨丨",
+   "after": "鹿踰海素",
+   "paddle": "白",
+   "kanripo": "白",
+   "fake": "自",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil021",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "物書跡如淡墨",
+   "after": "丨丨丨丨丨丨",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil021",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "一小溪忽",
+   "after": "一葉大如",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "丨丨丨以故名",
+   "after": "端諾爾鄂端譯",
+   "paddle": "郚",
+   "kanripo": "鄂",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "故名鄂端諾爾",
+   "after": "端譯言星宿也",
+   "paddle": "郢",
+   "kanripo": "鄂",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "流千里見",
+   "after": "悶磨黎山",
+   "paddle": "上",
+   "kanripo": "上",
+   "fake": "止",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "門見二水交流",
+   "after": "丨丨丨丨丨滙",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "丨丨丨以故名",
+   "after": "端諾爾鄂端譯",
+   "paddle": "郚",
+   "kanripo": "鄂",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "故名鄂端諾爾",
+   "after": "端譯言星宿也",
+   "paddle": "郢",
+   "kanripo": "鄂",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil026",
+   "judge": "opus",
+   "n": 4,
+   "control": true,
+   "before": "流千里見",
+   "after": "悶磨黎山",
+   "paddle": "上",
+   "kanripo": "上",
+   "fake": "止",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil034",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "如江南李國主",
+   "after": "月盡通金史僕",
+   "paddle": "閱",
+   "kanripo": "閲",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil034",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "直字及古算法",
+   "after": "能丨之握籌布",
+   "paddle": "一一",
+   "kanripo": "丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil034",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "算法丨丨丨能",
+   "after": "之握籌布畫目",
+   "paddle": "一",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil034",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "郭守敬傳",
+   "after": "父榮通五",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil035",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "之者密知昱激",
+   "after": "對曰劉勝位為",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil035",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "為大夫見禮上",
+   "after": "而知善不薦聞",
+   "paddle": "賔",
+   "kanripo": "賓",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil035",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "之賢而密達之",
+   "after": "道失節之士而",
+   "paddle": "進",
+   "kanripo": "違",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil035",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "失節之士而密",
+   "after": "之使明府賞刑",
+   "paddle": "紏",
+   "kanripo": "糾",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil035",
+   "judge": "gem",
+   "n": 5,
+   "control": true,
+   "before": "若衡等輩",
+   "after": "可多得激",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil036",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "洛卿乃居僚首",
+   "after": "丨丨丨丨丨丨",
+   "paddle": "丨丨丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil036",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "容當世見劉湛",
+   "after": "景仁專當要任",
+   "paddle": "陰",
+   "kanripo": "殷",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil036",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "范泰嘗衆",
+   "after": "讓誚鮮之",
+   "paddle": "中",
+   "kanripo": "中",
+   "fake": "巾",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil036",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "洛卿乃居僚首",
+   "after": "丨丨丨丨丨丨",
+   "paddle": "丨丨丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil036",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "范泰嘗衆",
+   "after": "讓誚鮮之",
+   "paddle": "中",
+   "kanripo": "中",
+   "fake": "巾",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil038",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "邁容齋四筆梁",
+   "after": "八十二歲雍熙",
+   "paddle": "瀨",
+   "kanripo": "灝",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil038",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "干某月某",
+   "after": "生祖諱某",
+   "paddle": "日",
+   "kanripo": "日",
+   "fake": "曰",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil038",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "邁容齋四筆梁",
+   "after": "八十二歲雍熙",
+   "paddle": "瀨",
+   "kanripo": "灝",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil038",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "干某月某",
+   "after": "生祖諱某",
+   "paddle": "日",
+   "kanripo": "日",
+   "fake": "曰",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "金縷猶歌空折",
+   "after": "又陳子昂詩世",
+   "paddle": "技",
+   "kanripo": "枝",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "石粉貯丨丨丨",
+   "after": "萬車賜當制學",
+   "paddle": "丨",
+   "kanripo": "一",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "日沒心情為寄",
+   "after": "丨丨丨一瓶惱",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "丨陸游詩兀兀",
+   "after": "丨丨未醒鹿胎",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "韓琦至榻前酌",
+   "after": "丨丨丨一大杯",
+   "paddle": "丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "上上和諸香作",
+   "after": "大如芥子每集",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 7,
+   "control": false,
+   "before": "味逾醇醪謂之",
+   "after": "丨丨丨又謂之",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 8,
+   "control": false,
+   "before": "記承平時滑州",
+   "after": "丨丨丨為天下",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 9,
+   "control": true,
+   "before": "子昂詩世",
+   "after": "拘目見酣",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "gem",
+   "n": 10,
+   "control": false,
+   "before": "一飲至數升名",
+   "after": "丨丨丨不知何",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "金縷猶歌空折",
+   "after": "又陳子昂詩世",
+   "paddle": "技",
+   "kanripo": "枝",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "翰林學士月給",
+   "after": "兵部寄以詩云",
+   "paddle": "內醞",
+   "kanripo": "内醖",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "子昂詩世",
+   "after": "拘目見酣",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "上上和諸香作",
+   "after": "大如芥子每集",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil040",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "靖州蠻飲酒以",
+   "after": "一飲至數升名",
+   "paddle": "臭",
+   "kanripo": "鼻",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "暕見之曰吾家",
+   "after": "也貧賤家兒忽",
+   "paddle": "一一",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "敏傳㑹稽",
+   "after": "陳氏有三",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "室值歲飢三女",
+   "after": "於西湖丨丨丨",
+   "paddle": "一一",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "女丨丨於西湖",
+   "after": "更日至市貨賣",
+   "paddle": "一一",
+   "kanripo": "丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "敏傳㑹稽",
+   "after": "陳氏有三",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil043",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "暕見之曰吾家",
+   "after": "也貧賤家兒忽",
+   "paddle": "一一",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "出震其位",
+   "after": "魯山元劉因王",
+   "paddle": "",
+   "kanripo": "丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "孰不娶終身曰",
+   "after": "丨丨之丨道州",
+   "paddle": "丨丨丨丨丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "丨李仲元法言",
+   "after": "丨丨丨者不屈",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "何人在只",
+   "after": "華亭丨丨",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "僠丨丨丨第五",
+   "after": "漢書鄭康成傳",
+   "paddle": "",
+   "kanripo": "元",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "何人在只",
+   "after": "華亭丨丨",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil048",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "僠丨丨丨第五",
+   "after": "漢書鄭康成傳",
+   "paddle": "",
+   "kanripo": "元",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil049",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "漆九事皆",
+   "after": "詞膠漆取",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil049",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "酉陽雜俎北朝",
+   "after": "禮婿丨丨日婦",
+   "paddle": "婦",
+   "kanripo": "婚",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "㣲晉書虞喜傳",
+   "after": "丨丨丨有弗及",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "學不營産業常",
+   "after": "丨丨丨雖家無",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "少孤貧為",
+   "after": "傭牧羊每",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "流涕時有暇即",
+   "after": "丨丨丨丨鑽堅",
+   "paddle": "",
+   "kanripo": "丨丨丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "少孤貧為",
+   "after": "傭牧羊每",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil051",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "學不營産業常",
+   "after": "丨丨丨雖家無",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil057",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "事旁人謂之待",
+   "after": "丨丨丨金麥銀",
+   "paddle": "閥",
+   "kanripo": "闕",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil057",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "甚麗以待",
+   "after": "事旁人謂",
+   "paddle": "其",
+   "kanripo": "其",
+   "fake": "共",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil057",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "見上烏璫十事",
+   "after": "紙為書馮贄雲",
+   "paddle": "獒",
+   "kanripo": "麩",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil057",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "事旁人謂之待",
+   "after": "丨丨丨金麥銀",
+   "paddle": "閥",
+   "kanripo": "闕",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil057",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "甚麗以待",
+   "after": "事旁人謂",
+   "paddle": "其",
+   "kanripo": "其",
+   "fake": "共",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "百丈無枝上結",
+   "after": "條如車葢葉一",
+   "paddle": "漿",
+   "kanripo": "藂",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "教民耒耜躬勤",
+   "after": "畝之事百穀滋",
+   "paddle": "獻",
+   "kanripo": "畎",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "波上一莖百葉",
+   "after": "丨丨丨丨碧藕",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "皆能飛翔",
+   "after": "丨丨青色",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "遺記鬱水在磅",
+   "after": "山東其水小流",
+   "paddle": "礡",
+   "kanripo": "磄",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "教民耒耜躬勤",
+   "after": "畝之事百穀滋",
+   "paddle": "獻",
+   "kanripo": "畎",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "波上一莖百葉",
+   "after": "丨丨丨丨碧藕",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil060",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "皆能飛翔",
+   "after": "丨丨青色",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil066",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "為之令國",
+   "after": "太學生冠",
+   "paddle": "子",
+   "kanripo": "子",
+   "fake": "予",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil066",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "晉四廂樂歌九",
+   "after": "在庭丨丨既通",
+   "paddle": "賓",
+   "kanripo": "賔",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil066",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "志建丨丨羅鐘",
+   "after": "列丨丨奏韶武",
+   "paddle": "虞",
+   "kanripo": "虡",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil066",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "志建丨丨羅鐘",
+   "after": "列丨丨奏韶武",
+   "paddle": "虞",
+   "kanripo": "虡",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil066",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "為之令國",
+   "after": "太學生冠",
+   "paddle": "子",
+   "kanripo": "子",
+   "fake": "予",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "傳見碧黃下碧",
+   "after": "隋書禮儀志皇",
+   "paddle": "綠",
+   "kanripo": "緑",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "州序秋天晚晴",
+   "after": "如掃潘岳籍田",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "岳籍田賦蟬冕",
+   "after": "以灼灼兮丨丨",
+   "paddle": "頽",
+   "kanripo": "熲",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "朱以黃以",
+   "after": "以元以纁",
+   "paddle": "白",
+   "kanripo": "白",
+   "fake": "自",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "冕熲以灼灼兮",
+   "after": "肅其芊芊江淹",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "寓言詩春草紛",
+   "after": "佳人曠無期司",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "碧翠齊",
+   "after": "病起見苔色詩",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "朱以黃以",
+   "after": "以元以纁",
+   "paddle": "白",
+   "kanripo": "白",
+   "fake": "自",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "州序秋天晚晴",
+   "after": "如掃潘岳籍田",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil069",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "寓言詩春草紛",
+   "after": "佳人曠無期司",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil070",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "之術也上曰善",
+   "after": "使劉敬徙所言",
+   "paddle": "廼",
+   "kanripo": "迺",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil070",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "縣城臨河徙適",
+   "after": "以充之甌脫史",
+   "paddle": "戌",
+   "kanripo": "戍",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil070",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "奴傳東胡",
+   "after": "愈益驕西",
+   "paddle": "王",
+   "kanripo": "王",
+   "fake": "玉",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil070",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "奴傳東胡",
+   "after": "愈益驕西",
+   "paddle": "王",
+   "kanripo": "王",
+   "fake": "玉",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil070",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "縣城臨河徙適",
+   "after": "以充之甌脫史",
+   "paddle": "戌",
+   "kanripo": "戍",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil071",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "丨丨丨在水上",
+   "after": "丨丨丨丨出不",
+   "paddle": "丨",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil071",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "乃湘也湘",
+   "after": "憶花上之",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil071",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "坤誠齋雜記沈",
+   "after": "為仙人所迎見",
+   "paddle": "義",
+   "kanripo": "羲",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil075",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "四下吳子",
+   "after": "馬必安其",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil075",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "春秋游牝別其",
+   "after": "則丨丨丨班馬",
+   "paddle": "牽",
+   "kanripo": "羣",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil075",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "丨之丨遺風之",
+   "after": "遺風乘見上牧",
+   "paddle": "乗",
+   "kanripo": "乘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "丨雜翁鴈頸也",
+   "after": "鑠翁詳鑠鹿皮",
+   "paddle": "釋",
+   "kanripo": "矍",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "翁趙宋王樵號",
+   "after": "丨丨詳室囁嚅",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "丨釣丨全",
+   "after": "丨詳袍大",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "蠻知在否試問",
+   "after": "丨丨坡李林甫",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "曰丨丨丨得此",
+   "after": "過矣多田翁盧",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "目為丨丨丨碧",
+   "after": "翁白鷺詳繼蜜",
+   "paddle": "縱",
+   "kanripo": "繼",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 7,
+   "control": false,
+   "before": "丨丨丨活套詩",
+   "after": "醉丨山丨釣丨",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 8,
+   "control": false,
+   "before": "丨陸羽陸放丨",
+   "after": "詩人紫髯丨孫",
+   "paddle": "束",
+   "kanripo": "宋",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 9,
+   "control": false,
+   "before": "丨詳眉朱晦丨",
+   "after": "黃丨山谷姓氏",
+   "paddle": "燾",
+   "kanripo": "熹",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "gem",
+   "n": 10,
+   "control": false,
+   "before": "周昭王庶子食",
+   "after": "丨山因氏〇丨",
+   "paddle": "米",
+   "kanripo": "采",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "丨雜翁鴈頸也",
+   "after": "鑠翁詳鑠鹿皮",
+   "paddle": "釋",
+   "kanripo": "矍",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "丨釣丨全",
+   "after": "丨詳袍大",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "丨陸羽陸放丨",
+   "after": "詩人紫髯丨孫",
+   "paddle": "束",
+   "kanripo": "宋",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "丨詳眉朱晦丨",
+   "after": "黃丨山谷姓氏",
+   "paddle": "燾",
+   "kanripo": "熹",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil083",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "周昭王庶子食",
+   "after": "丨山因氏〇丨",
+   "paddle": "米",
+   "kanripo": "采",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "相張忠定",
+   "after": "曾讀丨丨",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "饌唐宰相張文",
+   "after": "同列以堂饌豐",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "豐餘欲少損文",
+   "after": "曰天子所以重",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "去丨葫蘆旋辭",
+   "after": "切遶也漩水回",
+   "paddle": "慾",
+   "kanripo": "戀",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "葫蘆旋辭戀切",
+   "after": "也漩水回也傳",
+   "paddle": "逸",
+   "kanripo": "遶",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "丨丨丨史魏賈",
+   "after": "月讀左傳一遍",
+   "paddle": "逡",
+   "kanripo": "逵",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "饌唐宰相張文",
+   "after": "同列以堂饌豐",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "相張忠定",
+   "after": "曾讀丨丨",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "not found"
+  },
+  {
+   "uid": "A-pil085",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "豐餘欲少損文",
+   "after": "曰天子所以重",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "誼傳妙處",
+   "after": "傳司馬太",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "處不傳司馬太",
+   "after": "問謝車騎惠子",
+   "paddle": "傳",
+   "kanripo": "傅",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "惠子五車何以",
+   "after": "一言入玄謝曰",
+   "paddle": "",
+   "kanripo": "無",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "谷紅榴日炙丨",
+   "after": "長貌人名韓丨",
+   "paddle": "媽",
+   "kanripo": "嫣",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "鄢邑名焉何也",
+   "after": "燀稱延切火起",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "處不傳司馬太",
+   "after": "問謝車騎惠子",
+   "paddle": "傳",
+   "kanripo": "傅",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "誼傳妙處",
+   "after": "傳司馬太",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "惠子五車何以",
+   "after": "一言入玄謝曰",
+   "paddle": "",
+   "kanripo": "無",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "丨周師厚在鄭",
+   "after": "榜及第只壓得",
+   "paddle": "斛",
+   "kanripo": "觧",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil086",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "谷紅榴日炙丨",
+   "after": "長貌人名韓丨",
+   "paddle": "媽",
+   "kanripo": "嫣",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil087",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "不稅行此",
+   "after": "未半旬守",
+   "paddle": "令",
+   "kanripo": "令",
+   "fake": "今",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil087",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "也應之以德而",
+   "after": "嬰鬼焦氏易林",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil087",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "也應之以德而",
+   "after": "嬰鬼焦氏易林",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil087",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "不稅行此",
+   "after": "未半旬守",
+   "paddle": "令",
+   "kanripo": "令",
+   "fake": "今",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "而促節大者宜",
+   "after": "船小為笛又文",
+   "paddle": "剌",
+   "kanripo": "刺",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "盡也又文韻懃",
+   "after": "懃委曲貌通作",
+   "paddle": "愍",
+   "kanripo": "慇",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "也通作勤漢書",
+   "after": "身從事又文韻",
+   "paddle": "廬",
+   "kanripo": "廑",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "之病也又文韻",
+   "after": "憂也哀也又勇",
+   "paddle": "墐",
+   "kanripo": "慬",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "也又文韻慬憂",
+   "after": "哀也又勇也列",
+   "paddle": "七",
+   "kanripo": "也",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "菜可食又文韻",
+   "after": "藥草今當歸見",
+   "paddle": "斤",
+   "kanripo": "蘄",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 7,
+   "control": false,
+   "before": "歸見爾雅又文",
+   "after": "韻與支韻微韻",
+   "paddle": "蕈",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 8,
+   "control": false,
+   "before": "並異齦宜勤切",
+   "after": "也通作齗又文",
+   "paddle": "",
+   "kanripo": "齒本",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 9,
+   "control": false,
+   "before": "切齒本也通作",
+   "after": "又文韻听笑貌",
+   "paddle": "斷",
+   "kanripo": "齗",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 10,
+   "control": false,
+   "before": "通作齗又文韻",
+   "after": "上林賦听然而",
+   "paddle": "聽聽",
+   "kanripo": "听笑貌",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 11,
+   "control": false,
+   "before": "作忻又文韻忻",
+   "after": "也司馬法忻者",
+   "paddle": "闐",
+   "kanripo": "闓",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "gem",
+   "n": 12,
+   "control": true,
+   "before": "出也禮記",
+   "after": "昕鼓徵又",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "而促節大者宜",
+   "after": "船小為笛又文",
+   "paddle": "剌",
+   "kanripo": "刺",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "也通作勤漢書",
+   "after": "身從事又文韻",
+   "paddle": "廬",
+   "kanripo": "廑",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "之病也又文韻",
+   "after": "憂也哀也又勇",
+   "paddle": "墐",
+   "kanripo": "慬",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "也又文韻慬憂",
+   "after": "哀也又勇也列",
+   "paddle": "七",
+   "kanripo": "也",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "歸見爾雅又文",
+   "after": "韻與支韻微韻",
+   "paddle": "蕈",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 6,
+   "control": false,
+   "before": "作忻又文韻忻",
+   "after": "也司馬法忻者",
+   "paddle": "闐",
+   "kanripo": "闓",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil088",
+   "judge": "opus",
+   "n": 7,
+   "control": true,
+   "before": "出也禮記",
+   "after": "昕鼓徵又",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "嫡封國夫",
+   "after": "富不易妻",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "木以丨丨殺孝",
+   "after": "尹吉甫以後妻",
+   "paddle": "已",
+   "kanripo": "己",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "書史〇法喜妻",
+   "after": "丨以為丨慈悲",
+   "paddle": "",
+   "kanripo": "丨",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "碧丨色丨蒼丨",
+   "after": "霽也淒說文雲",
+   "paddle": "霎",
+   "kanripo": "霋",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "活套悲丨慘丨",
+   "after": "說文帛文",
+   "paddle": "縷",
+   "kanripo": "緀",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "木以丨丨殺孝",
+   "after": "尹吉甫以後妻",
+   "paddle": "已",
+   "kanripo": "己",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "短陋恐子孫似",
+   "after": "丨丨丨丨丨伉",
+   "paddle": "已",
+   "kanripo": "己",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "碧丨色丨蒼丨",
+   "after": "霽也淒說文雲",
+   "paddle": "霎",
+   "kanripo": "霋",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "opus",
+   "n": 4,
+   "control": true,
+   "before": "嫡封國夫",
+   "after": "富不易妻",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "A-pil089",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "活套悲丨慘丨",
+   "after": "說文帛文",
+   "paddle": "縷",
+   "kanripo": "緀",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B003",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "以入海為",
+   "after": "江自嶓冢",
+   "paddle": "中",
+   "kanripo": "中",
+   "fake": "巾",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B003",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "史記正義云在",
+   "after": "州東南三十里",
+   "paddle": "蘇",
+   "kanripo": "蘓",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B006",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "蒸曰餌餅之曰",
+   "after": "糗者擣粉熬大",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B006",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "於階上明",
+   "after": "得升堂受",
+   "paddle": "士",
+   "kanripo": "士",
+   "fake": "土",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B006",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "大豆為餌為餌",
+   "after": "之黏著以粉之",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B006",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "粉之耳餌言糗",
+   "after": "言粉互相足是",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B006",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "蒸曰餌餅之曰",
+   "after": "糗者擣粉熬大",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B006",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "粉之耳餌言糗",
+   "after": "言粉互相足是",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B006",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "於階上明",
+   "after": "得升堂受",
+   "paddle": "士",
+   "kanripo": "士",
+   "fake": "土",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "侯及卿大",
+   "after": "有地者皆",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "君魯侯隱公也",
+   "after": "問曰五等之爵",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "故謂之附庸矣",
+   "after": "變一為元解云",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "地天地之始也",
+   "after": "故上至繫之解",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "上春在王上矣",
+   "after": "不言至王者解",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B007",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "皆曰君是也今",
+   "after": "魯而言不言公",
+   "paddle": "據",
+   "kanripo": "据",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B009",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "喪葬三品以上",
+   "after": "車用開轍車油",
+   "paddle": "輛",
+   "kanripo": "輀",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B009",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "無官者諸",
+   "after": "無職掌者",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B009",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "無官者諸",
+   "after": "無職掌者",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B009",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "喪葬三品以上",
+   "after": "車用開轍車油",
+   "paddle": "輛",
+   "kanripo": "輀",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B011",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "行曰夏周相去",
+   "after": "遠故曰相古商",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B011",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "申氏時行",
+   "after": "夏周相去",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B011",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "申氏時行",
+   "after": "夏周相去",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B011",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "行曰夏周相去",
+   "after": "遠故曰相古商",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "生金生金尅甲",
+   "after": "水生甲及官火",
+   "paddle": "絕",
+   "kanripo": "絶",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "彼此相安方為",
+   "after": "備地支來往衝",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "柰馬馳如甲人",
+   "after": "在寅見壬寅則",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "有福庚寅為破",
+   "after": "半吉半凶又如",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 5,
+   "control": true,
+   "before": "見壬寅則",
+   "after": "家帶截路",
+   "paddle": "自",
+   "kanripo": "自",
+   "fake": "白",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "吉半凶又如辛",
+   "after": "在酉見癸酉",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B013",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "生金生金尅甲",
+   "after": "水生甲及官火",
+   "paddle": "絕",
+   "kanripo": "絶",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B013",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "見壬寅則",
+   "after": "家帶截路",
+   "paddle": "自",
+   "kanripo": "自",
+   "fake": "白",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B016",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "不日遂歸劉孝",
+   "after": "詩隔牆花半隱",
+   "paddle": "咸",
+   "kanripo": "威",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B016",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "得詩感泣",
+   "after": "日遂歸劉",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B016",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "不日遂歸劉孝",
+   "after": "詩隔牆花半隱",
+   "paddle": "咸",
+   "kanripo": "威",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B016",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "脂粉弄丨丨張",
+   "after": "之東飛伯勞歌",
+   "paddle": "東",
+   "kanripo": "柬",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B016",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "得詩感泣",
+   "after": "日遂歸劉",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "一日愆率",
+   "after": "盈寧難並",
+   "paddle": "土",
+   "kanripo": "土",
+   "fake": "士",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "我不然鰓鰓宵",
+   "after": "待豐年千村時",
+   "paddle": "盱",
+   "kanripo": "旰",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "鰓宵旰待豐年",
+   "after": "村時若千村慶",
+   "paddle": "干",
+   "kanripo": "千",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "得普天恩澤豈",
+   "after": "全先憂後樂何",
+   "paddle": "篤",
+   "kanripo": "兼",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "憂後樂何能遂",
+   "after": "景殘齡秖自憐",
+   "paddle": "哀",
+   "kanripo": "衰",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "gem",
+   "n": 6,
+   "control": false,
+   "before": "潤須臾卷葉舒",
+   "after": "村勤襏襫萬頃",
+   "paddle": "干",
+   "kanripo": "千",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B017",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "我不然鰓鰓宵",
+   "after": "待豐年千村時",
+   "paddle": "盱",
+   "kanripo": "旰",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B017",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "鰓宵旰待豐年",
+   "after": "村時若千村慶",
+   "paddle": "干",
+   "kanripo": "千",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B017",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "得普天恩澤豈",
+   "after": "全先憂後樂何",
+   "paddle": "篤",
+   "kanripo": "兼",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B017",
+   "judge": "opus",
+   "n": 4,
+   "control": true,
+   "before": "一日愆率",
+   "after": "盈寧難並",
+   "paddle": "土",
+   "kanripo": "土",
+   "fake": "士",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B017",
+   "judge": "opus",
+   "n": 5,
+   "control": false,
+   "before": "潤須臾卷葉舒",
+   "after": "村勤襏襫萬頃",
+   "paddle": "干",
+   "kanripo": "千",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B020",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "齊語則咫尺天",
+   "after": "俯伏下拜以敬",
+   "paddle": "顏",
+   "kanripo": "顔",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B020",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "怠苟簡而非前",
+   "after": "之比矣然左傳",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B020",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "史記之說",
+   "after": "不足信抑",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B020",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "史記之說",
+   "after": "不足信抑",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B020",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "怠苟簡而非前",
+   "after": "之比矣然左傳",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B021",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "陽消息兩端而",
+   "after": "神明之德如健",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B021",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "新安朱氏",
+   "after": "王昭素曰",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B021",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "陽消息兩端而",
+   "after": "神明之德如健",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B021",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "新安朱氏",
+   "after": "王昭素曰",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B024",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "小加減訶藜勒",
+   "after": "治小兒水穀痢",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B024",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "下半錢量",
+   "after": "小加減訶",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B024",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "以粥飲送下七",
+   "after": "量大小加減又",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B024",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "小加減訶藜勒",
+   "after": "治小兒水穀痢",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B024",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "以粥飲送下七",
+   "after": "量大小加減又",
+   "paddle": "九",
+   "kanripo": "丸",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B024",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "下半錢量",
+   "after": "小加減訶",
+   "paddle": "大",
+   "kanripo": "大",
+   "fake": "太",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B025",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "石磬也土塤也",
+   "after": "鼓鼗也絲琴瑟",
+   "paddle": "草",
+   "kanripo": "革",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B025",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "秋涼風至秋分",
+   "after": "闔風至立冬不",
+   "paddle": "闔",
+   "kanripo": "閶",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B025",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "侯用六大",
+   "after": "四士二夫",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B025",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "侯用六大",
+   "after": "四士二夫",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B025",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "石磬也土塤也",
+   "after": "鼓鼗也絲琴瑟",
+   "paddle": "草",
+   "kanripo": "革",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B025",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "涼兑音金其風",
+   "after": "闔又易緯通卦",
+   "paddle": "闔",
+   "kanripo": "閶",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B025",
+   "judge": "opus",
+   "n": 4,
+   "control": false,
+   "before": "秋涼風至秋分",
+   "after": "闔風至立冬不",
+   "paddle": "闔",
+   "kanripo": "閶",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B026",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "鬼括地圖",
+   "after": "桃都山有",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B026",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "歲除夕遺里閭",
+   "after": "一貼令囊浸井",
+   "paddle": "樂",
+   "kanripo": "藥",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B026",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "囊浸井中至元",
+   "after": "取水置",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B026",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "歲除夕遺里閭",
+   "after": "一貼令囊浸井",
+   "paddle": "樂",
+   "kanripo": "藥",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B026",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "囊浸井中至元",
+   "after": "取水置",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B026",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "鬼括地圖",
+   "after": "桃都山有",
+   "paddle": "曰",
+   "kanripo": "曰",
+   "fake": "日",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B030",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "城東北隅",
+   "after": "臺偏髙近",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B030",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "講武自于臺上",
+   "after": "鳴鏑之矢以為",
+   "paddle": "故",
+   "kanripo": "放",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B030",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "之銘結樓臺伏",
+   "after": "三齊畧記海上",
+   "paddle": "環",
+   "kanripo": "琛",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B030",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "城東北隅",
+   "after": "臺偏髙近",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B030",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "之銘結樓臺伏",
+   "after": "三齊畧記海上",
+   "paddle": "環",
+   "kanripo": "琛",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B031",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "庶人章分為二",
+   "after": "子敢問章分為",
+   "paddle": "留",
+   "kanripo": "曾",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B031",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "下諸家說",
+   "after": "安處古文",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B031",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "年九月戊午許",
+   "after": "上父慎說文曰",
+   "paddle": "沖",
+   "kanripo": "冲",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B031",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "庶人章分為二",
+   "after": "子敢問章分為",
+   "paddle": "留",
+   "kanripo": "曾",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B031",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "下諸家說",
+   "after": "安處古文",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B033",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "理之故",
+   "after": "行十一月二十",
+   "paddle": "",
+   "kanripo": "四",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B033",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "羲之頓首",
+   "after": "春哀痛羲",
+   "paddle": "末",
+   "kanripo": "末",
+   "fake": "未",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B033",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "羲之頓首",
+   "after": "春哀痛羲",
+   "paddle": "末",
+   "kanripo": "末",
+   "fake": "未",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B033",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "理之故",
+   "after": "行十一月二十",
+   "paddle": "",
+   "kanripo": "四",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B033",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "輩三行第三十",
+   "after": "之愛報七行復",
+   "paddle": "義",
+   "kanripo": "羲",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "flashhigh-correct"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B034",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "之間非必相懸",
+   "after": "也至史補所言",
+   "paddle": "絕",
+   "kanripo": "絶",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B034",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "氏譜雙合",
+   "after": "為一尚似",
+   "paddle": "而",
+   "kanripo": "而",
+   "fake": "面",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B037",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "州西溪鎮",
+   "after": "繅絲井世",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B037",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "空存二色之名",
+   "after": "邑之光還起一",
+   "paddle": "邛",
+   "kanripo": "卭",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B042",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "有益於人亦於",
+   "after": "有益如中與才",
+   "paddle": "巳",
+   "kanripo": "己",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct"
+   ],
+   "picked": "neither"
+  },
+  {
+   "uid": "B042",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "甚者其言",
+   "after": "得不峻然",
+   "paddle": "不",
+   "kanripo": "不",
+   "fake": "下",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B045",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "陵孫卿字",
+   "after": "况宣威王",
+   "paddle": "子",
+   "kanripo": "子",
+   "fake": "予",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B045",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "之數而說者謂",
+   "after": "祖以下至茂陵",
+   "paddle": "髙",
+   "kanripo": "高",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B045",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "時人適楚終老",
+   "after": "蘭陵今常州府",
+   "paddle": "於",
+   "kanripo": "于",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B045",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "永平中甘露降",
+   "after": "甘陵杜陵漢宣",
+   "paddle": "於",
+   "kanripo": "于",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B046",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "曰文明以止故",
+   "after": "為文离文自飾",
+   "paddle": "離",
+   "kanripo": "离",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B046",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "至其須說",
+   "after": "曰須面毛",
+   "paddle": "文",
+   "kanripo": "文",
+   "fake": "丈",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B046",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "以止故离為文",
+   "after": "文自飾是賁如",
+   "paddle": "離",
+   "kanripo": "离",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B046",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "也互體坎坎水",
+   "after": "潤是濡如也三",
+   "paddle": "肖",
+   "kanripo": "自",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B047",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "為諸侯受之君",
+   "after": "廢天倫而忘君",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B047",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "其中則與",
+   "after": "地參故體",
+   "paddle": "天",
+   "kanripo": "天",
+   "fake": "夫",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B047",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "若隱者可謂輕",
+   "after": "之國蹈道則未",
+   "paddle": "干乗",
+   "kanripo": "千乘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B047",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "作按舜典紀元",
+   "after": "商訓稱元祀此",
+   "paddle": "曰",
+   "kanripo": "日",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B047",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "其中則與",
+   "after": "地參故體",
+   "paddle": "天",
+   "kanripo": "天",
+   "fake": "夫",
+   "A_is": "fake",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B047",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "為諸侯受之君",
+   "after": "廢天倫而忘君",
+   "paddle": "巳",
+   "kanripo": "已",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "paddle"
+  },
+  {
+   "uid": "B047",
+   "judge": "opus",
+   "n": 3,
+   "control": false,
+   "before": "若隱者可謂輕",
+   "after": "之國蹈道則未",
+   "paddle": "干乗",
+   "kanripo": "千乘",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "neither"
+  },
+  {
+   "uid": "B050",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "義相同蓋",
+   "after": "子亦有取",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B050",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "于史克之對也",
+   "after": "邢侯楚申公巫",
+   "paddle": "晋",
+   "kanripo": "晉",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B050",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "故楚人爭鄐田",
+   "after": "而無成久訟未",
+   "paddle": "乆",
+   "kanripo": "久",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B050",
+   "judge": "opus",
+   "n": 1,
+   "control": true,
+   "before": "義相同蓋",
+   "after": "子亦有取",
+   "paddle": "夫",
+   "kanripo": "夫",
+   "fake": "天",
+   "A_is": "true",
+   "by": [],
+   "picked": "true"
+  },
+  {
+   "uid": "B050",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "故楚人爭鄐田",
+   "after": "而無成久訟未",
+   "paddle": "乆",
+   "kanripo": "久",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ],
+   "picked": "kanripo"
+  },
+  {
+   "uid": "B052",
+   "judge": "gem",
+   "n": 1,
+   "control": true,
+   "before": "獻鳥者佛",
+   "after": "首為其喙",
+   "paddle": "其",
+   "kanripo": "其",
+   "fake": "共",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B052",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "之非時獻禽之",
+   "after": "至敢膳諸從者",
+   "paddle": "末",
+   "kanripo": "未",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B053",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "其本則戚而已",
+   "after": "慶源輔氏曰祭",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B053",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "也故為禮之本",
+   "after": "雙峯饒氏曰放",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B053",
+   "judge": "gem",
+   "n": 3,
+   "control": true,
+   "before": "以禮之大",
+   "after": "以其不切",
+   "paddle": "本",
+   "kanripo": "本",
+   "fake": "木",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B053",
+   "judge": "gem",
+   "n": 4,
+   "control": false,
+   "before": "其不切放故也",
+   "after": "雲峯胡氏曰本",
+   "paddle": "〇",
+   "kanripo": "",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B055",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "破我斧又缺我",
+   "after": "周公東征四國",
+   "paddle": "斯",
+   "kanripo": "斨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B055",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "人圖卷絹",
+   "after": "髙八寸濶",
+   "paddle": "本",
+   "kanripo": "本",
+   "fake": "木",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B055",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "破我斧又缺我",
+   "after": "周公東征四國",
+   "paddle": "斯",
+   "kanripo": "斨",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B055",
+   "judge": "opus",
+   "n": 2,
+   "control": true,
+   "before": "人圖卷絹",
+   "after": "髙八寸濶",
+   "paddle": "本",
+   "kanripo": "本",
+   "fake": "木",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "薛敗而不善詩",
+   "after": "公為代作今集",
+   "paddle": "荊",
+   "kanripo": "荆",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "詩荆公為代作",
+   "after": "集中所謂薛秀",
+   "paddle": "令",
+   "kanripo": "今",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "笑當年薛乞兒",
+   "after": "公坐上賭新詩",
+   "paddle": "荊",
+   "kanripo": "荆",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "對局率饒",
+   "after": "一先道人",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "坐上賭新詩而",
+   "after": "又向江東去奉",
+   "paddle": "令",
+   "kanripo": "今",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "opus",
+   "n": 1,
+   "control": false,
+   "before": "笑當年薛乞兒",
+   "after": "公坐上賭新詩",
+   "paddle": "荊",
+   "kanripo": "荆",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "opus",
+   "n": 2,
+   "control": false,
+   "before": "坐上賭新詩而",
+   "after": "又向江東去奉",
+   "paddle": "令",
+   "kanripo": "今",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B056",
+   "judge": "opus",
+   "n": 3,
+   "control": true,
+   "before": "對局率饒",
+   "after": "一先道人",
+   "paddle": "人",
+   "kanripo": "人",
+   "fake": "入",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B057",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "含憺吐濫切恬",
+   "after": "也惔同紺古暗",
+   "paddle": "靜",
+   "kanripo": "静",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B057",
+   "judge": "gem",
+   "n": 2,
+   "control": false,
+   "before": "暗切青赤色也",
+   "after": "苦濫切魯邑亦",
+   "paddle": "閡",
+   "kanripo": "闞",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B057",
+   "judge": "gem",
+   "n": 3,
+   "control": false,
+   "before": "切猶卒也蹔同",
+   "after": "胡紺切苗莟心",
+   "paddle": "荅",
+   "kanripo": "莟",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B057",
+   "judge": "gem",
+   "n": 4,
+   "control": true,
+   "before": "切送死口",
+   "after": "玉也亦作",
+   "paddle": "中",
+   "kanripo": "中",
+   "fake": "巾",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B057",
+   "judge": "gem",
+   "n": 5,
+   "control": false,
+   "before": "同莟胡紺切苗",
+   "after": "心欲秀也甔都",
+   "paddle": "荅",
+   "kanripo": "莟",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B059",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "多熱熱血不止",
+   "after": "瘀成膿血利也",
+   "paddle": "蘊",
+   "kanripo": "藴",
+   "fake": null,
+   "A_is": "kanripo",
+   "by": [
+    "opus-redo"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B059",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "甚則黃赤",
+   "after": "有血也産",
+   "paddle": "而",
+   "kanripo": "而",
+   "fake": "面",
+   "A_is": "fake",
+   "by": [],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B060",
+   "judge": "gem",
+   "n": 1,
+   "control": false,
+   "before": "皆是墮於一偏",
+   "after": "渠先生曰精義",
+   "paddle": "橫",
+   "kanripo": "横",
+   "fake": null,
+   "A_is": "paddle",
+   "by": [
+    "opus-correct"
+   ],
+   "picked": "no answer"
+  },
+  {
+   "uid": "B060",
+   "judge": "gem",
+   "n": 2,
+   "control": true,
+   "before": "著萬物而",
+   "after": "迹窮神知",
+   "paddle": "有",
+   "kanripo": "有",
+   "fake": "右",
+   "A_is": "true",
+   "by": [],
+   "picked": "no answer"
+  }
+ ]
+}

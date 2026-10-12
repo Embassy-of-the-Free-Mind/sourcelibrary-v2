@@ -39,6 +39,7 @@ const rules = {
   'qa_screen dice < 0.80': Math.round(below(0.80) * LANE),
   'qa_screen dice < 0.85': Math.round(below(0.85) * LANE),
   'qa_screen dice < 0.90': Math.round(below(0.90) * LANE),
+  'qa_screen dice < 0.95': Math.round(below(0.95) * LANE),
   'no trusted qa_screen (not screened)': Math.round(((tot - cov.qa_screened) / tot) * LANE),
   'whole lane': LANE,
 };

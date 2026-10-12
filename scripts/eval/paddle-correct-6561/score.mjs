@@ -46,7 +46,10 @@ export function extract(row) {
   if (!m) return { status: 'no-sentinel', text: t };
   return { status: /===END===/.test(t) ? 'ok' : 'cut', text: m[1] };
 }
-const hanOf = (t) => foldHan(bodyText(t));
+// The ditto mark (repeat the headword) is the Han 丨 U+4E28 in Paddle and Kanripo; Opus writes the fullwidth ｜ U+FF5C,
+// which foldHan drops. Every bar form is read as 丨 for every arm, so a ditto mark is never charged as a deletion.
+const DITTO = /[｜|│┃]/g;
+const hanOf = (t) => foldHan(bodyText(t).replace(DITTO, '丨'));
 const bag = (s) => { const m = new Map(); for (const ch of s) m.set(ch, (m.get(ch) || 0) + 1); return m; };
 const overCount = (q, leaf) => { const W = bag(leaf), Q = bag(q); let oc = 0; for (const [ch, w] of W) oc += Math.max(0, (Q.get(ch) || 0) - w); return oc; };
 // Column order: each body line of >= 6 Han is placed in the leaf by fitting alignment (kept if d <= 1/3 of its length);
@@ -54,7 +57,7 @@ const overCount = (q, leaf) => { const W = bag(leaf), Q = bag(q); let oc = 0; fo
 function orderJumps(text, leaf) {
   const starts = [];
   for (const line of bodyText(text).split('\n')) {
-    const q = foldHan(line); const n = [...q].length; if (n < 6) continue;
+    const q = foldHan(line.replace(DITTO, "丨")); const n = [...q].length; if (n < 6) continue;
     const a = fitAlign(q, leaf); if (a.d <= n / 3) starts.push({ s: a.start, e: a.end });
   }
   let jumps = 0; for (let i = 1; i < starts.length; i++) if (starts[i].s < starts[i - 1].s - 2) jumps++;
@@ -74,6 +77,8 @@ const pages = sets.map((s) => {
   for (const [arm, m] of Object.entries(ARMS)) {
     if (arm === 'opus-redo' && !m.has(s.uid)) { row.arms[arm] = { status: 'missing' }; continue; }
     const r = m.get(s.uid); const x = extract(r);
+    // a reply with no body text on a page that prints >= 40 characters (e.g. "blank page") is a failed read, not a score
+    if (x.text.trim() && [...hanOf(x.text)].length === 0 && [...paddleQ].length >= 40) { x.status = 'did-not-read'; x.why = 'no body text'; x.text = ''; }
     const o = { status: x.status, secs: r?.secs ?? null, calls: r ? (r.attempts ?? 1) : 0, why: x.why };
     if (x.text.trim() && s.kanripo) Object.assign(o, scoreText(x.text, s.kanripo));
     // edit size vs the Paddle draft (Han, Levenshtein / Paddle length)

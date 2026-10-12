@@ -85,7 +85,8 @@ if (MODE === 'build') {
   for (const arm of ['opus-correct', 'opus-redo', 'pro-correct', 'flashhigh-correct']) {
     const fam = arm.startsWith('opus') ? 'gem' : 'opus';
     const rs = real.filter((r) => r.judge === fam && r.by.includes(arm));
-    perArm[arm] = { judged: rs.length, ...tally(rs), unsupported_share: rs.length ? +(rs.filter((r) => r.picked === 'paddle').length / rs.length).toFixed(3) : null };
+    const ans = rs.filter((r) => ['paddle', 'kanripo', 'neither'].includes(r.picked));
+    perArm[arm] = { judged: rs.length, answered: ans.length, ...tally(rs), unsupported_share: ans.length ? +(ans.filter((r) => r.picked === 'paddle').length / ans.length).toFixed(3) : null };
   }
   const out = { controls: { gem: tally(ctl.filter((r) => r.judge === 'gem')), opus: tally(ctl.filter((r) => r.judge === 'opus')) }, per_arm: perArm, items: res };
   fs.writeFileSync('readoff.json', JSON.stringify(out, null, 1));

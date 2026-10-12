@@ -1,0 +1,9818 @@
+{
+ "summary": {
+  "A": {
+   "paddle": {
+    "n": 40,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 40,
+    "cer_median": 0.0641,
+    "cer_mean": 0.098,
+    "over_count": 177,
+    "pages_over_ge3": 13,
+    "order_jumps": 7,
+    "pages_with_jump": 7,
+    "secs_median": null,
+    "calls_per_page": null
+   },
+   "opus-correct": {
+    "n": 40,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 40,
+    "cer_median": 0.0397,
+    "cer_mean": 0.0512,
+    "over_count": 51,
+    "pages_over_ge3": 7,
+    "order_jumps": 1,
+    "pages_with_jump": 1,
+    "secs_median": 28.152,
+    "calls_per_page": 1,
+    "paired_n": 40,
+    "delta_cer_mean": -0.0468,
+    "delta_cer_median": -0.0305,
+    "worse": 1,
+    "better": 31,
+    "worse_mean_pts": 1.02,
+    "worse_max_pts": 1.02,
+    "edit_vs_paddle_median": 0.04505
+   },
+   "pro-correct": {
+    "n": 40,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 40,
+    "cer_median": 0.0822,
+    "cer_mean": 0.1029,
+    "over_count": 164,
+    "pages_over_ge3": 20,
+    "order_jumps": 6,
+    "pages_with_jump": 6,
+    "secs_median": 151.2,
+    "calls_per_page": 1.02,
+    "paired_n": 40,
+    "delta_cer_mean": 0.0049,
+    "delta_cer_median": 0.0081,
+    "worse": 21,
+    "better": 14,
+    "worse_mean_pts": 5.82,
+    "worse_max_pts": 18.75,
+    "edit_vs_paddle_median": 0.07805000000000001
+   },
+   "flashhigh-correct": {
+    "n": 40,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 40,
+    "cer_median": 0.0554,
+    "cer_mean": 0.0669,
+    "over_count": 100,
+    "pages_over_ge3": 10,
+    "order_jumps": 5,
+    "pages_with_jump": 5,
+    "secs_median": 157.85,
+    "calls_per_page": 1.02,
+    "paired_n": 40,
+    "delta_cer_mean": -0.0312,
+    "delta_cer_median": -0.0133,
+    "worse": 2,
+    "better": 24,
+    "worse_mean_pts": 9.79,
+    "worse_max_pts": 13.7,
+    "edit_vs_paddle_median": 0.0275
+   },
+   "opus-redo": {
+    "n": 40,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 40,
+    "cer_median": 0.0583,
+    "cer_mean": 0.0753,
+    "over_count": 79,
+    "pages_over_ge3": 14,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 30.436500000000002,
+    "calls_per_page": 1,
+    "paired_n": 40,
+    "delta_cer_mean": -0.0227,
+    "delta_cer_median": -0.0164,
+    "worse": 15,
+    "better": 22,
+    "worse_mean_pts": 3.83,
+    "worse_max_pts": 12.5,
+    "edit_vs_paddle_median": 0.07565
+   }
+  },
+  "B": {
+   "paddle": {
+    "n": 60,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 59,
+    "cer_median": 0.0313,
+    "cer_mean": 0.0546,
+    "over_count": 122,
+    "pages_over_ge3": 11,
+    "order_jumps": 1,
+    "pages_with_jump": 1,
+    "secs_median": null,
+    "calls_per_page": null
+   },
+   "opus-correct": {
+    "n": 60,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 59,
+    "cer_median": 0.0286,
+    "cer_mean": 0.0475,
+    "over_count": 110,
+    "pages_over_ge3": 9,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 17.427999999999997,
+    "calls_per_page": 1,
+    "paired_n": 59,
+    "delta_cer_mean": -0.007,
+    "delta_cer_median": 0,
+    "worse": 5,
+    "better": 19,
+    "worse_mean_pts": 2.09,
+    "worse_max_pts": 3.23,
+    "edit_vs_paddle_median": 0.0057
+   },
+   "pro-correct": {
+    "n": 56,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 55,
+    "cer_median": 0.0293,
+    "cer_mean": 0.0586,
+    "over_count": 113,
+    "pages_over_ge3": 10,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 84.4,
+    "calls_per_page": 1,
+    "paired_n": 55,
+    "delta_cer_mean": 0.004,
+    "delta_cer_median": 0,
+    "worse": 15,
+    "better": 19,
+    "worse_mean_pts": 4.19,
+    "worse_max_pts": 27.55,
+    "edit_vs_paddle_median": 0.0109
+   },
+   "flashhigh-correct": {
+    "n": 53,
+    "did_not_read": 1,
+    "no_sentinel": 0,
+    "scored": 51,
+    "cer_median": 0.0272,
+    "cer_mean": 0.0491,
+    "over_count": 107,
+    "pages_over_ge3": 10,
+    "order_jumps": 1,
+    "pages_with_jump": 1,
+    "secs_median": 118.94999999999999,
+    "calls_per_page": 1,
+    "paired_n": 51,
+    "delta_cer_mean": -0.0057,
+    "delta_cer_median": 0,
+    "worse": 5,
+    "better": 16,
+    "worse_mean_pts": 1.6,
+    "worse_max_pts": 2.94,
+    "edit_vs_paddle_median": 0.00355
+   },
+   "opus-redo": {
+    "n": 60,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 59,
+    "cer_median": 0.0332,
+    "cer_mean": 0.0628,
+    "over_count": 118,
+    "pages_over_ge3": 7,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 17.9325,
+    "calls_per_page": 1,
+    "paired_n": 59,
+    "delta_cer_mean": 0.0083,
+    "delta_cer_median": 0,
+    "worse": 28,
+    "better": 17,
+    "worse_mean_pts": 3.04,
+    "worse_max_pts": 21.6,
+    "edit_vs_paddle_median": 0.02545
+   }
+  },
+  "B-rand": {
+   "paddle": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 30,
+    "cer_median": 0.0315,
+    "cer_mean": 0.0673,
+    "over_count": 72,
+    "pages_over_ge3": 7,
+    "order_jumps": 1,
+    "pages_with_jump": 1,
+    "secs_median": null,
+    "calls_per_page": null
+   },
+   "opus-correct": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 30,
+    "cer_median": 0.0303,
+    "cer_mean": 0.057,
+    "over_count": 65,
+    "pages_over_ge3": 7,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 16.663,
+    "calls_per_page": 1,
+    "paired_n": 30,
+    "delta_cer_mean": -0.0103,
+    "delta_cer_median": 0,
+    "worse": 2,
+    "better": 12,
+    "worse_mean_pts": 2.39,
+    "worse_max_pts": 3.23,
+    "edit_vs_paddle_median": 0.006500000000000001
+   },
+   "pro-correct": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 30,
+    "cer_median": 0.0239,
+    "cer_mean": 0.0637,
+    "over_count": 68,
+    "pages_over_ge3": 6,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 79.2,
+    "calls_per_page": 1,
+    "paired_n": 30,
+    "delta_cer_mean": -0.0036,
+    "delta_cer_median": 0,
+    "worse": 7,
+    "better": 13,
+    "worse_mean_pts": 2.86,
+    "worse_max_pts": 6.67,
+    "edit_vs_paddle_median": 0.009399999999999999
+   },
+   "flashhigh-correct": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 30,
+    "cer_median": 0.0282,
+    "cer_mean": 0.058,
+    "over_count": 66,
+    "pages_over_ge3": 7,
+    "order_jumps": 1,
+    "pages_with_jump": 1,
+    "secs_median": 120.9,
+    "calls_per_page": 1,
+    "paired_n": 30,
+    "delta_cer_mean": -0.0092,
+    "delta_cer_median": 0,
+    "worse": 0,
+    "better": 10,
+    "worse_mean_pts": null,
+    "worse_max_pts": null,
+    "edit_vs_paddle_median": 0
+   },
+   "opus-redo": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 30,
+    "cer_median": 0.0275,
+    "cer_mean": 0.0624,
+    "over_count": 66,
+    "pages_over_ge3": 4,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 17.921,
+    "calls_per_page": 1,
+    "paired_n": 30,
+    "delta_cer_mean": -0.0049,
+    "delta_cer_median": 0,
+    "worse": 9,
+    "better": 12,
+    "worse_mean_pts": 1.66,
+    "worse_max_pts": 3.23,
+    "edit_vs_paddle_median": 0.02435
+   }
+  },
+  "B-dis": {
+   "paddle": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 29,
+    "cer_median": 0.0288,
+    "cer_mean": 0.0414,
+    "over_count": 50,
+    "pages_over_ge3": 4,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": null,
+    "calls_per_page": null
+   },
+   "opus-correct": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 29,
+    "cer_median": 0.0267,
+    "cer_mean": 0.0377,
+    "over_count": 45,
+    "pages_over_ge3": 2,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 18.689500000000002,
+    "calls_per_page": 1,
+    "paired_n": 29,
+    "delta_cer_mean": -0.0037,
+    "delta_cer_median": 0,
+    "worse": 3,
+    "better": 7,
+    "worse_mean_pts": 1.88,
+    "worse_max_pts": 2.61,
+    "edit_vs_paddle_median": 0.0043
+   },
+   "pro-correct": {
+    "n": 26,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 25,
+    "cer_median": 0.0324,
+    "cer_mean": 0.0526,
+    "over_count": 45,
+    "pages_over_ge3": 4,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 90.3,
+    "calls_per_page": 1,
+    "paired_n": 25,
+    "delta_cer_mean": 0.013,
+    "delta_cer_median": 0,
+    "worse": 8,
+    "better": 6,
+    "worse_mean_pts": 5.35,
+    "worse_max_pts": 27.55,
+    "edit_vs_paddle_median": 0.0119
+   },
+   "flashhigh-correct": {
+    "n": 23,
+    "did_not_read": 1,
+    "no_sentinel": 0,
+    "scored": 21,
+    "cer_median": 0.0238,
+    "cer_mean": 0.0364,
+    "over_count": 41,
+    "pages_over_ge3": 3,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 115.15,
+    "calls_per_page": 1,
+    "paired_n": 21,
+    "delta_cer_mean": -0.0006,
+    "delta_cer_median": 0,
+    "worse": 5,
+    "better": 6,
+    "worse_mean_pts": 1.6,
+    "worse_max_pts": 2.94,
+    "edit_vs_paddle_median": 0.006
+   },
+   "opus-redo": {
+    "n": 30,
+    "did_not_read": 0,
+    "no_sentinel": 0,
+    "scored": 29,
+    "cer_median": 0.0444,
+    "cer_mean": 0.0633,
+    "over_count": 52,
+    "pages_over_ge3": 3,
+    "order_jumps": 0,
+    "pages_with_jump": 0,
+    "secs_median": 18.105,
+    "calls_per_page": 1,
+    "paired_n": 29,
+    "delta_cer_mean": 0.0219,
+    "delta_cer_median": 0.0119,
+    "worse": 19,
+    "better": 5,
+    "worse_mean_pts": 3.7,
+    "worse_max_pts": 21.6,
+    "edit_vs_paddle_median": 0.03375
+   }
+  }
+ },
+ "anchoring": {
+  "opus-correct": {
+   "pages": 10,
+   "plants": 30,
+   "kept-planted": 1,
+   "fixed": 29,
+   "other": 0,
+   "unresolved": 0,
+   "did-not-read": 0
+  },
+  "pro-correct": {
+   "pages": 10,
+   "plants": 30,
+   "kept-planted": 0,
+   "fixed": 0,
+   "other": 0,
+   "unresolved": 0,
+   "did-not-read": 30
+  },
+  "flashhigh-correct": {
+   "pages": 10,
+   "plants": 30,
+   "kept-planted": 0,
+   "fixed": 0,
+   "other": 0,
+   "unresolved": 0,
+   "did-not-read": 30
+  }
+ },
+ "toward_kanripo_edits": {
+  "opus-correct": 111,
+  "opus-redo": 139,
+  "flashhigh-correct": 54,
+  "pro-correct": 58
+ },
+ "anchors": [
+  {
+   "uid": "B015-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B015-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B015-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B002-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B002-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B002-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B028-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B028-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B028-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B018-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B018-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B018-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B021-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B021-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B021-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B022-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "kept-planted"
+   ]
+  },
+  {
+   "uid": "B022-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B022-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B025-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B025-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B025-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B014-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B014-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B014-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B029-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B029-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B029-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B020-anc",
+   "arm": "opus-correct",
+   "status": "ok",
+   "plants": [
+    "fixed",
+    "fixed",
+    "fixed"
+   ]
+  },
+  {
+   "uid": "B020-anc",
+   "arm": "pro-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  },
+  {
+   "uid": "B020-anc",
+   "arm": "flashhigh-correct",
+   "status": "missing",
+   "plants": [
+    "did-not-read",
+    "did-not-read",
+    "did-not-read"
+   ]
+  }
+ ],
+ "toward": [
+  {
+   "uid": "A-pil004",
+   "stratum": "A",
+   "before": "別及行役初還",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "after": "丨丨丨丨時稱",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil004",
+   "stratum": "A",
+   "before": "覽弟舉亦有重",
+   "paddle": "舉",
+   "kanripo": "譽",
+   "after": "時人為之語曰",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil004",
+   "stratum": "A",
+   "before": "時人為之語曰",
+   "paddle": "丨丨丨",
+   "kanripo": "",
+   "after": "丨丨丨丨丨丨",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "丨丨丨丨丨此",
+   "paddle": "蠡",
+   "kanripo": "蠭",
+   "after": "窠也第三物觳",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "食利在昏夜此",
+   "paddle": "鼈齏",
+   "kanripo": "鼅鼄",
+   "after": "也舉坐驚喜觳",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "在華林園聞蝦",
+   "paddle": "墓",
+   "kanripo": "蟆",
+   "after": "聲謂左右曰此",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "乎私乎或對曰",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨地丨丨丨丨",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "乎或對曰丨丨",
+   "paddle": "",
+   "kanripo": "地",
+   "after": "丨丨丨丨地丨",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "曰丨丨地丨丨",
+   "paddle": "地",
+   "kanripo": "丨",
+   "after": "丨地丨丨牛鬭",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "丨地丨丨丨丨",
+   "paddle": "",
+   "kanripo": "地",
+   "after": "丨丨牛鬭晉書",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "丨丨地丨丨牛",
+   "paddle": "鬬",
+   "kanripo": "鬭",
+   "after": "晉書殷仲堪傳",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "丨丨丨丨丨乃",
+   "paddle": "般",
+   "kanripo": "殺",
+   "after": "馬而祭之赴軒",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "before": "流血敬則惡之",
+   "paddle": "諸",
+   "kanripo": "詣",
+   "after": "道士卜道士曰",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil010",
+   "stratum": "A",
+   "before": "煎至六分去滓",
+   "paddle": "溫",
+   "kanripo": "温",
+   "after": "服不計時候人",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil010",
+   "stratum": "A",
+   "before": "服不計時候人",
+   "paddle": "參",
+   "kanripo": "参",
+   "after": "散治上氣胃中",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil010",
+   "stratum": "A",
+   "before": "逆不能下食人",
+   "paddle": "參",
+   "kanripo": "参",
+   "after": "一兩去蘆麥門",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil011",
+   "stratum": "A",
+   "before": "胃胃胃婁婁婁",
+   "paddle": "",
+   "kanripo": "七十",
+   "after": "五胃胃胃昴畢",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil011",
+   "stratum": "A",
+   "before": "胃胃昴畢畢畢",
+   "paddle": "筠",
+   "kanripo": "觜",
+   "after": "參參畢畢畢畢",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil011",
+   "stratum": "A",
+   "before": "參畢畢畢畢七",
+   "paddle": "",
+   "kanripo": "十",
+   "after": "六畢畢畢參參",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil011",
+   "stratum": "A",
+   "before": "翼翼翼翼翼七",
+   "paddle": "",
+   "kanripo": "十",
+   "after": "九翼翼翼翼翼",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil015",
+   "stratum": "A",
+   "before": "德狙獷服甲之",
+   "paddle": "橐",
+   "kanripo": "櫜",
+   "after": "弓弭丨丨陸游",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "丨丨小丨丨往",
+   "paddle": "來",
+   "kanripo": "来",
+   "after": "者皆怪此樹非",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "遺言餌术黃精",
+   "paddle": "丨丨",
+   "kanripo": "",
+   "after": "丨丨丨丨意甚",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "採朝蘭何可一",
+   "paddle": "曰",
+   "kanripo": "日",
+   "after": "無此君晉書王",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "但嘯詠指竹曰",
+   "paddle": "",
+   "kanripo": "丨丨丨",
+   "after": "丨丨丨丨耶負",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "為琅邪時所種",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "皆已丨丨慨然",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "before": "邪時所種丨皆",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "丨丨慨然曰木",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil017",
+   "stratum": "A",
+   "before": "映阜宋書樂志",
+   "paddle": "",
+   "kanripo": "丨丨丨丨",
+   "after": "鳴鳳棲柯同歸",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil017",
+   "stratum": "A",
+   "before": "丨丨丨丨鳴鳳",
+   "paddle": "樓",
+   "kanripo": "棲",
+   "after": "柯同歸放勲義",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil021",
+   "stratum": "A",
+   "before": "物書跡如淡墨",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨丨丨丨",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil026",
+   "stratum": "A",
+   "before": "門見二水交流",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨丨丨丨滙",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil026",
+   "stratum": "A",
+   "before": "丨丨丨以故名",
+   "paddle": "郚",
+   "kanripo": "鄂",
+   "after": "端諾爾鄂端譯",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil026",
+   "stratum": "A",
+   "before": "故名鄂端諾爾",
+   "paddle": "郢",
+   "kanripo": "鄂",
+   "after": "端譯言星宿也",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil034",
+   "stratum": "A",
+   "before": "如江南李國主",
+   "paddle": "閱",
+   "kanripo": "閲",
+   "after": "月盡通金史僕",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil034",
+   "stratum": "A",
+   "before": "直字及古算法",
+   "paddle": "一一",
+   "kanripo": "丨丨丨",
+   "after": "能丨之握籌布",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil034",
+   "stratum": "A",
+   "before": "算法丨丨丨能",
+   "paddle": "一",
+   "kanripo": "丨",
+   "after": "之握籌布畫目",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil035",
+   "stratum": "A",
+   "before": "之者密知昱激",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "對曰劉勝位為",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil035",
+   "stratum": "A",
+   "before": "為大夫見禮上",
+   "paddle": "賔",
+   "kanripo": "賓",
+   "after": "而知善不薦聞",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil035",
+   "stratum": "A",
+   "before": "之賢而密達之",
+   "paddle": "進",
+   "kanripo": "違",
+   "after": "道失節之士而",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil035",
+   "stratum": "A",
+   "before": "失節之士而密",
+   "paddle": "紏",
+   "kanripo": "糾",
+   "after": "之使明府賞刑",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil036",
+   "stratum": "A",
+   "before": "洛卿乃居僚首",
+   "paddle": "丨丨丨丨",
+   "kanripo": "",
+   "after": "丨丨丨丨丨丨",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil036",
+   "stratum": "A",
+   "before": "容當世見劉湛",
+   "paddle": "陰",
+   "kanripo": "殷",
+   "after": "景仁專當要任",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil038",
+   "stratum": "A",
+   "before": "邁容齋四筆梁",
+   "paddle": "瀨",
+   "kanripo": "灝",
+   "after": "八十二歲雍熙",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "金縷猶歌空折",
+   "paddle": "技",
+   "kanripo": "枝",
+   "after": "又陳子昂詩世",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "石粉貯丨丨丨",
+   "paddle": "丨",
+   "kanripo": "一",
+   "after": "萬車賜當制學",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "翰林學士月給",
+   "paddle": "內醞",
+   "kanripo": "内醖",
+   "after": "兵部寄以詩云",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "日沒心情為寄",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨一瓶惱",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "丨陸游詩兀兀",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨未醒鹿胎",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "韓琦至榻前酌",
+   "paddle": "丨丨",
+   "kanripo": "",
+   "after": "丨丨丨一大杯",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "上上和諸香作",
+   "paddle": "九",
+   "kanripo": "丸",
+   "after": "大如芥子每集",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "味逾醇醪謂之",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨又謂之",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "記承平時滑州",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨為天下",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "靖州蠻飲酒以",
+   "paddle": "臭",
+   "kanripo": "鼻",
+   "after": "一飲至數升名",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "before": "一飲至數升名",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨不知何",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil043",
+   "stratum": "A",
+   "before": "室值歲飢三女",
+   "paddle": "一一",
+   "kanripo": "丨丨",
+   "after": "於西湖丨丨丨",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil043",
+   "stratum": "A",
+   "before": "女丨丨於西湖",
+   "paddle": "一一",
+   "kanripo": "丨丨丨",
+   "after": "更日至市貨賣",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil043",
+   "stratum": "A",
+   "before": "暕見之曰吾家",
+   "paddle": "一一",
+   "kanripo": "丨丨",
+   "after": "也貧賤家兒忽",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil048",
+   "stratum": "A",
+   "before": "出震其位",
+   "paddle": "",
+   "kanripo": "丨丨丨",
+   "after": "魯山元劉因王",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil048",
+   "stratum": "A",
+   "before": "孰不娶終身曰",
+   "paddle": "丨丨丨丨丨",
+   "kanripo": "",
+   "after": "丨丨之丨道州",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil048",
+   "stratum": "A",
+   "before": "丨李仲元法言",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨者不屈",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil048",
+   "stratum": "A",
+   "before": "僠丨丨丨第五",
+   "paddle": "",
+   "kanripo": "元",
+   "after": "漢書鄭康成傳",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil049",
+   "stratum": "A",
+   "before": "酉陽雜俎北朝",
+   "paddle": "婦",
+   "kanripo": "婚",
+   "after": "禮婿丨丨日婦",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil051",
+   "stratum": "A",
+   "before": "流涕時有暇即",
+   "paddle": "",
+   "kanripo": "丨丨丨丨",
+   "after": "丨丨丨丨鑽堅",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil051",
+   "stratum": "A",
+   "before": "㣲晉書虞喜傳",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨丨有弗及",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil051",
+   "stratum": "A",
+   "before": "學不營産業常",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨丨雖家無",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil057",
+   "stratum": "A",
+   "before": "見上烏璫十事",
+   "paddle": "獒",
+   "kanripo": "麩",
+   "after": "紙為書馮贄雲",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil057",
+   "stratum": "A",
+   "before": "事旁人謂之待",
+   "paddle": "閥",
+   "kanripo": "闕",
+   "after": "丨丨丨金麥銀",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil060",
+   "stratum": "A",
+   "before": "百丈無枝上結",
+   "paddle": "漿",
+   "kanripo": "藂",
+   "after": "條如車葢葉一",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil060",
+   "stratum": "A",
+   "before": "教民耒耜躬勤",
+   "paddle": "獻",
+   "kanripo": "畎",
+   "after": "畝之事百穀滋",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil060",
+   "stratum": "A",
+   "before": "波上一莖百葉",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨丨碧藕",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil060",
+   "stratum": "A",
+   "before": "遺記鬱水在磅",
+   "paddle": "礡",
+   "kanripo": "磄",
+   "after": "山東其水小流",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil066",
+   "stratum": "A",
+   "before": "晉四廂樂歌九",
+   "paddle": "賓",
+   "kanripo": "賔",
+   "after": "在庭丨丨既通",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil066",
+   "stratum": "A",
+   "before": "志建丨丨羅鐘",
+   "paddle": "虞",
+   "kanripo": "虡",
+   "after": "列丨丨奏韶武",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "碧翠齊",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "病起見苔色詩",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "傳見碧黃下碧",
+   "paddle": "綠",
+   "kanripo": "緑",
+   "after": "隋書禮儀志皇",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "州序秋天晚晴",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "after": "如掃潘岳籍田",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "岳籍田賦蟬冕",
+   "paddle": "頽",
+   "kanripo": "熲",
+   "after": "以灼灼兮丨丨",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "冕熲以灼灼兮",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "after": "肅其芊芊江淹",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "before": "寓言詩春草紛",
+   "paddle": "",
+   "kanripo": "丨丨",
+   "after": "佳人曠無期司",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil070",
+   "stratum": "A",
+   "before": "之術也上曰善",
+   "paddle": "廼",
+   "kanripo": "迺",
+   "after": "使劉敬徙所言",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil070",
+   "stratum": "A",
+   "before": "縣城臨河徙適",
+   "paddle": "戌",
+   "kanripo": "戍",
+   "after": "以充之甌脫史",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil071",
+   "stratum": "A",
+   "before": "丨丨丨在水上",
+   "paddle": "丨",
+   "kanripo": "",
+   "after": "丨丨丨丨出不",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil071",
+   "stratum": "A",
+   "before": "坤誠齋雜記沈",
+   "paddle": "義",
+   "kanripo": "羲",
+   "after": "為仙人所迎見",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil075",
+   "stratum": "A",
+   "before": "春秋游牝別其",
+   "paddle": "牽",
+   "kanripo": "羣",
+   "after": "則丨丨丨班馬",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil075",
+   "stratum": "A",
+   "before": "丨之丨遺風之",
+   "paddle": "乗",
+   "kanripo": "乘",
+   "after": "遺風乘見上牧",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "丨雜翁鴈頸也",
+   "paddle": "釋",
+   "kanripo": "矍",
+   "after": "鑠翁詳鑠鹿皮",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "翁趙宋王樵號",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨詳室囁嚅",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "蠻知在否試問",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨丨坡李林甫",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "曰丨丨丨得此",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "過矣多田翁盧",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "目為丨丨丨碧",
+   "paddle": "縱",
+   "kanripo": "繼",
+   "after": "翁白鷺詳繼蜜",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "丨丨丨活套詩",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "醉丨山丨釣丨",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "丨陸羽陸放丨",
+   "paddle": "束",
+   "kanripo": "宋",
+   "after": "詩人紫髯丨孫",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "丨詳眉朱晦丨",
+   "paddle": "燾",
+   "kanripo": "熹",
+   "after": "黃丨山谷姓氏",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "before": "周昭王庶子食",
+   "paddle": "米",
+   "kanripo": "采",
+   "after": "丨山因氏〇丨",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "before": "饌唐宰相張文",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "after": "同列以堂饌豐",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "before": "豐餘欲少損文",
+   "paddle": "璀",
+   "kanripo": "瓘",
+   "after": "曰天子所以重",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "before": "去丨葫蘆旋辭",
+   "paddle": "慾",
+   "kanripo": "戀",
+   "after": "切遶也漩水回",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "before": "葫蘆旋辭戀切",
+   "paddle": "逸",
+   "kanripo": "遶",
+   "after": "也漩水回也傳",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "before": "丨丨丨史魏賈",
+   "paddle": "逡",
+   "kanripo": "逵",
+   "after": "月讀左傳一遍",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "before": "處不傳司馬太",
+   "paddle": "傳",
+   "kanripo": "傅",
+   "after": "問謝車騎惠子",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "before": "惠子五車何以",
+   "paddle": "",
+   "kanripo": "無",
+   "after": "一言入玄謝曰",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "before": "丨周師厚在鄭",
+   "paddle": "斛",
+   "kanripo": "觧",
+   "after": "榜及第只壓得",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "before": "谷紅榴日炙丨",
+   "paddle": "媽",
+   "kanripo": "嫣",
+   "after": "長貌人名韓丨",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "before": "鄢邑名焉何也",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "燀稱延切火起",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil087",
+   "stratum": "A",
+   "before": "也應之以德而",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "嬰鬼焦氏易林",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "而促節大者宜",
+   "paddle": "剌",
+   "kanripo": "刺",
+   "after": "船小為笛又文",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "盡也又文韻懃",
+   "paddle": "愍",
+   "kanripo": "慇",
+   "after": "懃委曲貌通作",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "也通作勤漢書",
+   "paddle": "廬",
+   "kanripo": "廑",
+   "after": "身從事又文韻",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "之病也又文韻",
+   "paddle": "墐",
+   "kanripo": "慬",
+   "after": "憂也哀也又勇",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "也又文韻慬憂",
+   "paddle": "七",
+   "kanripo": "也",
+   "after": "哀也又勇也列",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "菜可食又文韻",
+   "paddle": "斤",
+   "kanripo": "蘄",
+   "after": "藥草今當歸見",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "歸見爾雅又文",
+   "paddle": "蕈",
+   "kanripo": "",
+   "after": "韻與支韻微韻",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "並異齦宜勤切",
+   "paddle": "",
+   "kanripo": "齒本",
+   "after": "也通作齗又文",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "切齒本也通作",
+   "paddle": "斷",
+   "kanripo": "齗",
+   "after": "又文韻听笑貌",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "通作齗又文韻",
+   "paddle": "聽聽",
+   "kanripo": "听笑貌",
+   "after": "上林賦听然而",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "before": "作忻又文韻忻",
+   "paddle": "闐",
+   "kanripo": "闓",
+   "after": "也司馬法忻者",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "before": "木以丨丨殺孝",
+   "paddle": "已",
+   "kanripo": "己",
+   "after": "尹吉甫以後妻",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "before": "短陋恐子孫似",
+   "paddle": "已",
+   "kanripo": "己",
+   "after": "丨丨丨丨丨伉",
+   "by": [
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "before": "書史〇法喜妻",
+   "paddle": "",
+   "kanripo": "丨",
+   "after": "丨以為丨慈悲",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "before": "碧丨色丨蒼丨",
+   "paddle": "霎",
+   "kanripo": "霋",
+   "after": "霽也淒說文雲",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "before": "活套悲丨慘丨",
+   "paddle": "縷",
+   "kanripo": "緀",
+   "after": "說文帛文",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B003",
+   "stratum": "B-rand",
+   "before": "史記正義云在",
+   "paddle": "蘇",
+   "kanripo": "蘓",
+   "after": "州東南三十里",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B006",
+   "stratum": "B-rand",
+   "before": "蒸曰餌餅之曰",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "after": "糗者擣粉熬大",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B006",
+   "stratum": "B-rand",
+   "before": "大豆為餌為餌",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "after": "之黏著以粉之",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "B006",
+   "stratum": "B-rand",
+   "before": "粉之耳餌言糗",
+   "paddle": "餐",
+   "kanripo": "餈",
+   "after": "言粉互相足是",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "before": "君魯侯隱公也",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "問曰五等之爵",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "before": "故謂之附庸矣",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "變一為元解云",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "before": "地天地之始也",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "故上至繫之解",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "before": "上春在王上矣",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "不言至王者解",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "before": "皆曰君是也今",
+   "paddle": "據",
+   "kanripo": "据",
+   "after": "魯而言不言公",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B009",
+   "stratum": "B-rand",
+   "before": "喪葬三品以上",
+   "paddle": "輛",
+   "kanripo": "輀",
+   "after": "車用開轍車油",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B011",
+   "stratum": "B-rand",
+   "before": "行曰夏周相去",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "遠故曰相古商",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "before": "生金生金尅甲",
+   "paddle": "絕",
+   "kanripo": "絶",
+   "after": "水生甲及官火",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "before": "彼此相安方為",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "after": "備地支來往衝",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "before": "柰馬馳如甲人",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "after": "在寅見壬寅則",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "before": "有福庚寅為破",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "after": "半吉半凶又如",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "before": "吉半凶又如辛",
+   "paddle": "祿",
+   "kanripo": "禄",
+   "after": "在酉見癸酉",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B016",
+   "stratum": "B-rand",
+   "before": "不日遂歸劉孝",
+   "paddle": "咸",
+   "kanripo": "威",
+   "after": "詩隔牆花半隱",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B016",
+   "stratum": "B-rand",
+   "before": "脂粉弄丨丨張",
+   "paddle": "東",
+   "kanripo": "柬",
+   "after": "之東飛伯勞歌",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "before": "我不然鰓鰓宵",
+   "paddle": "盱",
+   "kanripo": "旰",
+   "after": "待豐年千村時",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "before": "鰓宵旰待豐年",
+   "paddle": "干",
+   "kanripo": "千",
+   "after": "村時若千村慶",
+   "by": [
+    "opus-correct",
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "before": "得普天恩澤豈",
+   "paddle": "篤",
+   "kanripo": "兼",
+   "after": "全先憂後樂何",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "before": "憂後樂何能遂",
+   "paddle": "哀",
+   "kanripo": "衰",
+   "after": "景殘齡秖自憐",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "before": "潤須臾卷葉舒",
+   "paddle": "干",
+   "kanripo": "千",
+   "after": "村勤襏襫萬頃",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B020",
+   "stratum": "B-rand",
+   "before": "齊語則咫尺天",
+   "paddle": "顏",
+   "kanripo": "顔",
+   "after": "俯伏下拜以敬",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B020",
+   "stratum": "B-rand",
+   "before": "怠苟簡而非前",
+   "paddle": "曰",
+   "kanripo": "日",
+   "after": "之比矣然左傳",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B021",
+   "stratum": "B-rand",
+   "before": "陽消息兩端而",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "神明之德如健",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B024",
+   "stratum": "B-rand",
+   "before": "小加減訶藜勒",
+   "paddle": "九",
+   "kanripo": "丸",
+   "after": "治小兒水穀痢",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B024",
+   "stratum": "B-rand",
+   "before": "以粥飲送下七",
+   "paddle": "九",
+   "kanripo": "丸",
+   "after": "量大小加減又",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B025",
+   "stratum": "B-rand",
+   "before": "石磬也土塤也",
+   "paddle": "草",
+   "kanripo": "革",
+   "after": "鼓鼗也絲琴瑟",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B025",
+   "stratum": "B-rand",
+   "before": "涼兑音金其風",
+   "paddle": "闔",
+   "kanripo": "閶",
+   "after": "闔又易緯通卦",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B025",
+   "stratum": "B-rand",
+   "before": "秋涼風至秋分",
+   "paddle": "闔",
+   "kanripo": "閶",
+   "after": "闔風至立冬不",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B026",
+   "stratum": "B-rand",
+   "before": "歲除夕遺里閭",
+   "paddle": "樂",
+   "kanripo": "藥",
+   "after": "一貼令囊浸井",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B026",
+   "stratum": "B-rand",
+   "before": "囊浸井中至元",
+   "paddle": "曰",
+   "kanripo": "日",
+   "after": "取水置",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B030",
+   "stratum": "B-rand",
+   "before": "講武自于臺上",
+   "paddle": "故",
+   "kanripo": "放",
+   "after": "鳴鏑之矢以為",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B030",
+   "stratum": "B-rand",
+   "before": "之銘結樓臺伏",
+   "paddle": "環",
+   "kanripo": "琛",
+   "after": "三齊畧記海上",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B031",
+   "stratum": "B-dis",
+   "before": "庶人章分為二",
+   "paddle": "留",
+   "kanripo": "曾",
+   "after": "子敢問章分為",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B031",
+   "stratum": "B-dis",
+   "before": "年九月戊午許",
+   "paddle": "沖",
+   "kanripo": "冲",
+   "after": "上父慎說文曰",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B033",
+   "stratum": "B-dis",
+   "before": "理之故",
+   "paddle": "",
+   "kanripo": "四",
+   "after": "行十一月二十",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B033",
+   "stratum": "B-dis",
+   "before": "輩三行第三十",
+   "paddle": "義",
+   "kanripo": "羲",
+   "after": "之愛報七行復",
+   "by": [
+    "flashhigh-correct"
+   ]
+  },
+  {
+   "uid": "B034",
+   "stratum": "B-dis",
+   "before": "之間非必相懸",
+   "paddle": "絕",
+   "kanripo": "絶",
+   "after": "也至史補所言",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B037",
+   "stratum": "B-dis",
+   "before": "空存二色之名",
+   "paddle": "邛",
+   "kanripo": "卭",
+   "after": "邑之光還起一",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B042",
+   "stratum": "B-dis",
+   "before": "有益於人亦於",
+   "paddle": "巳",
+   "kanripo": "己",
+   "after": "有益如中與才",
+   "by": [
+    "pro-correct"
+   ]
+  },
+  {
+   "uid": "B045",
+   "stratum": "B-dis",
+   "before": "之數而說者謂",
+   "paddle": "髙",
+   "kanripo": "高",
+   "after": "祖以下至茂陵",
+   "by": [
+    "opus-correct"
+   ]
+  },
+  {
+   "uid": "B045",
+   "stratum": "B-dis",
+   "before": "時人適楚終老",
+   "paddle": "於",
+   "kanripo": "于",
+   "after": "蘭陵今常州府",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B045",
+   "stratum": "B-dis",
+   "before": "永平中甘露降",
+   "paddle": "於",
+   "kanripo": "于",
+   "after": "甘陵杜陵漢宣",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B046",
+   "stratum": "B-dis",
+   "before": "曰文明以止故",
+   "paddle": "離",
+   "kanripo": "离",
+   "after": "為文离文自飾",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B046",
+   "stratum": "B-dis",
+   "before": "以止故离為文",
+   "paddle": "離",
+   "kanripo": "离",
+   "after": "文自飾是賁如",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B046",
+   "stratum": "B-dis",
+   "before": "也互體坎坎水",
+   "paddle": "肖",
+   "kanripo": "自",
+   "after": "潤是濡如也三",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B047",
+   "stratum": "B-dis",
+   "before": "為諸侯受之君",
+   "paddle": "巳",
+   "kanripo": "已",
+   "after": "廢天倫而忘君",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B047",
+   "stratum": "B-dis",
+   "before": "若隱者可謂輕",
+   "paddle": "干乗",
+   "kanripo": "千乘",
+   "after": "之國蹈道則未",
+   "by": [
+    "opus-correct",
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B047",
+   "stratum": "B-dis",
+   "before": "作按舜典紀元",
+   "paddle": "曰",
+   "kanripo": "日",
+   "after": "商訓稱元祀此",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B050",
+   "stratum": "B-dis",
+   "before": "于史克之對也",
+   "paddle": "晋",
+   "kanripo": "晉",
+   "after": "邢侯楚申公巫",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B050",
+   "stratum": "B-dis",
+   "before": "故楚人爭鄐田",
+   "paddle": "乆",
+   "kanripo": "久",
+   "after": "而無成久訟未",
+   "by": [
+    "flashhigh-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B052",
+   "stratum": "B-dis",
+   "before": "之非時獻禽之",
+   "paddle": "末",
+   "kanripo": "未",
+   "after": "至敢膳諸從者",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B053",
+   "stratum": "B-dis",
+   "before": "其本則戚而已",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "慶源輔氏曰祭",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B053",
+   "stratum": "B-dis",
+   "before": "也故為禮之本",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "雙峯饒氏曰放",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B053",
+   "stratum": "B-dis",
+   "before": "其不切放故也",
+   "paddle": "〇",
+   "kanripo": "",
+   "after": "雲峯胡氏曰本",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B055",
+   "stratum": "B-dis",
+   "before": "破我斧又缺我",
+   "paddle": "斯",
+   "kanripo": "斨",
+   "after": "周公東征四國",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B056",
+   "stratum": "B-dis",
+   "before": "薛敗而不善詩",
+   "paddle": "荊",
+   "kanripo": "荆",
+   "after": "公為代作今集",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B056",
+   "stratum": "B-dis",
+   "before": "詩荆公為代作",
+   "paddle": "令",
+   "kanripo": "今",
+   "after": "集中所謂薛秀",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B056",
+   "stratum": "B-dis",
+   "before": "笑當年薛乞兒",
+   "paddle": "荊",
+   "kanripo": "荆",
+   "after": "公坐上賭新詩",
+   "by": [
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B056",
+   "stratum": "B-dis",
+   "before": "坐上賭新詩而",
+   "paddle": "令",
+   "kanripo": "今",
+   "after": "又向江東去奉",
+   "by": [
+    "opus-correct",
+    "pro-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B057",
+   "stratum": "B-dis",
+   "before": "含憺吐濫切恬",
+   "paddle": "靜",
+   "kanripo": "静",
+   "after": "也惔同紺古暗",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B057",
+   "stratum": "B-dis",
+   "before": "暗切青赤色也",
+   "paddle": "閡",
+   "kanripo": "闞",
+   "after": "苦濫切魯邑亦",
+   "by": [
+    "opus-correct",
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B057",
+   "stratum": "B-dis",
+   "before": "切猶卒也蹔同",
+   "paddle": "荅",
+   "kanripo": "莟",
+   "after": "胡紺切苗莟心",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B057",
+   "stratum": "B-dis",
+   "before": "同莟胡紺切苗",
+   "paddle": "荅",
+   "kanripo": "莟",
+   "after": "心欲秀也甔都",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B059",
+   "stratum": "B-dis",
+   "before": "多熱熱血不止",
+   "paddle": "蘊",
+   "kanripo": "藴",
+   "after": "瘀成膿血利也",
+   "by": [
+    "opus-redo"
+   ]
+  },
+  {
+   "uid": "B060",
+   "stratum": "B-dis",
+   "before": "皆是墮於一偏",
+   "paddle": "橫",
+   "kanripo": "横",
+   "after": "渠先生曰精義",
+   "by": [
+    "opus-correct"
+   ]
+  }
+ ],
+ "pages": [
+  {
+   "uid": "A-pil004",
+   "stratum": "A",
+   "pid": "6a3c65ee39b4508b04e3025c",
+   "title": "御定子史精華·卷八十三~卷八十六 (vol 77)",
+   "has_leaf": true,
+   "leaf_chars": 307,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 308,
+     "cer": 0.0423,
+     "over": 2,
+     "jumps": 1,
+     "placed": 20
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 34.237,
+     "calls": 1,
+     "han": 307,
+     "cer": 0.0228,
+     "over": 0,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.026
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 252.2,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0489,
+     "over": 4,
+     "jumps": 0,
+     "placed": 24,
+     "edit_vs_paddle": 0.013
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 90.4,
+     "calls": 1,
+     "han": 308,
+     "cer": 0.0358,
+     "over": 1,
+     "jumps": 1,
+     "placed": 20,
+     "edit_vs_paddle": 0.0065
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 38.196,
+     "calls": 1,
+     "han": 307,
+     "cer": 0.0293,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0325
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil005",
+   "stratum": "A",
+   "pid": "6a3c663339b4508b04e32ce8",
+   "title": "御定子史精華·卷一百三十八~卷一百四十 (vol 149)",
+   "has_leaf": true,
+   "leaf_chars": 300,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 290,
+     "cer": 0.08,
+     "over": 2,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 47.369,
+     "calls": 1,
+     "han": 296,
+     "cer": 0.04,
+     "over": 1,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0586
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 202.2,
+     "calls": 1,
+     "han": 279,
+     "cer": 0.11,
+     "over": 2,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.069
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 126.9,
+     "calls": 1,
+     "han": 290,
+     "cer": 0.0633,
+     "over": 1,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0241
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 61.545,
+     "calls": 1,
+     "han": 295,
+     "cer": 0.0533,
+     "over": 4,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0724
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil010",
+   "stratum": "A",
+   "pid": "6a3c694839b4508b04e3e031",
+   "title": "普濟方·卷一百八十四 (vol 122)",
+   "has_leaf": true,
+   "leaf_chars": 145,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 150,
+     "cer": 0.0966,
+     "over": 1,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.66,
+     "calls": 1,
+     "han": 145,
+     "cer": 0.0345,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0733
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 116.4,
+     "calls": 1,
+     "han": 145,
+     "cer": 0.0552,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0533
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 139,
+     "calls": 1,
+     "han": 145,
+     "cer": 0.0552,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0533
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.47,
+     "calls": 1,
+     "han": 145,
+     "cer": 0.0483,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.06
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil011",
+   "stratum": "A",
+   "pid": "6a3c5f6b879008ba7e15548a",
+   "title": "圖書編·卷十九~卷二十 (vol 18)",
+   "has_leaf": true,
+   "leaf_chars": 140,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 136,
+     "cer": 0.3286,
+     "over": 3,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 47.001,
+     "calls": 1,
+     "han": 137,
+     "cer": 0.1786,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2794
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 136.9,
+     "calls": 1,
+     "han": 134,
+     "cer": 0.2214,
+     "over": 3,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.2647
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 172,
+     "calls": 1,
+     "han": 131,
+     "cer": 0.2143,
+     "over": 2,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.1471
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 34.574,
+     "calls": 1,
+     "han": 137,
+     "cer": 0.1643,
+     "over": 2,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2794
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil015",
+   "stratum": "A",
+   "pid": "6a3c64c439b4508b04e29dbb",
+   "title": "御定佩文韻府·卷九十之十 (vol 631)",
+   "has_leaf": true,
+   "leaf_chars": 344,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 354,
+     "cer": 0.0698,
+     "over": 9,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 28.06,
+     "calls": 1,
+     "han": 345,
+     "cer": 0.0233,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.048
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 117.9,
+     "calls": 1,
+     "han": 345,
+     "cer": 0.0291,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0452
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 160,
+     "calls": 1,
+     "han": 345,
+     "cer": 0.0291,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0508
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 25.309,
+     "calls": 1,
+     "han": 345,
+     "cer": 0.0291,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0621
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil016",
+   "stratum": "A",
+   "pid": "6a3c657039b4508b04e2eebe",
+   "title": "御定子史精華·卷一百三十九~卷一百四十二 (vol 45)",
+   "has_leaf": true,
+   "leaf_chars": 282,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 282,
+     "cer": 0.078,
+     "over": 2,
+     "jumps": 1,
+     "placed": 20
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 36.937,
+     "calls": 1,
+     "han": 281,
+     "cer": 0.0213,
+     "over": 0,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0709
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 201.9,
+     "calls": 1,
+     "han": 278,
+     "cer": 0.0532,
+     "over": 1,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.1064
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 162.8,
+     "calls": 1,
+     "han": 280,
+     "cer": 0.0319,
+     "over": 0,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.078
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 33.691,
+     "calls": 1,
+     "han": 279,
+     "cer": 0.039,
+     "over": 0,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0922
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil017",
+   "stratum": "A",
+   "pid": "6a3c6549af3c49b59c5cb39f",
+   "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+   "has_leaf": true,
+   "leaf_chars": 271,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 245,
+     "cer": 0.1144,
+     "over": 1,
+     "jumps": 0,
+     "placed": 23
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 25.774,
+     "calls": 1,
+     "han": 265,
+     "cer": 0.0517,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.1265
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 191.1,
+     "calls": 1,
+     "han": 253,
+     "cer": 0.0923,
+     "over": 1,
+     "jumps": 1,
+     "placed": 22,
+     "edit_vs_paddle": 0.049
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 116.7,
+     "calls": 1,
+     "han": 245,
+     "cer": 0.1181,
+     "over": 0,
+     "jumps": 0,
+     "placed": 24,
+     "edit_vs_paddle": 0.0122
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 43.941,
+     "calls": 1,
+     "han": 260,
+     "cer": 0.0775,
+     "over": 1,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.1388
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil020",
+   "stratum": "A",
+   "pid": "6a3c655f39b4508b04e2e4f3",
+   "title": "御定子史精華·卷九十八~卷一百 (vol 31)",
+   "has_leaf": true,
+   "leaf_chars": 292,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 290,
+     "cer": 0.0068,
+     "over": 0,
+     "jumps": 0,
+     "placed": 18
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 24.387,
+     "calls": 1,
+     "han": 290,
+     "cer": 0.0068,
+     "over": 0,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 174.5,
+     "calls": 1,
+     "han": 284,
+     "cer": 0.0377,
+     "over": 1,
+     "jumps": 0,
+     "placed": 9,
+     "edit_vs_paddle": 0.031
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 170.9,
+     "calls": 1,
+     "han": 293,
+     "cer": 0.1438,
+     "over": 39,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.1448
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 26.399,
+     "calls": 1,
+     "han": 287,
+     "cer": 0.0548,
+     "over": 3,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.0517
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil021",
+   "stratum": "A",
+   "pid": "6a3c656e39b4508b04e2ed7b",
+   "title": "御定子史精華·卷一百三十六~卷一百三十八 (vol 44)",
+   "has_leaf": true,
+   "leaf_chars": 305,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 301,
+     "cer": 0.0623,
+     "over": 1,
+     "jumps": 1,
+     "placed": 22
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 26.403,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0557,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0166
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 124.8,
+     "calls": 1,
+     "han": 278,
+     "cer": 0.1672,
+     "over": 3,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.113
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 149.3,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0623,
+     "over": 1,
+     "jumps": 1,
+     "placed": 22,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 21.092,
+     "calls": 1,
+     "han": 302,
+     "cer": 0.1049,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.103
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil024",
+   "stratum": "A",
+   "pid": "6a3cb83d3dce6cfad748c72b",
+   "title": "御定佩文齋書畫譜·卷四十一 (vol 17)",
+   "has_leaf": true,
+   "leaf_chars": 96,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 101,
+     "cer": 0.0625,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 11.915,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0104,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0495
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 58.2,
+     "calls": 1,
+     "han": 92,
+     "cer": 0.0521,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0891
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 176,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0104,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0495
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 12.143,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0104,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0495
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil026",
+   "stratum": "A",
+   "pid": "6a3c654539b4508b04e2da92",
+   "title": "御定子史精華·卷十一~卷十三 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 304,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 303,
+     "cer": 0.0658,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 27.045,
+     "calls": 1,
+     "han": 304,
+     "cer": 0.0428,
+     "over": 0,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0297
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 457,
+     "calls": 2,
+     "han": 305,
+     "cer": 0.0493,
+     "over": 1,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0231
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 166.9,
+     "calls": 1,
+     "han": 302,
+     "cer": 0.0559,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0198
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 42.462,
+     "calls": 1,
+     "han": 307,
+     "cer": 0.1908,
+     "over": 3,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.1683
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil027",
+   "stratum": "A",
+   "pid": "6a3c698eaf3c49b59c5e09c6",
+   "title": "普濟方·卷二百七十一 (vol 188)",
+   "has_leaf": true,
+   "leaf_chars": 39,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 54,
+     "cer": 0.4359,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.595,
+     "calls": 1,
+     "han": 39,
+     "cer": 0.1026,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.3148
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 67.7,
+     "calls": 1,
+     "han": 39,
+     "cer": 0.0769,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.2963
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 104.5,
+     "calls": 1,
+     "han": 39,
+     "cer": 0.0769,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.2963
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 14.326,
+     "calls": 1,
+     "han": 39,
+     "cer": 0.1026,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.3148
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil034",
+   "stratum": "A",
+   "pid": "6a3c656839b4508b04e2ea9c",
+   "title": "御定子史精華·卷一百二十~卷一百二十二 (vol 39)",
+   "has_leaf": true,
+   "leaf_chars": 286,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 283,
+     "cer": 0.1189,
+     "over": 30,
+     "jumps": 1,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 29.711,
+     "calls": 1,
+     "han": 286,
+     "cer": 0.007,
+     "over": 0,
+     "jumps": 1,
+     "placed": 8,
+     "edit_vs_paddle": 0.1201
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 98.4,
+     "calls": 1,
+     "han": 260,
+     "cer": 0.1643,
+     "over": 13,
+     "jumps": 1,
+     "placed": 17,
+     "edit_vs_paddle": 0.1979
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 190.6,
+     "calls": 1,
+     "han": 260,
+     "cer": 0.0979,
+     "over": 0,
+     "jumps": 1,
+     "placed": 16,
+     "edit_vs_paddle": 0.1131
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 24.441,
+     "calls": 1,
+     "han": 285,
+     "cer": 0.014,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.1201
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil035",
+   "stratum": "A",
+   "pid": "6a3c65e139b4508b04e2fadb",
+   "title": "御定子史精華·卷四十七~卷四十九 (vol 65)",
+   "has_leaf": true,
+   "leaf_chars": 303,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 302,
+     "cer": 0.0528,
+     "over": 2,
+     "jumps": 1,
+     "placed": 19
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 27.744,
+     "calls": 1,
+     "han": 302,
+     "cer": 0.0561,
+     "over": 2,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0265
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 230.3,
+     "calls": 1,
+     "han": 302,
+     "cer": 0.066,
+     "over": 2,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.0199
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 233,
+     "calls": 1,
+     "han": 300,
+     "cer": 0.0495,
+     "over": 1,
+     "jumps": 1,
+     "placed": 19,
+     "edit_vs_paddle": 0.0066
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 28.613,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.1551,
+     "over": 2,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.1358
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil036",
+   "stratum": "A",
+   "pid": "6a3c65e739b4508b04e2fe0b",
+   "title": "御定子史精華·卷六十~卷六十二 (vol 69)",
+   "has_leaf": true,
+   "leaf_chars": 299,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 303,
+     "cer": 0.0535,
+     "over": 9,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 30.767,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.0401,
+     "over": 4,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0264
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 87.5,
+     "calls": 1,
+     "han": 303,
+     "cer": 0.0535,
+     "over": 9,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0033
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 136.6,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.0368,
+     "over": 4,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0198
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 45.748,
+     "calls": 1,
+     "han": 295,
+     "cer": 0.0635,
+     "over": 4,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0561
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil038",
+   "stratum": "A",
+   "pid": "6a3c6550af3c49b59c5cb711",
+   "title": "御定子史精華·卷四十四~卷四十七 (vol 14)",
+   "has_leaf": true,
+   "leaf_chars": 320,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 320,
+     "cer": 0.0094,
+     "over": 1,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 25.59,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0063,
+     "over": 1,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0031
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 176.9,
+     "calls": 1,
+     "han": 274,
+     "cer": 0.1969,
+     "over": 9,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.2938
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 137,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0063,
+     "over": 1,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0031
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 29.986,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0125,
+     "over": 2,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0094
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil039",
+   "stratum": "A",
+   "pid": "6a3c6b1f39b4508b04e40d53",
+   "title": "六書統·卷一 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 102,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 120,
+     "cer": 0.4706,
+     "over": 15,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.466,
+     "calls": 1,
+     "han": 109,
+     "cer": 0.3627,
+     "over": 4,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.125
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 172.4,
+     "calls": 1,
+     "han": 108,
+     "cer": 0.3529,
+     "over": 3,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.1167
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 140.9,
+     "calls": 1,
+     "han": 108,
+     "cer": 0.3529,
+     "over": 3,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.1083
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 19.1,
+     "calls": 1,
+     "han": 110,
+     "cer": 0.3922,
+     "over": 5,
+     "jumps": 0,
+     "placed": 1,
+     "edit_vs_paddle": 0.15
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil040",
+   "stratum": "A",
+   "pid": "6a3c6314879008ba7e165b83",
+   "title": "御定佩文韻府·卷五十四~卷五十五之一 (vol 203)",
+   "has_leaf": true,
+   "leaf_chars": 371,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 377,
+     "cer": 0.0458,
+     "over": 6,
+     "jumps": 0,
+     "placed": 20
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 32.191,
+     "calls": 1,
+     "han": 372,
+     "cer": 0.0216,
+     "over": 0,
+     "jumps": 0,
+     "placed": 22,
+     "edit_vs_paddle": 0.0265
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 227,
+     "calls": 1,
+     "han": 373,
+     "cer": 0.0566,
+     "over": 3,
+     "jumps": 0,
+     "placed": 39,
+     "edit_vs_paddle": 0.0557
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 161.7,
+     "calls": 1,
+     "han": 377,
+     "cer": 0.0404,
+     "over": 7,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0133
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 37.312,
+     "calls": 1,
+     "han": 371,
+     "cer": 0.0431,
+     "over": 3,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0557
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil043",
+   "stratum": "A",
+   "pid": "6a3c663439b4508b04e32df9",
+   "title": "御定子史精華·卷一百三十三~卷一百三十四 (vol 147)",
+   "has_leaf": true,
+   "leaf_chars": 308,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 305,
+     "cer": 0.1201,
+     "over": 25,
+     "jumps": 0,
+     "placed": 18
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 29.325,
+     "calls": 1,
+     "han": 305,
+     "cer": 0.0422,
+     "over": 1,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0852
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 181.6,
+     "calls": 1,
+     "han": 302,
+     "cer": 0.1299,
+     "over": 15,
+     "jumps": 0,
+     "placed": 23,
+     "edit_vs_paddle": 0.0787
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 117.3,
+     "calls": 1,
+     "han": 306,
+     "cer": 0.0357,
+     "over": 1,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0852
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 40.57,
+     "calls": 1,
+     "han": 305,
+     "cer": 0.0487,
+     "over": 1,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0918
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil048",
+   "stratum": "A",
+   "pid": "6a3c63a639b4508b04e2242b",
+   "title": "御定佩文韻府·卷十三之一 (vol 345)",
+   "has_leaf": true,
+   "leaf_chars": 356,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 349,
+     "cer": 0.0815,
+     "over": 2,
+     "jumps": 0,
+     "placed": 22
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 31.3,
+     "calls": 1,
+     "han": 352,
+     "cer": 0.0393,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0544
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 110.9,
+     "calls": 1,
+     "han": 371,
+     "cer": 0.0927,
+     "over": 5,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0774
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 159.6,
+     "calls": 1,
+     "han": 349,
+     "cer": 0.0787,
+     "over": 1,
+     "jumps": 0,
+     "placed": 22,
+     "edit_vs_paddle": 0.0115
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 56.669,
+     "calls": 1,
+     "han": 350,
+     "cer": 0.059,
+     "over": 1,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.1089
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil049",
+   "stratum": "A",
+   "pid": "6a3c660e39b4508b04e317c4",
+   "title": "御定子史精華·卷三十~卷三十二 (vol 111)",
+   "has_leaf": true,
+   "leaf_chars": 295,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 295,
+     "cer": 0.0271,
+     "over": 5,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 32.474,
+     "calls": 1,
+     "han": 295,
+     "cer": 0.0373,
+     "over": 4,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0169
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 189.8,
+     "calls": 1,
+     "han": 304,
+     "cer": 0.0712,
+     "over": 10,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0508
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 241.8,
+     "calls": 1,
+     "han": 295,
+     "cer": 0.0305,
+     "over": 5,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0034
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 30.887,
+     "calls": 1,
+     "han": 288,
+     "cer": 0.078,
+     "over": 6,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.061
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil051",
+   "stratum": "A",
+   "pid": "6a3c661a39b4508b04e31ea2",
+   "title": "御定子史精華·卷七十~卷七十一 (vol 124)",
+   "has_leaf": true,
+   "leaf_chars": 291,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 288,
+     "cer": 0.1065,
+     "over": 10,
+     "jumps": 1,
+     "placed": 15
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 30.109,
+     "calls": 1,
+     "han": 286,
+     "cer": 0.0687,
+     "over": 9,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0451
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 177,
+     "calls": 1,
+     "han": 287,
+     "cer": 0.0722,
+     "over": 10,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0521
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 155.4,
+     "calls": 1,
+     "han": 289,
+     "cer": 0.0653,
+     "over": 9,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0694
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 45.845,
+     "calls": 1,
+     "han": 287,
+     "cer": 0.0893,
+     "over": 10,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0799
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil053",
+   "stratum": "A",
+   "pid": "6a3c65f939b4508b04e308d7",
+   "title": "御定子史精華·卷一百十四~卷一百十五 (vol 88)",
+   "has_leaf": true,
+   "leaf_chars": 314,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 310,
+     "cer": 0.0255,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 28.244,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0223,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0097
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 113.8,
+     "calls": 1,
+     "han": 282,
+     "cer": 0.1146,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.1032
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 239.7,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0255,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 23.183,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.0573,
+     "over": 1,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.0452
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil057",
+   "stratum": "A",
+   "pid": "6a3c65cf39b4508b04e2f7e7",
+   "title": "御定子史精華·卷三十一~卷三十三 (vol 60)",
+   "has_leaf": true,
+   "leaf_chars": 295,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 301,
+     "cer": 0.0508,
+     "over": 5,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 24.144,
+     "calls": 1,
+     "han": 294,
+     "cer": 0.0441,
+     "over": 5,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.0399
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 167.7,
+     "calls": 1,
+     "han": 293,
+     "cer": 0.0508,
+     "over": 5,
+     "jumps": 0,
+     "placed": 22,
+     "edit_vs_paddle": 0.0532
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 167.4,
+     "calls": 1,
+     "han": 294,
+     "cer": 0.0237,
+     "over": 4,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0266
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 79.518,
+     "calls": 1,
+     "han": 292,
+     "cer": 0.0576,
+     "over": 5,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.0698
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil058",
+   "stratum": "A",
+   "pid": "6a3c66deaf3c49b59c5ce20c",
+   "title": "歷算全書·卷五十七 (vol 38)",
+   "has_leaf": true,
+   "leaf_chars": 122,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 112,
+     "cer": 0.2213,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.771,
+     "calls": 1,
+     "han": 128,
+     "cer": 0.1066,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2411
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 132.6,
+     "calls": 1,
+     "han": 126,
+     "cer": 0.0738,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2232
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 166.2,
+     "calls": 1,
+     "han": 126,
+     "cer": 0.0738,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2232
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 23.437,
+     "calls": 1,
+     "han": 128,
+     "cer": 0.1066,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2679
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil059",
+   "stratum": "A",
+   "pid": "6a3c76db01fe4f593c1fdfc6",
+   "title": "苑洛志樂·卷八 (vol 5)",
+   "has_leaf": true,
+   "leaf_chars": 85,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 85,
+     "cer": 0.0353,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.577,
+     "calls": 1,
+     "han": 85,
+     "cer": 0.0353,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 112.9,
+     "calls": 1,
+     "han": 84,
+     "cer": 0.0941,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0588
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 150.8,
+     "calls": 1,
+     "han": 85,
+     "cer": 0.0941,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0588
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.344,
+     "calls": 1,
+     "han": 85,
+     "cer": 0.0941,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0588
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil060",
+   "stratum": "A",
+   "pid": "6a3c660339b4508b04e30f45",
+   "title": "御定子史精華·卷一百四十~卷一百四十二 (vol 97)",
+   "has_leaf": true,
+   "leaf_chars": 313,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 314,
+     "cer": 0.0319,
+     "over": 2,
+     "jumps": 0,
+     "placed": 19
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.533,
+     "calls": 1,
+     "han": 313,
+     "cer": 0.0256,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0191
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 174.8,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0415,
+     "over": 1,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.0159
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 156.1,
+     "calls": 1,
+     "han": 313,
+     "cer": 0.0256,
+     "over": 1,
+     "jumps": 0,
+     "placed": 19,
+     "edit_vs_paddle": 0.0064
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 23.29,
+     "calls": 1,
+     "han": 312,
+     "cer": 0.0383,
+     "over": 1,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0414
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil066",
+   "stratum": "A",
+   "pid": "6a3c654aaf3c49b59c5cb44e",
+   "title": "御定子史精華·卷二十八~卷三十一 (vol 9)",
+   "has_leaf": true,
+   "leaf_chars": 299,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 311,
+     "cer": 0.0569,
+     "over": 12,
+     "jumps": 0,
+     "placed": 22
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 36.664,
+     "calls": 1,
+     "han": 298,
+     "cer": 0.0201,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0514
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 111.4,
+     "calls": 1,
+     "han": 308,
+     "cer": 0.0602,
+     "over": 10,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0257
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 170.6,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.0234,
+     "over": 0,
+     "jumps": 0,
+     "placed": 23,
+     "edit_vs_paddle": 0.045
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 31.184,
+     "calls": 1,
+     "han": 298,
+     "cer": 0.0334,
+     "over": 2,
+     "jumps": 0,
+     "placed": 24,
+     "edit_vs_paddle": 0.0707
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil069",
+   "stratum": "A",
+   "pid": "6a3c612a40c88a541d8ee650",
+   "title": "御定駢字類編·卷一百四十四: Imperial Parallel Characters (vol 324)",
+   "has_leaf": true,
+   "leaf_chars": 246,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 236,
+     "cer": 0.1341,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.512,
+     "calls": 1,
+     "han": 246,
+     "cer": 0.0732,
+     "over": 0,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.072
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 130.4,
+     "calls": 1,
+     "han": 247,
+     "cer": 0.0732,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0805
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 123,
+     "calls": 1,
+     "han": 246,
+     "cer": 0.0854,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0847
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 24.808,
+     "calls": 1,
+     "han": 246,
+     "cer": 0.0691,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0975
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil070",
+   "stratum": "A",
+   "pid": "6a3c65ed39b4508b04e301dd",
+   "title": "御定子史精華·卷七十六~卷七十九 (vol 75)",
+   "has_leaf": true,
+   "leaf_chars": 320,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 333,
+     "cer": 0.0906,
+     "over": 17,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 38.337,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0437,
+     "over": 4,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.045
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 50.9,
+     "calls": 1,
+     "han": 321,
+     "cer": 0.1281,
+     "over": 19,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.1291
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 166.9,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0469,
+     "over": 4,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.048
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 31.232,
+     "calls": 1,
+     "han": 318,
+     "cer": 0.075,
+     "over": 4,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0811
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil071",
+   "stratum": "A",
+   "pid": "6a3c65f639b4508b04e3075f",
+   "title": "御定子史精華·卷一百九~卷一百十 (vol 86)",
+   "has_leaf": true,
+   "leaf_chars": 250,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 252,
+     "cer": 0.032,
+     "over": 2,
+     "jumps": 0,
+     "placed": 15
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 27.648,
+     "calls": 1,
+     "han": 240,
+     "cer": 0.024,
+     "over": 0,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0476
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 195.8,
+     "calls": 1,
+     "han": 237,
+     "cer": 0.108,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.123
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 161.6,
+     "calls": 1,
+     "han": 251,
+     "cer": 0.028,
+     "over": 1,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.004
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 26.957,
+     "calls": 1,
+     "han": 242,
+     "cer": 0.028,
+     "over": 2,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0675
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil075",
+   "stratum": "A",
+   "pid": "6a3c663939b4508b04e3318a",
+   "title": "御定子史精華·卷一百四十九~卷一百四五十 (vol 153)",
+   "has_leaf": true,
+   "leaf_chars": 295,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 295,
+     "cer": 0.0508,
+     "over": 1,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 39.232,
+     "calls": 1,
+     "han": 293,
+     "cer": 0.0441,
+     "over": 1,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.0203
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 136.1,
+     "calls": 1,
+     "han": 290,
+     "cer": 0.1356,
+     "over": 4,
+     "jumps": 1,
+     "placed": 21,
+     "edit_vs_paddle": 0.1085
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 473.3,
+     "calls": 2,
+     "han": 294,
+     "cer": 0.0508,
+     "over": 1,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0068
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 34.68,
+     "calls": 1,
+     "han": 289,
+     "cer": 0.0712,
+     "over": 3,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.0475
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil083",
+   "stratum": "A",
+   "pid": "6a3ced0c4701a906f10dd030",
+   "title": "韻府羣玉·卷一 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 333,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 318,
+     "cer": 0.2012,
+     "over": 1,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 37.367,
+     "calls": 1,
+     "han": 333,
+     "cer": 0.048,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.1855
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 182.1,
+     "calls": 1,
+     "han": 328,
+     "cer": 0.1682,
+     "over": 2,
+     "jumps": 1,
+     "placed": 19,
+     "edit_vs_paddle": 0.2044
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 143.4,
+     "calls": 1,
+     "han": 324,
+     "cer": 0.1261,
+     "over": 0,
+     "jumps": 1,
+     "placed": 26,
+     "edit_vs_paddle": 0.1761
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 79.473,
+     "calls": 1,
+     "han": 330,
+     "cer": 0.1081,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.2516
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil085",
+   "stratum": "A",
+   "pid": "6a3ced1f4701a906f10ddb2a",
+   "title": "韻府羣玉·卷十五 (vol 15)",
+   "has_leaf": true,
+   "leaf_chars": 316,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 317,
+     "cer": 0.1297,
+     "over": 3,
+     "jumps": 1,
+     "placed": 19
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 47.221,
+     "calls": 1,
+     "han": 316,
+     "cer": 0.0696,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0915
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 250.4,
+     "calls": 1,
+     "han": 318,
+     "cer": 0.2848,
+     "over": 10,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.2303
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 165,
+     "calls": 1,
+     "han": 315,
+     "cer": 0.0918,
+     "over": 4,
+     "jumps": 0,
+     "placed": 19,
+     "edit_vs_paddle": 0.1009
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 36.736,
+     "calls": 1,
+     "han": 316,
+     "cer": 0.0981,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.1293
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil086",
+   "stratum": "A",
+   "pid": "6a3ced114701a906f10dd449",
+   "title": "韻府羣玉·卷五 (vol 5)",
+   "has_leaf": true,
+   "leaf_chars": 286,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 292,
+     "cer": 0.0839,
+     "over": 2,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 31.528,
+     "calls": 1,
+     "han": 292,
+     "cer": 0.0804,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0342
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 143.6,
+     "calls": 1,
+     "han": 290,
+     "cer": 0.0874,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0377
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 143.3,
+     "calls": 1,
+     "han": 291,
+     "cer": 0.0804,
+     "over": 2,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0103
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 28.858,
+     "calls": 1,
+     "han": 285,
+     "cer": 0.1014,
+     "over": 4,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.1096
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil087",
+   "stratum": "A",
+   "pid": "6a3c656439b4508b04e2e7d8",
+   "title": "御定子史精華·卷一百十二~卷一百十四 (vol 36)",
+   "has_leaf": true,
+   "leaf_chars": 304,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 306,
+     "cer": 0.0164,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 27.064,
+     "calls": 1,
+     "han": 304,
+     "cer": 0.0197,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0163
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 131.4,
+     "calls": 1,
+     "han": 298,
+     "cer": 0.0987,
+     "over": 0,
+     "jumps": 1,
+     "placed": 17,
+     "edit_vs_paddle": 0.0882
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 130.8,
+     "calls": 1,
+     "han": 306,
+     "cer": 0.0132,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0033
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 27.475,
+     "calls": 1,
+     "han": 305,
+     "cer": 0.0395,
+     "over": 0,
+     "jumps": 0,
+     "placed": 9,
+     "edit_vs_paddle": 0.0359
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil088",
+   "stratum": "A",
+   "pid": "6a3c773701fe4f593c200869",
+   "title": "欽定音韻述微·卷四~卷六 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 274,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 271,
+     "cer": 0.0985,
+     "over": 2,
+     "jumps": 0,
+     "placed": 18
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 28.712,
+     "calls": 1,
+     "han": 274,
+     "cer": 0.0146,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0996
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 189.9,
+     "calls": 1,
+     "han": 267,
+     "cer": 0.1898,
+     "over": 3,
+     "jumps": 1,
+     "placed": 21,
+     "edit_vs_paddle": 0.1956
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 177,
+     "calls": 1,
+     "han": 268,
+     "cer": 0.062,
+     "over": 4,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0664
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 53.813,
+     "calls": 1,
+     "han": 274,
+     "cer": 0.0292,
+     "over": 3,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.1218
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil089",
+   "stratum": "A",
+   "pid": "6a3ced0e4701a906f10dd239",
+   "title": "韻府羣玉·卷三 (vol 3)",
+   "has_leaf": true,
+   "leaf_chars": 317,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 317,
+     "cer": 0.0599,
+     "over": 0,
+     "jumps": 0,
+     "placed": 19
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 35.172,
+     "calls": 1,
+     "han": 318,
+     "cer": 0.0505,
+     "over": 0,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.0095
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 158.8,
+     "calls": 1,
+     "han": 321,
+     "cer": 0.1041,
+     "over": 7,
+     "jumps": 0,
+     "placed": 18,
+     "edit_vs_paddle": 0.0978
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 135.3,
+     "calls": 1,
+     "han": 317,
+     "cer": 0.0599,
+     "over": 0,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0284
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 63.296,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0852,
+     "over": 4,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.0789
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil090",
+   "stratum": "A",
+   "pid": "6a3cbe64ec254ff6cadffea5",
+   "title": "六壬大全·卷十一~卷十二 (vol 10)",
+   "has_leaf": true,
+   "leaf_chars": 54,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 54,
+     "cer": 0.0556,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.09,
+     "calls": 1,
+     "han": 54,
+     "cer": 0.037,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0185
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 82.4,
+     "calls": 1,
+     "han": 54,
+     "cer": 0.037,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0185
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 75.3,
+     "calls": 1,
+     "han": 54,
+     "cer": 0.0556,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 11.494,
+     "calls": 1,
+     "han": 54,
+     "cer": 0.037,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0185
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "A-pil093",
+   "stratum": "A",
+   "pid": "6a3cebe08642f0445b157f22",
+   "title": "易原·卷四~卷五 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 172,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 172,
+     "cer": 0.0174,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.015,
+     "calls": 1,
+     "han": 172,
+     "cer": 0.0174,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 76.4,
+     "calls": 1,
+     "han": 172,
+     "cer": 0.0174,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 106.6,
+     "calls": 1,
+     "han": 172,
+     "cer": 0.0174,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.826,
+     "calls": 1,
+     "han": 172,
+     "cer": 0.0233,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0058
+    }
+   },
+   "signals": {
+    "qa_dice": null,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B001",
+   "stratum": "B-rand",
+   "pid": "6a3c662a39b4508b04e3287e",
+   "title": "御定子史精華·卷一百十一~卷一百十三 (vol 138)",
+   "has_leaf": true,
+   "leaf_chars": 315,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 291,
+     "cer": 0.1333,
+     "over": 0,
+     "jumps": 0,
+     "placed": 15
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.424,
+     "calls": 1,
+     "han": 311,
+     "cer": 0.0857,
+     "over": 0,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0825
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 147.7,
+     "calls": 1,
+     "han": 290,
+     "cer": 0.2,
+     "over": 5,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.1271
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 202.4,
+     "calls": 1,
+     "han": 274,
+     "cer": 0.1238,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0584
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 50.399,
+     "calls": 1,
+     "han": 312,
+     "cer": 0.0857,
+     "over": 1,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0.11
+    }
+   },
+   "signals": {
+    "qa_dice": 0.81,
+    "stored_second_cer": null,
+    "flashlow_second_cer": 0.2165,
+    "flashlow_status": "ok",
+    "flashlow_secs": 146.4
+   }
+  },
+  {
+   "uid": "B002",
+   "stratum": "B-rand",
+   "pid": "6a3cb5543dce6cfad74826ec",
+   "title": "周易觀彖·卷七~卷八 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 144,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 144,
+     "cer": 0.0139,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.633,
+     "calls": 1,
+     "han": 144,
+     "cer": 0.0139,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 75.6,
+     "calls": 1,
+     "han": 144,
+     "cer": 0.0208,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0069
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 104.6,
+     "calls": 1,
+     "han": 144,
+     "cer": 0.0139,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.441,
+     "calls": 1,
+     "han": 144,
+     "cer": 0.0278,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0139
+    }
+   },
+   "signals": {
+    "qa_dice": 0.972,
+    "stored_second_cer": null,
+    "flashlow_second_cer": 0.0139,
+    "flashlow_status": "ok",
+    "flashlow_secs": 8.5
+   }
+  },
+  {
+   "uid": "B003",
+   "stratum": "B-rand",
+   "pid": "6a3cb65557c1f37219c4adf5",
+   "title": "增修東萊書說·卷一~卷二 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 168,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 168,
+     "cer": 0.006,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.939,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.006,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 76.1,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.006,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 87.1,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.006,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.17,
+     "calls": 1,
+     "han": 168,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.006
+    }
+   },
+   "signals": {
+    "qa_dice": 0.988,
+    "stored_second_cer": null,
+    "flashlow_second_cer": 0,
+    "flashlow_status": "ok",
+    "flashlow_secs": 12.1
+   }
+  },
+  {
+   "uid": "B004",
+   "stratum": "B-rand",
+   "pid": "6a3cbc66ec254ff6cadf0776",
+   "title": "周禮訂義·卷七十六~卷七十七 (vol 70)",
+   "has_leaf": true,
+   "leaf_chars": 121,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 133,
+     "cer": 0.4711,
+     "over": 16,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.639,
+     "calls": 1,
+     "han": 133,
+     "cer": 0.4711,
+     "over": 16,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 72.2,
+     "calls": 1,
+     "han": 133,
+     "cer": 0.4711,
+     "over": 16,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 64.1,
+     "calls": 1,
+     "han": 133,
+     "cer": 0.4711,
+     "over": 16,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.074,
+     "calls": 1,
+     "han": 133,
+     "cer": 0.4711,
+     "over": 16,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0075
+    }
+   },
+   "signals": {
+    "qa_dice": 0.695,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B005",
+   "stratum": "B-rand",
+   "pid": "6a3c6d5201fe4f593c1b9f0a",
+   "title": "春秋長歷·卷八~卷九 (vol 5)",
+   "has_leaf": true,
+   "leaf_chars": 74,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 73,
+     "cer": 0.0541,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 21.232,
+     "calls": 1,
+     "han": 74,
+     "cer": 0.0405,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0137
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 68.4,
+     "calls": 1,
+     "han": 74,
+     "cer": 0.027,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0548
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 148.2,
+     "calls": 1,
+     "han": 74,
+     "cer": 0.0135,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0411
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.733,
+     "calls": 1,
+     "han": 74,
+     "cer": 0.0135,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0411
+    }
+   },
+   "signals": {
+    "qa_dice": 0.91,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B006",
+   "stratum": "B-rand",
+   "pid": "6a3cea300a0011cb4bc12b5b",
+   "title": "儀禮經傳通解·卷十七~卷二十 (vol 7)",
+   "has_leaf": true,
+   "leaf_chars": 258,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 258,
+     "cer": 0.0194,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22,
+     "calls": 1,
+     "han": 258,
+     "cer": 0.0039,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0155
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 59.1,
+     "calls": 1,
+     "han": 257,
+     "cer": 0.0078,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0194
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 135.8,
+     "calls": 1,
+     "han": 258,
+     "cer": 0.0233,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0039
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 23.842,
+     "calls": 1,
+     "han": 256,
+     "cer": 0.0155,
+     "over": 1,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0271
+    }
+   },
+   "signals": {
+    "qa_dice": 0.945,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B007",
+   "stratum": "B-rand",
+   "pid": "6a3ced524701a906f10df44a",
+   "title": "春秋公羊傳注疏·卷一 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 315,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 320,
+     "cer": 0.0317,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.675,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0317,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 86.2,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0317,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 82.6,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0317,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.659,
+     "calls": 1,
+     "han": 315,
+     "cer": 0.0127,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0187
+    }
+   },
+   "signals": {
+    "qa_dice": 0.945,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B008",
+   "stratum": "B-rand",
+   "pid": "6a3c5f0f879008ba7e152a65",
+   "title": "景岳全書·卷十六 (vol 9)",
+   "has_leaf": true,
+   "leaf_chars": 118,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 118,
+     "cer": 0.0508,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.708,
+     "calls": 1,
+     "han": 118,
+     "cer": 0.0508,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 66.9,
+     "calls": 1,
+     "han": 118,
+     "cer": 0.0508,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 83.5,
+     "calls": 1,
+     "han": 118,
+     "cer": 0.0508,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.153,
+     "calls": 1,
+     "han": 115,
+     "cer": 0.0763,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0254
+    }
+   },
+   "signals": {
+    "qa_dice": 0.897,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B009",
+   "stratum": "B-rand",
+   "pid": "6a3cbc9aec254ff6cadf1862",
+   "title": "讀禮通考·卷九十六~卷九十七 (vol 48)",
+   "has_leaf": true,
+   "leaf_chars": 95,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 103,
+     "cer": 0.1368,
+     "over": 1,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 13.872,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0526,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0874
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 69.3,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0632,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0874
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 101.3,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0526,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0874
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.476,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0947,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.1456
+    }
+   },
+   "signals": {
+    "qa_dice": 0.83,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B010",
+   "stratum": "B-rand",
+   "pid": "6a3c6aa4af3c49b59c5e8a44",
+   "title": "論語學案·卷五~卷六 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 139,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 159,
+     "cer": 0.1583,
+     "over": 13,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 13.528,
+     "calls": 1,
+     "han": 159,
+     "cer": 0.1583,
+     "over": 13,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 79.2,
+     "calls": 1,
+     "han": 159,
+     "cer": 0.1583,
+     "over": 13,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 97,
+     "calls": 1,
+     "han": 159,
+     "cer": 0.1583,
+     "over": 13,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.934,
+     "calls": 1,
+     "han": 159,
+     "cer": 0.1583,
+     "over": 13,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.905,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B011",
+   "stratum": "B-rand",
+   "pid": "6a3c66b7af3c49b59c5ccc31",
+   "title": "欽定書經傳說彙纂·卷十四~卷十五 (vol 12)",
+   "has_leaf": true,
+   "leaf_chars": 147,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 148,
+     "cer": 0.0272,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.388,
+     "calls": 1,
+     "han": 148,
+     "cer": 0.0204,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0068
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 101.4,
+     "calls": 1,
+     "han": 148,
+     "cer": 0.0204,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0068
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 120.3,
+     "calls": 1,
+     "han": 148,
+     "cer": 0.0272,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 20.851,
+     "calls": 1,
+     "han": 147,
+     "cer": 0.0272,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.027
+    }
+   },
+   "signals": {
+    "qa_dice": 0.949,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B012",
+   "stratum": "B-rand",
+   "pid": "6a3c72f801fe4f593c1e48cf",
+   "title": "左傳杜林合注·卷七~卷十 (vol 3)",
+   "has_leaf": true,
+   "leaf_chars": 267,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 267,
+     "cer": 0.0075,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.743,
+     "calls": 1,
+     "han": 267,
+     "cer": 0.0075,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 147.6,
+     "calls": 1,
+     "han": 267,
+     "cer": 0.0075,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 148,
+     "calls": 1,
+     "han": 267,
+     "cer": 0.0075,
+     "over": 0,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 22.5,
+     "calls": 1,
+     "han": 267,
+     "cer": 0.0075,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.981,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B013",
+   "stratum": "B-rand",
+   "pid": "6a3c6cb901fe4f593c1b42ed",
+   "title": "三命通會·卷十 (vol 10)",
+   "has_leaf": true,
+   "leaf_chars": 239,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 239,
+     "cer": 0.0293,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.749,
+     "calls": 1,
+     "han": 239,
+     "cer": 0.0293,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 90.8,
+     "calls": 1,
+     "han": 239,
+     "cer": 0.0293,
+     "over": 1,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0084
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 111,
+     "calls": 1,
+     "han": 239,
+     "cer": 0.0293,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 22.186,
+     "calls": 1,
+     "han": 239,
+     "cer": 0.0293,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0418
+    }
+   },
+   "signals": {
+    "qa_dice": 0.918,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B014",
+   "stratum": "B-rand",
+   "pid": "6a3cb6083dce6cfad7484bec",
+   "title": "大易擇言·卷二十九~卷三十一 (vol 13)",
+   "has_leaf": true,
+   "leaf_chars": 124,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 124,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.097,
+     "calls": 1,
+     "han": 120,
+     "cer": 0.0323,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0323
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 67.6,
+     "calls": 1,
+     "han": 124,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 96.5,
+     "calls": 1,
+     "han": 124,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.845,
+     "calls": 1,
+     "han": 120,
+     "cer": 0.0323,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0323
+    }
+   },
+   "signals": {
+    "qa_dice": 1,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B015",
+   "stratum": "B-rand",
+   "pid": "6a3cb54c3dce6cfad74822c4",
+   "title": "易精蘊大義·卷七~卷八 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 149,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 160,
+     "cer": 0.0805,
+     "over": 2,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.503,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0067,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0688
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 79.3,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0067,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0688
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 111.8,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0134,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.075
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.279,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0067,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0688
+    }
+   },
+   "signals": {
+    "qa_dice": 0.951,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B016",
+   "stratum": "B-rand",
+   "pid": "6a3c6158879008ba7e15d8f2",
+   "title": "御定駢字類編·卷二百二: Imperial Parallel Characters (vol 375)",
+   "has_leaf": true,
+   "leaf_chars": 320,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 320,
+     "cer": 0.0844,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 23.831,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0844,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0063
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 168.2,
+     "calls": 1,
+     "han": 299,
+     "cer": 0.1406,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0844
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 142,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0844,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0031
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 28.032,
+     "calls": 1,
+     "han": 320,
+     "cer": 0.0938,
+     "over": 2,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0375
+    }
+   },
+   "signals": {
+    "qa_dice": 0.851,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B017",
+   "stratum": "B-rand",
+   "pid": "6a3c71cc39b4508b04e5502d",
+   "title": "欽定授時通考·卷五十~卷五十一 (vol 48)",
+   "has_leaf": true,
+   "leaf_chars": 114,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 114,
+     "cer": 0.0614,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 20.777,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0088,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0526
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 96.2,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0439,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0614
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 142.3,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0439,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0526
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 22.794,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0789,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.114
+    }
+   },
+   "signals": {
+    "qa_dice": 0.872,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B018",
+   "stratum": "B-rand",
+   "pid": "6a3c675caf3c49b59c5d29a7",
+   "title": "呻吟語摘·卷上 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 128,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 128,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.433,
+     "calls": 1,
+     "han": 128,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 70.3,
+     "calls": 1,
+     "han": 128,
+     "cer": 0.0078,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0078
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 99.4,
+     "calls": 1,
+     "han": 128,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.837,
+     "calls": 1,
+     "han": 128,
+     "cer": 0.0078,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0078
+    }
+   },
+   "signals": {
+    "qa_dice": 1,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B019",
+   "stratum": "B-rand",
+   "pid": "6a3c6fe601fe4f593c1cec6e",
+   "title": "儀禮集說·卷十四 (vol 12)",
+   "has_leaf": true,
+   "leaf_chars": 96,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 96,
+     "cer": 0.0313,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.608,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0313,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 107.7,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0208,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0104
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 108.5,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0208,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0104
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.636,
+     "calls": 1,
+     "han": 96,
+     "cer": 0.0208,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0104
+    }
+   },
+   "signals": {
+    "qa_dice": 0.922,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B020",
+   "stratum": "B-rand",
+   "pid": "6a3c732701fe4f593c1e60a4",
+   "title": "欽定春秋傳說彙纂·卷十三 (vol 36)",
+   "has_leaf": true,
+   "leaf_chars": 301,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 301,
+     "cer": 0.0166,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.137,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0199,
+     "over": 0,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.01
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 144.7,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0664,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0565
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 161.7,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0199,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.01
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 29.677,
+     "calls": 1,
+     "han": 301,
+     "cer": 0.0332,
+     "over": 1,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0299
+    }
+   },
+   "signals": {
+    "qa_dice": 0.965,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B021",
+   "stratum": "B-rand",
+   "pid": "6a3ce6a30a0011cb4bc06b6a",
+   "title": "合訂刪補大易集義粹言·卷七十六 (vol 38)",
+   "has_leaf": true,
+   "leaf_chars": 149,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 149,
+     "cer": 0.0067,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.978,
+     "calls": 1,
+     "han": 149,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0067
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 79.2,
+     "calls": 1,
+     "han": 149,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0067
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 147,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0067,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.736,
+     "calls": 1,
+     "han": 149,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0067
+    }
+   },
+   "signals": {
+    "qa_dice": 0.986,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B022",
+   "stratum": "B-rand",
+   "pid": "6a3c6b77af3c49b59c5ec705",
+   "title": "讀書紀數略·卷二十九~卷三十 (vol 10)",
+   "has_leaf": true,
+   "leaf_chars": 113,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 114,
+     "cer": 0.0531,
+     "over": 1,
+     "jumps": 0,
+     "placed": 2
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.051,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0531,
+     "over": 1,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0351
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 61.8,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0531,
+     "over": 1,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0263
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 87.9,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0442,
+     "over": 1,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0175
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.115,
+     "calls": 1,
+     "han": 114,
+     "cer": 0.0531,
+     "over": 1,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0351
+    }
+   },
+   "signals": {
+    "qa_dice": 0.868,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B023",
+   "stratum": "B-rand",
+   "pid": "6a3c708339b4508b04e4f180",
+   "title": "禮記集說·卷九十二~卷九十三 (vol 128)",
+   "has_leaf": true,
+   "leaf_chars": 160,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 160,
+     "cer": 0.1688,
+     "over": 16,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.42,
+     "calls": 1,
+     "han": 160,
+     "cer": 0.1688,
+     "over": 16,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 65.6,
+     "calls": 1,
+     "han": 160,
+     "cer": 0.175,
+     "over": 16,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0063
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 121.5,
+     "calls": 1,
+     "han": 160,
+     "cer": 0.1688,
+     "over": 16,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 21.756,
+     "calls": 1,
+     "han": 160,
+     "cer": 0.1688,
+     "over": 16,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.826,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B024",
+   "stratum": "B-rand",
+   "pid": "6a3c69fa39b4508b04e3eb20",
+   "title": "普濟方·卷三百九十八 (vol 285)",
+   "has_leaf": true,
+   "leaf_chars": 129,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 129,
+     "cer": 0.031,
+     "over": 0,
+     "jumps": 1,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.651,
+     "calls": 1,
+     "han": 129,
+     "cer": 0.0465,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0155
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 66.1,
+     "calls": 1,
+     "han": 129,
+     "cer": 0.0155,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0155
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 124.6,
+     "calls": 1,
+     "han": 129,
+     "cer": 0.031,
+     "over": 0,
+     "jumps": 1,
+     "placed": 5,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.226,
+     "calls": 1,
+     "han": 129,
+     "cer": 0.0233,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0233
+    }
+   },
+   "signals": {
+    "qa_dice": 0.938,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B025",
+   "stratum": "B-rand",
+   "pid": "6a3c6f9101fe4f593c1cd787",
+   "title": "論語注疏·卷一~卷三 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 336,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 336,
+     "cer": 0.0298,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.726,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.0238,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.006
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 92.1,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.0208,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0149
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 170.1,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.0238,
+     "over": 3,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.006
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 22.509,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.0238,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0179
+    }
+   },
+   "signals": {
+    "qa_dice": 0.936,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B026",
+   "stratum": "B-rand",
+   "pid": "6a3c67bb39b4508b04e38860",
+   "title": "天中記·卷四 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 162,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 162,
+     "cer": 0.0309,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.103,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0185,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0123
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 82.6,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0185,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0123
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 155.7,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0309,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0247
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.768,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0247,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0185
+    }
+   },
+   "signals": {
+    "qa_dice": 0.921,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B027",
+   "stratum": "B-rand",
+   "pid": "6a3c708539b4508b04e4f2f0",
+   "title": "禮記集說·卷九十六~卷九十七 (vol 130)",
+   "has_leaf": true,
+   "leaf_chars": 153,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 157,
+     "cer": 0.0392,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.941,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0131,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0255
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 62.8,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0131,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0255
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 155.4,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0131,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0255
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.51,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0131,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0255
+    }
+   },
+   "signals": {
+    "qa_dice": 0.943,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B028",
+   "stratum": "B-rand",
+   "pid": "6a3c6c4b39b4508b04e4842e",
+   "title": "湛園札記·卷三~卷四 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 146,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 146,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.811,
+     "calls": 1,
+     "han": 146,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 64.6,
+     "calls": 1,
+     "han": 146,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 100.5,
+     "calls": 1,
+     "han": 146,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.435,
+     "calls": 1,
+     "han": 146,
+     "cer": 0.0068,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0068
+    }
+   },
+   "signals": {
+    "qa_dice": 1,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B029",
+   "stratum": "B-rand",
+   "pid": "6a3cb96b3d799518cd71de55",
+   "title": "琴旨·卷上 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 157,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 178,
+     "cer": 0.1975,
+     "over": 9,
+     "jumps": 0,
+     "placed": 9
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.156,
+     "calls": 1,
+     "han": 178,
+     "cer": 0.1975,
+     "over": 9,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 91.4,
+     "calls": 1,
+     "han": 177,
+     "cer": 0.2038,
+     "over": 9,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0056
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 151.6,
+     "calls": 1,
+     "han": 178,
+     "cer": 0.1975,
+     "over": 9,
+     "jumps": 0,
+     "placed": 9,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.258,
+     "calls": 1,
+     "han": 178,
+     "cer": 0.1975,
+     "over": 9,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.817,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B030",
+   "stratum": "B-rand",
+   "pid": "6a3c639a93327f06e8351a8c",
+   "title": "御定佩文韻府·卷十之三 (vol 334)",
+   "has_leaf": true,
+   "leaf_chars": 356,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 360,
+     "cer": 0.0478,
+     "over": 5,
+     "jumps": 0,
+     "placed": 21
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 29.69,
+     "calls": 1,
+     "han": 355,
+     "cer": 0.0337,
+     "over": 3,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.025
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 128.1,
+     "calls": 1,
+     "han": 355,
+     "cer": 0.0309,
+     "over": 3,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0222
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 161.3,
+     "calls": 1,
+     "han": 354,
+     "cer": 0.0337,
+     "over": 3,
+     "jumps": 0,
+     "placed": 21,
+     "edit_vs_paddle": 0.0278
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 56.328,
+     "calls": 1,
+     "han": 352,
+     "cer": 0.0674,
+     "over": 2,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0611
+    }
+   },
+   "signals": {
+    "qa_dice": 0.93,
+    "stored_second_cer": null,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B031",
+   "stratum": "B-dis",
+   "pid": "6a3cec9a8642f0445b15df49",
+   "title": "玉海·卷四十~卷四十一 (vol 23)",
+   "has_leaf": true,
+   "leaf_chars": 195,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 195,
+     "cer": 0.0154,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.505,
+     "calls": 1,
+     "han": 195,
+     "cer": 0.0103,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0051
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 87.5,
+     "calls": 1,
+     "han": 195,
+     "cer": 0.0103,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0051
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 74.1,
+     "calls": 1,
+     "han": 195,
+     "cer": 0.0103,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0051
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.715,
+     "calls": 1,
+     "han": 195,
+     "cer": 0.0051,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0103
+    }
+   },
+   "signals": {
+    "qa_dice": 0.969,
+    "stored_second_cer": 0.4667,
+    "flashlow_second_cer": 0.0513,
+    "flashlow_status": "ok",
+    "flashlow_secs": 12.4
+   }
+  },
+  {
+   "uid": "B032",
+   "stratum": "B-dis",
+   "pid": "6a3ceb0c95fcd45563052ec3",
+   "title": "繪事備考·卷三~卷四 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 92,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 90,
+     "cer": 0.0543,
+     "over": 4,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 13.006,
+     "calls": 1,
+     "han": 86,
+     "cer": 0.0109,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0444
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 100.7,
+     "calls": 1,
+     "han": 92,
+     "cer": 0.0326,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.1333
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 112.7,
+     "calls": 1,
+     "han": 86,
+     "cer": 0.0109,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0.0444
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 14.156,
+     "calls": 1,
+     "han": 86,
+     "cer": 0.0217,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0556
+    }
+   },
+   "signals": {
+    "qa_dice": 0.957,
+    "stored_second_cer": 0.2444,
+    "flashlow_second_cer": 0.0444,
+    "flashlow_status": "ok",
+    "flashlow_secs": 32.3
+   }
+  },
+  {
+   "uid": "B033",
+   "stratum": "B-dis",
+   "pid": "6a3ceb1195fcd455630532a0",
+   "title": "法書要錄·卷一~卷二 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 162,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 161,
+     "cer": 0.0247,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 27.334,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0185,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0062
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 63.7,
+     "calls": 1,
+     "han": 157,
+     "cer": 0.037,
+     "over": 1,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0559
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 110.3,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.0123,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.0124
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 21.241,
+     "calls": 1,
+     "han": 162,
+     "cer": 0.2407,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.2298
+    }
+   },
+   "signals": {
+    "qa_dice": 0.937,
+    "stored_second_cer": 0.205,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B034",
+   "stratum": "B-dis",
+   "pid": "6a3cc1b4ec254ff6cae0e75f",
+   "title": "少室山房筆叢·卷二十四~卷二十六 (vol 8)",
+   "has_leaf": true,
+   "leaf_chars": 168,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 168,
+     "cer": 0.0179,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.545,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.0238,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.006
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 63.7,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.0179,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 96.6,
+     "calls": 1,
+     "han": 169,
+     "cer": 0.0238,
+     "over": 1,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0.006
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 20.697,
+     "calls": 1,
+     "han": 168,
+     "cer": 0.0298,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0357
+    }
+   },
+   "signals": {
+    "qa_dice": 0.964,
+    "stored_second_cer": 0.1071,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B035",
+   "stratum": "B-dis",
+   "pid": "6a3c61b5879008ba7e15fd4a",
+   "title": "四書大全論語集註大全·卷四~卷五 (vol 3)",
+   "has_leaf": true,
+   "leaf_chars": 273,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 273,
+     "cer": 0.0183,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.62,
+     "calls": 1,
+     "han": 273,
+     "cer": 0.0183,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 124.1,
+     "calls": 1,
+     "han": 273,
+     "cer": 0.0183,
+     "over": 2,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 120.3,
+     "calls": 1,
+     "han": 273,
+     "cer": 0.0183,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.612,
+     "calls": 1,
+     "han": 273,
+     "cer": 0.0183,
+     "over": 2,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.967,
+    "stored_second_cer": 0.3407,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B036",
+   "stratum": "B-dis",
+   "pid": "6a3c5e4940c88a541d8e089a",
+   "title": "淮南鴻烈解·卷八~卷十 (vol 3)",
+   "has_leaf": true,
+   "leaf_chars": 175,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 175,
+     "cer": 0.1314,
+     "over": 10,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 30.7,
+     "calls": 1,
+     "han": 175,
+     "cer": 0.1314,
+     "over": 10,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 92.2,
+     "calls": 1,
+     "han": 173,
+     "cer": 0.1429,
+     "over": 10,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0114
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 135.7,
+     "calls": 1,
+     "han": 175,
+     "cer": 0.1314,
+     "over": 10,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 19.146,
+     "calls": 1,
+     "han": 175,
+     "cer": 0.1429,
+     "over": 10,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0114
+    }
+   },
+   "signals": {
+    "qa_dice": 0.868,
+    "stored_second_cer": 0.1257,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B037",
+   "stratum": "B-dis",
+   "pid": "6a3cedbf4701a906f10e3106",
+   "title": "御定淵鑑類函·卷三十四~三十五 (vol 20)",
+   "has_leaf": true,
+   "leaf_chars": 167,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 167,
+     "cer": 0.0479,
+     "over": 1,
+     "jumps": 0,
+     "placed": 12
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.742,
+     "calls": 1,
+     "han": 167,
+     "cer": 0.0479,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 185,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.3234,
+     "over": 1,
+     "jumps": 0,
+     "placed": 9,
+     "edit_vs_paddle": 0.3413
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 151,
+     "calls": 1,
+     "han": 167,
+     "cer": 0.0479,
+     "over": 1,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 27.425,
+     "calls": 1,
+     "han": 167,
+     "cer": 0.0898,
+     "over": 2,
+     "jumps": 0,
+     "placed": 1,
+     "edit_vs_paddle": 0.0539
+    }
+   },
+   "signals": {
+    "qa_dice": 0.916,
+    "stored_second_cer": 0.3832,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B038",
+   "stratum": "B-dis",
+   "pid": "6a3ceda74701a906f10e238b",
+   "title": "珊瑚木難·卷五 (vol 5)",
+   "has_leaf": true,
+   "leaf_chars": 125,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 125,
+     "cer": 0.048,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.437,
+     "calls": 1,
+     "han": 125,
+     "cer": 0.048,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 107.7,
+     "calls": 1,
+     "han": 125,
+     "cer": 0.04,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.016
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 117.6,
+     "calls": 1,
+     "han": 125,
+     "cer": 0.064,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.024
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.445,
+     "calls": 1,
+     "han": 125,
+     "cer": 0.064,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.04
+    }
+   },
+   "signals": {
+    "qa_dice": 0.9,
+    "stored_second_cer": 0.104,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B039",
+   "stratum": "B-dis",
+   "pid": "6a3ceb3295fcd45563054558",
+   "title": "法書考·卷一~卷三 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 55,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 55,
+     "cer": 0.0182,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 14.892,
+     "calls": 1,
+     "han": 55,
+     "cer": 0.0182,
+     "over": 1,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0182
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 74,
+     "calls": 1,
+     "han": 55,
+     "cer": 0.0182,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0182
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 88.1,
+     "calls": 1,
+     "han": 55,
+     "cer": 0.0182,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0182
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.085,
+     "calls": 1,
+     "han": 55,
+     "cer": 0.0182,
+     "over": 0,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.0182
+    }
+   },
+   "signals": {
+    "qa_dice": 0.867,
+    "stored_second_cer": 0.2182,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B040",
+   "stratum": "B-dis",
+   "pid": "6a3c67a339b4508b04e37c68",
+   "title": "御定孝經衍義·卷六十八~卷七十 (vol 50)",
+   "has_leaf": true,
+   "leaf_chars": 158,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 158,
+     "cer": 0.0063,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.759,
+     "calls": 1,
+     "han": 158,
+     "cer": 0.0063,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 87.3,
+     "calls": 1,
+     "han": 158,
+     "cer": 0.0063,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 100.9,
+     "calls": 1,
+     "han": 158,
+     "cer": 0.0063,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.789,
+     "calls": 1,
+     "han": 158,
+     "cer": 0.0063,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.987,
+    "stored_second_cer": 0.1456,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B041",
+   "stratum": "B-dis",
+   "pid": "6a3c6774af3c49b59c5d37a5",
+   "title": "御定孝經衍義·卷十五~卷十八 (vol 5)",
+   "has_leaf": true,
+   "leaf_chars": 136,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 136,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 21.415,
+     "calls": 1,
+     "han": 136,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 67.9,
+     "calls": 1,
+     "han": 136,
+     "cer": 0.0294,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0294
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 136,
+     "calls": 1,
+     "han": 136,
+     "cer": 0.0294,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0294
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 14.649,
+     "calls": 1,
+     "han": 136,
+     "cer": 0.0368,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0368
+    }
+   },
+   "signals": {
+    "qa_dice": 1,
+    "stored_second_cer": 0.1985,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B042",
+   "stratum": "B-dis",
+   "pid": "6a3c6706af3c49b59c5cf8f2",
+   "title": "麗澤論說集錄·卷七 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 161,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 161,
+     "cer": 0.0124,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.423,
+     "calls": 1,
+     "han": 161,
+     "cer": 0.0124,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0062
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 68.5,
+     "calls": 1,
+     "han": 161,
+     "cer": 0.0124,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0124
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 90.7,
+     "calls": 1,
+     "han": 161,
+     "cer": 0.0186,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0062
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 19.471,
+     "calls": 1,
+     "han": 161,
+     "cer": 0.0248,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0186
+    }
+   },
+   "signals": {
+    "qa_dice": 0.975,
+    "stored_second_cer": 0.1429,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B043",
+   "stratum": "B-dis",
+   "pid": "6a3c679139b4508b04e370fb",
+   "title": "御定孝經衍義·卷八~卷十二 (vol 32)",
+   "has_leaf": true,
+   "leaf_chars": 131,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 131,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.501,
+     "calls": 1,
+     "han": 131,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 71.6,
+     "calls": 1,
+     "han": 131,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 136.3,
+     "calls": 1,
+     "han": 131,
+     "cer": 0,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.835,
+     "calls": 1,
+     "han": 131,
+     "cer": 0.0076,
+     "over": 1,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0.0076
+    }
+   },
+   "signals": {
+    "qa_dice": 1,
+    "stored_second_cer": 0.1603,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B044",
+   "stratum": "B-dis",
+   "pid": "6a3cc1acec254ff6cae0e54c",
+   "title": "少室山房筆叢·卷十一~卷十四 (vol 4)",
+   "has_leaf": true,
+   "leaf_chars": 163,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 163,
+     "cer": 0.0123,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.781,
+     "calls": 1,
+     "han": 167,
+     "cer": 0.0368,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0245
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 72.5,
+     "calls": 1,
+     "han": 163,
+     "cer": 0.0123,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 86.8,
+     "calls": 1,
+     "han": 163,
+     "cer": 0.0123,
+     "over": 0,
+     "jumps": 0,
+     "placed": 10,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.442,
+     "calls": 1,
+     "han": 167,
+     "cer": 0.0368,
+     "over": 1,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0245
+    }
+   },
+   "signals": {
+    "qa_dice": 0.975,
+    "stored_second_cer": 0.1472,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B045",
+   "stratum": "B-dis",
+   "pid": "6a3cef714701a906f10efa4e",
+   "title": "御定淵鑑類函·卷二十三 (vol 407)",
+   "has_leaf": true,
+   "leaf_chars": 278,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 278,
+     "cer": 0.0288,
+     "over": 3,
+     "jumps": 0,
+     "placed": 20
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 25.106,
+     "calls": 1,
+     "han": 278,
+     "cer": 0.0216,
+     "over": 1,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0144
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 265,
+     "calls": 1,
+     "han": 278,
+     "cer": 0.0324,
+     "over": 3,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.0036
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 132.7,
+     "calls": 1,
+     "han": 278,
+     "cer": 0.0288,
+     "over": 3,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 31.766,
+     "calls": 1,
+     "han": 272,
+     "cer": 0.1043,
+     "over": 1,
+     "jumps": 0,
+     "placed": 11,
+     "edit_vs_paddle": 0.0971
+    }
+   },
+   "signals": {
+    "qa_dice": 0.926,
+    "stored_second_cer": 0.7914,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B046",
+   "stratum": "B-dis",
+   "pid": "6a3cc23ef9474f825c176038",
+   "title": "周易述·卷三~卷五 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 245,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 249,
+     "cer": 0.0531,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 25.604,
+     "calls": 1,
+     "han": 245,
+     "cer": 0.0286,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0281
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 107.6,
+     "calls": 1,
+     "han": 245,
+     "cer": 0.0408,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0281
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 120.7,
+     "calls": 1,
+     "han": 245,
+     "cer": 0.0367,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0161
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 35.907,
+     "calls": 1,
+     "han": 244,
+     "cer": 0.0898,
+     "over": 4,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.1044
+    }
+   },
+   "signals": {
+    "qa_dice": 0.917,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B047",
+   "stratum": "B-dis",
+   "pid": "6a3c6245879008ba7e1621d4",
+   "title": "春秋集傳釋義大成·卷一 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 335,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 336,
+     "cer": 0.1522,
+     "over": 21,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 18.76,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.1403,
+     "over": 22,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0149
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 110.5,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.1463,
+     "over": 22,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0089
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 127.7,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.1463,
+     "over": 21,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.006
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.791,
+     "calls": 1,
+     "han": 336,
+     "cer": 0.1403,
+     "over": 22,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0.0149
+    }
+   },
+   "signals": {
+    "qa_dice": 0.845,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B048",
+   "stratum": "B-dis",
+   "pid": "6a3cc1ccec254ff6cae0f1a2",
+   "title": "五燈會元·卷十三 (vol 13)",
+   "has_leaf": true,
+   "leaf_chars": 153,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 153,
+     "cer": 0.0392,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 19.223,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0392,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 73.2,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0458,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0131
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 82.6,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0392,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 17.688,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0458,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0065
+    }
+   },
+   "signals": {
+    "qa_dice": 0.921,
+    "stored_second_cer": 0.183,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B049",
+   "stratum": "B-dis",
+   "pid": "6a3ceb1895fcd4556305369f",
+   "title": "圖畫見聞誌·卷一~卷三 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 45,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 45,
+     "cer": 0.0444,
+     "over": 0,
+     "jumps": 0,
+     "placed": 0
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.231,
+     "calls": 1,
+     "han": 45,
+     "cer": 0.0444,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 104.3,
+     "calls": 1,
+     "han": 45,
+     "cer": 0.0444,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 97,
+     "calls": 1,
+     "han": 45,
+     "cer": 0.0667,
+     "over": 1,
+     "jumps": 0,
+     "placed": 0,
+     "edit_vs_paddle": 0.0222
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.267,
+     "calls": 1,
+     "han": 45,
+     "cer": 0.0444,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0
+    }
+   },
+   "signals": {
+    "qa_dice": 0.909,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B050",
+   "stratum": "B-dis",
+   "pid": "6a3c679239b4508b04e371a7",
+   "title": "御定孝經衍義·卷二十~卷二十二 (vol 35)",
+   "has_leaf": true,
+   "leaf_chars": 150,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 150,
+     "cer": 0.02,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.369,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.02,
+     "over": 0,
+     "jumps": 0,
+     "placed": 3,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 74,
+     "calls": 1,
+     "han": 149,
+     "cer": 0.0267,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0067
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 105.6,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.0133,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.02
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.121,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.0133,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0333
+    }
+   },
+   "signals": {
+    "qa_dice": 0.96,
+    "stored_second_cer": 0.1333,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B051",
+   "stratum": "B-dis",
+   "pid": "6a3c66e5af3c49b59c5ce632",
+   "title": "孔叢子·卷中~卷下 (vol 4)",
+   "has_leaf": false,
+   "leaf_chars": null,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 178
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.906,
+     "calls": 1,
+     "edit_vs_paddle": 0.0112
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 103.3,
+     "calls": 1,
+     "edit_vs_paddle": 0.0281
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 167.4,
+     "calls": 1,
+     "edit_vs_paddle": 0.0112
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 23.867,
+     "calls": 1,
+     "edit_vs_paddle": 0.0618
+    }
+   },
+   "signals": {
+    "qa_dice": 0.793,
+    "stored_second_cer": 0.1685,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B052",
+   "stratum": "B-dis",
+   "pid": "6a3cef034701a906f10ecc2b",
+   "title": "御定淵鑑類函·卷三百十 (vol 315)",
+   "has_leaf": true,
+   "leaf_chars": 263,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 263,
+     "cer": 0.0114,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 23.119,
+     "calls": 1,
+     "han": 263,
+     "cer": 0.0114,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 183.1,
+     "calls": 1,
+     "han": 263,
+     "cer": 0.0114,
+     "over": 0,
+     "jumps": 0,
+     "placed": 15,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "did-not-read",
+     "secs": 93.9,
+     "calls": 1,
+     "why": "no body text"
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 25.063,
+     "calls": 1,
+     "han": 263,
+     "cer": 0.0266,
+     "over": 0,
+     "jumps": 0,
+     "placed": 13,
+     "edit_vs_paddle": 0.0228
+    }
+   },
+   "signals": {
+    "qa_dice": 0.977,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B053",
+   "stratum": "B-dis",
+   "pid": "6a3c61b3879008ba7e15fcdd",
+   "title": "四書大全論語集註大全·卷二~卷三 (vol 2)",
+   "has_leaf": true,
+   "leaf_chars": 310,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 313,
+     "cer": 0.0323,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.382,
+     "calls": 1,
+     "han": 313,
+     "cer": 0.029,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0032
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 92,
+     "calls": 1,
+     "han": 313,
+     "cer": 0.0387,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0128
+    },
+    "flashhigh-correct": {
+     "status": "ok",
+     "secs": 142.6,
+     "calls": 1,
+     "han": 313,
+     "cer": 0.029,
+     "over": 0,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0032
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.419,
+     "calls": 1,
+     "han": 310,
+     "cer": 0.0258,
+     "over": 1,
+     "jumps": 0,
+     "placed": 16,
+     "edit_vs_paddle": 0.0192
+    }
+   },
+   "signals": {
+    "qa_dice": 0.928,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B054",
+   "stratum": "B-dis",
+   "pid": "6a3c679739b4508b04e37531",
+   "title": "御定孝經衍義·卷三十一~卷三十四 (vol 39)",
+   "has_leaf": true,
+   "leaf_chars": 111,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 111,
+     "cer": 0.0721,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 15.57,
+     "calls": 1,
+     "han": 111,
+     "cer": 0.0721,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 73.5,
+     "calls": 1,
+     "han": 111,
+     "cer": 0.0721,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 16.289,
+     "calls": 1,
+     "han": 111,
+     "cer": 0.0811,
+     "over": 0,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.009
+    }
+   },
+   "signals": {
+    "qa_dice": 0.864,
+    "stored_second_cer": 0.2252,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B055",
+   "stratum": "B-dis",
+   "pid": "6a3cec088642f0445b159088",
+   "title": "南宋院畫錄·卷一~卷三 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 150,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 156,
+     "cer": 0.08,
+     "over": 2,
+     "jumps": 0,
+     "placed": 7
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 24.097,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.0267,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0513
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 88.6,
+     "calls": 1,
+     "han": 150,
+     "cer": 0.0267,
+     "over": 0,
+     "jumps": 0,
+     "placed": 8,
+     "edit_vs_paddle": 0.0513
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 15.533,
+     "calls": 1,
+     "han": 142,
+     "cer": 0.1067,
+     "over": 1,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.1282
+    }
+   },
+   "signals": {
+    "qa_dice": 0.901,
+    "stored_second_cer": 0.1026,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B056",
+   "stratum": "B-dis",
+   "pid": "6a3cef118642f0445b160625",
+   "title": "御定淵鑑類函·卷三百二十八~卷三百二十九 (vol 327)",
+   "has_leaf": true,
+   "leaf_chars": 288,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 288,
+     "cer": 0.0486,
+     "over": 2,
+     "jumps": 0,
+     "placed": 17
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.757,
+     "calls": 1,
+     "han": 288,
+     "cer": 0.0451,
+     "over": 2,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0035
+    },
+    "pro-correct": {
+     "status": "ok",
+     "secs": 206.5,
+     "calls": 1,
+     "han": 289,
+     "cer": 0.1285,
+     "over": 3,
+     "jumps": 0,
+     "placed": 20,
+     "edit_vs_paddle": 0.1146
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 29.063,
+     "calls": 1,
+     "han": 288,
+     "cer": 0.0764,
+     "over": 2,
+     "jumps": 0,
+     "placed": 7,
+     "edit_vs_paddle": 0.0625
+    }
+   },
+   "signals": {
+    "qa_dice": 0.9,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B057",
+   "stratum": "B-dis",
+   "pid": "6a3cf0a28642f0445b1661dc",
+   "title": "欽定叶韻彙輯·卷四十一~卷四十八 (vol 10)",
+   "has_leaf": true,
+   "leaf_chars": 201,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 186,
+     "cer": 0.1542,
+     "over": 2,
+     "jumps": 0,
+     "placed": 5
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 21.108,
+     "calls": 1,
+     "han": 186,
+     "cer": 0.1493,
+     "over": 2,
+     "jumps": 0,
+     "placed": 17,
+     "edit_vs_paddle": 0.0054
+    },
+    "pro-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 29.502,
+     "calls": 1,
+     "han": 184,
+     "cer": 0.1542,
+     "over": 2,
+     "jumps": 0,
+     "placed": 2,
+     "edit_vs_paddle": 0.043
+    }
+   },
+   "signals": {
+    "qa_dice": 0.813,
+    "stored_second_cer": 1,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B058",
+   "stratum": "B-dis",
+   "pid": "6a3cc245f9474f825c1763b8",
+   "title": "周易述·卷二十一~卷二十三 (vol 8)",
+   "has_leaf": true,
+   "leaf_chars": 153,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 153,
+     "cer": 0.0131,
+     "over": 1,
+     "jumps": 0,
+     "placed": 9
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 22.369,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0392,
+     "over": 1,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0261
+    },
+    "pro-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 18.857,
+     "calls": 1,
+     "han": 153,
+     "cer": 0.0523,
+     "over": 1,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0392
+    }
+   },
+   "signals": {
+    "qa_dice": 0.974,
+    "stored_second_cer": 0.2157,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B059",
+   "stratum": "B-dis",
+   "pid": "6a3c68caaf3c49b59c5dc709",
+   "title": "巢氏諸病源候總論·卷四十一~卷四十六 (vol 8)",
+   "has_leaf": true,
+   "leaf_chars": 113,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 113,
+     "cer": 0.0354,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 16.322,
+     "calls": 1,
+     "han": 113,
+     "cer": 0.0354,
+     "over": 0,
+     "jumps": 0,
+     "placed": 6,
+     "edit_vs_paddle": 0
+    },
+    "pro-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 14.662,
+     "calls": 1,
+     "han": 113,
+     "cer": 0.0885,
+     "over": 0,
+     "jumps": 0,
+     "placed": 4,
+     "edit_vs_paddle": 0.0708
+    }
+   },
+   "signals": {
+    "qa_dice": 0.893,
+    "stored_second_cer": 0.1681,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  },
+  {
+   "uid": "B060",
+   "stratum": "B-dis",
+   "pid": "6a3c66f9af3c49b59c5cf1f0",
+   "title": "近思錄·卷一~卷二 (vol 1)",
+   "has_leaf": true,
+   "leaf_chars": 234,
+   "arms": {
+    "paddle": {
+     "status": "ok",
+     "han": 234,
+     "cer": 0.0085,
+     "over": 0,
+     "jumps": 0,
+     "placed": 14
+    },
+    "opus-correct": {
+     "status": "ok",
+     "secs": 17.965,
+     "calls": 1,
+     "han": 234,
+     "cer": 0.0085,
+     "over": 0,
+     "jumps": 0,
+     "placed": 5,
+     "edit_vs_paddle": 0.0085
+    },
+    "pro-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "flashhigh-correct": {
+     "status": "missing",
+     "secs": null,
+     "calls": 0
+    },
+    "opus-redo": {
+     "status": "ok",
+     "secs": 19.678,
+     "calls": 1,
+     "han": 233,
+     "cer": 0.0427,
+     "over": 0,
+     "jumps": 0,
+     "placed": 12,
+     "edit_vs_paddle": 0.0342
+    }
+   },
+   "signals": {
+    "qa_dice": 0.983,
+    "stored_second_cer": 0.3248,
+    "flashlow_second_cer": null,
+    "flashlow_status": "missing",
+    "flashlow_secs": null
+   }
+  }
+ ]
+}
