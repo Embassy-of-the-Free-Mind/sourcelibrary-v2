@@ -18,6 +18,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import LibrarianSearch from '@/components/LibrarianSearch';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import CuratorLauncher from '@/components/collections/CuratorLauncher';
 import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
@@ -373,7 +374,7 @@ export default async function SlimeMouldsCollectionPage() {
     featured && 'featured',
     gallery.length > 0 && 'gallery',
     'librarian', 'works', 'involved',
-  ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id] }));
+  ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id], hideOnTenantHost: id === 'librarian' }));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
   return (
@@ -593,6 +594,9 @@ export default async function SlimeMouldsCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
+      {/* The Librarian is refused on partner hosts (#4330) and this page is
+          served there, so the section goes too (the anchor bar drops its link). */}
+      <HideOnTenantHost>
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
@@ -612,6 +616,7 @@ export default async function SlimeMouldsCollectionPage() {
           </div>
         </div>
       </section>
+      </HideOnTenantHost>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
