@@ -1,0 +1,35 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<header>COLLOQVIOS.</header>
+<meta>Catchword: polo</meta>
+<warning>Handwritten marginal note in cursive script</warning>
+
+<margin>Engañar</margin>
+in quitoa,acaçomo quimatiz , aca-
+çomo quicaquiz initlauelilocaio y
+tatzin:in momati, acaçac quellel-
+tiz,quitlacaualtiz , inic amo tlatla-
+cotinemiz:çan moztlacauia,motla
+pololtia . Ca inixquich tlalticpac
+muchiua, àuel ixpanizinco mina-
+ya,motlàtia :muchixquich ixpantzin
+co neci:auh iyehuantin,amoquimo
+tlacamachitiznequi iniuhqui in ta
+tzin : çatepan vel quittazque , vel
+quimatizque,in quenin cenca tema
+mauhticatzintli, in tetlatzontequi
+licatzintli. Ca nelli, inaquin amo
+qmimacaxilia,in amo quimomauh
+caittilia Dios:muchipa çan tlanen
+popoloa,tlanenquixtia :ca ini axca
+initlatqui ininacayo:çan quinenpopo
+loa,çan quinenquixtia:auh ini ani
+ma inixiptlatzin Dios, mictlan qui
+tlaça,mictlan quimaiaui. Ca noiuh
+quichiuh in tlanenpopoloani : ca
+muchi,ca ixquich , çan quinenpo-
+polo
+
+<vocab>Dios, mictlan, tlalticpac, tatzin, colloqvios, engañar</vocab>

@@ -1,0 +1,2673 @@
+{
+ "summary": {
+  "controls": {
+   "planted": 5,
+   "caught": 5,
+   "rows": [
+    {
+     "uid": "ctl1_pil044",
+     "inserted": "廣三股修四徑隅五既方之外半其一矩環而共盤得",
+     "verdict": "invented",
+     "caught": true
+    },
+    {
+     "uid": "ctl2_pil064",
+     "inserted": "名伊遜郢嚻木譯言九渡通廣五七里可度馬自八九股",
+     "verdict": "invented",
+     "caught": true
+    },
+    {
+     "uid": "ctl3_pil093",
+     "inserted": "景仁專當要任意有不平辭意激揚每犯權要又少",
+     "verdict": "invented",
+     "caught": true
+    },
+    {
+     "uid": "ctl4_pil035",
+     "inserted": "若東長定數問截南澗就以長數爲",
+     "verdict": "invented",
+     "caught": true
+    },
+    {
+     "uid": "ctl5_pil048",
+     "inserted": "辭國曰離也火妻灰子以反於慶",
+     "verdict": "invented",
+     "caught": true
+    }
+   ]
+  },
+  "reads": {
+   "requested": 100,
+   "ok": 100,
+   "median_secs": 24.808,
+   "mean_secs": 29.7
+  },
+  "layout": {
+   "prose": 42,
+   "mixed": 28,
+   "table": 25,
+   "diagram": 5
+  },
+  "drawing_only": 0,
+  "rods_written": 3,
+  "reviewed": 100,
+  "verdicts": {
+   "invented": 23,
+   "clean": 59,
+   "minor": 16,
+   "material": 2
+  },
+  "invented": {
+   "k": 23,
+   "n": 100,
+   "rate": 0.23,
+   "wilson95": [
+    0.158,
+    0.322
+   ]
+  },
+  "invented_on_transcribed": {
+   "k": 23,
+   "n": 100,
+   "wilson95": [
+    0.158,
+    0.322
+   ]
+  },
+  "by_run": {
+   "5600": {
+    "n": 81,
+    "invented": 19
+   },
+   "5660": {
+    "n": 10,
+    "invented": 2
+   },
+   "6388": {
+    "n": 9,
+    "invented": 2
+   }
+  },
+  "by_layout": {
+   "prose": {
+    "n": 42,
+    "invented": 12
+   },
+   "mixed": {
+    "n": 28,
+    "invented": 5
+   },
+   "table": {
+    "n": 25,
+    "invented": 6
+   },
+   "diagram": {
+    "n": 5,
+    "invented": 0
+   }
+  },
+  "by_work": {
+   "御定子史精華": {
+    "n": 29,
+    "invented": 11
+   },
+   "御製增訂清文鑑": {
+    "n": 18,
+    "invented": 4
+   },
+   "other": {
+    "n": 53,
+    "invented": 8
+   }
+  },
+  "kanripo_own": {
+   "pages": 48,
+   "over_opus": 91,
+   "over_paddle": 218,
+   "pages_opus_ge3": 16,
+   "pages_paddle_ge3": 15,
+   "printed_chars": 12730
+  },
+  "gate": "NO-GO (invented on > 10%)"
+ },
+ "pages": [
+  {
+   "uid": "pil001",
+   "pid": "6a3c660f39b4508b04e3182e",
+   "bid": "6a3c660f39b4508b04e317cc",
+   "pn": 98,
+   "iss": 5600,
+   "title": "御定子史精華·卷三十三~卷三十六 (vol 112)",
+   "read_ok": true,
+   "read_secs": 39.871,
+   "layout": "prose",
+   "body_han": 290,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "清廟嚴嚴閟宮舞蹈象德笙磬陳風",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "刮楹",
+      "written": 2,
+      "printed": 1
+     },
+     {
+      "what": "繅",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 17,
+    "note": "The transcription invents a 14-character quotation not printed on the page and repeats the spans 刮楹 and 繅."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_035-9a",
+    "chars": 274,
+    "over_opus": 1,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil002",
+   "pid": "6a3c652c39b4508b04e2cb3a",
+   "bid": "6a3c652c39b4508b04e2cab0",
+   "pn": 138,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷九 (vol 8)",
+   "read_ok": true,
+   "read_secs": 29.202,
+   "layout": "mixed",
+   "body_han": 86,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all Chinese headwords and phonetic glosses on the page with only two character misreads (橛 read as 掘, 樑 read as 揉) and nothing invented."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil003",
+   "pid": "6a3c70b601fe4f593c1d41b8",
+   "bid": "6a3c70b601fe4f593c1d4105",
+   "pn": 179,
+   "iss": 5600,
+   "title": "春秋大事表·卷二之四 (vol 5)",
+   "read_ok": true,
+   "read_secs": 16.531,
+   "layout": "table",
+   "body_han": 85,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "晦",
+      "written": 13,
+      "printed": 12
+     },
+     {
+      "what": "干支",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 3,
+    "note": "The transcription adds a synthetic header row containing '干支' which does not appear on the page and an extra repeat of the cell '晦' (written 13 times, printed 12)."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil004",
+   "pid": "6a3c65ee39b4508b04e3025c",
+   "bid": "6a3c65ee39b4508b04e30225",
+   "pn": 54,
+   "iss": 5600,
+   "title": "御定子史精華·卷八十三~卷八十六 (vol 77)",
+   "read_ok": true,
+   "read_secs": 38.196,
+   "layout": "prose",
+   "body_han": 358,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the printed page text, headings, and repetition marks with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_084-9a",
+    "chars": 307,
+    "over_opus": 1,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil005",
+   "pid": "6a3c663339b4508b04e32ce8",
+   "bid": "6a3c663339b4508b04e32cad",
+   "pn": 58,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百三十八~卷一百四十 (vol 149)",
+   "read_ok": true,
+   "read_secs": 61.545,
+   "layout": "prose",
+   "body_han": 352,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "此蠭窠也第三物觳觫長足吐絲成",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 14,
+    "note": "The transcription interpolates the 14-character span 此蠭窠也第三物觳觫長足吐絲成 which the printed page omits using repetition/omission marks."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_139-6a",
+    "chars": 300,
+    "over_opus": 4,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil006",
+   "pid": "6a3cb56f3dce6cfad748318e",
+   "bid": "6a3cb56f3dce6cfad7483172",
+   "pn": 28,
+   "iss": 5600,
+   "title": "周易函書約存·卷六~卷七 (vol 4)",
+   "read_ok": true,
+   "read_secs": 35.719,
+   "layout": "table",
+   "body_han": 227,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "三〇一〇三〇",
+      "written": 3,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 12,
+    "note": "The second row repeats the cell 三〇一〇三〇 three times when it is printed only once (displacing 三〇一〇二〇 and 三〇一〇一〇), alongside three numeral misreads in rows 5 and 6."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil007",
+   "pid": "6a3c655c39b4508b04e2e352",
+   "bid": "6a3c655c39b4508b04e2e2a6",
+   "pn": 172,
+   "iss": 5600,
+   "title": "御定子史精華·卷八十~卷八十三 (vol 26)",
+   "read_ok": true,
+   "read_secs": 40.749,
+   "layout": "prose",
+   "body_han": 307,
+   "drawing_only": false,
+   "rods": true,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the printed classical text and double-column commentary with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_083-13b",
+    "chars": 287,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil008",
+   "pid": "6a3cbd56ec254ff6cadf803e",
+   "bid": "6a3cbd56ec254ff6cadf800a",
+   "pn": 52,
+   "iss": 5600,
+   "title": "漢隸字源·卷二 (vol 2)",
+   "read_ok": true,
+   "read_secs": 29.008,
+   "layout": "table",
+   "body_han": 132,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription faithfully matches the page with no invented text, having only the two sub-line digits of the numeral 二九 read in reverse order as 九二."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil009",
+   "pid": "6a3c70c801fe4f593c1d4d51",
+   "bid": "6a3c70c801fe4f593c1d4cfa",
+   "pn": 87,
+   "iss": 5600,
+   "title": "春秋大事表·卷三十五~卷三十八 (vol 28)",
+   "read_ok": true,
+   "read_secs": 21.285,
+   "layout": "table",
+   "body_han": 195,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately records all table entries, dates, and commentary from the page with no invented, omitted, or misread text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil010",
+   "pid": "6a3c694839b4508b04e3e031",
+   "bid": "6a3c694839b4508b04e3e025",
+   "pn": 12,
+   "iss": 5600,
+   "title": "普濟方·卷一百八十四 (vol 122)",
+   "read_ok": true,
+   "read_secs": 15.47,
+   "layout": "prose",
+   "body_han": 196,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects all printed text and annotations on the page without errors, omissions, or invented content."
+   },
+   "kanripo_own": {
+    "pb": "KR3e0067_WYG_184-5b",
+    "chars": 145,
+    "over_opus": 0,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil011",
+   "pid": "6a3c5f6b879008ba7e15548a",
+   "bid": "6a3c5f6b879008ba7e155415",
+   "pn": 117,
+   "iss": 5600,
+   "title": "圖書編·卷十九~卷二十 (vol 18)",
+   "read_ok": true,
+   "read_secs": 34.574,
+   "layout": "table",
+   "body_han": 187,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "Three repeated lodge characters are omitted across columns 73 (壁), 76 (井), and 78 (星), and column 78 misreads compound glyph [張星] as [鬼星], with nothing invented."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0050_WYG_020-9a",
+    "chars": 140,
+    "over_opus": 2,
+    "over_paddle": 3
+   }
+  },
+  {
+   "uid": "pil012",
+   "pid": "6a3c6b89af3c49b59c5ed2a3",
+   "bid": "6a3c6b89af3c49b59c5ed1bd",
+   "pn": 83,
+   "iss": 5600,
+   "title": "易通變·卷二十一~卷二十三 (vol 10)",
+   "read_ok": true,
+   "read_secs": 19.529,
+   "layout": "mixed",
+   "body_han": 124,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the printed page with no omitted, misread, or invented characters, including the correct count of 17 repeated 之 characters and the two printed 16-rank columns."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil013",
+   "pid": "6a3c6a87af3c49b59c5e7bd5",
+   "bid": "6a3c6a87af3c49b59c5e7bcc",
+   "pn": 9,
+   "iss": 5600,
+   "title": "御製歷象考成後編·卷八 (vol 16)",
+   "read_ok": true,
+   "read_secs": 91.27,
+   "layout": "table",
+   "body_han": 967,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately transcribes all 30 rows and 16 columns of the astronomical table with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil014",
+   "pid": "6a3c6243879008ba7e16203a",
+   "bid": "6a3c6243879008ba7e161fdd",
+   "pn": 92,
+   "iss": 5600,
+   "title": "西清古鑑·卷四十 (vol 60)",
+   "read_ok": true,
+   "read_secs": 14.3,
+   "layout": "diagram",
+   "body_han": 36,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The diagram contains no body text, and the characters cited in the image description match those printed on the page."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil015",
+   "pid": "6a3c64c439b4508b04e29dbb",
+   "bid": "6a3c64c439b4508b04e29d86",
+   "pn": 53,
+   "iss": 5600,
+   "title": "御定佩文韻府·卷九十之十 (vol 631)",
+   "read_ok": true,
+   "read_secs": 25.309,
+   "layout": "prose",
+   "body_han": 420,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the page with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0059_WYG_726-25a",
+    "chars": 344,
+    "over_opus": 1,
+    "over_paddle": 9
+   }
+  },
+  {
+   "uid": "pil016",
+   "pid": "6a3c657039b4508b04e2eebe",
+   "bid": "6a3c657039b4508b04e2ee51",
+   "pn": 109,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百三十九~卷一百四十二 (vol 45)",
+   "read_ok": true,
+   "read_secs": 33.691,
+   "layout": "prose",
+   "body_han": 299,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all headwords, commentary notes, and repetition marks on the page with only minor character misreads and nothing invented or omitted."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_141-9a",
+    "chars": 282,
+    "over_opus": 0,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil017",
+   "pid": "6a3c6549af3c49b59c5cb39f",
+   "bid": "6a3c6549af3c49b59c5cb37d",
+   "pn": 34,
+   "iss": 5600,
+   "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+   "read_ok": true,
+   "read_secs": 43.941,
+   "layout": "mixed",
+   "body_han": 324,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all entry headings, double-line annotations, and printed repetition marks with no invented or omitted text."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_020-17a",
+    "chars": 271,
+    "over_opus": 1,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil018",
+   "pid": "6a3c652f39b4508b04e2cd62",
+   "bid": "6a3c652f39b4508b04e2ccf4",
+   "pn": 110,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十二 (vol 11)",
+   "read_ok": true,
+   "read_secs": 21.97,
+   "layout": "mixed",
+   "body_han": 99,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The page is a bilingual Manchu–Chinese dictionary with six entries whose Chinese headwords and phonetic glosses match the printed text accurately with no invented characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil019",
+   "pid": "6a3c652c39b4508b04e2cbc5",
+   "bid": "6a3c652c39b4508b04e2cb4c",
+   "pn": 121,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷八 (vol 7)",
+   "read_ok": true,
+   "read_secs": 22.682,
+   "layout": "mixed",
+   "body_han": 73,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "阿特墨 顏顏額",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "鍋和羅穆倬 鄂鄂鄂",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 14,
+    "note": "The transcription invents the phonetic gloss '阿特墨 顏顏額' and erroneously duplicates '鍋和羅穆倬 鄂鄂鄂' under 掛勾子, which carries no Chinese gloss on the page."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil020",
+   "pid": "6a3c655f39b4508b04e2e4f3",
+   "bid": "6a3c655f39b4508b04e2e4a7",
+   "pn": 75,
+   "iss": 5600,
+   "title": "御定子史精華·卷九十八~卷一百 (vol 31)",
+   "read_ok": true,
+   "read_secs": 26.399,
+   "layout": "table",
+   "body_han": 313,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription closely matches the page with no invented or omitted text, containing only two misread characters: 口 read as 曰 in the 鶡冠子 commentary and the repetition mark ｜ transcribed as 溢."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_100-2a",
+    "chars": 292,
+    "over_opus": 3,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil021",
+   "pid": "6a3c656e39b4508b04e2ed7b",
+   "bid": "6a3c656e39b4508b04e2ed01",
+   "pn": 122,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百三十六~卷一百三十八 (vol 44)",
+   "read_ok": true,
+   "read_secs": 21.092,
+   "layout": "prose",
+   "body_han": 321,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects the printed page with only one minor character misread ('丹' for '且') and no invented text."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_138-11b",
+    "chars": 305,
+    "over_opus": 0,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil022",
+   "pid": "6a3c653539b4508b04e2d07f",
+   "bid": "6a3c653539b4508b04e2d056",
+   "pn": 41,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十七 (vol 16)",
+   "read_ok": true,
+   "read_secs": 23.731,
+   "layout": "mixed",
+   "body_han": 98,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "欽定四庫全書",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 6,
+    "note": "The title '欽定四庫全書' is transcribed twice (in header and insert) but printed only once, '不' is omitted from '不鄂佛', and characters in the phonetic gloss are misread."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil023",
+   "pid": "6a3c653839b4508b04e2d236",
+   "bid": "6a3c653839b4508b04e2d204",
+   "pn": 50,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十一 (vol 20)",
+   "read_ok": true,
+   "read_secs": 24.803,
+   "layout": "mixed",
+   "body_han": 80,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription captures all five Chinese headwords and phonetic glosses without invention, but consistently misreads 俾 as 僤 across the verb glosses."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil024",
+   "pid": "6a3cb83d3dce6cfad748c72b",
+   "bid": "6a3cb83d3dce6cfad748c6c1",
+   "pn": 106,
+   "iss": 5600,
+   "title": "御定佩文齋書畫譜·卷四十一 (vol 17)",
+   "read_ok": true,
+   "read_secs": 12.143,
+   "layout": "prose",
+   "body_han": 157,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately transcribes all printed text from the page, including the standalone name columns and subsequent biographical entries, with no omitted, misread, or invented text."
+   },
+   "kanripo_own": {
+    "pb": "KR3h0061_WYG_041-52b",
+    "chars": 96,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil025",
+   "pid": "6a3c6a87af3c49b59c5e7b84",
+   "bid": "6a3c6a87af3c49b59c5e7b42",
+   "pn": 66,
+   "iss": 5600,
+   "title": "御製歷象考成後編·卷七 (vol 15)",
+   "read_ok": true,
+   "read_secs": 39.677,
+   "layout": "table",
+   "body_han": 671,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The table is transcribed without omissions or invented rows, but contains a few misread numeric characters in the minutes and seconds columns."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil026",
+   "pid": "6a3c654539b4508b04e2da92",
+   "bid": "6a3c654539b4508b04e2da81",
+   "pn": 17,
+   "iss": 5600,
+   "title": "御定子史精華·卷十一~卷十三 (vol 4)",
+   "read_ok": true,
+   "read_secs": 42.462,
+   "layout": "prose",
+   "body_han": 357,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription faithfully captures the classical text, commentary, and repetition marks across all fifteen columns with no invented or omitted characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_011-8b",
+    "chars": 304,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil027",
+   "pid": "6a3c698eaf3c49b59c5e09c6",
+   "bid": "6a3c698eaf3c49b59c5e0967",
+   "pn": 95,
+   "iss": 5600,
+   "title": "普濟方·卷二百七十一 (vol 188)",
+   "read_ok": true,
+   "read_secs": 14.326,
+   "layout": "mixed",
+   "body_han": 65,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately transcribes the two columns of text and describes the talisman diagram without any invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3e0067_WYG_271-47a",
+    "chars": 39,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil028",
+   "pid": "6a3c653d39b4508b04e2d4ec",
+   "bid": "6a3c653d39b4508b04e2d4cb",
+   "pn": 33,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十六 (vol 25)",
+   "read_ok": true,
+   "read_secs": 19.247,
+   "layout": "mixed",
+   "body_han": 80,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "額額額",
+      "written": 2,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 6,
+    "note": "The transcription invents the three-character span 額額額 twice in the phonetic glosses for 截成段 and 使截成段, which does not appear on the page."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil029",
+   "pid": "6a3cbd59ec254ff6cadf8194",
+   "bid": "6a3cbd59ec254ff6cadf8132",
+   "pn": 98,
+   "iss": 5600,
+   "title": "漢隸字源·卷六 (vol 5)",
+   "read_ok": true,
+   "read_secs": 20.625,
+   "layout": "table",
+   "body_han": 77,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately records all variant characters and reference numbers across all five columns without any omissions or invented text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil030",
+   "pid": "6a3c654239b4508b04e2d7d6",
+   "bid": "6a3c654239b4508b04e2d76b",
+   "pn": 107,
+   "iss": 5600,
+   "title": "御定子史精華·卷一~卷三 (vol 1)",
+   "read_ok": true,
+   "read_secs": 26.345,
+   "layout": "prose",
+   "body_han": 383,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "丨",
+      "written": 4,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 3,
+    "note": "At the bottom of the column before the break, only one repetition mark (丨) is printed after 日, but the transcription writes four, duplicating marks that appear at the top of the next column."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_002-4a",
+    "chars": 305,
+    "over_opus": 4,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil031",
+   "pid": "6a3c6ef801fe4f593c1c7ebf",
+   "bid": "6a3c6ef801fe4f593c1c7e23",
+   "pn": 156,
+   "iss": 5600,
+   "title": "六經圖·卷一 (vol 1)",
+   "read_ok": true,
+   "read_secs": 21.108,
+   "layout": "table",
+   "body_han": 199,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription faithfully captures all printed characters, numerals, and glosses from the chart with no invented or omitted text, though the historical span for Xia through Sixteen Kingdoms printed in column 7 is transcribed at the end of column 6."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil032",
+   "pid": "6a3c70ac39b4508b04e5088f",
+   "bid": "6a3c70ac39b4508b04e50810",
+   "pn": 127,
+   "iss": 5600,
+   "title": "春秋大事表·卷二之一 (vol 2)",
+   "read_ok": true,
+   "read_secs": 17.38,
+   "layout": "table",
+   "body_han": 86,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures the header row characters and the twelve monthly table entries with no invented or omitted text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil033",
+   "pid": "6a3c6738af3c49b59c5d1661",
+   "bid": "6a3c6738af3c49b59c5d165d",
+   "pn": 4,
+   "iss": 5600,
+   "title": "性理大全書·卷八 (vol 5)",
+   "read_ok": true,
+   "read_secs": 15.47,
+   "layout": "diagram",
+   "body_han": 111,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all labels in the diagram without any omissions, misreads, or invented text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil034",
+   "pid": "6a3c656839b4508b04e2ea9c",
+   "bid": "6a3c656839b4508b04e2ea6a",
+   "pn": 50,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百二十~卷一百二十二 (vol 39)",
+   "read_ok": true,
+   "read_secs": 24.441,
+   "layout": "prose",
+   "body_han": 330,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects the printed text on the page with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_121-5b",
+    "chars": 286,
+    "over_opus": 0,
+    "over_paddle": 30
+   }
+  },
+  {
+   "uid": "pil035",
+   "pid": "6a3c65e139b4508b04e2fadb",
+   "bid": "6a3c65e139b4508b04e2facc",
+   "pn": 15,
+   "iss": 5600,
+   "title": "御定子史精華·卷四十七~卷四十九 (vol 65)",
+   "read_ok": true,
+   "read_secs": 28.613,
+   "layout": "prose",
+   "body_han": 356,
+   "drawing_only": false,
+   "rods": true,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "必有可觀",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 4,
+    "note": "The transcription invents '必有可觀' to complete the quotation from Kong Rong's memorial, but the page text ends at '朝'."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_047-7a",
+    "chars": 303,
+    "over_opus": 2,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil036",
+   "pid": "6a3c65e739b4508b04e2fe0b",
+   "bid": "6a3c65e739b4508b04e2fd7f",
+   "pn": 140,
+   "iss": 5600,
+   "title": "御定子史精華·卷六十~卷六十二 (vol 69)",
+   "read_ok": true,
+   "read_secs": 45.748,
+   "layout": "prose",
+   "body_han": 364,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "賦",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "丨",
+      "written": 4,
+      "printed": 3
+     }
+    ],
+    "invented_chars": 2,
+    "note": "The head entry is printed as 作拍張 without 賦, and the commentary prints three 丨 repeat marks rather than four."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_062-27a",
+    "chars": 299,
+    "over_opus": 4,
+    "over_paddle": 9
+   }
+  },
+  {
+   "uid": "pil037",
+   "pid": "6a3c6b9839b4508b04e44573",
+   "bid": "6a3c6b9839b4508b04e444c5",
+   "pn": 9,
+   "iss": 5600,
+   "title": "易通變·卷十八~卷十九 (vol 23)",
+   "read_ok": true,
+   "read_secs": 13.169,
+   "layout": "table",
+   "body_han": 109,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately matches all printed columns, symbols, and hexagram labels with no omissions, misreads, or invented text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil038",
+   "pid": "6a3c6550af3c49b59c5cb711",
+   "bid": "6a3c6550af3c49b59c5cb697",
+   "pn": 122,
+   "iss": 5600,
+   "title": "御定子史精華·卷四十四~卷四十七 (vol 14)",
+   "read_ok": true,
+   "read_secs": 29.986,
+   "layout": "prose",
+   "body_han": 382,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately reflects the printed page with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_046-20a",
+    "chars": 320,
+    "over_opus": 2,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil039",
+   "pid": "6a3c6b1f39b4508b04e40d53",
+   "bid": "6a3c6b1f39b4508b04e40ceb",
+   "pn": 104,
+   "iss": 5600,
+   "title": "六書統·卷一 (vol 1)",
+   "read_ok": true,
+   "read_secs": 19.1,
+   "layout": "mixed",
+   "body_han": 142,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "鐘",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "全成曰子方生",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 7,
+    "note": "The transcription invents '鐘' in Column 2 where the page prints 竝鼎文, and hallucinates '全成曰子方生' in Column 3 commentary, while misreading '否' as '孩'."
+   },
+   "kanripo_own": {
+    "pb": "KR1j0037_WYG_001-16b",
+    "chars": 102,
+    "over_opus": 5,
+    "over_paddle": 15
+   }
+  },
+  {
+   "uid": "pil040",
+   "pid": "6a3c6314879008ba7e165b83",
+   "bid": "6a3c6314879008ba7e165ae4",
+   "pn": 159,
+   "iss": 5600,
+   "title": "御定佩文韻府·卷五十四~卷五十五之一 (vol 203)",
+   "read_ok": true,
+   "read_secs": 37.312,
+   "layout": "prose",
+   "body_han": 448,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the page text, entry headings, and repetition marks without any invented or omitted text."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0059_WYG_446-37b",
+    "chars": 371,
+    "over_opus": 3,
+    "over_paddle": 6
+   }
+  },
+  {
+   "uid": "pil041",
+   "pid": "6a3c653a39b4508b04e2d3aa",
+   "bid": "6a3c653a39b4508b04e2d38b",
+   "pn": 31,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十四 (vol 23)",
+   "read_ok": true,
+   "read_secs": 23.907,
+   "layout": "mixed",
+   "body_han": 60,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "All five Chinese headwords are correctly transcribed, but the Chinese marginal header (金史卷八十三) and several characters in the small phonetic glosses are omitted."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil042",
+   "pid": "6a3cbefff9474f825c164907",
+   "bid": "6a3cbefff9474f825c164904",
+   "pn": 3,
+   "iss": 5600,
+   "title": "洪範皇極內篇·卷四~卷五 (vol 2)",
+   "read_ok": true,
+   "read_secs": 29.477,
+   "layout": "mixed",
+   "body_han": 143,
+   "drawing_only": false,
+   "rods": true,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures the prose text and the 6x9 grid of counting rods and divination terms, omitting only the small four-character annotation above the first grid column."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil043",
+   "pid": "6a3c663439b4508b04e32df9",
+   "bid": "6a3c663439b4508b04e32de3",
+   "pn": 22,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百三十三~卷一百三十四 (vol 147)",
+   "read_ok": true,
+   "read_secs": 40.57,
+   "layout": "prose",
+   "body_han": 377,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all headings, commentary, and placeholder rod marks across the page without omissions, additions, or misread characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_133-10b",
+    "chars": 308,
+    "over_opus": 1,
+    "over_paddle": 25
+   }
+  },
+  {
+   "uid": "pil044",
+   "pid": "6a3c660b39b4508b04e3158f",
+   "bid": "6a3c660b39b4508b04e3152c",
+   "pn": 99,
+   "iss": 5600,
+   "title": "御定子史精華·卷十七~卷二十 (vol 108)",
+   "read_ok": true,
+   "read_secs": 31.478,
+   "layout": "prose",
+   "body_han": 335,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "終",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "一",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 2,
+    "note": "The transcription invents '終' after '無絶' and '一' before '有識者', and misreads '面鳥' as '而爲'."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_019-13b",
+    "chars": 292,
+    "over_opus": 2,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil045",
+   "pid": "6a3c654039b4508b04e2d68e",
+   "bid": "6a3c654039b4508b04e2d65d",
+   "pn": 49,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷三十 (vol 29)",
+   "read_ok": true,
+   "read_secs": 20.948,
+   "layout": "mixed",
+   "body_han": 35,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "material",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription correctly captures the five printed Chinese headwords without invention, but omits the small Chinese phonetic glosses and the two entries lacking Chinese headwords."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil046",
+   "pid": "6a3c66d0af3c49b59c5cdb77",
+   "bid": "6a3c66d0af3c49b59c5cdadc",
+   "pn": 154,
+   "iss": 5600,
+   "title": "歷算全書·卷三十六~三十八 (vol 23)",
+   "read_ok": true,
+   "read_secs": 19.016,
+   "layout": "table",
+   "body_han": 140,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches the page title and all cells in the table."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil047",
+   "pid": "6a3c656a39b4508b04e2eb47",
+   "bid": "6a3c656a39b4508b04e2eaf9",
+   "pn": 78,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百二十六~卷一百二十八 (vol 41)",
+   "read_ok": true,
+   "read_secs": 75.874,
+   "layout": "prose",
+   "body_han": 344,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all headwords, double-column commentary, and repetition marks on the page with no invented or omitted text."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_127-5b",
+    "chars": 280,
+    "over_opus": 0,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil048",
+   "pid": "6a3c63a639b4508b04e2242b",
+   "bid": "6a3c63a639b4508b04e22411",
+   "pn": 26,
+   "iss": 5600,
+   "title": "御定佩文韻府·卷十三之一 (vol 345)",
+   "read_ok": true,
+   "read_secs": 56.669,
+   "layout": "prose",
+   "body_han": 385,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects all headwords, double-column commentary, and omission markers on the page without any invented text."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0059_WYG_105-12a",
+    "chars": 356,
+    "over_opus": 1,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil049",
+   "pid": "6a3c660e39b4508b04e317c4",
+   "bid": "6a3c660e39b4508b04e3173d",
+   "pn": 135,
+   "iss": 5600,
+   "title": "御定子史精華·卷三十~卷三十二 (vol 111)",
+   "read_ok": true,
+   "read_secs": 30.887,
+   "layout": "prose",
+   "body_han": 332,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "Text accurately matches the page with only two misread characters (璫 transcribed as 擋, 貧 as 分) and nothing invented."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_032-25a",
+    "chars": 295,
+    "over_opus": 6,
+    "over_paddle": 5
+   }
+  },
+  {
+   "uid": "pil050",
+   "pid": "6a3c654139b4508b04e2d717",
+   "bid": "6a3c654139b4508b04e2d6dd",
+   "pn": 58,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十九 (vol 28)",
+   "read_ok": true,
+   "read_secs": 24.622,
+   "layout": "mixed",
+   "body_han": 69,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all Chinese headwords and phonetic glosses on the page with only one minor misread of 烏 as 鳥."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil051",
+   "pid": "6a3c661a39b4508b04e31ea2",
+   "bid": "6a3c661a39b4508b04e31e58",
+   "pn": 73,
+   "iss": 5600,
+   "title": "御定子史精華·卷七十~卷七十一 (vol 124)",
+   "read_ok": true,
+   "read_secs": 45.845,
+   "layout": "prose",
+   "body_han": 322,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects all printed text across the page columns without omissions or invented content."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_071-10a",
+    "chars": 291,
+    "over_opus": 10,
+    "over_paddle": 10
+   }
+  },
+  {
+   "uid": "pil052",
+   "pid": "6a3c660039b4508b04e30e01",
+   "bid": "6a3c660039b4508b04e30d99",
+   "pn": 104,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百三十四~卷一百三十六 (vol 95)",
+   "read_ok": true,
+   "read_secs": 42.411,
+   "layout": "prose",
+   "body_han": 335,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "驅",
+      "written": 2,
+      "printed": 1
+     },
+     {
+      "what": "至",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 2,
+    "note": "The transcription adds an unprinted repeat of 驅 at the end of the line ｜｜流緩而不安則食之不驅之 and an unprinted 至 after 鶉鳥之性."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_135-21a",
+    "chars": 314,
+    "over_opus": 3,
+    "over_paddle": 5
+   }
+  },
+  {
+   "uid": "pil053",
+   "pid": "6a3c65f939b4508b04e308d7",
+   "bid": "6a3c65f939b4508b04e308ab",
+   "pn": 44,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百十四~卷一百十五 (vol 88)",
+   "read_ok": true,
+   "read_secs": 23.183,
+   "layout": "prose",
+   "body_han": 349,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "金簡玉字得",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 5,
+    "note": "The transcription interpolates the five-character phrase 金簡玉字得 before 通水之理 from the canonical text, but it is not printed on the page."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_114-22a",
+    "chars": 314,
+    "over_opus": 1,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil054",
+   "pid": "6a3c6527af3c49b59c5cb2e9",
+   "bid": "6a3c6527af3c49b59c5cb27a",
+   "pn": 111,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二 (vol 2)",
+   "read_ok": true,
+   "read_secs": 21.666,
+   "layout": "mixed",
+   "body_han": 64,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "額伊額",
+      "written": 2,
+      "printed": 1
+     },
+     {
+      "what": "阿伊因",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 6,
+    "note": "The transcription duplicates phonetic glosses 額伊額 and 阿伊因 into entries where they are not printed, and misreads 葉 as 額 in the gloss for 流."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil055",
+   "pid": "6a3c653139b4508b04e2cda0",
+   "bid": "6a3c653139b4508b04e2cd80",
+   "pn": 32,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十三 (vol 12)",
+   "read_ok": true,
+   "read_secs": 21.72,
+   "layout": "mixed",
+   "body_han": 58,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "material",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The Chinese headwords are accurately transcribed with no invented text, but all small Chinese phonetic glosses accompanying the Manchu headwords are omitted."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil056",
+   "pid": "6a3c6b9839b4508b04e4454f",
+   "bid": "6a3c6b9839b4508b04e444c4",
+   "pn": 138,
+   "iss": 5600,
+   "title": "易通變·卷十六~卷十七 (vol 22)",
+   "read_ok": true,
+   "read_secs": 16.965,
+   "layout": "table",
+   "body_han": 115,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects the printed page with no invented or omitted text, having only one character (咸) tentatively misread as 咢."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil057",
+   "pid": "6a3c65cf39b4508b04e2f7e7",
+   "bid": "6a3c65cf39b4508b04e2f781",
+   "pn": 102,
+   "iss": 5600,
+   "title": "御定子史精華·卷三十一~卷三十三 (vol 60)",
+   "read_ok": true,
+   "read_secs": 79.518,
+   "layout": "prose",
+   "body_han": 349,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription faithfully captures the text with no invented spans, but transcribes 璫 as 壋 and inverts the cross-reference 上見 to 見上 in four entries."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_032-25a",
+    "chars": 295,
+    "over_opus": 5,
+    "over_paddle": 5
+   }
+  },
+  {
+   "uid": "pil058",
+   "pid": "6a3c66deaf3c49b59c5ce20c",
+   "bid": "6a3c66deaf3c49b59c5ce196",
+   "pn": 118,
+   "iss": 5600,
+   "title": "歷算全書·卷五十七 (vol 38)",
+   "read_ok": true,
+   "read_secs": 23.437,
+   "layout": "table",
+   "body_han": 168,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all printed text, interlinear glosses, and decimal digits with no omissions, misreads, or invented characters."
+   },
+   "kanripo_own": {
+    "pb": "KR3f0026_WYG_070-58b",
+    "chars": 122,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil059",
+   "pid": "6a3c76db01fe4f593c1fdfc6",
+   "bid": "6a3c76db01fe4f593c1fdf9e",
+   "pn": 40,
+   "iss": 5600,
+   "title": "苑洛志樂·卷八 (vol 5)",
+   "read_ok": true,
+   "read_secs": 15.344,
+   "layout": "table",
+   "body_han": 131,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately captures all musical pitch names, side annotations, and column headers matching the page image."
+   },
+   "kanripo_own": {
+    "pb": "KR1i0007_WYG_005-19b",
+    "chars": 85,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil060",
+   "pid": "6a3c660339b4508b04e30f45",
+   "bid": "6a3c660339b4508b04e30ee4",
+   "pn": 97,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百四十~卷一百四十二 (vol 97)",
+   "read_ok": true,
+   "read_secs": 23.29,
+   "layout": "prose",
+   "body_han": 389,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "之類菰之有米者長安人謂之彫胡葭蘆之",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "流",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 18,
+    "note": "The transcription prepends 17 characters from the preceding page before 未解葉者 and duplicates the character 流 in 沉流."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_142-4b",
+    "chars": 313,
+    "over_opus": 1,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil061",
+   "pid": "6a3c653d39b4508b04e2d5b6",
+   "bid": "6a3c653d39b4508b04e2d56b",
+   "pn": 75,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十七 (vol 26)",
+   "read_ok": true,
+   "read_secs": 25.263,
+   "layout": "mixed",
+   "body_han": 33,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures the printed Chinese headwords and phonetic glosses, with only 珂 misread as 呵 in both entries."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil062",
+   "pid": "6a3c6b86af3c49b59c5ed125",
+   "bid": "6a3c6b86af3c49b59c5ed0e1",
+   "pn": 68,
+   "iss": 5600,
+   "title": "易通變·卷十八 (vol 8)",
+   "read_ok": true,
+   "read_secs": 16.375,
+   "layout": "table",
+   "body_han": 95,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "王□背弟年匠彖石□直",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 10,
+    "note": "The column '王□背弟年匠彖石□直' is printed only once on the page but transcribed twice as an extra repeat."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil063",
+   "pid": "6a3c6b80af3c49b59c5ecd4a",
+   "bid": "6a3c6b80af3c49b59c5ecc98",
+   "pn": 41,
+   "iss": 5600,
+   "title": "易通變·卷四~卷五 (vol 2)",
+   "read_ok": true,
+   "read_secs": 20.755,
+   "layout": "table",
+   "body_han": 240,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately matches the page, including the 8x8 grid table, annotations, commentary, and the printed woodblock error 七五."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil064",
+   "pid": "6a3c652a39b4508b04e2ca86",
+   "bid": "6a3c652a39b4508b04e2ca0a",
+   "pn": 124,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷七 (vol 6)",
+   "read_ok": true,
+   "read_secs": 19.482,
+   "layout": "mixed",
+   "body_han": 69,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all printed Chinese headwords and phonetic annotations without any invented text or omissions."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil065",
+   "pid": "6a3c652d39b4508b04e2cbfc",
+   "bid": "6a3c652d39b4508b04e2cbd8",
+   "pn": 36,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十 (vol 9)",
+   "read_ok": true,
+   "read_secs": 25.146,
+   "layout": "mixed",
+   "body_han": 74,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "All Chinese headwords and phonetic transliterations printed across both registers of the page are correctly transcribed with no invented or omitted characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil066",
+   "pid": "6a3c654aaf3c49b59c5cb44e",
+   "bid": "6a3c654aaf3c49b59c5cb440",
+   "pn": 14,
+   "iss": 5600,
+   "title": "御定子史精華·卷二十八~卷三十一 (vol 9)",
+   "read_ok": true,
+   "read_secs": 31.184,
+   "layout": "prose",
+   "body_han": 370,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription matches the page text and rod numerals accurately with at most one character misread."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_028-6b",
+    "chars": 299,
+    "over_opus": 2,
+    "over_paddle": 12
+   }
+  },
+  {
+   "uid": "pil067",
+   "pid": "6a3cbc6cec254ff6cadf09e1",
+   "bid": "6a3cbc6cec254ff6cadf09ab",
+   "pn": 54,
+   "iss": 5600,
+   "title": "讀禮通考·卷二~卷三 (vol 2)",
+   "read_ok": true,
+   "read_secs": 47.419,
+   "layout": "table",
+   "body_han": 312,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "同",
+      "written": 2,
+      "printed": 0
+     },
+     {
+      "what": "為族祖姑",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 6,
+    "note": "An extra '同' cell is appended to the bottom of both column 2 and column 3, and '為族祖姑' is prepended to the final cell in column 2 where only '同' is printed."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil068",
+   "pid": "6a3c6a91af3c49b59c5e7fe2",
+   "bid": "6a3c6a91af3c49b59c5e7f49",
+   "pn": 152,
+   "iss": 5600,
+   "title": "大統歷志·卷七~卷八 (vol 4)",
+   "read_ok": true,
+   "read_secs": 20.128,
+   "layout": "table",
+   "body_han": 229,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The numerical table is accurately transcribed column by column with no invented, omitted, or misread characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil069",
+   "pid": "6a3c612a40c88a541d8ee650",
+   "bid": "6a3c612a40c88a541d8ee628",
+   "pn": 40,
+   "iss": 5600,
+   "title": "御定駢字類編·卷一百四十四: Imperial Parallel Characters (vol 324)",
+   "read_ok": true,
+   "read_secs": 24.808,
+   "layout": "prose",
+   "body_han": 336,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription matches the printed page with no invented or omitted text, having only two misread characters: 己 misread as 巳 in 齊己, and 微 misread as 皺 in 風更微."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0056_WYG_144-19b",
+    "chars": 246,
+    "over_opus": 0,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil070",
+   "pid": "6a3c65ed39b4508b04e301dd",
+   "bid": "6a3c65ed39b4508b04e3017b",
+   "pn": 98,
+   "iss": 5600,
+   "title": "御定子史精華·卷七十六~卷七十九 (vol 75)",
+   "read_ok": true,
+   "read_secs": 31.232,
+   "layout": "prose",
+   "body_han": 352,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription matches the page text and repetition marks accurately, with only a single character misread (封 read as 討 in 封蒲泥)."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_078-2a",
+    "chars": 320,
+    "over_opus": 4,
+    "over_paddle": 17
+   }
+  },
+  {
+   "uid": "pil071",
+   "pid": "6a3c65f639b4508b04e3075f",
+   "bid": "6a3c65f639b4508b04e306eb",
+   "pn": 116,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百九~卷一百十 (vol 86)",
+   "read_ok": true,
+   "read_secs": 26.957,
+   "layout": "prose",
+   "body_han": 284,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription closely matches the page with no invented or omitted text and only one misread character (桉 misread as 楼)."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_110-34b",
+    "chars": 250,
+    "over_opus": 0,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil072",
+   "pid": "6a3c653539b4508b04e2d036",
+   "bid": "6a3c653539b4508b04e2cfa6",
+   "pn": 144,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十八 (vol 17)",
+   "read_ok": true,
+   "read_secs": 16.798,
+   "layout": "mixed",
+   "body_han": 44,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all printed Chinese headwords and phonetic glosses on the page with no invented or omitted Han characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil073",
+   "pid": "6a3c656239b4508b04e2e6d0",
+   "bid": "6a3c656239b4508b04e2e65f",
+   "pn": 113,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百一~卷一百四 (vol 32)",
+   "read_ok": true,
+   "read_secs": 32.957,
+   "layout": "prose",
+   "body_han": 309,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately matches all printed headwords, double-column commentary, and repetition marks on the page."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_103-2b",
+    "chars": 299,
+    "over_opus": 1,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil074",
+   "pid": "6a3c5f40879008ba7e153be5",
+   "bid": "6a3c5f40879008ba7e153ba0",
+   "pn": 69,
+   "iss": 5600,
+   "title": "太平御覽·目錄一~目錄二 (vol 2)",
+   "read_ok": true,
+   "read_secs": 11.471,
+   "layout": "prose",
+   "body_han": 94,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects all text across all eight columns of the page with no omissions, misreads, or invented text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil075",
+   "pid": "6a3c663939b4508b04e3318a",
+   "bid": "6a3c663939b4508b04e33130",
+   "pn": 90,
+   "iss": 5600,
+   "title": "御定子史精華·卷一百四十九~卷一百四五十 (vol 153)",
+   "read_ok": true,
+   "read_secs": 34.68,
+   "layout": "prose",
+   "body_han": 334,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "丨",
+      "written": 6,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 5,
+    "note": "The transcription writes six repetition marks (丨) in the first entry where only one is printed, and misreads 戢 as 戰."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_150-20b",
+    "chars": 295,
+    "over_opus": 3,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil076",
+   "pid": "6a3c653239b4508b04e2cf60",
+   "bid": "6a3c653239b4508b04e2cf2c",
+   "pn": 50,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷十六 (vol 15)",
+   "read_ok": true,
+   "read_secs": 19.992,
+   "layout": "mixed",
+   "body_han": 51,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "All five Chinese headwords are accurately transcribed, but several characters from the small phonetic glosses are omitted with ellipses."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil077",
+   "pid": "6a3c653939b4508b04e2d2ff",
+   "bid": "6a3c653939b4508b04e2d286",
+   "pn": 121,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷二十二 (vol 21)",
+   "read_ok": true,
+   "read_secs": 19.574,
+   "layout": "mixed",
+   "body_han": 10,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The page prints 鐵錠 twice as two separate dictionary headwords alongside 擂鉢, with the small Chinese phonetic glosses omitted."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil078",
+   "pid": "6a3cb9be3dce6cfad749662d",
+   "bid": "6a3cb9bd3dce6cfad74965cd",
+   "pn": 96,
+   "iss": 5600,
+   "title": "說文解字·卷十四上~卷十五下 (vol 8)",
+   "read_ok": true,
+   "read_secs": 19.168,
+   "layout": "table",
+   "body_han": 125,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately transcribes all radical headers, section numbers, and the volume title from the page without any omissions or invented text."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil079",
+   "pid": "6a3cbebaec254ff6cae02a11",
+   "bid": "6a3cbebaec254ff6cae029a7",
+   "pn": 106,
+   "iss": 5600,
+   "title": "御定韻府拾遺·卷二十一~卷二十二上 (vol 49)",
+   "read_ok": true,
+   "read_secs": 35.849,
+   "layout": "prose",
+   "body_han": 430,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "No text is invented, but there are a few character misreads (including 氐 as 氏, 垂 as 亟, 兮 as 分, 琤 as 砌, and 鸝 as 蠻) and one omitted repetition mark under 安閒房."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0060_WYG_022-19a",
+    "chars": 328,
+    "over_opus": 6,
+    "over_paddle": 30
+   }
+  },
+  {
+   "uid": "pil080",
+   "pid": "6a3c652939b4508b04e2c849",
+   "bid": "6a3c652939b4508b04e2c81e",
+   "pn": 43,
+   "iss": 5600,
+   "title": "御製增訂清文鑑·卷五 (vol 4)",
+   "read_ok": true,
+   "read_secs": 21.873,
+   "layout": "mixed",
+   "body_han": 58,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The Chinese headwords and phonetic glosses accurately match the page with no invented or omitted Han characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil081",
+   "pid": "6a3cbe69ec254ff6cae000b3",
+   "bid": "6a3cbe68ec254ff6cae0009d",
+   "pn": 22,
+   "iss": 5600,
+   "title": "星學大成·卷一~卷二 (vol 1)",
+   "read_ok": true,
+   "read_secs": 17.616,
+   "layout": "diagram",
+   "body_han": 180,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The page is a semicircular astronomical diagram whose quoted labels for solar terms, dawn/dusk, and sunrise/sunset all accurately match the printed text with nothing invented."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil082",
+   "pid": "6a3cc146ec254ff6cae0add2",
+   "bid": "6a3cc146ec254ff6cae0ad65",
+   "pn": 109,
+   "iss": 5660,
+   "title": "易學象數論·卷三~卷四 (vol 3)",
+   "read_ok": true,
+   "read_secs": 32.259,
+   "layout": "table",
+   "body_han": 404,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription omits the first month (十二月) under the hexagram 否, while all other columns and entries match the printed table."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil083",
+   "pid": "6a3ced0c4701a906f10dd030",
+   "bid": "6a3ced0c4701a906f10dcff9",
+   "pn": 55,
+   "iss": 5660,
+   "title": "韻府羣玉·卷一 (vol 1)",
+   "read_ok": true,
+   "read_secs": 79.473,
+   "layout": "prose",
+   "body_han": 408,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects all printed entries with no omissions or invented text, but contains a few misread characters such as 儒 as 孺, 古 as 吉, 無 as 槃, and 焉 as 馬."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0039_WYG_001-24a",
+    "chars": 333,
+    "over_opus": 0,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil084",
+   "pid": "6a3c732001fe4f593c1e5bce",
+   "bid": "6a3c732001fe4f593c1e5b84",
+   "pn": 74,
+   "iss": 5660,
+   "title": "欽定春秋傳說彙纂·卷首下 (vol 26)",
+   "read_ok": true,
+   "read_secs": 49.171,
+   "layout": "table",
+   "body_han": 176,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "十九 二十 二十一",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 7,
+    "note": "The row 十九 二十 二十一 in the lower section is printed once below the row containing 五十七 五十八 五十九, but the transcription duplicates it as an extra row before it."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil085",
+   "pid": "6a3ced1f4701a906f10ddb2a",
+   "bid": "6a3ced1f4701a906f10ddac0",
+   "pn": 106,
+   "iss": 5660,
+   "title": "韻府羣玉·卷十五 (vol 15)",
+   "read_ok": true,
+   "read_secs": 36.736,
+   "layout": "mixed",
+   "body_han": 403,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures the entries across the page without any invented text, having only a few character misreads (including 重 as 國, 豐 as 豈, 饌 as 餼, 王 as 主, and 曾 as 晉) and omitting the two catchword characters at the page foot."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0039_WYG_015-52b",
+    "chars": 316,
+    "over_opus": 0,
+    "over_paddle": 3
+   }
+  },
+  {
+   "uid": "pil086",
+   "pid": "6a3ced114701a906f10dd449",
+   "bid": "6a3ced114701a906f10dd359",
+   "pn": 74,
+   "iss": 5660,
+   "title": "韻府羣玉·卷五 (vol 5)",
+   "read_ok": true,
+   "read_secs": 28.858,
+   "layout": "mixed",
+   "body_han": 366,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures the entire page with no invented or omitted text and only two minor misreads (叫 for 此 and 日 for 白)."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0039_WYG_005-36b",
+    "chars": 286,
+    "over_opus": 4,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil087",
+   "pid": "6a3c656439b4508b04e2e7d8",
+   "bid": "6a3c656439b4508b04e2e7cc",
+   "pn": 12,
+   "iss": 5660,
+   "title": "御定子史精華·卷一百十二~卷一百十四 (vol 36)",
+   "read_ok": true,
+   "read_secs": 27.475,
+   "layout": "prose",
+   "body_han": 323,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "不可變何不遂驅之文公曰不然夫｜｜｜｜而｜亦",
+      "written": 1,
+      "printed": 0
+     }
+    ],
+    "invented_chars": 16,
+    "note": "The transcription includes a line carried over from the preceding page that is not printed on this page."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0058_WYG_112-6a",
+    "chars": 304,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil088",
+   "pid": "6a3c773701fe4f593c200869",
+   "bid": "6a3c773701fe4f593c200837",
+   "pn": 50,
+   "iss": 5660,
+   "title": "欽定音韻述微·卷四~卷六 (vol 2)",
+   "read_ok": true,
+   "read_secs": 53.813,
+   "layout": "prose",
+   "body_han": 348,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription matches the page text accurately with only one character misread (承 transcribed as 垂 in the quotation from 甘泉賦)."
+   },
+   "kanripo_own": {
+    "pb": "KR1j0077_WYG_005-25a",
+    "chars": 274,
+    "over_opus": 3,
+    "over_paddle": 2
+   }
+  },
+  {
+   "uid": "pil089",
+   "pid": "6a3ced0e4701a906f10dd239",
+   "bid": "6a3ced0d4701a906f10dd10b",
+   "pn": 99,
+   "iss": 5660,
+   "title": "韻府羣玉·卷三 (vol 3)",
+   "read_ok": true,
+   "read_secs": 63.296,
+   "layout": "prose",
+   "body_han": 395,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription faithfully follows the page text without invented spans, but misreads the three '活套' section headings as '淒' and contains a few character misreads such as 霽 as 齋 and 遲 as 逕."
+   },
+   "kanripo_own": {
+    "pb": "KR3k0039_WYG_003-49a",
+    "chars": 317,
+    "over_opus": 4,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil090",
+   "pid": "6a3cbe64ec254ff6cadffea5",
+   "bid": "6a3cbe64ec254ff6cadffd58",
+   "pn": 157,
+   "iss": 5660,
+   "title": "六壬大全·卷十一~卷十二 (vol 10)",
+   "read_ok": true,
+   "read_secs": 11.494,
+   "layout": "prose",
+   "body_han": 126,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription matches the printed page completely with no errors, omissions, or invented text."
+   },
+   "kanripo_own": {
+    "pb": "KR3g0031_WYG_012-30a",
+    "chars": 54,
+    "over_opus": 0,
+    "over_paddle": 0
+   }
+  },
+  {
+   "uid": "pil091",
+   "pid": "6a3c6a61af3c49b59c5e6533",
+   "bid": "6a3c6a61af3c49b59c5e64fd",
+   "pn": 54,
+   "iss": 5660,
+   "title": "七政推步·卷五 (vol 3)",
+   "read_ok": true,
+   "read_secs": 24.716,
+   "layout": "table",
+   "body_han": 312,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The table correctly captures the 6 degree columns and all corresponding sub-columns with no invented cells, having only a few misread digits in the small double-line numerical values."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil092",
+   "pid": "6992cbfc018b80967354c9d5",
+   "bid": "6992cbfc018b80967354c9d1",
+   "pn": 4,
+   "iss": 6388,
+   "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 6",
+   "read_ok": true,
+   "read_secs": 20.284,
+   "layout": "mixed",
+   "body_han": 189,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately captures all printed text and diagram descriptions on the page with no invented or omitted characters."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil093",
+   "pid": "6a3cebe08642f0445b157f22",
+   "bid": "6a3cebe08642f0445b157ef6",
+   "pn": 44,
+   "iss": 6388,
+   "title": "易原·卷四~卷五 (vol 2)",
+   "read_ok": true,
+   "read_secs": 16.826,
+   "layout": "prose",
+   "body_han": 219,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately matches the printed classical text and interlinear commentary with no errors."
+   },
+   "kanripo_own": {
+    "pb": "KR1a0029_WYG_004-22a",
+    "chars": 172,
+    "over_opus": 1,
+    "over_paddle": 1
+   }
+  },
+  {
+   "uid": "pil094",
+   "pid": "6992ce323ea667fbac82876e",
+   "bid": "6992ce313ea667fbac828700",
+   "pn": 5,
+   "iss": 6388,
+   "title": "三才圖會(八十一)",
+   "read_ok": true,
+   "read_secs": 24.201,
+   "layout": "diagram",
+   "body_han": 72,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The diagram labels are accurately described with no invented text, and at most one misread character (奠 read as 哭)."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil095",
+   "pid": "6992ce462960dc4e5cea8ef9",
+   "bid": "6992ce452960dc4e5cea8e8a",
+   "pn": 111,
+   "iss": 6388,
+   "title": "三才圖會(八十六)",
+   "read_ok": true,
+   "read_secs": 30.676,
+   "layout": "diagram",
+   "body_han": 293,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription misreads 卿 as 鄉 in 六卿為將 and omits the second 各 from each of the six rows in the middle section, with nothing invented."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil096",
+   "pid": "6992cd9643713c66ea6376c6",
+   "bid": "6992cd9643713c66ea63769d",
+   "pn": 41,
+   "iss": 6388,
+   "title": "三才圖會(三十八)",
+   "read_ok": true,
+   "read_secs": 26.812,
+   "layout": "table",
+   "body_han": 401,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "五不遇",
+      "written": 7,
+      "printed": 3
+     },
+     {
+      "what": "福星貴人",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 16,
+    "note": "The transcription repeatedly invents extra occurrences of 五不遇 (written 7 times against 3 printed) and spuriously copies 福星貴人 into the 辛丑 section where it does not appear."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil097",
+   "pid": "6992ce4d2960dc4e5cea901f",
+   "bid": "6992ce4d2960dc4e5cea8fdc",
+   "pn": 67,
+   "iss": 6388,
+   "title": "三才圖會(八十八)",
+   "read_ok": true,
+   "read_secs": 33.196,
+   "layout": "mixed",
+   "body_han": 187,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "minor",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "Five characters in the poem text are misread (夭 as 人, 桃 as 梔, 弄 as 美, 篩 as 飾, and 曲 as 幽), with no text invented or omitted."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil098",
+   "pid": "6992ce363ea667fbac828867",
+   "bid": "6992ce363ea667fbac828821",
+   "pn": 70,
+   "iss": 6388,
+   "title": "武備志(四十九)",
+   "read_ok": true,
+   "read_secs": 22.923,
+   "layout": "prose",
+   "body_han": 209,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "某某",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "invented_chars": 2,
+    "note": "The transcription duplicates a '某某' placeholder after '餘衆某某' in the final column, and misreads 敎 as 斂, 榜 as 楄, and 貫 as 費."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil099",
+   "pid": "6992ce65673ee1e40e32074b",
+   "bid": "6992ce65673ee1e40e32070c",
+   "pn": 62,
+   "iss": 6388,
+   "title": "詩經疏義會通·圖說 下",
+   "read_ok": true,
+   "read_secs": 25.523,
+   "layout": "mixed",
+   "body_han": 143,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription accurately reflects the text and drum notation chart on the page with no invented content."
+   },
+   "kanripo_own": null
+  },
+  {
+   "uid": "pil100",
+   "pid": "6992ca5dd4d545ae73fedf14",
+   "bid": "6992ca5dd4d545ae73fedf0e",
+   "pn": 6,
+   "iss": 6388,
+   "title": "孫子算經 (Sun Zis Mathematical Classic)",
+   "read_ok": true,
+   "read_secs": 15.882,
+   "layout": "prose",
+   "body_han": 183,
+   "drawing_only": false,
+   "rods": false,
+   "review": {
+    "verdict": "clean",
+    "invented": [],
+    "invented_chars": 0,
+    "note": "The transcription completely and accurately matches all printed text on the page."
+   },
+   "kanripo_own": null
+  }
+ ]
+}

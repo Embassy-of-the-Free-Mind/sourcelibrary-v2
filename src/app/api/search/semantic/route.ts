@@ -6,7 +6,7 @@ import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
 import { logSearchQuery } from '@/lib/search-log';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { resolveSearchScope, isScoped, scopeAdmits } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse, isScoped, scopeAdmits } from '@/lib/tenant-search-scope';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
@@ -90,9 +90,10 @@ export async function GET(request: NextRequest) {
   const scope = await resolveSearchScope(request.headers);
   const cacheControl = isScoped(scope) ? NO_STORE : SHARED_CACHE;
   if (scope.kind === 'closed') {
-    return NextResponse.json(
+    return closedScopeResponse(
+      scope,
       { results: [], query, total: 0, mode: 'semantic', level, lang: level === 'page' ? textLang : 'en' },
-      { headers: { 'Cache-Control': NO_STORE } },
+      'search.semantic',
     );
   }
 

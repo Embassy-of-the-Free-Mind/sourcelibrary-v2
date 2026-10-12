@@ -1,0 +1,42 @@
+<scan-quality>good</scan-quality>
+<language>Kaqchikel</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>62</page-num>
+<warning>Handwritten colonial Latin script in Kaqchikel</warning>
+
+Chikichin Andres ~ nima mac pe tikaban ri ve mani kome
+vayh chupam ri mevayibal Eih Martin, kitzih an chini
+ma mac tikaban rumal kitzih ha rucah rupixa Sancta Y-
+glesia Andres ~ naklaqa chokpam nak on chi Eih rien-
+ton vi camiçanel mac chi vetn maqui komevayih chupam
+Martin.~ Tavacazah na an chupam vae Ehohmilih
+Eih bijn can tzolzomin can chupam kaqhabal, xuyn canri
+katata chikichin at nunimal vae tnga tikaget vi tiketa-
+mah vi ruchohmil ri kitzih ha nima mevayibal Eih, xahani-
+bal Eih retam rughiquibaan rulatom pe can xauiha ri Santo
+Padre Papa vox inbi paulo, xaxere kitzih vi chinima cami-
+çanel mac, rulatom can chiquik Yndios vinak, ri vegoh ma-
+qui timevayih maquipe tixahanih chupam xaviga tixibin
+chinima camiçanel mac tuban chuach Dios, chaa.~
+Vaega ruçihil mevayibal Eih hee.~
+¶ Hari ronohel Viernes tantigulun tanga titape chupam
+ruçihil rusemanayl Quaresma.~
+¶ Rugin Sabado Sancto.~
+¶ Rugin ruvigilia ralaxibal Eih kahaual Jesu Christo, vue
+tnga mani quix mevayih chupam vae mevayibal Eih ~
+Vue pe tiveleh rutiye qhac chupam rixahan Eih kitzih chini
+ma camiçanel mac, tiban chuach Dios chaa.~
+Hagari rughakapil rugiyal pe el ruçihil quaresma rugin
+ronohel chiel viernes, Sabado, Vuepe quatro temporas.~
+Rugin Vigilia Maquina, y mevayibal Eih tah rumal ma-
+nilatom Camiçanel mac chivih riyx yndios vinak chaa ~
+¶ Haxax maqui vi yaom chivichin ri vue quix qhacun
+chupam kitzih nima Camiçanel mac tiban chuach Dios, ri
+ve quere tiban chaa.~
+Hachiqari rix tekah, chupam ruçihil mevayibal Eih, xa-
+hi huperah vepe caperah chi lekunvay, rugin halaychah,
+çalul tilo, xaghutu temebalga hala richin yvinakiltio
+
+<meta>catchword: hil</meta>
+<vocab>mevayibal, Quaresma, camiçanel mac, Yndios vinak, Viernes, Sabado Sancto, Vigilia, quatro temporas</vocab>

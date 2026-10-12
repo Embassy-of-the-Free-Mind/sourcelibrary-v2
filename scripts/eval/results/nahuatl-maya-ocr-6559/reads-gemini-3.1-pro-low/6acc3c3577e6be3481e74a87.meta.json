@@ -1,0 +1,23 @@
+{
+ "page_id": "6acc3c3577e6be3481e74a87",
+ "book_id": "6acc3c3477e6be3481e74a66",
+ "page_number": 33,
+ "cli": "agy",
+ "cli_version": "1.3.3",
+ "model": "gemini-3.1-pro-low",
+ "started_at": "2026-10-12T03:06:11.052Z",
+ "finished_at": "2026-10-12T03:07:17.166Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 1457,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "chatter": null,
+ "image_url": "https://archive.org/download/brevepracticayre00velz/page/n32/full/full/0/default.jpg",
+ "image_bytes": 1403854,
+ "image_sha256": "da49f3950701c14ea8742b58e1ce77429f3eaea3896362ba2895813f2dbb6881",
+ "prompt_sent_chars": 12939,
+ "prompt_sent_hash": "133d18400a324d97",
+ "stderr_tail": ""
+}

@@ -22,7 +22,7 @@ import {
 } from '../../scripts/lib/page-integrity.mjs';
 
 import {
-  extremeForLanguage, TRUNC_NORM_FLAG,
+  extremeForLanguage, TRUNC_NORM_FLAG, overlongTranslation, scanBook as scanBookForOverlong,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/audit/page-integrity.mjs';
@@ -358,5 +358,35 @@ describe('translationReasoningLeak', () => {
     expect(translationPipelineTalk('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBe(true);
     expect(translationReasoningLeak('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBeNull();
     expect(translationPipelineTalk('<meta>the watermark mentioned in the OCR has been omitted</meta> In the beginning')).toBe(false);
+  });
+});
+
+describe('a stored translation the write door would refuse as a runaway (#4098)', () => {
+  // shapes as measured on the issue's pages: ~3,000 characters of Latin, and what was stored against it
+  const latin = Array.from({ length: 60 }, (_, i) => `Quaestio ${i} de radicibus arboris elementalis et de forma prima generali.`).join(' ');
+  const english = Array.from({ length: 60 }, (_, i) => `Question ${i} of the roots of the elemental tree and of the primary general form.`).join(' ');
+
+  it('passes an ordinary translation', () => {
+    expect(overlongTranslation({ ocr: latin, tr: english })).toBeNull();
+    expect(overlongTranslation({ ocr: latin, tr: '' })).toBeNull();
+  });
+  it('padding: a table cell filled with spaces to the output cap (Plotinus p706: 192,156 chars, 48 of them prose)', () => {
+    const r = overlongTranslation({ ocr: latin, tr: `662 PLOTINI ENNEAD. VI.\n\n| [Column 1: Latin Text] ${' '.repeat(120000)}` });
+    expect(r?.shape).toBe('padding');
+    expect(r?.trBody).toBeLessThan(100);
+  });
+  it('loop: one sentence over and over (Fludd p754, x324)', () => {
+    const r = overlongTranslation({ ocr: latin, tr: 'From point P., let a line be drawn perpendicular to H.L., which intersects I.E. at point P. '.repeat(324) });
+    expect(r?.shape).toBe('loop');
+  });
+  it('overrun: prose with no repeat, far past the page', () => {
+    const tr = Array.from({ length: 400 }, (_, i) => `Sentence ${i} speaks of matter ${i * 7} and of form ${i * 13} in turn.`).join(' ');
+    expect(overlongTranslation({ ocr: latin, tr })?.shape).toBe('overrun');
+  });
+  it('scanBook counts it and writes one row per page', () => {
+    const rows = [{ p: 1, ocr: latin, tr: english }, { p: 2, ocr: latin, tr: `| [Left Column] ${' '.repeat(50000)}` }];
+    const { lines } = scanBookForOverlong('b', rows, { bookLang: 'Latin' });
+    expect(lines.at(-1).overlong).toEqual({ judged: 2, flagged: 1, shapes: { padding: 1 } });
+    expect(lines.filter((l: { kind: string }) => l.kind === 'overlong').map((l: { p: number }) => l.p)).toEqual([2]);
   });
 });

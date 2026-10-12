@@ -1,0 +1,28 @@
+<scan-quality>fair</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Top line cut off; minor show-through from verso.</warning>
+<unclear>[cut off line, only bottoms of letters visible]</unclear>
+oppa, nozo nappa niquimixelehuiaya in zazo aquiqu
+ma Namiquêque, ma Ichpôpochtin, ma zan yuhne
+mi. Nicnocuitia: Ca cana Cempoalpa onictenquix
+tzotlatolli, in Ahuilnemiliztlâtolli imixpan in occe
+Nohuampohuan; in Yehuantinin âzo ic oniquimixtlâp
+oniquinyolizahui; âzo oniquinyoleuh in ihuicpa u
+colli. Auh ca yuh anquihualtocatiazque, (iràn fi
+anquittotiazque in occequi in amotlâtlacol, huehy
+quipacholiztica, choquiztica. Auh intla yuh anqu
+N. P; ma yê yuh ompachihui in amoyollo, ca zan
+amechmopôpolhuiliz in Dios, in zazo itlâ yez, i
+tlâtlacol. Auh inic in itechcopai namechcenyolmaxi
+tlacaquican, N. P; ihuan xicmocenyectenehuilican i
+quizcateicnoittalitzin in Dios. (In Vit. PP.)
+§ Ca ce Mictlan Telpocatl huel oquimicti in Itâtzi
+in Iteachcauh. (à su hermano mayor) Ihuan zatepan ca âm
+hualli in tlâtlacolli, in oquimotequiuhti. Ic ommomati
+yê aoc huel momaquixtiz. Tel ceppa oquimocaquiti in
+machtiani, in quimohuecapanilhuiaya in ixquich in Ite
+litzin in Dios. Ic in Telpocatl omoyollapan, omoyolchic
+moyolcuitiz; inic Dios quimotlapôpolhuiliz. Yuh oa
+<vocab>Dios, Mictlan, tlâtlacolli, Namiquêque, Ichpôpochtin</vocab>

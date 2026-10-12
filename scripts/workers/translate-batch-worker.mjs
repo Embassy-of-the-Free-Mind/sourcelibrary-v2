@@ -60,6 +60,7 @@ import {
   MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL, PHASE as CHAINED_PHASE,
 } from '../lib/translate-batch-chained.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { enrolBrake } from '../lib/quality-gate.mjs';
 import { contentHash } from '../lib/translate-core.mjs';
 import { logUsage, completeBatchUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate } from './lib/supabase-page-writer.mjs';
@@ -265,6 +266,11 @@ async function chained(db) {
   if (has('enrol-auto') || has('enrol')) {
     const brake = await translateSubmitBrake(db);
     if (brake.stop) { console.log(`  ${brake.stop} — enrolling nothing`); return; }
+    // The standing quality gate (#5826): a NO-GO pauses ENROLMENT only — ticks above keep collecting
+    // and submitting the rounds of runs already open. One line, never a per-book REFUSED: the hand
+    // drivers write REFUSED lines to their refused.txt for good.
+    const qualityGate = await enrolBrake(db, 'translate', { log: (m) => console.log(`  ${m}`) });
+    if (qualityGate.paused) return;
   }
 
   if (has('plan')) {

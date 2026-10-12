@@ -1,0 +1,22 @@
+You are checking the ENGLISH translation of one page of a Siku Quanshu manuscript (classical Chinese, written in columns read top to bottom, right to left). For this page you have four inputs:
+
+- the PAGE IMAGE, which is the authority;
+- READING A: the transcription the English was translated from;
+- READING B: a newer, independent transcription of the same page;
+- the ENGLISH that readers see now. Notes, glosses, <meta>, <summary> and <keywords> are the translator's additions; judge them only if they assert something about what the page says.
+
+Either reading may be wrong in places. Read the image yourself wherever the readings differ or the English looks doubtful.
+
+TASK. List every MEANING error in the English: a wrong sense, name, number, quantity or date; a negation lost or added; a sentence or clause of the page that is left out, or one that the page does not contain. Do not list style, word choice that keeps the sense, romanisation, or the translator's notes where they are labelled as conjecture. Errors of order count only if they change the meaning.
+
+For each error give:
+- "english": the English words at fault (quote them exactly, max 15 words; for an omission, quote the words next to the gap);
+- "image_says": what the page actually says there (Chinese, with a short gloss);
+- "cause": "OCR" if Reading A is wrong at this point (and the image says otherwise) and the English follows Reading A; "TRANSLATION" if Reading A is right at this point and the English is still wrong; "BOTH" if Reading A is wrong there AND the English is wrong in a further way that a correct reading would not have prevented;
+- "b_right": true if Reading B reads this point correctly, false if not;
+- "severity": "material" if a reader would come away with a wrong fact, name, number, quantity, negation or instruction, or would miss or gain a whole clause; "minor" otherwise.
+
+Then a page "verdict":
+- "keep": no material error;
+- "retranslate-would-fix": at least one material error with cause OCR or BOTH where b_right is true (a fresh translation from Reading B would remove it);
+- "bad-regardless": material errors, but none that a translation from Reading B would fix (they are TRANSLATION errors, or Reading B is wrong too).

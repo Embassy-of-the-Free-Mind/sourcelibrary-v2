@@ -8,6 +8,8 @@ import { getClientIp } from '@/lib/rate-limit';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { sanitizeFeedbackImages } from '@/lib/feedback-images';
 import { parsePageReport, pageReportMessage } from '@/lib/page-report';
+import { resolveTenantFromRequest } from '@/proxy';
+import { resolveTenantId } from '@/lib/tenant-context';
 
 /**
  * One constant, shared with the `submit_feedback` tool schema that advertises it.
@@ -16,6 +18,42 @@ import { parsePageReport, pageReportMessage } from '@/lib/page-report';
  * the same day (#3715).
  */
 const MAX_MESSAGE = MAX_FEEDBACK_MESSAGE;
+
+/**
+ * Which tenant a submission came from, resolved here from the request — never
+ * from the JSON body, and never from the `x-tenant-*` headers: the proxy sets
+ * those when it resolves a tenant but does not strip a client-sent copy when it
+ * doesn't, so on a global request they are whatever the caller said (#4977).
+ *
+ * The proxy's own resolver covers the subdomain (bph.sourcelibrary.org), a
+ * `/bph/...` page, and the Referer of a root /api call fired from one. It does
+ * not cover the partner iframe: there the Referer is `/embed/<slug>/...`, whose
+ * first segment is `embed`, so that one case is read here and checked against
+ * the tenants collection.
+ *
+ * Best-effort: this route is also the write path for the widget inside the
+ * partner iframe, so a failure files the row untagged rather than losing it.
+ */
+async function resolveFeedbackTenant(
+  request: NextRequest,
+): Promise<{ tenant_slug: string | null; tenant_id: string | null; tenant_source: string }> {
+  try {
+    const resolved = await resolveTenantFromRequest(request);
+    if (resolved) return { tenant_slug: resolved.slug, tenant_id: resolved.id, tenant_source: resolved.source };
+
+    const referer = request.headers.get('referer');
+    const embedSlug = referer ? new URL(referer).pathname.match(/^\/embed\/([a-z0-9-]+)(?:\/|$)/)?.[1] : null;
+    if (embedSlug) {
+      const id = await resolveTenantId(embedSlug);
+      if (id) return { tenant_slug: embedSlug, tenant_id: id, tenant_source: 'embed-referer' };
+    }
+  } catch {
+    // fall through: untagged
+  }
+  // `tenant_slug: null` is a positive "global" answer; rows written before this
+  // field existed lack it entirely, and the triage script tells the two apart.
+  return { tenant_slug: null, tenant_id: null, tenant_source: 'none' };
+}
 
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
@@ -75,6 +113,7 @@ export async function POST(request: NextRequest) {
     // URLs of that route's exact shape survive; anything else is dropped rather
     // than rejected, so a stale attachment never costs the reader their message.
     const images = sanitizeFeedbackImages(rawImages);
+    const tenant = await resolveFeedbackTenant(request);
 
     const doc = {
       message: message.trim(),
@@ -84,6 +123,7 @@ export async function POST(request: NextRequest) {
       ip_hash: ipHash,
       user_agent: userAgent,
       channel,
+      ...tenant,
       created_at: new Date(),
       read: false,
       wants_to_help: wantsHelp,

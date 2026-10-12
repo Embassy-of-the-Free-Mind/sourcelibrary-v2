@@ -1,0 +1,63 @@
+# Tibetan: can Opus or Gemini Pro correct the Yigdzin OCR? (#6560)
+
+<!-- PRIOR ART: scripts/eval/tibetan-proofread/ (the 30-folio set and the ported kanjur_align scorer, against a human correction) and scripts/eval/replicate-6547/ (branch job-replicate-6547: correction + anchoring on Greif's print set). This applies that method to the Yigdzin-read Kangyur and scores against Derge. -->
+
+**Decision it changes:** whether the Yigdzin-read Derge pages get a correction pass (and by which model, correct or
+redo), or whether no general model is trustworthy on Tibetan script yet.
+
+**Set:** the 30 `kangyur` folios of `scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl` (PR #5456), one
+folio per book, served Yigdzin vs Derge identity 0.904–0.969.
+
+**Arms** (all $0, one page per call, at most 2 calls in flight):
+
+| arm | input | route |
+|---|---|---|
+| baseline | the served Yigdzin read | — |
+| opus-corr / pro-corr | image + Yigdzin draft, "correct only where the image differs; the draft may contain errors" | `claude -p --model opus` / `agy -p --model gemini-3.1-pro-high` |
+| opus-redo / pro-redo | image only | same |
+| opus-corr-anchor / pro-corr-anchor | image + draft with 3 planted syllable errors, 10 folios | same |
+
+The prompts are in `prep.py` (`REDO`, `CORR`): the same wording for both families, Uchen Unicode, the folio's line
+breaks, `<<<BEGIN>>>/<<<END>>>` sentinels. No prompt mentions planted errors or a count. Runners: Gemini via
+`scripts/eval/run-cli-arm.py` + `scripts/lib/agy-tool-gate.py` from branch `job-cli-ocr-fix-6523c` (@5fa9ae0b,
+sentinels + tool gate, #6523); Claude via `scripts/eval/replicate-6547/run-claude-arm.py` from branch
+`job-replicate-6547` (@6a5227f5, `--restricted`, Read only). Neither had merged when this ran; `run.sh` uses copies in
+`$JOB_SCRATCH/runner`.
+
+## Run
+
+```
+python3 scripts/eval/tibetan-correct-6560/prep.py --root $JOB_SCRATCH      # Derge windows, images, requests, plants
+scripts/eval/tibetan-correct-6560/run.sh [LIMIT]                            # 5 arms (pilot: LIMIT=5); resumable
+python3 scripts/eval/tibetan-correct-6560/score.py readoff-prep --settler pro-settles    # after the Opus arms
+python3 scripts/eval/tibetan-correct-6560/score.py readoff-prep --settler opus-settles   # after the Pro arms
+#   then run each readoff-*.jsonl with the OTHER family's runner (Pro settles Opus's changes, Opus settles Pro's)
+python3 scripts/eval/tibetan-correct-6560/score.py score --out scripts/eval/results/tibetan-correct-6560/scores.json.gz
+#   with no $JOB_SCRATCH it re-scores from the gzipped outputs committed under results/tibetan-correct-6560/out/
+```
+
+## Measures
+
+- **identity**: Needleman–Wunsch syllable matches against the folio's Derge window / syllables of the read. The
+  tokeniser and NW are `kanjur_align.py`'s (ported in `alignpairs.py`). The window is fixed per folio: the Derge e-text
+  pages (vol, imgnum ± 2) the served read was scored against. `prep.py` reproduces the manifest's `derge_identity`
+  for all 30 folios (the 10 marked-seam folios come out ≤ 0.002 higher because the `<leaf-break/>` tag is dropped).
+- **recall**: the read's matches that land on Derge positions the served read covers, divided by those positions.
+  It sees dropped or invented lines, which identity cannot. A frame holds two leaves that need not be contiguous in
+  Derge, so the cover is built from runs of served-read matches, not one first-to-last span.
+- **did not read**: an empty reply, timeout, refusal, a reply with no Tibetan, or nothing between the sentinels.
+  These are counted, not scored.
+- **intervals**: 95% bootstrap over books (one folio per book), 4,000 draws. The change against baseline is paired
+  on the same folios.
+- **anchoring**: 3 syllables planted per folio on 10 folios, in syllables the draft had right (they agree with
+  Derge): a look-alike root letter, an i/e or u/o vowel, and a swap for another common syllable of the folio. A plant
+  **survives** if the corrector's output has the planted syllable at the aligned position. Key:
+  `results/tibetan-correct-6560/plants.json`.
+- **recitation**: a span **moves toward Derge** where the served read differs from Derge and the arm agrees with it.
+  Each span goes to the other family's model with the image. It gets the two readings in random order, with no
+  word of which one is Derge, and is asked which the leaf shows. A span is **"toward Derge, not supported by the
+  image"** if the settler sees the draft's reading or something else. Each read-off call also carries 2
+  known-answer controls: a syllable where the served read and Derge agree, against a one-letter change. The
+  controls measure the settler.
+
+Result and decision: `scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md`.

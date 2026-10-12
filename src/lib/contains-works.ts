@@ -73,6 +73,11 @@ function stripTrailingNumeral(s: string): string {
     const lastTok = before.split(/\s+/).pop() || '';
     return lastTok.length > 1;
   };
+  // A roman numeral after VOL / TOME / PART is not a book number inside one
+  // work — it is WHICH VOLUME, the very distinction this module exists to
+  // report. Stripping it merged "WELD-BLUNDELL COLLECTION VOL. II" into Vol. I
+  // and hid that one record holds OECT I and OECT II (#4393).
+  if (/\b(?:VOL|VOLUME|VOLUMEN|TOME|TOM|TOMUS|BAND|BD|PART|PARS|TEIL)\s+[IVXLC]{1,5}$/u.test(s)) return s;
   for (;;) {
     let next = s;
     for (const re of [

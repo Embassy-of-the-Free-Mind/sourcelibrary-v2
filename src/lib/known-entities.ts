@@ -1,6 +1,7 @@
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import type { Collection } from '@/lib/api-client/types/collections';
 import SITE_FEATURES from '@/lib/site-features.json';
+import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 
 /**
  * Known-entity search capture (issue #2790).
@@ -37,6 +38,9 @@ const slugify = (s: string) =>
 export interface MatchOptions {
   /** Live collections list (from /api/collections) to match against. */
   collections?: Pick<Collection, 'slug' | 'name' | 'description' | 'subtitle'>[];
+  /** The search runs on a partner subdomain. A site feature the proxy refuses
+   *  there (the Librarian, #4330) must not be offered: its card is a 404. */
+  onTenantHost?: boolean;
 }
 
 /**
@@ -83,6 +87,7 @@ export function matchKnownEntity(query: string, opts: MatchOptions = {}): KnownE
   // embed-site-pages.mjs), so a phrasing ("identify a book from a photo")
   // finds the page by meaning where an exact alias does not.
   for (const f of SITE_FEATURES) {
+    if (opts.onTenantHost && isGlobalOnlyNavHref(f.href)) continue;
     if (f.aliases.some((a) => norm(a) === q || slugify(a) === qs)) {
       return { title: f.title, description: f.description, href: f.href, kind: 'feature' };
     }

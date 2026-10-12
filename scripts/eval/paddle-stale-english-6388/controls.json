@@ -1,0 +1,72 @@
+[
+ {
+  "page_id": "6992cefff7519cdd65044b93",
+  "book_id": "6992cefff7519cdd65044b57",
+  "title": "植物名實圖考(二)",
+  "page_number": 60,
+  "image": "https://images.sourcelibrary.org/archived/6992cefff7519cdd65044b57/60.jpg",
+  "cer": 0,
+  "plant": {
+   "kind": "negation",
+   "from": "Both its flowers and its leaves are similar to those of the common bean.",
+   "to": "Neither its flowers nor its leaves resemble those of the common bean.",
+   "truth": "花葉俱似家豆 (its flowers and leaves resemble the common bean)"
+  }
+ },
+ {
+  "page_id": "6a3ceb3295fcd455630545f3",
+  "book_id": "6a3ceb3195fcd45563054522",
+  "title": "法書考·卷四~卷八 (vol 2)",
+  "page_number": 67,
+  "image": "https://images.sourcelibrary.org/archived/6a3ceb3195fcd45563054522/67.jpg",
+  "cer": 0,
+  "plant": {
+   "kind": "name",
+   "from": "following in the tracks of Zhong <note>Zhong Yao</note>",
+   "to": "following in the tracks of Yan <note>Yan Zhenqing</note>",
+   "truth": "追跡鍾王 (follows Zhong [Yao] and Wang)"
+  }
+ },
+ {
+  "page_id": "6992cfbbf5b4f75c1a4c977a",
+  "book_id": "6992cfbaf5b4f75c1a4c976b",
+  "title": "海國圖志(31)",
+  "page_number": 15,
+  "image": "https://images.sourcelibrary.org/archived/6992cfbaf5b4f75c1a4c976b/15.jpg",
+  "cer": 0.015873015873015872,
+  "plant": {
+   "kind": "number",
+   "from": "It has a population of 27,000 people",
+   "to": "It has a population of 72,000 people",
+   "truth": "居民二萬七千丁 (27,000)"
+  }
+ },
+ {
+  "page_id": "6992ce462960dc4e5cea8ed4",
+  "book_id": "6992ce452960dc4e5cea8e8a",
+  "title": "三才圖會(八十六)",
+  "page_number": 74,
+  "image": "https://images.sourcelibrary.org/archived/6992ce452960dc4e5cea8e8a/74.jpg",
+  "cer": 0.03636363636363636,
+  "plant": {
+   "kind": "name",
+   "from": "| Wind Master |",
+   "to": "| Thunder Master |",
+   "truth": "風師 (Wind Master)"
+  }
+ },
+ {
+  "page_id": "6992cd5243713c66ea635cb1",
+  "book_id": "6992cd5243713c66ea635ca7",
+  "title": "三才圖會(十九)",
+  "page_number": 10,
+  "image": "https://images.sourcelibrary.org/archived/6992cd5243713c66ea635ca7/10.jpg",
+  "cer": 0,
+  "plant": {
+   "kind": "number",
+   "from": "is five <term>inches [cun]</term>",
+   "to": "is eight <term>inches [cun]</term>",
+   "truth": "耜廣五寸 (five cun)"
+  }
+ }
+]

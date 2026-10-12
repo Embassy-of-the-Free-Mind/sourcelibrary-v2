@@ -308,10 +308,14 @@ export function stampKeys({ batch_job_id, job_id }) {
  * day began. `written` is the Set of stampKeys from pages. Two kinds are split out rather than
  * counted as waste: a job whose pages a LATER paid copy re-wrote (`superseded` — that waste is
  * already counted once, on the later copy, under pages-paid-twice), and an `eval/` endpoint,
- * which writes no pages by design.
+ * which writes no pages by design. A third: `bookLevel`, the usage ids of book-level batches
+ * (the enrich lane meters `<enrichJobId>:<bookId>` and writes book indexes and summaries, never a
+ * page stamp) whose book took the output — see bookLevelDelivered(). Before this split the whole
+ * enrich lane read as waste: 2026-10-10 showed 24.3% waste, $9.61 of it four enrich jobs that
+ * moved 175 books to done.
  */
-export function paidForNothing(batchRows, written, superseded = new Set()) {
-  const nothing = [], supersededRows = [], evalRows = [];
+export function paidForNothing(batchRows, written, superseded = new Set(), bookLevel = new Set()) {
+  const nothing = [], supersededRows = [], evalRows = [], bookRows = [];
   for (const r of batchRows) {
     if (PLACEHOLDER.has(r.status) || !((r.cost_usd || 0) > 0) || !r.batch_job_id) continue;
     if (written.has(String(r.batch_job_id))) continue;
@@ -319,10 +323,37 @@ export function paidForNothing(batchRows, written, superseded = new Set()) {
       pages: r.page_count || 0, endpoint: r.endpoint || null };
     if (superseded.has(String(r.batch_job_id))) supersededRows.push(row);
     else if (String(r.endpoint || '').startsWith('eval/')) evalRows.push(row);
+    else if (bookLevel.has(String(r.batch_job_id))) bookRows.push(row);
     else nothing.push(row);
   }
   const byUsd = (a, b) => b.usd - a.usd;
-  return { nothing: nothing.sort(byUsd), superseded: supersededRows.sort(byUsd), eval: evalRows.sort(byUsd) };
+  return { nothing: nothing.sort(byUsd), superseded: supersededRows.sort(byUsd), eval: evalRows.sort(byUsd), book_level: bookRows.sort(byUsd) };
+}
+
+/** An enrich-lane usage id is `<enrichJobId>:<bookId>`, the job id always starting `enrich-`. */
+export function parseBookLevelId(batchJobId) {
+  const m = /^(enrich-[^:]+):(.+)$/.exec(String(batchJobId || ''));
+  return m ? { job: m[1], book: m[2] } : null;
+}
+
+/**
+ * Did the book take the output it was billed for? The enrich lane's state row says: `failed` and
+ * `dropped` mean the response was thrown away, and `<stage>_submitted` means it was never applied.
+ * Every other stage (index_collected, indexed, done, ...) is a book past the paid step.
+ */
+export function bookLevelDelivered(stage) {
+  return !!stage && stage !== 'failed' && stage !== 'dropped' && !String(stage).endsWith('_submitted');
+}
+
+/** The set of enrich usage ids whose book took the output, read from enrich_batch_books. */
+async function readBookLevel(db, batchRows) {
+  const ids = new Map();
+  for (const r of batchRows) { const p = parseBookLevelId(r.batch_job_id); if (p) ids.set(String(r.batch_job_id), p.book); }
+  if (!ids.size) return new Set();
+  const states = await db.collection('enrich_batch_books').find({ _id: { $in: [...new Set(ids.values())] } },
+    { projection: { stage: 1 } }).toArray();
+  const stageOf = new Map(states.map((s) => [String(s._id), s.stage]));
+  return new Set([...ids].filter(([, book]) => bookLevelDelivered(stageOf.get(book))).map(([id]) => id));
 }
 
 /** Jobs that FAILED on the day and carry a cost: real (Gemini returned tokens) or phantom (submit estimate only). */
@@ -692,7 +723,7 @@ export function renderText(R) {
   L.push(`  pages paid more than once (unforced, ${REPEAT_LOOKBACK_DAYS}-day lookback): ${int(W.repeat.pages)} pages in ${W.repeat.jobs} jobs, ${$(W.repeat.usd)}  (duplicates are a subset)`);
   L.push(`  collected, paid, wrote no page: ${W.nothing_jobs} jobs, ${$(W.nothing_usd)}  (upper bound — a page re-written later loses its stamp)`);
   for (const n of W.nothing.slice(0, 5)) L.push(`      ${n.batch_job_id}  ${n.lane}  ${$(n.usd)}  ${n.status}  ${n.endpoint || ''}`);
-  L.push(`      not counted as waste: ${W.superseded.jobs} superseded by a later paid copy (${$(W.superseded.usd)}, counted on that copy); ${W.eval.jobs} eval/ shadow jobs (${$(W.eval.usd)}, write no pages by design)`);
+  L.push(`      not counted as waste: ${W.superseded.jobs} superseded by a later paid copy (${$(W.superseded.usd)}, counted on that copy); ${W.eval.jobs} eval/ shadow jobs (${$(W.eval.usd)}, write no pages by design)${W.book_level ? `; ${W.book_level.jobs} book-level enrich requests whose book took the output (${$(W.book_level.usd)})` : ''}`);
   L.push(`  failed jobs carrying a cost: ${W.failed.real} real (${$(W.failed.real_usd)}, Gemini returned tokens), ${W.failed.phantom} phantom (${$(W.failed.phantom_usd)}, submit estimate only)`);
   L.push(`  unattributed (paid row, no endpoint): ${$(R.paid.unattributed_usd)} = ${R.paid.unattributed_pct.toFixed(1)}% of metered${Object.keys(R.paid.unattributed_by_type).length ? ' — ' + Object.entries(R.paid.unattributed_by_type).map(([k, v]) => `${k} ${$(v)}`).join(', ') : ''}`);
   L.push(`  batch jobs submitted with no submitted_by: ${W.no_submitter.jobs} jobs, ${$(W.no_submitter.usd)}`);
@@ -854,7 +885,8 @@ async function main() {
     const usageByJob = new Map(usage.batch.filter((r) => r.batch_job_id).map((r) => [String(r.batch_job_id), r]));
     const duplicates = duplicateSubmissions(jobs.filter((j) => ms(j.created_at) >= dayStart.getTime() - DUP_WINDOW_MS), { inDay, usageByJob });
     const repeat = pagesPaidTwice(jobs, { inDay, usageByJob });
-    const { nothing, superseded, eval: evalRows } = paidForNothing(usage.batch, written, repeat.superseded);
+    const bookLevel = await readBookLevel(db, usage.batch);
+    const { nothing, superseded, eval: evalRows, book_level: bookRows } = paidForNothing(usage.batch, written, repeat.superseded, bookLevel);
     const failedJobs = await db.collection('batch_jobs').find({ status: 'failed', completed_at: { $gte: dayStart, $lt: dayEnd } },
       { projection: { status: 1, cost_usd: 1, output_tokens: 1, completed_at: 1 } }).toArray();
     const failed = failedWithCost(failedJobs, { inDay: (j) => ms(j.completed_at) >= dayStart.getTime() && ms(j.completed_at) < dayEnd.getTime() });
@@ -869,6 +901,7 @@ async function main() {
       nothing: nothing.slice(0, 50), nothing_jobs: nothing.length, nothing_usd: r6(nothing.reduce((a, n) => a + n.usd, 0)), nothing_by_lane: nothingByLane,
       superseded: { jobs: superseded.length, usd: r6(superseded.reduce((a, n) => a + n.usd, 0)) },
       eval: { jobs: evalRows.length, usd: r6(evalRows.reduce((a, n) => a + n.usd, 0)) },
+      book_level: { jobs: bookRows.length, usd: r6(bookRows.reduce((a, n) => a + n.usd, 0)) },
       failed,
       no_submitter: { jobs: noSub.length, usd: r6(noSub.reduce((a, j) => a + jobCost(j, usageByJob).usd, 0)) },
     };

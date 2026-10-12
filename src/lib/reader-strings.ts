@@ -546,12 +546,15 @@ export interface ReaderStrings {
    * src/data/tengyur-section-quality.json; these are only the sentences around them.
    */
   tengyurNote: {
-    /** How good: the section's measured light/work/specialist split, who judged it and when. */
-    rated: (a: { section: string; n: number; date: string; light: number; work: number; specialist: number }) => string;
-    /** What goes wrong: the commonest kinds, then reversal/agent findings per 100 pages. */
-    faults: (a: { kinds: string[]; revAgent: number; voice: boolean }) => string;
-    /** n below the threshold: no rate of its own, the whole-Tengyur figures instead. */
-    tooFew: (a: { section: string; n: number; of: number; date: string; light: number; revAgent: number }) => string;
+    /** The section's reversal/wrong-speaker findings per 100 pages, with who judged, n and date. It
+     *  leads, and the light/work split is not shown: the same reviewers rated 84000's published
+     *  human English light on 32 of 40 verdicts, so that split does not separate a draft from a human
+     *  translation; the reversal/agent rate does (#5829 Result 3, #6203). */
+    rated: (a: { section: string; n: number; date: string; revAgent: number; voice: boolean }) => string;
+    /** The commonest other kinds; only called when there are some. */
+    faults: (a: { kinds: string[] }) => string;
+    /** n below the threshold: no rate of its own, the whole-Tengyur figure instead. */
+    tooFew: (a: { section: string; n: number; of: number; date: string; revAgent: number }) => string;
     kinds: { term: string; structure: string; gloss: string; omission: string; addition: string; reversal: string; agent: string };
     /** Section-specific failure the reviewers named (#5829 Result 2, Result 5). */
     /** The Vinaya's term kind, naming the Pali offence-class names (#5829 Result 6). */
@@ -657,12 +660,11 @@ export interface ReaderStrings {
  * a `/la` reader page exists only for a book written in Latin, so a Tibetan canon volume
  *  never renders there and the note needs no Latin wording. */
 const TENGYUR_NOTE_EN: ReaderStrings['tengyurNote'] = {
-    rated: ({ section, n, date, light, work, specialist }) =>
-      `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
-    faults: ({ kinds, revAgent, voice }) =>
-      `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
-    tooFew: ({ section, n, of, date, light, revAgent }) =>
-      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
+    rated: ({ section, n, date, revAgent, voice }) =>
+      `On ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}.`,
+    faults: ({ kinds }) => `Also common: ${kinds.join(', ')}.`,
+    tooFew: ({ section, n, of, date, revAgent }) =>
+      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
     kinds: {
       term: 'mistranslated technical terms',
       structure: 'misread sentence structure',
@@ -1563,12 +1565,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
     },
     tengyurNote: {
-      rated: ({ section, n, date, light, work, specialist }) =>
-        `De ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión sustancial` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
-      faults: ({ kinds, revAgent, voice }) =>
-        `Errores medidos: unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}${kinds.length ? `. También frecuentes: ${kinds.join(', ')}` : ''}.`,
-      tooFew: ({ section, n, of, date, light, revAgent }) =>
-        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, y unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
+      rated: ({ section, n, date, revAgent, voice }) =>
+        `En ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}.`,
+      faults: ({ kinds }) => `También frecuentes: ${kinds.join(', ')}.`,
+      tooFew: ({ section, n, of, date, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
       kinds: {
         term: 'términos técnicos mal traducidos',
         structure: 'estructura de la frase mal leída',

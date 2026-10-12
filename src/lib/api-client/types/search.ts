@@ -28,6 +28,15 @@ export interface SearchResult {
   page_number?: number;
   snippet?: string;
   snippet_type?: 'translation' | 'ocr' | 'summary';
+  /**
+   * Passage search only (`pages_only`, #3700). 0-1: how much of the query this
+   * page prints in order at one place — 1 is the whole query, 0 is its words
+   * only scattered. Absolute, not relative to the other results. Absent for a
+   * one-word query and for a passage only the meaning lane found.
+   */
+  phrase_match?: number;
+  /** Passage search only: which lane found the page. `both` is the strongest signal. */
+  found_by?: 'keyword' | 'semantic' | 'both';
   thumbnail?: string;
   thumbnail_blob?: string;
   image_display?: string;

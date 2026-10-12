@@ -19,8 +19,11 @@ env: AGY_GATE_ROOT (the workspace; required), AGY_GATE_LOG (optional jsonl of ev
 """
 import json, os, sys
 
-REASON = ('Tools are disabled here. The page image is already attached and you have seen it: write the '
-          'transcription directly in your reply, following the instructions exactly.')
+# The reason must not claim the model has seen the image: in one dev read (#6523 R2) a model that was told so wrote a
+# different page of the same edition from memory. It names the one tool that works instead.
+REASON = ('That tool is disabled here. The only tool available is view_file on the attached page image in this '
+          'directory. Open it with view_file if you have not yet, then write the transcription of what the image shows '
+          'directly in your reply, following the instructions exactly.')
 
 
 def decide(call, root):

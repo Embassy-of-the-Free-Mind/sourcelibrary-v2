@@ -31,6 +31,10 @@ describe('ocr-pareto.json', () => {
   it('reads a CLI re-score that is current and passes its positive control', () => {
     expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-plan-note.mjs', '--check'], { encoding: 'utf8' })).toContain('current');
   }, 120_000);
+  // #6523: the extractor re-score the builder reads (CI has no bench: the CLI rows are re-derived, the rest kept).
+  it('reads an extractor re-score that is current and passes its positive control', () => {
+    expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-extract.mjs', '--check', '--bench', '/nonexistent'], { encoding: 'utf8' })).toContain('current');
+  }, 120_000);
 
   it('has charts, each panel on at least 5 shared pages, the first one primary', () => {
     expect(charts.length).toBeGreaterThanOrEqual(3);
@@ -95,11 +99,32 @@ describe('ParetoCharts.tsx holds no figures', () => {
     .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
   const RULES: [string, RegExp][] = [
     ['no percentages', /\b(?!95%)\d+(\.\d+)?\s?%/],
-    ['no money', /\$\d/],
+    ['no money', /\$(?!0 via subscription)\d/], // the one fixed label: a subscription run bills nothing
     ['no dates', /\b20\d\d-\d\d-\d\d\b/],
     ['no engine names', /\b(gemini|flash|paddle|surya|kraken|tesseract|olmocr|ndl)\b/i],
   ];
   for (const [name, re] of RULES) it(name, () => {
     expect(code.split('\n').filter(l => re.test(l)).map(l => l.trim().slice(0, 120))).toEqual([]);
+  });
+});
+
+// The summary table on /quality/pareto (#6524) is a second reading of the panels the verdict sentences were written
+// from. If summaryRow() ever picks a different engine or formats a figure differently, the table and the sentence
+// under it disagree in public, so every figure in a row must be found in its section's verdict sentence.
+describe('the summary table agrees with each verdict sentence (#6524)', async () => {
+  const { OCR, TRANSLATION, summaryRow } = await import('@/app/quality/ParetoCharts');
+  for (const m of [OCR, TRANSLATION]) for (const chart of m.charts) it(`${m.key}/${chart.id}`, () => {
+    const r = summaryRow(chart, m), verdict = chart.panels[0].verdict;
+    if (r.state === 'not_fit') return void expect(verdict).toMatch(/^No verdict/);
+    expect(verdict).toContain(r.inUse);
+    if (r.state === 'withheld') expect(verdict).toMatch(/^Verdicts withheld/);
+    else if (r.state === 'none') expect(verdict).toMatch(/^No engine (is clearly better than|stands out from) /);
+    else {
+      expect(verdict.startsWith(r.state === 'switch' ? `${r.best} ` : `The evidence points toward ${r.best} over `), verdict).toBe(true);
+      expect(verdict).toContain(`${r.gain} `);
+      expect(verdict).toContain(`95% interval ${r.interval})`);
+      for (const also of r.also.slice(0, 2)) expect(verdict.split('Also better: ')[1]).toContain(also.label);
+      if (r.also.length > 2) expect(verdict).toContain(`and ${r.also.length - 2} more`);
+    }
   });
 });

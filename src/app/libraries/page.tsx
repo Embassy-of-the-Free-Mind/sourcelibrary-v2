@@ -252,6 +252,8 @@ export default async function LibrariesPage() {
   const bph = partners.find(p => p.providerKey === 'bph');
   const holdingLibraries = partners.filter(p => p.providerKey !== 'bph' && p.kind !== 'platform');
   const platforms = partners.filter(p => p.kind === 'platform');
+  // Rounded DOWN to the thousand so "over N" stays true between revalidations.
+  const holdingWorksFloor = Math.floor(holdingLibraries.reduce((n, p) => n + p.count, 0) / 1000) * 1000;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -295,8 +297,10 @@ export default async function LibrariesPage() {
         <section className="mb-16">
           <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
           <p className="text-sm text-muted mb-6 max-w-3xl">
-            The institutions whose collections we read from. Each one holds the books it digitized.
-            Every card links to its holdings on Source Library.
+            These are the collection sources, comprising over {holdingWorksFloor.toLocaleString('en-US')} accumulated
+            works, that we have developed so far. More are added regularly.{' '}
+            <a href="mailto:team@sourcelibrary.org" className="underline hover:text-primary">Contact us</a> if you would
+            like your works to join Source Library.
           </p>
 
           <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">

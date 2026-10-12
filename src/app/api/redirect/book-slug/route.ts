@@ -57,5 +57,19 @@ export async function GET(request: NextRequest) {
   }
 
   // Redirect non-slug URL to canonical slug URL
-  return NextResponse.redirect(new URL(`/book/${slug}${tail}${search}`, request.url), 301);
+  const target = new URL(`/book/${slug}${tail}${search}`, request.url);
+  // A <Link> to the id form prefetches it as an RSC request carrying Next's
+  // `_rsc` cache-busting param. A Location without that param makes the client
+  // discard the response the browser fetched by following the 301 and fetch the
+  // slug a second time — three requests per link, and the discarded one is an
+  // RSC-headed request to the bare slug URL, which the CDN answers with the
+  // cached HTML document (it does not key on the RSC header). Carrying `_rsc`
+  // through settles the client on the slug in one hop (#6438). Next forwards
+  // `_rsc` onto the proxy's rewrite target, so it is on this request's URL.
+  // Gated on the RSC header so a plain, CDN-cacheable 301 never carries it.
+  const rsc = request.nextUrl.searchParams.get('_rsc');
+  if (rsc && request.headers.get('rsc') === '1') {
+    target.searchParams.set('_rsc', rsc);
+  }
+  return NextResponse.redirect(target, 301);
 }
