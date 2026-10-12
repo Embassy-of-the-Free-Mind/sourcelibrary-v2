@@ -198,7 +198,7 @@ else if (cmd === 'score') {
   const md = [
     `**Weekly convergent audit (#6420 lane D)${incomplete.length ? ', INCOMPLETE: one reader' : ''}** — run \`${report.run}\`, seed ${draw.seed}, drawn ${draw.drawn_at.slice(0, 10)}`,
     '',
-    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini 3.7 Flash (CLI), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}${models('gemini37')}.`,
+    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini Flash (CLI; the model that read is named below), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}${models('gemini37')}.`,
     ...incomplete.flatMap((r) => ['', `**${r} did not read this run:** ${status[r].why}. Its rates and the agreement line are left out; the figures below are ONE reader's, so nothing here is convergent. Finish it with \`scripts/audit/convergent-audit-weekly.sh ${report.run}\` (every step skips what is done).`]),
     '',
     ...counted.filter((r) => typed[`random/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`random/${r}`], { what: 'random visible non-English books', reader: r })),
