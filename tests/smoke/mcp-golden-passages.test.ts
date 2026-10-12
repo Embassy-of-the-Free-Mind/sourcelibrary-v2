@@ -142,6 +142,40 @@ describe('search_within_book — the right page must rank, not merely appear', (
   });
 });
 
+describe('search_translations — a sentence searched across the library (#3700)', () => {
+  interface Passage { book_id: string; page: number; snippet?: string; phrase_match?: number; found_by?: string }
+
+  for (const c of fixture.corpus_ranking.cases) {
+    it(`"${c.query.slice(0, 48)}…" → a page printing it in the top ${c.withinTopN}`, async () => {
+      const data = await mcpCall('search_translations', { query: c.query, limit: 10 });
+      const passages: Passage[] = data?.passages || [];
+      expect(passages.length, 'no passages at all').toBeGreaterThan(0);
+
+      const rank = passages.findIndex((p) =>
+        'expectPage' in c
+          ? p.book_id === c.expectBookId && p.page === c.expectPage
+          : (p.snippet || '').toLowerCase().includes(c.contains.toLowerCase()));
+      expect(
+        rank,
+        `no such passage in the first ${passages.length}. Top 5: ` +
+          passages.slice(0, 5).map((p) => `${p.book_id} p.${p.page} (${p.phrase_match})`).join(', '),
+      ).toBeGreaterThanOrEqual(0);
+      expect(rank + 1).toBeLessThanOrEqual(c.withinTopN);
+      expect((passages[rank].snippet || '').toLowerCase()).toContain(c.contains.toLowerCase());
+      expect(passages[rank].phrase_match ?? 0).toBeGreaterThanOrEqual(c.minPhraseMatch);
+      for (const p of passages) expect(['keyword', 'semantic', 'both']).toContain(p.found_by);
+    });
+  }
+
+  it('a sentence the library does not hold does not score like one it does', async () => {
+    const c = fixture.corpus_ranking.absent;
+    const data = await mcpCall('search_translations', { query: c.query, limit: 10 });
+    const passages: Passage[] = data?.passages || [];
+    // Absolute scale (#3699): nothing here is stretched to 1 for being the best of a bad lot.
+    for (const p of passages) expect(p.phrase_match ?? 0, `${p.book_id} p.${p.page}`).toBeLessThanOrEqual(c.maxPhraseMatch);
+  });
+});
+
 // ---------------------------------------------------------------------------
 // 2. Controls — without these, "rank everything everywhere" would pass above
 // ---------------------------------------------------------------------------
