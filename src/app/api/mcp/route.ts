@@ -1012,8 +1012,32 @@ async function searchImages(args: Record<string, unknown>) {
       ? {
           note: args.book_id
             ? 'This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates.'
-            : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
+            : (args.subject || args.figure || args.symbol)
+              ? 'No images matched. subject/figure/symbol are exact, case-sensitive tag matches — check the spelling with list_image_facets (facet + contains), or move the word into query.'
+              : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
         }
+      : {}),
+  };
+}
+
+// Facet vocabulary (#4287): search_images' subject/figure/symbol filters are
+// exact matches over vocabularies of tens of thousands of extractor strings, so
+// an agent that cannot see them guesses and gets nothing back.
+async function listImageFacets(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  if (args.facet) params.set('facet', String(args.facet));
+  if (args.contains) params.set('contains', String(args.contains));
+  if (args.limit) params.set('limit', String(args.limit));
+  const r = await apiGet('/gallery/facets', params) as {
+    min_count: number; updated_at: string | null;
+    facets: Record<string, { distinct_values: number; listed_values: number; matched: number; terms: Array<{ value: string; count: number }> }>;
+  };
+  const empty = Object.entries(r.facets).filter(([, f]) => f.matched === 0).map(([name]) => name);
+  return {
+    ...r,
+    usage: 'Pass a value verbatim as search_images\' type/subject/figure/symbol argument. count = book illustrations carrying the tag; museum artworks are not counted. search_images will report a smaller total for the same value, because it shows at most a few images per book and skips low-quality crops — count measures the vocabulary, not the result size.',
+    ...(args.contains && empty.length
+      ? { note: `No ${empty.join('/')} tag on ${r.min_count}+ images contains "${String(args.contains)}". The tag is absent or rare — search for it as free text with search_images' query instead of a filter.` }
       : {}),
   };
 }
@@ -1402,7 +1426,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol (exact tag strings — look them up with list_image_facets) or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
     // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
     // resource and render the gallery grid in the conversation (#3978).
@@ -1412,13 +1436,29 @@ const TOOLS: Tool[] = [
       properties: {
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
         type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
-        subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
+        subject: { type: 'string', description: 'EXACT, case-sensitive match on an extracted subject tag ("alchemy", "medicinal plants") — a near-miss matches nothing. Look the string up with list_image_facets first, or put loose words in query instead.' },
+        figure: { type: 'string', description: 'EXACT, case-sensitive match on a figure tag ("Jesus Christ", "putti"). Look it up with list_image_facets.' },
+        symbol: { type: 'string', description: 'EXACT, case-sensitive match on a symbol tag ("ouroboros", "triangle"). Look it up with list_image_facets.' },
         year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
+      },
+    },
+  },
+  {
+    name: 'list_image_facets',
+    title: 'List Image Facets',
+    description: 'List the legal values of search_images\' type, subject, figure and symbol filters, with how many images carry each. Those filters are EXACT string matches on tags an AI extractor wrote, and each vocabulary runs to thousands of strings (e.g. "musical notes", "Jesus Christ", "medicinal plants"), so a guessed value usually matches nothing — look it up here first. Call with no facet for the top values of all four; with facet + contains to find the exact spelling of a term ("ouro" → "ouroboros"). Counts cover book illustrations of visible books only (the museum-artwork collection is not counted), and only strings on 3 or more images are listed; the list is refreshed weekly. If contains finds nothing, the tag is absent or rare — use it as free text in search_images\' query instead. No URL in this result is a browse page; link images from search_images results.',
+    annotations: { title: 'List Image Facets', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        facet: { type: 'string', enum: ['type', 'subject', 'figure', 'symbol'], description: 'Which filter\'s vocabulary. Omit for the top values of all four.' },
+        contains: { type: 'string', description: 'Case-insensitive substring to look for, e.g. "dragon". Matches are ordered by image count.' },
+        limit: { type: 'number', description: 'Values per facet (default 100 with a facet, 25 without; max 500).' },
       },
     },
   },
@@ -1685,6 +1725,7 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
+    case 'list_image_facets': return listImageFacets(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
