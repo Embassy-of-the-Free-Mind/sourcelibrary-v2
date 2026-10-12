@@ -9,7 +9,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
-import { displayPublished, citationYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -999,6 +999,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // is the free-text twin and must not be parsed here (#3718); `year` is the
   // numeric field, present on 49,959 books.
   const yearPublished = (book as unknown as { year?: number }).year;
+  // DC.date is a bibliographic claim, so it must not carry a year the record's
+  // own provenance marks as an import placeholder (#3307). The image-access
+  // test below keeps the raw value: it is a rights heuristic, not a claim.
+  const dcYear = assertableYear(book as unknown as Parameters<typeof assertableYear>[0]);
   const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
   const imageAccess: 'open' | 'nc-free' | 'blocked' =
     imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
@@ -1640,7 +1644,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           displayTitle={book.display_title}
           author={book.author}
           language={book.language}
-          year={yearPublished}
+          year={dcYear}
           description={book.ai_metadata?.description as string | undefined}
           categories={book.categories}
           keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
@@ -2025,7 +2029,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         displayTitle={book.display_title}
         author={book.author}
         language={book.language}
-        year={yearPublished}
+        year={dcYear}
         description={book.ai_metadata?.description as string | undefined}
         categories={book.categories}
         keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
