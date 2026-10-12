@@ -1,0 +1,1662 @@
+{
+ "round": "r1s1",
+ "langs": [
+  "Persian",
+  "Sanskrit"
+ ],
+ "arms": [
+  "FP",
+  "C38",
+  "C38S",
+  "PRO",
+  "OPUS",
+  "CF",
+  "CO"
+ ],
+ "items": {
+  "r1s1-001": {
+   "kind": "REPEAT",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "CF",
+    "T6": "C38S",
+    "T7": "C38"
+   }
+  },
+  "r1s1-002": {
+   "kind": "ARMS",
+   "page_id": "69f33d92876dd827cbc5c190_00121",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "CO",
+    "T3": "PRO",
+    "T4": "C38S",
+    "T5": "FP",
+    "T6": "C38",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-003": {
+   "kind": "ARMS",
+   "page_id": "69e748b385f786e884a4cbdb_00137",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38",
+    "T3": "CO",
+    "T4": "C38S",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-004": {
+   "kind": "ARMS",
+   "page_id": "69afd049ae982b9d51d6dd32_00292",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "CO",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "OPUS",
+    "T6": "CF",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-005": {
+   "kind": "ARMS",
+   "page_id": "69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "labels": {
+    "T1": "PRO",
+    "T2": "CF",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "CO",
+    "T6": "C38",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-006": {
+   "kind": "REPEAT",
+   "page_id": "69e8b2962ff2a8dc09e780a7_00722",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "OPUS",
+    "T7": "CF"
+   }
+  },
+  "r1s1-007": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "CO",
+    "T5": "OPUS",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-008": {
+   "kind": "PLANT",
+   "page_id": "69920bd5e0a548a13d886144_00793",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "**O Agni and Soma, whoever offers an oblation to you both, whoever makes a sacrificial offering,**",
+    "new": "**O Agni and Soma, whoever makes a sacrificial offering,**",
+    "how": "clause dropped",
+    "dropped": "whoever offers an oblation to you both,"
+   }
+  },
+  "r1s1-009": {
+   "kind": "REPEAT",
+   "page_id": "6a08a3a28fae3d3f19b789cd_00022",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38",
+    "T2": "CO",
+    "T3": "FP",
+    "T4": "CF",
+    "T5": "C38S",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-010": {
+   "kind": "PLANT",
+   "page_id": "6a09fcc5edaf0f8bef57ba2f_00022",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "When there is wide variation due to inundation by floodwaters, they shall demand revenue in this manner:",
+    "new": "When there is not wide variation due to inundation by floodwaters, they shall demand revenue in this manner:",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-011": {
+   "kind": "ARMS",
+   "page_id": "69e7299ba409200ea79f0b56_00211",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "CF",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "C38",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-012": {
+   "kind": "ARMS",
+   "page_id": "69b99f256ed9e0490990aa8a_00185",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "CF",
+    "T5": "PRO",
+    "T6": "C38",
+    "T7": "CO"
+   }
+  },
+  "r1s1-013": {
+   "kind": "PLANT",
+   "page_id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "In response, the author states: **These also...** This means mastery over the five aspects of the organs, beginning with grasp.",
+    "new": "In response, the author states: **These also...** This means mastery over the seven aspects of the organs, beginning with grasp.",
+    "how": "five → seven"
+   }
+  },
+  "r1s1-014": {
+   "kind": "REPEAT",
+   "page_id": "69d5ac26d0bd3547a5655542_00560",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "CF",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "CO"
+   }
+  },
+  "r1s1-015": {
+   "kind": "ARMS",
+   "page_id": "69935b198e28d8f4c5d3c249_00406",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "PRO",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "OPUS",
+    "T6": "CO",
+    "T7": "CF"
+   }
+  },
+  "r1s1-016": {
+   "kind": "ARMS",
+   "page_id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "CO",
+    "T4": "CF",
+    "T5": "PRO",
+    "T6": "FP",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-017": {
+   "kind": "REPEAT",
+   "page_id": "6992cf0970ab3737555456ae_00100",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "CF",
+    "T4": "PRO",
+    "T5": "C38",
+    "T6": "CO",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-018": {
+   "kind": "PLANT",
+   "page_id": "6a3067d0c4fd77fb5b9f8378_00057",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "For as to the Dharma the Blessed One teaches, we two do not enter into it, do not plunge into it, do not place faith in it; we feel alarmed, we fall into terror.\" Then those five hundred monks said this: \"We too, venerable ones, do not enter into, do not plunge into, nor place faith in the Blessed One's teaching of the Dharma; we feel alarmed, we are terrified, we fall into terror.",
+    "new": "For as to the Dharma the Blessed One teaches, we three do not enter into it, do not plunge into it, do not place faith in it; we feel alarmed, we fall into terror.\" Then those five hundred monks said this: \"We too, venerable ones, do not enter into, do not plunge into, nor place faith in the Blessed One's teaching of the Dharma; we feel alarmed, we are terrified, we fall into terror.",
+    "how": "two → three"
+   }
+  },
+  "r1s1-019": {
+   "kind": "ARMS",
+   "page_id": "69e3ff61b142e5dd9d6b0095_00128",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "PRO",
+    "T3": "CO",
+    "T4": "FP",
+    "T5": "CF",
+    "T6": "OPUS",
+    "T7": "C38"
+   }
+  },
+  "r1s1-020": {
+   "kind": "ARMS",
+   "page_id": "69e13c79998131d6a99c0917_00310",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "CF",
+    "T6": "CO",
+    "T7": "C38"
+   }
+  },
+  "r1s1-021": {
+   "kind": "ARMS",
+   "page_id": "69e72674a409200ea79ef3ae_00219",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "PRO",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38",
+    "T6": "C38S",
+    "T7": "CO"
+   }
+  },
+  "r1s1-022": {
+   "kind": "REPEAT",
+   "page_id": "69e7491a85f786e884a4d6f9_00789",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "CF",
+    "T5": "OPUS",
+    "T6": "CO",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-023": {
+   "kind": "PLANT",
+   "page_id": "69e8b28a2ff2a8dc09e77ff4_00036",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "If it is asked, \"How can this separate analysis be derived without explicitly stating the meaning as formulated above?\", the reply is: Now, these statements were composed having gathered and set forth a profound meaning.",
+    "new": "If it is asked, \"How can this separate analysis be derived without explicitly stating the meaning as formulated above?\", these statements were composed having gathered and set forth a profound meaning.",
+    "how": "clause dropped",
+    "dropped": "the reply is: Now,"
+   }
+  },
+  "r1s1-024": {
+   "kind": "ARMS",
+   "page_id": "69e80670fdad300064d9ef9d_00599",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "CF",
+    "T4": "CO",
+    "T5": "OPUS",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-025": {
+   "kind": "ARMS",
+   "page_id": "69b63e602a1dde00d5a9d059_00042",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "CO",
+    "T6": "PRO",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-026": {
+   "kind": "ARMS",
+   "page_id": "6a09fcc5edaf0f8bef57ba2f_00022",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "CO",
+    "T3": "C38S",
+    "T4": "PRO",
+    "T5": "C38",
+    "T6": "FP",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-027": {
+   "kind": "ARMS",
+   "page_id": "69907971b621b177c1af74df_00309",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CO",
+    "T2": "PRO",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "C38",
+    "T6": "CF",
+    "T7": "FP"
+   }
+  },
+  "r1s1-028": {
+   "kind": "REPEAT",
+   "page_id": "699258c28812793469fdd6be_00160",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CO",
+    "T2": "PRO",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "CF",
+    "T6": "OPUS",
+    "T7": "C38"
+   }
+  },
+  "r1s1-029": {
+   "kind": "PLANT",
+   "page_id": "69935b198e28d8f4c5d3c249_00406",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "The deputy said: The adversaries are knowledgeable, but they are biased with selfish motive; you are ignorant of the facts, yet you are the light of the community.",
+    "new": "The deputy said: The adversaries are knowledgeable, yet you are the light of the community.",
+    "how": "clause dropped",
+    "dropped": "but they are biased with selfish motive; you are ignorant of the facts,"
+   }
+  },
+  "r1s1-030": {
+   "kind": "ARMS",
+   "page_id": "699258c28812793469fdd6be_00160",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38",
+    "T3": "OPUS",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "CF",
+    "T7": "CO"
+   }
+  },
+  "r1s1-031": {
+   "kind": "REPEAT",
+   "page_id": "69f3285baeeee0fa38c6445e_00006",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "OPUS",
+    "T6": "C38S",
+    "T7": "CF"
+   }
+  },
+  "r1s1-032": {
+   "kind": "REPEAT",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "CF",
+    "T4": "C38",
+    "T5": "PRO",
+    "T6": "CO",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-033": {
+   "kind": "ARMS",
+   "page_id": "69de101d5cedf736edb85346_00027",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "PRO",
+    "T2": "CF",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "OPUS",
+    "T6": "C38S",
+    "T7": "CO"
+   }
+  },
+  "r1s1-034": {
+   "kind": "ARMS",
+   "page_id": "6992cf0970ab3737555456ae_00100",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "CO",
+    "T5": "CF",
+    "T6": "C38S",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-035": {
+   "kind": "REPEAT",
+   "page_id": "69907971b621b177c1af74df_00309",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CO",
+    "T2": "CF",
+    "T3": "PRO",
+    "T4": "C38",
+    "T5": "FP",
+    "T6": "OPUS",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-036": {
+   "kind": "PLANT",
+   "page_id": "6992cf0970ab3737555456ae_00100",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "| I visit the houses of the great and noble, | Where they buy from me fine fabrics, silver, and precious goods.",
+    "new": "| I visit the houses of the great and noble, silver, and precious goods.",
+    "how": "clause dropped",
+    "dropped": "| Where they buy from me fine fabrics,"
+   }
+  },
+  "r1s1-037": {
+   "kind": "PLANT",
+   "page_id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Seeing your vast and radiant presence reaching into the sky, radiant with colors, gaping mouths, and burning eyes, my inner self is shaken with terror.",
+    "new": "Seeing your vast and radiant presence reaching into the sky, radiant with colors, gaping mouths, and burning eyes, my inner self is not shaken with terror.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-038": {
+   "kind": "REPEAT",
+   "page_id": "6a09fcbaedaf0f8bef57b987_00024",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "CO",
+    "T5": "CF",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-039": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "CF",
+    "T3": "CO",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "C38S",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-040": {
+   "kind": "ARMS",
+   "page_id": "69ef251c85daccce30f2b1f2_00309",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "PRO",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "CO",
+    "T5": "C38S",
+    "T6": "CF",
+    "T7": "C38"
+   }
+  },
+  "r1s1-041": {
+   "kind": "ARMS",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "CF",
+    "T7": "FP"
+   }
+  },
+  "r1s1-042": {
+   "kind": "REPEAT",
+   "page_id": "6a0e54e98831ddc9459ad225_00087",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38",
+    "T3": "CF",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "OPUS",
+    "T7": "CO"
+   }
+  },
+  "r1s1-043": {
+   "kind": "REPEAT",
+   "page_id": "69e72674a409200ea79ef3ae_00219",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CO",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "CF",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-044": {
+   "kind": "REPEAT",
+   "page_id": "6a312d8867a0ec73f1bc373f_00050",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38S",
+    "T3": "PRO",
+    "T4": "OPUS",
+    "T5": "FP",
+    "T6": "C38",
+    "T7": "CO"
+   }
+  },
+  "r1s1-045": {
+   "kind": "ARMS",
+   "page_id": "699249c5a2d53df4853bfdaf_00012",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "PRO",
+    "T3": "CO",
+    "T4": "CF",
+    "T5": "C38",
+    "T6": "FP",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-046": {
+   "kind": "ARMS",
+   "page_id": "69e72c8ca409200ea79f4dd6_00556",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CO",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "CF",
+    "T5": "C38",
+    "T6": "FP",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-047": {
+   "kind": "REPEAT",
+   "page_id": "69b99f256ed9e0490990aa8a_00185",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "CO",
+    "T5": "C38",
+    "T6": "PRO",
+    "T7": "CF"
+   }
+  },
+  "r1s1-048": {
+   "kind": "PLANT",
+   "page_id": "69b63e602a1dde00d5a9d059_00042",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "for an enemy, however weak, is better made a friend.",
+    "new": "for an enemy, however weak, is not better made a friend.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-049": {
+   "kind": "REPEAT",
+   "page_id": "69e80670fdad300064d9ef9d_00599",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "CO",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "PRO",
+    "T6": "CF",
+    "T7": "C38"
+   }
+  },
+  "r1s1-050": {
+   "kind": "REPEAT",
+   "page_id": "6a08c5ffe4e4b7b8793e97a9_00024",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38",
+    "T2": "PRO",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "CO",
+    "T6": "C38S",
+    "T7": "CF"
+   }
+  },
+  "r1s1-051": {
+   "kind": "ARMS",
+   "page_id": "69e80662fdad300064d9ed7c_00171",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "C38S",
+    "T5": "FP",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-052": {
+   "kind": "REPEAT",
+   "page_id": "69f33d92876dd827cbc5c190_00121",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "CF",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "OPUS"
+   }
+  },
+  "r1s1-053": {
+   "kind": "ARMS",
+   "page_id": "69f3285baeeee0fa38c6445e_00006",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "CO",
+    "T7": "C38"
+   }
+  },
+  "r1s1-054": {
+   "kind": "PLANT",
+   "page_id": "69e7299ba409200ea79f0b56_00211",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "| Even if your dwelling were a mouse's tiny hole, you would still drink poison in the claws of a cat.",
+    "new": "| Even if your dwelling were a mouse's tiny hole, I would still drink poison in the claws of a cat.",
+    "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+   }
+  },
+  "r1s1-055": {
+   "kind": "ARMS",
+   "page_id": "69e7267ca409200ea79ef51d_00353",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "PRO",
+    "T2": "C38",
+    "T3": "OPUS",
+    "T4": "CO",
+    "T5": "CF",
+    "T6": "C38S",
+    "T7": "FP"
+   }
+  },
+  "r1s1-056": {
+   "kind": "REPEAT",
+   "page_id": "69e8b28a2ff2a8dc09e77ff4_00036",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "PRO",
+    "T4": "CF",
+    "T5": "C38S",
+    "T6": "C38",
+    "T7": "FP"
+   }
+  },
+  "r1s1-057": {
+   "kind": "PLANT",
+   "page_id": "69907971b621b177c1af74df_00309",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The meaning is that the golden egg came into being in empty space accompanied by darkness.",
+    "new": "The meaning is not that the golden egg came into being in empty space accompanied by darkness.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-058": {
+   "kind": "REPEAT",
+   "page_id": "6a06b0aff12363da8cfdc945_00193",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "CF",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "C38S",
+    "T7": "CO"
+   }
+  },
+  "r1s1-059": {
+   "kind": "REPEAT",
+   "page_id": "69e7490585f786e884a4d1aa_00097",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "OPUS",
+    "T6": "CO",
+    "T7": "C38"
+   }
+  },
+  "r1s1-060": {
+   "kind": "ARMS",
+   "page_id": "6a06657a64d4bf2ce5510151_00636",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CO",
+    "T3": "PRO",
+    "T4": "OPUS",
+    "T5": "C38",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-061": {
+   "kind": "ARMS",
+   "page_id": "69e748da49abba5e98281b25_00103",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38",
+    "T2": "PRO",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "CO",
+    "T6": "OPUS",
+    "T7": "CF"
+   }
+  },
+  "r1s1-062": {
+   "kind": "ARMS",
+   "page_id": "6a21994b4b61907ea5ffb7e5_00027",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CF",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "C38",
+    "T7": "CO"
+   }
+  },
+  "r1s1-063": {
+   "kind": "PLANT",
+   "page_id": "69f33d92876dd827cbc5c190_00121",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "First, what test should I perform on my own behalf?",
+    "new": "Second, what test should I perform on my own behalf?",
+    "how": "First → Second"
+   }
+  },
+  "r1s1-064": {
+   "kind": "ARMS",
+   "page_id": "69d91e423a50087f7bd9afc5_00214",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "CF",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "PRO",
+    "T6": "C38S",
+    "T7": "CO"
+   }
+  },
+  "r1s1-065": {
+   "kind": "ARMS",
+   "page_id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "labels": {
+    "T1": "PRO",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "OPUS",
+    "T5": "C38",
+    "T6": "FP",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-066": {
+   "kind": "PLANT",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "When making advances, a man should observe the woman's conduct and gestures; through that, her true feeling is examined.",
+    "new": "When making advances, her true feeling is examined.",
+    "how": "clause dropped",
+    "dropped": "a man should observe the woman's conduct and gestures; through that,"
+   }
+  },
+  "r1s1-067": {
+   "kind": "REPEAT",
+   "page_id": "69e13c79998131d6a99c0917_00310",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "CF",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "FP",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-068": {
+   "kind": "ARMS",
+   "page_id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "CO",
+    "T4": "PRO",
+    "T5": "OPUS",
+    "T6": "C38",
+    "T7": "CF"
+   }
+  },
+  "r1s1-069": {
+   "kind": "REPEAT",
+   "page_id": "69e3ff61b142e5dd9d6b0095_00128",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "CO",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-070": {
+   "kind": "ARMS",
+   "page_id": "6a06b0aff12363da8cfdc945_00193",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "C38",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-071": {
+   "kind": "ARMS",
+   "page_id": "69d5ac26d0bd3547a5655542_00560",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "CF",
+    "T3": "OPUS",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "C38",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-072": {
+   "kind": "ARMS",
+   "page_id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "labels": {
+    "T1": "PRO",
+    "T2": "CO",
+    "T3": "C38S",
+    "T4": "C38",
+    "T5": "OPUS",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-073": {
+   "kind": "REPEAT",
+   "page_id": "69935b208e28d8f4c5d3c445_00228",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CF",
+    "T3": "PRO",
+    "T4": "C38",
+    "T5": "C38S",
+    "T6": "FP",
+    "T7": "CO"
+   }
+  },
+  "r1s1-074": {
+   "kind": "REPEAT",
+   "page_id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38",
+    "T3": "CO",
+    "T4": "FP",
+    "T5": "C38S",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-075": {
+   "kind": "ARMS",
+   "page_id": "6a08a3a28fae3d3f19b789cd_00022",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CF",
+    "T3": "PRO",
+    "T4": "OPUS",
+    "T5": "CO",
+    "T6": "FP",
+    "T7": "C38"
+   }
+  },
+  "r1s1-076": {
+   "kind": "REPEAT",
+   "page_id": "69e748da49abba5e98281b25_00103",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "CF",
+    "T7": "C38"
+   }
+  },
+  "r1s1-077": {
+   "kind": "ARMS",
+   "page_id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "CO",
+    "T5": "C38S",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-078": {
+   "kind": "REPEAT",
+   "page_id": "69e72c8ca409200ea79f4dd6_00556",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "CF",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "FP",
+    "T6": "CO",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-079": {
+   "kind": "PLANT",
+   "page_id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The king called the learned man to account and reproached him, saying, \"You broke your promise and failed to fulfill the agreement.\" The tutor replied, \"O lord of the face of the earth, let it not remain hidden from your luminous mind that education is uniform, but nature differs.\" **Fragment** Although silver and gold come forth from stone, not every stone contains",
+    "new": "The king called the learned man to account and reproached him, saying, \"You broke your promise and failed to fulfill the agreement.\" The tutor replied, \"O lord of the face of the earth, let it not remain hidden from your luminous mind that education is not uniform, but nature differs.\" **Fragment** Although silver and gold come forth from stone, not every stone contains",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-080": {
+   "kind": "PLANT",
+   "page_id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "At the arrival of the rains, ten times the square root of the swan flock went to Lake Manasa.",
+    "new": "At the arrival of the rains, twelve times the square root of the swan flock went to Lake Manasa.",
+    "how": "ten → twelve"
+   }
+  },
+  "r1s1-081": {
+   "kind": "REPEAT",
+   "page_id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "CO",
+    "T6": "C38",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-082": {
+   "kind": "PLANT",
+   "page_id": "69f3285baeeee0fa38c6445e_00006",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "I am the servant of that high resolve which, beneath this azure sphere,",
+    "new": "You are the servant of that high resolve which, beneath this azure sphere,",
+    "how": "\\bI am\\b → you are"
+   }
+  },
+  "r1s1-083": {
+   "kind": "REPEAT",
+   "page_id": "699249c5a2d53df4853bfdaf_00012",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "CF",
+    "T3": "OPUS",
+    "T4": "PRO",
+    "T5": "C38",
+    "T6": "C38S",
+    "T7": "FP"
+   }
+  },
+  "r1s1-084": {
+   "kind": "ARMS",
+   "page_id": "69935b208e28d8f4c5d3c445_00228",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "C38",
+    "T3": "CF",
+    "T4": "FP",
+    "T5": "C38S",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-085": {
+   "kind": "REPEAT",
+   "page_id": "69d5ac2ed0bd3547a5655830_00063",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "PRO",
+    "T3": "OPUS",
+    "T4": "CF",
+    "T5": "C38",
+    "T6": "C38S",
+    "T7": "FP"
+   }
+  },
+  "r1s1-086": {
+   "kind": "PLANT",
+   "page_id": "69e80662fdad300064d9ed7c_00171",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Whether getting up, sitting down, going to bed, walking, or riding on a vehicle, the wound of a person does not cause pain after the prescribed bandage has been applied.",
+    "new": "Whether getting up, sitting down, going to bed, walking, or riding on a vehicle, the wound of a person does cause pain after the prescribed bandage has been applied.",
+    "how": "\\bdoes not\\b → does"
+   }
+  },
+  "r1s1-087": {
+   "kind": "REPEAT",
+   "page_id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "PRO",
+    "T5": "CF",
+    "T6": "FP",
+    "T7": "CO"
+   }
+  },
+  "r1s1-088": {
+   "kind": "ARMS",
+   "page_id": "69e7490d85f786e884a4d40e_00180",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "PRO",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S",
+    "T6": "FP",
+    "T7": "CO"
+   }
+  },
+  "r1s1-089": {
+   "kind": "ARMS",
+   "page_id": "6a3067d0c4fd77fb5b9f8378_00057",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "CO",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S",
+    "T6": "PRO",
+    "T7": "CF"
+   }
+  },
+  "r1s1-090": {
+   "kind": "REPEAT",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "C38",
+    "T5": "PRO",
+    "T6": "C38S",
+    "T7": "FP"
+   }
+  },
+  "r1s1-091": {
+   "kind": "ARMS",
+   "page_id": "69920bd5e0a548a13d886144_00793",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38",
+    "T4": "CO",
+    "T5": "PRO",
+    "T6": "OPUS",
+    "T7": "CF"
+   }
+  },
+  "r1s1-092": {
+   "kind": "ARMS",
+   "page_id": "6a0e54e98831ddc9459ad225_00087",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "CO",
+    "T4": "FP",
+    "T5": "C38S",
+    "T6": "CF",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-093": {
+   "kind": "ARMS",
+   "page_id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "PRO",
+    "T3": "C38",
+    "T4": "CO",
+    "T5": "OPUS",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-094": {
+   "kind": "REPEAT",
+   "page_id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "OPUS",
+    "T7": "C38"
+   }
+  },
+  "r1s1-095": {
+   "kind": "REPEAT",
+   "page_id": "69935b198e28d8f4c5d3c249_00406",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "PRO",
+    "T5": "CF",
+    "T6": "CO",
+    "T7": "FP"
+   }
+  },
+  "r1s1-096": {
+   "kind": "REPEAT",
+   "page_id": "69de101d5cedf736edb85346_00027",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "PRO",
+    "T3": "CF",
+    "T4": "CO",
+    "T5": "C38",
+    "T6": "C38S",
+    "T7": "FP"
+   }
+  },
+  "r1s1-097": {
+   "kind": "REPEAT",
+   "page_id": "6a09fcc5edaf0f8bef57ba2f_00022",
+   "lang": "Persian",
+   "labels": {
+    "T1": "PRO",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "CO",
+    "T5": "C38S",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-098": {
+   "kind": "PLANT",
+   "page_id": "69e7490d85f786e884a4d40e_00180",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Well-mannered among the gathered assembly, he remained there, waiting for the arrival of Hara, whose emblem is the bull.",
+    "new": "Well-mannered among the gathered assembly, he remained there, waiting for the arrival of Hara, whose emblem is not the bull.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s1-099": {
+   "kind": "ARMS",
+   "page_id": "69e7491f85f786e884a4dc2f_00182",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CO",
+    "T3": "CF",
+    "T4": "C38",
+    "T5": "OPUS",
+    "T6": "FP",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-100": {
+   "kind": "REPEAT",
+   "page_id": "6a21994b4b61907ea5ffb7e5_00027",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "PRO",
+    "T5": "CO",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-101": {
+   "kind": "REPEAT",
+   "page_id": "69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "CO",
+    "T6": "CF",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-102": {
+   "kind": "ARMS",
+   "page_id": "69e7490585f786e884a4d1aa_00097",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "CF",
+    "T4": "C38",
+    "T5": "C38S",
+    "T6": "PRO",
+    "T7": "CO"
+   }
+  },
+  "r1s1-103": {
+   "kind": "ARMS",
+   "page_id": "69e8b28a2ff2a8dc09e77ff4_00036",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CO",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "PRO",
+    "T6": "C38S",
+    "T7": "CF"
+   }
+  },
+  "r1s1-104": {
+   "kind": "ARMS",
+   "page_id": "6a312d8867a0ec73f1bc373f_00050",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "FP",
+    "T2": "CO",
+    "T3": "C38",
+    "T4": "PRO",
+    "T5": "OPUS",
+    "T6": "CF",
+    "T7": "C38S"
+   }
+  },
+  "r1s1-105": {
+   "kind": "ARMS",
+   "page_id": "69e7491a85f786e884a4d6f9_00789",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "PRO",
+    "T5": "CO",
+    "T6": "OPUS",
+    "T7": "FP"
+   }
+  },
+  "r1s1-106": {
+   "kind": "ARMS",
+   "page_id": "69d5ac2ed0bd3547a5655830_00063",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CO",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "CF",
+    "T5": "FP",
+    "T6": "OPUS",
+    "T7": "PRO"
+   }
+  },
+  "r1s1-107": {
+   "kind": "REPEAT",
+   "page_id": "69afd049ae982b9d51d6dd32_00292",
+   "lang": "Persian",
+   "labels": {
+    "T1": "CF",
+    "T2": "C38",
+    "T3": "CO",
+    "T4": "C38S",
+    "T5": "OPUS",
+    "T6": "PRO",
+    "T7": "FP"
+   }
+  },
+  "r1s1-108": {
+   "kind": "ARMS",
+   "page_id": "6a08c5ffe4e4b7b8793e97a9_00024",
+   "lang": "Persian",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "PRO",
+    "T3": "C38",
+    "T4": "CO",
+    "T5": "FP",
+    "T6": "C38S",
+    "T7": "CF"
+   }
+  },
+  "r1s1-109": {
+   "kind": "ARMS",
+   "page_id": "6a09fcbaedaf0f8bef57b987_00024",
+   "lang": "Persian",
+   "labels": {
+    "T1": "C38S",
+    "T2": "CO",
+    "T3": "PRO",
+    "T4": "C38",
+    "T5": "OPUS",
+    "T6": "FP",
+    "T7": "CF"
+   }
+  },
+  "r1s1-110": {
+   "kind": "REPEAT",
+   "page_id": "69e7490d85f786e884a4d40e_00180",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "PRO",
+    "T4": "C38S",
+    "T5": "C38",
+    "T6": "CF",
+    "T7": "FP"
+   }
+  },
+  "r1s1-111": {
+   "kind": "ARMS",
+   "page_id": "69e8b2962ff2a8dc09e780a7_00722",
+   "lang": "Sanskrit",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "CO",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "C38S",
+    "T6": "CF",
+    "T7": "PRO"
+   }
+  }
+ },
+ "fable_items": [
+  "r1s1-045",
+  "r1s1-018",
+  "r1s1-024",
+  "r1s1-103",
+  "r1s1-040",
+  "r1s1-086",
+  "r1s1-077",
+  "r1s1-065",
+  "r1s1-039",
+  "r1s1-109",
+  "r1s1-063",
+  "r1s1-016",
+  "r1s1-072",
+  "r1s1-004",
+  "r1s1-079",
+  "r1s1-108",
+  "r1s1-082",
+  "r1s1-102",
+  "r1s1-104",
+  "r1s1-013",
+  "r1s1-105",
+  "r1s1-020",
+  "r1s1-026",
+  "r1s1-092",
+  "r1s1-002",
+  "r1s1-010",
+  "r1s1-046",
+  "r1s1-062",
+  "r1s1-061",
+  "r1s1-089",
+  "r1s1-106",
+  "r1s1-075",
+  "r1s1-093",
+  "r1s1-084",
+  "r1s1-033",
+  "r1s1-057",
+  "r1s1-066",
+  "r1s1-025",
+  "r1s1-030",
+  "r1s1-064",
+  "r1s1-029",
+  "r1s1-053",
+  "r1s1-003",
+  "r1s1-060",
+  "r1s1-071",
+  "r1s1-099"
+ ],
+ "failed_reads": {}
+}
