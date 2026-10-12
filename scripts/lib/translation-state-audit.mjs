@@ -114,17 +114,15 @@ export function headlinePositiveControl(expected, now = Date.now()) {
 }
 
 /**
- * Every "N readable in English" figure a rendered page carries, tags and React
- * comment markers removed. A page whose copy no longer contains the phrase
- * returns [] — the caller reports it unreadable rather than passing it.
+ * Every "N readable in English" figure in a rendered page's HTML. The number
+ * and its label sit in neighbouring elements (`20,189</div><div …>books readable
+ * in English`), so the pattern steps over tags and React comment markers between
+ * them rather than stripping the page first. A page whose copy no longer carries
+ * the phrase returns [] — the caller reports it unreadable rather than passing it.
  */
 export function parseReadableFigures(html) {
-  const text = String(html ?? '')
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ');
   const out = [];
-  for (const m of text.matchAll(/(\d[\d,]*)\s+(?:books\s+|of them\s+)?readable in English/gi)) {
+  for (const m of String(html ?? '').matchAll(/(\d[\d,]*)(?:\s|<[^>]*>)*(?:books\s+|of them\s+)?readable in English/gi)) {
     const n = Number(m[1].replace(/,/g, ''));
     if (Number.isFinite(n) && !out.includes(n)) out.push(n);
   }

@@ -101,7 +101,8 @@ describe('parseReadableFigures', () => {
   it('reads the live page shapes', () => {
     expect(parseReadableFigures('<div class="x">20,189</div><div class="y">books readable in English</div>')).toEqual([20189]);
     expect(parseReadableFigures('<p>20,189<!-- --> books readable in English</p>')).toEqual([20189]);
-    expect(parseReadableFigures('<meta content="42289 books, 20189 of them readable in English">')).toEqual([]);
+    expect(parseReadableFigures('<meta content="42289 books, 20189 of them readable in English">')).toEqual([20189]);
+    expect(parseReadableFigures('<b>20,189</b><span class="a b">readable in English</span>')).toEqual([20189]);
     expect(parseReadableFigures('<p>42,289 books, 20189 of them readable in English</p><b>20,189</b> readable in English')).toEqual([20189]);
   });
   it('returns nothing when the copy changed', () => {
