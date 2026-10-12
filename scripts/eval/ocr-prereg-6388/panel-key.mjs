@@ -9,11 +9,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
-import { normalizeForScript, normalizeCJK } from '../lib/metrics.mjs';
+import { normalizeForScript, normalizeCJK, digitsOf, NORMALIZE_FOR_SCRIPT_VERSION } from '../lib/metrics.mjs';
 import { mean } from '../lib/paired-stats.mjs';
 
 export const HERE = path.dirname(new URL(import.meta.url).pathname);
 export const MAX_CHARS = 6000;
+export const NORMALISER_VERSION = NORMALIZE_FOR_SCRIPT_VERSION;   // stamped on every panel point (trends.mjs)
 export const STRATA = ['latin-print', 'zh-manuscript', 'english-print'];
 
 // reads/<arm>.jsonl while the reads run; the committed copy is reads/<arm>.jsonl.gz.
@@ -119,13 +120,26 @@ export function scoreArm(page, k, arm) {
   return Math.min(1, distToKey(k.key, r.chars) / k.denom);
 }
 
+// ── the digits-only channel (#6203) ──────────────────────────────────────────
+// The same plurality key, built over each reader's ASCII digits alone. A page whose key carries fewer than
+// MIN_KEY_DIGITS digits has no digit score (null); a failed read has none either (it is counted as a failure).
+export const MIN_KEY_DIGITS = 5;
+export function digitScore(page, keyArms, arm) {
+  const r = page.arm[arm];
+  const used = keyArms.map(a => page.arm[a]).filter(x => x && x.outcome === 'text');
+  if (!r || r.outcome !== 'text' || !used.length) return null;
+  const denom = mean(used.map(x => x.digits.length));
+  if (denom < MIN_KEY_DIGITS) return null;
+  return { errors: Math.min(denom, distToKey(accepted(buildNetwork(used.map(x => x.digits))), r.digits)), denom };
+}
+
 /** One sample row + its reads (Map per arm) → the page shape makeKey/scoreArm take. */
 export function pageOf(s, readsByArm) {
   const arm = {};
   for (const [a, m] of Object.entries(readsByArm)) {
     const r = m.get(s.uid);
     const chars = norm(r?.text, s.stratum, false);
-    arm[a] = { outcome: outcomeOf(r, chars), chars, raw: r?.text || '' };
+    arm[a] = { outcome: outcomeOf(r, chars), chars, digits: [...digitsOf(r?.text || '')], raw: r?.text || '' };
   }
   return { ...s, arm };
 }

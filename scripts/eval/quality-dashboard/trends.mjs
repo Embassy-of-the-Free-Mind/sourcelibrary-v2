@@ -14,6 +14,7 @@
  * the date it MEASURES (efficiency for ledger day D lives in D's document, not in the day the build ran).
  *
  *   served_text_stored  #6388 panel, the text we serve today, scored against the key       daily, $0
+ *                       (per stratum: failures k of n, median CER over pages with text, digits channel; #6203)
  *   served_text_config  #6388 panel re-read with today's production prompt on flash-lite     monthly, ~$0.20 (rerun-config.mjs)
  *   reach               live books readable in English + their pages with English text       daily, $0
  *   efficiency          paid-vs-got headline: $/1,000 pages written (OCR, translation), waste daily, copied
@@ -50,28 +51,53 @@ const hash = (t) => crypto.createHash('sha1').update(t || '').digest('hex').slic
 
 // ── 1. served-text quality on the #6388 panel ────────────────────────────────
 
+/** A page FAILED when the served read is empty, a refusal, text on a leaf the key calls blank, or CER above this. */
+export const FAIL_CER = 0.3;
+const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+const r4 = (x) => (x == null ? null : Math.round(x * 1e4) / 1e4);
+
 /**
- * Score one set of texts (uid → read row {text, …}) on the panel against the key. Returns per-stratum mean
- * capped CER (0–1), per-page CER and a short hash of each page's text (so the next point can say how many
- * pages were re-read in between). `panel` = { sample, keyReads } from loadPanel().
+ * Score one set of texts (uid → read row {text, …}) on the panel against the key. `panel` = { sample, keyReads }
+ * from loadPanel(). Per stratum (#6203: a mean of capped CERs was a failure count in disguise, the English 13.4%
+ * came from 6 of 30 pages), three separate things:
+ *   failures         pages whose served read is empty, a refusal, text on a blank leaf, or CER > FAIL_CER: k of n, by kind
+ *   median_cer_text  median capped CER over the pages that have a text read and a text key
+ *   digits           the digits-only channel pooled over those pages: digit errors / key digits (panel-key digitScore)
+ * `mean_cer` is still written so an older reader of the history store keeps working; nothing here displays it.
+ * Also per-page CER and a short hash of each page's text (so the next point can say how many pages were re-read).
  */
 export function scorePanel(texts, panel, lib) {
-  const { pageOf, makeKey, scoreArm, READERS, STRATA } = lib;
+  const { pageOf, makeKey, scoreArm, digitScore, READERS, STRATA } = lib;
   const strata = {}, per_page = {}, hashes = {};
   for (const st of STRATA) {
-    const cers = [];
+    const cers = [], textCers = [], kinds = {};
+    let failed = 0, dErr = 0, dDen = 0, dPages = 0;
     for (const s of panel.sample.filter((x) => x.stratum === st)) {
       const page = pageOf(s, { ...panel.keyReads, X: texts });
       const k = panel.keys.get(s.uid) ?? makeKey(page, READERS(st));
       panel.keys.set(s.uid, k);
       const c = scoreArm(page, k, 'X');
-      per_page[s.uid] = c == null ? null : Math.round(c * 1e4) / 1e4;
+      per_page[s.uid] = r4(c);
       hashes[s.uid] = hash(texts.get(s.uid)?.text);
-      if (c != null) cers.push(c);
+      if (c == null) continue;
+      cers.push(c);
+      const out = page.arm.X.outcome;
+      const kind = k.status === 'blank' ? (c > 0 ? 'text_on_blank' : null) : out !== 'text' ? out : c > FAIL_CER ? 'cer_over' : null;
+      if (kind) { failed++; kinds[kind] = (kinds[kind] || 0) + 1; }
+      if (k.status === 'ok' && out === 'text') {
+        textCers.push(c);
+        const d = digitScore(page, READERS(st), 'X');
+        if (d) { dErr += d.errors; dDen += d.denom; dPages++; }
+      }
     }
-    strata[st] = { mean_cer: cers.length ? Math.round((cers.reduce((a, b) => a + b, 0) / cers.length) * 1e4) / 1e4 : null, n: panel.sample.filter((x) => x.stratum === st).length, n_scored: cers.length };
+    strata[st] = {
+      mean_cer: cers.length ? r4(cers.reduce((a, b) => a + b, 0) / cers.length) : null,
+      n: panel.sample.filter((x) => x.stratum === st).length, n_scored: cers.length,
+      failures: { k: failed, n: cers.length, kinds }, median_cer_text: r4(median(textCers)), n_text: textCers.length,
+      digits: dPages ? { rate: r4(dErr / dDen), errors: Math.round(dErr * 10) / 10, key_digits: Math.round(dDen), pages: dPages } : null,
+    };
   }
-  return { strata, per_page, hashes };
+  return { strata, per_page, hashes, normaliser_version: lib.NORMALISER_VERSION, fail_cer: FAIL_CER };
 }
 
 export async function loadPanel(root) {
@@ -116,48 +142,51 @@ function staleNote(newest, now, maxAgeDays, cadence) {
   return age > maxAgeDays ? `No new point since ${md(newest)}; expected ${cadence}.` : null;
 }
 
+/** Points scored as this file scores now. An older point (a mean, digits dropped) is not on the same scale. */
+const comparable = (p) => p.strata && Object.values(p.strata).some((x) => x?.median_cer_text != null);
+
 function qualityChart(docs, now) {
-  const stored = points(docs, 'served_text_stored');
-  const config = points(docs, 'served_text_config');
+  const stored = points(docs, 'served_text_stored').filter(comparable);
+  const config = points(docs, 'served_text_config').filter(comparable);
   const latest = stored.at(-1);
   const strata = Object.keys(STRATUM_LABEL);
+  const fail = (x) => (x?.failures ? `${x.failures.k} of ${x.failures.n} pages failed` : 'failures not measured');
+  const tip = (st, x, how) => `${STRATUM_LABEL[st]}, ${how}: median ${pct(100 * x.median_cer_text)} over ${x.n_text} pages with text · ${fail(x)}${x.digits ? ` · digits ${pct(100 * x.digits.rate)} wrong` : ''}`;
   const series = strata.flatMap((st, i) => [
     {
       key: `stored:${st}`, label: STRATUM_LABEL[st], slot: i + 1, style: 'line', cadence_days: 1,
-      points: stored.filter((p) => p.strata?.[st]?.mean_cer != null).map((p) => ({
-        date: p.date, value: r1(100 * p.strata[st].mean_cer),
-        tip: `${STRATUM_LABEL[st]}, stored text: ${pct(100 * p.strata[st].mean_cer)} (${p.strata[st].n_scored} pages)`,
-      })),
+      points: stored.filter((p) => p.strata?.[st]?.median_cer_text != null).map((p) => ({ date: p.date, value: r1(100 * p.strata[st].median_cer_text), tip: tip(st, p.strata[st], 'stored text') })),
     },
     {
       key: `config:${st}`, label: `${STRATUM_LABEL[st]}, re-run`, slot: i + 1, style: 'dots', cadence_days: 31, legend: false,
-      points: config.filter((p) => p.strata?.[st]?.mean_cer != null).map((p) => ({
-        date: p.date, value: r1(100 * p.strata[st].mean_cer),
-        tip: `${STRATUM_LABEL[st]}, re-run with ${p.model}: ${pct(100 * p.strata[st].mean_cer)}`,
-      })),
+      points: config.filter((p) => p.strata?.[st]?.median_cer_text != null).map((p) => ({ date: p.date, value: r1(100 * p.strata[st].median_cer_text), tip: tip(st, p.strata[st], `re-run with ${p.model}`) })),
     },
   ]);
   let statement = null;
   if (latest) {
-    const now_ = strata.map((st) => `${STRATUM_SHORT[st]} ${pct(latest.strata?.[st]?.mean_cer == null ? null : 100 * latest.strata[st].mean_cer)}`).join(', ');
+    const each = (f) => strata.map((st) => `${STRATUM_SHORT[st]} ${f(latest.strata?.[st])}`).join(', ');
+    const failed = each((x) => (x?.failures ? `${x.failures.k} of ${x.failures.n}` : '–'));
+    const med = each((x) => pct(x?.median_cer_text == null ? null : 100 * x.median_cer_text));
+    const dig = each((x) => (x?.digits ? `${pct(100 * x.digits.rate)} of ${int(x.digits.key_digits)}` : 'too few to measure'));
     const prev = before(stored, latest.date, 7) ?? (stored.length > 1 ? stored[0] : null);
     let cmp = 'First point; nothing earlier to compare.';
     if (prev) {
       const changed = Object.keys(latest.hashes || {}).filter((u) => prev.hashes?.[u] && prev.hashes[u] !== latest.hashes[u]).length;
       const deltas = strata.map((st) => {
-        const a = latest.strata?.[st]?.mean_cer, b = prev.strata?.[st]?.mean_cer;
-        if (a == null || b == null) return null;
-        const d = r1(100 * (a - b));
-        return d === 0 ? null : `${STRATUM_SHORT[st]} ${d > 0 ? 'worse' : 'better'} by ${Math.abs(d).toFixed(1)} pts`;
+        const a = latest.strata?.[st], b = prev.strata?.[st];
+        if (a?.median_cer_text == null || b?.median_cer_text == null) return null;
+        const d = r1(100 * (a.median_cer_text - b.median_cer_text)), f = (a.failures?.k ?? 0) - (b.failures?.k ?? 0);
+        const parts = [f !== 0 ? `${Math.abs(f)} ${f > 0 ? 'more' : 'fewer'} failed` : null, d !== 0 ? `median ${d > 0 ? 'worse' : 'better'} by ${Math.abs(d).toFixed(1)} pts` : null].filter(Boolean);
+        return parts.length ? `${STRATUM_SHORT[st]} ${parts.join(', ')}` : null;
       }).filter(Boolean);
       cmp = changed === 0 ? `No panel page re-read since ${md(prev.date)}; unchanged.`
-        : `${changed} of ${Object.keys(latest.hashes).length} panel pages re-read since ${md(prev.date)}${deltas.length ? `: ${deltas.join(', ')}` : '; means unchanged'}.`;
+        : `${changed} of ${Object.keys(latest.hashes).length} panel pages re-read since ${md(prev.date)}${deltas.length ? `: ${deltas.join('; ')}` : '; failures and medians unchanged'}.`;
     }
-    statement = `Mean error of the text we serve: ${now_}. ${cmp}`;
+    statement = `Pages that failed (empty, refused, or over ${Math.round(100 * (latest.fail_cer ?? FAIL_CER))}% error): ${failed}. Median error on the pages with text: ${med}. Digits read wrong: ${dig}. ${cmp}`;
   }
   const lastConfig = config.at(-1);
   return {
-    id: 'quality', title: 'Served-text quality', unit: 'pct', y_label: 'mean character error, capped (lower is better)', lower_is_better: true,
+    id: 'quality', title: 'Served-text quality', unit: 'pct', y_label: 'median character error on pages with text, digits counted (lower is better); failed pages are counted apart, in the line above', lower_is_better: true,
     newest: latest?.date ?? null, statement, stale: staleNote(latest?.date, now, 2, 'daily'),
     key_type: PANEL_KEY.label, key_note: PANEL_KEY.note,
     panel_note: `Fixed panel of ${latest ? Object.keys(latest.hashes || {}).length : 'the #6388'} pages, one per book.`,
@@ -255,9 +284,13 @@ export function buildTrends(historyDocs, now = new Date()) {
 
 // ── IO: write today's points, backfill, read the history ─────────────────────
 
+/** `ifAbsent` keeps an existing point, unless it was scored under another normaliser version (a rescore, not new data). */
 export async function writePoint(db, date, field, value, { ifAbsent = false } = {}) {
   const col = db.collection('ops_reports');
-  if (ifAbsent && (await col.findOne({ _id: historyId(date), [field]: { $exists: true } }, { projection: { _id: 1 } }))) return 'kept';
+  if (ifAbsent) {
+    const have = await col.findOne({ _id: historyId(date), [field]: { $exists: true } }, { projection: { [`${field}.normaliser_version`]: 1 } });
+    if (have && (value.normaliser_version === undefined || have[field]?.normaliser_version === value.normaliser_version)) return 'kept';
+  }
   await col.updateOne(
     { _id: historyId(date) },
     { $set: { type: HISTORY_TYPE, day: date, [field]: { ...value, date }, [`written_at.${field}`]: new Date() } },
@@ -323,7 +356,7 @@ export async function recordHistory(db, { root, now = new Date(), log = console.
 
   const stored = await measureStoredText(db, root);
   await writePoint(db, today, 'served_text_stored', { ...stored, source: 'pages.ocr.data (live read)' });
-  log(`history: stored text ${today} ${Object.entries(stored.strata).map(([k, v]) => `${k} ${v.mean_cer}`).join(' · ')}${stored.missing_pages ? ` (${stored.missing_pages} panel pages not found)` : ''}`);
+  log(`history: stored text ${today} ${Object.entries(stored.strata).map(([k, v]) => `${k} failed ${v.failures.k}/${v.failures.n} median ${v.median_cer_text} digits ${v.digits?.rate ?? '–'}`).join(' · ')}${stored.missing_pages ? ` (${stored.missing_pages} panel pages not found)` : ''}`);
 
   const reach = await measureReach(db);
   if (reach.skipped) log(`history: reach NOT written — ${reach.skipped}`);

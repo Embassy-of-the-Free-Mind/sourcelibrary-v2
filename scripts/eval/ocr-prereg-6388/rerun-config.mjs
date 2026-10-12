@@ -92,7 +92,7 @@ await withMongo(async (db) => {
 
   const { lib, panel } = await loadPanel(ROOT);
   const scored = scorePanel(reads, panel, lib);
-  console.log(Object.entries(scored.strata).map(([k, v]) => `${k} ${(100 * v.mean_cer).toFixed(1)}% (${v.n_scored})`).join(' · '));
+  console.log(Object.entries(scored.strata).map(([k, v]) => `${k} failed ${v.failures.k}/${v.failures.n}, median ${(100 * v.median_cer_text).toFixed(1)}% (${v.n_text} with text)`).join(' · '));
   const today = new Date().toISOString().slice(0, 10);
   if (!APPLY) { console.log('(no --apply: nothing written)'); return; }
   await writePoint(db, today, 'served_text_config', {

@@ -1,0 +1,892 @@
+{
+ "generated_at": "2026-10-12T21:10:19.765Z",
+ "normaliser": {
+  "before": 3,
+  "after": 4
+ },
+ "panel_P": {
+  "before": {
+   "latin-print": {
+    "mean_cer": 0.0347,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.01,
+    "n_text": 30,
+    "digits": {
+     "rate": 0.0554,
+     "errors": 22,
+     "key_digits": 397,
+     "pages": 15
+    }
+   },
+   "zh-manuscript": {
+    "mean_cer": 0.0934,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.064,
+    "n_text": 30,
+    "digits": null
+   },
+   "english-print": {
+    "mean_cer": 0.1329,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 6,
+     "n": 30,
+     "kinds": {
+      "cer_over": 5,
+      "empty": 1
+     }
+    },
+    "median_cer_text": 0.0023,
+    "n_text": 29,
+    "digits": {
+     "rate": 0.0078,
+     "errors": 34,
+     "key_digits": 4370,
+     "pages": 10
+    }
+   }
+  },
+  "after": {
+   "latin-print": {
+    "mean_cer": 0.0365,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.0116,
+    "n_text": 30,
+    "digits": {
+     "rate": 0.0554,
+     "errors": 22,
+     "key_digits": 397,
+     "pages": 15
+    }
+   },
+   "zh-manuscript": {
+    "mean_cer": 0.0934,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.064,
+    "n_text": 30,
+    "digits": null
+   },
+   "english-print": {
+    "mean_cer": 0.1339,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 6,
+     "n": 30,
+     "kinds": {
+      "cer_over": 5,
+      "empty": 1
+     }
+    },
+    "median_cer_text": 0.0034,
+    "n_text": 29,
+    "digits": {
+     "rate": 0.0078,
+     "errors": 34,
+     "key_digits": 4370,
+     "pages": 10
+    }
+   }
+  },
+  "moved": [
+   {
+    "uid": "latin-print|69c833d26c6f3cc53c84e345-p-57",
+    "v3": 0.0777,
+    "v4": 0.0939
+   }
+  ],
+  "digitPages": [
+   {
+    "uid": "english-print|69d14ba11c2a66dc094b503f-p289",
+    "errors": 26,
+    "key_digits": 4258,
+    "cer_v4": 0.0065
+   },
+   {
+    "uid": "latin-print|69c833d26c6f3cc53c84e345-p-57",
+    "errors": 10,
+    "key_digits": 13,
+    "cer_v4": 0.0939
+   },
+   {
+    "uid": "latin-print|69b51e539a81ef7feb3d3478-p177",
+    "errors": 6,
+    "key_digits": 221,
+    "cer_v4": 0.0272
+   },
+   {
+    "uid": "english-print|69526046ab34727b1f04660c-p116",
+    "errors": 3,
+    "key_digits": 11,
+    "cer_v4": 0.6878
+   },
+   {
+    "uid": "english-print|69c877ac6c6f3cc53c85809b-p-35",
+    "errors": 3,
+    "key_digits": 17,
+    "cer_v4": 0.0017
+   },
+   {
+    "uid": "latin-print|69b65c8218b87551bfd1483c-p51",
+    "errors": 2,
+    "key_digits": 10,
+    "cer_v4": 0.0144
+   },
+   {
+    "uid": "english-print|69aec44d3b6ebce5e0ee5ba8-p354",
+    "errors": 2,
+    "key_digits": 5,
+    "cer_v4": 0.7802
+   },
+   {
+    "uid": "latin-print|6a42eda006e6ead3ac546fad-p23",
+    "errors": 1,
+    "key_digits": 8,
+    "cer_v4": 0.0082
+   },
+   {
+    "uid": "latin-print|69c870986c6f3cc53c85735b-p99",
+    "errors": 1,
+    "key_digits": 18,
+    "cer_v4": 0.0852
+   },
+   {
+    "uid": "latin-print|69b62f4a1c1c21a3737f4425-p25",
+    "errors": 1,
+    "key_digits": 5,
+    "cer_v4": 0.0073
+   },
+   {
+    "uid": "latin-print|6a267dfe6c1f37c9c4f3be5e-p37",
+    "errors": 1,
+    "key_digits": 29,
+    "cer_v4": 0.0083
+   }
+  ]
+ },
+ "panel_live": {
+  "before": {
+   "latin-print": {
+    "mean_cer": 0.0347,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.01,
+    "n_text": 30,
+    "digits": {
+     "rate": 0.0554,
+     "errors": 22,
+     "key_digits": 397,
+     "pages": 15
+    }
+   },
+   "zh-manuscript": {
+    "mean_cer": 0.0934,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.064,
+    "n_text": 30,
+    "digits": null
+   },
+   "english-print": {
+    "mean_cer": 0.1329,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 6,
+     "n": 30,
+     "kinds": {
+      "cer_over": 5,
+      "empty": 1
+     }
+    },
+    "median_cer_text": 0.0023,
+    "n_text": 29,
+    "digits": {
+     "rate": 0.0078,
+     "errors": 34,
+     "key_digits": 4370,
+     "pages": 10
+    }
+   }
+  },
+  "after": {
+   "latin-print": {
+    "mean_cer": 0.0365,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.0116,
+    "n_text": 30,
+    "digits": {
+     "rate": 0.0554,
+     "errors": 22,
+     "key_digits": 397,
+     "pages": 15
+    }
+   },
+   "zh-manuscript": {
+    "mean_cer": 0.0934,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 1,
+     "n": 30,
+     "kinds": {
+      "cer_over": 1
+     }
+    },
+    "median_cer_text": 0.064,
+    "n_text": 30,
+    "digits": null
+   },
+   "english-print": {
+    "mean_cer": 0.1339,
+    "n": 30,
+    "n_scored": 30,
+    "failures": {
+     "k": 6,
+     "n": 30,
+     "kinds": {
+      "cer_over": 5,
+      "empty": 1
+     }
+    },
+    "median_cer_text": 0.0034,
+    "n_text": 29,
+    "digits": {
+     "rate": 0.0078,
+     "errors": 34,
+     "key_digits": 4370,
+     "pages": 10
+    }
+   }
+  },
+  "moved": [
+   {
+    "uid": "latin-print|69c833d26c6f3cc53c84e345-p-57",
+    "v3": 0.0777,
+    "v4": 0.0939
+   }
+  ],
+  "digitPages": [
+   {
+    "uid": "english-print|69d14ba11c2a66dc094b503f-p289",
+    "errors": 26,
+    "key_digits": 4258,
+    "cer_v4": 0.0065
+   },
+   {
+    "uid": "latin-print|69c833d26c6f3cc53c84e345-p-57",
+    "errors": 10,
+    "key_digits": 13,
+    "cer_v4": 0.0939
+   },
+   {
+    "uid": "latin-print|69b51e539a81ef7feb3d3478-p177",
+    "errors": 6,
+    "key_digits": 221,
+    "cer_v4": 0.0272
+   },
+   {
+    "uid": "english-print|69526046ab34727b1f04660c-p116",
+    "errors": 3,
+    "key_digits": 11,
+    "cer_v4": 0.6878
+   },
+   {
+    "uid": "english-print|69c877ac6c6f3cc53c85809b-p-35",
+    "errors": 3,
+    "key_digits": 17,
+    "cer_v4": 0.0017
+   },
+   {
+    "uid": "latin-print|69b65c8218b87551bfd1483c-p51",
+    "errors": 2,
+    "key_digits": 10,
+    "cer_v4": 0.0144
+   },
+   {
+    "uid": "english-print|69aec44d3b6ebce5e0ee5ba8-p354",
+    "errors": 2,
+    "key_digits": 5,
+    "cer_v4": 0.7802
+   },
+   {
+    "uid": "latin-print|6a42eda006e6ead3ac546fad-p23",
+    "errors": 1,
+    "key_digits": 8,
+    "cer_v4": 0.0082
+   },
+   {
+    "uid": "latin-print|69c870986c6f3cc53c85735b-p99",
+    "errors": 1,
+    "key_digits": 18,
+    "cer_v4": 0.0852
+   },
+   {
+    "uid": "latin-print|69b62f4a1c1c21a3737f4425-p25",
+    "errors": 1,
+    "key_digits": 5,
+    "cer_v4": 0.0073
+   },
+   {
+    "uid": "latin-print|6a267dfe6c1f37c9c4f3be5e-p37",
+    "errors": 1,
+    "key_digits": 29,
+    "cer_v4": 0.0083
+   }
+  ]
+ },
+ "ref_pinned_served": [
+  {
+   "digits_scored": false,
+   "slug": "german-boltzmann-gastheorie2-p128",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0,
+   "cer_v4": 0,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 16
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-de-weigel-gnothi2-p40",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.005636070853462183,
+   "cer_v4": 0.005636070853462183,
+   "upper_v3": 0.004830917874396157,
+   "upper_v4": 0.004830917874396157,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 7
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-de-zesen-rosemund-p100",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.006762468300929858,
+   "cer_v4": 0.006762468300929858,
+   "upper_v3": 0.002535925612848655,
+   "upper_v4": 0.002535925612848655,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 2
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-hegel-logik-p148",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0,
+   "cer_v4": 0,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 3
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-hegel-phaenomenologie-p351",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0,
+   "cer_v4": 0,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 6
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-herder-sprache-p44",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.014573991031390121,
+   "cer_v4": 0.014573991031390121,
+   "upper_v3": 0.011210762331838597,
+   "upper_v4": 0.011210762331838597,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 2
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "german-humboldt-kosmos1-p150",
+   "language": "German",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0,
+   "cer_v4": 0,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 5
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-aeneid-1",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.00694444444444442,
+   "cer_v4": 0.00694444444444442,
+   "upper_v3": 0.00694444444444442,
+   "upper_v4": 0.00694444444444442,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 11
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-aeneid-10-pallas",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.04915912031047864,
+   "cer_v4": 0.04915912031047864,
+   "upper_v3": 0.01681759379042691,
+   "upper_v4": 0.01681759379042691,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 6
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.005399568034557212,
+   "cer_v4": 0.005399568034557212,
+   "upper_v3": 0.002159827213822907,
+   "upper_v4": 0.002159827213822907,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 31
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.00700700700700696,
+   "cer_v4": 0.00700700700700696,
+   "upper_v3": 0.005005005005005003,
+   "upper_v4": 0.005005005005005003,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 0
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-la-agricola-metallica-p406",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.0010504201680672232,
+   "cer_v4": 0.0010504201680672232,
+   "upper_v3": 0.0010504201680672232,
+   "upper_v4": 0.0010504201680672232,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 3
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-la-copernicus-derev-p142",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.09350649350649354,
+   "cer_v4": 0.09350649350649354,
+   "upper_v3": 0.008658008658008698,
+   "upper_v4": 0.008658008658008698,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 42
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-la-linnaeus-systema1735-p5",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.002970297029702973,
+   "cer_v4": 0.002970297029702973,
+   "upper_v3": 0.001980198019801982,
+   "upper_v4": 0.001980198019801982,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 19
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-la-malleus-ed2-p30",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.06385404789053595,
+   "cer_v4": 0.06385404789053595,
+   "upper_v3": 0.058152793614595244,
+   "upper_v4": 0.058152793614595244,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 0
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-la-praetorius-syntagma1-p120",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.01182654402102501,
+   "cer_v4": 0.01182654402102501,
+   "upper_v3": 0.005256241787122251,
+   "upper_v4": 0.005256241787122251,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 2
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.0703296703296703,
+   "cer_v4": 0.0703296703296703,
+   "upper_v3": 0.038461538461538436,
+   "upper_v4": 0.038461538461538436,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 0
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-vulgate-genesis-1",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.34397163120567376,
+   "cer_v4": 0.34397163120567376,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 88
+   }
+  },
+  {
+   "digits_scored": false,
+   "slug": "latin-vulgate-genesis-5-genealogy",
+   "language": "Latin",
+   "aligned_v3": true,
+   "aligned_v4": true,
+   "cer_v3": 0.010763209393346407,
+   "cer_v4": 0.010763209393346407,
+   "upper_v3": 0,
+   "upper_v4": 0,
+   "digits": {
+    "rate": null,
+    "errors": null,
+    "refDigits": 0,
+    "ocrDigits": 95
+   }
+  }
+ ],
+ "ref_tier_engines": {
+  "reads": 319,
+  "cells": {
+   "ref-pinned · Latin · gemini-3.6-flash+antigravity-cli": {
+    "n": 6,
+    "median_v3": 0.027088217628025046,
+    "median_v4": 0.027088217628025046,
+    "mean_v3": 0.04639340025658595,
+    "mean_v4": 0.04639340025658595,
+    "alignment_flips": 0
+   },
+   "ref-ws · German · gemini-3.6-flash+antigravity-cli": {
+    "n": 23,
+    "median_v3": 0.002670226969292422,
+    "median_v4": 0.0026560424966799445,
+    "mean_v3": 0.00517426485157242,
+    "mean_v4": 0.00569468776374487,
+    "alignment_flips": 0
+   },
+   "ref-ws · Latin · gemini-3.6-flash+antigravity-cli": {
+    "n": 44,
+    "median_v3": 0.006183630255846895,
+    "median_v4": 0.006183630255846895,
+    "mean_v3": 0.031636692988081694,
+    "mean_v4": 0.03333871258447138,
+    "alignment_flips": 0
+   },
+   "ref-pinned · Latin · gemini-3.7-flash+antigravity-cli": {
+    "n": 6,
+    "median_v3": 0.021194873934599956,
+    "median_v4": 0.021194873934599956,
+    "mean_v3": 0.05925740038830309,
+    "mean_v4": 0.05925740038830309,
+    "alignment_flips": 0
+   },
+   "ref-ws · German · gemini-3.7-flash+antigravity-cli": {
+    "n": 16,
+    "median_v3": 0.005413438452625263,
+    "median_v4": 0.005413438452625263,
+    "mean_v3": 0.024222465628958176,
+    "mean_v4": 0.024271163470605123,
+    "alignment_flips": 0
+   },
+   "ref-ws · Latin · gemini-3.7-flash+antigravity-cli": {
+    "n": 42,
+    "median_v3": 0.003961288868134183,
+    "median_v4": 0.00429814155792807,
+    "mean_v3": 0.013014495579804865,
+    "mean_v4": 0.014856559166471392,
+    "alignment_flips": 0
+   },
+   "ref-pinned · Latin · gemini-3.8-flash+antigravity-cli-rep": {
+    "n": 5,
+    "median_v3": 0.023483365949119372,
+    "median_v4": 0.023483365949119372,
+    "mean_v3": 0.047124522849454585,
+    "mean_v4": 0.047124522849454585,
+    "alignment_flips": 0
+   },
+   "ref-ws · Latin · gemini-3.8-flash+antigravity-cli-rep": {
+    "n": 44,
+    "median_v3": 0.004887218045112773,
+    "median_v4": 0.004859805764411029,
+    "mean_v3": 0.015211768555242535,
+    "mean_v4": 0.01686786178493209,
+    "alignment_flips": 0
+   },
+   "ref-pinned · Latin · gemini-3.8-flash+antigravity-cli": {
+    "n": 6,
+    "median_v3": 0.021695374435100445,
+    "median_v4": 0.021695374435100445,
+    "mean_v3": 0.0420631227773588,
+    "mean_v4": 0.0420631227773588,
+    "alignment_flips": 0
+   },
+   "ref-ws · German · gemini-3.8-flash+antigravity-cli": {
+    "n": 17,
+    "median_v3": 0.0026478375992938785,
+    "median_v4": 0.0026478375992938785,
+    "mean_v3": 0.01115104979318045,
+    "mean_v4": 0.011283496569482158,
+    "alignment_flips": 0
+   },
+   "ref-ws · Latin · gemini-3.8-flash+antigravity-cli": {
+    "n": 43,
+    "median_v3": 0.003759398496240629,
+    "median_v4": 0.003759398496240629,
+    "mean_v3": 0.01270717098918715,
+    "mean_v4": 0.014251060863642369,
+    "alignment_flips": 0
+   },
+   "ref-pinned · Latin · gemini-3.8-flash-high+antigravity-cli": {
+    "n": 6,
+    "median_v3": 0.021695374435100445,
+    "median_v4": 0.021695374435100445,
+    "mean_v3": 0.0420631227773588,
+    "mean_v4": 0.0420631227773588,
+    "alignment_flips": 0
+   },
+   "ref-ws · Latin · gemini-3.8-flash-high+antigravity-cli": {
+    "n": 45,
+    "median_v3": 0.0030487804878048808,
+    "median_v4": 0.0030487804878048808,
+    "mean_v3": 0.011250706449812936,
+    "mean_v4": 0.012903320099767123,
+    "alignment_flips": 0
+   }
+  },
+  "moved_pages": [
+   {
+    "page": "ref-ws|ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "v3": 0.0531062124248497,
+    "v4": 0.06342913776015857,
+    "ref_digits": 11
+   },
+   {
+    "page": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "v3": 0.0877573131094258,
+    "v4": 0.15368421052631576,
+    "ref_digits": 27
+   },
+   {
+    "page": "ref-ws|ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "v3": 0.05210420841683372,
+    "v4": 0.06243805748265607,
+    "ref_digits": 11
+   },
+   {
+    "page": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "v3": 0.0877573131094258,
+    "v4": 0.15157894736842104,
+    "ref_digits": 27
+   },
+   {
+    "page": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+    "engine": "gemini-3.8-flash+antigravity-cli-rep",
+    "v3": 0.0877573131094258,
+    "v4": 0.15052631578947362,
+    "ref_digits": 27
+   },
+   {
+    "page": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "v3": 0.0877573131094258,
+    "v4": 0.15052631578947362,
+    "ref_digits": 27
+   },
+   {
+    "page": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "v3": 0.0877573131094258,
+    "v4": 0.15052631578947362,
+    "ref_digits": 27
+   }
+  ]
+ },
+ "ref_ws_bound": {
+  "German": {
+   "n": 30,
+   "median_digit_share": 0,
+   "max_digit_share": 0.024863553668890235,
+   "pages_over_1pt": 5
+  },
+  "Latin": {
+   "n": 65,
+   "median_digit_share": 0,
+   "max_digit_share": 0.028421052631578948,
+   "pages_over_1pt": 7
+  }
+ }
+}
