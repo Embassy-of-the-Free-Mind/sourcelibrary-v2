@@ -1,0 +1,1784 @@
+{
+ "single": {
+  "pro": {
+   "did_not_read": {
+    "restarted": 3
+   },
+   "page/humphries_strict": {
+    "cer": [
+     0.08700249669555,
+     0.05290809951153016,
+     0.14085620336410776
+    ],
+    "wer": [
+     0.14391813830665126,
+     0.10081786725385342,
+     0.21278994845360824
+    ]
+   },
+   "page/humphries_modified": {
+    "cer": [
+     0.07506580738858128,
+     0.041901840490797544,
+     0.12816220238095238
+    ],
+    "wer": [
+     0.09768680312864038,
+     0.05487705585409543,
+     0.16734048163121815
+    ]
+   },
+   "anchored/humphries_strict": {
+    "cer": [
+     0.04526362167719195,
+     0.020395530933737735,
+     0.09249000148126203
+    ],
+    "wer": [
+     0.09308466743687077,
+     0.061360677083333336,
+     0.14934019954940458
+    ]
+   },
+   "anchored/humphries_modified": {
+    "cer": [
+     0.03512753018062994,
+     0.01113695841814481,
+     0.08131610595454686
+    ],
+    "wer": [
+     0.04975869529039774,
+     0.020902612826603325,
+     0.10402443406395975
+    ]
+   },
+   "pages": 30
+  },
+  "flash": {
+   "did_not_read": {
+    "duplicated": 2
+   },
+   "page/humphries_strict": {
+    "cer": [
+     0.07886596551631385,
+     0.04537472238004235,
+     0.1301763907734057
+    ],
+    "wer": [
+     0.12338550372283848,
+     0.0866389803809251,
+     0.17702570777741622
+    ]
+   },
+   "page/humphries_modified": {
+    "cer": [
+     0.06945137848782382,
+     0.03590565099707231,
+     0.12125
+    ],
+    "wer": [
+     0.08468855477140227,
+     0.04847986852917009,
+     0.1381078141991611
+    ]
+   },
+   "anchored/humphries_strict": {
+    "cer": [
+     0.03174005433466928,
+     0.018991519829381,
+     0.050333504361210875
+    ],
+    "wer": [
+     0.07232943321683635,
+     0.05440336639615269,
+     0.0960864930714177
+    ]
+   },
+   "anchored/humphries_modified": {
+    "cer": [
+     0.023298385754701282,
+     0.011394495926537697,
+     0.04133285282621351
+    ],
+    "wer": [
+     0.03559374041116907,
+     0.020618556701030927,
+     0.05699642801677279
+    ]
+   },
+   "pages": 31
+  },
+  "opus": {
+   "did_not_read": {},
+   "page/humphries_strict": {
+    "cer": [
+     0.05130815433167057,
+     0.03912712860335968,
+     0.06643234686485472
+    ],
+    "wer": [
+     0.0921619293712317,
+     0.07758733481617167,
+     0.10953436807095343
+    ]
+   },
+   "page/humphries_modified": {
+    "cer": [
+     0.043212467859579155,
+     0.031194108364018938,
+     0.05808880810179174
+    ],
+    "wer": [
+     0.056795131845841784,
+     0.04266630316248637,
+     0.07400407095085781
+    ]
+   },
+   "anchored/humphries_strict": {
+    "cer": [
+     0.022141911839560217,
+     0.017141802262717897,
+     0.02794476035743298
+    ],
+    "wer": [
+     0.05857019810508183,
+     0.05008775482651546,
+     0.06709829311359623
+    ]
+   },
+   "anchored/humphries_modified": {
+    "cer": [
+     0.0150076087526893,
+     0.010548027466645779,
+     0.020398899954609778
+    ],
+    "wer": [
+     0.025210084033613446,
+     0.019555947654756652,
+     0.03159379407616361
+    ]
+   },
+   "pages": 33
+  },
+  "resolve": {
+   "did_not_read": {},
+   "page/humphries_strict": {
+    "cer": [
+     0.06355665231544681,
+     0.04851941557934213,
+     0.0815482233502538
+    ],
+    "wer": [
+     0.10938654841093866,
+     0.0927485062466051,
+     0.12940275650842267
+    ]
+   },
+   "page/humphries_modified": {
+    "cer": [
+     0.051353546291283164,
+     0.03645358997710882,
+     0.06926277350414559
+    ],
+    "wer": [
+     0.06387106402029548,
+     0.0472737040021488,
+     0.08295601552393272
+    ]
+   },
+   "anchored/humphries_strict": {
+    "cer": [
+     0.027381077391578284,
+     0.02139010518898787,
+     0.03413637994315203
+    ],
+    "wer": [
+     0.06844050258684405,
+     0.05889794770874332,
+     0.07816127534437393
+    ]
+   },
+   "anchored/humphries_modified": {
+    "cer": [
+     0.017162966973470493,
+     0.01221192553967525,
+     0.022791149266697328
+    ],
+    "wer": [
+     0.026712430980450678,
+     0.02054371331479765,
+     0.033353922174181594
+    ]
+   },
+   "pages": 32
+  }
+ },
+ "disagreement": {
+  "pro|flash+opus": {
+   "pages": 29,
+   "flagged_word_share": 0.10384300899427637,
+   "flagged_char_share": 0.10374017142452363,
+   "spans": 191,
+   "primary_errors": 286,
+   "caught": 169,
+   "caught_share": [
+    0.5909090909090909,
+    0.2523364485981308,
+    0.7296195652173914
+   ],
+   "primary_cer_mod_anchored": [
+    0.03456905990927577,
+    0.01024741506646972,
+    0.08202716823406478
+   ],
+   "oracle_cer_mod_anchored": [
+    0.013201939621460972,
+    0.00624587111885172,
+    0.024018822914283845
+   ],
+   "primary_wer_mod_anchored": [
+    0.049361408353469104,
+    0.019736842105263157,
+    0.1051567239635996
+   ],
+   "oracle_wer_mod_anchored": [
+    0.020193303417328272,
+    0.012522361359570662,
+    0.030961791831357048
+   ],
+   "flag_share_ci": [
+    0.10384300899427637,
+    0.05925282363162467,
+    0.17186379928315412
+   ],
+   "resolver": {
+    "did_not_read": {},
+    "pages_with_flags": 28,
+    "page/humphries_strict": {
+     "cer": [
+      0.06767511086811251,
+      0.051460402605440776,
+      0.08678193342846713
+     ],
+     "wer": [
+      0.11498973305954825,
+      0.09754511461550967,
+      0.13607924921793535
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.055560769591740965,
+      0.03955782934405262,
+      0.07434548213190431
+     ],
+     "wer": [
+      0.06869175008629617,
+      0.050673281360737066,
+      0.08917748917748917
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.026699471478039,
+      0.020357002627684317,
+      0.033688938798427846
+     ],
+     "wer": [
+      0.06827515400410678,
+      0.057504706486393976,
+      0.07872523686477174
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.016486782418269983,
+      0.011379414428010865,
+      0.02240217715973582
+     ],
+     "wer": [
+      0.025888850535036246,
+      0.01929886685552408,
+      0.03308700033590863
+     ]
+    },
+    "pages": 29
+   },
+   "primary_same_pages": {
+    "page/humphries_strict": {
+     "cer": [
+      0.08814774315047688,
+      0.053936272567774064,
+      0.14323598848678892
+     ],
+     "wer": [
+      0.1461327857631759,
+      0.10243084660519698,
+      0.21745128470425937
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.07652119505709369,
+      0.04311806288583949,
+      0.1307120783746466
+     ],
+     "wer": [
+      0.09993096306523991,
+      0.05687369155617585,
+      0.17232704402515722
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.044438369479375496,
+      0.019170673076923078,
+      0.09267227938883692
+     ],
+     "wer": [
+      0.09257357973990417,
+      0.05965761715372644,
+      0.14995450409463149
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.03456905990927577,
+      0.01024741506646972,
+      0.08202716823406478
+     ],
+     "wer": [
+      0.049361408353469104,
+      0.019736842105263157,
+      0.1051567239635996
+     ]
+    },
+    "pages": 29
+   }
+  },
+  "pro|opus": {
+   "pages": 29,
+   "flagged_word_share": 0.08258381030253475,
+   "flagged_char_share": 0.07986824396118156,
+   "spans": 157,
+   "primary_errors": 286,
+   "caught": 160,
+   "caught_share": [
+    0.5594405594405595,
+    0.19444444444444445,
+    0.7171171171171171
+   ],
+   "primary_cer_mod_anchored": [
+    0.03456905990927577,
+    0.01024741506646972,
+    0.08202716823406478
+   ],
+   "oracle_cer_mod_anchored": [
+    0.014265603003284843,
+    0.007285866603483,
+    0.025119331742243435
+   ],
+   "primary_wer_mod_anchored": [
+    0.049361408353469104,
+    0.019736842105263157,
+    0.1051567239635996
+   ],
+   "oracle_wer_mod_anchored": [
+    0.021746634449430445,
+    0.013945704722945334,
+    0.03267211201866978
+   ],
+   "flag_share_ci": [
+    0.08258381030253475,
+    0.04194815396700707,
+    0.15002492108323642
+   ]
+  },
+  "pro|flash": {
+   "pages": 29,
+   "flagged_word_share": 0.09239574816026165,
+   "flagged_char_share": 0.09120209676276829,
+   "spans": 168,
+   "primary_errors": 286,
+   "caught": 158,
+   "caught_share": [
+    0.5524475524475524,
+    0.17543859649122806,
+    0.7145454545454546
+   ],
+   "primary_cer_mod_anchored": [
+    0.03456905990927577,
+    0.01024741506646972,
+    0.08202716823406478
+   ],
+   "oracle_cer_mod_anchored": [
+    0.013952760832160176,
+    0.006978126857965391,
+    0.024790599208418987
+   ],
+   "primary_wer_mod_anchored": [
+    0.049361408353469104,
+    0.019736842105263157,
+    0.1051567239635996
+   ],
+   "oracle_wer_mod_anchored": [
+    0.022091819123230928,
+    0.013966480446927373,
+    0.03312990409764603
+   ],
+   "flag_share_ci": [
+    0.09239574816026165,
+    0.047387999353064855,
+    0.16138225863911648
+   ]
+  }
+ },
+ "correction": {
+  "opus-corr": {
+   "did_not_read": {},
+   "corrected": {
+    "page/humphries_strict": {
+     "cer": [
+      0.055814078596982,
+      0.040245648955020995,
+      0.07474204704604567
+     ],
+     "wer": [
+      0.0984652788330041,
+      0.08017694221730716,
+      0.12005988023952095
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.046208465080157544,
+      0.03120142127470575,
+      0.06435643564356436
+     ],
+     "wer": [
+      0.059680883706658486,
+      0.04210864673738348,
+      0.08028720626631854
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.023697447346477662,
+      0.016876452115301147,
+      0.031834769780262444
+     ],
+     "wer": [
+      0.0607810363166692,
+      0.049869970934679514,
+      0.07245710784313726
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.01544904864924835,
+      0.009904545318531374,
+      0.022012992136338533
+     ],
+     "wer": [
+      0.025007671064743785,
+      0.018184550646227832,
+      0.03314917127071823
+     ]
+    },
+    "pages": 31
+   },
+   "draft_same_pages": {
+    "page/humphries_strict": {
+     "cer": [
+      0.07886596551631385,
+      0.04537472238004235,
+      0.1301763907734057
+     ],
+     "wer": [
+      0.12338550372283848,
+      0.0866389803809251,
+      0.17702570777741622
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.06945137848782382,
+      0.03590565099707231,
+      0.12125
+     ],
+     "wer": [
+      0.08468855477140227,
+      0.04847986852917009,
+      0.1381078141991611
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.03174005433466928,
+      0.018991519829381,
+      0.050333504361210875
+     ],
+     "wer": [
+      0.07232943321683635,
+      0.05440336639615269,
+      0.0960864930714177
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.023298385754701282,
+      0.011394495926537697,
+      0.04133285282621351
+     ],
+     "wer": [
+      0.03559374041116907,
+      0.020618556701030927,
+      0.05699642801677279
+     ]
+    },
+    "pages": 31
+   }
+  },
+  "pro-corr": {
+   "did_not_read": {},
+   "corrected": {
+    "page/humphries_strict": {
+     "cer": [
+      0.05608306210829276,
+      0.04070244542918103,
+      0.07474795839651
+     ],
+     "wer": [
+      0.10211214101200425,
+      0.08323218311080284,
+      0.12453125
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.045681477783325014,
+      0.031178844959635688,
+      0.06290217840486452
+     ],
+     "wer": [
+      0.0602945688861614,
+      0.04291721038132521,
+      0.08060692271218586
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.02544584016999758,
+      0.018741453736225433,
+      0.033682898409343416
+     ],
+     "wer": [
+      0.06382008813250266,
+      0.05269443200477683,
+      0.07697379264875556
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.016641704110500914,
+      0.011265355588607943,
+      0.02304092874489131
+     ],
+     "wer": [
+      0.026235041423749616,
+      0.019195612431444242,
+      0.03485009891949475
+     ]
+    },
+    "pages": 31
+   },
+   "draft_same_pages": {
+    "page/humphries_strict": {
+     "cer": [
+      0.07886596551631385,
+      0.04537472238004235,
+      0.1301763907734057
+     ],
+     "wer": [
+      0.12338550372283848,
+      0.0866389803809251,
+      0.17702570777741622
+     ]
+    },
+    "page/humphries_modified": {
+     "cer": [
+      0.06945137848782382,
+      0.03590565099707231,
+      0.12125
+     ],
+     "wer": [
+      0.08468855477140227,
+      0.04847986852917009,
+      0.1381078141991611
+     ]
+    },
+    "anchored/humphries_strict": {
+     "cer": [
+      0.03174005433466928,
+      0.018991519829381,
+      0.050333504361210875
+     ],
+     "wer": [
+      0.07232943321683635,
+      0.05440336639615269,
+      0.0960864930714177
+     ]
+    },
+    "anchored/humphries_modified": {
+     "cer": [
+      0.023298385754701282,
+      0.011394495926537697,
+      0.04133285282621351
+     ],
+     "wer": [
+      0.03559374041116907,
+      0.020618556701030927,
+      0.05699642801677279
+     ]
+    },
+    "pages": 31
+   }
+  }
+ },
+ "anchoring": {
+  "opus-corr-anchor": {
+   "survived": 0,
+   "corrected": 26,
+   "other": 0,
+   "site_not_found": 0,
+   "ambiguous": 3,
+   "rate": 0.0,
+   "ci": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pages": 10,
+   "detail": [
+    {
+     "uid": "035_327_001",
+     "kind": "num",
+     "line": 21,
+     "prev": "Art.",
+     "orig": "12.",
+     "planted": "42.",
+     "next": "Among",
+     "left": [
+      "Quasi",
+      "Trial",
+      "Art."
+     ],
+     "right": [
+      "Among",
+      "these"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "035_327_001",
+     "kind": "word",
+     "line": 5,
+     "prev": "the",
+     "orig": "concurrence",
+     "planted": "happen",
+     "next": "of",
+     "left": [
+      "reason",
+      "of",
+      "the"
+     ],
+     "right": [
+      "of",
+      "certain"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "035_327_001",
+     "kind": "word",
+     "line": 8,
+     "prev": "might",
+     "orig": "perhaps",
+     "planted": "relation",
+     "next": "be",
+     "left": [
+      "parties",
+      "injured,",
+      "might"
+     ],
+     "right": [
+      "be",
+      "not"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 20,
+     "prev": "some",
+     "orig": "details",
+     "planted": "enquiries",
+     "next": "respecting",
+     "left": [
+      "accompanied",
+      "with",
+      "some"
+     ],
+     "right": [
+      "respecting",
+      "their"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 17,
+     "prev": "married,",
+     "orig": "certificates",
+     "planted": "should",
+     "next": "of",
+     "left": [
+      "produced.",
+      "If",
+      "married,"
+     ],
+     "right": [
+      "of",
+      "the"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "the",
+     "orig": "country,",
+     "planted": "present,",
+     "next": "",
+     "left": [
+      "coming",
+      "into",
+      "the"
+     ],
+     "right": [
+      "let",
+      "them"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_049_002",
+     "kind": "word",
+     "line": 4,
+     "prev": "titles",
+     "orig": "which",
+     "planted": "within",
+     "next": "are",
+     "left": [
+      "the",
+      "several",
+      "titles"
+     ],
+     "right": [
+      "are",
+      "taken"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_049_002",
+     "kind": "word",
+     "line": 5,
+     "prev": "the",
+     "orig": "party",
+     "planted": "perhaps",
+     "next": "injured",
+     "left": [
+      "in",
+      "which",
+      "the"
+     ],
+     "right": [
+      "injured",
+      "may"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 11,
+     "prev": "this",
+     "orig": "branch",
+     "planted": "apply",
+     "next": "of",
+     "left": [
+      "improvement",
+      "from",
+      "this"
+     ],
+     "right": [
+      "of",
+      "Le="
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 9,
+     "prev": "the",
+     "orig": "tendencies",
+     "planted": "other",
+     "next": "just",
+     "left": [
+      "one",
+      "of",
+      "the"
+     ],
+     "right": [
+      "just",
+      "mentioned."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 14,
+     "prev": "of",
+     "orig": "these",
+     "planted": "forming",
+     "next": "ends",
+     "left": [
+      "the",
+      "attainment",
+      "of"
+     ],
+     "right": [
+      "ends",
+      "and"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 24,
+     "prev": "and",
+     "orig": "Consciousness.",
+     "planted": "Cases.",
+     "next": "",
+     "left": [
+      "Of",
+      "Intention",
+      "and"
+     ],
+     "right": [
+      "For",
+      "the"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "the",
+     "orig": "cases",
+     "planted": "unwholesome",
+     "next": "in",
+     "left": [
+      "1.",
+      "For",
+      "the"
+     ],
+     "right": [
+      "in",
+      "which"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 3,
+     "prev": "Simple",
+     "orig": "Personal",
+     "planted": "Trades",
+     "next": "Injuries.",
+     "left": [
+      "C",
+      "Of",
+      "Simple"
+     ],
+     "right": [
+      "Injuries.",
+      "drug"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 12,
+     "prev": "hitherto",
+     "orig": "advanced.",
+     "planted": "explaining.",
+     "next": "",
+     "left": [
+      "Author",
+      "has",
+      "hitherto"
+     ],
+     "right": [
+      "26",
+      "73"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 5,
+     "prev": "our",
+     "orig": "Author",
+     "planted": "Student",
+     "next": "has",
+     "left": [
+      "municipal",
+      "Law,",
+      "our"
+     ],
+     "right": [
+      "has",
+      "spent"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 6,
+     "prev": "in",
+     "orig": "explaining",
+     "planted": "advanced",
+     "next": "the",
+     "left": [
+      "much",
+      "time",
+      "in"
+     ],
+     "right": [
+      "the",
+      "supposed"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 8,
+     "prev": "receives",
+     "orig": "little",
+     "planted": "prescribed",
+     "next": "light",
+     "left": [
+      "our",
+      "definition",
+      "receives"
+     ],
+     "right": [
+      "light",
+      "from"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 6,
+     "prev": "convertible",
+     "orig": "terms.",
+     "planted": "amounting.",
+     "next": "So",
+     "left": [
+      "legislature",
+      "are",
+      "convertible"
+     ],
+     "right": [
+      "So",
+      "that,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 22,
+     "prev": "and",
+     "orig": "wrong,",
+     "planted": "prescribes,",
+     "next": "he",
+     "left": [
+      "<del>a</del>",
+      "right,",
+      "and"
+     ],
+     "right": [
+      "he",
+      "will"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 5,
+     "prev": "persons",
+     "orig": "intitled",
+     "planted": "therewith",
+     "next": "to",
+     "left": [
+      "person",
+      "or",
+      "persons"
+     ],
+     "right": [
+      "to",
+      "take"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 11,
+     "prev": "in",
+     "orig": "default",
+     "planted": "continue",
+     "next": "of",
+     "left": [
+      "therewith:",
+      "And",
+      "in"
+     ],
+     "right": [
+      "of",
+      "such"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 23,
+     "prev": "as",
+     "orig": "aforesaid,",
+     "planted": "seized,",
+     "next": "with",
+     "left": [
+      "to",
+      "be",
+      "as"
+     ],
+     "right": [
+      "with",
+      "power"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "Jeremy",
+     "orig": "Bentham",
+     "planted": "Service",
+     "next": "appointed",
+     "left": [
+      "the",
+      "said",
+      "Jeremy"
+     ],
+     "right": [
+      "appointed",
+      "sole"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 18,
+     "prev": "peculiar",
+     "orig": "nature",
+     "planted": "purpose",
+     "next": "invented",
+     "left": [
+      "new",
+      "and",
+      "peculiar"
+     ],
+     "right": [
+      "invented",
+      "by"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 1,
+     "prev": "more",
+     "orig": "Penitentiary",
+     "planted": "Bentham",
+     "next": "House",
+     "left": [
+      "one",
+      "or",
+      "more"
+     ],
+     "right": [
+      "House",
+      "or"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "num",
+     "line": 6,
+     "prev": "alone",
+     "orig": "(£5000",
+     "planted": "(£5050",
+     "next": "at",
+     "left": [
+      "Convict",
+      "House-rent",
+      "alone"
+     ],
+     "right": [
+      "at",
+      "5"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "word",
+     "line": 16,
+     "prev": "to",
+     "orig": "advance",
+     "planted": "called",
+     "next": "the",
+     "left": [
+      "having",
+      "agreed",
+      "to"
+     ],
+     "right": [
+      "the",
+      "purchase"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "word",
+     "line": 2,
+     "prev": "or",
+     "orig": "adoption",
+     "planted": "years",
+     "next": "of",
+     "left": [
+      "Colony",
+      "Plan,",
+      "or"
+     ],
+     "right": [
+      "of",
+      "some"
+     ],
+     "verdict": "corrected"
+    }
+   ]
+  },
+  "pro-corr-anchor": {
+   "survived": 0,
+   "corrected": 25,
+   "other": 1,
+   "site_not_found": 0,
+   "ambiguous": 3,
+   "rate": 0.0,
+   "ci": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pages": 10,
+   "detail": [
+    {
+     "uid": "035_327_001",
+     "kind": "num",
+     "line": 21,
+     "prev": "Art.",
+     "orig": "12.",
+     "planted": "42.",
+     "next": "Among",
+     "left": [
+      "Quasi",
+      "Trial",
+      "Art."
+     ],
+     "right": [
+      "Among",
+      "these"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "035_327_001",
+     "kind": "word",
+     "line": 5,
+     "prev": "the",
+     "orig": "concurrence",
+     "planted": "happen",
+     "next": "of",
+     "left": [
+      "reason",
+      "of",
+      "the"
+     ],
+     "right": [
+      "of",
+      "certain"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "035_327_001",
+     "kind": "word",
+     "line": 8,
+     "prev": "might",
+     "orig": "perhaps",
+     "planted": "relation",
+     "next": "be",
+     "left": [
+      "parties",
+      "injured,",
+      "might"
+     ],
+     "right": [
+      "be",
+      "not"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 20,
+     "prev": "some",
+     "orig": "details",
+     "planted": "enquiries",
+     "next": "respecting",
+     "left": [
+      "accompanied",
+      "with",
+      "some"
+     ],
+     "right": [
+      "respecting",
+      "their"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 17,
+     "prev": "married,",
+     "orig": "certificates",
+     "planted": "should",
+     "next": "of",
+     "left": [
+      "produced.",
+      "If",
+      "married,"
+     ],
+     "right": [
+      "of",
+      "the"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "071_108_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "the",
+     "orig": "country,",
+     "planted": "present,",
+     "next": "",
+     "left": [
+      "coming",
+      "into",
+      "the"
+     ],
+     "right": [
+      "let",
+      "them"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_049_002",
+     "kind": "word",
+     "line": 4,
+     "prev": "titles",
+     "orig": "which",
+     "planted": "within",
+     "next": "are",
+     "left": [
+      "the",
+      "several",
+      "titles"
+     ],
+     "right": [
+      "are",
+      "taken"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_049_002",
+     "kind": "word",
+     "line": 5,
+     "prev": "the",
+     "orig": "party",
+     "planted": "perhaps",
+     "next": "injured",
+     "left": [
+      "in",
+      "which",
+      "the"
+     ],
+     "right": [
+      "injured",
+      "may"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 11,
+     "prev": "this",
+     "orig": "branch",
+     "planted": "apply",
+     "next": "of",
+     "left": [
+      "improvement",
+      "from",
+      "this"
+     ],
+     "right": [
+      "of",
+      "Le="
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 9,
+     "prev": "the",
+     "orig": "tendencies",
+     "planted": "other",
+     "next": "just",
+     "left": [
+      "one",
+      "of",
+      "the"
+     ],
+     "right": [
+      "just",
+      "mentioned."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_069_002",
+     "kind": "word",
+     "line": 14,
+     "prev": "of",
+     "orig": "these",
+     "planted": "forming",
+     "next": "ends",
+     "left": [
+      "the",
+      "attainment",
+      "of"
+     ],
+     "right": [
+      "ends",
+      "and"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 24,
+     "prev": "and",
+     "orig": "Consciousness.",
+     "planted": "Cases.",
+     "next": "",
+     "left": [
+      "Of",
+      "Intention",
+      "and"
+     ],
+     "right": [
+      "For",
+      "the"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "the",
+     "orig": "cases",
+     "planted": "unwholesome",
+     "next": "in",
+     "left": [
+      "1.",
+      "For",
+      "the"
+     ],
+     "right": [
+      "in",
+      "which"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "072_167_002",
+     "kind": "word",
+     "line": 3,
+     "prev": "Simple",
+     "orig": "Personal",
+     "planted": "Trades",
+     "next": "Injuries.",
+     "left": [
+      "C",
+      "Of",
+      "Simple"
+     ],
+     "right": [
+      "Injuries.",
+      "drug"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 12,
+     "prev": "hitherto",
+     "orig": "advanced.",
+     "planted": "explaining.",
+     "next": "",
+     "left": [
+      "Author",
+      "has",
+      "hitherto"
+     ],
+     "right": [
+      "26",
+      "73"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 5,
+     "prev": "our",
+     "orig": "Author",
+     "planted": "Student",
+     "next": "has",
+     "left": [
+      "municipal",
+      "Law,",
+      "our"
+     ],
+     "right": [
+      "has",
+      "spent"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_028_001",
+     "kind": "word",
+     "line": 6,
+     "prev": "in",
+     "orig": "explaining",
+     "planted": "advanced",
+     "next": "the",
+     "left": [
+      "much",
+      "time",
+      "in"
+     ],
+     "right": [
+      "the",
+      "supposed"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 8,
+     "prev": "receives",
+     "orig": "little",
+     "planted": "prescribed",
+     "next": "light",
+     "left": [
+      "our",
+      "definition",
+      "receives"
+     ],
+     "right": [
+      "light",
+      "from"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 6,
+     "prev": "convertible",
+     "orig": "terms.",
+     "planted": "amounting.",
+     "next": "So",
+     "left": [
+      "legislature",
+      "are",
+      "convertible"
+     ],
+     "right": [
+      "So",
+      "that,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "096_038_003",
+     "kind": "word",
+     "line": 22,
+     "prev": "and",
+     "orig": "wrong,",
+     "planted": "prescribes,",
+     "next": "he",
+     "left": [
+      "<del>a</del>",
+      "right,",
+      "and"
+     ],
+     "right": [
+      "he",
+      "will"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 5,
+     "prev": "persons",
+     "orig": "intitled",
+     "planted": "therewith",
+     "next": "to",
+     "left": [
+      "person",
+      "or",
+      "persons"
+     ],
+     "right": [
+      "to",
+      "take"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 11,
+     "prev": "in",
+     "orig": "default",
+     "planted": "continue",
+     "next": "of",
+     "left": [
+      "therewith:",
+      "And",
+      "in"
+     ],
+     "right": [
+      "of",
+      "such"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_070_002",
+     "kind": "word",
+     "line": 23,
+     "prev": "as",
+     "orig": "aforesaid,",
+     "planted": "seized,",
+     "next": "with",
+     "left": [
+      "to",
+      "be",
+      "as"
+     ],
+     "right": [
+      "with",
+      "power"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 12,
+     "prev": "Jeremy",
+     "orig": "Bentham",
+     "planted": "Service",
+     "next": "appointed",
+     "left": [
+      "the",
+      "said",
+      "Jeremy"
+     ],
+     "right": [
+      "appointed",
+      "sole"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 18,
+     "prev": "peculiar",
+     "orig": "nature",
+     "planted": "purpose",
+     "next": "invented",
+     "left": [
+      "new",
+      "and",
+      "peculiar"
+     ],
+     "right": [
+      "invented",
+      "by"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_077_002",
+     "kind": "word",
+     "line": 1,
+     "prev": "more",
+     "orig": "Penitentiary",
+     "planted": "Bentham",
+     "next": "House",
+     "left": [
+      "one",
+      "or",
+      "more"
+     ],
+     "right": [
+      "House",
+      "or"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "num",
+     "line": 6,
+     "prev": "alone",
+     "orig": "(£5000",
+     "planted": "(£5050",
+     "next": "at",
+     "left": [
+      "Convict",
+      "House-rent",
+      "alone"
+     ],
+     "right": [
+      "at",
+      "5"
+     ],
+     "verdict": "other"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "word",
+     "line": 16,
+     "prev": "to",
+     "orig": "advance",
+     "planted": "called",
+     "next": "the",
+     "left": [
+      "having",
+      "agreed",
+      "to"
+     ],
+     "right": [
+      "the",
+      "purchase"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "115_111_004",
+     "kind": "word",
+     "line": 2,
+     "prev": "or",
+     "orig": "adoption",
+     "planted": "years",
+     "next": "of",
+     "left": [
+      "Colony",
+      "Plan,",
+      "or"
+     ],
+     "right": [
+      "of",
+      "some"
+     ],
+     "verdict": "corrected"
+    }
+   ]
+  }
+ }
+}

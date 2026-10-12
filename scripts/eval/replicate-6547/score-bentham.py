@@ -135,6 +135,7 @@ def main():
         texts, fails = reads(arms[arm], gt)
         draft = {u: reads(arms['flash'], [u])[0].get(u) for u in texts}
         draft = {u: t for u, t in draft.items() if t is not None}
+        texts = {u: t for u, t in texts.items() if u in draft}  # pages whose draft was itself a read
         rep['correction'][arm] = {'did_not_read': fails, 'corrected': measure(texts, gt), 'draft_same_pages': measure(draft, gt)}
     for arm in [x for x in arms if x.endswith('-corr-anchor')]:
         v = {'survived': 0, 'corrected': 0, 'other': 0, 'site_not_found': 0, 'ambiguous': 0}

@@ -64,8 +64,32 @@ def failed_kind(row):
     if not row.get('text'):
         e = (row.get('error') or 'empty').split(':')[0]
         return e
-    _, prob = unwrap(row['text'])
-    return prob if prob in ('empty', 'refusal') else None
+    body, prob = unwrap(row['text'])
+    if prob in ('empty', 'refusal'):
+        return prob
+    if duplicated(body):
+        return 'duplicated'
+    return 'restarted' if restarted(body) else None
+
+
+def restarted(text):
+    """A restart the exact-probe check misses because the second copy is RESPELLED (Bentham 116_286_002, Pro: 'woud',
+    'concepton', 'profitible' in a second copy of the page): three or more distinct lines of 25+ characters each
+    written twice. Across every #6547 arm this fires on 5 Gemini reads and on no Claude read and no Greif page."""
+    import collections
+    c = collections.Counter(x.strip() for x in (text or '').split('\n') if len(x.strip()) >= 25)
+    return sum(1 for v in c.values() if v > 1) >= 3
+
+
+def duplicated(text):
+    """cli-chatter.mjs ocrReadProblem 'duplicated reply' (#6523, branch job-cli-ocr-fix-6523c), ported: the second half
+    restates a long stretch of the first, i.e. the page written twice (a restart, often after a recitation cut, the
+    second copy sometimes respelled). 200 chars is far above any running head or catchword."""
+    b = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', text or ''))
+    if len(b) < 800:
+        return False
+    at = int(len(b) * 0.55)
+    return b.find(b[at:at + 200]) < at - 100
 
 
 # ---- normalisations -------------------------------------------------------------------------------------------
