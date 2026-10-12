@@ -128,7 +128,7 @@ The columns follow the brief:
 3. **Pages as observations.** The gate (3 per book), the spot check (3), convergence (10) and shelf-overview (4) quote page rates. Quote books.
 4. **Frames that are not what the number implies.** Most-read pages (#6420), flagged pages (#6388 tables), famous texts (#5695), easier references (#5935), any-visibility books (#5914, #5935, canon-gap). The number is right about its frame; the quotation drops the frame.
 5. **Positive controls are rare outside the judged-translation studies.** The cheapest one, for every reader-facing review, is 3 planted pages per batch: a neighbouring leaf, a dropped line, a flipped negation. The reviewer must catch all 3 before its verdicts count.
-6. **The CER normaliser drops digits.** Any CER-based claim about numbers, dates or tables is currently unmeasured.
+6. **The CER normaliser drops digits.** Any CER-based claim about numbers, dates or tables is currently unmeasured. *Repaired 2026-10-12 (#6203): `normalizeForScript` v4 keeps digits in Latin-script text, `digitChannel()` reports them apart, and the dashboard shows failures, the median over pages with text, and digits wrong per stratum. On re-scoring, only the `ref-pinned` / `ref-ws` tiers shared the normaliser (the whole-page benchmark already kept digits) and no figure moved by 1 pt: `scripts/eval/experiments/2026-10-12-cer-digits-kept-6203.md`.*
 
 ## The three measures most in need of repair
 

@@ -59,11 +59,15 @@ const gtOf = (stratum, slug) => {
   const f = path.join(EVAL, stratum === 'ref-pinned' ? 'ground-truth' : 'ground-truth-ws', `${slug}.json`);
   return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null;
 };
+// The committed scored/ files were made under normalizeForScript v3 (digits dropped). Until the benchmark's ref tiers
+// are re-scored from every engine's output on the main box, this re-score matches them (#6203; what v4 moves is in
+// scripts/eval/experiments/2026-10-12-cer-digits-kept-6203.md). Drop this with that re-score.
+const V3_DIGITS = { digits: false };
 export function score(stratum, slug, text) {
   if (stratum.startsWith('ref-')) {
     const g = gtOf(stratum, slug);
     const script = g.script === 'cjk' || g.script === 'chinese' ? 'cjk' : (g.script || 'latin');
-    const r = scoreAgainstReference(g.ocr_ground_truth, text, script);
+    const r = scoreAgainstReference(g.ocr_ground_truth, text, script, undefined, V3_DIGITS);
     return { aligned: r.aligned, cer: r3(r.charAccuracyWindowed == null ? null : 1 - r.charAccuracyWindowed) };
   }
   const ref = loadRefText(path.join(EVAL, 'benchmark', 'refs'), slug).text;
