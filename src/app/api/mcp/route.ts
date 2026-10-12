@@ -9,13 +9,18 @@ import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import { EMBEDDED_EXTRACT_TIP, EXTRACT_SPAN_WARNING } from '@/lib/announced-extract';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { getRatingOptions } from '@/lib/review-queue';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
+import { conceptsInQuery } from '@/lib/concept-aliases';
+import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
+import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -115,6 +120,31 @@ async function searchLibrary(args: Record<string, unknown>) {
   };
 }
 
+/**
+ * The curated vocabulary for the concept a query names (#4251, `src/lib/concept-aliases.ts`).
+ *
+ * Search matches the words it is sent, and each tradition's texts sit under that tradition's
+ * own word: "daemon" does not reach the Vendidad, which says daēva. Nothing here is searched
+ * on the caller's behalf — `related` terms are other concepts, and folding them into the query
+ * would return Avestan law as if it used the Greek word. The caller is told the words and
+ * told, in so many words, that they were not searched (agent-tool-results.md: state the
+ * absence). Empty object when the query names no curated concept.
+ */
+function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
+  const found = conceptsInQuery(String(query ?? ''));
+  if (!found.length) return {};
+  return {
+    concept_vocabulary: found.map((v) => ({
+      concept: v.concept,
+      matched_on: v.matched,
+      ...(v.same_word.length ? { same_word: v.same_word } : {}),
+      ...(v.other_renderings.length ? { other_renderings: v.other_renderings } : {}),
+      ...(v.related.length ? { related_terms: v.related } : {}),
+    })),
+    concept_vocabulary_note: 'These terms were NOT searched: the results below match only the query you sent. They are the library\'s curated vocabulary for the concept your query names. same_word = the same word in other spellings and scripts; other_renderings = how other translators put it; related_terms = adjacent concepts and other traditions\' counterparts, which are NOT synonyms (do not report a passage found under one as using another). Each tradition\'s texts are indexed under its own term, so to cross traditions call search_translations again with the terms you need, one per call. A term listed here is not a promise that passages exist for it.',
+  };
+}
+
 async function searchPassages(args: Record<string, unknown>) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
   const offset = Number(args.offset) || 0;
@@ -163,6 +193,11 @@ async function searchPassages(args: Record<string, unknown>) {
       //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
       //   'summary'             = AI-generated description (do NOT quote as the author's words)
       snippet_type: snippetType,
+      // How much of the query the page prints in order at one place, 0-1, and
+      // which lane found it. Absolute, so a caller can tell a real hit from
+      // 27 pages that each print the words somewhere (#3700).
+      ...(r.phrase_match !== undefined ? { phrase_match: r.phrase_match } : {}),
+      ...(r.found_by ? { found_by: r.found_by } : {}),
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
@@ -181,8 +216,9 @@ async function searchPassages(args: Record<string, unknown>) {
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
-    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". phrase_match is how much of your query the page prints in order at one place (1 = all of it, 0 = only scattered words); a snippet is a window, so call get_quote before quoting. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -253,6 +289,7 @@ async function searchConcept(args: Record<string, unknown>) {
       diversity_note: 'Passages are re-ordered for spread, not dropped: pass diversity "off" for the plain nearest-first order. This is a ranked sample, not a census of what the library holds on the topic.',
     } : {}),
     ...(conceptLane ? { lane: 'concept', lane_note: 'Experimental concept lane (#6173): ranked by an abstract of each page\'s ideas, 1,216 books only. Snippets are the page text.' } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
     tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
@@ -396,6 +433,12 @@ async function getBook(args: Record<string, unknown>) {
   // rather than a title anyone published. Say so in prose next to the title.
   const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
   const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
+  // #3697: stored `confidence` is the extraction model's self-report (high on
+  // 96% of entries, including the wrong ones). Re-check every list on the way
+  // out so a gap or a sink chapter is visible on books extracted before the
+  // write-side checks existed.
+  const storedChapters = Array.isArray(result.chapters) ? result.chapters as Chapter[] : null;
+  const chapterReport = storedChapters?.length ? checkChapters(storedChapters) : null;
   return {
     id: result.id, title: resolvedTitle.display, author: result.author,
     ...(resolvedTitle.isDescriptive
@@ -418,7 +461,16 @@ async function getBook(args: Record<string, unknown>) {
     // where a localized edition exists. Pass the code as `lang` to get_quote /
     // get_book_text / search_within_book to read that edition.
     editions: editionsForBook(result),
-    reading_summary: result.reading_summary, chapters: result.chapters,
+    reading_summary: result.reading_summary,
+    chapters: chapterReport ? chapterReport.chapters : result.chapters,
+    ...(chapterReport ? {
+      chapter_checks: {
+        checks_run: CHECKS_RUN,
+        flagged_entries: chapterReport.flagged,
+        ...(chapterReport.gaps.length ? { numbering_gaps: chapterReport.gaps } : {}),
+        note: 'confidence on each chapter is the extraction model\'s own estimate, lowered to "low" (original kept as model_confidence, reason in flags) where a check above fails. Unflagged entries are NOT verified, only uncontradicted. A numbering gap means a chapter heading was missed or misassigned: the entry before it probably runs over the missing chapter\'s pages.',
+      },
+    } : {}),
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
     // is the answer to "which book has the Poetics?", which the catalogue title
@@ -664,6 +716,14 @@ function sourceColumnQuote(result: Record<string, unknown>): boolean {
  * the flags would come back all-false on precisely the pages where the caller
  * has nothing but the original to quote from.
  */
+// The quote API returns the reader's display URL, which is usually a
+// same-origin `/api/image?…` path. An MCP client is not on our origin, so the
+// JSON must carry an absolute URL — a relative one is a link the model has to
+// guess the host for (#3937).
+function absolutizeQuoteImage(quote: Record<string, unknown> | undefined): void {
+  if (typeof quote?.page_image_url === 'string') quote.page_image_url = absoluteImageUrl(quote.page_image_url);
+}
+
 function quotableText(quote: Record<string, unknown> | undefined): string | null {
   if (typeof quote?.translation === 'string') return quote.translation;
   if (quote?.text_source === 'ocr_original' && typeof quote.original === 'string') return quote.original;
@@ -692,6 +752,7 @@ async function getQuote(args: Record<string, unknown>) {
   // `text` is not a field on this response and reading it silently produced
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
+  absolutizeQuoteImage(quote);
   const quoteText = quotableText(quote);
   // Hyphen splits live in the ORIGINAL, never in the translation — a translator
   // resolves them. Passing only the translation made hyphen_split_at_end
@@ -710,7 +771,12 @@ async function getQuote(args: Record<string, unknown>) {
       if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
     }
   }
-  const hint = continuityHint(continuity, Number(args.page));
+  // A continuity hint advises fetching the neighbours and quoting them as one
+  // passage — which, across an announced extract, assembles a quotation that
+  // straddles two authors under one citation (#3689). Say so on the hint itself.
+  const inExtract = !!(quote as Record<string, unknown> | undefined)?.embedded_extract;
+  const baseHint = continuityHint(continuity, Number(args.page));
+  const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
@@ -718,6 +784,7 @@ async function getQuote(args: Record<string, unknown>) {
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
   if (printedPage(result)) tips.push(PRINTED_PAGE_TIP);
+  if (inExtract) tips.push(EMBEDDED_EXTRACT_TIP);
 
   // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
   // each read their own copy of this guidance and fixes do not propagate.
@@ -783,6 +850,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
+        absolutizeQuoteImage(q);
         const continuity = pageContinuity(
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
@@ -790,7 +858,8 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
         if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
-        const hint = continuityHint(continuity, page);
+        const baseHint = continuityHint(continuity, page);
+        const hint = baseHint && q?.embedded_extract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
         // Per-page structured failure, so one untranslated page in a range does
@@ -901,6 +970,10 @@ async function searchImages(args: Record<string, unknown>) {
         ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
         : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
       : undefined,
+    // The canvas this image sits on (#4289): a IIIF client can fetch the page
+    // or a region of it from here. Named as in search_library's iiif_manifest.
+    ...(item.iiifManifest ? { iiif_manifest: item.iiifManifest } : {}),
+    ...(item.iiifCanvas ? { iiif_canvas: item.iiifCanvas } : {}),
   })) || [];
 
   // #4288 item 1. Two things were wrong here and both made a model assert a
@@ -1012,10 +1085,53 @@ async function searchImages(args: Record<string, unknown>) {
       ? {
           note: args.book_id
             ? 'This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates.'
-            : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
+            : (args.subject || args.figure || args.symbol)
+              ? 'No images matched. subject/figure/symbol are exact, case-sensitive tag matches. Check the spelling with list_image_facets (facet + contains), or move the word into query.'
+              : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
         }
       : {}),
   };
+}
+
+// Facet vocabulary (#4287): search_images' subject/figure/symbol filters are
+// exact matches over vocabularies of tens of thousands of extractor strings, so
+// an agent that cannot see them guesses and gets nothing back.
+async function listImageFacets(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  if (args.facet) params.set('facet', String(args.facet));
+  if (args.contains) params.set('contains', String(args.contains));
+  if (args.limit) params.set('limit', String(args.limit));
+  const r = await apiGet('/gallery/facets', params) as {
+    min_count: number; updated_at: string | null;
+    facets: Record<string, { distinct_values: number; listed_values: number; matched: number; terms: Array<{ value: string; count: number }> }>;
+  };
+  const empty = Object.entries(r.facets).filter(([, f]) => f.matched === 0).map(([name]) => name);
+  return {
+    ...r,
+    usage: 'Pass a value verbatim as search_images\' type/subject/figure/symbol argument. count = book illustrations carrying the tag; museum artworks are not counted. search_images will report a smaller total for the same value, because it shows at most a few images per book and skips low-quality crops: count measures the vocabulary, not the result size.',
+    ...(args.contains && empty.length
+      ? { note: `No ${empty.join('/')} tag on ${r.min_count}+ images contains "${String(args.contains)}". The tag is absent or rare, so search for it as free text with search_images' query instead of a filter.` }
+      : {}),
+  };
+}
+
+/**
+ * "Do you hold X?" — the holdings check #4250 asked for (`has_work`). One
+ * acquisition session reported ~108 titles missing, a large fraction already
+ * held: list_books substring-matches and search_library relevance-ranks, so a
+ * negative from either meant nothing. The backend is the public
+ * /api/books/check-duplicate (checkHoldings(), #6019), which counts hidden
+ * copies without describing them, so it is safe on this unauthenticated surface.
+ */
+async function checkDuplicate(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  for (const k of ['url', 'title', 'author', 'year', 'language', 'ia_id', 'manifest']) {
+    if (args[k] !== undefined && args[k] !== null && args[k] !== '') params.set(k, String(args[k]));
+  }
+  if (!params.has('url') && !params.has('ia_id') && !params.has('manifest') && (params.get('title') || '').length < 2) {
+    return { error: 'Provide a title (2+ characters, ideally with author), or a url / ia_id / manifest.' };
+  }
+  return apiGet('/books/check-duplicate', params);
 }
 
 async function submitFeedback(args: Record<string, unknown>) {
@@ -1243,18 +1359,18 @@ const TOOLS: Tool[] = [
   {
     name: 'search_translations',
     title: 'Search Translations',
-    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: single distinctive terms ("memory palace", "wax tablet") work best; multi-word natural-English queries ("unity of the intellect") may return fewer results because matching is term-based, not phrase-based. Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
+    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: a distinctive term ("wax tablet") or the sentence you are looking for both work; matching is by word, and a page that prints your words together and in order ranks above one that scatters them. Each passage carries phrase_match (0-1, absolute, not relative to the other results): 1 means the page prints your whole query in order at one place, 0 means your words occur only apart; when every passage is under about 0.2 the library probably does not print that sentence, so try search_concept. It is absent for a one-word query and for a passage found by meaning alone. found_by says which lane found the page: "keyword", "semantic", or "both" (the strongest signal). Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
     annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Search term — prefer single distinctive concepts ("harmony of the spheres", "active intellect") over long natural-language phrases. Multi-word queries match all terms (not phrase); wrap in "double quotes" for exact phrase.' },
+        query: { type: 'string', description: 'A distinctive term ("harmony of the spheres", "active intellect") or the sentence you are looking for. A multi-word query matches pages printing ANY of its words, ranked so that pages printing them together come first (see phrase_match); wrap in "double quotes" to require the exact phrase.' },
         language: { type: 'string', description: 'Filter by a single original language' },
         languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
-        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": keyword results come in match order. Nothing is dropped; later pages hold the rest.' },
+        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": passages come in relevance order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
@@ -1302,12 +1418,12 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, author/title fragment via search, language, category, year range, translation recency) — no content/topic matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        search: { type: 'string', description: 'Free-text filter matching title or author (relevance-ranked, may include title matches). For exactly one person\'s books use author_id instead.' },
+        search: { type: 'string', description: 'Relevance-ranked word match over title (original, display and English), author, original-script name forms (e.g. Greek), AND the book\'s AI summary. A hit can name your term in neither title nor author, only in what the book discusses. Diacritic-insensitive. For exactly one person\'s books use author_id instead.' },
         author_id: { type: 'string', description: 'Canonical author slug, e.g. "jan-hus" — filters to exactly that person\'s books via the author thesaurus (variant slugs resolve to the canonical person). Every book row in results carries its author_id; the response echoes the canonicalized author.' },
         edition_key: { type: 'string', description: 'Other digitizations of ONE printing — pass the edition_key from a result row. Only full-quality keys match on both sides, so this answers "what other scans of this exact edition do you hold?" and never merges different printings of the same title.' },
         work_id: { type: 'string', description: 'Every witness of one WORK, across editions, languages and centuries — pass the work_id from a result row or from get_book. Use this instead of a title search whenever you already hold the identifier: witnesses of one work are often titled differently in each language, so a title search finds only the subset that happens to share your wording. Unlike list_editions (which returns the whole set), this composes with language, year_from/year_to and sort.' },
@@ -1382,6 +1498,23 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'check_duplicate',
+    title: 'Check Holdings',
+    description: 'DOES THE LIBRARY HOLD THIS WORK? Call this BEFORE telling the user the library lacks a book, and before proposing one for acquisition. A miss from list_books or search_library is NOT evidence of absence: list_books matches words and search_library ranks by relevance, so a held book can sit behind dozens of better-ranked hits. Give a title + author (+ year if known), or a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest). Matches the same scan, the same edition, other editions and the same work, plus near and cross-lingual titles (title in any language). Returns a verdict (same_object / same_edition / possible_same_edition / other_edition / related_title / new), confidence, matches with reasons, ids and URLs, held_not_public (copies held but not yet published: counted, not described), and limits (what the check could not search). A "new" verdict from a URL alone has not searched other editions; pass the title and author too.',
+    annotations: { title: 'Check Holdings', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        title: { type: 'string', description: 'Title in any language, original or English, e.g. "Musurgia universalis".' },
+        author: { type: 'string', description: 'Author in any form ("Athanasius Kircher", "Kircher, Athanasius"). Strongly improves matching.' },
+        year: { type: 'number', description: 'Edition year, if known. Separates "same edition" from "another edition".' },
+        url: { type: 'string', description: 'A library URL or IIIF manifest for a specific copy (title then optional).' },
+        ia_id: { type: 'string', description: 'Internet Archive identifier, for an exact same-scan match.' },
+        language: { type: 'string', description: 'Language hint for the cross-lingual title match (optional).' },
+      },
+    },
+  },
+  {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
     description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
@@ -1402,7 +1535,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol (exact tag strings; look them up with list_image_facets) or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
     // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
     // resource and render the gallery grid in the conversation (#3978).
@@ -1412,13 +1545,29 @@ const TOOLS: Tool[] = [
       properties: {
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
         type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
-        subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
+        subject: { type: 'string', description: 'EXACT, case-sensitive match on an extracted subject tag ("alchemy", "medicinal plants"); a near-miss matches nothing. Look the string up with list_image_facets first, or put loose words in query instead.' },
+        figure: { type: 'string', description: 'EXACT, case-sensitive match on a figure tag ("Jesus Christ", "putti"). Look it up with list_image_facets.' },
+        symbol: { type: 'string', description: 'EXACT, case-sensitive match on a symbol tag ("ouroboros", "triangle"). Look it up with list_image_facets.' },
         year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
+      },
+    },
+  },
+  {
+    name: 'list_image_facets',
+    title: 'List Image Facets',
+    description: 'List the legal values of search_images\' type, subject, figure and symbol filters, with how many images carry each. Those filters are EXACT string matches on tags an AI extractor wrote, and each vocabulary runs to thousands of strings (e.g. "musical notes", "Jesus Christ", "medicinal plants"), so a guessed value usually matches nothing. Look it up here first. Call with no facet for the top values of all four; with facet + contains to find the exact spelling of a term ("ouro" → "ouroboros"). Counts cover book illustrations of visible books only (the museum-artwork collection is not counted), and only strings on 3 or more images are listed; the list is refreshed weekly. If contains finds nothing, the tag is absent or rare: use it as free text in search_images\' query instead. No URL in this result is a browse page; link images from search_images results.',
+    annotations: { title: 'List Image Facets', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        facet: { type: 'string', enum: ['type', 'subject', 'figure', 'symbol'], description: 'Which filter\'s vocabulary. Omit for the top values of all four.' },
+        contains: { type: 'string', description: 'Case-insensitive substring to look for, e.g. "dragon". Matches are ordered by image count.' },
+        limit: { type: 'number', description: 'Values per facet (default 100 with a facet, 25 without; max 500).' },
       },
     },
   },
@@ -1680,11 +1829,13 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);
+    case 'check_duplicate': return checkDuplicate(args);
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
+    case 'list_image_facets': return listImageFacets(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
@@ -1753,6 +1904,19 @@ interface ImageAttachment {
   urls: Array<string | undefined | null>;
   /** Text block rendered directly after the image — caption + link. */
   caption: string;
+  /** Said in place of the image when no candidate could be attached. Omit to skip silently. */
+  missing?: string;
+}
+
+// The caller asked for the leaf by name (include_image), so an unattached scan
+// is reported, not dropped: for a month this path attached nothing on most
+// books and nothing in the result said so (#3937).
+function leafAttachment(pageImageUrl: string, caption: string): ImageAttachment {
+  return {
+    urls: leafImageCandidates(pageImageUrl),
+    caption,
+    missing: `${caption}\nThe scan could not be attached inline (fetch failed, or over the 1 MB inline limit). View it at ${absoluteImageUrl(pageImageUrl)}`,
+  };
 }
 
 function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
@@ -1791,10 +1955,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
   if (name === 'get_quote') {
     const quote = r.quote as Record<string, unknown> | undefined;
     if (typeof quote?.page_image_url === 'string') {
-      return [{
-        urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
-      }];
+      return [leafAttachment(
+        quote.page_image_url,
+        `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
+      )];
     }
     return [];
   }
@@ -1805,10 +1969,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .slice(0, MAX_INLINE_IMAGES)
       .map((entry) => {
         const q = entry.quote as Record<string, unknown>;
-        return {
-          urls: [q.page_image_url as string | undefined],
-          caption: `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
-        };
+        return leafAttachment(
+          q.page_image_url as string,
+          `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
+        );
       });
   }
 
@@ -2079,6 +2243,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           if (img) {
             content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
             content.push({ type: 'text' as const, text: attachments[i].caption });
+          } else if (attachments[i].missing) {
+            content.push({ type: 'text' as const, text: attachments[i].missing as string });
           }
         }
 

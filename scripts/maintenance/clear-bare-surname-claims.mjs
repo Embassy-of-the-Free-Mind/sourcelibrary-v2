@@ -40,6 +40,7 @@ export const APPROVED = {
   Bruno: 'Q36330',      // Giordano Bruno; 1 of 10
   Fabricius: 'Q60204',  // David Fabricius; 1 of 10
   Agrippa: 'Q76568',    // Heinrich Cornelius Agrippa; 2 of 10
+  Scaliger: 'Q441066',  // Julius Caesar Scaliger; 6 of 10 sampled were Joseph, and what is left after the re-attribution is undecided (Derek, 2026-10-11)
 };
 
 /** Fields that say WHO the record is. `name`, `type`, `books`, counters and timestamps stay. */

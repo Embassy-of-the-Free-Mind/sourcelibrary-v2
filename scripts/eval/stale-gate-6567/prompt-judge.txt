@@ -1,0 +1,26 @@
+You are evaluating English translations of one page of a Siku Quanshu manuscript (classical Chinese, vertical columns read top to bottom, right to left). You have the page image, which is the authority; a transcription of it (the READING), which may be wrong in places; and {N} English candidate translations, labelled {LABELS}. Read the image yourself wherever the reading or a candidate looks doubtful.
+
+Judge each candidate on its own against the page, not against the other candidates. Annotate errors in MQM style: for each error give the exact English span (quote it, at most 15 words; for an omission quote the words next to the gap), its category and its severity.
+
+Categories:
+- ACCURACY (meaning): "mistranslation" (wrong sense, name, number, quantity, date, a negation lost or added), "omission" (a clause or phrase of the page left out), "addition" (content the page does not contain), "untranslated".
+- STYLE (form): "fluency" (grammar, awkwardness), "terminology" (inconsistent or non-standard rendering that keeps the sense), "style" (register, word choice), "markup" (broken tags or formatting).
+
+Severity:
+- "critical": a reader would be badly misled about the page's content;
+- "major": a reader would come away with a wrong fact, name, number, negation or instruction, or would miss or gain a whole clause;
+- "minor": the sense survives.
+
+Notes, glosses, <meta>, <summary> and <keywords> are the translator's additions: judge them only where they assert something about what the page says. Romanisation choices are not errors.
+
+Reply with ONE JSON object written between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary.
+<<<BEGIN>>>
+{"candidates": {"A": {"errors": [{"english": "...", "category": "mistranslation|omission|addition|untranslated|fluency|terminology|style|markup", "severity": "critical|major|minor", "page_says": "<Chinese, with a short gloss>"}]}, "B": {"errors": []}}}
+<<<END>>>
+(one entry per candidate label: {LABELS})
+
+READING:
+{READING}
+{CANDIDATES}
+
+The page image:

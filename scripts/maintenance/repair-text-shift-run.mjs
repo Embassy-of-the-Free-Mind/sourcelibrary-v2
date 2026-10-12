@@ -22,7 +22,8 @@
  *
  * Guards (fail closed): --map must show the run as the chosen offset with NO page
  * scoring offset 0 inside it and ≥ 80% of scored pages agreeing; book with
- * hidden_reason refused; --adjudicated pages (checked by eye) leave the gate but are recorded; (#3099); split pages refused; a human-edited ocr/translation
+ * hidden_reason refused (--allow-stale-hidden-reason passes a leftover hidden_reason on a book that is
+ * visible and not hidden, and records it on the book_event); --adjudicated pages (checked by eye) leave the gate but are recorded; (#3099); split pages refused; a human-edited ocr/translation
  * in the run refused; idempotent per (book, run) via book_events; each page write is
  * conditional on the ocr it was planned from (a concurrent re-OCR → skip, not clobber).
  *
@@ -55,6 +56,10 @@ const APPLY = args.includes('--apply');
 // garbled OCR of a facing-page strip). Excluded from the gate, recorded on the book_event.
 const ADJ = flag('adjudicated') ? flag('adjudicated').split(',').map(Number) : [];
 const ADJ_WHY = flag('adjudicated-why', '');
+// A hidden_reason left behind on a book that is served (visible: true, hidden not true) is a stale marker, not a
+// reason to keep the book out of a repair: 70 visible books carried `unprocessed` on 2026-10-12, Meditationes 1484
+// (#5803) among them. Opt-in, and only for that shape; a book that is actually hidden is still refused.
+const ALLOW_STALE_HIDDEN = args.includes('--allow-stale-hidden-reason');
 if (ADJ.length && !ADJ_WHY) { console.error('--adjudicated needs --adjudicated-why "<how each was checked>"'); process.exit(1); }
 if (!BOOK || !Number.isFinite(FROM) || !Number.isFinite(TO) || !['left', 'right'].includes(DIR) || !MAP) {
   console.error('usage: --book ID --from A --to B --dir left|right --map <offset-map.jsonl> [--issue N] [--apply]'); process.exit(1);
@@ -76,9 +81,13 @@ if (zero.length || other.length || !scored.length || agree / scored.length < 0.8
 const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
 const db = client.db('bookstore');
 try {
-  const book = await db.collection('books').findOne({ id: BOOK }, { projection: { id: 1, title: 1, hidden_reason: 1 } });
+  const book = await db.collection('books').findOne({ id: BOOK }, { projection: { id: 1, title: 1, hidden_reason: 1, hidden: 1, visible: 1 } });
   if (!book) throw new Error('book not found');
-  if (book.hidden_reason) { console.log(`[REFUSE] hidden_reason=${book.hidden_reason}`); process.exit(2); }
+  const staleHidden = book.hidden_reason && book.visible === true && book.hidden !== true;
+  if (book.hidden_reason && !(ALLOW_STALE_HIDDEN && staleHidden)) {
+    console.log(`[REFUSE] hidden_reason=${book.hidden_reason}${staleHidden ? ' (visible and not hidden: pass --allow-stale-hidden-reason)' : ''}`); process.exit(2);
+  }
+  if (book.hidden_reason) console.log(`  note: stale hidden_reason=${book.hidden_reason} on a visible book, allowed by flag`);
   const done = await db.collection('book_events').findOne({ book_id: BOOK, type: 'text_shift_repair', 'details.run': `${FROM}-${TO}` });
   if (done) { console.log('[SKIP] this run is already repaired (book_events)'); process.exit(0); }
 
@@ -137,7 +146,7 @@ try {
   await recountBook(db, BOOK, { reason: 'repair-text-shift-run', now });
   await db.collection('book_events').insertOne({
     book_id: BOOK, type: 'text_shift_repair', at: now, source: 'repair-text-shift-run',
-    details: { run: `${FROM}-${TO}`, dir: DIR, pages: moves.length, cleared: cleared.map((m) => m.page_number), revisions: revisions.length, revision_source: SOURCE, map: MAP, adjudicated: ADJ, adjudicated_why: ADJ_WHY || undefined, issue: ISSUE, backup: backupFile },
+    details: { run: `${FROM}-${TO}`, dir: DIR, pages: moves.length, cleared: cleared.map((m) => m.page_number), revisions: revisions.length, revision_source: SOURCE, map: MAP, adjudicated: ADJ, adjudicated_why: ADJ_WHY || undefined, stale_hidden_reason: book.hidden_reason || undefined, issue: ISSUE, backup: backupFile },
   });
 
   // ── Supabase: pages mirror + snippet (resyncMirrors), then permute embedding vectors ──

@@ -399,10 +399,15 @@ export const SCRIPT_DEFS = {
 //   2  (#5522) also drops image/figure description blocks, strips every remaining tag (keeping its text),
 //      and decodes entities. Under v1, on 72 EEBO-TCP references, `imagedesc`, `nbsp`, `sizesmall`,
 //      `typedecoratiue`, `uuoodcut` and `langenglishlang` were among the top "OCR insertions".
-export const NORMALIZE_FOR_SCRIPT_VERSION = 2;
+//   3  (#6388) centring markers (`->line<-`) are removed BEFORE the tag strip. Under v2 the tag regex read
+//      the `<-` that closes one centred line as a tag opener and deleted everything up to the `>` of the
+//      next `->`: every line between two centred lines. On the #6388 Latin set that cut real text from
+//      13 of 450 reads and put flash-lite's CER at 5.5 where it is 3.4.
+export const NORMALIZE_FOR_SCRIPT_VERSION = 3;
 const DESCRIPTION_BLOCKS = /<(image-desc|figure|detected-images)\b[^>]*>[\s\S]*?<\/\1>/gi;   // describe the page, not its text
 const cleanMarkup = s => stripWrappers(s || '')
   .replace(DESCRIPTION_BLOCKS, ' ')
+  .replace(/->|<-/g, ' ')                    // centring markers are layout; left in, `<- … ->` reads as one tag
   .replace(/<[^>]*>/g, ' ')                  // any other tag: drop the tag (and its attributes), keep the text
   .replace(/&amp;/gi, '&')                   // the et-ligature is text; SCRIPT_DEFS.latin folds & to "et"
   .replace(/&[a-z]{2,8};|&#\d+;/gi, ' ');    // nbsp and other entities are layout

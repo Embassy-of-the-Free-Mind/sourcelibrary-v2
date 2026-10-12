@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Spanish wave 3 (#6559): Martín Cortés 1551 (Derek: import despite the NC-ND scan licence) and Osuna's Abecedario I-II, found on IA by an author-only re-query (lesson: absence from IA is usually a spelling miss)."
+  ],
+  "books": [
+    {
+      "ia": "breve-compendio-de-la-sphera-y-de-la-arte-de-navegar",
+      "region": "explore",
+      "title": "Breve compendio de la sphera y de la arte de navegar",
+      "author": "Martín Cortés de Albacar",
+      "language": "Spanish",
+      "published": "1551",
+      "text_role": "original",
+      "note": "Seville, Antón Álvarez, 1551. Museo Naval copy digitised by the Fundación Ignacio Larramendi. IA states CC BY-NC-ND 4.0; Europeana lists the same Larramendi object as CC BY-SA 4.0 (record /499/…larramendi_es_14162). Imported on Derek's decision 2026-10-11: public-domain text, unaltered images, non-profit, credit Larramendi. The book that taught England to navigate (Eden's 1561 translation)."
+    },
+    {
+      "ia": "ARes54407",
+      "region": "esoteric",
+      "title": "Primera parte del libro llamado Abecedario spiritual",
+      "author": "Francisco de Osuna",
+      "language": "Spanish",
+      "published": "1528",
+      "text_role": "original",
+      "note": "Seville, Juan Cromberger, 1528. Seville University copy."
+    },
+    {
+      "ia": "bub_gb_4ksHAq2nqM4C",
+      "region": "esoteric",
+      "title": "Segunda parte del libro llamado Abecedario spiritual",
+      "author": "Francisco de Osuna",
+      "language": "Spanish",
+      "published": "1539",
+      "text_role": "original",
+      "note": "1539."
+    }
+  ]
+}

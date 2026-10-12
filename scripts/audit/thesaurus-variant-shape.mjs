@@ -36,7 +36,7 @@
  *   node scripts/audit/thesaurus-variant-shape.mjs --shape=multi_person
  */
 import { MongoClient } from 'mongodb';
-import { classifyVariant } from '../lib/variant-shape.mjs';
+import { buildExtenderIndex, classifyVariant } from '../lib/variant-shape.mjs';
 
 const JSON_OUT = process.argv.includes('--json');
 const ONLY = (process.argv.find((a) => a.startsWith('--shape=')) || '').split('=')[1] || null;
@@ -55,23 +55,10 @@ const books = db.collection('books');
  * only gets this answer because we compute it here, over `books.author`, which
  * is the population the canonical-link backfill actually matches against.
  */
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-const extendersByForm = new Map();
-{
-  const rows = await books.aggregate([
-    { $match: { author: { $type: 'string', $nin: ['', null] }, content_type: { $ne: 'artwork' } } },
-    { $group: { _id: '$author' } },
-  ], { allowDiskUse: true }).toArray();
-  for (const r of rows) {
-    const n = norm(r._id);
-    const head = n.split(/[\s,]+/)[0];
-    if (!head || head === n) continue;          // the bare form is not its own extender
-    if (!extendersByForm.has(head)) extendersByForm.set(head, new Set());
-    // Key by the folded remainder so two spellings of one person count once.
-    extendersByForm.get(head).add(n.replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean).sort().join(' '));
-  }
-}
-const extendingPeople = (v) => extendersByForm.get(norm(v))?.size ?? 0;
+const extendingPeople = buildExtenderIndex((await books.aggregate([
+  { $match: { author: { $type: 'string', $nin: ['', null] }, content_type: { $ne: 'artwork' } } },
+  { $group: { _id: '$author' } },
+], { allowDiskUse: true }).toArray()).map((r) => r._id));
 
 const shapes = { multi_person: [], role_annotated: [], edition_annotated: [], overlong: [], underspecified: [] };
 const benign = { script_pair: 0, institutional: 0 };

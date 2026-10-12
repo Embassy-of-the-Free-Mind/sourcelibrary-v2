@@ -9,6 +9,9 @@
  * - Feeds index sectionSummaries as structural hints when available
  * - Confidence scoring (high/medium/low) per chapter
  * - Multi-volume detection with Tomus/Volumen/Band awareness
+ *
+ * Oct 2026 (#3697): the model's confidence is calibrated by chapter-checks.ts
+ * before saving, and the last chapter stops at the end of the printed body.
  */
 
 import { getGeminiClient } from '@/lib/gemini-client';
@@ -16,6 +19,7 @@ import { logGeminiCall, type GeminiTrigger, outputTokensFrom } from '@/lib/gemin
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { computeEndPages } from '@/lib/chapter-text';
+import { checkChapters, endMatterStart } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 
 interface RawHeading {
@@ -368,15 +372,27 @@ export async function extractChaptersForBook(
 
   chapters.sort((a, b) => a.pageNumber - b.pageNumber);
 
-  // Compute endPage for each chapter
-  computeEndPages(chapters, pages.length);
+  // Compute endPage for each chapter. The last chapter is bounded by the end
+  // of the printed body, not the page count — otherwise it absorbs the index,
+  // advertisements and endpapers (#3697: 16 pages where its siblings ran 2–7).
+  const tail = endMatterStart(pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data })));
+  // If the model already gave the end matter its own entry ("Index"), that
+  // entry bounds the last chapter, and trimming would shrink it to one page.
+  const bodyEnd = tail && tail > 1 && !chapters.some(c => c.pageNumber >= tail)
+    ? Math.min(pages.length, tail - 1)
+    : pages.length;
+  computeEndPages(chapters, bodyEnd);
+
+  // Calibrate the model's self-reported confidence against what can be checked
+  // mechanically (numbering gaps, span outliers) — see chapter-checks.ts.
+  const checked = checkChapters(chapters).chapters;
 
   // Save to book
   await db.collection('books').updateOne(
     { id: bookId },
     {
       $set: {
-        chapters,
+        chapters: checked,
         chapters_extracted_at: new Date(),
       }
     }
@@ -400,7 +416,7 @@ export async function extractChaptersForBook(
   }).catch(() => {}); // non-blocking
 
   return {
-    chapters,
+    chapters: checked,
     rawHeadingsCount: rawHeadings.filter(h => h.source === 'ocr').length,
     translationHeadingsCount,
     tocPagesFound: tocPages.length,

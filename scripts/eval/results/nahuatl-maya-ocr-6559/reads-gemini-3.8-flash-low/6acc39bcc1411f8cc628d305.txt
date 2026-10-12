@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>218</page-num>
+<warning>Handwritten Spanish colonial humanist / cancelleresca hand. Primary text is in Classical Nahuatl with Latin liturgical incipit in red ink.</warning>
+<meta>Catchword: intote°</meta>
+
+<image-desc size="small" type="decorative" significance="low">Rubricated calligraphic initial I in red ink with black penwork decoration</image-desc>
+# In illo tempore.
+Ibat Jesus in ciuitatem que vocatur Naim etc̃.
+
+<image-desc size="medium" type="decorative" significance="low">Large calligraphic initial Y in dark red/crimson ink with flourishes spanning four lines</image-desc>
+Yniquac nican tlalticpac monemitinya tote°. i. x°. Ceppa ompa mouicaya ynaltepetlipan ytoca yocan Naim, quimouiquilique ynitlamachtilhuan yuan occequin cenca miectlacafl inquimouilique. Yniquac altepetenamitl itlan omaxitito, ipan moquixtito micqui, yeuiquitoaya Ynin micqui cetlacatl icnociuatzintli çan icenteconetiz, quichoquititinuh, yuan miequintin cololhuitiuij. Auh iniquac oquimottili tote°. quimocnoittili quimolhuili. Ciuatzintle macaxicho ca niman itlan ommaxiti, commotzitzquili intlapechtli. Auh inyeuantin quinapalotiuia ocmomanque.
+
+<vocab>In illo tempore, totepetl, tlalticpac, Naim, tlamachtilhuan, altepetenamitl, icnociuatzintli, tlapechtli</vocab>

@@ -1,0 +1,28 @@
+<scan-quality>good</scan-quality>
+<language>K'iche'</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<meta>Catchword: ma</meta>
+<warning>Handwritten Latin script.</warning>
+<vocab>Christianos, Padres, Sacerdotes, Dios</vocab>
+
+<margin><unclear>ez</unclear></margin>
+ha tannima ahoxel vacami . ti
+quiban Conohel Christianos vi
+nak , ha tti nimaygovinak vi
+que quinimah, que coqueçah, que
+quiloçoh, tiquiluc, tiquipathna
+uipequij tiquivath he Padres, Sa
+cerdotes ; heruta tacanimas, al
+gualay qui ttin ttiuvath Dios -
+quere ga ha roquicam, haga re
+gheta lim, kitzih tiquix maca
+mo, quix ttuh ttu, quix yokoyo,
+quix cak pile, quix cak maha tti
+xibibal y vij tok tivuz tamah y
+mac panigux : rumal vuz maqui
+he ynimam, vuz maqui he yvo
+<margin>÷</margin>
+queçam qui locolah tzih , vuz pe
+
+ma

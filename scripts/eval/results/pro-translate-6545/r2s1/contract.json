@@ -1,0 +1,20 @@
+{
+ "DO": {
+  "pages": 42,
+  "proposed": 65,
+  "applied": 64,
+  "outside_spans": 1,
+  "not_in_draft": 0,
+  "unparsed": 0,
+  "no_edit_pages": 0
+ },
+ "DF": {
+  "pages": 42,
+  "proposed": 63,
+  "applied": 61,
+  "outside_spans": 2,
+  "not_in_draft": 0,
+  "unparsed": 0,
+  "no_edit_pages": 2
+ }
+}

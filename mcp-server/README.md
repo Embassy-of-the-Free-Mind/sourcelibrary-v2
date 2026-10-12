@@ -108,7 +108,7 @@ Browse the collection with filters. Returns title, author, language, year, and t
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `search` | string | No | Filter by title/author (diacritic-insensitive) |
+| `search` | string | No | Word match over title, author, name forms and AI summary (diacritic-insensitive) |
 | `language` | string | No | Filter by language |
 | `category` | string | No | Filter by category |
 | `sort` | string | No | recent-translation, recent, title-asc, title-desc |

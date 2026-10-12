@@ -1,0 +1,47 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>83</page-num>
+<header>SAHAGÚN PRIMEROS MEMORIALES, CAP. II. CIELO É INFIERNO § 4.º CUENTA DE LOS SIGNOS, 7.º TRECENARIO</header>
+<warning>Page contains a photographic facsimile of a 16th-century Nahuatl manuscript leaf (Códice Matritense del Real Palacio, fol. 299r) embedded within a modern printed edition.</warning>
+
+<meta>299.</meta>
+
+matlactli oçe couatl.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 11-Coatl: a framed square containing eleven circular dots and a serpent's head.</image-desc>
+
+matlactli omo<sup>me</sup> miquiztli
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 12-Miquiztli: a framed square containing twelve circular dots and a skull.</image-desc>
+
+matlactli omey maçatl.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 13-Mazatl: a framed square containing thirteen circular dots and a deer's head.</image-desc>
+
+<meta>6</meta>
+
+Jnin matlactetl omey tonalpoalli moteneuaya qualli tonalli ynaquin oncan tlacatia. Cenca yielcatca motlamachtiaya çacamouani çenca vnca quiaiani Cannoivhqui intlaçahoatl ynonca tlacatia çenca yiel tlamachiuani yoan mochi qui piaya intonacaiutl ynizquianican yçentli. yetl. invauh tli ynchia yoan vnca teytlaçaloz motlamachtica quipia quachtli.
+
+Ce tochfli.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 1-Tochtli: a framed square containing one circular dot and a rabbit's head.</image-desc>
+
+vme atl.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 2-Atl: a framed square containing two circular dots and a vessel filled with water.</image-desc>
+
+yei izcuinthi.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 3-Itzcuintli: a framed square containing three circular dots and a dog's head.</image-desc>
+
+naui vçomatli.
+
+<image-desc size="small" type="diagram" significance="high">Glyph for the day sign 4-Ozomatli: a framed square containing four circular dots and a monkey's head.</image-desc>
+
+HISTORIA DE LAS COSAS DE NUEVA ESPAÑA
+
+(Códice matritense del Real Palacio, fol. 299 fte).
+
+<vocab>Sahagún, Primeros Memoriales, tonalpohualli, couatl, miquiztli, maçatl, tochtli, atl, izcuintli, vçomatli, quachtli</vocab>
