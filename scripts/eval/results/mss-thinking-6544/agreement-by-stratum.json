@@ -1,0 +1,50 @@
+{
+ "latin": {
+  "spans": 426,
+  "keys_agree": 204,
+  "agree_share": 0.479,
+  "fable_sided_O": 120,
+  "fable_sided_G": 83,
+  "fable_none": 19
+ },
+ "cjk": {
+  "spans": 14,
+  "keys_agree": 4,
+  "agree_share": 0.286,
+  "fable_sided_O": 5,
+  "fable_sided_G": 2,
+  "fable_none": 3
+ },
+ "arabic": {
+  "spans": 137,
+  "keys_agree": 79,
+  "agree_share": 0.577,
+  "fable_sided_O": 25,
+  "fable_sided_G": 31,
+  "fable_none": 2
+ },
+ "syriac": {
+  "spans": 11,
+  "keys_agree": 9,
+  "agree_share": 0.818,
+  "fable_sided_O": 0,
+  "fable_sided_G": 2,
+  "fable_none": 0
+ },
+ "hebrew": {
+  "spans": 24,
+  "keys_agree": 6,
+  "agree_share": 0.25,
+  "fable_sided_O": 14,
+  "fable_sided_G": 2,
+  "fable_none": 2
+ },
+ "greek": {
+  "spans": 26,
+  "keys_agree": 9,
+  "agree_share": 0.346,
+  "fable_sided_O": 2,
+  "fable_sided_G": 10,
+  "fable_none": 5
+ }
+}

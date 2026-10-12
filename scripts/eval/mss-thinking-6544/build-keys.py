@@ -130,7 +130,7 @@ def requests(root):
 def parse(reply):
     body = unwrap(reply or '')[0]
     out = {}
-    for m in re.finditer(r'^\W*S(\d+)\W*[:\-–]\s*(A|B|NONE|ILLEGIBLE)\b\s*[:\-–]?\s*(.*)$', body, re.M | re.I):
+    for m in re.finditer(r'^[^\S\n]*\W?S(\d+)[^\S\n]*[:\-–][ \t]*(A|B|NONE|ILLEGIBLE)\b[ \t]*[:\-–]?[ \t]*(.*)$', body, re.M | re.I):
         out[int(m.group(1))] = (m.group(2).upper(), m.group(3).strip())
     return out
 
