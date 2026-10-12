@@ -1,0 +1,53 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Spanish italic hand, Yucatec Maya–Spanish dictionary; the right edge of the text is cut off by the binding/photograph, so line endings are lost</warning>
+<meta>Each entry is preceded by a small check mark in the left margin</meta>
+
+Hiʒ. deleitarse mucho en alguna cosa, y embeuecerse e<unclear>[cut off]</unclear>
+sin entender a otro ꝗ v tan v hiʒ v kay Juan ithil v<unclear>[cut off]</unclear>
+estando Juan embeuecido en cantar en su milpa paseyo<unclear>[cut off]</unclear>
+v tan v hiʒ v kanal Juan camanen, maix yilahen. estand<unclear>[cut off]</unclear>
+embeueçido en comer y gustando mucho de la comida p<unclear>[cut off]</unclear>
+y no me vido ꝗ de aqui Hun Hiʒ Juana v manab cab g<unclear>[cut off]</unclear>
+tho Juana de comprar miel.
+
+Hiʒ. ser demasiado en reir en contar cuentos en bocear en<unclear>[cut off]</unclear>
+encantar etc. gustando mucho dello ꝗ Hiʒ v cah v can Ju<unclear>[cut off]</unclear>
+cuenta Juan cuentos demasiado con mucho gusto.
+
+Hiʒaan ti cal. } deleitarse mucho en alguna cosa y gustar<unclear>[cut off]</unclear>
+Hiʒaan ti chij.
+ꝗ Hiʒaan <unclear>veymcil</unclear> ti cal. l. ti chij Juan gusta Juan mu<unclear>[cut off]</unclear>
+estar amancebado.
+
+Hiʒaan ti cheeh. el que esta finado y muerto de risa.
+
+Hiʒaan. ti okol. el que esta de demasiado llorar medio mu<unclear>[cut off]</unclear>
+
+Hiʒaancil v cah v can Juan yetel Pedro. estan Juan y Ped<unclear>[cut off]</unclear>
+lando y en conuersacion hasta mas no poder etc. en otras <unclear>[cut off]</unclear>
+
+Hiʒil. gustar mucho de vna cosa ꝗ Hiʒi Juan ti mak cab<unclear>[cut off]</unclear>
+gusto Juan mucho de comer miel.
+
+Hiʒil ti cheeh. reirse demasiado finarse de risa
+
+Hiʒil ti cab. morir o ser justiciado ꝗ Hiʒi ti cab tumen yoc<unclear>[cut off]</unclear>
+fue justiciado por ladron.
+
+Hiʒil ik. agonizar desmaiarse y dar parasismo
+
+Hiʒ pay. tah. t. tirar de alguna cosa larga y delgada como<unclear>[cut off]</unclear>
+de cordel correa. vara etc.
+
+Hichcib. tah. t. encerar algun hilo o cuerda pasandolo po<unclear>[cut off]</unclear>
+cerote o por la cera. como haze el çapatero. y assi otras cos<unclear>[cut off]</unclear>
+pasan por color negro colorado etc. <unclear>mediendo</unclear> el tal color<unclear>[cut off]</unclear>
+lugar de cib.
+
+Hich. ah. ib añudar. atar, o ñudar; y lo assi ñudado o a<unclear>[cut off]</unclear>
+y lo que se trae atado o colgado al cinto ꝗ balx a Hich.
+
+<vocab>Yucatec Maya dictionary, hiʒ, hiʒaan, hiʒil, hich, cib, milpa, miel, deleitarse, justiciado, cerote, çapatero</vocab>

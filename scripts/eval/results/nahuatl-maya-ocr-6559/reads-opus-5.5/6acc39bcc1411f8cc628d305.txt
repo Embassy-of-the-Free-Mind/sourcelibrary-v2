@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>217</page-num>
+<warning>Handwritten 16th-century rounded humanist/gothic book hand; Latin rubric in red ink with a large red initial I and a large red initial Y. Faint show-through from the other side not transcribed.</warning>
+<image-desc size="small" type="decorative" significance="low">Large red calligraphic initial I beginning the rubric, preceded by a small black paragraph mark; large red flourished initial Y opening the Nahuatl text.</image-desc>
+## ¶ In illo tempore.
+
+Ibat Jesus in ciuitatem que voca
+tur Naim etc̃.
+
+Yniquac nican tlalticpac mone
+mitiaya tote.º i.xº. Ceppa ompa
+mouicaya in altepetl ipan ytoca
+yocan Naim, quimouiquilique yn itla
+machtilhuã yuan occequin cenca mi
+ec tlacatl in quimouilique. Yniquac
+altepetenamitl itlan omaxitito, ipã
+moquixtito micqui, yeui quitocazq̃
+ynin micqui ce tlacatl icnociuatzintli
+çan içen teconeuh, quichoquilitiuh,
+yuan miequintin cololhuitiui. Auh ini
+quac oquimotili tote.º quimoicnoitti
+li quimolhuili. Ciuatzintle macaxicho
+ca niman itlan ommaxiti, commotzitz
+quili in tlapechtli. Auh in yeuantin qui
+napalotiuia oc momanque. in tote.º
+<vocab>In illo tempore, Jesus, Naim, tote.º i.xº., altepetl, icnociuatzintli, tlapechtli, Gospel, widow of Nain</vocab>

@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>La vida, y milagros</header>
+<warning>Some uneven inking and staining; faint show-through from the other side not transcribed.</warning>
+in intlateumatiliz in Chriſtianome, yhuan in in
+tepantlahtolizticatzinco, yequene in intlacnopil
+huilizticatzinco in iyectetlayecolticatzitzihuan,
+quimocenquizcatlacamachiltia, yhuan quimocẽ-
+quizcanemiliztia in iteutenahuatiltzin. ——
+
+¶ IN ipan huei altepetl Padua, ce oncan nen
+ca mahuiztililoni cihuapilli: auh in itlaçotzin
+Dios ſanct Antonio, cẽca miequintin macehual-
+tin quimololhuilitihuiya, inic quicaquiznequia
+in itemachtiltzin in vmpa ixtlahuacan, ipampa
+ca in teupan Ygleſia ahmo huel onaquia, ahmo o
+nehuaya in macehualtin: auh cecni acalotenco
+onaxihuato, oncan ce onhuetz acaloco, nepanotl
+motopeuhque inic cenca nepapatzoloya. Auh in
+onhuetz acaloco, ca oncã oquilnamic in ca huel
+ohuican onhuetz, yhuan ca cença tlaçotli in itla-
+quen in quimaquitihuiya ca yãcuic, auh ca hue-
+llateumatiliztica oquimotzatzilili, ittetzinco o-
+mocauhtzino in toTecuiyo Dios, itemanahuica-
+tzin muchiuhtzinoz, yhuan in yehuatzin itlaço-
+tzin Dios ſanct Antonio: yehica ca oc no cenca
+yehuatl quimacacia, quimauhcaittaya, ca cenca
+alahuacayo tlahuele, cocole in inamic, ca intla
+quittazquia in inamic, in huel omoçoquinelo, ca
+cẽca huel yc tlatlahuelchihuazquia. Auh ca nimã
+<meta>catchword: iciuhca</meta>
+<vocab>Padua, ſanct Antonio, cihuapilli, teupan Yglesia, acalotenco, acaloco, toTecuiyo Dios, temachtiltzin, miracle, Saint Anthony of Padua</vocab>

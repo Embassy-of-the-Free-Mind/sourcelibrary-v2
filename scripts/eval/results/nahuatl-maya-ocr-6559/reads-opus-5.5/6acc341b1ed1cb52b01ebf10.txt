@@ -1,0 +1,30 @@
+<scan-quality>fair</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Gothic (blackletter) type with heavy, uneven inking; some letters filled in. Show-through from the other side visible in the lower part of the leaf; not transcribed.</warning>
+¶ Auh yyehuanti inqualti yn yecti yye-
+quic nelilonj. Quinmopaccano chiliz qn̄-
+molhuiliz ynamehuantĩ ynan notlaçopil
+hua ynã notlaço tetlayecolticahua i huel
+ãnechmo tlaçoca machitique ynipampa i-
+tlalticpac nin onemitico ynic namech no
+maquixtilico yn huelãnechmo tlatocatiq̃
+an nech moteotique huel pachiuh inamo
+yollo innamo teuh innamotlatocauh/
+huel annechmoneltoquitique yniniteotl
+yhuan noquichtli çan nocel çanniyo. Auh
+nopampa anquinmotlaocolilique ynic-
+qui tlamantli oniquin notenehuili. Auh
+ynaxcan nochantzinco ã motlecahuizque-
+ynic ompa cemicac ammo papaquiltizque
+an tlatocatizque ynayc tzonquicaz ynamo
+papaquiliz. O ca yehuatli. ynquitoznequi
+ompa hualmohuicaz inquintlatzontequili
+quiuh yyolque yhuã i mimicque auh ynin
+cuix pachihui in moyollo.
+¶ Auh niccauhtzine. yniquac tiquitohua
+nic noneltoquitia i dios ſpũ ſãcto. Queça.
+¶ Nopiltzine tlaxiccaq̃ caonimitzno.hui
+li çacẽ teotl yyehuatl yney perſonas q̃toz-
+<vocab>tlaçopilhua, tetlayecolticahua, tlalticpac, teotl, noquichtli, tlatocatizque, dios ſpũ ſãcto, perſonas, pilcrow</vocab>

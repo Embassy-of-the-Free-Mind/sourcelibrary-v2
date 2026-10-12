@@ -1,0 +1,47 @@
+<scan-quality>fair</scan-quality>
+<language>Nahuatl</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<warning>Handwritten 18th-century Spanish-American cursive (Nahuatl dramatic dialogue). The speaker names in the left margin are cut off by the left edge of the image.</warning>
+<margin><unclear>[cut off]</unclear>pixqui</margin>
+℟: Tlaxihuallauh Yntihuei nexicoliztli Caçan tehuatl monexi
+coliztica tiquinquintlapololtia Yntlalticpac tlaca ticnequi ma
+mochintin xiquinhuica Yncampa <unclear>Cmil.</unclear> Omitz motlaxili <unclear>yn Dios.</unclear> <unclear>Yntetla</unclear>
+ni mictlan, xiyauh amo nican, nixpa xineçi Caintlanic ne
+quiz Canican nimitzilpiz tepoz mecatica, Yhuan nimitz cahuatiuh
+yn mocha Ynic aemo occeppa nican tihuallaz tlalticpac tiquin
+tlapololtiquiuh Yntlalticpac tlaca
+
+---
+
+<margin>Demo.</margin>
+℟: Ye nimitz tlalcahuia Yntiteopixqui Ancatel niquittaz quen tic
+palehuiz Yntlâtocahuani Ynixquich Cahuitl, Ynaic Oquilnamic
+ynitlâtlacol, axcan Ye Cenpohuali Yhuan Macuili Xihuitl Yn çan
+tlâtlacolpa Nemin Yhuan Caçan ilpitinemi Yni nenepil, aoc
+huel Mitz mo nan quiliz <unclear>ypp</unclear> Cayehuatl. Ynitlâtlacol tlama
+mal Quitlâtoltzac Yn manel quinequi Moyolcuitiz Cayêhuatl
+quinontilia, Ynihuei Cenzon tlâtlacol acmo ximo<unclear>çiahuiti</unclear> Yn
+titeopixqui yn manel tic mottilia Nican mixpantzinco Ycac
+Neçi huey mahuiztic tlacatl, Caçenca Oyax, tlâtlacoltica yni
+anima Yn momatia âço aic miquiz Çan Oquihuetz quilia
+ya Yn miquiztli auh in axcan <unclear>Manel</unclear> xic mo yêyecalhui âço
+tel huelitiz mitz monanquiliz Catitlaçotzin yn Dios Cayeniauh
+yn nêhuatl, maxic mochihuili Yn moteopixcatequitzin Caqualli <unclear>yez</unclear>
+yntla Omitz mo nan quili.
+
+---
+
+Calaquî Demonio; Oncan Mocahuazque teopixqui Yhn. Oc Omentin
+
+---
+
+<margin><unclear>[cut off]</unclear>pixqui</margin>
+℟: Quenin Çenca nino mauhtia, Ynoniccac ixquich âmo quali
+tlâtolli, motlachihual Quen Omitz tlapololti Yntlacatecolotl. Cuix
+huel neltiliztli Ynixquich nican Omitz ixcomacatehuac; maxi
+nech nanquili âço huelitiz Nimitz palehuiz Neyolcuitiliztica
+âtle qui nênehuitzin âtlecaçiz âtle quipanahuiz Ynchipahuaca
+<meta>catchword: neyolqui</meta>
+<vocab>teopixqui, Demonio, tlâtlacolli, mictlan, Tlacatecolotl, neyolcuitiliztli, Dios, anima, stage direction</vocab>

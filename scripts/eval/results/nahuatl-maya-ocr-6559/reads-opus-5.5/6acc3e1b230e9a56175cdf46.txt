@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>Yucatec Maya</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<header>HUAN VIII.</header>
+<page-num>32</page-num>
+
+5 Behelae Moyzez tu almatħantahon ti le almatħan ca c cħin le beyoba; hebac tech, ¿bax ca ualic?
+6 Letilela tu yalahob tan u tuntic leti, utial cu pathalob u tacuhol; hebac Hezuz, tan u chintal, tu ɔibtah yokol le luum yetel u yalukab.
+7 Y hebix cu chicholticob cach tan u kaaticobti, taɔi, tu yalahtiob: Le max ichil tex xma keban, u cħin yaxtanil humpel tunich yokol x leti.
+8 Y, tan u chintal tu caten, t ɔibnah ti luum.
+9 Y letiob, tan u yubicob letilela, y tacanupolob tumen u tuculob, hokob huntul tu pach ulak, tan u chunpahal tumen le hach nuxibob tac le u ɔoc, y Hezuz pat tuhun, y le x cħup ualacbal tun chumuc.
+
+<column-break/>
+
+10 Y tan u taɔcuba Hezuz, matan u yilic mixmac chen le x cħup, tu yalahti: X cħup ¿ tux yan le macob cu tacicobapol? ¿ mixmac ua tu cħanucultah a cuxtal?
+11 Y x leti tu yalah: Yumil, mixmac. Hezuz tun tu yalahti: Mix ten cin cħanucultic a cuxtal. Xen, y ma kebanchahal tu caten.
+12 Hezuz tu tħanahtiob tun tu caten, tan u yalic: Ten le zazil ti le yokolcab: le max tħultic in pach, ma bin maanac ich ekhocħenil; uama bin yanacti le zazil ti le cuxtal.
+13 Le Farizeob tun tu yalahobti: Teche ca ɔic hahiltħan taba: a hahiltħan ma hah.
+14 Hezuz tu nucah ca tu yalahtiob: Cex
+
+<vocab>Huan (John) VIII, Hezuz, Moyzez, Farizeob, almatħan, x cħup, zazil, yokolcab, cuxtal, keban, Yucatec Maya Gospel</vocab>

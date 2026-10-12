@@ -1,0 +1,23 @@
+<scan-quality>fair</scan-quality>
+<language>Yucatec Maya</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>33</page-num>
+<sig>3</sig>
+<warning>Foxing and uneven inking; a few letters blotted</warning>
+
+ob, iix ú ɔac ti tulacalóob· le kazóob.
+K. ¿Báax á káatic táan á ualic: cilichcuntabac leti á kaba?
+N. Cá yanacti tzicil iix cicitħanbilaltáac.
+K. ¿Báax á káatic táan á ualic: talac ti c tóon leti á ahauil?
+N. Cá yanac ti c tóon tumen gracia uaix ɔabilah, iix t pachil ú ɔatóon ú gloria uaix maxul cuxtalé.
+K. ¿Báax á káatic táan á ualic: mentabac á uolah bay ti le lúum hebic ti leti cáan?
+N. Cá c mentéex tóon uincóon tuliz iix zeblil hebic le angelóob.
+K. ¿Báax á káatic táan á ualic: leti c uah ti zanzamal kiuil c ɔatóonhelé?
+N. Tulacal le báax lay tzenul kanáan ti uincil iix pixan.
+K. ¿Báaxten á káatic utial pel behelé?
+N. Tioklal cutal kananil ti káatic le laili zamal.
+K. ¿Báax á káatic táan á ualic: c zateztóon c paxóob?
+N. Záat-zahul ti kebanóob iix ti tzeculóob paxanóob tioklal laóobé.
+
+<vocab>catechism, Pater Noster, K. (káat, question), N. (núuc, answer), ahauil, gracia, gloria, angelóob, pixan, kebanóob, Yucatec Maya</vocab>

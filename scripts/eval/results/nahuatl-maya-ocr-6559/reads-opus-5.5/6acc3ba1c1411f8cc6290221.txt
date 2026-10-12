@@ -1,0 +1,38 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>83</page-num>
+<header>SAHAGÚN — PRIMEROS MEMORIALES, CAP. II. — CIELO É INFIERNO — § 4.º CUENTA DE LOS SIGNOS, 7.º TRECENARIO</header>
+<warning>Handwritten 16th-century Nahuatl in a Spanish humanist hand, reproduced in a printed facsimile plate</warning>
+<meta>Manuscript folio number 299 at top right; a small figure "6" at right above the paragraph</meta>
+
+<margin>299.</margin>
+
+matlactli oce couatl.
+
+matlactli om<unclear>ey</unclear> <gloss>me</gloss> miquiztli
+
+matlactli omey maçatl.
+
+<image-desc size="medium" type="symbol" significance="high">Three square day-sign glyphs stacked vertically on the right: a serpent with eleven dots, a skull (death) with twelve dots, and a deer head with thirteen dots.</image-desc>
+
+<margin>6</margin>
+
+Inin matlactetl omey tonalpoalli motenevaya qualli tonalli ynaquin oncan tlacatia. Cenca yiel catca motlamachtiaya çaçamouani çenca vnca quiauani Çannoiuh qui intlaçihoatl ynoncã tlacatia cenca yiel tlamachiuani yoã mochiqui piaya intonacaiutl ynizquiamicac yçentli. ynetl· invauhtli yn chia yoã vnca te ytlacavhca motlamachtia· quipia quachtli·
+
+Ce tochtli.
+
+vme atl.
+
+yei itzcuintli.
+
+navi vçomatli.
+
+<image-desc size="medium" type="symbol" significance="high">Four square day-sign glyphs stacked vertically on the right: a rabbit head with one dot, a water vessel with two dots, a dog head with three dots, and a monkey head with four dots.</image-desc>
+
+->HISTORIA DE LAS COSAS DE NUEVA ESPAÑA<-
+
+->(Códice matritense del Real Palacio, fol. 299 fte).<-
+
+<vocab>tonalpoalli, matlactli, couatl, miquiztli, maçatl, tochtli, atl, itzcuintli, ozomatli, trecena, Primeros Memoriales, Sahagún, Códice matritense</vocab>

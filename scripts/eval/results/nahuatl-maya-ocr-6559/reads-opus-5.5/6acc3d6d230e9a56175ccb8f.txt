@@ -1,0 +1,36 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<warning>Handwritten Spanish italic hand; Spanish–Yucatec Maya vocabulary. Faint mirror-reversed show-through from the other side is not transcribed</warning>
+<meta>A flourish below the folio number at top right</meta>
+
+Descaecido anssi: thonan: thoyan:
+Descalçar çapatos: choch xanab
+Descalçar Calças: hoʒ: pul:
+Descalço: ix ma xanab:
+Descalabrar: paapol: chinpol
+Descalabrado: paan V pol:
+Descalabradura: cinil: cintanil:
+Descaminada Cosa: mabean: Vt: mabean athan:
+Descaminado que ha perdido el camino: catan beti:
+Descanpar la lluuia: tzitzilha: haual V kaxal haa:
+Descansar y descanso: helel:
+Descanso dar a otra Cosa: helecah
+Descansadero: heleb: lubay: boh cabal V lec
+Descarado Sin Verguença: chic Vuich: coyen V pacat. ⊏ Vide
+Desuergonçado: o si esento:
+Descargarse de la carga: helcah cuch:
+Descargar a otro: Omcah cuch:
+Descargarse de lo que le Calunian: tacba: lukcahba: ⊏ Vide
+Defenderse: examinarse:
+Descargar su Conciençia: omcah V coch pixan:
+Descasarse por algun ynpedimento: chachpahal ti batanba.
+Descasar anssi: luk cah ti batanba:
+Descasarse quoad torum: nach cunah ti batanba:
+Descascarar Como Naranjas o arbles: ppo opp.
+Descascarar Como frisoles: ppal.
+Descascarado anssi: ppalaan: ppalbil:
+
+<vocab>Spanish–Maya vocabulary, descalzar, xanab, descalabrar, pol, descansar, helel, descargar, cuch, pixan, descasarse, quoad torum, batanba, descascarar</vocab>

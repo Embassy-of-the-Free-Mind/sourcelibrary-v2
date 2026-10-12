@@ -1,0 +1,398 @@
+[
+ {
+  "page_id": "6acc3ae6c1411f8cc628f5e8",
+  "X": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 6,
+   "normalisations": 2,
+   "worst_error": "'iclâ' for 'itlâ'; adds -z- in 'quizcateicnoittaliztzin'/'liztzin' (page: -litzin)"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 5,
+   "normalisations": 0,
+   "worst_error": "'huehy' and '(iràn fi' misreads in blotted lines"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc341b1ed1cb52b01ebf10",
+  "X": {
+   "failed": false,
+   "score": 3,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 8,
+   "normalisations": 3,
+   "worst_error": "'neltiloni' for 'neliloni', 'Quenca' for 'Queça', 'yyei' for 'yney'; expands spũ sãcto, drops ç in 'çacẽ'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 3,
+   "normalisations": 0,
+   "worst_error": "'ynic' for 'yniz'"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc3b23c1411f8cc628f8c7",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none"
+  },
+  "Y": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none"
+  },
+  "better": "tie"
+ },
+ {
+  "page_id": "6acc3ac2c1411f8cc628f2d5",
+  "X": {
+   "failed": false,
+   "score": 3,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 15,
+   "normalisations": 10,
+   "worst_error": "'mo chipahuili' for 'mochihuili', 'Catilatzin ynts' for 'Catitlaçotzin yn D.s'; drops circumflexes on tlâtlacol throughout"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 7,
+   "normalisations": 0,
+   "worst_error": "'Ancatel' for 'Au catel', 'Oyax'/'tel' minor"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc39bcc1411f8cc628d305",
+  "X": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 4,
+   "normalisations": 2,
+   "worst_error": "'quitoacaque' for 'quitocazq̃'; 'icenteconeuz' drops ç; drops º marks"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 4,
+   "normalisations": 0,
+   "worst_error": "'oquimotili'/'quimoicnoitti' vs page 'oquimottili'/'quimocnoitti'"
+  },
+  "better": "tie"
+ },
+ {
+  "page_id": "6acc3c3577e6be3481e74a87",
+  "X": {
+   "failed": false,
+   "score": 3,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 2,
+   "normalisations": 12,
+   "worst_error": "long s modernised throughout Spanish (confiesso, personas, siete); 'passè' for 'paſè'; 'cinquenta' for 'ſinquenta'; 'nohuampohua' for 'nohuãpohua'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 1,
+   "normalisations": 0,
+   "worst_error": "'à mis' for 'â mis'"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc3bb6c1411f8cc62905d5",
+  "X": {
+   "failed": false,
+   "score": 3,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 15,
+   "normalisations": 1,
+   "worst_error": "many words marked illegible; some misreads in very cursive hand, but no fluent fill"
+  },
+  "Y": {
+   "failed": false,
+   "score": 2,
+   "dropped_lines": 0,
+   "invented_lines": 4,
+   "misread_words": 15,
+   "normalisations": 0,
+   "worst_error": "fluent invented fill in illegible spans ('principales de los barios', 'que se vendia a los vezinos', 'sin que por ello se les pague cosa alguna'); signature read 'Juangomez'; folio '477' read as 'f 77'"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc39f8c1411f8cc628db69",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none (keeps ſ and tildes cẽ, oncã, yãcuic, nimã)"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 1,
+   "normalisations": 10,
+   "worst_error": "long s and nasal tildes normalised (sanct, cenca, oncan, yancuic, niman)"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc35281ed1cb52b01eea96",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 1,
+   "normalisations": 0,
+   "worst_error": "'ixpantzinco' for printed 'ixpanizinco'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 7,
+   "worst_error": "nasal tildes dropped (ixpantzin, iyehuantin, cenca, çan quinenpopo)"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3ba1c1411f8cc6290221",
+  "X": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 4,
+   "normalisations": 4,
+   "worst_error": "'Ce' for 'Çe', 'oce' for 'oçe', 'itzcuintli' for 'izcuintli', 'motenevaya' for 'moteneuaya'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 5,
+   "normalisations": 3,
+   "worst_error": "'quicuani' for 'quiauani', 'yietl' for 'ynetl'; 'ynoncan'/'yoan' drop tildes"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3d60230e9a56175cc8ab",
+  "X": {
+   "failed": false,
+   "score": 2,
+   "dropped_lines": 0,
+   "invented_lines": 1,
+   "misread_words": 25,
+   "normalisations": 0,
+   "worst_error": "every headword 'Hiʒ' read 'Hij'; garbled 'Hijxaan veyuncil hucal. l. hichij Juan puesto' and 'prestare' for 'gustar'; small fill past cut edge"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 5,
+   "normalisations": 0,
+   "worst_error": "'Hichcib'/'Hich' uncertain; 'veymcil' unclear"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc3e1b230e9a56175cdf46",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none (lines joined, words exact)"
+  },
+  "Y": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none"
+  },
+  "better": "tie"
+ },
+ {
+  "page_id": "6acc3de1230e9a56175cdab2",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 8,
+   "normalisations": 1,
+   "worst_error": "'¡' for '¿' on every question; 'kinil' for 'kiuil'; 'cicithanbi' drops ħ"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3d6d230e9a56175ccb8f",
+  "X": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 3,
+   "normalisations": 3,
+   "worst_error": "'ti batanba' for 'tubatanba' (x3); 'Descascarar' for 'Descaxcarar' (x3)"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 5,
+   "normalisations": 2,
+   "worst_error": "'emcah' for 'Omcah' (x2), 'çatanbeti', 'ofi çiento'; 'Descampar'/'ympedimento' normalised"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3d74230e9a56175ccd15",
+  "X": {
+   "failed": false,
+   "score": 2,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 8,
+   "normalisations": 15,
+   "worst_error": "cuatrillo and tresillo rendered as 'tt'/'h' throughout (ttiquivath, quinimah); 'vuz' for 'vue', 'cak' for 'çak'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 3,
+   "normalisations": 0,
+   "worst_error": "minor spacing/letter doubts"
+  },
+  "better": "Y"
+ },
+ {
+  "page_id": "6acc3de4230e9a56175cdb00",
+  "X": {
+   "failed": false,
+   "score": 5,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 0,
+   "normalisations": 0,
+   "worst_error": "none (keeps ħ, titel)"
+  },
+  "Y": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 6,
+   "normalisations": 4,
+   "worst_error": "'ti lel' for 'titel' (x4), 'coczicil' for 'cocziɔil'; ħ normalised to h"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3da5230e9a56175cd3c7",
+  "X": {
+   "failed": false,
+   "score": 3,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 10,
+   "normalisations": 0,
+   "worst_error": "cuatrillo-h rendered with tresillo glyph 'ꜫh' throughout (special letter kept but wrong glyph); 'ꜫekal' for 'ꜫekaʒ', 'Vrega' for 'Vaega'"
+  },
+  "Y": {
+   "failed": false,
+   "score": 2,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 10,
+   "normalisations": 60,
+   "worst_error": "cuatrillo-h→'ch', tresillo→'E', ʒ→'h' throughout (chupam, Eih, kitzih)"
+  },
+  "better": "X"
+ },
+ {
+  "page_id": "6acc3daf230e9a56175cd43c",
+  "X": {
+   "failed": false,
+   "score": 4,
+   "dropped_lines": 0,
+   "invented_lines": 0,
+   "misread_words": 3,
+   "normalisations": 0,
+   "worst_error": "minor accent readings in Spanish column (tomò/perdiò)"
+  },
+  "Y": {
+   "failed": true,
+   "score": null,
+   "dropped_lines": null,
+   "invented_lines": null,
+   "misread_words": null,
+   "normalisations": null,
+   "worst_error": "empty transcription"
+  },
+  "better": "X"
+ }
+]

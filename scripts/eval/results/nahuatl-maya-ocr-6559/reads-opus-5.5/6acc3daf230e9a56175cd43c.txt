@@ -1,0 +1,29 @@
+<scan-quality>fair</scan-quality>
+<language>Kaqchikel</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<warning>Foxing, staining and a damaged lower edge; mirror-reversed show-through and offset from the facing leaf are not transcribed. Two large brown handwritten numerals "2" in the right column/margin. Right edge of the Spanish column is slightly cut</warning>
+<meta>Catchwords: R. Kitziʒ (left column), R. Es (right column)</meta>
+
+P. Balaga xugam vi can ru tiohʒil ru vinakil kanima ahaval Jesu Christo?
+R. Chupam ru ꜭhutul ru ꜭ,alamal S. Maria hunelic ꜫopoʒ xʒkekeriçax vi can ruma ru ꜩintaçibal Espiritu Santo.
+P. Ma xçach pe ru ꜫopohil S. Maria tok xtiohilan ru hugiçic ꜭahol Dios, chupam ru ꜭhutul chupam ꜭa ru ꜭ,alamal?
+R. Mani xçachtaʒ ru ꜫopohil, xax hunelic vi ꜫopoʒ: ꜫopoʒ chuxe ru santoilaʒ alanic; ꜫopoʒ chupam ru santoilaʒ alanic; ꜫopoʒ ꜭa chui ru santoilaʒ alanic.
+P. Dios pe ri Santa Maria?
+R. Mani Dios taʒ, xa alai richin Jesu Christo ru hugiçic ꜭahol Dios.
+P. Hagari kanima aʒaval Jesu Christo Dios pe ri?
+
+<column-break/>
+
+P. A donde tomò carne humana nueſtro Señor Jeſu Chriſto?
+R. En el vientre de la ſiempre Virgen Maria encarnò por obra del Eſpiritu Santo.
+<insert>2</insert>
+P. Se quebrantò, ò ſe perdiò la Virginidad de Maria Santiſſima quando encarnò en ſu vientre el Hijo de Dios?
+R. No perdiò ſu Virginidad; ſino q̃ quedò ſiempre Virgen intacta. Virgen antes del Santiſſimo parto; Virgen en el parto, y Virgen deſpues de ſu parto Santiſſimo.
+<insert>2</insert>
+P. Es por ventura Dios la Virgen Maria?
+R. No es Dios ſino Madre de Chriſto, verdadero Hijo de Dios.
+P. Nueſtro Señor Jeſu Chriſto es Dios?
+
+<vocab>catechism, P. (pregunta), R. (respuesta), Jesu Christo, S. Maria, Espiritu Santo, ꜫopoʒ (virgin), Virginidad, encarnación, Kaqchikel–Spanish doctrina</vocab>

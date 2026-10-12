@@ -1,0 +1,85 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>7</page-num>
+<warning>Bilingual Nahuatl (M.) and Spanish (C., italic) confession text. Show-through from the other side visible; not transcribed.</warning>
+### 4. MANDAMIENTO.
+
+M. Ninoyolcuitia: ca oni-
+quinmahuizpolo no-
+huãpohua oniquimil-
+hui ixtecqui tlahuan-
+qui ahuilnenqui te-
+tlachiuhqui; ompo-
+hualpa, ihuan chi-
+cocpa.
+
+C. *Me confieſſo que deſ-
+honré à mis Proximos,
+les dixe: Ladron, Bor-
+racho, Luxurioſo, He-
+chizero; quarenta, y
+ſiete vezes.*
+
+M. Niquincocolia no-
+huanpohua, ihuan ye-
+quipiè ce xihuitl inin
+neyolcocoliztli.
+
+C. *Les tengo odio â mis
+proximos, y tiene un
+año eſte odio.*
+
+M. Oniquinmahuizpolo
+huehuetque, ihuan
+ilamatlacame, oni-
+quinpanahui, amo oni-
+quintlapalo; ompual-
+pa, ihuan chicuexpa.
+
+C. *Deſhonré à los Vie-
+jos, y Viejas perſonas,*
+<column-break/>
+*los paſè, no les ſalu-
+dè quarenta, y ocho
+vezes.*
+
+M. Amo onicmahuiztili
+notatzin, ompoalpa,
+ihuan chiuhnacpa.
+
+C. *No honré â mi Pa-
+dre, quarenta, y nueve
+vezes.*
+
+M. Amo onicmahuiztili
+nonantzin, ompoalpa,
+ihuan matlacpa.
+
+C. *No honrè à mi Ma-
+dre, cinquenta vezes.*
+
+M. Tecaonitlato ompual-
+pa, ihuan matlacpa,
+ihuan cecpa.
+
+C. *Hablè mal de otro,
+ſinquenta, y una vez.*
+
+### 5. MANDAMIENTO.
+
+M. Oniquinmicti nohuã-
+pohua, Ompualpa,
+ihuan matlacpa, ihuã
+ôcpa.
+
+C. *Heri, ó les di golpean-
+do, ô aporreando â mis
+proximos cinquenta, y
+dos vezes.*
+
+M. Oniquinmicti, oni-
+<meta>catchword: quin</meta>
+<vocab>Mandamiento, neyolcuitiliztli, huãpohua, Proximos, ompoalpa, matlacpa, confession manual, Nahuatl-Spanish</vocab>

@@ -1,0 +1,42 @@
+<scan-quality>fair</scan-quality>
+<language>Kaqchikel</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>62</page-num>
+<warning>Handwritten colonial Guatemalan hand (photographic facsimile), with tresillo (ꜫ) and z-tailed letters; contrast is low in places</warning>
+<meta>Catchword: hil</meta>
+
+ꜫhikiꜫhin Andres ~ nima mac pe tikaban ri vemani kome
+vayiʒ ꜫhupam rimevayibal ꜫiʒ Martin, kitziʒ an ꜫhini
+ma mac tikaban rumal kitziʒ ha rucaʒ rupixa Sancta y
+glesia. Andres ~ naklaga ꜫhokpam nak on ꜫhi ꜫiʒ riꜫa
+ton vi camiçanel mac ꜫhi vetn maqui komevayiʒ chupam
+Martin. ~ Tavagaxaʒ na an ꜫhupam vae ꜫhoʒmilaʒ
+ꜫiʒ bijn can tzolꜫomin can ꜫhupam kaghabal, xuyacan ri
+katata ꜫhikiꜫhin at nurimal vue taga tikaget vi tiketa
+maʒ vi ruꜫhoʒmil ri kitziʒ ha nima mevayibal ꜫiʒ, xahani
+bal ꜫiʒ retam rughiquibaan ruꜫatom pe can xauiha ri S.to
+Padre Papa roxinbi paulo, xaxere kitziʒ vi ꜫhinima Cami
+çanel mac, ruꜫatom can ꜫhiquiʒ yndios vinak, ri vegoʒ ma-
+qui timevayiʒ maquipe tixahaniʒ ꜫhupam xaviga tixibin
+ꜫhinima camiçanel mac tiban ꜫhuaꜫh Dios, ꜫhaa. ~
+Vrega ruꜫihil mevayibal ꜫiʒ hee. ~
+¶ Hari ronohel Viernes tantigulun taga tikape ꜫhupam
+ruꜫihil ru semanayl Quaresma. ~
+¶ Rugin Sabado Sancto. ~
+¶ Rugin ru Vigilia ralaxibal ꜫiʒ kahaual Jesu xpto, vue
+taga mani quix mevayiʒ ꜫhupam vae mevayibal ꜫiʒ ~
+Vuepe ti vele ꜫaʒ rutiyc ghac ꜫhupam rixahan ꜫiʒ kitziʒ ꜫhini
+ma camiçanel mac, tiban ꜫhuaꜫh Dios ꜫhaa. ~
+Hagari rughakapil rugiyal pe el ruꜫihil quaresma rugin
+ronohel ꜫhiel viernes, Sabado, Vuepe quatro temporas. ~
+Rugin Vigilia Maquina, y mevayibal ꜫiʒ taʒ rumal ma
+ni ꜫatom camiçanel mac ꜫhiviʒ riyx yndios vinak ꜫhaa ~
+¶ Haxaxmaqui vi yaom ꜫhiviꜫhin ri vue quix ghacun
+ꜫhupam kitziʒ nima camiçanel mac tiban ꜫhuaꜫh Dios. ri
+ve que re tiban ꜫhaa. ~
+Ha ꜫhigari rix ꜫekal, ꜫhupam ruꜫihil mevayibal ꜫiʒ, xa
+ki huperaʒ vepe caperaʒ ꜫhi lekun vay, rugin halay ꜫhaʒ,
+çakul tilo, xa ghutu te mebal ga hala ri ꜫhin y vinakil tio
+
+<vocab>mevayibal ꜫiʒ (fasting day), Andres, Martin, Santa Yglesia, Viernes, Sabado Sancto, Vigilia, Quaresma, quatro temporas, Padre Papa Paulo, yndios vinak, camiçanel mac, Dios</vocab>

@@ -1,0 +1,29 @@
+<scan-quality>fair</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<warning>Image is a cropped fragment: the right edge cuts every line mid-word, the top line is sliced through horizontally and the bottom line is partly cut; the lower half of the image is empty white. A dark gutter strip runs down the left side. Some heavy, blotted print in the middle lines.</warning>
+<unclear>top line cut off horizontally, not legible</unclear>
+oppa, nozo nappa niquimixelehuiaya in zazo aquiqu<unclear>[cut off]</unclear>
+ma Namiquêque, ma Ichpôpochtin, ma zan yuhne<unclear>[cut off]</unclear>
+mi. Nicnocuitia : Ca cana Cempoalpa onictenquix<unclear>[cut off]</unclear>
+tzotlatolli, in Ahuilnemiliztlâtolli imixpan in oc<unclear>[cut off]</unclear>
+Nohuampohuan; in Yehuantinin âzo ic oniquimixtlâp<unclear>[cut off]</unclear>
+oniquinyolizahui ; âzo oniquinyoleuh in ihuicpa <unclear>[cut off]</unclear>
+colli. Auh ca yuh anquihualtocatiazque, (*irán su*<unclear>[cut off]</unclear>
+anquittotiazque in occequi, in amotlâtlacol, huel <unclear>[cut off]</unclear>
+quipacholiztica, choquiztica. Auh intla yuh anqu<unclear>[cut off]</unclear>
+N. P; ma yê yuh ompachihui in amoyolloi, ca zan<unclear>[cut off]</unclear>
+amechmopôpolhuiliz in Dios, in zazo iclâ yez, <unclear>[cut off]</unclear>
+tlâtlacol. Auh inic in itechcopai namechcenyolmaxi<unclear>[cut off]</unclear>
+tlacaquican, N. P; ihuan xicmocenyectenehuilican <unclear>[cut off]</unclear>
+quizcateicnoittaliztzin in Dios. (*In Vit. PP.*)
+
+Ca ce Mictlan Telpocatl huel oquimicti in Itâtzi<unclear>[cut off]</unclear>
+in Iteachcauh. (*á su hermano mayor*) Ihuan zatepan ca âm<unclear>[cut off]</unclear>
+hualli in tlâtlacolli, in oquimotequiuhti. Ic ommomati<unclear>[cut off]</unclear>
+yê aoc huel momaquixtiz. Tel ceppa oquimocaquiti in<unclear>[cut off]</unclear>
+machtianis in quimohuecapanilhuiaya in ixquich in Ite<unclear>[cut off]</unclear>
+liztzin in Dios. Ic in Telpocatl omoyollapan, omoyolchic<unclear>[cut off]</unclear>
+moyolcuitiz; inic Dios quimotlapôpolhuiliz. Yuh oq<unclear>[cut off]</unclear>
+<vocab>Cempoalpa, Ahuilnemiliztlâtolli, tlâtlacolli, Dios, Mictlan, Telpocatl, Iteachcauh, In Vit. PP., moyolcuitiz, confession</vocab>

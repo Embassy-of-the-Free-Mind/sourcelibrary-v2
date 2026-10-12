@@ -1,0 +1,469 @@
+[
+ {
+  "stderr": "",
+  "page_id": "6acc3ae6c1411f8cc628f5e8",
+  "exit": 0,
+  "secs": 1380,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 11,
+    "normalisations": 3,
+    "worst_error": "Normalised Spanish orthography and injected markdown formatting for parentheticals, misread 'huehy' as 'huel' and 'itlâ' as 'iclâ', and dropped several line-final characters."
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 4,
+    "normalisations": 0,
+    "worst_error": "Misread long-s in 'ſu' as 'fi', dropped 'y' before 'u', and misread 'oq' as 'oa' at the end of the page."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "jetski: no output produced — a tool required the \"command\" permission that headless mode cannot prompt for, so it was auto-denied. Add an allow-rule under permissions.allow in settings.json (e.g. command(<target>)). Alternatively, re-run with --dangerously-skip-permissions to auto-approve all tools.",
+  "page_id": "6acc341b1ed1cb52b01ebf10",
+  "exit": 0,
+  "secs": 15,
+  "parsed": null,
+  "raw": ""
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3b23c1411f8cc628f8c7",
+  "exit": 0,
+  "secs": 92,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 5,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 0,
+    "worst_error": "Misread 'omozcali' as 'omozazli' (in verse 8)"
+   },
+   "Y": {
+    "failed": false,
+    "score": 5,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 0,
+    "worst_error": "Misread 'omozcali' as 'omozazli' (in verse 8)"
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3ac2c1411f8cc628f2d5",
+  "exit": 0,
+  "secs": 93,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 16,
+    "normalisations": 2,
+    "worst_error": "Missed the interlinear insertion 'ca' in 'tlatocahuani', instead reading 'tlato huani'."
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 10,
+    "normalisations": 16,
+    "worst_error": "Misread 'mo chipahuili' as 'mochihuili', changing the root meaning from 'cleanse/purify' to 'do/make'."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc39bcc1411f8cc628d305",
+  "exit": 0,
+  "secs": 83,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 3,
+    "normalisations": 4,
+    "worst_error": "Misread 'coneuh' as 'coneuz' and normalized several tilde abbreviations to standard forms (e.g. 'ipã' to 'ipan', 'q~' to 'que')."
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 6,
+    "normalisations": 0,
+    "worst_error": "Multiple letter-level misreads (e.g., 'quitocazq~' instead of 'quitoacaq~', 'oquimotili' for 'oquimottili') and incorrect page number in metadata."
+   },
+   "better": "X"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3c3577e6be3481e74a87",
+  "exit": 0,
+  "secs": 69,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 2,
+    "normalisations": 15,
+    "worst_error": "Extensive normalization of long-s, macrons, and archaic spellings; misread catchword 'quia.' as 'quin-' appended directly to text."
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 2,
+    "normalisations": 0,
+    "worst_error": "Misread 'tlachiahqui' as 'tlachiuhqui' and the catchword 'quia.' as 'quin'."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3bb6c1411f8cc62905d5",
+  "exit": 0,
+  "secs": 76,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 55,
+    "normalisations": 8,
+    "worst_error": "Omitted over 30 words as [illegible] and misread phrases like 'xaiantes' for 'barios'"
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 18,
+    "normalisations": 22,
+    "worst_error": "Completely misread the phrase 'luys de velasco... y casa real y rreparos' as 'hijo a los quales auia que pagar a real y se pagauan'"
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc39f8c1411f8cc628db69",
+  "exit": 0,
+  "secs": 92,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 2,
+    "normalisations": 0,
+    "worst_error": "Transcribed 'cenca' as 'cença' on line 17 and omitted the page number '56'"
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 10,
+    "worst_error": "Systematically normalised long-s to s and nasal tildes to n, and hallucinated an accent on 'iyéctetlayecolticatzitzihuan'"
+   },
+   "better": "X"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc35281ed1cb52b01eea96",
+  "exit": 0,
+  "secs": 79,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 5,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 0,
+    "worst_error": "Corrected the original printed typo 'ixpanizinco' to 'ixpantzinco'"
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 2,
+    "normalisations": 5,
+    "worst_error": "Systematically normalized nasal tildes to 'n' (e.g., cẽca to cenca) and missed the tilde on qmimacaxilia"
+   },
+   "better": "X"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3ba1c1411f8cc6290221",
+  "exit": 0,
+  "secs": 63,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 9,
+    "normalisations": 4,
+    "worst_error": "Misread 'quicuani' as 'quiauani', 'ynizquicanicac' as 'ynizquiamicac', and 'ytlacalva' as 'ytlacavhca'"
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 1,
+    "invented_lines": 0,
+    "misread_words": 0,
+    "normalisations": 4,
+    "worst_error": "Dropped the marginal folio number '299.' from the text body"
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3d60230e9a56175cc8ab",
+  "exit": 0,
+  "secs": 93,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 18,
+    "normalisations": 15,
+    "worst_error": "Systematically misreading marginal checkmarks as the letter 'z' and misreading 'tical. l. tichij' as 'hucal. l. hichij'."
+   },
+   "Y": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 22,
+    "normalisations": 1,
+    "worst_error": "Falsely claiming line endings are cut off (dropping several words) and making severe paleographic errors like 'kanal' for 'hanal' and 'ñudar' for 'trauar'."
+   },
+   "better": "X"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3e1b230e9a56175cdf46",
+  "exit": 0,
+  "secs": 104,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 0,
+    "normalisations": 0,
+    "worst_error": "Removed original line breaks and line-end hyphenations to merge text into paragraphs"
+   },
+   "Y": {
+    "failed": false,
+    "score": 5,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 0,
+    "normalisations": 0,
+    "worst_error": "Missing minor spaces before some punctuation marks (such as colons and question marks)"
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3de1230e9a56175cdab2",
+  "exit": 0,
+  "secs": 121,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 2,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 6,
+    "worst_error": "Failed to preserve original line breaks and normalised all ¡ marks to ¿"
+   },
+   "Y": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 2,
+    "invented_lines": 0,
+    "misread_words": 1,
+    "normalisations": 1,
+    "worst_error": "Dropped the header and footer lines; missed the special ħ character and kiuil typo"
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3d6d230e9a56175ccb8f",
+  "exit": 0,
+  "secs": 92,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 8,
+    "normalisations": 8,
+    "worst_error": "Misread Maya pronoun 'tu batanba' as 'ti batanba' 3 times; misread manicule as '⊏'; normalized historical 'Descaxcarar' to 'Descascarar'."
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 3,
+    "normalisations": 2,
+    "worst_error": "Misread 'osi esento' as 'ofi çiento' due to misinterpreting the long s."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3d74230e9a56175ccd15",
+  "exit": 0,
+  "secs": 106,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 13,
+    "normalisations": 12,
+    "worst_error": "Systematically misreads 'vue' as 'vuz', completely normalises away all Parra characters (ꜭ), and makes numerous spacing errors while dropping the word 'ki' on line 16."
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 9,
+    "normalisations": 0,
+    "worst_error": "Systematically hallucinates the tresillo character (ꜫ) in place of similarly-shaped h, k, and tz."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3de4230e9a56175cdb00",
+  "exit": 0,
+  "secs": 120,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 1,
+    "invented_lines": 0,
+    "misread_words": 6,
+    "normalisations": 0,
+    "worst_error": "Completely ignored line breaks and column layout; misread 'ti lel' as 'titel'."
+   },
+   "Y": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 0,
+    "normalisations": 5,
+    "worst_error": "Normalised barred h (ħ) to regular h."
+   },
+   "better": "Y"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3da5230e9a56175cd3c7",
+  "exit": 0,
+  "secs": 81,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 3,
+    "dropped_lines": 1,
+    "invented_lines": 0,
+    "misread_words": 18,
+    "normalisations": 0,
+    "worst_error": "Dropped the final catchword 'hil' and hallucinates the tresillo character in regular words (e.g., chuach -> ꜫhuaꜫh, chaa -> ꜫhaa)."
+   },
+   "Y": {
+    "failed": false,
+    "score": 2,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 27,
+    "normalisations": 58,
+    "worst_error": "Aggressively normalises Parra characters and abbreviations (ꜫh -> ch, xp̄to -> christo) and misreads the tresillo (ꜫ) as 'E' or 'z' and paragraph marks as 'C'."
+   },
+   "better": "X"
+  }
+ },
+ {
+  "stderr": "",
+  "page_id": "6acc3daf230e9a56175cd43c",
+  "exit": 0,
+  "secs": 75,
+  "parsed": {
+   "X": {
+    "failed": false,
+    "score": 4,
+    "dropped_lines": 0,
+    "invented_lines": 0,
+    "misread_words": 5,
+    "normalisations": 10,
+    "worst_error": "misread cuatrillo with comma as tresillo with comma (ꜭ,alamal instead of ꜫ,alamal) and missed 'i' in xçachitaʒ"
+   },
+   "Y": {
+    "failed": true,
+    "score": 0,
+    "dropped_lines": 54,
+    "invented_lines": 0,
+    "misread_words": 0,
+    "normalisations": 0,
+    "worst_error": "empty transcription"
+   },
+   "better": "X"
+  }
+ }
+]

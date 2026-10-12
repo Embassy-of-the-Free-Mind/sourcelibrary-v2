@@ -1,0 +1,31 @@
+<scan-quality>fair</scan-quality>
+<language>Yucatec Maya</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>12</page-num>
+<warning>Grey, low-contrast photographic reproduction; a few letters faint. Parallel Yucatec Maya (left) and Spanish (right) columns</warning>
+
+á lukez ú bonlilóob in puczikal, iix á cilichcuntic in pixan.
+
+Olalcuntez, in Dios, in puczikal, utial in bóotic in kebanóob, utial in uetħic le tuntahulóob cá cú talelóob, utial in cumcintic le kaz ɔibolahóob cá cú ahauinticen, iix utial in-nahaltic le tibilbeilóob cá cú kanantaltené.
+
+Chup in puczikal ti humpel munil yacunahul ti á utzil, ti humpel hah pec ti in kebanóob, ti humpel mekáan yacunah utial y in lakóob, iix ti humpel heɔanil macunzah tile yokolcab: utial cá bay cuxlacen tzayanen ti in yumtzilóob, yacunah ti in kahualóob, utz ti in etyacunahóob, iix utzul tħanil ti in ah cħecħóob.
+
+Uanten, yumé, y á ɔabilah utial in tocicimba ti le tzucyahil y le cá cú tukolalticen á nachcuntic tile cocziɔil y le yatzil, le nonohbail y le mukolal, iix pakzizil y le tħabáan olil.
+
+ɔáten, in Dios, tiblil ti le meyhulóob, nohoch puczikal ti le tec lubul kazóob, mukanil titel nummiaóob, tiblil titel utzóob, ɔá olil titel okotba, tiblil titel hanal, ɔocbezahul ti in kocholóob, iix heɔanil ti in xul uolahulóob.
+
+<column-break/>
+
+mi voluntad, quiteis las manchas de mi corazon, y santifiqueis mi alma.
+
+Fortaleced, mi Dios, mi corazon, para satisfacer mis pecados, para reprimir las tentaciones que vienen para reprimir los malos deseos que reinan en mí, y para alcanzar las virtudes que necesito.
+
+Llenad mi corazon de un tierno amor de tu bondad, de un verdadero aborrecimiento de mis pecados, de un abrasado amor, para con mis prógimos, y de un firme desprendimiento del mundo: para que así viva unido con mis superiores, amar á mis enemigos, hacer bien á los que me aman, y hablar bien de mis inferiores.
+
+Socorredme, Señor, con vuestra misericordia para defenderme de la impureza con la que me molesta, retiradme de la avaricia con la misericordia, la soberbia con la humildad, y la tibieza con fervorosa diligencia.
+
+Cóncedeme, mi Dios, prudencia en las obras, gran corazon en las violentas caidas, fortaleza en los trabajos, prudencia en los bienes, cuidado en la oracion, templanza en la comida, cumplimiento en mis obligaciones, y firmeza en mis resoluciones.
+
+<vocab>prayer, puczikal, pixan, kebanóob, Dios, yokolcab, misericordia, humildad, templanza, Yucatec Maya, Spanish parallel text</vocab>

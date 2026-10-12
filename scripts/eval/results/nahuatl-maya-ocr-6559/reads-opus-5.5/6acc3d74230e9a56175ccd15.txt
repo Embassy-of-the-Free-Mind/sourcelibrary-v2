@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>Kaqchikel</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten humanist book hand, colonial Guatemalan orthography with cuatrillo (ꜭ) and tresillo (ꜫ); faint reversed folio number "59" at top left is show-through and is not transcribed</warning>
+<meta>Catchword: ma</meta>
+
+ha tannima ahoxel vacami ti <gloss><unclear>ũ</unclear></gloss>
+quiban Conohel Christianos vi
+nak, ha ꜭhinima y go vinak vi
+quex quinimaꜫ, que co que çaꜫ, que
+quilocoꜫ, tiqui luc, tiqui pathna
+uipe quij ꜭhiquivaꜭh he Padres, Sa
+çerdotes; heruta ta canimas, al
+gualay qui ꜭhin ꜭhuvaꜭh Dios -
+querega ha roquicam, haga re
+ghetalim, kiꜫih ꜭhiquix maca
+mo, quix ꜭhuꜫ ꜭhu, quix yoꜫoyo,
+quix çak pile, quix çak maha ꜭhi
+xibibal y vij tok ti vue tamaꜫ y
+mac pani gux: rumal vue maqui
+he y ni mam, vue maqui he y vo
+queçam qui locolaꜫ kiꜫih vue pe
+
+<vocab>Christianos, Padres, Sacerdotes, Dios, ꜭhuvaꜭh, kiꜫih, xibibal, Kaqchikel doctrina</vocab>

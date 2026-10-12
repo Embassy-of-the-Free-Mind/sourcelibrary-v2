@@ -1,0 +1,37 @@
+<scan-quality>fair</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>477</page-num>
+<meta>Folio and leaf numbers at top: "34-cº" (top left, with a circled mark), "477" (brown ink, top centre), "45" (top right).</meta>
+<warning>Handwritten 16th-century Spanish secretary/procesal hand, very cursive and heavily abbreviated; many words uncertain. Pictorial (Nahua tlacuilo) drawings with short Spanish labels. Lower right corner of the leaf is torn.</warning>
+Como davan al bisorey don luys de velasco y su hijo ciento y veinte cargas de yerua cada
+dia para su cavalleriza y casa y a doña ana su hija diez cargas de yerva <unclear>vino a esta</unclear> <unclear>la</unclear>
+yerua <unclear>que se le da</unclear> por repartimiento para el bisorey y a <unclear>nuestros</unclear> para la qual les pagauan a quar
+<unclear>tillo</unclear> por cada carga aunque a los macehuales y a los <unclear>pobres</unclear> de los <unclear>xaiantes</unclear> costaua a los
+<unclear>que yban a cogella</unclear> a medio real cada carga / como valia el ordinario <unclear>[illegible — 3-4 words]</unclear>
+desta cibdad / lo q el <unclear>[illegible — 2 words]</unclear> ante my <unclear>Ber.do</unclear> de vilches <unclear>[illegible — 4-5 words]</unclear>
+alcaldes y regidores desta cibdad de mexico por lengua de <unclear>Juan Gonçalez</unclear> <unclear>[illegible — 3 words]</unclear> y en
+en fe dello lo firmaron de sus nonbres /
+
+Ante my <unclear>Ber.do</unclear> de vilches
+<unclear>[signature with paraph, illegible]</unclear>
+
+<image-desc size="large" type="diagram" significance="high">Pictorial tribute register in the indigenous style: on the left, blue disc numeral signs stacked above a row of five bundles of green grass (fodder), each topped by a pink flag; a dotted line leads to the drawn head of Don Luis de Velasco beside one grass bundle, and to the bust of Doña Ana de Velasco beside another bundle topped by three pink discs.</image-desc>
+<insert>vale</insert> <insert><unclear>[illegible — 3 short words]</unclear></insert> <insert>Don luys de velasco</insert> <insert>Doña ana de velasco</insert>
+
+Como davan el ordinario cada semana / veinte peones / dos albaniles / dos carpinteros y dos en
+caladores / veinte indios de <unclear>servicio</unclear> para traer agua y barrer para el servicio del dicho bisorey don
+luys de velasco <unclear>aunque y casa real y reparos della</unclear> / por repartimiento de la cibdad de mexico
+<unclear>[illegible — 4-5 words]</unclear> se les pagase <unclear>[illegible — 3 words]</unclear> lo qual ansi mismo declararon <unclear>[illegible — 2 words]</unclear> el dicho
+governador alcaldes y regidores por lengua del dicho interprete /
+
+Ante my <unclear>Ber.do</unclear> de vilches
+<unclear>[signature with paraph, illegible]</unclear>
+
+<image-desc size="medium" type="diagram" significance="high">A ruled strip of five compartments showing labour service: a worker with a digging stick under a flag (peones), with a red-and-blue day sign marked "lunes"; two heads beneath a stone-and-hand sign (albañiles); two heads beneath an axe/adze sign (carpinteros); two heads beneath a plaster or whitewash sign (encaladores); and a servant with a water jar and broom beneath a flag (indios de servicio).</image-desc>
+<insert>peones para <unclear>los reparos</unclear></insert> <insert>lunes</insert> <insert>albañiles</insert> <insert>carpinteros</insert> <insert>encaladores</insert> <insert>indios de servicio para agua y barrer</insert>
+
+<insert>2 don luys de velasco bisorrey</insert>
+<image-desc size="large" type="portrait" significance="high">The viceroy Don Luis de Velasco, bearded, in dark cap and robe, seated on an X-frame chair, pointing, with a speech scroll before his mouth and a name glyph above his head; to the left a building facade (the palace) with a frieze of circular discs.</image-desc>
+<vocab>Luis de Velasco, bisorey, Doña Ana de Velasco, yerva, repartimiento, macehuales, peones, albañiles, carpinteros, encaladores, ciudad de México, Vilches, tribute</vocab>
