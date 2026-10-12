@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
@@ -127,6 +128,17 @@ export const GET = withApiAuth(async (
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const meteredAnon = !isBotRequest && (await isMeteredAnonRequest(request));
     const botPageLimit = isBotRequest || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
+    if (isBot(request)) {
+      // Chapter mode resolves its span later; the log keeps the requested span,
+      // and an unbounded request is clamped whenever the book exceeds the ceiling.
+      const requestedTo = toPage ?? (book.pages_count || 0);
+      logBotRead(request, {
+        route: 'text', book: resolvedBookId, trusted: !isBotRequest,
+        pageFrom: fromPage ?? 1, pageTo: requestedTo,
+        maxPage: isBotRequest ? botPageLimit : undefined,
+        clamped: isBotRequest && botPageLimit !== undefined && requestedTo > botPageLimit,
+      });
+    }
 
     // Provenance. Two layers, deliberately different in reach:
     //   - the INVISIBLE imprimatur goes on every page of every response (this

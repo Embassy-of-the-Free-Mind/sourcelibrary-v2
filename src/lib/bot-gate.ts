@@ -56,6 +56,17 @@ const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbo
 // are NOT here and stay gated.
 const USER_FETCH_AGENTS = ['claude-user', 'chatgpt-user', 'perplexity-user'];
 
+/**
+ * The KNOWN_BOTS token this request's UA matched, or null. Used to attribute
+ * gated reads in `bot_reads` (src/lib/bot-reads.ts, #4309). Our own MCP server
+ * returns null — it is logged separately in mcp_usage (#4306).
+ */
+export function botNameFor(request: Request): string | null {
+  const ua = (request.headers.get('user-agent') || '').toLowerCase();
+  if (ALWAYS_ALLOW.some(bot => ua.includes(bot))) return null;
+  return KNOWN_BOTS.find(bot => ua.includes(bot)) ?? null;
+}
+
 export function isBot(request: Request): boolean {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
   return KNOWN_BOTS.some(bot => ua.includes(bot));
@@ -68,10 +79,10 @@ export function isSearchCrawler(request: Request): boolean {
 }
 
 /**
- * Check if the request is trusted (bypasses the page gate) — our own MCP, a
- * search-index crawler, or a valid API key (Bearer sl_data_...).
+ * The UA-only half of isTrustedBot — no API-key lookup, so it is safe on the
+ * proxy's hot path (used there to label html rows in bot_reads, #4309).
  */
-export async function isTrustedBot(request: Request): Promise<boolean> {
+export function isTrustedByUserAgent(request: Request): boolean {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
   if (ALWAYS_ALLOW.some(bot => ua.includes(bot))) return true;
 
@@ -80,6 +91,16 @@ export async function isTrustedBot(request: Request): Promise<boolean> {
 
   // User-initiated assistant fetches (a human asked an assistant to read a page).
   if (USER_FETCH_AGENTS.some(bot => ua.includes(bot))) return true;
+
+  return false;
+}
+
+/**
+ * Check if the request is trusted (bypasses the page gate) — our own MCP, a
+ * search-index crawler, or a valid API key (Bearer sl_data_...).
+ */
+export async function isTrustedBot(request: Request): Promise<boolean> {
+  if (isTrustedByUserAgent(request)) return true;
 
   // Check for API key — holders bypass bot gating on all endpoints
   const authHeader = request.headers.get('authorization');

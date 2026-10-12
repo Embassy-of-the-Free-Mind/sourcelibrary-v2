@@ -39,6 +39,7 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import { isBot, isTrustedBot } from '@/lib/bot-gate';
+import { logBotRead } from '@/lib/bot-reads';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { freeMaxPage } from '@/lib/free-preview';
 import { markForExport } from '@/lib/provenance';
@@ -178,6 +179,14 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const partCount = Math.max(1, Math.ceil(pages.length / PART_SIZE));
   if (part > partCount) notFound();
   const slice = pages.slice((part - 1) * PART_SIZE, part * PART_SIZE);
+  if (!exempt && isBot(request)) {
+    const sliceTo = slice[slice.length - 1].page_number;
+    logBotRead(request, {
+      route: 'read', book: bookId, trusted: !untrustedBot,
+      pageFrom: slice[0].page_number, pageTo: sliceTo,
+      maxPage: clampAt, clamped: untrustedBot && clampAt !== undefined && sliceTo > clampAt,
+    });
+  }
   const partOfPage = (pageNumber: number): number => {
     const idx = pages.findIndex(p => p.page_number >= pageNumber);
     return idx < 0 ? partCount : Math.floor(idx / PART_SIZE) + 1;
