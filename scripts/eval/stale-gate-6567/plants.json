@@ -1,0 +1,150 @@
+{
+ "seed": 6570,
+ "rule": "8 of the step-2 pages drawn by plants-pick.mjs (seed 6570); 2 meaning errors each, written by hand, away from the diff hunks where the page allows; the planted English is the stored English every arm and judge sees",
+ "items": [
+  {
+   "qid": "p08",
+   "page_id": "6992cf12284cdd19fef47018",
+   "edits": [
+    {
+     "kind": "number",
+     "from": "->Mountain Herbs, Volume 7<-",
+     "to": "->Mountain Herbs, Volume 9<-",
+     "truth": "山草卷之七 (volume 7)"
+    },
+    {
+     "kind": "name",
+     "from": "# **Yuanzhi** <note>original: 遠志",
+     "to": "# **Huangqi** <note>original: 遠志",
+     "truth": "遠志 (Yuanzhi)"
+    }
+   ]
+  },
+  {
+   "qid": "p09",
+   "page_id": "6992ce7077d26f9321776e69",
+   "edits": [
+    {
+     "kind": "number",
+     "from": "**Szechuan Lovage Root** <gloss>5 mace</gloss>",
+     "to": "**Szechuan Lovage Root** <gloss>3 mace</gloss>",
+     "truth": "川芎五錢 (five qian)"
+    },
+    {
+     "kind": "negation",
+     "from": "wounds and injuries that do not penetrate the internal membrane",
+     "to": "wounds and injuries that penetrate the internal membrane",
+     "truth": "殺傷不透膜者 (wounds that do not pierce the membrane)"
+    }
+   ]
+  },
+  {
+   "qid": "p17",
+   "page_id": "6992cea1673ee1e40e32138d",
+   "edits": [
+    {
+     "kind": "number",
+     "from": "leaching it four times",
+     "to": "leaching it two times",
+     "truth": "再四淋之 (leach it again and again, four times)"
+    },
+    {
+     "kind": "number",
+     "from": "only those fifty years of age began to wear silk",
+     "to": "only those seventy years of age began to wear silk",
+     "truth": "年五十始衣帛 (at fifty)"
+    }
+   ]
+  },
+  {
+   "qid": "p22",
+   "page_id": "6a3c61c4879008ba7e160282",
+   "edits": [
+    {
+     "kind": "negation",
+     "from": "Praying, offering sacrifices, and providing for the spirits cannot be sincere or solemn without the Rites.",
+     "to": "Praying, offering sacrifices, and providing for the spirits can be sincere and solemn even without the Rites.",
+     "truth": "非禮不誠不莊 (without the rites, not sincere, not solemn)"
+    },
+    {
+     "kind": "name",
+     "from": "Zheng says:",
+     "to": "Kong says:",
+     "truth": "鄭氏曰 (Master Zheng says)"
+    }
+   ]
+  },
+  {
+   "qid": "p27",
+   "page_id": "6a3cc18aec254ff6cae0d2e6",
+   "edits": [
+    {
+     "kind": "number",
+     "from": "collected at the 5,048-day mark",
+     "to": "collected at the 5,480-day mark",
+     "truth": "五千四十八日 (5,048 days)"
+    },
+    {
+     "kind": "sense",
+     "from": "a woman who has just birthed her first-born son",
+     "to": "a woman who has just birthed her first-born daughter",
+     "truth": "頭生男嬌乳 (milk of a mother of a first-born son)"
+    }
+   ]
+  },
+  {
+   "qid": "p37",
+   "page_id": "6a3cc11fec254ff6cae09919",
+   "edits": [
+    {
+     "kind": "name",
+     "from": "☷☷<br><term>Kun</term> <gloss>The Receptive</gloss>",
+     "to": "☷☷<br><term>Qian</term> <gloss>The Creative</gloss>",
+     "truth": "坤 (Kun)"
+    },
+    {
+     "kind": "name",
+     "from": "<term>Jin</term> <gloss>Progress</gloss>",
+     "to": "<term>Mingyi</term> <gloss>Darkening of the Light</gloss>",
+     "truth": "晉 (Jin)"
+    }
+   ]
+  },
+  {
+   "qid": "p39",
+   "page_id": "6a1d609ed274b9630ccf8b9d",
+   "edits": [
+    {
+     "kind": "name",
+     "from": "assisting the Son of Heaven from above",
+     "to": "assisting the Empress from above",
+     "truth": "上佐天子 (assist the Son of Heaven)"
+    },
+    {
+     "kind": "number",
+     "from": "refer to the six stars below these",
+     "to": "refer to the four stars below these",
+     "truth": "魁下六星 (six stars)"
+    }
+   ]
+  },
+  {
+   "qid": "p40",
+   "page_id": "6992cc12018b80967354ccf8",
+   "edits": [
+    {
+     "kind": "number",
+     "from": "two inches long, one inch wide",
+     "to": "two inches long, three inches wide",
+     "truth": "廣一寸 (one inch wide)"
+    },
+    {
+     "kind": "sense",
+     "from": "Lean fish are actually superior for this method; while fatty fish are delicious",
+     "to": "Fatty fish are actually superior for this method; while lean fish are delicious",
+     "truth": "瘦魚彌勝肥者雖美 (lean fish are better; fat ones, though tasty...)"
+    }
+   ]
+  }
+ ]
+}
