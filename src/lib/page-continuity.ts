@@ -141,15 +141,98 @@ const FURNITURE_LINE = /^[\p{Lu}\p{N}][\p{Lu}\p{N}\s.,'’:-]{0,38}$/u;
  * So: a loop, one block or one line at a time, nearest opener only. Linear, and
  * there is nothing to backtrack into.
  */
+/**
+ * THE MARKUP IS NOT ALWAYS WELL-FORMED, and the two loops below must not depend
+ * on it being so (#3698). Both used to pair the tag at the edge with the NEAREST
+ * tag of the same name. Four shapes in served text defeat that, found on 50
+ * malformed pages from six books and in a seeded draw of 3,123 adjacent pairs
+ * (2026-10-12):
+ *
+ *   1. THE SPLIT ANNOTATION, by far the commonest (the reported page, Diogenes
+ *      Laertius p.33): `<margin></margin>`, then the marginal note, then a
+ *      second `</margin>`. The model closed the tag before writing into it. At
+ *      the head the empty pair was stripped and the NOTE was then read as the
+ *      page's opening words. `validateTranslationTags` (scripts/lib/
+ *      translate-core.mjs) rejoins this shape at write time; pages written
+ *      before it are still served as they were.
+ *   2. THE ORPHAN CLOSER: a `</margin>` at the foot whose nearest `<margin>`
+ *      is an earlier note with a closer of its own. Pairing them took the body
+ *      between the two as furniture.
+ *   3. THE UNCLOSED OPENER at the head. Its nearest closer belongs to a LATER
+ *      note, and the body before that went with it. Where its words end cannot
+ *      be known, so it is left alone and the strip stops there.
+ *   4. A NOTE INSIDE A NOTE: a footnote carrying a translator's `<note>`. This
+ *      one is well-formed, and nearest-tag pairing still got it wrong, cutting
+ *      the outer note in half.
+ *
+ * So the partner of a tag is found by counting depth, not by proximity. None of
+ * this repairs the text. It only decides what the edge tests read.
+ */
+
+/** Index just past the closer that balances the opener at the start of `t`, or -1. */
+function matchingCloseEnd(t: string, tag: string): number {
+  const opener = `<${tag}>`;
+  const closer = `</${tag}>`;
+  let depth = 1;
+  let pos = opener.length;
+  for (;;) {
+    const close = t.indexOf(closer, pos);
+    if (close === -1) return -1;
+    const open = t.indexOf(opener, pos);
+    if (open !== -1 && open < close) {
+      depth++;
+      pos = open + opener.length;
+    } else {
+      pos = close + closer.length;
+      if (--depth === 0) return pos;
+    }
+  }
+}
+
+/** Index of the opener that balances a closer sitting just after `body`, or -1. */
+function matchingOpenStart(body: string, tag: string): number {
+  const opener = `<${tag}>`;
+  const closer = `</${tag}>`;
+  let depth = 1;
+  let pos = body.length;
+  while (pos > 0) {
+    const open = body.lastIndexOf(opener, pos - 1);
+    if (open === -1) return -1;
+    const close = body.lastIndexOf(closer, pos - 1);
+    if (close > open) {
+      depth++;
+      pos = close;
+    } else {
+      pos = open;
+      if (--depth === 0) return pos;
+    }
+  }
+  return -1;
+}
+
 function stripLeadingFurniture(text: string): string {
   let t = text;
   for (;;) {
     t = t.trimStart();
+    // A closer with nothing before it closes nothing: drop it and look again.
+    const stray = FURNITURE_TAGS.find((name) => t.startsWith(`</${name}>`));
+    if (stray) {
+      t = t.slice(stray.length + 3);
+      continue;
+    }
     const tag = FURNITURE_TAGS.find((name) => t.startsWith(`<${name}>`));
     if (tag) {
-      const close = t.indexOf(`</${tag}>`);
-      if (close === -1) return t;
-      t = t.slice(close + tag.length + 3);
+      const opener = `<${tag}>`;
+      const closer = `</${tag}>`;
+      let end = matchingCloseEnd(t, tag);
+      if (end === -1) return t; // shape 3
+      if (!t.slice(opener.length, end - closer.length).trim()) {
+        // Shape 1: an empty pair, then a second closer before any new opener.
+        const orphan = t.indexOf(closer, end);
+        const reopen = t.indexOf(opener, end);
+        if (orphan !== -1 && (reopen === -1 || orphan < reopen)) end = orphan + closer.length;
+      }
+      t = t.slice(end);
       continue;
     }
     const eol = t.indexOf('\n');
@@ -164,9 +247,17 @@ function stripTrailingFurniture(text: string): string {
     t = t.trimEnd();
     const tag = FURNITURE_TAGS.find((name) => t.endsWith(`</${name}>`));
     if (tag) {
-      const open = t.lastIndexOf(`<${tag}>`);
-      if (open === -1) return t;
-      t = t.slice(0, open);
+      const opener = `<${tag}>`;
+      const closer = `</${tag}>`;
+      const body = t.slice(0, t.length - closer.length);
+      // Shape 1 first: counted by depth, its empty pair is balanced and the
+      // closer at the foot looks like an orphan. The note it closes starts there.
+      const prevClose = body.lastIndexOf(closer);
+      const prevOpen = body.lastIndexOf(opener);
+      const split = prevOpen !== -1 && prevClose > prevOpen && !body.slice(prevOpen + opener.length, prevClose).trim();
+      const open = split ? prevOpen : matchingOpenStart(body, tag);
+      // No opener of its own (shape 2): drop the tag, not the body above it.
+      t = open === -1 ? body : t.slice(0, open);
       continue;
     }
     const eol = t.lastIndexOf('\n');
