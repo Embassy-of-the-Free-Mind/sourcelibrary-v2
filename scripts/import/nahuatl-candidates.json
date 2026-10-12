@@ -1,6 +1,7 @@
 {
   "_comment": [
-    "Nahuatl texts we lacked (#6559), found on IA with spelling variants after a holdings survey (37 Nahuatl-tagged books, 14 live, mostly codices). check-holdings: all new."
+    "Nahuatl texts we lacked (#6559), found on IA with spelling variants after a holdings survey (37 Nahuatl-tagged books, 14 live, mostly codices). check-holdings: all new.",
+    "Comprehensive pass (2026-10-11): IA language:nah + subject Nahuatl language/literature + Aztecs, 454 items -> 340 editions after holdings/dupe filter -> printed Nahuatl works 1553-1914 one copy per edition, plus six Filologica/Amoxcalli manuscript image sets. Dropped: held/queued, mis-tagged (Santali Bible, Proust), crank (Denison), non-Nahuatl travel/history, one-image codex uploads."
   ],
   "books": [
     {
@@ -98,6 +99,897 @@
       "published": "1883",
       "text_role": "original",
       "note": "Philadelphia 1883."
+    },
+    {
+      "ia": "ayer_ms_1478",
+      "region": "nahuatl",
+      "title": "Dictionarium ex Hisniensi in Latinum sermonem",
+      "author": "Antonio de Nebrija",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1540",
+      "text_role": "original",
+      "note": "Newberry Ayer MS 1478: Nebrija's Spanish-Latin dictionary with the 16th-c. manuscript Nahuatl column."
+    },
+    {
+      "ia": "ayer_ms_1467",
+      "region": "nahuatl",
+      "title": "Incipiunt Epistolae et Evangelia, quae in diebus dominicis per anni totius circulum leguntur",
+      "author": "Catholic Church",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1500",
+      "text_role": "original",
+      "note": "Newberry Ayer MS 1467: epistles and gospels in Nahuatl, 16th c."
+    },
+    {
+      "ia": "ayer_871_a995_p45_1553",
+      "region": "nahuatl",
+      "title": "Doctrina cristiana",
+      "author": "Pedro de Gante",
+      "language": "English",
+      "languages": [
+        "English",
+        "Nahuatl"
+      ],
+      "published": "1553",
+      "text_role": "original",
+      "note": "1553. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "confessionarioma01moli",
+      "region": "nahuatl",
+      "title": "Confessionario mayor, en lengua mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1565",
+      "text_role": "original",
+      "note": "1565. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "dogmasofchurchde00unkn",
+      "region": "nahuatl",
+      "title": "[Dogmas of the Church and devotional materials in Nahuatl]",
+      "author": "Anonymous",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Latin",
+        "Spanish"
+      ],
+      "published": "1572",
+      "text_role": "original",
+      "note": "1572. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "doctrinachristia00moli_1",
+      "region": "nahuatl",
+      "title": "Doctrina christiana, en lengua mexicana muy necessaria:: en la qual se contienen todos los principales mysterios de nuestra sancta fee Catholica",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1578",
+      "text_role": "original",
+      "note": "1578. Nahuatl-language or Nahuatl-studies work; IA JohnCarterBrownLibrary, americana."
+    },
+    {
+      "ia": "tovarcodex00tova",
+      "region": "nahuatl",
+      "title": "[Tovar Codex]",
+      "author": "Juan de Tovar",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1582",
+      "text_role": "original",
+      "note": "Juan de Tovar's c.1585 illustrated history and calendar, John Carter Brown Library."
+    },
+    {
+      "ia": "teotamachiliztii00bras",
+      "region": "nahuatl",
+      "title": "Teotamachilizti iny iuliliz auh yni miquiliz Tu Temaquizticatzim Iesu Christo quenami in quim pua teotacuiloque tech teomauxti. = Ó sea, tratado de la vida y muerte de nuestro señor Jesu Christo, en l",
+      "author": "Anonymous",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1600",
+      "text_role": "original",
+      "note": "1600. Nahuatl-language or Nahuatl-studies work; IA jcbguatemala, jcbspanishamerica."
+    },
+    {
+      "ia": "librodelamiseria01juan",
+      "region": "nahuatl",
+      "title": "Libro dela miseria y breuedad de la vida del hombre: y de sus quatro postrimerias, en lengua mexicana",
+      "author": "fray Juan Bautista",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish",
+        "Latin"
+      ],
+      "published": "1604",
+      "text_role": "original",
+      "note": "1604. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "vidaymilagrosdel01juan",
+      "region": "nahuatl",
+      "title": "Vida y milagros del bien auenturado Sanct Antonio de Padua: primer predicador general de la Orden del seraphico P.S. Francisco: a quien el papa Grego. 9. por la alteza de su sabiduria, y excelente doc",
+      "author": "fray Juan Bautista",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1605",
+      "text_role": "original",
+      "note": "1605. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "lavidaymilagrosd00sena",
+      "region": "nahuatl",
+      "title": "La Vida y milagros del glorioso S. Nicolás de Tolentino, de la orden de Sanct Augustin, doctor de la Iglesia",
+      "author": "Ambrosio de Sena",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1605",
+      "text_role": "original",
+      "note": "1605. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "iesuchristosnofr00juan",
+      "region": "nahuatl",
+      "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexicana",
+      "author": "fray Juan Bautista",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1606",
+      "text_role": "original",
+      "note": "1606. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_871_a9545_m6_1607",
+      "region": "nahuatl",
+      "title": "Espeio divino en Lengva Mexicana: en qve pveden verse los padres, y tomar documento para acertar a doctrinar bien a sus hijos, y aficionallos alas..",
+      "author": "Juan de Mijangos",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1607",
+      "text_role": "original",
+      "note": "1607. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "caminodelcieloen01lenm",
+      "region": "nahuatl",
+      "title": "Camino del cielo en lengua mexicana,: con todos los requisitos necessarios para conseguir este fin, con todo lo que vn [Christ]iano deue creer, saber, y obrar, desde el punto que tiene vso de razon, h",
+      "author": "Martin de León",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1611",
+      "text_role": "original",
+      "note": "1611. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_871_a952_a7_1611",
+      "region": "nahuatl",
+      "title": "Vocabulario Manual De Las Lenguas Castellana y Mexicana: En Que Se Contienen las palabras, preguntas, y respuestas mas communes y ordinarias que se..",
+      "author": "Pedro de Arenas",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1611",
+      "text_role": "original",
+      "note": "1611. Nahuatl-language or Nahuatl-studies work; IA newberry, fav-juhseh."
+    },
+    {
+      "ia": "primerapartedels00lenf",
+      "region": "nahuatl",
+      "title": "Primera parte del sermonario del tiempo de todo el año, duplicado, en lengua mexicana",
+      "author": "Francisco León",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1614",
+      "text_role": "original",
+      "note": "1614. Nahuatl-language or Nahuatl-studies work; IA thomasfisherlatinamerican, thomasfisher."
+    },
+    {
+      "ia": "primerapartedels00mija",
+      "region": "nahuatl",
+      "title": "Primera parte del Sermonario, dominical, y sanctoral, en lengua mexicana.: Contiene las dominicas, que ay desde la septuagesima, hasta la vltima de penthecostes, platica para los que comulgan el iueue",
+      "author": "Juan de Mijangos",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1624",
+      "text_role": "original",
+      "note": "1624. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_871_a955_c35_a5_1634",
+      "region": "nahuatl",
+      "title": "Confessionario mayor, y menor en lengva mexicana. Y platicas contra las supresticiones sic de idolatria, que el dia de oy an quedado a los naturales..",
+      "author": "Bartolomé de Alva",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1634",
+      "text_role": "original",
+      "note": "Bartolomé de Alva, 1634: confessionary aimed at surviving pre-Hispanic ritual."
+    },
+    {
+      "ia": "ayer_871_a955_c36_l8_1634",
+      "region": "nahuatl",
+      "title": "Manval mexicano, de la administracion de los santos Sacramentos, conforme al Manual Toledano. Compuesto en la lengua Mexicana",
+      "author": "Catholic Church",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1634",
+      "text_role": "original",
+      "note": "1634. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "artemexicano00gald",
+      "region": "nahuatl",
+      "title": "Arte mexicano",
+      "author": "Diego de Galdo Guzmán",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1642",
+      "text_role": "original",
+      "note": "1642. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "apologiaydeclara00osso",
+      "region": "nahuatl",
+      "title": "Apologia, y declaracion en dialogos en la lengua mexicana, del symbolo de San Athanasio, y confessionario breve",
+      "author": "Juan Ossorio",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1653",
+      "text_role": "original",
+      "note": "1653. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artedelenguamexi00veta_0",
+      "region": "nahuatl",
+      "title": "Arte de lengua mexicana,: dispuesto por orden, y mandato de N. Rmo P. Fr. Francisco Treviño, predicador theologo, padre de la santa Provincia de Burgos, y comissario general de todas las de la Nueva-E",
+      "author": "Augustín de Vetancurt",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1673",
+      "text_role": "original",
+      "note": "1673. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "cathecismocencay00cast",
+      "region": "nahuatl",
+      "title": "Cathecismo cenca yn tech monequi quimatizque yn Christianos Tlaneltocanime ynicmomaquixtizque",
+      "author": "Balthasar del Castillo",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1683",
+      "text_role": "original",
+      "note": "1683. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artedelenguamexi02vzqu",
+      "region": "nahuatl",
+      "title": "Arte de lengua mexicana",
+      "author": "Antonio Vázquez Gastelu",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1689",
+      "text_role": "original",
+      "note": "1689. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "cartillamayorenl01cath",
+      "region": "nahuatl",
+      "title": "Cartilla mayor, en lengua castellana, latina, y mexicana",
+      "author": "Catholic Church",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Latin",
+        "Nahuatl"
+      ],
+      "published": "1691",
+      "text_role": "original",
+      "note": "1691. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artedelalenguame00guer",
+      "region": "nahuatl",
+      "title": "Arte de la lengua mexicana segun la acostumbran hablar los Indios en todo el Obispado de Guadalaxara, parte del de Guadiana, y del de Mechoacan. Dispuesto, por orden, y mandato de N.M.R.P. Fr. Ioseph ",
+      "author": "Juan Guerra",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1692",
+      "text_role": "original",
+      "note": "1692. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "luzmethododeconf00vill",
+      "region": "nahuatl",
+      "title": "Luz, methodo, de confesar idolatras sic, y destierro de idolatrias, debajo del tratado siguiente.: Tratado de avisos, y puntos importantes, de la abominable seta de la idolatria, para examinar por ell",
+      "author": "Diego Jaime Ricardo Villavicencio",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1692",
+      "text_role": "original",
+      "note": "Puebla 1692: method for confessing idolaters; Nahuatl ritual survivals."
+    },
+    {
+      "ia": "sermonesmexicano00veta",
+      "region": "nahuatl",
+      "title": "[Sermones mexicanos]",
+      "author": "Augustín de Vetancurt",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Nahuatl"
+      ],
+      "published": "1700",
+      "text_role": "original",
+      "note": "1700. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "Ayer_4A_2779",
+      "region": "nahuatl",
+      "title": "Arte de el idioma mexicano",
+      "author": "Manuel Pérez",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1713",
+      "text_role": "original",
+      "note": "1713. Nahuatl-language or Nahuatl-studies work; IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "farolindianoygui00pere",
+      "region": "nahuatl",
+      "title": "Farol indiano, y guia de curas de indios title: summa de los cinco sacramentos que administran los ministros evangelicos en esta America: con todos los casos morales que suceden entre indios, deducido",
+      "author": "Manuel Pérez",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1713",
+      "text_role": "original",
+      "note": "1713. Nahuatl-language or Nahuatl-studies work; IA thomasfisherlatinamerican, thomasfisher."
+    },
+    {
+      "ia": "colloquioynqueni00sant",
+      "region": "nahuatl",
+      "title": "Colloquio yn quenin oquimaxili yn tlaçomahuiz quauhnepanolli Sancta Cruz intlacemicnopilhuiani Santa. Elena",
+      "author": "Manuel de los Santos y Salazar",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1714",
+      "text_role": "original",
+      "note": "1714. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "manualdelossanto00senz",
+      "region": "nahuatl",
+      "title": "Manual de los santos sacramentos conforme al ritual de Paulo V.: Formado por mandado del ilustrissimo, y excelentissimo seor D. Juan de Palafox, y Mendoza, siendo obispo de la Puebla de los Angeles, e",
+      "author": "Andrés Sáenz de la Peña",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Latin",
+        "Nahuatl"
+      ],
+      "published": "1691",
+      "text_role": "original",
+      "note": "1691. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artedelalenguame00avil",
+      "region": "nahuatl",
+      "title": "Arte de la lengua mexicana, y breves platicas de los mysterios de N. Santa Fee Catholica, y otras para exortacion de su obligacion á los Indios",
+      "author": "Francisco de Avila",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1717",
+      "text_role": "original",
+      "note": "1717. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "nexcuitilmachiot00veta",
+      "region": "nahuatl",
+      "title": "NexcuitilMachiotl quimoteittitila. Yn to nantzin. Santa Yglesia ytechpa tlâtohua. Çe tlâtlacohuani Aic chipahualiztica. Omoyolcuiti Ocentelchihualoc Mictlan",
+      "author": "Augustín de Vetancurt",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1749",
+      "text_role": "original",
+      "note": "1749. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artenovissimadel01tapi",
+      "region": "nahuatl",
+      "title": "Arte novissima de lengua mexicana",
+      "author": "Carlos de Tapia Zenteno",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1753",
+      "text_role": "original",
+      "note": "1753. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_3a_600",
+      "region": "nahuatl",
+      "title": "Arte de la lengua mexicana",
+      "author": "José Agustín Aldama y Guevara",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1754",
+      "text_role": "original",
+      "note": "1754. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "Ayer_3A_606",
+      "region": "nahuatl",
+      "title": "Catecismo mexicano: que contiene toda la doctrina christiana con todas sus declaraciones: en que el ministro de almas hallarà, lo que á estas..",
+      "author": "Gerónimo de Ripalda",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1758",
+      "text_role": "original",
+      "note": "1758. Nahuatl-language or Nahuatl-studies work; IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "promptuariomanu00paregoog",
+      "region": "nahuatl",
+      "title": "Promptuario manual mexicano: que á la verdad podrá ser utilissimo á los parrochos para la enseñanza ; á los necessitados indios para su instrucción ; y á los que aprenden la lengua para la expe",
+      "author": "Ignacio de Paredes",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1759",
+      "text_role": "original",
+      "note": "1759. Nahuatl-language or Nahuatl-studies work; IA europeanlibraries, fav-adolfo_v_zquez_romero795."
+    },
+    {
+      "ia": "sermondenuestrag00pare",
+      "region": "nahuatl",
+      "title": "Sermon de nuestra gran reyna, poderosissima patrona, madre, y señora nuestra, Maria Santissima de Guadalupe.: En que breve, y claramente se refiere la historia de su admirable, y milagrosa aparicion; ",
+      "author": "Ignacio de Paredes",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1759",
+      "text_role": "original",
+      "note": "1759. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "brevepracticayre00velz",
+      "region": "nahuatl",
+      "title": "Breve practica, y regimen del confessonario sic de Indios, en mexicano, y castellano; para instruccion del confessor principiante, habilitacion, y examen del penitente",
+      "author": "Carlos Celedonio Velázquez de Cárdenas",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1761",
+      "text_role": "original",
+      "note": "1761. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "artevocabularioy00cort",
+      "region": "nahuatl",
+      "title": "Arte, vocabulario y confessionario en el idioma mexicano,: como se usa en el Obispado de Guadalaxara",
+      "author": "Jerónimo Tomás de Aquino Cortés y Zedeño",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1765",
+      "text_role": "original",
+      "note": "1765. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "ayer_pm_4068_4_c5_a6_1800z",
+      "region": "nahuatl",
+      "title": "Chrestomathie nahuatl: publiée pour le cours de langue mexicaine professé au siège de la Société Américaine de France",
+      "author": "Domingo Francisco de San Antón Muñón Chimalpahin Cuauhtlehuanitzin",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1800",
+      "text_role": "original",
+      "note": "1800. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "ayer_pm_4061_m35_1820",
+      "region": "nahuatl",
+      "title": "La Malinche de la Constitucion: en los idiomas mejicano y castellano",
+      "author": "Anonymous",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1820",
+      "text_role": "original",
+      "note": "1820. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "Ayer_BS345_A97_1833",
+      "region": "nahuatl",
+      "title": "El Evangelio de S. Lucas, del latin al mexicano ò mejor nahuatl",
+      "author": "Anonymous",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1833",
+      "text_role": "original",
+      "note": "1833. Nahuatl-language or Nahuatl-studies work; IA indigenouslanguagesamericas, newberry."
+    },
+    {
+      "ia": "silabariodeidiom00gali",
+      "region": "nahuatl",
+      "title": "Silabario de idioma mexicano",
+      "author": "Faustino Galicia Chimalpopoca",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1849",
+      "text_role": "original",
+      "note": "1849. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "evangeliariumepi00cath",
+      "region": "nahuatl",
+      "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mexicanum ex antiquo codice Mexicano nuper reperto: depromptum cum praefatione interpretatione adnotationibus glossario",
+      "author": "Catholic Church",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Latin"
+      ],
+      "published": "1858",
+      "text_role": "original",
+      "note": "1858. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "eptomemodof00chim",
+      "region": "nahuatl",
+      "title": "Epítome ó modo fácil de aprender el idioma Nahuatl, ó lengua mexicana",
+      "author": "Faustino Chimalpopoca Galicia",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1869",
+      "text_role": "original",
+      "note": "1869. Nahuatl-language or Nahuatl-studies work; IA robarts, toronto."
+    },
+    {
+      "ia": "glossariumazteco00bion",
+      "region": "nahuatl",
+      "title": "Glossarium azteco-latinum et latinoaztecum curâ et studio Bernardini Biondelli collectum ac digestum",
+      "author": "Bernardino Biondelli",
+      "language": "Latin",
+      "languages": [
+        "Latin",
+        "Nahuatl"
+      ],
+      "published": "1869",
+      "text_role": "original",
+      "note": "1869. Nahuatl-language or Nahuatl-studies work; IA robarts, toronto."
+    },
+    {
+      "ia": "estudiodelafilos01rosa",
+      "region": "nahuatl",
+      "title": "Estudio de la filosofia y riqueza de la lengua mexicana,: para el uso de los alumnos del seminario de Guadalajara",
+      "author": "Agustín de la Rosa",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1877",
+      "text_role": "original",
+      "note": "1877. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "gramaticateorico00rosa",
+      "region": "nahuatl",
+      "title": "Gramatica teorico-practica de la lengua mexicana.: Obra utilisima, contiene las reglas suficientes para hablar con perfeccion, y en poco tiempo este precioso idioma",
+      "author": "Francisco Rosales y Malpica",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1873",
+      "text_role": "original",
+      "note": "1873. Nahuatl-language or Nahuatl-studies work; IA jcbindigenous, JohnCarterBrownLibrary."
+    },
+    {
+      "ia": "gramticadelalen00palmgoog",
+      "region": "nahuatl",
+      "title": "Gramática de la lengua azteca ó mejicana; escrita con arreglo al programa oficial para que sirva de texto en las escuelas normales del estado",
+      "author": "Miguel Trinidad Palma",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1886",
+      "text_role": "original",
+      "note": "1886. Nahuatl-language or Nahuatl-studies work; IA americana, fav-satir_fanes."
+    },
+    {
+      "ia": "yacuiciyectenon00unkngoog",
+      "region": "nahuatl",
+      "title": "Yacuic iyec tenonotzaltzin in Jesu-Christo, quenami oquimo ihcuilhuili in san Lucas",
+      "author": "Mariano Paz y Sanchez",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1889",
+      "text_role": "original",
+      "note": "1889. Nahuatl-language or Nahuatl-studies work; IA americana, fav-aldo1111."
+    },
+    {
+      "ia": "lienzodetlaxcal00chav",
+      "region": "nahuatl",
+      "title": "Lienzo de Tlaxcalla",
+      "author": "Alfredo Chavero",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1892",
+      "text_role": "original",
+      "note": "Chavero's 1892 edition of the Lienzo de Tlaxcala."
+    },
+    {
+      "ia": "ayer_pm_4068_4_v35_1894",
+      "region": "nahuatl",
+      "title": "El milagro de la Virgen del Tepeyac",
+      "author": "Antonio Valeriano",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1894",
+      "text_role": "original",
+      "note": "1894. Nahuatl-language or Nahuatl-studies work; IA newberry."
+    },
+    {
+      "ia": "gri_33125000812210",
+      "region": "nahuatl",
+      "title": "Códice Fernández Leal",
+      "author": "Anonymous",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1895",
+      "text_role": "original",
+      "note": "1895. Nahuatl-language or Nahuatl-studies work; IA getty, americana."
+    },
+    {
+      "ia": "sacrificiodeisa00trongoog",
+      "region": "nahuatl",
+      "title": "Sacrificio de Isaac. Auto en lengua mexicana (anónimo) escrito en el ano 1678",
+      "author": "Francisco del Paso y Troncoso",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1899",
+      "text_role": "original",
+      "note": "1899. Nahuatl-language or Nahuatl-studies work; IA americana, fav-archivonomista."
+    },
+    {
+      "ia": "kalendarioydolat00unse",
+      "region": "nahuatl",
+      "title": "Kalendario ydolatrico en 16 f / N. 23. Inv.o 6.o: No. 1. appartenant à E. Eug. Goupil 1880, Paris",
+      "author": "Anonymous",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1900",
+      "text_role": "original",
+      "note": "The 'idolatrous calendar': Nahuatl ritual calendar (c.1600 MS, printed facsimile)."
+    },
+    {
+      "ia": "historiadelascos62saha",
+      "region": "nahuatl",
+      "title": "Historia general de las cosas de Nueva España",
+      "author": "de Sahagún Bernardino",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ],
+      "published": "1905",
+      "text_role": "original",
+      "note": "1905. Nahuatl-language or Nahuatl-studies work; IA getty, americana."
+    },
+    {
+      "ia": "coronamexicana00moteuoft",
+      "region": "nahuatl",
+      "title": "Corona mexicana ó historia de los nueve Motezumas",
+      "author": "Diego Luis de Motezuma",
+      "language": "Spanish",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ],
+      "published": "1914",
+      "text_role": "original",
+      "note": "1914. Nahuatl-language or Nahuatl-studies work; IA robarts, toronto."
+    },
+    {
+      "ia": "historia-tolteca-chichimeca_202405",
+      "region": "nahuatl",
+      "title": "Historia Tolteca Chichimeca",
+      "author": "Juan Bautista Cuauh­tinchan",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1500",
+      "text_role": "original",
+      "note": "Annals of Cuauhtinchan (c.1550-60), BnF Mexicain 46-58. Personal upload of the manuscript images."
+    },
+    {
+      "ia": "tratado-de-hechicerias-y-sortilegios-1553",
+      "region": "nahuatl",
+      "title": "Tratado De Hechicerías Y Sortilegios ( 1553)",
+      "author": "Fray Andrés de Olmos",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1553",
+      "text_role": "original",
+      "note": "Andrés de Olmos, 1553: Nahuatl adaptation of Castañega's Tratado de las supersticiones (1529), imported in the same wave. Filologica/Amoxcalli image set, PD mark."
+    },
+    {
+      "ia": "testeriano-ii",
+      "region": "nahuatl",
+      "title": "Testeriano II",
+      "author": "Jacobo de Testera",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1529",
+      "text_role": "original",
+      "note": "Testerian pictographic catechism (16th c.). Personal upload."
+    },
+    {
+      "ia": "codex-osuna",
+      "region": "nahuatl",
+      "title": "Codex Osuna",
+      "author": "Anonymous Nahua tlacuilo",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1563",
+      "text_role": "original",
+      "note": "1565 Nahuatl-Spanish pictorial testimony, BNE. Filologica/Amoxcalli images, PD mark."
+    },
+    {
+      "ia": "matricula-de-huexotzingo",
+      "region": "nahuatl",
+      "title": "Matricula de Huexotzingo",
+      "author": "Anonymous Nahua tlacuilo",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1559",
+      "text_role": "original",
+      "note": "1560 tribute census, BnF Mexicain 387. Filologica/Amoxcalli images, PD mark."
+    },
+    {
+      "ia": "tudela-codex",
+      "region": "nahuatl",
+      "title": "Tudela Codex",
+      "author": "Anonymous Nahua tlacuilo",
+      "language": "Nahuatl",
+      "languages": [
+        "Nahuatl"
+      ],
+      "published": "1540",
+      "text_role": "original",
+      "note": "16th c., Museo de América, Madrid. Filologica images."
     }
   ]
 }
