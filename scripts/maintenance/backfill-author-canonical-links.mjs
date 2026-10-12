@@ -22,6 +22,15 @@
  *   (under-merge over mis-merge — the #2218 stance). Every write carries provenance
  *   so it is fully auditable and reversible via `--undo`.
  *
+ *   UNIQUENESS IS NOT VALIDITY (#4313). `jan-hus` carried the bare variant
+ *   "Johannes"; no other doc did, so the exactly-one gate passed and 115 books by
+ *   a dozen different Johannes-es were linked to Jan Hus. So every name form is
+ *   screened through `matchKeyVerdict` (scripts/lib/variant-shape.mjs) BEFORE it
+ *   becomes a match key: bare forenames many people extend, compounds, role- and
+ *   edition-annotated strings are refused (reviewed mononyms — Plato, Paracelsus —
+ *   are admitted for their own doc only). Every refused match is printed with
+ *   its book count, so the under-linking this costs is visible, never silent.
+ *
  * USAGE:
  *   node scripts/maintenance/backfill-author-canonical-links.mjs            # dry run (default), LIVE books only
  *   node scripts/maintenance/backfill-author-canonical-links.mjs --apply    # write
@@ -33,6 +42,7 @@
  * Env: MONGODB_URI (set -a; source .env.production.local; set +a)
  */
 import { MongoClient, ObjectId } from 'mongodb';
+import { buildExtenderIndex, matchKeyVerdict } from '../lib/variant-shape.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
@@ -128,6 +138,24 @@ const allAuthors = await authors
 // alias-only match must ALSO share a rare token with the doc's own catalogue
 // forms — thesaurus-wide frequency <= 3, which admits surnames (drebbel: 1,
 // hokusai: 1) and refuses given names (giulio: 5, jacob: 75).
+// Corpus evidence for the `underspecified` shape — the same population and the
+// same builder the standing audit (thesaurus-variant-shape.mjs) uses, so what
+// the detector calls unsafe is exactly what this script refuses to match on.
+const extendingPeople = buildExtenderIndex((await books.aggregate([
+  { $match: { author: { $type: 'string', $nin: ['', null] }, content_type: { $ne: 'artwork' } } },
+  { $group: { _id: '$author' } },
+], { allowDiskUse: true }).toArray()).map((r) => r._id));
+// normForm -> { form, shape, slugs, books } for every name form refused as a
+// match key. `books` is filled in as references hit it, and printed at the end.
+const refused = new Map();
+/** Is this name form safe to use as a match key? Records the refusal if not. */
+function matchable(v, n, slug) {
+  const c = matchKeyVerdict(v, slug, { extendingPeople });
+  if (c.matchable) return true;
+  if (!refused.has(n)) refused.set(n, { form: v, shape: c.shape, slugs: new Set(), books: 0 });
+  refused.get(n).slugs.add(slug);
+  return false;
+}
 const tokensOf = (s) => norm(s).replace(/[^\w\s]/g, ' ').split(/\s+/).filter((t) => t.length >= 4);
 const tokenFreq = new Map();
 const nameMap = new Map();
@@ -139,6 +167,7 @@ for (const a of allAuthors) {
     if (!v) continue;
     for (const t of tokensOf(v)) docToks.add(t);
     const n = norm(v);
+    if (!matchable(v, n, a.slug)) continue;
     if (!nameMap.has(n)) nameMap.set(n, []);
     if (!nameMap.get(n).some((d) => d.slug === a.slug)) nameMap.get(n).push(a);
   }
@@ -147,6 +176,7 @@ for (const a of allAuthors) {
   for (const v of (a.aliases || [])) {
     if (!v) continue;
     const n = norm(v);
+    if (!matchable(v, n, a.slug)) continue;
     if (!nameMap.has(n)) nameMap.set(n, []);
     if (!nameMap.get(n).some((d) => d.slug === a.slug)) {
       nameMap.get(n).push(a);
@@ -163,6 +193,9 @@ for (const a of allAuthors) {
 /** nameMap hits for this string, with the alias-only rare-token guard applied. */
 function lookupPerson(raw) {
   const n = norm(raw);
+  // Count the reference a refused form turned away. A reviewed mononym is
+  // refused for every doc but its own, so the form can be in both maps.
+  if (refused.has(n)) refused.get(n).books++;
   const hits = nameMap.get(n);
   if (!hits) return null;
   const kept = hits.filter((doc) => {
@@ -308,6 +341,18 @@ console.log('--- Phase B: entity-linked books (author_entity_id -> authors doc) 
 console.log(`  scanned: ${liveEntityLinked.length} | writes staged: ${ops.length - (anchored + unanchored)} (name-fallback: ${entNameMatched})`);
 console.log(`    skipped: entity owned by >1 person ${entAmbiguous}, orphan entity (no canonical owner) ${entOrphan}`);
 console.log(`=> TOTAL author_id writes staged: ${ops.length}`);
+
+// Refused matches, ALWAYS printed (dry run and apply): a screen that drops
+// links silently is how under-linking goes unnoticed. Only forms a reference in
+// this run actually hit are listed; the full inventory is the standing audit.
+// An upper bound on links withheld: some of these the ambiguity or alias-only
+// guards would have skipped anyway.
+const turnedAway = [...refused.values()].filter((r) => r.books > 0).sort((a, b) => b.books - a.books);
+console.log(`--- Refused match keys (unsafe variant shape, #4313): ${refused.size} forms in the thesaurus, ${turnedAway.length} hit by this run, ${turnedAway.reduce((s, r) => s + r.books, 0)} references turned away ---`);
+for (const r of turnedAway) {
+  const slugs = [...r.slugs];
+  console.log(`  [${r.shape}] ${JSON.stringify(r.form)} × ${r.books} — claimed by ${slugs.slice(0, 3).join(', ')}${slugs.length > 3 ? ` +${slugs.length - 3}` : ''}`);
+}
 
 if (APPLY && ops.length) {
   // Index for the read-path author_id lookup (idempotent).
