@@ -20,7 +20,7 @@ node --env-file=.env.production.local scripts/eval/cross-family-6203/run.mjs dra
 EXTRA_BRIEFS="$PWD/scripts/eval/cross-family-6203/KIND-ADDENDUM.md" scripts/eval/second-reader/run-readers.sh $R opus claude opus read 4
 node scripts/eval/second-reader/second-reader.mjs cli-requests --run $R --reader gemini --addendum scripts/eval/cross-family-6203/KIND-ADDENDUM.md
 python3 scripts/eval/run-cli-arm.py --requests $R/readers/gemini/requests.jsonl --out $R/readers/gemini/cli-out.jsonl \
-  --arm xfam6203-gemini --model <model> --job cross-family-6203 --kind review --parallel 2 --attempts 4
+  --arm xfam6203-gemini --model <model> --job cross-family-6203 --kind review --parallel 2 --attempts 4 --no-tool-gate
 node scripts/eval/second-reader/second-reader.mjs cli-assemble --run $R --reader gemini
 node scripts/eval/cross-family-6203/run.mjs score --run $R --readers opus,gemini
 ```

@@ -34,13 +34,16 @@ scripts/eval/second-reader/run-readers.sh "$RUN" opus claude opus read 4
 # Gemini through the CLI, one page per call, the #6338 tested path; logs to the shared agy call meter.
 node scripts/eval/second-reader/second-reader.mjs cli-requests --run "$RUN" --reader gemini37
 
+# --no-tool-gate: since #6571 (2026-10-12 afternoon) run-cli-arm.py installs the OCR tool gate on every image request,
+# and its denial message tells the model to "write the transcription". A reviewer must not be told that. Without the
+# gate this is the path #6338 tested: plan mode, and the runner's own nudge when the model asks for a tool.
 # One pass over the models: 0 = every page has a reply, 3 = every model is out of quota, else the runner's error.
 gemini_reads() {
   local m rc=3
   for m in $GEM_MODELS; do
     python3 scripts/eval/run-cli-arm.py --requests "$RUN/readers/gemini37/requests.jsonl" --out "$RUN/readers/gemini37/cli-out.jsonl" \
       --arm audit6420-gemini37 --model "$m" --job convergent-audit-6420 --kind review --parallel 2 --attempts 4 \
-      --workdir "$BASE/tmp/cli-ws"
+      --no-tool-gate --workdir "$BASE/tmp/cli-ws"
     rc=$?
     [ "$rc" -eq 3 ] || return "$rc"
     echo "$(date -u +%FT%TZ) quota on $m"

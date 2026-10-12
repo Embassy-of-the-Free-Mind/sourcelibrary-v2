@@ -90,7 +90,7 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
     stub(join(bin, 'flock'), 'exit 0');
     stub(join(repo, 'scripts/eval/second-reader/run-readers.sh'), `echo "readers $2" >> ${log}`);
     // python3 = run-cli-arm.py: exit 3 (quota) for the first N calls, then 0.
-    stub(join(bin, 'python3'), `n=$(grep -c '^cli ' ${log} 2>/dev/null); m=$(echo "$*" | sed -n 's/.*--model \\([^ ]*\\).*/\\1/p'); echo "cli $m" >> ${log}; [ "$n" -lt ${quotaExits} ] && exit 3; exit 0`);
+    stub(join(bin, 'python3'), `n=$(grep -c '^cli ' ${log} 2>/dev/null); m=$(echo "$*" | sed -n 's/.*--model \\([^ ]*\\).*/\\1/p'); echo "cli $m$(echo "$*" | grep -q -- '--kind review .*--no-tool-gate' || echo ' GATED')" >> ${log}; [ "$n" -lt ${quotaExits} ] && exit 3; exit 0`);
     const out = execFileSync('bash', [join(repo, 'scripts/audit/convergent-audit-weekly.sh'), '2099-01-05'], {
       encoding: 'utf8', env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, REPO: repo, AUDIT_BASE: base, AUDIT_LOCK: join(repo, 'lock'), AUDIT_QUOTA_WAIT: '0', ...env },
     });
@@ -98,6 +98,7 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
   }
   it('no quota trouble: one Gemini pass, then assemble and score', () => {
     const { calls } = run(0);
+    // …and a review call never gets the OCR tool gate, whose denial tells the model to transcribe (#6571's default).
     expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.7-flash-low']);
     expect(calls.at(-1)).toContain('convergent-audit-weekly.mjs score --run');
     expect(calls.at(-2)).toContain('cli-assemble');
