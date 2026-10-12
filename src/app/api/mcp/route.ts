@@ -1046,6 +1046,25 @@ async function listImageFacets(args: Record<string, unknown>) {
   };
 }
 
+/**
+ * "Do you hold X?" — the holdings check #4250 asked for (`has_work`). One
+ * acquisition session reported ~108 titles missing, a large fraction already
+ * held: list_books substring-matches and search_library relevance-ranks, so a
+ * negative from either meant nothing. The backend is the public
+ * /api/books/check-duplicate (checkHoldings(), #6019), which counts hidden
+ * copies without describing them, so it is safe on this unauthenticated surface.
+ */
+async function checkDuplicate(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  for (const k of ['url', 'title', 'author', 'year', 'language', 'ia_id', 'manifest']) {
+    if (args[k] !== undefined && args[k] !== null && args[k] !== '') params.set(k, String(args[k]));
+  }
+  if (!params.has('url') && !params.has('ia_id') && !params.has('manifest') && (params.get('title') || '').length < 2) {
+    return { error: 'Provide a title (2+ characters, ideally with author), or a url / ia_id / manifest.' };
+  }
+  return apiGet('/books/check-duplicate', params);
+}
+
 async function submitFeedback(args: Record<string, unknown>) {
   await apiPost('/feedback', { message: args.message, name: args.name || null, email: args.email || null, page: args.page || null });
   return { ok: true, message: 'Feedback submitted successfully. Thank you!' };
@@ -1410,6 +1429,23 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'check_duplicate',
+    title: 'Check Holdings',
+    description: 'DOES THE LIBRARY HOLD THIS WORK? Call this BEFORE telling the user the library lacks a book, and before proposing one for acquisition. A miss from list_books or search_library is NOT evidence of absence: list_books matches words and search_library ranks by relevance, so a held book can sit behind dozens of better-ranked hits. Give a title + author (+ year if known), or a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest). Matches the same scan, the same edition, other editions and the same work, plus near and cross-lingual titles (title in any language). Returns a verdict (same_object / same_edition / possible_same_edition / other_edition / related_title / new), confidence, matches with reasons, ids and URLs, held_not_public (copies held but not yet published: counted, not described), and limits (what the check could not search). A "new" verdict from a URL alone has not searched other editions; pass the title and author too.',
+    annotations: { title: 'Check Holdings', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        title: { type: 'string', description: 'Title in any language, original or English, e.g. "Musurgia universalis".' },
+        author: { type: 'string', description: 'Author in any form ("Athanasius Kircher", "Kircher, Athanasius"). Strongly improves matching.' },
+        year: { type: 'number', description: 'Edition year, if known. Separates "same edition" from "another edition".' },
+        url: { type: 'string', description: 'A library URL or IIIF manifest for a specific copy (title then optional).' },
+        ia_id: { type: 'string', description: 'Internet Archive identifier, for an exact same-scan match.' },
+        language: { type: 'string', description: 'Language hint for the cross-lingual title match (optional).' },
+      },
+    },
+  },
+  {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
     description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
@@ -1724,6 +1760,7 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);
+    case 'check_duplicate': return checkDuplicate(args);
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
