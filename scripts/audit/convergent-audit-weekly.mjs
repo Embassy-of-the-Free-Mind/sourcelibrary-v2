@@ -7,7 +7,9 @@
  * The weekly convergent audit (#6420 lane D). Every Monday: one page per book from 60 random visible non-English books,
  * plus 20 pages lane B (scripts/batch/ocr-convergence) wrote. Opus (subscription, sealed `claude -p`) and Gemini 3.7
  * Flash (agy CLI, plan mode) each read every page against its image with the frozen #6338 brief. Posts serious-error
- * rates with Wilson 95% CIs, inter-reader agreement and the top findings as a comment on #6420.
+ * rates with Wilson 95% CIs, inter-reader agreement and the top findings as a comment on #6420. A reader that read
+ * under 80% of the pages is named with the reason (quota, no reply, unparsable; convergent-audit-lib.mjs readerStatus)
+ * and its rates and the agreement line are left out, never printed as dashes (#6203: the 2026-10-12 run).
  *
  *   node --env-file=.env.production.local scripts/audit/convergent-audit-weekly.mjs draw  --run R [--books 60] [--written 20] [--seed N]
  *   scripts/eval/second-reader/run-readers.sh R opus claude opus read 4
@@ -28,7 +30,8 @@ import { MongoClient } from 'mongodb';
 import { structureCounts, pageImageUrl } from '../eval/spot-check/lib.mjs';
 import { validateOutput, wilson, keyOf, redactRecord } from '../eval/second-reader/lib.mjs';
 import { makeRng } from '../eval/lib/paired-stats.mjs';
-import { exposureOf, kindOfFinding, kOfNBooks, kOfNMarkdown } from '../lib/review-vocabulary.mjs';
+import { exposureOf, kOfNBooks, kOfNMarkdown } from '../lib/review-vocabulary.mjs';
+import { readerStatus, seriousKinds, isSeriousPage, kindAgreement, MIN_READ_SHARE } from './convergent-audit-lib.mjs';
 
 const argv = process.argv.slice(2);
 const cmd = argv[0];
@@ -121,7 +124,7 @@ if (cmd === 'draw') {
 else if (cmd === 'score') {
   const draw = read(J('draw.json'));
   const packets = new Map(draw.pages.map((d) => [d.packet, read(J('packets', `${d.packet}.json`))]));
-  const isSerious = (p) => !!p && ([...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].some((e) => e.severity === 'serious') || p.right_page === 'no');
+  const isSerious = isSeriousPage;
   const ocrSerious = (p) => !!p && ((p.ocr_errors || []).some((e) => e.severity === 'serious') || p.right_page === 'no');
   const byReader = {};
   for (const name of READERS) {
@@ -136,9 +139,21 @@ else if (cmd === 'score') {
     byReader[name] = got;
   }
   const strata = ['random', 'lane-b-written'];
+  // Why a reader has the verdicts it has. A reader under MIN_READ_SHARE is not a reader of this run.
+  const lines = (f) => { try { return fs.readFileSync(f, 'utf8').split('\n').filter(Boolean); } catch { return []; } };
+  const parse = (l) => { try { return JSON.parse(l); } catch { return null; } };
+  const status = {};
+  for (const name of READERS) {
+    const base = J('readers', name);
+    const requests = lines(path.join(base, 'requests.jsonl')).map(parse).filter(Boolean).map((r) => r.uid);
+    status[name] = readerStatus({ uids: requests.length ? requests : [...packets.keys()], rows: lines(path.join(base, 'cli-out.jsonl')).map(parse).filter(Boolean),
+      quotaText: lines(path.join(base, 'QUOTA.txt')).join('\n'), reviewed: [...byReader[name].keys()] });
+    if (!status[name].ok && !requests.length && name === 'opus') status[name].why = `read ${status[name].read} of ${status[name].requested}: no review file for the rest (readers/opus/meta/done.log)`;
+  }
+  const counted = READERS.filter((r) => status[r].read >= MIN_READ_SHARE * status[r].requested);
+  const incomplete = READERS.filter((r) => !counted.includes(r));
   // #6203: the same verdicts typed by KIND and split by EXPOSURE, as k of n BOOKS (one page per book, the seed's
   // pick where lane B wrote several pages of one book). A reader's own `kind` wins; else the class's default kind.
-  const seriousKinds = (p) => [...new Set([...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e.severity === 'serious').map(kindOfFinding).filter(Boolean)), ...(p.right_page === 'no' ? ['wrong_leaf'] : [])];
   const typed = {};
   for (const s of strata) for (const name of READERS) {
     typed[`${s}/${name}`] = kOfNBooks(draw.pages.filter((d) => d.stratum === s && byReader[name].has(d.packet)).map((d) => {
@@ -155,6 +170,7 @@ else if (cmd === 'score') {
   for (const s of strata) for (const name of READERS) table[`${s}/${name}`] = { any_serious: rate(name, s, isSerious), ocr_serious: rate(name, s, ocrSerious) };
   // Agreement on "this page has a serious error", pages both readers read: raw agreement and Cohen's kappa.
   const agreement = {};
+  const byKind = counted.length === READERS.length ? kindAgreement(byReader.opus, byReader.gemini37) : null;
   for (const s of [...strata, 'all']) {
     const both = draw.pages.filter((d) => (s === 'all' || d.stratum === s) && READERS.every((r) => byReader[r].has(d.packet)));
     const a = both.map((d) => isSerious(byReader.opus.get(d.packet))), b = both.map((d) => isSerious(byReader.gemini37.get(d.packet)));
@@ -174,25 +190,28 @@ else if (cmd === 'score') {
     findings.push({ ...d, readers: flags, convergent: flags.length === READERS.length, errors: errs.slice(0, 4) });
   }
   findings.sort((x, y) => Number(y.convergent) - Number(x.convergent));
-  const report = { run: path.basename(R), seed: draw.seed, drawn_at: draw.drawn_at, scored_at: new Date().toISOString(), pages: draw.pages.length, read: Object.fromEntries(READERS.map((r) => [r, byReader[r].size])), typed, table, agreement, findings };
+  const report = { run: path.basename(R), seed: draw.seed, drawn_at: draw.drawn_at, scored_at: new Date().toISOString(), pages: draw.pages.length, read: Object.fromEntries(READERS.map((r) => [r, byReader[r].size])), typed, table, agreement, agreement_by_kind: byKind, reader_status: status, incomplete, findings };
   write(J('report.json'), report);
   const pct = (x) => (x == null ? '—' : `${(100 * x).toFixed(0)}%`);
-  const cell = (x) => (x.n ? `${x.k}/${x.n} = ${pct(x.rate)} [${pct(x.ci[0])}, ${pct(x.ci[1])}]` : '—');
+  const cell = (x) => (x.n ? `${x.k}/${x.n} = ${pct(x.rate)} [${pct(x.ci[0])}, ${pct(x.ci[1])}]` : 'not read');
+  const models = (r) => (status[r].models.length ? ` (${status[r].models.join(', ')})` : '');
   const md = [
-    `**Weekly convergent audit (#6420 lane D)** — run \`${report.run}\`, seed ${draw.seed}, drawn ${draw.drawn_at.slice(0, 10)}`,
+    `**Weekly convergent audit (#6420 lane D)${incomplete.length ? ', INCOMPLETE: one reader' : ''}** — run \`${report.run}\`, seed ${draw.seed}, drawn ${draw.drawn_at.slice(0, 10)}`,
     '',
-    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini 3.7 Flash (CLI), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}.`,
+    `${draw.pages.length} pages: one page per book from ${draw.pages.filter((d) => d.stratum === 'random').length} random visible non-English books (frame ${draw.frame_books}), plus ${draw.pages.filter((d) => d.stratum === 'lane-b-written').length} pages lane B wrote. Each read against its image by Opus (subscription, sealed) and Gemini 3.7 Flash (CLI), frozen #6338 brief (REVIEWER.md + CALIBRATION-ADDENDUM.md). Read: Opus ${report.read.opus}, Gemini ${report.read.gemini37}${models('gemini37')}.`,
+    ...incomplete.flatMap((r) => ['', `**${r} did not read this run:** ${status[r].why}. Its rates and the agreement line are left out; the figures below are ONE reader's, so nothing here is convergent. Finish it with \`scripts/audit/convergent-audit-weekly.sh ${report.run}\` (every step skips what is done).`]),
     '',
-    ...READERS.filter((r) => typed[`random/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`random/${r}`], { what: 'random visible non-English books', reader: r })),
-    ...READERS.filter((r) => typed[`lane-b-written/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`lane-b-written/${r}`], { what: 'books lane B wrote a page of', reader: r })),
+    ...counted.filter((r) => typed[`random/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`random/${r}`], { what: 'random visible non-English books', reader: r })),
+    ...counted.filter((r) => typed[`lane-b-written/${r}`].books).flatMap((r) => kOfNMarkdown(typed[`lane-b-written/${r}`], { what: 'books lane B wrote a page of', reader: r })),
     '',
     'By page, every exposure together (the earlier weeks\' table, kept for the series):',
     '',
     '| stratum | reader | pages with a serious error (any lane) | serious OCR error or wrong leaf |',
     '|---|---|---|---|',
-    ...strata.flatMap((s) => READERS.map((r) => `| ${s} | ${r} | ${cell(table[`${s}/${r}`].any_serious)} | ${cell(table[`${s}/${r}`].ocr_serious)} |`)),
+    ...strata.flatMap((s) => counted.map((r) => `| ${s} | ${r} | ${cell(table[`${s}/${r}`].any_serious)} | ${cell(table[`${s}/${r}`].ocr_serious)} |`)),
     '',
-    `Agreement on "serious error on this page" (pages both read): ${[...strata, 'all'].map((s) => agreement[s].n ? `${s} n=${agreement[s].n}, raw ${pct(agreement[s].raw)}, κ ${agreement[s].kappa == null ? '—' : agreement[s].kappa.toFixed(2)} (both ${agreement[s].both_serious}, Opus only ${agreement[s].opus_only}, Gemini only ${agreement[s].gemini_only})` : `${s} n=0`).join('; ')}.`,
+    incomplete.length ? 'Agreement between the readers: not computed, one reader did not read.' : `Agreement on "serious error on this page" (pages both read): ${[...strata, 'all'].map((s) => agreement[s].n ? `${s} n=${agreement[s].n}, raw ${pct(agreement[s].raw)}, κ ${agreement[s].kappa == null ? '—' : agreement[s].kappa.toFixed(2)} (both ${agreement[s].both_serious}, Opus only ${agreement[s].opus_only}, Gemini only ${agreement[s].gemini_only})` : `${s} n=0`).join('; ')}.`,
+    ...(byKind ? [`By kind, Cohen's κ over the ${byKind.any_serious.n} pages both read (— = a reader never or always flagged it, not estimable): ${Object.entries(byKind).filter(([, x]) => x.a_yes + x.b_yes > 0).map(([k, x]) => `${k.replace(/_/g, ' ')} ${x.kappa == null ? '—' : x.kappa.toFixed(2)} (Opus ${x.a_yes}, Gemini ${x.b_yes}, both ${x.both})`).join('; ') || 'no serious finding by either reader'}.`] : []),
     '',
     'Top findings (both readers first):',
     ...findings.slice(0, 10).map((f) => `- ${f.convergent ? '**both**' : f.readers.join('')} · ${f.stratum} · \`${f.book_id}\` p.${f.page_number} (${f.language ?? '?'}, OCR ${f.ocr_model ?? '?'}): ${f.errors.slice(0, 2).map((e) => `${e.class ?? '?'} ${String(e.problem ?? '').slice(0, 140)}`).join('; ')}`),
