@@ -99,23 +99,25 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
   it('no quota trouble: one Gemini pass, then assemble and score', () => {
     const { calls } = run(0);
     // …and a review call never gets the OCR tool gate, whose denial tells the model to transcribe (#6571's default).
-    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.7-flash-low']);
+    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.8-flash-low']);
     expect(calls.at(-1)).toContain('convergent-audit-weekly.mjs score --run');
     expect(calls.at(-2)).toContain('cli-assemble');
   });
+  // The default list is one model since 3.7 was withdrawn (2026-10-12); the fallback is exercised with two.
+  const TWO = { AUDIT_GEMINI_MODELS: 'gemini-3.8-flash-low gemini-3.8-flash-medium' };
   it('quota on the first model tries the next before waiting', () => {
-    const { calls } = run(1);
-    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.7-flash-low', 'cli gemini-3.8-flash-low']);
+    const { calls } = run(1, TWO);
+    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.8-flash-low', 'cli gemini-3.8-flash-medium']);
   });
   it('quota on every model waits and resumes until the reads are in', () => {
-    const { out, calls } = run(4);
+    const { out, calls } = run(4, TWO);
     expect(calls.filter((c) => c.startsWith('cli '))).toHaveLength(5);
     expect(out).toContain('every model is out of quota: wait 0s (retry 1 of 8)');
     expect(out).toContain('(retry 2 of 8)');
     expect(calls.at(-1)).toContain('score');
   });
   it('gives up after the retries and still scores, so the report can say why', () => {
-    const { out, calls } = run(99, { AUDIT_QUOTA_RETRIES: '2' });
+    const { out, calls } = run(99, { ...TWO, AUDIT_QUOTA_RETRIES: '2' });
     expect(calls.filter((c) => c.startsWith('cli '))).toHaveLength(6);   // 3 passes × 2 models
     expect(out).toContain('quota still out after 2 waits: scoring without the Gemini reader');
     expect(calls.at(-1)).toContain('score');
