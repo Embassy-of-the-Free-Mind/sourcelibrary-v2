@@ -1413,7 +1413,7 @@ const TOOLS: Tool[] = [
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
         type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
         subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
-        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
+        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some works carry the date a photograph or upload was made (e.g. 2005) rather than the date of the work — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup). Undated artworks are excluded from any year-filtered search, not passed through.' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },

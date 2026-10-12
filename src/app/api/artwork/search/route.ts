@@ -27,8 +27,8 @@ const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engrav
  *   period     — period filter (e.g. "Baroque", "Renaissance") — passed to semanticArtworkSearch
  *   culture    — culture filter (e.g. "Italian", "Dutch") — passed to semanticArtworkSearch
  *   genre      — genre filter (e.g. "religious", "mythological") — passed to semanticArtworkSearch
- *   year_from  — published year >= (string-compared, since published is stored as string)
- *   year_to    — published year <=
+ *   year_from  — numeric `year` >= (an artwork with no numeric year is EXCLUDED)
+ *   year_to    — numeric `year` <=
  *   artist     — artist slug ("albrecht-durer"), the API twin of
  *                /artwork/artist/[slug]; resolved via the shared
  *                artistAuthorRegex so both surfaces return the same set
@@ -59,8 +59,8 @@ export async function GET(request: NextRequest) {
     const period = searchParams.get('period');
     const culture = searchParams.get('culture');
     const genre = searchParams.get('genre');
-    const yearStart = searchParams.get('year_from') || searchParams.get('yearStart');
-    const yearEnd = searchParams.get('year_to') || searchParams.get('yearEnd');
+    const yearStart = parseYearParam(searchParams.get('year_from') || searchParams.get('yearStart'));
+    const yearEnd = parseYearParam(searchParams.get('year_to') || searchParams.get('yearEnd'));
     const bookId = searchParams.get('book_id') || searchParams.get('bookId');
     const artistSlug = (searchParams.get('artist') || '').trim();
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50);
@@ -131,8 +131,7 @@ export async function GET(request: NextRequest) {
       if (subjectFilter) merged = merged.filter(r => (r.subjects ?? []).some(s => matchesIgnoreCase(s, subjectFilter)));
       if (figureFilter) merged = merged.filter(r => (r.figures ?? []).some(f => matchesIgnoreCase(f, figureFilter)));
       if (symbolFilter) merged = merged.filter(r => (r.symbols ?? []).some(s => matchesIgnoreCase(s, symbolFilter)));
-      if (yearStart) merged = merged.filter(r => !r.published || r.published >= yearStart);
-      if (yearEnd) merged = merged.filter(r => !r.published || r.published <= yearEnd);
+      if (yearStart !== null || yearEnd !== null) merged = merged.filter(r => yearInRange(r.year, yearStart, yearEnd));
       if (artistTest) merged = merged.filter(r => artistTest.test(r.author ?? ''));
 
       // Fallback: if semantic returned nothing usable, do a regex fallback
@@ -145,6 +144,7 @@ export async function GET(request: NextRequest) {
             ? typeFilter
             : { $in: VISUAL_RESOURCE_TYPES },
           ...(artistRegex ? { author: artistRegex } : {}),
+          ...yearMatch(yearStart, yearEnd),
           $or: [
             { title: { $regex: pattern, $options: 'i' } },
             { display_title: { $regex: pattern, $options: 'i' } },
@@ -176,12 +176,7 @@ export async function GET(request: NextRequest) {
         : { $in: VISUAL_RESOURCE_TYPES },
     };
     if (artistRegex) filter.author = artistRegex;
-    if (yearStart || yearEnd) {
-      const yf: Record<string, string> = {};
-      if (yearStart) yf.$gte = yearStart;
-      if (yearEnd) yf.$lte = yearEnd;
-      filter.published = yf;
-    }
+    Object.assign(filter, yearMatch(yearStart, yearEnd));
 
     const docs = await db.collection('books')
       .find(filter, { projection: artworkProjection })
@@ -321,6 +316,38 @@ function shapeArtworkRow(
       similarity: Math.round(semantic.similarity * 1000) / 1000,
     } : {}),
   };
+}
+
+// Year range (#4288 item 3). Filter on the numeric `year`, never the
+// `published` string: `published` is free text from the source record
+// ("En 1547", "Unknown date", "15th centurydate QS:P,+1450…", "2011-11-25"),
+// and comparing it as a string let 336 of the 1,120 artworks returned for
+// year_from=2000 through with a numeric year before 2000 (measured
+// 2026-10-12, visible artworks). An artwork with no numeric year FAILS a
+// range in every lane — before this the q-lane passed it (599 visible
+// artworks have no date at all) while the browse lane did not, so the same
+// filter meant two things. Same rule as search_library's year filter.
+function parseYearParam(raw: string | null): number | null {
+  if (!raw) return null;
+  const n = parseInt(raw, 10);
+  return Number.isFinite(n) ? n : null;
+}
+
+function yearMatch(from: number | null, to: number | null): Record<string, unknown> {
+  if (from === null && to === null) return {};
+  return {
+    year: {
+      $type: 'number',
+      ...(from !== null ? { $gte: from } : {}),
+      ...(to !== null ? { $lte: to } : {}),
+    },
+  };
+}
+
+function yearInRange(year: unknown, from: number | null, to: number | null): boolean {
+  if (from === null && to === null) return true;
+  if (typeof year !== 'number' || !Number.isFinite(year)) return false;
+  return (from === null || year >= from) && (to === null || year <= to);
 }
 
 function matchesIgnoreCase(value: string, query: string): boolean {
