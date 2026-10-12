@@ -112,6 +112,7 @@ async function screenWindow(db, step, entries) {
   return { rows, books };
 }
 
+// image-pick-ok: the screen shows the image the OCR read (ocr.source_url, which getPageSource set at read time), then the split crop
 const imageUrlOf = (p) => p.ocr?.source_url || p.cropped_photo || p.archived_photo || p.photo || null;
 
 async function fetchImages(sample, db, out) {
