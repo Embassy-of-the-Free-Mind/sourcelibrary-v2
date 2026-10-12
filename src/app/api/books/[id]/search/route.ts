@@ -8,7 +8,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBookReadable } from '@/lib/book-access';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { frontMatterVerdict } from '@/lib/front-matter';
-import { scorePages } from '@/lib/passage-score';
+import { scorePages, phraseMatch, tokenize } from '@/lib/passage-score';
 import { semanticCoverage, type SemanticCoverage } from '@/lib/semantic-coverage';
 
 /**
@@ -28,12 +28,18 @@ interface SearchResult {
   pageNumber: number;
   matches: SearchMatch[];
   /**
-   * Relevance in 0-1, normalised within its own leg. Surfaced because
-   * search_concept documents its 0.70/0.55 calibration and this tool did not,
-   * so a caller had no way to tell a real hit at rank 20 from noise
+   * How well this page answers the query, 0-1 on an ABSOLUTE scale (#3699):
+   * the higher of `similarity` and `phrase_match`, or 1 for a one-word query
+   * the page prints. It is not stretched against the book's best hit, so a
+   * query the book cannot answer scores low everywhere. Surfaced because
+   * search_concept documents its 0.70/0.55 calibration and this tool did not
    * (#3653 follow-up #4, item 1c).
    */
   score?: number;
+  /** Raw cosine similarity from the semantic leg — the same scale search_concept calibrates. */
+  similarity?: number;
+  /** 0-1: how much of a multi-word query the page prints in order at one place (passage-score.ts). */
+  phrase_match?: number;
   /** Which leg found this page. Both, when they agree — a strong signal. */
   found_by?: 'keyword' | 'semantic' | 'both';
   /** Introduction / preface / contents rather than the body — see src/lib/front-matter.ts. */
@@ -397,14 +403,40 @@ export async function GET(
     }
     const results = [...byPage.values()];
 
+    // Two numbers per page, kept apart on purpose (#3699).
+    //
+    // `rank` orders the list: each leg normalised against its own best hit, as
+    // above. It is only ever compared within this one response, and is never
+    // returned.
+    //
+    // `score` is what the caller reads, and it must be able to say "nothing
+    // here". Normalising it within the book could not: the best of a bad lot
+    // was always 1.0, so "zebra pancake velocipede submarine trombone" scored
+    // 1.0 on Taylor's Metaphysics exactly as the sentence on p.264 did. So it
+    // is built only from absolute measures — the raw cosine, and how much of
+    // the query the page prints together.
+    const rank = new Map<SearchResult, number>();
     const maxKeyword = Math.max(0, ...rawKeywordScore.values());
     const maxSemantic = Math.max(0, ...rawSemanticScore.values());
-    for (const r of results) {
+    const oneWord = tokenize(matchQuery).length < 2;
+    const phrase = phraseMatch(matchQuery, results.map((r) => scoreText.get(r.pageId) ?? ''));
+    results.forEach((r, i) => {
       const kw = maxKeyword > 0 ? (rawKeywordScore.get(r.pageId) ?? 0) / maxKeyword : 0;
       const sem = maxSemantic > 0 ? (rawSemanticScore.get(r.pageId) ?? 0) / maxSemantic : 0;
-      r.score = Math.round(Math.max(kw, sem) * 1000) / 1000;
+      rank.set(r, Math.max(kw, sem));
       if (!r.found_by) r.found_by = rawSemanticScore.has(r.pageId) && !rawKeywordScore.has(r.pageId) ? 'semantic' : 'keyword';
-    }
+
+      const lexical = r.found_by !== 'semantic';
+      if (rawSemanticScore.has(r.pageId)) r.similarity = Math.round(rawSemanticScore.get(r.pageId)! * 1000) / 1000;
+      // A page found by meaning alone has no claim to print the words, and
+      // search_translations omits phrase_match for it too.
+      if (lexical && phrase.length) r.phrase_match = Math.round(phrase[i].match * 100) / 100;
+      // A one-word query has no order to match: a keyword hit prints the word
+      // (the snippet is cut around it, or the page is dropped), which is the
+      // whole query.
+      const printed = lexical ? (oneWord ? 1 : r.phrase_match ?? 0) : 0;
+      r.score = Math.round(Math.max(printed, r.similarity ?? 0) * 1000) / 1000;
+    });
 
     // ---- Rank ----
     //
@@ -422,7 +454,7 @@ export async function GET(
     // was never the scorer — it was the $sort that threw the scorer's answer
     // away. Rescoring here would be re-introducing it in a subtler form.
     const byScore = (a: SearchResult, b: SearchResult) =>
-      (b.score ?? 0) - (a.score ?? 0) || a.pageNumber - b.pageNumber;
+      (rank.get(b) ?? 0) - (rank.get(a) ?? 0) || a.pageNumber - b.pageNumber;
     const ranked = [
       ...results.filter((r) => !r.is_front_matter).sort(byScore),
       ...results.filter((r) => r.is_front_matter).sort(byScore),
