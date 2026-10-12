@@ -1,0 +1,260 @@
+{
+ "fa": {
+  "panel_pages": 23,
+  "stored_engine": "gemini-3-flash-preview",
+  "cells": {
+   "c38": {
+    "opus_judge": [
+     3.98,
+     4.2,
+     4.39
+    ],
+    "pro_judge": [
+     3.7,
+     4.35,
+     4.96
+    ],
+    "basis": "measured: the same pages, same stored output"
+   },
+   "pro": {
+    "opus_judge": [
+     3.67,
+     4.17,
+     4.59
+    ],
+    "pro_judge": [
+     3.57,
+     4.3,
+     5.0
+    ],
+    "basis": "pooled: full thinking was never read; Pro at thinking 128 is measured in this script family, the thinking step is a prior",
+    "P_beats_c38_opus_judge": 0.46,
+    "P_beats_c38_pro_judge": 0.45,
+    "delta_vs_c38_opus_judge": [
+     -0.5,
+     -0.02,
+     0.39
+    ]
+   },
+   "opus": {
+    "opus_judge": [
+     4.65,
+     4.83,
+     4.93
+    ],
+    "pro_judge": [
+     4.09,
+     4.67,
+     5.0
+    ],
+    "basis": "measured, thin: Opus was read on 5 pages of this language",
+    "P_beats_c38_opus_judge": 1.0,
+    "P_beats_c38_pro_judge": 0.88,
+    "delta_vs_c38_opus_judge": [
+     0.41,
+     0.63,
+     0.83
+    ],
+    "opus_minus_pro_judge_on_opus_arm": [
+     -0.24,
+     0.13,
+     0.74
+    ],
+    "self_pref_diff_in_diff": [
+     -0.15,
+     0.33,
+     0.76
+    ]
+   },
+   "stored": {
+    "opus_judge": [
+     3.65,
+     3.89,
+     4.11
+    ],
+    "pro_judge": [
+     3.43,
+     4.04,
+     4.65
+    ],
+    "basis": "measured: the same pages, same stored output"
+   },
+   "corr38": {
+    "opus_judge": [
+     3.61,
+     4.07,
+     4.48
+    ],
+    "pro_judge": [
+     3.48,
+     4.22,
+     4.92
+    ],
+    "basis": "pooled: correction arms were never fitted; prior only",
+    "P_beats_c38_opus_judge": 0.3,
+    "P_beats_c38_pro_judge": 0.32,
+    "delta_vs_c38_opus_judge": [
+     -0.54,
+     -0.13,
+     0.26
+    ]
+   },
+   "corrO": {
+    "opus_judge": [
+     3.83,
+     4.48,
+     5.0
+    ],
+    "pro_judge": [
+     3.61,
+     4.48,
+     5.0
+    ],
+    "basis": "pooled: correction arms were never fitted; prior only",
+    "P_beats_c38_opus_judge": 0.76,
+    "P_beats_c38_pro_judge": 0.63,
+    "delta_vs_c38_opus_judge": [
+     -0.37,
+     0.28,
+     0.8
+    ]
+   }
+  }
+ },
+ "sa": {
+  "panel_pages": 30,
+  "stored_engine": "gemini-3-flash-preview",
+  "cells": {
+   "c38": {
+    "opus_judge": [
+     4.05,
+     4.27,
+     4.47
+    ],
+    "pro_judge": [
+     3.8,
+     4.43,
+     4.97
+    ],
+    "basis": "measured: the same pages, same stored output"
+   },
+   "pro": {
+    "opus_judge": [
+     3.98,
+     4.42,
+     4.8
+    ],
+    "pro_judge": [
+     3.83,
+     4.57,
+     5.0
+    ],
+    "basis": "pooled: full thinking was never read; Pro at thinking 128 is measured in this script family, the thinking step is a prior",
+    "P_beats_c38_opus_judge": 0.75,
+    "P_beats_c38_pro_judge": 0.71,
+    "delta_vs_c38_opus_judge": [
+     -0.27,
+     0.15,
+     0.52
+    ]
+   },
+   "opus": {
+    "opus_judge": [
+     4.57,
+     4.77,
+     4.9
+    ],
+    "pro_judge": [
+     3.97,
+     4.63,
+     5.0
+    ],
+    "basis": "measured, thin: Opus was read on 7 pages of this language",
+    "P_beats_c38_opus_judge": 1.0,
+    "P_beats_c38_pro_judge": 0.75,
+    "delta_vs_c38_opus_judge": [
+     0.28,
+     0.5,
+     0.72
+    ],
+    "opus_minus_pro_judge_on_opus_arm": [
+     -0.27,
+     0.15,
+     0.77
+    ],
+    "self_pref_diff_in_diff": [
+     -0.13,
+     0.32,
+     0.73
+    ]
+   },
+   "stored": {
+    "opus_judge": [
+     3.67,
+     3.88,
+     4.08
+    ],
+    "pro_judge": [
+     3.4,
+     4.03,
+     4.63
+    ],
+    "basis": "measured: the same pages, same stored output"
+   },
+   "corr38": {
+    "opus_judge": [
+     3.63,
+     4.1,
+     4.53
+    ],
+    "pro_judge": [
+     3.5,
+     4.23,
+     4.97
+    ],
+    "basis": "pooled: correction arms were never fitted; prior only",
+    "P_beats_c38_opus_judge": 0.25,
+    "P_beats_c38_pro_judge": 0.27,
+    "delta_vs_c38_opus_judge": [
+     -0.6,
+     -0.17,
+     0.23
+    ]
+   },
+   "corrO": {
+    "opus_judge": [
+     3.8,
+     4.45,
+     4.97
+    ],
+    "pro_judge": [
+     3.57,
+     4.43,
+     5.0
+    ],
+    "basis": "pooled: correction arms were never fitted; prior only",
+    "P_beats_c38_opus_judge": 0.66,
+    "P_beats_c38_pro_judge": 0.5,
+    "delta_vs_c38_opus_judge": [
+     -0.47,
+     0.15,
+     0.7
+    ]
+   }
+  }
+ },
+ "_model": {
+  "version": "v1",
+  "likelihood": "ordered logistic",
+  "instrument_class": "panel",
+  "diagnostics": {
+   "chains": 4,
+   "draws_per_chain": 500,
+   "divergences": 2,
+   "max_rhat": 1.02,
+   "max_rhat_at": "wk[33]",
+   "min_ess": 178,
+   "min_ess_at": "tau_fl[0]"
+  }
+ }
+}
