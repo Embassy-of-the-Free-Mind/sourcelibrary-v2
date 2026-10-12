@@ -16,6 +16,7 @@ import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { aiGenerator } from '@/lib/iiif-provenance';
 import { isBookReadable } from '@/lib/book-access';
+import { iiifCanvasId } from '@/lib/iiif-refs';
 
 const BASE = 'https://sourcelibrary.org';
 const MAX_RESULTS = 200;
@@ -161,7 +162,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     for (const page of pages) {
       if (totalMatches >= MAX_RESULTS) break;
       const pageNum = page.page_number;
-      const canvasId = `${BASE}/api/iiif/${bookId}/canvas/p${pageNum}`;
+      const canvasId = iiifCanvasId(bookId, pageNum);
 
       // Check OCR text. Strip AI editorial wrappers first so the search never
       // matches or returns <meta>/<summary> prose that isn't on the page (PR #2232).
