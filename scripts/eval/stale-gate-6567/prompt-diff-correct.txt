@@ -1,0 +1,29 @@
+You are correcting the English translation of one page of a Siku Quanshu manuscript (classical Chinese, vertical columns read top to bottom, right to left).
+
+The English below was translated from an OLDER transcription of this page. The page has since been transcribed again (the NEW READING below). The CHANGES list every place where the Chinese characters of the two transcriptions differ, as old → new, with a few characters of the new reading on either side to locate them. The page image is the authority.
+
+Your task is narrow. Change ONLY the English words that render characters inside a change, and only when the change alters what the English should say. Leave every other word of the English exactly as it is, even where you would have translated it differently, including notes, tags and formatting. A change that does not alter the meaning (a variant form, a particle the English never rendered, a change the English already reflects) needs no edit. Where the old and new readings differ, check the image, and follow the new reading unless the image clearly shows the old one is right.
+
+Give your edits as replacements. For each edit:
+- "changes": the ids of the changes it answers (e.g. ["h3"]);
+- "from": the exact English words to replace, copied character for character from the English below, long enough to occur only once in it, and no longer than needed;
+- "to": the replacement English, in the same style and markup as the surrounding text.
+Where text the new reading adds needs new English, use "from" for the English words next to where it goes, and repeat them in "to" with the new words added.
+
+If no edit is needed, give an empty list.
+
+Reply with ONE JSON object written between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary.
+<<<BEGIN>>>
+{"edits": [{"changes": ["h1"], "from": "...", "to": "..."}]}
+<<<END>>>
+
+NEW READING:
+{NEW}
+
+CHANGES (old → new):
+{HUNKS}
+
+ENGLISH:
+{ENGLISH}
+
+The page image:
