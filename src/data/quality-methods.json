@@ -86,14 +86,14 @@
       "id": "reference-translations",
       "name": "Our English against published translations",
       "question": "Where a person has published a translation of the same passage, how close is ours?",
-      "kind": "accuracy",
+      "kind": "judged",
       "scope": "321 pages in five language tracks (84000, SuttaCentral and others), two blind AI judges",
       "cadence": "per study",
       "latest": { "date": "2026-10-04", "headline": "Correcting the transcription lifts fidelity most (+0.65 to +1.77 on a 1–5 scale); the stronger model cuts reversed statements from 15 to 6 per 100 pages (Sanskrit, Pali, Chinese)", "source": "scripts/eval/experiments/2026-10-04-translation-vs-reference-synthesis-5695.md" },
       "on_finding": "Ranks the levers in the decision ledger; changes to models and prompts must beat it.",
       "blind_to": "Texts nobody has translated, which is most of what we hold",
       "issue": 5695,
-      "validity": {"verdict": "valid-with-caveat", "note": "Two blind AI judges against a published translation measure fidelity, not accuracy, so \"judged\" fits better than \"accuracy\". The frame is texts someone has translated. A run against itself moves reversals by 11 to 19 per 100 pages.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
+      "validity": {"verdict": "valid-with-caveat", "note": "Two blind AI judges against a published translation measure fidelity, not accuracy, so it is labelled \"judged\" (relabelled 2026-10-12). The frame is texts someone has translated. A run against itself moves reversals by 11 to 19 per 100 pages.", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-12"},
       "status": "per-study"
     },
     {
@@ -117,11 +117,11 @@
       "kind": "screen",
       "scope": "Every page in the corpus mirror, eight automatic checks",
       "cadence": "per run",
-      "latest": { "date": "2026-09-24", "headline": "20,933 page-number breaks in 6,472 books, about 45% real by a read of 20", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5059" },
+      "latest": { "date": "2026-09-24", "headline": "20,933 page-number breaks in 6,472 books. In a read of 20 of them, 4 were missing pages", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5059" },
       "on_finding": "Repair lists only. Nothing yet holds a flagged book from view.",
       "blind_to": "Scans spliced from different copies where the numbering still runs",
       "issue": 5059,
-      "validity": {"verdict": "misleading", "note": "The \"about 45% real\" headline is page-number breaks. In the read of 20, 9 were real but only 4 were missing pages; most were duplicate scans. Other classes have their own precision (duplicates 20 of 20, catchword 1 of 20).", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-11"},
+      "validity": {"verdict": "valid-with-caveat", "note": "The headline used to read \"about 45% real\". In the read of 20 breaks, 9 were real, but only 4 were missing pages; most were duplicate scans. Since 2026-10-12 the headline gives missing pages, 4 of 20, which is what it names. n = 20. Other classes have their own precision (duplicates 20 of 20, catchword 1 of 20).", "source": ".claude/docs/measurement-validity.md", "as_of": "2026-10-12"},
       "status": "per-run"
     },
     {

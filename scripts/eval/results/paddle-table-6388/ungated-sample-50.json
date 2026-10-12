@@ -1,0 +1,1330 @@
+[
+ {
+  "n": 1,
+  "book_id": "6992cf24f5b4f75c1a4c813d",
+  "title": "武備志(一百)",
+  "visible": true,
+  "page_number": 43,
+  "page_id": "6992cf24f5b4f75c1a4c8168",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 184,
+   "lines": 16,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.75,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 259,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 2,
+  "book_id": "6a3c782b01fe4f593c207478",
+  "title": "佛祖歷代通載·卷七~卷八 (vol 4)",
+  "visible": true,
+  "page_number": 68,
+  "page_id": "6a3c782b01fe4f593c2074bc",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 145,
+   "lines": 11,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.8068965517241379,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 214,
+  "img_w": 790,
+  "img_h": 1053,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 3,
+  "book_id": "6992cd8b43713c66ea637248",
+  "title": "武備志(十四)",
+  "visible": true,
+  "page_number": 21,
+  "page_id": "6992cd8b43713c66ea63725e",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 171,
+   "lines": 9,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7485380116959064,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 238,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 4,
+  "book_id": "6992cdbc43713c66ea6383f4",
+  "title": "武備志(二十五)",
+  "visible": true,
+  "page_number": 20,
+  "page_id": "6992cdbc43713c66ea63845e",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 141,
+   "lines": 10,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6524822695035462,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 210,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 5,
+  "book_id": "6992cbf9018b80967354c7b8",
+  "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 4",
+  "visible": true,
+  "page_number": 61,
+  "page_id": "6992cbf9018b80967354c93f",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 202,
+   "lines": 42,
+   "run": 2,
+   "dup_lines": 1,
+   "distinct_ratio": 0.30198019801980197,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "dup_lines:1",
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 302,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 6,
+  "book_id": "6992cf1b70ab373755545946",
+  "title": "武備志(九十八)",
+  "visible": true,
+  "page_number": 22,
+  "page_id": "6992cf1b70ab37375554595c",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 162,
+   "lines": 10,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6234567901234568,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 230,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 7,
+  "book_id": "6a3cbe60ec254ff6cadffb0a",
+  "title": "六壬大全·卷九 (vol 8)",
+  "visible": true,
+  "page_number": 79,
+  "page_id": "6a3cbe60ec254ff6cadffbef",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 133,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.40601503759398494,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 199,
+  "img_w": 785,
+  "img_h": 1047,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 8,
+  "book_id": "6a3c782b01fe4f593c207478",
+  "title": "佛祖歷代通載·卷七~卷八 (vol 4)",
+  "visible": true,
+  "page_number": 134,
+  "page_id": "6a3c782b01fe4f593c2074fe",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 121,
+   "lines": 15,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.768595041322314,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 195,
+  "img_w": 771,
+  "img_h": 1054,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 9,
+  "book_id": "6a3cbe70ec254ff6cae00504",
+  "title": "星學大成·卷十五~卷十六 (vol 9)",
+  "visible": true,
+  "page_number": 119,
+  "page_id": "6a3cbe71ec254ff6cae0057b",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 93,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7849462365591398,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 163,
+  "img_w": 782,
+  "img_h": 1072,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 10,
+  "book_id": "6a3cbe5cec254ff6cadff895",
+  "title": "六壬大全·卷三 (vol 3)",
+  "visible": true,
+  "page_number": 86,
+  "page_id": "6a3cbe5cec254ff6cadff8eb",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 159,
+   "lines": 15,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.5345911949685535,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 255,
+  "img_w": 783,
+  "img_h": 1069,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 11,
+  "book_id": "6a3c6d5101fe4f593c1b9e24",
+  "title": "春秋長歷·卷六~卷七 (vol 4)",
+  "visible": true,
+  "page_number": 177,
+  "page_id": "6a3c6d5101fe4f593c1b9ed5",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 41,
+   "lines": 12,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7317073170731707,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 111,
+  "img_w": 757,
+  "img_h": 1037,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 12,
+  "book_id": "6a3cbe79ec254ff6cae00a78",
+  "title": "星學大成·卷三~卷四 (vol 18)",
+  "visible": true,
+  "page_number": 161,
+  "page_id": "6a3cbe7aec254ff6cae00b19",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 166,
+   "lines": 14,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6506024096385542,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 258,
+  "img_w": 777,
+  "img_h": 1043,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 13,
+  "book_id": "6a3cbf08f9474f825c164e09",
+  "title": "御定星歷考原·卷一~卷二 (vol 1)",
+  "visible": true,
+  "page_number": 85,
+  "page_id": "6a3cbf08f9474f825c164f00",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 147,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6326530612244898,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 213,
+  "img_w": 765,
+  "img_h": 1049,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 14,
+  "book_id": "6a3cebcd8642f0445b157597",
+  "title": "周易傳義大全·卷二十二 (vol 11)",
+  "visible": true,
+  "page_number": 66,
+  "page_id": "6a3cebcd8642f0445b1575da",
+  "title_hit": false,
+  "low_distinct": true,
+  "features": {
+   "han": 284,
+   "lines": 17,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.27816901408450706,
+   "guard_flags": []
+  },
+  "reasons": [
+   "distinct:0.278"
+  ],
+  "has_english": false,
+  "text_len": 405,
+  "img_w": 761,
+  "img_h": 1050,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 15,
+  "book_id": "6a3cbee6f9474f825c16437a",
+  "title": "皇極經世書解·卷二 (vol 4)",
+  "visible": true,
+  "page_number": 107,
+  "page_id": "6a3cbee6f9474f825c1643e5",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 140,
+   "lines": 32,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.4785714285714286,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 238,
+  "img_w": 778,
+  "img_h": 1063,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 16,
+  "book_id": "6a3c66d9af3c49b59c5ce05e",
+  "title": "歷算全書·卷五十三 (vol 34)",
+  "visible": true,
+  "page_number": 82,
+  "page_id": "6a3c66d9af3c49b59c5ce0b1",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 154,
+   "lines": 37,
+   "run": 1,
+   "dup_lines": 2,
+   "distinct_ratio": 0.44155844155844154,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "dup_lines:2",
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 249,
+  "img_w": 1051,
+  "img_h": 1441,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 17,
+  "book_id": "6a3cbe5cec254ff6cadff91e",
+  "title": "六壬大全·卷四~卷五 (vol 4)",
+  "visible": true,
+  "page_number": 29,
+  "page_id": "6a3cbe5dec254ff6cadff93b",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 108,
+   "lines": 11,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7222222222222222,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 177,
+  "img_w": 785,
+  "img_h": 1061,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 18,
+  "book_id": "6992c9af54b3f8b16b4afd0c",
+  "title": "太乙統宗寶鑑 (Taiyi Comprehensive Divination Mirror)",
+  "visible": true,
+  "page_number": 57,
+  "page_id": "6992c9af54b3f8b16b4afd45",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 147,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.5238095238095238,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 213,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 19,
+  "book_id": "6a3cbefef9474f825c16487f",
+  "title": "洪範皇極內篇·卷一~卷三 (vol 1)",
+  "visible": true,
+  "page_number": 54,
+  "page_id": "6a3cbefef9474f825c1648b5",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 179,
+   "lines": 14,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.3016759776536313,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 251,
+  "img_w": 770,
+  "img_h": 1063,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 20,
+  "book_id": "6a3c66c2af3c49b59c5cd367",
+  "title": "歷算全書·卷十四 (vol 10)",
+  "visible": true,
+  "page_number": 71,
+  "page_id": "6a3c66c2af3c49b59c5cd3ae",
+  "title_hit": true,
+  "low_distinct": true,
+  "features": {
+   "han": 207,
+   "lines": 48,
+   "run": 1,
+   "dup_lines": 3,
+   "distinct_ratio": 0.2463768115942029,
+   "guard_flags": []
+  },
+  "reasons": [
+   "dup_lines:3",
+   "distinct:0.246",
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 381,
+  "img_w": 777,
+  "img_h": 1053,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 21,
+  "book_id": "6992cd5243713c66ea635ca7",
+  "title": "三才圖會(十九)",
+  "visible": true,
+  "page_number": 4,
+  "page_id": "6992cd5243713c66ea635cab",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 29,
+   "lines": 5,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6896551724137931,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 92,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 22,
+  "book_id": "6a3c782401fe4f593c20707e",
+  "title": "佛祖歷代通載·卷三~卷四 (vol 2)",
+  "visible": true,
+  "page_number": 3,
+  "page_id": "6a3c782401fe4f593c207171",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 111,
+   "lines": 39,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7927927927927928,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 256,
+  "img_w": 778,
+  "img_h": 1057,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 23,
+  "book_id": "6992cd2dae978f7d41598661",
+  "title": "三才圖會(十)",
+  "visible": true,
+  "page_number": 97,
+  "page_id": "6992cd2eae978f7d415986c2",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 198,
+   "lines": 9,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.5151515151515151,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 265,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 24,
+  "book_id": "6a3cbe64ec254ff6cadffd58",
+  "title": "六壬大全·卷十一~卷十二 (vol 10)",
+  "visible": true,
+  "page_number": 204,
+  "page_id": "6a3cbe64ec254ff6cadffed4",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 56,
+   "lines": 10,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6428571428571429,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 129,
+  "img_w": 788,
+  "img_h": 1058,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 25,
+  "book_id": "6992ca84d4d545ae73fee3cc",
+  "title": "新編直指算法統宗 (Suanfa Tongzong: Systematic Treatise on Arithmetic) Vol 1",
+  "visible": true,
+  "page_number": 80,
+  "page_id": "6992ca84d4d545ae73fee41c",
+  "title_hit": true,
+  "low_distinct": true,
+  "features": {
+   "han": 266,
+   "lines": 50,
+   "run": 1,
+   "dup_lines": 6,
+   "distinct_ratio": 0.19548872180451127,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "dup_lines:6",
+   "distinct:0.195",
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 374,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 26,
+  "book_id": "6992cde181c9d7efb84d0920",
+  "title": "三才圖會(五十九)",
+  "visible": true,
+  "page_number": 28,
+  "page_id": "6992cde281c9d7efb84d093c",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 37,
+   "lines": 2,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.5945945945945946,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 97,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 27,
+  "book_id": "6a3c6aecaf3c49b59c5eb666",
+  "title": "欽定協紀辨方書·卷十四 (vol 12)",
+  "visible": true,
+  "page_number": 47,
+  "page_id": "6a3c6aecaf3c49b59c5eb695",
+  "title_hit": false,
+  "low_distinct": true,
+  "features": {
+   "han": 116,
+   "lines": 18,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.25862068965517243,
+   "guard_flags": []
+  },
+  "reasons": [
+   "distinct:0.259"
+  ],
+  "has_english": false,
+  "text_len": 192,
+  "img_w": 785,
+  "img_h": 1048,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 28,
+  "book_id": "6992cd6743713c66ea6363c5",
+  "title": "三才圖會(二十五)",
+  "visible": true,
+  "page_number": 75,
+  "page_id": "6992cd6743713c66ea636411",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 379,
+   "lines": 29,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7071240105540897,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 466,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 29,
+  "book_id": "6a3cbe84ec254ff6cae011d0",
+  "title": "星學大成·卷三十 (vol 31)",
+  "visible": true,
+  "page_number": 77,
+  "page_id": "6a3cbe85ec254ff6cae0121d",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 129,
+   "lines": 12,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6589147286821705,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 269,
+  "img_w": 779,
+  "img_h": 1039,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 30,
+  "book_id": "6992ce61673ee1e40e3204ed",
+  "title": "武備志(五十八)",
+  "visible": true,
+  "page_number": 47,
+  "page_id": "6992ce61673ee1e40e32051c",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 162,
+   "lines": 9,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.5555555555555556,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 229,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 31,
+  "book_id": "6a3c6a7aaf3c49b59c5e72ea",
+  "title": "御製歴象考成後編·卷四 (vol 4)",
+  "visible": true,
+  "page_number": 53,
+  "page_id": "6a3c6a7aaf3c49b59c5e731f",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 96,
+   "lines": 10,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.4270833333333333,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 164,
+  "img_w": 766,
+  "img_h": 1040,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 32,
+  "book_id": "6a3cbe75ec254ff6cae00763",
+  "title": "星學大成·卷二十三~卷二十四 (vol 13)",
+  "visible": true,
+  "page_number": 5,
+  "page_id": "6a3cbe75ec254ff6cae00768",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 120,
+   "lines": 10,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6916666666666667,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 188,
+  "img_w": 776,
+  "img_h": 1065,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 33,
+  "book_id": "6992cdfa81c9d7efb84d122b",
+  "title": "三才圖會(六十六)",
+  "visible": true,
+  "page_number": 21,
+  "page_id": "6992cdfa81c9d7efb84d1240",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 26,
+   "lines": 9,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7692307692307693,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 93,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "diagram"
+ },
+ {
+  "n": 34,
+  "book_id": "6a3c66d4af3c49b59c5cdd1a",
+  "title": "歷算全書·卷四十三 (vol 27)",
+  "visible": true,
+  "page_number": 115,
+  "page_id": "6a3c66d4af3c49b59c5cde2e",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 148,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.527027027027027,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 214,
+  "img_w": 775,
+  "img_h": 1048,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 35,
+  "book_id": "6992cd9843713c66ea637791",
+  "title": "武備志(十七)",
+  "visible": true,
+  "page_number": 53,
+  "page_id": "6992cd9843713c66ea6377c6",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 171,
+   "lines": 9,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7017543859649122,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 238,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 36,
+  "book_id": "6a3c66d1af3c49b59c5cdbfa",
+  "title": "歷算全書·卷三十九 (vol 24)",
+  "visible": true,
+  "page_number": 102,
+  "page_id": "6a3c66d1af3c49b59c5cdc60",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 133,
+   "lines": 17,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.3383458646616541,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 254,
+  "img_w": 1054,
+  "img_h": 1422,
+  "layout_by_eye": "prose with an inset figure"
+ },
+ {
+  "n": 37,
+  "book_id": "6a3c66c2af3c49b59c5cd367",
+  "title": "歷算全書·卷十四 (vol 10)",
+  "visible": true,
+  "page_number": 116,
+  "page_id": "6a3c66c2af3c49b59c5cd3db",
+  "title_hit": true,
+  "low_distinct": true,
+  "features": {
+   "han": 165,
+   "lines": 37,
+   "run": 2,
+   "dup_lines": 3,
+   "distinct_ratio": 0.26666666666666666,
+   "guard_flags": []
+  },
+  "reasons": [
+   "dup_lines:3",
+   "distinct:0.267",
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 281,
+  "img_w": 770,
+  "img_h": 1037,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 38,
+  "book_id": "6992cdcf23b3ade43ec1519b",
+  "title": "三才圖會(五十四)",
+  "visible": true,
+  "page_number": 47,
+  "page_id": "6992cdcf23b3ade43ec151ca",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 169,
+   "lines": 9,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6094674556213018,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 236,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 39,
+  "book_id": "6a3cc148ec254ff6cae0ae04",
+  "title": "易學象數論·卷五~卷六 (vol 4)",
+  "visible": true,
+  "page_number": 109,
+  "page_id": "6a3cc148ec254ff6cae0ae71",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 119,
+   "lines": 8,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.4789915966386555,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 185,
+  "img_w": 773,
+  "img_h": 1045,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 40,
+  "book_id": "6992cdf781c9d7efb84d11bd",
+  "title": "武備志(三十六)",
+  "visible": true,
+  "page_number": 20,
+  "page_id": "6992cdf881c9d7efb84d11d1",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 101,
+   "lines": 27,
+   "run": 1,
+   "dup_lines": 2,
+   "distinct_ratio": 0.39603960396039606,
+   "guard_flags": []
+  },
+  "reasons": [
+   "dup_lines:2",
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 186,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "diagram"
+ },
+ {
+  "n": 41,
+  "book_id": "6a3c66c2af3c49b59c5cd367",
+  "title": "歷算全書·卷十四 (vol 10)",
+  "visible": true,
+  "page_number": 53,
+  "page_id": "6a3c66c2af3c49b59c5cd39c",
+  "title_hit": true,
+  "low_distinct": true,
+  "features": {
+   "han": 212,
+   "lines": 49,
+   "run": 1,
+   "dup_lines": 3,
+   "distinct_ratio": 0.22169811320754718,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "dup_lines:3",
+   "distinct:0.222",
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 319,
+  "img_w": 771,
+  "img_h": 1030,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 42,
+  "book_id": "6a3cbe76ec254ff6cae008a2",
+  "title": "星學大成·卷三十 (vol 16)",
+  "visible": true,
+  "page_number": 68,
+  "page_id": "6a3cbe77ec254ff6cae008e6",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 128,
+   "lines": 22,
+   "run": 1,
+   "dup_lines": 1,
+   "distinct_ratio": 0.6640625,
+   "guard_flags": []
+  },
+  "reasons": [
+   "dup_lines:1",
+   "table_title"
+  ],
+  "has_english": false,
+  "text_len": 229,
+  "img_w": 781,
+  "img_h": 1057,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 43,
+  "book_id": "6992cafbd4d545ae73feecfa",
+  "title": "河洛真數 (Helo Zhenshu: True Numbers of the River Luo) Vol 4",
+  "visible": true,
+  "page_number": 74,
+  "page_id": "6992cafbd4d545ae73feed44",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 181,
+   "lines": 12,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6574585635359116,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 251,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 44,
+  "book_id": "6ac774fe541cd556e64f3267",
+  "title": "荀子·卷十七~卷二十 (vol 5)",
+  "visible": false,
+  "page_number": 21,
+  "page_id": "6ac774ff541cd556e64f327c",
+  "title_hit": false,
+  "low_distinct": true,
+  "features": {
+   "han": 323,
+   "lines": 17,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.2786377708978328,
+   "guard_flags": []
+  },
+  "reasons": [
+   "distinct:0.279"
+  ],
+  "has_english": false,
+  "text_len": 398,
+  "img_w": 782,
+  "img_h": 930,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 45,
+  "book_id": "6992cf29f5b4f75c1a4c8238",
+  "title": "武備志(一百一)",
+  "visible": true,
+  "page_number": 21,
+  "page_id": "6992cf29f5b4f75c1a4c824d",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 126,
+   "lines": 81,
+   "run": 2,
+   "dup_lines": 2,
+   "distinct_ratio": 0.626984126984127,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "dup_lines:2",
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 265,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 46,
+  "book_id": "6992ce7477d26f9321776f08",
+  "title": "武備志(六十二)",
+  "visible": true,
+  "page_number": 28,
+  "page_id": "6992ce7477d26f9321776f24",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 112,
+   "lines": 17,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.7053571428571429,
+   "guard_flags": [
+    "repeated_line"
+   ]
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 196,
+  "img_w": 2000,
+  "img_h": 3000,
+  "layout_by_eye": "list"
+ },
+ {
+  "n": 47,
+  "book_id": "6a3c6a5eaf3c49b59c5e6355",
+  "title": "七政推步·卷一~卷二 (vol 1)",
+  "visible": true,
+  "page_number": 145,
+  "page_id": "6a3c6a5faf3c49b59c5e63e7",
+  "title_hit": false,
+  "low_distinct": true,
+  "features": {
+   "han": 178,
+   "lines": 7,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.07865168539325842,
+   "guard_flags": []
+  },
+  "reasons": [
+   "distinct:0.079"
+  ],
+  "has_english": false,
+  "text_len": 394,
+  "img_w": 825,
+  "img_h": 1102,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 48,
+  "book_id": "69af0e26be5fc7f363546652",
+  "title": "九章算經 (Jiuzhang Suanjing: Nine Chapters on Mathematical Art, Vol. 1)",
+  "visible": true,
+  "page_number": 33,
+  "page_id": "69af0e26be5fc7f363546673",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 177,
+   "lines": 14,
+   "run": 2,
+   "dup_lines": 0,
+   "distinct_ratio": 0.384180790960452,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 249,
+  "img_w": 1267,
+  "img_h": 2000,
+  "layout_by_eye": "prose"
+ },
+ {
+  "n": 49,
+  "book_id": "6a3c76d801fe4f593c1fdd9c",
+  "title": "苑洛志樂·卷四~卷五 (vol 3)",
+  "visible": true,
+  "page_number": 168,
+  "page_id": "6a3c76d901fe4f593c1fde44",
+  "title_hit": false,
+  "low_distinct": true,
+  "features": {
+   "han": 86,
+   "lines": 28,
+   "run": 1,
+   "dup_lines": 8,
+   "distinct_ratio": 0.29069767441860467,
+   "guard_flags": []
+  },
+  "reasons": [
+   "dup_lines:8",
+   "distinct:0.291"
+  ],
+  "has_english": false,
+  "text_len": 172,
+  "img_w": 763,
+  "img_h": 1035,
+  "layout_by_eye": "table"
+ },
+ {
+  "n": 50,
+  "book_id": "6992c9bc54b3f8b16b4afddd",
+  "title": "景祐太乙福應經 (Jingyou Taiyi Blessed Response Classic)",
+  "visible": true,
+  "page_number": 56,
+  "page_id": "6992c9bc54b3f8b16b4afe15",
+  "title_hit": true,
+  "low_distinct": false,
+  "features": {
+   "han": 252,
+   "lines": 12,
+   "run": 1,
+   "dup_lines": 0,
+   "distinct_ratio": 0.6190476190476191,
+   "guard_flags": []
+  },
+  "reasons": [
+   "table_title"
+  ],
+  "has_english": true,
+  "text_len": 322,
+  "img_w": 1900,
+  "img_h": 3000,
+  "layout_by_eye": "prose"
+ }
+]
