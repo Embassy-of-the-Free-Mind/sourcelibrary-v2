@@ -1,0 +1,835 @@
+[
+ {
+  "uid": "chk001",
+  "pid": "6a3c6991af3c49b59c5e09ee",
+  "bid": "6a3c6991af3c49b59c5e09d0",
+  "pn": 30,
+  "iss": 5600,
+  "title": "普濟方·卷二百七十 (vol 187)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "run:16",
+   "dup_lines:1"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "diagram",
+  "invented": [
+   {
+    "what": "聖聖聖聖聖聖聖聖聖聖聖聖聖聖聖聖 (for the lower-left talisman glyph)",
+    "written": 16,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 16,
+  "note": "This is a talisman page. The small notes (斷温, 户辟, 上帖, 辟温, 門户) and the three 天/火 columns roughly match the page, but the lower-left talisman (stacked 目 shapes ending in 七) is written as sixteen 聖, which the page does not print. The 女 elements in the upper-left talisman are left out, the large right-hand glyph is guessed as 癲瘕, and one 天 is dropped while 大 is read as 火."
+ },
+ {
+  "uid": "chk002",
+  "pid": "6a3c654239b4508b04e2d7c6",
+  "bid": "6a3c654239b4508b04e2d76b",
+  "pn": 91,
+  "iss": 5600,
+  "title": "御定子史精華·卷一~卷三 (vol 1)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "repeated_line_run",
+   "run:18",
+   "dup_lines:3"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "丨 repetition marks after 於金用莫利於水",
+    "written": 16,
+    "printed": 7
+   }
+  ],
+  "invented_chars": 10,
+  "note": "The first column prints about 7 丨 marks between 水 and the large 主流行 but the transcription writes 16; 肇 is misread as 犨, and the run before 注 in the last 天地 column has one 丨 more than the page shows; everything else matches."
+ },
+ {
+  "uid": "chk003",
+  "pid": "6a3cb7313dce6cfad7486cd9",
+  "bid": "6a3cb7313dce6cfad7486c67",
+  "pn": 114,
+  "iss": 5600,
+  "title": "尚書通考·卷九~卷十 (vol 6)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "dup_lines:9"
+  ],
+  "verdict": "minor",
+  "label": "real-text-with-errors",
+  "layout": "table",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The page prints 24 朝貢 cells (侯 11, 甸 5, 男 3, 采 2, 衞 2, 要 1). The transcription writes 23, with the grid order scrambled, and it leaves out the 采 row label. 十一年 is misread as a second 十年."
+ },
+ {
+  "uid": "chk004",
+  "pid": "6a3c653639b4508b04e2d120",
+  "bid": "6a3c653639b4508b04e2d0e0",
+  "pn": 63,
+  "iss": 5600,
+  "title": "御製增訂清文鑑·卷二十 (vol 19)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:1"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "美美美美美",
+    "written": 5,
+    "printed": 0
+   },
+   {
+    "what": "李逢生书志",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "靈芝",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "集",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "卷",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "頌",
+    "written": 3,
+    "printed": 0
+   },
+   {
+    "what": "阿阿阿",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "朱建人",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "美",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "書之",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "如",
+    "written": 1,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 27,
+  "note": "The page prints only the header, 營繕清吏司, 工部 and 部院類第五, plus small phonetic glosses beside Manchu script; the transcription adds unprinted text (美美美美美, 李逢生书志, 靈芝, 頌×3, 朱建人, etc.), writes the 阿阿阿 gloss twice although it is printed once, and leaves out 工部."
+ },
+ {
+  "uid": "chk005",
+  "pid": "6a3c653539b4508b04e2cfd7",
+  "bid": "6a3c653539b4508b04e2cfa6",
+  "pn": 49,
+  "iss": 5600,
+  "title": "御製增訂清文鑑·卷十八 (vol 17)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "repeated_line_run",
+   "run:8",
+   "dup_lines:1"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "書 (as standalone cells beyond the margin title's single 書)",
+    "written": 22,
+    "printed": 1
+   },
+   {
+    "what": "是",
+    "written": 8,
+    "printed": 0
+   },
+   {
+    "what": "魯鈍",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "可述",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "之",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "惡",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "矣足不",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "卵",
+    "written": 2,
+    "printed": 0
+   },
+   {
+    "what": "鬆/鯉/鳥/侶/法 (garbled small annotation glyphs)",
+    "written": 1,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 45,
+  "note": "This is a Manchu–Chinese dictionary page. It prints 欽定四庫全書, the headwords 舉動拙鈍, 魯鈍, 遲鈍, 拙鈍 and 鈍繆類, and small phonetic glosses beside them. The transcription repeats 書 about 21 extra times and writes 是 eight times, neither printed. It writes 魯鈍 twice where the page prints it once, and adds other characters the page does not carry. It also leaves out most of the small gloss characters."
+ },
+ {
+  "uid": "chk006",
+  "pid": "6a3c65fc39b4508b04e30bcd",
+  "bid": "6a3c65fc39b4508b04e30b3a",
+  "pn": 147,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百二十五~卷一百二十七 (vol 92)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "run:17"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription matches the page column by column. Some ditto-mark (丨) runs are hard to count exactly, but the Han text matches the page with nothing added or left out."
+ },
+ {
+  "uid": "chk007",
+  "pid": "6a3c654e39b4508b04e2db9c",
+  "bid": "6a3c654e39b4508b04e2db7e",
+  "pn": 30,
+  "iss": 5600,
+  "title": "御定子史精華·卷三十五~卷三十七 (vol 11)",
+  "reasons": [
+   "strict:local_loop",
+   "run:6"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "This is an annotated prose page and the transcription follows it closely, with nothing repeated or invented; 追 is read as 退, and 汜水 is probably read as 池水."
+ },
+ {
+  "uid": "chk008",
+  "pid": "6a3c65fc39b4508b04e30ac7",
+  "bid": "6a3c65fc39b4508b04e30a91",
+  "pn": 54,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百二十二~卷一百二十四 (vol 91)",
+  "reasons": [
+   "strict:line_loop",
+   "run:9"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The text matches the page column by column, with no repeated or invented spans; the only misread is 入 in 子入有精神, written as 人."
+ },
+ {
+  "uid": "chk009",
+  "pid": "6a3c65e939b4508b04e2ff65",
+  "bid": "6a3c65e939b4508b04e2ff17",
+  "pn": 78,
+  "iss": 5600,
+  "title": "御定子史精華·卷七十一~卷七十二 (vol 73)",
+  "reasons": [
+   "strict:line_loop",
+   "run:8"
+  ],
+  "verdict": "minor",
+  "label": "real-text-with-errors",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription follows the page in order and repeats nothing; the only errors are three places where 老子 is read as 老于 (before 善戰者, 用兵 and 抗兵)."
+ },
+ {
+  "uid": "chk010",
+  "pid": "6992ce4d2960dc4e5cea9030",
+  "bid": "6992ce4d2960dc4e5cea8fdc",
+  "pn": 84,
+  "iss": 6388,
+  "title": "三才圖會(八十八)",
+  "reasons": [
+   "strict:local_loop",
+   "run:4",
+   "dup_lines:43",
+   "table_title"
+  ],
+  "verdict": "minor",
+  "label": "real-text-with-errors",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "All 15 tone-chart labels appear once each in page order, and the 史邦卿 lyric text matches the page; 反 is read as 乆 twice, the small title glosses beside 詞 are doubtful (read as 訥蘊), and the clipped characters at the top of the rightmost column are missing."
+ },
+ {
+  "uid": "chk011",
+  "pid": "6a3c65fc39b4508b04e30afd",
+  "bid": "6a3c65fc39b4508b04e30a91",
+  "pn": 108,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百二十二~卷一百二十四 (vol 91)",
+  "reasons": [
+   "strict:local_loop",
+   "run:4"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The body text matches the page column by column with nothing written extra; only the margin titles (欽定四庫全書, 御定子史精華) and the page number are left out."
+ },
+ {
+  "uid": "chk012",
+  "pid": "6a3cb56d3dce6cfad7483052",
+  "bid": "6a3cb56d3dce6cfad7482ff1",
+  "pn": 96,
+  "iss": 5600,
+  "title": "周易函書約存·卷八~卷九 (vol 5)",
+  "reasons": [
+   "strict:local_loop",
+   "repeated_line_run",
+   "run:9",
+   "dup_lines:7",
+   "distinct:0.122"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "table",
+  "invented": [
+   {
+    "what": "遯 四月二月十月六月",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "遯 一五月月 / 遯 一五七月月 (spurious extra 遯 fragments)",
+    "written": 2,
+    "printed": 0
+   },
+   {
+    "what": "兊 六月四月二月十月八",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "同人 八月十月二四月六 (second 同人 block)",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "run of extra 月 after 艮",
+    "written": 9,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 45,
+  "note": "The page is a 16-column grid of hexagrams and month numbers. The transcription scrambles it: it repeats the 遯 and 兊 blocks, adds stray 遯 fragments and a second 同人 block, and leaves out or garbles most of the 否, 壯, 姤 and 大有 columns and many of the month-number sequences."
+ },
+ {
+  "uid": "chk013",
+  "pid": "6a3c65eb39b4508b04e3005d",
+  "bid": "6a3c65eb39b4508b04e3004b",
+  "pn": 18,
+  "iss": 5600,
+  "title": "御定子史精華·卷七十三~卷七十五 (vol 74)",
+  "reasons": [
+   "repeated_line_run",
+   "run:7",
+   "dup_lines:6"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription follows the page's text and its repeat marks (丨) column by column; the only error is 關羽 read as 開羽."
+ },
+ {
+  "uid": "chk014",
+  "pid": "6a3c660b39b4508b04e31587",
+  "bid": "6a3c660b39b4508b04e3152c",
+  "pn": 91,
+  "iss": 5600,
+  "title": "御定子史精華·卷十七~卷二十 (vol 108)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:3"
+  ],
+  "verdict": "minor",
+  "label": "real-text-with-errors",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "This is a reference-book entry page that uses ditto strokes. The text matches the page with nothing invented, but a short small-print span after 狀聖人起則見 (roughly 蟠神悔連則, before 龍顏) is left out, and a few characters may be misread."
+ },
+ {
+  "uid": "chk015",
+  "pid": "6a3c660539b4508b04e3113e",
+  "bid": "6a3c660539b4508b04e310b2",
+  "pn": 140,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百五十~卷一百五十二 (vol 100)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:6"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The Han text matches the page apart from two misreads: 飡 for 食 in 充夏食, and 節 for 欽 in the header 欽定四庫全書; some 丨 repeat marks are missing or in the wrong place, but they carry no Han text."
+ },
+ {
+  "uid": "chk016",
+  "pid": "6a3c66d0af3c49b59c5cdb66",
+  "bid": "6a3c66d0af3c49b59c5cdadc",
+  "pn": 137,
+  "iss": 5600,
+  "title": "歷算全書·卷三十六~三十八 (vol 23)",
+  "reasons": [
+   "strict:local_loop",
+   "run:4",
+   "dup_lines:3",
+   "table_title"
+  ],
+  "verdict": "material",
+  "label": "real-text-with-errors",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The prose columns and answer line match the page. The left square-root diagram roughly matches column by column. The right diagram is garbled: its digits are written as pairs that do not follow the printed columns, and some are left out, including the boxed 二一四 at the top. In the left margin, 原 is missing and 二四 was taken as a page number, though it is also written once more as separate lines, so it is not a printed duplicate."
+ },
+ {
+  "uid": "chk017",
+  "pid": "6a3cbefef9474f825c1648f4",
+  "bid": "6a3cbefef9474f825c16487f",
+  "pn": 117,
+  "iss": 5600,
+  "title": "洪範皇極內篇·卷一~卷三 (vol 1)",
+  "reasons": [
+   "strict:local_loop",
+   "repeated_line_run",
+   "run:11",
+   "dup_lines:3",
+   "distinct:0.280",
+   "table_title"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "table",
+  "invented": [
+   {
+    "what": "凶 (column of 凶 cells before 大)",
+    "written": 10,
+    "printed": 9
+   },
+   {
+    "what": "祥 (column of 祥 cells)",
+    "written": 11,
+    "printed": 10
+   }
+  ],
+  "invented_chars": 2,
+  "note": "Repeated cells are miscounted: the 凶 and 祥 columns each get one extra cell, the 悔 column is one short (9 vs 10), and the last 吝 column is two short (8 vs 10); the other columns and the prose match."
+ },
+ {
+  "uid": "chk018",
+  "pid": "6a3c65e839b4508b04e2fe20",
+  "bid": "6a3c65e839b4508b04e2fe1a",
+  "pn": 6,
+  "iss": 5600,
+  "title": "御定子史精華·卷六十三~卷六十四 (vol 70)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:3"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription matches the page's Han characters. The only differences are small mismatches in how many ditto marks (丨) it gives around 摧/坐 and 在途/以, which look like column-break misalignment rather than invented text."
+ },
+ {
+  "uid": "chk019",
+  "pid": "6a3c71a401fe4f593c1d9765",
+  "bid": "6a3c71a401fe4f593c1d973a",
+  "pn": 42,
+  "iss": 5600,
+  "title": "欽定授時通考·卷十三~卷十四 (vol 6)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:1"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "diagram",
+  "invented": [
+   {
+    "what": "欽定四庫全書 劉光揖四通考 卷十三 (header block)",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "甸",
+    "written": 8,
+    "printed": 4
+   }
+  ],
+  "invented_chars": 18,
+  "note": "The header block is written twice and 甸 is written eight times, but the page prints the header once and 甸 four times; the title 四甸為縣 and the central 縣 are missing, 淸 looks like a misread of the second 溝, and 光 in the header is likely a misread."
+ },
+ {
+  "uid": "chk020",
+  "pid": "6a3c660339b4508b04e30f20",
+  "bid": "6a3c660339b4508b04e30ee4",
+  "pn": 60,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百四十~卷一百四十二 (vol 97)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:4"
+  ],
+  "verdict": "minor",
+  "label": "real-text-with-errors",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The body text matches the page column by column, with nothing repeated or invented; the transcription leaves out the margin title 欽定四庫全書 and one 丨丨 ditto pair after 竹箭, and 柴檻 is possibly a misread of 柴楂/植."
+ },
+ {
+  "uid": "chk021",
+  "pid": "6a3c652a39b4508b04e2c9a6",
+  "bid": "6a3c652a39b4508b04e2c984",
+  "pn": 34,
+  "iss": 5600,
+  "title": "御製增訂清文鑑·卷六 (vol 5)",
+  "reasons": [
+   "repeated_line_run",
+   "run:7",
+   "dup_lines:1"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "重",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "主人、主人",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "是是是",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "不",
+    "written": 7,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 15,
+  "note": "The page is Manchu script with small Chinese phonetic glosses. The transcription gets most of the glosses roughly right but scrambles their order and misreads several, such as 憤 and 違. It also adds 重, 主人主人, 是是是 and seven 不 that the page does not print, probably invented from the unglossed Manchu columns."
+ },
+ {
+  "uid": "chk022",
+  "pid": "6a3c65f239b4508b04e304d2",
+  "bid": "6a3c65f239b4508b04e3045b",
+  "pn": 119,
+  "iss": 5600,
+  "title": "御定子史精華·卷九十七~卷一百 (vol 82)",
+  "reasons": [
+   "strict:line_loop",
+   "run:8"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription matches the page column by column, with nothing repeated or invented; the only possible difference is the number of repeat marks (丨) after 國俗, which are not Han characters."
+ },
+ {
+  "uid": "chk023",
+  "pid": "6a3c61f240c88a541d8f121b",
+  "bid": "6a3c61f240c88a541d8f115a",
+  "pn": 193,
+  "iss": 5600,
+  "title": "妙法蓮華經 佛教十三經今譯 董國柱 2 (vol 2)",
+  "reasons": [
+   "strict:line_loop",
+   "distinct:0.262"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "This is a prose page and the transcription follows it closely, with two misread characters: the printed 娑婆 is written as 婆婆, and the printed 摩睺罗伽 is written as 摩醍罗伽."
+ },
+ {
+  "uid": "chk024",
+  "pid": "6a3c6a8baf3c49b59c5e7d88",
+  "bid": "6a3c6a8baf3c49b59c5e7d1b",
+  "pn": 7,
+  "iss": 5600,
+  "title": "大統歷志·卷三~卷四 (vol 2)",
+  "reasons": [
+   "strict:local_loop",
+   "run:4",
+   "distinct:0.051",
+   "table_title"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "table",
+  "invented": [
+   {
+    "what": "六四 七〇 四八八 六九 (cell sequence repeated in the second band-3 line)",
+    "written": 2,
+    "printed": 1
+   },
+   {
+    "what": "一〇三 … 七〇 (repeated across the two band-5 lines)",
+    "written": 2,
+    "printed": 1
+   }
+  ],
+  "invented_chars": 14,
+  "note": "The page is a 9-column grid (三十 to 三八) in 6 bands. Each cell holds two vertical pairs of digits. The transcription reads the bands as garbled horizontal lines, copies cell sequences from one line into the next, gives only one line for the last band, and gets many digits wrong."
+ },
+ {
+  "uid": "chk025",
+  "pid": "6a3c652939b4508b04e2c96a",
+  "bid": "6a3c652939b4508b04e2c8c2",
+  "pn": 168,
+  "iss": 5600,
+  "title": "御製增訂清文鑑·卷三~卷四 (vol 3)",
+  "reasons": [
+   "strict:local_loop+line_loop",
+   "run:19",
+   "dup_lines:2"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "素是素",
+    "written": 3,
+    "printed": 0
+   },
+   {
+    "what": "中",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "書是是是是是",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "是是是是是是是是是是是是是是是是是是是",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "美",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "墨子建之書",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "是是是是是是",
+    "written": 1,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 47,
+  "note": "This page is mostly Manchu script with only three Chinese headwords (綠營官, 關口守尉, 防禦) plus small Chinese phonetic glosses. The transcription matches the headwords, except that 關 is read as 閣, but it invents repeated 是, 素是素, 中, 美 and 墨子建之書, and leaves out all of the small phonetic glosses."
+ },
+ {
+  "uid": "chk026",
+  "pid": "6a3c65fe39b4508b04e30c1d",
+  "bid": "6a3c65fe39b4508b04e30be9",
+  "pn": 51,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百三十一~卷一百三十三 (vol 94)",
+  "reasons": [
+   "strict:local_loop",
+   "run:13"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "prose",
+  "invented": [
+   {
+    "what": "丨 placeholder marks after 答曰 at the foot of column 1",
+    "written": 11,
+    "printed": 5
+   }
+  ],
+  "invented_chars": 6,
+  "note": "The text matches the page apart from variant forms. The column-1 run of 丨 placeholder marks is written as 11 where about 5 are printed, and the run of 丨 before 按瑀式之子 is cut to a single mark."
+ },
+ {
+  "uid": "chk027",
+  "pid": "6a3c652d39b4508b04e2cbf2",
+  "bid": "6a3c652d39b4508b04e2cbd8",
+  "pn": 26,
+  "iss": 5600,
+  "title": "御製增訂清文鑑·卷十 (vol 9)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:3"
+  ],
+  "verdict": "invented",
+  "label": "invented",
+  "layout": "mixed",
+  "invented": [
+   {
+    "what": "是是是是是",
+    "written": 5,
+    "printed": 0
+   },
+   {
+    "what": "里 (single-character lines, five in a row)",
+    "written": 5,
+    "printed": 0
+   },
+   {
+    "what": "美里",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "美秀",
+    "written": 1,
+    "printed": 0
+   },
+   {
+    "what": "未",
+    "written": 1,
+    "printed": 0
+   }
+  ],
+  "invented_chars": 14,
+  "note": "This page is a Manchu–Chinese glossary with small sound-gloss annotations; the transcription adds sequences the page does not print (是×5, 里×5, 美里, 美秀, 未), scrambles the gloss characters, misreads 喇瑪 as 琳瑪, and leaves out several gloss characters such as 纏, 精 and 瑪."
+ },
+ {
+  "uid": "chk028",
+  "pid": "6a3c660339b4508b04e30f26",
+  "bid": "6a3c660339b4508b04e30ee4",
+  "pn": 66,
+  "iss": 5600,
+  "title": "御定子史精華·卷一百四十~卷一百四十二 (vol 97)",
+  "reasons": [
+   "strict:local_loop",
+   "run:10",
+   "dup_lines:1"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "The transcription matches the page column by column; the 丨 repeat marks line up, nothing is repeated or added, and only the margin title and page number are left out."
+ },
+ {
+  "uid": "chk029",
+  "pid": "6a3c6550af3c49b59c5cb756",
+  "bid": "6a3c6550af3c49b59c5cb697",
+  "pn": 191,
+  "iss": 5600,
+  "title": "御定子史精華·卷四十四~卷四十七 (vol 14)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:2"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "prose",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "This is a prose page of entries with large-character headwords. Every column of the image appears in the transcription, nothing is duplicated, and the repeat marks (丨) only break up the reading order without adding or dropping any Chinese characters."
+ },
+ {
+  "uid": "chk030",
+  "pid": "6a3c65e539b4508b04e2fbc4",
+  "bid": "6a3c65e539b4508b04e2fb8d",
+  "pn": 55,
+  "iss": 5600,
+  "title": "御定子史精華·卷五十~卷五十三 (vol 66)",
+  "reasons": [
+   "repeated_line_run",
+   "run:5",
+   "dup_lines:5"
+  ],
+  "verdict": "clean",
+  "label": "clean",
+  "layout": "mixed",
+  "invented": [],
+  "invented_chars": 0,
+  "note": "Nothing is invented or left out; the transcription matches this column-format entry list except that the last character, 氈, is read as 幹."
+ }
+]

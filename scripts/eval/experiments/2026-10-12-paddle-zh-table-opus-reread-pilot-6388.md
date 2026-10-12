@@ -84,7 +84,7 @@ PRIOR ART: `2026-10-11-paddle-zh-table-detector-6388.md`, which has the detector
   - Opus over-writes printed characters 91 times, Paddle 218 (12,730 printed characters).
   - Pages with an over-count ≥ 3: Opus 16, Paddle 15. Opus's excess is spread thinly; Paddle's is concentrated.
 - **The reviewer over-calls on small print.** On 12 own-aligned pages called invented, 7 claimed spans are 3 or more
-  characters long. The Kanripo leaf prints 5 of them in full (`data/kanripo-check-invented.jsonl`); these are
+  characters long. The Kanripo leaf prints 5 of them in full (`results/kanripo-check-invented.jsonl`); these are
   double-line small notes Opus read and Flash did not see. Two corrected estimates:
   - drop those 5 pages: 18/100;
   - also apply the same 5/12 false-positive share to the 11 invented pages Kanripo cannot check: about 13/100.
