@@ -1,0 +1,20 @@
+{
+ "computed_at": "2026-10-12T03:30:24.910Z",
+ "lane": "paddle-zh-2026-10",
+ "cer_max": 0.1,
+ "stale_pages": 75543,
+ "excluded": {
+  "under 8 Han characters": 30
+ },
+ "cer_ge_0_1": 24837,
+ "eligible": 50676,
+ "eligible_by_bin": {
+  "0–0.05": 34721,
+  "0.05–0.1": 15955
+ },
+ "books": 738,
+ "page_holds_by_reason": {
+  "paddle-zh-6388-ocr-only": 74688,
+  "paddle-zh-5600-ocr-only": 855
+ }
+}
