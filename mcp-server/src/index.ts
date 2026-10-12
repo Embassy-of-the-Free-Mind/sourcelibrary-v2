@@ -164,7 +164,7 @@ const TOOLS: Tool[] = [
       properties: {
         search: {
           type: "string",
-          description: "Relevance-ranked word match over title, author, original-script name forms AND the book's AI summary — a hit may name your term only in its summary, not its title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
+          description: "Relevance-ranked word match over title, author, original-script name forms AND the book's AI summary. A hit may name your term only in its summary, not its title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
         },
         language: {
           type: "string",
