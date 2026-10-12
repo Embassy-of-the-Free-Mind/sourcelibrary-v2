@@ -1,0 +1,724 @@
+{
+  "_comment": [
+    "Spanish acquisition wave (#6559): esoteric Spain, navigation and exploration, Hernando Colón's library.",
+    "PRODUCED BY: IA advancedsearch over a ~85-work want list (2026-10-11), then hand subject-filter and imprint screen",
+    "(import-workflow.md steps 3 and 3b), then check-holdings.ts on every pick with title+author+year.",
+    "SELECTION: earliest edition on IA wins (ad fontes); nothing printed after 1918; library uploaders preferred.",
+    "Dropped: Lapidario 1881 facsimile (held as \"Lapidary of King Alfonso X\"); Quirós 1876 (Google scans, volumes ambiguous).",
+    "Not on IA, next channel is BNE Biblioteca Digital Hispánica: Castañega 1529, Pérez de Vargas 1568, Molinos Guía 1675,",
+    "Martín Cortés 1551, Ruiz de Alarcón 1629, Tafur, Laredo Subida del Monte Sión, Colombina catálogo IV-VII.",
+    "region = shelf: esoteric | americas-esoteric | explore | colon."
+  ],
+  "books": [
+    {
+      "ia": "ARes11501",
+      "region": "esoteric",
+      "title": "Reprobación de las supersticiones y hechicerías",
+      "author": "Pedro Ciruelo",
+      "language": "Spanish",
+      "published": "1541",
+      "text_role": "original",
+      "note": "Salamanca 1541 (Seville University copy). The standard Spanish manual against magic, divination and the evil eye; first ed. c.1530 is not on IA."
+    },
+    {
+      "ia": "per_witchcraft-in-europe-and-america_navarro-gaspar_1631_702",
+      "region": "esoteric",
+      "title": "Tribunal de superstición ladina, explorador del saber, astucia y poder del demonio",
+      "author": "Gaspar Navarro",
+      "language": "Spanish",
+      "published": "1631",
+      "text_role": "original",
+      "note": "Huesca 1631. Cornell Witchcraft Collection microfilm."
+    },
+    {
+      "ia": "b30363755",
+      "region": "esoteric",
+      "title": "Auto de fe celebrado en la ciudad de Logroño en los días 7 y 8 de noviembre de 1610",
+      "author": "Tribunal del Santo Oficio de Logroño (ed. Leandro Fernández de Moratín)",
+      "language": "Spanish",
+      "published": "1820",
+      "text_role": "original",
+      "note": "Madrid 1820 reprint, with Moratín's satirical notes, of the 1611 relación of the Zugarramurdi witch trial. Wellcome copy."
+    },
+    {
+      "ia": "relaciondelautod00pera",
+      "region": "esoteric",
+      "title": "Relación del auto de fe celebrado por el Santo Oficio de la Inquisición de Lima (1733)",
+      "author": "Pedro de Peralta Barnuevo",
+      "language": "Spanish",
+      "published": "1733",
+      "text_role": "original",
+      "note": "Lima 1733."
+    },
+    {
+      "ia": "bub_gb_huNLhjinfiUC",
+      "region": "esoteric",
+      "title": "Tratado de la verdadera y falsa prophecía",
+      "author": "Juan de Horozco y Covarrubias",
+      "language": "Spanish",
+      "published": "1588",
+      "text_role": "original",
+      "note": "Segovia 1588. On true and false prophecy, visionaries and diviners."
+    },
+    {
+      "ia": "bub_gb_1I_bEfkahdAC",
+      "region": "esoteric",
+      "title": "Oculta filosofía: de la sympatía y antipatía de las cosas",
+      "author": "Juan Eusebio Nieremberg",
+      "language": "Spanish",
+      "published": "1633",
+      "text_role": "original",
+      "note": "Barcelona 1633 (first ed. as a separate title). Sympathy and antipathy, natural magic."
+    },
+    {
+      "ia": "A087264",
+      "region": "esoteric",
+      "title": "Curiosa filosofía y tesoro de maravillas de la naturaleza",
+      "author": "Juan Eusebio Nieremberg",
+      "language": "Spanish",
+      "published": "1630",
+      "text_role": "original",
+      "note": "Madrid 1630, first edition."
+    },
+    {
+      "ia": "jardindeflorescv00torq_0",
+      "region": "esoteric",
+      "title": "Jardín de flores curiosas",
+      "author": "Antonio de Torquemada",
+      "language": "Spanish",
+      "published": "1575",
+      "text_role": "original",
+      "note": "Antwerp 1575 (first ed. Salamanca 1570). Marvels, monsters, ghosts, werewolves, witches; source for Cervantes' Persiles."
+    },
+    {
+      "ia": "bub_gb_FV8cVmngzgoC",
+      "region": "esoteric",
+      "title": "Examen de ingenios para las sciencias",
+      "author": "Juan Huarte de San Juan",
+      "language": "Spanish",
+      "published": "1581",
+      "text_role": "original",
+      "note": "Pamplona? 1581 edition (first Baeza 1575). Humoral theory of talent; read across Europe."
+    },
+    {
+      "ia": "bub_gb_9OLW7LT8UoQC",
+      "region": "esoteric",
+      "title": "Phisonomía y varios secretos de naturaleza",
+      "author": "Jerónimo Cortés",
+      "language": "Spanish",
+      "published": "1609",
+      "text_role": "original",
+      "note": "1609. Physiognomy, chiromancy, books of secrets."
+    },
+    {
+      "ia": "HHAZ3352",
+      "region": "esoteric",
+      "title": "El non plus ultra del lunario y pronóstico perpetuo",
+      "author": "Jerónimo Cortés",
+      "language": "Spanish",
+      "published": "1745",
+      "text_role": "original",
+      "note": "Seville 1745 edition of the most-reprinted Spanish astrological almanac."
+    },
+    {
+      "ia": "8V359INV2549RES",
+      "region": "esoteric",
+      "title": "Reportorio de los tiempos",
+      "author": "Andrés de Li",
+      "language": "Spanish",
+      "published": "1510",
+      "text_role": "original",
+      "note": "c.1510 (Bibliothèque Sainte-Geneviève). Calendar, astrology and medicine; first Spanish reportorio (1492)."
+    },
+    {
+      "ia": "bub_gb_kJXOnEuIYuUC",
+      "region": "esoteric",
+      "title": "Chronographia o Reportorio de los tiempos",
+      "author": "Jerónimo de Chaves",
+      "language": "Spanish",
+      "published": "1576",
+      "text_role": "original",
+      "note": "Seville 1576. Cosmography, computus and judicial astrology by the Casa de Contratación cosmographer."
+    },
+    {
+      "ia": "A1090722",
+      "region": "esoteric",
+      "title": "Entierro del juicio final y vivificación de la astrología",
+      "author": "Diego de Torres Villarroel",
+      "language": "Spanish",
+      "published": "1727",
+      "text_role": "original",
+      "note": "Madrid 1727. The \"Gran Piscator de Salamanca\" defends astrology against Martín Martínez and Feijoo."
+    },
+    {
+      "ia": "2542040R.nlm.nih.gov",
+      "region": "americas-esoteric",
+      "title": "Verdadera medicina, cirugía y astrología",
+      "author": "Juan de Barrios",
+      "language": "Spanish",
+      "published": "1607",
+      "text_role": "original",
+      "note": "Mexico City 1607 (NLM copy). Medicine and astrology printed in New Spain."
+    },
+    {
+      "ia": "sitionaturalezay00cisn",
+      "region": "americas-esoteric",
+      "title": "Sitio, naturaleza y propiedades de la ciudad de México",
+      "author": "Diego Cisneros",
+      "language": "Spanish",
+      "published": "1618",
+      "text_role": "original",
+      "note": "Mexico City 1618. Astrological medicine of the Valley of Mexico."
+    },
+    {
+      "ia": "reportoriodelost00mart",
+      "region": "americas-esoteric",
+      "title": "Reportorio de los tiempos y historia natural de esta Nueva España",
+      "author": "Enrico Martínez",
+      "language": "Spanish",
+      "published": "1606",
+      "text_role": "original",
+      "note": "Mexico City 1606, John Carter Brown copy. Astrology, natural history and the drainage of the Valley of Mexico."
+    },
+    {
+      "ia": "libros-del-saber-ed-rico-y-sinobas",
+      "region": "esoteric",
+      "title": "Libros del saber de astronomía del rey D. Alfonso X de Castilla",
+      "author": "Alfonso X el Sabio (ed. Manuel Rico y Sinobas)",
+      "language": "Spanish",
+      "published": "1863",
+      "text_role": "original",
+      "note": "Madrid 1863-67, the Royal Academy edition of the Alfonsine astronomical/astrological corpus (instruments, star catalogue). PDF item, 1,771 pages, probably all five volumes in one file."
+    },
+    {
+      "ia": "BocadosDeOro1510",
+      "region": "esoteric",
+      "title": "Bocados de oro",
+      "author": "Anonymous (after al-Mubashshir ibn Fātik)",
+      "language": "Spanish",
+      "published": "1510",
+      "text_role": "original",
+      "note": "Toledo 1510. Castilian version of the Mukhtār al-ḥikam: sayings of Hermes, Pythagoras, Socrates and other sages."
+    },
+    {
+      "ia": "ARes73420",
+      "region": "esoteric",
+      "title": "Visión delectable de la filosofía y artes liberales",
+      "author": "Alfonso de la Torre",
+      "language": "Spanish",
+      "published": "1526",
+      "text_role": "original",
+      "note": "Seville 1526. Allegorical encyclopaedia of philosophy, drawing on Maimonides and al-Ghazali."
+    },
+    {
+      "ia": "ARes056081",
+      "region": "esoteric",
+      "title": "Arte general y breve en dos instrumentos para todas las sciencias, recopilada del Arte Magna de Raimundo Lulio",
+      "author": "Pedro de Guevara",
+      "language": "Spanish",
+      "published": "1584",
+      "text_role": "original",
+      "note": "Madrid 1584. Lullian combinatory art in Spanish, written for Philip II."
+    },
+    {
+      "ia": "artedelosmetales00barb_0",
+      "region": "esoteric",
+      "title": "Arte de los metales",
+      "author": "Álvaro Alonso Barba",
+      "language": "Spanish",
+      "published": "1640",
+      "text_role": "original",
+      "note": "Madrid 1640, first edition. Potosí metallurgy, mercury amalgamation, and a chapter on the generation of metals and alchemy."
+    },
+    {
+      "ia": "sextapartedelabe00osun",
+      "region": "esoteric",
+      "title": "Sexta parte del Abecedario espiritual",
+      "author": "Francisco de Osuna",
+      "language": "Spanish",
+      "published": "1554",
+      "text_role": "original",
+      "note": "Medina del Campo 1554, JCB copy. Osuna's Abecedario taught Teresa of Ávila the prayer of recollection."
+    },
+    {
+      "ia": "origendelosindio00garc",
+      "region": "americas-esoteric",
+      "title": "Origen de los indios del Nuevo Mundo e Indias Occidentales",
+      "author": "Gregorio García",
+      "language": "Spanish",
+      "published": "1607",
+      "text_role": "original",
+      "note": "Valencia 1607, JCB copy. Lost tribes, Atlantis, Carthaginians, Ophir: every theory of Amerindian origins."
+    },
+    {
+      "ia": "tratadounicoysin00roch",
+      "region": "americas-esoteric",
+      "title": "Tratado único y singular del origen de los indios occidentales del Pirú, México, Santa Fe y Chile",
+      "author": "Diego Andrés Rocha",
+      "language": "Spanish",
+      "published": "1681",
+      "text_role": "original",
+      "note": "Lima 1681. Indians as descendants of the lost tribes and ancient Spaniards; Ophir."
+    },
+    {
+      "ia": "memoriasantiguas00mont",
+      "region": "americas-esoteric",
+      "title": "Memorias antiguas historiales y políticas del Perú",
+      "author": "Fernando de Montesinos",
+      "language": "Spanish",
+      "published": "1882",
+      "text_role": "original",
+      "note": "Madrid 1882 (Jiménez de la Espada ed.) of the 1640s MS: Peru as Ophir, an invented 90-king Inca prehistory."
+    },
+    {
+      "ia": "carnero-primera-edicion_202302",
+      "region": "americas-esoteric",
+      "title": "El Carnero: conquista y descubrimiento del Nuevo Reino de Granada",
+      "author": "Juan Rodríguez Freyle",
+      "language": "Spanish",
+      "published": "1859",
+      "text_role": "original",
+      "note": "Bogotá 1859 first edition (Pérez ed.) of the 1636 chronicle: El Dorado, witches and scandals of colonial Bogotá."
+    },
+    {
+      "ia": "sumadegeographia00enci_0",
+      "region": "explore",
+      "title": "Suma de geographía",
+      "author": "Martín Fernández de Enciso",
+      "language": "Spanish",
+      "published": "1519",
+      "text_role": "original",
+      "note": "Seville 1519, first edition, JCB copy. First Spanish printed account of the New World and a navigation manual."
+    },
+    {
+      "ia": "artedenauegarenq00medi",
+      "region": "explore",
+      "title": "Arte de navegar",
+      "author": "Pedro de Medina",
+      "language": "Spanish",
+      "published": "1545",
+      "text_role": "original",
+      "note": "Valladolid 1545, first edition, JCB copy. We hold only the 1580 Dutch translation."
+    },
+    {
+      "ia": "compendiodelarte00zamo",
+      "region": "explore",
+      "title": "Compendio del arte de navegar",
+      "author": "Rodrigo Zamorano",
+      "language": "Spanish",
+      "published": "1588",
+      "text_role": "original",
+      "note": "Seville 1588, JCB copy. The Casa de Contratación pilots' textbook."
+    },
+    {
+      "ia": "instrucionnauthi00garc",
+      "region": "explore",
+      "title": "Instrucción náuthica para el buen uso y regimiento de las naos",
+      "author": "Diego García de Palacio",
+      "language": "Spanish",
+      "published": "1587",
+      "text_role": "original",
+      "note": "Mexico City 1587, the first nautical book printed in the Americas."
+    },
+    {
+      "ia": "bub_gb_GWQ0Mj13LAEC",
+      "region": "explore",
+      "title": "Regimiento de navegación",
+      "author": "Andrés García de Céspedes",
+      "language": "Spanish",
+      "published": "1606",
+      "text_role": "original",
+      "note": "Madrid 1606, with the Hydrografía."
+    },
+    {
+      "ia": "cartadecristba00colu",
+      "region": "explore",
+      "title": "Carta de Cristóbal Colón enviada de Lisboa a Barcelona en marzo de 1493",
+      "author": "Cristóbal Colón (ed. F. A. de Varnhagen)",
+      "language": "Spanish",
+      "published": "1869",
+      "text_role": "original",
+      "note": "Vienna 1869, Varnhagen's edition of the Spanish first-voyage letter."
+    },
+    {
+      "ia": "lahistoriadedfer01coln",
+      "region": "explore",
+      "title": "La historia de D. Fernando Colón, en la qual se da particular y verdadera relación de la vida y hechos del almirante D. Cristóbal Colón su padre",
+      "author": "Hernando Colón",
+      "language": "Spanish",
+      "published": "1749",
+      "text_role": "original",
+      "note": "Madrid 1749 (Barcia, Historiadores primitivos), first Spanish printing; the 1571 Italian is the only earlier."
+    },
+    {
+      "ia": "cartaderelacione00cort",
+      "region": "explore",
+      "title": "Carta de relación enviada a Su Majestad (segunda carta)",
+      "author": "Hernán Cortés",
+      "language": "Spanish",
+      "published": "1522",
+      "text_role": "original",
+      "note": "Seville 1522, JCB copy: the second letter, Tenochtitlan described. We hold the third."
+    },
+    {
+      "ia": "laquartarelacion00cort",
+      "region": "explore",
+      "title": "La cuarta relación",
+      "author": "Hernán Cortés",
+      "language": "Spanish",
+      "published": "1525",
+      "text_role": "original",
+      "note": "Toledo 1525, JCB copy."
+    },
+    {
+      "ia": "historiadenuevae00cort",
+      "region": "explore",
+      "title": "Historia de Nueva-España, escrita por su esclarecido conquistador Hernán Cortés",
+      "author": "Hernán Cortés (ed. Francisco Antonio Lorenzana)",
+      "language": "Spanish",
+      "published": "1770",
+      "text_role": "original",
+      "note": "Mexico City 1770. Lorenzana's edition with the Codex Mendoza tribute plates and a calendar wheel."
+    },
+    {
+      "ia": "ouiedodelanatura00fern",
+      "region": "explore",
+      "title": "De la natural hystoria de las Indias (Sumario)",
+      "author": "Gonzalo Fernández de Oviedo",
+      "language": "Spanish",
+      "published": "1526",
+      "text_role": "original",
+      "note": "Toledo 1526, first edition, JCB copy. First natural history of the Americas."
+    },
+    {
+      "ia": "lahistoriagenera00fern",
+      "region": "explore",
+      "title": "La historia general de las Indias (primera parte)",
+      "author": "Gonzalo Fernández de Oviedo",
+      "language": "Spanish",
+      "published": "1535",
+      "text_role": "original",
+      "note": "Seville 1535, first edition, JCB copy. We hold only the 1851 Academy edition."
+    },
+    {
+      "ia": "libroxxdelasegun00fern",
+      "region": "explore",
+      "title": "Libro XX de la segunda parte de la general historia de las Indias",
+      "author": "Gonzalo Fernández de Oviedo",
+      "language": "Spanish",
+      "published": "1557",
+      "text_role": "original",
+      "note": "Valladolid 1557, JCB copy. The only part of book II printed in Oviedo's century (Magellan's strait, the Moluccas)."
+    },
+    {
+      "ia": "historiagenerald12herr",
+      "region": "explore",
+      "title": "Historia general de los hechos de los castellanos en las islas y tierra firme del mar océano, Décadas I-II",
+      "author": "Antonio de Herrera y Tordesillas",
+      "language": "Spanish",
+      "published": "1601",
+      "text_role": "original",
+      "note": "Madrid 1601-15, first edition, JCB copy. Décadas 1-2."
+    },
+    {
+      "ia": "historiagenerald345herr",
+      "region": "explore",
+      "title": "Historia general de los hechos de los castellanos, Décadas III-V",
+      "author": "Antonio de Herrera y Tordesillas",
+      "language": "Spanish",
+      "published": "1601",
+      "text_role": "original",
+      "note": "Madrid 1601-15, first edition, JCB copy. Décadas 3-5."
+    },
+    {
+      "ia": "historiagenerald67herr",
+      "region": "explore",
+      "title": "Historia general de los hechos de los castellanos, Décadas VI-VII",
+      "author": "Antonio de Herrera y Tordesillas",
+      "language": "Spanish",
+      "published": "1615",
+      "text_role": "original",
+      "note": "Madrid 1601-15, first edition, JCB copy. Décadas 6-7."
+    },
+    {
+      "ia": "historiagenerald89herr",
+      "region": "explore",
+      "title": "Historia general de los hechos de los castellanos, Décadas VIII-IX",
+      "author": "Antonio de Herrera y Tordesillas",
+      "language": "Spanish",
+      "published": "1615",
+      "text_role": "original",
+      "note": "Madrid 1601-15, first edition, JCB copy. Décadas 8-9 (vol. 8 also the Descripción)."
+    },
+    {
+      "ia": "primerapartedela00simn",
+      "region": "explore",
+      "title": "Primera parte de las noticias historiales de las conquistas de Tierra Firme en las Indias Occidentales",
+      "author": "Pedro Simón",
+      "language": "Spanish",
+      "published": "1627",
+      "text_role": "original",
+      "note": "Cuenca 1627, JCB copy. New Granada and Venezuela, El Dorado expeditions."
+    },
+    {
+      "ia": "grandezamexicana00balb",
+      "region": "explore",
+      "title": "Grandeza mexicana",
+      "author": "Bernardo de Balbuena",
+      "language": "Spanish",
+      "published": "1604",
+      "text_role": "original",
+      "note": "Mexico City 1604, JCB copy. Verse portrait of the colonial capital."
+    },
+    {
+      "ia": "mc-0033215",
+      "region": "explore",
+      "title": "Elegías de varones ilustres de Indias",
+      "author": "Juan de Castellanos",
+      "language": "Spanish",
+      "published": "1589",
+      "text_role": "original",
+      "note": "Madrid 1589, first part (IA dates it 1598). Longest poem in Spanish: Columbus to the conquest of New Granada."
+    },
+    {
+      "ia": "sixteenthcent00lboprich",
+      "region": "explore",
+      "title": "Geografía y descripción universal de las Indias",
+      "author": "Juan López de Velasco",
+      "language": "Spanish",
+      "published": "1894",
+      "text_role": "original",
+      "note": "Madrid 1894 (Zaragoza ed.) of the royal cosmographer's 1574 survey."
+    },
+    {
+      "ia": "islariogeneralde00sant",
+      "region": "explore",
+      "title": "Islario general de todas las islas del mundo",
+      "author": "Alonso de Santa Cruz",
+      "language": "Spanish",
+      "published": "1918",
+      "text_role": "original",
+      "note": "Madrid 1918 first edition of the c.1540 island-book with its maps."
+    },
+    {
+      "ia": "nuevodescubrimie00acua",
+      "region": "explore",
+      "title": "Nuevo descubrimiento del gran río de las Amazonas",
+      "author": "Cristóbal de Acuña",
+      "language": "Spanish",
+      "published": "1641",
+      "text_role": "original",
+      "note": "Madrid 1641, first edition, JCB copy. Suppressed on publication; very rare."
+    },
+    {
+      "ia": "descubrimientod00carvgoog",
+      "region": "explore",
+      "title": "Descubrimiento del río de las Amazonas",
+      "author": "Gaspar de Carvajal (ed. José Toribio Medina)",
+      "language": "Spanish",
+      "published": "1894",
+      "text_role": "original",
+      "note": "Seville 1894, Medina's edition of Carvajal's account of Orellana 1542 (the Amazons) with documents."
+    },
+    {
+      "ia": "viagealestrecho00sarmguat",
+      "region": "explore",
+      "title": "Viaje al Estrecho de Magallanes",
+      "author": "Pedro Sarmiento de Gamboa",
+      "language": "Spanish",
+      "published": "1768",
+      "text_role": "original",
+      "note": "Madrid 1768 first edition of the 1579-80 voyage."
+    },
+    {
+      "ia": "A254218",
+      "region": "explore",
+      "title": "Relación del viaje al Estrecho nuevo de San Vicente y reconocimiento del de Magallanes",
+      "author": "Bartolomé and Gonzalo García de Nodal",
+      "language": "Spanish",
+      "published": "1766",
+      "text_role": "original",
+      "note": "Cádiz 1766 reprint of the 1621 relación."
+    },
+    {
+      "ia": "sucesosdelasisla00morg",
+      "region": "explore",
+      "title": "Sucesos de las islas Filipinas",
+      "author": "Antonio de Morga",
+      "language": "Spanish",
+      "published": "1609",
+      "text_role": "original",
+      "note": "Mexico City 1609, first edition, JCB copy."
+    },
+    {
+      "ia": "bub_gb_xqMIMkWDLzgC",
+      "region": "explore",
+      "title": "Historia de las cosas más notables, ritos y costumbres del gran reino de la China",
+      "author": "Juan González de Mendoza",
+      "language": "Spanish",
+      "published": "1586",
+      "text_role": "original",
+      "note": "Madrid 1586. Europe's standard account of China for a generation."
+    },
+    {
+      "ia": "bub_gb_33S7qp1wVGoC",
+      "region": "explore",
+      "title": "Historia del gran Tamorlán e itinerario y enarración del viaje",
+      "author": "Ruy González de Clavijo",
+      "language": "Spanish",
+      "published": "1782",
+      "text_role": "original",
+      "note": "Madrid 1782 (2nd ed.; first Seville 1582). Embassy of Henry III to Timur at Samarkand, 1403-06."
+    },
+    {
+      "ia": "relacionhistori1ullo",
+      "region": "explore",
+      "title": "Relación histórica del viaje a la América Meridional, tomo I",
+      "author": "Jorge Juan y Antonio de Ulloa",
+      "language": "Spanish",
+      "published": "1748",
+      "text_role": "original",
+      "note": "Madrid 1748, first edition. The French-Spanish geodesic mission to Quito."
+    },
+    {
+      "ia": "relacionhistoric02ullo",
+      "region": "explore",
+      "title": "Relación histórica del viaje a la América Meridional, tomo II",
+      "author": "Jorge Juan y Antonio de Ulloa",
+      "language": "Spanish",
+      "published": "1748",
+      "text_role": "original",
+      "note": "Madrid 1748."
+    },
+    {
+      "ia": "relacionhistoric03ullo",
+      "region": "explore",
+      "title": "Relación histórica del viaje a la América Meridional, tomo III",
+      "author": "Jorge Juan y Antonio de Ulloa",
+      "language": "Spanish",
+      "published": "1748",
+      "text_role": "original",
+      "note": "Madrid 1748."
+    },
+    {
+      "ia": "relacionhistoric04ullo",
+      "region": "explore",
+      "title": "Relación histórica del viaje a la América Meridional, tomo IV",
+      "author": "Jorge Juan y Antonio de Ulloa",
+      "language": "Spanish",
+      "published": "1748",
+      "text_role": "original",
+      "note": "Madrid 1748 (includes the Resumen histórico of the Incas)."
+    },
+    {
+      "ia": "viajepoliticocie0000mala",
+      "region": "explore",
+      "title": "Viaje político-científico alrededor del mundo por las corbetas Descubierta y Atrevida",
+      "author": "Alejandro Malaspina",
+      "language": "Spanish",
+      "published": "1885",
+      "text_role": "original",
+      "note": "Madrid 1885, first publication of the 1789-94 expedition journal."
+    },
+    {
+      "ia": "coleccindelosv01nava",
+      "region": "explore",
+      "title": "Colección de los viajes y descubrimientos que hicieron por mar los españoles, tomo I",
+      "author": "Martín Fernández de Navarrete",
+      "language": "Spanish",
+      "published": "1825",
+      "text_role": "original",
+      "note": "Madrid 1825-37. Columbus's diary (Las Casas abstract) first printed here."
+    },
+    {
+      "ia": "coleccindelosv_a02nava",
+      "region": "explore",
+      "title": "Colección de los viajes y descubrimientos, tomo II",
+      "author": "Martín Fernández de Navarrete",
+      "language": "Spanish",
+      "published": "1825",
+      "text_role": "original",
+      "note": "Madrid 1825."
+    },
+    {
+      "ia": "coleccindelosvi03nava",
+      "region": "explore",
+      "title": "Colección de los viajes y descubrimientos, tomo III",
+      "author": "Martín Fernández de Navarrete",
+      "language": "Spanish",
+      "published": "1829",
+      "text_role": "original",
+      "note": "Madrid 1829. Vespucci, Balboa, early voyages."
+    },
+    {
+      "ia": "coleccibonviages04navarich",
+      "region": "explore",
+      "title": "Colección de los viajes y descubrimientos, tomo IV",
+      "author": "Martín Fernández de Navarrete",
+      "language": "Spanish",
+      "published": "1837",
+      "text_role": "original",
+      "note": "Madrid 1837. Magellan-Elcano."
+    },
+    {
+      "ia": "coleccindelosv05nava",
+      "region": "explore",
+      "title": "Colección de los viajes y descubrimientos, tomo V",
+      "author": "Martín Fernández de Navarrete",
+      "language": "Spanish",
+      "published": "1837",
+      "text_role": "original",
+      "note": "Madrid 1837. Loaísa and Saavedra to the Moluccas."
+    },
+    {
+      "ia": "CatalogueOfTheLibraryOfFerdinandCo",
+      "region": "colon",
+      "title": "Catalogue of the Library of Ferdinand Columbus (Registrum B, facsimile)",
+      "author": "Hernando Colón (facsimile ed. Archer M. Huntington)",
+      "language": "Spanish",
+      "published": "1905",
+      "text_role": "original",
+      "note": "New York 1905 facsimile of Hernando Colón's own Registrum B, the numbered register of his 15,000-volume library, in his hand. Spanish/Latin MS; English title page only."
+    },
+    {
+      "ia": "bibliotecacolombinacatalogo1",
+      "region": "colon",
+      "title": "Biblioteca Colombina: catálogo de sus libros impresos, tomo I",
+      "author": "Servando Arbolí Faraudo y Simón de la Rosa y López",
+      "language": "Spanish",
+      "published": "1888",
+      "text_role": "original",
+      "note": "Seville 1888. Catalogue of the surviving printed books of Hernando Colón's library, with his purchase notes. Tomes IV-VII (to 1948) not on IA."
+    },
+    {
+      "ia": "bibliotecacolombinacatalogo2",
+      "region": "colon",
+      "title": "Biblioteca Colombina: catálogo de sus libros impresos, tomo II",
+      "author": "Servando Arbolí Faraudo y Simón de la Rosa y López",
+      "language": "Spanish",
+      "published": "1891",
+      "text_role": "original",
+      "note": "Seville 1891."
+    },
+    {
+      "ia": "bibliotecacolombinacatalogo3",
+      "region": "colon",
+      "title": "Biblioteca Colombina: catálogo de sus libros impresos, tomo III",
+      "author": "Servando Arbolí Faraudo y Simón de la Rosa y López",
+      "language": "Spanish",
+      "published": "1894",
+      "text_role": "original",
+      "note": "Seville 1894."
+    },
+    {
+      "ia": "fernandcolomb00harrrich",
+      "region": "colon",
+      "title": "Fernand Colomb: sa vie, ses œuvres",
+      "author": "Henry Harrisse",
+      "language": "French",
+      "published": "1872",
+      "text_role": "original",
+      "note": "Paris 1872. The first study of Hernando and his library catalogues (Abecedarium, Registrum)."
+    }
+  ]
+}
