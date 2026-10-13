@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: [lzh, sa, pi]
+scripts: []
+canons: [chinese-buddhist, chinese-classics, sanskrit, pali]
+n_books: null
+n_pages: 138
+verdict: "Built a 138-unit reference set (75 typed Chinese canon passages, 23 Sanskrit, 40 Pali pages), each with a fit-checked open English (132 same, 7 minor); Sonnet arm run, nothing judged yet."
+status: informational
+decision: null
+superseded_by: null
+issue: [6331, 6339]
+---
 ## 2026-10-08 · Chinese canon reference set and the Sanskrit/Pali extension (#6331 tests 2 and 5) — set built, Sonnet arm run, nothing judged yet
 <!-- PRIOR ART: 2026-10-08-pareto-sample-audit-6304.md (judged the #6182 Chinese panel unfit: 21 pages, 17 under 300 characters, printed canon only; its page checks now live in scripts/eval/lib/page-fitness.mjs and run here before any arm); scripts/eval/pareto-6182/units.mjs (the prompt v13 request this set reuses); scripts/eval/translation-vs-reference/ (#5695 harness; records.jsonl follows its input format). -->
 

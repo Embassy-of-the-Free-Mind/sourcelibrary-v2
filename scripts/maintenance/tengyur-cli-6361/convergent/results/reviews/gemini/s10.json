@@ -1,0 +1,51 @@
+[
+ {
+  "book_id": "6abeb35b896ea18127c83af5",
+  "slot": 10,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ལ (Derge Tengyur, vol. 105)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Volume 105 (letter La) of the Derge Tengyur Madhyamaka section, containing canonical Indian Madhyamaka treatises and commentaries.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 415,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "ཡང་ཞེས་པའི་དོན་ནི་སླར་གྱི་དོན་ཏོ",
+      "english": "this meaning is further emphasized",
+      "problem": "Misinterprets a grammatical gloss explaining the particle 'yang' ('and/also') as 'slar' ('further/again') as a rhetorical statement about emphasizing meaning",
+      "severity": "moderate",
+      "class": "T6"
+     },
+     {
+      "source": "སྡུག་བསྔལ་ཀུན་འབྱུང་འཇིག་རྟེན་དང་",
+      "english": "The origin of suffering is the world",
+      "problem": "Conflates the first two items of a list (duhkha, samudaya, loka) into 'the origin of suffering' and misinterprets the verse syntax as an equational clause",
+      "severity": "moderate",
+      "class": "T4"
+     },
+     {
+      "source": "དེ་ཉེ་",
+      "english": "and that near...",
+      "problem": "Translates an incomplete orphan syllable at the leaf boundary ('nye') literally as the independent word 'near'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Version B correctly interprets the particle commentary, accurately parses the cited verse, and cleanly handles the leaf boundary fragments.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear woodblock leaf from the Derge Tengyur with a completely accurate transcription; Translation B provides an exceptionally faithful and technically precise rendering of the Madhyamaka commentary."
+ }
+]

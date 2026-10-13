@@ -1,0 +1,88 @@
+<scan-quality>good</scan-quality>
+<language>Yucatec Maya, Spanish</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>12</page-num>
+<header>-12-</header>
+<vocab>Yucatec Maya, Catholic prayers, misericordia, puczikal, Dios</vocab>
+
+á lukez ú bonlilóob in puczi-
+kal, iix á cilichcuntic in pi-
+xan.
+  Olalcuntez, in Dios, in
+puczikal, utial in bóotic in ke-
+banóob, utial in uethic le
+tuntahulóob cá cú talelóob,
+utial in cumcintic le kaz ɔi-
+bolahóob cá cú ahauinticen,
+iix utial in nahaltic le tibil-
+beilóob cá cú kanantaltené.
+  Chup in puczikal ti hum-
+pel munil yacunahul ti á
+utzil, ti humpel hah pec ti in
+kebanóob, ti humpel mekáan
+yacunah utial y in lakóob,
+iix ti humpel heɔanil macun
+zah tile yokolcab: utial cá
+bay cuxlacen tzayanen ti in
+yumtzilóob, yacunah ti in
+kahualóob, utz ti in etyacu-
+nahóob, iix utzul thanil ti in
+ah chechóob.
+  Uanten, yumé, y á ɔabi-
+lah utial in tocicimba ti
+le tzucyahil y le cá cú tuko-
+lalticen á nachcuntic tile
+coczicil y le yatzil, le
+nonohbail y le mukolal,
+iix pakzizil y le thabáan
+olil.
+  Ɔáten, in Dios, tiblil ti le
+meyhulóob, nohoch puczikal
+ti le tec lubul kazóob, muka-
+nil ti lel nummiaóob, tiblil ti-
+lel utzóob, ɔá olil ti lel okot-
+ba, tiblil ti lel hanal, ɔoc-
+bezahul ti in kocholóob, iix
+heɔanil ti in xul uolahulóob.
+<column-break/>
+mi voluntad, quiteis las man-
+chas de mi corazon, y santi-
+fiqueis mi alma.
+  Fortaleced, mi Dios, mi co-
+razon, para satisfacer mis pe-
+cados, para reprimir las ten-
+taciones que vienen para re-
+primir los malos deseos que
+reinan en mí, y para alcanzar
+las virtudes que necesito.
+  Llenad mi corazon de un
+tierno amor de tu bondad,
+de un verdadero aborreci-
+miento de mis pecados, de
+un abrasado amor, para con
+mis prógimos, y de un firme
+desprendimiento del mundo:
+para que así viva unido con
+mis superiores, amar á mis
+enemigos, hacer bien á los
+que me aman, y hablar bien
+de mis inferiores.
+  Socorredme, Señor, con
+vuestra misericordia para de-
+fenderme de la impureza con
+la que me molesta, retiradme
+de la avaricia con la miseri-
+cordia, la soberbia con la hu-
+mildad, y la tibieza con fer-
+vorosa diligencia.
+  Cóncedeme, mi Dios, pru-
+dencia en las obras, gran co-
+razon en las violentas caidas,
+fortaleza en los trabajos, pru-
+dencia en los bienes, cuidado
+en la oracion, templanza en
+la comida, cumplimiento en
+mis obligaciones, y firmeza
+en mis resoluciones.

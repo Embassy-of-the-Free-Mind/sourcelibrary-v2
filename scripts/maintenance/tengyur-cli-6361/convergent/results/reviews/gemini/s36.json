@@ -1,0 +1,59 @@
+[
+ {
+  "book_id": "6abed9a6896ea18127c8ffaa",
+  "slot": 36,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur Pramāṇa (ཚད་མ, tshad ma) volume 'e (འེ, vol. 192), containing Buddhist epistemological commentary.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 537,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "གཞན་ཡང་གང་དག་ལ་ཐམས་ཅད་མཁྱེན་པ་མི་ཉེ་བ་ནི་རྟོགས་པར་མི་ནུས་སོ་",
+      "image": "གཞན་ཡང་གང་དག་ལ་ཐམས་ཅད་མཁྱེན་པ་མི་ཉེ་བ་དེ་རྟོགས་པར་མི་ནུས་སོ་",
+      "problem": "Particle དེ་ misread as ནི་",
+      "severity": "minor"
+     },
+     {
+      "ocr": "དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་#ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+      "image": "དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་མ་ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+      "problem": "Negative particle མ་ omitted before ཡིན་པ་, reversing the sense from 'not omniscient' to 'is omniscient'",
+      "severity": "serious",
+      "class": "O5"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "སྐྱེ་བ་མི་སྲིད་པའི་ཕྱིར་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ་བར་འགྱུར་རོ།",
+      "english": "Because birth is impossible, it would follow that everything must be examined as being omniscience itself.",
+      "problem": "Misparses ཐམས་ཅད་མཁྱེན་པ་ཉིད་ (omniscience / sarvajñatva) by isolating ཐམས་ཅད་ as 'everything', garbling the opening reductio argument",
+      "severity": "moderate"
+     },
+     {
+      "source": "ཡང་ན་ཤེས་པ་དེའི་ཤེས་བྱ་གང་ཡིན་པ་དེ་དེའི་ཤེས་པ་སྟེ་དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་མ་ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+      "english": "Alternatively, whatever are the objects of knowledge for that consciousness, that is the knowledge of that person; being empty of that means being an omniscient being.",
+      "problem": "Reverses the core epistemological thesis by stating that being devoid of the knowledge of knowable objects makes one an omniscient being (asserting the exact opposite of 'not omniscient')",
+      "severity": "serious",
+      "class": "T4",
+      "reversal": true
+     }
+    ],
+    "other": [],
+    "prefer": "A",
+    "prefer_reason": "Translation A accurately renders Pramāṇa terminology and maintains logical coherence, whereas Translation B reverses the core epistemological conclusion by claiming that lacking knowledge makes one omniscient.",
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear woodblock folio from the Derge Tengyur Pramāṇa section; OCR has one serious omission of a negative particle, which misled Translation B into reversing a key logical claim, while Translation A remains precise and faithful."
+ }
+]

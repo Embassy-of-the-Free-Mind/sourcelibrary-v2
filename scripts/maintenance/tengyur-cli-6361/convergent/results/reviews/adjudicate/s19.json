@@ -1,0 +1,96 @@
+[
+  {
+    "book_id": "6abed42c896ea18127c8d54f",
+    "slot": 19,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary (svalakṣaṇa, universals, perception vs inference, memory-ascertainment); belongs in the Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 323,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "དེ་ལྟར་ན་དེ་མ་གྲུབ་པ་ཡིན། གང་གིས་ན་དེ་དེ་ཤེས་པར་བྱ་བའི་ཕྱིར། རྗེས་སུ་དཔག་པ་ཡིན་ཞེ་ན།",
+            "english": "If that is so, it would be unestablished. Why then would inference be employed to make it known?",
+            "problem": "The objector's implied rhetorical question ('then how is it unestablished, so that inference is needed to know it?') is rendered as a flat assertion that it 'would be unestablished', which contradicts the preceding sentence; the following 'Why then would inference be employed' keeps the objection's thrust, so the sense is recoverable but the line is self-contradictory.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          {
+            "source": "ཅིའི་ཕྱིར་ཇི་ལྟ་བ་བཞིན་དུ་ཉམས་སུ་མྱོང་བའི་རྣམ་པ་དག་ལ་ངེས་པ་ (breaks off at the foot of the folio)",
+            "english": "why is there certainty regarding the aspects experienced as they truly are?",
+            "problem": "A sentence cut off at the end of the folio is closed as a complete positive question; the verb is on the next leaf, and the argument (seeing without distinction should yield ascertainment of all aspects) points to 'why does ascertainment not arise', so B's closure likely inverts it. A marks the break with an ellipsis.",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": null,
+            "english": "<note>This refers to the Buddhist logical theory where perceiving an object should theoretically mean perceiving all its qualities, yet conceptual thought must still work to eliminate false impositions.</note>",
+            "problem": "Interpretive commentary not on the page, inserted mid-argument in the reader text.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "རྣམ་པར་རྟོག་པའི་བློ་ཉེ་བར་གཞག་པའི་ཆོས་རྣམས",
+            "english": "the phenomena established by the conceptual mind",
+            "problem": "ཉེ་བར་གཞག་པ is 'superimposed/imputed'; 'established' blurs the point.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium",
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error; A has one self-contradictory line in the objection whose thrust survives, while B adds an invented interpretive note and finishes the folio's broken final sentence as a question that probably inverts it, so A is the safer text for a reader.",
+        "adjudication": [
+          {
+            "raised_by": "reviewer1",
+            "version": "B",
+            "claim": "B's final sentence invents a closed question that reverses the objection (serious, reversal).",
+            "verdict": "confirmed",
+            "why": "The image ends at ངེས་པ་ with the verb on the next leaf; B closes it as 'why is there certainty', likely the opposite of the intended 'why does ascertainment not arise'. Confirmed as a defect but rated moderate (T6), since the reversing verb is not on this page and cannot be verified from it."
+          },
+          {
+            "raised_by": "both",
+            "version": "B",
+            "claim": "B inserts an interpretive <note> not in the Tibetan.",
+            "verdict": "confirmed",
+            "why": "No corresponding text anywhere on the folio; moderate."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "A turns the objector's rhetorical question into a statement 'it would be unestablished', reversing the objection (serious).",
+            "verdict": "confirmed",
+            "why": "The image reads དེ་ལྟར་ན་དེ་མ་གྲུབ་པ་ཡིན། གང་གིས་ན… — an implied 'how is it unestablished'; A's flat 'it would be unestablished' is wrong. But A's next sentence 'Why then would inference be employed' keeps the objector's point, so the argument's direction is recoverable: downgraded to moderate, not a reversal of the debate."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "'only' over-weights the particle in རང་བཞིན་ཅན་འབའ་ཞིག་བཟུང་དུ་ཟིན་ཀྱང་.",
+            "verdict": "rejected",
+            "why": "འབའ་ཞིག does mean 'only/merely'; A's rendering is correct."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "OCR drops ཏེ། after གྲུབ་པ་ཡིན and misreads a cluster after ཆོས་ཅན (minor).",
+            "verdict": "rejected",
+            "why": "At the crop resolution the line reads as transcribed; I cannot see a ཏེ and shad there. Minor either way and does not affect either translation."
+          }
+        ]
+      }
+    ],
+    "book_verdict": "A faithful transcription of a Derge pramāṇa folio. Both translations are broadly sound; A has one confused line in the objection, B adds an invented note and over-closes the folio's last sentence."
+  }
+]

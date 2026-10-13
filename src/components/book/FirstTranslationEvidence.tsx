@@ -44,6 +44,7 @@ import {
   type ScreenedBook,
 } from '@/lib/first-translation/candidate';
 import type { PriorTranslationCredit } from '@/lib/types/book';
+import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import {
   hasPublishablePriorTranslation,
   priorLinkLabel,
@@ -110,13 +111,19 @@ function fmtDate(d?: string | Date): string {
   }
 }
 
-function normalizePriors(attempt: FirstTranslationAttempt | null, legacy?: LegacyPrior[]): NormalizedPrior[] {
+// A study that quotes the work (#4639), or an unanchored audit substitute
+// (#4634), is not an earlier translation of it.
+function normalizePriors(
+  book: Pick<EvidenceBook, 'title' | 'author'>,
+  attempt: FirstTranslationAttempt | null,
+  legacy?: LegacyPrior[],
+): NormalizedPrior[] {
   if (attempt?.priors?.length) {
-    return attempt.priors
+    return displayablePriorPicks(book, attempt.priors)
       .filter((p) => p.english_title)
       .map((p) => ({ title: p.english_title, translator: p.translator, pub_year: p.pub_year, completeness: p.completeness, url: p.source_url }));
   }
-  return (legacy ?? [])
+  return displayablePriorPicks(book, legacy)
     .filter((p) => p.english_title)
     .map((p) => ({ title: p.english_title, translator: p.translator, pub_year: p.pub_year, completeness: p.completeness, url: p.url }));
 }
@@ -386,7 +393,7 @@ export default async function FirstTranslationEvidence({
     summary = null;
   }
 
-  const priors = normalizePriors(attempt, legacy?.translations_found);
+  const priors = normalizePriors(book, attempt, legacy?.translations_found);
 
   // Confidence signal. Only a real adjudicator strength (strong/moderate) earns
   // the evidence chip; everything else — weak legacy/automated, or nothing on

@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6abed57e896ea18127c8df52",
+    "slot": 23,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཐེ (Derge Tengyur, vol. 179)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio of verse-and-prose debate on pramāṇa (arbiters, infinite regress, valid cognition), consistent with the Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "རྟོགས་བྱེད་གཉིས་ / ནི་རྩོད་པས་ནི།", "image": "start of line 2 looks closer to ཀ་རྩོད་པ་ན། (གཉིས་ཀ་རྩོད་པ་ན, 'when both dispute'); low confidence at this resolution", "problem": "possible misread of particles at the line seam; sense barely affected", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "རྟོགས་བྱེད་གཉིས་ནི་རྩོད་པས་ནི། །རྟོགས་བྱེད་གཞན་དག་ཡིན་པར་ནི། །འགྱུར་ཕྱིར་ཐུག་པ་མེད་པ་ཡིན།", "english": "the two means of realization <note>the arguments or perspectives of the two disputants</note> will conflict. If other means of realization are required...", "problem": "rtogs byed here are the arbiters/judges of the debate (people), not 'means of realization'; the note wrongly identifies them with the disputants' arguments, which obscures the argument (arbiters disagree → further arbiters → regress)", "severity": "moderate", "class": "T10" },
+          { "source": "རྟོགས་པར་བྱེད་པ་རྣམས་ཕྱོགས་དང་རྒོལ་བ་དང་ཕྱིར་རྒོལ་བ་དག་བློ་ཐ་དད་པ", "english": "those who provide the means of realization—the proponent and the opponent—have differing intellects", "problem": "three parties (arbiters, proponent, respondent) collapsed into two; the arbiters are made identical with the disputants", "severity": "moderate" },
+          { "source": "སྔར་གྱི་ཁས་བླངས་པས་འདི་ལ་གནོད་པ་ཡིན་གྱི།", "english": "it is only in a certain way that the previous claim is harmed by this", "problem": "agent and patient swapped: source says the prior claim harms this, not that it is harmed by this; 'gsang ste brjod' rendered 'secretly asked'", "severity": "moderate" },
+          { "source": "ཇི་ལྟར་འདོད་ཀུན་མེད་པ་འམ། །མ་ཚང་ལ་སོགས་བརྗོད་པ་ཡིན།", "english": "how can you speak of all desires being non-existent or incomplete?", "problem": "'dod here is the intended/asserted (thesis), not 'desires'; misleading", "severity": "moderate" },
+          { "source": "སངས་རྒྱས་རྣམས། །ཐ་དད་བཞེད་", "english": "the Buddhas have different intentions", "problem": "Buddhas assert distinctions, not have differing intentions", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "སྔར་གྱི་ཁས་བླངས་པས་འདི་ལ་གནོད་པ་ཡིན་གྱི། ཚད་མའི་སྟོབས་ལས་འོངས་པ་འདིས་ནི་སྔ་མ་ལ་མ་ཡིན་པའི་ཕྱིར།", "english": "in whatever manner a previous acceptance might be harmed by this, it is not harmed by what arrives through the force of valid cognition", "problem": "agent/patient muddled (prior claim harms this) and the sentence becomes self-contradictory, since 'this' is what arrives through valid cognition", "severity": "moderate" },
+          { "source": "གང་ལ་བདེན་པར་རློམ་ཡོད་པ། །དེ་ནི་དམིགས་པ་མེད་པར་འདོད།", "english": "Whoever holds the conceit of truth asserts that there is no objective referent.", "problem": "that toward which truth is presumed is held [by the author] to lack a referent; B makes the conceited person the one asserting it", "severity": "minor" },
+          { "source": "(summary)", "english": "defending Madhyamaka critiques of inherent truth", "problem": "school label in summary is an inference not stated on the page", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B correctly renders rtogs byed as arbiters and keeps arbiters, proponent and respondent distinct, so the regress argument reads clearly, whereas A misidentifies the arbiters with the disputants (with a wrong gloss) and has more moderate slips.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge pramāṇa folio with a good transcription; both translations are serviceable, B being the more faithful, with no serious errors in either."
+  }
+]

@@ -1,0 +1,71 @@
+[
+  {
+    "book_id": "6abeb404896ea18127c84235",
+    "slot": 13,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཧ (Derge Tengyur, vol. 108)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Madhyamaka commentary in the Derge woodblock (sūtra-citing commentary on conventional vs ultimate truth, the selflessness of phenomena and the yogin's fearlessness). It belongs in the dbu ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 167,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "གང་{ཆུང་ཟད་,ཅུང་ཟད་}ཀུན་རྫོབ་",
+            "image": "གང་ཆུང་ཟད་ཀུན་རྫོབ་",
+            "problem": "The OCR puts a variant-reading brace into the transcription. The print shows one reading (ཆུང་ཟད). Otherwise all 8 lines match the block, from 'ཅད་ལ། །ཞེས་བྱ་བ' to '།མཐོང'.",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "ལམ་ཚོལ་བ་ནི་ཉམས་པར་འགྱུར་རོ་ཞེ་ན",
+            "english": "then those seeking the path would be discouraged",
+            "problem": "ཉམས means the search would be ruined or pointless. It does not mean the seekers would be psychologically discouraged. A also drops the ཞེ་ན objection marker from this sentence, and only the following 'To address this' signals it.",
+            "severity": "moderate"
+          },
+          {
+            "source": "ངལ་བ་འབྲས་བུ་མེད་པའི་ཕྱིར་ཉམས",
+            "english": "the effort ... would be exhausted and fruitless; that is the meaning of being discouraged",
+            "problem": "ངལ་བ ('toil') is turned into 'exhausted', and the gloss of ཉམས is again given as 'discouraged'. The point is that the toil would be fruitless and therefore 'ruined'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "གང་{ཆུང་ཟད་,ཅུང་ཟད་}",
+            "english": "<insert>slight</insert> <gloss>original: chung zad</gloss> <note>the text notes an alternative reading ...</note>",
+            "problem": "The note says the text itself notes an alternative reading. The variant comes from the OCR brace, not from the print. The reader also sees an unknown <insert> tag and a cluttered run of three tags.",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          {
+            "source": "ལམ་འདིས་སྤང་བར་འདོད་པ",
+            "english": "wishing to abandon suffering through this path",
+            "problem": "B supplies 'suffering' as the object of སྤང་བ. The object is implicit in the source, and B's choice is defensible from the preceding clause.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The A text uses a non-standard <insert> tag that the reader format may not render.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error. B renders ཉམས ('ruined') and ངལ་བ ('toil') correctly and keeps the objection-reply structure explicit, while A twice turns ཉམས into 'discouraged' and adds a note about a textual variant that is not on the print.",
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The print matches the transcription almost word for word, and both translations follow the argument faithfully. B is cleaner; A has two moderate lexical slips about the 'ruined' path and a cluttered variant note."
+  }
+]

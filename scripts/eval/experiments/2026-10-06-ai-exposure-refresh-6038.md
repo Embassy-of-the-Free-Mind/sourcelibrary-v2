@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 500
+n_pages: null
+verdict: "Gemini 3.1 Pro does not recognise 45.0% [40.7-49.4] of 500 random works (about a third by books); the May self-familiarity detector fails its own controls."
+status: superseded
+decision: "Run 2 (PR #6089) retracted the works figure: quote 52.2% of works not named by any frontier model, about a third only by volumes"
+superseded_by: "2026-10-07-ai-exposure-run2-6038.md"
+issue: 6038
+---
 ## 2026-10-06 · Is "~40% of our books are new to AI" still true? About 45% of distinct works (a third of books) are not recognised by Gemini 3.1 Pro; the May self-familiarity detector does not survive its own controls (#6038)
 
 **Question.** Re-measure the May 2026 preprint's figures (42.9% "confidently new", 21.1% "confidently in", 39% expected in training; `public/contamination-probe-paper.pdf`) on today's corpus, with current models. Break the result down by the slices we would offer a lab. The measure is WORK-level (does the model know the work through any channel?), never FILE-level (has it seen our scan?). #5549 showed the file-level question is unpowered for current models.

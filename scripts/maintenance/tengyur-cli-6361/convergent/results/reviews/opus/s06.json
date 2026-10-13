@@ -1,0 +1,71 @@
+[
+  {
+    "book_id": "6abeb2b1896ea18127c8327d",
+    "slot": 6,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary on Mūlamadhyamakakārikā ch. 24 (the four truths). It belongs in the Madhyamaka section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 486,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཞེས་བྱ་བ་སྨྲས་སོ།",
+            "image": "ཞེས་བྱ་བ་བསྒྲུབས་སོ། (a tall stacked བསྒྲུ- form, not སྨྲ-; it recurs at the closing formula on lines 1, 3 and 7)",
+            "problem": "The commentary's closing formula seems to have been normalised to the commoner 'smras so'. The image appears to read a བསྒྲུ- stack. Exact reading uncertain at this resolution.",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "ཁྱེད་ཀྱི་གཞུང་ལས",
+            "image": "ཁྱོད་ཀྱི་གཞུང་ལས (probable)",
+            "problem": "Pronoun vowel possibly misread; no change of sense.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "གལ་ཏེ་ངོ་བོ་ཉིད་ཀྱིས་ནི། །ཡོངས་སུ་ཤེས་པ་མ་ཡིན་ན། །དེ་ནི་ཇི་ལྟར་ཡོངས་ཤེས་འགྱུར།",
+            "english": "If suffering has an intrinsic nature, / It cannot be completely understood. / How could it be completely understood?",
+            "problem": "The root verse's protasis ('if by intrinsic nature it is not fully known') is recast as 'if it has intrinsic nature, it cannot be understood'. That turns the conditional into its conclusion, and the next line repeats 'how could it be understood'. The quatrain is also padded to five lines with 'Furthermore, according to your system' as a verse line.",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "ལམ་གྱི་སྡུག་བསྔལ་འགོག་པ་ནི། །གང་ཞིག་ཐོབ་པར་འགྱུར་བར་འདོད།",
+            "english": "how would the cessation of suffering on the Path be attained?",
+            "problem": "Drops 'which…do you claim (འདོད)', so the jab at the opponent's own claim is lost.",
+            "severity": "minor"
+          },
+          {
+            "source": "ཞེས་བྱ་བ་སྨྲས་སོ / ཞེས་བྱ་བའི་ཐ་ཚིག་གོ",
+            "english": "This is the meaning of the statement: Because...",
+            "problem": "The gloss formula is inverted, so the gloss reads as though it were the statement being explained.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          {
+            "source": "སྐྱོན་ཡོངས་སུ་མ་ཤེས་པ་དེའི་རྒྱུ་སྲེད་པ",
+            "english": "just as that fault is not fully known, its cause, craving",
+            "problem": "Awkward and slightly off rendering of a difficult or possibly misread phrase. 'Just as' is not in the source.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B renders the root verse's conditional faithfully as a quatrain and keeps the 'do you claim' and gloss formulas. A recasts the verse's protasis and pads the stanza.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge folio. The OCR is close to the print, with only small formula and vowel doubts. Both translations follow the argument on the four truths. B is the more faithful, especially in the root verse."
+  }
+]

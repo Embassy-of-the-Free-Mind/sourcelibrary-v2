@@ -1,0 +1,109 @@
+[
+ {
+  "book_id": "6abed76c896ea18127c8ee40",
+  "slot": 38,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur Pramāṇa (Tshad ma) section commentary volume 'me' (vol. 185), treating classical Indian Buddhist epistemological debates on perception and the causes of doubt.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 168,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "སྡོང་གྲུ་",
+      "image": "སྡོང་དུམ་",
+      "problem": "Systematic misreading of 'sdong dum' (post/stump, sthāṇu) as 'sdong gru' across lines 1, 2, 3, 4, 5, and 7",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "རེ་རེ་པོ་ཉིད་ཀྱི་སྤྱི་ལ་",
+      "image": "རེ་རེ་ཉིད་ཀྱི་སྤྱི་ལ་",
+      "problem": "Spurious syllable 'po' inserted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "དུས་ཀྱི་དབྱེ་བ་གཉིས་ཀར་",
+      "image": "དུས་ཀྱི་དབྱེ་བས་གཉིས་ཀར་",
+      "problem": "Instrumental suffix 's' omitted from 'dbye bas'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "གཞན་གྱིས་བརྗོད་པ་ནིའོ། །",
+      "image": "གཞན་གྱིས་བརྗོད་པ་སྟེ།",
+      "problem": "Misread particle 'ste' as 'ni'o'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "གལ་ཏེ་ཁྱོད་ཀྱི་ནི་ལུགས་ལ་ཡང་།",
+      "image": "གལ་ཏེ་ཁྱོད་ཀྱི་ལུགས་ལ་ཡང་།",
+      "problem": "Spurious particle 'ni' inserted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ཤེས་པ་ནི་འདི་འབྲང་བ་ཡིན་ནོ་ཞེས་བྱ་བར་ངེས་པའོ། །",
+      "image": "ཤེས་པ་ནི་འདི་འགྲེང་བ་ཡིན་ནོ་ཞེས་བྱ་བར་ངེས་པའོ། །",
+      "problem": "Misread ''greng ba' (upright / erect) as ''brang ba' (following / pursuing), corrupting the concluding epistemological definition",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "མ་ཡིན་པས་དྲན་པ་ཐེ་ཚོམ་གྱི་རྒྱུ་མཚན་ཡིན་ན་",
+      "english": "Because it is not the case, memory is the cause of doubt",
+      "problem": "Clumsy rendering of 'ma yin pas' as an independent clause ('Because it is not the case') rather than connecting to non-perception as the condition for memory",
+      "severity": "moderate"
+     },
+     {
+      "source": "ལན་ནི་ཇི་ལྟར་ཞེས་བྱ་སྟེ་",
+      "english": "The reply begins with \"Just as,\"",
+      "problem": "Mistranslated rhetorical question particle 'ji ltar' ('How [could both be seen]?') as comparative 'Just as'",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "<start of text>",
+      "english": "to the objection that what appears in common...",
+      "problem": "Sentence starts with lowercase 'to', missing initial capitalization",
+      "severity": "minor"
+     },
+     {
+      "source": "གཅིག་གི་ཚེ་གཉིས་ཀ་མཐོང་བ་མེད་དོ་",
+      "english": "at one time, neither is seen",
+      "problem": "Mistranslated 'gnyis ka mthong ba med do' ('both are not seen [together]') as 'neither is seen'",
+      "severity": "moderate"
+     },
+     {
+      "source": "དེས་ན་ཐེ་ཚོམ་ཟ་བ་མ་ཡིན་ནོ་ཞེ་ན།",
+      "english": "Therefore, does one not entertain doubt?",
+      "problem": "Reversed the opponent's negative assertion ('therefore doubt does not arise') into a question asking if doubt is entertained",
+      "severity": "moderate"
+     },
+     {
+      "source": "ཤེས་པ་ནི་འདི་འགྲེང་བ་ཡིན་ནོ་ཞེས་བྱ་བར་ངེས་པའོ། །",
+      "english": "Cognition is determined to follow this.",
+      "problem": "Blindly translated the OCR error ''brang ba' ('following') instead of the woodblock text ''greng ba' ('upright'), completely obscuring the perceptual determination of uprightness in the classic post/person doubt debate",
+      "severity": "serious",
+      "class": "T1",
+      "reversal": false
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly reads the image's key epistemological predicate 'upright' (འགྲེང་བ་) where B translates an OCR error as 'follow this', and A properly identifies the misread 'sdong gru' as a post or tree trunk.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur woodblock print folio on Buddhist epistemology; the OCR contains systematic misreadings ('sdong dum' -> 'sdong gru' and ''greng ba' -> ''brang ba') which Translation A successfully overcomes while Translation B propagates as serious translation errors."
+ }
+]

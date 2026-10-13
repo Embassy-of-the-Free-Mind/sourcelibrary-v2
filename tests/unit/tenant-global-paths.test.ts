@@ -32,6 +32,13 @@ import {
 
 const repoRoot = path.resolve(__dirname, '../..');
 const read = (p: string) => readFileSync(path.join(repoRoot, p), 'utf8');
+/** Repo-relative paths of every file under src/ whose name matches. */
+const srcFiles = (name: RegExp, dir = 'src'): string[] =>
+  readdirSync(path.join(repoRoot, dir), { withFileTypes: true }).flatMap(e => {
+    const rel = `${dir}/${e.name}`;
+    if (e.isDirectory()) return srcFiles(name, rel);
+    return name.test(e.name) ? [rel] : [];
+  });
 
 describe('isGlobalOnlyTenantPath', () => {
   it('blocks the corpus-wide pages and their children', () => {
@@ -184,6 +191,48 @@ describe('proxy behavior', () => {
       expect(res?.status).not.toBe(404);
     }
   );
+
+  // The Librarian (#4330, decided 2026-10-10): refused on every partner host,
+  // for every method and every route under /api/embassy; served on the apex.
+  const LIBRARIAN_PATHS = [
+    '/librarian',
+    '/librarian/voice',
+    '/api/embassy/chat',
+    '/api/embassy/rooms',
+    '/api/embassy/threads',
+    '/api/embassy/voice',
+    '/api/embassy/voice-search',
+  ];
+  const post = (url: string, host: string) =>
+    new NextRequest(url, {
+      method: 'POST',
+      headers: { host, 'user-agent': 'Mozilla/5.0 Chrome/124', 'content-type': 'application/json' },
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'hi' }] }),
+    });
+
+  it.each(['bph.sourcelibrary.org', 'bhutan.sourcelibrary.org'])(
+    'refuses the Librarian and its API on the partner host %s',
+    async (host) => {
+      for (const p of LIBRARIAN_PATHS) {
+        const res = await proxy(req(`https://${host}${p}`, host));
+        expect(res?.status, `${host}${p}`).toBe(404);
+      }
+      const chat = await proxy(post(`https://${host}/api/embassy/chat`, host));
+      expect(chat?.status, `POST ${host}/api/embassy/chat`).toBe(404);
+    }
+  );
+
+  it.each(['sourcelibrary.org', 'www.sourcelibrary.org'])(
+    'still serves the Librarian and its API on the main host %s',
+    async (host) => {
+      for (const p of LIBRARIAN_PATHS) {
+        const res = await proxy(req(`https://${host}${p}`, host));
+        expect(res?.status, `${host}${p}`).not.toBe(404);
+      }
+      const chat = await proxy(post(`https://${host}/api/embassy/chat`, host));
+      expect(chat?.status, `POST ${host}/api/embassy/chat`).not.toBe(404);
+    }
+  );
 });
 
 describe('the block list and the carve-out cannot overlap', () => {
@@ -239,6 +288,80 @@ describe('wiring', () => {
       const src = read(f);
       expect(src, `${f} links to /librarian`).toContain('/librarian');
       expect(src, `${f} must gate that link on the host`).toMatch(/!isTenantSurface && \(/);
+    }
+  });
+
+  it('every link to the Librarian in src/ is refused, filtered or host-gated on a partner host', () => {
+    // #4330: the proxy 404s /librarian on tenant hosts, so a link to it on a
+    // page a partner host serves is a dead link in the partner's reading room.
+    // Each file that writes the path must be accounted for below; a new one
+    // fails here until someone decides whether it can render on a tenant host.
+    const LIBRARIAN_HREF = /['"`]\/librarian(?=[?'"`/])/;
+    // Block comments and whole-line `//` comments are dropped: prose that
+    // mentions `/librarian?thread=<id>` is not a link.
+    const code = (f: string) =>
+      read(f).replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    const files = srcFiles(/\.(tsx?|json)$/).filter(f => LIBRARIAN_HREF.test(code(f)));
+
+    // Served only under a path the proxy refuses on tenant hosts (`/es/…` is
+    // 308'd off the path there first, landing on the refused `/librarian`).
+    const UNDER_REFUSED_ROUTE = [
+      /^src\/app\/librarian\//,
+      /^src\/app\/es\/librarian\//,
+      /^src\/app\/about\//,
+      /^src\/app\/api\/embassy\//,
+    ];
+    // Not a rendered link: warm lists, route metadata, the locale registry,
+    // the block list itself.
+    const NOT_A_LINK = new Set([
+      'src/app/api/admin/cache-probe/route.ts',
+      'src/app/api/cron/warm/route.ts',
+      'src/app/api/deploy-warm/route.ts',
+      'src/lib/librarian-i18n.ts',
+      'src/lib/locale-path.ts',
+      'src/lib/tenant-global-paths.ts',
+      // The site-feature registry: matchKnownEntity drops refused features on
+      // a tenant host (tests/unit/known-entities.test.ts).
+      'src/lib/site-features.json',
+    ]);
+    // Rendered only by HomeView, i.e. the apex home and its locale twins; the
+    // proxy serves the partner's own home at `/` and 308s locale prefixes.
+    const APEX_HOME_ONLY = new Set(['src/components/home/AskTheSourceBand.tsx']);
+    // Rendered on partner hosts: the gate each one must carry.
+    const GATED: Record<string, RegExp> = {
+      'src/components/layout/SiteHeader.tsx': /isGlobalOnlyNavHref/,
+      'src/app/search/page.tsx': /!isTenantSurface && \(/,
+      'src/components/search/UnifiedSearch.tsx': /!isTenantSurface && \(/,
+      'src/components/reader-v2/Reader2C.tsx': /siteMenuOpen && !isEmbedded/,
+      'src/app/podcast/page.tsx': /<HideOnTenantHost>[\s\S]*href="\/librarian"[\s\S]*<\/HideOnTenantHost>/,
+      // The link is the component itself; the next test pins that every page
+      // rendering it wraps it in <HideOnTenantHost>.
+      'src/components/LibrarianSearch.tsx': /\/librarian/,
+    };
+
+    expect(files.length).toBeGreaterThan(0);
+    for (const f of files) {
+      if (UNDER_REFUSED_ROUTE.some(re => re.test(f)) || NOT_A_LINK.has(f) || APEX_HOME_ONLY.has(f)) continue;
+      expect(GATED[f], `${f} links to /librarian: gate it on the host and list it here`).toBeDefined();
+      expect(read(f), `${f} must gate its /librarian link on the host`).toMatch(GATED[f]);
+    }
+  });
+
+  it('every page that renders LibrarianSearch hides it, and its jump link, on a partner host', () => {
+    const importers = srcFiles(/\.tsx?$/).filter(f =>
+      read(f).includes("from '@/components/LibrarianSearch'")
+    );
+    expect(importers.length).toBeGreaterThan(0);
+    for (const f of importers) {
+      const src = read(f);
+      expect(src, `${f} must wrap LibrarianSearch in HideOnTenantHost`).toMatch(
+        /<HideOnTenantHost>[\s\S]*<LibrarianSearch[\s\S]*<\/HideOnTenantHost>/
+      );
+      if (src.includes('CollectionAnchorBar')) {
+        expect(src, `${f} must drop the Librarian jump link on a tenant host`).toMatch(
+          /hideOnTenantHost: (true|id === 'librarian')/
+        );
+      }
     }
   });
 

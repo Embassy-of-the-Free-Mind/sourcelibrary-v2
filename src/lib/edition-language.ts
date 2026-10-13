@@ -25,6 +25,8 @@ export interface LanguageApparatusSource {
   language?: string | null;
   original_language?: string | null;
   text_role?: string | null;
+  /** What wrote `text_role` — decides whether "original" is a finding or a default. */
+  text_role_source?: string | null;
   is_translation?: boolean | null;
 }
 
@@ -33,21 +35,54 @@ export interface LanguageApparatus {
   edition_language: string | null;
   /** Language of the work, when known and different from the edition. */
   work_language?: string;
-  /** original | period-translation | modern-translation, when classified. */
+  /**
+   * original | period-translation | modern-translation | unclassified.
+   * `unclassified` is the stored "original" that nothing but a metadata
+   * heuristic put there — see `servedTextRole`.
+   */
   text_role?: string;
   /** Present only on a translated edition — states the chain in words. */
   translation_note?: string;
 }
 
-const TRANSLATION_ROLES = new Set(['period-translation', 'modern-translation']);
+// `translation` is not a value any classifier writes, but hand adjudication
+// has (5 live rows, 2026-10-11) — it means what it says.
+const TRANSLATION_ROLES = new Set(['period-translation', 'modern-translation', 'translation']);
+
+/**
+ * The role a response may state, given what the record holds (#4441).
+ *
+ * Stored `text_role: "original"` is a default, not a classification: the
+ * heuristic (`classifyTextRole`) returns it for every non-English scan and for
+ * every English book with no translation signal in its metadata. Measured on
+ * live 2026-10-11 (n = 42,300): 41,531 "original", of which 41,227 carry a
+ * heuristic source and 286 none — 18 were put there by anything that looked.
+ * Risner's 1572 Latin Alhazen is one of the 41,227, and served as "original" it
+ * told callers Ibn al-Haytham wrote in Latin.
+ *
+ * So "original" is served only where a non-heuristic source wrote it; the rest
+ * read `unclassified`. A translation role is passed through whatever its
+ * source — the heuristic only assigns one on positive evidence. And "original"
+ * beside a differing work language is self-contradictory (257 live rows): the
+ * language pair wins and the role is withheld.
+ */
+function servedTextRole(book: LanguageApparatusSource, hasWorkLanguage: boolean): string | undefined {
+  const role = typeof book.text_role === 'string' && book.text_role ? book.text_role : undefined;
+  if (role !== 'original') return role;
+  if (hasWorkLanguage || book.is_translation === true) return undefined;
+  const source = typeof book.text_role_source === 'string' ? book.text_role_source : '';
+  return source && !/heuristic/i.test(source) ? 'original' : 'unclassified';
+}
 
 /**
  * Build the apparatus block for a book record. Returns an object meant to be
  * spread into a response.
  *
  * `work_language` and `translation_note` are omitted rather than nulled when
- * they don't apply: an absent field reads as "this edition is in the work's own
- * language", while `work_language: null` invites a caller to render "null".
+ * nothing is recorded: `work_language: null` invites a caller to render "null".
+ * Absent means NOT RECORDED, never "same as the edition" — only 7% of live
+ * books carry an `original_language` at all (#4441). The positive statement
+ * that an edition is in the work's own language is `text_role: "original"`.
  */
 export function languageApparatus(book: LanguageApparatusSource): LanguageApparatus {
   const edition = displayLanguage(book.language) || null;
@@ -57,7 +92,7 @@ export function languageApparatus(book: LanguageApparatusSource): LanguageAppara
   // at import; older records predate it, so drop it here too.
   const work = workRaw && (!edition || !sameLanguage(workRaw, edition)) ? workRaw : null;
 
-  const role = typeof book.text_role === 'string' && book.text_role ? book.text_role : undefined;
+  const role = servedTextRole(book, !!work);
   // A record can evidence a translation three ways, and the weakest of them
   // (a work language that differs) is the one present on the oldest rows.
   const isTranslation = book.is_translation === true || (role ? TRANSLATION_ROLES.has(role) : false) || !!work;

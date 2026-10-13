@@ -1,0 +1,342 @@
+{
+ "issue": 6523,
+ "made": "2026-10-11, job cli-ocr-fix-6523c: random.Random(6523); failed = 3.8 Flash CLI low CER > 0.5 after the #6523 extractor, drawn by cause (classify.py label); good = CER < 0.1, drawn by stratum",
+ "pool": "capped Latin + Early English sets (pages.json charts latin, english \u2229 capped-set.json): 191 pages",
+ "dev_failed": [
+  {
+   "uid": "eebo-tcp-5488|ed-6990618a322e01b1349a5136-p49",
+   "chart": "english",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 0.68
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6991d65e8c1030b12444ae97-p118",
+   "chart": "english",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 0.809
+  },
+  {
+   "uid": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-easy-latin-stories-djvu-p16",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-coppernicus-monete-djvu-p4",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "chart": "latin",
+   "cause": "prose refusal / summary offer",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77",
+   "chart": "latin",
+   "cause": "empty: asked for a tool again after nudge",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+   "chart": "latin",
+   "cause": "empty: asked for a tool again after nudge",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-arcana-coelestia-vol-i-djvu-p16",
+   "chart": "latin",
+   "cause": "empty: asked for a tool again after nudge",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-dal-giorno-in-cui-pervenne-djvu-p3",
+   "chart": "latin",
+   "cause": "empty: asked for a tool again after nudge",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-pinned|latin-aeneid-1",
+   "chart": "latin",
+   "cause": "empty: asked for a tool again after nudge",
+   "cer_stored": 1
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "chart": "latin",
+   "cause": "safety filter cut",
+   "cer_stored": 0.904
+  },
+  {
+   "uid": "ref-pinned|latin-hieronymus-prologus-galeatus",
+   "chart": "latin",
+   "cause": "safety filter cut",
+   "cer_stored": 1
+  },
+  {
+   "uid": "latin-period-5126|ed-6a26beae0e247ebad6de8612-p18",
+   "chart": "latin",
+   "cause": "safety filter cut",
+   "cer_stored": 0.987
+  },
+  {
+   "uid": "ref-ws|ws-la-gallia-christiana-1720-t2-djvu-p2",
+   "chart": "latin",
+   "cause": "not alignable (text present)",
+   "cer_stored": 1
+  },
+  {
+   "uid": "ref-ws|ws-la-ecclesiam-a-iesu-christo-djvu-p3",
+   "chart": "latin",
+   "cause": "not alignable (text present)",
+   "cer_stored": 1
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6991d6778c1030b12444b4d4-p43",
+   "chart": "english",
+   "cause": "real misread",
+   "cer_stored": 0.575
+  }
+ ],
+ "dev_good": [
+  {
+   "uid": "latin-period-5126|ed-6a0b351d688e6a8e15f6759f-p18",
+   "chart": "latin",
+   "cer_stored": 0.046
+  },
+  {
+   "uid": "latin-period-5126|ed-6a9085af8696e74449c320be-p21",
+   "chart": "latin",
+   "cer_stored": 0.078
+  },
+  {
+   "uid": "latin-period-5126|ed-69b6e47ea8d7b8d17a676440-p218",
+   "chart": "latin",
+   "cer_stored": 0.033
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6a425310343d756d34e34ea7-p15",
+   "chart": "latin",
+   "cer_stored": 0.064
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6a506fd980b7658fae261d6e-p16",
+   "chart": "latin",
+   "cer_stored": 0.087
+  },
+  {
+   "uid": "eebo-tcp-5488|ed-6a48d985df05f7ea342b77fb-p16",
+   "chart": "latin",
+   "cer_stored": 0.056
+  },
+  {
+   "uid": "ref-ws|ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+   "chart": "latin",
+   "cer_stored": 0.003
+  },
+  {
+   "uid": "ref-ws|ws-la-cshb42-corpusscriptorum45niebuoft-pdf-p284",
+   "chart": "latin",
+   "cer_stored": 0.008
+  },
+  {
+   "uid": "ref-ws|ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+   "chart": "latin",
+   "cer_stored": 0.045
+  },
+  {
+   "uid": "ref-pinned|latin-la-linnaeus-systema1735-p5",
+   "chart": "latin",
+   "cer_stored": 0.003
+  }
+ ],
+ "held_out": [
+  "eebo-tcp-5488|ed-0425b5da276941ae93dd76624ba8236a-p86",
+  "eebo-tcp-5488|ed-69526046ab34727b1f04660c-p342",
+  "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
+  "eebo-tcp-5488|ed-69568595be7c607c5f03b9e4-p22",
+  "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+  "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
+  "eebo-tcp-5488|ed-69906056ef12272ffdc8cdee-p43",
+  "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
+  "eebo-tcp-5488|ed-699061933d9181cce82fb5aa-p55",
+  "eebo-tcp-5488|ed-6990619d3d9181cce82fb688-p9",
+  "eebo-tcp-5488|ed-69906319ef12272ffdc8f380-p107",
+  "eebo-tcp-5488|ed-69906537726f64800c10a08c-p8",
+  "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+  "eebo-tcp-5488|ed-6991d6508c1030b12444acd8-p26",
+  "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
+  "eebo-tcp-5488|ed-6991e175b53cae6bb602470e-p28",
+  "eebo-tcp-5488|ed-6991e194339ebc850994a230-p98",
+  "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+  "eebo-tcp-5488|ed-699fcd429ff0f1d2c4517fff-p28",
+  "eebo-tcp-5488|ed-69ac7f0f20878c5c9ba524b5-p366",
+  "eebo-tcp-5488|ed-69aebe60c0472fef6455a8f2-p14",
+  "eebo-tcp-5488|ed-69aebfdea41a7e10e5a71d19-p27",
+  "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
+  "eebo-tcp-5488|ed-69aebfeb36a4ffb2dcfb62e3-p100",
+  "eebo-tcp-5488|ed-69b18619c4be2cdd0edc524e-p6",
+  "eebo-tcp-5488|ed-69b18625c4be2cdd0edc549e-p137",
+  "eebo-tcp-5488|ed-69bf60fd065df5d87d778bb3-p153",
+  "eebo-tcp-5488|ed-69cfa93f80eb0ccd3e739280-p101",
+  "eebo-tcp-5488|ed-69de0cf180210ba13d79fa39-p98",
+  "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+  "eebo-tcp-5488|ed-69e7833a0fc6fc955e36317c-p94",
+  "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
+  "eebo-tcp-5488|ed-6a08fd2e25e3a402b23b3bca-p26",
+  "eebo-tcp-5488|ed-6a08fd6325e3a402b23b3e15-p27",
+  "eebo-tcp-5488|ed-6a3d29e1af872ba37a51ab17-p22",
+  "eebo-tcp-5488|ed-6a425634dfbbb4d07aa5382e-p15",
+  "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
+  "eebo-tcp-5488|ed-6a42aecb5207af7c42f5333c-p17",
+  "eebo-tcp-5488|ed-6a42d56d1894955eb725e97f-p22",
+  "eebo-tcp-5488|ed-6a42ec4006e6ead3ac544b8f-p14",
+  "eebo-tcp-5488|ed-6a43001a4e06bc233ecf5ef6-p16",
+  "eebo-tcp-5488|ed-6a4300764e06bc233ecf660a-p15",
+  "eebo-tcp-5488|ed-6a4308144e06bc233ed03513-p15",
+  "eebo-tcp-5488|ed-6a430a2a22c0c8edb0f8c8d4-p16",
+  "eebo-tcp-5488|ed-6a43851557a09c2c0fcc0005-p17",
+  "eebo-tcp-5488|ed-6a4a26ba9dda7124b26753a5-p38",
+  "eebo-tcp-5488|ed-6a4ad920d6371d99e766879c-p83",
+  "eebo-tcp-5488|ed-6a4f71ca1cba01ec54e763c3-p15",
+  "eebo-tcp-5488|ed-6a58ecbfc6cd8f98710688e0-p15",
+  "eebo-tcp-5488|ed-6a8f6267e408ab73f484d28b-p15",
+  "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+  "latin-period-5126|ed-606a74d72ac1420b924dde761439fb3f-p27",
+  "latin-period-5126|ed-6953e4fa77f38f6761bef1dc-p53",
+  "latin-period-5126|ed-6958e912d3a8928334814c19-p8",
+  "latin-period-5126|ed-6970e3599b09d309d780a252-p61",
+  "latin-period-5126|ed-697a6e5cb981745f5fac1d7e-p31",
+  "latin-period-5126|ed-697a8014e680cef7cedae395-p31",
+  "latin-period-5126|ed-6990505e7d19f3f2aac1e2b7-p72",
+  "latin-period-5126|ed-69b2f46f5ef23d31023f6f1c-p176",
+  "latin-period-5126|ed-69b303fb983e01f74b98704a-p1127",
+  "latin-period-5126|ed-69b51e49cf111105c4299e5d-p40",
+  "latin-period-5126|ed-69b51e69768235dc65992e2f-p15",
+  "latin-period-5126|ed-69b51e9947b06ecd581940dc-p309",
+  "latin-period-5126|ed-69b63e841c1c21a3738655d6-p40",
+  "latin-period-5126|ed-69b649aa18b87551bfc5e743-p59",
+  "latin-period-5126|ed-69b64c0318b87551bfc70acd-p13",
+  "latin-period-5126|ed-69b64c9618b87551bfc76fcf-p20",
+  "latin-period-5126|ed-69b64da218b87551bfc7fe19-p70",
+  "latin-period-5126|ed-69b64f1818b87551bfc907fb-p125",
+  "latin-period-5126|ed-69b6542618b87551bfcc6072-p119",
+  "latin-period-5126|ed-69b660aeb3f4fc0441533e16-p29",
+  "latin-period-5126|ed-69b6f32ab1a3146c05278d5a-p72",
+  "latin-period-5126|ed-69c7a6b092b884e4f8173c12-p232",
+  "latin-period-5126|ed-69c821446c6f3cc53c84aa06-p433",
+  "latin-period-5126|ed-69c8a3f26c6f3cc53c85e777-p36",
+  "latin-period-5126|ed-6a26bc6cd6b178e5aad8300b-p18",
+  "latin-period-5126|ed-6a26c136aad44c98627bfb47-p21",
+  "latin-period-5126|ed-6a4252e5343d756d34e33e36-p9",
+  "latin-period-5126|ed-6a4253fe343d756d34e37966-p18",
+  "latin-period-5126|ed-6a425bef744db9e3105a3b00-p18",
+  "latin-period-5126|ed-6a425df3dfbbb4d07aa634cb-p21",
+  "latin-period-5126|ed-6a4263b1744db9e3105b1125-p23",
+  "latin-period-5126|ed-6a429a398e351c27eb859980-p20",
+  "latin-period-5126|ed-6a429c378e351c27eb85cd66-p6",
+  "latin-period-5126|ed-6a42abe85207af7c42f4b6d7-p10",
+  "latin-period-5126|ed-6a42acc65207af7c42f4db34-p13",
+  "latin-period-5126|ed-6a42b1d25207af7c42f57a9c-p25",
+  "latin-period-5126|ed-6a42b7ee5207af7c42f63a27-p21",
+  "latin-period-5126|ed-6a42bbf75207af7c42f6f607-p6",
+  "latin-period-5126|ed-6a42ca0be76baa13aa84c734-p23",
+  "latin-period-5126|ed-6a42d91f1894955eb72629fe-p18",
+  "latin-period-5126|ed-6a42eb2806e6ead3ac541e30-p21",
+  "latin-period-5126|ed-6a42ebca06e6ead3ac543887-p8",
+  "latin-period-5126|ed-6a42f62b3ad4d80da1237aed-p18",
+  "latin-period-5126|ed-6a434784201f98f53c3eff29-p17",
+  "latin-period-5126|ed-6a43779193aef4a7d61477df-p21",
+  "latin-period-5126|ed-6a4388a857a09c2c0fcc46bb-p8",
+  "latin-period-5126|ed-6a448ab6bd67d80f01c767fe-p18",
+  "latin-period-5126|ed-6a479e7ce1b3ba9165a14c27-p23",
+  "latin-period-5126|ed-6a48d782df05f7ea342b7309-p21",
+  "latin-period-5126|ed-6a48d783df05f7ea342b730a-p21",
+  "latin-period-5126|ed-6a48e1881e36bf8015227aa8-p21",
+  "latin-period-5126|ed-6a4e46a4dc886f1f5abb5d80-p9",
+  "latin-period-5126|ed-6a4f22748afd506469a564d5-p18",
+  "latin-period-5126|ed-6a4f92c0d7f4f9119ff22b41-p9",
+  "latin-period-5126|ed-6a509b82ad1859a71f41b8d6-p18",
+  "latin-period-5126|ed-6a9057a0ab26ecd307a0cd7c-p9",
+  "latin-period-5126|ed-6a906153ce57ddf536207e42-p9",
+  "latin-period-5126|ed-6a9061f6c21b989bffd757b3-p8",
+  "latin-period-5126|ed-6a90658feb8fb726ee3b3f2a-p18",
+  "latin-period-5126|ed-6a9066caeb8fb726ee3b6d69-p6",
+  "latin-period-5126|ed-6a906748eb8fb726ee3b7bad-p18",
+  "latin-period-5126|ed-6a90675ceb8fb726ee3b7f5a-p9",
+  "latin-period-5126|ed-6a906bf4336010794b0d2ab0-p18",
+  "latin-period-5126|ed-6a9078467f9d520dd42e41e2-p18",
+  "latin-period-5126|ed-6a909914b7feee6e9c427a2a-p21",
+  "latin-period-5126|ed-6a90991fb7feee6e9c427bf0-p18",
+  "latin-period-5126|ed-6a9099bbb7feee6e9c42915e-p9",
+  "latin-period-5126|ed-6a909b5ab7feee6e9c429605-p18",
+  "latin-period-5126|ed-6a90a3b93a69baad5d30cf72-p9",
+  "latin-period-5126|ed-6a90a3c03a69baad5d30d34e-p21",
+  "latin-period-5126|ed-6a90b8fdfea824c8068281d6-p18",
+  "latin-period-5126|ed-6a90ce08354ec8f981e30277-p9",
+  "latin-period-5126|ed-6a90ce1d2efcf696ead70a9b-p23",
+  "latin-period-5126|ed-6a90e2d81a02a5cb2d7325f2-p21",
+  "latin-period-5126|ed-6a90e7e5544007b776b3806a-p18",
+  "latin-period-5126|ed-6a94184aa4ed5935447a82d2-p9",
+  "latin-period-5126|ed-6a94341a7680120fac24d808-p18",
+  "latin-period-5126|ed-6a9437f67e41ac276318823e-p21",
+  "ref-pinned|latin-la-agricola-metallica-p406",
+  "ref-pinned|latin-vulgate-genesis-1",
+  "ref-pinned|latin-vulgate-genesis-5-genealogy",
+  "ref-ws|ws-la-28233-pdf-pdf-p4",
+  "ref-ws|ws-la-agricola-de-re-metallica-djvu-p406",
+  "ref-ws|ws-la-alegrii-opera-minora-castellana-et-latina-pdf-p232",
+  "ref-ws|ws-la-allorquando-vi-annunziammo-djvu-p2",
+  "ref-ws|ws-la-anniversaria-in-memoriam-reipublic-sacr-et-liter-p15",
+  "ref-ws|ws-la-apocalypsis-revelata-djvu-p3",
+  "ref-ws|ws-la-cabaret-dupaty-poetae-minores-1842-djvu-p416",
+  "ref-ws|ws-la-cic-ron-uvres-compl-tes-panckoucke-1830-t-7-djvu-p470",
+  "ref-ws|ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+  "ref-ws|ws-la-columbus-carmen-epicum-pdf-p7",
+  "ref-ws|ws-la-columellae-opera-djvu-p26",
+  "ref-ws|ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l-p2",
+  "ref-ws|ws-la-cshb48-corpusscriptorum30niebuoft-pdf-p182",
+  "ref-ws|ws-la-de-bello-rustico-valentino-pdf-p24",
+  "ref-ws|ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+  "ref-ws|ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+  "ref-ws|ws-la-descriptiones-et-icones-plantarum-rariorum-hunga-p105",
+  "ref-ws|ws-la-dimitrie-cantemir-operele-principelui-demetriu-c-p16",
+  "ref-ws|ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+  "ref-ws|ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+  "ref-ws|ws-la-foliot-canticum-pdf-p32",
+  "ref-ws|ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+  "ref-ws|ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p26",
+  "ref-ws|ws-la-gallia-christiana-1715-t1-djvu-p29",
+  "ref-ws|ws-la-hortus-malabaricus-volume-1-pdf-p4",
+  "ref-ws|ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+  "ref-ws|ws-la-joseph-piechowski-de-ironia-iliadis-pdf-p16",
+  "ref-ws|ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor-p46",
+  "ref-ws|ws-la-machumetis-saracenorum-principis-eiusque-success-p259"
+ ]
+}

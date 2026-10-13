@@ -1,0 +1,367 @@
+{
+ "issue": 6203,
+ "seed": 6203,
+ "drawn_at": "2026-10-12T21:31:14.375Z",
+ "frame_books": 21058,
+ "gate_books": 10,
+ "spot_books": 35,
+ "skipped": {
+  "reviewed: no eligible page among those read": 6,
+  "random: no eligible served page": 4,
+  "control dropped: page cannot take it": 1
+ },
+ "pages": [
+  {
+   "packet": "p000",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "served",
+   "book_id": "6992cbe8018b80967354c531",
+   "page_number": 89,
+   "language": "Chinese",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p001",
+   "source": "gate:qg_translate_202610101657_1rqt",
+   "exposure": "served",
+   "book_id": "6a3cef034701a906f10ecc19",
+   "page_number": 18,
+   "language": "Chinese",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p002",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69c1bb878522835be8460195",
+   "page_number": 37,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p003",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "6a4b945ba25898ec8788a3e3",
+   "page_number": 13,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p004",
+   "source": "control",
+   "exposure": "served",
+   "book_id": "69f33dcd876dd827cbc5c954",
+   "page_number": 23,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3-flash-preview",
+   "control": {
+    "class": "dropped",
+    "expect_kind": "omission",
+    "span": null,
+    "before": "After sending off many people, the clouds return.",
+    "after": ""
+   }
+  },
+  {
+   "packet": "p005",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "6a4e39c4c030cbc5f406d91c",
+   "page_number": 11,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p006",
+   "source": "spot-check:sprint-2026-10-07-r1",
+   "exposure": "served",
+   "book_id": "6984e84db96022f6fa69b4c8",
+   "page_number": 242,
+   "language": "German",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p007",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69e53454d48480a386965c84",
+   "page_number": 153,
+   "language": "Arabic",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p008",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69c1ba808522835be8459109",
+   "page_number": 163,
+   "language": "Hebrew",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p009",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "6a43aed43c91e2a63d4da5c5",
+   "page_number": 8,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p010",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69942c74b2f6748db4abdcdd",
+   "page_number": 110,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p011",
+   "source": "gate:qg_translate_202610101657_1rqt",
+   "exposure": "served",
+   "book_id": "69b51e5b768235dc65991b4e",
+   "page_number": 777,
+   "language": "German",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p012",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "served",
+   "book_id": "69b99d316ed9e04909908baa",
+   "page_number": 374,
+   "language": "Pali",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p013",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "served",
+   "book_id": "698420e33ade13bcefaeb7d1",
+   "page_number": 367,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p014",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69906a4ad69de0e6980706b9",
+   "page_number": 8,
+   "language": "Sanskrit",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p015",
+   "source": "gate:qg_translate_202610101657_1rqt",
+   "exposure": "served",
+   "book_id": "69ef285a85daccce30f2c836",
+   "page_number": 453,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p016",
+   "source": "spot-check:sprint-2026-10-07-r1",
+   "exposure": "served",
+   "book_id": "69f1347f365e3fcae574ed95",
+   "page_number": 9,
+   "language": "Classical Chinese",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p017",
+   "source": "gate:qg_translate_202610101657_1rqt",
+   "exposure": "served",
+   "book_id": "6a06cddfc749b698e5b2cb29",
+   "page_number": 63,
+   "language": "Arabic",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p018",
+   "source": "spot-check:sprint-2026-10-07-r1",
+   "exposure": "served",
+   "book_id": "6a0f06c5900fb4799cef25f2",
+   "page_number": 22,
+   "language": "Sanskrit",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p019",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69dbcb5e1040d1d5e20b636c",
+   "page_number": 18,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p020",
+   "source": "control",
+   "exposure": "served",
+   "book_id": "6970e37b9b09d309d780a2bc",
+   "page_number": 73,
+   "language": "French",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview",
+   "control": {
+    "class": "negation",
+    "expect_kind": "mistranslation",
+    "span": [
+     171,
+     224
+    ],
+    "before": "not ",
+    "after": ""
+   }
+  },
+  {
+   "packet": "p021",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69b221b408069e96e8430c70",
+   "page_number": 108,
+   "language": "Latin",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p022",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69c1bb7e8522835be845ffbb",
+   "page_number": 252,
+   "language": "Hebrew, Judeo-Italian, and Judeo-Greek",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p023",
+   "source": "control",
+   "exposure": "served",
+   "book_id": "69528aaeab34727b1f04ef1d",
+   "page_number": 178,
+   "language": "French",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview",
+   "control": {
+    "class": "wrong_leaf",
+    "expect_kind": "wrong_leaf",
+    "text_of_page": 179
+   }
+  },
+  {
+   "packet": "p024",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "hidden",
+   "book_id": "69d7e0dbe9e5e67989c37135",
+   "page_number": 86,
+   "language": "Sanskrit",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p025",
+   "source": "gate:qg_translate_202610101657_1rqt",
+   "exposure": "served",
+   "book_id": "6a4e3834806e65f390cf129b",
+   "page_number": 27,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3.1-flash-lite"
+  },
+  {
+   "packet": "p026",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "served",
+   "book_id": "69dea5f24d19ec2e9ba77d50",
+   "page_number": 138,
+   "language": "Sanskrit",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3.1-flash-lite-preview"
+  },
+  {
+   "packet": "p027",
+   "source": "spot-check:fortnightly-2026-10-06-month0",
+   "exposure": "served",
+   "book_id": "6992ce5f673ee1e40e3203b1",
+   "page_number": 13,
+   "language": "Chinese",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p028",
+   "source": "spot-check:sprint-2026-10-07-r1",
+   "exposure": "served",
+   "book_id": "6a2032b118654bf8e1903571",
+   "page_number": 37,
+   "language": "Arabic",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p029",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "6991ead32f801130a473e82a",
+   "page_number": 21,
+   "language": "Italian",
+   "ocr_model": "gemini-3-flash-preview",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p030",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "6ac0c90ef427c9bb0692ebba",
+   "page_number": 82,
+   "language": "Tibetan",
+   "ocr_model": null,
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p031",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69f33af4876dd827cbc5857b",
+   "page_number": 37,
+   "language": "Korean",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "translation_model": "gemini-3-flash-preview"
+  },
+  {
+   "packet": "p032",
+   "source": "random",
+   "exposure": "served",
+   "book_id": "69c7bb1525ec2ba5ccd7f9e4",
+   "page_number": 163,
+   "language": "Latin",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "translation_model": "gemini-3-flash-preview"
+  }
+ ]
+}

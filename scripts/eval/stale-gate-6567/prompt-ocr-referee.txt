@@ -1,0 +1,23 @@
+You are refereeing claims that a machine transcription of one page of a classical Chinese manuscript (a Siku Quanshu copy, vertical columns read top to bottom, right to left) contains errors. The page image is the authority. Another reviewer made the claims below; they may be right or wrong.
+
+Open the attached page image and check each claim against it yourself.
+
+Rules for what counts:
+- Variant or traditional forms of the same character are not errors (爲/為, 着/著, 衆/眾 and similar).
+- Ignore the fold margin (四庫全書, juan and leaf numbers), tags, punctuation and line breaks. Small double-column interlinear notes ARE body text.
+- "material" means a translation made from this transcription would tell a reader something the page does not say, or leave out something it does: a different name, title, place, number, date, quantity or term; a negation gained or lost; a clause or 3 or more characters invented, dropped or put out of order. Anything else is "minor".
+
+For each claim, by its id, say whether the error is really there ("confirmed": true or false) and, if it is, its severity as you judge it.
+
+Reply with ONE JSON object written between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers.
+<<<BEGIN>>>
+{"claims": [{"id": "c1", "confirmed": true, "severity": "material|minor", "why": "<a few words>"}]}
+<<<END>>>
+
+TRANSCRIPTION:
+{TRANSCRIPTION}
+
+CLAIMS:
+{CLAIMS}
+
+The page image:

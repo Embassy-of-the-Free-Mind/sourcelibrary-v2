@@ -1,0 +1,257 @@
+{
+ "seed": 6394,
+ "items": [
+  {
+   "qid": "a003",
+   "uid": "all|6a3cec2f8642f0445b15a44b|287",
+   "review_qid": "q003",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a005",
+   "uid": "all|6a3c775d01fe4f593c201888|94",
+   "review_qid": "q005",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a007",
+   "uid": "all|6a3c66bcaf3c49b59c5cd02c|82",
+   "review_qid": "q007",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a011",
+   "uid": "all|6a3c64d539b4508b04e2a71d|36",
+   "review_qid": "q011",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a012",
+   "uid": "stale|6a3c5eb740c88a541d8e51e3|56",
+   "review_qid": "q012",
+   "A": "R1",
+   "B": "R2",
+   "r1": "minor",
+   "r2": "material"
+  },
+  {
+   "qid": "a013",
+   "uid": "all|6a3c787801fe4f593c208732|153",
+   "review_qid": "q013",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a018",
+   "uid": "all|6a3c7b3d01fe4f593c21d3a9|113",
+   "review_qid": "q018",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a022",
+   "uid": "all|6a3c715639b4508b04e53d5e|112",
+   "review_qid": "q022",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a025",
+   "uid": "all|6a3c640f39b4508b04e23ec9|56",
+   "review_qid": "q025",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a027",
+   "uid": "all|6a3c6a3daf3c49b59c5e4fa1|108",
+   "review_qid": "q027",
+   "A": "R2",
+   "B": "R1",
+   "r1": "minor",
+   "r2": "unusable"
+  },
+  {
+   "qid": "a028",
+   "uid": "all|6a3c77fb01fe4f593c206225|59",
+   "review_qid": "q028",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a029",
+   "uid": "stale|6a3c5e5f40c88a541d8e1745|185",
+   "review_qid": "q029",
+   "A": "R2",
+   "B": "R1",
+   "r1": "minor",
+   "r2": "material"
+  },
+  {
+   "qid": "a032",
+   "uid": "all|6a3c6b6739b4508b04e43b2a|44",
+   "review_qid": "q032",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a033",
+   "uid": "all|6a3c721a01fe4f593c1dc2a3|58",
+   "review_qid": "q033",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a035",
+   "uid": "all|6a3cec6b8642f0445b15c5b3|113",
+   "review_qid": "q035",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a036",
+   "uid": "all|6a3c6bbd39b4508b04e45a93|95",
+   "review_qid": "q036",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a037",
+   "uid": "all|6a3cb6a957c1f37219c4bb86|96",
+   "review_qid": "q037",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a042",
+   "uid": "all|6a3cee024701a906f10e55d0|80",
+   "review_qid": "q042",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a054",
+   "uid": "all|6a3ce86e552d34d98411bb5a|30",
+   "review_qid": "q054",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a057",
+   "uid": "all|6a3c63d5af3c49b59c5c8e88|89",
+   "review_qid": "q057",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a059",
+   "uid": "all|6a3ce7d30a0011cb4bc0b2dd|77",
+   "review_qid": "q059",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a061",
+   "uid": "all|6a3c67ebaf3c49b59c5d4994|111",
+   "review_qid": "q061",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a064",
+   "uid": "all|6a3c6a98af3c49b59c5e8416|67",
+   "review_qid": "q064",
+   "A": "R1",
+   "B": "R2",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a065",
+   "uid": "all|6a3c625040c88a541d8f3586|62",
+   "review_qid": "q065",
+   "A": "R1",
+   "B": "R2",
+   "r1": "minor",
+   "r2": "material"
+  },
+  {
+   "qid": "a068",
+   "uid": "all|6a3c7a0239b4508b04e62189|62",
+   "review_qid": "q068",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a070",
+   "uid": "all|6a3cc0a9f9474f825c17106b|73",
+   "review_qid": "q070",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  },
+  {
+   "qid": "a071",
+   "uid": "all|6a3c797701fe4f593c20fbc2|97",
+   "review_qid": "q071",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "material"
+  },
+  {
+   "qid": "a075",
+   "uid": "all|6a3cc158ec254ff6cae0b749|93",
+   "review_qid": "q075",
+   "A": "R2",
+   "B": "R1",
+   "r1": "clean",
+   "r2": "minor"
+  }
+ ]
+}

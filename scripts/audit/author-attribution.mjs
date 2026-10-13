@@ -196,7 +196,7 @@ const GARBAGE = [
   { tag: 'concatenated-placeholder', filter: { author: /^(Anonymous|Unknown)(Unknown|Anonymous)/i } },
   { tag: 'non-string', filter: { author: { $type: ['object', 'array'] } } },
   { tag: 'model-reasoning', filter: { author: /\b(wait|I will use|must be exactly one)\b/i } },
-  { tag: 'over-long', filter: { $expr: { $gt: [{ $strLenCP: { $ifNull: ['$author', ''] } }, 200] } } },
+  { tag: 'over-long', filter: { $expr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$author' }, 'string'] }, '$author', ''] } }, 200] } } },
 ];
 for (const g of GARBAGE) {
   const total = await books.countDocuments(g.filter);

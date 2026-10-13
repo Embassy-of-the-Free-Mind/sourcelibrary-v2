@@ -37,6 +37,7 @@
 import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { makeBookDoc } from '../lib/book-docs.mjs';
+import { iiifFullSizeUrl } from '../lib/iiif-utils.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -98,7 +99,7 @@ for (const c of cands) {
   const title = c.title || `Leiden drawing ${id}`;
   const author = c.author && c.author !== 'Unknown' ? c.author : 'Unknown artist';
   const base = imgBase(id);
-  const fullUrl = `${base}/full/full/0/default.jpg`;
+  const fullUrl = iiifFullSizeUrl(base);
   const displayUrl = `${base}/full/1200,/0/default.jpg`;
   const thumbUrl = `${base}/full/!400,400/0/default.jpg`;
   const year = yearFrom(c.date_text);

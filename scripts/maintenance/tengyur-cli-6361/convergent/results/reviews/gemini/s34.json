@@ -1,0 +1,46 @@
+[
+ {
+  "book_id": "6abed90a896ea18127c8f9ee",
+  "slot": 34,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Belongs to the Pramāṇa (tsad ma / logic and epistemology) section of the Derge Tengyur (volume zhe, vol. 190), containing Indian Buddhist epistemological debate texts engaging Sāṃkhya and Nyāya positions.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 286,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "གྲུབ་པའི་སྒྲུབ་པར་བྱེད་པའི་སྐྱོན་",
+      "english": "the fault in the proof established by the Sāṃkhya",
+      "problem": "Translates the technical logical fault siddhasādhana-doṣa (the fallacy of proving what is already established) loosely as 'the fault in the proof established by the Sāṃkhya'.",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "གསལ་བ་",
+      "english": "clarity / clearly manifest / phenomenon contrary to clarity",
+      "problem": "Systematically mistranslates the foundational Sāṃkhya technical term གསལ་བ་ (vyakta, 'the manifest' / manifest phenomena, contrasted with avyakta / prakṛti) as 'clarity', distorting the debate regarding whether manifest phenomena share an identical nature with primordial matter.",
+      "severity": "serious",
+      "class": "T3",
+      "reversal": false
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly translates the core Sāṃkhya technical category གསལ་བ་ as 'the manifest' (vyakta), whereas Translation B renders it throughout as 'clarity', distorting the philosophical argument.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The folio is an authentic Derge Tengyur woodblock print from the Pramāṇa section transcribed with perfect OCR accuracy. Translation A is distinctly preferable as Translation B fundamentally misinterprets the technical ontological category vyakta ('the manifest') as 'clarity'."
+ }
+]

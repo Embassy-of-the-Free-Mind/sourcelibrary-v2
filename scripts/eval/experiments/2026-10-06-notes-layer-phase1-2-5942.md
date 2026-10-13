@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged_vs_reference, accuracy]
+languages: [la, de, fr, it, nl, es]
+scripts: [Latn]
+canons: []
+n_books: 40
+n_pages: 40
+verdict: "On 40 Lite pages the note-free prompt is not less faithful than v13 (4.38 vs 4.24, P1 and P2 pass); a parser splits 800 stored pages into text and annotations exactly."
+status: undecided
+decision: "Cleared for Lite by rule but not switched (waits for #5942 phase 5); parser in src/lib/translation-layers.ts; phase-3 data model awaits Derek"
+superseded_by: null
+issue: 5942
+---
 ## 2026-10-06 · Notes as their own layer, phases 1–2: is the note-free prompt safe on Flash-Lite, and can stored markup be parsed into text + annotations? (#5942)
 <!-- PRIOR ART: 2026-10-06-translation-notes-free-5919.md (PR #5926) ran v13 twice against v13-plain on 40 pages, 12 of them on Lite; its runner, scorer and rule are reused here on 40 other pages, all Lite. The #5695 fidelity harness (translation-vs-reference/) is used unchanged. For the parser: src/lib/term-definitions.ts and src/lib/notes-off.ts are called, not rebuilt. -->
 

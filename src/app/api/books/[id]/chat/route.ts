@@ -6,12 +6,12 @@ import { isBookReadable } from '@/lib/book-access';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 import { z } from 'zod';
+import { searchChatPages } from '@/lib/chat-page-search';
 
 // Projections for this route (#5184). Every list below is the complete set
 // of fields the code path reads — checked per #4603, one constant per site.
 
-/** searchBookPages: the scorer reads `translation.data`; the context builder `page_number`. */
-const CHAT_PAGE_PROJECTION = { _id: 0, id: 1, book_id: 1, page_number: 1, 'translation.data': 1 } as const;
+// searchBookPages' projection lives in src/lib/chat-page-search.ts.
 
 /** buildBookContext: the header lines + the inline-index fallback for the summary. */
 const CHAT_CONTEXT_BOOK_PROJECTION = {
@@ -99,59 +99,15 @@ function extractKeywords(query: string): string[] {
     .filter(word => word.length > 2 && !stopWords.has(word));
 }
 
-// Search pages within a book for relevant content
+// Search pages within a book for relevant content. Every matching page is
+// scored in the database and only the top `limit` come back (#5220).
 async function searchBookPages(
   bookId: string,
   query: string,
   limit: number = 15
 ): Promise<PageData[]> {
   const db = await getDb();
-  const keywords = extractKeywords(query);
-
-  if (keywords.length === 0) {
-    // No meaningful keywords - return first few pages
-    return await db.collection('pages')
-      .find({ book_id: bookId, 'translation.data': { $exists: true } })
-      .project(CHAT_PAGE_PROJECTION)
-      .sort({ page_number: 1 })
-      .limit(limit)
-      .toArray() as unknown as PageData[];
-  }
-
-  // Build regex patterns for each keyword
-  const regexPatterns = keywords.map(k => new RegExp(k, 'i'));
-
-  // Search for pages containing any of the keywords. Projected to the two
-  // fields the scorer and the context builder read, and bounded: this used
-  // to return every matching page of the book as a FULL page doc (ocr,
-  // translations, detected_images, thumbnails…) per chat turn (#5184).
-  // The cap is generous relative to `limit` so the score-and-slice below
-  // still has a real candidate pool.
-  const pages = await db.collection('pages')
-    .find({
-      book_id: bookId,
-      'translation.data': { $exists: true },
-      $or: regexPatterns.map(r => ({ 'translation.data': r }))
-    })
-    .project(CHAT_PAGE_PROJECTION)
-    .sort({ page_number: 1 })
-    .limit(limit * 10)
-    .toArray() as unknown as PageData[];
-
-  // Score pages by keyword matches
-  const scoredPages = pages.map(page => {
-    const text = (page.translation?.data || '').toLowerCase();
-    let score = 0;
-    for (const keyword of keywords) {
-      const matches = (text.match(new RegExp(keyword, 'gi')) || []).length;
-      score += matches;
-    }
-    return { page, score };
-  });
-
-  // Sort by score and return top matches
-  scoredPages.sort((a, b) => b.score - a.score);
-  return scoredPages.slice(0, limit).map(sp => sp.page);
+  return searchChatPages(db, { book_id: bookId }, extractKeywords(query), limit);
 }
 
 // Search chapter texts for relevant content using keyword matching

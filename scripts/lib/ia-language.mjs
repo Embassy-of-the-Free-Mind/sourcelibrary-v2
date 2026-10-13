@@ -29,7 +29,7 @@
  * .claude/docs/invariants/language-fields.md. A caller value that loses to a source signal is a
  * work hint and belongs in `original_language`, which is what the route does and what this returns.
  */
-import { normalizeLanguageToken } from './language-normalize.mjs';
+import { normalizeLanguageToken, languageCode, languageRow } from './language-normalize.mjs';
 
 const first = (v) => (Array.isArray(v) ? v[0] : v);
 
@@ -37,11 +37,61 @@ const first = (v) => (Array.isArray(v) ? v[0] : v);
  * IA's language claims, most empirical first. `ocr_detected_lang` is IA's own OCR reading the pages;
  * `language` is its catalogue record. Order matters and is the whole point.
  */
-export function iaLanguageSignals(meta = {}) {
+export function iaLanguageSignals(meta = {}, caller = null) {
   return [
-    { source: 'ia_ocr_detected', value: normalizeLanguageToken(first(meta.ocr_detected_lang)) },
-    { source: 'ia_metadata', value: normalizeLanguageToken(first(meta.language)) },
+    {
+      source: 'ia_ocr_detected',
+      value: normalizeLanguageToken(first(meta.ocr_detected_lang)),
+      discounted: assessIaOcrLanguage({
+        ocrLang: first(meta.ocr_detected_lang),
+        ocrScripts: meta.ocr_detected_script,
+        catalogLang: first(meta.language),
+        callerLang: caller,
+      }),
+    },
+    { source: 'ia_metadata', value: normalizeLanguageToken(first(meta.language)), discounted: null },
   ].filter((s) => s.value);
+}
+
+/** IA's `ocr_detected_script` names → ISO 15924, folded to comparable groups. */
+const IA_SCRIPT = {
+  latin: 'Latn', fraktur: 'Latn', greek: 'Grek', cyrillic: 'Cyrl', arabic: 'Arab', hebrew: 'Hebr',
+  devanagari: 'Deva', tibetan: 'Tibt', han: 'CJK', hans: 'CJK', hant: 'CJK',
+  hangul: 'CJK', japanese: 'CJK', katakana: 'CJK', hiragana: 'CJK',
+};
+const SCRIPT_GROUP = { Cyrs: 'Cyrl', Hani: 'CJK', Jpan: 'CJK', Kore: 'CJK' };
+const scriptGroup = (s) => SCRIPT_GROUP[s] || s;
+
+/**
+ * Twin of assessIaOcrLanguage() in src/lib/resolve-language.ts (#4582), held identical by
+ * tests/unit/ia-language.test.ts. Returns why IA's `ocr_detected_lang` must not lead on this item,
+ * or null. The OCR reading is derived from IA's OCR, so it is noise where that OCR fails — Arabic
+ * read as "Latin", a hieroglyphic lithograph as Kyrgyz, Latin Google scans as Russian, Sanskrit as
+ * Hindi/Nepali — always at confidence 1.0. The full rationale lives on the TS side.
+ */
+export function assessIaOcrLanguage({ ocrLang, ocrScripts, catalogLang, callerLang } = {}) {
+  const ocrCode = languageCode(ocrLang);
+  if (!ocrCode && !normalizeLanguageToken(ocrLang)) return null;
+  const scripts = (Array.isArray(ocrScripts) ? ocrScripts : [ocrScripts])
+    .filter((s) => typeof s === 'string' && !!s.trim());
+  if (scripts.length >= 3) return 'ocr-multi-script';
+
+  const catalogRow = languageRow(languageCode(catalogLang));
+  const refRow = catalogRow || languageRow(languageCode(callerLang));
+  const ocrRow = languageRow(ocrCode);
+  if (!ocrRow) return normalizeLanguageToken(catalogLang) || normalizeLanguageToken(callerLang) ? 'ocr-unknown-language' : null;
+
+  const seen = scripts.length ? IA_SCRIPT[scripts[0].trim().toLowerCase()] : undefined;
+  if (seen && !ocrRow.ambiguous_script && scriptGroup(ocrRow.script) !== seen) return 'ocr-script-mismatch';
+
+  if (refRow && !refRow.ambiguous_script && ocrRow.script === 'Latn' && refRow.script !== 'Latn') {
+    return 'ocr-cannot-read-script';
+  }
+  if (catalogRow && catalogRow.script !== 'Latn' && scriptGroup(catalogRow.script) === scriptGroup(ocrRow.script)
+      && catalogRow.family !== ocrRow.family) {
+    return 'ocr-same-script-cousin';
+  }
+  return null;
 }
 
 /**
@@ -57,14 +107,17 @@ export function iaLanguageSignals(meta = {}) {
  *            chosen_from: string, provenance: object}}
  */
 export function resolveIaLanguage(meta = {}, caller = null) {
-  const signals = iaLanguageSignals(meta);
+  const signals = iaLanguageSignals(meta, caller);
   const callerLang = normalizeLanguageToken(caller);
-  const pick = signals[0] || null;
+  // A discounted signal (#4582) is recorded in the claims but never picked.
+  const pick = signals.find((s) => !s.discounted) || null;
 
   const claims = [];
   if (callerLang) claims.push({ source: 'caller', value: callerLang });
   for (const s of signals) {
-    if (!claims.some((c) => c.source === s.source && c.value === s.value)) claims.push(s);
+    if (!claims.some((c) => c.source === s.source && c.value === s.value)) {
+      claims.push({ source: s.source, value: s.value, ...(s.discounted ? { discounted: s.discounted } : {}) });
+    }
   }
 
   let language = null, original_language = null, conflict = false, chosen_from = 'none';

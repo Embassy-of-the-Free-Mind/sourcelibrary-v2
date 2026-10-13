@@ -17,6 +17,8 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -35,13 +37,9 @@ const ENDPOINTS = [
     latencySloMs: 1000,
     checkBody: true,
   },
-  {
-    name: 'embed_ficino',
-    url: 'https://sourcelibrary-v2.vercel.app/embed/ficino',
-    twoShot: true,
-    latencySloMs: 1000,
-    checkBody: true,
-  },
+  // embed_ficino was dropped (#5075): there is no `ficino` tenant, so /embed/ficino has always
+  // rendered notFound() behind a 200 (`data-dgst="NEXT_HTTP_ERROR_FALLBACK;404"`) — the probe
+  // reported 2,010/2,015 OK for a page that does not exist. Re-add it when the tenant does.
   {
     name: 'embed_bhutan',
     url: 'https://sourcelibrary-v2.vercel.app/embed/bhutan',
@@ -63,14 +61,47 @@ const ALERT_COOLDOWN_MS = 60 * 60 * 1000;
 const RECOVERY_WARM_THRESHOLD_MS = 800;
 // Delay between the two shots in a two-shot probe
 const TWO_SHOT_DELAY_MS = 250;
-// RSC error body patterns
-const ERROR_BODY_PATTERNS = ['Something went wrong', 'digest:'];
+// The embed routes STREAM (src/app/embed/[tenant]/loading.tsx): the 200 shell goes out first and
+// the page renders inside a Suspense boundary. A render that throws after the shell (a Mongo
+// maxTimeMS expiry, #5075) never changes the status code and never puts "Something went wrong"
+// in the HTML — the error boundary is rendered client-side. What React (Fizz) DOES emit is
+// `$RX("B:0","<digest>",…)` for a boundary whose server render errored (or the attribute form
+// `<template data-rxi data-bid=… data-dgst=…>`), and the RSC payload carries `"digest":"…"`.
+// The old patterns ('Something went wrong', 'digest:') matched none of these: 174 render
+// timeouts in one week against 2,016/2,016 OK checks.
+const ERROR_BODY_PATTERNS = [
+  { re: /\$RX\("B:/, label: 'streamed render error ($RX)' },
+  { re: /data-dgst=/, label: 'streamed render error (data-dgst)' },
+  { re: /\\?"digest\\?":/, label: 'RSC error digest' },
+];
 
 const PROBE_ONLY = process.argv.includes('--probe-only') || process.argv.includes('--check');
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+/**
+ * Inspect a streamed HTML body for a render that failed behind a 200 shell.
+ * Returns a reason string, or null when the page completed.
+ *
+ * Two assertions: (1) no boundary reports a server render error; (2) every Suspense
+ * boundary the shell opened (`<template id="B:n">`) was later completed (`$RC("B:n"`) —
+ * a boundary left pending means the stream ended before the page arrived.
+ */
+export function detectStreamedRenderError(body) {
+  for (const { re, label } of ERROR_BODY_PATTERNS) {
+    if (re.test(body)) return `error body detected: ${label}`;
+  }
+  const opened = new Set([...body.matchAll(/<template id="(B:\d+)"/g)].map(m => m[1]));
+  const done = new Set([
+    ...[...body.matchAll(/\$RC\("(B:\d+)"/g)].map(m => m[1]),
+    ...[...body.matchAll(/data-bid="(B:\d+)"/g)].map(m => m[1]),
+  ]);
+  const pending = [...opened].filter(id => !done.has(id));
+  if (pending.length > 0) return `unresolved suspense boundary (${pending.join(', ')})`;
+  return null;
+}
 
 async function fetchWithTimeout(url) {
   const start = Date.now();
@@ -129,12 +160,17 @@ async function checkTwoShot(endpoint) {
   const checked_at = new Date();
 
   // --- First shot (warm-up; latency logged but not used for SLO) ---
+  // The cold shot is where a slow loader actually times out, so its body is checked too:
+  // a reader landing on a cold lambda sees that error page (#5075).
   let cold_ms = null;
   let cold_status = null;
+  let coldBodyError = null;
   try {
     const { res, latency_ms } = await fetchWithTimeout(endpoint.url);
-    // Drain body to avoid connection leak
-    await res.text().catch(() => {});
+    const body = await res.text().catch(() => '');
+    if (endpoint.checkBody && res.status >= 200 && res.status < 300) {
+      coldBodyError = detectStreamedRenderError(body);
+    }
     cold_ms = latency_ms;
     cold_status = res.status;
   } catch (err) {
@@ -164,13 +200,8 @@ async function checkTwoShot(endpoint) {
     // Body check for RSC error boundaries
     let bodyError = null;
     if (endpoint.checkBody && httpOk) {
-      const body = await res.text();
-      for (const pattern of ERROR_BODY_PATTERNS) {
-        if (body.includes(pattern)) {
-          bodyError = `error body detected ('${pattern}' found)`;
-          break;
-        }
-      }
+      bodyError = detectStreamedRenderError(await res.text());
+      if (!bodyError && coldBodyError) bodyError = `cold shot: ${coldBodyError}`;
     } else {
       await res.text().catch(() => {});
     }
@@ -345,19 +376,23 @@ async function main() {
           continue;
         }
 
-        // Two-consecutive-fails gate: only alert on latency SLO violations if the previous
-        // check was also a failure. Network outages (non-200 status) skip this gate.
-        const isLatencyViolation = f.status !== 0 && f.status >= 200 && f.status < 300 && f.reason && f.reason.startsWith('slow:');
-        if (isLatencyViolation) {
+        // Two-consecutive-fails gate: a latency SLO violation or a streamed render error behind
+        // a 200 (#5075 — intermittent under Atlas load) alerts only if the PREVIOUS check also
+        // failed. Every failure is still recorded in uptime_checks. Network outages (non-200
+        // status) skip this gate. The previous check is the one before this run's — this run's
+        // row is already inserted, and matching it made the gate always pass.
+        const is200 = f.status !== 0 && f.status >= 200 && f.status < 300;
+        const isLatencyViolation = is200 && !!f.reason && f.reason.startsWith('slow:');
+        if (is200) {
           const prevCheck = await checksCol.findOne(
-            { endpoint: f.endpoint, ok: false },
+            { endpoint: f.endpoint, checked_at: { $lt: f.checked_at } },
             { sort: { checked_at: -1 } }
           );
-          if (!prevCheck) {
-            console.log(`[uptime] ${f.endpoint} slow (first occurrence), waiting for second consecutive fail before alerting`);
+          if (!prevCheck || prevCheck.ok) {
+            console.log(`[uptime] ${f.endpoint} ${f.reason} (first occurrence), waiting for second consecutive fail before alerting`);
             continue;
           }
-          console.log(`[uptime] ${f.endpoint} slow on consecutive checks — alerting`);
+          console.log(`[uptime] ${f.endpoint} failing on consecutive checks — alerting`);
         }
 
         const msg = `${f.endpoint} is down: ${f.reason || f.error} (${f.url})`;
@@ -424,7 +459,11 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('[uptime] Fatal:', err);
-  process.exit(1);
-});
+// Run only as a script; importing (tests/unit/uptime-monitor-body.test.ts) must not probe.
+// realpath: the cron runs it from /root/sourcelibrary, which may be a symlink.
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(err => {
+    console.error('[uptime] Fatal:', err);
+    process.exit(1);
+  });
+}

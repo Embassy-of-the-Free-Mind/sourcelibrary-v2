@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { scorePages, tokenize, fold } from '@/lib/passage-score';
+import { scorePages, phraseMatch, tokenize, fold } from '@/lib/passage-score';
 
 /**
  * The scorer runs on the REGEX FALLBACK path only. Where Atlas is available its
@@ -93,5 +93,62 @@ describe('edges', () => {
   it('returns nothing for an empty query or an empty pool', () => {
     expect(scorePages('', [page('p1', 'text')])).toEqual([]);
     expect(scorePages('heap', [])).toEqual([]);
+  });
+});
+
+describe('phraseMatch — word order, for the corpus-wide passage search (#3700)', () => {
+  const q = 'to educate the mind without educating the heart';
+  const scattered = 'We educate the young. ' + 'lorem ipsum dolor sit amet '.repeat(30) + 'The mind tires. ' + 'lorem ipsum '.repeat(30) + 'Without the heart nothing.';
+
+  it('scores 1 for the whole query in order and near 0 for the same words scattered', () => {
+    const [whole, apart] = phraseMatch(q, ['He said: to educate the mind without educating the heart is no education.', scattered]);
+    expect(whole.match).toBeCloseTo(1, 5);
+    expect(apart.match).toBeLessThan(0.2);
+  });
+
+  it('is absolute: a pool with no good page does not stretch its best to 1', () => {
+    // #3699. Normalising within the result set makes nonsense and a verbatim
+    // hit both top out at 1, so a caller cannot tell "found" from "not here".
+    const scores = phraseMatch(q, [scattered, 'the mind and the heart', 'nothing relevant']);
+    expect(Math.max(...scores.map((s) => s.match))).toBeLessThan(0.3);
+    expect(scores[2].match).toBe(0);
+  });
+
+  it('does not add two halves of the query found in two different places', () => {
+    const half = 'to educate the mind without';
+    const rest = 'without educating the heart';
+    const [together, apart] = phraseMatch(q, [
+      `x ${q} y`,
+      `${half} ${'lorem ipsum dolor '.repeat(40)} ${rest}`,
+    ]);
+    expect(together.match).toBeCloseTo(1, 5);
+    expect(apart.match).toBeLessThan(0.75);
+  });
+
+  it('allows one word in between, and ignores case, punctuation and accents', () => {
+    const [a, b] = phraseMatch('nature abhors a vacuum', ['"Nature utterly abhors a Vacuum," so that', 'vacuum a abhors nature']);
+    expect(a.match).toBeGreaterThan(0.6);
+    expect(b.match).toBe(0);
+    expect(phraseMatch('ψυχη δυο σωμασιν', ['μία ψυχὴ δύο σώμασιν ἐνοικοῦσα'])[0].match).toBeCloseTo(1, 5);
+  });
+
+  it('gives offsets into the text it was handed, accents and all', () => {
+    const text = 'φίλος, μία ψυχὴ δύο σώμασιν ἐνοικοῦσα';
+    const [m] = phraseMatch('ψυχη δυο σωμασιν', [text]);
+    expect(text.slice(m.start, m.end)).toBe('ψυχὴ δύο σώμασιν');
+  });
+
+  it('weights a rare sequence above one every candidate prints', () => {
+    // "of the" is on all three; only the first has "merely a heap".
+    const scores = phraseMatch('of the merely a heap', [
+      'it is not merely a heap, said he',
+      'the top of the hill',
+      'the end of the road',
+    ]);
+    expect(scores[0].match).toBeGreaterThan(scores[1].match * 2);
+  });
+
+  it('has nothing to say about a one-word query', () => {
+    expect(phraseMatch('Speusippus', ['Speusippus succeeded Plato'])).toEqual([]);
   });
 });

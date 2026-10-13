@@ -139,7 +139,9 @@ The homepage stat document carries `updatedAt`; any surface that prints a headli
 3. **Positive control, every run:** perturb one sampled book's stored rung in memory and require the comparator to flag it. A run whose control does not fire reports `probe_broken`, never PASS (`stage-coverage.mjs` convention).
 4. **Negative control, recorded once in the PR:** stamp a wrong rung on one hidden test book, run, watch it go red, restore. A guard that has never been red is decoration (`tests-that-are-not-guards.md`).
 
-The audit also carries forward `fully-translated-coverage.mjs` (#5063) as a rule on the new field: `rung ∈ {readable, complete}` with `pages_count > 30` and `pages_translated < 0.5 · pages_count` is a FAIL.
+The audit also carries forward `fully-translated-coverage.mjs` (#5063) as a rule on the new field: `rung ∈ {readable, complete}` with `pages_count > 30` and `pages_translated < 0.5 · (pages_count − pages_blank)` is a FAIL. The denominator is **whole**, not bare `pages_count` as first written here: on 2026-10-12 the `pages_count` form flagged 46 live books, all facsimiles whose other half is blank versos and whose rungs were right (Papyrus of Ani: 168 leaves, 86 blank, 82 of 82 translatable pages translated); on whole it flags 0.
+
+*Built in #5290 (2026-10-12):* comparators in `scripts/lib/translation-state-audit.mjs`, pinned by `tests/unit/translation-state-audit.test.ts`. First production run: 0 of 300 sampled rungs disagree, every headline equals the view (20,189), the catalog matches Mongo on all seven rungs. Rendered pages carry no timestamp, so they are judged on value alone (2% of the view); `/api/analytics/canon` and `/api/platform/stats` need a session and are listed as not checked. `--include <book-id>` forces a book into the sample (the negative control). The weekly crontab line is not in yet.
 
 ## Migration, in independently mergeable steps
 

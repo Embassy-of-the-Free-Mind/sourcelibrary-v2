@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [preference, judged]
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 299
+n_pages: 299
+verdict: "On real Latin queue pages readers prefer 3.7 Flash CLI over flash-lite on 14/15 gothic and 17/22 roman pages; lite loops on 4/46 gothic and reads long-s as f; gothic is about 7% of the queue."
+status: undecided
+decision: null
+superseded_by: null
+issue: 6375
+---
 ## 2026-10-09 · Latin OCR backlog: Gemini 3.7 Flash through the CLI against production flash-lite on 299 queue pages (#6375)
 
 PRIOR ART: `2026-10-03-open-engine-print-5660.md` (#5924 round 4: Latin CER on referenced pages, no gothic; lite's

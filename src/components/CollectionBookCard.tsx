@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Check, Heart, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
-import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
+import { bookCoverResponsiveLoader, framedCardLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
+import FramedImg from '@/components/FramedImg';
+import { coverFrame } from '@/lib/framed-image';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
@@ -50,6 +52,9 @@ export interface CollectionBook {
    *  silently falls back to the 2000px scan. */
   image_display?: string | null;
   image_card?: string | null;
+  /** Where the page sits inside the cover scan (#6010). Applied only while it
+   *  names the cover being drawn; a feed that does not project it changes nothing. */
+  thumbnail_frame?: unknown;
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
@@ -201,6 +206,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   // behaviour for every non-card book.
   const fallbackUrl = (cardUrl && displayUrl) || getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+  // A framed cover is drawn larger than its card (#6010): when the 500px card
+  // variant would be upscaled, take the display scan of the same page.
+  const frame = coverFrame(book, thumbnailUrl);
+  const coverLoader = frame && thumbnailUrl === cardUrl && displayUrl ? framedCardLoader(displayUrl) : bookCoverResponsiveLoader;
   const slug = book.slug || book.id || book.bookId || '';
 
   // "Does this book exist in the surface language?" — asked through the shared
@@ -244,9 +253,11 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         )}
 
         {thumbnailUrl && !imageError ? (
-          <Image
+          <FramedImg
+            as={Image}
+            frame={frame}
             src={thumbnailUrl}
-            loader={bookCoverResponsiveLoader}
+            loader={coverLoader}
             alt={shownTitle}
             fill
             quality={85}

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo, he, arc, ar, fa, la]
+scripts: [Tibt, Hebr, Arab, Latn]
+canons: []
+n_books: 104
+n_pages: 150
+verdict: "No temperature passes the first-draw test (T0.2 +0.10 equals the floor); the two-draw contrast favours 0.2 or 0 by about 0.1 grade; best-of-3 gains +0.06 on the Tengyur at 3.6x cost."
+status: undecided
+decision: "Recommends explicit temperature 0 and no best-of-3; translate-worker.mjs unchanged, pending Derek (#6202)"
+superseded_by: null
+issue: 6202
+---
 ## 2026-10-07 · Temperature and best-of-3 for translation, against published references (#6202)
 <!-- PRIOR ART: scripts/eval/xlref-t1 — reused (arms.mjs: the production request replayed to files; its page set and references). Also reused unchanged: scripts/eval/translation-vs-reference/ (JUDGE-PROMPT.md, build-packet.mjs, score.mjs), the #5695 T4 set (2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md, which measured the temperature-1 noise floor), the Tengyur 84000 set (2026-10-04-tengyur-stored-draft-vs-84000-5797.md) and the margin rule of 2026-10-04-routing-eval-tool-replay-5828.md. No earlier run had temperature or best-of-N as an arm (2026-10-01-chinese-skqs-followup-5568.md: "Worth its own run"). -->
 

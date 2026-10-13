@@ -114,7 +114,7 @@ const bookQuery = BOOK_ID
 
 const books = await db.collection('books').find(bookQuery, {
   projection: {
-    _id: 0, id: 1, slug: 1, title: 1, ia_identifier: 1, cover_page: 1,
+    _id: 0, id: 1, slug: 1, title: 1, author: 1, ia_identifier: 1, cover_page: 1,
     cover_page_number: 1, image_thumb: 1, image_display: 1, thumbnail: 1,
     thumbnail_blob: 1, thumbnail_source: 1,
   },
@@ -175,7 +175,7 @@ for (let i = 0; i < books.length; i += BATCH) {
 
     // Re-score every scanned page; scorer reads ocr_head via its fallback chain.
     const scored = bookPages
-      .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book.title }) }))
+      .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book.title, bookAuthor: book.author }) }))
       .sort((a, b) => b.score - a.score);
     const best = scored[0];
     if (!best || best.score < minScore || best.page.page_number === coverNum) {

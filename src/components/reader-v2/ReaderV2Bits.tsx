@@ -15,7 +15,8 @@ import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import { issueUrl } from '@/lib/check-methods';
-import { PaneEmptyState, GatedPane } from './PaneEmptyState';
+import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
+import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
@@ -372,6 +373,16 @@ export function ReaderProse({
     return <PaneEmptyState page={page} book={book} kind={kind} />;
   }
 
+  // Model text the book never carried (#5903). The pipeline's own marker is page
+  // information, not English; a translation over a transcription with no text is
+  // the model describing a plate or an endpaper, framed and labelled as such.
+  // Display only — the stored text stays (page-counts reads the marker).
+  const markerType = kind === 'translation' ? noContentMarkerType(text) : null;
+  if (markerType) {
+    return <NoTextPageLine pageType={markerType} />;
+  }
+  const ungrounded = kind === 'translation' && isUngroundedTranslation({ ocr: page.ocr, translation: { data: text } });
+
   const fontSize = Math.round(baseSize * settings.textScale * 10) / 10;
 
   return (
@@ -394,6 +405,7 @@ export function ReaderProse({
         language={lang}
         columns={page.columns}
         pageType={page.page_type}
+        ungrounded={ungrounded}
       />
     </div>
   );

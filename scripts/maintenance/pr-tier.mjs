@@ -140,20 +140,64 @@ export function groupedBumps(diff) {
 // The first line of a failed command's stderr, e.g. `HTTP 406: Sorry, the diff exceeded the maximum number of files (300)`.
 const errLine = (e) => (String(e?.stderr || '').split('\n').find((l) => l.trim()) || e?.message || String(e)).trim().slice(0, 200);
 
+/** The REST files list: every file (up to GitHub's 3,000) with its own patch. One JSON object per line. */
+export function prFiles(number, run = sh) {
+  return run(`gh api repos/{owner}/{repo}/pulls/${number}/files --paginate --jq '.[]'`).split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
+}
+
+/**
+ * Rebuild a unified diff from the REST files list, for when `gh pr diff` is
+ * refused (#5794: HTTP 406 past 300 files or 20,000 lines). That endpoint still
+ * serves each file's own patch, but omits it for a file too big to show; a file
+ * with added lines and no patch is returned in `unread` so the caller can say so.
+ */
+export function diffFromFiles(files) {
+  const parts = [];
+  const unread = [];
+  for (const f of files) {
+    if (f.patch == null) { if (f.additions > 0) unread.push(f.filename); continue; }
+    const from = f.previous_filename || f.filename;
+    parts.push(`diff --git a/${from} b/${f.filename}`, `--- ${f.status === 'added' ? '/dev/null' : 'a/' + from}`, `+++ ${f.status === 'removed' ? '/dev/null' : 'b/' + f.filename}`, f.patch);
+  }
+  return { diff: parts.join('\n'), unread };
+}
+
 /**
  * `run` is injectable so a test can stand in for `gh`. A diff GitHub will not
- * serve (#6324: HTTP 406 `too_large` past 300 files or 20K lines) used to throw
- * out of `--all` partway through the list. A diff we cannot read is a diff
- * nobody checked, so it HOLDs with the reason instead.
+ * serve (#6324, #5794: HTTP 406 `too_large` past 300 files or 20K lines) is
+ * rebuilt from per-file patches. What still cannot be read is a diff nobody
+ * checked, so it HOLDs with the reason; it never throws or goes unlabelled.
+ * `gh pr view --json files` stops at 100 files (measured on #5991: 100 of 776),
+ * so a PR at that cap takes its paths from the REST list too.
  */
 export function classifyPR(number, run = sh) {
   const pr = JSON.parse(run(`gh pr view ${number} --json number,title,author,isDraft,labels,files,url,comments`));
-  const paths = (pr.files || []).map((f) => f.path);
+  let paths = (pr.files || []).map((f) => f.path);
+  let rest = null;
+  const restFiles = () => (rest ??= prFiles(number, run));
   let diff = '';
   let diffError = null;
-  try { diff = run(`gh pr diff ${number}`); } catch (e) { diffError = errLine(e); }
+  let unread = [];
+  try { diff = run(`gh pr diff ${number}`); } catch (e) {
+    diffError = errLine(e);
+    try {
+      ({ diff, unread } = diffFromFiles(restFiles()));
+      // A file whose lines are never scanned costs nothing when its patch is missing.
+      unread = unread.filter((p) => !ignoreRes.some((re) => re.test(p)));
+      diffError = null;
+    } catch (e2) { diffError += `; per-file patches failed too — ${errLine(e2)}`; }
+  }
+  const extraReasons = [];
+  if (paths.length >= 100) {
+    try {
+      paths = [...new Set([...paths, ...restFiles().flatMap((f) => [f.filename, f.previous_filename].filter(Boolean))])];
+      if (restFiles().length >= 3000) extraReasons.push({ reason: 'PR touches 3,000+ files, more than GitHub will list; the rest were not checked', paths: [], lines: [] });
+    } catch (e) { extraReasons.push({ reason: `only the first ${paths.length} files could be listed — ${errLine(e)}`, paths: [], lines: [] }); }
+  }
   const result = classifyPaths(paths, scannableAddedLines(diff));
+  result.reasons.push(...extraReasons);
   if (diffError) result.reasons.push({ reason: `diff could not be read, so its lines were not checked — ${diffError}`, paths: [], lines: [] });
+  if (unread.length) result.reasons.push({ reason: `GitHub served no patch for ${unread.length} file${unread.length === 1 ? '' : 's'} too large to show, so their lines were not checked`, paths: unread.slice(0, 8), lines: [] });
   const author = pr.author?.login || '';
   const isBot = /dependabot/.test(author);
   if (!RULES.autoMergeAuthors.some((a) => a === author || a.replace('app/', '') === author)) {

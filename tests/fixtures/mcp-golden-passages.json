@@ -36,6 +36,34 @@
     ]
   },
 
+  "corpus_ranking": {
+    "tool": "search_translations",
+    "expectation": "Searching the WHOLE library for a sentence must put a page that prints it in the top N, with a phrase_match that says so; a sentence the library does not hold must not score like one it does.",
+    "$why": "#3700. The corpus-wide keyword search ordered passages by Atlas's bag-of-words score fused through a ladder built for ranking books, so the more precisely a caller described a passage the worse it did, and nothing in the response distinguished a real hit from 27 pages that each print the words somewhere.",
+    "cases": [
+      {
+        "query": "the whole is not merely a heap but something besides its parts",
+        "expectBookId": "69d14a6c1c2a66dc094b41b2",
+        "expectPage": 264,
+        "withinTopN": 5,
+        "contains": "not merely a heap",
+        "minPhraseMatch": 0.5,
+        "$was": "21st in Atlas's own order (measured 2026-10-12), so absent at limit 10; after fusion it was demoted further because its book is a classified translation."
+      },
+      {
+        "query": "the unexamined life is not worth living",
+        "withinTopN": 3,
+        "contains": "unexamined life is not worth living",
+        "minPhraseMatch": 0.95
+      }
+    ],
+    "absent": {
+      "query": "to educate the mind without educating the heart",
+      "maxPhraseMatch": 0.3,
+      "$why": "The reporter's query. The library holds no page that prints it (measured 2026-10-12: best run 0.11 over the 150 best keyword pages). The honest answer is a list whose scores say so."
+    }
+  },
+
   "rare_term_control": {
     "tool": "search_within_book",
     "expectation": "A single distinctive term still returns its few exact pages. This is the control that proves the ranking fix did not simply loosen matching.",

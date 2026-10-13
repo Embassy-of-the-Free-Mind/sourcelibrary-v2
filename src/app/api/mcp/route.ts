@@ -9,12 +9,18 @@ import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import { EMBEDDED_EXTRACT_TIP, EXTRACT_SPAN_WARNING } from '@/lib/announced-extract';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
+import { getRatingOptions } from '@/lib/review-queue';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
+import { conceptsInQuery } from '@/lib/concept-aliases';
+import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
+import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -44,7 +50,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.7.1';
+const SERVER_VERSION = '4.9.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -114,6 +120,31 @@ async function searchLibrary(args: Record<string, unknown>) {
   };
 }
 
+/**
+ * The curated vocabulary for the concept a query names (#4251, `src/lib/concept-aliases.ts`).
+ *
+ * Search matches the words it is sent, and each tradition's texts sit under that tradition's
+ * own word: "daemon" does not reach the Vendidad, which says daēva. Nothing here is searched
+ * on the caller's behalf — `related` terms are other concepts, and folding them into the query
+ * would return Avestan law as if it used the Greek word. The caller is told the words and
+ * told, in so many words, that they were not searched (agent-tool-results.md: state the
+ * absence). Empty object when the query names no curated concept.
+ */
+function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
+  const found = conceptsInQuery(String(query ?? ''));
+  if (!found.length) return {};
+  return {
+    concept_vocabulary: found.map((v) => ({
+      concept: v.concept,
+      matched_on: v.matched,
+      ...(v.same_word.length ? { same_word: v.same_word } : {}),
+      ...(v.other_renderings.length ? { other_renderings: v.other_renderings } : {}),
+      ...(v.related.length ? { related_terms: v.related } : {}),
+    })),
+    concept_vocabulary_note: 'These terms were NOT searched: the results below match only the query you sent. They are the library\'s curated vocabulary for the concept your query names. same_word = the same word in other spellings and scripts; other_renderings = how other translators put it; related_terms = adjacent concepts and other traditions\' counterparts, which are NOT synonyms (do not report a passage found under one as using another). Each tradition\'s texts are indexed under its own term, so to cross traditions call search_translations again with the terms you need, one per call. A term listed here is not a promise that passages exist for it.',
+  };
+}
+
 async function searchPassages(args: Record<string, unknown>) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
   const offset = Number(args.offset) || 0;
@@ -162,6 +193,11 @@ async function searchPassages(args: Record<string, unknown>) {
       //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
       //   'summary'             = AI-generated description (do NOT quote as the author's words)
       snippet_type: snippetType,
+      // How much of the query the page prints in order at one place, 0-1, and
+      // which lane found it. Absolute, so a caller can tell a real hit from
+      // 27 pages that each print the words somewhere (#3700).
+      ...(r.phrase_match !== undefined ? { phrase_match: r.phrase_match } : {}),
+      ...(r.found_by ? { found_by: r.found_by } : {}),
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
@@ -180,8 +216,9 @@ async function searchPassages(args: Record<string, unknown>) {
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
-    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording. snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". phrase_match is how much of your query the page prints in order at one place (1 = all of it, 0 = only scattered words); a snippet is a window, so call get_quote before quoting. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -252,8 +289,9 @@ async function searchConcept(args: Record<string, unknown>) {
       diversity_note: 'Passages are re-ordered for spread, not dropped: pass diversity "off" for the plain nearest-first order. This is a ranked sample, not a census of what the library holds on the topic.',
     } : {}),
     ...(conceptLane ? { lane: 'concept', lane_note: 'Experimental concept lane (#6173): ranked by an abstract of each page\'s ideas, 1,216 books only. Snippets are the page text.' } : {}),
+    ...conceptVocabularyBlock(args.query),
     passages,
-    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -395,6 +433,12 @@ async function getBook(args: Record<string, unknown>) {
   // rather than a title anyone published. Say so in prose next to the title.
   const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
   const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
+  // #3697: stored `confidence` is the extraction model's self-report (high on
+  // 96% of entries, including the wrong ones). Re-check every list on the way
+  // out so a gap or a sink chapter is visible on books extracted before the
+  // write-side checks existed.
+  const storedChapters = Array.isArray(result.chapters) ? result.chapters as Chapter[] : null;
+  const chapterReport = storedChapters?.length ? checkChapters(storedChapters) : null;
   return {
     id: result.id, title: resolvedTitle.display, author: result.author,
     ...(resolvedTitle.isDescriptive
@@ -417,7 +461,16 @@ async function getBook(args: Record<string, unknown>) {
     // where a localized edition exists. Pass the code as `lang` to get_quote /
     // get_book_text / search_within_book to read that edition.
     editions: editionsForBook(result),
-    reading_summary: result.reading_summary, chapters: result.chapters,
+    reading_summary: result.reading_summary,
+    chapters: chapterReport ? chapterReport.chapters : result.chapters,
+    ...(chapterReport ? {
+      chapter_checks: {
+        checks_run: CHECKS_RUN,
+        flagged_entries: chapterReport.flagged,
+        ...(chapterReport.gaps.length ? { numbering_gaps: chapterReport.gaps } : {}),
+        note: 'confidence on each chapter is the extraction model\'s own estimate, lowered to "low" (original kept as model_confidence, reason in flags) where a check above fails. Unflagged entries are NOT verified, only uncontradicted. A numbering gap means a chapter heading was missed or misassigned: the entry before it probably runs over the missing chapter\'s pages.',
+      },
+    } : {}),
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
     // is the answer to "which book has the Poetics?", which the catalogue title
@@ -663,6 +716,14 @@ function sourceColumnQuote(result: Record<string, unknown>): boolean {
  * the flags would come back all-false on precisely the pages where the caller
  * has nothing but the original to quote from.
  */
+// The quote API returns the reader's display URL, which is usually a
+// same-origin `/api/image?…` path. An MCP client is not on our origin, so the
+// JSON must carry an absolute URL — a relative one is a link the model has to
+// guess the host for (#3937).
+function absolutizeQuoteImage(quote: Record<string, unknown> | undefined): void {
+  if (typeof quote?.page_image_url === 'string') quote.page_image_url = absoluteImageUrl(quote.page_image_url);
+}
+
 function quotableText(quote: Record<string, unknown> | undefined): string | null {
   if (typeof quote?.translation === 'string') return quote.translation;
   if (quote?.text_source === 'ocr_original' && typeof quote.original === 'string') return quote.original;
@@ -691,6 +752,7 @@ async function getQuote(args: Record<string, unknown>) {
   // `text` is not a field on this response and reading it silently produced
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
+  absolutizeQuoteImage(quote);
   const quoteText = quotableText(quote);
   // Hyphen splits live in the ORIGINAL, never in the translation — a translator
   // resolves them. Passing only the translation made hyphen_split_at_end
@@ -709,7 +771,12 @@ async function getQuote(args: Record<string, unknown>) {
       if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
     }
   }
-  const hint = continuityHint(continuity, Number(args.page));
+  // A continuity hint advises fetching the neighbours and quoting them as one
+  // passage — which, across an announced extract, assembles a quotation that
+  // straddles two authors under one citation (#3689). Say so on the hint itself.
+  const inExtract = !!(quote as Record<string, unknown> | undefined)?.embedded_extract;
+  const baseHint = continuityHint(continuity, Number(args.page));
+  const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
@@ -717,6 +784,7 @@ async function getQuote(args: Record<string, unknown>) {
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
   if (printedPage(result)) tips.push(PRINTED_PAGE_TIP);
+  if (inExtract) tips.push(EMBEDDED_EXTRACT_TIP);
 
   // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
   // each read their own copy of this guidance and fixes do not propagate.
@@ -782,6 +850,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
+        absolutizeQuoteImage(q);
         const continuity = pageContinuity(
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
@@ -789,7 +858,8 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
         if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
-        const hint = continuityHint(continuity, page);
+        const baseHint = continuityHint(continuity, page);
+        const hint = baseHint && q?.embedded_extract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
         // Per-page structured failure, so one untranslated page in a range does
@@ -900,6 +970,10 @@ async function searchImages(args: Record<string, unknown>) {
         ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
         : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
       : undefined,
+    // The canvas this image sits on (#4289): a IIIF client can fetch the page
+    // or a region of it from here. Named as in search_library's iiif_manifest.
+    ...(item.iiifManifest ? { iiif_manifest: item.iiifManifest } : {}),
+    ...(item.iiifCanvas ? { iiif_canvas: item.iiifCanvas } : {}),
   })) || [];
 
   // #4288 item 1. Two things were wrong here and both made a model assert a
@@ -1011,10 +1085,53 @@ async function searchImages(args: Record<string, unknown>) {
       ? {
           note: args.book_id
             ? 'This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates.'
-            : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
+            : (args.subject || args.figure || args.symbol)
+              ? 'No images matched. subject/figure/symbol are exact, case-sensitive tag matches. Check the spelling with list_image_facets (facet + contains), or move the word into query.'
+              : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
         }
       : {}),
   };
+}
+
+// Facet vocabulary (#4287): search_images' subject/figure/symbol filters are
+// exact matches over vocabularies of tens of thousands of extractor strings, so
+// an agent that cannot see them guesses and gets nothing back.
+async function listImageFacets(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  if (args.facet) params.set('facet', String(args.facet));
+  if (args.contains) params.set('contains', String(args.contains));
+  if (args.limit) params.set('limit', String(args.limit));
+  const r = await apiGet('/gallery/facets', params) as {
+    min_count: number; updated_at: string | null;
+    facets: Record<string, { distinct_values: number; listed_values: number; matched: number; terms: Array<{ value: string; count: number }> }>;
+  };
+  const empty = Object.entries(r.facets).filter(([, f]) => f.matched === 0).map(([name]) => name);
+  return {
+    ...r,
+    usage: 'Pass a value verbatim as search_images\' type/subject/figure/symbol argument. count = book illustrations carrying the tag; museum artworks are not counted. search_images will report a smaller total for the same value, because it shows at most a few images per book and skips low-quality crops: count measures the vocabulary, not the result size.',
+    ...(args.contains && empty.length
+      ? { note: `No ${empty.join('/')} tag on ${r.min_count}+ images contains "${String(args.contains)}". The tag is absent or rare, so search for it as free text with search_images' query instead of a filter.` }
+      : {}),
+  };
+}
+
+/**
+ * "Do you hold X?" — the holdings check #4250 asked for (`has_work`). One
+ * acquisition session reported ~108 titles missing, a large fraction already
+ * held: list_books substring-matches and search_library relevance-ranks, so a
+ * negative from either meant nothing. The backend is the public
+ * /api/books/check-duplicate (checkHoldings(), #6019), which counts hidden
+ * copies without describing them, so it is safe on this unauthenticated surface.
+ */
+async function checkDuplicate(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  for (const k of ['url', 'title', 'author', 'year', 'language', 'ia_id', 'manifest']) {
+    if (args[k] !== undefined && args[k] !== null && args[k] !== '') params.set(k, String(args[k]));
+  }
+  if (!params.has('url') && !params.has('ia_id') && !params.has('manifest') && (params.get('title') || '').length < 2) {
+    return { error: 'Provide a title (2+ characters, ideally with author), or a url / ia_id / manifest.' };
+  }
+  return apiGet('/books/check-duplicate', params);
 }
 
 async function submitFeedback(args: Record<string, unknown>) {
@@ -1043,6 +1160,156 @@ async function proposeCollection(args: Record<string, unknown>) {
     email: args.email || null,
   }) as Record<string, unknown>;
   return { ok: true, id: result.id, message: result.message || 'Collection proposal sent to the Source Library team for review. Thank you!' };
+}
+
+/** Verdicts for a shift are exactly the translation-check queue's, so shift rows
+ *  and /check rows count in the same rollup. */
+const SHIFT_VERDICTS = getRatingOptions('translation-check').map((r) => r.rating);
+const clipStr = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
+
+/** Steps for a model-operated book run, returned with every page so a long chat
+ *  never loses them. The volunteer donates their Claude; the person runs it. */
+const BOOK_RUN_STEPS =
+  'For this page: (1) read the scan and compare the transcription with it, line by line and mark by mark ' +
+  '(long s vs f, u/v, abbreviation marks, the margins); (2) compare the English with the transcription: ' +
+  'omissions ("…" where the original runs on), additions, misreadings, and text carried over from the ' +
+  'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
+  '(3) tell the user in two or three plain sentences what the page says and what you found, quoting only ' +
+  'the words at issue; do not paste the full transcription or translation unless asked; they do not need ' +
+  'to read the language; (4) call ' +
+  'submit_page_review with mode "book-run" and YOUR verdict and findings; (5) for each error you can see ' +
+  'on the scan or in the original, call propose_correction with drafted_by "assistant" (transcription ' +
+  'before translation); (6) ask whether to continue, and on yes call continue_review_shift with next.book ' +
+  'and next.after. Submit only after the user agreed, once at the start, that findings are submitted as ' +
+  'you go. Never invent a problem to have something to report: "both_sound" with no findings is a ' +
+  'useful result.';
+
+async function getBookRunPage(args: Record<string, unknown>, extra: Record<string, string>) {
+  const params = new URLSearchParams(extra);
+  const code = clipStr(args.volunteer_code, 64);
+  if (code) params.set('volunteer_id', code);
+  const language = clipStr(args.language, 40);
+  if (language) params.set('language', language);
+  const r = await apiGet('/review/book-run', params) as Record<string, unknown>;
+  const page = r.page as Record<string, unknown> | null;
+  return {
+    volunteer_code: r.volunteer_id,
+    ...(r.resumed ? { resumed: true } : {}),
+    run: r.run ?? null,
+    page,
+    next: r.next ?? null,
+    ...(r.message ? { message: r.message } : {}),
+    ...(page ? { how_to_run: BOOK_RUN_STEPS } : {}),
+  };
+}
+
+async function startReviewShift(args: Record<string, unknown>) {
+  const extra: Record<string, string> = {};
+  const book = clipStr(args.book, 300);
+  if (book) extra.book = book;
+  if (args.new_book === true) extra.fresh = '1';
+  const result = await getBookRunPage(args, extra);
+  return {
+    ...result,
+    first_time: 'Before the first page, tell the user in a few lines: their Claude will check this book page by page ' +
+      'against the scans and send what it finds to Source Library; they can watch, ask questions, or just say ' +
+      '"continue"; findings and proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s ' +
+      'translations, and nothing changes on a page until a second reader agrees. Ask once whether that is OK. ' +
+      'Give them volunteer_code so a later chat can pick up where this one stops.',
+  };
+}
+
+async function continueReviewShift(args: Record<string, unknown>) {
+  const book = clipStr(args.book, 300);
+  if (!book) return { error: 'book is required: pass next.book from the previous page' };
+  const extra: Record<string, string> = { book };
+  if (args.after != null) extra.after = String(args.after);
+  return getBookRunPage(args, extra);
+}
+
+async function startBlindCheck(args: Record<string, unknown>) {
+  const params = new URLSearchParams();
+  const code = clipStr(args.volunteer_code, 64);
+  if (code) params.set('volunteer_id', code);
+  const language = clipStr(args.language, 40);
+  if (language) params.set('language', language);
+  if (args.pages != null) params.set('n', String(args.pages));
+  const shift = await apiGet('/review/translation-check/shift', params) as Record<string, unknown>;
+  return {
+    shift_id: shift.shift_id,
+    volunteer_code: shift.volunteer_id,
+    language: shift.language,
+    pages: shift.items,
+    ...(shift.message ? { message: shift.message } : {}),
+    how_to_run: 'One page at a time: show it, ask the user for THEIR verdict first, then give your reading with exact quotes, let them accept or reject each point, then submit_page_review with mode "blind" and their final verdict. Tell the user their volunteer_code so they can continue next time.',
+  };
+}
+
+async function submitPageReview(args: Record<string, unknown>) {
+  const verdict = String(args.verdict ?? '');
+  if (!SHIFT_VERDICTS.includes(verdict)) {
+    return { error: `verdict must be one of: ${SHIFT_VERDICTS.join(', ')}` };
+  }
+  const findings = Array.isArray(args.assistant_findings)
+    ? (args.assistant_findings as Array<Record<string, unknown>>).slice(0, 12).map((f) => ({
+        layer: f.layer === 'transcription' ? 'transcription' : 'translation',
+        quote: clipStr(f.quote, 300),
+        problem: clipStr(f.problem, 500),
+        user_agreed: typeof f.user_agreed === 'boolean' ? f.user_agreed : null,
+      }))
+    : [];
+  const asVerdict = (v: unknown) => (typeof v === 'string' && SHIFT_VERDICTS.includes(v) ? v : null);
+  const tv = args.text_version as Record<string, unknown> | undefined;
+  // book-run: the verdict is the volunteer's Claude's, with the person running it;
+  // blind: the verdict is the person's own, given before the assistant's reading.
+  const mode = args.mode === 'blind' ? 'blind' : 'book-run';
+  await apiPost('/review/submit', {
+    queue: mode === 'blind' ? 'translation-check' : 'book-run',
+    item_id: args.item_id,
+    rating: verdict,
+    note: clipStr(args.note, 2000),
+    volunteer_id: args.volunteer_code,
+    volunteer_label: clipStr(args.name, 80),
+    detail: {
+      via: 'mcp-shift',
+      mode,
+      shift_id: clipStr(args.shift_id, 64),
+      book_id: clipStr(args.book_id, 64),
+      page_number: typeof args.page_number === 'number' ? args.page_number : null,
+      user_looked: typeof args.user_looked === 'boolean' ? args.user_looked : null,
+      verdict_before_assistant: mode === 'blind' && args.verdict_before_assistant === true,
+      first_verdict: asVerdict(args.first_verdict),
+      assistant_verdict: asVerdict(args.assistant_verdict),
+      assistant_findings: findings,
+      assistant_model: clipStr(args.assistant_model, 80),
+      reader_languages: clipStr(args.reader_languages, 200),
+      text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
+    },
+  });
+  return { ok: true, message: 'Review recorded. Thank you. It is evidence about this page; it does not change the page by itself.' };
+}
+
+async function proposeCorrection(args: Record<string, unknown>) {
+  // item_id is `trans:<language>:<pages.id>`; the route takes the page id.
+  const pageId = String(args.item_id ?? '').split(':').slice(2).join(':');
+  const result = await apiPost('/review/corrections', {
+    page_id: pageId,
+    field: args.field,
+    base_hash: args.base_hash,
+    edits: args.edits,
+    volunteer_id: args.volunteer_code,
+    volunteer_label: clipStr(args.name, 80),
+    drafted_by: args.drafted_by,
+    assistant_model: clipStr(args.assistant_model, 80),
+    note: clipStr(args.note, 2000),
+    shift_id: clipStr(args.shift_id, 64),
+  }) as Record<string, unknown>;
+  return {
+    ok: true,
+    id: result.id,
+    status: result.status,
+    message: 'Correction proposed. A second reader will check it against the scan before it changes the page; the volunteer is credited when it is applied.',
+  };
 }
 
 /**
@@ -1092,18 +1359,18 @@ const TOOLS: Tool[] = [
   {
     name: 'search_translations',
     title: 'Search Translations',
-    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: single distinctive terms ("memory palace", "wax tablet") work best; multi-word natural-English queries ("unity of the intellect") may return fewer results because matching is term-based, not phrase-based. Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
+    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: a distinctive term ("wax tablet") or the sentence you are looking for both work; matching is by word, and a page that prints your words together and in order ranks above one that scatters them. Each passage carries phrase_match (0-1, absolute, not relative to the other results): 1 means the page prints your whole query in order at one place, 0 means your words occur only apart; when every passage is under about 0.2 the library probably does not print that sentence, so try search_concept. It is absent for a one-word query and for a passage found by meaning alone. found_by says which lane found the page: "keyword", "semantic", or "both" (the strongest signal). Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
     annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Search term — prefer single distinctive concepts ("harmony of the spheres", "active intellect") over long natural-language phrases. Multi-word queries match all terms (not phrase); wrap in "double quotes" for exact phrase.' },
+        query: { type: 'string', description: 'A distinctive term ("harmony of the spheres", "active intellect") or the sentence you are looking for. A multi-word query matches pages printing ANY of its words, ranked so that pages printing them together come first (see phrase_match); wrap in "double quotes" to require the exact phrase.' },
         language: { type: 'string', description: 'Filter by a single original language' },
         languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
-        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": keyword results come in match order. Nothing is dropped; later pages hold the rest.' },
+        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": passages come in relevance order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
@@ -1151,12 +1418,12 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, author/title fragment via search, language, category, year range, translation recency) — no content/topic matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        search: { type: 'string', description: 'Free-text filter matching title or author (relevance-ranked, may include title matches). For exactly one person\'s books use author_id instead.' },
+        search: { type: 'string', description: 'Relevance-ranked word match over title (original, display and English), author, original-script name forms (e.g. Greek), AND the book\'s AI summary. A hit can name your term in neither title nor author, only in what the book discusses. Diacritic-insensitive. For exactly one person\'s books use author_id instead.' },
         author_id: { type: 'string', description: 'Canonical author slug, e.g. "jan-hus" — filters to exactly that person\'s books via the author thesaurus (variant slugs resolve to the canonical person). Every book row in results carries its author_id; the response echoes the canonicalized author.' },
         edition_key: { type: 'string', description: 'Other digitizations of ONE printing — pass the edition_key from a result row. Only full-quality keys match on both sides, so this answers "what other scans of this exact edition do you hold?" and never merges different printings of the same title.' },
         work_id: { type: 'string', description: 'Every witness of one WORK, across editions, languages and centuries — pass the work_id from a result row or from get_book. Use this instead of a title search whenever you already hold the identifier: witnesses of one work are often titled differently in each language, so a title search finds only the subset that happens to share your wording. Unlike list_editions (which returns the whole set), this composes with language, year_from/year_to and sort.' },
@@ -1172,7 +1439,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where they differ the response also carries `work_language`, `text_role` (original / period-translation / modern-translation) and a `translation_note` — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the edition is in the work\'s own language. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where the record knows they differ the response also carries `work_language` and a `translation_note`, and `text_role` (original / period-translation / modern-translation / unclassified) says what kind of witness this is — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the work\'s language is NOT RECORDED on this record. It is not a statement that the edition is in the work\'s own language (most records have never been checked; Risner\'s 1572 Latin Alhazen carries none, and the work is Arabic). Only `text_role: "original"` asserts that these are the author\'s own words in the author\'s language; `text_role: "unclassified"` means nobody has examined it, so do not infer the work\'s language from `language`, and do not conclude the library lacks a tradition because a `language` filter came back empty. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1231,6 +1498,23 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: 'check_duplicate',
+    title: 'Check Holdings',
+    description: 'DOES THE LIBRARY HOLD THIS WORK? Call this BEFORE telling the user the library lacks a book, and before proposing one for acquisition. A miss from list_books or search_library is NOT evidence of absence: list_books matches words and search_library ranks by relevance, so a held book can sit behind dozens of better-ranked hits. Give a title + author (+ year if known), or a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest). Matches the same scan, the same edition, other editions and the same work, plus near and cross-lingual titles (title in any language). Returns a verdict (same_object / same_edition / possible_same_edition / other_edition / related_title / new), confidence, matches with reasons, ids and URLs, held_not_public (copies held but not yet published: counted, not described), and limits (what the check could not search). A "new" verdict from a URL alone has not searched other editions; pass the title and author too.',
+    annotations: { title: 'Check Holdings', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        title: { type: 'string', description: 'Title in any language, original or English, e.g. "Musurgia universalis".' },
+        author: { type: 'string', description: 'Author in any form ("Athanasius Kircher", "Kircher, Athanasius"). Strongly improves matching.' },
+        year: { type: 'number', description: 'Edition year, if known. Separates "same edition" from "another edition".' },
+        url: { type: 'string', description: 'A library URL or IIIF manifest for a specific copy (title then optional).' },
+        ia_id: { type: 'string', description: 'Internet Archive identifier, for an exact same-scan match.' },
+        language: { type: 'string', description: 'Language hint for the cross-lingual title match (optional).' },
+      },
+    },
+  },
+  {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
     description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
@@ -1251,7 +1535,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol (exact tag strings; look them up with list_image_facets) or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
     // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
     // resource and render the gallery grid in the conversation (#3978).
@@ -1261,13 +1545,29 @@ const TOOLS: Tool[] = [
       properties: {
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
         type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
-        subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
+        subject: { type: 'string', description: 'EXACT, case-sensitive match on an extracted subject tag ("alchemy", "medicinal plants"); a near-miss matches nothing. Look the string up with list_image_facets first, or put loose words in query instead.' },
+        figure: { type: 'string', description: 'EXACT, case-sensitive match on a figure tag ("Jesus Christ", "putti"). Look it up with list_image_facets.' },
+        symbol: { type: 'string', description: 'EXACT, case-sensitive match on a symbol tag ("ouroboros", "triangle"). Look it up with list_image_facets.' },
         year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
         year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
+      },
+    },
+  },
+  {
+    name: 'list_image_facets',
+    title: 'List Image Facets',
+    description: 'List the legal values of search_images\' type, subject, figure and symbol filters, with how many images carry each. Those filters are EXACT string matches on tags an AI extractor wrote, and each vocabulary runs to thousands of strings (e.g. "musical notes", "Jesus Christ", "medicinal plants"), so a guessed value usually matches nothing. Look it up here first. Call with no facet for the top values of all four; with facet + contains to find the exact spelling of a term ("ouro" → "ouroboros"). Counts cover book illustrations of visible books only (the museum-artwork collection is not counted), and only strings on 3 or more images are listed; the list is refreshed weekly. If contains finds nothing, the tag is absent or rare: use it as free text in search_images\' query instead. No URL in this result is a browse page; link images from search_images results.',
+    annotations: { title: 'List Image Facets', ...READ_ONLY },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        facet: { type: 'string', enum: ['type', 'subject', 'figure', 'symbol'], description: 'Which filter\'s vocabulary. Omit for the top values of all four.' },
+        contains: { type: 'string', description: 'Case-insensitive substring to look for, e.g. "dragon". Matches are ordered by image count.' },
+        limit: { type: 'number', description: 'Values per facet (default 100 with a facet, 25 without; max 500).' },
       },
     },
   },
@@ -1332,6 +1632,126 @@ const TOOLS: Tool[] = [
         name: { type: 'string' }, email: { type: 'string' },
       },
       required: ['title', 'rationale', 'book_ids'],
+    },
+  },
+  {
+    name: 'start_review_shift',
+    title: 'Start a Review Shift',
+    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user runs the shift, watches, asks questions and says "continue". Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Shifts are for a person at the keyboard: one page per message, never run unattended or in a loop.',
+    annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        volunteer_code: { type: 'string', description: 'The code from the user\'s earlier shift, if they have one. Omit on a first shift; one is issued.' },
+        book: { type: 'string', description: 'A book the user wants to check: id, slug or sourcelibrary.org reader URL (optional).' },
+        language: { type: 'string', description: 'Prefer books in this original language, e.g. "Latin" (optional; any language works, the user need not read it).' },
+        new_book: { type: 'boolean', description: 'True to start a different book instead of resuming the last one.' },
+      },
+    },
+  },
+  {
+    name: 'continue_review_shift',
+    title: 'Continue a Review Shift',
+    description: 'Next page of the book being reviewed, after the user says "continue" (or "next"). Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
+    annotations: { title: 'Continue a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        book: { type: 'string', description: 'next.book from the previous page' },
+        after: { type: 'number', description: 'next.after from the previous page' },
+        volunteer_code: { type: 'string' },
+      },
+      required: ['book', 'after', 'volunteer_code'],
+    },
+  },
+  {
+    name: 'start_blind_check',
+    title: 'Start a Blind Check (for readers of the language)',
+    description: 'OPTIONAL lane, only for a user who reads the original language and asks to judge pages themselves: up to five random pages from different books, each with scan, transcription and English. Here the USER is the reviewer: ask for THEIR verdict first, before any opinion of yours, then give your reading with exact quotes, let them accept or reject each point, and call submit_page_review with mode "blind" and their final verdict. Never choose the verdict for them. For everyone else use start_review_shift.',
+    annotations: { title: 'Start a Blind Check', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        language: { type: 'string', description: 'Original language the user reads, e.g. "Latin".' },
+        volunteer_code: { type: 'string' },
+        pages: { type: 'number', description: 'How many pages (1-5, default 5).' },
+      },
+    },
+  },
+  {
+    name: 'submit_page_review',
+    title: 'Submit a Page Review',
+    description: 'Record the verdict on one page of a shift. mode "book-run" (start_review_shift / continue_review_shift): the verdict and findings are YOURS, from reading the scan and both texts; set user_looked true if the user checked anything on the page themselves. mode "blind" (start_blind_check): the verdict is the USER\'S, given before your reading; put yours in assistant_verdict. Verdicts: both_sound (transcription matches the scan and the English matches the original), translation_drift (transcription right, English departs from it), transcription_off (the text does not match the scan), both_off, unclear (the scan or the text cannot be judged). Quote exact words in every finding. A review is evidence about the page; it does not change it.',
+    annotations: { title: 'Submit a Page Review', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        mode: { type: 'string', enum: ['book-run', 'blind'], description: '"book-run" unless the page came from start_blind_check.' },
+        item_id: { type: 'string', description: 'page.item_id (book run) or the item\'s item_id (blind check)' },
+        volunteer_code: { type: 'string' },
+        verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'book-run: your verdict. blind: the user\'s final verdict.' },
+        book_id: { type: 'string', description: 'run.book_id (book run)' },
+        page_number: { type: 'number', description: 'page.page_number (book run)' },
+        user_looked: { type: 'boolean', description: 'book-run: true if the user checked something on this page themselves.' },
+        verdict_before_assistant: { type: 'boolean', description: 'blind: true if the user committed to a verdict before seeing your reading.' },
+        first_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'blind: the user\'s verdict before your reading, if it changed.' },
+        note: { type: 'string', description: 'Anything a later reader should know (optional, max 2000 chars).' },
+        assistant_verdict: { type: 'string', enum: [...SHIFT_VERDICTS], description: 'Your own verdict (blind mode; in book-run it equals verdict).' },
+        assistant_findings: {
+          type: 'array',
+          description: 'Problems found, each with an exact quote (max 12).',
+          items: {
+            type: 'object',
+            properties: {
+              layer: { type: 'string', enum: ['transcription', 'translation'] },
+              quote: { type: 'string', description: 'The exact words at issue (max 300 chars)' },
+              problem: { type: 'string', description: 'What is wrong, and what the scan or original shows (max 500 chars)' },
+              user_agreed: { type: 'boolean', description: 'Only if the user actually weighed in on this point' },
+            },
+            required: ['layer', 'problem'],
+          },
+        },
+        reader_languages: { type: 'string', description: 'Languages the user says they read, if they said.' },
+        assistant_model: { type: 'string', description: 'Your model name, if known.' },
+        text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
+        shift_id: { type: 'string', description: 'shift_id (blind check only)' },
+        name: { type: 'string', description: 'How the user wants to be credited (optional).' },
+      },
+      required: ['item_id', 'volunteer_code', 'verdict'],
+    },
+  },
+  {
+    name: 'propose_correction',
+    title: 'Propose a Correction',
+    description: 'During a review shift, propose a correction to a page\'s transcription (field "ocr") or English (field "translation"). A correction is a list of exact span edits: each "find" must be copied exactly from the text the shift returned and occur once on the page (add surrounding words if it repeats); "replace" is the corrected text ("" deletes). Fix only what the scan or the original shows is wrong: misread letters, dropped or added words, a sentence the English skips. Do not restyle or modernise. Propose transcription fixes before translation fixes, as separate calls. Pass base_hash = page.text_version for that field. A proposal does NOT change the page: it is applied only after a second reader agrees, and the volunteer is credited. If the call says the page changed since it was loaded, say so and move on. drafted_by: "assistant" if you found and worded it in a book run, "volunteer" if the user supplied the wording, "assistant_accepted" if you drafted it and the user approved it specifically, "mixed" otherwise.',
+    annotations: { title: 'Propose a Correction', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        item_id: { type: 'string', description: 'page.item_id from the shift' },
+        field: { type: 'string', enum: ['ocr', 'translation'], description: '"ocr" for the transcription, "translation" for the English' },
+        base_hash: { type: 'string', description: 'text_version.ocr or text_version.translation from the page' },
+        edits: {
+          type: 'array',
+          description: 'Span edits (1-30).',
+          items: {
+            type: 'object',
+            properties: {
+              find: { type: 'string', description: 'Exact text currently on the page' },
+              replace: { type: 'string', description: 'Corrected text' },
+              reason: { type: 'string', description: 'What the scan or the original shows (short)' },
+            },
+            required: ['find', 'replace'],
+          },
+        },
+        volunteer_code: { type: 'string' },
+        drafted_by: { type: 'string', enum: ['assistant', 'volunteer', 'assistant_accepted', 'mixed'] },
+        note: { type: 'string', description: 'Anything the second reader should know (optional)' },
+        assistant_model: { type: 'string', description: 'Your model name, if known' },
+        shift_id: { type: 'string' },
+        name: { type: 'string', description: 'How the user wants to be credited (optional)' },
+      },
+      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by'],
     },
   },
   {
@@ -1409,14 +1829,21 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
     case 'list_editions': return listEditions(args);
+    case 'check_duplicate': return checkDuplicate(args);
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
     case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
+    case 'list_image_facets': return listImageFacets(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
     case 'propose_collection': return proposeCollection(args);
+    case 'start_review_shift': return startReviewShift(args);
+    case 'continue_review_shift': return continueReviewShift(args);
+    case 'start_blind_check': return startBlindCheck(args);
+    case 'submit_page_review': return submitPageReview(args);
+    case 'propose_correction': return proposeCorrection(args);
     // Name every tool in the error: a caller that guessed a name ("search") can
     // self-correct on the next call instead of concluding the server is broken.
     default: throw new Error(`Unknown tool: ${name}. Available tools: ${TOOLS.map((t) => t.name).join(', ')}`);
@@ -1477,6 +1904,19 @@ interface ImageAttachment {
   urls: Array<string | undefined | null>;
   /** Text block rendered directly after the image — caption + link. */
   caption: string;
+  /** Said in place of the image when no candidate could be attached. Omit to skip silently. */
+  missing?: string;
+}
+
+// The caller asked for the leaf by name (include_image), so an unattached scan
+// is reported, not dropped: for a month this path attached nothing on most
+// books and nothing in the result said so (#3937).
+function leafAttachment(pageImageUrl: string, caption: string): ImageAttachment {
+  return {
+    urls: leafImageCandidates(pageImageUrl),
+    caption,
+    missing: `${caption}\nThe scan could not be attached inline (fetch failed, or over the 1 MB inline limit). View it at ${absoluteImageUrl(pageImageUrl)}`,
+  };
 }
 
 function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
@@ -1493,13 +1933,32 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       }));
   }
 
+  if ((name === 'start_review_shift' || name === 'continue_review_shift') && r.page && typeof r.page === 'object') {
+    const p = r.page as Record<string, unknown>;
+    const run = (r.run ?? {}) as Record<string, unknown>;
+    const urls = Array.isArray(p.scan_urls) ? (p.scan_urls as string[]) : [];
+    return urls.length
+      ? [{ urls, caption: `Scan: ${(run.book_title as string) || 'untitled'}, p. ${p.page_number as number}\n${p.reader_url as string}` }]
+      : [];
+  }
+
+  if (name === 'start_blind_check' && Array.isArray(r.pages)) {
+    return (r.pages as Array<Record<string, unknown>>)
+      .filter((p) => typeof p.image_url === 'string')
+      .slice(0, MAX_INLINE_IMAGES)
+      .map((p) => ({
+        urls: [p.image_url as string],
+        caption: `Scan for ${p.item_id as string}: ${(p.book_title as string) || 'untitled'}, p. ${p.page_number as number}`,
+      }));
+  }
+
   if (name === 'get_quote') {
     const quote = r.quote as Record<string, unknown> | undefined;
     if (typeof quote?.page_image_url === 'string') {
-      return [{
-        urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
-      }];
+      return [leafAttachment(
+        quote.page_image_url,
+        `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
+      )];
     }
     return [];
   }
@@ -1510,10 +1969,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .slice(0, MAX_INLINE_IMAGES)
       .map((entry) => {
         const q = entry.quote as Record<string, unknown>;
-        return {
-          urls: [q.page_image_url as string | undefined],
-          caption: `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
-        };
+        return leafAttachment(
+          q.page_image_url as string,
+          `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
+        );
       });
   }
 
@@ -1609,6 +2068,17 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           'io.modelcontextprotocol/ui': { mimeTypes: [MCP_APP_MIME_TYPE] },
         },
       },
+      // Server-level routing hint. Without it, "start a review shift" in
+      // claude.ai was answered with an improvised menu instead of a call to
+      // start_review_shift (first live try, 2026-10-10, #6418).
+      instructions:
+        'Source Library: historical primary sources with transcriptions and English translations. ' +
+        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
+        'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
+        'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
+        'first_time and how_to_run; on "continue" call continue_review_shift. Use start_blind_check ' +
+        'only for a user who reads the language and wants to judge pages themselves.',
     },
   );
 
@@ -1773,6 +2243,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           if (img) {
             content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
             content.push({ type: 'text' as const, text: attachments[i].caption });
+          } else if (attachments[i].missing) {
+            content.push({ type: 'text' as const, text: attachments[i].missing as string });
           }
         }
 

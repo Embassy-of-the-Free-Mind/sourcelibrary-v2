@@ -38,7 +38,7 @@ const PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.or
 const CSV_COLUMNS = [
   'title', 'author', 'language', 'year', 'pages',
   'pages_transcribed', 'pages_translated', 'translation_pct',
-  'is_first_english_translation', 'source_library',
+  'is_first_english_translation',
   'categories', 'collections', 'url',
 ];
 
@@ -59,7 +59,7 @@ async function fetchAllBooks() {
   while (true) {
     const { data, error } = await supabase
       .from('books_catalog')
-      .select('id, slug, title, display_title, author, language, year, pages_count, pages_ocr, pages_translated, pages_blank, is_first_translation, image_source_provider, categories, collections')
+      .select('id, slug, title, display_title, author, language, year, pages_count, pages_ocr, pages_translated, pages_blank, is_first_translation, categories, collections')
       .eq('visible', true)
       .gt('pages_count', 0)
       .order('sort_title', { ascending: true })
@@ -101,7 +101,6 @@ function buildCsv(books) {
       String(pagesTranslated),
       String(translationPct),
       book.is_first_translation ? 'yes' : 'no',
-      csvEscape(book.image_source_provider || ''),
       csvEscape((book.categories || []).join('; ')),
       csvEscape((book.collections || []).join('; ')),
       csvEscape(url),

@@ -1,0 +1,29 @@
+name: Page image pick
+
+# On a page split from a spread, archived_photo (and often display_photo) is still the
+# WHOLE two-page image — 60,585 pages in 614 books (2026-10-11). Code that picks it by
+# hand sends a model both pages, and it shipped twice in one week (#6420, #6465).
+# This fails a PR that adds a new hand-rolled `archived_photo || …` pick; use
+# getPageSource() from page-image-url. No database, no secrets, seconds to run.
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - '.github/workflows/page-image-pick.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  page-image-pick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: No new hand-rolled page image picks
+        run: node scripts/audit/page-image-pick.mjs --ci

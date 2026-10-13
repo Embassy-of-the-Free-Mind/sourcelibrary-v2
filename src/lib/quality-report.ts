@@ -7,9 +7,9 @@
  * file keeps only the document read and the types.
  *
  * The document is written by scripts/eval/quality-dashboard/build.mjs --push, which copies what the
- * instruments wrote (corpus audits, OCR evidence, the speed-test gate ledger, quality round 1,
- * reader reports). The page renders it and computes nothing. A section whose instrument has not run
- * arrives as null / 'not_run' and is shown as "no measurement", never as zero.
+ * instruments wrote (corpus audits, OCR evidence, reader reports) and the four trend lines (#6429).
+ * The page renders it and computes nothing. A section whose instrument has not run arrives as null
+ * and is shown as "no measurement", never as zero.
  */
 import { getDb } from '@/lib/mongodb';
 
@@ -42,9 +42,35 @@ export interface AuditPick {
   ge4: Rate; any_major: Rate; weighting: string;
 }
 
+/** One trend chart (#6429). Every label, statement and tooltip is written by build.mjs (trends.mjs). */
+export interface TrendChart {
+  id: string;
+  title: string;
+  unit: 'pct' | 'usd' | 'count';
+  y_label: string;
+  lower_is_better: boolean;
+  /** Date of the newest point (YYYY-MM-DD); null = no measurement. */
+  newest: string | null;
+  statement: string | null;
+  /** Set when the newest point is older than the series' cadence allows. */
+  stale: string | null;
+  key_type?: string;
+  key_note?: string;
+  panel_note?: string;
+  extra_legend?: { style: 'dots'; label: string }[];
+  ref?: { value: number; label: string };
+  series: {
+    key: string; label: string; slot: 1 | 2 | 3; style: 'line' | 'dots'; cadence_days: number; legend?: boolean;
+    points: { date: string; value: number; tip: string }[];
+  }[];
+  source: string;
+}
+
 export interface QualityData {
   generated: string;
   sampling: string;
+  /** Absent on documents written before #6429; null when the history store was not read. */
+  trends?: TrendChart[] | null;
   translation: {
     runs: AuditRun[];
     latest: AuditPick | null;
@@ -69,32 +95,6 @@ export interface QualityData {
     label: string; value: number; value_kind: string; n: number; n_note?: string;
     chance: number | null; date: string; source: string;
   }[];
-  lanes: {
-    windows: {
-      window: string; judged_at: string; verdict: string; reasons: string[];
-      n: number; defective: number; major_pct: number | null; ci: Interval;
-      seeded: { n: number; major: number } | null; seam: { n: number; major: number } | null;
-      by_class: Record<string, number>; controls: Record<string, string> | null;
-      warn_count: number; trend_warn: boolean; by_eye: string[];
-    }[];
-    baseline: { label: string; run: string; drawn_at: string; n: number; any_major: Rate; source: string } | null;
-    trend_rule: { bound_pct: number; floor_pp: number } | null;
-    ledger: string;
-    issue: string;
-    missing?: boolean;
-  };
-  round1: {
-    status: 'not_run' | 'done';
-    issue: string;
-    preregistration: string;
-    drawn: string | null;
-    result?: string;
-    date?: string | null;
-    rows: {
-      stratum: string; n: number | null; cost_per_book_usd: number | null; days: number | null;
-      ocr_score: number | null; translation_major_pct: number | null; verdict: string | null;
-    }[];
-  };
   defects: {
     run: string; drawn_at: string; n: number; source: string; taxonomy: string;
     rows: {

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged, accuracy]
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: 20
+n_pages: 20
+verdict: "Kraken OmniSyr reads printed Syriac best (CER 0.130), but translating its text costs 1.33 fidelity points and 12 vs 5 reversal pages: keep those translations withheld; OCR lever is a Kraken fine-tune."
+status: undecided
+decision: "Kraken-read English stays withheld (no change); the Kraken fine-tune spend (#5730) is unjudged, for Derek"
+superseded_by: null
+issue: [6295, 5730]
+---
 ## 2026-10-08 · Printed Syriac on the Pareto page: which reader, and is the Kraken text good enough to translate from? (#6295) — directional; translations stay withheld
 
 PRIOR ART: `2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md` (Kraken models on two

@@ -27,6 +27,7 @@
 import { isUsableImageUrl, isArchiveFailed } from '@/lib/utils';
 import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 import { isAllowedImageHost } from '@/lib/image-proxy-hosts';
+import { r2PageIdentity } from '@/lib/r2-page-identity';
 
 export type ImageSize = 'thumb' | 'display' | 'original' | 'hires';
 
@@ -216,27 +217,6 @@ function cropRegion(page: PageImageFields): { xStart?: number; xEnd?: number } |
  * Resolve a display- or thumb-sized URL. Prefers a pre-sized R2 variant, then an
  * IIIF-native resize, then the /api/image proxy. Always browser-safe and bounded.
  */
-/**
- * Identity of the page-image an R2 URL names, or null when the URL does not
- * follow that convention (IIIF, external hosts, anything unparseable).
- *
- * Normalises the two things that make one page look like two URLs:
- *   - variant suffix — `x.jpg`, `x-thumb.jpg`, `x-full.jpg` are one image
- *   - zero padding across path families — `/archived/{b}/5.jpg` is the same
- *     page as `/pages/{b}/0005.jpg`
- */
-function r2PageIdentity(url: string): string | null {
-  const q = url.split('?')[0];
-  if (!q.includes('images.sourcelibrary.org/')) return null;
-  const file = (q.split('/').pop() || '').replace(/-(?:thumb|full|card)(?=\.[a-z0-9]+$)/i, '').replace(/\.[a-z0-9]+$/i, '');
-  if (!file) return null;
-  const book = q.match(/\/(?:pages|archived|thumbnails|cropped)\/([^/]+)\//)?.[1];
-  if (!book) return null;
-  // Numeric page filenames compare by value so 5 and 0005 agree; named ones
-  // (`sp<id>`, a cropped image id) compare literally.
-  return `${book}/${/^\d+$/.test(file) ? String(parseInt(file, 10)) : file}`;
-}
-
 /**
  * Is `variant` a resize of `source`, as far as we can tell?
  *

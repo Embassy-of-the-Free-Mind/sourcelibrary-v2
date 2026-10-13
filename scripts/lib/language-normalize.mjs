@@ -23,7 +23,7 @@ const CODE2 = {
 /** ISO-639-2/3 and MARC -> canonical English name. */
 const CODE3 = {
   ara: 'Arabic', arm: 'Armenian', ben: 'Bengali', ces: 'Czech', chi: 'Chinese',
-  chu: 'Church Slavonic', cze: 'Czech', dan: 'Danish', deu: 'German', dut: 'Dutch',
+  chu: 'Church Slavonic', cop: 'Coptic', cze: 'Czech', dan: 'Danish', deu: 'German', dut: 'Dutch',
   egy: 'Egyptian', ell: 'Greek', eng: 'English', enm: 'Middle English',
   fas: 'Persian', fra: 'French', fre: 'French', frm: 'Middle French',
   fro: 'Old French', geo: 'Georgian', ger: 'German', gmh: 'Middle High German',
@@ -31,7 +31,7 @@ const CODE3 = {
   ice: 'Icelandic', ita: 'Italian', jpn: 'Japanese', kor: 'Korean', lat: 'Latin',
   mar: 'Marathi', nah: 'Nahuatl', nld: 'Dutch', nor: 'Norwegian', ota: 'Ottoman Turkish',
   per: 'Persian', pol: 'Polish', por: 'Portuguese', rus: 'Russian', san: 'Sanskrit',
-  spa: 'Spanish', swe: 'Swedish', syr: 'Syriac', tam: 'Tamil', tel: 'Telugu',
+  spa: 'Spanish', swe: 'Swedish', syr: 'Syriac', tam: 'Tamil', tel: 'Telugu', tib: 'Tibetan',
   tur: 'Turkish', urd: 'Urdu', zho: 'Chinese',
 };
 
@@ -103,6 +103,9 @@ const FAMILY = {
   // Found by the #4781 free-lane run: 7 Books of Hours catalogued Dutch, tagged
   // Middle Dutch on every leaf, reported as `contradict` — the instrument, not the data.
   'Middle Dutch': 'Dutch', 'Old Dutch': 'Dutch',
+  // #4582: the cataloguer's `egy` and a caller's "Egyptian hieroglyphs" are one language in one
+  // script; compared apart, the import resolver called a hieroglyphic corpus a translation of itself.
+  'Egyptian Hieroglyphs': 'Egyptian',
 };
 
 /** The family a canonical language name belongs to, for equivalence tests. */

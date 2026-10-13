@@ -1,0 +1,47 @@
+[
+  {
+    "book_id": "6abed76c896ea18127c8ee40", "slot": 29,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Pramāṇa commentary folio (refutation of establishing a prior cognition via memory and arthāpatti; svasaṃvedana argument), consistent with the Derge Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 653,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སྐྱེས་བུ་གཞན་གྱིས་མྱོང་བར་གྱུར་པ་ནི་དོན་", "image": "སྐྱེས་བུ་གཞན་གྱིས་མྱོང་བར་གྱུར་པའི་དོན་ (line 5, as far as the print reads)", "problem": "genitive read as ནི; sense recoverable, both translations construe it correctly", "severity": "minor" },
+          { "ocr": "ཁོ་ནར་ཏེ", "image": "ཁོ་ན་རྟེ/སྟེ (cramped; line 2)", "problem": "particle form uncertain at this resolution; no change of sense", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "གཞན་དེས་ཉམས་སུ་མྱོང་བ་ནི། སྐྱེས་བུ་གཞན་ཉམས་སུ་མྱོང་བ་མེད་པའི་ཕྱིར་སྐྱེས་བུ་ཕ་རོལ་པོས་དོན་ཉམས་སུ་མ་མྱོང་བ་དེ་བཞིན་དུ", "english": "that experience by another does not belong to another person because there is no experience; just as an external person has not experienced the object", "problem": "closing analogy garbled: 'does not belong to another person' inverts whose experience is lacking, and ཕ་རོལ་པོ ('the other person') rendered 'external person'; the point (the other's experience is not one's own) is obscured", "severity": "moderate" },
+          { "source": "འདི་ལ་བརྗོད་པ་ནི་དེ་ཡང་ཞེས་བྱ་བ", "english": "To this, the commentary states: \"That too...\"", "problem": "the lemma is from the root text, not 'the commentary'", "severity": "minor" },
+          { "source": "དོན་ལྐོག་ཏུ་གྱུར་པའི་ཕྱིར", "english": "because the external object is hidden", "problem": "'external' added", "severity": "minor" },
+          { "source": "དྲན་པ་ལས་གཞན་པའི་དོན་གྱིས་གོ་བ་ཡང་མྱོང་བ་མེད་དེ", "english": "there is no experience of presumption distinct from memory", "problem": "terse clause construed awkwardly", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "སྐྱེས་བུ་ཕ་རོལ་པོས་དོན་ཉམས་སུ་མ་མྱོང་བ་དེ་བཞིན་དུ", "english": "just as that other person does not experience the object for you", "problem": "'for you' is an interpretive addition, though it states the intended point", "severity": "minor" },
+          { "source": "དྲན་པ་ཙམ་གྱིས་འཇུག་པའི་ཕྱིར", "english": "because memory occurs as a mere mental event", "problem": "loose for 'proceeds by mere memory'", "severity": "minor" },
+          { "source": "summary", "english": "an experience must be self-aware to be valid", "problem": "summary slightly mis-states the thesis (self-experience is needed for memory to be possible)", "severity": "minor" }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Neither version has a serious error; B renders the closing analogy of another person's experience coherently where A garbles it (moderate), and A's Sanskrit glossing is not a fidelity advantage.",
+        "other": [],
+        "confidence": "medium",
+        "adjudication": [
+          { "raised_by": "reviewer1", "version": "A", "claim": "closing example garbled ('does not belong to another person', 'external person')", "verdict": "confirmed", "why": "Image line 8 reads གཞན་དེས་ཉམས་སུ་མྱོང་བ་ནི། སྐྱེས་བུ་གཞན་ཉམས་སུ་མྱོང་བ་མེད་པའི་ཕྱིར་སྐྱེས་བུ་ཕ་རོལ་པོས་དོན་ཉམས་སུ་མ་མྱོང་བ; A's rendering misattributes the lack of experience and mistranslates ཕ་རོལ་པོ; moderate, not a reversal of the page's thesis." },
+          { "raised_by": "reviewer2", "version": "A", "claim": "OCR ཐ་མ་ should be ཐལ་བ་, making 'final consequence/conclusion' a derived error in both", "verdict": "rejected", "why": "At this resolution line 5 reads ཐམ/ཐ་མ as transcribed; cannot confirm ཐལ་བ, and in any case it affects A and B equally and is minor." },
+          { "raised_by": "reviewer2", "version": "A", "claim": "A preferable for precise Sanskrit terminology and structural cues", "verdict": "rejected", "why": "Glossing quality is not fidelity; on the Tibetan, A's final passage is the only moderate error on the page and B has none." },
+          { "raised_by": "me", "version": "B", "claim": "'for you' added in the closing analogy", "verdict": "confirmed", "why": "Not in the Tibetan, but an interpretive addition consistent with the argument; minor." }
+        ]
+      }
+    ],
+    "book_verdict": "Clean Derge woodblock folio with a near-exact transcription; both translations follow the argument without serious error, B being clearer in the closing analogy."
+  }
+]

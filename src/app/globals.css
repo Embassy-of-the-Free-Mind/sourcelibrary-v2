@@ -1164,3 +1164,28 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* <FramedImg> (#6010): a box with the shape of the framed page, centred in its
+   slot; the scan inside is scaled and offset so only the page shows.
+   --framed-a is the page's w/h. Without container units the box is simply the
+   slot's width, which crops a tall page like object-cover did. */
+.framed-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--framed-a);
+  transform: translate(-50%, -50%);
+}
+@supports (width: 1cqw) {
+  .framed-box-cover { width: max(100cqw, calc(100cqh * var(--framed-a))); }
+  .framed-box-contain { width: min(100cqw, calc(100cqh * var(--framed-a))); }
+  /* Fill the slot unless that overfills the page by more than --framed-over. */
+  .framed-box-page {
+    width: min(
+      max(100cqw, calc(100cqh * var(--framed-a))),
+      calc(min(100cqw, calc(100cqh * var(--framed-a))) * var(--framed-over))
+    );
+  }
+}

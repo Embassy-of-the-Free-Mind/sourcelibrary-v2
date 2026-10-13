@@ -39,6 +39,7 @@ import { chromium } from 'playwright';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { iiifFullSizeUrl } from '../lib/iiif-utils.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -83,7 +84,7 @@ function pagesFromManifest(m) {
   return canvases.map(c => {
     const res = c.images?.[0]?.resource;
     const svc = res?.service?.['@id'];
-    const photo = (svc ? `${svc}/full/full/0/default.jpg` : res?.['@id']) || null;
+    const photo = (svc ? iiifFullSizeUrl(svc, res?.service) : res?.['@id']) || null;
     const thumbnail = svc ? `${svc}/full/!400,400/0/default.jpg` : photo;
     return photo ? { photo, thumbnail } : null;
   }).filter(Boolean);

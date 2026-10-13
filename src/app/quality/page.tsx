@@ -8,7 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { GRADES, LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
+import { GRADES, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -88,6 +88,13 @@ const running = allIssues.filter(i => i.status === 'running');
 const planned = allIssues.filter(i => i.status === 'planned');
 
 const experiments = listExperiments();
+const STATUS_LABEL = {
+  adopted: 'in use',
+  rejected: 'not adopted',
+  undecided: 'decision pending',
+  informational: 'measurement',
+  superseded: 'replaced',
+} as const;
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
@@ -529,6 +536,13 @@ export default function QualityCenterPage() {
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
 
+          {MONTH_NOTE && (
+            <>
+              <Sub>What changed this month ({MONTH_NOTE.as_of})</Sub>
+              <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">{MONTH_NOTE.text}</p>
+            </>
+          )}
+
           <Sub>Cost against agreement with a typed text, by script</Sub>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             For each script: is any OCR engine clearly better or cheaper than the one we use, judged on the same pages
@@ -688,6 +702,7 @@ export default function QualityCenterPage() {
                 <div className="flex flex-wrap items-baseline gap-x-3">
                   <span className="text-xs text-stone-500 tabular-nums whitespace-nowrap">{e.date}</span>
                   <a href={e.href} className="text-stone-900 font-semibold hover:text-amber-800">{e.question}</a>
+                  {e.status && <span className="text-xs text-stone-500 whitespace-nowrap">{STATUS_LABEL[e.status]}</span>}
                 </div>
                 {e.headline && <p className="text-stone-700 text-[0.95rem] leading-relaxed mt-1">{e.headline}</p>}
                 {e.issues.length > 0 && (
@@ -713,7 +728,8 @@ export default function QualityCenterPage() {
           )}
           <Source>
             Read from <A href={`${GH}tree/main/scripts/eval/experiments`}>scripts/eval/experiments/</A>, one file per
-            experiment. The line under a title is the write-up&rsquo;s own answer, where it states one in a sentence.
+            experiment. The line under a title is the write-up&rsquo;s own one-line verdict. A write-up that a later run
+            replaced is left off this list and kept in the log.
           </Source>
         </Section>
 

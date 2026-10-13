@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [lzh, sa, pi]
+scripts: []
+canons: [chinese-buddhist, chinese-classics, sanskrit, pali]
+n_books: 111
+n_pages: 138
+verdict: "No verdict: the re-judged C38 anchor moved −0.12, past the 0.10 tolerance. Descriptively a Sonnet check on a Gemini draft adds +0.10 [+0.05, +0.16] fidelity and almost never worsens a page."
+status: undecided
+decision: null
+superseded_by: null
+issue: [6182, 6331]
+---
 ## 2026-10-09 · Does a Sonnet check-and-revise flow beat one-shot Gemini 3.8 Flash (CLI) on the canon set, and at what subscription cost? (#6182, job agentic-qa-6182)
 
 PRIOR ART: `2026-10-08-canon-set-judged-6331.md` (the same 138 units, judge prompt, gate and by-text bootstrap; one-shot

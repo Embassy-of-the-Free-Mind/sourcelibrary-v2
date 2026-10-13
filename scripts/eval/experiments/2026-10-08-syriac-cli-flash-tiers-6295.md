@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [accuracy, judged]
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: 20
+n_pages: 20
+verdict: "On printed Syriac, 3.7 Flash CLI reads at CER 0.426 and 3.6 at 0.520 against the Kraken lane's 0.130; Kraken-text translations stay outside the floor under every tier; neither decision changes."
+status: informational
+decision: null
+superseded_by: null
+issue: 6295
+---
 ## 2026-10-08 · Printed Syriac: Gemini 3.7 Flash and 3.6 Flash through the CLI, and 3.8 Flash's full repeat read (#6295) — directional; neither decision changes
 
 Follows the 3.8 Flash addendum in `2026-10-08-syriac-print-pareto-6295.md`. It uses the same 24 sealed pages, the

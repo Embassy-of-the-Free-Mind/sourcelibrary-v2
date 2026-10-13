@@ -118,6 +118,11 @@ export function applyTextRole(bookDoc: Record<string, unknown>): void {
     if (!bookDoc.text_role_source) bookDoc.text_role_source = 'import-explicit';
     return;
   }
+  // A language still under review is not evidence for a role (#4582): a bad
+  // OCR language signal set is_translation and stamped "modern-translation" on
+  // an original epigraphic corpus. Leave it unset — textRoleRank falls back to
+  // the language proxy — until the review settles the language.
+  if (bookDoc.language_review === true) return;
   const { text_role, original_in_scan } = classifyTextRole(bookDoc as ClassifiableBook);
   bookDoc.text_role = text_role;
   bookDoc.text_role_source = 'import-heuristic-v1';

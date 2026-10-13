@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 6
+n_pages: 20
+verdict: "Kraken reads the English pages Gemini refuses at median CER 0.009 but reproduces only 78.5% of digit strings (bar 90%), so the gate stopped and nothing was written."
+status: rejected
+decision: "Gate stopped; Derek chose option (b), GLM digit repair, re-gated in 2026-10-06-glm-digit-repair-4686.md"
+superseded_by: null
+issue: 4686
+---
 <!-- PRIOR ART: 2026-10-04 round 3 of #5660 (PR #5786) scored Kraken CATMuS-Print against human-keyed EEBO-TCP English (1600–1699 CER 0.046 vs lite 0.053), but on pages Gemini ANSWERED; #4686's own probe read 5 refused pages with no reference. 2026-10-05-engine-contest-5870.md is the preregistration pattern followed here. No earlier run measured any engine on the pages Gemini refuses. -->
 ## 2026-10-06 · Can Kraken fill the English pages Gemini refuses as RECITATION? (#4686)
 

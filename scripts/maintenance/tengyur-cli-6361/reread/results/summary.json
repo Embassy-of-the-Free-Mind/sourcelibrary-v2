@@ -1,0 +1,86 @@
+{
+ "run_id": "tengyur-cli-6361-reread",
+ "model": "gemini-3.8-flash-low",
+ "agy_version": "1.3.3",
+ "prompt_version": "v13 6a98b8a175660c6a8b09a8f9 516510147237b6a79d9d3f6e797bba7f",
+ "nudge_text": "Do not write a plan. Output the English translation of the attached page now, exactly as instructed above.",
+ "started": "2026-10-10T17:00:34Z",
+ "finished": "2026-10-11T02:52:20Z",
+ "pages": 6494,
+ "accepted": 6492,
+ "failed": 2,
+ "failed_pages": [
+  {
+   "page_id": "6abeb159896ea18127c8269c",
+   "vol": 96,
+   "page_number": 24,
+   "classes": [
+    "denied_tool",
+    "nudge:status_ERROR",
+    "status_ERROR"
+   ]
+  },
+  {
+   "page_id": "6abeb51e896ea18127c84d76",
+   "vol": 112,
+   "page_number": 269,
+   "classes": [
+    "denied_tool",
+    "nudge:chatter",
+    "chatter"
+   ]
+  }
+ ],
+ "calls": 9843,
+ "calls_by_class": {
+  "fresh:denied_tool": 2892,
+  "fresh:ok": 3169,
+  "nudge:ok": 3323,
+  "fresh:plan_note": 438,
+  "nudge:status_ERROR": 1,
+  "fresh:status_ERROR": 3,
+  "fresh:transient": 6,
+  "nudge:transient": 3,
+  "fresh:safety_filter": 1,
+  "nudge:chatter": 1,
+  "fresh:chatter": 2,
+  "nudge:plan_note": 1,
+  "nudge:denied_tool": 2,
+  "fresh:empty": 1
+ },
+ "accepted_first_call": 3164,
+ "accepted_nudged": 3324,
+ "accepted_by_nudge": 3323,
+ "accepted_zero_thinking": 3201,
+ "accepted_zero_thinking_nudged": 1674,
+ "thinking_tokens_median_accepted": 460,
+ "by_stage1_reason": {
+  "chatter": {
+   "staged/first": 2587,
+   "staged/nudged": 2681,
+   "failed/nudged": 2
+  },
+  "plan-mode": {
+   "staged/first": 67,
+   "staged/nudged": 84
+  },
+  "stage1-failed": {
+   "staged/first": 479,
+   "staged/nudged": 514
+  },
+  "door": {
+   "staged/first": 22,
+   "staged/nudged": 20
+  },
+  "reasoning-leak": {
+   "staged/nudged": 25,
+   "staged/first": 13
+  }
+ },
+ "quota_hits": 0,
+ "manifest_sha256": "0bcf8222273cd1723aaca4cf3584ce29e212936393202b9e409b549a2ae27bf0",
+ "calls_sha256": "154e3af2cb38982f1531d821cc511c20d5cae3b38cadbcb7c249cafe9c47b11c",
+ "apply_log_sha256": "c4f4de62ffe05a3f605d29c584c628ec70e95475b5fd63fe1329a4268313ff4d",
+ "written": 6492,
+ "r2": "sl-corpus-snapshots/runs/tengyur-cli-6361/item3/{reread,reread-apply,convergent}/ (16,820 files, rclone check 0 differences)"
+}

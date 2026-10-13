@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abeb4e5896ea18127c849f3",
+    "slot": 40,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur woodblock folio (margin volume letter ཁི), verse on bodhisattva conduct (purification of body and of resources/right livelihood); belongs in the Tengyur Madhyamaka volume.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 424,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "གོམ་པ་གཉི་ག་དེ་ལྟ་བུར།", "image": "གོམས་པ་གཉི་ག་དེ་ལྟ་བུར། (s-suffix appears present)", "problem": "suffix dropped on 'habituation'; both translations read it as habituation anyway", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "གསོང་པོར་སྙན་པར་སྨྲ་བྱེད་ཁ་གསག་ཡིན།", "english": "Speaking pleasantly and deceitfully for the purpose of gain and honor is flattery.", "problem": "གསོང་པོ means honest/straightforward (i.e. speaking in a seemingly upright, sweet way); rendered as its opposite 'deceitfully'", "severity": "moderate" },
+          { "source": "ཁོང་ཁྲོ་རྗེས་ཆགས་ཡིན་པའི་ཕྱིར། །ཆགས་པ་སྤངས་ལས", "english": "is anger and passion. Therefore, by abandoning attachment", "problem": "causal 'because anger follows on attachment' flattened into an identity statement; argument still recoverable", "severity": "minor" },
+          { "source": "གོམ་པ་རིམ་གྱིས་བདལ་ནས་འདོར་མི་བྱེད།", "english": "nor walking with ostentatiously measured steps", "problem": "'ostentatiously' is interpretive", "severity": "minor" }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          { "source": "གཞན་ལ་དངོས་སུ་བརྙས་བྱེད་ལྟར།", "english": "just as one openly treats others with respect", "problem": "བརྙས་ means contempt/disparagement; B turns it into 'respect', inverting the comparison in the self-other exchange verse", "severity": "serious", "class": "T8", "reversal": true },
+          { "source": "གསོང་པོར་སྙན་པར་སྨྲ་བྱེད་ཁ་གསག་ཡིན།", "english": "Speaking pleasantly but untruthfully for the sake of gain and honor is sycophancy.", "problem": "གསོང་པོ (honest/straightforward) rendered as 'untruthfully'", "severity": "moderate" },
+          { "source": "གོམ་པ་རིམ་གྱིས་བདལ་ནས་འདོར་མི་བྱེད།", "english": "do not cast their steps broadly or out of sequence", "problem": "'out of sequence' is not in རིམ་གྱིས (gradually)", "severity": "minor" },
+          { "source": "ངག་ཀྱང་གཅམ་བུ་དང་། །འཇམ་པར་བསྐྱུངས་ཤིང་", "english": "flattery or false gentleness, and never speaks in a diminished or subservient manner", "problem": "padded into three items; 'false' and 'subservient' added", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "B inverts བརྙས་ (contempt) into 'respect' in the opening verse, while A's errors are a shared moderate slip on གསོང་པོ and minor interpretive wording.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Transcription of this Derge folio is close to the print throughout; translation A is a faithful verse rendering, while B reverses one key word (contempt read as respect), which an expert reader would flag."
+  }
+]

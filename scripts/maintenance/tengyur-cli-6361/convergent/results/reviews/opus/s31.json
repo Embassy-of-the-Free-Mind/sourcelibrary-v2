@@ -1,0 +1,68 @@
+[
+  {
+    "book_id": "6abed7f8896ea18127c8f2ca",
+    "slot": 31,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary (universals, anvaya, the Devadatta 'either one eats' example); belongs in the Tengyur Pramāṇa section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 471,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "གང་ཡང་རུང་བ་གཅིག་ཟའོ་ཞེས་བྱ་བ་གཅིག་ཅིག་སོད་དམ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+            "english": "the statement that \"either one is eating\" carries the meaning: \"Is the one slain, or...\"",
+            "problem": "The comparison ('it is like saying \"shall [I] kill one or the other?\"') is rendered awkwardly and opaquely; meaning is kept but hard to follow.",
+            "severity": "minor"
+          },
+          {
+            "source": "དེ་ཡང་ཞེས་བྱ་བ་སྨོས་ཏེ། རྗེས་སུ་འགྲོ་བ་མེད་པས་ཐེ་ཚོམ་ཟ་ལ་ཞེས་བྱ་བ་",
+            "english": "He states: \"that also\" and so forth. Regarding the phrase, \"doubting because of the absence of positive concomitance\"",
+            "problem": "Faithful; 'ཟ་ལ' read as 'doubting' rather than 'is doubtful' — slight.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          {
+            "source": "གང་ཡང་རུང་བ་གཅིག་ཟའོ་ཞེས་བྱ་བ་གཅིག་ཅིག་སོད་དམ་ཞེས་བྱ་བའི་དོན་ཏོ།",
+            "english": "then the question \"is one of them eating?\" or \"is it one or the other?\" would be meaningless.",
+            "problem": "The source says the phrase has the sense of 'shall [I] kill one or the other?'; B drops the 'kill' (སོད) comparison and invents 'would be meaningless'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "དུ་མའི་གཉིས་པ་ཅན་སེམས་པའི་གནས་སྐབས་ཡིན་པའི་ཕྱིར་རོ།",
+            "english": "because this is an instance of considering the consciousness accompanied by a plurality.",
+            "problem": "སེམས་པ here is the verb 'considering' (as in the preceding ཆོས་བསམ་པའི་སྐབས); B adds a spurious 'consciousness' object.",
+            "severity": "moderate"
+          },
+          {
+            "source": "ལུས་དང་བུམ་པ་གཉིས་པ་ལ་ནི་མི་སྲིད་དོ།",
+            "english": "impossible for the body and the pot to be accompanied by a second <note>referring to a dual nature or a separate consciousness</note>",
+            "problem": "Speculative explanatory note not grounded in the text; rendering of གཉིས་པ as 'a second' muddles the point.",
+            "severity": "minor"
+          },
+          {
+            "source": "གལ་ཏེ་ཅིའི་ཕྱིར་དོན་གཞན་མེད་ཅེ་ན། དེ་ཡང་ཞེས་བྱ་བ་སྨོས་ཏེ།",
+            "english": "If one asks why there is no separate object, the text says: \"Since there is no positive pervasion, there is doubt.\"",
+            "problem": "The lemma 'དེ་ཡང་' is dropped and merged into the next lemma.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "A keeps the 'kill one or the other' comparison and reads སེམས་པ correctly as 'considering', where B replaces the comparison with an invented 'meaningless' and adds a spurious 'consciousness'.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean Derge pramāṇa folio with an OCR that matches the block print line for line; both translations follow the argument, A more faithfully than B, with no serious errors in either."
+  }
+]

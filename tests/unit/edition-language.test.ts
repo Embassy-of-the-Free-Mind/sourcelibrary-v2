@@ -86,6 +86,49 @@ describe('languageApparatus', () => {
     expect(a.work_language).toBeUndefined();
   });
 
+  // #4441 — stored "original" is the heuristic's default on 41,227 of 41,531
+  // live rows; served as-is it asserted that Ibn al-Haytham wrote in Latin.
+  describe('a defaulted "original" is not served as a classification', () => {
+    // Both live Risner records, as stored 2026-10-11.
+    const ALHAZEN = { language: 'Latin', text_role: 'original', text_role_source: 'heuristic-v1' };
+
+    it('serves the heuristic default as unclassified', () => {
+      const a = languageApparatus(ALHAZEN);
+      expect(a.text_role).toBe('unclassified');
+      expect(a.work_language).toBeUndefined();
+      for (const source of ['import-heuristic-v1', undefined, null, '']) {
+        expect(languageApparatus({ ...ALHAZEN, text_role_source: source }).text_role).toBe('unclassified');
+      }
+    });
+
+    it('keeps "original" where something other than the heuristic wrote it', () => {
+      for (const source of ['human-qa-3942', 'curated-2026-08-08', 'gemini-v1', 'import-explicit', 'manual-qa']) {
+        expect(languageApparatus({ ...ALHAZEN, text_role_source: source }).text_role).toBe('original');
+      }
+    });
+
+    it('passes a heuristic TRANSLATION role through — it is only assigned on evidence', () => {
+      const a = languageApparatus({ language: 'English', text_role: 'modern-translation', text_role_source: 'heuristic-v1' });
+      expect(a.text_role).toBe('modern-translation');
+      expect(a.translation_note).toBeTruthy();
+    });
+
+    it('withholds "original" beside a differing work language, whatever wrote it', () => {
+      // 257 live rows say both. The language pair is the evidence; the role is not.
+      for (const source of ['heuristic-v1', 'human-qa-3942']) {
+        const a = languageApparatus({ language: 'Latin', original_language: 'Arabic', text_role: 'original', text_role_source: source });
+        expect('text_role' in a).toBe(false);
+        expect(a.work_language).toBe('Arabic');
+        expect(a.translation_note).toContain('Arabic');
+      }
+      expect('text_role' in languageApparatus({ language: 'French', text_role: 'original', is_translation: true })).toBe(false);
+    });
+
+    it('reads the hand-adjudicated stray value "translation" as a translation', () => {
+      expect(servesTranslatedOriginal({ language: 'English', text_role: 'translation' })).toBe(true);
+    });
+  });
+
   it('languageApparatusFields omits the edition language it would duplicate', () => {
     const f = languageApparatusFields(IBN_KHALDUN);
     expect('edition_language' in f).toBe(false);
@@ -118,9 +161,8 @@ describe('citationLanguageFields', () => {
   });
 
   it('omits work_language when it carries no information', () => {
-    // Absent, not null: an absent field reads as "this edition is in the work's
-    // own language", while work_language: null invites a citation renderer to
-    // print "null" into a published payload.
+    // Absent, not null: work_language: null invites a citation renderer to
+    // print "null" into a published payload. Absent means not recorded (#4441).
     for (const book of [
       { language: 'Latin' },
       { language: 'Latin', original_language: 'Latin' },

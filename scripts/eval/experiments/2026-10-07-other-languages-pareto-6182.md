@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: 365
+n_pages: 365
+verdict: "gemini-3.7-flash clears rule B over production for Latin (+0.45), Greek (+0.28) and Sanskrit/Pali/Chinese (+0.26, by 0.01); keep production for T3 vernaculars and Hebrew/Arabic/Persian."
+status: undecided
+decision: "Nothing re-routed as of 2026-10-10 (DEFAULT_MODEL still gemini-3-flash-preview); routing is Derek's call (#6182)"
+superseded_by: null
+issue: 6182
+---
 ## 2026-10-07 · Every language but Tibetan: which Gemini model sits on the cost × fidelity frontier, and is any worth a routing change? (#6182, rule B)
 <!-- PRIOR ART: 2026-10-07-tengyur-pareto-replication-6182.md (the Tibetan half of the same preregistration: rule A + rule B on 171 Tengyur sides), the five #5695 reference tracks and the #5873 top-up (the 365 pages and references reused unchanged; build-translation-pareto.mjs plots their original arms). Scorer: scripts/eval/tengyur-levers/score-ref.py gains a `--round 6182xl` switch that calls scripts/eval/pareto-6182/score-xl.py; the Tibetan rounds re-score unchanged. -->
 

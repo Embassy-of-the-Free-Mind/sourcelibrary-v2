@@ -1,0 +1,77 @@
+[
+  {
+    "book_id": "6abeb51b896ea18127c84c67",
+    "slot": 17,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio (margin label དབུ་མ་ གི, folio ༢༡) from a Madhyamaka-section text compiling sutra citations (Sāgaramatiparipṛcchā, Brahmadattaparipṛcchā); belongs in the Derge Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སེམས་ཅན་དགའ་བ་ཡང་སྦྱིན་པའམ།",
+            "image": "the line-1 cluster after སེམས་ཅན་ is hard to resolve at this resolution; could be དག་ཡང་ rather than དགའ་བ་ཡང་",
+            "problem": "possible misreading in the list of the four means of gathering; not certain from the image",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          {
+            "source": "སེམས་ཅན་དགའ་བ་ཡང་སྦྱིན་པའམ། སྙན་པར་སྨྲ་བའམ། དོན་སྤྱོད་པའམ། དོན་མཐུན་པས་སྡུད་པར་མི་བྱེད་པ་ནས། དེ་དག་ནི་ཚིག་ཙམ་གྱི་དངོས་པོའི་བར་དུ་འགྱུར་བ་དེ་དག",
+            "english": "if one provides joy to sentient beings, or speaks pleasantly, or acts purposefully, or gathers them through consistency of purpose, but does not do so from the state of merely being words up to the point of transformation",
+            "problem": "The source says they do NOT gather beings by giving, pleasant speech, beneficial action or consistency of purpose (སྡུད་པར་མི་བྱེད་པ), and so become merely verbal. A says one DOES all four, then adds an invented condition ('does not do so from the state of merely being words'). The negation moves to the wrong clause and the passage stops making sense.",
+            "severity": "serious",
+            "class": "T8",
+            "reversal": true
+          },
+          {
+            "source": "སྲོག་ཆགས་བྱེ་བ་སྟོང་ཕྲག་ཉི་ཤུ་གསུམ།",
+            "english": "Twenty-three thousand million living beings",
+            "problem": "23,000 koṭis (×10 million) is 230,000 million, not 23,000 million; the number is wrong by a factor of ten",
+            "severity": "moderate"
+          },
+          {
+            "source": "བཀོད་པའི་རྒྱལ་པོ་ཞེས་བྱའི་གྲོང་ཁྱེར",
+            "english": "a city called Arranged",
+            "problem": "the city name drops རྒྱལ་པོ ('King of Arrays')",
+            "severity": "moderate"
+          },
+          {
+            "source": "the Brahmadatta verse citation (lines ending in །)",
+            "english": "run together as continuous prose",
+            "problem": "the verse form is lost (T16)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "དགེ་སློང་དྲན་པའི་བློ་ཅན་ཞེས་བྱ་བྱུང་། / ཆོས་སྨྲ་དྲན་པའི་བློ་ཅན",
+            "english": "A monk named Matimant / That Dharma speaker Matimant",
+            "problem": "the monk's name drops དྲན་པ ('mindful', Smṛtimati); 'Matimant' renders only བློ་ཅན",
+            "severity": "moderate"
+          },
+          {
+            "source": "དོན་མཐུན་པས་སྡུད་པར་མི་བྱེད་པ་ནས། དེ་དག་ནི་ཚིག་ཙམ་གྱི་དངོས་པོའི་བར་དུ་འགྱུར་བ་དེ་དག",
+            "english": "up to those things which become merely verbal reality",
+            "problem": "the ནས ('... up to', marking an abridged quotation) is rendered stiffly; the quote closes without ever opening on this page",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "A reverses the opening sentence on the four means of gathering and gets the number 23,000 koṭis wrong; B keeps the negation, the number and the verse, and its only real slip is shortening the monk's name.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this Derge folio matches the print closely. Translation B is faithful and keeps the verse. Translation A reverses the opening sentence about not gathering beings and gets a number wrong."
+  }
+]

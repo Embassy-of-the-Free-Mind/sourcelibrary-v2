@@ -18,9 +18,10 @@ for b in $BOXES; do
   label=${b%%=*}; target=${b#*=}
   line=$(ssh -o BatchMode=yes -o ConnectTimeout=8 "$target" /root/bin/claude-job.sh where 2>/dev/null | grep -m1 '^host=')
   if [ -z "$line" ]; then printf '%-11s %s\n' "$label" "no answer (ssh failed, or the wrapper there has no \`where\` yet)"; continue; fi
-  cores=1 load1=0 mem_free_mb=0 job_disk_free_gb=0 root_free_gb=0 live_jobs=0 ready=no
-  for kv in $line; do case "$kv" in cores=*|load1=*|mem_free_mb=*|job_disk_free_gb=*|root_free_gb=*|live_jobs=*|ready=*) eval "${kv%%=*}='${kv#*=}'" ;; esac; done
-  per=$(awk -v l="$load1" -v c="$cores" 'BEGIN{printf "%.2f", l/c}')
+  cores=1 load1=0 load5= mem_free_mb=0 job_disk_free_gb=0 root_free_gb=0 live_jobs=0 ready=no
+  for kv in $line; do case "$kv" in cores=*|load1=*|load5=*|mem_free_mb=*|job_disk_free_gb=*|root_free_gb=*|live_jobs=*|ready=*) eval "${kv%%=*}='${kv#*=}'" ;; esac; done
+  # 5-minute load when reported: l7a's archive tick swings the 1-minute load from ~1 to ~60 every 10 min.
+  per=$(awk -v l="${load5:-$load1}" -v c="$cores" 'BEGIN{printf "%.2f", l/c}')
   verdict=ok
   [ "$ready" = yes ] || verdict="skip: $ready"
   [ "$verdict" = ok ] && [ "$mem_free_mb" -lt "$MIN_MEM_MB" ] && verdict="skip: memory"

@@ -89,7 +89,9 @@ export const GET = withApiAuth(async (
       // Muqaddimah: language French, original_language Arabic). Without these
       // three, every MCP caller saw one scalar and had no way to tell a
       // translation-of-a-translation from a source text.
-      original_language: 1, text_role: 1, is_translation: 1,
+      // text_role_source lets the apparatus tell a classified "original" from
+      // the heuristic's default (#4441).
+      original_language: 1, text_role: 1, text_role_source: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
       // The stamped translation rung (#5287) — the reader's whole-book
       // download panel reads it instead of its own page arithmetic.

@@ -15,12 +15,14 @@ export type JobStatus =
     'completed_with_errors' |  // All pages attempted, some failed (retryable)
     'failed' |                 // Job failed completely
     'cancelled' |              // User cancelled the job
+    'blocked' |                // Every page was health-blocked: nothing written, nothing failed (#5108)
     'partial';                 // Legacy: same as completed_with_errors
 
 export interface JobProgress {
   total: number;       // Total pages in this job
   completed: number;   // Pages completed successfully
   failed?: number;     // Pages that failed (optional, for retry logic)
+  skipped_health_blocked?: number; // Pages in scope stamped translation.health_blocked, left untranslated (#5108)
 }
 
 export interface JobResult {

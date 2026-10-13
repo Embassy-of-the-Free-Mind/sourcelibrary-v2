@@ -64,6 +64,8 @@ export interface CatalogBook {
    */
   pages_translated_es: number;
   pages_blank: number;
+  /** The honest denominator for translationCompleteness() (#4505). Null until recounted. */
+  pages_translatable: number | null;
   photo: string | null;
   thumbnail: string | null;
   thumbnail_blob: string | null;
@@ -75,6 +77,9 @@ export interface CatalogBook {
    *  names the same page as `image_display` — see getBookCardUrl. `undefined`
    *  means "not looked up yet"; `null` means "looked up, this book has none". */
   image_card?: string | null;
+  /** Where the page sits inside the cover scan (#6010); see coverFrame().
+   *  Attached from Mongo alongside `image_card`. */
+  thumbnail_frame?: unknown;
   read_count: number;
   is_first_translation: boolean;
   quality_score: number;
@@ -138,7 +143,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // and PostgREST 42703s the whole query on an unknown column — which would take
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
-export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
 
 // The extra columns search and the book-detail shell append after BOOK_SELECT.
 // `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
@@ -344,7 +349,7 @@ async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
     const { getReadDb } = await import('@/lib/mongodb');
     const db = await getReadDb();
     const docs = await db.collection('books')
-      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1 } })
+      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1, thumbnail_frame: 1 } })
       .maxTimeMS(2000)
       .toArray();
     const byId = new Map(docs.map(d => [d.id as string, d]));
@@ -362,6 +367,9 @@ async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
       // cut from a different page than `thumbnail` simply keep the full-size
       // cover until the two fields are reconciled — a separate fix.
       row.image_card = (doc.image_card as string | null) ?? null;
+      // Safe to attach whichever cover this row draws: the frame names the
+      // image it was measured on and coverFrame() refuses any other (#6010).
+      if (doc.thumbnail_frame) row.thumbnail_frame = doc.thumbnail_frame;
     }
   } catch (err) {
     console.error('[books-catalog] card-variant lookup failed, serving full-size covers:', (err as Error)?.message);

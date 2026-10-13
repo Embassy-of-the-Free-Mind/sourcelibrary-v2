@@ -1,0 +1,43 @@
+<scan-quality>good</scan-quality>
+<language>K'iche'</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>62</page-num>
+<meta>catchword: hil</meta>
+<warning>Handwritten K'iche' Mayan with Spanish loanwords</warning>
+
+chikichin Andres ~ nima mac pe tikaban ri vemani home
+vayh chupam rimevayihabal Eih Martin, kitzih an chini
+ma mac tikaban rumal kitzih ha rucah rupixa Sancta y
+glesia Andres ~ naki taga chokpam nak on chi Eih ri Ea-
+tom vi camiçanel mac chiveta maqui homevayih chupam
+Martin. ~ Tavaga xah na an chupam vae chokmilah
+kitz bijn can tzolcomin can chupam kaghabal, xuyacan ri
+Katata chikichin at nunimal vaue taga tikaget vi tiketa
+mah vi ruchok mil ri kitzih ha nima mevayibal Eih, xahani
+bal Eih retam rughiquibaan ru Eatom pe can xaui ha ri Sancto
+Padre Papa rox in bi paulo, xaxere kitzih vi chinima cami
+çanel mac, ru Eatom can chiquih Yndios vinak, ri vegoh ma-
+qui timevayih maquipe tixahanih chupam xaviga tixibin
+chi nima camiçanel mac tuban chuach Dios, chaa . ~
+Vaega ruzihil mevayibal Eih hee . ~
+C Hari ronohel viernes tantigulun taga tikape chupam
+ruzihil ru semanayl Quaresma . ~
+C Rugin Sabado Sancto . ~
+C Rugin ruvigilia ralaxibal Eih kahaual Jesu christo, vue
+taga mani quix mevayih chupam vae mevayibal Eih ~
+Vuepe tivele Eah rutiye ghac chupam rixahan Eih kitzih chini
+ma camiçanel mac, tiban chuach Dios chaa . ~
+Hagari rughakapil rugiyal pe el ruzihil quaresma rugin
+ronohel chiel viernes, Sabado, Vuepe quatro temporas.
+Rugin Vigilia Maquina, Y mevayibal Eih tah rumal ma
+ni Eatom camiçanel mac chivih ri yx yndios vinak chaa ~
+C Haxaxmaqui vi yaom chivichin ri vue quix ghacun
+chupam kitzih nima camiçanel mac tiban chuach Dios ri
+veque retiban chaa . ~
+Hachigari rix Eekah, chupam ruzihil mevayibal Eih, xa
+ki huperah, vepe caperah chi lekun vay, rugin hala ychah,
+çalul tilo, xa ghutu temebal ga hala richiny vinakiltio
+hil
+
+<vocab>Andres, Martin, Sancta yglesia, Paulo, Yndios, Quaresma, Sabado Sancto, Jesu christo, quatro temporas</vocab>

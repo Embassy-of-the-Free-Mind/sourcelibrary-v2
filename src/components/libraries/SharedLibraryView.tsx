@@ -38,6 +38,7 @@ interface BookItem {
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
+  thumbnail_frame?: unknown;
   published?: string;
   read_count?: number;
 }
@@ -88,6 +89,11 @@ export interface SharedLibraryViewProps {
   galleryImages: GalleryImage[];
   contributingLibraries: ContributingLibrary[];
   basePath: string;
+  /** Where the Illustrations strip links. Defaults to `${basePath}/gallery`
+   *  (reading rooms). The public /libraries/[slug] pages have no gallery route —
+   *  next.config 308s it to the unscoped /gallery — so they pass the global
+   *  gallery scoped with `?library=<provider>` (#5954). */
+  gallery?: { path: string; query?: string };
   sort: string;
   language: string;
   q?: string;
@@ -107,6 +113,10 @@ export interface SharedLibraryViewProps {
   tenantSlug?: string | null;
   /** Force embed behavior from the server (used by /embed routes) */
   forceEmbedded?: boolean;
+  /** Hide book counts (used by the public /libraries/[slug] pages). A
+   *  per-source tally reads as a shopping list for anyone re-assembling the
+   *  corpus; partner reading rooms keep their counts. */
+  hideCounts?: boolean;
 }
 
 export default function SharedLibraryView({
@@ -118,6 +128,7 @@ export default function SharedLibraryView({
   galleryImages,
   contributingLibraries,
   basePath,
+  gallery = { path: `${basePath}/gallery` },
   sort,
   language: languageFilter,
   q,
@@ -130,6 +141,7 @@ export default function SharedLibraryView({
   catalogTotal = 0,
   tenantSlug,
   forceEmbedded = false,
+  hideCounts = false,
 }: SharedLibraryViewProps) {
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
@@ -225,12 +237,12 @@ export default function SharedLibraryView({
                 <span className="w-px h-4 bg-white/20" />
                 <span>{total.toLocaleString('en-US')} digitised on Source Library</span>
               </>
-            ) : (
+            ) : hideCounts ? null : (
               <span>{total.toLocaleString('en-US')} translated books</span>
             )}
             {languages.length > 0 && (
               <>
-                <span className="w-px h-4 bg-white/20" />
+                {(!hideCounts || (usesUnifiedCatalogue && catalogTotal > 0)) && <span className="w-px h-4 bg-white/20" />}
                 <span>{languages.slice(0, 5).map(l => l.lang).join(', ')}</span>
               </>
             )}
@@ -271,7 +283,7 @@ export default function SharedLibraryView({
                 return (
                   <Link
                     key={galleryId}
-                    href={embedHref(`${basePath}/gallery/image/${galleryId}`)}
+                    href={embedHref(`${gallery.path}/image/${galleryId}`)}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
@@ -297,13 +309,13 @@ export default function SharedLibraryView({
                 );
               })}
               <Link
-                href={embedHref(`${basePath}/gallery`)}
+                href={embedHref(gallery.query ? `${gallery.path}?${gallery.query}` : gallery.path)}
                 className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex items-center justify-center"
               >
                 <div className="text-center px-2">
                   <Images className="w-6 h-6 text-muted mx-auto mb-1.5 group-hover:text-accent-rust transition-colors" />
                   <span className="text-xs text-secondary group-hover:text-accent-rust transition-colors font-medium">
-                    See all illustrations
+                    {gallery.query ? 'Search these illustrations' : 'See all illustrations'}
                   </span>
                 </div>
               </Link>
@@ -338,7 +350,7 @@ export default function SharedLibraryView({
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary"
                 >
                   {lib.name}
-                  <span className="text-xs text-muted">({lib.count})</span>
+                  {!hideCounts && <span className="text-xs text-muted">({lib.count})</span>}
                 </span>
               ))}
             </div>
@@ -388,9 +400,11 @@ export default function SharedLibraryView({
                   >
                     All Books
                   </h2>
-                  <p className="text-sm text-muted mt-1">
-                    {total.toLocaleString('en-US')} books from {partner.name}
-                  </p>
+                  {!hideCounts && (
+                    <p className="text-sm text-muted mt-1">
+                      {total.toLocaleString('en-US')} books from {partner.name}
+                    </p>
+                  )}
                 </div>
 
                 <CollectionFilters
@@ -424,6 +438,7 @@ export default function SharedLibraryView({
                     pages_translated: book.pages_translated,
                     thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                     thumbnail_blob: book.thumbnail_blob,
+                    thumbnail_frame: book.thumbnail_frame,
                     language: book.language,
                     published: book.published,
                     translation_percent: book.pages_ocr && book.pages_translated
@@ -511,6 +526,7 @@ export default function SharedLibraryView({
                         pages_translated: book.pages_translated,
                         thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                         thumbnail_blob: book.thumbnail_blob,
+                        thumbnail_frame: book.thumbnail_frame,
                         language: book.language,
                         published: book.published,
                         translation_percent: book.pages_ocr && book.pages_translated

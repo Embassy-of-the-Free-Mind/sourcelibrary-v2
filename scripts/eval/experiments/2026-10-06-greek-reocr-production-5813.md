@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [agreement, judged]
+languages: [grc]
+scripts: [Grek]
+canons: []
+n_books: 540
+n_pages: 119978
+verdict: "Flash re-read 110,164 of 119,978 lite-read Greek print pages at $0.0030 a page; 7.8% refused (RECITATION); by eye 2 inventions, diacritics lost on 1% (4% pre-1600)."
+status: adopted
+decision: "Re-read kept in production, 11,608 pp retranslated; collectors join text parts (#5930); 25K-page retranslation and 1450-1599 release pending Derek"
+superseded_by: null
+issue: [5813, 5700, 5930]
+---
 ## 2026-10-06 · What happened when the lite-read printed Greek pages were re-read on Flash in production (#5813)?
 <!-- PRIOR ART: 2026-10-04-reocr-lift-5700.md measured the LIFT of a Flash re-read on 53 lite-read pages against human references (+0.75; Greek +1.04) and sized the stratum; it ran no production re-OCR. This is the production run it proposed: 119,978 pages through the Batch path and the collector, with what broke, what it cost and what the pages look like by eye. No judged score was taken here. -->
 

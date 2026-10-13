@@ -44,8 +44,8 @@ try {
     { $match: match },
     { $project: {
         model: { $ifNull: ['$translation.model', '(none)'] },
-        ocrLen: { $strLenCP: '$ocr.data' },
-        trLen: { $strLenCP: '$translation.data' },
+        ocrLen: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } },
+        trLen: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } },
     } },
     { $group: {
         _id: '$model',

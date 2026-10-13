@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Navigational recall@3 on 42 fixed queries rose from 0.40 to 0.69 with a re-index and to 1.00 with a name match; 0.88 on 25 held-out queries."
+status: adopted
+decision: "Site index rebuilt from a derived page list plus a name match in /api/search/unified (src/lib/search/site-nav.ts, #5945)"
+superseded_by: null
+issue: 5945
+---
 ## 2026-10-06 · Does search take a visitor to a page they name, and what fixes it: the index or a name match? (#5945)
 <!-- PRIOR ART: 2026-10-06-site-search-recall-5905.md scores /api/search for BOOK recall with the same runner; no earlier entry scores /api/search/unified for where a page's NAME leads. scripts/eval/search-quality-eval.mjs has pass/fail assertions on book queries only. -->
 

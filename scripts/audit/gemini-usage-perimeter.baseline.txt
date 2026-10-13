@@ -100,8 +100,6 @@ scripts/maintenance/reground-captions.mjs
 scripts/maintenance/resynthesize-summaries.mjs
 scripts/maintenance/split-audit-visual.mjs
 scripts/match-bph-orphans-gemini.mjs
-scripts/migration/backfill-artwork-embeddings.mjs
-scripts/migration/backfill-book-embeddings.mjs
 scripts/migration/backfill-ocr-near-complete.mjs
 scripts/music/transcribe-notation.mjs
 scripts/reextract-broken-chapters.mjs

@@ -65,8 +65,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  *   429  → penalise the host and retry
  *   5xx / network / timeout → retry with backoff, then `error`
  *   other 4xx → `error` immediately
- * Not `rateLimitedFetch`: it retries 4xx too (its 4xx throw lands in its own catch), which
- * would turn every one of ~3.5K nightly 404s into four requests and a 3.5 s backoff.
+ * Written when `rateLimitedFetch` still retried 4xx (its 4xx throw landed in its own catch),
+ * which would have turned every one of ~3.5K nightly 404s into four requests and a 3.5 s
+ * backoff. That is fixed (#5084); this keeps its own policy for the 404 → `zero` distinction.
  *
  * @returns {{status:'ok', json:any}|{status:'zero'}|{status:'error', message:string}}
  */

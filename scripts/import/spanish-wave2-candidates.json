@@ -1,0 +1,68 @@
+{
+  "_comment": [
+    "Spanish wave 2 (#6559): works not on IA in wave 1, plus Quirós once its Google-scan volumes were told apart by the djvu text.",
+    "BNE Biblioteca Digital Hispánica blocks this network outright (Cloudflare block page, 2026-10-11); not attempted further. Martín Cortés 1551 is on IA but the scan is CC BY-NC-ND (Larramendi), left for a rights call."
+  ],
+  "books": [
+    {
+      "ia": "historiadeldesc00bermgoog",
+      "region": "explore",
+      "title": "Historia del descubrimiento de las regiones austriales hecho por el general Pedro Fernández de Quirós, tomo I",
+      "author": "Pedro Fernández de Quirós (ed. Justo Zaragoza)",
+      "language": "Spanish",
+      "published": "1876",
+      "text_role": "original",
+      "note": "Madrid 1876 (Justo Zaragoza ed., Biblioteca Hispano-Ultramarina), first printing of Quirós's account of the 1595 and 1605-06 South Sea voyages (Marquesas, Tuamotus, Vanuatu, the search for Terra Australis). Google scan; tome identified from the djvu text."
+    },
+    {
+      "ia": "historiadeldesc03bermgoog",
+      "region": "explore",
+      "title": "Historia del descubrimiento de las regiones austriales hecho por el general Pedro Fernández de Quirós, tomo II",
+      "author": "Pedro Fernández de Quirós (ed. Justo Zaragoza)",
+      "language": "Spanish",
+      "published": "1876",
+      "text_role": "original",
+      "note": "Madrid 1876 (Justo Zaragoza ed., Biblioteca Hispano-Ultramarina), first printing of Quirós's account of the 1595 and 1605-06 South Sea voyages (Marquesas, Tuamotus, Vanuatu, the search for Terra Australis). Google scan; tome identified from the djvu text."
+    },
+    {
+      "ia": "historiadeldesc05bermgoog",
+      "region": "explore",
+      "title": "Historia del descubrimiento de las regiones austriales hecho por el general Pedro Fernández de Quirós, tomo III (apéndice e índice)",
+      "author": "Pedro Fernández de Quirós (ed. Justo Zaragoza)",
+      "language": "Spanish",
+      "published": "1876",
+      "text_role": "original",
+      "note": "Madrid 1876 (Justo Zaragoza ed., Biblioteca Hispano-Ultramarina), first printing of Quirós's account of the 1595 and 1605-06 South Sea voyages (Marquesas, Tuamotus, Vanuatu, the search for Terra Australis). Google scan; tome identified from the djvu text."
+    },
+    {
+      "ia": "andancaseviajesd01tafu",
+      "region": "explore",
+      "title": "Andanças e viajes de Pero Tafur por diversas partes del mundo avidos (1435-1439), tomo I",
+      "author": "Pero Tafur",
+      "language": "Spanish",
+      "published": "1874",
+      "text_role": "original",
+      "note": "Madrid 1874 (Colección de libros españoles raros ó curiosos, tomo 8), first edition of the MS. A Castilian knight in Jerusalem, Cairo, Constantinople and the Black Sea; met Niccolò de' Conti on his return from India."
+    },
+    {
+      "ia": "andancaseviajesd02tafu",
+      "region": "explore",
+      "title": "Andanças e viajes de Pero Tafur por diversas partes del mundo avidos (1435-1439), tomo II",
+      "author": "Pero Tafur",
+      "language": "Spanish",
+      "published": "1874",
+      "text_role": "original",
+      "note": "Madrid 1874, second volume."
+    },
+    {
+      "ia": "bub_gb_Jt8Ix_ow3YsC",
+      "region": "esoteric",
+      "title": "Libros de la B. Madre Teresa de Jesús",
+      "author": "Teresa de Jesús",
+      "language": "Spanish",
+      "published": "1604",
+      "text_role": "original",
+      "note": "1604 edition of the Libros (Vida, Camino de perfección, Moradas). The 1588 Salamanca editio princeps (ed. Luis de León) is not on IA."
+    }
+  ]
+}

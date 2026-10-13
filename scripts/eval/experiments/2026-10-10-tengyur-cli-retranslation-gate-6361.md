@@ -7,8 +7,8 @@ canons: [derge-tengyur]
 n_books: 7
 n_pages: 21
 verdict: "Gemini 3.8 Flash via the CLI had half the stored English's serious errors on 21 pages read against the image (7 vs 14; reversals 2 vs 5), but two of seven volumes had a serious error the stored English lacks, so the preregistered gate stopped the apply. 23% of 'staged' replies were plan-mode chatter, not translations."
-status: undecided
-decision: "Nothing written. Applying the 17,135 gate-passing pages is a decision for Derek (#6361)."
+status: adopted
+decision: "Derek waived the per-volume stop rule 2026-10-10; the 17,135 gate-passing pages were applied with provenance (scripts/maintenance/tengyur-cli-6361/apply.mjs, #6361)"
 superseded_by: null
 issue: [6361, 6182, 6321, 6174]
 ---

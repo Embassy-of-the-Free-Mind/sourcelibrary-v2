@@ -26,7 +26,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { bootstrapRatioCI, resetSeed } from '../lib/paired-stats.mjs';
-import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
+import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod, pageExposure } from '../../lib/book-checks.mjs';
 import { seriousPage, seriousClasses, pageFindings, FIT, pageRecords, packetProvenance, runCost, checkedAtOf } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
@@ -103,7 +103,7 @@ for (const st of log.strata) {
       frame: { stratum: st.name, seed: log.seed, draw: runId, checked_at_source: 'reviews file (git add or mtime)' },
       pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
       verdict, verdict_source: 'reader', classes: seriousClasses(b.pages), note: b.reader_summary ?? b.book_verdict,
-      page_findings: pageFindings(b.pages),
+      page_findings: pageFindings(b.pages), exposure: await pageExposure(db, b.book_id, pagesRead),
       evidence_path: f,
       text_provenance: packetProvenance({ pagesRead, packetPages: packets.find((x) => x.book_id === b.book_id)?.pages, now, checkedAt, provenanceFromPage }),
       ...(cost ? { subscription_usd_eq: +(cost.usd / reviews.length).toFixed(4) } : {}),

@@ -30,6 +30,12 @@
  * the gate in experiments-lint.mjs; #5939). It is data for the index and the
  * public pages, not prose: it is dropped here, so EXPERIMENTS.md reads as before.
  *
+ * The same run writes experiments/index.json: one record per dated entry (date,
+ * question, link, and the header's fields), newest first. /quality, /research/
+ * canon-gap and /research/canon-quality read it instead of hand-wired lists, so a
+ * new entry reaches them, and a superseded one leaves them, with no page edit.
+ * Like EXPERIMENTS.md it is GENERATED on main; a PR never hand-edits it.
+ *
  *   node scripts/eval/build-experiments.mjs           # write EXPERIMENTS.md (on main, or with --force)
  *   node scripts/eval/build-experiments.mjs --check   # exit 1 if EXPERIMENTS.md is stale or a file is malformed
  *   node scripts/eval/build-experiments.mjs --print   # the generated text on stdout, write nothing
@@ -45,11 +51,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { splitHeader } from './lib/experiment-header.mjs';
+import { splitHeader, readExperiment } from './lib/experiment-header.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(DIR, 'experiments');
 const OUT = path.join(DIR, 'EXPERIMENTS.md');
+const INDEX = path.join(SRC, 'index.json');
+const BLOB = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/';
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 
@@ -93,6 +101,61 @@ export function buildExperiments(srcDir = SRC) {
 
   const text = `${withBanner.trimEnd()}\n\n---\n\n${sections.join('\n\n')}\n`;
   return { text, problems, counts: { series: series.length, dated: dated.length, notes: notes.length } };
+}
+
+/** A heading's question as plain text: markdown and trailing issue references removed. */
+export function plainQuestion(heading) {
+  return heading
+    .replace(/^##\s+\d{4}-\d{2}-\d{2}(?:\s*\([^)]*\))?\s*[·—,:-]?\s*/, '')
+    .replace(/<!--.*?-->/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\*\*|__|`/g, '')
+    .replace(/(^|\s)\*([^*]+)\*/g, '$1$2')
+    .replace(/\s*\((?:#\d+[^)]*)\)\s*/g, ' ')
+    .replace(/\s+—\s+RESULT$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * The machine-readable index of the dated entries (#5939), newest first. An entry
+ * without a header is listed with `status: null` (the weekly garden names it); an
+ * entry whose header does not parse is a problem, as in the lint.
+ */
+export function buildIndex(srcDir = SRC) {
+  const problems = [];
+  const names = fs.readdirSync(srcDir).filter((n) => DATED.test(n)).sort().reverse();
+  const entries = names.map((n) => {
+    const text = fs.readFileSync(path.join(srcDir, n), 'utf8');
+    const { header, body, problems: p } = readExperiment(text);
+    for (const x of p) problems.push(`${n}: ${x}`);
+    const heading = stripPriorArt(body).split('\n')[0];
+    const h = header || {};
+    const list = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]);
+    const headingIssues = [...heading.matchAll(/#(\d{3,5})\b/g)].map((m) => Number(m[1]));
+    return {
+      file: n,
+      date: n.slice(0, 10),
+      question: plainQuestion(heading),
+      href: `${BLOB}${n}`,
+      stage: h.stage ?? null,
+      measure: list(h.measure),
+      languages: list(h.languages),
+      scripts: list(h.scripts),
+      canons: list(h.canons),
+      n_books: h.n_books ?? null,
+      n_pages: h.n_pages ?? null,
+      verdict: h.verdict ?? null,
+      status: h.status ?? null,
+      decision: h.decision ?? null,
+      superseded_by: h.superseded_by ?? null,
+      issues: header ? list(h.issue) : [...new Set(headingIssues)],
+    };
+  });
+  // One entry per line: a new write-up is a one-line diff.
+  const text = `{"generated_by": ${JSON.stringify('scripts/eval/build-experiments.mjs — do not edit; schema in scripts/eval/experiments/README.md (#5939)')},\n` +
+    `"count": ${entries.length},\n"entries": [\n${entries.map((e) => JSON.stringify(e)).join(',\n')}\n]}\n`;
+  return { text, problems, entries };
 }
 
 /**
@@ -165,8 +228,12 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   if (has('--check')) {
     const cur = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
     if (cur !== text) { console.error('EXPERIMENTS.md is stale — main regenerates it (eval-ledgers-regenerate.yml); locally: --print, or --force to write'); process.exit(1); }
-    if (problems.length) process.exit(1);
-    console.log(`EXPERIMENTS.md is current (${counts.dated} entries, ${counts.series} series, ${counts.notes} notes)`);
+    const idx = buildIndex();
+    for (const p of idx.problems) console.error(`build-experiments: ${p}`);
+    const curIdx = fs.existsSync(INDEX) ? fs.readFileSync(INDEX, 'utf8') : '';
+    if (curIdx !== idx.text) { console.error('experiments/index.json is stale — main regenerates it (eval-ledgers-regenerate.yml); locally: --force to write'); process.exit(1); }
+    if (problems.length || idx.problems.length) process.exit(1);
+    console.log(`EXPERIMENTS.md and index.json are current (${counts.dated} entries, ${counts.series} series, ${counts.notes} notes)`);
     process.exit(0);
   }
   if (problems.length) process.exit(1);
@@ -176,6 +243,10 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
       'Add your entry as a file under scripts/eval/experiments/ and leave EXPERIMENTS.md alone (--print to view, --force to override).');
     process.exit(2);
   }
+  const idx = buildIndex();
+  for (const p of idx.problems) console.error(`build-experiments: ${p}`);
+  if (idx.problems.length) process.exit(1);
   fs.writeFileSync(OUT, text);
-  console.log(`wrote EXPERIMENTS.md (${counts.dated} entries, ${counts.series} series, ${counts.notes} notes)`);
+  fs.writeFileSync(INDEX, idx.text);
+  console.log(`wrote EXPERIMENTS.md (${counts.dated} entries, ${counts.series} series, ${counts.notes} notes) and experiments/index.json`);
 }

@@ -259,3 +259,120 @@ describe('pageContinuity — an edge ellipsis is a continuation marker', () => {
     expect(pageContinuity(self_contained).continues_on_next).toBe(false);
   });
 });
+
+/**
+ * The case #3723 left open on #3721: a page that ENDS, followed by a note.
+ *
+ * Fixtures captured from production on 2026-10-11 (see _trailing_note_note in
+ * the fixture file) before these assertions were written.
+ */
+describe('pageContinuity — a note at the foot is not the end of the sentence', () => {
+  const { p98, p99 } = fixtures.trailing_note;
+
+  it('the fixture really ends on a note, after a full stop', () => {
+    // If a re-translation ever drops the note, the tests below pass for a
+    // different reason and stop guarding anything.
+    expect(p98.translation.endsWith('</note>')).toBe(true);
+    expect(p98.translation).toMatch(/the teachings of Geometry\. <note>[^<]*<\/note>$/);
+  });
+
+  it('reads a complete epigram above a translator note as complete', () => {
+    const c = pageContinuity(p98.translation, p98.original);
+    expect(c.continues_on_next).toBe(false);
+    expect(continuityHint(c, 98)).toBeNull();
+  });
+
+  it('agrees with the page that follows', () => {
+    const c98 = pageContinuity(p98.translation, p98.original);
+    const c99 = pageContinuity(p99.translation, p99.original);
+    expect(c98.continues_on_next).toBe(c99.continues_from_previous);
+  });
+
+  it('still reports a sentence that breaks off above a note', () => {
+    // The guard against "a note means the page ended". The note is removed and
+    // the words before it are judged; they are not assumed to be a sentence.
+    const cut = p98.translation.replace('the teachings of Geometry. <note>', 'the teachings of <note>');
+    expect(cut).not.toBe(p98.translation);
+    expect(pageContinuity(cut, p98.original).continues_on_next).toBe(true);
+  });
+
+  it('keeps the word inside an inline tag, and drops the tag', () => {
+    const body = self_contained.replace(/\s+\S+$/, '');
+    expect(pageContinuity(`${body} the <term>lapis</term>.`).continues_on_next).toBe(false);
+    expect(pageContinuity(`${body} the <term>lapis</term>`).continues_on_next).toBe(true);
+  });
+});
+
+/**
+ * Malformed editorial markup (#3698). The write-time repair postdates a good many
+ * served pages, so the reader has to cope with what is stored.
+ */
+describe('pageContinuity — malformed furniture tags', () => {
+  // Captured 2026-10-12, verbatim (see _split_margin_note in the fixture file).
+  // Verdicts checked against origin/main before the change: p374 and p667 both
+  // returned continues_from_previous: false.
+  const { p374, p667 } = fixtures.split_margin;
+
+  it('reads past a split marginal note at the head, to the body below it', () => {
+    // "<margin></margin>\nIt also appears\nthat the eidola … foretell\nfuture
+    // events.\n</margin>\n\n...and many connections, not a manifest sign"
+    // The note opens on a capital; the body opens on the translator's ellipsis.
+    expect(pageContinuity(p374.translation, p374.original).continues_from_previous).toBe(true);
+    // "<header>…</header>\n\n<margin></margin>\n<unclear>What matter in
+    // potentiality is.</unclear>\n</margin>\nthe spiritual receptacle and anchor"
+    expect(pageContinuity(p667.translation, p667.original).continues_from_previous).toBe(true);
+  });
+
+  // The remaining shapes are built by attaching a broken tag to a real page.
+  // What is asserted is that the verdict does not MOVE, never what it is: the
+  // page's own words are untouched, so its edges are the same edges.
+  const real = pageContinuity(p47);
+  const NOTE = 'A gloss in the margin.';
+
+  it('does not let an orphan closer at the foot take the body above it', () => {
+    // Paired with the nearest opener, the stray </margin> swallowed everything
+    // after the genuine note, and the page was judged on what stood before it.
+    const cut = p47.indexOf('\n\n', 400);
+    const page = `${p47.slice(0, cut)}\n\n<margin>${NOTE}</margin>${p47.slice(cut)}\n</margin>`;
+    expect(pageContinuity(page)).toEqual(real);
+    expect(pageContinuity(`${p47}\n</margin>`)).toEqual(real);
+  });
+
+  it('does not let an unclosed opener at the head borrow a later closer', () => {
+    // The opener never closes; the nearest </margin> is a later note's. Taken as
+    // a pair, they hid the opening words and the page was judged from mid-leaf.
+    const cut = p47.lastIndexOf('\n\n');
+    const later = `${p47.slice(0, cut)}\n\n<margin>${NOTE}</margin>${p47.slice(cut)}`;
+    expect(pageContinuity(`<margin>${later}`)).toEqual(real);
+  });
+
+  it('drops a stray closer at the head', () => {
+    expect(pageContinuity(`</margin>\n${p47}`)).toEqual(real);
+  });
+
+  it('strips a note that carries a note of its own, whole', () => {
+    // The shape of Solovyov p.67 (69ade9b4bbdf273192a474bc): a footnote with a
+    // translator's note inside it. Nearest-opener pairing cut it at the inner one.
+    const nested = `<note>A footnote, <note>original: "i.e."</note> which ends in a full stop.</note>`;
+    expect(pageContinuity(`${p47}\n\n${nested}`)).toEqual(real);
+    expect(pageContinuity(`${nested}\n\n${p47}`)).toEqual(real);
+  });
+
+  it('treats a split note at the foot as one note', () => {
+    expect(pageContinuity(`${p47}\n\n<margin></margin>\n${NOTE}\n</margin>`)).toEqual(real);
+  });
+});
+
+describe('pageContinuity — cost', () => {
+  it('judges a page of short capital lines in linear time', () => {
+    // Herculaneum papyrus transcription, 1,018 characters. The trailing
+    // furniture regex backtracked exponentially on it: 53.7 s for this one
+    // call, in the request path of get_quote. Checked with the regex restored:
+    // this test fails after 53.6 s, and nothing else in the file notices.
+    const { p41 } = fixtures.caps_lines;
+    const started = performance.now();
+    const c = pageContinuity(p41.translation, p41.original);
+    expect(performance.now() - started).toBeLessThan(250);
+    expect(c.hyphen_split_at_end).toBe(false);
+  });
+});

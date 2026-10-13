@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
+import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import { licenseDisplay } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
@@ -11,6 +12,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
 import { getEffectiveByline } from '@/lib/byline';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { resolveHoldingLibrary } from '@/lib/library-partners';
 
 const FIELD_LABELS: Record<string, string> = {
   display_title: 'Display Title',
@@ -358,7 +360,7 @@ export default function BibliographicInfo({
                       : book.translation_verification!.translations_found?.length
                         ? book.translation_verification!.translations_found
                         : book.translation_verification!.translations || [];
-                    return translations
+                    return displayablePriorPicks(book, translations)
                       .filter(t => t.english_title || t.translator)
                       .map((t, i) => (
                         <div key={i} className="text-sm">
@@ -400,15 +402,18 @@ export default function BibliographicInfo({
                         </div>
                       ));
                   })()}
-                  {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (
+                  {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (() => {
+                    // A study that quotes the work is not an earlier translation of it (#4639).
+                    const earlier = displayablePriorPicks(book, book.translation_verification!.translations_found);
+                    return (
                     <div className="text-stone-500 text-xs space-y-1">
                       <p>
                         {firstTranslationDescription(book.translation_verification.disposition)}
                       </p>
-                      {(book.translation_verification.translations_found?.length ?? 0) > 0 && (
+                      {earlier.length > 0 && (
                         <div className="space-y-1 pt-1">
                           <span className="text-stone-400">Earlier translations</span>
-                          {book.translation_verification.translations_found!.map((t, i: number) => (
+                          {earlier.map((t, i: number) => (
                             <div key={i} className="pl-2">
                               <span className="text-stone-300 italic">{t.english_title}</span>
                               {t.translator && <span className="text-stone-400">, trans. {t.translator}</span>}
@@ -448,7 +453,8 @@ export default function BibliographicInfo({
                         </details>
                       )}
                     </div>
-                  )}
+                    );
+                  })()}
                 </div>
               </div>
             )}
@@ -488,12 +494,18 @@ export default function BibliographicInfo({
             <div className="mt-4 pt-4 border-t border-stone-700">
               <div className="flex items-center gap-2 mb-3">
                 <ImageIcon className="w-4 h-4 text-stone-400" />
-                <span className="text-sm font-medium text-stone-300">Image Source</span>
+                <span className="text-sm font-medium text-stone-300">Provenance</span>
               </div>
               <div className="space-y-2 text-sm">
+                {resolveHoldingLibrary(book.image_source) && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Held by:</span>
+                    <span className="text-stone-100 font-semibold">{resolveHoldingLibrary(book.image_source)}</span>
+                  </div>
+                )}
                 {book.image_source.provider_name && (
                   <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">Source:</span>
+                    <span className="text-stone-500 w-24 flex-shrink-0">Scans from:</span>
                     {showExternalLinks && book.image_source.source_url ? (
                         <a
                           href={book.image_source.source_url}
@@ -513,12 +525,6 @@ export default function BibliographicInfo({
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Digitized by:</span>
                     <span className="text-stone-200">{book.image_source.digitized_by}</span>
-                  </div>
-                )}
-                {book.image_source.contributing_library && (
-                  <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">Provided by:</span>
-                    <span className="text-stone-200">{book.image_source.contributing_library}</span>
                   </div>
                 )}
                 {book.image_source.sponsor && (

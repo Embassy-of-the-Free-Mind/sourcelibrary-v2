@@ -26,7 +26,7 @@ import { isBookScopedUrl } from '../lib/r2-key.mjs';
 const OUT = (process.argv.find((a) => a.startsWith('--out=')) || '--out=scripts/output/retire-warehouse').slice(6);
 const CHUNK = 500;
 
-const nonEmpty = (f) => ({ $cond: [{ $gt: [{ $strLenCP: { $ifNull: [f, ''] } }, 0] }, 1, 0] });
+const nonEmpty = (f) => ({ $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] } }, 0] }, 1, 0] });
 const httpUrl = { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: '^https?://' } }, 1, 0] };
 const poisoned = { $cond: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: '/(undefined|null|NaN)/' } }, 1, 0] };
 
@@ -45,7 +45,7 @@ const goodArchive = (p) => typeof p.archived_photo === 'string' && /^https?:\/\/
 async function pageDiff(db, bookId) {
   // Text lengths only — never pull the text itself over the wire for 20K books.
   const pipe = [{ $match: { book_id: bookId } }, { $project: { _id: 1, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, archive_metadata: 1, book_id: 1,
-    ocr_len: { $strLenCP: { $trim: { input: { $ifNull: ['$ocr.data', ''] } } } }, tr_len: { $strLenCP: { $trim: { input: { $ifNull: ['$translation.data', ''] } } } } } }];
+    ocr_len: { $strLenCP: { $trim: { input: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } } } }, tr_len: { $strLenCP: { $trim: { input: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } } } } } }];
   const wh = await db.collection('pages_warehouse').aggregate(pipe).toArray();
   const live = await db.collection('pages').aggregate(pipe).toArray();
   const byId = new Map(live.map((p) => [p.id || String(p._id), p]));

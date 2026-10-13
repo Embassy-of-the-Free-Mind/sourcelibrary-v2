@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs maintenance script, no type declarations
-import { classifyPaths, classifyPR, groupedBumps, scannableAddedLines } from '../../scripts/maintenance/pr-tier.mjs';
+import { classifyPaths, classifyPR, diffFromFiles, groupedBumps, scannableAddedLines } from '../../scripts/maintenance/pr-tier.mjs';
 
 const DELETION = 'data deletion or migration in the diff';
 const reasons = (paths: string[], lines: string[]) =>
@@ -92,6 +92,71 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
     const { result } = classifyPR(5991, fakeGh(tooLarge));
     expect(result.tier).toBe('HOLD');
     expect(result.reasons.map((r: { reason: string }) => r.reason).join('\n')).toMatch(/diff could not be read.*HTTP 406/);
+  });
+});
+
+describe('pr-tier: a refused diff is rebuilt from per-file patches (#5794)', () => {
+  const tooLarge = () => {
+    throw Object.assign(new Error('Command failed: gh pr diff 5786'), {
+      stderr: 'could not find pull request diff: HTTP 406: Sorry, the diff exceeded the maximum number of lines (20000).\nPullRequest.diff too_large\n',
+    });
+  };
+  type F = { filename: string; status?: string; additions: number; patch?: string; previous_filename?: string };
+  const gh = (files: F[], viewPaths = files.map((f) => f.filename)) => (cmd: string) => {
+    if (cmd.startsWith('gh pr view')) return JSON.stringify({ number: 5786, title: 'eval results', author: { login: 'JDerekLomas' }, labels: [], files: viewPaths.map((path) => ({ path })), comments: [] });
+    if (cmd.startsWith('gh pr diff')) return tooLarge();
+    if (cmd.startsWith('gh api repos/{owner}/{repo}/pulls/5786/files')) return files.map((f) => JSON.stringify({ status: 'modified', ...f })).join('\n') + '\n';
+    throw new Error(`unexpected ${cmd}`);
+  };
+  const reasonsOf = (r: { reasons: { reason: string }[] }) => r.reasons.map((x) => x.reason);
+
+  it('harmless patches: a label still comes out, and it is AUTO', () => {
+    const { result } = classifyPR(5786, gh([{ filename: 'scripts/eval/foo.mjs', additions: 1, patch: '@@ -0,0 +1 @@\n+console.log(1);' }]));
+    expect(result.tier).toBe('AUTO');
+  });
+
+  it('deletion code in a per-file patch still holds', () => {
+    const { result } = classifyPR(5786, gh([{ filename: 'scripts/maintenance/x.mjs', additions: 1, patch: '@@ -0,0 +1 @@\n+await col.deleteMany({});' }]));
+    expect(result.tier).toBe('HOLD');
+    expect(reasonsOf(result)).toContain(DELETION);
+  });
+
+  it('a scanned file GitHub serves no patch for holds, naming it', () => {
+    const { result } = classifyPR(5786, gh([{ filename: 'src/lib/huge.ts', additions: 30000 }]));
+    expect(result.tier).toBe('HOLD');
+    const r = result.reasons.find((x: { reason: string }) => /no patch/.test(x.reason));
+    expect(r.paths).toEqual(['src/lib/huge.ts']);
+  });
+
+  it('a missing patch on a file whose lines are never scanned (eval results) does not hold', () => {
+    const { result } = classifyPR(5786, gh([{ filename: 'scripts/eval/results/x/big.json', additions: 30000 }, { filename: 'scripts/eval/results/x/run.mjs', additions: 1, patch: '@@ -0,0 +1 @@\n+export {};' }]));
+    expect(result.tier).toBe('AUTO');
+  });
+
+  it('when the per-file patches fail too, it holds with both errors instead of throwing', () => {
+    const run = (cmd: string) => (cmd.startsWith('gh pr view') ? gh([])(cmd) : tooLarge());
+    const { result } = classifyPR(5786, run);
+    expect(result.tier).toBe('HOLD');
+    expect(reasonsOf(result).join('\n')).toMatch(/diff could not be read.*HTTP 406.*per-file patches failed too/);
+  });
+
+  it('gh pr view stops at 100 files; a hold path past that comes from the REST list', () => {
+    const files: F[] = Array.from({ length: 150 }, (_, i) => ({ filename: `scripts/eval/results/x/${i}.json`, additions: 1, patch: '@@ -0,0 +1 @@\n+{}' }));
+    files.push({ filename: 'scripts/migrations/2026-10-10-x.mjs', additions: 1, patch: '@@ -0,0 +1 @@\n+// noop' });
+    const { result } = classifyPR(5786, gh(files, files.slice(0, 100).map((f) => f.filename)));
+    expect(reasonsOf(result)).toContain(DELETION);
+  });
+});
+
+describe('pr-tier: diffFromFiles', () => {
+  it('rebuilt diff carries file headers that scannableAddedLines reads', () => {
+    const { diff, unread } = diffFromFiles([
+      { filename: 'docs/a.md', status: 'added', additions: 1, patch: '@@ -0,0 +1 @@\n+col.deleteMany({})' },
+      { filename: 'src/lib/b.ts', status: 'renamed', previous_filename: 'src/lib/old.ts', additions: 1, patch: '@@ -1 +1 @@\n-x\n+await col.deleteMany({});' },
+      { filename: 'public/logo.png', status: 'added', additions: 0 },
+    ]);
+    expect(unread).toEqual([]);
+    expect(scannableAddedLines(diff)).toEqual(['await col.deleteMany({});']);
   });
 });
 

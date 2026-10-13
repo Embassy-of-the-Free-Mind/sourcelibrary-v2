@@ -46,7 +46,7 @@ function authHeader() {
  * Returns the parsed result; throws on a non-200 or on an empty revalidation,
  * so a caller cannot mistake "nothing happened" for success.
  */
-export async function revalidatePaths(paths, { quiet = false } = {}) {
+export async function revalidatePaths(paths, { quiet = false, type } = {}) {
   const list = (Array.isArray(paths) ? paths : [paths]).filter(Boolean);
   if (!list.length) return { revalidated: 0, paths: [] };
 
@@ -56,7 +56,7 @@ export async function revalidatePaths(paths, { quiet = false } = {}) {
   const res = await fetch(`${BASE}/api/admin/revalidate`, {
     method: 'POST',
     headers: authHeader(),
-    body: JSON.stringify({ paths: list }),
+    body: JSON.stringify(type ? { paths: list, type } : { paths: list }),
   });
 
   const body = await res.text();
@@ -66,7 +66,7 @@ export async function revalidatePaths(paths, { quiet = false } = {}) {
   try { json = JSON.parse(body); } catch { throw new Error(`revalidate: non-JSON response — ${body.slice(0, 200)}`); }
   if (!json.revalidated) throw new Error(`revalidate: server revalidated 0 paths for ${list.join(', ')}`);
 
-  if (!quiet) console.log(`  revalidated ${json.revalidated} path(s): ${list.join(', ')}`);
+  if (!quiet) console.log(`  revalidated ${json.revalidated} path(s)${type ? ` (${type})` : ''}: ${list.join(', ')}`);
   return json;
 }
 
@@ -79,4 +79,55 @@ export async function revalidatePaths(paths, { quiet = false } = {}) {
 export async function revalidateCollection(slug, opts = {}) {
   if (!slug) throw new Error('revalidateCollection: slug is required');
   return revalidatePaths([`/collections/${slug}`, '/collections', '/collections/all'], opts);
+}
+
+/** The reader route whose hidden-book 404 is cached at the LAYOUT level (#4843). */
+export const READER_PAGE_PATTERN = '/book/[id]/page/[pageId]';
+
+function bookPaths(books) {
+  const set = new Set();
+  for (const b of books || []) {
+    if (!b) continue;
+    if (b.slug) set.add(`/book/${b.slug}`);
+    if (b.id) set.add(`/book/${b.id}`);
+  }
+  return [...set];
+}
+
+/**
+ * Evict the cached copies of books whose PUBLICATION changed (#6227) — the
+ * script-side twin of what /api/books/[id]/visibility does in-process.
+ *
+ * While a book is hidden, every reader URL anyone touched is cached as a 404
+ * raised in the reader's route-group layout; a page-level revalidation of the
+ * book paths does not clear it. So, in this order:
+ *   1. the reader route PATTERN + the book paths as type 'layout';
+ *   2. the book paths as pages — the route purges these at Cloudflare.
+ * The pattern call is broad (every reader page of every book), so a bulk caller
+ * passes all its books in ONE call, never one call per book.
+ *
+ * books: [{ id, slug? }]. Throws on any failure — see bookEvictionFollowUp().
+ */
+export async function revalidateBookPages(books, opts = {}) {
+  const paths = bookPaths(books);
+  if (!paths.length) return { revalidated: 0, paths: [] };
+  await revalidatePaths([READER_PAGE_PATTERN, ...paths], { ...opts, type: 'layout' });
+  return revalidatePaths(paths, opts);
+}
+
+/**
+ * The exact commands that do what revalidateBookPages() does, for a caller to
+ * print when the eviction could not run (no secret in env, HTTP error). A
+ * publish that cannot evict must not read as finished.
+ */
+export function bookEvictionFollowUp(books) {
+  const paths = bookPaths(books);
+  if (!paths.length) return '';
+  const curl = (body) =>
+    `curl -sS -X POST ${BASE}/api/admin/revalidate -H "x-revalidate-secret: $REVALIDATE_SECRET" ` +
+    `-H 'Content-Type: application/json' -d '${JSON.stringify(body)}'`;
+  return [
+    curl({ paths: [READER_PAGE_PATTERN, ...paths], type: 'layout' }),
+    curl({ paths }),
+  ].join('\n');
 }

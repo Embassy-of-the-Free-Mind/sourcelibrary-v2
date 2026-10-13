@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>Spanish, Yucatec Maya</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>1</columns>
+<warning>Handwritten Yucatec Maya and Spanish manuscript</warning>
+z Hij. deleitarse mucho en alguna cosa, y embeuecerse u
+sin entender a otro ¶ v tan v hij v kay Juan, ihil v col. ca num
+estando Juan embeuecido en cantar ensu milpa pase yo y
+v tan v hij v hanal Juan camanen, maix yilahen. estand
+embeuecido en comer y gustando mucho dela comida pa
+y no me vido ¶ de aqui Hun Hij Juana v manab cab gu
+sto Juana de comprar miel.
+z Hij. ser demasiado en reir en contar cuentos en bocear en
+cantar etc. gustando mucho dello ¶ Hij v cah v can Ju
+cuenta Juan cuentos demasiado con mucho gusto.
+z Hijxan ti cab. }
+z Hijxaan ti chij. } deleitarse mucho en alguna cosa y prestare
+¶ Hijxaan veyuncil hucal. l. hichij Juan puesto Juan mu
+estar amancebado.
+z Hijxaan ti cheeh. el que esta finado y muerto derisa.
+z Hijxaan. tiokol. el que esta de demasiado llorar medio mu
+z Hijxaancil v cah v can Juan yetel Pedro. estan Juan y Ped
+lando y en conuersacion hasta mas no poder etc en otras c
+z Hijil. gustar mucho de vna cosa ¶ Hizi Juan ti mak cab
+gusto Juan mucho de comer miel.
+z Hijil ti cheeh. reirse demasiado finar se derisa
+z Hijil ticab. morir o ser justiciado ¶ Hizi ticab tumen yo
+fue justiciado por ladron.
+z Hijil ik. agonizar desmaiarse y dar parasismo
+z Hiz pay. tah. t. tirar de alguna cosa larga y delgada como
+vn. cordel correa. vara etc.
+z Hith cib. tah. t. en cerar algun hilo o cuerda passando lo po
+cerote o por la cera. como haze el çapatero. y assi o tras cos
+passan por color negro colorado etc. madiendo el tal colo
+lugar de cib.
+z Hith. ah. ib añudar. atar. o trauar; y lo assi añudado o a
+y lo que se trae añudado o colgado al cinto ¶ balx a Hith.
+<vocab>Hij, Hith, Yucatec Maya, Spanish, dictionary, glossary</vocab>

@@ -49,7 +49,7 @@ export async function loadHoldingCandidates(db, pgc) {
 /**
  * Book sets per corpus key. Keys are the gap map's internal ones (tengyur, kangyur, cbeta, cbeta_chan,
  * pali, gretil*, kabbalah, zohar, lurianic, cordovero, openiti_sufi, ganjoor, mongolian_kanjur,
- * tripitaka_koreana, kanripo, and since #6220 latin, patrologia_latina, camena, latin_classical, greek); `other_editions` sets ride along for the two Derge canons.
+ * tripitaka_koreana, kanripo, chinese_other (#6528), and since #6220 latin, patrologia_latina, camena, latin_classical, greek); `other_editions` sets ride along for the two Derge canons.
  * @returns {Record<string, { books: object[], method: string }>}
  */
 export function corpusBookSets(books, whBy = {}) {
@@ -99,6 +99,11 @@ export function corpusBookSets(books, whBy = {}) {
   R.greek = set(books.filter((b) => GREEK_LANGS.includes(b.language)), `language=${GREEK_LANGS.join(' or ')} (any edition; not matched to Perseus or First1KGreek works)`);
   const krSet = whBy.kanripo || new Set();
   R.kanripo = set(books.filter((b) => krSet.has(b.id)), 'works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)');
+  // The tradition figure's Chinese row (#6528): every Chinese-language book outside the Buddhist set, as Greek counts
+  // every Greek book. The kanripo set above stays the canon table's "we hold" and is a title-match floor: it found
+  // 170 of ≈13K, missing the Siku Quanshu scans.
+  const cbetaIds = new Set(R.cbeta.books.map((b) => b.id));
+  R.chinese_other = set(zh.filter((b) => !cbetaIds.has(b.id)), 'language contains Chinese, not in the cbeta set (any edition; not matched to Kanripo works)');
   return R;
 }
 

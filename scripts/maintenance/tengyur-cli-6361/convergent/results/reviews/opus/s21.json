@@ -1,0 +1,44 @@
+[
+  {
+    "book_id": "6abed4cd896ea18127c8dab2",
+    "slot": 21,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཉེ (Derge Tengyur, vol. 177)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa-section commentary (on the Pramāṇavārttika, Pramāṇasiddhi material on rebirth, craving and wrong cognition) in a Derge woodblock print; belongs on the Derge Tengyur Pramāṇa shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 288,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ནུས་པ་ནི་གགས་བྱེད་པ་མེད་པ་ཅན་ནོ", "image": "ནུས་པ་ནི་གེགས་བྱེད་པ་མེད་པ་ཅན་ནོ", "problem": "vowel e dropped from གེགས 'obstruction'; recoverable", "severity": "minor" },
+          { "ocr": "དེ་ལྟར་ནི་ཁྱད་པར་ནི་དེ་ཡོད་དོ", "image": "དེ་ལྟར་ན་ཁྱད་པར་ནི་དེ་ཡོད་དོ", "problem": "particle ན read as ནི", "severity": "minor" },
+          { "ocr": "གཟུགས་ལ་སོགས་པའི་འབྲས་བུ་རྟེན་ཡིན་ནོ", "image": "གཟུགས་ལ་སོགས་པའི་འབྲས་བུའི་རྟེན་ཡིན་ནོ (as far as I can read)", "problem": "genitive འི on འབྲས་བུ apparently dropped", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "ལོངས་སྤྱོད་ཀྱི་བདག་ཉིད་ཅན་གྱི་བདག་གི་རང་གི་ངོ་བོ་དེ་དང་འགལ་བ་ཡང་བྱ་བ་དང་ལོངས་སྤྱོད་དང་བྲལ་བ་ཉིད་ཡིན་པ", "english": "The self-nature of the self as an enjoyer is contradictory because it is characterized by being devoid of action and enjoyment", "problem": "Source says what is contradictory TO the enjoyer-self's nature is the state of being devoid of action and enjoyment; A makes the self-nature itself contradictory 'because' it is devoid of them, garbling the svabhāvaviruddhopalabdhi argument", "severity": "moderate" },
+          { "source": "ལོངས་སྤྱོད་ཀྱི་བདག་ཉིད་ཅན་གྱི་བདག", "english": "<note>original: \"bhoktṛ-ātman\"</note>", "problem": "Sanskrit 'original' asserted in a note; not on the page (plausible reconstruction presented as fact)", "severity": "minor", "class": "T10" },
+          { "source": "ལེའུ་དང་པོར་ལུང་ཚད་མ་མ་ཡིན་པར་རོ", "english": "how scripture is not a valid means of knowledge <note>in certain contexts</note>", "problem": "invented hedging qualifier not in the source", "severity": "minor", "class": "T10" },
+          { "source": "ཅི་རིགས་དེ་དང་ལྷན་ཅིག་འབྱུང་བའོ", "english": "arise together in their respective ways", "problem": "drops 'with that' (the mind/sense base they co-arise with)", "severity": "minor" },
+          { "source": "གང་དེ་མ་ཐག་ཏུ་སྐྱེ་བའོ། །ཅི་རིགས་པར་རྟེན་ཡིན་ཏེ", "english": "That which is produced immediately after is the basis.", "problem": "adds 'is the basis' from the next lemma; the source only says the capacity is that which arises immediately after", "severity": "moderate" },
+          { "source": "གནས་གཞན་ཐོབ་པ་གཟུགས་ལ་སོགས་པའི་འབྲས་བུ(འི)་རྟེན་ཡིན་ནོ", "english": "the attainment of another state, such as the fruit of form and so forth, is the basis", "problem": "misconstrued: attaining another state is the basis OF fruits such as form; A makes form an instance of the attainment", "severity": "moderate" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "གང་དེ་མ་ཐག་ཏུ་སྐྱེ་བའོ", "english": "that which produces immediately following", "problem": "སྐྱེ་བ 'arises' rendered as active 'produces'; slight shift", "severity": "minor" },
+          { "source": "ལུས་དང་ལྡན་པ་ལ་ལ་ཡང", "english": "also in certain embodied beings", "problem": "'beings' for embodied things (flames are the example); small slip", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B construes the opening svabhāvaviruddhopalabdhi argument and the closing 'basis of fruits such as form' correctly, where A garbles both and adds unsupported notes.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean Derge print with a near-accurate transcription; both translations are serviceable, but B is the more faithful and A has several moderate construal errors and two invented notes."
+  }
+]

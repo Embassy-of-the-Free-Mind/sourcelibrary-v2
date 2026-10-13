@@ -18,6 +18,7 @@ export const CHECK_METHODS: Record<string, CheckMethodInfo> = {
   'monthly-corpus-audit': { label: 'Monthly audit of a random sample of the whole library' },
   'retranslation-gate': { label: 'Re-translation check: three consecutive pages read against the page images, new English beside the old' },
   'hide-broken-text': { label: 'Review that led to the book being hidden for broken text' },
+  'ocr-convergence': { label: 'OCR check: a second machine reading compared with the stored one; where they differ, an AI reader checked the page image' },
   'reasoning-leak': { label: 'Automated check for the model’s own reasoning stored as the translation', issue: 6117 },
   'refusal-empty': { label: 'Automated check for a transcription that is a refusal or is empty', issue: 4686 },
 };

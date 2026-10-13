@@ -492,7 +492,7 @@ export type Improvement = {
   status: string;
   /** what was measured on what, against what, by whom, when: the row's provenance in one line */
   basis: string;
-  /** the write-up the numbers are copied from (a file pinned to a commit, or the issue comment that reports them) */
+  /** the write-up the numbers are copied from: its link in the experiment index (#5939) */
   source: string;
 };
 

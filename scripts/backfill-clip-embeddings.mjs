@@ -19,6 +19,11 @@
  *   --limit N          Process at most N items
  *   --dry-run          Count what would be embedded, don't embed
  *   --clip-url URL     CLIP server URL (default: http://localhost:3457)
+ *
+ * Spend: none to record. Unlike its neighbours (backfill-book-, -artwork- and
+ * -gallery-text-embeddings, which embed through Gemini and write `gemini_usage`
+ * rows via scripts/lib/embedding-usage.mjs), this calls our own CLIP server
+ * running Xenova/clip-vit-base-patch32 locally — nothing is billed per call (#4902).
  */
 
 import { MongoClient } from 'mongodb';

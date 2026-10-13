@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 150
+verdict: "Sentence-level Jev ranks judge-quoted reversals at AUC 0.84 and catches 21/21 planted flips, but about 96 of 100 flags would be false alarms; page AUC 0.72 at 2.7x D3's cost."
+status: rejected
+decision: "Not adopted; #6062 closed as a null result, reversals stay a task for the reference judges"
+superseded_by: null
+issue: 6062
+---
 ## 2026-10-07 · Can Jev, asked one English sentence at a time, screen translations for reversed meaning? (#6062)
 <!-- PRIOR ART: scripts/eval/translation-vs-reference/backtrans/ (#5695 extra test) built the 150-page labelled set and ran three reference-free detectors at page level (D3 page AUC 0.71); scripts/eval/jev/additions-screen.py asked Jev a page-level question about added words. Neither asked Jev the sentence-level question. -->
 

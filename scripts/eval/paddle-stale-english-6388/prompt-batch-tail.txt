@@ -1,0 +1,5 @@
+
+There are several pages below, each with its own image file (./<id>.jpg). Judge each page on its own; they are unrelated. Open every image with the Read tool (the only tool you may use) before you answer.
+
+Answer with ONE JSON object and nothing else:
+{"pages":[{"id":"<id>","errors":[{"english":"...","image_says":"...","cause":"OCR|TRANSLATION|BOTH","b_right":true,"severity":"minor|material"}],"verdict":"keep|retranslate-would-fix|bad-regardless"}, ...]}

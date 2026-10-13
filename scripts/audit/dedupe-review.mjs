@@ -386,8 +386,8 @@ async function m3() {
       const rows = await db.collection('pages').aggregate([
         { $match: { book_id: bookId } },
         { $project: { _id: 0, page_number: 1,
-          ocr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
-          tr: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } } },
+          ocr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] },
+          tr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] } } },
       ], { maxTimeMS: 60000 }).toArray();
       return new Map(rows.map((r) => [r.page_number, r]));
     };

@@ -12,6 +12,7 @@ import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-lan
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
 import { usableManifestLabel } from '@/lib/manifest-label';
+import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -232,7 +233,7 @@ export function extractCanvasImage(canvas: IIIFCanvas): { photo: string; thumbna
 
     if (serviceId) {
       return {
-        photo: `${serviceId}/full/full/0/default.jpg`,
+        photo: iiifFullSizeUrl(serviceId, service),
         thumbnail: `${serviceId}/full/200,/0/default.jpg`,
       };
     }
@@ -245,7 +246,7 @@ export function extractCanvasImage(canvas: IIIFCanvas): { photo: string; thumbna
     const serviceId = body.service?.[0]?.id || body.service?.[0]?.['@id'];
     if (serviceId) {
       return {
-        photo: `${serviceId}/full/full/0/default.jpg`,
+        photo: iiifFullSizeUrl(serviceId, body.service),
         thumbnail: `${serviceId}/full/200,/0/default.jpg`,
       };
     }

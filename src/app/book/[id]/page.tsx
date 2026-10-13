@@ -9,13 +9,13 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
-import { displayPublished, citationYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
+import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
@@ -85,6 +85,7 @@ import { getPageImageUrl } from '@/lib/page-image-url';
 import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel, collectPriorTranslations } from '@/lib/prior-translation';
+import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -998,6 +999,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // is the free-text twin and must not be parsed here (#3718); `year` is the
   // numeric field, present on 49,959 books.
   const yearPublished = (book as unknown as { year?: number }).year;
+  // DC.date is a bibliographic claim, so it must not carry a year the record's
+  // own provenance marks as an import placeholder (#3307). The image-access
+  // test below keeps the raw value: it is a rights heuristic, not a claim.
+  const dcYear = assertableYear(book as unknown as Parameters<typeof assertableYear>[0]);
   const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
   const imageAccess: 'open' | 'nc-free' | 'blocked' =
     imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
@@ -1084,7 +1089,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // rule when nothing scores confidently. `selectScoredCoverPage` is shared
     // with /api/books/[id]/ensure-cover so the page we SHOW here is the page
     // that gets SAVED as the cover.
-    const coverPage = selectScoredCoverPage(pages, book.title)?.page;
+    const coverPage = selectScoredCoverPage(pages, book.title, book.author)?.page;
     const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
     // Printed table-of-contents page (design's "Original printed contents" card).
     const tocPage = pages.find(p => p.page_type === 'toc');
@@ -1185,6 +1190,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
       const partner = provider ? getPartnerByProvider(provider) : undefined;
       if (!partner || !embedPolicy.showBookRelatedBooks) return null;
+      // Only a HOLDING institution gets this callout. A platform (Internet
+      // Archive, Google Books…) does not hold the book, and "From the
+      // collection of Internet Archive" would credit the wrong party; the
+      // provenance panel names both the holder and the scan source.
+      if (partner.kind === 'platform') return null;
       // Each query is timeout-guarded and independently caught so a slow/failing
       // one (e.g. an exact count over a huge provider like Internet Archive)
       // never nulls the whole section — we degrade a stat, not the feature.
@@ -1196,11 +1206,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       // ever hiding the section on a big provider.
       const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 24 }), { books: [] as CatalogBook[], total: 0 });
       if (all.total < 2) return null; // not worth a "collection" callout for a lone book
-      const [exactBooks, translated, languages] = await Promise.all([
-        guard(browseBooks({ provider: partner.providerKey, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: all.total, books: [] as CatalogBook[] }),
-        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: 0, books: [] as CatalogBook[] }),
-        guard(getLanguageCounts({ provider: partner.providerKey }), [] as Array<{ lang: string; count: number }>),
-      ]);
       const covers = all.books
         .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
         .slice(0, 14)
@@ -1215,7 +1220,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         color: partner.color,
         image,
         logo: partner.logo,
-        stats: { books: exactBooks.total || all.total, languages: languages.length, translated: translated.total },
         covers,
       };
     })();
@@ -1365,8 +1369,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
     const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
+    // A study that quotes the work (#4639), or an audit substitute with nothing to
+    // check it against (#4634), is not shown as an earlier translation.
     const verificationPicks = timelineVerification?.disposition === 'translation_found'
-      ? (timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
+      ? displayablePriorPicks(book, timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
       : [];
 
     collectPriorTranslations(timelinePrior, verificationPicks).forEach((row, i) => {
@@ -1638,7 +1644,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           displayTitle={book.display_title}
           author={book.author}
           language={book.language}
-          year={yearPublished}
+          year={dcYear}
           description={book.ai_metadata?.description as string | undefined}
           categories={book.categories}
           keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
@@ -2023,7 +2029,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         displayTitle={book.display_title}
         author={book.author}
         language={book.language}
-        year={yearPublished}
+        year={dcYear}
         description={book.ai_metadata?.description as string | undefined}
         categories={book.categories}
         keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}

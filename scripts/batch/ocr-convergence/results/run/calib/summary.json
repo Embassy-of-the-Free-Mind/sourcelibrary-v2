@@ -1,0 +1,49 @@
+{
+ "set": "calib",
+ "threshold": 0.01,
+ "pages": 60,
+ "books": 20,
+ "actions": {
+  "residual": 18,
+  "keep": 17,
+  "write": 16,
+  "agree": 2,
+  "contain": 6,
+  "no-second-read": 1
+ },
+ "by_group": {
+  "latin": {
+   "residual": 5,
+   "keep": 5,
+   "write": 12,
+   "agree": 2
+  },
+  "greek": {
+   "residual": 7,
+   "contain": 2,
+   "keep": 3
+  },
+  "german": {
+   "residual": 1,
+   "keep": 4,
+   "write": 1,
+   "contain": 3
+  },
+  "chinese": {
+   "keep": 2,
+   "residual": 2,
+   "write": 2
+  },
+  "arabic": {
+   "keep": 3,
+   "residual": 2,
+   "write": 1
+  },
+  "hebrew": {
+   "residual": 1,
+   "contain": 1,
+   "no-second-read": 1
+  }
+ },
+ "decided_at": "2026-10-10T18:31:36.418Z"
+}

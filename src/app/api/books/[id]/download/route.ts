@@ -16,6 +16,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { exportableTranslation } from '../../../../../../scripts/lib/model-only-translation.mjs';
 import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
 import { Readable } from 'stream';
@@ -2507,6 +2508,18 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       // `/api/books/{id}/text?lang=<iso>` reports `lang_coverage` for the same
       // book if a caller needs the number before exporting.
       console.info(`[download] ${id} format=${format} lang=${exportLang}: ${localizedPages}/${pages.length} pages in ${exportLang}, the rest fall back to English`);
+    }
+
+    // Model text the book never carried (#5903) leaves the export here, once, for
+    // every format: the pipeline's `[Blank page — no translatable content]` marker
+    // (page information, not English) and a "translation" written over a
+    // transcription with no text (the model describing a plate or an endpaper).
+    // Such a page exports as untranslated; its scan and transcription stay.
+    // Same rule as the reader — scripts/lib/model-only-translation.mjs.
+    for (const p of pages) {
+      if (p.translation?.data && !exportableTranslation(p as never)) {
+        p.translation = { ...p.translation, data: '' };
+      }
     }
 
     // Create safe filename base

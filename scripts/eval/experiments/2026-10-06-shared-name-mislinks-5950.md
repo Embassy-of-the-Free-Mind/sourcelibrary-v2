@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 120
+verdict: "56 of 120 sampled mentions (47%) on 12 bare-surname person records belong to someone else, from 0/10 (Gesner, Helmont) to 10/10 (Montanus)."
+status: informational
+decision: "Search name chooser built from full-name records only (src/lib/search/name-chooser.ts); Bacon repair dry-run followed (#5950)"
+superseded_by: null
+issue: 5950
+---
 ## 2026-10-06 · When several people share a surname, how many mentions sit on the wrong person? (#5950)
 <!-- PRIOR ART: scripts/audit/person-entity-name-collisions.mjs counts person records whose NAMES collide (#5888) and opens no page; 2026-07-26 #3361 measured whether a cited page prints the name at all (22%), not whose name it is. No earlier entry reads mentions to say which bearer of a name is meant. -->
 

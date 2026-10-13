@@ -12,6 +12,7 @@
  * must never fail an import.
  */
 import type { Db } from 'mongodb';
+import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 
 interface MinimalCanvas {
   images?: Array<{ resource?: { '@id'?: string; id?: string; service?: unknown } }>;
@@ -52,14 +53,14 @@ function extractCanvasImage(canvas: MinimalCanvas): { photo: string; thumbnail: 
   const imageResource = canvas?.images?.[0]?.resource;
   if (imageResource) {
     const sid = serviceId(imageResource.service);
-    if (sid) return { photo: `${sid}/full/full/0/default.jpg`, thumbnail: `${sid}/full/200,/0/default.jpg` };
+    if (sid) return { photo: iiifFullSizeUrl(sid, imageResource.service), thumbnail: `${sid}/full/200,/0/default.jpg` };
     const direct = imageResource['@id'] || imageResource.id || '';
     return { photo: direct, thumbnail: direct };
   }
   const body = canvas?.items?.[0]?.items?.[0]?.body;
   if (body) {
     const sid = serviceId(body.service);
-    if (sid) return { photo: `${sid}/full/full/0/default.jpg`, thumbnail: `${sid}/full/200,/0/default.jpg` };
+    if (sid) return { photo: iiifFullSizeUrl(sid, body.service), thumbnail: `${sid}/full/200,/0/default.jpg` };
     const direct = body.id || '';
     return { photo: direct, thumbnail: direct };
   }

@@ -7,6 +7,8 @@
  * 1. SELF_MATCH     — the cited prior IS the book's own catalog record
  * 2. ANTHOLOGY      — the cited prior is an anthology/collected-works, not a
  *                     translation of this specific work
+ *    STUDY          — the cited prior is a study/monograph that quotes the work,
+ *                     not a translation of it (#4639)
  * 3. VOLUME         — the book is a single numbered volume/part of a set and the
  *                     cited prior is the whole container (or a different volume)
  * 4. PARTIAL        — the cited prior is partial/excerpts (doesn't defeat "first complete")
@@ -42,6 +44,7 @@ export interface CitedPriorInput {
 export type GuardId =
   | 'SELF_MATCH'
   | 'ANTHOLOGY'
+  | 'STUDY'
   | 'VOLUME'
   | 'PARTIAL'
   | 'LOW_CONFIDENCE';
@@ -271,6 +274,144 @@ function checkAnthology(
   };
 }
 
+// ── Guard 2b: Study / monograph that quotes the work (#4639) ──────────────────
+
+/**
+ * Title shapes of a book ABOUT a person rather than a translation BY them:
+ * "Athanasius Kircher: A Renaissance Man and the Quest for Lost Knowledge",
+ * "Robert Fludd: Hermetic Philosopher", "Johannes Reuchlin and the Campaign to
+ * Destroy Jewish Books", "A Critical Study of Chu Tsai-yü's Contribution …".
+ *
+ * Deliberately NOT "<Author>: <anything>" — "Jacob Boehme: The Way to Christ"
+ * and "Bonaventure: The Soul's Journey into God" are real translations in that
+ * exact shape. Only a role noun after the colon, or "and his/the <topic>", reads
+ * as a study.
+ */
+const STUDY_TITLE_RES: RegExp[] = [
+  /\ba (?:critical |historical |biographical )?study of\b/,
+  /\b(?:critical|historical|biographical) study\b/,
+  /\blife and (?:times|thought|work|works)\b/,
+  /\band (?:his|her) (?:critique|life|world|work|thought|times|circle|contribution|legacy)\b/,
+  /\band the (?:quest|campaign|secrets|rediscovery|search|invention)\b/,
+  /:\s*(?:a |an |the )?(?:[a-z'-]+ ){0,3}(?:man|philosopher|rosicrucian|magus|polymath|scientist|thinker|humanist|mystic|physician|astronomer|genius)\b/,
+];
+
+/**
+ * How the AI-written `notes` admit the cited book is a study that quotes the
+ * work, not a translation of it: "Scholarly monograph containing translated
+ * excerpts", "within a biographical study". Not bare "biographical": "the
+ * biographical account of Böhme" is the SECTION a real translation renders.
+ */
+const STUDY_NOTES_RES: RegExp[] = [
+  /\bmonograph\b/,
+  /\bbiographical (?:and \w+ )?(?:study|work|context)\b/,
+  /\b(?:critical|historical|analytical) (?:\w+ )?study\b/,
+];
+
+/**
+ * Fires when the cited prior is a study, monograph or biography that quotes
+ * passages of the work — not a translation of it (#4639: Godwin's Kircher
+ * monograph credited as an "excerpts" translation of 14 Kircher works).
+ *
+ * Never fires on a `complete` prior: a monograph that prints a full translation
+ * of a short text (Leoniceno's Libellus in *The Great Pox*) IS a translation of
+ * it. Never fires when the prior's title is about this work (high overlap).
+ */
+function checkStudy(
+  book: BookInput,
+  prior: CitedPriorInput,
+): { fired: boolean; reason: string } {
+  if (prior.completeness === 'complete') return { fired: false, reason: 'cited prior is complete' };
+
+  // Lowercased but NOT normalise()d: the colon is part of the title shape.
+  const title = (prior.english_title ?? '').toLowerCase().replace(/\s+/g, ' ');
+  const notes = normalise(prior.notes ?? '');
+
+  const titleHit = STUDY_TITLE_RES.find(re => re.test(title));
+  const notesHit = STUDY_NOTES_RES.find(re => re.test(notes));
+  if (!titleHit && !notesHit) return { fired: false, reason: 'no study/monograph signal' };
+
+  const titleOverlap = tokenOverlap(book.title, prior.english_title ?? '');
+  const coverage = bookTitleCoverage(book.title, prior.english_title ?? '');
+  if (titleOverlap >= 0.45 || coverage >= 0.80) {
+    return {
+      fired: false,
+      reason: `study signal found but title overlap/coverage is high (jaccard=${titleOverlap.toFixed(2)}, coverage=${coverage.toFixed(2)}) — likely is this work`,
+    };
+  }
+
+  return {
+    fired: true,
+    reason: `Cited prior reads as a study that quotes the work, not a translation of it (${titleHit ? `title ${titleHit}` : `notes ${notesHit}`})`,
+  };
+}
+
+/**
+ * Is this cited prior a study/monograph that merely quotes the work? Such a
+ * prior must not be shown to readers as an "earlier translation" (#4639).
+ */
+export function isStudyNotTranslation(book: BookInput, prior: CitedPriorInput): boolean {
+  return checkStudy(book, prior).fired;
+}
+
+/**
+ * Drop the cited priors that are studies quoting the work, keeping the rest in
+ * order. For the reader surfaces that list `translation_verification` picks or
+ * FT attempt priors (untyped Mongo shapes) as "earlier translations".
+ */
+export function withoutStudyPriors<T>(
+  book: { title?: string | null; author?: string | null },
+  priors: readonly T[] | null | undefined,
+): T[] {
+  if (!priors?.length) return [];
+  const bookInput: BookInput = { title: book.title ?? '', author: book.author ?? undefined };
+  return priors.filter((p) => {
+    const o = (p ?? {}) as Record<string, unknown>;
+    const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
+    const completeness = str(o.completeness);
+    return !checkStudy(bookInput, {
+      english_title: str(o.english_title) ?? str(o.title),
+      completeness:
+        completeness === 'complete' || completeness === 'partial' ||
+        completeness === 'excerpts' || completeness === 'unknown'
+          ? completeness
+          : undefined,
+      notes: str(o.notes),
+    }).fired;
+  });
+}
+
+/**
+ * Is this pick a translation the 2026-05-30 grounding audit substituted for a
+ * claim it contradicted, with nothing a reader could check it against — no
+ * dated year, no URL, no catalogue id? The audit model returned these with an
+ * empty evidence array, so the translator and publisher are the model's word
+ * alone. On a reader surface treat such a credit as absent, not as a credit
+ * (#4634; e.g. Nynauld's *De la Lycanthropie* → "Marina Rivas García, Hexen
+ * Press", year "unknown").
+ *
+ * Deliberately narrow: an alternative WITH a year (Billingsley's Euclid 1570,
+ * Twyne's Petrarch 1579 …) is usually a real early edition and stays.
+ */
+export function isUnanchoredAuditAlternative(prior: unknown): boolean {
+  const o = (prior ?? {}) as Record<string, unknown>;
+  if (o.evidence_source !== 'gemini_grounding_audit_alternative') return false;
+  const hasYear = /\d{3,4}/.test(String(o.pub_year ?? ''));
+  return !hasYear && !o.url && !o.catalog_id;
+}
+
+/**
+ * The `translation_verification` picks a reader surface may list as earlier
+ * English translations: drops studies that quote the work (#4639) and
+ * unanchored audit substitutes (#4634), keeping the rest in order.
+ */
+export function displayablePriorPicks<T>(
+  book: { title?: string | null; author?: string | null },
+  priors: readonly T[] | null | undefined,
+): T[] {
+  return withoutStudyPriors(book, priors).filter((p) => !isUnanchoredAuditAlternative(p));
+}
+
 // ── Guard 3: Volume / container mismatch (#3044) ──────────────────────────────
 
 /**
@@ -434,6 +575,7 @@ export function evaluatePrior(
 ): GuardResult {
   const selfMatch = checkSelfMatch(book, citedPrior);
   const anthology = checkAnthology(book, citedPrior);
+  const study = checkStudy(book, citedPrior);
   const volume = checkVolume(book, citedPrior);
   const partial = checkPartial(book, citedPrior);
   const lowConf = checkLowConfidence(book, citedPrior);
@@ -441,6 +583,7 @@ export function evaluatePrior(
   const detail: GuardResult['detail'] = {
     SELF_MATCH: { fired: selfMatch.fired, reason: selfMatch.reason },
     ANTHOLOGY:  { fired: anthology.fired, reason: anthology.reason },
+    STUDY:      { fired: study.fired, reason: study.reason },
     VOLUME:     { fired: volume.fired, reason: volume.reason },
     PARTIAL:    { fired: partial.fired, reason: partial.reason },
     LOW_CONFIDENCE: { fired: lowConf.fired, reason: lowConf.reason },
@@ -450,6 +593,7 @@ export function evaluatePrior(
   const definitiveGuards: GuardId[] = [];
   if (selfMatch.fired) definitiveGuards.push('SELF_MATCH');
   if (anthology.fired) definitiveGuards.push('ANTHOLOGY');
+  if (study.fired) definitiveGuards.push('STUDY');
   if (volume.fired) definitiveGuards.push('VOLUME');
   if (partial.fired) definitiveGuards.push('PARTIAL');
 

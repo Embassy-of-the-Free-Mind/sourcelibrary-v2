@@ -134,12 +134,17 @@ function bagDice(a, b) {
   let m = 0; for (const t of b) { const n = c.get(t); if (n) { m++; c.set(t, n - 1); } }
   return (2 * m) / (a.length + b.length);
 }
-/** Gemini output → the words printed on the page. Container tags whose CONTENT is not on the page go first. */
+/** Gemini output → the words printed on the page. Container tags whose CONTENT is not on the page go first.
+ *  Centred-line marks (`->Title<-`) are stripped BEFORE any tag regex, and the generic tag regex only matches a
+ *  real tag name: a bare `<[^>]+>` read `<-` as a tag opener and deleted everything up to the next `>`, often the
+ *  rest of the page body (#5217; same shape as scripts/eval/en-ocr-reference-5124.mjs normaliser v2+). */
+const stripCentred = (s) => String(s || '').replace(/^->\s*|\s*<-$/gm, '').replace(/->|<-/g, ' ');
+const TAG = /<\/?[a-zA-Z][\w-]*(?:\s[^<>]*)?\/?>/g;
 function normalise(s) {
-  return String(s || '')
-    .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/^#{1,6}\s+/gm, '').replace(/\*{1,3}([^*\n]+)\*{1,3}/g, '$1').replace(/^->\s*|\s*<-$/gm, '').replace(/^-{3,}$/gm, '').replace(/^>\s*/gm, '')
+  return stripCentred(s)
+    .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^<>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(TAG, ' ')
+    .replace(/^#{1,6}\s+/gm, '').replace(/\*{1,3}([^*\n]+)\*{1,3}/g, '$1').replace(/^-{3,}$/gm, '').replace(/^>\s*/gm, '')
     .normalize('NFC').toLowerCase().replace(/ſ/g, 's').replace(/[’‘ʼ`´]/g, "'").replace(/[“”„]/g, '"').replace(/[‐‑‒–—―]/g, '-')
     .replace(/\s+/g, ' ').trim();
 }
@@ -247,7 +252,7 @@ async function stageSample(db) {
       const byOffset = {}; for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
       if (!Object.keys(byOffset).length) continue;
       const pt = pageTypeOf(t);
-      const prose = !NON_PROSE_TYPES.has(pt || '') && tt.length >= 120 && scriptShare(t.replace(/<[^>]+>/g, ' '), lang) >= 0.9;
+      const prose = !NON_PROSE_TYPES.has(pt || '') && tt.length >= 120 && scriptShare(stripCentred(t).replace(TAG, ' '), lang) >= 0.9;
       refs.push({ byOffset, tt, k, prose });
     }
     if (refs.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${b.id} ${lang} ${band} | ref pages ${refs.length} < ${MIN_REF_PAGES}`); continue; }

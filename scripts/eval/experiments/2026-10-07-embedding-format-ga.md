@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "GA and preview embeddings are bit-identical; query prefix alone loses (B R@10 0.97 to 0.84); prefix on both sides helps but misses the bar at the ceiling; more dims gain nothing."
+status: rejected
+decision: "No prefix, no re-embed, stay at 768 dims; larger follow-up test run (#6170)"
+superseded_by: null
+issue: [6170, 6175]
+---
 ## 2026-10-07 · Should page embeddings move to the GA model, the documented task prefix, or more dimensions? (#6170)
 <!-- PRIOR ART: 2026-10-07-orig-lang-embedding-recall-5729.md (Gemini vs open models on the untranslated pool; one format, one model id, 768 dims) and scripts/eval/librarian-search/ (live-store search variants over translated books). Neither varies the model id, the input format or the dimension. -->
 

@@ -8,8 +8,9 @@ import pareto from '@/data/ocr-pareto.json';
  * The OCR cost/accuracy charts (#5983, rebuilt in #6386). Guards:
  *  1. the committed src/data/ocr-pareto.json is what the generator gives from today's inputs, and the CLI re-score
  *     it reads reproduces the scorer on every unchanged read (rescore-plan-note.mjs --check);
- *  2. ONE failure rule: every engine in a panel is scored on every page of the panel (no engine's failure removes a
- *     page), accuracy and its interval stay inside [0, 1];
+ *  2. ONE failure rule (#6523): every engine in a panel was run on every page of the panel; a failed read is counted
+ *     in `did_not_read`, not scored, and an engine that did not read more than 20% is flagged `partly_measured`;
+ *     accuracy and its interval stay inside [0, 1];
  *  3. the frontier is exactly the non-dominated priced engines, and only on panels not graded not_fit;
  *  4. a verdict word needs the paired interval to exclude 0 AND the difference to clear the noise band;
  *  5. the renderer holds no figures: every number on the page comes from the JSON.
@@ -18,7 +19,8 @@ import pareto from '@/data/ocr-pareto.json';
  */
 type Vs = { diff: number; ci95: number[] | null; n_pages: number };
 type Point = { engine: string; accuracy: number; accuracy_ci95: number[] | null; cost: { usd_per_1k: number; source: string; basis: string } | null;
-  on_frontier?: boolean; production: boolean; vs_in_use?: Vs; verdict?: string; label: string };
+  on_frontier?: boolean; production: boolean; vs_in_use?: Vs | null; verdict?: string; label: string;
+  did_not_read: { k: number; n: number; kinds: Record<string, number> }; partly_measured?: string };
 type Panel = { kind: string; n_pages: number; n_works: number; frontier: boolean; grade: { level: string }; noise: { kind: string; band: number | null } | null; verdict: string; placed: Point[]; no_cost: Point[] };
 const charts = (pareto as unknown as { charts: { id: string; panels: Panel[] }[] }).charts;
 const panels = charts.flatMap(c => c.panels.map(p => [c.id, p] as const));
@@ -31,6 +33,10 @@ describe('ocr-pareto.json', () => {
   it('reads a CLI re-score that is current and passes its positive control', () => {
     expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-plan-note.mjs', '--check'], { encoding: 'utf8' })).toContain('current');
   }, 120_000);
+  // #6523: the extractor re-score the builder reads (CI has no bench: the CLI rows are re-derived, the rest kept).
+  it('reads an extractor re-score that is current and passes its positive control', () => {
+    expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-extract.mjs', '--check', '--bench', '/nonexistent'], { encoding: 'utf8' })).toContain('current');
+  }, 120_000);
 
   it('has charts, each panel on at least 5 shared pages, the first one primary', () => {
     expect(charts.length).toBeGreaterThanOrEqual(3);
@@ -40,12 +46,23 @@ describe('ocr-pareto.json', () => {
     }
   });
 
-  it('scores every engine on every page of its panel, inside [0, 1]', () => {
-    for (const [id, p] of panels) for (const x of [...p.placed, ...p.no_cost]) {
-      if (x.vs_in_use) expect(x.vs_in_use.n_pages, `${id}/${p.kind}/${x.engine}`).toBe(p.n_pages);
-      expect(x.accuracy).toBeGreaterThanOrEqual(0);
-      expect(x.accuracy).toBeLessThanOrEqual(1);
-      for (const v of x.accuracy_ci95 || []) { expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1); }
+  it('counts every page of its panel for every engine, read or not, inside [0, 1]', () => {
+    for (const [id, p] of panels) {
+      const prod = [...p.placed, ...p.no_cost].find(x => x.production);
+      for (const x of [...p.placed, ...p.no_cost]) {
+        const at = `${id}/${p.kind}/${x.engine}`, d = x.did_not_read;
+        expect(d.n, at).toBe(p.n_pages);
+        expect(Object.values(d.kinds).reduce((a, b) => a + b, 0), at).toBe(d.k);
+        expect(!!x.partly_measured, at).toBe(d.k / d.n > 0.2);
+        // paired only on pages both engines read
+        if (x.vs_in_use && prod) {
+          expect(x.vs_in_use.n_pages, at).toBeLessThanOrEqual(p.n_pages - Math.max(d.k, prod.did_not_read.k));
+          expect(x.vs_in_use.n_pages, at).toBeGreaterThanOrEqual(p.n_pages - d.k - prod.did_not_read.k);
+        }
+        expect(x.accuracy).toBeGreaterThanOrEqual(0);
+        expect(x.accuracy).toBeLessThanOrEqual(1);
+        for (const v of x.accuracy_ci95 || []) { expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1); }
+      }
     }
   });
 
@@ -95,11 +112,32 @@ describe('ParetoCharts.tsx holds no figures', () => {
     .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
   const RULES: [string, RegExp][] = [
     ['no percentages', /\b(?!95%)\d+(\.\d+)?\s?%/],
-    ['no money', /\$\d/],
+    ['no money', /\$(?!0 via subscription)\d/], // the one fixed label: a subscription run bills nothing
     ['no dates', /\b20\d\d-\d\d-\d\d\b/],
     ['no engine names', /\b(gemini|flash|paddle|surya|kraken|tesseract|olmocr|ndl)\b/i],
   ];
   for (const [name, re] of RULES) it(name, () => {
     expect(code.split('\n').filter(l => re.test(l)).map(l => l.trim().slice(0, 120))).toEqual([]);
+  });
+});
+
+// The summary table on /quality/pareto (#6524) is a second reading of the panels the verdict sentences were written
+// from. If summaryRow() ever picks a different engine or formats a figure differently, the table and the sentence
+// under it disagree in public, so every figure in a row must be found in its section's verdict sentence.
+describe('the summary table agrees with each verdict sentence (#6524)', async () => {
+  const { OCR, TRANSLATION, summaryRow } = await import('@/app/quality/ParetoCharts');
+  for (const m of [OCR, TRANSLATION]) for (const chart of m.charts) it(`${m.key}/${chart.id}`, () => {
+    const r = summaryRow(chart, m), verdict = chart.panels[0].verdict;
+    if (r.state === 'not_fit') return void expect(verdict).toMatch(/^No verdict/);
+    expect(verdict).toContain(r.inUse);
+    if (r.state === 'withheld') expect(verdict).toMatch(/^Verdicts withheld/);
+    else if (r.state === 'none') expect(verdict).toMatch(/^No engine (is clearly better than|stands out from) /);
+    else {
+      expect(verdict.startsWith(r.state === 'switch' ? `${r.best} ` : `The evidence points toward ${r.best} over `), verdict).toBe(true);
+      expect(verdict).toContain(`${r.gain} `);
+      expect(verdict).toContain(`95% interval ${r.interval})`);
+      for (const also of r.also.slice(0, 2)) expect(verdict.split('Also better: ')[1]).toContain(also.label);
+      if (r.also.length > 2) expect(verdict).toContain(`and ${r.also.length - 2} more`);
+    }
   });
 });

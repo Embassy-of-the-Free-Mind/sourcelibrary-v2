@@ -5,7 +5,13 @@
  * assert the displayed number cannot exceed 100 no matter how inconsistent the inputs.
  */
 import { describe, it, expect } from 'vitest';
-import { translationCompleteness, translationPercent } from '@/lib/translation-completeness';
+import {
+  translationCompleteness,
+  translationPercent,
+  TRANSLATABLE_PAGES_EXPR,
+  TRANSLATED_PAGES_CAPPED_EXPR,
+  aggregateTranslationPercent,
+} from '@/lib/translation-completeness';
 
 describe('translationCompleteness', () => {
   it('uses pages_translatable as the denominator when present', () => {
@@ -65,5 +71,59 @@ describe('translationCompleteness', () => {
   it('handles missing fields without throwing', () => {
     expect(translationPercent({})).toBe(0);
     expect(translationPercent({ pages_count: null, pages_translated: null })).toBe(0);
+  });
+});
+
+// The aggregate surfaces (analytics/canon, the admin dashboard) compute the formula in
+// Mongo, so there are two copies of it. This evaluates the $group expressions over the
+// operators they use and asserts each book contributes what the TS helper says — if
+// one copy changes without the other, these go red.
+type Doc = Record<string, unknown>;
+function evalExpr(e: unknown, doc: Doc): unknown {
+  if (typeof e === 'string' && e.startsWith('$')) return doc[e.slice(1)];
+  if (e === null || typeof e !== 'object') return e;
+  const [op, raw] = Object.entries(e as Record<string, unknown>)[0];
+  const args = (Array.isArray(raw) ? raw : [raw]).map(a => evalExpr(a, doc));
+  switch (op) {
+    case '$cond': return args[0] ? args[1] : args[2];
+    case '$and': return args.every(Boolean);
+    case '$isNumber': return typeof args[0] === 'number';
+    case '$gte': return (args[0] as number) >= (args[1] as number);
+    case '$ifNull': return args[0] ?? args[1];
+    case '$max': return Math.max(...(args as number[]));
+    case '$min': return Math.min(...(args as number[]));
+    case '$subtract': return (args[0] as number) - (args[1] as number);
+    default: throw new Error(`unhandled operator ${op}`);
+  }
+}
+
+describe('the Mongo $group expressions', () => {
+  const books: Doc[] = [
+    { pages_count: 200, pages_translated: 179, pages_translatable: 179, pages_blank: 21 },
+    { pages_count: 100, pages_translated: 80, pages_blank: 5 },
+    { pages_count: 60, pages_translated: 60, pages_blank: 54 }, // the 1000% Blue Qur'an inputs
+    { pages_count: 10, pages_translated: 50, pages_translatable: 10 },
+    { pages_count: 40, pages_translated: 0, pages_translatable: 0 },
+    { pages_count: 12, pages_translated: 3, pages_translatable: null, pages_blank: null },
+    { pages_count: 5, pages_blank: 9 },
+    {},
+  ];
+
+  it('match translationCompleteness() book by book', () => {
+    for (const b of books) {
+      const c = translationCompleteness(b);
+      expect(evalExpr(TRANSLATABLE_PAGES_EXPR, b)).toBe(c.translatable);
+      expect(evalExpr(TRANSLATED_PAGES_CAPPED_EXPR, b)).toBe(c.translatable === 0 ? 0 : c.translated);
+    }
+  });
+
+  it('sum to a total that never exceeds 100 and is 0 over an empty denominator', () => {
+    const translated = books.reduce((s, b) => s + (evalExpr(TRANSLATED_PAGES_CAPPED_EXPR, b) as number), 0);
+    const translatable = books.reduce((s, b) => s + (evalExpr(TRANSLATABLE_PAGES_EXPR, b) as number), 0);
+    expect(translated).toBeLessThanOrEqual(translatable);
+    expect(aggregateTranslationPercent(translated, translatable)).toBeLessThanOrEqual(100);
+    expect(aggregateTranslationPercent(5, 0)).toBe(0);
+    expect(aggregateTranslationPercent(50, 10)).toBe(100);
+    expect(aggregateTranslationPercent(1, 3)).toBe(33.3);
   });
 });

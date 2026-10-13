@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6abed5db896ea18127c8e188", "slot": 24,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། དེ (Derge Tengyur, vol. 180)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Pramāṇa commentary (a Pramāṇavārttika-type commentary refuting Īśvara and pradhāna as creators), correctly shelved in the Derge Tengyur Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 289,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "བྱ་བའི་བྲེ་བྲག་གིས་སམ།", "image": "བྱ་བའི་བྱེ་བྲག་གིས་སམ།", "problem": "བྱེ་བྲག (difference) misread as བྲེ་བྲག; meaning recoverable", "severity": "minor" },
+          { "ocr": "འདོད་ཆགས་ལ་སོགས་པ་དང་ལན་ཡང་", "image": "འདོད་ཆགས་ལ་སོགས་པ་དང་ལྡན་ཡང་ (as far as I can read the print)", "problem": "ལྡན 'endowed with' read as ལན 'reply'. This changes the root-text lemma, and translation A carries the error ('the reply concerning attachment')", "severity": "moderate", "class": "O6" },
+          { "ocr": "སྙིང་རྗེས་ལ་སོགས་པ་དང་ལྡན་པའི་དབང་ཕྱུག་པ་ལ", "image": "སྙིང་རྗེ་ལ་སོགས་པ་དང་ལྡན་པའི་དབང་ཕྱུག་ལ (probable)", "problem": "stray ས and པ; harmless", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "མི་ཤེས་པའི་འགྲོ་བ་རྣམས་མེད་པའི་ཐ་སྙད་ལ། ཅིའི་ཕྱིར་འཇུག་པར་བྱེད་པ", "english": "why would he engage in the conventional activities of ignorant wandering beings?", "problem": "drops མེད་པའི ('of the non-existent') and makes Īśvara the one who engages, where the text says he causes ignorant beings to engage; the point of the quoted objection is blurred", "severity": "moderate" },
+          { "source": "འདོད་ཆགས་ལ་སོགས་པ་དང་ལན་ཡང་ (image: ལྡན་ཡང་)", "english": "Also with respect to the reply concerning attachment and so forth...", "problem": "follows the OCR misreading ལན 'reply'; the image reads 'even though endowed with attachment etc.'", "severity": "moderate" },
+          { "source": "དབང་ཕྱུག་ཉིད་དང་མི་འགལ་བའི་ཕྱིར་གཉེན་པོ་བསྟན་པ་ནི། བློ་སྔོན་དུ་འགྲོ་བ་མ་ཡིན་པའི་ཕྱིར་མི་རིགས་སོ་ཞེ་ན", "english": "teaching their antidotes does not conflict with Īśvara himself; nevertheless, it is improper because it is not preceded by intellect", "problem": "restructures the objection and adds 'nevertheless'; the reason clause is attached to the wrong verb, though the objector's overall claim survives", "severity": "minor" },
+          { "source": "<keywords>", "english": "pratyakṣa, anumāna", "problem": "keywords list terms that do not appear on the page", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཕྱོགས་དང་མཐུན་པའི་ཕྱོགས་གང་ཡང་རུང་བ་ཉིད་ལྟ་བུ་ཡིན་ན", "english": "are simply anything compatible with the subject", "problem": "'either the paksha or the sapakṣa' (thesis or similar instance) is collapsed into 'compatible with the subject'; the disjunction is lost", "severity": "moderate" },
+          { "source": "རྗེས་སུ་འགྲོ་ལྡོག་མེད་པ་ཡིན་ན་ཇི་ལྟར་ལས་རྟོགས་པ་ཡིན", "english": "how can it be understood through karma?", "problem": "the question is how karma is inferred (karma is the object of the inference), not how something is known 'through karma'. The roles are swapped", "severity": "moderate" },
+          { "source": "འབྲས་བུ་སྣ་ཚོགས་པ་ཉིད་མཐོང་བ་ནི་རྣམ་པར་དཔྱོད་པ་དང་། སྙིང་རྗེས་ལ་སོགས་པ་དང་ལྡན་པའི་དབང་ཕྱུག", "english": "the observation of various results ... leads to an analysis. If a creator Lord possesses compassion and similar qualities", "problem": "རྣམ་པར་དཔྱོད་པ ('discernment', one of Īśvara's attributes) is read as 'leads to an analysis', so it drops out of the list of attributes. The same word is also rendered 'analysis' later", "severity": "moderate" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither has a serious error. A is right on the logic of the opening (paksha or sapakṣa; karma as what is inferred; discernment as Īśvara's attribute), while B mis-parses all three; A's one OCR-driven slip ('reply') matters less.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right leaf, with a good transcription: one meaning-relevant misread (ལན for ལྡན). Both translations are usable; A is somewhat more faithful to the argument."
+  }
+]

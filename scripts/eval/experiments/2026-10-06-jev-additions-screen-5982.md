@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 154
+verdict: "Jev separates planted additions (AUC 0.96) but real ones less well (AUC 0.81); as a pre-screen halving Gemini reads it keeps 16 of 22 true additions (73%)."
+status: undecided
+decision: null
+superseded_by: null
+issue: 5982
+---
 ## 2026-10-06 · Can Jev screen translated pages for untagged additions, in front of the Gemini detector? (#5982)
 <!-- PRIOR ART: scripts/eval/jev/ (instruction-page, seam and Clef screens) never asked whether a translation adds words; scripts/eval/untagged-additions/ is the Gemini detector and its controls and by-eye labels, which this reuses as ground truth but does not test a cheaper first pass against. -->
 

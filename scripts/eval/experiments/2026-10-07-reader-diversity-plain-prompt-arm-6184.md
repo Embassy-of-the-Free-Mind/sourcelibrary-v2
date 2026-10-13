@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [sa]
+scripts: [Deva]
+canons: []
+n_books: 2
+n_pages: 30
+verdict: "Flash with Pro's plain prompt reads 79% of 63 Sanskrit mark slots against Pro's 90%, under the 85% bar: Pro's lead is the model, not the prompt."
+status: informational
+decision: "By the preregistered rule 'Pro decides' stands for the Sanskrit tie-break; a Devanagari prompt clause is proposed for A/B (#6203)"
+superseded_by: null
+issue: [6184, 6203]
+---
 ## 2026-10-07 · Is Pro's lead on Sanskrit marks the model or the prompt? (#6184)
 
 PRIOR ART: `2026-10-07-reader-diversity-temperature-vs-family-6184.md` (Pro 90% vs Flash v19.1 73% on the same

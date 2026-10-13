@@ -1,0 +1,75 @@
+[
+ {
+  "book_id": "6abed76c896ea18127c8ee40",
+  "slot": 29,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Authentic canonical Tibetan Buddhist Pramāṇa (epistemology/logic) commentary from the Derge Tengyur collection, volume 185 (letter 'me').",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 653,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ཁོ་ནར་ཏེ་",
+      "image": "ཁོ་ན་སྟེ་",
+      "problem": "Subjoined sa-ta ligature སྟེ (ste) misread as རྟེ (rte) with ra-mgo",
+      "severity": "minor",
+      "class": "O3"
+     },
+     {
+      "ocr": "ཐ་མ་",
+      "image": "ཐལ་བ་",
+      "problem": "Epistemological commentary term ཐལ་བ་ (prasaṅga / logical consequence) misread as ཐ་མ་ (final)",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "གང་གི་ཐ་མ་ཡིན་སྙམ་ན།",
+      "english": "If one asks what the final consequence is,",
+      "problem": "Minor translation distortion derived from OCR misreading ཐལ་བ་ as ཐ་མ་",
+      "severity": "minor",
+      "class": "E2"
+     },
+     {
+      "source": "གཞན་དེས་ཉམས་སུ་མྱོང་བ་ནི། སྐྱེས་བུ་གཞན་ཉམས་སུ་མྱོང་བ་མེད་པའི་ཕྱིར་",
+      "english": "that experience by another does not belong to another person because there is no experience",
+      "problem": "Slightly awkward syntactic parsing of the argument regarding experiencing another person's cognition",
+      "severity": "minor",
+      "class": "T8"
+     }
+    ],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "དྲན་པ་ཙམ་གྱིས་འཇུག་པའི་ཕྱིར་རོ",
+      "english": "because memory occurs as a mere mental event",
+      "problem": "Imprecise translation of དྲན་པ་ཙམ་ (mere memory) as 'mere mental event'",
+      "severity": "minor",
+      "class": "T9"
+     },
+     {
+      "source": "གང་གི་ཐ་མ་ཡིན་སྙམ་ན།",
+      "english": "If one wonders what the final conclusion is,",
+      "problem": "Minor translation distortion derived from OCR misreading ཐལ་བ་ (prasaṅga) as ཐ་མ་ (final)",
+      "severity": "minor",
+      "class": "E2"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A provides precise Sanskrit technical vocabulary with standard diacritics (arthāpatti, pramāṇa, parokṣa) and preserves the formal structural commentary cues more accurately.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Well-preserved Derge Tengyur Pramāṇa woodblock folio with high-accuracy transcription and faithful English translations of complex Buddhist epistemological arguments on self-awareness and memory."
+ }
+]

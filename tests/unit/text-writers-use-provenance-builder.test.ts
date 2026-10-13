@@ -26,6 +26,7 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
+  'scripts/maintenance/withhold-paddle-table-pages-6388.mjs': "--undo moves the page's own earlier transcription back from its page_revisions snapshot; the engine block it was written with never left the page (#6388); nothing is read from a model",
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
   'scripts/batch/greek-reocr-5813/restore-truncated.mjs': "a move of the page's own earlier text back from its page_revisions snapshot, with the engine block and content_hash that snapshot carries (#5813); nothing is read from a model",
@@ -62,8 +63,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/workers/mineru-ocr-worker.mjs': "MinerU (specialist, not Gemini) — its own engine block (specialist-engine/1: version, licence, backend, run, input), checked by missingProvenance under source 'mineru'",
   'src/app/api/books/[id]/import-batch/route.ts': 'text supplied by the importer with the request, not a model read here',
   'src/app/api/iiif/[id]/search/route.ts': 'reads; the probe matches its regex filters',
-  'src/app/api/books/[id]/chat/route.ts': 'reads; the probe matches its regex filters',
-  'src/app/api/[tenant]/books/[id]/chat/route.ts': 'reads; the probe matches its regex filters',
+  'src/lib/chat-page-search.ts': 'reads (both chat routes); the probe matches its regex filters',
   'scripts/enrichment/dedup-entities.mjs': 'entity records, not page text (matches the probe on a `data:` line)',
   'src/lib/import-utils.ts': 'seeds an empty ocr object when a page doc is created',
   'src/app/api/pages/[id]/route.ts': 'manual edits by a signed-in person (source: manual)',

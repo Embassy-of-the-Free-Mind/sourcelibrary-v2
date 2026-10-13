@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cleanPageText } from '../../scripts/lib/page-embedding-text.mjs';
+import { cleanPageText, pageEmbeddingRowTs } from '../../scripts/lib/page-embedding-text.mjs';
 import { stripAnnotations } from '../../src/lib/semantic-alignment';
 
 /**
@@ -65,5 +65,15 @@ describe('semantic-alignment stripAnnotations', () => {
     expect(out).not.toContain('good');
     expect(out).not.toContain('Latin');
     expect(out).toContain('Real body text');
+  });
+});
+
+describe('pageEmbeddingRowTs', () => {
+  it('is the timestamp a stored row records, so embed-gemini can tell a current vector', () => {
+    const t = new Date('2026-10-10'), o = new Date('2026-10-01'), u = new Date('2026-09-01');
+    expect(pageEmbeddingRowTs({ translation: { updated_at: t }, ocr: { updated_at: o }, updated_at: u })).toBe(t);
+    expect(pageEmbeddingRowTs({ ocr: { updated_at: o }, updated_at: u })).toBe(o);
+    expect(pageEmbeddingRowTs({ updated_at: u })).toBe(u);
+    expect(pageEmbeddingRowTs({})).toBeNull();
   });
 });

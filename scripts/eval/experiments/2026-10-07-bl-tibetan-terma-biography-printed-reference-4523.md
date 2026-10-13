@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 133
+n_pages: 287
+verdict: "No accuracy figure is possible for held terma/biography manuscripts: 96% of served pages retrieve no open e-text; the 6 on-index pages read at median identity 0.80."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-07 · Can the held BL terma and biography manuscripts be scored against a printed e-text? Almost never: 96% of served pages fall off every open reference (#4523, step A)
 <!-- PRIOR ART: 2026-10-01 Nyingma-tantra reference run (scripts/eval/results/tibetan-nyingma-reference-2026-10-01/README.md, PR #5459) — same aligner, same controls, one reference (rKTs Gpb). This run had no known reference, so it first FINDS one per book on held-out pages, then scores different pages. -->
 

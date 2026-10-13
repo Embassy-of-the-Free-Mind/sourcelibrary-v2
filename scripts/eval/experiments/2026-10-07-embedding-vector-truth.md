@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 23064
+n_pages: 68690
+verdict: "e5-base vectors stamped Gemini by a column default sit in 2.95% of translated books (about 205K rows); the 0.5-0.9 cosine band is stale source text, not a model fault."
+status: informational
+decision: "Write-time e5 guard (#6189) and summary-prefix fix (#6194); the repair is logged in the follow-up 6175 entry"
+superseded_by: null
+issue: [6175, 6189, 6194, 6221]
+---
 ## 2026-10-07 · Is each stored embedding the vector of its own text, by the model its row names? (#6175)
 <!-- PRIOR ART: 2026-10-07-embedding-format-ga.md (#6170 found the e5 rows as a side finding) and 2026-10-07-embedding-models-qwen3-dual.md (#6172 found the 0.5–0.9 band). Both re-embedded an eval pool; neither asked which writer made a wrong vector, measured the corpus, or repaired it. -->
 

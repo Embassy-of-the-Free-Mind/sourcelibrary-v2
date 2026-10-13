@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 97
+n_pages: 237
+verdict: "No open engine beats the flash models on Latin print: 1500s lite+longs and flash+cal tie (0.076), 1600s flash+cal and 3.8-flash (0.068), lite 0.093; GLM trails."
+status: undecided
+decision: "No routing change and Latin stays off the GPU box; the lite long-s post-pass and flash routing are posed to Derek in the PR (#5924)"
+superseded_by: null
+issue: [5924, 5660]
+---
 ## 2026-10-06 · Latin print on the GEX45: does an open engine beat flash-lite by century? Round 4 of #5660, random books: no. The flash models win, and lite plus a long-s post-pass is close behind (#5924)
 
 PRIOR ART: 2026-10-04-ocr-bakeoff-round-3-5660.md (round 3: same GLM-OCR config, same Calamari config, same scorer; Latin was directional, 61 hand-picked pages); 2026-10-04-latin-print-by-century-5126.md (lite vs flash-preview by century on 82 same-edition pages, production prompt: the 1600s kept lite); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md (the same-edition reference route).

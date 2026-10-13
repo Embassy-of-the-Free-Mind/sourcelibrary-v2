@@ -72,6 +72,12 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
  */
 const UNATTENDED = [
   // ── Hetzner crontab ──
+  { match: 'climits check', spends: false, gated: false,
+    note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
+  { match: 'edge-crawl-alert.mjs', spends: false, gated: false,
+    note: 'reads Cloudflare GraphQL analytics (free) and pushes ntfy; no model call (#6398)' },
+  { match: 'box.sh push-limits', spends: false, gated: false,
+    note: 'copies the climits meter file to the other job boxes over the mesh; no model call (#6360)' },
   { match: 'pipeline-orchestrator.mjs', spends: true, gated: true,
     note: 'per-phase budgetAllowsDispatch; verified structurally by check A' },
   { match: 'translate-worker.mjs', spends: true, gated: true,
@@ -131,6 +137,8 @@ const UNATTENDED = [
     note: 'daily refit of pages.printed_page from stored OCR text; Mongo only, no model call (#4291)' },
   { match: 'clip-index-integrity.mjs', spends: false, gated: false,
     note: 'read-only join of clip_embeddings to gallery_images; no model call, no write (#5195)' },
+  { match: 'quality-dashboard/build.mjs', spends: false, gated: false,
+    note: '/admin/quality daily rebuild + trend history: reads pages/books/ops_reports, writes ops_reports only; no model call (#6429)' },
   { match: 'paid-vs-got.mjs', spends: false, gated: false,
     note: 'daily paid-vs-got ledger: reads usage stores, batch_jobs, pages and the billing export; writes one ops_reports row; no model call (#5499)' },
   { match: 'spend-daily.mjs', spends: false, gated: false,

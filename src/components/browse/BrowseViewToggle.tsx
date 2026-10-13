@@ -23,6 +23,7 @@ interface BrowseBook {
   pages_translated?: number;
   thumbnail?: string | null;
   thumbnail_blob?: string | null;
+  thumbnail_frame?: unknown;
   is_first_translation?: boolean;
   ft_disposition?: string | null;
 }
@@ -118,6 +119,7 @@ export default function BrowseViewToggle({ books, renderListItem }: BrowseViewTo
                 pages_translated: book.pages_translated,
                 thumbnail: book.thumbnail || undefined,
                 thumbnail_blob: book.thumbnail_blob || undefined,
+                thumbnail_frame: book.thumbnail_frame,
                 language: book.language || undefined,
                 is_first_translation: book.is_first_translation,
                 ft_disposition: book.ft_disposition || undefined,

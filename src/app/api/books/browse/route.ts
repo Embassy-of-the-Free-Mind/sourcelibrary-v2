@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
     // Build query
     let query = supabase
       .from('books_catalog')
-      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, is_first_translation, last_translation_at, quality_score, image_source_provider', { count: 'exact' })
+      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, is_first_translation, last_translation_at, quality_score', { count: 'exact' })
       .eq('visible', true)
       .gt('pages_count', 0);
 

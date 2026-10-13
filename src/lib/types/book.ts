@@ -24,6 +24,8 @@ export interface Book {
 
   // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)
   resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
+  // What kind of record this is; set at creation (#5292c). The reading rule is isArtworkRecord() in artwork-record.ts.
+  content_type?: 'book' | 'artwork' | 'text' | null;
 
   // Editor-chosen "About" side plate/page. Overrides the auto-picked
   // representative visual on the book page's About section. Stores the
@@ -79,6 +81,9 @@ export interface Book {
   // Display and categorization
   thumbnail?: string;          // @deprecated Use image_display. Cover/display image (~1200px for books, full-res for artworks)
   thumbnail_blob?: string;     // @deprecated Use image_thumb. Small preview (150px)
+  /** Where the page sits inside the cover scan: a PageFrame plus `of`, the R2
+   *  identity of the image it was measured on (#6010). Read through coverFrame(). */
+  thumbnail_frame?: unknown;
 
   // Canonical image fields (migration in progress — prefer these over thumbnail/thumbnail_blob)
   image_display?: string;      // Primary display image (1200px) — R2 URL

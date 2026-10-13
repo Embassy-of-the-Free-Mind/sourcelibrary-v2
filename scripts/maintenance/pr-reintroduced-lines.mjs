@@ -25,6 +25,7 @@
  * fetches `--shallow-since`; locally a normal clone has it).
  */
 import { execFileSync, execSync } from 'node:child_process';
+import { diffFromFiles, prFiles } from './pr-tier.mjs';
 
 const MARKER = '<!-- pr-reintroduced-lines -->';
 const MIN_LEN = 40;
@@ -101,16 +102,25 @@ function body(number, r) {
     out.push(`  \`${f.line.slice(0, 160)}\``);
   }
   if (r.findings.length > 15) out.push(`- …and ${r.findings.length - 15} more`);
-  out.push('', `_Checked ${r.checked} of ${r.total} added lines ≥ ${MIN_LEN} chars. Script: \`scripts/maintenance/pr-reintroduced-lines.mjs\`._`);
+  out.push('', `_Checked ${r.checked} of ${r.total} added lines ≥ ${MIN_LEN} chars${r.unread ? ` (${r.unread} file${r.unread === 1 ? '' : 's'} too large for GitHub to serve a patch were not read)` : ''}. Script: \`scripts/maintenance/pr-reintroduced-lines.mjs\`._`);
   return out.join('\n');
 }
 
 function main() {
   const number = parseInt(val('--pr'), 10);
   if (!number) { console.error('usage: --pr N [--comment]'); process.exit(1); }
-  const diff = sh(`gh pr diff ${number}`);
+  // `sh` swallows errors, so a refused diff (#5794: HTTP 406 past 300 files or
+  // 20K lines) used to read as "empty diff". Rebuild it from per-file patches.
+  let diff;
+  let unread = [];
+  try { diff = execSync(`gh pr diff ${number}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024 }); } catch (e) {
+    console.log(`#${number}: gh pr diff refused (${String(e.stderr || e.message).split('\n')[0].slice(0, 120)}); reading per-file patches`);
+    ({ diff, unread } = diffFromFiles(prFiles(number)));
+    if (unread.length) console.log(`  ${unread.length} file(s) with no patch from GitHub, not checked: ${unread.slice(0, 5).join(', ')}`);
+  }
   if (!diff.trim()) { console.log(`#${number}: empty diff, nothing to check`); return; }
   const r = findReintroduced(diff);
+  r.unread = unread.length;
   console.log(`#${number}: ${r.findings.length} re-introduced line(s) among ${r.checked}/${r.total} checked`);
   for (const f of r.findings) console.log(`  ${f.file}  ← removed by ${f.hits.map((h) => h.ref).join(', ')}\n    ${f.line.slice(0, 120)}`);
   if (!r.findings.length || !has('--comment')) return;

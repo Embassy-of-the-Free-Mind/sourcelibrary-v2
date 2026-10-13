@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged_vs_reference, judged]
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 113
+verdict: "G38's gain replicates on 113 fresh 84000 sides (+0.15, p = 0.0005) and 70 fresh weak-section pages (findings 61 to 29 per 100); +0.23 over production misses 0.25, so no default switch."
+status: undecided
+decision: "Pramana + Madhyamaka re-translation recommended, pending Derek; CLI run gated, nothing written (#6361); Tibetan default unchanged"
+superseded_by: null
+issue: [6182, 6121, 6361]
+---
 ## 2026-10-07 · Tengyur: does gemini-3.8-flash's gain replicate on fresh texts, and where does each Gemini model sit on cost × fidelity? (#6182)
 <!-- PRIOR ART: 2026-10-07-tengyur-newer-models-6121.md (#6121 round 2: G38 and Opus pass on 2 reference texts, 58 sides; this is its preregistered replication), 2026-10-03-tengyur-quality-arms-5497.md (the 113 sides aligned to 84000, reused unchanged), 2026-10-07-tengyur-open-models-6182.md (open and non-Gemini arms on the same 171 sides, companion packet). Scorer: scripts/eval/tengyur-levers/score-ref.py, given a `--round 6182` switch; rounds 1 and 2 re-score byte-identical. -->
 

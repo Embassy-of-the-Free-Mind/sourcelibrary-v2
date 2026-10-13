@@ -1,0 +1,46 @@
+[
+  {
+    "book_id": "6abeb43e896ea18127c844b1",
+    "slot": 14,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཨ (Derge Tengyur, vol. 109)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka-section commentary (citing Daśabhūmika and Yuktiṣaṣṭikā, four māras, then śīla among the perfections); belongs to the Derge Tengyur dbu ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 195,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "བདུད་(ཀྱིང་,ཀྱང་)རྣམ་པ་བཞིའོ", "image": "བདུད་ཀྱང་རྣམ་པ་བཞིའོ", "problem": "an editorial variant bracket (ཀྱིང་,ཀྱང་) is inserted into the transcription; the print shows only ཀྱང", "severity": "minor" },
+          { "ocr": "ཉོན་མོངས་པ་དང་དུ་མི་ལས་སྡིག་པ", "image": "ཉོན་མོངས་པ་དང་དུ་མི་ལེན་ སྡིག་པ (as far as I can read)", "problem": "ལེན 'adopt' read as ལས; both translations correctly render 'not adopting afflictions', so the sense survives", "severity": "minor" },
+          { "ocr": "སེམས་ལ་འགྱོད་པའི་མི་ཉེ་བར་ཞི་བས", "image": "probably འགྱོད་པའི་མེ་ ('fire of remorse'), which fits 'cools the mind'", "problem": "vowel probably misread (མི for མེ); the glyph is hard to read at this resolution", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "བདུད་རེ་རེས་ཀྱང་བ་སྤུའི་བུ་ག་རེ་རེ་ནས་བྱུང་བའི་བདུད་ཀྱི་ལུས་ཚད་དེ་སྙེད་མངོན་པར་སྤྲུལ", "english": "each of those demons were to manifest as many demonic bodies as there are pores on their skin", "problem": "the source has bodies emanated FROM EACH PORE; A turns this into a count equal to the number of pores", "severity": "moderate", "class": "T8" },
+          { "source": "ཁམས་གསུམ་པའི་བདུད་ཐམས་ཅད་ཀྱི་སྟོབས་རབ་ཏུ་འཇོམས་པར་བྱེད་པའི་སྟོབས་སྟོང་པ་ཉིད་ཀྱི་དོན་གྱི་རྡོ་རྗེ་ཆེན་པོས་འཇོམས་པར་བྱེད་པ་རྣམས་འདུལ་ལོ", "english": "the power of all the demons of the three realms is completely subdued. They are tamed by the \"Great Vajra of the Meaning of Emptiness,\" which subdues those who need subduing", "problem": "the quotation is restructured: the subduing power is an attribute of the vajra, and 'those to be subdued' are the object of 'tames'; A splits it into separate claims and gives the vajra the wrong role", "severity": "moderate" },
+          { "source": "འཆི་བདག་གི་བདུད་ནི་རང་བཞིན་གྱི་བདུད་དེ་དངོས་པོ་ལ་གྷ་ཉའོ", "english": "which is the actual executioner", "problem": "the obscure transliteration ལ་གྷ་ཉ is turned into a confident 'actual executioner' with no sign of doubt", "severity": "moderate", "class": "T7" },
+          { "source": "ཉོན་མོངས་པ་དང་དུ་མི་ལེན་སྡིག་པ་མི་འཇུག་པས", "english": "one does not engage in non-virtue under the influence of afflictions", "problem": "two separate negations ('does not adopt afflictions, does not enter into wrongdoing') are merged into a causal clause that is not in the source", "severity": "moderate" },
+          { "source": "རང་ཉིད་ཀློག་པ", "english": "personal recitation", "problem": "the sense is 'recite of their own accord' (spontaneously, through habituation); 'personal recitation' blurs it", "severity": "minor" },
+          { "source": "འཕགས་པ་ས་བཅུ་པར", "english": "<note>original: \"Arya Dashabhumika Sutra\"…</note>", "problem": "the Sanskrit title is labelled 'original', but the page has only the Tibetan", "severity": "minor" },
+          { "source": "(running prose)", "english": "numbered lists 1.–4. and 1.–3.", "problem": "list formatting imposed on continuous commentary prose", "severity": "minor", "class": "T16" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "དངོས་པོ་ལ་གྷ་ཉའོ", "english": "which is the destruction of entities <note>interpreting the phonetic transliteration la gha nya as Sanskrit laṅghana…</note>", "problem": "a conjectural reading, but it is openly flagged as an interpretation in the note", "severity": "minor" },
+          { "source": "ཁམས་གསུམ་པའི་བདུད་ཐམས་ཅད་ཀྱི་སྟོབས་རབ་ཏུ་འཇོམས་པར་བྱེད་པའི་སྟོབས", "english": "the power that completely subdues the power of all māras of the three realms", "problem": "the appositive is placed loosely after 'emptiness' so it reads somewhat awkwardly, but the structure is preserved", "severity": "minor" },
+          { "source": "བ་སྤུའི་བུ་ག་རེ་རེ་ནས་བྱུང་བའི་བདུད་ཀྱི་ལུས་ཚད་དེ་སྙེད", "english": "emanated as many demonic bodies from each pore", "problem": "'as many' leaves out what the number is compared with (དེ་སྙེད, 'that many', i.e. as many as there are beings)", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error, but B keeps the pore image, the Daśabhūmika quotation structure and the two negations in the śīla definition, and flags its conjecture on ལ་གྷ་ཉ; A has four moderate distortions and imposes list formatting.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A faithful Derge folio with a sound transcription (one editorial variant bracket and one or two minor vowel misreads). Translation B is clearly the better English; A is readable but loosens several clauses."
+  }
+]

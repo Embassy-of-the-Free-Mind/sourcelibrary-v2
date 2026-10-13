@@ -351,7 +351,8 @@ export default function CanonGapPage() {
           <p className="mt-4 text-base text-stone-600">
             Latin is our largest language, about {fmt(LATIN_BOOKS_ALL)} books, so the Latin row counts only the
             books in four of our collections: Hermetica, alchemy, Kabbalah and natural philosophy. Latin books on
-            Kabbalah are counted in the Kabbalah row too. The Greek row counts every book in Greek.
+            Kabbalah are counted in the Kabbalah row too. The Greek row counts every book in Greek, and the Chinese
+            classics row every book in Chinese outside the Buddhist canon.
           </p>
           <TraditionProgress n={1} rows={TRADITIONS} />
         </Section>

@@ -10,6 +10,7 @@ const STATUS_COLORS: Record<JobStatus, string> = {
     processing: 'var(--accent-sage)',
     failed: 'var(--accent-rust)',
     cancelled: 'var(--text-gold)',
+    blocked: 'var(--accent-rust)',
 };
 
 const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
@@ -20,6 +21,7 @@ const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
     processing: Loader2,
     failed: XCircle,
     cancelled: X,
+    blocked: XCircle,
 };
 
 interface JobCardProps {

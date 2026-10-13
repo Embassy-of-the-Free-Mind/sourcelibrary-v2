@@ -1,0 +1,42 @@
+[
+  {
+    "book_id": "6abeb35b896ea18127c83af5",
+    "slot": 10,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ལ (Derge Tengyur, vol. 105)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Madhyamaka commentary refuting Cittamatra and self-cognition (svasamvedana); it quotes the bodhicitta verse 'rtogs bya rtogs byed rnam pa'i sems' and runs a fourfold analysis of mind and illusion, so it belongs in the dbu ma section.",
+    "rights_flag": null,
+    "structure_note": "The margin folio label on the image reads '416' while the record is page 415. That is probably a scan-sequence versus folio-label offset, not a defect. The page continues mid-sentence from the previous leaf, as expected.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 415,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "གང་དུ་རྟོགས་དང་རྟོགས་བྱེད་པ།", "image": "the last syllable of the verse line may be ཅན rather than པ (hard to read at this resolution)", "problem": "possible one-syllable slip in the verse; no change of meaning", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "དམ་པ་ཡིན་ཏེ་རྟོགས་པས་སྒྲོ་བཏགས་པ་མ་ཡིན་པ་ཡང་ཞེས་པའི་དོན་ནི་སླར་གྱི་དོན་ཏོ།", "english": "It is the ultimate truth because it is not an imputation through realization; this meaning is further emphasized.", "problem": "This is a word gloss (the 'yang' in the root text means 'moreover'), and A turns it into 'this meaning is further emphasized'. A also makes the ཏེ into a causal 'because'.", "severity": "moderate", "class": "T8" },
+          { "source": "སྡུག་བསྔལ་ཀུན་འབྱུང་འཇིག་རྟེན་དང་། །ལྟ་གནས་སྲེད་པའང་དེ་དག་ཉིད།", "english": "The origin of suffering is the world, and viewpoints and cravings are also just that", "problem": "The quoted verse is a list (suffering, origin, the world, the bases of views and craving are those very [aggregates]). A misparses it as the claim 'the origin of suffering is the world'.", "severity": "moderate", "class": "T8" },
+          { "source": "བཅོམ་ལྡན་འདས་ཀྱིས་སེམས་ཙམ་ཉིད་དུ་ཡོད་པར་གསུངས་པ", "english": "Whatever the Blessed One has said regarding the existence of Cittamatra", "problem": "The source means the Buddha taught that things exist as mind only. A has him talking about the existence of the Cittamatra school.", "severity": "moderate" },
+          { "source": "རང་རིག་པའི་ཤེས་པ་ཅུང་ཟད་ཀྱང་རིགས་པ་མ་ཡིན་ཏེ", "english": "even a slight knowledge of svasamvedana is not logical", "problem": "The source says self-cognizing awareness is not tenable at all. 'Knowledge of' is awkward and misleading.", "severity": "minor" },
+          { "source": "འགྲོ་བ་སེམས་ཙམ་དུ་འདོད་པའི་གྲུབ་མཐའ", "english": "the philosophical tenet that asserts the world is mind-only", "problem": "'gro ba means 'beings', not 'the world'", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "བརྟགས་པས་གཞག་པ་འཇུག་པའི་རྒྱུ་ཉིད་ནི་འཁོར་བ་ཡིན་ཏེ", "english": "The entry into positing the appropriated aggregates as existent, non-existent, and so forth through conceptual investigation is the very cause of saṃsāra.", "problem": "The source says the cause of engaging in such positing IS samsara. B makes the positing the cause OF samsara, which swaps subject and predicate.", "severity": "moderate", "class": "T8" },
+          { "source": "དེ་ཡང་འབྲེལ་པ་མ་ཡིན་ལ", "english": "that too is incoherent", "problem": "'brel pa ma yin means 'not connected / irrelevant', not 'incoherent'", "severity": "minor" },
+          { "source": "དངོས་པོ་ཅུང་ཟད་གཅིག་ནི་འདིར་དགག་པ་མ་ཡིན་ནོ", "english": "Not even the slightest real entity is refuted here.", "problem": "The word 'real' is added; it is a slight interpretive gloss", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither version has a serious error, but A misparses the opening word gloss, the quoted verse and the mind-only sentence, while B has a single moderate subject-predicate swap.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is a cleanly transcribed folio of a Madhyamaka commentary, on the right shelf. Both English versions are serviceable; B is the more faithful of the two."
+  }
+]

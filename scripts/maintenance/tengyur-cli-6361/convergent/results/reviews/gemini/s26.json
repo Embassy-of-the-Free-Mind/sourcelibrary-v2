@@ -1,0 +1,43 @@
+[
+ {
+  "book_id": "6abed65f896ea18127c8e6d6",
+  "slot": 26,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། པེ (Derge Tengyur, vol. 182)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Buddhist epistemological treatise (Pramāṇa section) from the Derge Tengyur xylograph collection.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 352,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "པར་འགྱུར་རོ། །",
+      "english": "It will become so.",
+      "problem": "Misinterprets the trailing verb phrase of a reductio argument continuing from the previous folio as an independent future declarative statement.",
+      "severity": "minor"
+     },
+     {
+      "source": "ཁྱད་པར་ཐམས་ཅད་འཛིན་པར་བྱེད་པའོ། །",
+      "english": "it grasps all particulars",
+      "problem": "Translates the causative construction 'causes to apprehend / makes apprehended' as a simple active verb.",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately renders technical Pramāṇa terminology with appropriate glosses and correctly handles the syntax of folio boundary fragments.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, high-quality Derge Tengyur blockprint folio with an accurate transcription and an exceptionally precise, philosophically sound Translation B."
+ }
+]

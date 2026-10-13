@@ -21,6 +21,7 @@ import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
 import { countGalleryImages, galleryFilter, galleryHref, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
 import LibrarianSearch from '@/components/LibrarianSearch';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 /*
@@ -67,7 +68,7 @@ const SECTIONS = [
   { id: 'translations', label: 'First translations' },
   { id: 'featured', label: 'Featured' },
   { id: 'gallery', label: 'Gallery' },
-  { id: 'librarian', label: 'Librarian' },
+  { id: 'librarian', label: 'Librarian', hideOnTenantHost: true },
   { id: 'works', label: 'Works' },
   { id: 'involved', label: 'Get involved' },
 ];
@@ -471,6 +472,9 @@ export default async function MycologyCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
+      {/* The Librarian is refused on partner hosts (#4330) and this page is
+          served there, so the section goes too (the anchor bar drops its link). */}
+      <HideOnTenantHost>
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
@@ -490,6 +494,7 @@ export default async function MycologyCollectionPage() {
           </div>
         </div>
       </section>
+      </HideOnTenantHost>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">

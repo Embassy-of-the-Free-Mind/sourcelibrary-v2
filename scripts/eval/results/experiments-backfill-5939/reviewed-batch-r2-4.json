@@ -1,0 +1,342 @@
+{
+ "2026-10-07-verse-memory-r2-6141.md": {
+  "stage": "translation",
+  "measure": "judged",
+  "languages": [
+   "bo"
+  ],
+  "scripts": [
+   "Tibt"
+  ],
+  "canons": [
+   "derge-tengyur"
+  ],
+  "n_books": null,
+  "n_pages": 8,
+  "verdict": "Whole-block verse memory qualifies on only 12 pages; the 8 fresh ones read by eye against the Tibetan: 6 better, 1 same, 1 worse, so the gate (0 worse) failed and nothing was written.",
+  "status": "rejected",
+  "decision": "No write: the verse-memory gate failed twice and --round=2 --apply throws (#6141, PR #6166)",
+  "superseded_by": null,
+  "issue": 6141
+ },
+ "2026-10-08-canon-reference-set-6331.md": {
+  "stage": "translation",
+  "measure": "none",
+  "languages": [
+   "lzh",
+   "sa",
+   "pi"
+  ],
+  "scripts": [],
+  "canons": [
+   "chinese-buddhist",
+   "chinese-classics",
+   "sanskrit",
+   "pali"
+  ],
+  "n_books": null,
+  "n_pages": 138,
+  "verdict": "Built a 138-unit reference set (75 typed Chinese canon passages, 23 Sanskrit, 40 Pali pages), each with a fit-checked open English (132 same, 7 minor); Sonnet arm run, nothing judged yet.",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": [
+   6331,
+   6339
+  ]
+ },
+ "2026-10-08-canon-set-judged-6331.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [
+   "lzh",
+   "sa",
+   "pi"
+  ],
+  "scripts": [],
+  "canons": [
+   "chinese-buddhist",
+   "chinese-classics",
+   "sanskrit",
+   "pali"
+  ],
+  "n_books": 111,
+  "n_pages": 138,
+  "verdict": "Gemini 3.8 Flash via the CLI is the route for Chinese, Sanskrit and Pali and clears the good-enough bar (fidelity 4.31 / 4.39 / 4.67); Sonnet is never shown better.",
+  "status": "undecided",
+  "decision": "Route recommended in the #6331 decision table (PR #6350); running the canon gap on the CLI waits on the subscription-plan decision",
+  "superseded_by": null,
+  "issue": 6331
+ },
+ "2026-10-08-claude-subscription-arms-6182.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 373,
+  "n_pages": 534,
+  "verdict": "Claude Sonnet on the subscription scores below Gemini 3.8 Flash in every pool (pooled −0.16 [−0.22, −0.09]; Tengyur −0.35) with 2.6x the reversal pages; Haiku is far worse.",
+  "status": "rejected",
+  "decision": "No Claude translation route; subscription routing goes to Gemini 3.8 Flash CLI (#6331, PR #6350); panels published in PR #6349",
+  "superseded_by": null,
+  "issue": [
+   6182,
+   6349
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-113-6182.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [
+   "bo"
+  ],
+  "scripts": [
+   "Tibt"
+  ],
+  "canons": [
+   "derge-tengyur"
+  ],
+  "n_books": 8,
+  "n_pages": 113,
+  "verdict": "Gemini 3.8 Flash through the CLI matches the API on 113 fresh Tengyur sides against 84000: C38 − G38 +0.03 [−0.13, +0.18], inversion sides 3 vs 2; gate passed.",
+  "status": "undecided",
+  "decision": "Tengyur re-translation runs through the CLI, not the API (Derek 2026-10-08, #6361); writing it to pages is still gated",
+  "superseded_by": null,
+  "issue": [
+   6182,
+   6321
+  ]
+ },
+ "2026-10-08-cli-arm-tengyur-6182.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [
+   "bo"
+  ],
+  "scripts": [
+   "Tibt"
+  ],
+  "canons": [
+   "derge-tengyur"
+  ],
+  "n_books": 2,
+  "n_pages": 58,
+  "verdict": "The CLI arm cannot be told from the API on 58 Tengyur sides: C38 − G38 +0.06 [−0.10, +0.23], inversion sides 2 vs 3; both beat production by about 0.4–0.5; gate passed.",
+  "status": "undecided",
+  "decision": "Tengyur re-translation runs through the CLI, not the API (Derek 2026-10-08, #6361); writing it to pages is still gated",
+  "superseded_by": null,
+  "issue": [
+   6182,
+   6277
+  ]
+ },
+ "2026-10-08-cli-arm-xl-365-6331.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 363,
+  "n_pages": 363,
+  "verdict": "Gate failed: CLI fidelity equals the API's (pooled −0.02 [−0.07, +0.03]) but the CLI reversed sense on 26 pages vs 19; Greek, T4, T5 and the pool fail, Latin and T3 pass.",
+  "status": "rejected",
+  "decision": "Preregistered gate failed on reversals: the CLI is not declared equal to the API outside Tibetan (#6331)",
+  "superseded_by": null,
+  "issue": [
+   6331,
+   6182
+  ]
+ },
+ "2026-10-08-pareto-sample-audit-6304.md": {
+  "stage": "translation",
+  "measure": "judged",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "verdict": "43 Pareto panel pages (21 translation, 22 OCR) do not suit the measure; without them order and frontier hold in 21/25 translation and 10/13 OCR panels; Chinese #6182 and print OCR unfit to rank.",
+  "status": "adopted",
+  "decision": "The 43 pages are dropped from /quality/pareto with limit notes on each panel (PR #6309); T5 bar now holds for 3.8 Flash, not 3.7",
+  "superseded_by": null,
+  "issue": [
+   6304,
+   6309
+  ]
+ },
+ "2026-10-08-second-reader-harness-synthetic-check-6338.md": {
+  "stage": "pipeline",
+  "measure": "accuracy",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 40,
+  "n_pages": 40,
+  "verdict": "A synthetic 40-book run found four harness bugs (matching, planting, sealing, blinding), fixed before any real read; --allowedTools does not restrict a headless reader, --restricted does.",
+  "status": "adopted",
+  "decision": "Harness fixed, synthetic suite runs in CI (35 tests); the calibration runner refuses a CLI without --restricted (#6338)",
+  "superseded_by": null,
+  "issue": 6338
+ },
+ "2026-10-08-syriac-cli-flash-tiers-6295.md": {
+  "stage": "ocr",
+  "measure": [
+   "accuracy",
+   "judged"
+  ],
+  "languages": [
+   "syc"
+  ],
+  "scripts": [
+   "Syrc"
+  ],
+  "canons": [],
+  "n_books": 20,
+  "n_pages": 20,
+  "verdict": "On printed Syriac, 3.7 Flash CLI reads at CER 0.426 and 3.6 at 0.520 against the Kraken lane's 0.130; Kraken-text translations stay outside the floor under every tier; neither decision changes.",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": 6295
+ },
+ "2026-10-08-syriac-print-pareto-6295.md": {
+  "stage": "translation",
+  "measure": [
+   "judged",
+   "accuracy"
+  ],
+  "languages": [
+   "syc"
+  ],
+  "scripts": [
+   "Syrc"
+  ],
+  "canons": [],
+  "n_books": 20,
+  "n_pages": 20,
+  "verdict": "Kraken OmniSyr reads printed Syriac best (CER 0.130), but translating its text costs 1.33 fidelity points and 12 vs 5 reversal pages: keep those translations withheld; OCR lever is a Kraken fine-tune.",
+  "status": "undecided",
+  "decision": "Kraken-read English stays withheld (no change); the Kraken fine-tune spend (#5730) is unjudged, for Derek",
+  "superseded_by": null,
+  "issue": [
+   6295,
+   5730
+  ]
+ },
+ "2026-10-08-which-flagged-books-are-stored-in-the-wrong-page-order-5699.md": {
+  "stage": "image",
+  "measure": "judged",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 60,
+  "n_pages": null,
+  "verdict": "50 of 60 flagged right-to-left and CJK books are confirmed out of reading order by image (26 whole-book descending, 17 one part, 6 pair-swapped, 1 swap); 10 are false positives.",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": 5699
+ },
+ "2026-10-09-agentic-qa-arms-6182.md": {
+  "stage": "translation",
+  "measure": "judged_vs_reference",
+  "languages": [
+   "lzh",
+   "sa",
+   "pi"
+  ],
+  "scripts": [],
+  "canons": [
+   "chinese-buddhist",
+   "chinese-classics",
+   "sanskrit",
+   "pali"
+  ],
+  "n_books": 111,
+  "n_pages": 138,
+  "verdict": "No verdict: the re-judged C38 anchor moved −0.12, past the 0.10 tolerance. Descriptively a Sonnet check on a Gemini draft adds +0.10 [+0.05, +0.16] fidelity and almost never worsens a page.",
+  "status": "undecided",
+  "decision": null,
+  "superseded_by": null,
+  "issue": [
+   6182,
+   6331
+  ]
+ },
+ "2026-10-09-latin-cli-pilot-6375.md": {
+  "stage": "ocr",
+  "measure": [
+   "preference",
+   "judged"
+  ],
+  "languages": [
+   "la"
+  ],
+  "scripts": [
+   "Latn"
+  ],
+  "canons": [],
+  "n_books": 299,
+  "n_pages": 299,
+  "verdict": "On real Latin queue pages readers prefer 3.7 Flash CLI over flash-lite on 14/15 gothic and 17/22 roman pages; lite loops on 4/46 gothic and reads long-s as f; gothic is about 7% of the queue.",
+  "status": "undecided",
+  "decision": null,
+  "superseded_by": null,
+  "issue": 6375
+ },
+ "2026-10-09-ocr-pareto-gemini-3-7-3-6-flash-cli-6293.md": {
+  "stage": "ocr",
+  "measure": "accuracy",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": 555,
+  "verdict": "3.7 Flash CLI beats lite on Greek, Chinese and Syriac manuscript and ties 3 Flash, as 3.8 does; 3.6 is worse than 3.8 on four charts and loops; the CLI adds a third failure, the plan note.",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": 6293
+ },
+ "2026-10-09-ocr-pareto-gemini-3-8-flash-cli-6293.md": {
+  "stage": "ocr",
+  "measure": "accuracy",
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": 908,
+  "verdict": "3.8 Flash through the CLI beats Flash-Lite on Greek, Chinese and Syriac manuscript, never 3 Flash; about 6% of CLI pages fail in ways the API does not (empties, blocks, prose refusals).",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": [
+   6293,
+   6345
+  ]
+ },
+ "2026-10-09-second-reader-pilot-gemini-cli-6338.md": {
+  "stage": "pipeline",
+  "measure": "none",
+  "languages": [
+   "grc",
+   "la"
+  ],
+  "scripts": [
+   "Grek",
+   "Latn"
+  ],
+  "canons": [],
+  "n_books": 4,
+  "n_pages": 16,
+  "verdict": "Gemini through the CLI can run the shelf-reviewer brief: 16/16 pages per arm, no empties, blocks or schema failures; one call per page, since the four-image book call thins the reading.",
+  "status": "informational",
+  "decision": null,
+  "superseded_by": null,
+  "issue": [
+   6338,
+   6347
+  ]
+ }
+}

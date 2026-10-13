@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 160
+verdict: "After four tightenings the term-definition rule passed 40/40 by eye and moved definitions out of <term> on 207,363 pages in 4,911 books (4.0%); 16 pages later corrected."
+status: adopted
+decision: "Class d_termdef applied with page_revisions undo rows; the same rule now drives the reader (#5901, #5908)"
+superseded_by: null
+issue: [5901, 5908]
+---
 ## 2026-10-06 · Can a model's definition stored inside `<term>` be moved to a `<note>` by rule, and what did applying it change? (#5901)
 
 PRIOR ART: `2026-10-04-a2-cleanup-applied-5700.md` — the procedure followed here step for step (scan, 40-page by-eye gate through the reader, pilot, apply through `repairTranslationText`, resync, undo proof), and its script, which gains one class. `src/lib/term-definitions.ts` (#5908) — the rule, written for the reader's display; it had not been run over the corpus, and no stored text was changed by it.

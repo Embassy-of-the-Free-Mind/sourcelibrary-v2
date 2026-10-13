@@ -54,7 +54,7 @@ const HUMAN = new Map(Object.entries({
 function readable(db, id) {
   return db.collection('pages').aggregate([
     { $match: { book_id: id, page_number: { $gt: 0 } } },
-    { $group: { _id: null, tr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 20] }, 1, 0] } } } },
+    { $group: { _id: null, tr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 20] }, 1, 0] } } } },
   ]).toArray().then((r) => r[0]?.tr ?? 0);
 }
 
