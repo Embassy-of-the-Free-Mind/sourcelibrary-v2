@@ -70,3 +70,12 @@ sonnet | haiku` into `out/sonnet-corr*.jsonl` and `out/haiku-corr*.jsonl`. `scor
 arms and adds `_<arm>_minus_opus_corr` (paired, with folios better / worse). No image read-off was run for them.
 Scores with all arms: `results/tibetan-correct-6560/scores-6667.json.gz`. Write-up:
 `scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md`.
+
+## Gemini 3.8 Flash arms (#6560, 2026-10-13)
+
+`prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-3.8-flash-low | -high
+--kind ocr --parallel 2` on `req/corr.jsonl` and `req/corr-anchor.jsonl`, into `out/flash-{low,high}-corr*.jsonl`.
+`score.py readoff-prep --settler opus-settles-flash` builds a separate read-off key for both Flash arms, so the
+committed `opus-settles` key (Pro's arms) is not rebuilt. Opus ran it through `replicate-6547/run-claude-arm.py
+--model opus`. Scores with all arms: `results/tibetan-correct-6560/scores-flash.json.gz`. Write-up:
+`scripts/eval/experiments/2026-10-13-tibetan-flash38-correct-6560.md`.
