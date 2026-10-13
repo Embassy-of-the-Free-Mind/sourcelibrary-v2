@@ -6,6 +6,8 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
+import ocrRouting from '../../../scripts/lib/ocr-routing-table.json';
+import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
 import { GRADES, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
@@ -98,6 +100,16 @@ const STATUS_LABEL = {
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
+
+/* Who reads which page (#6688): the rows of scripts/lib/ocr-routing-table.json, the one source the
+   routing code exports and the routing README is generated from. Nothing about a row is typed here. */
+type RoutingEvidence = { file?: string; issue?: number; pr?: number; n: string; date: string };
+const ROUTING_STATUS: Record<string, string> = { settled: 'settled', provisional: 'decided on a small sample', open: 'not settled' };
+const ocrExperimentCount = EXPERIMENTS.filter(e => e.stage === 'ocr').length;
+const evidenceHref = (e: RoutingEvidence) => (e.file ? `${BLOB}scripts/eval/experiments/${e.file}` : `${ISSUE}${e.issue}`);
+/** "#6544" in a sentence becomes a link to the issue. */
+const withIssueLinks = (text: string) =>
+  text.split(/(#\d+)/).map((part, i) => (/^#\d+$/.test(part) ? <IssueLink key={i} num={Number(part.slice(1))} /> : part));
 
 const audit = sampleAudit();
 const of = (v: Of) => `${v.n} of ${v.of}`;
@@ -393,6 +405,73 @@ export default function QualityCenterPage() {
             {fidelityRun && <> (run {fidelityRun}{fidelityIssue && <>, <IssueLink num={fidelityIssue} /></>})</>}: one page per book,
             two blind model judges comparing our English with a published human translation of the same page. Methods and
             intervals: <A href="/research/quality">How page quality is measured</A>.
+          </Source>
+
+          <div id="who-reads" className="scroll-mt-24">
+            <Sub>Who reads which page</Sub>
+          </div>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            Different kinds of page are read by different engines. This table is what {n(ocrExperimentCount)} transcription
+            experiments have settled so far: the reader for each kind of page, and the measurement behind the choice. The
+            figures come from test pages that have a typed text to compare with. They are not a rate for every page in the
+            library. Where a row is not settled, or rests on a small sample, it says so.
+          </p>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[760px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Kind of page</th>
+                  <th className={th}>Read by</th>
+                  <th className={th}>Why, as measured</th>
+                  <th className={th}>Evidence</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ocrRouting.rows.map(row => (
+                  <tr key={row.id}>
+                    <td className={`${td} font-semibold text-stone-900 w-[18%]`}>{row.kind}</td>
+                    <td className={`${td} w-[20%]`}>
+                      {row.reader}
+                      <span className="block text-xs text-stone-500 mt-1">{row.in_use}</span>
+                    </td>
+                    <td className={td}>
+                      {row.why}
+                      <span className="block mt-1"><Status status={ROUTING_STATUS[row.status] ?? row.status} /></span>
+                    </td>
+                    <td className={`${td} w-[18%]`}>
+                      <ul className="space-y-1">
+                        {(row.evidence as RoutingEvidence[]).map(e => (
+                          <li key={e.file ?? e.issue}>
+                            <A href={evidenceHref(e)}>{e.n}</A>, {longDate(e.date)}
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mt-4 mb-2">Tested and not adopted:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-stone-700 leading-relaxed max-w-3xl">
+            {ocrRouting.not_adopted.map(x => (
+              <li key={x.engine}>
+                <b className="text-stone-900">{x.engine}.</b> {withIssueLinks(x.why)}
+              </li>
+            ))}
+          </ul>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mt-4">
+            A reviewer in these tests is an AI model unless the row says a person checked. To keep watch on each reader we
+            have specified a weekly check: a random page from each of ten books per reader, reviewed against the page image
+            by a model from a different maker than the one that read it. It is not running yet.
+          </p>
+          <Source>
+            Read from <A href={`${BLOB}scripts/lib/ocr-routing-table.json`}>scripts/lib/ocr-routing-table.json</A> (as of{' '}
+            {longDate(ocrRouting.as_of)}, <IssueLink num={ocrRouting.issue} />), the same file the routing code reads. The
+            weekly check is specified in{' '}
+            <A href={`${BLOB}scripts/eval/ocr-routing/README.md`}>scripts/eval/ocr-routing/README.md</A>. Cost against accuracy
+            for each engine: <A href="/quality/pareto">What it costs to read and translate a page, and how well</A>.
           </Source>
 
           <Sub>What we have not measured, and what is known to be wrong</Sub>

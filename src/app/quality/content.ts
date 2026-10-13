@@ -5,7 +5,7 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-10-10';
+export const PROSE_AS_OF = '2026-10-13';
 
 /**
  * "What changed this month" (#5939): a short dated note written by a person, shown at the top of

@@ -23,6 +23,9 @@
  *   node scripts/eval/build-routing-table.mjs --check    # exit 1 if the committed section is stale
  *   node --env-file=… scripts/eval/build-routing-table.mjs --refresh-pages   # re-measure the snapshot, then rewrite
  *
+ * It also writes the page-KIND table (#6688) into scripts/eval/ocr-routing/README.md, from
+ * scripts/lib/ocr-routing-table.json (tests/unit/ocr-routing-table.test.ts checks that one).
+ *
  * tests/unit/routing-table-fresh.test.ts runs the same comparison, so a PR that changes a routing
  * constant, a ledger row or the evidence JSON without re-running this fails CI. No model call. Nothing is
  * written outside the doc and (with --refresh-pages) languages.json.
@@ -30,7 +33,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE, FLASH_OCR_FROM } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE, FLASH_OCR_FROM, OCR_ROUTING_TABLE } from '../lib/ocr-routing.mjs';
 import { toLanguageCodes, codeFamily, languageName } from '../lib/language-normalize.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -157,6 +160,36 @@ export function withSection(doc, section) {
 }
 export const currentSection = (doc) => { const a = doc.indexOf(BEGIN), b = doc.indexOf(END); return a < 0 || b < a ? null : doc.slice(a, b + END.length); };
 
+/* ── the page-KIND table (#6688): scripts/lib/ocr-routing-table.json → scripts/eval/ocr-routing/README.md ── */
+
+export const KIND_DOC = 'scripts/eval/ocr-routing/README.md';
+export const KIND_BEGIN = '<!-- BEGIN GENERATED ocr-routing-table: scripts/eval/build-routing-table.mjs writes this section from scripts/lib/ocr-routing-table.json. Do not edit it by hand. -->';
+export const KIND_END = '<!-- END GENERATED ocr-routing-table -->';
+const EXPERIMENTS = 'scripts/eval/experiments/';
+const cellText = (s) => String(s).replace(/\|/g, '\\|').replace(/\n/g, ' ');
+/** One evidence item as doc text: the file (with its sample and date), or the issue and its open PR. */
+export const evidenceLabel = (e) => `${e.file ? `\`${EXPERIMENTS}${e.file}\`` : `#${e.issue}${e.pr ? ` (write-up in PR #${e.pr})` : ''}`} (${e.n}, ${e.date})`;
+
+export function renderKindTable(table = OCR_ROUTING_TABLE) {
+  const lines = [
+    KIND_BEGIN, '',
+    `As of ${table.as_of} (#${table.issue}). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.`, '',
+    '| page kind (`id`) | reader | status · routed | production today | evidence |',
+    '|---|---|---|---|---|',
+    ...table.rows.map((r) => `| ${cellText(r.kind)} (\`${r.id}\`) | ${cellText(r.reader)} | ${r.status} · ${r.routed} | ${cellText(r.production)} | ${r.evidence.map(evidenceLabel).map(cellText).join('; ')} |`),
+    '', 'Tested and not adopted:', '',
+    ...table.not_adopted.map((x) => `- **${x.engine}.** ${x.why}`),
+    '', KIND_END,
+  ];
+  return lines.join('\n');
+}
+export const currentKindSection = (doc) => { const a = doc.indexOf(KIND_BEGIN), b = doc.indexOf(KIND_END); return a < 0 || b < a ? null : doc.slice(a, b + KIND_END.length); };
+export function withKindSection(doc, section) {
+  const a = doc.indexOf(KIND_BEGIN), b = doc.indexOf(KIND_END);
+  if (a < 0 || b < a || doc.indexOf(KIND_BEGIN, a + 1) >= 0) throw new Error(`${KIND_DOC}: expected exactly one "${KIND_BEGIN}" … "${KIND_END}" pair`);
+  return doc.slice(0, a) + section + doc.slice(b + KIND_END.length);
+}
+
 async function refreshPages() {
   const { MongoClient } = await import('mongodb');
   const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
@@ -177,11 +210,15 @@ async function refreshPages() {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv.includes('--refresh-pages')) await refreshPages();
   const doc = read(DOC); const section = renderRoutingTable();
+  const kindDoc = read(KIND_DOC); const kindSection = renderKindTable();
   if (process.argv.includes('--check')) {
+    if (currentKindSection(kindDoc) !== kindSection) { console.error(`${KIND_DOC}: the generated page-kind table is stale — run \`node scripts/eval/build-routing-table.mjs\``); process.exit(1); }
     if (currentSection(doc) !== section) { console.error(`${DOC}: the generated routing table is stale — run \`node scripts/eval/build-routing-table.mjs\``); process.exit(1); }
     console.log(`${DOC}: generated routing table is current`);
   } else {
     fs.writeFileSync(path.join(ROOT, DOC), withSection(doc, section));
+    fs.writeFileSync(path.join(ROOT, KIND_DOC), withKindSection(kindDoc, kindSection));
+    console.log(`${KIND_DOC}: wrote the page-kind table (${OCR_ROUTING_TABLE.rows.length} kinds)`);
     console.log(`${DOC}: wrote the generated routing table (${section.split('\n').filter((l) => /^\| .*\(`[a-z]{3}`\)/.test(l)).length} languages)`);
   }
 }

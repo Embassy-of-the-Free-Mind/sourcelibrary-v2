@@ -8,7 +8,7 @@ n_books: 5
 n_pages: 2600
 verdict: "Full Kraken reads carry both Proclus In Timaeum codices past the 80% bar (97.7% and 98.7% located against Schneider); the alchemical codices plateau near 48%, limited by the edition."
 status: undecided
-decision: null
+decision: "Nothing written. For Derek on #6688, default: do not write the two Proclus codices from the fitted edition; Greek manuscripts follow routing row manuscripts (Opus) once that is routed"
 superseded_by: null
 issue: 5619
 ---

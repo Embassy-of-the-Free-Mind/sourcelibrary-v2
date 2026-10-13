@@ -7,8 +7,8 @@ canons: []
 n_books: 100
 n_pages: 100
 verdict: "On Paddle's Chinese pages, Opus correcting Paddle's draft beats both Paddle and an Opus re-read. On the 40 withheld table pages: median CER 4.0% against Paddle 6.4% and Opus redo 5.8%, better on 31 pages and worse on 1. On ordinary pages the gain is small (−1.0 pt on 30 random pages, 2 made worse) and sits on the pages the lane's own Kanripo screen already scores below 0.95 dice. Every corrector left at most 1 of 30 planted errors. 3.1 Pro makes 21 of 40 table pages worse. A cross-family read-off disputes 26–36% of every arm's edits toward Kanripo, Opus included, and the two judges agree on only 70% of items, so it does not separate the arms. Opus quota, not speed, bounds the lane: the 4,379 table pages take about 1 account-week, dice < 0.90 (414K pages) about 97, the whole 1.57M lane about 369."
-status: undecided
-decision: null
+status: adopted
+decision: "Opus corrects Paddle's draft on the flagged table pages (job table-correct-6561; routing rows chinese-tables and correct-not-redo). Closed in #6688"
 superseded_by: null
 issue: [6561, 6388, 6553]
 ---

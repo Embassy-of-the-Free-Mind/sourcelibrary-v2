@@ -7,8 +7,8 @@ canons: []
 n_books: 48
 n_pages: 48
 verdict: "Paddle reads SKQS manuscript pages best (median CER 0.132 vs Qwen3-VL 0.205, flash 0.304, lite 0.372); the Tibetan woodblock canary passed, and gate 0 stopped both backlog lanes."
-status: undecided
-decision: null
+status: adopted
+decision: "PaddleOCR-VL over Qwen3-VL, Flash and Flash-Lite for Siku Quanshu manuscript pages (routing row chinese-siku-manuscript); Yigdzin stays the Tibetan reader (row tibetan). Closed in #6688"
 superseded_by: null
 issue: [5660]
 ---

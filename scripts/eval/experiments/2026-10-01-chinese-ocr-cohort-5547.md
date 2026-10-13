@@ -7,8 +7,8 @@ canons: [chinese-classics]
 n_books: 433
 n_pages: 433
 verdict: "On the held SKQS cohort (97.7% brush manuscript) lite is catastrophic on 10.6% of pages, PaddleOCR-VL 0.9%, flash-preview 3.7%; Paddle passes the cost-lane rule again."
-status: undecided
-decision: "Paddle lane for the 7,894 books (dedup first, ~EUR 650-800) proposed; PENDING Derek in DECISIONS.md, default books stay held (#5547)"
+status: adopted
+decision: "PaddleOCR-VL reads the Siku Quanshu cohort (routing row chinese-siku-manuscript; lane scripts/lib/paddle-zh-lane.mjs, #5600). Closed in #6688"
 superseded_by: null
 issue: [5547, 4719]
 ---

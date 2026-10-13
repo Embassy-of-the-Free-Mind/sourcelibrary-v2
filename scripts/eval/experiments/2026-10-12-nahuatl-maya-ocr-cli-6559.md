@@ -7,8 +7,8 @@ canons: []
 n_books: 18
 n_pages: 18
 verdict: "Through the CLI, Gemini 3.1 Pro reads Nahuatl and Mayan-language pages better than 3.8 Flash (Opus-judged mean 4.1 vs 3.5 Nahuatl, 4.3 vs 3.75 Mayan, of 5); 3.8 Flash flattens colonial Maya letters (24 normalisations on 8 pages)."
-status: undecided
-decision: null
+status: rejected
+decision: "The 3.1 Pro CLI lane was not taken (withdrawn from agy 2026-10-12); Derek chose Opus on 2026-10-12 (routing row nahuatl-mayan). Closed in #6688"
 superseded_by: null
 issue: [6559, 6553]
 ---

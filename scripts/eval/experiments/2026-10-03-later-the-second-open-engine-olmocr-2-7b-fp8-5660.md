@@ -7,8 +7,8 @@ canons: []
 n_books: null
 n_pages: 383
 verdict: "olmOCR-2-7B-FP8 beats flash-lite on English 1600-1699 (CER 0.036 vs 0.053, routes to box) but keeps lite elsewhere; Greek catastrophic on 55 of 114 pages."
-status: undecided
-decision: null
+status: rejected
+decision: "olmOCR not adopted: English 1600-1699 stays on Flash-Lite and no open-engine print lane runs (routing row latin-script-print, not-adopted list; GPU lanes stopped at gate 0, #5660). Closed in #6688"
 superseded_by: null
 issue: 5660
 ---

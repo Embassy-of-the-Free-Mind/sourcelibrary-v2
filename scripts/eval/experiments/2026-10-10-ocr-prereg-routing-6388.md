@@ -7,8 +7,8 @@ canons: []
 n_books: 90
 n_pages: 90
 verdict: "Provisional (AI-consensus key): PaddleOCR beats flash-lite on Chinese manuscripts by 24.5 pts CER; on Latin print no engine can be told apart from flash-lite; on English print nothing beats it."
-status: undecided
-decision: null
+status: rejected
+decision: "No routing change: the provisional verdicts agree with routing rows chinese-siku-manuscript (Paddle) and latin-script-print (Flash-Lite); the human key was not run. Closed in #6688"
 superseded_by: null
 issue: [6388, 6203, 6386]
 ---
