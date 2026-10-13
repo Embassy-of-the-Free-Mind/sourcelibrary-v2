@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
@@ -297,6 +298,8 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
 
     // Delete the page
     await db.collection('pages').deleteOne(scope);
+    // Its vector must stop being served by semantic search (#6270).
+    await withdrawPageVectors([id], { reason: 'removed', writer: 'DELETE /api/pages/[id]' });
 
     // Renumber remaining pages for this book - use bulkWrite for speed
     const remainingPages = await db.collection('pages')

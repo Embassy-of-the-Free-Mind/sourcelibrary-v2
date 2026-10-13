@@ -11,6 +11,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 
 const args = process.argv.slice(2);
 
@@ -89,8 +90,11 @@ async function main() {
     }
 
     // Delete excess pages
+    const excessIds = await db.collection('pages').distinct('id', excessFilter);
     const deleteResult = await db.collection('pages').deleteMany(excessFilter);
     console.log(`\nDeleted ${deleteResult.deletedCount} excess pages.`);
+    // Their vectors must stop being served by semantic search (#6270).
+    await withdrawPageVectors(excessIds, { reason: 'removed', writer: 'fix-ia-page-counts' });
 
     // Recount remaining pages with OCR and translations
     const remainingTotal = await db.collection('pages').countDocuments({ book_id: bookId });
