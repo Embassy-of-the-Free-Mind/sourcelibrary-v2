@@ -119,9 +119,13 @@ def main():
     ap.add_argument('--root', default=os.environ.get('JOB_SCRATCH'))
     ap.add_argument('--index', default='/root/tibetan-eval/etext-index-full.pkl')
     ap.add_argument('--seed', type=int, default=6560)
+    ap.add_argument('--reuse-plants', action='store_true',
+                    help='#6667: rebuild the requests from the committed derge-windows.json.gz and plants.json (same '
+                         'folios, same planted drafts) without kanjur_align or the e-text index; writes neither file')
     a = ap.parse_args()
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    from kanjur_align import syllables, nw_identity, window_syllables
+    if not a.reuse_plants:
+        from kanjur_align import syllables, nw_identity, window_syllables
 
     rows = [json.loads(l) for l in open(MANIFEST, encoding='utf-8')]
     rows = [r for r in rows if r['stratum'] == 'kangyur']
@@ -154,6 +158,8 @@ def main():
 
     rng = random.Random(a.seed)
     anchor_ids = sorted(rng.sample([r['id'] for r in rows], 10))
+    old = json.load(open(os.path.join(OUT, 'plants.json'), encoding='utf-8')) if a.reuse_plants else None
+    assert old is None or old['anchor_ids'] == anchor_ids
     reqs = {'redo': [], 'corr': [], 'corr-anchor': []}
     plants = {}
     for r in rows:
@@ -162,16 +168,26 @@ def main():
         reqs['redo'].append({'uid': r['id'], 'image': img, 'prompt': REDO})
         reqs['corr'].append({'uid': r['id'], 'image': img, 'prompt': CORR.format(draft=r['served_text'])})
         if r['id'] in anchor_ids:
-            d, pl = plant(r, windows[r['id']]['syllables'], rng)
+            if old:  # the committed key, applied as score.py applies it
+                pl = old['plants'][r['id']]['plants']
+                lines = r['served_text'].split('\n')
+                for p in sorted(pl, key=lambda p: (p['line'], -p['offset'])):
+                    l = lines[p['line']]
+                    assert l[p['offset']:p['offset'] + len(p['orig'])] == p['orig']
+                    lines[p['line']] = l[:p['offset']] + p['planted'] + l[p['offset'] + len(p['orig']):]
+                d = '\n'.join(lines)
+            else:
+                d, pl = plant(r, windows[r['id']]['syllables'], rng)
             plants[r['id']] = {'seq': r['seq'], 'plants': pl}
             reqs['corr-anchor'].append({'uid': r['id'], 'image': img, 'prompt': CORR.format(draft=d)})
     for k, v in reqs.items():
         with open(os.path.join(a.root, 'req', k + '.jsonl'), 'w', encoding='utf-8') as f:
             for x in v:
                 f.write(json.dumps(x, ensure_ascii=False) + '\n')
-    json.dump({'seed': a.seed, 'anchor_ids': anchor_ids, 'plants': plants,
-               'note': 'planted in the DRAFT only; never mentioned in any prompt (no count, no hint)'},
-              open(os.path.join(OUT, 'plants.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    if not old:
+        json.dump({'seed': a.seed, 'anchor_ids': anchor_ids, 'plants': plants,
+                   'note': 'planted in the DRAFT only; never mentioned in any prompt (no count, no hint)'},
+                  open(os.path.join(OUT, 'plants.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print({k: len(v) for k, v in reqs.items()}, 'plants', sum(len(v['plants']) for v in plants.values()), file=sys.stderr)
 
 

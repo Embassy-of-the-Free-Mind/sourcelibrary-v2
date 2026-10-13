@@ -51,7 +51,7 @@ def call(prompt, model, cwd, timeout, effort=None):
         cls = 'empty'
     else:
         cls = None
-    return out, err or (raw[-300:] if cls else ''), secs, cls, {'turns': j.get('num_turns'), 'cost_usd_equiv': j.get('total_cost_usd')}
+    return out, err or (raw[-300:] if cls else ''), secs, cls, {'turns': j.get('num_turns'), 'cost_usd_equiv': j.get('total_cost_usd'), 'model_resolved': ','.join(j.get('modelUsage') or {}) or None}
 
 
 def main():

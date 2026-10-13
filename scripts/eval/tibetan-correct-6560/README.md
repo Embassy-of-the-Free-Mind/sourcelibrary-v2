@@ -61,3 +61,12 @@ python3 scripts/eval/tibetan-correct-6560/score.py score --out scripts/eval/resu
   controls measure the settler.
 
 Result and decision: `scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md`.
+
+## Sonnet and Haiku arms (#6667)
+
+`prep.py --root <scratch> --reuse-plants` rebuilds the requests from the committed Derge windows and `plants.json`
+(no `kanjur_align`, no e-text index). The arms ran through `scripts/eval/replicate-6547/run-claude-arm.py --model
+sonnet | haiku` into `out/sonnet-corr*.jsonl` and `out/haiku-corr*.jsonl`. `score.py` scores them beside the committed
+arms and adds `_<arm>_minus_opus_corr` (paired, with folios better / worse). No image read-off was run for them.
+Scores with all arms: `results/tibetan-correct-6560/scores-6667.json.gz`. Write-up:
+`scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md`.
