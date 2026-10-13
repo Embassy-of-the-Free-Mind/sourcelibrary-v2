@@ -1,0 +1,401 @@
+[
+ {
+  "slot": 6,
+  "book_id": "6a3c6549af3c49b59c5cb37d",
+  "book_url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d",
+  "tradition": null,
+  "book": {
+   "id": "6a3c6549af3c49b59c5cb37d",
+   "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+   "display_title": null,
+   "author": "吳士玉",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06055736.cn",
+   "pages_count": 192,
+   "pages_ocr": 162,
+   "pages_translated": 140,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 192,
+   "distinct_page_numbers": 192,
+   "duplicate_records": 0,
+   "pages_with_ocr": 162,
+   "pages_translated": 140,
+   "with_printed_number": 20,
+   "printed_backsteps": 7,
+   "printed_repeats": 11,
+   "pages_count_field": 192,
+   "pages_ocr_field": 162,
+   "pages_translated_field": 140
+  },
+  "run": [
+   137,
+   138,
+   139
+  ],
+  "pages": [
+   {
+    "page_number": 137,
+    "page_id": "6a3c6549af3c49b59c5cb406",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/137.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n傳義宗名倍太祖長子忽汗降太祖改其國曰東丹以\n倍為人皇王主之太宗立以東平為南京徙倍居之倍\n歸國命王繼逺撰建南京碑\n作樂田園詩\n閬苑集\n遼史宗室平王隆\n先傳平王為人聰\n明博學能詩有\n行於世\n十鹿射獲其九\n遼史宗室潛傳濬道宗\n長子六歲封梁王明年\n從上獵矢連發三中上顧左右曰朕祖宗以來騎射絕\n人是兒雖幼不墜其風後遇\n帝喜設宴\n剪桐為珪\n劉向說苑成王與唐叔虞燕居丨梧丨葉以\n丨丨而授唐叔虞曰余以此封汝唐叔虞喜\n以告周公周公以請曰天子封虞耶成王曰余一與虞\n戲也周公對曰天子無戲言於是遂封唐叔虞於晉\n鴻寶秘書\n應劭風俗通淮南王安招致賔客方術\n之士數千人作丨丨苑丨枕中之丨\n八公\n詣門\n葛洪神仙傳淮南王劉安者漢髙帝之孫也折節\n下士篤好儒學方術之士不逺千里卑辭重幣請",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "The biography of Yizong <note>original: 義宗</note>, named Bei, states he was the eldest son of Taizu. When the Huhar kingdom surrendered, Taizu renamed the nation East Dan and appointed Bei as the Human Sovereign King to govern it. When Taizhou ascended the throne, he designated Dongping as the Southern Capital and relocated Bei to reside there. Upon Bei's return to his domain, he ordered Wang Jiyuan to compose the Southern Capital Stele.\n\nHe composed the *Garden Poetry on Making Music* and the *Langyuan Collection*.\n\nThe *History of Liao* in the Biographies of the Imperial Clan concerning King Ping, Longxian, records that King Ping was intelligent and possessed vast learning. He was capable in poetry and his writings circulated widely in the world. \n\nHe shot ten deer and captured nine of them.\n\nThe *History of Liao* in the Biographies of the Imperial Clan concerning Qian, named Jun, states he was the eldest son of Daozong. At age six, he was enfeoffed as the King of Liang. The following year, he accompanied the Emperor on a hunt. His arrows hit the target three times in succession. The Emperor looked to his attendants and said, \"Since the time of my ancestors, our riding and archery have surpassed others. Though this child is young, he does not let that tradition fall.\" Later, encountering the Emperor's joy, a banquet was prepared.\n\nCutting a Paulownia leaf to make a jade scepter.\n\nLiu Xiang's *Garden of Stories* <note>original: Shuo Yuan</note> records that King Cheng and Tang Shuyu were living in leisure. The King cut a leaf from a paulownia tree into the shape of a jade scepter and gave it to Tang Shuyu, saying, \"I use this to enfeoff you.\" Tang Shuyu was delighted and informed the Duke of Zhou. The Duke of Zhou requested an audience and asked, \"Did the Son of Heaven enfeoff Shuyu?\" King Cheng replied, \"I was only joking with Shuyu.\" The Duke of Zhou responded, \"The Son of Heaven has no joking words.\" Consequently, Tang Shuyu was enfeoffed at Jin.\n\nThe Great Treasure and the Secret Books.\n\nYing Shao's *Comprehensive Meaning of Customs* <note>original: Fengsu Tong</note> records that An, the King of Huainan, recruited thousands of guests, practitioners of methods, and men of arts. He produced the *Great Treasure* and the *Secret Books* kept in a pillow within the garden.\n\nThe Eight Dukes arrived at the gate.\n\nGe Hong's *Biographies of Divine Immortals* records that Liu An, the King of Huainan, was the grandson of Emperor Gao of the Han. He was humble toward scholars and sincerely loved Confucian learning. Practitioners of methods traveled from a thousand miles away, drawn by his humble words and heavy gifts, to request an audience.\n\n<summary>This page records historical anecdotes from the Liao and Han dynasties, focusing on imperial scholars, the archery skills of young princes, and the literary patronage of Liu An, King of Huainan.</summary>\n<keywords>Liao Dynasty, Yizong, King Ping, Liu An, King of Huainan, Duke of Zhou, archery, poetry, talismans, Jin state</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 138,
+    "page_id": "6a3c6549af3c49b59c5cb407",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/138.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n尚定子史釋華\n<header>卷二十二</header>\n<page-num>十九</page-num>\n致之於是乃有丨丨丨丨皆鬚眉皓白門吏白王王使\n閽人自以意難問之八公皆變為童子角髻青絲色如\n桃花門吏大驚王聞之足不履跣而迎登思仙之臺\n張錦帳象牀燒百和之香進金玉之几執弟子之禮\n登\n思仙臺進金玉\n見\n上\n雞鳴天上犬吠雲中\n葛洪神仙傳\n淮南王安登\n山大祭埋金地中即白日昇天八公與安所踏山上石\n皆陷成跡時人傳八公安臨去時餘藥器置在庭中雞\n犬舐啄之盡得昇天故\n丨丨丨丨丨丨丨也\n魚藻宮\n葛洪西京雜記趙王如\n意年㓜未能親外傅戚\n姬使舊趙王內傅趙媪傅之號\n其室曰養德宮後改為丨丨丨\n落猿巖棲龍岫\n葛洪西\n京雜記\n梁孝王好營宮室苑囿之樂作曜華之宮築兔園園中\n有百靈山山有膚寸石丨丨丨丨丨丨又有雁池池間\n有鶴洲\n鳬渚\n鶴洲鳬渚\n見\n上\n格熊\n葛洪西京雜記廣陵王胥有\n勇力常於別囿學丨丨後遂",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Imperial Collection of the Four Treasuries\nExcerpts from the Masters and Historians\nVolume 22\nPage 19\n\n<note>original: \"致之於是乃有八公皆至\"</note> brought them there; thus there were <term>Eight Elders</term> <gloss>Ba Gong</gloss> who all arrived, their hair and eyebrows completely white. The gate official reported this to the King. The King sent the gatekeeper to intentionally challenge them with difficult questions. The Eight Elders all transformed into young children with hair tied in horn-shaped knots of raven-black silk and complexions like peach blossoms. The gate official was greatly alarmed. When the King heard of this, he did not even put on his shoes but went barefoot to welcome them. They ascended the Terrace for Contemplating Immortals. He spread brocade curtains and ivory beds, burned hundred-blend incense, and presented tables of gold and jade, observing the rituals due from a disciple to a teacher.\n\nAscended the Terrace for Contemplating Immortals; presented gold and jade.\n<note>See above.</note>\n\nChickens crow in the heavens; dogs bark amidst the clouds.\n<term>Ge Hong</term> <gloss>283–343 AD, Taoist scholar and alchemist</gloss>, Traditions of Divine Immortals <note>original: \"Shenxian Zhuan\"</note>: Liu An, the King of Huainan, ascended the mountain to perform a great sacrifice and buried gold in the earth. He then ascended to heaven in broad daylight. The rocks on the mountain where the Eight Elders and Liu An stepped were all indented with their footprints. The people of that time passed down the story that when King Liu An was about to depart, he left the remaining medicinal vessels in the courtyard. The chickens and dogs licked and pecked at them, and all of them were able to ascend to heaven. Thus it is said: <term>chickens crow in the heavens and dogs bark amidst the clouds</term>.\n\nPalace of Fish and Algae.\nGe Hong, Miscellaneous Records of the Western Capital <note>original: \"Xijing Zhaji\"</note>: Liu Ruyi, the Prince of Zhao, was young and could not yet attend lessons with outside tutors. Lady Qi ordered the former tutor of the Prince of Zhao, Mother Zhao, to tutor him. Her chamber was named the Palace of Cultivating Virtue, which was later changed to the <term>Palace of Fish and Algae</term> <gloss>Yu Zao Gong</gloss>.\n\nThe Rock of the Falling Gibbon; The Cave of the Dwelling Dragon.\nGe Hong, Miscellaneous Records of the Western Capital: King Xiao of Liang enjoyed the pleasures of constructing palaces, chambers, gardens, and enclosures. He built the Palace of Shining Splendor and constructed the Rabbit Garden. Within the garden was the Mountain of a Hundred Spirits. On the mountain were stones of diverse textures, the <term>Rock of the Falling Gibbon</term>, and the <term>Cave of the Dwelling Dragon</term>. There was also the Goose Pond, and within the pond were the Isle of Cranes and the Shore of Wild Ducks.\n\nIsle of Cranes and Shore of Wild Ducks.\n<note>See above.</note>\n\nWrestling Bears.\nGe Hong, Miscellaneous Records of the Western Capital: Liu Xu, the Prince of Guangling, possessed great physical strength. He often practiced <term>wrestling bears</term> <gloss>Ge Xiong</gloss> in his private enclosures; later he...\n\n<summary>This page records legends associated with the Prince of Huainan and his ascension to immortality with the Eight Elders, alongside descriptions of Han dynasty palaces and the physical feats of Prince Liu Xu.</summary>\n<keywords>Liu An, Eight Elders, Taoism, immortality, Ge Hong, Rabbit Garden, Han Dynasty palaces, wrestling bears</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 139,
+    "page_id": "6a3c6549af3c49b59c5cb408",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/139.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n能空手搏之\n莫不絕脰\n遊忘憂館\n葛洪西京雜記梁孝王丨於丨\n丨之丨集諸遊士各使為賦枚\n乘為柳賦路喬如為鶴賦公孫詭為文鹿賦鄒陽為酒\n賦公孫乘為月賦羊勝為屏賦韓安國作几賦不成鄒\n陽代\n作\n罇盈縹玉爵獻金漿\n葛洪西京雜記枚乘柳賦曰\n君王淵穆其度御羣英而翫\n之小臣瞽聵與此陳詞於是丨丨丨丨之酒丨丨丨\n丨之醪庶羞千族盈滿六庖雋乂英髦列襟聨袍\n安\n廣坐列雕屏\n葛洪西京雜記鄒陽酒賦曰哲王臨國綽\n矣多暇召皤皤之臣聚肅肅之賓丨丨丨\n丨丨丨綃綺為\n席犀璩為鎮\n藩后\n葛洪西京雜記羊勝屏賦曰飾以\n文錦映以流黃畫以古烈顒顒昂\n昂丨丨宜之\n壽考無疆\n日華客館\n葛洪西京雜記河間王德築丨\n丨宮置丨丨二十餘區以待學\n士自奉養\n不踰賓客\n至閫遺舄\n葛洪西京雜記梁孝王子買從朝\n年幼竇太后欲強冠婚之上謂王\n<header>欽定四庫全書</header>\n<header>御定子史精華</header>\n<page-num>二十</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Can wrestle them with bare hands.\nNone escape without a broken neck.\n\nVisiting the Hall of Forgetting Cares\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King Xiao of Liang <note>Liu Wu, a Han dynasty prince known for his patronage of the arts</note> visited the Hall of Forgetting Cares.</margin>\n<margin>In the Hall of Forgetting Cares, he gathered various wandering scholars and asked each to compose a <term>fu</term> <gloss>rhapsodic poem</gloss>.</margin> Mei Cheng wrote the Poem on the Willow; Lu Qiaoru wrote the Poem on the Crane; Gongsun Gui wrote the Poem on the Patterned Deer; Zou Yang wrote the Poem on Wine; Gongsun Cheng wrote the Poem on the Moon; Yang Sheng wrote the Poem on the Screen. Han Anguo did not finish his Poem on the Table, so Zou Yang composed it on his behalf.\n\nThe flagon is filled with pale jade-colored wine; the goblet is offered with golden syrup.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Mei Cheng’s Poem on the Willow says:</margin>\nThe King’s temperament is deep and serene; he governs the elite and finds pleasure in them. I, your humble servant, though blind and deaf <note>a self-deprecating scholarly trope</note>, join in to offer these words. Thus, we have the wine that fills the pale jade flagon and the mash offered in the golden syrup. A thousand varieties of delicacies fill the six kitchens. The talented and eminent scholars sit in a row, their robes joined together.\n\nTaking a seat in the wide hall, lined with carved screens.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Zou Yang’s Poem on Wine says: A wise king governs the state with generous leisure.</margin> He summons white-haired ministers and gathers solemn guests. He takes a seat in the wide hall, lined with carved screens. Thin silk and patterned fabrics serve as mats; rhinoceros horn and green jade serve as weights to hold them down.\n\nA prince of the frontier.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Yang Sheng’s Poem on the Screen says: It is decorated with</margin> patterned brocade and reflects sulfur-yellow light. It is painted with the virtuous heroes of antiquity, looking solemn and lofty. It is fitting for a prince of the frontier; may his longevity be without limit.\n\nPalace of Solar Splendor and the Guest House.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King De of Hejian built the Palace of Solar Splendor</margin> and established more than twenty areas for the Guest House to host scholars. His own lifestyle and maintenance did not exceed that of his guests.\n\nShoes left at the threshold.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Liu Mai, the son of King Xiao of Liang, followed him to court.</margin> He was young in years, but Empress Dowager Dou wished to force him to undergo the capping ceremony <note>the rite of passage to adulthood</note> and marry. The Emperor said to the King...\n\n<header>Imperial Edition of the Complete Library of the Four Treasuries</header>\n<header>Imperially Commissioned Essence of Subsidary Books and Histories</header>\n<page-num>20</page-num>\n\n<summary>This page records historical anecdotes from the Western Capital regarding the literary patronage of King Xiao of Liang and King De of Hejian. It focuses on the composition of various poems by famous scholars and the generous treatment of guests in royal courts.</summary>\n<keywords>King Xiao of Liang, Ge Hong, Western Capital, rhapsodic poems, Mei Cheng, Zou Yang, Han dynasty scholars, hospitality</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "book_id": "69c8a2246c6f3cc53c85e367",
+  "book_url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367",
+  "tradition": null,
+  "book": {
+   "author": "Westcott, William Wynn",
+   "display_title": "Dreams",
+   "id": "69c8a2246c6f3cc53c85e367",
+   "image_source": {
+    "provider": "bph"
+   },
+   "language": "English",
+   "pages_count": 12,
+   "pages_ocr": 12,
+   "pages_translated": 10,
+   "place_published": "[London]",
+   "published": "n.d. [before 1925]",
+   "title": "Dreams",
+   "visible": true,
+   "original_language": "Latin"
+  },
+  "structure": {
+   "page_records": 12,
+   "distinct_page_numbers": 12,
+   "duplicate_records": 0,
+   "pages_with_ocr": 12,
+   "pages_translated": 12,
+   "with_printed_number": 7,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 12,
+   "pages_ocr_field": 12,
+   "pages_translated_field": 10
+  },
+  "run": [
+   1,
+   2,
+   3
+  ],
+  "pages": [
+   {
+    "page_number": 1,
+    "page_id": "69d36c414867d41461b4b3e0",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0001.jpg",
+    "image_status": 200,
+    "ocr": "<language>la</language>\n<language>en</language>\n<script>mixed</script>\n<page-type>title-page</page-type>\n<meta>The page is a red paper cover with a decorative border. It contains a library stamp from the Quatuor Coronati Lodge.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A rectangular decorative border composed of repeating floral and scroll motifs framing the entire text area.</image-desc>\n\n# Societas Rosicruciana.\n\n---\n\n->FRATER DR. W. WYNN WESTCOTT.<-\n->*M.W. Supreme Magus, IX.°*<-\n\n---\n\n<insert>\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Oval library stamp with text and handwritten numbers.</image-desc>\nQUATUOR CORONATI LODGE\nNo. 9586\n001\n</insert>\n\n## DREAMS.\n\n---\n\n->By M.W. FRATER DR. W. WYNN WESTCOTT, IX°.<-\n\n->Supreme Magus, Soc. Ros. in Ang.<-\n\n---\n\n->PRIVATELY PRINTED.<-\n\n[COPYRIGHT.\n\n<vocab>Societas Rosicruciana, Frater, Supreme Magus, Dreams, W. Wynn Westcott, Quatuor Coronati Lodge</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<meta>This is the start of the document titled \"Dreams\" by W. Wynn Westcott.</meta>\n\n<note>A rectangular decorative border composed of repeating floral and scroll motifs frames the entire text area.</note>\n\n# Rosicrucian Society <note>original: \"Societas Rosicruciana\"</note>\n\n---\n\n->BROTHER <note>original: \"FRATER\"</note> DR. W. WYNN WESTCOTT.<-\n->*Highest Magician <note>original: \"Supreme Magus\"</note>, IX.°*<-\n\n---\n\n<insert></insert>\n<note>An oval library stamp identifies this copy as belonging to the Quatuor Coronati Lodge, number 9586, with the handwritten number 001.</note>\nQUATUOR CORONATI LODGE\nNo. 9586\n001\n</insert>\n\n## DREAMS.\n\n---\n\n->By MOST WORTHY BROTHER <note>original: \"M.W. FRATER\"</note> DR. W. WYNN WESTCOTT, IX°.<-\n\n->Highest Magician <note>original: \"Supreme Magus\"</note> of the Rosicrucian Society in England <note>original: \"Soc. Ros. in Ang.\"</note><-\n\n---\n\n->PRIVATELY PRINTED.<-\n\n[COPYRIGHT.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 2,
+    "page_id": "69d36c414867d41461b4b3e1",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0002.jpg",
+    "image_status": 200,
+    "ocr": "<language>en</language>\n<script>mixed</script>\n<page-type>frontispiece</page-type>\n<meta>The left page is a red textured endpaper with a white label pasted in the center.</meta>\n\n<image-desc size=\"medium\" type=\"emblem\" significance=\"high\">A circular blue seal or bookplate. The outer ring contains the text \"PHILOSOPHIA • HERMETICA\". Inside the circle is a symbolic emblem featuring a pelican in her piety (feeding her young from her own breast), a common alchemical and Rosicrucian symbol, set within a shield-like frame with rays emanating from behind.</image-desc>\n\n->Roz M S<-\n<gloss>Handwritten notation in pencil below the seal.</gloss>\n\n<vocab>Philosophia Hermetica, Pelican in her piety</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<note>The left page is a red textured endpaper with a white label pasted in the center.</note>\n\n<note>A circular blue emblem depicts a pelican feeding her young from her own breast. This is a traditional symbol of self-sacrifice and nourishment used in alchemical and Rosicrucian traditions. The border of the seal contains the words Hermetic Philosophy <note>original: \"PHILOSOPHIA HERMETICA\"</note>.</note>\n\n->Roz M S<-\n<gloss>Handwritten notation in pencil below the seal.</gloss>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 3,
+    "page_id": "69d36c414867d41461b4b3e2",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0003.jpg",
+    "image_status": 200,
+    "ocr": "<language>en</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n# Dreams.\n\n->By M.W. FRATER DR. W. WYNN WESTCOTT, IX°.<-\n->Supreme Magus, Soc. Ros. in Ang.<-\n\nDREAMS have at all times been a favourite subject for discussion, and the very little that is known about their causation has led to the utmost divergence in the opinions expressed concerning them.\nAll of us dream occasionally, and many persons dream as often as they sleep; probably we all do so, and the difference between persons as to dreaming is due to a variation in the power of Remembrance when awaking.\nThere is considerable evidence to show that animals dream as well as men, women, and children. Many of us must have observed the domestic cat and dog showing signs of dreaming by their movements and the sounds they make. Tennyson wrote—\n> “ Like a dog he hunts in dreams—— ”\nIt has been said that animals in their wild state of nature do not dream, but it is difficult to make observations on wild animals. It is generally agreed that domestication is the cause of increased mind-power in some animals, and with enlarged powers of observation and concerted action, may come the faculty of dreaming. Domesticated animals certainly develop some Reason in addition to their primal Instinct, and this can only be due to the companionship of man and the training they receive; the mere change of food would not alone account for their extended powers.\nTo return to humanity, Byron wrote of dreams—\n> “ Strange state of being . . . .\n> Senseless to feel, and with sealed eyes to see ” ;\nwhile Cato said—\n> “ Regard not dreams, since they are but the images, of our hopes and fears.”\nWordsworth said that we may\n> “ Hunt half a day for a forgotten dream.”\nJoel, the old Hebrew prophet said—\n> “ Your old men shall dream dreams,”\nDryden wrote—\n> “ Dreams are interludes which fancy makes,”\n\n<vocab>Dreams, W. Wynn Westcott, Soc. Ros. in Ang., Supreme Magus, Remembrance, Instinct, Reason</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "# Dreams.\n\n->By MOST WORTHY BROTHER <note>original: \"M.W. FRATER\"</note> DR. W. WYNN WESTCOTT, IX°.<-\n->Highest Magician <note>original: \"Supreme Magus\"</note> of the Rosicrucian Society in England <note>original: \"Soc. Ros. in Ang.\"</note><-\n\nDREAMS have at all times been a favourite subject for discussion, and the very little that is known about their causation has led to the utmost divergence in the opinions expressed concerning them.\nAll of us dream occasionally, and many persons dream as often as they sleep; probably we all do so, and the difference between persons as to dreaming is due to a variation in the power of Remembrance when awaking.\nThere is considerable evidence to show that animals dream as well as men, women, and children. Many of us must have observed the domestic cat and dog showing signs of dreaming by their movements and the sounds they make. Tennyson wrote:\n> “ Like a dog he hunts in dreams ”\nIt has been said that animals in their wild state of nature do not dream, but it is difficult to make observations on wild animals. It is generally agreed that domestication is the cause of increased mind power in some animals, and with enlarged powers of observation and concerted action, may come the faculty of dreaming. Domesticated animals certainly develop some Reason in addition to their primal Instinct, and this can only be due to the companionship of man and the training they receive; the mere change of food would not alone account for their extended powers.\nTo return to humanity, Byron wrote of dreams:\n> “ Strange state of being . . . .\n> Senseless to feel, and with sealed eyes to see ” ;\nwhile Cato said:\n> “ Regard not dreams, since they are but the images of our hopes and fears.”\nWordsworth said that we may\n> “ Hunt half a day for a forgotten dream.”\nJoel, the old Hebrew prophet said:\n> “ Your old men shall dream dreams,”\nDryden wrote:\n> “ Dreams are interludes which fancy makes,”",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "book_url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607",
+  "tradition": null,
+  "book": {
+   "id": "6a26bd05d6b178e5aad87607",
+   "title": "Cosmographey : oder Beschreibung aller Länder Herrschafftenn und fürnembsten Stetten des gantzen Erdbodens sampt ihren Gelegenheiten, Eygenschafften, Religion, Gebreüchen, Geschichten vnnd Handthierungen ect.",
+   "display_title": "Münster, Sebastian: Cosmographey",
+   "author": "Münster, Sebastian",
+   "language": "German",
+   "published": "1578",
+   "pages_count": 1558,
+   "pages_ocr": 25,
+   "pages_translated": 23,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 1558,
+   "distinct_page_numbers": 1558,
+   "duplicate_records": 0,
+   "pages_with_ocr": 25,
+   "pages_translated": 23,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 1558,
+   "pages_ocr_field": 25,
+   "pages_translated_field": 23
+  },
+  "run": [
+   7,
+   8,
+   9
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "6a26bd05d6b178e5aad8760e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/7.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>dedication</page-type>\n<columns>1</columns>\n<sig>a ij</sig>\n\n# Dem Durchleuchtigsten vnnd\n## Großmächtigsten Landsfürsten vnd Herren/ Her-\n### ren Gustaff zu Schwedien/ der Gothen vnd Wen-\n### den &c. König/ meinem aller Gnedigsten\n### Herren.\n\n<image-desc size=\"medium\" type=\"decorative\" significance=\"low\">Large woodcut ornamental initial 'V' featuring intricate floral and scrollwork designs, used to open the main body of the dedication text.</image-desc>\n\nVmbeschreiben die gantze Welt\nwie mein fürnemen ist/ in diesem Buch/ Großmäch-\ntigster vnnd Gnedigster Herr/ erfordert ein weitschweif-\nfig vnnd wolbericht gemüt/ das viel gelesen/ vil gescheh/ vil\ngehört vnnd viel erfahren hab/ welches dannocht alles\nnoch nicht genug wil sein/ wo nicht ein recht vrtheil\ndarbey ist/ dadurch man mög vnderscheiden das war\nvon dem falschen/ vnnd das gewiß von dem ungewissen.\nEs were nach den Bücheren Göttlicher geschrifft/\nkein lesen auff Erdtrich lustiger vnnd nützlicher dem\nMenschen/ dann das lesen der Historien/ wo sie (als\nsie solten) ohn angesehen dieser oder jener partheyen/\ngeschrieben weren. Dann was seind alle Historien an-\nders/ weder fürgebilde exempel/ an denen man sicht wie diese oder jene sach außgeschla-\ngen/ wie Menschliche wiß vnd vorsehung zum öfftern mal so ungewiß/ ja blind ist/ vnd\nalle ding so gar an der hand Gottes hangen/ der alle ding würcket in allen dingen? Aller\nvnser Rathschlag gath hindersich/ wo er dem fürsehen Gottes nicht gemäß ist. Sich zu/\nes wolten die Kinder Adams ein Thurn bauwen biß an Himmel/ vnd dem zukünfftigen\nSündtfluß entrinnen? Wie weit sie gefält haben/ ist mengklichem offenbar. Es haben\nvnderstanden Ninus vnd Semiramis zubauwen unüberwindliche Stett/ nemlich Ni-\nniuen vnnd Babylon/ machten Mauren darumb so breit das etlich Wägen neben einan-\nder gehn möchten. Es halff sie aber nichts/ wie es sich mit der zeit erfunden hat. Die\nRömer wolten jhnen zuëignen ein ewigs Regiment vnd höchst Imperium vber die gan-\nze Welt/ vertilckten auch deßhalben die Africanische Statt Carthaginem/ die solichs\nauch vnderstand/ wie lang aber haben sie es behalten? Die Juden vnnd nach jhnen die\nHeyden wolten außtillcken Christum vnnd seine heilsame Lehr wider den Rathschlag Got-\ntes/ aber was haben sie geschaffet? Es seind die Juden darüber zügrund gangen/ vnd die\nHeyden jrem jrthumb vnd falscher Religion genomen/ wie fast sie anfengcklichen dar-\nwider getobet haben. Das Heylig land hat vorzeiten geflossen mit Milch vnd Hönig/\naber jetzt ist es ein rauch/ bitter/ ungeschlacht Erdtrich. Griechenland hat zü den selbigen\nzeiten gehabt die sinnreichsten vnnd spißfindigsten Männer/ so in der Welt haben mö-\ngen erfunden werden/ do auch alle Philosophi vnd Natürliche Meister erstanden seind/\nwas hat es jetzundt dann ellend/ grob/ vngelehrt vnnd vnuerstanden Leüt? Schweden/\nGothen/ Nordwegien vnd andere Mitnächtige Länder/ seind vorzeiten also arm vnnd\ndürfftig gewesen an der Leibs narung/ das sie jhre Indigenas vnnd Landsleüt nicht ha-\nben mögen erziehen/ sonder mit grossen hauffen in fruchtbare Länder geschickt/ dann do\nher seind kommen die Gothen/ Longobarden/ Nortmänner/ Cimbern/ Schwyßer/ Ala-\nmanen vnnd andere vil mehr/ aber zü vnsere zeiten vbertreffen sie in Reichthumen garnahen\nalle Länder Europe/ wirt auch minder darinn gefunden dan in diesen eüsseren Ländern?\nWo findt man mehr Golds/ Sylbers/ Kupffers/ vnd auch andere Metall/ dan in diesen\nLändern? Wo findt man hübscher Viech/ vnnd mehr Fleisch vnd Fisch/ dan in diesen Län-\nderne? Die auch dem gantzen Teütschland/ Franckreich/ Böhem vnnd Poland/ dürr vnnd ge-\nsaltzen Fisch gnüg geben? Was köstlich Fell vnd Belß oder Füter werck auß diesen Län-\ndern komen in all Mittagige Länder/ weißt jederman. Wo kompt aber das her/ das die-\nse Länder die jhre einwohner vorzeiten nicht haben mögen erneheren/ die selbigen speysen\njetzundt vnnd schicken narung in andere Länder? Es kompt von der Hand Gottes/ der gibt\nvnd\n\n<vocab>\nGustaff zu Schwedien, Historien, Vorsehung Gottes, Sündtfluß, Ninus, Semiramis, Carthaginem, Griechenland, Reichthumen, Metall, Viech, Belß\n</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# To the Most Serene and\n## Most Mighty Sovereign and Lord/ Lord\n### Gustav of Sweden/ King of the Goths and\n### Wends &c./ my most Gracious\n### Lord.\n\n<meta>Large woodcut ornamental initial V featuring intricate floral and scrollwork designs, used to open the main body of the dedication text.</meta>\n\nTo describe the entire world as is my intention in this book, Most Mighty and Gracious Lord, requires a far-reaching and well-informed mind that has read much, seen much, heard much, and experienced much. Yet all this would still not be enough if a right judgment were not present, by which one might distinguish the true from the false, and the certain from the uncertain. After the books of Holy Scripture, there would be no reading on earth more pleasant and useful to man than the reading of histories, if they were written (as they should be) without regard for this or that party. For what are all histories other than illustrative examples in which one sees how this or that matter turned out? They show how human wisdom and foresight are so often uncertain, even blind, and how all things depend entirely on the hand of God, who works all things in all things. All our counsel goes backward where it is not in accordance with the providence of God. Look: the children of Adam wanted to build a tower reaching to heaven to escape the future flood. How far they failed is manifest to everyone. Ninus and Semiramis undertook to build invincible cities, namely Nineveh and Babylon. They made walls around them so wide that several wagons might go side by side. But it helped them nothing, as was found with time. The Romans wanted to claim for themselves an eternal reign and highest empire over the whole world. For that reason they also destroyed the African city of Carthage, which also undertook such a thing. But how long did they keep it? The Jews and after them the heathens wanted to root out Christ and his wholesome teaching against the counsel of God, but what did they accomplish? The Jews went to ruin because of it, and the heathens were taken from their error and false religion, however much they initially raged against it. The Holy Land formerly flowed with milk and honey, but now it is a smoky, bitter, and wild soil. Greece in those same times had the most ingenious and subtle men that could be found in the world, where also all philosophers and masters of nature arose. What does it have now but wretched, coarse, unlearned, and simple people? Sweden, Gothland, Norway and other northern lands were formerly so poor and needy in bodily sustenance that they could not raise their <term>indigenas</term> <gloss>natives</gloss> and countrymen. Instead, they sent them in large crowds into fertile lands. From there came the Goths, Lombards, Northmen, Cimbri, Swiss, Alemanni and many others. But in our times they surpass almost all lands of Europe in riches. Is there less found in them than in these outer lands? Where does one find more gold, silver, copper, and also other metals than in these lands? Where does one find handsomer cattle, and more meat and fish than in these lands? They give enough dried and salted fish to all of Germany, France, Bohemia and Poland. Everyone knows what precious skins and furs or lining-work come out of these lands into all southern countries. But where does it come from, that these lands which formerly could not nourish their inhabitants now feed them and send nourishment into other lands? It comes from the hand of God, who gives and\n\n<summary>The dedication to King Gustav of Sweden argues that history and geography reveal God's providence. Münster describes how once-powerful nations have fallen while formerly poor northern lands like Sweden have become wealthy.</summary>\n<keywords>Gustav of Sweden, history, providence, geography, Goths, Nineveh, Carthage, natural resources</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 8,
+    "page_id": "6a26bd05d6b178e5aad8760f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/8.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>dedication</page-type>\n\n# An Kön. Maiestat zu Schweden.\n\nund nimpt nach seinem gefallen/ und erzeigt mit seinen thaten/ das er der Herr ist/ nicht allein im Himmel/ sonder auch auff Erden/ und in dem weiten Möre/ und alle ding durch ihn verhandlet werden/ und nichts *ex fortuna uel casu/* das ist von Glück oder unglück/ wie die Menschen davon reden/ sonder alles auß dem wissen/ ja Ordnung Gottes geschicht. Daher kompt es das ein Königreich abgeth und das ander auffgeth/ ein Landt reich wirt und das ander verdirbt/ ein Statt zu nimpt und die andere abnimpt/ ein Herzschafft außstirbt und die andere auffsteh/ und in summa vnder dem beweglichen Himmel nichts bestendig bleibt/ alles der wunderbarlichkeit vnderworffen ist/ darauß wir lernen sollen/ unser herz nicht auff zergenklich/ sonder auff das ewig zu schlahen. Solches aber schreib ich/ nicht das ich E. Kö. May. damit lernen wöll/ die sollichs wol weißt/ sonder das ich etwas anzeigung geb/ was mich verursacht hat zu beschreiben diß Buch/ das argument streckt sich gar weit. Ich hab hie ein Compendium und kurzen begriff von allen Ländern des Erdtreichs dem gemeinen Mann wöllen zuschreiben/ sich darin mit läsen zu erlustigen/ und den gelehrten ein weg anzeigen/ wie man noch so vil Teutschen Chronographien/ auch gar nuzlich Cosmographien und Topographien schreiben möchte/ wie ich dann solches vor 18. jahren hab vnderstanden unnd angefangen mit diesem Werck/ nach gefolgt dem Hochgelehrten Mann Straboni. Als ich aber vor sechs jahren noch mit dieser arbeit umbgieng/ ist zu mir kommen E. Kö. May. Diener/ der Hochgelehrt Herr/ Herr Georgius Normannus/ dem ich vorhin auß etlichen Bücheren under meinem nammen außgangen/ bekannt was/ und als er besichtiget diese fürgenomen arbeit/ scheinet er sie wol wirdig/ das sie under dem Königlichen schirm E. Kö. May. an tag käme/ sunst were ich nicht so vermessen gewesen/ diesem Buch ein solchen Patron für zu stellen. Hab mich auch dieser anmutung dester lieber vnderzogen/ als ich von jhm vernommen hab das frey und geneigt gemüt/ so E. Kö. May. tregt gegen allen gelehrten und kunstreichen/ welches sie sonderlich bisher bewiesen hat in dem/ das sie sich geflissen/ die junge Landsfürsten und Prinzen E. Kö. May. Sohn zu instituiren in Christlichen Thugenden und Adelichen Künsten/ Gott wöll solich gemüt bestätigen biß zum end. Ich het E. Kö. May. Hauptstatt Stockholm/ sampt andern fürnemmen Stetten des Reichs Schweden gern verfaßt/ gehabt in diese dritt edition wie sunst andere Stett/ damit ich ein danckbar gemüt het erzeigt gegen E. Kö. May. mir bewisen/ aber nach dem E. Kö. May. mir von dem Königlichen Schloß Calmar anno Christi 1546. gantz gnedigklich ein zugeschrieben/ ist mir sither biß auff den heutigen tag nie kein gewisse bottschafft zugestanden in sollichen ferren weg/ dadurch ich mein fürnemmen het mögen entplössen E. Kö. May. Unnd damit wil ich mich entschuldiget haben. Wil auch mich hinfür E. Kö. May. auff das aller vnderthenigst und mit höchstem fleiß befolhen. Datum zu Basel am 17. tag Merzen/ Im jar nach Christi geburt. M. D. L.\n\n->E. Kö. May.<-\n\n->Vnderthänigster<-\n\n->Sebastianus Munsterus.<-\n\n<vocab>Sebastian Münster, Cosmographia, Sweden, Georgius Normannus, Strabo, Stockholm, Calmar, Basel, 1550</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# To His Royal Majesty of Sweden.\n\nand takes away according to his pleasure. He shows with his deeds that he is the Lord, not only in heaven but also on earth and in the wide sea. All things are handled through him, and nothing <term>ex fortuna uel casu</term> <gloss>from fortune or chance</gloss>, as men speak of it, but everything happens out of the knowledge, indeed the order of God. From this it comes that one kingdom ends and another begins; one land becomes rich and another perishes; one city increases and another decreases; one lordship dies out and another rises. In summary, under the moving heavens nothing remains permanent; everything is subject to wonder. From this we should learn to set our hearts not on the perishable, but on the eternal. I write such things, however, not to teach Your Royal Majesty, who knows this well, but to give some indication of what caused me to describe this book. The argument extends very far. I wanted to dedicate here a compendium and short summary of all the lands of the earth to the common man, to delight himself therein with reading. I also wanted to show a way to the learned how one might yet write very useful Cosmographies and Topographies after so many German Chronographies. I undertook and began this work eighteen years ago, following that highly learned man Strabo. But while I was still occupied with this work six years ago, Your Royal Majesty's servant came to me, the highly learned Master Georgius Normannus. He was already familiar with me from several books published under my name. When he inspected this undertaken work, it seemed to him well worthy that it should come to light under the royal protection of Your Royal Majesty. Otherwise, I would not have been so bold as to present such a patron for this book. I also undertook this suggestion all the more gladly as I heard from him of the free and inclined spirit which Your Royal Majesty bears toward all the learned and skillful. This has been especially proven in that Your Majesty has been diligent to instruct the young princes, Your Royal Majesty's sons, in Christian virtues and noble arts. May God confirm such a spirit until the end. I would have gladly included Your Royal Majesty's capital city Stockholm, along with other noble cities of the kingdom of Sweden, in this third edition as I have with other cities. By this I would have shown a thankful spirit for the kindness shown to me by Your Royal Majesty. But after Your Royal Majesty most graciously wrote to me from the Royal Castle of Kalmar in the year of Christ 1546, no certain messenger has reached me from such a distance until this today. Thereby I might have revealed my intention to Your Royal Majesty. And with this I wish to have excused myself. I will also henceforth commend myself to Your Royal Majesty most submissively and with the highest diligence. Dated at Basel on the 17th day of March, in the year after Christ's birth 1550.\n\n->Your Royal Majesty's<-\n\n->Most Submissive<-\n\n->Sebastian Münster.<-\n\n<summary>Münster continues his dedication to the King of Sweden, citing the Greek geographer Strabo as an influence. He apologizes for not including more Swedish cities like Stockholm due to the difficulty of communication.</summary>\n<keywords>Sebastian Münster, Gustav of Sweden, Strabo, Georgius Normannus, Stockholm, Kalmar, Basel, 1550</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 9,
+    "page_id": "6a26bd05d6b178e5aad87610",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/9.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>preface</page-type>\n<page-num>a iij</page-num>\n<meta>Catchword: Sie</meta>\n<vocab>Cosmographia, Sebastian Münster, Geography, Erdreich, Weltbeschreibung, Hispania, Orient, Sitten</vocab>\n\n# Vorred Sebastiani Munsteri\n## in das Buch der Cosmography\n### oder Weltbeschreibung.\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornamental decorative initial 'D' featuring interlaced foliate and vine patterns.</image-desc>Die kunst / so man mit einem Griechischen wort Cosmographiam nennt / das ist beschreibung der Welt / oder Geographiam / beschreibung des Erdreichs / wie hoch und Edel sie allwegen geachtet sey / bey den erfahrnen Männern / zeigen uns alle Historien an / ja die Historie gründe sich auch auff diese kunst / und ohn sie mag niemand ein Histori ordenlichen beschreiben / oder auch recht verstohn / wie dann ein weyser und gelehrter Mann spricht / <margin>Was Geography ist.</margin> Die Geography ist ein erkantnuß des Erdreichs / das wir tödlichen auß der gaben Gottes einwohnen / welche die Kunst liebhaber richtig unnd fertig macht zu verston die geschehenen ding / so uns von alter zeit her in Geschrifften verlassen seind. Ja diese Kunst eröffnet uns zum dickern mal die verborgne heimlichkeit der Heyligen geschrifft / und entblößt die krafft der klügen natur / so do verborgen ligt in mancherley dingen. Wie hetten die Alten / ja auch die so zu unserer zeit leben / also glückhafftig Krieg mögen füren in frembden und ferren Ländern / do sie etwann über hohe Berg / etwann über tieffe Wasser haben müssen reysen / auch etwann über Möre Schiffen / wann sie nicht hetten gewüst durch die Kunst gelegenheit des Erdreichs / weyte und ende des Möres / unnd eigenschafft der Länder : Was meinst du das die König in Hispania für kosten und schaden haben erlitten / biß sie das undertheil des Erdreichs haben erfaren / und die Schiffung von Hispania in Orient durch den Mittag erkündiget ? Man achtet vor zeiten die Menschen hochverständig unnd klüg / die do weit gewandlet unnd an vil enden gewesen waren / vil Stätt gesehen / der Menschen sitten und eygenschafft / gewonheit und gebreuchen erfaren / darzu mancherley Thier / Bäum <margin>In was achtung bey den alten die Cosmography.</margin> und der Kreüter natur hetten gelehrt und erkennt. Man entboth jnen grosse ehre / unnd braucht sie zu Rhäten gemeines nutzes / unnd zu Richtern des Volcks / als die jhenen so durch eygen erfarung güte unnd sälige Rhät geben köndten. Dann diese Kunst streckt sich nit allein uber die Länder / wohnungen und sitten mancherley Völcker / sonder bekümmert sich auch mit andern dingen des Erdreichs und Möres / als mit seltzamen Thieren / Bäumen / Metallen und andern nützen unnd unnützen dingen / so auff dem Erdreich oder in dem Möre erfunden werden. Zu unsern zeiten ist es gar von nöten / das du weyt hin und her auff der Erden umbschweyfest / zu besichtigen unnd erfaren gelegenheit der Länder / Stätt / Wässer / Bergen unnd Thäler. Item die sitten / gebreüch / gesätz / und Regiment der Menschen / eigenschafft unnd natur der Thier / Bäum unnd Kreüter. Du magst diese ding jetzund in den Büchern finden / und darauß mehr lernen und erkennen von diesem oder jhenem Land / dann ein andrer / der gleich darinn jhar unnd tag ist gewesen. Hie findest du wie man zu unsern zeiten also scheinbarlich und Burgerlich under einandern in den gemeinden lebt / weder zu den alten und ersten zeiten / da die Menschen auff der Erden schlecht / einfeltig / ja frech unnd roh lebten. Sie hetten kein verzeichnete Müntz im brauch / do was kein gewerb noch Kaufft handel / sunder sie gaben waht umb waht / und vergolten ein gutthat mit der andern. Es hett keiner etwas besonders oder eygenthumb / sonder wie der Lufft unnd Himmel gemein ware / also was auch das Erdreich unnd Wasser frey bey jederman.\n\n->Sie<-",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# Preface of Sebastian Münster\n## to the Book of Cosmography\n### or Description of the World.\n\n<meta>Ornamental decorative initial D featuring interlaced foliate and vine patterns.</meta> All histories show us how highly and nobly the art called by a Greek word <term>Cosmographiam</term> <gloss>Cosmography</gloss>, that is, description of the world, or <term>Geographiam</term> <gloss>Geography</gloss>, description of the earth, has always been regarded by experienced men. Indeed, history is based on this art, and without it no one can describe a history in an orderly way or rightly understand it. As a wise and learned man says, <margin>What Geography is.</margin> Geography is a knowledge of the earth, which we mortals inhabit by the gift of God, which makes the lovers of art ready and prepared to understand the things that have happened, which have been left to us in writings from ancient times. Indeed, this art frequently opens to us the hidden secrets of Holy Scripture and reveals the power of clever nature that lies hidden in various things. How could the ancients, and also those who live in our time, have conducted wars so successfully in foreign and distant lands? They sometimes had to travel over high mountains, sometimes over deep waters, and also sail over seas. This would have been impossible if they had not known through the art the location of the earth, the width and end of the sea, and the properties of the lands. What do you think the kings in Spain suffered in costs and damages until they explored the lower part of the earth and discovered the navigation from Spain to the Orient through the south? In former times, people were considered highly intelligent and wise who had traveled far and been to many places, seen many cities, and experienced the manners and properties, customs and usages of people. They also learned and recognized many animals, trees <margin>In what regard Cosmography was held by the ancients.</margin> and the nature of herbs. Great honor was offered to them, and they were used as counselors for the common good and as judges of the people, as those who could give good and blessed advice through their own experience. For this art extends not only over the lands, dwellings and customs of various peoples, but also concerns itself with other things of the earth and sea, such as strange animals, trees, metals and other useful and useless things that are found on the earth or in the sea. In our times it is quite necessary that you wander far and wide on the earth to inspect and experience the location of lands, cities, waters, mountains and valleys. Likewise the manners, customs, laws, and government of people, and the properties and nature of animals, trees and herbs. You may now find these things in books and learn and recognize more from them about this or that land than another who has been there for a year and a day. Here you find how people in our times live so visibly and civilly among each other in communities, compared to the old and first times when people on earth lived poorly, simply, even boldly and crudely. They had no marked coins in use; there was no trade or merchant business, but they gave item for item and repaid one good deed with another. No one had anything special or private property, but just as the air and heaven were common, so also the earth and water were free to everyone.\n\n->They<-\n\n<summary>Münster defines geography and cosmography as essential tools for understanding history, scripture, and warfare. He contrasts the modern civil world with the simple, communal life of ancient times.</summary>\n<keywords>Cosmography, Geography, history, exploration, nature, ancient vs modern, commerce</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 9,
+  "book_id": "69dea1ce4d19ec2e9ba75548",
+  "book_url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548",
+  "tradition": null,
+  "book": {
+   "id": "69dea1ce4d19ec2e9ba75548",
+   "title": "Le Nuove Musiche",
+   "display_title": null,
+   "author": "Giulio Caccini",
+   "language": "Italian",
+   "published": "1601",
+   "ia_identifier": "iii_20240814",
+   "pages_count": 33,
+   "pages_ocr": 25,
+   "pages_translated": 23,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "BNCF"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 33,
+   "distinct_page_numbers": 33,
+   "duplicate_records": 0,
+   "pages_with_ocr": 25,
+   "pages_translated": 23,
+   "with_printed_number": 15,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 33,
+   "pages_ocr_field": 25,
+   "pages_translated_field": 23
+  },
+  "run": [
+   21,
+   22,
+   23
+  ],
+  "pages": [
+   {
+    "page_number": 21,
+    "page_id": "69dea1ce4d19ec2e9ba7555d",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/21.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>18</page-num>\n<vocab>Madrigali, Rapimento di Cefalo, Maria Medici, contrappunto, passaggi, basso continuo</vocab>\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Three systems of musical notation, each consisting of a vocal staff and a basso continuo staff with figured bass (7 6, b 6, 6, b). The notation utilizes diamond-shaped note heads typical of early 17th-century printing.</image-desc>\n\nahi qual fara'l tormen to? Quãd haurò d'oro il volto, e'l crĩ d'argen\n\nto Quãdo haurò d'oro il volto, e'l crin d'ar gen\n\nto.\n\n->IL FINE DE MADRIGALI.<-\n\n<image-desc size=\"medium\" type=\"decorative\" significance=\"low\">A horizontal rectangular woodcut ornament featuring a symmetrical arrangement of scrolling acanthus leaves and floral motifs.</image-desc>\n\n---\n\n<page-num>19</page-num>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">An ornate woodcut initial 'N' decorated with architectural elements and stylized foliage.</image-desc>\n\nNON hauendo io potuto per molti impedimenti far' istampare com'era il desiderio mio il Rapimento di Cefalo composto in musica da me per comandamento del Se- renissimo Gran Duca mio Signore rappresentato nello Sposalizio della Cristia- nissima Maria Medici Regina di Francia, e di Nauarra, mi è parso ora con l'occasione di quest' altre mie musiche aggiugnere à quelle l'ultimo Coro di esso Rapimento, accioche vedutasi la varietà de i passaggi fatti da me per le parti, che cantano sole, io non sia necessitato farne altra dimostrazione, com' hauea pensato, potendosi nel- la parte del Basso, che tal volta ricerca le corde del Tenore, e ne' due Tenori seguenti osseruare le regole usate da me intorno alle sillabe, e lunghe, e breui. E ben che io non habbia usato la buona, e la cattiva secondo le regole del contrappunto, così in queste parti come nell' altre mie musiche, ove intervengono tali adornamenti, non dimeno perche non ho usato di ripercuotere nel rigiro di essi la corda del Basso nelle dissonanze, ciò giudico, che si debba permettere, e per questo, e per la varietà loro, come anco per lo priuilegio, che deue hauere in questa parte, chi canta solo, non potendo erra- re con le parti di mezzo, come errore grande sarebbe, se nelle altre musiche, che si costumano à più voci qualunque parte facesse passaggi, bastando allora per non corrompere l'artifizio del contrap- punto in esse (oltre à molti errori in che si può incorrere) usare solo la buona maniera, e l'affetto, del quale nel Discorso sopra à bastanza per dichiarazione si è favellato.\n\n### Ultimo Coro del Rapimento di Cefalo concertato tra voci e strumenti da settantacinque persone in mezza Luna tanto quanto tenea la Scena onde poi ne segui altri concerti, & il ballo il quale ad altra occasione manderò fuori.\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Six staves of musical notation for a multi-part vocal choir. The diamond-shaped notes are underlaid with lyrics. The music represents a choral setting from a theatrical production.</image-desc>\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel richia ma il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij ch'a gl'al berghi del ciel ri chia ma il co re.\n\nIneffabile ardore ij ch'a gli alberghi del ciel richia ma il co re.",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>18</header>\n\nAh, what will the torment be? When will I have a face of gold and hair of silver? When will I have a face of gold and hair of silver?\n\n->THE END OF THE MADRIGALS.<-\n\n<note>A horizontal rectangular woodcut ornament features a symmetrical arrangement of scrolling acanthus leaves and floral motifs.</note>\n\n---\n\n<page-num>19</page-num>\n\n<meta>An ornate woodcut initial 'N' is decorated with architectural elements and stylized foliage.</meta>\n\nHaving been unable, due to many impediments, to have printed—as was my desire—the <term>Rapimento di Cefalo</term> <gloss>The Abduction of Cephalus</gloss>, composed in music by me by command of the Most Serene Grand Duke my Lord, and performed at the wedding of the Most Christian Maria Medici, Queen of France and Navarre, it has seemed good to me now, on the occasion of these other pieces of music of mine, to add to them the final Chorus of said <term>Rapimento</term> <gloss>Abduction</gloss>. Thus, having seen the variety of the <term>passaggi</term> <gloss>vocal runs/ornaments</gloss> made by me for the parts that sing alone, I will not be necessitated to make other demonstration of it, as I had thought. One may, in the part of the Bass (which at times seeks the strings of the Tenor), and in the two following Tenors, observe the rules used by me regarding the syllables, both long and short. And although I have not used the good and the bad according to the rules of <term>contrappunto</term> <gloss>counterpoint</gloss>, as much in these parts as in my other music where such ornaments intervene, nonetheless, because I have not used the practice of striking again in their rotation the Bass string in dissonances, I judge that this should be permitted. Both for this, and for their variety, as also for the privilege that he who sings alone should have in this part—not being able to err with the middle parts, as it would be a great error if, in other music accustomed to multiple voices, any part were to make <term>passaggi</term> <gloss>vocal runs</gloss>—it is sufficient then, in order not to corrupt the artifice of counterpoint therein (beyond many errors into which one can run), to use only the good manner and the <term>affetto</term> <gloss>musical expression</gloss>, of which I have spoken sufficiently in the Discourse for explanation.\n\n### Final Chorus of the Rapimento di Cefalo, arranged for voices and instruments, [performed] by seventy-five people in a half-moon shape, as much as the Stage held, from which other concerts then followed, and the dance, which I will send out on another occasion.\n\n<note>Six staves of musical notation for a multi-part vocal choir are displayed. The diamond-shaped notes are underlaid with lyrics representing a choral setting from a theatrical production.</note>\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 22,
+    "page_id": "69dea1ce4d19ec2e9ba7555e",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/22.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>29, 31</page-num>\n<header>Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotei 29\nMusico Eccellente della Cappella di N. S.</header>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Large ornamental drop cap letter 'M' featuring intricate vine and floral foliage patterns.</image-desc>\n\nMuoue si dol ce, è si for ue guer ra Lusingando i pensier beltà mor ta le ch'à volo un cor' non spiegheria mai l'à le\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Musical staves with notes, clefs, and figured bass notations (numbers like 7, 6, 10, 14).</image-desc>\n\n<gloss>Ec trillo</gloss> <gloss>Tri</gloss>\nle Per solle uarsi peregrin da terra Se non scen desse a rifuegliar lo A mo re\n\n<column-break/>\n\n<header>31</header>\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Continuation of musical staves and notation.</image-desc>\n\nPer solleuarfi peregrin da terra Se nō scendesse a rifuegliar lo A mo re.\n\n> Si replica Ineffabile ardore.\n\n---\n\n->Quest’ aria cantò solo con altri passaggi secondo il suo stile Iacopo Peri,<-\n->Musico Eccellente stipendiato da queste Altezze Sereniss.<-\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Decorative horizontal border made of floral fleurons.</image-desc>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Large ornamental drop cap letter 'C' containing a heraldic shield or coat of arms, surrounded by elaborate baroque foliage.</image-desc>\n\nCaduca fiam ma di leggiadri sguar di ci da per morte dilet tofo af falto Ma verace belta regna nell'al\n\n<sig>F</sig>\n\n<vocab>Melchior Palontrotei, Iacopo Peri, Aria, passaggi, Musico Eccellente, Cappella di N. S., figured bass, trillo</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotei 29\nMusico Eccellente della Cappella di N. S.</header>\n\n<meta>Large ornamental drop cap letter 'M' features intricate vine and floral foliage patterns.</meta>\n\nIt moves so sweetly, and so fiercely, a war flattering the thoughts, a mortal beauty that at flight a heart would never spread its wings,\n\n<note>Musical staves with notes, clefs, and figured bass notations (numbers like 7, 6, 10, 14).</note>\n\n<term>Et trillo</term> <gloss>And trill</gloss>\n\nto raise itself as a pilgrim from the earth, if it did not descend to reawaken <term>Amore</term> <gloss>Love</gloss>.\n\n<column-break/>\n\n<header>31</header>\n\n<note>Continuation of musical staves and notation.</note>\n\nTo raise itself as a pilgrim from the earth, if it did not descend to reawaken Love.\n\n> Repeat Ineffable Ardor.\n\n---\n\n->This aria was sung solo with other <term>passaggi</term> <gloss>vocal runs</gloss> according to his style by Iacopo Peri,<-\n->Excellent Musician salaried by these Most Serene Highnesses.<-\n\n<note>Decorative horizontal border made of floral fleurons.</note>\n\n<meta>Large ornamental drop cap letter 'C' contains a heraldic shield or coat of arms, surrounded by elaborate baroque foliage.</meta>\n\nFading flame of graceful glances, which gives a delightful assault for death, but true beauty reigns in the high...\n<sig>F</sig>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 23,
+    "page_id": "69dea1ce4d19ec2e9ba7555f",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/23.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>22</page-num>\n\ngo Indi arma l'arco,et indi auuenta i dar\n\ndi Che'l cor pia\n\nga te han di be ar va\n\nlo\n\nre. Ineffa\n\n---\n\n*Quest' aria cantò solo parte con i propri passaggi, e parte à suo gusto il famoso Francesco Rasi Nobile Aretino, molto grato Seruitore all' Alt. Ser. di Mantoua.*\n\n---\n\n<image-desc size=\"medium\" type=\"woodcut\" significance=\"low\">Decorative woodcut initial 'Q' containing a miniature scene with a seated figure in a landscape.</image-desc>\n\nQual trascorren do per gli eterei cam pi Il Sol qua giu l'õbre e not\n\n<column-break/>\n\n<page-num>23</page-num>\n\ntur ne aggior Tale amor su le stelle almo soggior\n\nna E co sparge fra noi fulgidi\n\nlam pi Per in vogliar\n\nal trui del suo\n\nsplẽdo\n\nre.\n\n<meta>catchword: re.</meta>\n\n<vocab>Francesco Rasi, aria, passaggi, Mantoua, Aretino, soggiorno, cosparge, splendore</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>22</header>\n\n...and then arms the bow, and then launches the darts that wound the heart, [for those] who have beautiful value. Ineffable...\n\n---\n\n*This aria was sung solo, partly with its own <term>passaggi</term> <gloss>vocal runs</gloss> and partly to his own taste, by the famous Francesco Rasi, a Nobleman of Arezzo, a very grateful Servant to the Most Serene Highness of Mantua.*\n\n---\n\n<meta>Decorative woodcut initial 'Q' contains a miniature scene with a seated figure in a landscape.</meta>\n\nQual <note>As</note> traversing through the ethereal fields, the Sun down here [scatters] the shadows and...\n\n<column-break/>\n\n<page-num>23</page-num>\n\n...night brings to day. Such love dwells in the soul above the stars, and scatters among us brilliant flashes, to entice others of its splendor.\n\n<meta>catchword: re.</meta>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "book_id": "69e78f6213e67bd16d4e6bc2",
+  "book_url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2",
+  "tradition": null,
+  "book": {
+   "id": "69e78f6213e67bd16d4e6bc2",
+   "title": "Incomplete manuscripts",
+   "display_title": "Incomplete manuscripts",
+   "author": "Ogyen Choling Collection",
+   "language": "Tibetan",
+   "pages_count": 157,
+   "pages_ocr": 59,
+   "pages_translated": 55,
+   "image_source": {
+    "provider": "bl"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 157,
+   "distinct_page_numbers": 157,
+   "duplicate_records": 0,
+   "pages_with_ocr": 135,
+   "pages_translated": 55,
+   "with_printed_number": 10,
+   "printed_backsteps": 2,
+   "printed_repeats": 5,
+   "pages_count_field": 157,
+   "pages_ocr_field": 59,
+   "pages_translated_field": 55
+  },
+  "run": [
+   56,
+   57,
+   58
+  ],
+  "pages": [
+   {
+    "page_number": 56,
+    "page_id": "69e78f6213e67bd16d4e6bfa",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/56.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Tibetan</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">A yellow adhesive note containing handwritten Tibetan text placed over a measuring tape grid.</image-desc>\n\nམཛུབ་ཆད།\n\n<vocab>Tibetan, Ogyen Choling Collection, manuscript fragment</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<meta>translator note: This page consists of a small yellow note placed on a measuring grid.</meta>\n<note>A yellow adhesive note contains handwritten Tibetan text: 'Missing finger/index' <note>original: \"mdzub chad\"</note>. This is likely a library or archival note indicating a missing portion of the manuscript.</note>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 57,
+    "page_id": "69e78f6213e67bd16d4e6bfb",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/57.jpg",
+    "image_status": 200,
+    "ocr": "དབུ་ཤོག་ཆད།\n༄༅་། བསྒྲུབ་པ་ ལས་ལ་སྦྱར་བའོ་། དང་པོ་བསྙེན་པ་བྱ་བ་ནི་ དུར་ཁྲོད་ལ་སོགས་པ་དབེན་\nཞིང་ཉམས་དགའ་བའི་གནས་སུ་སོང་ལ་ཕྱག་དར་ལ་སོགས་པ་ཡིད་འཇུག་པར་བྱས་ལ་ གནས་དེར་རང་གི་མདུན་དུ་མཎྜལ་\nམདའ་གང་པ་གཅིག་བྱས་པའི་དབུས་སུ་ ཟླུམ་པོ་ཁྲུ་གང་པ་གཅིག་བྱས་ དེའི་དབུས་སུ་རིན་པོ་ཆེའི་རྟེན་ལྷག་སྤྲོད་\nགཅིག་བྲི་ དེའི་སྟེང་དང་ཕྱི་རུ་ནས་ཀྱི་ཚོམ་བུ་བཀོད་ ཚོམ་བུ་དབུས་མའི་སྟེང་དུ་མཉྫིའཾ་ མཆོག་རྐང་གི་ཁྲིའུ་བྱས་པའི\nསྟེང་དུ་ ཀ་པཱ་ལ་མཚྡན་གཅིག་བཞག་པའི་ནང་དུ་དཔལ་བཤོས་དང་ཁྲག་སྣ་ཚོགས་པས་བཀང་བའི་རྟེན་གཏོར་གཅིག་བཤམས་\n<leaf-break/>\n࿓࿔་། ལ་བྱས་པ་མང་དུ་ཕུལ་ལ་འདོད་པའི་དོན་ལ་གསོལ་བ་གདབ་ དེ་ནས་བསྙེན་པ་བྱས་ལ་ གོང་ལྟར་དུས་བཞིར་བསྐྱེད་སྟིཾ་\nམཆོད་གཏོར་འབུལ་ དེ་ལྟར་ཞག་ཉིུ་རྩ་གཅིག་བསྒྲུབས་ཏེ་གསང་བར་བྱའོ་། དེ་ནས་རྟེན་གཏོར་གཙང་སར་ཕུལ་ ནོར་བུ་དང་སྐུ་ཚགས་བྱ་བ་ནི་\nབསྙེན་པའོ་། ༈ དེ་ནས་དངོས་གྲུབ་བསྒྲུབ་པ་ནི་ ཅེས་པས་འདིའི་སྒྲུབ་པ་བྱ་བ་ལ་ སྔར་གྱི་དཀྱོིར་དེའི་སྟེང་དུ་གྲུ་གསུཾ་རྒྱ་དང་དཔངས་སུ་མཐོ་གང་པ་༡་\nབྱ་ དེའི་ཕྱི་ནང་ཁྲག་ལ་སོཌ་པས་དམར་པོར་བྱུག་ དེའི་ཟུར་གསུམ་དུ་མཆོག་ཕུར་གསུམ་བརྩུགས་ དེའི་ཁར་ཐོད་པ་མཚྡན་གཅིག་ཟས་རྣམ་པ་\nསྣ་ཚོཌ་པས་བཀང་བ་བཞག་ གཞན་ཡང་འབྲུ་སྣ་དང་། རྒུན་འབྲུཾ་དང་ཤིང་ཐོག་ཀྱང་དེའི་ནང་དུ་བླུག་ རིནོེ་སྣ་ཚོཌ་ཀྱང་དེར་བཞག་ དེའི་ནང་དུ་རང་གང་\nདགའ་བའི་ཞལ་ཟས་སྣ་ཚོགས་བཞག་ དེའི་སྟེང་དུ་གོང་གི་ནོར་བུ་དང་སྐུ་བཞག་ དལ་གྱི་ཟུར་གསུཾ་མདུན་དང་བཞིར་གཏོར་མ་ཟན་ཆང་འཐེབ་ཀྱུ་སྤྲད་པ་",
+    "ocr_engine": "bdrc",
+    "ocr_model": "bdrc-yigdzin-v1",
+    "translation": "<meta>Title page is missing.</meta>\nFirst, regarding the practice: apply it to the activity. First, to perform the preliminary retreat <term>nyenpa</term>: go to a secluded and pleasant place such as a charnel ground, and perform sweeping and so on to make the mind engaged. In that place, in front of yourself, make a mandala of one cubit. In its center, make a circle of one span. In its center, draw a single surplus-offering for the precious support. On top and outside of that, arrange heaps of grain. On the central heap, place a small table or a supreme footed-throne. On top of that, place a skull-cup <term>kapala</term> with the required marks, filled with the \"glory-food\" <term>palshö</term> and various kinds of blood, and arrange a single support <term>gtor ma</term>.\n\n<leaf-break/>\n\n...Offer many things that have been made, and make requests for the desired goals. Then, perform the preliminary retreat. As before, perform the generation and visualization at the four times of the day, and offer the <term>gtor ma</term>. Thus, practice for twenty-one days and keep it secret. Then, offer the support <term>gtor ma</term> in a clean place. Making the jewel and the body-form is the preliminary retreat. \nThen, for the accomplishment of the actual siddhi <term>spiritual attainment</term>: for the practice of this, on top of the previous altar, make a triangle one span in width and height. Coat its exterior and interior in red with blood and so on. In its three corners, plant three supreme ritual daggers <term>phur ba</term>. On top of it, place a skull-cup with the required marks, filled with various kinds of food. Also, pour various grains, grapes, and fruits inside it. Place various jewels there too. Inside it, place various kinds of food that you enjoy. On top of that, place the aforementioned jewel and the body-form. In the three corners and the front of the mandala, provide four <term>gtor ma</term> made of dough and beer, with small finger-pressed offerings...",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 58,
+    "page_id": "69e78f6213e67bd16d4e6bfc",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/58.jpg",
+    "image_status": 200,
+    "ocr": "དབུ་ཤོག་ཆད།\nཆང་ཕུད་ཀྱང་བླུག་ དེའི་ནང་དུ་ནོར་བུ་གཉིས་ཀྱང་བཞག་ལ་ དེའི་སྟེང་དུ་ཡུཾབ་ཀྱི་སྐུ་གཉིས་ཀྱང་བཞུགསོུལ་། རྒྱུན་གཏོར་གཅིག་ཀྱང་མདུན་དུ་བཅའ་\nགཞན་ཡང་དཀོན་མཆོགི་མཆོད་གཏོར་དཀར་གསུམ་མངར་གསུམ་འབྱོར་ཚད་ཀྱང་བཤཾས་ཏེ་ མཚཾས་དཾ་པར་བྱས་ལ་ རང་བསྟན་བདེ་བ་ལ་འདུག་སྟེ་\nསེམས་བསྐྱེད་དང་ལྡན་པས་བདེ་མཆོགི་ཡི་དམ་གང་རུང་བསྐྱེད་ལ་མཚཾས་དྲག་ཏུ་བྱ་ བསྲུང་བའི་གུར་ཁང་ཕུག་སྟེ་མེ་རི་རྡོ་ར་གཞལ་ཡས་ཁང་བསྒོམས་ལ་\nབླ་མ་དང་ཡི་དམ་དཀཽག་རྣཾས་ལ་མཆོད་གཏོར་ཕུལ་ སྒྲུབ་པ་ལ་བར་ཆད་མི་འབྱུང་བ་དང་་ མྱུར་དུ་འགྲུབ་པའི་གསོལ་བ་གདབ་ དེ་ནས་རྟེན་གཏོར་\nདེ་ཤ་ཁྲགི་རི་བོ་བདུད་རྩིའི་རྒྱ་མཚོ་ཆེན་པོ་གཅིག་ཏུ་བསམ་མོ་། དེའི་སྟེང་དུ་ནོར་བུ་གཉིས་དང་རྟེན་གཏོར་རྣཾས་ཆོས་སྐྱོང་ཡབ་ཡུམ་དུ་སྐད་ཅིག་གིས་ཝལ་གྱིས་\nབསྐྱེད་ དེ་ནས་རང་གི་སྙིང་གའི་ས་བོན་ལས་འོད་ཟེར་འཕྲོས་པས་ནུབ་ཕྱོགས་ཨོརྒྱན་གྱི་དྲོུད་ནས་ཡུཾབ་སྤྱན་དྲངས་ལ་སྟིམ་ དེ་ནས་མཆོད་གཏོར་ཤ་ཁྲག་\n<leaf-break/>\nབདུན་གཉིས་གཞན་པའི་ནང་དུ་ཁྲག་རེ་བླུག་པ་བཞི་བཞག། གཞན་ཡང་བླ་མ་དཀཽགི་མཆོད་པ་དང་། ཚོགས་ཀྱི་ཡོ་བྱད་ཅི་འབྱོར་བཤཾས། དེས་ནི་རལ་\nདང་རྫས་ཀྱི་བཀོད་པའི་བཅའ་གཞིའི་རིམ་པ་བསྟན་པའོ་། ༈ དེ་ནས་བསྟན་བདེ་བ་ལ་ཁ་ནུབ་ཏུ་ལྟས་དེ་བསྡད་ལ། བདག་ཉིད་ཡི་དཾ་ལྷའི་ཏིངེ༹ནི་དུ་ཞུཌ་ཏེ་\nམཚཾས་བཅད་བསྲུང་བའི་འཁོར་ལོའི་གུར་ཁང་ཕུག། བླ་མ་ཡི་དཾ་དཀཽག་ལ་སོགས་པ་ལ་མཆོད་གཏོར་གཞུང་བཞིན་ཕུལ་ནས་བར་ཆད་བསྲུང་བའི་གསོལ་བ།\nགདབ། ཚོགས་ཟས་བྱིན་གྱིས་བརླབས་པའི་ཕུད་དང་གཏོར་མ་ལྔ་པོ་ཕུལ། རང་ལོངས་སྤྱད་ལྷག་གཏོར་བཏང་། དེ་ནས་སྐད་ཅིགི་གཏོར་མ་ཨོཾ་ཨཱཿཧཱུཾ་\nགིས་བྱིན་གྱིས་བརླབས་ཏེ། བདིུ༹དའི་རྒྱ་མཚོ་ཆེན་པོ་ཤྲགི་རི་བོ་ཆེན་པོ་གཅིག་ཏུ་དམིགས་ལ། དེའི་ནང་དུ་ཕྱི་ཐོད་པ་ནང་རིན་པོ་ཆེ་ལས་གྲུབ་པའི་དུར་ཁྲོད་\nཀྱི་གཞས་ཁང་ཆེན་པོ་གཅིག་བསཾ། དེའི་ནང་དུ་སྐུ་དུང་དང་འགྲོན་བུ་གཉིས་ལས་ཆོས་སྐྱོང་ཡུཾབ་ཝལ་གྱིས་བསྐྱེད་ལ། རང་གི་ཐུཌའི་སོན་ལས་འོད་ཟེར་",
+    "ocr_engine": "bdrc",
+    "ocr_model": "bdrc-yigdzin-v1",
+    "translation": "The first page is missing.\nPour the first press of beer and place the two jewels inside it. Above that, seat the two figures of the Father and Mother <note>the deity and his consort</note>. Also, arrange a single regular offering <term>gtor ma</term> in front. Furthermore, arrange as many white and sweet offerings to the Triple Gem as you can afford. Establish a strict boundary and remain in a state of self-contained bliss. Possessing the <term>bodhicitta</term> <gloss>mind of enlightenment</gloss>, generate whichever <term>yidam</term> <gloss>meditational deity</gloss> of Chakrasamvara is appropriate and maintain the boundary strictly. Visualize the protective tent, the mountain of fire, the vajra-fence, and the celestial palace. Offer the <term>gtor ma</term> to the gurus, deities, and the Triple Gem. Pray that no obstacles arise to the accomplishment and that it be quickly achieved. Then, visualize that support offering as a mountain of flesh and blood and a great ocean of nectar. Upon it, instantly and vividly generate the two jewels and the support offerings as the Dharma Protector Father and Mother. Then, light rays radiate from the seed syllable in your own heart, inviting the Father and Mother from the charnel ground of Uddiyana in the west, and they dissolve into the visualization. Then, the flesh and blood of the offering <term>gtor ma</term>...\n\n<leaf-break/>\n\n...Place four containers, each filled with a bit of blood, among the other fourteen. Also, arrange whatever offerings for the Guru and Triple Gem and whatever feast substances <term>tsog</term> you have obtained. This explains the sequence of setting up the ritual materials and substances. Then, sitting comfortably and facing the west, enter the meditative absorption of the self-generated deity and establish the boundary by visualizing the protective wheel and tent. Offer the <term>gtor ma</term> to the gurus, deities, and Triple Gem according to the manual, and pray for protection from obstacles. Offer the first portion of the blessed feast food and the five <term>gtor ma</term>. Consume some yourself and send out the remaining offerings. Then, instantly bless the <term>gtor ma</term> with the syllables **OM AH HUM**. Visualize it as a great ocean of nectar and a great mountain of blood. Inside that, imagine a great palace of the charnel ground made of precious gems within a skull-cup. Inside that, from the white shell and the cowrie, the Dharma Protector Father and Mother are vividly generated. From the seed syllable in your own heart, light rays...",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]
