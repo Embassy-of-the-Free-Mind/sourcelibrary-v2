@@ -199,7 +199,7 @@ const TRADITIONS = [
   { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'] },
   { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'] },
   // #6220. Latin is picked by collection, since all ≈52K Latin books would be most of the library;
-  // Greek is every Greek-language book. Latin books in `kabbalah` are also counted under Kabbalah.
+  // Greek is every Greek-language book. Latin books in `kabbalah` that pass the Kabbalah shelf rule are also counted under Kabbalah.
   { id: 'latin', name: 'Latin: Hermetica, alchemy, Kabbalah and natural philosophy', sets: ['latin'], rows: ['patrologia-latina', 'camena-poemata', 'perseus-latin'] },
   { id: 'greek', name: 'Greek', sets: ['greek'], rows: ['perseus-greek', 'first1k-greek'] },
 ];
@@ -246,6 +246,8 @@ const traditions = TRADITIONS.map((t, ti) => {
   const canon_page_equivalents = Math.round(canon.reduce((a, r) => a + (r.size.base_chars ? r.size.base_chars / map.rates[r.lang].base_chars_per_page : 0), 0));
   return {
     id: t.id, name: t.name, gap_map_rows: t.rows,
+    // Who is on the shelf and why (#5916): each set's selector sentence, as canon-holdings.mjs applies it.
+    membership: t.sets.map((k) => sets[k].method),
     books: bs.length,
     readable_books: bs.filter((b) => isReadableInEnglish(b.translation_state)).length,
     pages_scanned: bs.reduce((a, b) => a + (b.pages_count || 0), 0),
@@ -279,7 +281,7 @@ writeFileSync(OUT, JSON.stringify({
     eternity_shelf: 'the 278-book Eternity reading list (list file); readable = readable_in_english recomputed from pages',
     tengyur_draft: 'Derge Tengyur volumes: pages with text / with draft English counted on pages; per_volume = [vol, pages_with_text, pages_translated]; spend_usd = type translation usage rows on these books, both stores',
     latin_books_all: 'every book with language=Latin (the Latin tradition row counts four collections only)',
-    traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language; ocr_engines / translation_models = [model, pages] counted on pages with text / with English (ocr.model, else ocr.source; translation.model); book_pages = [id, title, public, scanned, transcribed, translated]',
+    traditions: 'books held per tradition, each counted once; membership = the rule that puts a book on the shelf (Kabbalah and Sufi exceptions reviewed by hand in canon-shelf-review-5916.json, #5916); pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language; ocr_engines / translation_models = [model, pages] counted on pages with text / with English (ocr.model, else ocr.source; translation.model); book_pages = [id, title, public, scanned, transcribed, translated]',
   },
   corpora,
   traditions,

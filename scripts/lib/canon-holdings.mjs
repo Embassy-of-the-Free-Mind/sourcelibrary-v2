@@ -7,11 +7,13 @@
 // told (Derge Tengyur/Kangyur by BDRC scan id or Esukhia), otherwise "any edition" — each set carries
 // its `method` sentence, and the readers quote it.
 
+import { readFileSync } from 'fs';
+
 const PROJ = {
   projection: {
     id: 1, title: 1, english_title: 1, language: 1, visible: 1, hidden: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
     collections: 1, 'image_source.provider': 1, 'image_source.source_url': 1, source_url: 1, metadata: 1,
-    translation_state: 1, 'pipeline_auto.hold.reason': 1, acquisition_campaign: 1,
+    translation_state: 1, 'pipeline_auto.hold.reason': 1, acquisition_campaign: 1, content_type: 1,
   },
 };
 // Latin and Greek (#6220): Latin is our largest language (≈52K books), so it is loaded by the four
@@ -46,6 +48,16 @@ export async function loadHoldingCandidates(db, pgc) {
   return { books: [...all.values()], whBy, counts: { lang: byLang.length, collections: byColl.length, latin: byLatin.length, work_holdings: whBooks.length } };
 }
 
+const SHELF_REVIEW = JSON.parse(readFileSync(new URL('../catalog-coverage/canon-shelf-review-5916.json', import.meta.url), 'utf8'));
+
+/** The shelf rule applied to the candidates, minus the reviewed excludes, plus the reviewed includes (#5916). */
+function reviewed(shelf, candidates, rule) {
+  const { exclude, include } = SHELF_REVIEW[shelf];
+  const out = new Set(exclude.map((x) => x.id));
+  const inc = new Set(include.map((x) => x.id));
+  return candidates.filter((b) => !out.has(b.id) && (inc.has(b.id) || rule(b)));
+}
+
 /**
  * Book sets per corpus key. Keys are the gap map's internal ones (tengyur, kangyur, cbeta, cbeta_chan,
  * pali, gretil*, kabbalah, zohar, lurianic, cordovero, openiti_sufi, ganjoor, mongolian_kanjur,
@@ -77,16 +89,26 @@ export function corpusBookSets(books, whBy = {}) {
   R.gretil_buddhist = set(skt.filter((b) => has(b, 'buddhism', 'buddhist-canon', 'indian-buddhist-jain') || /buddh|bauddh|sūtra|sutra|prajñā|prajna|abhidharma|bodhi/i.test(hay(b))), 'Sanskrit books in buddhism collections or Buddhist title terms');
   R.gretil_vedanta = set(skt.filter((b) => has(b, 'vedanta-darshana') || /vedānta|vedanta|brahmasūtra|brahmasutra|upaniṣad|upanishad|śaṅkara|shankara/i.test(hay(b))), 'Sanskrit books in vedanta-darshana or Vedānta title terms');
   R.gretil_gaudiya = set(skt.filter((b) => /gosvām|gosvam|caitanya|chaitanya|rūpa|jīva gos|bhaktirasām|bhaktirasam|haribhakti/i.test(hay(b))), 'Sanskrit books with Gauḍīya author/title terms');
+  // Tradition shelves (#5916): a book is on the shelf only if it is a text OF the tradition (a canonical
+  // work, a commentary, a tradition author's treatise), not one that mentions it. Our `kabbalah` and
+  // `sufi-eastern-mysticism` collections are broad subject collections (grimoires, Theosophy, the
+  // Bhagavad Gita), so membership of them alone no longer admits a book; artwork records never do.
+  // The reviewed exceptions, each with its reason, are in canon-shelf-review-5916.json.
+  const isText = (b) => b.content_type !== 'artwork';
   const heb = books.filter((b) => /Hebrew|Aramaic/.test(b.language || '') || has(b, 'kabbalah', 'jewish-kabbalistic-mysticism'));
-  const kab = heb.filter((b) => has(b, 'kabbalah', 'jewish-kabbalistic-mysticism') || /zohar|זהר|זוהר|kabbal|qabbal|cabbal|עץ חיים|etz ?chaim|ets ?hayy?im|pardes rimm?on|פרדס רמונים|cordovero|קורדובירו|luria|vital|ויטאל|tikk?un/i.test(hay(b)));
-  R.kabbalah = set(kab, 'Hebrew/Aramaic or kabbalah collections, with Kabbalah collection/title terms (any edition)');
+  const kabTitle = (b) => /zohar|זהר|זוהר|kabbal|kabal|qabbal|cabbal|cabal|עץ חיים|etz ?chaim|ets ?hayy?im|pardes rimm?on|פרדס רמונים|cordovero|קורדובירו|luria|vital|ויטאל|tikk?un|yetzirah|jezirah|bahir/i.test(hay(b));
+  const kab = reviewed('kabbalah', heb, (b) => isText(b) && (has(b, 'jewish-kabbalistic-mysticism') || kabTitle(b)
+    || (/Hebrew|Aramaic/.test(b.language || '') && has(b, 'kabbalah'))));
+  R.kabbalah = set(kab, 'in jewish-kabbalistic-mysticism, or a Kabbalah title term (Zohar, Kabbalah/Cabala, Yetzirah, Cordovero, Luria …), or Hebrew/Aramaic in the kabbalah collection; minus artwork records and the reviewed exceptions (canon-shelf-review-5916.json, #5916); any edition');
   R.zohar = set(kab.filter((b) => /zohar|זהר|זוהר|tikk?un/i.test(hay(b))), 'Zohar / Tikkunei Zohar by title');
   R.lurianic = set(kab.filter((b) => /etz ?chaim|ets ?hayy?im|עץ חיים|luria|vital|ויטאל|ari\b|shemonah sh|שמונה שערים|pri etz|sha.ar ha/i.test(hay(b))), 'Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)');
   R.cordovero = set(kab.filter((b) => /cordovero|קורדובירו|pardes rimm?on|פרדס רמונים|tomer dev|תומר דבורה|or ne.erav|אור נערב/i.test(hay(b))), 'Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)');
   const isl = books.filter((b) => /Arabic|Persian/.test(b.language || '') || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism'));
-  const oitiSet = whBy.openiti || new Set();
-  R.openiti_sufi = set(isl.filter((b) => oitiSet.has(b.id) || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism') || /ibn ?.?arab[iī]|fus[uū]s|fut[uū]h[aā]t|فصوص|فتوحات|ابن عربي|ابن العربي/i.test(hay(b))),
-    'Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings');
+  // An OpenITI holding alone does not admit a book (#5916): OpenITI is the whole Islamicate corpus (the
+  // Nights, al-Bīrūnī, geographies), not its Sufi part.
+  R.openiti_sufi = set(reviewed('sufi', isl, (b) => isText(b) && (has(b, 'sufism', 'sufism-islamic-mysticism')
+    || /ibn ?.?arab[iī]|fus[uū]s|fut[uū]h[aā]t|فصوص|فتوحات|ابن عربي|ابن العربي/i.test(hay(b)))),
+    'Arabic/Persian/sufism-collection books in sufism or sufism-islamic-mysticism, or with Ibn ʿArabī title terms; minus artwork records and the reviewed exceptions (canon-shelf-review-5916.json, #5916)');
   R.ganjoor = set(books.filter((b) => b.language === 'Persian' && (has(b, 'persian-literary-tradition') || /d[iī]v[aā]n|diwan|masnav|mathnaw|shahnam|sh[aā]hn[aā]m|gulist|bust[aā]n|دیوان|ديوان|مثنوی|شاهنامه|گلستان|بوستان|غزل|hafez|hafiz|sa.di|rumi|attar|ferdowsi|nizami|jami/i.test(hay(b)))),
     'Persian books in persian-literary-tradition or with classical poetry title terms (any edition)');
   R.mongolian_kanjur = set(books.filter((b) => b.language === 'Mongolian' || /W4CZ5370|mongolian (kanjur|kangyur)|ganjuur/i.test(hay(b))), 'language=Mongolian or Mongolian Kanjur by title/source');
