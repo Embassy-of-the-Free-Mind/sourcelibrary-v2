@@ -43,6 +43,9 @@
  * Measured 2026-10-10 (49,776 books, 7.80M rows, 33 min at --concurrency 6): reembed 1,225,122 (stale 1,154,967,
  * empty-snippet 417,119, both 249,851; 97,113 more in books that are not live, left out); withdraw 152,987
  * (archived 145,612, page-missing 7,375). Re-run right before the write window: the stale class grows daily.
+ * Measured 2026-10-13, after the window (49,807 books, 7.82M rows, 14 min): reembed 7,199, of which 6,990 have a
+ * source newer than the window; the pre-fix rule lists 19,770 on the same day. Unlisted, live books: no-text
+ * 10,272 served rows (3,389 still hold a snippet), snippet-no-translation 87,878, empty-snippet-current 0.
  *
  * Usage: node --env-file=.env.production.local scripts/maintenance/enumerate-reembed-6221.mjs --out DIR
  *        [--books id,id] [--concurrency 6] [--chunk 100000]
