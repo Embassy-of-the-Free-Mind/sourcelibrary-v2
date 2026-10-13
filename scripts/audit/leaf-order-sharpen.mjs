@@ -104,7 +104,7 @@ function shuffled(arr, seed) {
 
 export const SEAM_CHARS = 320;      // of the foot and of the head shown to the reader
 export const SEAM_MIN_CHARS = 120;  // a shorter foot or head is not read
-export const CONTROL_EVERY = 5;     // one control pair (a join and a made gap) per this many jumps
+export const CONTROL_EVERY = 5;     // one control (a join, or a made gap, alternately) per this many jumps
 
 /** The jumps a reader must decide, and controls from the same books. Returns { items, key }. */
 function buildPacket(rows, seed) {
