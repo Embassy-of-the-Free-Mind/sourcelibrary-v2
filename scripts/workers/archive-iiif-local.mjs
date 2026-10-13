@@ -51,6 +51,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -316,12 +317,10 @@ async function main() {
   for (const bookId of touchedBookIds) {
     const book = await db.collection('books').findOne(
       { id: bookId }, { projection: { pages_count: 1, 'pipeline_auto.status': 1 } });
-    const archivedCount = await db.collection('pages').countDocuments(
-      { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] }, $expr: { $not: { $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: '^failed:' } } } },
-      { maxTimeMS: 10000 }
-    ).catch(() => -1);
-    if (archivedCount < 0) continue;
-    const set = { pages_archived: archivedCount, updated_at: new Date() };
+    // recountBook() writes all six counters from the book's visible pages (#5327).
+    const recount = await recountBook(db, bookId, { reason: 'archive-iiif-local' }).catch(() => null);
+    if (!recount) continue;
+    const set = { updated_at: new Date() };
     // Count non-failed pages remaining: a book is "done" when no page still lacks a real archived_photo.
     const remaining = await db.collection('pages').countDocuments({
       book_id: bookId,
@@ -330,7 +329,7 @@ async function main() {
     if (remaining === 0 && book?.pages_count > 0) {
       // Forward-only. A book already past archiving keeps its status: writing
       // 'archive_complete' over 'chapters_complete' would send it back through
-      // paid OCR/translation/chapters. Its pages_archived is still updated above —
+      // paid OCR/translation/chapters. Its pages_archived is still recounted above —
       // the archiving work is recorded either way, only the status is left alone.
       if (mayAdvanceToArchiveComplete(book?.pipeline_auto?.status)) {
         set['pipeline_auto.status'] = 'archive_complete';

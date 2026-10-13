@@ -9,6 +9,7 @@ import sharp from 'sharp';
 // the cover archiver. See src/lib/archivable-sources.ts for why three private
 // copies of this became a silent no-op.
 import { ARCHIVABLE_SOURCES_REGEX } from '@/lib/archivable-sources';
+import { recountBook } from '@/lib/page-counts';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -28,36 +29,28 @@ export const maxDuration = 300;
  * on to its 300s maxDuration), so callers retry work that in fact completed. An increment
  * would drift on every one of those retries.
  *
- * Matches the counting predicate used by `scripts/workers/archive-bulk.mjs` — a non-empty
- * string, not merely a present field.
+ * The recount is `recountBook()` (#5327): all six counters over the book's VISIBLE pages,
+ * the count the reconciler writes. This route used to count every page, soft-hidden ones
+ * included, so on a book with hidden pages the two writers alternated.
  */
 async function syncArchivedCounter(
   db: Awaited<ReturnType<typeof getDb>>,
   bookId: string,
-  pagesCount: number | undefined,
-): Promise<number> {
-  const archivedCount = await db.collection('pages').countDocuments(
-    { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
-    { maxTimeMS: 10000 },
-  );
+): Promise<{ archivedPages: number; visiblePages: number }> {
+  const { after } = await recountBook(db, bookId, { reason: 'archive-images' });
+  const { pages_archived: archivedPages, pages_count: visiblePages } = after;
 
-  const update: Record<string, unknown> = {
-    pages_archived: archivedCount,
-    updated_at: new Date(),
-  };
-
-  // Only claim a status when we know the denominator. A book with no pages_count
-  // would otherwise be marked complete on the first archived page.
-  if (typeof pagesCount === 'number' && pagesCount > 0) {
-    const archiveStatus = archivedCount >= pagesCount ? 'archive_complete' : 'archive_partial';
-    update.archive_status = archiveStatus;
+  // Only claim a status when there is a denominator. A book with no visible pages
+  // would otherwise be marked complete at zero of zero.
+  if (visiblePages > 0) {
+    const archiveStatus = archivedPages >= visiblePages ? 'archive_complete' : 'archive_partial';
+    const update: Record<string, unknown> = { archive_status: archiveStatus, updated_at: new Date() };
     if (archiveStatus === 'archive_complete') {
       update.archive_completed_at = new Date();
     }
+    await db.collection('books').updateOne({ id: bookId }, { $set: update });
   }
-
-  await db.collection('books').updateOne({ id: bookId }, { $set: update });
-  return archivedCount;
+  return { archivedPages, visiblePages };
 }
 
 /**
@@ -115,14 +108,14 @@ export const POST = withAuth(async (request, session, context) => {
       // by an earlier call (or by a call the edge timed out on) lands in exactly this
       // branch, and this is what lets a stale counter self-heal instead of keeping the
       // book selectable for re-archiving forever.
-      const archivedPages = await syncArchivedCounter(db, bookId, book.pages_count ?? totalPages);
+      const { archivedPages, visiblePages } = await syncArchivedCounter(db, bookId);
 
       return NextResponse.json({
         message: 'No pages need archiving',
         archived: 0,
         totalPages,
         archivedPages,
-        percentArchived: totalPages > 0 ? Math.round((archivedPages / totalPages) * 100) : 0
+        percentArchived: visiblePages > 0 ? Math.round((archivedPages / visiblePages) * 100) : 0
       });
     }
 
@@ -268,7 +261,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Get updated counts, and record the archived count on the book so selectors and the
     // watchdog can see this route's work (#3712).
     const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
-    const archivedPages = await syncArchivedCounter(db, bookId, book.pages_count ?? totalPages);
+    const { archivedPages, visiblePages } = await syncArchivedCounter(db, bookId);
     const remainingCount = await db.collection('pages').countDocuments({
       book_id: bookId,
       archived_photo: { $exists: false },
@@ -292,7 +285,7 @@ export const POST = withAuth(async (request, session, context) => {
       remaining: remainingCount,
       totalPages,
       archivedPages,
-      percentArchived: totalPages > 0 ? Math.round((archivedPages / totalPages) * 100) : 0,
+      percentArchived: visiblePages > 0 ? Math.round((archivedPages / visiblePages) * 100) : 0,
       usage: {
         bytesUploaded: totalBytesUploaded,
         megabytesUploaded: Math.round(totalBytesUploaded / (1024 * 1024) * 100) / 100,

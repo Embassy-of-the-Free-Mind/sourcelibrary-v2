@@ -47,7 +47,7 @@ const BASELINE: string[] = JSON.parse(
 ).files;
 
 /** Current size of the baseline. Lower it when a file leaves; never raise it. */
-const BASELINE_CEILING = 68;
+const BASELINE_CEILING = 57;
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {
@@ -187,8 +187,10 @@ describe('book page-counter writers (#5325)', () => {
     expect(rows.length).toBeGreaterThan(40);
     const shapes = new Set(rows.flatMap(r => r.shapes));
     expect([...shapes].sort()).toEqual(['$inc', 'hoisted', 'inline']);
+    // pages_archived has no live writer left since the archive group converted
+    // (#5327); the matcher's sight of it is pinned by the hoisted negative control.
     const counters = new Set(rows.flatMap(r => r.counters));
-    expect([...counters].sort()).toEqual([...COUNTERS].sort());
+    expect([...counters].sort()).toEqual(COUNTERS.filter(c => c !== 'pages_archived').sort());
   });
 
   describe('negative controls: one violating source per shape is caught', () => {

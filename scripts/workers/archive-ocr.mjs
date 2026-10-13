@@ -18,6 +18,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const MAX_PAGES = 10_000;
 // MAX_PAGES_PER_DOMAIN caps how many pages from a single source make it into one
@@ -507,21 +508,13 @@ async function main() {
   if (touchedBookIds.size > 0) {
     let synced = 0;
     for (const bookId of touchedBookIds) {
-      const pagesCol = 'pages';
       const booksCol = 'books';
-      const archivedCount = await db.collection(pagesCol).countDocuments(
-        { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
-        { maxTimeMS: 10000 }
-      );
-      // Look up pages_count for the status flip (the IA bulk worker has this
-      // in its book projection; here we don't, so look it up).
-      const bookDoc = await db.collection(booksCol).findOne(
-        { id: bookId },
-        { projection: { pages_count: 1 } },
-      );
-      const isComplete = bookDoc && archivedCount >= (bookDoc.pages_count || 0);
+      // recountBook() writes all six counters from the book's visible pages
+      // (#5327); the status flip reads the recount.
+      const { matched, after } = await recountBook(db, bookId, { reason: 'archive-ocr' });
+      if (!matched) continue;
+      const isComplete = after.pages_count > 0 && after.pages_archived >= after.pages_count;
       const update = {
-        pages_archived: archivedCount,
         archive_status: isComplete ? 'archive_complete' : 'archive_partial',
         updated_at: new Date(),
       };

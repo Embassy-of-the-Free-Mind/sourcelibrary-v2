@@ -19,6 +19,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -321,17 +322,9 @@ async function main() {
   if (touchedBookIds.size > 0) {
     let synced = 0;
     for (const bookId of touchedBookIds) {
-      const archivedCount = await db.collection('pages').countDocuments(
-        { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
-        { maxTimeMS: 10000 }
-      ).catch(() => -1);
-      if (archivedCount >= 0) {
-        await db.collection('books').updateOne(
-          { id: bookId },
-          { $set: { pages_archived: archivedCount, updated_at: new Date() } }
-        );
-        synced++;
-      }
+      // recountBook() writes all six counters from the book's visible pages (#5327)
+      const recount = await recountBook(db, bookId, { reason: 'archive-gallica' }).catch(() => null);
+      if (recount?.matched) synced++;
     }
     console.log(`[archive-gallica] Synced pages_archived on ${synced} books`);
   }

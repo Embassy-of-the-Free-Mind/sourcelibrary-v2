@@ -59,6 +59,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { eraraPdfLeafOffset, pdfIndexForPage } from './lib/erara-pdf-leaves.mjs';
 
 // CLI args
@@ -200,20 +201,16 @@ async function processBook(book, db) {
     // runs in the log, none of which moved anything.
     //
     // A skip that does not record WHY is an infinite loop with a progress bar.
-    // Sync the counter from the pages themselves, using the same predicate the
-    // archive route uses, so the book leaves the queue by being correct rather
-    // than by being ignored.
-    const archivedCount = await db.collection(pagesCol).countDocuments(
-      { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
-      { maxTimeMS: 10000 },
-    );
-    if (archivedCount > 0) {
+    // Sync the counter from the pages themselves with recountBook() — the one
+    // writer the archive route and the reconciler share (#5327) — so the book
+    // leaves the queue by being correct rather than by being ignored.
+    const { after } = await recountBook(db, book.id, { reason: 'archive-erara:nothing-to-archive' });
+    if (after.pages_archived > 0) {
       await db.collection(booksCol).updateOne(
         { id: book.id },
         {
           $set: {
-            pages_archived: archivedCount,
-            archive_status: archivedCount >= (book.pages_count || 0) ? 'archive_complete' : 'archive_partial',
+            archive_status: after.pages_archived >= after.pages_count ? 'archive_complete' : 'archive_partial',
             updated_at: new Date(),
           },
         },
@@ -364,16 +361,13 @@ async function processBook(book, db) {
     const rate = (archived / ((Date.now() - stats.startTime) / 1000)).toFixed(1);
     console.log(`    ${archived}/${workItems.length} archived, ${failed} failed (${rate} pages/sec overall)`);
 
-    // Sync pages_archived counter (#497)
+    // Sync the page counters (#497) through recountBook() (#5327)
     if (archived > 0) {
-      const archivedCount = await db.collection(pagesCol).countDocuments(
-        { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
-        { maxTimeMS: 10000 }
-      );
-      const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
+      const { after } = await recountBook(db, book.id, { reason: 'archive-erara' });
+      const archiveStatus = after.pages_count > 0 && after.pages_archived >= after.pages_count ? 'archive_complete' : 'archive_partial';
       await db.collection(booksCol).updateOne(
         { id: book.id },
-        { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
+        { $set: { archive_status: archiveStatus, updated_at: new Date() } }
       );
     }
 
