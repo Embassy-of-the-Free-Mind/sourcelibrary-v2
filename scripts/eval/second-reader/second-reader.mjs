@@ -402,7 +402,9 @@ else if (cmd === 'cli-requests') {
   const taxo = Object.entries(taxonomyNames()).map(([k, v]) => `- ${k} · ${v}`).join('\n');
   const rows = [];
   if (role === 'read') {
-    const brief = `${body(path.join(REPO, 'scripts/eval/spot-check/REVIEWER.md')).trim()}\n\n${body(path.join(HERE, 'CALIBRATION-ADDENDUM.md')).trim()}`;
+    // --addendum FILE[,FILE]: further brief files after the two frozen ones (the #6203 run asks for a `kind` per error).
+    const extra = String(opt('addendum', '')).split(',').filter(Boolean).map((f) => `\n\n${body(f).trim()}`).join('');
+    const brief = `${body(path.join(REPO, 'scripts/eval/spot-check/REVIEWER.md')).trim()}\n\n${body(path.join(HERE, 'CALIBRATION-ADDENDUM.md')).trim()}${extra}`;
     const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. The class codes are listed below instead of the taxonomy file. PACKET_FILE is given inline below and holds ONE book with ONE page. The page image is the file attached at the end of this message; it is the image the packet\'s `image_file` names. Do steps 3 and 4 for this page. OUTPUT_FILE is your reply: reply with ONLY one JSON object, the page entry from the schema with the addendum\'s two fields (`page_number`, `right_page`, `ocr_score`, `ocr_errors`, `tr_score`, `tr_errors`, `other`, `confidence`, `printed_marker`, `layout`), with no prose and no markdown fence.';
     for (const f of fs.readdirSync(J('packets')).filter((x) => x.endsWith('.json')).sort()) {
       const recs = read(J('packets', f));

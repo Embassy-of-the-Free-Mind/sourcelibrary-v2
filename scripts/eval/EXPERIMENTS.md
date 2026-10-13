@@ -116,6 +116,13 @@ plus batch 5's 16 pages and 2 serious pages, assumed spread over two of its five
 25% (13–39). Entry: `2026-10-06-random-book-spot-check-canon-shelves-5914.md`.
 ² Month 0 judged on-sight defects as a count (≈ 18 of 30), not per book; the CI treats it as exactly 18.
 
+**Design change before the first fortnightly draw (2026-10-19):** `draw.mjs` now draws runs only from pages with
+`page_number > 0`. Records at ≤ 0 are soft-hidden and never render (`scripts/lib/page-counts.mjs`, #3293), but they can carry
+translations, so the unfiltered draw could pick a run no reader sees. That hole was found by the #6056 shelf overview, which drew 6 of 96.
+Replayed over the eight draw dates 2026-10-19 → 2027-01-25, the old filter put 2 of 80 runs on such pages (2026-11-30, 2026-12-28).
+The new filter puts 0 there. It draws the same books, and every other book keeps the same run. Month 0's draw is in the
+ops repo and was not re-checked here.
+
 ## Monthly translation corpus audit (#5301) — does the served defect rate move?
 
 One entry for the series, one row per month (newest first); the row is written by the stage-2 routine
@@ -127,6 +134,42 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
+
+## 2026-10-13 · Does "short source, long English" find title leaves that were given a chapter? (#6297)
+
+PRIOR ART: `isExcess` in `scripts/lib/translate-core.mjs` (the `runaway` tier) does not judge a source under 300
+characters; `scripts/lib/illegible-source-gate.mjs` refuses a page nobody could read, and a title leaf is legible.
+#6297 proposed the raw signal "source under 200 characters, English over 600" and named 14 Tengyur pages.
+
+**Design.** Rule (`isRecited`): source weight under 300 and English body over max(600, 3 × weight). Source weight
+is the transcription with tags removed and their contents kept, a Han, kana or Hangul character counted 16. English
+body is `bodyLen`, which leaves out notes, summaries and keywords. Read-only, $0, no model call. Detector:
+`scripts/audit/recited-short-source.mjs`.
+
+**Result.**
+
+| set | pages | fired | what the fires are |
+|---|---:|---:|---|
+| Tengyur title leaves withheld by eye (4 on #6048, 3 here), text from `page_revisions` | 7 | 7 | positive controls |
+| The other 11 of the 14 pages #6297 named, read from image | 11 | 0 | a translated title with a summary and keywords; 3 are four-line ornate leaves with a short verse |
+| 213 Tengyur volumes, after the withholds | 128,329 translated, 35 short | 0 | |
+| Random draw of 60,000 pages, 34,335 translated | 208 short | 5 | all 5 wrong by text: English for an empty or `[RECITATION_BLOCKED]` source, or a heading followed by a page of prose |
+| Every `page_type: title-page` with English | 52,477, 9,474 short | 537 (349 books; 442 pages on public books) | see below |
+
+Of the 537, a seeded random 20 were read as text: on all 20 the English carries paragraphs the transcription does not
+hold. Most open with a continuity note and then give the previous or next page's text under the half-title
+("PRECEPTS", "LUCULLUS", "BOOK III"). Five of the 20 were opened as images; all five leaves hold one line. So the
+class is wider than recitation from memory: the same shape is produced when a neighbouring page's text lands on a
+half-title. The reader meets it the same way, as English that is not on the page.
+
+The raw signal over-counts. It measured the whole English string, so a one-line title with a `<summary>` and
+`<keywords>` passed 600 characters: 11 of its 14 Tengyur pages were that.
+
+**What this does not show.** The 203 short pages the rule did not fire on were not opened, so this gives no recall
+figure outside the 7 controls. "Wrong by text" assumes the transcription is complete: a leaf whose transcription
+missed most of the page would also fire, and the English would still not have come from that leaf's reading.
+
+*Replicated?* No. One run, one reader.
 
 ## 2026-10-12 · Can Opus or Gemini 3.1 Pro correct the Yigdzin OCR of the BL Kangyurs, and is correct or redo better? (#6560)
 
@@ -1629,6 +1672,26 @@ Artifacts:
   `manifest.json`, `predictions/`, `results/report-2026-10-12.json`).
 - The bulk table and posteriors are on the job box: `/data/scratch/sl/jobs/estimator-core-6557/`.
 
+## 2026-10-12 · Do an Opus reader and a Gemini reader agree, kind by kind, on the same 30 pages? (#6203 validation run; half run)
+<!-- PRIOR ART: 2026-10-09-second-reader-pilot-gemini-cli-6338.md and the #6338 calibration (Opus vs Gemini 3.1 Pro agreed at chance, alpha -0.13, on "serious" severity); the weekly #6420 lane D audit (two readers, agreement on "serious" only, and on 2026-10-12 one reader). Neither measures agreement per KIND of error or plants pages in the same batch. -->
+
+**Question.** #6420 calls a finding convergent when two AI readers of different families both make it, and waives a by-eye stop on that agreement. Do the two families agree above chance, per kind of error, and does each catch a planted one?
+
+**Design.** `scripts/eval/cross-family-6203/README.md`, fixed before any reader ran. 33 pages, one per book, seed 6203: 5 from the #5826 gate's sample, 10 from the #5914 fortnightly spot check, 15 random live non-English books whose page serves English, and 3 planted controls (the next leaf's text under this leaf's image; one middle sentence cut from the English; one negation reversed in the English). 32 of the 33 pages were served to readers at the draw, 1 was in a hidden book. Readers get the frozen #6338 brief plus `KIND-ADDENDUM.md` (one of twelve kinds on every error), packets with no model name and no URL. $0.
+
+**What ran.** The Opus reader only (`claude -p`, sealed folder, Read and Write only; 4 at a time; about 14 minutes).
+
+**What did not run, and why.** The Gemini reader. It goes through the `agy` CLI, which is installed on the main box only. This job ran on another box, has no shell on main, and main refused new jobs (its Claude account was at 99% of its week). The same day the Gemini account was out of quota from 03:30 to 06:35 UTC and limited again soon after (#6420). So **no kappa was measured**. To finish: `scripts/eval/cross-family-6203/finish-gemini.sh scripts/eval/results/cross-family-6203/2026-10-12 <model>` on main; it rebuilds the run from the committed packets, reads, scores and packs.
+
+**Result (one reader).**
+- Opus read 33 of 33 pages. Every one of its 396 error entries carries a kind from the vocabulary.
+- **Controls: 3 of 3 detected, each called serious, each with the right kind** (wrong leaf, omission, mistranslation).
+- On the 30 natural pages Opus recorded a serious error on 18. By kind (pages; a page can carry several): misread 10, mistranslation 10, added gloss 5, illegible fill 4, confabulation 2, omission 2, layout 2, carry-over 1, other 1, recitation 0, show-through 0, wrong leaf 0. **This is not a rate of anything**: half the pages come from sets a model already reviewed, and it is one model's reading.
+
+**What it does and does not show.** It shows the new vocabulary is usable by a reader (no entry without a kind) and that Opus, with this brief, finds the three planted kinds. It does not show reliability. The only cross-family figure remains #6338's alpha of -0.13, which is agreement at chance. Until the Gemini half lands, a finding two AI readers share is two readings, not a validated one.
+
+**Replicated?** No. **Artifact:** `scripts/eval/results/cross-family-6203/2026-10-12/` (key, packets, Opus reviews, report). Images are fetched again by `restore`; 17 of 33 come back re-encoded by their host, which `restore.json` records.
+
 ## 2026-10-12 · Fixing the Gemini CLI OCR route by iteration (#6523): markers + a tool gate put 3.7 / 3.8 Flash where the model is
 
 Job `cli-ocr-fix-6523c` (Hetzner). Every read went through `agy -p` on the Google subscription, $0 billed; no paid
@@ -1765,6 +1828,39 @@ Accuracy (1 − mean CER), before → after:
 - **Tests:** `tests/unit/cli-ocr-extract-6523.test.ts` covers the extractor, the unwrap, the gate, and the parity of the marker instruction between Python and JS. `ocr-pareto.test.ts` checks `rescore-extract.mjs --check`.
 
 **Spend.** $0 billed. No database write.
+
+## 2026-10-12 · What does the served-text CER say once digits count? The 90 panel pages re-scored (#6203 repair 1)
+<!-- PRIOR ART: 2026-10-10 #6388 results (scripts/eval/ocr-prereg-6388/results.md: the panel and its key, scored with digits dropped); numbers-5224.mjs (#5224: which engine misreads printed numbers, image as truth, English only). Neither re-scores the panel with digits kept or reports digits as their own rate. -->
+
+**Question.** The validity audit (`.claude/docs/measurement-validity.md`, PR #6520) found that `normalizeForScript(…, 'latin')` kept `[a-z]` only, so `"p. 239 n. 25; | 2.54,3 |"` scored as `"p n"`, and that one mean per stratum hid a failure count. What do the numbers become with digits kept, and with failures and typical error reported apart?
+
+**Design.** $0, no model call. `scripts/eval/ocr-prereg-6388/rescore-digits.mjs --live`.
+- The 90-page #6388 panel (30 Latin print, 30 Chinese manuscript, 30 English print; one page per book), scored against the same AI-consensus key (readers G, S, O; no human has checked it) under v3 (digits dropped) and v4 (digits kept). Served text: the 2026-10-10 `reads/P` file and `pages.ocr.data` on 2026-10-12. They are identical: no panel page was re-read in between.
+- A page FAILED when the served read is empty, a refusal, text on a leaf the key calls blank, or its capped CER is above 0.3.
+- Digits channel: the same plurality key built over each reader's ASCII digits alone; errors pooled over pages whose key has at least 5 digits.
+- Reference tiers of the benchmark: the 19 Latin-script `ground-truth/` pages' SERVED text under both versions; for the 95 Latin-script `ground-truth-ws/` pages only a bound (the reference's digit share), because the engines' outputs are with the run on the main box.
+
+**Result.** Full tables: `scripts/eval/results/digits-kept-6203/rescore-digits.md`.
+
+| stratum | mean CER v3 → v4 | failed | median CER, pages with text, v3 → v4 | digits wrong |
+|---|---|---|---|---|
+| Latin print | 3.5% → 3.6% | 1 of 30 | 1.0% → 1.2% (n=30) | 5.5% of 397 key digits, 15 pages |
+| Chinese manuscript | 9.3% → 9.3% | 1 of 30 | 6.4% → 6.4% (n=30) | too few ASCII digits |
+| English print | 13.3% → 13.4% | 6 of 30 (5 over 30%, 1 empty) | 0.2% → 0.3% (n=29) | 0.8% of 4,370 key digits, 10 pages |
+
+- **One page of 90 moves by more than 1 pt**: Latin `69c833d26c6f3cc53c84e345` p.57, 7.8% → 9.4% (10 of its 13 digits differ from the key).
+- **The English mean was a failure count.** 13.4% is 6 failed pages; the median page with text is at 0.3%.
+- **The numeric table** (`69d14ba11c2a66dc094b503f` p.289, 4,258 digits) goes from CER 0.0% to 0.7%: 26 digit errors against the key. The all-character CER still barely sees them, which is why digits have their own channel.
+- **Digit errors are found on 11 of the 25 pages that have enough digits to score.**
+- **Benchmark, pareto and by-language figures.** The audit said every Latin-script CER shares this normaliser. Checked against the code, that is true only of the two reference tiers scored by `scoreAgainstReference` (`ref-pinned`, `ref-ws`). The whole-page benchmark strata (`benchmark-score.mjs normAlpha`) and the English reference strata (`en-ocr-ref-normalise@3`) already keep digits (`\p{L}\p{N}`), so they do not move.
+  - `ref-pinned`: none of the 19 Latin-script references carries a digit. Scored naively, v4 charged the printed verse numbers as insertions (Vulgate Genesis 5, served text, 1.1% → 3.7% with no misread), so `scoreAgainstReference` scores digits only when the reference has some (`digitsScored`). With that rule 0 of 19 pages move.
+  - `ref-ws` and `ref-pinned`, engine outputs: the five CLI arms whose reads are committed (`results/ocr-pareto-6293/outputs-*.jsonl`, 319 Latin-script reads, 13 tier × language × engine cells) were scored both ways. **No cell's median or mean moves by more than 1 pt** (largest: `ref-ws` Latin means, +0.1 to +0.2 pt), and no alignment verdict flips. **Two pages move by more than 1 pt**: *Mercurius Gallobelgicus* 1592 p.20 (27 reference digits), 8.8% → 15.1–15.4% for all five arms, and *Delitiae sapientiae de amore conjugiali* p.2 (11 digits), about 5.2% → 6.2% for two arms. Five arms moving by the same amount on one page points at the reference's numerals, not at five identical misreads; not checked by eye.
+  - The API engines (flash-lite, flash, Kraken) on those tiers were not re-scored: their outputs are with the run on the main box. Bound: the median digit share of a `ref-ws` reference is 0.0% (German 30 pages, max 2.5%; Latin 65 pages, max 2.8%), and a page's CER can move by about its digit share, so their cell medians cannot move by 1 pt either. **No benchmark, pareto or by-language figure moves by more than 1 pt.**
+  - The committed pareto re-scores (`ocr-pareto-6293/rescore-*.mjs`) stay pinned to v3 digit handling (`{ digits: false }`) so they still reproduce the committed scores 779 of 779. To move the ref tiers to v4, re-score on the main box (`benchmark-score.mjs --root <bench> --stratum=ref-ws,ref-pinned`) and drop the pin.
+
+**Limits.** The key is AI consensus, so a digit all three readers misread the same way is scored correct; the digits channel is agreement, not accuracy. One page per book, 30 per stratum: a failure rate of 6 of 30 has a Wilson 95% interval of 10% to 37%. Only ASCII digits are counted; Chinese numerals are characters and were always scored.
+
+**Replicated?** No. **Artifact:** `scripts/eval/results/digits-kept-6203/`.
 
 ## 2026-10-11 · Re-reading the 6,494 not-applicable Tengyur pages with a one-turn nudge, checked by two blind readers
 

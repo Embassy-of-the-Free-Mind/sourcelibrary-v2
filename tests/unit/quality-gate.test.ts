@@ -53,7 +53,7 @@ function makeDb(seed: Record<string, Doc[]> = {}) {
   };
 }
 const control = (extra: Doc = {}) => ({ _id: 'processing_control', paused_phases: [], ...extra });
-const SAMPLE = [{ book_id: 'b1', language: 'Latin', page_ids: ['p1', 'p2', 'p3'], page_numbers: [1, 2, 3] }];
+const SAMPLE = [{ book_id: 'b1', language: 'Latin', page_ids: ['p1', 'p2', 'p3'], page_numbers: [1, 2, 3], exposure: [1, 2, 3].map((n) => ({ page_number: n, exposure: 'served' })) }];
 
 describe('failure classes are the taxonomy doc’s, both ways', () => {
   it('every code is a heading of page-error-taxonomy.md and every heading is a code', () => {

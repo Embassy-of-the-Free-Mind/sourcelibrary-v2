@@ -18,7 +18,7 @@ History store: `bookstore.ops_reports`, one document per UTC day, `_id: quality-
 
 | Chart | Series | Source | Cadence |
 |---|---|---|---|
-| Served-text quality | `served_text_stored` (1a): the 90-page #6388 panel's text as served today (`pages.ocr.data`), mean capped CER per stratum against the panel key | `trends.mjs measureStoredText` + `ocr-prereg-6388/panel-key.mjs` | daily, $0 |
+| Served-text quality | `served_text_stored` (1a): the 90-page #6388 panel's text as served today (`pages.ocr.data`) against the panel key, per stratum three things apart (#6203): pages that FAILED (empty, refusal, or CER > 0.3), k of n; the median capped CER over the pages with text (the line); digits read wrong (digit errors ÷ key digits). Not one mean: the English 13.4% was 6 failed pages of 30 | `trends.mjs measureStoredText` + `ocr-prereg-6388/panel-key.mjs` | daily, $0 |
 | | `served_text_config` (1b): the same pages re-read with today's OCR prompt on `gemini-3.1-flash-lite` | `ocr-prereg-6388/rerun-config.mjs --max-usd 0.50 --apply`, by hand | about monthly, ~$0.20 |
 | Reach | `reach`: live books in the `readable_in_english` view, and their pages with English text (translated pages; OCR'd pages for English originals). Not written when < 99% of live books carry `translation_state` | `trends.mjs measureReach` | daily, $0 |
 | Cost per page | `efficiency`: $ per 1,000 pages written for OCR and translation, waste % — copied from `paid-vs-got-<day>` | `scripts/audit/paid-vs-got.mjs` | daily (ledger day = yesterday) |
@@ -28,7 +28,7 @@ Backfill: efficiency and bill from every stored paid-vs-got doc (from 2026-10-01
 
 The key is the #6388 **AI-consensus key** (two or three AI readers agreeing, no human). When `adjudicate-6388` lands a model-adjudicated key, change `PANEL_KEY` in `trends.mjs` and the key file `panel-key.mjs` builds from; the label on the page follows.
 
-1a moves only when panel pages are re-read; the statement says how many were since the week-earlier point. Cost statements pool seven ledger days, because a single low-volume day's $/1,000 is noisy.
+Points are stamped `normaliser_version` (4 = digits kept). A point scored the old way (one mean, digits dropped) is not drawn on the same line; the 2026-10-10 file points are rescored on the next build. 1a moves only when panel pages are re-read; the statement says how many were since the week-earlier point. Cost statements pool seven ledger days, because a single low-volume day's $/1,000 is noisy.
 
 ## What it reads
 

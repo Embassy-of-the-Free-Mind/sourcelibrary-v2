@@ -43,6 +43,8 @@ async function handlePOST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: [],
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: 0,
       image_source: {
         provider: 'user_upload',

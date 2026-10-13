@@ -164,7 +164,12 @@ def pick_from_needs(tried: set[int], start_area: int) -> tuple[dict, str] | None
         except (OSError, ValueError):
             log(f"warn: needs map {f} does not parse")
             continue
-        for item in items if isinstance(items, list) else []:
+        if isinstance(items, dict):  # three of the four maps wrap the ranked list as {"queue": [...]}
+            items = items.get("queue")
+        if not isinstance(items, list):
+            log(f"warn: needs map {f} has no ranked list")
+            continue
+        for item in items:
             n = item.get("issue")
             if not item.get("lane_ok") or not isinstance(n, int) or n in tried:
                 continue
