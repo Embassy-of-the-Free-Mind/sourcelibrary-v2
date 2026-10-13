@@ -416,13 +416,20 @@ export default function QualityCenterPage() {
             figures come from test pages that have a typed text to compare with. They are not a rate for every page in the
             library. Where a row is not settled, or rests on a small sample, it says so.
           </p>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            The reader for new pages is not always the one that wrote the text you see. Many pages were read earlier, by
+            another engine. The third column says what is stored now, counted on {longDate(ocrRouting.census.date)}: for
+            Latin, German, English, Greek and Arabic from every page of 150 random books in each language, and for Tibetan
+            and Chinese from every page.
+          </p>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-            <table className="min-w-[760px] w-full text-sm text-stone-700">
+            <table className="min-w-[920px] w-full text-sm text-stone-700">
               <thead>
                 <tr>
                   <th className={th}>Kind of page</th>
-                  <th className={th}>Read by</th>
+                  <th className={th}>New pages are read by</th>
+                  <th className={th}>What readers have now</th>
                   <th className={th}>Why, as measured</th>
                   <th className={th}>Evidence</th>
                 </tr>
@@ -430,16 +437,17 @@ export default function QualityCenterPage() {
               <tbody>
                 {ocrRouting.rows.map(row => (
                   <tr key={row.id}>
-                    <td className={`${td} font-semibold text-stone-900 w-[18%]`}>{row.kind}</td>
-                    <td className={`${td} w-[20%]`}>
+                    <td className={`${td} font-semibold text-stone-900 w-[15%]`}>{row.kind}</td>
+                    <td className={`${td} w-[17%]`}>
                       {row.reader}
                       <span className="block text-xs text-stone-500 mt-1">{row.in_use}</span>
                     </td>
+                    <td className={`${td} w-[17%]`}>{row.stored ?? <span className="text-stone-400">Not counted</span>}</td>
                     <td className={td}>
                       {row.why}
                       <span className="block mt-1"><Status status={ROUTING_STATUS[row.status] ?? row.status} /></span>
                     </td>
-                    <td className={`${td} w-[18%]`}>
+                    <td className={`${td} w-[15%]`}>
                       <ul className="space-y-1">
                         {(row.evidence as RoutingEvidence[]).map(e => (
                           <li key={e.file ?? e.issue}>
@@ -463,8 +471,8 @@ export default function QualityCenterPage() {
           </ul>
           <p className="text-stone-700 leading-relaxed max-w-3xl mt-4">
             A reviewer in these tests is an AI model unless the row says a person checked. To keep watch on each reader we
-            have specified a weekly check: a random page from each of ten books per reader, reviewed against the page image
-            by a model from a different maker than the one that read it. It is not running yet.
+            have specified a weekly check: one random page from each of about 50 books, reviewed against the page image by
+            a model from a different maker than the one that read it. It is not running yet.
           </p>
           <Source>
             Read from <A href={`${BLOB}scripts/lib/ocr-routing-table.json`}>scripts/lib/ocr-routing-table.json</A> (as of{' '}

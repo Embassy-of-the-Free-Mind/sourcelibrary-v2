@@ -130,10 +130,22 @@ describe('OCR routing table by page kind (scripts/lib/ocr-routing-table.json)', 
     expect(page).toContain('ocrRouting.rows.map(');
     expect(page).toContain('ocrRouting.not_adopted.map(');
     for (const k of ['row.kind', 'row.reader', 'row.why', 'row.in_use']) expect(page).toContain(`{${k}}`);
+    expect(page).toContain('{row.stored ??');
     // no row's sentence is typed into the page or its hand-written content file
     const hand = page + read('src/app/quality/content.ts');
     for (const r of rows) for (const k of ['why', 'in_use'] as const) {
       if (r[k].length > 40) expect([r.id, k, hand.includes(r[k])]).toEqual([r.id, k, false]);
+    }
+  });
+
+  it('STORED: a census figure carries its date, sample and source, and the Pareto charts name both baselines', () => {
+    const census = OCR_ROUTING_TABLE.census as { date: string; source: string; method: string };
+    expect(census.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(census.method).toMatch(/150 random live books/);
+    expect(census.source.length).toBeGreaterThan(20);
+    const pareto = JSON.parse(read('src/data/ocr-pareto.json')) as { charts: { id: string; stored_now: string | null }[] };
+    for (const r of rows as (Row & { stored: string | null; charts?: string[] })[]) for (const c of r.charts ?? []) {
+      expect([c, pareto.charts.find((x) => x.id === c)?.stored_now]).toEqual([c, r.stored]);
     }
   });
 

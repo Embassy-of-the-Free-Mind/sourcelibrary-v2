@@ -7,9 +7,9 @@ canons: []
 n_books: 50
 n_pages: 360
 verdict: "On the 50 most-read non-English books, Opus reading the image judged the served OCR seriously wrong on 121 of 283 adjudicated gate pages (43%, Wilson 37–49%; Greek 38/48, Arabic 14/20, Chinese 19/30, Latin 44/144, German 6/37). A Gemini 3.7 Flash CLI second read is the better text on 51 pages, but the preregistered gate stopped the writes: Gemini 3.8 judged 3 of 40 staged writes worse (Opus 0 of 40), and one of the three is an auditor error checked by eye. CER agreement is not acceptance: 12 of 30 pages with CER < 0.01 still needed a fix."
-status: adopted
-decision: "Lane B applied: the gate's staged writes and the 200 most-read non-English books were adjudicated by Opus and audited by Gemini (routing row two-reads-disagree, #6420). Closed in #6688"
-superseded_by: null
+status: superseded
+decision: "Nothing written. 19 pages contained (13 gate, 6 calibration), incl. a whole-book wrong-leaf shift (illustrated Tang tales, 10 of 10 pages). Scaling lane B and applying the 51 staged writes is a decision for Derek (#6420)."
+superseded_by: "2026-10-13-ocr-convergence-main200-6420.md"
 issue: [6420, 6174, 6338]
 ---
 PRIOR ART: 2026-10-09 Latin CLI pilot (#6375: the CLI read on unread backlog pages, no stored text) and the #6338 second-reader entries (Gemini as a second reader of served pages). This entry is the first that compares a second read with the SERVED transcription on the most-read books and gates writes on it.

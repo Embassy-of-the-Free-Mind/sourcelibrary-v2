@@ -230,6 +230,84 @@ with their runs, and the 20 by-eye verdicts. Reproduce:
 `node --env-file=.env.production.local scripts/audit/translation-leaf-shift.mjs --frame caseless` and
 `--frame rest --sample 300 --seed 5021`; control: `--book 69dea23c4d19ec2e9ba75f5e --as-of 2026-10-13T00:00:00Z --list`.
 
+## 2026-10-13 · Can Gemini 3.8 Flash correct the Yigdzin OCR of the BL Kangyurs? (#6560)
+
+PRIOR ART: `2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md` (Opus and 3.1 Pro, correct and redo, on the same
+set) and `2026-10-13-sonnet-haiku-correct-vs-opus-6667.md` (Sonnet and Haiku, same set). This entry adds two arms.
+The harness, folios, drafts, plants, prompt and scorer are unchanged. The Opus and Pro rows below are the committed
+outputs of the first run; they were not re-run.
+
+**Why.** Pro is withdrawn as a corrector because it recites the edition's spelling. Opus cannot cover about 800K
+pages on the subscription. A $0 Flash pass through `agy` is the remaining way to correct Tibetan at scale.
+
+**Design.**
+- **Arms:** `agy -p --model gemini-3.8-flash-low` and `gemini-3.8-flash-high`, low first. Each arm read the 30
+  folios with the served draft, then the 10 anchoring folios with 3 planted syllables each. The prompt is the
+  same CORR prompt as Opus and Pro (`prep.py --reuse-plants` rebuilds it from the committed files). The runner is
+  `scripts/eval/run-cli-arm.py` (plan mode, tool gate, sentinels): one page per call, 2 calls in flight, $0, no Mongo
+  writes.
+- **Score:** syllable identity against the fixed Derge window per folio, with a 95% bootstrap over books. Δ is
+  paired on the same folios.
+- **Recitation:** every span where a Flash arm moved from the draft toward Derge was read off the image by Opus
+  (`claude -p`, the other family). Each call showed both readings in random order with no word of which one is
+  Derge, plus 2 known-answer controls. Both Flash arms share one call per folio (key `opus-settles-flash`).
+
+**Result.** All 80 arm calls and all 30 read-off calls returned a read (did-not-read 0 everywhere, no nudges, no
+wrapper problems).
+
+| arm | identity vs Derge [95%] | Δ vs served [95%] | Δ vs Opus correct [95%] | folios better / worse | planted errors left (10 folios) | moved toward Derge / not supported by image | s per page (median) |
+|---|---|---|---|---|---|---|---|
+| served Yigdzin | 0.945 [0.939, 0.951] | — | — | — | — | — | — |
+| Opus correct | 0.960 [0.952, 0.967] | +0.015 [+0.008, +0.022] | — | 23 / 0 | 14 / 30 (47%) | 197 / 25 (Pro settles) | 32 |
+| Pro correct | 0.965 [0.957, 0.972] | +0.020 [+0.011, +0.029] | +0.005 [−0.004, +0.015] | 25 / 5 | 3 / 30 (10%) | 431 / 26 (Opus settles) | 135 |
+| **Flash 3.8 low correct** | **0.968 [0.962, 0.974]** | **+0.023 [+0.016, +0.030]** | **+0.008 [+0.002, +0.015]** (20 / 9 folios) | **30 / 0** | **3 / 30 (10%)** | 344 / 13 (Opus settles) | 23 |
+| Flash 3.8 high correct | 0.953 [0.946, 0.959] | +0.008 [+0.004, +0.013] | −0.007 [−0.012, −0.002] (10 / 17) | 23 / 1 | 17 / 30 (57%) | 121 / 3 (Opus settles) | 135 |
+
+- **Flash low minus Pro correct:** +0.003 [−0.002, +0.009]. **Flash high minus Flash low:** −0.015 [−0.022, −0.008];
+  high is worse on 24 of 30 folios.
+- **Anchoring folios, scored separately:** Flash low 0.972 (+0.025 [+0.013, +0.037]; +0.021 [+0.011, +0.031] over
+  Opus on the same 10, better on all 10). Flash high 0.952 (+0.004 [−0.001, +0.011]).
+- **Settler:** Opus got 57 of 60 controls right, 0 wrong, and 3 unclear.
+
+**What the numbers are made of.**
+- **Flash low edits every folio, and the edits are repairs.** Seq 28 is an example: བུང→དྲུང, ད་གའ→དགའ, འཚམ→འཚལ, ཁྱོ→ཁྱོད,
+  with the same syllable count as the draft. On 2 folios its recall against Derge falls while its identity rises: seq 28
+  goes from 0.951 to 0.765, and seq 25 from 0.796 to 0.254. That fall comes from the alignment of a two-leaf frame,
+  not from dropped text: on seq 28 the line and syllable counts equal the draft's. Opus correct falls the same way on
+  seq 25 (0.402).
+- **Recitation of ya-btags spelling is small and local.** The test is whether Flash writes the e-text's
+  མྱི/མྱེད over the leaf's མི/མེད, as Pro did.
+  - Flash low made 7 such changes and Pro made 26.
+  - On seq 8, where Pro made 14, Flash low made none.
+  - On seq 20, Flash low and Pro make the same 3 changes, and Opus sees མྱི/མྱེད on the leaf for all 3.
+  - On seq 23, Flash low changed 4 of the draft's 10 མེད and Pro changed 9. Opus supports 2 of Flash's 4.
+  - **Checked by eye at full resolution:** line 2 reads མཚན་མ་མྱེད་པ, so Flash is right there. Line 3 reads
+    མཚན་མ་མེད་པ་དང་ ། སྨོན་པ་མེད་པ, and Flash wrote མྱེད in both places. Those 2 changes are recitation.
+  - In the other direction, Flash removed a ya-btags once (seq 4, མྱེད→མེད), and Opus agrees with that change.
+- **Flash low's other 11 unsupported spans** are single particles or letters, where Opus sees the draft's reading:
+  ཀྱི/ཀྱིས, དུས→ངུས, དང→དག, སྐྱོད→བསྐྱོད, ཆགས→ཆག, རྩོལ→སྩོལ, པོས→པས, and one tsheg. On seq 28 Flash folded an
+  interlinear addition (མཛོད written above the line) into the line. Opus sees the addition. This is an editorial
+  choice, not an error on the leaf.
+- **Flash high behaves like Opus.** It is selective: it returned 4 folios unchanged, and its surviving plants sit
+  mostly on the folios where Opus's survive (6, 8, 14, 19, 20, 29; plus 9 and 24). It makes few toward-Derge changes and few unsupported ones (121
+  and 3). At high thinking, the model keeps the draft where low thinking repairs it.
+- **Identity against Derge rewards recitation.** The read-off is a model, not a reader, and its controls cannot
+  show that the settler does not itself recite. The one pattern that matters, ya-btags, was checked by eye on the
+  folio where it appeared.
+
+**Recommendation (decision owed by Derek).** Run a $0 Gemini 3.8 Flash correction pass at **low** thinking over the
+Yigdzin Tibetan, with two guards:
+- keep the served read as the prior revision;
+- hold any change that only adds or removes a ya-btags on མ (མི/མེད ↔ མྱི/མྱེད) for an Opus settle, or drop it. That
+  is the one systematic recitation pattern seen on this set, and it is cheap to detect.
+
+Do not use high thinking: it is slower (135 s vs 23 s per page) and corrects less. **Confidence:** moderate. Flash
+low is ahead of Opus correct on every measure here, but this is one run on 30 folios with a model settler, and
+identity against Derge partly rewards normalisation.
+
+*Replicated?* No. One run, 30 folios. Artifacts: `scripts/eval/results/tibetan-correct-6560/out/flash-*`,
+`readoff-*-flash*`, `scores-flash.json.gz`.
+
 ## 2026-10-13 · Can Sonnet or Haiku correct a draft as well as Opus, on the #6561 Chinese pages and the #6560 Tibetan folios? (#6667)
 
 PRIOR ART: `2026-10-12-paddle-zh-correct-vs-redo-6561.md` and `2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md`.
@@ -454,6 +532,41 @@ missed most of the page would also fire, and the English would still not have co
 
 *Replicated?* No. Data: `scripts/eval/results/spot-check/sprint-2026-10-13-r2/` (sample, packets, reviews, results, findings, report) and `scripts/eval/results/spot-check/sprint-clusters.json`.
 
+## 2026-10-13 · Is Opus a better translator than Gemini 3.8 Flash Low on the #6559 Nahuatl books?
+
+**Why.** On 2026-10-13 Derek switched the #6559 translation lane to Opus, on the evidence of #6545. The condition: first run a paired check on about 30 pages Gemini had already translated, with a blind judge from the other family. If Opus is not better, say so and stop.
+
+**Design.**
+- **Pages.** 10 consecutive pages (pp. 60–69) from each of 3 Nahuatl books: the *Sermonario* dedicated *A Iesu Christo S.N.* (`6acc3c2677e6be3481e74709`), the *Evangeliarium, epistolarium et lectionarium Aztecum* (`6acc3b31c1411f8cc628f943`), and Paredes's *Promptuario manual mexicano* (`6acc3ae4c1411f8cc628f4e5`). In each book this was the first run of 10 pages from p. 60 on that the Gemini reads covered (`selection.json`). The OCR on all of them is the Opus OCR written 2026-10-13.
+- **Arms.**
+  - Gemini: `cli-translate.mjs`, `agy -p`, `gemini-3.8-flash-low`. One page per call, seeded with its own previous page.
+  - Opus: `claude-translate.mjs`, `claude -p --model opus` (resolved `claude-opus-5-5`), with translate-core's block prompt over p. 60–69. p. 60 had no seed, because no translation was stored.
+- **Judge.** `agy`, `gemini-3.8-flash-high`, `run-cli-arm.py --kind judge` (`judge-prompt.md`). Each call had the page image, the OCR and both translations as A and B; the `<summary>`/`<keywords>` blocks were stripped from both. The judge scored each 1–5 for fidelity and listed omitted, added and mistranslated passages. A first run with a seeded A/B order showed heavy position bias, so every page was judged again with A and B swapped (`key-swap.json`). The scores are the mean of both orders (`score.py`).
+
+**Result.**
+
+| book | pages | Opus | Gemini | Opus − Gemini | judge preferred, O/G (2 orders × 10) | omitted O/G | added O/G | mistranslated O/G |
+|---|---|---|---|---|---|---|---|---|
+| *Sermonario* | 10 | 3.40 | 4.10 | −0.70 | 5/15 | 27/13 | 8/10 | 45/17 |
+| *Evangeliarium* | 10 | 3.80 | 3.60 | +0.20 | 11/9 | 13/19 | 6/7 | 35/38 |
+| *Promptuario* | 10 | 3.55 | 4.15 | −0.60 | 5/15 | 29/12 | 9/13 | 27/19 |
+| **all** | 30 | **3.58** | **3.95** | **−0.37** (bootstrap 95% CI −0.77 to +0.03) | 21/39 | 69/44 | 23/30 | 107/74 |
+
+- Per page: Opus was higher on 7, tied on 10, and Gemini was higher on 13.
+- **Position bias:** Opus − Gemini was +0.20 with Opus shown as A and −0.93 with Opus as B (n = 30 each). The judge preferred the same translation in both orders on only 17 of 30 pages.
+- **Checked by eye (on the text):**
+  - *Sermonario* p. 62 is on Romans 13:12, *induamur arma lucis*. Gemini's "armour of light" for *teotlahuiztli in tlanextlahuiztli* is right; Opus's "the shining radiance" is wrong.
+  - Opus dropped a running header (*Sermonario* p. 64).
+  - *Promptuario* p. 67: the OCR marks many doubtful words as `<unclear>`, and Opus copied those Nahuatl words through untranslated ("never will we <unclear>timiquizque</unclear>"). Gemini translated inside the tags.
+
+**Limits.**
+- The judge is the same family as the Gemini arm.
+- The position effect is larger than the gap.
+- n = 30, all Nahuatl prose (sermons, lectionary). No Maya or Kaqchikel pages were included.
+- The seeding was unequal on p. 60 only.
+
+**Decision.** None taken. Derek's rule was "if Opus is not better, say so and stop to ask". Under this judge Opus is not better, so the 48 untranslated #6559 books wait for his call (posted on #6559).
+
 ## 2026-10-13 · Does the Opus read pass the calibration gate (#6559)?
 
 **Why.** Derek decided on 2026-10-12 that Opus reads the Nahuatl and Mayan-language books. The brief set a gate before any write: a blind judge from the other model family; mean fidelity ≥ 4.0; at least 2 of 3 planted errors caught; and no read that invents text.
@@ -488,6 +601,50 @@ missed most of the page would also fire, and the English would still not have co
 **Artifacts.** `scripts/eval/results/opus-ocr-calibration-6559/`: `KEY.json` (uid → page, plants), `judge-prompt.md`, `judge-out-gemini-3.8-flash-high.jsonl`, `build-packet.mjs.txt`. The packet (`items.json`) is on branch `eval/blind-judge-6559`.
 
 *Replicated?* No.
+
+## 2026-10-13 · Lane B at scale: what does a Gemini second read plus Opus adjudication change on 150 of the most-read non-English books?
+
+**Design.** As the gate (`scripts/eval/PREREGISTRATION-ocr-convergence-6420.md`), T = 0.01, every disagreement to
+Opus (subscription, sealed `claude -p`, `ADJUDICATOR.md`), blind write audit of 40 staged writes per set by a fresh Opus
+and Gemini 3.8 Flash high, stop if either finds more than 2 of 40 worse. Two sets: **main200a** (36 books, 360 pages:
+Latin 290, German 50, Hebrew 20; reads `gemini-3.7-flash-low`) and **main200b** (114 books, 1,131 pages: Latin 470,
+German 281, Chinese 180, Greek 150, Arabic 30, Hebrew 20). **Deviation:** agy withdrew 3.7 on 2026-10-12, so 315 of the
+1,491 reads are `gemini-3.8-flash-low`; each read's meta and write reason name its model (#6635).
+
+**Result.**
+
+| Action | main200a | main200b | total |
+|---|---:|---:|---:|
+| agree (CER < T) | 68 | 117 | 185 |
+| keep (Opus: stored read right) | 150 | 393 | 543 |
+| write decided | 38 | 203 | 241 |
+| → written | 26 | 188 | **214** |
+| → refused by the shared-words guard | 9 | 15 | 24 |
+| residual (merge or low confidence) | 91 | 336 | 427 |
+| contain | 3 | 21 | 24 |
+| defer (book in a translate lane) | 0 | 20 | 20 |
+| no second read | 10 | 40 | 50 |
+
+- Write audits: main200a Opus 35 better / 3 same / 0 worse, Gemini 35 / 0 / **3**; main200b Opus 39 / 1 / 0, Gemini 39 / 0 / **1**.
+  All four Gemini "worse" pages are direct disagreements with Opus about what the leaf says (Fludd *demon-stretur*,
+  *imperuestigabili/imperscrutabili*, Foresti folio 144/164, Ficino *uigesimotertio/uigisimoseptimo*); they were relabelled
+  residual and not written. Both sets GO.
+- Contained 34 pages in 12 books (hold `ocr-unsettled-6420` or `ocr-wrong-leaf-6420`, English withheld): neither read usable
+  on 24; Vitruvius *De architectura* (`69af45f461b03be5fb7af39e`) serves another leaf's text on all 10 pages read, with an
+  offset that grows through the book (p.44 holds p.XXXIV; p.270 holds printed p.216). Reg.gr.80, catalogued as Aristotle and
+  Maximus, reads as Plutarch on 8 pages.
+- 187 written pages are stamped `translation_stale: convergent-ocr-6420`.
+
+**What this says for routing.** The second read is mostly confirmation: Opus kept the stored text or agreed on 728 pages and
+wrote 214. Opus looked at every disagreeing page's image anyway. The cost is a Gemini read on every page plus an Opus read on
+~80% of them. Whether Opus alone, correcting in place, does as well is not measured here (see decision).
+
+**Replicated?** In part: the gate, main200a and main200b give the same pattern (Opus 0 worse in 118 audited writes; Gemini
+3–4 per 40 at the gate, 3 and 1 here). Each verdict is still one Opus read.
+
+**Artifacts.** `scripts/batch/ocr-convergence/results/run/main200a/` (#6599) and `results/run/main200b/` (#6662); apply runs
+`cli-ocr-20261012065330` and `cli-ocr-20261013081553`; `book_checks` method `ocr-convergence`. Known gap: a `book_checks` note
+counts guard-refused writes as written (Vitruvius's row says 10; none were).
 
 ## 2026-10-13 · Which printed page-number breaks are missing leaves, which are copies, which are nothing? (#5059)
 

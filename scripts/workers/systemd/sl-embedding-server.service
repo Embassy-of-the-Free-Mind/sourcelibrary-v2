@@ -1,0 +1,37 @@
+# Embedding server (multilingual-e5-base at /embed, and the /clip/* proxy to the
+# CLIP server on 3457 that visual search, the gallery, /identify and the
+# Librarian call from Vercel). Installed on the Hetzner box at
+# /etc/systemd/system/sl-embedding-server.service.
+#
+#   scp this file to the box, then:
+#     systemctl daemon-reload && systemctl enable --now sl-embedding-server
+#
+# SHARED SECRET (#6206): every route except bare /health needs header
+# x-embed-key equal to EMBED_SERVER_KEY. The key is not in this file. It lives in
+# /etc/sourcelibrary/embed-server.env (root, 0600; one line EMBED_SERVER_KEY=...)
+# and the same value is EMBED_SERVER_KEY in Vercel (all environments). It is
+# switched on by a drop-in, so enforcing and rolling back are one file and one
+# restart:
+#   /etc/systemd/system/sl-embedding-server.service.d/embed-key.conf
+#     [Service]
+#     EnvironmentFile=/etc/sourcelibrary/embed-server.env
+# No drop-in = rollout mode (no check, startup warning). Rollback:
+#   rm /etc/systemd/system/sl-embedding-server.service.d/embed-key.conf
+#   systemctl daemon-reload && systemctl restart sl-embedding-server
+# Denied requests are logged one line a minute: journalctl -u sl-embedding-server | grep embed-auth
+# Rotating the key: change Vercel first, wait for a production build, then the
+# file here and restart. In between, visual search 401s, so do it in one sitting.
+[Unit]
+Description=Source Library Embedding Server (multilingual-e5-base)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/sourcelibrary
+ExecStart=/usr/bin/node scripts/workers/embedding-server.mjs
+Restart=always
+RestartSec=5
+Environment=EMBED_PORT=3456
+
+[Install]
+WantedBy=multi-user.target

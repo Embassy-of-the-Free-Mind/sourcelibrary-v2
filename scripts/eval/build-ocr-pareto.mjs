@@ -120,6 +120,10 @@ const SCRIPTS = [
 // scripts/lib/ocr-routing-table.json name it (`pareto: { chart, engine }`; #6688). Printed Syriac is the Kraken lane
 // (#4883) and the Siku Quanshu manuscripts are PaddleOCR-VL (#5600). Every other chart asks the router.
 const LANE_ENGINE = new Map(OCR_ROUTING_TABLE.rows.filter(r => r.pareto).map(r => [r.pareto.chart, r.pareto.engine]));
+// The other baseline (#6688): "the engine in use" is what NEW pages get, and the text readers have now was mostly
+// written earlier by other engines. Each chart carries its row's dated census so a win over the engine in use is
+// not read as a reason to re-read stored pages.
+const STORED_NOW = new Map(OCR_ROUTING_TABLE.rows.filter(r => r.stored && r.charts).flatMap(r => r.charts.map(c => [c, r.stored])));
 // #6304's verdicts: these charts' references were judged not fit to rank engines.
 const UNFIT_6304 = new Set(['chinese-print', 'armenian']);
 // Scripts with OCR runs but no typed reference the charts could score against.
@@ -513,13 +517,14 @@ for (const script of SCRIPTS) {
     if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines], ps, production, repeat,
       { role: 'secondary', heading: `${ps.size} pages drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')}` }));
   }
-  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, panels });
+  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, stored_now: STORED_NOW.get(script.id) || null, panels });
 }
 
 const out = {
   issue: 6386,
   generated_by: 'scripts/eval/build-ocr-pareto.mjs',
   measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read',
+  stored_now_census: OCR_ROUTING_TABLE.census,
   production_rule: 'the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns',
   grade_rules: GRADE_RULES,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },

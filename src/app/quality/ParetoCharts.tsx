@@ -52,7 +52,7 @@ type Panel = {
   grade: Grade; frontier: boolean; noise: Noise | null; date: string | null; verdict: string;
   notes: string[]; points: Point[]; extraHeads: { head: string; title: string }[];
 };
-export type Chart = { id: string; title: string; production_label: string; caption: string | null; mentions: string[]; panels: Panel[] };
+export type Chart = { id: string; title: string; production_label: string; caption: string | null; storedNow: string | null; mentions: string[]; panels: Panel[] };
 type NoChartRow = { title: string; why: string; source: string };
 
 /** Everything that differs between the OCR and the translation figures. No figures in here either. */
@@ -94,7 +94,7 @@ type RawPanel<P> = {
   kind: string; role?: string; heading: string | null; n_pages: number; n_works: number; reference: string; grade: Grade;
   frontier: boolean; noise: Noise | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
 };
-type RawChart<P> = { id: string; title: string; production_label: string; caption?: string | null; mentions?: string[]; panels: RawPanel<P>[] };
+type RawChart<P> = { id: string; title: string; production_label: string; caption?: string | null; stored_now?: string | null; mentions?: string[]; panels: RawPanel<P>[] };
 
 const base = <P,>(p: RawPanel<P>, i: number) => ({
   kind: p.kind, role: p.role ?? (i === 0 ? 'primary' : 'secondary'), heading: p.heading, n_pages: p.n_pages, n_works: p.n_works,
@@ -131,7 +131,7 @@ export function translationPanel(p: RawPanel<XPoint>, i = 0): Panel {
   };
 }
 const adapt = <P,>(c: RawChart<P>, f: (p: RawPanel<P>, i: number) => Panel): Chart => ({
-  id: c.id, title: c.title, production_label: c.production_label, caption: c.caption ?? null, mentions: c.mentions ?? [], panels: c.panels.map(f),
+  id: c.id, title: c.title, production_label: c.production_label, caption: c.caption ?? null, storedNow: c.stored_now ?? null, mentions: c.mentions ?? [], panels: c.panels.map(f),
 });
 
 type Data<P> = { charts: RawChart<P>[]; no_chart: NoChartRow[]; grade_rules: Record<Grade['level'], string> };
@@ -599,6 +599,12 @@ export function NotMeasured({ measures = [OCR, TRANSLATION] }: { measures?: Meas
                 </summary>
                 <div className="mt-3 mb-2 space-y-8 pl-4 border-l border-stone-200">
                   {chart.caption && <p className="text-sm text-stone-600 max-w-3xl">{chart.caption}</p>}
+                  {chart.storedNow && (
+                    <p className="text-sm text-stone-600 max-w-3xl">
+                      The engine in use is the one new pages get. What readers have now: {chart.storedNow} A gain over the
+                      engine in use is not a gain over the stored text.
+                    </p>
+                  )}
                   {chart.mentions.map(t => <p key={t} className="text-sm text-stone-600 max-w-3xl">{t}</p>)}
                   {chart.panels.map(x => <PanelView key={x.kind} chart={chart} panel={x} m={m} sub />)}
                 </div>

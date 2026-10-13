@@ -2,6 +2,11 @@
  "issue": 6386,
  "generated_by": "scripts/eval/build-ocr-pareto.mjs",
  "measure": "accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read",
+ "stored_now_census": {
+  "date": "2026-10-13",
+  "source": "Derek's parent session, notes to job ocr-routing-6688 (2026-10-13T17:42Z page-weighted, 17:41Z Tibetan, 16:11Z Chinese); posted on #6688",
+  "method": "Latin, German, English, Greek, Arabic: 150 random live books per language, every page, by ocr.model. Tibetan and Chinese: every page of the live books, counted. A one-page-per-book draw is biased toward the 25-page Gemini preview and is not used."
+ },
  "production_rule": "the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns",
  "grade_rules": {
   "decide": "20 or more works, a reference made independently of the engine we use, one error measure, and no problem found by the sample check.",
@@ -23,6 +28,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
+   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
    "panels": [
     {
      "kind": "primary",
@@ -1514,6 +1520,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
+   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
    "panels": [
     {
      "kind": "primary",
@@ -2005,6 +2012,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
    "panels": [
     {
      "kind": "primary",
@@ -2627,6 +2635,7 @@
    "production_engine": "gemini-3-flash-preview",
    "production_label": "Gemini 3 Flash",
    "caption": null,
+   "stored_now": "86% of pages were read by Gemini 3 Flash, 9% by Flash-Lite and 5% have no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -4472,6 +4481,7 @@
    "production_engine": "paddleocr-vl-1.6",
    "production_label": "PaddleOCR-VL 1.6",
    "caption": "On many pages the reference runs longer than the page, so every engine carries some unavoidable error.",
+   "stored_now": "1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -5806,6 +5816,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": "Counted with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -6273,6 +6284,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",
@@ -6669,6 +6681,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.",
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",
@@ -7061,6 +7074,7 @@
    "production_engine": "omnisyr",
    "production_label": "Kraken (OmniSyr)",
    "caption": "Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.",
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",

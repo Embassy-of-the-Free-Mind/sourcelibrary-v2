@@ -13,7 +13,9 @@
     "code": "internal, checked by the test: {router: a probe of getOcrModelForBook and the model it must return} or {file: a lane or reader script that must exist}",
     "evidence": "the experiment files (scripts/eval/experiments/) or issue behind the row, with the sample and the date",
     "audit": "the weekly audit stratum (scripts/eval/ocr-routing/README.md, \"The weekly audit\"): how the lane's pages are selected, and which model family reviews them (never the reader's own)",
-    "pareto": "optional: the /quality/pareto chart this row's reader is the engine in use for, and that engine's id in the benchmark data. scripts/eval/build-ocr-pareto.mjs reads it; a chart no row names takes its engine in use from getOcrModelForBook"
+    "pareto": "optional: the /quality/pareto chart this row's reader is the engine in use for, and that engine's id in the benchmark data. scripts/eval/build-ocr-pareto.mjs reads it; a chart no row names takes its engine in use from getOcrModelForBook",
+    "stored": "public: what readers have now, the stored text by the engine that wrote it (the `census` block gives date, sample and source); null where it was not counted. It differs from `reader`, which is what NEW pages get",
+    "charts": "optional: the /quality/pareto charts whose pages are this kind; build-ocr-pareto.mjs copies `stored` onto them so each chart names both baselines"
   },
   "rows": [
     {
@@ -22,6 +24,7 @@
       "reader": "Gemini 3.1 Flash-Lite",
       "why": "On 147 printed Latin pages with a typed reference (7 October 2026), Flash-Lite got 93.3% of characters right, Gemini 3 Flash 94.7% and Claude Sonnet 94.0%. No other engine we tested did better than Gemini 3 Flash, and the larger model costs about twice as much a page. On English print from 1800 to 1930 the two tied on 75 of 92 pages (114 books, September 2026). Known weakness: Flash-Lite reads the long s as f, and loops on some gothic type.",
       "in_use": "In use.",
+      "stored": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
       "status": "settled",
       "routed": "yes",
       "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Batch API.",
@@ -57,7 +60,12 @@
       "audit": {
         "select": "ocr.model gemini-3.1-flash-lite*, book language in the Latin-script list",
         "reviewer": "claude"
-      }
+      },
+      "charts": [
+        "latin",
+        "english",
+        "latin-script-other"
+      ]
     },
     {
       "id": "greek-print",
@@ -65,6 +73,7 @@
       "reader": "Gemini 3 Flash",
       "why": "On 127 printed Greek pages with a typed reference (7 October 2026), Gemini 3 Flash got 92.3% of characters right and Flash-Lite 87.8%. Claude Opus tied Gemini 3 Flash on 60 pages (6 October 2026).",
       "in_use": "In use for books published on the site and for newly added books. Older Greek books that are not yet published are still read by Flash-Lite.",
+      "stored": "86% of pages were read by Gemini 3 Flash, 9% by Flash-Lite and 5% have no text yet.",
       "status": "settled",
       "routed": "partly",
       "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884).",
@@ -95,7 +104,10 @@
       "audit": {
         "select": "ocr.model gemini-3-flash*, book language family grc",
         "reviewer": "claude"
-      }
+      },
+      "charts": [
+        "greek"
+      ]
     },
     {
       "id": "persian-sanskrit-pali-arabic-print",
@@ -103,6 +115,7 @@
       "reader": "Gemini 3 Flash",
       "why": "We had pages that Flash-Lite had read re-read by Gemini 3 Flash, and the English judged against published translations (93 pages in all, one per book; 4 October 2026). The English scored higher by 1.00 of 5 points on 6 Persian pages, 0.75 on 10 Sanskrit pages, 0.58 on 6 Pali pages and 0.39 on 9 Arabic pages. The samples are small: the Pali and Arabic gains are not clearly above zero. Manuscripts in these languages are not covered.",
       "in_use": "In use for books published on the site and for newly added books.",
+      "stored": "Arabic: 57% of pages were read by Gemini 3 Flash, 39% by Flash-Lite and 4% have no text yet. Persian, Sanskrit and Pali were not counted.",
       "status": "provisional",
       "routed": "partly",
       "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729).",
@@ -136,6 +149,7 @@
       "reader": "Claude Opus",
       "why": "On 76 manuscript pages with an expert transcription (English, medieval Latin, French and Arabic; 12 October 2026), Opus got 9.9% of characters wrong, Gemini 3.1 Pro 14.0% and Flash-Lite 16.1%. Among each reader's ten worst pages, Opus wrote text that is not on the page on 3 and the Gemini readers on 5 to 7. Where Opus cannot read a line it marks it instead of guessing. On 40 of our own manuscript pages, which have no expert transcription, the order of Opus and Gemini 3.1 Pro depended on which model refereed, so that part is not settled.",
       "in_use": "Not in use yet. Manuscripts are still read by Flash-Lite; the change is waiting for a decision.",
+      "stored": null,
       "status": "settled",
       "routed": "no",
       "production": "Not routed. Manuscripts still go to lite through getOcrModelForBook (the BPH and non-Latin carve-outs are unreachable under OCR_LITE_ONLY, #4877). The reader exists: scripts/batch/claude-ocr.mjs (claude -p, subscription, 10 pages per call), written by cli-ocr.mjs apply. Gemini 3.1 Pro was withdrawn from the agy CLI on 2026-10-12, so it is not an option.",
@@ -161,6 +175,7 @@
       "reader": "Claude Opus",
       "why": "In a first test on 18 pages, one per book (12 October 2026), Gemini 3.8 Flash rewrote colonial Mayan letters as modern ones 24 times on 8 pages. In a check of 15 Opus-read pages from 3 books (13 October 2026), a Gemini reviewer scored them 3.80 of 5, just under the 4.0 we had set, found no invented text, and caught 3 of 3 errors we had planted. The pages had no text before, so they were filled with this reading.",
       "in_use": "In use.",
+      "stored": null,
       "status": "provisional",
       "routed": "yes",
       "production": "By hand: scripts/batch/claude-ocr.mjs read, cli-ocr.mjs apply --mark-stale=opus-ocr-6559. 11,843 pages written 2026-10-13 on Derek's call (#6559), every one empty before. No scheduled lane selects these books.",
@@ -190,6 +205,7 @@
       "reader": "PaddleOCR-VL",
       "why": "On 433 books, one page each (1 October 2026), PaddleOCR got more than half the characters wrong on 0.9% of pages, Gemini 3 Flash on 3.7% and Flash-Lite on 10.6%. In a random check of 60 pages PaddleOCR had read, one per book (10 October 2026), no page was unusable and none had invented text: 51% were clean, 27% had minor errors and 22% had material errors. Qwen3-VL tied it on 503 pages at three times the cost.",
       "in_use": "In use.",
+      "stored": "1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
       "status": "settled",
       "routed": "yes",
       "production": "scripts/lib/paddle-zh-lane.mjs (ocr.source 'paddle'), run by hand on a leased GPU over fixed book lists (#5600, #5660, #6388); 1.57M pages written. Not in lanes.mjs, and no scheduled lane selects its books: they are held. Measured 2026-10-13 from books.pages_count − pages_ocr: about 68K unread Chinese pages sit in books held for this lane (holds gpu-backlog-5660, paddle-zh-5600-ocr-only, paddle-zh-6388-*) and wait for its next run.",
@@ -220,7 +236,10 @@
       "pareto": {
         "chart": "chinese-manuscript",
         "engine": "paddleocr-vl-1.6"
-      }
+      },
+      "charts": [
+        "chinese-manuscript"
+      ]
     },
     {
       "id": "chinese-tables",
@@ -228,6 +247,7 @@
       "reader": "PaddleOCR-VL, then Claude Opus corrects the draft against the image",
       "why": "PaddleOCR invents text on table pages. A rule on the text found all 136 pages known to have invented text and flags 4,379 of 1,568,108 pages (0.28%), which are withheld (11 October 2026). On 40 of them (12 October 2026), Opus correcting the draft left 4.0% of characters wrong, against 6.4% for the draft and 5.8% for Opus reading the image afresh. It was better on 31 pages and worse on 1. Opus reading from the image alone was not adopted: a Gemini reviewer found invented text in 23 of 100 such readings.",
       "in_use": "In progress. The flagged pages show no text until the corrected text has been reviewed.",
+      "stored": null,
       "status": "settled",
       "routed": "partly",
       "production": "The 4,379 flagged pages are ocr.unreadable (reason paddle_table_6388). Job table-correct-6561 is correcting them to files; nothing is written until the Gemini review. Only Opus corrects: Sonnet and Haiku were tested and rejected (#6667).",
@@ -267,6 +287,7 @@
       "reader": "Gemini 3.1 Flash-Lite, for now",
       "why": "Not settled. Only 19 pages have a typed reference, too few to choose a reader. They are read by the default engine until more are measured.",
       "in_use": "In use, as the default.",
+      "stored": "Counted with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
       "status": "open",
       "routed": "yes",
       "production": "lite through getOcrModelForBook. Chinese is deliberately not in FLASH_OCR_FROM (it waits for #5574, Paddle against flash off the Siku Quanshu). Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold, which the scheduled Gemini lane (orchestrator-ocr) will read on lite; about 68K held for the Paddle lane (row chinese-siku-manuscript); about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
@@ -287,17 +308,21 @@
       "audit": {
         "select": "ocr.model gemini-3.1-flash-lite*, book language family zho",
         "reviewer": "claude"
-      }
+      },
+      "charts": [
+        "chinese-print"
+      ]
     },
     {
       "id": "tibetan",
       "kind": "Tibetan",
       "reader": "BDRC Yigdzin, a reader built for Tibetan",
-      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. The best general model, Claude Opus, matched 71.5% and invented Tibetan. On 30 folios (12 October 2026), Opus correcting the Yigdzin text raised the match by 1.5 points and made no folio worse, but left 14 of 30 planted errors in place. Re-reading from the image lowered the match to 70%. No correction pass runs yet.",
+      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. The best general model, Claude Opus, matched 71.5% and invented Tibetan. On 30 folios (12 and 13 October 2026), a model correcting the Yigdzin text against the image raised the match: Gemini 3.8 Flash to 96.8% with no folio worse and 3 of 30 planted errors left, Opus to 96.0% with 14 of 30 left. Reading afresh from the image lowered it to 70%. No correction pass runs yet.",
       "in_use": "In use. The correction pass is not.",
+      "stored": "203,477 pages were read by Yigdzin and 142,234 have no text yet. About 81,000 pages still carry a Gemini reading; 79,400 of those are withheld from readers.",
       "status": "settled",
       "routed": "yes",
-      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). A correction pass is an open decision on #6560.",
+      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). A correction pass is an open decision on #6560: Gemini 3.8 Flash low did better than Opus on the same 30 folios.",
       "code": {
         "file": "scripts/maintenance/apply-reocr-verdicts.mjs"
       },
@@ -311,6 +336,11 @@
           "file": "2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md",
           "n": "30 folios, one per book",
           "date": "2026-10-12"
+        },
+        {
+          "file": "2026-10-13-tibetan-flash38-correct-6560.md",
+          "n": "30 folios, one per book",
+          "date": "2026-10-13"
         },
         {
           "file": "2026-10-04-tibetan-lite-vs-yigdzin-4523.md",
@@ -329,6 +359,7 @@
       "reader": "Kraken, an open-source reader, with a model trained on Syriac",
       "why": "On 20 printed books, one page each (8 October 2026), Kraken got 13.0% of consonants wrong, Gemini 3.7 Flash 42.6% and Flash-Lite 68.3%. Gemini tends to write out the standard published text instead of reading the page. English made from the Kraken text scored 1.33 of 5 points lower than English made from a typed text, so those translations are withheld.",
       "in_use": "In use.",
+      "stored": null,
       "status": "settled",
       "routed": "yes",
       "production": "scripts/lib/syriac-kraken-lane.mjs on Hetzner CPU (ocr.source 'kraken'). Never Gemini (Derek, #4883).",
@@ -367,6 +398,7 @@
       "reader": "NDL Koten OCR, the National Diet Library's reader for classical Japanese",
       "why": "Checked by eye, not against a typed text. On 20 cursive books (30 September 2026) it gave the text of the page on 9 of 10 pages we read, where Gemini's earlier reading was invented or looping on 3 of 4. There is no accuracy figure yet because we have no typed reference for these pages.",
       "in_use": "Used on a first set of 20 books.",
+      "stored": null,
       "status": "provisional",
       "routed": "partly",
       "production": "scripts/lib/ndl-koten-lane.mjs (ocr.source 'ndl-koten'), pilot of 20 books (PR #5412); no standing lane (#5100). Typeset Japanese is unmeasured and reads on lite.",
@@ -396,6 +428,7 @@
       "reader": "A second try, then MinerU (an open-source reader) for English printed after 1820, then the Internet Archive's own text if a person has checked it",
       "why": "On 114 English books, one page each (30 September 2026), MinerU read all 16 pages Gemini had refused. On all pages its typical error was 0.66% of characters against 0.20% for Flash-Lite, so it fills gaps and does not replace Flash-Lite. The Internet Archive's own text gets 5.1% of printed numbers wrong against 1.8% for Flash-Lite (82 books, 5,212 numbers), so it is used only for pages with no other text.",
       "in_use": "In use.",
+      "stored": null,
       "status": "settled",
       "routed": "yes",
       "production": "The RECITATION ladder (ocr-lane-decision-tree.md, branch 3): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
@@ -428,8 +461,9 @@
       "id": "two-reads-disagree",
       "kind": "A page where two readings disagree",
       "reader": "Claude Opus compares both with the image and decides; Gemini checks a sample of the changes",
-      "why": "On the 50 most-read books that are not in English (10 October 2026), Opus judged the stored text seriously wrong on 121 of 283 pages, and a second reading by Gemini was the better text on 51. Of 40 proposed replacements, Gemini judged 3 worse than the stored text and Opus none; one of the three was the reviewer's own mistake, checked by eye. Close agreement between two readings is not proof: 12 of 30 pages that differed by under 1% still needed a correction.",
+      "why": "On 150 of the most-read books that are not in English (1,491 pages, 13 October 2026), a second reading by Gemini was compared with the stored text, and Opus settled each difference against the image. 214 pages (14%) were rewritten and Opus kept the stored text on 543. In a blind check of 78 rewritten pages, Opus judged none worse than before and Gemini judged 4 worse; those 4 were not written. 34 pages in 12 books were withheld, among them a whole book showing the text of other pages.",
       "in_use": "Used so far on the 200 most-read books that are not in English.",
+      "stored": null,
       "status": "settled",
       "routed": "partly",
       "production": "scripts/batch/ocr-convergence/driver.mjs (#6420 lane B): Gemini CLI second read, Opus adjudicates every disagreement, a two-family audit gates the writes. Run on the 200 most-read non-English books; not a standing lane for the whole library.",
@@ -438,9 +472,9 @@
       },
       "evidence": [
         {
-          "file": "2026-10-10-ocr-convergence-gate-6420.md",
-          "n": "50 books, 360 pages",
-          "date": "2026-10-10"
+          "file": "2026-10-13-ocr-convergence-main200-6420.md",
+          "n": "150 books, 1,491 pages",
+          "date": "2026-10-13"
         },
         {
           "file": "2026-09-30-does-disagreement-between-two-reads-of-one-page-find-5313.md",
@@ -456,9 +490,10 @@
     {
       "id": "correct-not-redo",
       "kind": "A page that already has a text from a specialist reader, with some errors",
-      "reader": "Claude Opus corrects the existing text against the image; the page is not read again from nothing",
-      "why": "Measured twice on 12 October 2026. Tibetan, 30 folios: correcting raised the match with the typed Derge text from 94.5% to 96.0%, and reading afresh lowered it to 70%. Chinese, 40 table pages: correcting left 4.0% of characters wrong, reading afresh 5.8%. Smaller Claude models did not correct as well: Sonnet made 10 of 40 pages worse where Opus made 1 (13 October 2026).",
+      "reader": "A model corrects the existing text against the image; the page is not read again from nothing. Claude Opus for the Chinese table pages",
+      "why": "Measured on 12 and 13 October 2026. Tibetan, 30 folios: correcting raised the match with the typed Derge text from 94.5% to 96.0% (Opus) and 96.8% (Gemini 3.8 Flash), and reading afresh lowered it to 70%. Chinese, 40 table pages: Opus correcting left 4.0% of characters wrong, reading afresh 5.8%. Smaller Claude models did not correct as well: Sonnet made 10 of 40 pages worse where Opus made 1.",
       "in_use": "In progress on the Chinese table pages. Not yet used for Tibetan.",
+      "stored": null,
       "status": "settled",
       "routed": "partly",
       "production": "Applied to the Chinese table pages only (job table-correct-6561, files, not yet written). Tibetan correction is an open decision on #6560. For manuscripts a correction pass was no better than Opus alone (#6544), so this row covers specialist drafts only.",
@@ -477,6 +512,11 @@
         {
           "file": "2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
           "n": "130 pages, one per book",
+          "date": "2026-10-13"
+        },
+        {
+          "file": "2026-10-13-tibetan-flash38-correct-6560.md",
+          "n": "30 folios, one per book",
           "date": "2026-10-13"
         }
       ],
@@ -503,5 +543,10 @@
       "engine": "Any general model as a Tibetan or Syriac reader",
       "why": "They write text that is not on the page, or write out a known edition instead of reading the page (#4523, #4883, #6011)."
     }
-  ]
+  ],
+  "census": {
+    "date": "2026-10-13",
+    "source": "Derek's parent session, notes to job ocr-routing-6688 (2026-10-13T17:42Z page-weighted, 17:41Z Tibetan, 16:11Z Chinese); posted on #6688",
+    "method": "Latin, German, English, Greek, Arabic: 150 random live books per language, every page, by ocr.model. Tibetan and Chinese: every page of the live books, counted. A one-page-per-book draw is biased toward the 25-page Gemini preview and is not used."
+  }
 }

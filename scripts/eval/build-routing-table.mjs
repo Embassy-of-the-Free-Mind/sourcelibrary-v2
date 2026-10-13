@@ -174,9 +174,10 @@ export function renderKindTable(table = OCR_ROUTING_TABLE) {
   const lines = [
     KIND_BEGIN, '',
     `As of ${table.as_of} (#${table.issue}). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.`, '',
-    '| page kind (`id`) | reader | status · routed | production today | evidence |',
-    '|---|---|---|---|---|',
-    ...table.rows.map((r) => `| ${cellText(r.kind)} (\`${r.id}\`) | ${cellText(r.reader)} | ${r.status} · ${r.routed} | ${cellText(r.production)} | ${r.evidence.map(evidenceLabel).map(cellText).join('; ')} |`),
+    `"Reader" is what NEW pages get. "Stored now" is what readers have: ${table.census.method} Counted ${table.census.date}; source: ${table.census.source}.`, '',
+    '| page kind (`id`) | reader (new pages) | stored now | status · routed | production today | evidence |',
+    '|---|---|---|---|---|---|',
+    ...table.rows.map((r) => `| ${cellText(r.kind)} (\`${r.id}\`) | ${cellText(r.reader)} | ${cellText(r.stored ?? 'not counted')} | ${r.status} · ${r.routed} | ${cellText(r.production)} | ${r.evidence.map(evidenceLabel).map(cellText).join('; ')} |`),
     '', 'Tested and not adopted:', '',
     ...table.not_adopted.map((x) => `- **${x.engine}.** ${x.why}`),
     '', KIND_END,
