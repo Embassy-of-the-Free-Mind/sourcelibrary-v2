@@ -36,7 +36,7 @@ otherwise buy with our own subscription time.
 | Pacing | five pages in one result / one page, then "continue" / **one page per call, a stretch of pages per turn** | One page per tool call keeps every scan under the inline cap. Stopping after every page was tried first (2026-10-11) and was wrong: the first real run took 12 hours for 6 pages, and Derek: "only let me read one page at a time. That doesn't seem right at all." Since 2026-10-13 Claude works through a stretch (10 pages unless the user says otherwise), retelling each page in a short paragraph and naming what it found, then pauses with a tally. One line per page was tried first and read as a log, not a reading. |
 | Selection | random pool / volunteer's choice / most-read / detector-flagged | Volunteer's choice if they name a book; else resume their last run; else start at a page the translation-check pool is waiting on (`nextCandidate`), so runs spread over the books the pool samples. Most-read and detector-flagged starts are next. |
 | Output | rating / correction | Both, per page: a `volunteer_ratings` row in its own queue `book-run` (never counted toward the human `translation-check` consensus) and span-edit proposals (`drafted_by:'assistant'`). |
-| Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Not yet built:** apply a correction when two independent runs propose the same edit, or our own adjudicator confirms one; planted-error pages to weight each volunteer's setup by measured accuracy rather than claimed model. Until then corrections wait for a second reader as before. |
+| Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Built:** a second reader (#6679: Opus and Gemini on the CLIs, both must accept an edit) and planted-error pages (#6682): about one page in ten of a book run carries one known error in its English (an antonym or a changed number, a word found nowhere else on the page), recorded in `review_plants`; a review of it is tagged `control_plant_id` and a fix on it is stored as `control`, never applied; `scripts/audit/book-run-plant-catch.mjs` gives each volunteer × model its catch rate, beside the second reader's accept/reject counts on its real fixes (the false-alarm side; no confirmed-clean page set exists). **Not yet built:** weighting a setup's evidence by those rates (#6557). |
 
 **What a book run returns per page:** the scan (proxied at 1,600 px so it fits the 1MB inline
 cap; the first live shift lost two of five scans to it), transcription and English with editorial
@@ -77,8 +77,8 @@ cannot answer, when nothing seems to happen, when it feels like busywork, or whe
    tally; not built)*
 
 **Open:** the size of a run on a Pro account before its limit (measure on the first real runs);
-whether the volunteer's Claude follows the "no invented problems" line (planted clean pages test
-it); retiring `/contribute`.
+whether the volunteer's Claude follows the "no invented problems" line (the second reader's
+rejections measure it until a confirmed-clean page set exists); retiring `/contribute`.
 
 ## The question, reframed
 
