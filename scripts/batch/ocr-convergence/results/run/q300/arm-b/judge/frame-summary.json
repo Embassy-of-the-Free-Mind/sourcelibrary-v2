@@ -1,0 +1,29 @@
+{
+ "pages": 976,
+ "stored_drift_excluded": [],
+ "differ": 806,
+ "differ_books": 98,
+ "agree": 170,
+ "judged_differ": 196,
+ "judged_controls": 40,
+ "cross": {
+  "A:keep / B:keep": 98,
+  "A:residual / B:write": 271,
+  "A:keep / B:write": 178,
+  "A:write / B:write": 176,
+  "A:agree / B:write": 34,
+  "A:no-second-read / B:write": 19,
+  "A:agree / B:keep": 48,
+  "A:contain / B:write": 9,
+  "A:residual / B:keep": 17,
+  "A:pending-adjudication / B:write": 2,
+  "A:write / B:keep": 1,
+  "A:no-second-read / B:keep": 3,
+  "A:keep / B:defer": 55,
+  "A:residual / B:defer": 48,
+  "A:defer / B:defer": 12,
+  "A:contain / B:defer": 3,
+  "A:no-second-read / B:defer": 1,
+  "A:agree / B:defer": 1
+ }
+}

@@ -1,0 +1,464 @@
+{
+ "set": "q300b",
+ "audited": 40,
+ "writes": 40,
+ "read": {
+  "opus": 40,
+  "gemini": 40
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 3
+ },
+ "writes_better": {
+  "opus": 37,
+  "gemini": 36
+ },
+ "writes_same": {
+  "opus": 3,
+  "gemini": 1
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "69738f4d88210126e09bf9c3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Nearly identical; X matches the print in 'Erkänntniß', 'guthertzige' and catchword 'GOtt', where Y has 'Erkanntniß', 'gutherzige', 'GOTT'.",
+   "gemini_note": "X correctly preserves 'Erkänntniß' and 'guthertzige' where Y reads 'Erkanntniß' and 'gutherzige'."
+  },
+  {
+   "page_id": "6a42c42197284560a2b0bb55",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y misreads 'proteruus' as 'proternus' and drops accents ('quòd', 'usurpâsse'); otherwise the two agree.",
+   "gemini_note": "X correctly transcribes 'proteruus', which Y misreads as 'proternus'."
+  },
+  {
+   "page_id": "695aaf48ccf1d7d64e9e096b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X follows the leaf's text and red initials (U 'Uocauit autem', 'Reuersus est abraham ad pueros', 'Uixit autem sara', I 'Igitur puella'), while Y invents readings such as 'Ecce uocauit', 'Habitauit t. abrahā in bersabee', 'Expleti sunt aut sarra', 'Cumque puella' and garbled phrases like 'uoluit sumi sic'.",
+   "gemini_note": "Y invents 'Expleti sunt' for 'Uixit autem' and corrupts 'pepercisti' to 'peperisti'."
+  },
+  {
+   "page_id": "69f74550711083c1ca10fc6a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y matches the print in 'sagte er', 'Teihl', 'Einigk', 'betlende' and 'ihres Leibes', where X has 'sagtest er', 'Theil', 'Einigt', 'bettende' and 'thres leibes'.",
+   "gemini_note": "X misreads 'sagte er' as 'sagtest er', 'betlende' as 'bettende', and 'ihres' as 'thres'."
+  },
+  {
+   "page_id": "69b269da2a2dfd041c5e771b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X gives recognisable lemmata such as 'Ἀεικής, ὁ σκληρὸς ὁ μὴ εἴκων' and marks the gaps, while Y garbles headwords (e.g. 'Αζάνας', 'Αζήλιος' for Ἀεικής and Ἀεικέλιος) and fills whole lines with nonsense.",
+   "gemini_note": "Y severely corrupts headwords throughout, misreading Ἀεικής as 'Αζάνας' and Ἀερομένη as 'Αζεμβλυ'."
+  },
+  {
+   "page_id": "6a3a3bb7862ce9a5b4d761b6",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "The wording is the same in both; they differ only in markup, æ/œ ligatures and 'iuridicè' vs 'iuridice'.",
+   "gemini_note": "Both transcriptions accurately record the text; differences in ligatures ('pœna' vs 'poena'), orthography ('vsum' vs 'usum'), and layout markup do not affect the reading."
+  },
+  {
+   "page_id": "69938d615d28b693146ceec9",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "Y matches the print in 'In nouum', 'Insulæ', 'Inachiæ', 'horrendæ', 'Libiæ', where X has 'In nouam' and drops the æ endings.",
+   "gemini_note": "X faithfully preserves what is printed on the leaf, whereas Y silently emends multiple readings such as 'nouam' to 'nouum' in line 1 and 'Insula' to 'Insulæ' in line 4."
+  },
+  {
+   "page_id": "695580c057e3b773024f5f93",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The main text is identical; Y gets the apparatus right ('19 αὐτὴ EF', '28 ᾖ aF') where X has 'αὕτη' and 'ἢ', and X puts some line numbers in the wrong place ('15 εἴδει', '<margin>30</margin> 30').",
+   "gemini_note": "In the apparatus, X misreads '28 ᾖ' as '28 ἢ' and '19 αὐτὴ' as '19 αὕτη'."
+  },
+  {
+   "page_id": "6a0859db49638a50931c88c2",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The print reads 'Ὡραίας' and 'ἔτι κενὸς ἥξεις' as X has them; Y has 'Ὡραῖος' and invents 'ἔτι κερδοπλήξας'.",
+   "gemini_note": "X replaces the printed reading 'κερδοπλήξας' with 'κενὸς ἥξεις'."
+  },
+  {
+   "page_id": "69ac843a274fb531f2b6c288",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y changes the sense in several places: 'Schemate' for 'Themate', 'Præterea' for 'Prætereo', 'mensura dimensio' for 'mera dimensio', 'regant' for 'tegant', and it drops 'mauis'; X matches the print.",
+   "gemini_note": "Y misreads 'Themate' as 'Schemate', 'χρονοκράτορες' as 'χειροκράτορες', and 'tegant' as 'regant'."
+  },
+  {
+   "page_id": "695591667bd6d2cd1d6192ad",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Nearly identical; Y has small slips such as 'Schmeltz ſimal', 'ut ſcias' (print 'ſcis'), 'falſedinem' and 'Recipe folis' where X correctly reads 'ſimul', 'ſcis', 'ſalſedinem', 'ſolis'.",
+   "gemini_note": "Y misreads 'ſolis' as 'folis' under Tinctura and twice transcribes 'falſedinem' for 'ſalſedinem'."
+  },
+  {
+   "page_id": "69906ec78a353648e1ed016a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y follows the leaf ('arietis et terminatur ad tropicum estivalem que pars describit 6 signa septentrionalia'), while X's opening 'Linee enim a de pronum est inalem quartam' and much of what follows is invented garble.",
+   "gemini_note": "X severely garbles the text, misreading 'a centro versus circumferentiam' as 'a retro v[er]sus ante[m]'."
+  },
+  {
+   "page_id": "69bd9e066120d54bd037af5e",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the words printed in the slanted left part of the lines, e.g. 'hunc librum consilium coniugii de massa Solis atque Lunæ' (the book's title) and 'tis figat', turning them into marginal fragments; Y keeps them in the running text.",
+   "gemini_note": "X omits 'librum consilium coniugii de massa Solis atque' from the third line and misidentifies line beginnings as marginalia."
+  },
+  {
+   "page_id": "69bd9f17f6d63c919747f41b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The wording is the same; the only differences are small Greek accent and spelling variants ('γεύεαθαι' in X vs 'γεύεσθαι' in Y) and where the catchword 'Ἐσθλῶν' is placed.",
+   "gemini_note": "X corrupts the Greek proverb as 'Μὴ γεύεαθαι τῶ μελανέρων' instead of 'Μὴ γεύεσθαι τῶν μελανούρων'."
+  },
+  {
+   "page_id": "69b220f356715b0e32473c1a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y matches the print ('hic fratre suo cēsore', 'iterficere', 'de uimine', 'A labor'), while X has 'tuo cēsore', 'itercidere' and 'uicimine'; the two texts are otherwise identical.",
+   "gemini_note": "X gives 'itercidere' for 'iterficere' in line 20 and 'uicimine' for 'uimine' in line 23."
+  },
+  {
+   "page_id": "6990532bd7712f78163cd582",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y has wrong words that change the sense: 'φλογώσεων … ἐξανθήσεων' where the print has 'ψιλώσεων … ἐξαρώσεων', 'αἰώνια' for 'ἀνίατα', 'χρημάτων' for 'σχημάτων', 'παρόντος' for 'προσιόντος', and catchword 'πολὺ' for 'περὶ'.",
+   "gemini_note": "Y introduces severe sense-changing errors, including reading 'χρημάτων' for 'σχημάτων' and inventing 'θήσεων' where line 8 begins with 'ρώσεων'."
+  },
+  {
+   "page_id": "6953ab8777f38f6761bd7730",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X leaves many gaps, but its readings fit the hand ('et tartaro sale cupa patella', 'a medietate martii usque in fine mensis septembris'); Y fills the page with invented strings such as 'Si curare tale cupa purala' and 'fiamedietate magis vbī tūne mīsī'.",
+   "gemini_note": "Y corrupts the Latin text into garbled nonsense, transcribing 'fieri a medietate martii usque in fine mensis septembris' as 'fiamedietate magis vbī tūne mīsī tepter hū alh'."
+  },
+  {
+   "page_id": "695591667bd6d2cd1d6192b7",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y gets small readings right that X misses: 'Ad reiuvenescendum' (X 'Ad iuvenescendum'), 'servandam', 'paradysi ana', 'senæ', 'dosi' and the line-end 'ser-[pentes]' (X 'fer-'); the text is otherwise the same.",
+   "gemini_note": "X misreads 'Macis' as 'Martis' and merges 'paradysi ana.' into 'paradyfiana.' in the opening recipe."
+  },
+  {
+   "page_id": "69b2f3d2a9a500a45e5e8c52",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X has wrong words, a wrong name and wrong numbers: 'Iunius alit viua vox' (print 'Plenius'), 'temporalitatem sustentare' (print 'temporali vitam'), 'alitur dicendo' (print 'discendo'), 'Akta alnus', 'Valla lib. 5' (print 'lib. 1') and 'Quintil. lib. 1. cap. 4' (print 'lib. 2'); Y has the print's readings.",
+   "gemini_note": "X misreads 'Iras leones alit' as 'Ira icones alit' and 'discendo' as 'dicendo'."
+  },
+  {
+   "page_id": "69906ec78a353648e1ed016e",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y reads the leaf sensibly ('versus circumferentiam in linea altitudinis et ibi pone almuri'), and its rubric 'Capitulum 4m ad sciendum declinationem' matches the red heading; X is largely garbled, and its rubric 'Capitulum secundum ad sciendum distanciam' gives the wrong chapter number and the wrong word.",
+   "gemini_note": "X severely misreads the manuscript throughout, giving 'Versus eundem in linea altera' for 'versus circumferentiam in linea altitudinis' in line 1 and 'distanciam' for 'declinationem' in the rubric."
+  },
+  {
+   "page_id": "6990532bd7712f78163cd534",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Nearly identical; Y reads the Gemini entry correctly as 'στειρῶδες' where X has 'σειρῶδες', otherwise only accent differences.",
+   "gemini_note": "Y alters the printed 'σειρῶδες' to 'στειρῶδες' and alters the accents of 'κάρκινος', 'χῆλαι', and 'σκόρπιος'."
+  },
+  {
+   "page_id": "69f726db9b6af70d44af5486",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X has wrong words ('fit' for 'sit', 'uenerabilis' for 'uenerabilius', 'inuetrice'), badly garbled Greek ('ὃ πισέυας', 'ἥλεως ꝯ’ κόσμος') and drops the final 'ποτε'; Y follows the leaf.",
+   "gemini_note": "X severely garbles the Greek text, misreading 'οὐ πιστεύεις' as 'ὃ πισέυας', 'ψυχὴν' as 'ψυχλὼ', and 'οὐρανοῦ' as 'ὀρανδ'."
+  },
+  {
+   "page_id": "69f751cf0459050f952a91df",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y changes the section number 'XXIIX' to 'XXIX', drops 'eben' from 'nicht eben die schwerste', and misreads 'Logie' and the catchword 'Wahra'; X matches the print.",
+   "gemini_note": "Y misreads the section number '§. XXIIX.' as '§. XXIX.', omits 'eben', and transcribes 'Logic' as 'Logie'."
+  },
+  {
+   "page_id": "6953ab9577f38f6761bd7885",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'priuationis' as 'suasionis', garbles 'peccatum quod est finis priuationis uirtutis et cecitas' and omits 'sed per inequalitatem partium peruertitur substantia in inequalitatem'; Y renders these correctly.",
+   "gemini_note": "X repeatedly misreads 'priuacionis' as 'suasionis' and omits 'partium peruertitur substantia in inequalitatem'."
+  },
+  {
+   "page_id": "695906c895a91542b28bf63d",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles verse L as 'restituit, purgando illis erat abusion' where the plate reads 'restitit, purgando illustrat abusum', and gives 'Ricciis'; Y also records 'DOCTRINÆ' and 'M.DC.II' correctly.",
+   "gemini_note": "X garbles line 6 as 'illis erat abusion' instead of 'illustrat abusum' and misreads the author's surname as 'Ricciis'."
+  },
+  {
+   "page_id": "69d5ac5f4dc55b8478ddd6de",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y reads 'الجندي' for 'الجني', drops 'ثلث' in 'وقد وهبت لك ثلث جنايته', and turns 'واتى التاجر الى بلاده' into 'واني انا جئت الى بلاد ودخلت'; X follows the manuscript.",
+   "gemini_note": "Y introduces numerous severe misreadings throughout, including reading \"ثم اقص لها كعادي\" for \"ثم اقتلها كعادتي\" (line 12) and \"الجندي\" for \"الجني\" (line 5)."
+  },
+  {
+   "page_id": "69b2ffbce5d6d64d8e1975c4",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y garbles words, e.g. 'ἐκπερτάτΘ- γνώμην' for 'δεπορτάτος γενόμενος' and 'ἘλεύθερΘ-… ἐάνπερ' for 'Ἀπελεύθερος… δέονται' (the initial is A); X reads the page correctly.",
+   "gemini_note": "Y severely misreads Greek ligatures throughout, introducing nonsensical readings such as 'ἐκπερτάτΘ- γνώμην' for 'δεπορτάτος γενόμενος' and 'πόθ' εὐγνώμων' for 'περὶ εὐγενῶν'."
+  },
+  {
+   "page_id": "6a087eaab2a99026ccf6fe8d",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Same text, but Y misprints two characters, '子' for the printed '予' and '衍' for '衎'; X has both right.",
+   "gemini_note": "Y misreads the Chinese characters '予' as '子' ('especially the 子') and '衎' as '衍' ('Ll. 4. 衍')."
+  },
+  {
+   "page_id": "6981b48b43e4118ad3e96eb3",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Same text; Y misreads long s as f several times ('fed', 'inftar', 'aridiffi', 'hæfit') and has 'hic' for 'hìc'.",
+   "gemini_note": "Y misreads long s as 'f' in multiple words (e.g., 'fed', 'inftar', 'hæfit') and introduces an extraneous hyphen in 'pingui-buſque'."
+  },
+  {
+   "page_id": "69af2366b5227118e60e51f4",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Main text and apparatus have identical wording; only the layout of the apparatus differs (table vs running text).",
+   "gemini_note": "X forces the running apparatus into an arbitrary table, severing entries and misassociating variants (e.g. splitting '3 regnum suum' from 'add. G m. 2, om. V')."
+  },
+  {
+   "page_id": "69523496ab34727b1f044a4f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'super delatam' / 'delataz' / 'vbi delata' (the accused woman); Y changes this each time to 'relatam'/'relata'.",
+   "gemini_note": "Y repeatedly misreads 'delatam' and 'delata' as 'relatam' and 'relata'."
+  },
+  {
+   "page_id": "69b18a82c4be2cdd0edc7faf",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'Quantulumcunque enim spatium sit' and the catchword 'ſent,'; X has 'Quantumcunque' and 'fent,'. Otherwise the two texts are nearly identical.",
+   "gemini_note": "X misreads 'Quantulumcunque' as 'Quantumcunque'."
+  },
+  {
+   "page_id": "6a3a3bb7862ce9a5b4d7616e",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The leaf reads 'etiamsi sit plurium', 'sunt viri' and 'fructus paraphernalium'; X has 'etiam si fit', 'viris' and 'paraphernalia'.",
+   "gemini_note": "Y correctly transcribes 'sunt viri' and 'paraphernalium' where X reads 'sunt viris' and 'paraphernalia'."
+  },
+  {
+   "page_id": "69b2ffbce5d6d64d8e1975d2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'εἰρήκαμεν περὶ τρία ταῦτα' and 'σύντομος κατάληψις'; X has 'πόθεν τρία', which changes the sense, plus 'συντόμου' and the nonsense word 'γίνου'.",
+   "gemini_note": "X misreads 'περὶ' as 'πόθεν' and 'τοίνυν' as 'γίνου', altering the meaning of the legal text."
+  },
+  {
+   "page_id": "695591667bd6d2cd1d6192b8",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'per 10,34. curat', 'lucraberis' and 'ſeminis'; Y has the wrong number '10. 24.', 'lucrabis' and 'feminis' twice.",
+   "gemini_note": "Y misreads 'seminis' as 'feminis' in two recipes and truncates 'lucraberis' to 'lucrabis'."
+  },
+  {
+   "page_id": "695931d4b91a6184ea9433ae",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'وبالمشكاة المنظوم', '...الله لا اله الا هو' and 'وذل له'; Y has the invented 'وبالباه المنطرم', drops 'لا اله' ('الله الله الا هو') and has 'به' for 'له'.",
+   "gemini_note": "Y misreads 'وبالمشكاة المنظوم' as 'وبالباه المنطرم' and corrupts 'لا اله الا هو' into 'الله الا هو'."
+  },
+  {
+   "page_id": "6974c0cf7479f79d0944bf93",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'deren Ur-heber' and 'Böses zu würcken'; Y substitutes 'Ursprung' and 'thun'.",
+   "gemini_note": "Y misreads 'Urheber' as 'Ursprung' and replaces 'würcken' with 'thun'."
+  },
+  {
+   "page_id": "6952901cb184004c526a168e",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y adds a modern English preamble ('This page contains text in Early New High German...') that is not on the leaf, and misreads 'kindtlich', 'verschmorn' and 'pony'. The printed wording is otherwise much the same.",
+   "gemini_note": "Y misreads the king's name 'yony' as 'pony' and prints 'verschmorn' for 'verschmorren'."
+  },
+  {
+   "page_id": "69f7152da971c4a8e969fc8e",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'genera enim' as 'genere enim' and 'eāque' as 'eaque', places the marginal notes wrongly, and appends cut-off word fragments from the facing page ('quia fica coo quae...').",
+   "gemini_note": "X erroneously includes text from the facing page as a second column ('quia', 'fica', 'coo')."
+  },
+  {
+   "page_id": "69b2f33e21208ea9dc277f57",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'Col. 339.' after 'De antidotis ad quotidianas', misreads 'salsis' as 'falsis' and 'syncopen' as 'syncope', and puts the column break in the wrong place.",
+   "gemini_note": "Y omits 'Col. 339.' after 'De antidotis ad quotidianas' and misreads 'ſalſis' as 'falsis'."
+  }
+ ]
+}
