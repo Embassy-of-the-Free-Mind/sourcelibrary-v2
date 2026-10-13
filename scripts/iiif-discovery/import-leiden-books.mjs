@@ -40,6 +40,7 @@ import { getScriptClient } from '../lib/mongo.mjs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { iiifFullSizeUrl } from '../lib/iiif-utils.mjs';
+import { yearFromPublished } from '../lib/catalogue-year.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -59,7 +60,6 @@ const slugify = (t, max = 70) => (t || '').toLowerCase().normalize('NFD').replac
 const normalizeTitle = t => (t || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
 const normalizeAuthor = a => (a || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
 const licenseFor = r => r === 'public-domain' ? 'publicdomain' : (r === 'cc-by' ? 'CC-BY-4.0' : 'unknown');
-const yearFrom = text => { const m = (text || '').match(/\b(1[0-9]{3}|20[0-2][0-9])\b/); return m ? parseInt(m[1]) : null; };
 
 const { client, db } = await getScriptClient({ noTimeout: true });
 async function uniqueSlug(base) { let slug = base || 'leiden-manuscript', i = 2; while (await db.collection('books').findOne({ slug }, { projection: { _id: 1 } })) slug = `${base}-${i++}`; return slug; }
@@ -117,7 +117,8 @@ for (const c of cands) {
 
   const title = c.title || `Leiden manuscript ${id}`;
   const author = c.author && c.author !== 'Unknown' ? c.author : 'Unknown';
-  const year = yearFrom(c.date_text);
+  // "1303 [1885]": the Hijri year comes first; store the bracketed CE year (#6057).
+  const year = yearFromPublished(c.date_text);
 
   if (DRY_RUN) {
     if (imported < 15) console.log(`  ${title.slice(0, 50)} | ${author.slice(0, 20)} | ${c.date_text || '?'} | ${pages.length}pp | ${c.metadata?.shelfmark || ''}`);
