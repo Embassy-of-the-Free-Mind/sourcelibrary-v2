@@ -30,7 +30,8 @@ const cat = new Map(); for (const r of db.prepare('SELECT id, display_title, tit
 const cent = (y) => (Number.isFinite(y) ? Math.floor(y / 100) * 100 : null);
 const denom = {}; for (const r of db.prepare('SELECT book_id, count(*) n FROM pages WHERE tr = 1 GROUP BY book_id').iterate()) { const c = cent(cat.get(r.book_id)?.year_num); const k = c ?? 'nd'; denom[k] = (denom[k] || 0) + r.n; }
 
-// seeded shuffle
+// seeded shuffle. This lossy double-arithmetic LCG made the published 2026-10-13 draw and is frozen in
+// tests/unit/paired-stats-prng.test.ts so that draw stays reproducible; a NEW draw should use an integer PRNG.
 let seed = 6652; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
 const q = db.prepare('SELECT p.book_id, p.p FROM pages_en e JOIN pages p ON p.rowid = e.rowid WHERE pages_en MATCH ?');
 const counts = {}; const zero = []; const picked = new Map();
