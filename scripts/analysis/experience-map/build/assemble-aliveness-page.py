@@ -32,9 +32,15 @@ head = re.sub(r'<title>.*?</title>', '<title>An Atlas of Aliveness</title>', hea
 head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="' + prose['DESCRIPTION'] + '">', head)
 nav = peace[peace.index('<nav class="site">'):peace.index('</nav>') + 6].replace('<a href="#examples">Passages</a>', '<a href="#map-h">Map</a>')
 
+def num(path):
+    # {{a.b.0}} in the prose reads N['a']['b'][0]; numbers get thousands separators. A bad path aborts the build.
+    v = nums
+    for part in path.split('.'):
+        v = v[int(part)] if isinstance(v, list) else v[part]
+    return f'{v:,}' if isinstance(v, int) else str(v)
 body = tpl
 for k, v in prose.items():
-    body = body.replace(f'__{k}__', v)
+    body = body.replace(f'__{k}__', re.sub(r'\{\{([\w.]+)\}\}', lambda m: num(m.group(1)), v))
 body = body.replace('__POINTS__', pts.replace('</', '<\\/')).replace('__NUMBERS__', json.dumps(nums, ensure_ascii=False).replace('</', '<\\/'))
 left = sorted(set(re.findall(r'__[A-Z_]+__', body)))
 if left: sys.exit(f'unfilled placeholders: {left}')

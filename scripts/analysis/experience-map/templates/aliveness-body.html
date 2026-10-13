@@ -39,6 +39,10 @@
   blockquote.ex { margin:0 0 16px; padding:0 0 0 16px; border-left:3px solid var(--border-medium); }
   blockquote.ex p { margin:0 0 4px; font-size:17px; }
   blockquote.ex cite { font-family:var(--ff-ui); font-style:normal; font-size:12.5px; color:var(--text-muted); }
+  .lexgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px 22px; margin:16px 0 8px; }
+  .lexgrid h3 { margin:0 0 2px; font-size:13.5px; }
+  .lexgrid svg { width:100%; height:auto; display:block; }
+  .lexgrid svg text { font-family:var(--ff-ui); font-size:10px; fill:var(--fig-mute); }
   @media (max-width:640px) { body { font-size:17px; } .wrap, .wide { padding-left:16px; padding-right:16px; } .controls input[type=search] { width:100%; } }
 </style>
 
@@ -64,6 +68,11 @@ __INTRO__
 
 <div class="wrap">
 __FINDINGS__
+
+<h2 id="vocab">The vocabulary of a living world, by century</h2>
+<p>__LEX_INTRO__</p>
+<div class="lexgrid" id="lex"></div>
+<p class="cap" id="cap-lex"></p>
 
 <h2 id="rates">How common it is</h2>
 <p>__RATES_INTRO__</p>
@@ -111,7 +120,7 @@ __DATA_NOTE__
   var b = N.baseline_any;
   document.getElementById('statrow').innerHTML = [
     [fmt(N.points), 'confirmed passages on the map'], [fmt(N.books), 'books'], [fmt(N.languages), 'edition languages'],
-    [b.rate[0]+'%', 'of random corpus pages touch any layer'], [fmt(N.baseline_n), 'random pages read for that rate']
+    [b.rate[0]+'%', 'of '+fmt(N.baseline_n)+' random corpus pages touch any layer']
   ].map(function(x){ return '<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'; }).join('');
 
   // controls
@@ -136,8 +145,8 @@ __DATA_NOTE__
     svg.attr('viewBox','0 0 '+W+' '+H).attr('height', H);
     svg.selectAll('*').remove();
     var g = svg.append('g');
-    [-2000,-1000,0,500,1000,1200,1400,1500,1600,1700,1800,1900,2000].forEach(function(t){
-      if (W < 560 && [-1000,500,1200,1500,1700,1900].indexOf(t) >= 0) return;
+    [-2000,0,500,1000,1200,1400,1500,1600,1700,1800,1900,2000].forEach(function(t){
+      if (W < 560 && [0,500,1200,1500,1700,1900].indexOf(t) >= 0) return;
       g.append('line').attr('x1',x(t)).attr('x2',x(t)).attr('y1',M.t).attr('y2',H-M.b).attr('stroke','var(--fig-grid)').attr('stroke-width',.6);
       g.append('text').attr('x',x(t)).attr('y',H-M.b+16).attr('text-anchor','middle').text(t<0?(-t)+' BCE':t);
     });
@@ -176,11 +185,32 @@ __DATA_NOTE__
   function show(d){
     document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+yr(d.y)+' · '+esc(d.lg)+
       '<br><span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+d.p+'</span><span class="tag">'+esc(d.tr)+'</span><span class="tag">what: '+esc(d.c)+'</span><span class="tag">life from: '+esc(d.s)+'</span>'+(d.fp?'<span class="tag">first person</span>':'')+
-      '<br><a href="'+esc(d.u)+'" target="_blank" rel="noopener">Read the page on Source Library ↗</a></div>'+(d.why?'<p class="why">Judge’s reason: '+esc(d.why)+'</p>':'');
+      '<br><a href="'+esc(d.u)+'" target="_blank" rel="noopener">'+(d.fm ? 'Open the book on Source Library ↗</a> (this passage is in the front matter, which the reader cannot open by page number)' : 'Read the page on Source Library ↗</a>')+'</div>'+(d.why?'<p class="why">Judge’s reason: '+esc(d.why)+'</p>':'');
   }
   ctl.addEventListener('input', draw); window.addEventListener('resize', function(){ clearTimeout(window._rz); window._rz = setTimeout(draw, 120); });
   draw();
   var first = P.filter(function(d){ return d.l==='felt' && d.p==='alive' && d.fp; })[0] || P[0]; if (first) show(first);
+
+  // lexical small multiples: phrase occurrences per 10K translated pages by edition century (model-free)
+  if (N.lexical) {
+    var LX = N.lexical, show = ['world_soul','living_minerals','living_heavens','plant_soul','sympathy','dead_matter','vital_breath','acedia','maker_spirit'];
+    var short = ['<1400','1400s','1500s','1600s','1700s','1800s','1900s'];
+    document.getElementById('lex').innerHTML = show.filter(function(d){ return LX.dims[d]; }).map(function(d){
+      var D = LX.dims[d], r = D.rate.map(function(v){ return v || 0; }), mx = Math.max.apply(null, r) || 1, W = 240, H = 110, l = 6, rr = 6, t = 18, b = 22;
+      var hex = LC[D.layer].hex, dead = d === 'dead_matter';
+      var X = function(i){ return l + i*(W-l-rr)/(r.length-1); }, Y = function(v){ return t + (1 - v/mx)*(H-t-b); };
+      var path = r.map(function(v,i){ return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1); }).join('');
+      var pk = r.indexOf(mx);
+      return '<div><h3>'+esc(D.label)+'</h3><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(D.label)+' by century">'+
+        '<line x1="'+l+'" x2="'+(W-rr)+'" y1="'+(H-b)+'" y2="'+(H-b)+'" stroke="var(--fig-grid)"/>'+
+        '<path d="'+path+'" fill="none" stroke="'+hex+'" stroke-width="2" '+(dead?'stroke-dasharray="4 3"':'')+'/>'+
+        r.map(function(v,i){ return '<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="2.4" fill="'+hex+'"/>'; }).join('')+
+        '<text x="'+Math.min(X(pk), W-40)+'" y="'+(Y(mx)-6)+'" text-anchor="middle">'+mx+'</text>'+
+        [0,3,6].map(function(i){ return '<text x="'+X(i)+'" y="'+(H-6)+'" text-anchor="'+(i===0?'start':i===6?'end':'middle')+'">'+short[i]+'</text>'; }).join('')+
+        '</svg></div>';
+    }).join('');
+    document.getElementById('cap-lex').textContent = 'Occurrences of each dimension’s phrases per 10,000 translated pages, by the century of the edition the library holds (a 1600s printing of Plato counts in the 1600s). Each panel has its own scale; the number is the peak. Translated pages per bin: '+LX.bins.map(function(b,i){ return b+' '+fmt(LX.denominators[i]); }).join(', ')+'. No model is involved in these counts.';
+  }
 
   // rates table
   var rows = [];

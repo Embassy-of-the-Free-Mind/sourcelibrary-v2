@@ -91,6 +91,14 @@ for r in hits:
     if any(r[x + '_final'] for x in LAYERS): s['any'] += 1
 N['per_dim'] = [{'id': d, 'label': dim_label[d], 'layer': dim_layer[d], **v, 'own_rate': wilson(v['own'], v['n'])} for d, v in sorted(per_dim.items(), key=lambda kv: (LAYERS.index(dim_layer[kv[0]]), kv[0]))]
 
+# Alexander's sense: places, gardens, buildings-as-bodies, wholeness, spirit of place — retrieved vs confirmed on any layer
+ALEX = ['living_place', 'garden', 'building_body', 'wholeness', 'genius_loci']
+N['alexander'] = {'retrieved': sum(per_dim[d]['n'] for d in ALEX), 'judged': sum(1 for r in hits if r.get('probe_dim') in ALEX and r['judged']),
+                  'confirmed': sum(per_dim[d]['any'] for d in ALEX)}
+FELT = [d for d in dim_layer if dim_layer[d] == 'felt']
+N['felt_probes'] = {'retrieved': sum(per_dim[d]['n'] for d in FELT), 'judged': sum(1 for r in hits if r.get('probe_dim') in FELT and r['judged']),
+                    'confirmed_own': sum(per_dim[d]['own'] for d in FELT)}
+
 # layer x pole counts in the confirmed set
 N['confirmed'] = {f'{L}_{p}': sum(1 for r in hits if r[L + '_final'] == p) for L in LAYERS for p in ['alive', 'dead']}
 
@@ -178,7 +186,9 @@ for r in hits:
         pts.append({'l': L, 'p': p, 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110], 'a': (r.get('book_author') or '')[:60],
                     'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other', 'c': r.get('carrier'), 's': r.get('source_of_life'),
                     'q': r[L + '_quote'], 'why': (r[L + '_reason'] or '')[:220], 'fp': r.get('first_person'),
-                    'u': f"https://sourcelibrary.org/book/{r['book_id']}?page={r['page_number']}", 'd': r.get('probe_dim'), 'ln': r['lane'], 'ph': r.get('probe') if r['lane'] == 'lexical' else None})
+                    # front matter has a negative page_number in the mirror and the reader cannot open it by ?page=:
+                    # link the book and say so, rather than send the reader to a page that does not hold the quote
+                    'u': f"https://sourcelibrary.org/book/{r['book_id']}" + (f"?page={r['page_number']}" if r['page_number'] > 0 else ''), 'fm': r['page_number'] <= 0, 'd': r.get('probe_dim'), 'ln': r['lane'], 'ph': r.get('probe') if r['lane'] == 'lexical' else None})
 N['points'] = len(pts)
 json.dump(pts, open(os.path.join(D, 'aliveness-data.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(N, open(os.path.join(D, 'aliveness-numbers.json'), 'w'), ensure_ascii=False, indent=1)
