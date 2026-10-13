@@ -1,0 +1,607 @@
+{
+ "issue": 5916,
+ "reviewed_at": "2026-10-13",
+ "reviewed_by": "spare-lane Claude (Opus), by title, author, language and collections; first pages not read",
+ "note": "Exceptions to the shelf rules in scripts/lib/canon-holdings.mjs. exclude removes a book the rule admits; include admits a book the rule misses; doubtful_kept lists members a human should look at next. Artwork records (content_type artwork) are excluded by the rule, not listed here.",
+ "sufi": {
+  "exclude": [
+   {
+    "id": "69c1b8898522835be844a8fb",
+    "title": "Al-ṭibb al-rūḥānī (Arabic MS 100)",
+    "reason": "al-Rāzī's philosophical ethics; not a Sufi text or author"
+   },
+   {
+    "id": "69d5ac5f4dc55b8478ddd6b6",
+    "title": "Alf Layla wa-Layla",
+    "reason": "Thousand and One Nights; story collection"
+   },
+   {
+    "id": "69d5ac07d0bd3547a5654dcc",
+    "title": "Tahqiq ma li-l-Hind",
+    "reason": "al-Bīrūnī on India; ethnography"
+   },
+   {
+    "id": "69ea3e83300d991d0f1d3743",
+    "title": "كتاب البلدان (Kitāb al-Buldān)",
+    "reason": "geography / cosmography"
+   },
+   {
+    "id": "69908ad8285673ff8cb80bac",
+    "title": "Wonders of the Lands",
+    "reason": "geography / cosmography"
+   },
+   {
+    "id": "69b3043d1d880408995dff3d",
+    "title": "Life and Deeds of Tamerlane",
+    "reason": "Ibn ʿArabshāh's life of Tamerlane; history"
+   },
+   {
+    "id": "69b52be0d6bd9f58edb2515c",
+    "title": "Secretum Secretorum (pseudo-Aristotle) & Al-Ghazali on Divine Science",
+    "reason": "pseudo-Aristotle Secretum secretorum; not Sufi"
+   },
+   {
+    "id": "69b6363a8ab57a1de53a75c8",
+    "title": "Rasa'il Ikhwan al-Safa (Epistles of the Brethren of Purity)",
+    "reason": "Ikhwān al-Ṣafāʾ; philosophical encyclopaedia, not Sufi"
+   },
+   {
+    "id": "6953c67d77f38f6761bd9c18",
+    "title": "Ikhwan al-Safa (Epistles of the Brethren of Purity)",
+    "reason": "Ikhwān al-Ṣafāʾ; philosophical encyclopaedia, not Sufi"
+   },
+   {
+    "id": "69b635962831a80d67f3a90b",
+    "title": "The Philosophy of Illumination (Hikmat al-Ishraq)",
+    "reason": "Suhrawardī's Illuminationist philosophy (Ishrāq), a separate school"
+   },
+   {
+    "id": "69e8b2b32ff2a8dc09e788c7",
+    "title": "كتاب الفصوص (Kitāb al-Fuṣūṣ)",
+    "reason": "al-Fārābī (attr.); philosophy"
+   },
+   {
+    "id": "69d5ac26d0bd3547a5655542",
+    "title": "Khamsa",
+    "reason": "Persian/Chagatai romance epic; counted on the Persian poetry row"
+   },
+   {
+    "id": "69d5ac49d0bd3547a5655d65",
+    "title": "Layli va Majnun",
+    "reason": "Persian/Chagatai romance epic; counted on the Persian poetry row"
+   },
+   {
+    "id": "6992ce6d77d26f9321776cd0",
+    "title": "The Loves of Laili and Majnun",
+    "reason": "Persian/Chagatai romance epic; counted on the Persian poetry row"
+   },
+   {
+    "id": "69b63ea42a1dde00d5a9f682",
+    "title": "Rubaiyat of Omar Khayyam",
+    "reason": "Omar Khayyām's Rubāʿiyyāt; not Sufi"
+   },
+   {
+    "id": "69dfdabf220eedf04e13bab1",
+    "title": "Rubaiyat of Omar Khayyam",
+    "reason": "Omar Khayyām's Rubāʿiyyāt; not Sufi"
+   },
+   {
+    "id": "69e534bbd48480a386966f5c",
+    "title": "Rubaiyat of Omar Khayyam (Pogany illustrated)",
+    "reason": "Omar Khayyām's Rubāʿiyyāt; not Sufi"
+   },
+   {
+    "id": "699249c5a2d53df4853bfdaf",
+    "title": "Kitáb-i-Íqán (1882 Bombay edition)",
+    "reason": "Baháʼí scripture"
+   },
+   {
+    "id": "69a55344627bcf18a5c33b06",
+    "title": "The Seven Valleys and The Four Valleys",
+    "reason": "Baháʼí scripture"
+   },
+   {
+    "id": "6a20329b18654bf8e190326e",
+    "title": "Nubdhah fī ṛadd ahl al-Ṭarīqah fī singgapūrah sanat 1269 Or. 6982",
+    "reason": "a refutation of the Sufi orders; mentions the tradition, not of it"
+   },
+   {
+    "id": "69907947b621b177c1af5d8c",
+    "title": "Mohammedan Saints and Sanctuaries in Palestine",
+    "reason": "Canaan's folk-religion ethnography of Palestine"
+   },
+   {
+    "id": "699079397d066daf3b4a93d8",
+    "title": "The Religious Attitude and Life in Islam",
+    "reason": "Macdonald's lectures on Islam; modern study"
+   }
+  ],
+  "include": [
+   {
+    "id": "699356a983378b7aed7ce7b9",
+    "title": "Gulshan-i Raz (The Mystic Rose Garden)",
+    "reason": "Shabistarī, Gulshan-i Rāz (English); classic Sufi poem"
+   },
+   {
+    "id": "699357738e28d8f4c5d3c1a2",
+    "title": "Lawā'iḥ: A Treatise on Ṣūfism",
+    "reason": "Jāmī, Lawāʾiḥ; Sufi treatise"
+   },
+   {
+    "id": "69935b208e28d8f4c5d3c445",
+    "title": "Kashf al-Maḥjūb (Persian Critical Edition)",
+    "reason": "Hujwīrī, Kashf al-Maḥjūb; Sufi manual"
+   },
+   {
+    "id": "699356a38e28d8f4c5d3b69f",
+    "title": "The Kashf al-Mahjub (Revelation of the Veiled)",
+    "reason": "Hujwīrī, Kashf al-Maḥjūb; Sufi manual"
+   },
+   {
+    "id": "6953c90c77f38f6761bde04b",
+    "title": "Poems from the Divan of Hafiz",
+    "reason": "Ḥāfiẓ, Dīvān (English)"
+   },
+   {
+    "id": "69935b198e28d8f4c5d3c249",
+    "title": "Mathnawī-yi Maʿnawī (Persian Critical Edition, Books I-II)",
+    "reason": "Rūmī, Mathnawī (Persian critical edition)"
+   }
+  ],
+  "doubtful_kept": [
+   {
+    "id": "695931c4b91a6184ea9432e3",
+    "title": "Sun of Knowledge (Shams al-Ma'arif)",
+    "reason": "al-Būnī's lettrism: occult, but by a Sufi author and read within Sufism"
+   },
+   {
+    "id": "695931cbb91a6184ea94337c",
+    "title": "The Radiant Sparks",
+    "reason": "al-Būnī's lettrism: occult, but by a Sufi author and read within Sufism"
+   },
+   {
+    "id": "69908a7693003de39c9658e5",
+    "title": "The Sun of Gnosis",
+    "reason": "al-Būnī's lettrism: occult, but by a Sufi author and read within Sufism"
+   },
+   {
+    "id": "69906543726f64800c10abfe",
+    "title": "Tahafut al-Falasifa (Incoherence of the Philosophers)",
+    "reason": "al-Ghazālī on philosophy (Tahāfut; Latin Maqāṣid): kept as a tradition author's treatise"
+   },
+   {
+    "id": "69c833616c6f3cc53c84e250",
+    "title": "Logica et philosophia",
+    "reason": "al-Ghazālī on philosophy (Tahāfut; Latin Maqāṣid): kept as a tradition author's treatise"
+   },
+   {
+    "id": "69b63e552a1dde00d5a9ce6e",
+    "title": "The Gulistan, or Rose Garden",
+    "reason": "Saʿdī and Niẓāmī's Makhzan al-Asrār: didactic poetry with Sufi content; also Persian poetry"
+   },
+   {
+    "id": "69b63e602a1dde00d5a9d059",
+    "title": "The Bustan (Garden of Fragrance)",
+    "reason": "Saʿdī and Niẓāmī's Makhzan al-Asrār: didactic poetry with Sufi content; also Persian poetry"
+   },
+   {
+    "id": "69e748cd49abba5e98281879",
+    "title": "مخزن الاسرار (Makhzan al-Asrār)",
+    "reason": "Saʿdī and Niẓāmī's Makhzan al-Asrār: didactic poetry with Sufi content; also Persian poetry"
+   },
+   {
+    "id": "6a20331818654bf8e190427d",
+    "title": "Fragment of Mawlid (or Mawlūd) Sharaf al-Anām Or. 8225",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032d218654bf8e1903805",
+    "title": "[Copy of a book of prayers; Duʿāʾ; and litanies; some parts with Malay interlinear translation. Pro",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032d718654bf8e19038a2",
+    "title": "Duʿāʾ; prayer Or. 7181",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032dc18654bf8e19038f2",
+    "title": "[Duʿāʾ; prayer] Or. 7185",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032dd18654bf8e190390e",
+    "title": "[Duʾāʾ. A book of prayers and litanies with Javanese titles] Or. 7186",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032d518654bf8e1903867",
+    "title": "[A similar booklet of a book of prayers; Duʿāʾ; and litanies; with Javanese titles. Probably from A",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032cd18654bf8e19037d6",
+    "title": "Duʿāʾ Mawlid Or. 7167",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   },
+   {
+    "id": "6a2032c318654bf8e1903736",
+    "title": "Wird Or. 7097",
+    "reason": "Leiden devotional manuscripts (duʿāʾ, mawlid, wird) from the Indonesian Sufi collection; generic Islamic prayer is possible"
+   }
+  ]
+ },
+ "kabbalah": {
+  "exclude": [
+   {
+    "id": "695285cdab34727b1f04c25a",
+    "title": "The Key of Solomon",
+    "reason": "grimoire (Key of Solomon, Abramelin, Sloane Raziel)"
+   },
+   {
+    "id": "69791609f35c6bbfbfd252d8",
+    "title": "Claviculae Salomonis & Theosophia Pneumatica, That is, The True Knowledge of God, and His Visible an",
+    "reason": "grimoire (Key of Solomon, Abramelin, Sloane Raziel)"
+   },
+   {
+    "id": "6a267db96c1f37c9c4f3b512",
+    "title": "Magia Abraham oder Underricht von der Heiligen Cabala - Mscr.Dresd.N.111",
+    "reason": "grimoire (Key of Solomon, Abramelin, Sloane Raziel)"
+   },
+   {
+    "id": "695935dd7d148073487739da",
+    "title": "The Book of Raziel (Sepher Raziel)",
+    "reason": "grimoire (Key of Solomon, Abramelin, Sloane Raziel)"
+   },
+   {
+    "id": "69d66611bf5afe33937f8d0d",
+    "title": "Compendium of Sepher Raziel",
+    "reason": "grimoire (Key of Solomon, Abramelin, Sloane Raziel)"
+   },
+   {
+    "id": "69778932ea8c250fd9c79a17",
+    "title": "Cabala, Mirror of Art and Nature: in Alchemy: What the ancient Stone of the Wise is, yet what kind o",
+    "reason": "alchemy; 'Cabala' in the title only"
+   },
+   {
+    "id": "69b52c5fa2d71b015aa97e16",
+    "title": "Cabala, Mirror of Art and Nature in Alchemy",
+    "reason": "alchemy; 'Cabala' in the title only"
+   },
+   {
+    "id": "699ef9fe16733aa5a290e3d6",
+    "title": "A Short Enquiry Concerning the Hermetic Art",
+    "reason": "alchemy; 'Cabala' in the title only"
+   },
+   {
+    "id": "69b21d87b7c52df2b4f2a204",
+    "title": "On the Origins of Etruria",
+    "reason": "Postel on Etruscan origins; not a Kabbalah text"
+   },
+   {
+    "id": "6977958a887488c1e5342ee7",
+    "title": "The Battle Against the Kabbalah",
+    "reason": "polemic against Kabbalah; about it, not of it"
+   },
+   {
+    "id": "6a26ba9161b3857ed05b05e4",
+    "title": "Destructio Cabale, seu Cabalistice perfidie ab Ioanne Reuchlin Capnione iampridem in lucem edite",
+    "reason": "polemic against Kabbalah; about it, not of it"
+   },
+   {
+    "id": "6a4a59ae9050f0b4342fd008",
+    "title": "Adami à Lebenwaldt, Philosophi & Medici, Comitis Palatini & Poëtae Laureati Caesarei, Notarij Aposto",
+    "reason": "polemic against Kabbalah; about it, not of it"
+   },
+   {
+    "id": "699ef9fbc384f32a28ff58c1",
+    "title": "Spinozism in Judaism",
+    "reason": "Wachter's Spinozism in Judaism, a refutation; about Kabbalah, not of it"
+   },
+   {
+    "id": "6a4a59b19050f0b4342fd071",
+    "title": "Der Spinozismus im Jüdenthumb, oder, die von dem heutigen Jüdenthumb und dessen Geheimen Kabbala Ver",
+    "reason": "Wachter's Spinozism in Judaism, a refutation; about Kabbalah, not of it"
+   },
+   {
+    "id": "697a30569f4a4a764855ca29",
+    "title": "The Count of Gabalis: or, The extravagant mysteries of the Cabalists, exposed in five pleasant disco",
+    "reason": "Count of Gabalis; satire on elemental spirits"
+   },
+   {
+    "id": "69a027816a20ac4e1fc40514",
+    "title": "The Telescope of Zoroaster",
+    "reason": "divination manual"
+   },
+   {
+    "id": "6a26bc8ed6b178e5aad84645",
+    "title": "Unterthenigste beschreibung der hoch und verborgenen Künsten, Magien und Cabala : in 10 theil gethei",
+    "reason": "catalogue of magic arts"
+   },
+   {
+    "id": "6952b01e77f38f6761bc1e33",
+    "title": "Directory of Human Life / Exemplary Work against the Deceptions and Dangers of the World",
+    "reason": "Pico's devotional Opuscula; no Kabbalah content"
+   },
+   {
+    "id": "69a5e3f5006a409842216b6c",
+    "title": "Syriac Gospel Lectionary",
+    "reason": "Syriac Gospel lectionary"
+   },
+   {
+    "id": "69b30091e5d6d64d8e199898",
+    "title": "Compound Hebrew Words and Names",
+    "reason": "Hebrew grammar / philology"
+   },
+   {
+    "id": "6a4a59ae9050f0b4342fcffb",
+    "title": "Schediasmatis philologico-critici dissertationis III quae grammaticam evolvit, pars IV, in qua de Ta",
+    "reason": "Hebrew grammar / philology"
+   },
+   {
+    "id": "69b3e612304c1c6b3950b1a3",
+    "title": "Astronomical and Astrological Treatises",
+    "reason": "Ibn Ezra's astronomy and astrology"
+   },
+   {
+    "id": "69b3f794a107e55a0ee1e15e",
+    "title": "Aristotle Metaphysics — Hebrew Translation",
+    "reason": "Hebrew translation of Aristotle's Metaphysics"
+   },
+   {
+    "id": "69c1baba8522835be8459dc6",
+    "title": "Novellae on the Arbaʾah Ṭurim by Rabbi Löw of Prague (Hebrew MS 55)",
+    "reason": "halakhic novellae"
+   },
+   {
+    "id": "6a4a59ab9050f0b4342fcde3",
+    "title": "Glaubwürdige Copey eines Schreibens, welches an Herren Paulinum gewesenen Datarium unter weiland Pap",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59c49050f0b4342fe05b",
+    "title": "Glaubwürdige Copey eines Schreibens, welches an Herren Paulinum, gewesenen Datarium, under weyland B",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59d49050f0b4342fe814",
+    "title": "Glaubwürdige Copey eines Schreibens, welches an Herrn Paulinum ... geschrieben worden : von der Jesu",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59b19050f0b4342fd1d8",
+    "title": "La Realtá Del Progetto Di Borgo-Fontana Dimostrata Nella Sua Esecuzione Opera : Che mette in vista l",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59b49050f0b4342fd37b",
+    "title": "La Realtá Del Progetto Di Borgo-Fontana Dimostrata Nella Sua Esecuzione Opera : Che mette in vista l",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59cc9050f0b4342fe4d2",
+    "title": "La Realtá Del Progetto Di Borgo-Fontana Dimostrata Nella Sua Esecuzione Opera :Che mette in vista ",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59ba9050f0b4342fd9a2",
+    "title": "Cabala sive Scrinia Sacra : mysteries of state and government in lettres of illustrious Persons ...",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59d09050f0b4342fe67f",
+    "title": "Prognosticon aus der politischen Cabala und dem Staatsfirmament : die künfftigen Regierungs-Einflüss",
+    "reason": "'cabala' in the sense of intrigue or cabal (Jesuit, political, Jansenist)"
+   },
+   {
+    "id": "6a4a59bd9050f0b4342fdb69",
+    "title": "La cabala sacra per la sacra lettera, scritta dalla gran Madre di Dio à Messinesi : Panegirico sacro",
+    "reason": "Marian sermon / congratulatory chronogram; 'cabala' in the title only"
+   },
+   {
+    "id": "6a4a59c79050f0b4342fe093",
+    "title": "Prognosis Cabalistica Et Chronodistichon Gratulatorium Honoribus Reverendissimi, Perillustris, Ac Am",
+    "reason": "Marian sermon / congratulatory chronogram; 'cabala' in the title only"
+   }
+  ],
+  "include": [
+   {
+    "id": "6980941ee3b0852e94638f6a",
+    "title": "Book of the Miraculous Word",
+    "reason": "Reuchlin, De verbo mirifico; founding Christian Kabbalah text"
+   },
+   {
+    "id": "69c4ec33a3a4a7c546ee6119",
+    "title": "On the Miraculous Word",
+    "reason": "Reuchlin, De verbo mirifico; founding Christian Kabbalah text"
+   },
+   {
+    "id": "694f8d99efce46492e19fdad",
+    "title": "The 900 Theses",
+    "reason": "Pico's 900 Theses, with the kabbalistic conclusions"
+   },
+   {
+    "id": "69b4cc27d2bf9b45ea4783aa",
+    "title": "Pico della Mirandola — 900 Theses (c.1487 Incunabulum)",
+    "reason": "Pico's 900 Theses, with the kabbalistic conclusions"
+   },
+   {
+    "id": "69b51e36ff09e4fe943aa09d",
+    "title": "The Nine Hundred Theses for Debate in Rome in 1486",
+    "reason": "Pico's 900 Theses, with the kabbalistic conclusions"
+   },
+   {
+    "id": "69487f16b75c15feb90b27ef",
+    "title": "Amphitheater of Eternal Wisdom",
+    "reason": "Khunrath, Amphitheatrum Sapientiae ... Christiano-Kabalisticum"
+   },
+   {
+    "id": "6952d08677f38f6761bc5477",
+    "title": "Amphitheatre of Eternal Wisdom (1609)",
+    "reason": "Khunrath, Amphitheatrum Sapientiae ... Christiano-Kabalisticum"
+   },
+   {
+    "id": "69b4190a2b0edf3eaa2de972",
+    "title": "Khunrath — Amphitheatre of Eternal Wisdom, 1702 MS",
+    "reason": "Khunrath, Amphitheatrum Sapientiae ... Christiano-Kabalisticum"
+   },
+   {
+    "id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatre of Eternal Wisdom",
+    "reason": "Khunrath, Amphitheatrum Sapientiae ... Christiano-Kabalisticum"
+   },
+   {
+    "id": "6974b642457dd8909910b9e3",
+    "title": "Work on the Secrets of Catholic Truth Against Jewish Obstinacy",
+    "reason": "Galatinus, De arcanis catholicae veritatis; Christian Kabbalah"
+   },
+   {
+    "id": "69b51e3bcf111105c4298b05",
+    "title": "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca veteris test",
+    "reason": "Galatinus, De arcanis catholicae veritatis; Christian Kabbalah"
+   },
+   {
+    "id": "69b51e3f47b06ecd5818c17c",
+    "title": "Petri Galatini Opus de arcanis catholicae veritatis: Hoc est, In omnia difficilia loca Veteris Testa",
+    "reason": "Galatinus, De arcanis catholicae veritatis; Christian Kabbalah"
+   },
+   {
+    "id": "69b51e4ecf111105c429a518",
+    "title": "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Christianae ",
+    "reason": "Galatinus, De arcanis catholicae veritatis; Christian Kabbalah"
+   },
+   {
+    "id": "6970e3539b09d309d780a23c",
+    "title": "Key of Hidden Things Since the Creation of the World",
+    "reason": "Postel, Absconditorum clavis; Christian Kabbalah"
+   },
+   {
+    "id": "6991ed0c8bec46532eb4a1ab",
+    "title": "On Hidden Things from the Constitution of the World-Key",
+    "reason": "Postel, Absconditorum clavis; Christian Kabbalah"
+   },
+   {
+    "id": "69b51e39ff09e4fe943aa1f7",
+    "title": "Absconditorvm À Constitutione mundi Clauis, qua mens humana tam in diuinis quàm in humanis per tinge",
+    "reason": "Postel, Absconditorum clavis; Christian Kabbalah"
+   },
+   {
+    "id": "69b51e4bcf111105c429a045",
+    "title": "Absconditorum a constitutione mundi clavis : qua mens humana tam in divinis, quam in humanis perting",
+    "reason": "Postel, Absconditorum clavis; Christian Kabbalah"
+   },
+   {
+    "id": "69520767ab34727b1f043814",
+    "title": "Three songs on the harmony of the whole world. With a recently added index of them",
+    "reason": "Giorgi, De harmonia mundi; Christian Kabbalah"
+   },
+   {
+    "id": "69528662ab34727b1f04c6f8",
+    "title": "Three Songs on the Harmony of the Whole World",
+    "reason": "Giorgi, De harmonia mundi; Christian Kabbalah"
+   },
+   {
+    "id": "6a4a59a89050f0b4342fcaaf",
+    "title": "Portae Lvcis H[a]ec est porta Tetragra[m]maton iusti intrabu[n]t p[er] eam",
+    "reason": "Gikatilla, Portae lucis (Latin)"
+   },
+   {
+    "id": "6a4a59ab9050f0b4342fce08",
+    "title": "Theodorici Hackspanii, SS. Theol. Et Linguarum Orient. Prof. Publ. Miscellaneorum Sacrorum Libri Duo",
+    "reason": "Hackspan, Miscellanea sacra, with the exercise on Jewish Kabbalah"
+   },
+   {
+    "id": "69dbcb081040d1d5e20b1456",
+    "title": "Epistola Neumiae filii Haccanae de secretis. Epistola Haccanae filii Neumiae ad cognitionem generati",
+    "reason": "Paulus de Heredia, Epistola de secretis; pseudo-kabbalistic"
+   },
+   {
+    "id": "6a3cf636eb5811212fef6542",
+    "title": "Philosophie der Geschichte oder über die Tradition, Band 1",
+    "reason": "Molitor, Philosophie der Tradition; exposition of Kabbalah"
+   },
+   {
+    "id": "6a3cf63aeb5811212fef6714",
+    "title": "Philosophie der Geschichte oder über die Tradition, Band 2",
+    "reason": "Molitor, Philosophie der Tradition; exposition of Kabbalah"
+   },
+   {
+    "id": "6a3cf641eb5811212fef6834",
+    "title": "Philosophie der Geschichte oder über die Tradition, Band 3",
+    "reason": "Molitor, Philosophie der Tradition; exposition of Kabbalah"
+   },
+   {
+    "id": "6a3cf647eb5811212fef6b1a",
+    "title": "Philosophie der Geschichte oder über die Tradition, Band 4",
+    "reason": "Molitor, Philosophie der Tradition; exposition of Kabbalah"
+   }
+  ],
+  "doubtful_kept": [
+   {
+    "id": "69b418bc2b0edf3eaa2ddc19",
+    "title": "Kabbalistic Art & Key of Solomon — Two Esoteric Texts, 18th C.",
+    "reason": "Ars cabalistica bound with a Clavicula Salomonis"
+   },
+   {
+    "id": "6953ab3677f38f6761bd6ab2",
+    "title": "Reg.lat.1300",
+    "reason": "Sefer Raziel: practical Kabbalah or grimoire"
+   },
+   {
+    "id": "6985ca7194b042cd03912166",
+    "title": "The Book of the Angel Raziel",
+    "reason": "Sefer Raziel: practical Kabbalah or grimoire"
+   },
+   {
+    "id": "695937303b43cb6630c91e62",
+    "title": "The Sword of Moses",
+    "reason": "Sword of Moses: Jewish magic, pre-kabbalistic"
+   },
+   {
+    "id": "6984e84e1a2124a93951c229",
+    "title": "A Little Work of Raymond on Kabbalistic Hearing or Introduction to All Sciences",
+    "reason": "pseudo-Llull De auditu kabbalistico: Lullism under a kabbalistic title"
+   },
+   {
+    "id": "69c4ec33a3a4a7c546ee6125",
+    "title": "Short Treatise on the Kabbalistic Hearing",
+    "reason": "pseudo-Llull De auditu kabbalistico: Lullism under a kabbalistic title"
+   },
+   {
+    "id": "695591ca7bd6d2cd1d6198e4",
+    "title": "Bibliographia Kabbalistica",
+    "reason": "modern scholarship on Kabbalah (Scholem's bibliography, Ginsburg, Waite)"
+   },
+   {
+    "id": "6a19bfd19b13f9ea2b272e34",
+    "title": "The Kabbalah: Its Doctrines, Development, and Literature",
+    "reason": "modern scholarship on Kabbalah (Scholem's bibliography, Ginsburg, Waite)"
+   },
+   {
+    "id": "6955962b7bd6d2cd1d620ef7",
+    "title": "The Doctrine and Literature of the Kabalah",
+    "reason": "modern scholarship on Kabbalah (Scholem's bibliography, Ginsburg, Waite)"
+   },
+   {
+    "id": "6a4a59cc9050f0b4342fe4b1",
+    "title": "De Cabala Log-Arithmo-Geometro-Mantica ... Dissertatiuncula",
+    "reason": "kabbalistic number/letter play or a general survey of occult sciences"
+   },
+   {
+    "id": "6970e3739b09d309d780a2a4",
+    "title": "A Diatribe on Anagrammatism, Which is Part of the Kabbalah, Written for Pleasure, Published for Usef",
+    "reason": "kabbalistic number/letter play or a general survey of occult sciences"
+   },
+   {
+    "id": "6a4a59d09050f0b4342fe6e0",
+    "title": "Etwas zur richtigen Beurtheilung der Theosophie, Cabbala, Magie und anderer geheimer übernatürlichen",
+    "reason": "kabbalistic number/letter play or a general survey of occult sciences"
+   },
+   {
+    "id": "69c1b7d48522835be844a136",
+    "title": "Treatise on Astronomy (Sefer Ha-Tekhuna) by Hayyim Vital",
+    "reason": "Vital's astronomy: a kabbalist's non-kabbalistic work"
+   }
+  ]
+ }
+}
