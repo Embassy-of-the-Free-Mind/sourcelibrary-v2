@@ -20,11 +20,11 @@
  */
 import { readFileSync, appendFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 
 const SL = process.env.SL_REPO || path.join(process.env.HOME, 'sourcelibrary');
-const require = createRequire(path.join(SL, 'package.json'));
-const { GoogleGenAI } = require('@google/genai');
+// every call writes a gemini_usage row (endpoint below) — the spend perimeter refuses unlogged call sites
+const { callGemini } = await import(path.join(SL, 'scripts', 'lib', 'gemini-script-client.mjs'));
+const ENDPOINT = 'scripts/analysis/experience-map/classify/classify-aliveness.mjs';
 
 const DIR = process.env.ALIVE_OUT || path.join(SL, 'scripts', 'output', 'experience-map', 'aliveness');
 const IN = process.env.CLASSIFY_IN || path.join(DIR, 'hits-v5-merged.jsonl');
@@ -32,7 +32,6 @@ const OUT = process.env.CLASSIFY_OUT || path.join(DIR, 'classified-aliveness.jso
 const MODEL = 'gemini-3.1-flash-lite'; // fixed: the paid-API rule allows no other Gemini model here
 const CONCURRENCY = Number(process.env.CLASSIFY_CONC || 12);
 const MAX = Number(process.env.CLASSIFY_MAX || 0);
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY });
 
 const REGISTERS = new Set(['testimony','narrative','instruction','doctrine','description','fiction','other','junk']);
 const POLES = new Set(['alive','dead']);
@@ -106,11 +105,8 @@ async function worker() {
   while (idx < todo.length) {
     const r = todo[idx++]; const n = idx;
     try {
-      const res = await ai.models.generateContent({
-        model: MODEL, contents: PROMPT(r),
-        config: { temperature: 0, maxOutputTokens: 700, thinkingConfig: { thinkingBudget: 0 } },
-      });
-      inTok += res.usageMetadata?.promptTokenCount || 0; outTok += res.usageMetadata?.candidatesTokenCount || 0;
+      const res = await callGemini({ model: MODEL, prompt: PROMPT(r), endpoint: ENDPOINT, temperature: 0, maxOutputTokens: 700, type: 'analysis', bookId: r.book_id, promptVersion: 'aliveness-v2' });
+      inTok += res.inputTokens || 0; outTok += res.outputTokens || 0;
       const j = extract(res.text);
       if (!j) { fail++; continue; }
 
