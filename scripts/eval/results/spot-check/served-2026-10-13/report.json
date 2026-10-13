@@ -1,0 +1,2201 @@
+{
+ "issue": 6691,
+ "dir": "scripts/eval/results/spot-check/served-2026-10-13",
+ "seed": 6691,
+ "frame_size": 23256,
+ "books_drawn": 210,
+ "books_reviewed": 200,
+ "headline": {
+  "n": 184,
+  "any_serious": {
+   "k": 62,
+   "n": 184,
+   "rate": 0.33695652173913043,
+   "ci": [
+    0.2726143240295248,
+    0.40796737312437026
+   ]
+  },
+  "inventing": {
+   "k": 27,
+   "n": 184,
+   "rate": 0.14673913043478262,
+   "ci": [
+    0.10284856470605078,
+    0.20507844579405496
+   ]
+  },
+  "by_kind": {
+   "confabulation": {
+    "k": 13,
+    "n": 184,
+    "rate": 0.07065217391304347,
+    "ci": [
+     0.041751183592458406,
+     0.11711395224613155
+    ]
+   },
+   "recitation": {
+    "k": 0,
+    "n": 184,
+    "rate": 0,
+    "ci": [
+     0,
+     0.020450537938611096
+    ]
+   },
+   "wrong_leaf": {
+    "k": 3,
+    "n": 184,
+    "rate": 0.016304347826086956,
+    "ci": [
+     0.005560179013037424,
+     0.04683218921018418
+    ]
+   },
+   "carry_over": {
+    "k": 3,
+    "n": 184,
+    "rate": 0.016304347826086956,
+    "ci": [
+     0.005560179013037424,
+     0.04683218921018418
+    ]
+   },
+   "show_through": {
+    "k": 1,
+    "n": 184,
+    "rate": 0.005434782608695652,
+    "ci": [
+     0.0009600176563927046,
+     0.03013779704375523
+    ]
+   },
+   "illegible_fill": {
+    "k": 9,
+    "n": 184,
+    "rate": 0.04891304347826087,
+    "ci": [
+     0.025943752210147525,
+     0.09033227658229512
+    ]
+   },
+   "misread": {
+    "k": 21,
+    "n": 184,
+    "rate": 0.11413043478260869,
+    "ci": [
+     0.07587065398107057,
+     0.16817269594981407
+    ]
+   },
+   "mistranslation": {
+    "k": 10,
+    "n": 184,
+    "rate": 0.05434782608695652,
+    "ci": [
+     0.029785256822126627,
+     0.09713804873185283
+    ]
+   },
+   "omission": {
+    "k": 11,
+    "n": 184,
+    "rate": 0.059782608695652176,
+    "ci": [
+     0.03370616078147046,
+     0.10386442153404585
+    ]
+   },
+   "layout": {
+    "k": 3,
+    "n": 184,
+    "rate": 0.016304347826086956,
+    "ci": [
+     0.005560179013037424,
+     0.04683218921018418
+    ]
+   },
+   "added_gloss": {
+    "k": 7,
+    "n": 184,
+    "rate": 0.03804347826086957,
+    "ci": [
+     0.018548344609331902,
+     0.07643313066003705
+    ]
+   },
+   "other": {
+    "k": 4,
+    "n": 184,
+    "rate": 0.021739130434782608,
+    "ci": [
+     0.008485627621220012,
+     0.05455401736353842
+    ]
+   }
+  }
+ },
+ "by_exposure": {
+  "served": {
+   "n": 184,
+   "any_serious": {
+    "k": 62,
+    "n": 184,
+    "rate": 0.33695652173913043,
+    "ci": [
+     0.2726143240295248,
+     0.40796737312437026
+    ]
+   }
+  },
+  "withheld": {
+   "n": 16,
+   "any_serious": {
+    "k": 3,
+    "n": 16,
+    "rate": 0.1875,
+    "ci": [
+     0.06591599019788683,
+     0.4300888116754912
+    ]
+   }
+  },
+  "no_english": {
+   "n": 0,
+   "any_serious": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   }
+  },
+  "hidden": {
+   "n": 0,
+   "any_serious": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   }
+  }
+ },
+ "weighted_serious_rate": 0.22180270885772507,
+ "weighted_not_on_leaf_rate": 0.10426705022174278,
+ "weight_basis": "stratum share of the screened draw",
+ "strata": [
+  {
+   "name": "gem-3flash|latin|print|tr-lite",
+   "share": 0.2866666666666667,
+   "est_frame": 6667,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "show_through": 1,
+    "illegible_fill": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 667
+  },
+  {
+   "name": "gem-lite|latin|print|tr-lite",
+   "share": 0.182,
+   "est_frame": 4233,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 9,
+   "serious": {
+    "k": 2,
+    "n": 9,
+    "rate": 0.2222222222222222,
+    "ci": [
+     0.06322510654056959,
+     0.5474110333077882
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 9,
+    "rate": 0.1111111111111111,
+    "ci": [
+     0.01989088741690992,
+     0.4349997083707909
+    ]
+   },
+   "kinds": {
+    "carry_over": 1,
+    "misread": 1,
+    "mistranslation": 1
+   },
+   "withheld_books": 1,
+   "withheld_serious": 0,
+   "expected_serious_books": 941
+  },
+  {
+   "name": "gem-3flash|latin|print|tr-3flash",
+   "share": 0.12466666666666666,
+   "est_frame": 2899,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 10,
+    "rate": 0,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   },
+   "kinds": {
+    "misread": 1,
+    "omission": 1,
+    "added_gloss": 1,
+    "other": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 580
+  },
+  {
+   "name": "paddle|cjk|print|tr-3flash",
+   "share": 0.057,
+   "est_frame": 1326,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 10,
+    "rate": 0,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   },
+   "kinds": {
+    "misread": 1,
+    "mistranslation": 1,
+    "omission": 2,
+    "layout": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 398
+  },
+  {
+   "name": "bdrc|tibetan|print|tr-3flash",
+   "share": 0.05533333333333333,
+   "est_frame": 1287,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 0,
+   "serious": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   },
+   "kinds": {},
+   "withheld_books": 10,
+   "withheld_serious": 2,
+   "expected_serious_books": null
+  },
+  {
+   "name": "gem-lite|latin|print|tr-3flash",
+   "share": 0.049666666666666665,
+   "est_frame": 1155,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "illegible_fill": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 116
+  },
+  {
+   "name": "gem-3flash|greek|print|tr-lite",
+   "share": 0.021666666666666667,
+   "est_frame": 504,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "mistranslation": 2
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 151
+  },
+  {
+   "name": "etext|other-script|etext|tr-corpus",
+   "share": 0.017666666666666667,
+   "est_frame": 411,
+   "drawn": 10,
+   "reviewed_books": 0,
+   "served_books": 0,
+   "serious": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "ci": null
+   },
+   "kinds": {},
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": null
+  },
+  {
+   "name": "gem-3flash|latin|print|tr-unrecorded",
+   "share": 0.014,
+   "est_frame": 326,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "not_on_leaf": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "kinds": {
+    "confabulation": 2,
+    "wrong_leaf": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 98
+  },
+  {
+   "name": "gem-3flash|greek|print|tr-3flash",
+   "share": 0.013,
+   "est_frame": 302,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 4,
+    "n": 10,
+    "rate": 0.4,
+    "ci": [
+     0.1681803285264069,
+     0.6873262320788047
+    ]
+   },
+   "not_on_leaf": {
+    "k": 4,
+    "n": 10,
+    "rate": 0.4,
+    "ci": [
+     0.1681803285264069,
+     0.6873262320788047
+    ]
+   },
+   "kinds": {
+    "wrong_leaf": 1,
+    "carry_over": 1,
+    "illegible_fill": 2,
+    "misread": 1,
+    "mistranslation": 1,
+    "added_gloss": 2
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 121
+  },
+  {
+   "name": "paddle|cjk|print|tr-lite",
+   "share": 0.011333333333333334,
+   "est_frame": 264,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 6,
+    "n": 10,
+    "rate": 0.6,
+    "ci": [
+     0.3126737679211953,
+     0.831819671473593
+    ]
+   },
+   "not_on_leaf": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "kinds": {
+    "confabulation": 2,
+    "mistranslation": 4,
+    "layout": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 158
+  },
+  {
+   "name": "gem-3flash|cjk|print|tr-3flash",
+   "share": 0.01,
+   "est_frame": 233,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "misread": 1,
+    "omission": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 47
+  },
+  {
+   "name": "gem-3flash|latin|ms|tr-lite",
+   "share": 0.009666666666666667,
+   "est_frame": 225,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 8,
+    "n": 10,
+    "rate": 0.8,
+    "ci": [
+     0.4901624691221323,
+     0.9433178490622331
+    ]
+   },
+   "not_on_leaf": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "carry_over": 1,
+    "illegible_fill": 1,
+    "misread": 5,
+    "added_gloss": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 180
+  },
+  {
+   "name": "etext|tibetan|etext|tr-3flash",
+   "share": 0.009333333333333334,
+   "est_frame": 217,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 0,
+    "n": 10,
+    "rate": 0,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 10,
+    "rate": 0,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   },
+   "kinds": {},
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 0
+  },
+  {
+   "name": "gem-3flash|indic|print|tr-3flash",
+   "share": 0.009333333333333334,
+   "est_frame": 217,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "illegible_fill": 1,
+    "misread": 3,
+    "added_gloss": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 65
+  },
+  {
+   "name": "gem-3flash|cyrillic|print|tr-lite",
+   "share": 0.008,
+   "est_frame": 186,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "not_on_leaf": {
+    "k": 0,
+    "n": 10,
+    "rate": 0,
+    "ci": [
+     0,
+     0.2775328030260577
+    ]
+   },
+   "kinds": {
+    "omission": 3
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 56
+  },
+  {
+   "name": "gem-lite|latin|ms|tr-lite",
+   "share": 0.007333333333333333,
+   "est_frame": 171,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "misread": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 17
+  },
+  {
+   "name": "gem-3flash|greek|ms|tr-lite",
+   "share": 0.007333333333333333,
+   "est_frame": 171,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 6,
+    "n": 10,
+    "rate": 0.6,
+    "ci": [
+     0.3126737679211953,
+     0.831819671473593
+    ]
+   },
+   "not_on_leaf": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.10779126655639398,
+     0.6032218546540291
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "illegible_fill": 2,
+    "misread": 3,
+    "mistranslation": 1,
+    "added_gloss": 2,
+    "other": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 103
+  },
+  {
+   "name": "gem-lite|cjk|print|tr-lite",
+   "share": 0.007333333333333333,
+   "est_frame": 171,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 5,
+   "serious": {
+    "k": 4,
+    "n": 5,
+    "rate": 0.8,
+    "ci": [
+     0.375534627029995,
+     0.9637758917743693
+    ]
+   },
+   "not_on_leaf": {
+    "k": 1,
+    "n": 5,
+    "rate": 0.2,
+    "ci": [
+     0.03622410822563066,
+     0.6244653729700049
+    ]
+   },
+   "kinds": {
+    "wrong_leaf": 1,
+    "misread": 1,
+    "omission": 1,
+    "layout": 1
+   },
+   "withheld_books": 5,
+   "withheld_serious": 1,
+   "expected_serious_books": 137
+  },
+  {
+   "name": "gem-lite|cjk|print|tr-3flash",
+   "share": 0.007,
+   "est_frame": 163,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 6,
+    "n": 10,
+    "rate": 0.6,
+    "ci": [
+     0.3126737679211953,
+     0.831819671473593
+    ]
+   },
+   "not_on_leaf": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "kinds": {
+    "confabulation": 1,
+    "illegible_fill": 1,
+    "misread": 2,
+    "omission": 3,
+    "other": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 98
+  },
+  {
+   "name": "rest",
+   "share": 0.09166666666666666,
+   "est_frame": 2132,
+   "drawn": 10,
+   "reviewed_books": 10,
+   "served_books": 10,
+   "serious": {
+    "k": 4,
+    "n": 10,
+    "rate": 0.4,
+    "ci": [
+     0.1681803285264069,
+     0.6873262320788047
+    ]
+   },
+   "not_on_leaf": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "kinds": {
+    "confabulation": 2,
+    "misread": 1,
+    "other": 1
+   },
+   "withheld_books": 0,
+   "withheld_serious": 0,
+   "expected_serious_books": 853
+  }
+ ],
+ "repair_pays_most": [
+  "gem-lite|latin|print|tr-lite",
+  "rest",
+  "gem-3flash|latin|print|tr-lite"
+ ],
+ "classes_served": {
+  "O6": 20,
+  "T7": 19,
+  "T8": 6,
+  "I1": 3,
+  "O1": 11,
+  "T10": 8,
+  "T9": 3,
+  "I7": 3,
+  "O5": 5,
+  "T15": 1,
+  "T1": 2,
+  "other:name-substituted": 1,
+  "T5": 3,
+  "O7": 4,
+  "O2": 1,
+  "T17": 1,
+  "O15": 1,
+  "O14": 1,
+  "O17": 1,
+  "T14": 1,
+  "other:column-interleave": 1,
+  "other:invented_heading": 1,
+  "T16": 1
+ },
+ "forms": [
+  {
+   "form": "print",
+   "n": 116,
+   "any_serious": {
+    "k": 25,
+    "n": 116,
+    "rate": 0.21551724137931033,
+    "ci": [
+     0.15045670602078326,
+     0.29881568588681556
+    ]
+   },
+   "inventing": {
+    "k": 10,
+    "n": 116,
+    "rate": 0.08620689655172414,
+    "ci": [
+     0.047499354579506416,
+     0.15144230637700093
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 4,
+     "n": 116,
+     "rate": 0.034482758620689655,
+     "ci": [
+      0.013489827471250715,
+      0.08531954110482
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 116,
+     "rate": 0,
+     "ci": [
+      0,
+      0.032054506989112996
+     ]
+    },
+    "wrong_leaf": {
+     "k": 3,
+     "n": 116,
+     "rate": 0.02586206896551724,
+     "ci": [
+      0.008833887803391775,
+      0.0732867653759395
+     ]
+    },
+    "carry_over": {
+     "k": 1,
+     "n": 116,
+     "rate": 0.008620689655172414,
+     "ci": [
+      0.0015233877598062502,
+      0.047219834626046175
+     ]
+    },
+    "show_through": {
+     "k": 0,
+     "n": 116,
+     "rate": 0,
+     "ci": [
+      0,
+      0.032054506989112996
+     ]
+    },
+    "illegible_fill": {
+     "k": 2,
+     "n": 116,
+     "rate": 0.017241379310344827,
+     "ci": [
+      0.004741013160523687,
+      0.060690924622068175
+     ]
+    },
+    "misread": {
+     "k": 2,
+     "n": 116,
+     "rate": 0.017241379310344827,
+     "ci": [
+      0.004741013160523687,
+      0.060690924622068175
+     ]
+    },
+    "mistranslation": {
+     "k": 8,
+     "n": 116,
+     "rate": 0.06896551724137931,
+     "ci": [
+      0.03535749046889508,
+      0.13020673969413338
+     ]
+    },
+    "omission": {
+     "k": 7,
+     "n": 116,
+     "rate": 0.0603448275862069,
+     "ci": [
+      0.029535553229544508,
+      0.11933996153674453
+     ]
+    },
+    "layout": {
+     "k": 2,
+     "n": 116,
+     "rate": 0.017241379310344827,
+     "ci": [
+      0.004741013160523687,
+      0.060690924622068175
+     ]
+    },
+    "added_gloss": {
+     "k": 2,
+     "n": 116,
+     "rate": 0.017241379310344827,
+     "ci": [
+      0.004741013160523687,
+      0.060690924622068175
+     ]
+    },
+    "other": {
+     "k": 2,
+     "n": 116,
+     "rate": 0.017241379310344827,
+     "ci": [
+      0.004741013160523687,
+      0.060690924622068175
+     ]
+    }
+   }
+  },
+  {
+   "form": "manuscript",
+   "n": 44,
+   "any_serious": {
+    "k": 28,
+    "n": 44,
+    "rate": 0.6363636363636364,
+    "ci": [
+     0.48866376763315156,
+     0.7621647037513508
+    ]
+   },
+   "inventing": {
+    "k": 12,
+    "n": 44,
+    "rate": 0.2727272727272727,
+    "ci": [
+     0.16346381555922163,
+     0.4184887321332743
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 6,
+     "n": 44,
+     "rate": 0.13636363636363635,
+     "ci": [
+      0.0640295446017158,
+      0.26709453170627784
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 44,
+     "rate": 0,
+     "ci": [
+      0,
+      0.08029560492349135
+     ]
+    },
+    "wrong_leaf": {
+     "k": 0,
+     "n": 44,
+     "rate": 0,
+     "ci": [
+      0,
+      0.08029560492349135
+     ]
+    },
+    "carry_over": {
+     "k": 1,
+     "n": 44,
+     "rate": 0.022727272727272728,
+     "ci": [
+      0.00402325201554931,
+      0.11807709813869241
+     ]
+    },
+    "show_through": {
+     "k": 0,
+     "n": 44,
+     "rate": 0,
+     "ci": [
+      0,
+      0.08029560492349135
+     ]
+    },
+    "illegible_fill": {
+     "k": 6,
+     "n": 44,
+     "rate": 0.13636363636363635,
+     "ci": [
+      0.0640295446017158,
+      0.26709453170627784
+     ]
+    },
+    "misread": {
+     "k": 18,
+     "n": 44,
+     "rate": 0.4090909090909091,
+     "ci": [
+      0.2768785553665456,
+      0.5559024637104528
+     ]
+    },
+    "mistranslation": {
+     "k": 2,
+     "n": 44,
+     "rate": 0.045454545454545456,
+     "ci": [
+      0.012555109836448336,
+      0.1513499855485438
+     ]
+    },
+    "omission": {
+     "k": 3,
+     "n": 44,
+     "rate": 0.06818181818181818,
+     "ci": [
+      0.02345939572462935,
+      0.18225044489111314
+     ]
+    },
+    "layout": {
+     "k": 0,
+     "n": 44,
+     "rate": 0,
+     "ci": [
+      0,
+      0.08029560492349135
+     ]
+    },
+    "added_gloss": {
+     "k": 5,
+     "n": 44,
+     "rate": 0.11363636363636363,
+     "ci": [
+      0.04952780569751397,
+      0.2397915253797293
+     ]
+    },
+    "other": {
+     "k": 1,
+     "n": 44,
+     "rate": 0.022727272727272728,
+     "ci": [
+      0.00402325201554931,
+      0.11807709813869241
+     ]
+    }
+   }
+  },
+  {
+   "form": "blank",
+   "n": 11,
+   "any_serious": {
+    "k": 3,
+    "n": 11,
+    "rate": 0.2727272727272727,
+    "ci": [
+     0.09746059213308628,
+     0.5656453033189257
+    ]
+   },
+   "inventing": {
+    "k": 3,
+    "n": 11,
+    "rate": 0.2727272727272727,
+    "ci": [
+     0.09746059213308628,
+     0.5656453033189257
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 2,
+     "n": 11,
+     "rate": 0.18181818181818182,
+     "ci": [
+      0.051367689278583956,
+      0.47698056435423286
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "wrong_leaf": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "carry_over": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "show_through": {
+     "k": 1,
+     "n": 11,
+     "rate": 0.09090909090909091,
+     "ci": [
+      0.016232172705325593,
+      0.3773584391082959
+     ]
+    },
+    "illegible_fill": {
+     "k": 1,
+     "n": 11,
+     "rate": 0.09090909090909091,
+     "ci": [
+      0.016232172705325593,
+      0.3773584391082959
+     ]
+    },
+    "misread": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "mistranslation": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "omission": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "layout": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "added_gloss": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    },
+    "other": {
+     "k": 0,
+     "n": 11,
+     "rate": 0,
+     "ci": [
+      0,
+      0.25883296999442634
+     ]
+    }
+   }
+  },
+  {
+   "form": "plate",
+   "n": 13,
+   "any_serious": {
+    "k": 6,
+    "n": 13,
+    "rate": 0.46153846153846156,
+    "ci": [
+     0.23206067674961361,
+     0.7085620444143711
+    ]
+   },
+   "inventing": {
+    "k": 2,
+    "n": 13,
+    "rate": 0.15384615384615385,
+    "ci": [
+     0.04325817796522907,
+     0.4223463125106327
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "wrong_leaf": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "carry_over": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    },
+    "show_through": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "illegible_fill": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "misread": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    },
+    "mistranslation": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "omission": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    },
+    "layout": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    },
+    "added_gloss": {
+     "k": 0,
+     "n": 13,
+     "rate": 0,
+     "ci": [
+      0,
+      0.22809537513180025
+     ]
+    },
+    "other": {
+     "k": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "ci": [
+      0.013710421090225994,
+      0.333139511713605
+     ]
+    }
+   }
+  }
+ ],
+ "not_this_leaf": [
+  {
+   "book_id": "69b0081de8cbd2498149b813",
+   "page_number": 78,
+   "stratum": "gem-3flash|greek|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "wrong_leaf"
+   ],
+   "classes": [
+    "I1",
+    "I1"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The stored text opens 'γίνεται πολλάκις. οἱ γὰρ ἀπὸ τῆς γαστρὸς ἀτμοὶ' / 'contingit; nam vapores a ventriculo' under a p. 68 header. The image is p. 67, which begins 'οἱ δὲ μύες ἕνεκα μὲν τοῦ φυλάττεσθαι' / 'Musculi vero, ut substantiam suam servent' and ends 'Sic igitur oculis quoque saepenumero', the words the stored text continues.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Claudii Galeni Opera Omnia, Vol. 8"
+  },
+  {
+   "book_id": "69f32f7f876dd827cbc45808",
+   "page_number": 201,
+   "stratum": "gem-3flash|latin|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "illegible_fill"
+   ],
+   "classes": [
+    "O1"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "Lines 5–6 of the stored text ('par de la partie par de la seisine duns que la seisine nient / dist en auncien temps que ad de la partie par de la seisine') repeat stock phrases; the image there reads 'dist en avowant le quel ... enfeffa un Will' pere Robert' and similar, so this part of the text is fill, not the leaf's words. Hand is hard; confidence medium.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Year book reports, 1332-1337"
+  },
+  {
+   "book_id": "6a14e14d311a9edd4621ec4a",
+   "page_number": 105,
+   "stratum": "bdrc|tibetan|print|tr-3flash",
+   "lane": {
+    "ocr": "bdrc",
+    "script": "tibetan",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "withheld",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O4",
+    "T10"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "After the second <leaf-break/>, the stored transcription has '༄༅། །ཉ྄ ཉ྄ ཉ྄ … ཐ྄ ཐ྄' and about 30 rows of '྾྾྾྾', which the English calls 'a mantra grid or protective diagram'. The photograph holds only two folios of running verse, with empty backing below; nothing on it corresponds to this block.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Tshamdrak rNying rgyud A (EAP310-4-1-30)"
+  },
+  {
+   "book_id": "6992f412c8c6ac61574e753f",
+   "page_number": 10,
+   "stratum": "gem-3flash|cjk|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "cjk",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "T10",
+    "T10",
+    "T15",
+    "T10"
+   ],
+   "form": "plate",
+   "not_this_leaf": true,
+   "evidence": "The English gives a caption '刈禾 / Reaping the Grain' as 'original' and describes farmers with sickles, shoulder-pole porters, a buffalo pulling the cart and a bridge over a stream. The leaf carries only the caption 収貯 and shows threshing with paddles, hand-loading of a cart, a resting buffalo and a granary.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "臺灣番社風俗 (Taiwan Fanshe Fengsu: Customs of Taiwans Indigenous People)"
+  },
+  {
+   "book_id": "69b52bd6d6bd9f58edb24d5e",
+   "page_number": 393,
+   "stratum": "gem-3flash|greek|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "illegible_fill"
+   ],
+   "classes": [
+    "O1",
+    "O1"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The last entry is stored as 'Ἄτροποι χρόνοι κατὰ ζῴδιον, ὁποῖα ἑκάστῳ συμβήσεται' ('…what will happen to each'). After 'κατὰ ζώδιον,' the leaf reads 'ἐπαυ… κατ' αὐτ… γενή…'. No 'ὁποῖα ἑκάστῳ συμβήσεται' is written there.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "De mundanis apotelesmatibus excerptum ex libro Albumasaris"
+  },
+  {
+   "book_id": "6993837f50654cbbe2916cba",
+   "page_number": 250,
+   "stratum": "gem-3flash|greek|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation",
+    "misread"
+   ],
+   "classes": [
+    "O1",
+    "O1",
+    "O6",
+    "T7",
+    "O6"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The stored Greek reads 'σεισμοῦ γὰρ γενομένου περὶ τὴν Κύπρον ἡνίκα ἡ ἐκκλησία αὐτῶν ἐβλάβη'. The leaf, legibly, reads 'σεισμοῦ γενομένου πρίν τι ἐπικυρωθῆναι, ἡ ἐκκλησία αὕτη ἀνεβλήθη. τῇ δ' ὑστεραίᾳ ἐκκλησίᾳ ὁ Νικίας…' (Thuc. 5.45.4–46.1). The top half of the page is invented over the real text, which is legible.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Thucydides, Histories (MS, 11th c.)"
+  },
+  {
+   "book_id": "69b52c5c3dd6d9423027f9f2",
+   "page_number": 101,
+   "stratum": "gem-3flash|greek|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "illegible_fill",
+    "added_gloss"
+   ],
+   "classes": [
+    "O1",
+    "O1",
+    "T10"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The stored first line reads 'ἡ μελισσόφυλλος εὐώδης ἐστὶν … σὺν ὁμιλίᾳ'. The leaf's first line begins 'Κ(αὶ) μέλι· καὶ ἡ ῥίζα …' and ends 'σὺν ὠμηλύσει'. There is no lemon balm and no 'fragrant' on the leaf, and the second line's 'ῥητίνη εὐώδης … σὺν ὠδίνι' is not there either.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Galeni Anatomicae aggressiones"
+  },
+  {
+   "book_id": "69c72e586a0f3d112faf71e3",
+   "page_number": 577,
+   "stratum": "gem-3flash|greek|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": false,
+   "kinds": [],
+   "classes": [],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The English 'When we do not feel pain, we no longer need pleasure' and 'tranquility of the soul' come from the standard text of the Letter to Menoeceus; the leaf reads 'ἀλγῶμεν. οὐκέτι τῆς ἡδονῆς δεόμεθα' with no 'ὅταν δὲ μὴ ἀλγῶμεν', and 'τοῦ σώματος ἀταραξίαν'. Small and in the right direction, but not this edition's words.",
+   "confidence": "high",
+   "verdict": "show_with_caveat",
+   "title": "[Greek: Peri Bion, Dogmaton kai apophthegmaton ton en philosophia eudokimesanton: biblia deka] De vitis, decretis & responsis celebrium philosophorum libri decem"
+  },
+  {
+   "book_id": "6953cc3677f38f6761be156e",
+   "page_number": 172,
+   "stratum": "gem-3flash|greek|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "carry_over"
+   ],
+   "classes": [
+    "T5"
+   ],
+   "form": "plate",
+   "not_this_leaf": true,
+   "evidence": "The English ends with '# HERCULANEUM FRAGMENTS. Lines 2—7: … Papyrus reads ΚΑΓ : Naples reads ΚΑΙ … 32. … ΚΟΛΗC : not, as Naples reads, ΧΟΛΗC'. The image shows only the drawing of Papyrus 152 with its labels 'Pap. 152' and 'Ox. p. 15'; there are no notes on the leaf (they belong to a neighbouring page).",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Fragmenta Herculanensia - Herculaneum Papyri Catalogue with Facsimiles"
+  },
+  {
+   "book_id": "69b2223d08069e96e84330fe",
+   "page_number": 113,
+   "stratum": "gem-3flash|greek|print|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "greek",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O1",
+    "O1"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The stored first line of the hymn to Nike is 'Ἐλθέ μάκαιρ᾽ ἀγαθέ νίκην' ('Come, blessed, good Victory'); the image clearly prints '[Ε]ὐδύνατον κ(α)λέω νίκην' ('I call mighty Victory'), with only the initial left for the rubricator.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Musaeus, Hero and Leander, with Orphic Argonautica, Hymns, and Lithica (Aldine Press)"
+  },
+  {
+   "book_id": "69906d5364d44bd0a0ef5344",
+   "page_number": 3,
+   "stratum": "gem-3flash|indic|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "indic",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "misread",
+    "illegible_fill",
+    "confabulation"
+   ],
+   "classes": [
+    "O7",
+    "T7",
+    "T7"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The English gives a planet table ('Mars | Veda (4) and Agni (3)', 'Venus | Shashi (1) and Vidhu (1)') and 'For Mars, the value of four-thousand and fifty'; the leaf is 13 lines of running verse (numbered १–५) with bhūta-saṅkhyā words, no table, and the transcription it was made from is mostly non-words.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Graha Kaumudi"
+  },
+  {
+   "book_id": "69f1341dc8d07a681065333c",
+   "page_number": 4,
+   "stratum": "gem-3flash|latin|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O2",
+    "T17"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The stored Tangut is a handful of glyphs (𗦵𗰗𗽻𗰖) repeated, with whole columns duplicated, while the image shows some 30 columns of varied Tangut characters; the English then describes the page as a phonetic glossary, which the leaf of a sutra is not.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "[Da fang guang fo hua yan jing] juan 41"
+  },
+  {
+   "book_id": "69b43d3706b196d69f66f5ad",
+   "page_number": 111,
+   "stratum": "gem-3flash|latin|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "carry_over"
+   ],
+   "classes": [
+    "T5"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The leaf's last line ends 'partem tum medicam tum astronomicam resultat cas', but the English goes on with 'like a harmony endowed with the gifts of the stars—so from tones, first chosen according to the standard of the stars ... some celestial virtue arises', text that belongs to the following page.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Plotini Libri XXVII posteriores Marsilio Ficino interprete"
+  },
+  {
+   "book_id": "6a4f1ddbdd60b16646ccecf3",
+   "page_number": 2,
+   "stratum": "gem-3flash|latin|print|tr-lite",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "illegible_fill",
+    "show_through"
+   ],
+   "classes": [
+    "O7",
+    "O1",
+    "O1",
+    "O1",
+    "O1",
+    "O1",
+    "O1"
+   ],
+   "form": "blank",
+   "not_this_leaf": true,
+   "evidence": "The stored text gives 'Ad d. VIII. Junii Anno CIO IO CC XVII' and 'Ex Typographeo JOHANNIS KANTERI', 'ADAM MEIOSO, Heidelbergâ-Marchic.'; the mirrored show-through on the image reads 'Ad d. ... Martii, Anno cIɔ Iɔc LVI', 'E Typographeo JOHANNIS REUSNERI', 'ADAM MEIOVIO, Frideberga Marchico'. The transcription is a fluent guess made from show-through on an otherwise blank leaf.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Disputatio Philosophica, De Aetatibus ... Praeses M. Henricus Bussenius ... Respondente Adam Meiovio ... MDCLVI"
+  },
+  {
+   "book_id": "69aea4b63f91570550876981",
+   "page_number": 14,
+   "stratum": "gem-3flash|latin|print|tr-unrecorded",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-unrecorded"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O1"
+   ],
+   "form": "blank",
+   "not_this_leaf": true,
+   "evidence": "The stored image-desc says the stamp ring reads \"BIBLIOTHÈQUE DE LA SORBONNE\". The embossed stamp on this leaf reads, mirrored, 'LIBRARY UNIVERSITY OF TORONTO'.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Constantinople Painted by Warwick Goble"
+  },
+  {
+   "book_id": "69b221f908069e96e8431bfa",
+   "page_number": 14,
+   "stratum": "gem-3flash|latin|print|tr-unrecorded",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-unrecorded"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O1"
+   ],
+   "form": "blank",
+   "not_this_leaf": true,
+   "evidence": "The stored note says the show-through reads \"C. CORNELII TACITI / OPERA\". The mirrored show-through on this leaf is Aldus's Dante title ('…SITO, ET FORMA… TRATTA… ISTESSA DE / SCRITTIONE DEL / POETA') above the anchor-and-dolphin.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Divina Commedia: With Map of the Inferno (Aldine Press, 2nd ed.)"
+  },
+  {
+   "book_id": "69aeaaf167e6731bc136594f",
+   "page_number": 10,
+   "stratum": "gem-3flash|latin|print|tr-unrecorded",
+   "lane": {
+    "ocr": "gem-3flash",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-unrecorded"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "wrong_leaf"
+   ],
+   "classes": [
+    "I1",
+    "I1"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The stored text tags the page blank and describes a reversed embossed 'UNIVERSITY OF TORONTO LIBRARY' stamp. The image is the printed wrapper or title of Sorel's Réflexions sur la violence, 2nd edition (Marcel Rivière), with no stamp.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Réflexions sur la violence"
+  },
+  {
+   "book_id": "69af118e7feb16bd9d149210",
+   "page_number": 4,
+   "stratum": "gem-lite|cjk|print|tr-lite",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "cjk",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "wrong_leaf"
+   ],
+   "classes": [
+    "I1",
+    "I1"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The stored text opens '第一見界總星圖 見界總星圖者以赤道之北極為心'. The image instead shows a page headed 恒星經緯圖說 that begins '百六十度者赤道緯度也從心至界分二十八直線者' and lists earlier observers (落下閎, 一行, 郭守敬). None of the stored text appears on it.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "西洋新法曆書 (New Western Calendar Treatise)"
+  },
+  {
+   "book_id": "69e747d985f786e884a499a6",
+   "page_number": 313,
+   "stratum": "gem-lite|latin|ms|tr-lite",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "latin",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation",
+    "misread"
+   ],
+   "classes": [
+    "O1",
+    "O6",
+    "O6",
+    "O1",
+    "O6",
+    "T7"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The first line is stored as 'mīne þeode se þe ellen mærþo', but the clearly legible leaf reads '[ni]hte weorce gefeh ellen mærþum' (Beowulf 827: rejoiced in his night-work). The stored words are not on the leaf, and the translation renders them as 'my people, he who had attained the glory of courage'.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Beowulf (Cotton MS Vitellius A.xv)"
+  },
+  {
+   "book_id": "69c822ed6c6f3cc53c84ae7d",
+   "page_number": 55,
+   "stratum": "gem-lite|latin|print|tr-3flash",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-3flash"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "illegible_fill"
+   ],
+   "classes": [
+    "O1",
+    "T14"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The image cuts the line at 'Und diese Turbam wollt…'; the stored OCR completes it as 'wollte die Welt zum Theil zernichten' and the English as 'God wanted to partly destroy this Turbam'. Neither 'die Welt' nor 'God' is visible on the leaf, and they contradict each other.",
+   "confidence": "medium",
+   "verdict": "do_not_show",
+   "title": "Versuch einer Auflösung der 177. Fragen aus Jakob Böhm"
+  },
+  {
+   "book_id": "69dbc7cf1040d1d5e20943fc",
+   "page_number": 266,
+   "stratum": "gem-lite|latin|print|tr-lite",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": false,
+   "kinds": [],
+   "classes": [],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The leaf ends mid-sentence 'Primo vt legez quā' (OCR 'Primo ut legebat qua'). The English closes it as 'so that He might fulfill the law which He gave to others;'. 'He might fulfill' and 'He gave to others' are not on this leaf: it is a seam completion, a half clause.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Sermones de tempore et de sanctis"
+  },
+  {
+   "book_id": "6a267d456c1f37c9c4f391d6",
+   "page_number": 21,
+   "stratum": "gem-lite|latin|print|tr-lite",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "carry_over"
+   ],
+   "classes": [
+    "T5"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The image ends with 'Parentis mul-|ti-' and then the footnote '(a) Imò etiam pro Humani generis salute...'. The English goes on: 'in crystalline serenity and the redness of a carbuncle ... Thence he comes physico-artificially to judge the healthy and the sick ... into the fire of consumption.' None of that is on this leaf or in its OCR.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Urim & Thurim, sive Symbolum Physico-Chymicum Henrici Khunrathi"
+  },
+  {
+   "book_id": "69dc5601cb6f7429748b9a60",
+   "page_number": 23,
+   "stratum": "gem-lite|latin|print|tr-lite",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "latin",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": false,
+   "kinds": [],
+   "classes": [],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "Column 2 ends 'Nā ego cōceptionis tuę' (OCR 'Nā ego cōceptionis tue'). The English finishes the sentence: 'For I have come as a minister of your conception—not that I might interfere with your virginity.' 'I have come as a minister' and the virginity clause are not on this leaf.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Opuscula. Con: Liber gratiae; Laudes Virginis Mariae; ..."
+  },
+  {
+   "book_id": "6a3cc1ccec254ff6cae0f113",
+   "page_number": 136,
+   "stratum": "paddle|cjk|print|tr-lite",
+   "lane": {
+    "ocr": "paddle",
+    "script": "cjk",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "other:invented_heading"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The translation's heading '# Commentary on the Diamond Sutra' has no basis on the leaf, whose only header is 欽定四庫全書 / 卷十三 over Chan encounter dialogues (魯祖面壁, 郡守受代歸).",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "五燈會元·卷十三 (vol 13)"
+  },
+  {
+   "book_id": "6992cdfb81c9d7efb84d129c",
+   "page_number": 42,
+   "stratum": "paddle|cjk|print|tr-lite",
+   "lane": {
+    "ocr": "paddle",
+    "script": "cjk",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "layout",
+    "confabulation"
+   ],
+   "classes": [
+    "T16",
+    "T10",
+    "T16"
+   ],
+   "form": "print",
+   "not_this_leaf": true,
+   "evidence": "The note says the methods are 'cited in the \"Jin Kui Yaolue\"'; the leaf's citations are 聖惠, 肘后方, 千金方 and 蘇恭本草 (Lin Yi attributes one method to Zhang Zhongjing, but no Jin kui yaolüe is named).",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "本草綱目·卷五十二"
+  },
+  {
+   "book_id": "69b3e677304c1c6b3950b41f",
+   "page_number": 547,
+   "stratum": "rest",
+   "lane": {
+    "ocr": "gem-lite",
+    "script": "hebrew",
+    "form": "print",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "O1",
+    "O1"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The stored text is a Hebrew litany 'ודע כי הרוח הוא בחינת …' with invented verses like 'ורוח מלכות'. The image shows a full page of cursive Zohar Aramaic under the running head תרומה (folio 271), with no such repeating formula.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Zohar on Genesis-Exodus"
+  },
+  {
+   "book_id": "69dfede38d34461cbe7f4db6",
+   "page_number": 17,
+   "stratum": "rest",
+   "lane": {
+    "ocr": "other-engine",
+    "script": "cjk",
+    "form": "ms",
+    "tr": "tr-lite"
+   },
+   "exposure": "served",
+   "serious": true,
+   "kinds": [
+    "confabulation"
+   ],
+   "classes": [
+    "T7"
+   ],
+   "form": "manuscript",
+   "not_this_leaf": true,
+   "evidence": "The English ('The edge of the fire-starter, / The edge of the mouth … the path of the father') has no basis in the stored Japanese or on the panel. The panel shows the Azumaya passage with Kaoru waiting in the rain and the waka さしとむるむぐらやしげきあづまやの.",
+   "confidence": "high",
+   "verdict": "do_not_show",
+   "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1"
+  }
+ ],
+ "not_reviewed": [
+  {
+   "book_id": "69aff09357adc49dbfc42588",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff00b57adc49dbfc42244",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff0a757adc49dbfc42eca",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69afe4b657adc49dbfc41dbd",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69afefbc57adc49dbfc4221b",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff09557adc49dbfc42610",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff08157adc49dbfc4237a",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69afee6957adc49dbfc4205b",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff09857adc49dbfc4272e",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  },
+  {
+   "book_id": "69aff09e57adc49dbfc4292e",
+   "stratum": "etext|other-script|etext|tr-corpus",
+   "why": "no-image"
+  }
+ ]
+}

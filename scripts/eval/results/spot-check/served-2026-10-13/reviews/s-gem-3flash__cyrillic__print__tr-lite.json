@@ -1,0 +1,242 @@
+[
+  {
+    "book_id": "69af3ee596430911b0bcef22", "slot": 152, "title": "Человекобог и человекозверь", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Bulgakov's 1913 essay on Tolstoy, pre-reform orthography; matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "The image is an unsplit two-page spread (printed pp. 24 and 25 on one leaf image); with_printed_number 14 of 26 records fits a book scanned as spreads. The OCR reads both pages; the translation covers only the left one.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "то я непремѣнно лгу, говоря, что я хочу дѣлать доброе", "image": "italic 'хочу дѣлать доброе'", "problem": "italic emphasis not marked", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Если же впредь отказываешься отъ борьбы ... какъ будто стараясь въ этомъ кого-то увѣрить, можетъ быть, [all of printed p. 25 with its two footnotes]", "english": "(nothing — the English ends at 'try not to repeat it.' and note 1 'Ibid. 54—5.')", "problem": "the whole right-hand page of the spread (printed p. 25, ~30 lines and footnotes 1–2) is transcribed but not translated; the reader of the English loses half the leaf, including the 'joy of the path' argument", "severity": "serious", "class": "T1", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "Spread not split: one image holds printed pages 24 and 25, which is what lets the translation stop halfway", "severity": "moderate", "class": "I3", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Transcription of both printed pages on the spread is essentially exact, but the English stops at the foot of p. 24 and silently drops all of p. 25; the scan is unsplit spreads."
+  },
+  {
+    "book_id": "69af201bb93f9affdf29ddf7", "slot": 153, "title": "Полное собрание сочинений А.П. Чехова", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A Chekhov volume (Google scan via IA). Catalogue collection 'americana' is odd for Russian literature, but the work is what the title says.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 153 of 317 numbered pages is very high; may reflect a volume whose stories restart pagination or a numeral reader confused by Google boilerplate/edition structure; not checkable from one page. Title lacks a volume number though the Google id ('00') suggests one volume of a set.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<image-desc ...>The Google logo in its classic multi-colored serif font.</image-desc>", "english": "A woodcut depicts the Google logo in its classic multi-colored serif font.", "problem": "'woodcut' invented for a digital colour logo", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "Page is Google Books' digitisation boilerplate, not the book; it is served and 'translated' (English echoed) as page 1 of a Chekhov volume, with an English <summary> about usage guidelines", "severity": "minor", "class": "other:scanner-boilerplate" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Page 1 is the Google Books boilerplate, transcribed accurately; the English calls the Google logo 'a woodcut'. Harmless but not book content."
+  },
+  {
+    "book_id": "69af0ebf067c0c26ee26edd4", "slot": 154, "title": "Полное собрание сочинений. Т. 13: Братья Карамазовы", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Brothers Karamazov, 1904 collected works; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 130,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "она вся зависитъ", "image": "italic 'вся'", "problem": "emphasis not marked", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "эта мысль, мысль фаланги", "english": "the thought of the phalanx [gloss: a tightly ordered formation, here symbolizing Dmitri's perceived power over her]", "problem": "фаланга here is the phalanx spider (solifuge), continuing клоп/тарантул; the visible gloss invents a military meaning", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "а я клопъ ... клопа и подлеца", "english": "I was a louse ... a louse and a scoundrel", "problem": "клопъ is a bedbug, not a louse", "severity": "minor" },
+          { "source": "всего остальнаго стоило-бы", "english": "it would have been worth more than anything else", "problem": "'would have been worth all the rest' — loose", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Exact transcription and a fluent, faithful translation, marred by an invented gloss explaining 'phalanx' as a military formation when Dostoevsky means the spider."
+  },
+  {
+    "book_id": "69af10a4d5d111f99e41c02d", "slot": 155, "title": "Сочинения Пушкина. Т. 6", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Pushkin vol. 6 (Annenkov edition, 1855), appendix of documents on the Pugachev revolt; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 393,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<gloss>¹)</gloss>", "image": "footnote reference ¹) and footnote", "problem": "footnote marker tagged as gloss rather than note", "severity": "minor", "class": "O11" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "и черезъ съ деньгами", "english": "and he had money with him", "problem": "черезъ (черес) is a money belt; detail flattened", "severity": "minor" },
+          { "source": "отъ злодѣя сдѣланъ старшиною", "english": "he was made a sergeant by the villain <note>Pugachev</note>", "problem": "старшина is a Cossack elder/officer, not 'sergeant'; the added Pugachev note is correct", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean transcription of the Orenburg siege diary page with footnote; translation faithful with small lexical slips."
+  },
+  {
+    "book_id": "69af14604e1da8eb32ebf7c6", "slot": 156, "title": "Собрание сочинений К. Леонтьева. Т. 2", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Leontiev's Collected Works vol. 2 (1912); matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 109,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Printed p. 95 transcribed exactly (including italic 'франкъ') and translated faithfully."
+  },
+  {
+    "book_id": "69af1216b8bbede5a0084b35", "slot": 157, "title": "Полное собрание сочинений А.П. Чехова. Том 4", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Chekhov vol. 4 (Marks 1903); matches. Collection 'americana' is a catalogue oddity.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 336 of 555 is very high; likely pagination restarting per story or Google-scan structure; not visible from this page.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 110,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "за полгода же до смерти старика онъ вдругъ", "image": "italic 'онъ'", "problem": "emphasis not marked", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Printed p. 108 ('The Princess'-period story with Nadezhda Lvovna Kandurina) transcribed and translated accurately."
+  },
+  {
+    "book_id": "69af0fbb024c2bf295285bb9", "slot": 158, "title": "Полное собрание сочинений И. С. Тургенева в 12 томах. Т. 1", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Turgenev, Marks 1898; this page is from 'First Love'. Matches, though 'First Love' in vol. 1 is unexpected — cannot check from one page.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 440 of 844 is very high for a single volume; possibly several works with restarting pagination bound together, which would also explain 'First Love' at printed p. 12. Worth a look.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Княжна сѣла", "english": "The princess's daughter sat down", "problem": "княжна rendered clumsily, inconsistent with 'princess' later on the page", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Printed p. 12 of 'First Love' read exactly; the OCR correctly ignores bleed-through fragments in the right margin. Translation faithful."
+  },
+  {
+    "book_id": "69af106b266659b71a321df6", "slot": 159, "title": "Полное собрание сочинений И. С. Тургенева в 12 томах. Т. 4", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Turgenev vol. 4; page is from 'Fathers and Sons'. Matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "— Какъ же! Очень нужны нигилисты!", "english": "— How so! Nihilists are very necessary!", "problem": "Pavel Petrovich's sarcasm ('Oh, of course! Nihilists are badly needed!') reads as a sincere assertion", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "мнѣ случайно, что оно не вызвано", "english": "it happened by chance that it was not called forth", "problem": "page-initial fragment of 'не кажется ли вам случайно…' garbled", "severity": "minor" },
+          { "source": "вы обличители", "english": "you are accusers", "problem": "'denouncers/exposers' — weak", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Fathers and Sons p. 54 transcribed exactly; translation good apart from flattening Pavel Petrovich's ironic line."
+  },
+  {
+    "book_id": "69af214e7c27d4b637fed5b5", "slot": 160, "title": "Сочиненія А.Н. Островскаго. Т. 4", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Ostrovsky vol. 4 (1867); a play scene with Anna Pavlovna and Khryukov. Matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 355,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Знаю я это короткое-то время. Дай я вамъ теперь триста рублей ... Ишь ты, какъ гладко причесана: во-", "english": "(nothing after the speaker heading '->Khryukov.<-')", "problem": "translation stops after the first speech; eleven of twelve speeches on the page, including the stage direction, are untranslated", "severity": "serious", "class": "T1", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "Centering markers '->Anna Pavlovna.<-' around speaker names appear in both panes; if rendered raw, readers see arrows", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Transcription of printed p. 347 is exact (show-through from the facing page correctly ignored), but the English is truncated after the first line of dialogue."
+  }
+]

@@ -1,0 +1,257 @@
+[
+  {
+    "book_id": "69b51db4cf111105c428e961", "slot": 2,
+    "title": "Quaestiones Tres Per-Utiles ... Henrici Khunrath (Drei Fragen)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Khunrath's 1607 German/Latin treatise on tartaric diseases; the leaf (header 'DREI FRAGEN.') matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "pages_translated field says 53 while 64 page records carry a translation: the counter is stale. One printed backstep among only 6 read page numbers is most likely a misread numeral.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 21, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "latet SALIS SAPIENTIÆ ... expellens.\n\ndie Menschen vnd das Vieh trincken ... [column-break] den ERDEN / vnd dero flies oder Quell-Wasseren / daraus man nicht alleine kochet vnd Brawet / sondern auch", "image": "the right-column head 'den ERDEN / vnd dero flies oder Quell-Wasseren / daraus man nicht alleine kochet vnd Brawet / sondern auch' stands beside the left marginal block and runs straight into the full-width line 'die Menschen vnd das Vieh trincken'", "problem": "reading order of the mixed full-width / two-column layout broken: the sentence 'from which one not only cooks and brews but also people and cattle drink' is split, its first half moved to the second column after the column break", "severity": "moderate", "class": "O11", "kind": "layout" },
+          { "ocr": "ver-vnreinigt", "image": "ver-vnreiniget", "problem": "spelling normalised", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "zuvohr aus VVO vnd VVAN eine", "english": "from WHERE and WHEN <note>a disease arises</note>", "problem": "an unmarked explanatory insertion tagged as a note fills in an obscure phrase; 'eine' left untranslated", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "an-er Erbete Natürliche zuneigung", "english": "a natural inclination", "problem": "'an-ererbte' (inherited) dropped: the source says the inclination to tartaric ailments is inherited", "severity": "moderate", "class": "T9", "kind": "omission" },
+          { "source": "den ERDEN / vnd dero flies oder Quell-Wasseren / daraus man nicht alleine kochet vnd Brawet / sondern auch [die Menschen vnd das Vieh trincken]", "english": "'people and cattle drink; ...' (first paragraph) ... 'the EARTHS and their flowing or spring waters, from which one not only cooks and brews, but also...' (after the column break)", "problem": "the OCR's broken order is carried into the English, so a reader meets a sentence beginning mid-clause and its first half dangling later", "severity": "moderate", "class": "T14", "kind": "layout" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf, words largely right; the complex marginal/two-column layout is read out of order, so the English opens mid-sentence and leaves fragments, and the translation drops 'inherited' and inserts an explanatory note. Usable with a caveat on reading order."
+  },
+  {
+    "book_id": "6a100969f717292950969869", "slot": 3,
+    "title": "Erster [- zehender] Theil der Bücher und Schrifften ... Paracelsus (1589)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Huser's Paracelsus edition; the leaf is from 'Der Ander Tractat' on baths (Bäder), as expected.",
+    "rights_flag": null,
+    "structure_note": "Only 1,046 of 2,029 pages have OCR. 541 printed repeats and 49 backsteps are expected in a ten-part collected edition where each Theil restarts pagination; not a defect on its own.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 320, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Margasithen", "image": "Margazithen", "problem": "spelling", "severity": "minor", "class": "O8" },
+          { "ocr": "und ... ligen ... mögen", "image": "vnd ... ligē ... mögē", "problem": "u/v and nasal-bar abbreviations silently normalised throughout (consistent; not flagged as editorial)", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "Kakimiis", "english": "<gloss>alum salts</gloss>", "problem": "gloss is a guess (cadmia/calamine is likelier); minor apparatus", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "the OCR's <image-desc> of the drop cap becomes a <note> in the English ('An ornamental drop-cap 'D' depicts floral and foliage motifs.') run into the first word of the chapter", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean page: the transcription follows the Fraktur closely (with silent u/v and abbreviation normalisation) and the translation is faithful."
+  },
+  {
+    "book_id": "6a3533c8c8ce407afbe04f36", "slot": 4,
+    "title": "The All-Seeing Eye, Vol. 1 No. 2", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Manly P. Hall's 1923 magazine; the leaf (p. 8, header THE ALL-SEEING EYE) matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 10, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "cosmic root substance", "image": "cosmic root subtance", "problem": "printer's typo silently corrected", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "oftimes ... specie ... bequeathes", "english": "ofttimes ... species ... bequeaths", "problem": "an English source 'translated' into English: spelling silently modernised/corrected", "severity": "minor", "class": "T12" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Exact transcription of a 1923 English magazine page (US publication of 1923, public domain); the English pane is a lightly normalised copy."
+  },
+  {
+    "book_id": "69b525ae29577f283b57ac7b", "slot": 5,
+    "title": "F. de Wit Germania inferior ... Nieuw kaert-boeck vande XVII Nederlandtsche provincien", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The leaf is page 1, 'BESCHRYVING VAN NEDERLAND, En aengrensende Landen', the text that opens de Wit's atlas.",
+    "rights_flag": null,
+    "structure_note": "An atlas: 38 records and only 14 printed numbers is expected (plates unnumbered).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 4, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "(no margin notes in the right column)", "image": "right-hand marginal notes beside the second column (e.g. 'Rivieren', 'Bosschen', 'Wild', 'Gevogelt', a note at the language passage) are visible", "problem": "the side-notes of the second column are dropped while those of the first are kept", "severity": "moderate", "class": "O12", "kind": "omission" },
+          { "ocr": "geen land in eenen boecken des werelts", "image": "unreadable at this resolution; the sense requires 'in eenige hoecken des werelts'", "problem": "garbled phrase", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Roofvogels zijn 'er yet menigte", "image": "not legible at this resolution ('in menigte' expected)", "problem": "garbled word", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "de Rijn, de Maes, de Schelde, en de Loir", "image": "not legible at this resolution", "problem": "'Loir' (the English gives 'Loire', a French river) is doubtful in a list of Low Countries rivers; probably the Leye/Lys", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "is Duits", "english": "is German <note>original: \"Duits\" (referring here to the Dutch language ...)</note>", "problem": "rendered 'German' and then corrected in an inline note; the note is right but the main text misleads", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "de Loir", "english": "the Loire", "problem": "a French river named among the Netherlands' chief rivers, following a doubtful OCR reading", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "low"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf and structurally right (title, marginal headings, two columns), but the scan is a small whole-opening image (about 1000 px wide) in which the small type cannot be checked word by word; a few phrases look garbled, the right column's side-notes are dropped, and 'Duits' is first rendered 'German'. Usable with a caveat; low confidence."
+  },
+  {
+    "book_id": "6a4e46f6dc886f1f5abb6470", "slot": 6,
+    "title": "De dulcissima sententia Davidis ... A. M. Joanne Hillero", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Latin verse on 1 Chron. 17 ('Aspicis me sicut formam hominis'), as the title says.",
+    "rights_flag": null,
+    "structure_note": "pages_translated 13 of 14: one page untranslated (probably the title or a blank).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 8, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Undique ... namque ... Teque", "image": "Vndiq; ... namq; ... Teq;", "problem": "-que abbreviations expanded and V/U normalised without mark", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Sed tibi nunc placido ridet clementia uultu", "english": "But now mercy smiles upon you with a calm face", "problem": "'tibi' is possessive: 'your clemency now smiles with a calm face'; the English makes God the one smiled upon", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "Aspicis infirmi, quid ego praestantius optem?", "english": "Do you look upon the weak, what could I hope for that is more excellent?", "problem": "the line echoes the title ('You look on me as on a [weak] man'); turned into a question; minor", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Accurate transcription of the italic verse; the translation is faithful apart from one misconstrued dative ('mercy smiles upon you')."
+  },
+  {
+    "book_id": "6a4ac93433aff31aa5240580", "slot": 7,
+    "title": "Epithalamium in nuptiis ... Joannis Lutheri luchauiensis ... Nicolao Silberhorn", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Wedding poem for Johannes Luther of Lucha; the leaf praises Lucha and the groom.",
+    "rights_flag": null,
+    "structure_note": "Only 9 of 17 pages translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Aurea ut Agricolis Uissa uocetur ibi.", "image": "Aurea ut Agricolis bissa uocetur ibi.", "problem": "place/field name misread (b read as U)", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Aurea ut Agricolis Uissa uocetur ibi", "english": "the golden <term>Uissa</term> <gloss>a local river</gloss>", "problem": "the misread name is then glossed as 'a local river' with no basis on the page (the line is about meadows)", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "Est sita florenti gramine, Lucha, solo", "english": "Is situated on flourishing grass, Lucha, in the soil", "problem": "ablatives misconstrued: 'lies on soil flourishing with grass'", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Sound page except one misread name ('Uissa' for printed 'bissa') which the translation then glosses, without basis, as 'a local river'."
+  },
+  {
+    "book_id": "6a4f1ddbdd60b16646ccecf3", "slot": 8,
+    "title": "Disputatio Philosophica, De Aetatibus ... Praeses M. Henricus Bussenius ... Respondente Adam Meiovio ... MDCLVI", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The catalogue title (Frankfurt/Oder 'Bregelana'? 1656, Bussenius, Meiovius) matches what the mirrored image shows; the stored text does not.",
+    "rights_flag": null,
+    "structure_note": "Page 2 is the back of the title leaf: the title page shows through mirror-reversed. No printed numbers at all in 24 records.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2, "right_page": "yes", "form": "blank",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Ad d. VIII. Junii Anno CIO IO CC XVII.", "image": "Ad d. [blank] Martii, Anno cIɔ Iɔc LVI. (1656, matching the catalogue)", "problem": "date invented: June 1717 instead of March 1656", "severity": "serious", "class": "O7", "kind": "illegible_fill" },
+          { "ocr": "REGIOMONTI PRUSSORUM / Ex Typographeo JOHANNIS KANTERI", "image": "REGIOMONTI PRUSSORUM. / E Typographeo JOHANNIS REUSNERI.", "problem": "printer replaced by a better-known later Königsberg printer (Kanter)", "severity": "serious", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "ADAM MEIOSO / Heidelbergâ-Marchic.", "image": "ADAM MEIOVIO, / Frideberga Marchico,", "problem": "respondent's name and home town invented (Heidelberg is not in the Mark)", "severity": "serious", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "Scapulae-Magdeburg.", "image": "Soltquella Marchicus.", "problem": "praeses' origin invented", "severity": "serious", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "In Electorali Regiomontanâ / Publico eruditorum disquisitioni iudicio / PRAESES", "image": "In Electorali Bregelanâ, / Publicae eruditorum ventilationi subjicio / Praeses", "problem": "university and formula substituted with plausible stock wording", "severity": "serious", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "(omitted)", "image": "'Quam,' below AETATIBUS", "problem": "word dropped", "severity": "minor", "class": "O5", "kind": "omission" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Ad d. VIII. Junii Anno CIO IO CC XVII.", "english": "On the day of June 8, in the year 1717.", "problem": "faithful to the invented OCR, so the reader is told a 1656 disputation is from 1717, at Königsberg, from Kanter's press", "severity": "serious", "class": "O1", "kind": "illegible_fill" }
+        ],
+        "other": [
+          { "note": "model commentary shown as text: '<warning>This image is a mirrored bleed-through scan ...</warning>' and '<meta>This page is a mirrored scan; transcription reflects the intended forward-facing text.</meta>' (the latter also in the English pane)", "severity": "moderate", "class": "O15", "kind": "other" },
+          { "note": "the leaf is the blank verso of the title leaf with the title showing through reversed; it is transcribed and translated as a title page", "severity": "serious", "class": "O1", "kind": "show_through" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The stored text gives 'Ad d. VIII. Junii Anno CIO IO CC XVII' and 'Ex Typographeo JOHANNIS KANTERI', 'ADAM MEIOSO, Heidelbergâ-Marchic.'; the mirrored show-through on the image reads 'Ad d. ... Martii, Anno cIɔ Iɔc LVI', 'E Typographeo JOHANNIS REUSNERI', 'ADAM MEIOVIO, Frideberga Marchico'. The transcription is a fluent guess made from show-through on an otherwise blank leaf.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The page is a blank verso with the title page showing through mirror-reversed; the OCR 'corrected' it into a fluent title page with invented date (1717 for 1656), university, printer (Kanter for Reusner), and the respondent's name and town, and the English repeats them. Withhold this page."
+  },
+  {
+    "book_id": "6a4b82f7c0fa233644e30930", "slot": 9,
+    "title": "De Eo, Quod Circa Sermonem Iustum Est ... Heuberus (1693)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Jena disputation; the leaf, p. (18), discusses good intention and good works, consistent with a moral-philosophy disputation.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 18, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Israel ... Philistaeis ... conmoraretur", "image": "Iſra-el ... Philiſtæis ... commoraretur", "problem": "ligature normalisation; 'conmoraretur' for 'commoraretur'", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Neque est, ut objicias, bonum opus malum evadere propter intentionem malam. Ergo vi contrariorum malum opus fit bonum, propter intentionem bonam.", "english": "Nor can you object that a good work turns out evil because of an evil intention. Therefore, by the power of opposites, an evil work becomes good because of a good intention.", "problem": "the two sentences are the objection the author rejects ('nor may you argue: X, therefore by contraries Y'); the English states the conclusion as the author's own, against his thesis", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "Propheta Samuel etiam commoraretur", "english": "the Prophet Samuel was still delayed", "problem": "fine; 'etiam' as 'still' acceptable", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Excellent transcription; the translation is faithful except that one objection-and-inference is rendered as if it were the author's own claim."
+  },
+  {
+    "book_id": "69e4171613026012157f6cfd", "slot": 10,
+    "title": "Remains of the Right Honourable John, Earl of Rochester (1718)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Leaf p. 81, header 'Earl of ROCHESTER.', satirical song stanzas V–VII.",
+    "rights_flag": null,
+    "structure_note": "11 printed repeats / 6 backsteps in 125 numbered pages; probably misread numerals in a microfilm scan, not checked.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 95, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "he hath marry'd Wh——,", "english": "he has married a whore,", "problem": "the printer's deliberate elision is filled in without mark", "severity": "moderate", "class": "T12", "kind": "added_gloss" },
+          { "source": "She brought forth a Barn ... hath ... doth ... &c.", "english": "a child that ... has ... does ... etc.", "problem": "English source modernised", "severity": "minor", "class": "T12" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Exact transcription; the English pane is a modernised copy that also fills in the printed 'Wh——' as 'a whore' without marking it."
+  }
+]

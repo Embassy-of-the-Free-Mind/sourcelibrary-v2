@@ -1,0 +1,281 @@
+[
+  {
+    "book_id": "6991bf4d734f402cad489537", "slot": 122,
+    "title": "Scientific Compilations: Bede, Pseudo-Ptolemy, Avicenna (Sloane MS 2030)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Physiognomy text (lips, cheeks, jaws, nostrils with animal analogies) in a scientific miscellany; consistent with the catalogue.",
+    "rights_flag": null,
+    "structure_note": "Foliation numerals '100' (top) and '96' (bottom) both on the leaf; backsteps/repeats likely come from the two competing numberings, not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 205, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "<margin>de linguis oriṡ</margin>", "image": "De signis oris (red rubric)", "problem": "rubric 'signs of the mouth' read as 'of the tongues of the mouth'; same with 'de linguis uenarū' for 'De signis genarum'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Hen̄as aūt quī grossiores hnt̄", "image": "Genas autem qui grossiores habent", "problem": "'cheeks' misread; translation turns the cheek section into one about lips", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "R. ad pēcor'", "image": "R. ad porcos", "problem": "animal analogy (pigs) lost; translated 'to the beast'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "*De denteṡ cognoscerē suū colūpat̄ tūm assiatat̄*", "image": "running text line '...cogitatore subdolus atque timidus ...' followed by rubric 'De signis narium'", "problem": "a line of running text made into an italic heading about teeth", "severity": "moderate", "class": "O11", "kind": "layout" },
+          { "ocr": "Pula hōgeā & audanṡ. Os paruū̀ miserabilē ... uillz̄ quantē", "image": "...Bucca longa ... audacis. Os paruum ... (many lines)", "problem": "most lines are garbled abbreviation-strings throughout the page; only scattered words are right", "severity": "serious", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "q̄ s̄ ūxta rottūm ... ī anū parṣ̄", "english": "which in [the] anus [part], which are near the [mouth]", "problem": "garble rendered as a fluent and grotesque anatomical statement about nostrils", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "p̄au<unclear>u</unclear>tē alāatiṡ (image: patule alacritatis)", "english": "livid, and [full] of poverty", "problem": "'wide nostrils give sign of alacrity' becomes 'poverty'", "severity": "moderate", "class": "T7", "kind": "misread" },
+          { "source": "Hen̄as aūt quī grossiores hnt̄", "english": "Those who have [lips] that are thicker", "problem": "cheeks rendered as lips (follows the OCR misread)", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [
+          { "note": "<note> inserted after 'Handis': 'A term of unknown origin, possibly a corruption of a Greek word...' — invented gloss shown in reader text", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "note": "invented heading 'Of [the] teeth, to know his [own] color...' in the English", "severity": "moderate", "class": "O11", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf, but the transcription of this dense abbreviated physiognomy is mostly garbled and the English papers over it with fluent nonsense ('in the anus part', cheeks as lips); not fit to show."
+  },
+  {
+    "book_id": "69f1341dc8d07a681065333c", "slot": 123,
+    "title": "[Da fang guang fo hua yan jing] juan 41", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Tangut block-print in folding (concertina) format, consistent with a Tangut Avatamsaka sutra; the stored text is what is wrong, not the catalogue.",
+    "rights_flag": null,
+    "structure_note": "15 pages, 11 translated. The page's own translation calls the work a 'lexicographical or phonetic manual', contradicting the title (Avatamsaka sutra, juan 41).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4, "right_page": "unsure", "form": "print",
+        "ocr_score": 1,
+        "ocr_errors": [
+          { "ocr": "𗦵𗰗𗽻𗦵𗰗𗰖𗰗𗰖𗰗𗰖𘚿𗦵𗽻... (6 columns of 9 lines built from ~4 glyphs, columns 1/3/5 and 2/4/6 identical)", "image": "five panels of about six columns each of varied Tangut characters, ~17 per column", "problem": "the transcription is a loop of four or five code points, repeated block for block; none of it is the leaf's text", "severity": "serious", "class": "O2", "kind": "confabulation" },
+          { "ocr": "<header>類芻</header> / <margin>類 芻 四</margin>", "image": "a Tangut panel title followed by Chinese numeral 四 in the margin", "problem": "Tangut margin characters rendered as Chinese characters", "severity": "moderate", "class": "O10", "kind": "misread" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "(the looped glyph block)", "english": "This section appears to be a lexicographical or phonetic manual ... [The structural arrangement of characters continues.] ×5", "problem": "no translation; a page description that wrongly calls a sutra a phonetic glossary, stored as the English", "severity": "serious", "class": "T17", "kind": "confabulation" }
+        ],
+        "other": [
+          { "note": "<gloss>categorized miscellaneous</gloss> on an invented reading 'Lèichú' — invented apparatus", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The stored Tangut is a handful of glyphs (𗦵𗰗𗽻𗰖) repeated, with whole columns duplicated, while the image shows some 30 columns of varied Tangut characters; the English then describes the page as a phonetic glossary, which the leaf of a sutra is not.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is invented (a loop of four glyphs) and the 'translation' is a wrong description of the page; nothing a reader is shown here comes from the leaf."
+  },
+  {
+    "book_id": "69b52c453dd6d9423027f160", "slot": 124,
+    "title": "Ioannitii Introductio ad artem parvam Galeni", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Medical aphorism-style text on humours, ages, regions and convalescence; plausible within a Johannitius/Articella manuscript (this leaf reads like Hippocratic aphorism material, as often bound with the Isagoge).",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 71, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "In in / firmitate significat toni hoīe", "image": "In / sanitate significat boni(?) hominis ...", "problem": "'in health' read as 'in infirmity': sense reversed", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "In huiu etatis filii crescentes <gloss>et</gloss> p<unclear>er</unclear>ra uinciai", "image": "Habundantia scilicet et defectu ...", "problem": "a phrase invented from a misread; translated 'In the children of this age, growing'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "sicca exata uel acuta", "image": "pgata uis curat (purgatio ... curat)", "problem": "line misread", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "p' uacitē", "image": "patientem", "problem": "misread; translated 'in vacuity'", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "In in firmitate significat toni hoīe n' e' c' ql' ...", "english": "In infirmity, it signifies [that] the tone of a man is not in equality", "problem": "carries the health/infirmity reversal into the English", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "garbled lines (e.g. 'Si q' s pml' hi r' s' in nuncia i nez solo')", "english": "If anyone... in the messenger... [do not] hasten [to] a sudden [conclusion]", "problem": "fluent fill over garble with no mark of doubt beyond ellipses", "severity": "moderate", "class": "T7", "kind": "illegible_fill" }
+        ],
+        "other": [
+          { "note": "<gloss>id est</gloss>, <gloss>et</gloss> tags on ordinary conjunctions leak into both panes", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf, but much of the reading is garbled and one aphorism is reversed ('in health' becomes 'in infirmity'); the English reads as fragmentary and partly wrong."
+  },
+  {
+    "book_id": "69f32fef876dd827cbc45f42", "slot": 125,
+    "title": "Excerptum decretorum, ca. 1350", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Canon-law/sacramental extracts (baptism, confirmation) fit the title.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 262, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Originale enim sit reatu remanens actu in. ... Originalia insecuntur reatu et remanent actu", "image": "Originale tran-/sit reatu remanet actu ... Originalia transeunt reatu et remanent actu", "problem": "'transit/transeunt' (passes away) misread as 'sit'/'insecuntur'; the doctrinal point (original sin passes as to guilt, remains in act) is lost and the English says original sin 'remains in reality'", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "Os fideles per manus episcoporum", "image": "Omnes fideles per manus impositionem episcoporum", "problem": "'impositionem' dropped", "severity": "moderate", "class": "O5", "kind": "omission" },
+          { "ocr": "regnum ad uitam ... regnorum beneficia", "image": "regeneramur ad uitam ... regenerationis beneficia", "problem": "abbreviations for regeneratio misexpanded", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "confirmatio ueniam laudet", "image": "confirmat ieiunia laudet", "problem": "misread", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Originale enim sit reatu remanens actu in", "english": "For original sin remains in reality, effectively in.", "problem": "says original sin remains, where the leaf says it passes in guilt", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "regnorum beneficia", "english": "the benefits of the kingdoms", "problem": "should be 'benefits of regeneration'", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [
+          { "note": "<note>Blue paraph mark.</note> twice inside the English", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Mostly a sound reading of a clear hand, but the opening distinction between original and actual sin is misread so that the English says the reverse of the source; with that fixed it would be showable."
+  },
+  {
+    "book_id": "69b52cdf65eba8acdb9c925b", "slot": 126,
+    "title": "Dantis Convivium et alia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Convivio III (commentary on 'Amor che ne la mente mi ragiona'); fits.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 76, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "cioè di uirtu & di uerita", "image": "cioe di uerita & di uirtu", "problem": "word order swapped", "severity": "minor", "class": "O8", "kind": "misread" },
+          { "ocr": "<margin>D</margin>alle uirtu ... <margin>I</margin> anima che ascolta", "image": "line 1 '& alle uirtu'; 'D' of 'Della' begins line 2; 'L'anima' in red", "problem": "initials mis-tagged as margin", "severity": "minor", "class": "O11", "kind": "layout" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<margin>D</margin>alle uirtu", "english": "<margin>D</margin>of virtues", "problem": "stray letter tags in the English", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "other": [
+          { "note": "stray 'D' and 'I' margin tags inside sentences of the reader text", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "A good reading and faithful translation of the Convivio; the only weakness is stray margin tags ('D', 'I') leaking into sentences."
+  },
+  {
+    "book_id": "69b43d3706b196d69f66f5ad", "slot": 127,
+    "title": "Plotini Libri XXVII posteriores Marsilio Ficino interprete", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The leaf is Ficino's De vita III.21 (seven degrees of things, songs dedicated to Apollo), written as a commentary on Plotinus; plausible in a Ficino Plotinus volume.",
+    "rights_flag": null,
+    "structure_note": "Stored page-num '48' while the leaf's foliation at bottom right looks like '108'; minor.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 111, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nisi mystorum iussu it", "image": "nisi mysteriorum iusserit", "problem": "misread; English 'by the command of the mystics'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "& florz Linquuntur", "image": "& florum & unguentorum", "problem": "'ointments' lost", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "<gloss>R ordinem in celo sequimur chaldeorum.</gloss>", "image": "Respondentque Mercurio, si ordinem in celo sequimur Chaldeorum", "problem": "a main-text clause tagged as a gloss", "severity": "moderate", "class": "O11", "kind": "layout" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Quorsum hec ut intelligas quemadmodum ex certa herbarum uaporumque compositione confecta partem tum medicam tum astronomicam resultat cas", "english": "...a certain form results—like a harmony endowed with the gifts of the stars—so from tones, first chosen according to the standard of the stars, then composed for their agreement among themselves, a common form is as it were made, and in it some celestial virtue arises.", "problem": "the last sentence of the English continues well past the end of the leaf (which stops at 'resultat cas'), supplying the rest of De vita III.21 that is not on this page", "severity": "serious", "class": "T5", "kind": "carry_over" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The leaf's last line ends 'partem tum medicam tum astronomicam resultat cas', but the English goes on with 'like a harmony endowed with the gifts of the stars—so from tones, first chosen according to the standard of the stars ... some celestial virtue arises', text that belongs to the following page.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is good; the English is faithful until its last sentence, which runs on into the next page's text, and a clause is mis-tagged as a gloss."
+  },
+  {
+    "book_id": "69b52ce965eba8acdb9c949f", "slot": 128,
+    "title": "Aliud exemplar Dantis Comoedia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Paradiso XIV with a vernacular commentary in the outer columns; fits.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 279, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "### Capitolo xviii di paradiso", "image": "Chapitolo xiiii di paradiso (red)", "problem": "canto number wrong (XVIII for XIV)", "severity": "serious", "class": "O7", "kind": "misread" },
+          { "ocr": "Al uero al uerchio / et dolcie chio / adietro / et uoce si larqua in un ritedo uero", "image": "Al centro al cerchio e sì dal cerchio al centro / muovesi l'acqua in un ritondo vaso", "problem": "the canto's famous opening tercet garbled", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "uoc ... uoc ... (right column throughout)", "image": "cioe (abbreviated) introducing each gloss", "problem": "the commentary's 'cioè' read as 'uoc' dozens of times; commentary largely garbled", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "Al uero al uerchio / et dolcie chio / adietro", "english": "To the truth, to the circle, and sweet <term>chio</term> <gloss>key/sound</gloss>", "problem": "the tercets translated word by word from garble into nonsense", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "uoc", "english": "voice", "problem": "'cioè' rendered 'voice' throughout the commentary", "severity": "moderate", "class": "T7", "kind": "misread" },
+          { "source": "nel mo l'e si raba me isghandio", "english": "the <term>raba</term> <gloss>rabbi</gloss>, <term>isghandio</term> <gloss>scandal/dispute</gloss>", "problem": "dozens of invented term/gloss pairs over garbled words (also 'pho' glossed 'prophet' for philosopho)", "severity": "serious", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "<note> at the top of the English is a page description; <term>/<gloss> markup on nearly every line", "severity": "moderate", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf, but the canto is misnumbered, the verses and commentary are badly garbled, and the English is word-salad with invented glosses; a Dante reader would see this on sight."
+  },
+  {
+    "book_id": "69f32f27876dd827cbc44d5b", "slot": 129,
+    "title": "Magna Carta with statutes to 12 Edward II, register of writs (ca. 1325) and treatises", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Register of writs (gaol delivery, de bono et malo); fits.",
+    "rights_flag": null,
+    "structure_note": "Leaf carries two numberings ('28' at head, '140' top right), which explains the repeats/backsteps.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 286, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Salvis nobis amerciamentis inde iusticia pervenientibus secundum legem ... Salvis nobis amerciamentis inde provenientibus et aliis ad nos inde spectantibus", "image": "...facturi inde quod ad iusticiam pertinet secundum legem et consuetudinem regni nostri. Salvis nobis amerciamentis inde provenientibus. Et ideo...", "problem": "the saving clause doubled and its first copy fused with a misread; 'et aliis ad nos inde spectantibus' not visible on the leaf", "severity": "moderate", "class": "O4", "kind": "layout" },
+          { "ocr": "tunc eandem inquisitionem praedicti Roberti fieri faciatis", "image": "tunc eandem gaolam de predicto R. ... deliberetis", "problem": "the command (deliver the gaol of R.) misread as 'make an inquisition'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "apud Hanonem", "image": "apud Haveringe (place of tested writ)", "problem": "place name misread", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "De Gaola deliberanda clausa", "english": "Concerning delivering a closed jail", "problem": "'clausa' = close writ (breve clausum), not a closed jail", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The writs are recognisably and mostly correctly read; caveats are a doubled saving clause, a misread operative command in the last writ, a wrong place name, and 'close writ' rendered 'closed jail'."
+  },
+  {
+    "book_id": "69f32bf5b6c06ca8a5e75efb", "slot": 130,
+    "title": "Expositio in Lucam", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Bede on Luke 3 (thirty years, genealogy of Christ); fits.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 74, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "sciat primum hanc esse consuetudinem scripturarum", "image": "sciat primu n ee (primum non esse) consuetudinis scripturarum", "problem": "'non esse' read as 'hanc esse': Bede's statement that Scripture does NOT trace genealogies through women becomes its opposite", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "datum est peccatis quibus tauri nos oriens ex alto", "image": "datum est per eum qui visitavit nos oriens ex alto", "problem": "Luke 1:78 echo misread into nonsense ('bulls')", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "et solum repandi lilii", "image": "uel folium repandi lilii", "problem": "misread", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "sciat primum hanc esse consuetudinem scripturarum ut mulierum in generationibus ordo texeatur", "english": "Let him know first that this is the custom of the Scriptures, that the order of women is woven into generations.", "problem": "reverses Bede's point (follows the OCR misread)", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "cur non marie potius quia ioseph sed qui nihil ad eam pertinere videbatur generatio describatur", "english": "Why is the generation of Joseph described, rather than Mary's, since nothing seemed to pertain to her?", "problem": "it is Joseph who seemed to have nothing to do with Christ; the English attaches the clause to Mary", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "peccatis quibus tauri nos oriens ex alto", "english": "it is given to sins to which the bulls are [the source], the rising from on high", "problem": "nonsense from the misread", "severity": "moderate", "class": "T7", "kind": "misread" }
+        ],
+        "other": [
+          { "note": "<meta>A red decorative initial Q begins the paragraph.</meta> inside the English", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "A clean Carolingian hand read well on the whole, but one dropped negation ('non esse' → 'hanc esse') makes Bede say the opposite on the genealogy question, and the English follows it."
+  }
+]

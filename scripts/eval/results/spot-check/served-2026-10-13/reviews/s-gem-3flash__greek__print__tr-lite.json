@@ -1,0 +1,248 @@
+[
+  {
+    "book_id": "69b304445facc83a9a3dbf99", "slot": 62, "title": "Proverbia Graeca", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Apostolius' Greek proverbs with facing Latin, 1619; catalogue matches the leaf.",
+    "rights_flag": null,
+    "structure_note": "11 backsteps / 11 repeats over 385 printed numbers in a 1619 two-column book; likely misread numerals or genuine misnumbering, not a splice, from this one page. 418 vs 433 translated: field lags the count.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 180, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "μερὶς καὶ πνίξ", "image": "Μερὶς οὐ πνίξ (ȣ̓ ligature)", "problem": "the negative of the proverb ('portion, not choking') read as 'and'; the English follows the Latin and is right", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "μετὰ μυῶν Κόρυδος", "image": "Μετὰ Μουσῶν Κόρυδος", "problem": "'with the Muses' read as 'with the mice'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "excitata partitio est", "image": "excogitata partitio est", "problem": "Latin misread, carried into the English 'a partition was excited'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "ἢ ἤτως ... ἔπαυζεν ... μεσικᾶ τινος", "image": "ἢ καὶ οὕτως ... ἔπαυσεν ... μουσικοῦ τινος", "problem": "ligature slips in the Greek", "severity": "minor", "class": "O6" },
+          { "ocr": "<language>Latin</language>", "image": "Greek and Latin in parallel columns", "problem": "language tag names only one of the two", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Cum gestu autem quodam legendum.", "english": "It must be read with a certain hypocrisy <note>i.e., affectation or mockery</note>.", "problem": "the Latin column's 'gesture' rendered from the Greek ὑπόκρισιν instead, with an added note; the two columns' renderings are swapped", "severity": "minor", "class": "T14" },
+          { "source": "excitata partitio est (image: excogitata)", "english": "a partition was excited", "problem": "follows the OCR misread", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Sound page: both columns transcribed and translated faithfully apart from a few Greek ligature misreads (οὐ read as καί, Μουσῶν as μυῶν) that the English mostly sidesteps by following the Latin."
+  },
+  {
+    "book_id": "6a76d4c66ba8d6d1d3f8e65a", "slot": 63, "title": "Epicuri Fragmenta librorum II et XI De Natura, ex voluminibus papyraceis Herculanensibus", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Rosini's 1818 edition of the Herculaneum Epicurus; the 'americana' collection tag is an odd home but the work is what the catalogue says.",
+    "rights_flag": null,
+    "structure_note": "Only 25 of 109 pages have OCR and 20 are translated: the book is mostly unread, which a reader paging past the preface will meet.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 17, "right_page": "yes", "form": "print",
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The last preface leaf (p. XII) is transcribed word for word and translated faithfully, date and place included; the book as a whole is only a quarter read."
+  },
+  {
+    "book_id": "69b65ef6b3f4fc0441525693", "slot": 64, "title": "Francisci Porti Cretensis... In omnes Sophoclis tragoedias prolegomena", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Portus' Sophocles prolegomena, 1584, Latin with Greek terms; matches the leaf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 15, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "quam Sophocleum", "image": "quàm Sophoclæum", "problem": "spelling normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "imitatur autem homines res vel laetas, vel tristes", "english": "Moreover, one imitates people in either joyful or sad situations", "problem": "subject and object confused: men imitate things joyful or sad", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean transcription of the Latin and its Greek words; the English is faithful but for one confused clause on imitation."
+  },
+  {
+    "book_id": "69b51eceff09e4fe943b51f1", "slot": 65, "title": "Porphyrius De Antro Nympharum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Van Goens' 1765 Porphyry edition; the leaf is its Latin preface.",
+    "rights_flag": null,
+    "structure_note": "82 of 210 pages OCR'd, 77 translated: most of the book is unread.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 26, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Credebat is, <term>Homericos</term> (*)", "image": "Credebat is, ἱστοὺς Homericos (*)", "problem": "the Greek key word ἱστούς (the masts/looms the whole argument is about) dropped; English then reads 'the Homericos [poles/masts]'", "severity": "moderate", "class": "O10", "kind": "omission" },
+          { "ocr": "stamen enim opus est quod texitur", "image": "stamen enim ἱστὸς opus est quod texitur", "problem": "Greek ἱστός dropped again; the sentence's sense ('the warp is the loom-work') lost", "severity": "moderate", "class": "O10", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "stamen enim opus est quod texitur", "english": "for the *stamen* <gloss>warp/thread</gloss> is the work which is woven", "problem": "faithful to the defective OCR; the point that ἱστός means the warp is missing", "severity": "moderate", "class": "O10", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "<summary> and <keywords> blocks stored at the end of the translation; visible to a reader if the renderer does not strip them", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Faithful Latin and English, but the Greek word ἱστός, the subject of the passage, is dropped twice, so the argument about masts versus looms is hard to follow."
+  },
+  {
+    "book_id": "69dbc9bd1040d1d5e20a5d45", "slot": 66, "title": "De materia medica [Greek] (Aldine 1499)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Aldine Greek Dioscorides 1499; this leaf is Book V on medicinal wines.",
+    "rights_flag": null,
+    "structure_note": "Only 22 printed numbers in 285 pages (the Aldine is largely unnumbered), so the 9 backsteps say little.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 222, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ἰσχυρὸς δὲ λαμβανόμενος αἰχλίδιον καὶ καλούμεναι φοινικαί. μέλιτι δὲ εἰσὶν οἱ ἀποβρέχουσι τοὺς φοίνικας", "image": "ἰσχάδες δὲ λαμβάνονται αἱ χελιδόνιαι καλούμεναι ἢ φοινικαί. μέλαιναι δὲ εἰσὶ καὶ ἀποβρέχονται ὡς προείρηται", "problem": "dried figs ('swallow' figs, black) misread as 'strong' and 'honey'; the English follows the image, not the OCR", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "ἡ ἐκ δευτέρας δὲ τοῦ τεύχεσθαι, τὸ ἐκ στεμφύλων ἀπόβρεγμα φέρει αὐτὸ μεῖζον", "image": "καὶ ἐκ δευτέρου καὶ τρίτου ἐπιχεῖται τὸ ἐκ τῶν στεμφύλων ἀπόβρεγμα ... μέσον", "problem": "line garbled in the dense Aldine ligatures", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "καταρροϊζομένοις καὶ βάστοισιν", "image": "καταρροιζομένοις καὶ βήσσουσιν", "problem": "'coughing' misread; English gives 'constipated'", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "κατασπᾷ δὲ καὶ ἔμμηνα. καὶ γάλα δὲ πλεῖον ποιεῖ.", "english": "It suppresses menses and makes milk sparse.", "problem": "both effects reversed: the Greek says it brings down the menses and makes more milk", "severity": "serious", "class": "T8", "kind": "mistranslation" },
+          { "source": "ἔα δ' ἐπὶ ἡμέρας ι' (image: ι', ten)", "english": "Leave it for seven days. On the eleventh day...", "problem": "steeping time in a recipe given as seven days; the leaf says ten (hence 'on the eleventh day')", "severity": "serious", "class": "T7", "kind": "mistranslation" },
+          { "source": "κεφάλαιον ογ. ... οδ. ... οε. ... ος. ... οζ. ... οη.", "english": "Chapter 43 ... 44 ... 45 ... 46 ... 47 ... 48", "problem": "Greek numerals 73–78 rendered as 43–48", "severity": "moderate", "class": "other:numeral", "kind": "mistranslation" },
+          { "source": "ἐλεφαντιάσεως ἐστὶ κινητικόν, ὡς καὶ τὸ ζῦθος", "english": "is stinging for elephantiasis, as is its nature", "problem": "'it provokes elephantiasis, as beer (zythos) does' lost", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "αἱμοπτοϊκοῖς ἁρμόζει", "english": "and for the stomach", "problem": "'those spitting blood' rendered as 'the stomach'", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "πυθάκνην τετρημένην ἐν τῷ πυθμένι", "english": "a jar with a pipe <note>original: \"siphon\"</note> inserted at the bottom", "problem": "a note claims the original says 'siphon'; it does not", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "ποιεῖ δὲ τὰ αὐτὰ τῷ ῥητινίτῃ", "english": "Press them with the resinous wine.", "problem": "'it has the same effects as resin wine' mistranslated", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "οὐρητικός", "english": "(missing)", "problem": "'diuretic' dropped from the date-wine properties", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "A pharmacological page whose English reverses two effects (menses and milk) and changes a recipe's ten days to seven, on top of several misreads of the dense 1499 Aldine type; a reader using it as Dioscorides would be misled."
+  },
+  {
+    "book_id": "69b267c7fe529639c2e8ac14", "slot": 67, "title": "Homeri Ilias (1517 Aldine Edition)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Aldine Iliad; leaf is the opening of Book Λ (11).",
+    "rights_flag": null,
+    "structure_note": "51 backsteps / 57 repeats over 336 printed numbers: the Aldine is foliated (one number per leaf) and numbers are often misread, so likely an artefact, not a splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 349, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<page-num>11</page-num>", "image": "no page number on this leaf (11 is the book number Λ)", "problem": "page number invented from the book number, and shown in the translation", "severity": "minor", "class": "O16" },
+          { "ocr": "<margin>Λ</margin>", "image": "guide letter ἠ in the margin for the missing initial", "problem": "guide letter misreported", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "<summary>/<keywords> blocks and ->…<- centring arrows stored in the translation; visible if not stripped by the renderer", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Opening of Iliad 11 transcribed faithfully from the Aldine cursive and translated accurately."
+  },
+  {
+    "book_id": "699438446879ff0184cb8593", "slot": 68, "title": "Macarii Aegyptii Opera Omnia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Pseudo-Macarius homilies, Greek with Latin, 1698.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 71, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<language>Latin</language>", "image": "Greek and Latin columns", "problem": "language tag names one of two", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<margin>I. Cor. II, 8.</margin> ... <margin>Ioh VI, 35.</margin>", "english": "<margin>1 Cor. 2:9.</margin> ... <margin>John 6:51.</margin>", "problem": "the printed scripture references silently corrected to the modern ones; the reader sees references the edition does not print", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Both columns transcribed accurately and translated faithfully; the English quietly 'corrects' two of the edition's marginal scripture references."
+  },
+  {
+    "book_id": "69e7478d85f786e884a48a87", "slot": 69, "title": "Ὁμήρου Ὀδύσσεια (Homeri Odyssea)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "1575 Odyssey with Latin version; this leaf is the Latin of Book Ρ (17).",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 517, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "mariti de redituro die", "image": "mariti de reditiuo die", "problem": "word normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Et tunc me interroget mariti de reditiuo die", "english": "And then let her ask me about my husband's day of return", "problem": "Odysseus speaks: it is her husband's return, not 'my husband's'", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "the turnover fragments '(lysses', '(lius', '(regrinus' became invented marginal notes in the English: <margin>Ulysses</margin>, <margin>other</margin>, <margin>stranger</margin>", "severity": "moderate", "class": "O11", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Accurate transcription and a faithful English of the Latin Odyssey 17, but the printer's turned-up line endings appear in the English as three bogus marginal notes, and one 'her husband' became 'my husband'."
+  },
+  {
+    "book_id": "69b2223d08069e96e84330fe", "slot": 70, "title": "Musaeus, Hero and Leander, with Orphic Argonautica, Hymns, and Lithica (Aldine Press)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Aldine 1517 Musaeus/Orphica; leaf holds the end of the Orphic hymn to Athena, the hymn to Nike, and the start of the hymn to Apollo.",
+    "rights_flag": null,
+    "structure_note": "Printed numbers on 91 of 184 pages; backsteps likely misread folios in a foliated Aldine.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 113, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Ἐλθέ μάκαιρ᾽ ἀγαθέ νίκην, θνητοῖσι ποθεινήν.", "image": "[Ε]ὐδύνατον καλέω νίκην, θνητοῖσι ποθεινήν (guide letter ε in the margin, initial space left blank)", "problem": "first line of the hymn to Nike replaced by an invented opening ('Come, blessed, good Victory'), apparently patterned on the Apollo hymn's 'Ἐλθὲ μάκαρ' below; the English carries it", "severity": "serious", "class": "O1", "kind": "confabulation" },
+          { "ocr": "φίλοισι κακοῖς", "image": "φίλοιστρε κακοῖς", "problem": "'frenzy-loving to the wicked' read as 'to friends evils', carried into the English", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "<margin>λ</margin>", "image": "guide letter ε", "problem": "guide letter misread", "severity": "minor", "class": "O12" },
+          { "ocr": "Λῖτα μάκαιρα θεὰ", "image": "first word partly lost at the initial; reads as ...ία μάκαιρα θεά", "problem": "first word uncertain; 'Λῖτα' (English: 'Prayer') not clearly on the leaf", "severity": "minor", "class": "O6" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Ἐλθέ μάκαιρ᾽ ἀγαθέ νίκην (not on the leaf)", "english": "Come, blessed, good Victory, desired by mortals.", "problem": "translates the invented OCR line; the leaf says 'I call mighty Victory, desired by mortals'", "severity": "serious", "class": "O1", "kind": "confabulation" },
+          { "source": "φίλοισι κακοῖς (image φίλοιστρε)", "english": "to friends evils", "problem": "follows the misread", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [
+          { "note": "<summary>/<keywords> blocks stored in the translation; visible if not stripped", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The stored first line of the hymn to Nike is 'Ἐλθέ μάκαιρ᾽ ἀγαθέ νίκην' ('Come, blessed, good Victory'); the image clearly prints '[Ε]ὐδύνατον κ(α)λέω νίκην' ('I call mighty Victory'), with only the initial left for the rubricator.",
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Most of the page is a faithful read of the Aldine Orphic hymns, but the opening line of the hymn to Nike is invented ('Come, blessed, good Victory' for 'I call mighty Victory') and served in both panes; one epithet is also misread."
+  }
+]

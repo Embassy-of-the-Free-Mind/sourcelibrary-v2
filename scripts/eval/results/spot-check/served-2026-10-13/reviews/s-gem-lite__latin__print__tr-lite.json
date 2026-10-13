@@ -1,0 +1,264 @@
+[
+  {
+    "book_id": "69d14a2c1c2a66dc094b3a11", "slot": 12, "title": "The Works of Plato, vol. 4", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Taylor & Sydenham's 1804 English Plato; the leaf is The Second Alcibiades, p. 608.",
+    "rights_flag": null,
+    "structure_note": "Record 617 shows printed p. 608, consistent with ~9 leaves of front matter. 22 backsteps / 20 repeats over 593 printed numbers in a 624-page volume are more likely misread numerals or section restarts than a splice; nothing on this leaf suggests a structural fault.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 617, "right_page": "yes", "form": "print",
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "¹ We have here a specimen of Plato's uncommon skill in philosophical or universal grammar. ... See Mr. Harris's Hermes, b. i. ch. xi. and viii.—S.", "english": "(absent)", "problem": "the whole footnote (Sydenham's note on ΚΑΚΩΣ/ΗΠΙΣΤΑΤΟ) is dropped from the English reading text", "severity": "moderate", "class": "T9", "kind": "omission" },
+          { "source": "the derivative words, *ill*, and *he knew*¹.", "english": "(absent)", "problem": "the opening clause carried over from the previous page is dropped", "severity": "minor", "class": "T6", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "An English book 'translated' into English: the reader's English panel is a light modernising paraphrase of Taylor's text ('rational conclusions' → 'logical conclusions'), not a translation", "severity": "minor", "class": "I7", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The transcription is exact, Greek footnote included. The English panel is a paraphrase of an English original, and it drops the footnote; readers should use the transcription."
+  },
+  {
+    "book_id": "69dbc7ad1040d1d5e20932a0", "slot": 13, "title": "Philosophia pauperum ... (version B)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Incunable Albertus Magnus (BSB); the leaf carries the 'De anima' running head.",
+    "rights_flag": null,
+    "structure_note": "The last record (109) is a library capture of an end leaf with a BSB colour chart and resolution target laid over it. Only the right-hand ends of the lines of a table of chapters are visible. 9 backsteps / 16 repeats over only 38 printed numbers look like misread or missing folio numerals in an unfoliated incunable.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 109, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ficationis.", "image": "ıſcationis. (partly covered)", "problem": "fragment start uncertain; fragments otherwise read as visible", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "uni. / uaporis. / ... de yride. / ... possibilis. / ... eliberatiua", "english": "(no translation; only a <note> describing the page)", "problem": "the visible fragments are not translated; a model note describing the calibration chart is served instead. Its claim that they 'mirror the chapter headings from the previous table of contents' is plausible but cannot be checked from this leaf", "severity": "minor", "class": "O14", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "The reader's English panel consists only of a model-authored <note> about the archive's colour chart, not a translation", "severity": "minor", "class": "T3", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "This is a calibration-target capture of an end leaf. The OCR keeps the visible line-ends honestly, and the English panel is a description, not a translation. It is harmless but gives the reader nothing."
+  },
+  {
+    "book_id": "69dbc7cf1040d1d5e20943fc", "slot": 14, "title": "Sermones de tempore et de sanctis", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Incunable sermon collection (BSB), De tempore section.",
+    "rights_flag": null,
+    "structure_note": "The OCR tags the folio 'Cxx' as <sig>Cii</sig>, an example of how misread folio numerals produce the 9 backsteps / 7 repeats on only 25 printed numbers. This is not a splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 266, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Domus quippe domini decet sanctitudo in longitudine dierum psalmo.xij.", "image": "dn̄i decet sanctitudo in longitudine dierū ps·xcij·", "problem": "Psalm 92 read as 12 (the translation silently corrects it to 92)", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "Dicit etiam ipsa virgo Maria non tam per eo quod", "image": "Hinc etiam ipsa virgo Maria non tm̄ p eo q̧", "problem": "'Hinc' read as 'Dicit', so the translation makes Mary herself the speaker of the author's claim ('The Virgin Mary herself says that...')", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "nec enim per factionem oris de recipere", "image": "nec eū p factionem oris de|cipere", "problem": "'decipere' (deceive) split and misread, so the sense is lost", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "per dei sapientia domini figurat quod ut dicit", "image": "p de3 sapiā3 timor dn̄i figurat̄· q3 vt dr̄", "problem": "'timor' dropped, which garbles 'by the wisdom of God the fear of the Lord is figured'", "severity": "moderate", "class": "O5", "kind": "omission" },
+          { "ocr": "<sig>Cii</sig>", "image": "Cxx·", "problem": "folio number misread and tagged as a signature", "severity": "minor", "class": "O16", "kind": "misread" },
+          { "ocr": "Christus habitat etiam Christus", "image": "xp̄o·Habitat etiā xp̄s", "problem": "the line-initial 'xpo.' (end of the previous sentence) is merged in as a subject", "severity": "minor", "class": "T6", "kind": "layout" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "nec enim per factionem oris de recipere", "english": "not merely through the motion of the mouth", "problem": "the sense 'nor to deceive him by a pretence of the mouth' is lost", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "per dei sapientia domini figurat quod ut dicit Ecclesiastica.j.", "english": "By the wisdom of the Lord, he signifies what Ecclesiasticus 1 says", "problem": "rendered fluently over the garbled OCR; the point (wisdom figures the fear of the Lord) is obscured", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "Primo ut legebat qua", "english": "First, so that He might fulfill the law which He gave to others;", "problem": "the sentence breaks off at the page end ('Primo ut legem quam'); the English completes it with words not on this leaf", "severity": "moderate", "class": "T6", "kind": "carry_over" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The leaf ends mid-sentence 'Primo vt legez quā' (OCR 'Primo ut legebat qua'). The English closes it as 'so that He might fulfill the law which He gave to others;'. 'He might fulfill' and 'He gave to others' are not on this leaf: it is a seam completion, a half clause.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The sermon text is readable and mostly right, but several abbreviation misreads carry into the English (Mary made the speaker, 'decipere' lost, 'timor' dropped). The last line is completed with words not on the leaf; that is a small seam defect, but it is off-leaf text."
+  },
+  {
+    "book_id": "69d8f6ec003a652e450bb568", "slot": 15, "title": "The Secret History of Pythagoras", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The 1721 London pamphlet title page matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "A 2-page user upload: this is a fragment (title page plus one leaf), not the whole pamphlet.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<page-num>300</page-num>", "image": "handwritten '300' in the top-right corner (a later hand)", "problem": "a later pencil number is taken as the page number", "severity": "minor", "class": "O13", "kind": "other" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Translated from the Original Copy", "english": "Translated from the original manuscript", "problem": "'Copy' changed to 'manuscript' on a title page that is quoted verbatim", "severity": "minor", "class": "T8", "kind": "mistranslation" },
+          { "source": "MDCCXXI.", "english": "1721.", "problem": "a title-page imprint normalised instead of transcribed", "severity": "minor", "class": "O8", "kind": "other" },
+          { "source": "All publ.", "english": "All published", "problem": "an ambiguous manuscript note expanded without a mark", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "<meta>Handwritten \"300\" ...</meta> and a <note> wrapper are in the English reading text; an English title page is re-served as an English 'translation'", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The title page is transcribed accurately, Greek motto included. The English panel adds small changes ('manuscript' for 'Copy'), and a model <meta> note shows in the text."
+  },
+  {
+    "book_id": "69dbcad41040d1d5e20af38e", "slot": 16, "title": "Liber de homine [Italian] Libro del perchè", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "1478 Italian Manfredi; the leaf is on the tunics and humours of the eye.",
+    "rights_flag": null,
+    "structure_note": "The book is unfoliated over most leaves (96 printed numbers of 225), so the backsteps are more likely misread signatures than disorder.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 168, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "fe chiama / fe liga / fe ingrossano", "image": "ſe chiama / ſe liga / ſe ingroſſano", "problem": "long-s read as f throughout in 'se'", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "similmente referrate sono incluse", "image": "ſimilmente reſerrate ſiano incluſe", "problem": "'siano' read as 'sono'", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "tudine e le due piu grande", "english": "st moisture, and the two larger ones", "problem": "the split word from the previous page is rendered as an odd fragment 'st moisture'", "severity": "minor", "class": "T6", "kind": "other" },
+          { "source": "sia no intercluse e circundate da queste due magiore e anchora due altre alquanto minore", "english": "(the repeated clause is collapsed)", "problem": "the printer's dittography is silently removed, which is acceptable for reading", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A clean read of a 1478 Italian anatomy of the eye. The OCR and English are faithful, with only the long-s→f habit and a stray seam fragment."
+  },
+  {
+    "book_id": "69e792de80b52390feb16e5e", "slot": 17, "title": "Hikayat Hang Tuah, Vol. II", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The Malay text of Hikayat Hang Tuah, as catalogued.",
+    "rights_flag": "A modern typeset romanised edition (IA identifier 'hikayat-hang-tuah-ii-2010', clean 20th-century offset type, printed page '164'), not a c.1700 source. It is likely an in-copyright Malaysian/Indonesian publisher edition; the catalogue date '1700' describes the work, not this edition.",
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 162, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "melihat anak Raja itu, terlalu ramai", "image": "melihat anak Raja itu disambut, terlalu ramai", "problem": "the word 'disambut' is dropped", "severity": "minor", "class": "O5", "kind": "omission" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "seerti di dalam tulisan rupanya orang menyandang tatapan itu", "english": "(absent)", "problem": "the clause describing the procession of food-bearers ('like a picture') is dropped", "severity": "moderate", "class": "T9", "kind": "omission" },
+          { "source": "Manatah segala raja-raja berangkat itu, tiada bermain-main berburu segenap pulau?", "english": "Where are all the kings who go traveling, not stopping to hunt on every island?", "problem": "the rhetorical 'what king travelling does not stop to hunt at every island?' is turned into a literal question", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "menyuruhkan segala pegawai dan pertuanan pergi menyambut Raja itu", "english": "to go and welcome the King", "problem": "'Raja itu' here is the visiting prince, not the King", "severity": "minor", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The OCR is near-perfect and the English broadly right, though it drops a clause and flattens a rhetorical question. The edition is a modern typeset one that looks in copyright."
+  },
+  {
+    "book_id": "6a22da5468f6a1498e30047a", "slot": 18, "title": "Omnia quae extant opera (Giunta edition, 1565)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The Giunta Galen; this leaf is the pseudo-Galenic De spermate, p. 40.",
+    "rights_flag": null,
+    "structure_note": "The 122 backsteps / 377 repeats fit the Giunta edition's separately paginated parts and volumes, not disorder. Coverage is partial: 1070 of 1276 pages have OCR and 556 are translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 427, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "licet magis affinis sit tertianae, et quotidianae", "image": "magis affinis ſit tertianæ, q̃ quotidianæ", "problem": "'quam' read as 'et', which reverses the comparison (more akin to tertian THAN quotidian)", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "et tempus finem diem et horam. Nam si infirmitas fuerit ex signa et planetas", "image": "& tempus ſ̃m diem & horam. Nam ſi infirmitas fuerit ſ̃m ſigna & planetas", "problem": "the 'secundum' abbreviation read as 'finem' and 'ex'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "A Sferut etiam physici", "image": "ASſerūt etiam phyſici (drop-cap A)", "problem": "the drop cap is split off; 'Asserunt' is lost", "severity": "minor", "class": "O11", "kind": "misread" },
+          { "ocr": "discernet ... in theoria,", "image": "diſcernit ... in theo-|rica,", "problem": "small slips", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "licet magis affinis sit tertianae, et quotidianae", "english": "although it is more akin to the tertian and daily", "problem": "the comparison 'more akin to tertian than quotidian' is lost", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "A Sferut etiam physici omnia in terris firmari", "english": "Physicians also investigate that all things on earth are fixed", "problem": "'Asserunt' (assert) is rendered as 'investigate'", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "et tempus finem diem et horam", "english": "and the time, end, day, and hour", "problem": "'according to day and hour' becomes a list with 'end'", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "source": "symphonia instrumenti artificis animae, idest corporis displicet", "english": "the symphony of the instrument of the artist, that is, the soul, displeases the body", "problem": "the apposition is misattached: the body is the instrument of the artist-soul, and its harmony is what displeases", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "<note>Alternatively:</note> wrapper inside the margin line of the reading text", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "A dense folio page, transcribed largely right, marginal notes included. Several abbreviation misreads ('quam' read as 'et', 'secundum' as 'finem/ex') and a few loose renderings change local sense in the English."
+  },
+  {
+    "book_id": "6a267d456c1f37c9c4f391d6", "slot": 19, "title": "Urim & Thurim, sive Symbolum Physico-Chymicum Henrici Khunrathi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Khunrath's alchemical creed (1693 printing); the leaf matches.",
+    "rights_flag": null,
+    "structure_note": "27 of 30 pages have OCR; the single backstep is unremarkable.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "</margin>\nti-", "image": "'ti-' once, as the catchword-line before the footnote", "problem": "the line-end 'ti-' is duplicated after the footnote, which is tagged <margin> though it is a foot-of-page note", "severity": "minor", "class": "O12", "kind": "layout" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Parentis multi-", "english": "the almighty Parent; in crystalline serenity and the redness of a carbuncle; whole, in Body, Spirit, and Soul, as if Quint-Essential: Thence he comes physico-artificially to judge the healthy and the sick ... At whose arrival all fruits of all Elements ... must be examined ... And they render ... testimony ... And the good that is in them goes into the state of glorification; but that which is evil, into the fire of consumption.", "problem": "the leaf ends at 'Parentis multi-'. The English goes on for five more paragraphs of the creed that are not on this leaf and not in the transcription: lookahead from the following page(s), or invention", "severity": "serious", "class": "T5", "kind": "carry_over" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The image ends with 'Parentis mul-|ti-' and then the footnote '(a) Imò etiam pro Humani generis salute...'. The English goes on: 'in crystalline serenity and the redness of a carbuncle ... Thence he comes physico-artificially to judge the healthy and the sick ... into the fire of consumption.' None of that is on this leaf or in its OCR.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is exact, but the English roughly doubles the page with five paragraphs of the creed that belong to later leaves. A reader citing this page would quote text that is not on it."
+  },
+  {
+    "book_id": "69dc5601cb6f7429748b9a60", "slot": 20, "title": "Opuscula. Con: Liber gratiae; Laudes Virginis Mariae; ...", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "1481 Vincent of Beauvais; the leaf is from the Laudes Virginis Mariae.",
+    "rights_flag": null,
+    "structure_note": "Unfoliated incunable (153 of 298 pages have a printed number); the backsteps likely come from misread chapter or signature numerals.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 23, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Lap. XXIII.", "image": "Cap. XXIIII.", "problem": "chapter 24 read as 23", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "Discant ergo mulieres positoz pudoris imitari. dilce virgo", "image": "Discant ergo mulieres ꝓpositū pudoris imitari. disce virgo", "problem": "'propositum' and 'disce' misread; both carry into the English", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Trepidare quippe virginem et ad omnes", "image": "Trepidare quippe vir-|ginum est ad omnes", "problem": "'virginum est' read as 'virginem et'", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "Trepidatio delinat ser uitutis", "image": "Trepidatio desinat ser-|uitutis", "problem": "'desinat' (let it cease) misread", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Nā ego cōceptionis tue", "english": "For I have come as a minister of your conception—not that I might interfere with your virginity.", "problem": "the page ends at 'conceptionis tue'; the English adds a full clause of Augustine that is not on this leaf", "severity": "moderate", "class": "T6", "kind": "carry_over" },
+          { "source": "Trepidatio delinat seruitutis. qua vocari dñam facit z impat auctoritas ipsa sui germinis", "english": "Trembling stems from servitude, which the authority of the fruit of your own womb makes you be called Lady and commands.", "problem": "'let the trembling of servitude cease' becomes 'trembling stems from servitude'", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "Ergo turbata est verecūdie fuit virginal. z q nō perturbata fortitudinis", "english": "she was troubled by virginal modesty, and not perturbed by strength", "problem": "'that she was not perturbed was [a mark] of fortitude' becomes 'not perturbed by strength'", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "Discant ergo mulieres positoz pudoris imitari. dilce virgo verborum vitare lasciuiam", "english": "let women learn to imitate the modesty of one placed there. Let the virgin love to avoid", "problem": "rendered fluently over the misreads ('their resolve of modesty'; 'learn, virgin, to avoid')", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "Qualis āgel ab ea fugauit metu. Bern. lup missus e omeli. Lap. XXIII.", "english": "(absent)", "problem": "the chapter heading and number are dropped from the English", "severity": "moderate", "class": "T9", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "<meta>continues from previous page: she</meta> and <meta>A decorative initial 'A' featuring floral flourishes.</meta> appear in the English reading text", "severity": "moderate", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "Column 2 ends 'Nā ego cōceptionis tuę' (OCR 'Nā ego cōceptionis tue'). The English finishes the sentence: 'For I have come as a minister of your conception—not that I might interfere with your virginity.' 'I have come as a minister' and the virginity clause are not on this leaf.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The two-column incunable is mostly read, but abbreviation misreads carry into several fluent mistranslations. The chapter heading is dropped, model <meta> notes show in the English, and the last sentence is completed with a clause not on the leaf."
+  }
+]

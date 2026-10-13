@@ -1,0 +1,235 @@
+[
+  {
+    "book_id": "69c1bc6b8522835be8463238", "slot": 202, "title": "Yemenite prayer book for the whole year (Tikhlal)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Yemenite manuscript with Mishnah Shabbat and Song of Songs for Sabbath recitation; matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "18 printed backsteps over only 42 pages with a printed number in a manuscript; most likely misread leaf or quire numerals, not a splice. Not checked beyond this page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 98, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "נפש האלהים כו' שיעלו וירדו תורנגולא שפרח דחזי אותה עד שתשקע", "image": "לפני האפרוחים כדי שיעלו וירדו תרנגולת שברחה דוחין אותה עד שתכנס", "problem": "the first line of small cursive (Mishnah Shabbat 18:2) is misread into different words; 'the soul of God' stands where the leaf says 'before the chicks'", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "ואשה מצרה את בנה כו' יהודה איש כפר גבוני שהא נוטל א'", "image": "והאשה מדדה את בנה א\"ר יהודה אימתי בזמן שהוא נוטל א'", "problem": "'R. Judah: when? at the time that…' is read as a person, 'Judah, a man of Kefar Gevoni', who is not on the leaf", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "<meta>… Catchword at bottom left: דמי.</meta>", "image": "the catchword at the foot reads like בית/ב…, not דמי", "problem": "catchword misread in the meta note", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "נפש האלהים כו' … יהודה איש כפר גבוני", "english": "...the soul of the gods, etc. ... Judah, a man of Kefar Gevoni, who takes one and leaves one", "problem": "garbled OCR rendered as fluent English with no sign of doubt; a reader gets an invented name and 'the soul of the gods' in a Mishnah about helping animals and children walk", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "תיקוני שבת מלכתא", "english": "Sabbath Repairs by the Queen", "problem": "running head means 'preparations/rites of the Sabbath Queen'; 'by the Queen' makes the queen the author", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "ובסכנה מכסהו על פי עדים ועוד אמר ר' אליעזר", "english": "and in danger he covers it. According to the witnesses, Rabbi Eliezer also said", "problem": "'on the testimony of witnesses' belongs to the preceding clause; attached to the next sentence it changes the sense", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Correct leaf. The square-script Song of Songs and most of Mishnah Shabbat ch. 19–20 are read well. The first four lines of cursive are misread into nonsense, including an invented 'Judah, a man of Kefar Gevoni', and the translation renders that nonsense as fluent English."
+  },
+  {
+    "book_id": "695361879c494f9f9f0424f4", "slot": 203, "title": "Picatrix (Ghāyat al-Ḥakīm)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Ritter's critical edition of the Arabic Ghāyat al-Ḥakīm (Studien der Bibliothek Warburg, 1933), pp. 106–107.",
+    "rights_flag": "Typeset critical edition with Latin apparatus (Ritter, 1933). This is not a c. 1000 artefact, as 'published: c. 1000' implies; it is a 20th-century edition, so check its rights status.",
+    "structure_note": "A two-page spread on each image. 218 records for an edition of over 400 pages, which fits spreads.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 63, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "page 107 (left) transcribed first, then page 106 (right)", "image": "Arabic spread reads right to left: 106 (Chapter 10 heading, Saturn…Mercury) comes before 107 (Moon…)", "problem": "the transcription runs the two pages in reverse order, so the Moon entry comes before the chapter heading", "severity": "moderate", "class": "I6", "kind": "layout" },
+          { "ocr": "<image-desc>… Saturn (♄), Jupiter (♃), Mars (♂), Sun (☉), Venus (♀), Mercury (☿), and the Moon (☽).</image-desc>", "image": "seven talismanic signs that are not the standard planetary glyphs (only the Moon crescent resembles one)", "problem": "the description substitutes the familiar glyphs for the signs actually printed", "severity": "moderate", "class": "O14", "kind": "added_gloss" },
+          { "ocr": "والسباذنج", "image": "والاسباذنج", "problem": "alif dropped", "severity": "minor" },
+          { "ocr": "apparatus lines", "image": "Latin/Arabic apparatus", "problem": "mixed-direction apparatus scrambled in places", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "مرآة … مقرعة … شعاعها", "english": "mirror … whip … her radiance <note>a crown of rays</note>", "problem": "fine; notes on stone names are reasonable, but 'garnet' for al-bijādī and 'emery' for sunbādhaj are presented without hedging", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "the translation opens with a <meta> paragraph describing the previous page; if rendered, it is model commentary in the reader text", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Clean read and faithful translation of Ritter's edition. The caveats: the transcription pane runs the RTL spread in reverse page order, and the image description calls the edition's peculiar planetary signs the standard glyphs. The catalogue date 'c. 1000' hides that this is a 1933 edition."
+  },
+  {
+    "book_id": "69557431f63a75710917329b", "slot": 204, "title": "De Musica", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Volkmann's 1856 edition of Ps.-Plutarch De Musica; nothing on this leaf contradicts it.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "form": "blank",
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A blank leaf (microfilm frame), correctly marked blank with nothing invented."
+  },
+  {
+    "book_id": "69b3e677304c1c6b3950b41f", "slot": 205, "title": "Zohar on Genesis-Exodus", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Sephardic cursive Zohar manuscript; the running head on this leaf reads תרומה (parashat Terumah), consistent with Zohar on Exodus.",
+    "rights_flag": null,
+    "structure_note": "175 of 752 pages have no OCR. Not judged from one page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 547, "right_page": "unsure", "form": "manuscript",
+        "ocr_score": 1,
+        "ocr_errors": [
+          { "ocr": "סוד הרוח הוא מן הדברים העמוקים … ודע כי הרוח הוא בחינת המלכות והוא בחינת השכינה. וזהו סוד מה שכתוב ורוח מלכות.", "image": "about 23 dense lines of Zohar Aramaic in cursive (words like סלקין, כולהו, רזא, דא visible), running head תרומה, folio '271', marginal notes", "problem": "the whole transcription is invented: a repetitive Hebrew litany 'know that the spirit is the aspect of X … and this is the secret of what is written ורוח X', cycling through the sefirot, with fabricated verses ('ורוח תפארת', 'ורוח יסוד', 'ורוח מלכות'). Nothing on the leaf matches; the running head is תרומה, not הרוח", "severity": "serious", "class": "O1", "kind": "confabulation" },
+          { "ocr": "(no marginalia)", "image": "several marginal glosses in a second hand, right and left margins", "problem": "marginalia dropped", "severity": "moderate", "class": "O12", "kind": "omission" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "ודע כי הרוח הוא בחינת …", "english": "And know that the spirit is the aspect of … 'And a spirit of kingdom.'", "problem": "faithful to the invented transcription, so the reader gets an English Zohar page that is entirely invented, with verse quotations that do not exist ('And a spirit of beauty', 'And a spirit of foundation')", "severity": "serious", "class": "O1", "kind": "confabulation" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The stored text is a Hebrew litany 'ודע כי הרוח הוא בחינת …' with invented verses like 'ורוח מלכות'. The image shows a full page of cursive Zohar Aramaic under the running head תרומה (folio 271), with no such repeating formula.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The OCR is a pure confabulation: a fluent, formulaic Hebrew text about 'ruaḥ' with fabricated scriptural tags, where the leaf is cursive Zohar Aramaic on Terumah. The translation faithfully passes the invention to readers. Contain this page, and suspect other pages read by the same flash-lite pass."
+  },
+  {
+    "book_id": "69a5f079b29703bc86eb5697", "slot": 206, "title": "Tiezerakan Patmutiwn (Universal History)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Stepanos Taronetsi's Universal History, but in a modern critical edition (see rights).",
+    "rights_flag": "The leaf is a digitally typeset modern critical edition: running head 'ՊԱՏՄՈՒԹԻՒՆ ՏԻԵԶԵՐԱԿԱՆ', page 697, numbered paragraphs (§114–121) and an apparatus with sigla A B C D E O T1 T2. It looks like the 21st-century Matenagirk Hayots corpus volume, not the 1885 edition the catalogue names. Likely in copyright.",
+    "structure_note": "313 page records vs pages_count 284. Printed page 697 on scan 89 also contradicts an 1885 stand-alone edition, so the catalogue identity (date/edition) is wrong (I7).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 89, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "զքշկապետն", "image": "զբժշկապետն", "problem": "'chief physician' misread; the translation then says 'royal master of the court'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "8 A թագաւորութիւն BD թագաւորութիւն", "image": "8 ABCDEO ձերոց", "problem": "note 8 copied from note 6 instead of read", "severity": "moderate", "class": "O12", "kind": "misread" },
+          { "ocr": "1 ABCD պաղատանդ", "image": "1 ABCDO պաղատանդ", "problem": "siglum dropped", "severity": "minor" },
+          { "ocr": "15 AC գեղից գեղից", "image": "15 AC գեղից գեօղից", "problem": "variant flattened", "severity": "minor" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "զանուանեալն Խոսրովնում եւ զքշկապետն արքունի", "english": "the one named Khosrov-shum and the royal master of the court", "problem": "the leaf says 'the royal chief physician'; the office is lost", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "footnotes 1–34", "english": "(absent)", "problem": "the critical apparatus is dropped from the translation without notice", "severity": "minor", "class": "T13", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Accurate OCR and a faithful translation of a clean page. The caveat is that the scan is a modern typeset critical edition, apparently not the 1885 edition the catalogue claims, so rights and identity need a check. Two small misreads (the 'chief physician', one apparatus note)."
+  },
+  {
+    "book_id": "69af12230092756351e4473e", "slot": 207, "title": "測量法義 (Methods of Surveying)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Celing fayi from the 海山仙館叢書 reprint (mid-19th c.), as the footer shows; the catalogue's 1608 is the work's date, not this print's.",
+    "rights_flag": null,
+    "structure_note": "Spreads, one per record; the backstep and repeats are likely from folio numerals on spreads.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 8, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<image-desc>… The vertex of the quadrant is point 甲 on the right … arc on the left contains points 戊 (top)…", "image": "己 is at the top, 戊 at the left end of the arc; 甲 is central", "problem": "diagram description slightly wrong", "severity": "minor", "class": "O14" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "權線", "english": "the plumb line (<term>quxian</term>)", "problem": "wrong pinyin (quanxian)", "severity": "minor", "class": "T10" }
+        ],
+        "other": [
+          { "note": "a literal <column-break/> tag sits mid-sentence in the English", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean transcription of the spread, with the interlinear Euclid references kept as glosses, and a faithful translation of the shadow-quadrant argument. Only minor slips (pinyin, a stray tag, diagram labels)."
+  },
+  {
+    "book_id": "69dfede38d34461cbe7f4db6", "slot": 208, "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "NDL scroll 源氏物語絵巻 (ん-98), a later copy of Genji text panels; this panel is the Azumaya chapter. 'published 1100' is the work's era, not the scroll's.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 17, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "さしとむるむくらやしけにあつまやのあまりほとふるあまはゝきかなゝ", "image": "さしとむるむくらやしけきあつまやのあまりほとふるあまそゝきかな", "problem": "the waka is misread at 'しけに' and 'あまはゝきかなゝ' (for 雨そそきかな)", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "同二日", "image": "not visible on this panel", "problem": "trailing line not on the leaf (possibly a label from elsewhere)", "severity": "minor" },
+          { "ocr": "如し□□□れにていかなる", "image": "the first column is cut at the right edge", "problem": "partial column; the gaps are marked, which is fine", "severity": "minor" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "…さのゝわたりこはへもあらんなとくちすさひたまて … さしとむるむくらやしけきあつまやの…", "english": "The edge of the fire-starter, / The edge of the mouth. … Thinking only of the path of the father. … The clear path of the ink, the fisherman", "problem": "the English is free verse-like invention with no relation to the transcription (Kaoru at the Azumaya house in the rain, the 'Sano no watari' allusion, the waka). Not a translation of this page", "severity": "serious", "class": "T7", "kind": "confabulation" }
+        ],
+        "other": [
+          { "note": "the summary ('introspective … reflection on … mysterious figures') describes the invented English, not the scene", "severity": "moderate", "class": "E1" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The English ('The edge of the fire-starter, / The edge of the mouth … the path of the father') has no basis in the stored Japanese or on the panel. The panel shows the Azumaya passage with Kaoru waiting in the rain and the waka さしとむるむぐらやしげきあづまやの.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The NDL Koten OCR of the cursive panel is roughly right, with misreads. The English is invented, impressionistic verse that translates nothing on the page, and the summary is built on it. Withhold the translation."
+  },
+  {
+    "book_id": "69ef2f8272c1376fdf2af8f6", "slot": 209, "title": "Die Propaedeutik der Araber im zehnten Jahrhundert (Ikhwan al-Safa, Quadrivium incl. Music)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Dieterici's 1865 German translation of the Ikhwān al-Ṣafāʾ propaedeutic epistles, as titled.",
+    "rights_flag": null,
+    "structure_note": "The book language field says 'Arabic', but this volume is Dieterici's German translation; the page is German (I7, catalogue fault).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 133, "right_page": "yes", "form": "print",
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Thau, Rohr, Elle, Faust, Finger", "english": "hair, reed, ell, fist, finger", "problem": "'Thau' is a rope (a surveyor's cord), not hair", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "[82]", "english": "<note>82</note>", "problem": "Arabic-text page reference turned into a note", "severity": "minor", "class": "O16" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Exact German OCR and a faithful English rendering of the passage on hearing, distance and instruments, with one wrong measure word ('hair' for Thau, rope). The book's language field should be German, not Arabic."
+  },
+  {
+    "book_id": "69a5eb5baa8e0e4092147282", "slot": 210, "title": "Acta Martyrum et Sanctorum, Tomus V", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Bedjan's Syriac Acta; nothing on this leaf contradicts it.",
+    "rights_flag": null,
+    "structure_note": "Only 12–20 of 723 pages translated; the book is served essentially untranslated. Not a defect of this page.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "form": "blank",
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 5, "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A blank leaf, correctly marked blank with no invented text."
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "book_id": "6abe86096a920ffd924d3c92", "slot": 132, "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉ (Derge Tengyur, vol. 9)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Delhi reprint of the Derge Tengyur, tantra-commentary section; this leaf is a Hevajra-cycle commentary (bodhyaṅgas mapped onto the mandala palace).",
+    "rights_flag": null,
+    "structure_note": "The reprint's own page number in the margin (161) is one higher than the record number (160). The text matches the leaf, so this is the reprint's numbering, not a misalignment. Counts are consistent (683 records; 682 with text and translation).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 160, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "གཞལ་ཡས་ཁང་གི་ནང་དུ་སྣ་ཚོགས་པདྨའི་སྟེང་དུ་བདུད་བཞི་རྣམས་ཀྱིས་ཉི་མ་མནན་པ་བལྟ་བར་བྱ་སྟེ", "english": "upon a multi-colored lotus, one should visualize the four demons being pressed down by the sun", "problem": "Agent and patient are swapped: the Tibetan has the sun [seat] pressed by or onto the four māras. The iconography is still recoverable from context.", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "དགྱེས་མཛད་རྡོ་རྗེ་ཚངས་པ་དང་ཁྱབ་འཇུག་དང་དབང་ཕྱུག་ཆེན་པོ་དང་ལྷའི་དབང་པོ་རྣམས་ (sentence continues on next leaf)", "english": "Hevajra ... is seated upon Brahma, Vishnu, Mahesvara, and Indra", "problem": "The verb 'is seated upon' is supplied for a sentence that runs onto the next leaf. Hevajra stands on these gods rather than sitting, and the summary itself says 'standing'.", "severity": "moderate", "class": "T5", "kind": "added_gloss" },
+          { "source": "ཆོས་རབ་ཏུ་རྣམ་པར་དག་པར་བསག་པ / ... རབ་ཏུ་རྣམ་པར་བསག་པ", "english": "right accumulation of the purity of phenomena / right accumulation of diligence", "problem": "The seven bodhyaṅga names are rendered as 'right accumulation of ...', which is literal and non-standard (dharma-pravicaya should be 'discernment of dharmas').", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The stored text is this leaf. The translation is faithful in substance. The weakness is the closing Hevajra sentence: the sun/māra relation is reversed, and 'seated upon' is completed from beyond the leaf."
+  },
+  {
+    "book_id": "6abeb11e896ea18127c82406", "slot": 133, "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། མ (Derge Tengyur, vol. 95)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur Prajñāpāramitā section; a sūtra commentary (Mañjuśrī dialogue on bodhi).",
+    "rights_flag": null,
+    "structure_note": "The margin page number is 92 against record 91. This is the reprint's numbering offset; the text matches the leaf. Counts are consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 91, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "སངས་རྒྱས་སམ། གཞན་གང་གིས་ཀྱང་མངོན་པར་རྫོགས་པར་རྟོགས་པའི་མཚན་ཉིད་བསྟན་ཟིན་པ་དང་། སྟོན་པར་གྱུར་པ་ལྟ་བུར་མངོན་པར་རྫོགས་པར་རྟོགས་སོ", "english": "neither a Buddha nor anyone else has already shown their defining characteristics to be fully and perfectly realized, nor do they fully and perfectly realize them in the manner of becoming a teacher", "problem": "The translation adds a 'neither ... nor' negation that the final clause (positive རྟོགས་སོ) does not carry. This is a doubtful reading of a hard sentence.", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "བར་གྱི་སྒྲས་དྲན་པ་གཟུང་ངོ", "english": "The word \"between\" ... should be understood as referring to mindfulness", "problem": "བར་གྱི་སྒྲ is the elliptical 'up to/etc.' that includes the omitted items; it is not 'between'. The same error recurs with 'in between'.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "འཐད་པ་གཞན་ཡང་དེ་ལྟ་ལགས་ཀྱིས་ཀྱང་", "english": "Even though there is another justification", "problem": "This is a concessive misreading of 'a further reason is given'.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The stored text is this leaf. The translation is mostly sound but mistranslates the commentary's 'bar gyi sgra' (ellipsis) device as 'between', and it adds a negation to one sentence."
+  },
+  {
+    "book_id": "6abe9b0d6a920ffd924d8b20", "slot": 134, "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕི (Derge Tengyur, vol. 45)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur tantra commentary; a commentary on a praise of the five families and their consorts.",
+    "rights_flag": null,
+    "structure_note": "The margin number is 302 against record 301, the reprint's numbering offset. 530 of 533 pages are translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 301, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "སྙོམས་པའི་དོན་(ཏེ,ཏོ)། །", "image": "a single reading on the block", "problem": "The e-text's variant apparatus '(ཏེ,ཏོ)' is left in the reader text.", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "དམིགས་པ་མེད་པའི་ཚུལ་ཡིན་པས་ནམ་མཁའ་རྡོ་རྗེའོ", "english": "he is the <term>Akashagarbha</term> <gloss>Space-Vajra</gloss>", "problem": "ནམ་མཁའ་རྡོ་རྗེ (kha-vajra, 'sky-vajra') is identified as the bodhisattva Ākāśagarbha (nam mkha'i snying po), a different figure. The summary repeats the error.", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "ཕ་རོལ་ཏུ་ཕྱིན་པའོ", "english": "he is the Perfection", "problem": "This should say 'he has gone beyond' (is transcendent); rendering it as a noun obscures the point.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The stored text is this leaf and the translation is faithful in structure. The weakness is that 'Space-Vajra' is glossed as Ākāśagarbha, a different figure, and that misidentification is repeated in the summary."
+  },
+  {
+    "book_id": "6abec470896ea18127c89f6a", "slot": 135, "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ནུ (Derge Tengyur, vol. 151)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur Vinaya section; procedure for appointing a monk to carry a dispute to another community.",
+    "rights_flag": null,
+    "structure_note": "The margin number is 132 against record 131, the reprint's offset. Counts are consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 131, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "དབུལ་བའི་{གོ་རིམས་,གོ་རིམ་}རྣམ་པར་གཞག་པ", "image": "one reading", "problem": "The e-text's variant braces are left in the reader text.", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "རྩོད་པ་སྦེད་པ (throughout)", "english": "concealer of the dispute / conceal the dispute", "problem": "The officer the page appoints conveys the dispute to another community for settlement, as the page itself goes on to describe. 'Conceal' gives the office the opposite sense on every occurrence, though the procedure stays readable.", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "(no source)", "english": "<note>referring to a formal legal procedure to prevent the escalation of a monastic conflict</note>", "problem": "The note is an unmarked model gloss built on the wrong sense of 'conceal'.", "severity": "minor", "class": "T10", "kind": "added_gloss" },
+          { "source": "དེས་གནས་བརྟན་དང་བཅས། སོ་སོར་ཐར་པ་དང་བཅས་པའི་དགེ་འདུན་ལ་སྔར་བྱུང་བ་བརྗོད་དེ", "english": "that person, together with the elders and the community associated with the Pratimoksha, shall relate the previous events", "problem": "The Tibetan means he relates the events TO a community that has elders and the prātimokṣa; it does not mean 'together with' the elders.", "severity": "minor", "kind": "mistranslation" },
+          { "source": "གནས་ཆེ་གེ་མོ", "english": "such-and-hers place", "problem": "Typo.", "severity": "minor" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The stored text is this leaf. The Vinaya procedure is followable, but the key office is mistranslated as 'concealer of the dispute' throughout, with an invented gloss to match. E-text variant braces show in the transcription."
+  },
+  {
+    "book_id": "6ac0bdbef427c9bb0692d885", "slot": 136, "title": "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཐ (Derge Kangyur, vol. 86)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Kangyur tantra section, red-ink Derge print (LoC copy); a tantra dialogue between Samantabhadra and the Tathāgatas.",
+    "rights_flag": null,
+    "structure_note": "Only 73 of 641 pages are translated. This is a partly-processed volume, not a structural fault. The transcription omits the leaf's opening yig-mgo, which is harmless.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 221, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "སྙིང་པོ་སྔགས་དང་ཕྱག་རྒྱ་དང་། །རིག་སྔགས་ཀྱང་ནི་ལེགས་པར་སྒྲུབ།", "english": "I shall properly achieve the heart-essence mantras, the mudras, and the knowledge-spells", "problem": "An invented first-person 'I shall' sits inside the Tathāgatas' request; the line is part of the question (how is it accomplished).", "severity": "minor", "kind": "mistranslation" },
+          { "source": "ཞུ་བའི་ཚིག་རྡོ་རྗེ་འདི་ཉིད་ཀྱི་སྐུ་དང་གསུང་དང་ཐུགས་རྡོ་རྗེ་རྣམས་ལས་རྣམ་པར་ཕྱུང་ངོ", "english": "From the vajra body, speech, and mind of this very vajra, he brought forth these words in response to the request", "problem": "The phrase order is loosened: 'this very vajra-word of the request' is the object brought forth. The meaning is close.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The stored text is this leaf (checked line by line against the red print) and the translation is faithful, with small slips in the verse request."
+  },
+  {
+    "book_id": "6abeb666896ea18127c854c5", "slot": 137, "title": "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཇི (Derge Tengyur, vol. 116)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur sūtra-commentary section; commentary on a sūtra's setting at Rājagṛha.",
+    "rights_flag": null,
+    "structure_note": "The margin number is 253 against record 252, the reprint's offset. Counts are consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 252, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "རྣམ་པ་འདི་ལྟ་བུ་#མ་གསུངས་ཏེ ... བཀྲོལ་#ཏེ ... ཅུང་ཟད་ཀྱང་#ཕུལ་བས", "image": "no such marks on the block", "problem": "About ten '#' editorial flags from the e-text are left in the reader text.", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "གཟིངས་བསྟོད་པ", "english": "praises it", "problem": "This means 'inspires/encourages' (samuttejana); 'praises' is loose.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The stored text is this leaf and the translation is faithful. The only blemish is the e-text '#' flags showing in the transcription."
+  },
+  {
+    "book_id": "6abead3a896ea18127c81226", "slot": 138, "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇུ (Derge Tengyur, vol. 68)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur tantra commentary; a structural outline of the worldly maṇḍalas (Four Great Kings, Lokapālas).",
+    "rights_flag": null,
+    "structure_note": "The margin number is 10 against record 9, the reprint's offset. Counts are consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "སློབ་དཔོན་གྱི་ལས་རྒྱལ་མཆོག་གི་རིམ་པ", "english": "the sequence of the supreme victory of the master's activities", "problem": "ལས་རྒྱལ་མཆོག is the technical samādhi karmarājāgrī ('supreme king of action'), the third of the three samādhis paired with sbyor ba dang po and dkyil 'khor rgyal mchog just before it. The rendering loses the term. The error occurs twice.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "གནོད་སྦྱིན་གྱི་རྒྱལ་པོ་ངལ་བསོ་པོས", "english": "the king of the yakshas, Vaishravana <note>literally: He Who Rests</note>", "problem": "The name is identified as Vaiśravaṇa (normally rnam thos sras), which is an unflagged guess.", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The stored text is this leaf and the translation follows the outline faithfully. The caveat is that the technical samādhi name 'las rgyal mchog' is rendered as 'supreme victory of the master's activities'."
+  },
+  {
+    "book_id": "6abe974b6a920ffd924d7dd6", "slot": 139, "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉི (Derge Tengyur, vol. 39)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur tantra commentary (Guhyasamāja-type bodhicitta verses of Amitābha and Amoghasiddhi).",
+    "rights_flag": null,
+    "structure_note": "The margin number is 32 against record 31, the reprint's offset. Counts are consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 31, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "མི་དམིགས་པའི་ཡེ་ཤེས་ཀྱི་ཚུལ་གྱིས", "english": "through the manner of non-conceptual primordial wisdom", "problem": "This means 'non-objectifying' rather than 'non-conceptual'.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "The translation opens with a model-written <meta> describing the text ('This text is a commentary from the Derge Tengyur ... particularly Amitabha and Amoghasiddhi') and ends with '<meta>text cuts off mid-sentence</meta>'. This is apparatus that is not on the leaf; it is harmless if the meta tag is hidden.", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The stored text is this leaf and the translation is faithful. The only issue is a model-written <meta> preface and tail note on the translation."
+  },
+  {
+    "book_id": "6abe9ef86a920ffd924d9fa4", "slot": 140, "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡི (Derge Tengyur, vol. 55)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge Tengyur tantra commentary; a maṇḍala ritual (hook, noose, chain, bell summoning the deities).",
+    "rights_flag": null,
+    "structure_note": "The margin number is 188 against record 187, the reprint's offset. 487 of 489 pages are translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 187, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5, "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "སེམས་དཔའ་ཐམས་ཅད", "english": "all the bodhisattvas", "problem": "This is 'all the sattvas (deities)'; 'bodhisattvas' is a slight narrowing.", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The stored text is this leaf and the translation of the hook/noose/chain/bell rite is faithful and readable."
+  }
+]

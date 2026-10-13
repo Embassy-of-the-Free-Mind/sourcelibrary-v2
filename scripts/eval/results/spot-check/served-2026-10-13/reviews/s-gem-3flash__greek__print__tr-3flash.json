@@ -1,0 +1,565 @@
+[
+ {
+  "book_id": "69e8b1a22ff2a8dc09e764f9",
+  "slot": 92,
+  "title": "Γεωγραφικά (Geographica)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Casaubon's 1587 commentary and castigations on Strabo; the page is the end of the Book XIV notes and the start of Book XV, as catalogued (display title).",
+  "rights_flag": null,
+  "structure_note": "22 printed backsteps / 26 repeats over 231 numbered pages; in a dense two-column commentary with 'PAG. 470'-style lemma references this is most likely misread page numerals, not a splice. 186 of 249 pages translated.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 222,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "(order) 'Cyprum ita esse circumeundam…' placed first, then left- and right-column notes interleaved, ending with '…iis qui à Coryco Curium tendunt'",
+      "image": "Left column of the top half ends 'iis qui à Coryco Curium tendunt', and the right column continues 'Cyprum ita esse circumeundam…'",
+      "problem": "two-column reading order scrambled: the split sentence is broken and right-column notes (Βοόσουρα, Hierocepia, Σόλιοι…) are interleaved with left-column ones",
+      "severity": "moderate",
+      "class": "O11",
+      "kind": "layout"
+     },
+     {
+      "ocr": "every commentary note, including the whole body of the Book XV commentary, wrapped in <margin>",
+      "image": "main-column commentary text, not marginalia",
+      "problem": "body text mis-tagged as marginalia",
+      "severity": "moderate",
+      "class": "O12",
+      "kind": "layout"
+     },
+     {
+      "ocr": "Ἡ δὲ ἐκλειπομένη τῆς Ἀσίας ὅση τε ἐκτὸς τοῦ Ταύρου",
+      "image": "Α σελειπόμενα τῆς Ἀσίας ἐστὶ τὰ ἐκτὸς τοῦ Ταύρου (approx.)",
+      "problem": "Greek lemmata in cursive ligatured type are often normalised or rewritten toward a plausible phrase rather than read",
+      "severity": "moderate",
+      "class": "O8",
+      "kind": "misread"
+     },
+     {
+      "ocr": "Est πλείστοις inquit: sed non διαπλάσμα enim vocant",
+      "image": "Est ἁπλοῖς inquit: sed non διάπλουν. διάπλουν enim vocant (approx.)",
+      "problem": "Greek terms misread; the note's point (the word for a direct crossing) is lost",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "Plinio, Hierocopia",
+      "image": "Plinio, Hierocepia",
+      "problem": "Latin name misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "ἡ μηροτραφὴς δ' λέγεται) Imo μηρορραφὴς à poetis dicitur … Iouis femine editi",
+      "english": "or suitors as it is said) Rather suitors <note>original: \"mnēstēras\"</note> is said by the poets, and in Eustathius also … suitors is written",
+      "problem": "the note is about the epithet 'thigh-reared/thigh-sewn' of Dionysus (hence Pliny's 'born from the thigh of Jove'); the English turns it into 'suitors' and invents an 'original: mnēstēras' that is on neither the leaf nor the transcription",
+      "severity": "serious",
+      "class": "T10",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "καὶ Νεωρία) Ex Ptolemaeo & Diodoro suspicor legendum, Κερυνία. nam malè apud Diod. Κερυνία.",
+      "english": "It should be read as Carpasia according to Ptolemy and Diodorus; for it is incorrectly written as Keronie in Diodorus.",
+      "problem": "Casaubon's conjecture (Kerynia) is replaced by another Cypriot town name, Carpasia; a reader is told the wrong emendation",
+      "severity": "serious",
+      "class": "other:name-substituted",
+      "kind": "mistranslation"
+     },
+     {
+      "source": "Greek lemmata throughout (e.g. ἀκρατίδαν γοῦν; Ἄορνον δέ τινα πέτραν … Arrianus, Ἀλλὰ δὲ ἡ Ἄορνος …; ἡ δ' ἄνυδρον πολλήν) Arrianus κατάστικτον vocat)",
+      "english": "'PAGE 473. as if an uneducated life'; 'a crest with faithful defeat … But Arrian in his book … and the theft'; 'and Arrian calls it a constitution'",
+      "problem": "garbled Greek rendered as fluent but meaningless English with no mark of doubt; Arrian's quotation on Aornos is nonsense; 'PAG. 472' becomes 'PAGE 473'",
+      "severity": "serious",
+      "class": "T7",
+      "kind": "illegible_fill"
+     },
+     {
+      "source": "Diodorus vero Meropidem simpliciter vocat lib. XIII.",
+      "english": "Diodorus, however, simply calls it Meropis in Book 4",
+      "problem": "book number wrong (XIII → 4)",
+      "severity": "moderate",
+      "class": "O7",
+      "kind": "mistranslation"
+     },
+     {
+      "source": "scripserunt VI M. oppidorum fuisse nullum Co minus, gentium IX",
+      "english": "there was no town smaller than five thousand, and of nine nations",
+      "problem": "Pliny's '5,000 towns, none smaller than Cos' garbled",
+      "severity": "moderate",
+      "kind": "mistranslation"
+     },
+     {
+      "source": "καὶ ἡ Ἱεροκηπία) Plinio, Hierocopia.",
+      "english": "and Hierapytna) In Pliny, this is Hierocepia",
+      "problem": "lemma rendered as a different place (Hierapytna, in Crete)",
+      "severity": "moderate",
+      "kind": "mistranslation"
+     }
+    ],
+    "other": [
+     {
+      "note": "<meta>continues from previous page: At the mountain pass of Amanus</meta> heads the English; nothing on this leaf supports it",
+      "severity": "minor",
+      "class": "T15"
+     }
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "The Latin of Casaubon's notes is read well and the English of the long prose notes is sound, but the Greek lemmata are garbled and the English fills them with confident nonsense, including an invented 'suitors / mnēstēras' gloss and a wrong emendation (Carpasia for Kerynia). Not fit to show a philologist."
+ },
+ {
+  "book_id": "6a3f023d97e91e1768f669a9",
+  "slot": 93,
+  "title": "Platonis Dialogi secundum Thrasylli tetralogias dispositi",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Hermann's Teubner Plato vol. 6 (appendix with Alcinous' Didaskalikos); the page is Alcinous ch. 25, as the running head says.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 225,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "ἀγέννητον",
+      "image": "ἀγένητον",
+      "problem": "spelling normalised",
+      "severity": "minor",
+      "class": "O8",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show",
+  "book_verdict": "Clean: the transcription matches the 1887 page line for line and the English is faithful."
+ },
+ {
+  "book_id": "69c7f259f08a1a5ab805c04e",
+  "slot": 94,
+  "title": "[Greek Enchiridion]",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Hephaestion's Enchiridion on metre (Paris 1553); the page is the section on choriambic metre.",
+  "rights_flag": null,
+  "structure_note": "206 page records against pages_count 138 (and 204 vs 132 translated): the book has been split into single pages ('sp' images) but the book-level counts were not updated. Backsteps 62 / repeats 85 likely reflect the split (two records per original spread) plus misread numerals.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 35,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin><unclear>ζφ.</unclear><unclear>δυ-</unclear>…</margin>",
+      "image": "line-ends of the facing page visible at the left edge",
+      "problem": "neighbour strip read as marginalia (and carried into the English)",
+      "severity": "minor",
+      "class": "I4",
+      "kind": "layout"
+     },
+     {
+      "ocr": "Εὑρήσεται οὖν πρὸς τῇ τελείᾳ ἀμφὸς καὶ μία συλλαβή",
+      "image": "Εὑρήσεται οὖν πρὸς τῷ τελείῳ ἴαμβος καὶ μία συλλαβή",
+      "problem": "'iamb' misread as 'ἀμφὸς'; the English then says 'with a complete amphibrach'",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "ἀλλὰ τὰ τοιαῦτα συνεχέστερά ἐστι, ἀφανέστερά ἐστι",
+      "image": "ἀλλὰ τὰ ταῦτα συνεχέστερα εἰ(?), ἀπρεπέστερά ἐστι",
+      "problem": "'more unseemly' read as 'less distinct'",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "Ἰσοπνόοι | μείρακες",
+      "image": "Ἰσοπόνοι | μείρακες",
+      "problem": "example verse misread",
+      "severity": "moderate",
+      "kind": "misread"
+     },
+     {
+      "ocr": "metrical marks rendered as '-> ˘ ˘ - ˘ ˘ - … <-' lines",
+      "image": "quantity marks printed above the verse words",
+      "problem": "marks detached from their syllables and simplified",
+      "severity": "minor",
+      "class": "O14"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "πρὸς τῇ τελείᾳ ἀμφὸς",
+      "english": "with a complete amphibrach",
+      "problem": "follows the OCR misread; the source speaks of an iamb",
+      "severity": "moderate",
+      "kind": "misread"
+     },
+     {
+      "source": "ἀφανέστερά ἐστι",
+      "english": "less distinct",
+      "problem": "follows the misread (should be 'more unseemly')",
+      "severity": "moderate",
+      "kind": "misread"
+     }
+    ],
+    "other": [
+     {
+      "note": "'-> ˘ ˘ - … <-' arrow markup and a <margin><unclear>…</unclear></margin> block of facing-page fragments appear in the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "Right page, mostly well read, but several meaning-changing misreads in the metrical terms (ἀμφὸς for ἴαμβος, ἀφανέστερα for ἀπρεπέστερα) are carried into the English, and arrow markup and facing-page fragments show in the reader text. The book's page counts are stale after splitting."
+ },
+ {
+  "book_id": "69c72e586a0f3d112faf71e3",
+  "slot": 95,
+  "title": "[Greek: Peri Bion, Dogmaton kai apophthegmaton ton en philosophia eudokimesanton: biblia deka] De vitis, decretis & responsis celebrium philosophorum libri decem",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Froben's 1533 Basel Greek editio princeps of Diogenes Laertius; the page is Book X, the Letter to Menoeceus.",
+  "rights_flag": null,
+  "structure_note": "899 page records against pages_count 600 (874 vs 568 translated): split into single pages but the book counts are stale.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 577,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "τοῦτο μακαρίως ζῆν ἐστὶ τέλος",
+      "image": "τοῦ μακαρίως ζῆν ἐστὶ τέλος",
+      "problem": "small slip",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "καὶ τὴν τοῦ σώματος ἀταραξίαν",
+      "english": "and the tranquility (ataraxia) of the soul",
+      "problem": "this 1533 print (and the transcription) reads 'of the body'; the English silently substitutes the familiar 'of the soul' from the received text",
+      "severity": "moderate",
+      "class": "O3",
+      "kind": "recitation"
+     },
+     {
+      "source": "ὅταν ἐκ τοῦ μὴ παρεῖναι τὴν ἡδονὴν ἀλγῶμεν. οὐκέτι τῆς ἡδονῆς δεόμεθα.",
+      "english": "…when we feel pain because pleasure is absent. When we do not feel pain, we no longer need pleasure.",
+      "problem": "the clause 'When we do not feel pain' is not on this leaf (it is missing in this edition); the English supplies it from the received text without marking it",
+      "severity": "moderate",
+      "class": "O3",
+      "kind": "recitation"
+     }
+    ],
+    "other": [],
+    "not_this_leaf": true,
+    "not_this_leaf_evidence": "The English 'When we do not feel pain, we no longer need pleasure' and 'tranquility of the soul' come from the standard text of the Letter to Menoeceus; the leaf reads 'ἀλγῶμεν. οὐκέτι τῆς ἡδονῆς δεόμεθα' with no 'ὅταν δὲ μὴ ἀλγῶμεν', and 'τοῦ σώματος ἀταραξίαν'. Small and in the right direction, but not this edition's words.",
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "Transcription is excellent and the English reads well, but the translation quietly follows the received text of Epicurus where this 1533 print differs (adds a missing clause, 'soul' for the printed 'body'); fine for a general reader, misleading for anyone studying this edition."
+ },
+ {
+  "book_id": "69b00996c42435fcd0cf9399",
+  "slot": 96,
+  "title": "Claudii Galeni Opera Omnia, Vol. 14",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Kühn's Galen vol. 14; the page is De theriaca ad Pisonem ch. 10, Greek with Latin version.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 252,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Invented heading '## ON THE BOOK OF THERIAC' (the running head is only ΓΑΛΗΝΟΥ ΠΡΟΣ ΠΙΣΩΝΑ) and a <meta> continuity line about 'the gecko and amphisbaena' that this leaf does not support",
+      "severity": "minor",
+      "class": "T15"
+     }
+    ],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show",
+  "book_verdict": "Accurate Greek and Latin transcription and a faithful English version of the Greek; only an added heading and continuity note."
+ },
+ {
+  "book_id": "6953cc3677f38f6761be156e",
+  "slot": 97,
+  "title": "Fragmenta Herculanensia - Herculaneum Papyri Catalogue with Facsimiles",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Walter Scott's Fragmenta Herculanensia (1885); the page is a facsimile drawing of Papyrus 157-152.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 172,
+    "right_page": "yes",
+    "form": "plate",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ΑΓΑΘΩΝ ΠΕΡΙ ΤΩΝ ΤΟΙΟΥΤΩΝ",
+      "image": "ΑΓΑΘΩΝ ΠΕΡΙ ΤΑ[..]Τ ΤΩΝ ΤΟΙΟΥΤΩΝ",
+      "problem": "a few letters of the facsimile skipped or regularised",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "(nothing on this leaf)",
+      "english": "# HERCULANEUM FRAGMENTS. Lines 2—7: There is a blank space near the beginning of these lines covered by a layered fragment … 4. beginning: Papyrus reads ΚΑΓ : Naples reads ΚΑΙ … 34. beginning: Papyrus same as Oxford facsimile.",
+      "problem": "a full block of textual notes (line-by-line Papyrus vs Naples readings) is appended to the English; the leaf is only the facsimile drawing with no notes at all",
+      "severity": "serious",
+      "class": "T5",
+      "kind": "carry_over"
+     },
+     {
+      "source": "ΟCΟCΑ ΚΥΜΑΤΑ ΤΩΙC...ΝΙΩΤΗ ΕΠΕCΕΝ",
+      "english": "as many waves as fell upon the survivor of the flood <note>original: Deucalionite …</note>",
+      "problem": "a lacuna filled with a confident restoration and an explanatory note, unmarked",
+      "severity": "moderate",
+      "class": "T7",
+      "kind": "illegible_fill"
+     }
+    ],
+    "other": [
+     {
+      "note": "<meta> continuity note asserts what the previous page discussed ('Flood of Deucalion' etc.); unverifiable here",
+      "severity": "minor",
+      "class": "T15"
+     }
+    ],
+    "not_this_leaf": true,
+    "not_this_leaf_evidence": "The English ends with '# HERCULANEUM FRAGMENTS. Lines 2—7: … Papyrus reads ΚΑΓ : Naples reads ΚΑΙ … 32. … ΚΟΛΗC : not, as Naples reads, ΧΟΛΗC'. The image shows only the drawing of Papyrus 152 with its labels 'Pap. 152' and 'Ox. p. 15'; there are no notes on the leaf (they belong to a neighbouring page).",
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "The facsimile letters are copied well, but the English carries a whole page of textual notes that are not on this leaf, presented as if they were."
+ },
+ {
+  "book_id": "69942bfeb2f6748db4abc97f",
+  "slot": 98,
+  "title": "Epistolae (Greek-Latin)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Synesius' Letters in a Greek-Latin edition (1605); this page is the Latin version of a letter about the murder of Aemilius.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 129,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "fuaferunt … fententiam … poffum … Hefiodus",
+      "image": "ſuaſerunt … ſententiam … poſſum … Heſiodus (long s)",
+      "problem": "long s transcribed as f throughout, making Latin words wrong in the reader text",
+      "severity": "moderate",
+      "class": "O8",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "Right page and a faithful English, but the transcription writes long s as f throughout (fuaferunt, poffum), which looks wrong to any Latin reader."
+ },
+ {
+  "book_id": "6a357f4b5307b013ee58472d",
+  "slot": 99,
+  "title": "Opera (Epistulae)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Foerster's Teubner Libanius, Epistulae; the page is a letter on behalf of Lucianus with full critical apparatus.",
+  "rights_flag": null,
+  "structure_note": "Only 523 of 778 pages have OCR (509 translated): about a third of the volume is untranscribed.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 260,
+    "right_page": "yes",
+    "form": "print",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "critical apparatus wrapped in <margin>",
+      "image": "apparatus at the foot of the page",
+      "problem": "apparatus tagged as marginalia",
+      "severity": "minor",
+      "class": "O12",
+      "kind": "layout"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "full apparatus (variants for ὅτ' ἂν, ἥξῃ, οἷπερ, γε, πότερον, ἀνελεῖν, ἐπιτείνειν …)",
+      "english": "<note>Critical apparatus: Notes on various manuscript readings for the words \"find,\" \"pardon,\" and \"extend.\"</note>",
+      "problem": "apparatus reduced to a one-line description that is partly wrong (no variant on 'pardon')",
+      "severity": "minor",
+      "class": "T13",
+      "kind": "omission"
+     }
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show",
+  "book_verdict": "Excellent transcription and a faithful translation of the letter; the apparatus is only summarised in the English."
+ },
+ {
+  "book_id": "699439cd6879ff0184cb9235",
+  "slot": 100,
+  "title": "Philosophical Works",
+  "tradition": null,
+  "shelf_fit": "doubtful",
+  "shelf_note": "Catalogued as Psellos, 'Philosophical Works', date unknown, but this leaf is the crow-and-mouse chapter of Stephanites and Ichnelates (the Greek Kalila wa-Dimna), in a manuscript. It may be a miscellany that includes Psellos; the title doesn't say so.",
+  "rights_flag": null,
+  "structure_note": "The image is an unsplit two-page manuscript opening (foliated 75 on the right) while the record says page 71; 32 backsteps in 107 numbered pages fits a mix of folio numbers and openings. The book is a Greek manuscript, not print.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 79,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "εἴπερ πέρδιξ ἐπίσμα, μηδέν τι μάσον καταντήσας",
+      "image": "εἴπερ πρότερ(ον) λύσεις με, πρὸ τῆς ἀπὸ τούτων καταντήσεως (approx.)",
+      "problem": "the word 'partridge' (πέρδιξ) is not on the leaf; the line is rewritten",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "λυθεῖσα δὲ ἡ πέρδιξ ἀπῆλθεν",
+      "image": "καὶ λυθεῖσαι ἀπηλλάγησαν",
+      "problem": "'partridge' invented a second time (the freed birds, plural)",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "ὁ δὲ εἶπε πρὸς εἶ",
+      "image": "(ὁ δὲ) εἶπε· τίς εἶ, φίλτατε",
+      "problem": "exchange misread",
+      "severity": "moderate",
+      "kind": "misread"
+     },
+     {
+      "ocr": "δεῖ γὰρ τὸν μὲν μῦν γῆ, ταῦ δὲ ἀεροπορίαν κτεῖν; οὐδὲ ἴσω σε κέρομμε; δίγγα· ὦ αὐτὲ ριφι κἀκειο λάμπων",
+      "image": "legible minuscule (e.g. 'ἐξ αὐτῆς ἡ … ὡς ἡ τοῦ λέοντος καὶ τοῦ ἐλέφαντος')",
+      "problem": "large parts of both pages are garbled non-words",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "<meta>Catchword on the right page: στρ.</meta>",
+      "image": "the right page ends '… ὁμοειδεῖς … σοι', no catchword",
+      "problem": "invented catchword",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "πέρδιξ (OCR misread)",
+      "english": "partridge <note>While the standard version of this fable features a Ringdove, this manuscript uses the word for partridge.</note>",
+      "problem": "an invented manuscript fact: the note tells the reader this manuscript says 'partridge', when the word is an OCR invention",
+      "severity": "serious",
+      "class": "T10",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "δίγγα· ὦ αὐτὲ ριφι κἀκειο λάμπων ἡ τοῦ λέοντος ἢ τοῦ ἐλέφαντος",
+      "english": "\"Dingga! O you who shines like a lion or an elephant!\"",
+      "problem": "fluent English built on garbled OCR, with no mark of doubt; the source contrasts natural enmities (lion/elephant, mouse/weasel)",
+      "severity": "serious",
+      "class": "T7",
+      "kind": "illegible_fill"
+     },
+     {
+      "source": "πῶς γὰρ ὕδωρ κἂν τῷ πυρὶ θερμανθῇ, ἀλλ' οὐ τὴν οἰκείαν φύσιν ἀποβάλλει",
+      "english": "how can water, even if heated by fire, not eventually lose its [borrowed] nature?",
+      "problem": "sense reversed: water heated by fire does NOT lose its own nature (and still puts the fire out)",
+      "severity": "moderate",
+      "class": "T8",
+      "kind": "mistranslation"
+     }
+    ],
+    "other": [
+     {
+      "note": "Spread not split: two manuscript pages in one image, served as one 'page 71' with an invented '### Page 71' heading",
+      "severity": "moderate",
+      "class": "I3"
+     }
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "Right opening, but the minuscule is read badly: 'partridge' is invented twice and the English adds a note claiming the manuscript says partridge; much of the rest is fluent English over garbled Greek. The catalogue (Psellos, Philosophical Works) doesn't match the Stephanites and Ichnelates text on this leaf."
+ }
+]

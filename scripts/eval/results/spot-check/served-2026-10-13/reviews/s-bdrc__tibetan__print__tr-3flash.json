@@ -1,0 +1,236 @@
+[
+  {
+    "book_id": "69e7ab175f1a22ab19a92bbc", "slot": 42, "title": "Thadrak Kanjur gZungs 'dus E", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Dhāraṇī collection (Avalokiteśvara dhāraṇīs) from a Kanjur gZungs 'dus volume; matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "The image is one EAP photograph of two pecha folios. The transcription keeps them apart with <leaf-break/>. The top folio ends 'ཞག་བདུན་གྱིས་' and the bottom one begins 'ཕྱག་བཞི་པ', so the two sides do not run on; that is how the photograph pairs sides, not a splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 287, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སྤྱན་རས་གཟིགས་དབང་ཕྱུག་གི་མ་ཞེས་བྱ་བའི", "image": "…དབང་ཕྱུག་གི་ཡུམ་ཞེས་བྱ་བའི (as in the parallel phrase two lines below)", "problem": "'yum' shortened to 'ma'; the sense survives", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "ཨ་ལྷ་མོ་དྲུག་མ་དང་། ཨ་བ་ནོར་གུ་རིན་པོ་ཆེས་བརྟེན་པ", "image": "cursive bottom folio line 2; not legible at this resolution, but the stored string reads as garbled", "problem": "probable misread in the iconographic description", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "ཨ་བ་ནོར་གུ་རིན་པོ་ཆེས་བརྟེན་པ", "english": "Supported by the six goddesses and the jewel <term>Avanorgu</term>", "problem": "turns a garbled OCR string into a proper noun with no doubt marked", "severity": "moderate", "class": "T7", "kind": "illegible_fill" }
+        ],
+        "other": [
+          { "note": "The translation opens with '<meta>continues from previous page</meta>'. It is a continuity tag; whether readers see it depends on the renderer.", "severity": "minor", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Both folios are transcribed in full and in order. The dhāraṇī, its benefits and the colophon are translated faithfully. One garbled phrase in the iconography is rendered as a confident name ('Avanorgu')."
+  },
+  {
+    "book_id": "69e7614bcc48e59ad74eef64", "slot": 43, "title": "Nor rgyam dbang skor", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Empowerment cycle; the colophon names Padma Gling pa (Pema Lingpa) treasure, in keeping with a Gangtey (Pema Lingpa tradition) collection.",
+    "rights_flag": null,
+    "structure_note": "Only 65 of 130 pages are counted as OCR'd in the book field, but structure shows 130 with OCR; 61 translated. Two printed backsteps and one repeat come from 6 printed numbers only; probably misread marginal numerals. The image holds three folios in one photograph.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སློབ་བུ་རྩུབས་ཉལ་ཁར་མགོ་ཁྱབ་ཁ་ནུབ༔", "image": "middle folio too small to read at 1536 px; the sense requires 'mgo byang' (head to the north)", "problem": "probable misread 'byang' → 'khyab'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "middle folio: interlinear red annotations", "image": "the middle folio carries many lines of small red interlinear writing", "problem": "it cannot be told at this resolution whether the red interlinear notes are read or dropped; the stored text reads as one continuous main text", "severity": "moderate", "class": "O12", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "མགོ་ཁྱབ་ཁ་ནུབ", "english": "the head is covered and pointed west", "problem": "carries the probable misread (head to the north, face to the west) into the English", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "ཁབ་སྟོང་གྲོག་སྟོང་འགྲིམ་པ", "english": "wandering through empty needles or empty anthills", "problem": "a literal reading that makes little sense", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "low"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "All three folios are the right ones: the first lines and the Pema Lingpa colophon match the image. The image is only 1536 px wide, too small to check the middle folio's heavy red interlinear annotation. The translation renders the abbreviated refrains as ellipses, which is reasonable."
+  },
+  {
+    "book_id": "69e789a84a6785cfd60d2ce8", "slot": 44, "title": "mkha 'gro seng ge gdong ma'i lo rgyus sgrub mchod rjes gnang las thsogs nges par bkod pa", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Siṃhamukhā (seng ge gdong ma) empowerment and activity rites, as titled.",
+    "rights_flag": null,
+    "structure_note": "6 page records, all with OCR, but only 3 translated. The image is three folios in one photograph.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཁྱི་བརྒྱ་འུའི་བས་བུ་མོ་གཙང་མས་སྨྱོས", "image": "final line of the bottom folio, too small to verify", "problem": "string looks corrupt (likely 'khyi rgya'u'i bal')", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "༄༅། །མཛོད།།", "english": "Perform!", "problem": "the closing word of the previous rite is rendered as a stand-alone command", "severity": "minor", "kind": "mistranslation" },
+          { "source": "འཁྲུམ་གཅོད་ན", "english": "To stop diarrhea", "problem": "a doubtful identification of a disease name, with no mark of doubt", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A clean read of three folios of empowerment and protective-rite instructions. The opening lines of each folio match the image, and the translation follows the Tibetan closely. Only a few disease and ingredient terms are doubtful."
+  },
+  {
+    "book_id": "69e77a1b0fc6fc955e35dca3", "slot": 45, "title": "Tshe khrid rdo rje phreng ba'i skor (EAP039-1-4-160)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "These folios are a narrative of King Trisong Detsen and the Mal-gro nāga at Samye, not a longevity instruction. A bound miscellany under the cycle's title is plausible, so not called wrong.",
+    "rights_flag": null,
+    "structure_note": "196 pages with OCR but only 57 translated. One backstep comes from just 3 printed numbers; probably a misread numeral. The page's narrative content may be a separate text bound in the volume.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 159, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "སྣ་མཐོའ་བཅད་དེ", "english": "They cut [the top of] their noses <note>a traditional form of oath-taking</note>", "problem": "the phrase is taken literally, and a note is added to justify it", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "low"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Three folios of dbu med (cursive) script. The opening 'ལ་བཀྲིས་པ' and the onomatopoeic run on the third folio ('ཚ་ཙག་ཙག… སྲོ་བྱེར་བྱེར') match the image's layout, but the small cursive could not be checked word by word. The translation is fluent and faithful to the transcription."
+  },
+  {
+    "book_id": "69e7ab145f1a22ab19a9287b", "slot": 46, "title": "Thadrak Kanjur mDo sde AM", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Subhadra episode from the Mahāparinirvāṇa narrative; Kanjur sūtra section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 159, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཆོས་འདུལབ་གང་ལ་འཕགས་པའི་ལས་ཡན་ལག", "image": "…འཕགས་པའི་ལམ་ཡན་ལག…", "problem": "'lam' read 'las'; the translation corrects it", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "གལ་ཏེ་ཞུ་བ་ལུང་བསྟན་པའི་སླད་དུ་སྐབས་འབྱེད་པ་ལྟ་ན", "english": "if there is an opportunity to ask for a prophecy", "problem": "lung bstan here means answering questions, not a prophecy", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "འདི་ནི་ངའི་གཞན་མུ་སྟེགས་ཅན་ཀུན (sentence breaks off at the leaf end)", "english": "This is my last conversation with other heretical wanderers.", "problem": "the sentence is finished from the known sūtra ('last conversation') when the leaf breaks off; lookahead", "severity": "moderate", "class": "T5", "kind": "recitation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A sound transcription and translation of the Subhadra episode on both folios. One sentence that breaks off at the leaf end is finished from the known sūtra, and 'lung bstan' is rendered as 'prophecy'."
+  },
+  {
+    "book_id": "6a14e14d311a9edd4621ec4a", "slot": 47, "title": "Tshamdrak rNying rgyud A (EAP310-4-1-30)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Chapter 109 of a rTa mchog rol pa tantra (Hayagrīva), as befits an rNying rgyud volume.",
+    "rights_flag": null,
+    "structure_note": "364 pages with OCR, 259 translated. The image holds two folios; the stored text holds three leaf-blocks, the third of which is not in the photograph.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 105, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<leaf-break/> ༄༅། །ཉ྄ ཉ྄ ཉ྄ ཉ྄ ཉ྄ ཉ྄ ཐ྄ ཐ྄ ཐ྄… followed by ~30 lines of ྾྾྾྾ marks", "image": "The photograph shows only two folios. The top ends '…དེ་ཉིད་དོན་དང་ཕྲད་པའོ།།' and the bottom ends '…བཀའ་སྩལ་པ། །སྤྲུལ་སྐུ'. Below the bottom folio is bare grey backing; there is no third leaf, grid or diagram.", "problem": "a whole third 'leaf' of invented symbol rows with no basis in the image", "severity": "serious", "class": "O4", "kind": "confabulation" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "the invented ྾/ཉ/ཐ block", "english": "<note>This leaf consists of a complex arrangement of characters and symbols, likely a mantra grid or protective diagram…</note> *Nya nya nya… Tha tha tha…*", "problem": "the English presents an invented third leaf as a 'mantra grid or protective diagram' that does not exist", "severity": "serious", "class": "T10", "kind": "confabulation" },
+          { "source": "།གནས་པ་ལ།", "english": "Regarding the remaining:", "problem": "a fragment carried over from the previous leaf, given a guessed sense", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "After the second <leaf-break/>, the stored transcription has '༄༅། །ཉ྄ ཉ྄ ཉ྄ … ཐ྄ ཐ྄' and about 30 rows of '྾྾྾྾', which the English calls 'a mantra grid or protective diagram'. The photograph holds only two folios of running verse, with empty backing below; nothing on it corresponds to this block.",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The two real folios (the four-mudra sealing verses and the end of chapter 109 of the rTa mchog rol pa tantra) are transcribed and translated well. A third, invented 'leaf' of symbol rows is appended and presented in English as a mantra diagram. It is not on the photograph."
+  },
+  {
+    "book_id": "69e787024a6785cfd60c9bec", "slot": 48, "title": "rNying ma rgyud 'bum Ji", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Vajrakīla (rDo rje gzhon nu) root-tantra explanation, chapter 5; fits an rNying ma rgyud 'bum volume.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཀཽ་རི་བིན་དམར་ཞིང་བྱུག་སྔོ", "image": "bottom folio line 5, small; Gaurī's line probably reads otherwise ('dkar mo…')", "problem": "probable misread in the list of the eight Mātṛkās", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "ཀཽ་རི་བིན་དམར་ཞིང་བྱུག་སྔོ", "english": "Gauri, blue-black, smears the skin of a corpse", "problem": "a fluent rendering over a garbled line, with no mark of doubt", "severity": "minor", "class": "T7", "kind": "illegible_fill" },
+          { "source": "ཛ་ཏིས་འགུག་སེ་དང་གསང་པའི་མཆོག", "english": "Through the gathering of jati and the supreme secret", "problem": "obscure line rendered loosely", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Both folios are the right ones and read in order. The chapter colophon falls where the image shows the short last line. The translation is faithful except for some fluent guesses in the Mātṛkā list."
+  },
+  {
+    "book_id": "69e7961b80b52390feb18c44", "slot": 49, "title": "bde mchog bong zhal snyan brgyud kyi sngon 'gro'i zhal shes mkha' 'gro'i zhal lung (EAP105-2-3-57)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Vajrasattva practice within the preliminaries (sngon 'gro), consistent with the title.",
+    "rights_flag": null,
+    "structure_note": "32 page records: 25 with OCR, 10 translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 22, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "སྣའི་རྩེར༑མི་ཤིག་ཐིག་ལེ", "english": "At the tip of the nose, upon a sun and moon disk, is an indestructible bindu", "problem": "the line begins mid-phrase (carried over from the previous leaf) and the English presents it as a complete sentence", "severity": "minor", "class": "T6", "kind": "layout" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A sound read of a Vajrasattva purification passage across the two halves of the leaf. The four-powers structure ('power of the remedy', 'power of repentance') is rendered correctly."
+  },
+  {
+    "book_id": "69e789d04a6785cfd60d2e95", "slot": 50, "title": "tshe sgrub rdo rje phreng ba'i gsol 'debs dang las byang dgos 'dod kun 'byung", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Title folio and the first lineage-prayer folio of the named text.",
+    "rights_flag": null,
+    "structure_note": "Only 2 pages, both OCR'd and translated. The 'OGYEN CHOLING' purple stamp and the 'Ka 167' shelf mark are owner marks of the library, not a rights issue.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "(nothing between the title line and 'དཀྱིལ་འཁོར་དུ། ཁྱབ་བདག་རིགས་བརྒྱའི་བདག་ཉིད་ཅན།')", "image": "Line 1 of the text folio is a whole line of verse, beginning after ༄༅། with '…འཆར་བར྾ བཤད་སྒྲུབ་ཆོས་ཀྱི་…' and ending '…ཡེ་ཤེས་ལྷ་ཡི་'. Line 2 continues 'དཀྱིལ་འཁོར་དུ'.", "problem": "The first line of the prayer is dropped; the transcription starts mid-phrase at 'dkyil 'khor du', losing the opening invocation(s) of the lineage prayer.", "severity": "serious", "class": "O5", "kind": "omission" },
+          { "ocr": "ཆོ་སྒྲུབ་རྡོ་རྗེ་ཕྲེང་བའི་གསོལ་འདེབས", "image": "ཚེ་སྒྲུབ་རྡོ་རྗེ་ཕྲེང་བའི་གསོལ་འདེབས (title folio)", "problem": "'tshe' read 'cho' in the title; the translation still says 'Longevity'", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "repeated ྾ refrain-abbreviation marks (e.g. 'འགྱུར་མེད་རྡོ་རྗེར྾ ཟད་སར་འཁྱོལ་བར྾')", "english": "Unchanging Vajra <unclear>...</unclear> to reach the state of exhaustion <unclear>...</unclear>", "problem": "the ྾ mark means 'repeat the refrain (gsol ba 'debs / byin gyis rlobs)', but the English marks every one as an illegible gap, so the prayer reads as damaged", "severity": "moderate", "class": "T7", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "About a dozen <unclear>...</unclear> tags sit in the English; on a two-page prayer they read as damage the leaf does not have", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The right leaf: the title folio and the first folio of the lineage prayer. The transcription silently drops the prayer's first line, and the English marks each refrain abbreviation (྾) as an illegible gap ('<unclear>...</unclear>'). A reader gets an incomplete prayer that looks damaged."
+  }
+]
