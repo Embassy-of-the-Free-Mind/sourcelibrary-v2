@@ -52,7 +52,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.10.0';
+const SERVER_VERSION = '4.11.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1212,6 +1212,12 @@ async function proposeCollection(args: Record<string, unknown>) {
 const SHIFT_VERDICTS = getRatingOptions('translation-check').map((r) => r.rating);
 const clipStr = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
 
+/** A shift's evidence is weighed by the model that produced it, and MCP calls carry no model
+ *  name, so the assistant must state its own (#6418). The first real run sent none. */
+const MODEL_FIELD_HELP =
+  'Your own model name and version, copied exactly as your instructions or system prompt give it, and ' +
+  'whether extended thinking is on. Write "unknown" rather than guess; a wrong name is worse than none.';
+
 /** Steps for a model-operated book run, returned with every page so a long chat
  *  never loses them. The volunteer donates their Claude; the person runs it. */
 const BOOK_RUN_STEPS =
@@ -1331,7 +1337,8 @@ async function submitPageReview(args: Record<string, unknown>) {
       first_verdict: asVerdict(args.first_verdict),
       assistant_verdict: asVerdict(args.assistant_verdict),
       assistant_findings: findings,
-      assistant_model: clipStr(args.assistant_model, 80),
+      assistant_model: clipStr(args.assistant_model, 80) ?? 'unreported',
+      client: clipStr(args._client_user_agent, 200),
       reader_languages: clipStr(args.reader_languages, 200),
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
     },
@@ -1350,7 +1357,8 @@ async function proposeCorrection(args: Record<string, unknown>) {
     volunteer_id: args.volunteer_code,
     volunteer_label: clipStr(args.name, 80),
     drafted_by: args.drafted_by,
-    assistant_model: clipStr(args.assistant_model, 80),
+    assistant_model: clipStr(args.assistant_model, 80) ?? 'unreported',
+    client: clipStr(args._client_user_agent, 200),
     note: clipStr(args.note, 2000),
     shift_id: clipStr(args.shift_id, 64),
   }) as Record<string, unknown>;
@@ -1770,12 +1778,12 @@ const TOOLS: Tool[] = [
           },
         },
         reader_languages: { type: 'string', description: 'Languages the user says they read, if they said.' },
-        assistant_model: { type: 'string', description: 'Your model name, if known.' },
+        assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
         shift_id: { type: 'string', description: 'shift_id (blind check only)' },
         name: { type: 'string', description: 'How the user wants to be credited (optional).' },
       },
-      required: ['item_id', 'volunteer_code', 'verdict'],
+      required: ['item_id', 'volunteer_code', 'verdict', 'assistant_model'],
     },
   },
   {
@@ -1805,11 +1813,11 @@ const TOOLS: Tool[] = [
         volunteer_code: { type: 'string' },
         drafted_by: { type: 'string', enum: ['assistant', 'volunteer', 'assistant_accepted', 'mixed'] },
         note: { type: 'string', description: 'Anything the second reader should know (optional)' },
-        assistant_model: { type: 'string', description: 'Your model name, if known' },
+        assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         shift_id: { type: 'string' },
         name: { type: 'string', description: 'How the user wants to be credited (optional)' },
       },
-      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by'],
+      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by', 'assistant_model'],
     },
   },
   {
@@ -2255,7 +2263,12 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         }
       }
 
-      const result = await handleToolCall(name, argsObj, toolOpts);
+      // Shift writes record which client sent them (claude.ai, Desktop, Claude Code), next to
+      // the model the assistant reports for itself: MCP calls carry no model name (#6418).
+      const callArgs = name === 'submit_page_review' || name === 'propose_correction'
+        ? { ...argsObj, _client_user_agent: reqContext.userAgent }
+        : argsObj;
+      const result = await handleToolCall(name, callArgs, toolOpts);
       // Record pages served under the REAL caller identity so the budget
       // above has something to sum. Fire-and-forget, like all usage logging.
       if (PAGE_BUDGET_TOOLS.has(name)) {
