@@ -1,0 +1,692 @@
+{
+  "_comment": [
+    "The first press in the Americas (#6559): Mexico City imprints, Juan Pablos 1539 onward, from the John Carter Brown Library's Mexican incunabula on IA.",
+    "PRODUCED BY: enumerate-dedupe-source.ts --ia-collection jcbmexicoincunables (87 NEW, 2026-10-11), then hand selection: every item to 1601, one copy per edition, plus five later landmarks (Hernández 1615, Alemán 1609, Bramón 1620, Huehuetlahtolli 1601, Echegoyan 1603). Post-1601 sermons and ephemera skipped.",
+    "language = first MARC language code of the edition (language-fields.md); languages[] when bilingual. MARC cai/nai for Michoacán items = Purépecha."
+  ],
+  "books": [
+    {
+      "ia": "manualdeadultos00cabr",
+      "region": "new-world-press",
+      "title": "[Manual de adultos]",
+      "author": "Anonymous",
+      "language": "Spanish",
+      "published": "1540",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1540. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Latin"
+      ]
+    },
+    {
+      "ia": "dotrinachristian00crdo",
+      "region": "new-world-press",
+      "title": "Dotrina [christ]iana para instrucion et informacion de los indios:: por manera de hystoria",
+      "author": "Pedro de Córdoba",
+      "language": "Spanish",
+      "published": "1544",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1544. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "dotrinabreuemuyp00zumr",
+      "region": "new-world-press",
+      "title": "Dotrina breue muy prouechosa delas cosas que pertenecen ala fe catholica y a nuestra cristiandad en estilo llano para comun inteligencia",
+      "author": "Juan de Zumárraga",
+      "language": "Spanish",
+      "published": "1544",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1544. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "esteesvncompendi00deny",
+      "region": "new-world-press",
+      "title": "Este es vn compendio breue que tracta dela manera de como se han de hazer las processiones",
+      "author": "le Chartreux Denys",
+      "language": "Spanish",
+      "published": "1544",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1544. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "tripartitodelchr00gers",
+      "region": "new-world-press",
+      "title": "Tripartito del christianissimo y consolatorio doctor Juan Gerson de doctrina christiana: a qualquiera muy prouechosa",
+      "author": "Jean Gerson",
+      "language": "Spanish",
+      "published": "1544",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1544. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "doctrinacristian00pabl",
+      "region": "new-world-press",
+      "title": "Doctrina cristiana:: mas cierta y verdadera para gente sin erudicion y letras: en que se contiene el catecismo o informacion para indios con todo lo principal y necessario que el [christ]iano deue sab",
+      "author": "Anonymous",
+      "language": "Spanish",
+      "published": "1546",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1546. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "reglachristianab00pabl",
+      "region": "new-world-press",
+      "title": "Regla christiana breue:: para ordenar la vida y tipo del [crist]iano que se quiere saluar y tener su alma dispuesta: para que Jesu [Crist]o more en ella",
+      "author": "Anonymous",
+      "language": "Spanish",
+      "published": "1547",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1547. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "doctrinacristian00gant",
+      "region": "new-world-press",
+      "title": "[Doctrina cristiana en lengua mexicana.]",
+      "author": "Pedro de Gante",
+      "language": "Nahuatl",
+      "published": "1548",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1548. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "copilacionbreued00bona",
+      "region": "new-world-press",
+      "title": "Copilacion breue de vn tratado de sant Buenauentura que se llama: Mistica theologia",
+      "author": "Bonaventure",
+      "language": "Spanish",
+      "published": "1549",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1549. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "doctrinachristia00pabl",
+      "region": "new-world-press",
+      "title": "Doctrina christiana en lengua española y mexicana:: hecha por los religiosos de la orden de Sancto Domingo",
+      "author": "Anonymous",
+      "language": "Spanish",
+      "published": "1550",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1550. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "dialecticaresolu00alon",
+      "region": "new-world-press",
+      "title": "Dialectica resolutio: cum textu Aristotelis",
+      "author": "Alonso de la Vera Cruz",
+      "language": "Latin",
+      "published": "1554",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1554. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "recognitiosummul00alon",
+      "region": "new-world-press",
+      "title": "Recognitio, summularum reuerendi Patris Illdephonsi a Vera Cruce Augustiniani",
+      "author": "Alonso de la Vera Cruz",
+      "language": "Latin",
+      "published": "1554",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1554. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "constitucionesde00cath",
+      "region": "new-world-press",
+      "title": "Constituciones del arçobispado y prouincia de la muy ynsigne y muy leal ciudad de Tenuxtitlan Mexico de la nueua España",
+      "author": "Catholic Church. Province of Mexico City (Mexico). Concilio Provincial (1st : 1555)",
+      "language": "Spanish",
+      "published": "1556",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1556. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "speculumconiugio00alon",
+      "region": "new-world-press",
+      "title": "Speculum coniugiorum",
+      "author": "Alonso de la Vera Cruz",
+      "language": "Latin",
+      "published": "1556",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1556. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "phisicaspeculati00alon",
+      "region": "new-world-press",
+      "title": "Phisica, speculatio",
+      "author": "Alonso de la Vera Cruz",
+      "language": "Latin",
+      "published": "1557",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1557. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "artedelalenguade00gilb",
+      "region": "new-world-press",
+      "title": "Arte de la lengua de Michuacan",
+      "author": "Maturino Gilberti",
+      "language": "Spanish",
+      "published": "1558",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1558. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "thesorospiritual00gilb",
+      "region": "new-world-press",
+      "title": "Thesoro spiritual en lengua de Mechuacan,: en el qual se contiene la doctrina christiana y oraciones para cada dia, y el examen de la conciencia, y declaracion de la missa",
+      "author": "Maturino Gilberti",
+      "language": "Purépecha",
+      "published": "1558",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1558. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "dialogodedoctrin00gilb",
+      "region": "new-world-press",
+      "title": "Dialogo de doctrina christiana, enla lengua de Mechuacan",
+      "author": "Maturino Gilberti",
+      "language": "Spanish",
+      "published": "1559",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1559. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Purépecha"
+      ]
+    },
+    {
+      "ia": "grammaticamaturi00gilb",
+      "region": "new-world-press",
+      "title": "Grammatica Maturini tractatus omnium ferè quae grammatices studiosis tradi solent",
+      "author": "Maturino Gilberti",
+      "language": "Latin",
+      "published": "1559",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1559. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "vocabularioenlen00gilb",
+      "region": "new-world-press",
+      "title": "Vocabulario en lengua de Mechuacan",
+      "author": "Maturino Gilberti",
+      "language": "Spanish",
+      "published": "1559",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1559. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Purépecha"
+      ]
+    },
+    {
+      "ia": "missaleromanumor00cath",
+      "region": "new-world-press",
+      "title": "Missale romanum ordinarium.: Misale romanum nuper adoptatum commodum quorumcumque sacerdotum summa diligentia distinctum: atque ita ex nouo ordine digestum vt appositis introitibus, gradualibus, offer",
+      "author": "Catholic Church",
+      "language": "Latin",
+      "published": "1561",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1561. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "prouisionescedul00news",
+      "region": "new-world-press",
+      "title": "Prouisiones cedulas instruciones de su Magestad:: ordenanças de difuntos y audiencia, para la buena expedicion de los negocios, y administracion de justicia: y gouernacion desta Nueua España: y para e",
+      "author": "New Spain",
+      "language": "Spanish",
+      "published": "1563",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1563. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "bullasdndpiidivi00cath",
+      "region": "new-world-press",
+      "title": "Bulla S.D.N.D. Pii Divina Providentia papae quarti super confirmatione oecumeniic sic generalis concilii Tridentini",
+      "author": "Catholic Church. Pope (1559-1565 : Pius IV)",
+      "language": "Latin",
+      "published": "1564",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1564. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "canonesetdecreta00coun",
+      "region": "new-world-press",
+      "title": "Canones et decreta, sacrosancti oecumenici, & generalis concilij Tridentini.: Sub Paulo.III. Iulio.III. Pio.IIII. Pont. Max",
+      "author": "Council of Trent (1545-1563)",
+      "language": "Latin",
+      "published": "1564",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1564. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "confessionariobr00moli",
+      "region": "new-world-press",
+      "title": "Confessionario breue, en lengua mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "published": "1565",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1565. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "doctrinachristia00domi",
+      "region": "new-world-press",
+      "title": "Doctrina [Christ]iana breue y compendiosa por via de dialogo entre vn maestro y vn discipulo,: sacada en lengua castellana y mexicana",
+      "author": "Domingo de la Anunciación",
+      "language": "Spanish",
+      "published": "1565",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1565. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "doctrinachristia00feri",
+      "region": "new-world-press",
+      "title": "Doctrina Christiana en lengua Castellana y Çapoteca",
+      "author": "Pedro de Feria",
+      "language": "Spanish",
+      "published": "1567",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1567. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Zapotec"
+      ]
+    },
+    {
+      "ia": "tabulapriuilegio00cath",
+      "region": "new-world-press",
+      "title": "Tabula priuilegiorum, quæ sanctissimus Papa Pius Quintus, concessit fratribus mendicantibus: in bulla confirmationis, & nouæ, concessionis priuilegiorum, ordinum mendicantium. Anno. 1567",
+      "author": "Catholic Church. Pope (1566-1572 : Pius V)",
+      "language": "Latin",
+      "published": "1568",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1568. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "artedelalenguame01moli",
+      "region": "new-world-press",
+      "title": "Arte de la lengua mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "published": "1571",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1571. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "doctrinachristia00juan",
+      "region": "new-world-press",
+      "title": "Doctrina christiana en la lengua guasteca con la lengua castellana,: la guasteca correspondiente acada palabra: de guasteco: segun que se pudo tolerar en la frasis: de la lengua guasteca",
+      "author": "Juan de la Cruz",
+      "language": "Spanish",
+      "published": "1571",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1571. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "arteydictionario00lagu",
+      "region": "new-world-press",
+      "title": "Arte y dictionario: con otras obras, en lengua Michuacana",
+      "author": "Juan Baptista de Lagunas",
+      "language": "Spanish",
+      "published": "1574",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1574. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "doctrinachristia00juan_0",
+      "region": "new-world-press",
+      "title": "Doctrina christiana muy cumplida,: donde se contiene la exposicion de todo lo necessario para doctrinar alos Yndios, y administralles los Sanctos Sacramentos",
+      "author": "Juan de la Anunciación",
+      "language": "Spanish",
+      "published": "1575",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1575. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "doctrinalisfidei02medi",
+      "region": "new-world-press",
+      "title": "Doctrinalis fidei in Michuacanensium Indorum linguam: aeditus ab admodum Reuerendo Patre Fratre Joanne Metinensi, Bethico, Augustiniani ordinis, et Priore conuentus Tacambarensis. Tomus secundus. ... ",
+      "author": "Juan de Medina Plaza",
+      "language": "Purépecha",
+      "published": "1575",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1575. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "misticatheologia00bona",
+      "region": "new-world-press",
+      "title": "Mistica theologia:: en la qual se nos enseña el verdadero camino del cielo, mediante el exercicio de la virtud",
+      "author": "Bonaventure",
+      "language": "Spanish",
+      "published": "1575",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1575. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "thesorospiritual01gilb",
+      "region": "new-world-press",
+      "title": "Thesoro spiritual de pobres en lengua de Michuacan:: dirigida al muy illustre y. R. señor don fray Ioan de Medina Rincon electo dignissimo obispo de la dicha prouincia",
+      "author": "Maturino Gilberti",
+      "language": "Purépecha",
+      "published": "1575",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1575. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Purépecha",
+        "Spanish",
+        "Latin"
+      ]
+    },
+    {
+      "ia": "artedelalenguame00moli",
+      "region": "new-world-press",
+      "title": "Arte dela lengua mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "published": "1576",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1576. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "confessionariobr01moli",
+      "region": "new-world-press",
+      "title": "Confessionario breue, en lengua mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "published": "1577",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1577. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "sermonarioenleng00juan",
+      "region": "new-world-press",
+      "title": "Sermonario en lengua mexicana,: donde se contiene (por el orden del missal nueuo romano,) dos sermones en todas las dominicas y festiuidades principales de todo el año: y otro en las fiestas de los Sa",
+      "author": "Juan de la Anunciación",
+      "language": "Spanish",
+      "published": "1577",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1577. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "arteenlenguazapo00juan",
+      "region": "new-world-press",
+      "title": "Arte en lengua zapoteca",
+      "author": "de Córdoba Juan",
+      "language": "Spanish",
+      "published": "1578",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1578. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Zapotec"
+      ]
+    },
+    {
+      "ia": "confessionarioma00moli",
+      "region": "new-world-press",
+      "title": "Confessionario mayor, en la lengna sic mexicana y castellana",
+      "author": "Alonso de Molina",
+      "language": "Spanish",
+      "published": "1578",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1578. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "doctrinalisfidei01medi",
+      "region": "new-world-press",
+      "title": "Doctrinalis fidei in Mechuacanensium indorum lingua",
+      "author": "Juan de Medina Plaza",
+      "language": "Purépecha",
+      "published": "1578",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1578. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "vocabularioenlen00juan",
+      "region": "new-world-press",
+      "title": "Vocabulario en lengua çapoteca",
+      "author": "de Córdoba Juan",
+      "language": "Spanish",
+      "published": "1578",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1578. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Zapotec"
+      ]
+    },
+    {
+      "ia": "instructionyarte00medr",
+      "region": "new-world-press",
+      "title": "Instruction y arte para con facilidad rezar el officio diuino,: conforme a las reglas y orden del breuiario, que nuestro muy sanctissimo Padre Pio. V. ordeno, segun la intencion del sancto Concilio Tr",
+      "author": "Alonso de Medrano",
+      "language": "Spanish",
+      "published": "1579",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1579. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "colloquiosdelapa00gaon",
+      "region": "new-world-press",
+      "title": "Colloquios de la paz, y tranquilidad christiana, en lengua mexicana",
+      "author": "Juan de Gaona",
+      "language": "Nahuatl",
+      "published": "1582",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1582. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Nahuatl",
+        "Latin",
+        "Spanish"
+      ]
+    },
+    {
+      "ia": "dialogosmilitare00garc",
+      "region": "new-world-press",
+      "title": "Dialogos militares,: de la formacion, è informacion de personas, instrumentos, y cosas necessarias para el buen vso de la guerra",
+      "author": "Diego García de Palacio",
+      "language": "Spanish",
+      "published": "1583",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1583. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "psalmodiachristi00saha",
+      "region": "new-world-press",
+      "title": "Psalmodia christiana, y sermonario de los sanctos del año, en langua mexicana",
+      "author": "Bernardino de Sahagún",
+      "language": "Spanish",
+      "published": "1583",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1583. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "estatutosgenerle00fran",
+      "region": "new-world-press",
+      "title": "Estatutos generles sic de Barcelona, para la familia Cismontana, de la orden de nuestro seraphico padre. S. Francisco: los quales por mandado de nuestro. R.P.F. Francisco Gonçaga, ministro general, fu",
+      "author": "Franciscans",
+      "language": "Spanish",
+      "published": "1585",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1585. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "constitutionesor00augu",
+      "region": "new-world-press",
+      "title": "Constitutiones Ordinis Frartum Eremitraum sic Sancti Augustini.: Nuper recognitae, & in ampliorem formam ac ordinem redactae",
+      "author": "Augustinians",
+      "language": "Spanish",
+      "published": "1587",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1587. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "tractadobrebedem00farf",
+      "region": "new-world-press",
+      "title": "Tractado brebe de medicina,: y de todas las enfermedades",
+      "author": "Agustín Farfán",
+      "language": "Spanish",
+      "published": "1592",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1592. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "artemexicana00rinc",
+      "region": "new-world-press",
+      "title": "Arte mexicana",
+      "author": "Antonio Rincón",
+      "language": "Spanish",
+      "published": "1595",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1595. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "lafundacionysumm00vera",
+      "region": "new-world-press",
+      "title": "La fundacion y summario de indulgencias del sacro Orden de Nuestra Señora de la Merced, Redemption de Captiuos.: Con vn breve tractado que enseña el camino de la vida perfecta",
+      "author": "Francisco de Vera y Villavicencio",
+      "language": "Spanish",
+      "published": "1595",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1595. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "summayrecopilaci00lpez",
+      "region": "new-world-press",
+      "title": "Summa y recopilacion de cirugia, con un arte para sangrar, y examen de barberos",
+      "author": "Alonso López de Hinojosos",
+      "language": "Spanish",
+      "published": "1595",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1595. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "confessionarioen00juan",
+      "region": "new-world-press",
+      "title": "Confessionario en lengua mexicana y castellana.: Con muchas aduertencias muy necessarias para los Confessores",
+      "author": "Juan Bautista",
+      "language": "Spanish",
+      "published": "1599",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1599. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "aduertenciaspara00juan",
+      "region": "new-world-press",
+      "title": "Aduertencias. Para los confessores de los Naturales",
+      "author": "Juan Bautista",
+      "language": "Latin",
+      "published": "1600",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1600. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Latin",
+        "Spanish",
+        "Nahuatl"
+      ]
+    },
+    {
+      "ia": "relacionhistoria00ribe",
+      "region": "new-world-press",
+      "title": "Relacion historiada de las exequias funerales de la magestad del rey D. Philippo II. nuestro senor.: Hechas por el tribunal del Sancto Officio de la Inquisicion desta Nueua España y sus prouincias, y ",
+      "author": "Dionisio de Ribera Flórez",
+      "language": "Spanish",
+      "published": "1600",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1600. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "huehuetlahtolliq00juan",
+      "region": "new-world-press",
+      "title": "Huehuetlahtolli, que contiene las plàticas que los padres y madres hicieron á sus hijos y á sus hijas, y los señores á sus vasallos, todas llenas de doctrina moral y politica",
+      "author": "Juan Bautista",
+      "language": "Nahuatl",
+      "published": "1601",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1601. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables).",
+      "languages": [
+        "Nahuatl",
+        "Spanish"
+      ]
+    },
+    {
+      "ia": "tablasdereducion00eche",
+      "region": "new-world-press",
+      "title": "Tablas de reduciones de monedas, y del valor de todo genero de plata y oro, y del modo de hazer las cuentas del, y delos derechos que se deuen a su Mag. enel quintar la plata, y delos intereses de vno",
+      "author": "Felipe Echegoyan",
+      "language": "Spanish",
+      "published": "1603",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1603. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "ortografiacastel00alem",
+      "region": "new-world-press",
+      "title": "Ortografia castellana",
+      "author": "Mateo Alemán",
+      "language": "Spanish",
+      "published": "1609",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1609. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "quatrolibrosdela00hern",
+      "region": "new-world-press",
+      "title": "Quatro libros. De la naturaleza, y virtudes de las plantas, y animales que estan receuidos en el vso de medicina en la Nueua España, y la methodo, y correccion, y preparacion, que para administrallas ",
+      "author": "Francisco Hernández",
+      "language": "Spanish",
+      "published": "1615",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1615. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    },
+    {
+      "ia": "lossirguerosdela00bram",
+      "region": "new-world-press",
+      "title": "Los sirgueros de la virgen sin original peccado ..",
+      "author": "Francisco Bramón",
+      "language": "Spanish",
+      "published": "1620",
+      "text_role": "original",
+      "note": "Mexico City imprint, 1620. John Carter Brown Library, Mexican incunabula collection (IA jcbmexicoincunables)."
+    }
+  ]
+}

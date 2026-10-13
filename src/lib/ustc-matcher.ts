@@ -26,6 +26,7 @@ const TEMPERATURE = 0.1;
 
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { citationTitle } from '@/lib/title-provenance';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -918,6 +919,36 @@ export async function matchToUstc(
 
 // ── Batch Match Helper ────────────────────────────────────────────────
 
+/**
+ * Projection a caller needs before handing a `books` row to `ustcMatchInput`.
+ * `content_type` / `resource_type` / `field_provenance` are what let
+ * `citationTitle()` tell an artwork's AI caption from its source title.
+ */
+export const USTC_MATCH_PROJECTION = {
+  id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
+  language: 1, original_language: 1,
+  content_type: 1, resource_type: 1, field_provenance: 1,
+} as const;
+
+/**
+ * The matcher input for a `books` row. The title is `citationTitle()`, never a
+ * bare `display_title || title`: on an artwork record `display_title` is often
+ * a caption a vision model wrote from the image (`artwork-enrichment.mjs`), and
+ * 109 of 159 artwork USTC bindings were matched against such captions (#4326) —
+ * "The Microcosmic Mind and the Three Worlds" bound at confidence "high" to a
+ * Fludd edition no printer ever titled that. On a textual book citationTitle()
+ * still returns the displayed (translated) title, so books match as before.
+ */
+export function ustcMatchInput(book: Record<string, unknown>): Parameters<typeof matchToUstc>[1] {
+  return {
+    title: citationTitle(book),
+    author: book.author as string | undefined,
+    year: (book.year || book.published) as number | undefined,
+    language: (book.language || book.original_language) as string | undefined,
+    id: book.id as string,
+  };
+}
+
 export async function matchBookToUstc(
   db: Db,
   bookId: string,
@@ -925,7 +956,7 @@ export async function matchBookToUstc(
 ): Promise<MatchResult> {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, original_language: 1, ustc_id: 1, ustc_match: 1 } },
+    { projection: { ...USTC_MATCH_PROJECTION, ustc_id: 1, ustc_match: 1 } },
   );
 
   if (!book) return { success: false, error: `Book not found: ${bookId}` };
@@ -935,13 +966,7 @@ export async function matchBookToUstc(
     return { success: true, skipped: 'Already matched' };
   }
 
-  const result = await matchToUstc(db, {
-    title: (book.display_title || book.title) as string,
-    author: book.author as string | undefined,
-    year: (book.year || book.published) as number | undefined,
-    language: (book.language || book.original_language) as string | undefined,
-    id: book.id as string,
-  }, options);
+  const result = await matchToUstc(db, ustcMatchInput(book), options);
 
   // Persist match to database
   if (result.success && result.match) {

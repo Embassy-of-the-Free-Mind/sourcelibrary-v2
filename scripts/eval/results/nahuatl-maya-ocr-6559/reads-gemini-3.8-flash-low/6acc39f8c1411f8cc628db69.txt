@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>La vida, y milagros</header>
+<meta>catchword: iciuhca</meta>
+
+in intlateumatiliz in Chriſtianome, yhuan in in tepantlahtolizticatzinco, yequene in intlacnopilhuilizticatzinco in iyectetlayecoltica tzitzihuan, quimocenquizcatlacamachiltia, yhuan quimocenquizcanemiliztia in iteutenahuatiltzin.
+
+¶ IN ipan huei altepetl Padua, ce oncan nenca mahuiztililoni cihuapilli: auh in itlaçotzin Dios ſanct Antonio, cenca miequintin macehualtin quimololhuilitihuiya, inic quicaquiznequia in itemachtiltzin in vmpa ixtlahuacan, ipampa ca in teupan Ygleſia ahmo huel onaquia, ahmo onehuaya in macehualtin: auh cecni acalotenco onaxihuato, oncan ce onhuetz acaloco, nepanotl imotopeuhque inic cenca nepapatzoloya. Auh in onhuetz acaloco, ca oncan oquilnamic in ca huel ohuican onhuetz, yhuan ca cenca tlaçotli in itlaquen in quimaquitihuiya ca yancuic, auh ca huellateumatiliztica oquimotzatzilili, ittetzinco omocauhtzino in toTecuiyo Dios, itemanahuicatzin muchiuhtzinoz, yhuan in yehuatzin itlaçotzin Dios ſanct Antonio: yehica ca oc no cenca yehuatl quimacacia, quimauhcaittaya, ca cenca alahuacayo tlahuele, cocole in inamic, ca intla quittazquia in inamic, in huel omoçoquinelo, ca cenca huel yc tlatlahuelchihuazquia. Auh ca niman
+
+<vocab>Chriſtianome, altepetl, Padua, cihuapilli, ſanct Antonio, macehualtin, Ygleſia, toTecuiyo Dios</vocab>

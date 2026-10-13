@@ -191,7 +191,7 @@ const corpora = map.rows.map((r) => {
 const TRADITIONS = [
   { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'] },
   { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'] },
-  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo'], rows: ['kanripo'] },
+  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo', 'chinese_other'], rows: ['kanripo'] },
   { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'] },
   { id: 'sanskrit', name: 'Sanskrit', sets: ['gretil'], rows: ['gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya'] },
   { id: 'kabbalah', name: 'Kabbalah', sets: ['kabbalah'], rows: ['sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero'] },

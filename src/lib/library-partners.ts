@@ -623,6 +623,31 @@ export function getPartnerByProvider(provider: string): LibraryPartner | undefin
   );
 }
 
+// Placeholder values importers wrote into contributing_library (measured
+// 2026-10-11: "IIIF Source" 830 visible books, "unknown library" 342).
+const NOT_A_HOLDER = new Set(['iiif source', 'unknown library', 'unknown', 'null', 'undefined', '[object object]']);
+const PLATFORM_NAMES = new Set(
+  Object.values(LIBRARY_PARTNERS).filter(p => p.kind === 'platform').flatMap(p => [p.name.toLowerCase(), p.shortName.toLowerCase()]),
+);
+
+/** The institution that physically HOLDS the book, for display. Prefers the
+ *  per-book `contributing_library`; otherwise the provider itself when it is a
+ *  holding institution. A platform (Internet Archive, Google Books…) is never
+ *  returned as the holder: it carries scans of books held elsewhere. */
+export function resolveHoldingLibrary(
+  imageSource: { provider?: string | null; provider_name?: string | null; contributing_library?: string | null } | null | undefined,
+): string | undefined {
+  if (!imageSource) return undefined;
+  const contributing = (imageSource.contributing_library || '').trim();
+  // Some importers stored a serialized object here; that is a data bug, not a name.
+  if (contributing && !contributing.startsWith('{') && !contributing.startsWith('[')
+      && !NOT_A_HOLDER.has(contributing.toLowerCase())
+      && !PLATFORM_NAMES.has(contributing.toLowerCase())) return contributing;
+  const partner = imageSource.provider ? getPartnerByProvider(imageSource.provider) : undefined;
+  if (partner && partner.kind !== 'platform') return partner.name;
+  return undefined;
+}
+
 /** Every provider key whose books belong to this partner. Use this — not
  *  `partner.providerKey` alone — wherever books are filtered by provider. */
 export function getProviderKeys(partner: LibraryPartner): string[] {

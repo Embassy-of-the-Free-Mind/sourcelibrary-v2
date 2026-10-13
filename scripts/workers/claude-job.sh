@@ -41,13 +41,15 @@ if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/
   \`sl-tsc\` (one at a time, box-wide), never a bare \`npx tsc\`.
 - The box is ARM64: Python ML tools (kraken, CLIP, onnx venvs) are NOT installed here; if the brief needs
   them, say so on the issue and stop."
-  claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- /root/.local/bin/claude "$@"; }
+  CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
+  claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=$SL/.claude/worktrees; DATA=/data/scratch/sl/jobs
 else
   HOST=hetzner; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs
   HOST_RULES="- This box has 16 GB shared by every worker. node_modules is shared with the main checkout: NEVER run
   npm ci / npm install. To type-check run \`sl-tsc\` (one at a time, box-wide), never a bare \`npx tsc\`."
-  claude_capped() { claude "$@"; }
+  CLAUDE_BIN=${CLAUDE_BIN:-claude}
+  claude_capped() { "$CLAUDE_BIN" "$@"; }
   # Disk (#6223): the 150 GB root filled to 100% on 10-01 and again on 10-07 (job worktrees + experiment
   # output in /root) while the 492 GB volume sat half empty. New worktrees and all job output go to the volume.
   VOL=/mnt/HC_Volume_105839809; WT=$VOL/worktrees; DATA=$VOL/jobs
@@ -85,6 +87,10 @@ $HOST_RULES
 - A real decision: end your FINAL message with one line each:
   \`DECISION: <question> — default: <recommended answer> (#issue)\`. The wrapper collects them into
   $JD/decisions.txt for the morning digest; they do not page.
+- INBOX: Derek's sessions can steer you mid-run with \`claude-job.sh note $1 "<message>"\`, which appends to
+  $JD/$1.inbox. Run \`cat $JD/$1.inbox 2>/dev/null\` at the start of each new step, before each report you
+  post, and before the done file. A note overrides the brief where they conflict. Name the notes you acted
+  on in your next issue/PR comment (#6534).
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
@@ -161,9 +167,12 @@ pr_of() {  # $1 head branch -> "<url> <head sha>" of its newest PR in any state,
 # byte-identical to what PR #6273 had merged. A file is landed when its blob equals origin/main's at that
 # path, or appears in any commit pushed to origin since the job started. Anything else (and a deletion)
 # is listed. Reads at most 500 paths.
+pushed_blobs() {  # $1 worktree, $2 job start (ISO) -> every blob in a commit pushed to origin since then
+  git -C "$1" log --remotes=origin --since="$2" --raw --no-abbrev --no-renames --format= 2>/dev/null | awk '$4 ~ /^[0-9a-f]+$/ {print $4}' | sort -u
+}
 dirty_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
   local d="$1" seen l f h; seen=$(mktemp)
-  git -C "$d" log --remotes=origin --since="$2" --raw --no-abbrev --no-renames --format= 2>/dev/null | awk '$4 ~ /^[0-9a-f]+$/ {print $4}' | sort -u > "$seen"
+  pushed_blobs "$d" "$2" > "$seen"
   git -C "$d" status --porcelain -uall 2>/dev/null | grep -vE '(node_modules|src/lib/vendor/lamejs-bundle\.js|\.vercel/.*)$' | head -500 | while IFS= read -r l; do
     f=${l:3}; f=${f##* -> }
     if [ -f "$d/$f" ]; then
@@ -175,8 +184,29 @@ dirty_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
   done
   rm -f "$seen"
 }
+# The same test for commits on no remote. A squash merge puts the job's files on main and deletes its
+# branch, so the commits are then on no branch at all; a job that opens its PR from a second clone leaves
+# the same shape. Of twelve such worktrees checked by hand on 2026-10-09, twelve held nothing that was not
+# already on GitHub (#6358). For every path those commits touch: the file as it stands at HEAD is landed
+# when its blob equals origin/main's at that path or appears in a commit pushed since the job started; a
+# path HEAD deleted is landed when origin/main lacks it too. Prints the paths that are not landed.
+unpushed_not_landed() {  # $1 worktree, $2 job start (ISO) -> one path per line
+  local d="$1" seen f h; seen=$(mktemp)
+  pushed_blobs "$d" "$2" > "$seen"
+  git -C "$d" log HEAD --not --remotes=origin --name-only --no-renames --format= -z 2>/dev/null | sort -zu | while IFS= read -r -d '' f; do
+    [ -n "$f" ] || continue
+    h=$(git -C "$d" rev-parse -q --verify "HEAD:$f" 2>/dev/null)
+    if [ -z "$h" ]; then git -C "$d" rev-parse -q --verify "origin/main:$f" >/dev/null 2>&1 || continue
+    else
+      [ "$h" = "$(git -C "$d" rev-parse -q --verify "origin/main:$f" 2>/dev/null)" ] && continue
+      grep -qx "$h" "$seen" && continue
+    fi
+    echo "$f"
+  done
+  rm -f "$seen"
+}
 landing_check() {
-  local name="$1" d="$(wt_dir "$1")" brief="$JD/$1.brief.txt" risk="" rep="" since br="" ahead=0 nc p1="" p2="" pr="" dirty unp h
+  local name="$1" d="$(wt_dir "$1")" brief="$JD/$1.brief.txt" risk="" rep="" since br="" ahead=0 nc p1="" p2="" pr="" dirty unp unl h
   [ -f "$brief" ] || { echo "REPORT: no brief file $brief"; return; }
   since=$(date -u -d "@$(stat -c %Y "$brief")" +%FT%TZ)
   landing_contract "$name" "$brief"
@@ -205,14 +235,17 @@ landing_check() {
     elif [ "$LC_PR" = auto ] && [ "${ahead:-0}" -gt 0 ]; then rep="$rep $ahead commit(s) beyond main but no PR;"; fi
   fi
   # 3. Work at risk: it exists only in this worktree. A commit counts as pushed when some remote branch
-  # holds it (jobs push under other names: eleven false "unpushed" on 2026-10-07), or when it is the head
-  # of a PR (a squash-merged PR's branch is deleted, and its commits are then on no branch at all).
+  # holds it (jobs push under other names: eleven false "unpushed" on 2026-10-07), when it is the head
+  # of a PR, or when every file it touched is on GitHub already (unpushed_not_landed).
   if [ -d "$d" ]; then
     dirty=$(dirty_not_landed "$d" "$since")
     [ -n "$dirty" ] && risk="$risk $(echo "$dirty" | wc -l) uncommitted file(s) in $d ($(echo "$dirty" | head -3 | tr '\n' ' ' | sed 's/ $//'));"
     unp=$(git -C "$d" rev-list --count HEAD --not --remotes=origin 2>/dev/null); h=$(git -C "$d" rev-parse HEAD 2>/dev/null)
     if [ "${unp:-0}" -gt 0 ]; then
-      case " $p1 $p2 " in *" $h "*) ;; *) risk="$risk $unp unpushed commit(s) on $br;" ;; esac
+      case " $p1 $p2 " in *" $h "*) ;; *)
+        unl=$(unpushed_not_landed "$d" "$since")
+        [ -n "$unl" ] && risk="$risk $unp unpushed commit(s) on $br ($(echo "$unl" | wc -l) file(s) on no remote: $(echo "$unl" | head -3 | tr '\n' ' ' | sed 's/ $//'));" ;;
+      esac
     fi
   fi
   local c="[#${LC_ISSUE:-?} from ${LC_ISSUE_SRC:-nothing}; PR: $LC_PR]"
@@ -245,6 +278,18 @@ Committed by claude-job.sh so the work survives the job (#6360).${big:+ Left out
     else echo "[claude-job] checkpoint push FAILED ($2) $(date -u +%FT%TZ)" >> "$log"; fi
   )
   return 0
+}
+
+# Jobs run `claude -p --permission-mode acceptEdits`, which allows edits and nothing else: every shell
+# command, the `touch <name>.done` included, needs "Bash" in the user settings' allow-list. On 2026-10-09
+# earthai-l7a read ready=yes with no permissions block, and its first job looped, unable to write its done
+# file (#6358). True when the allow-list holds a bare Bash rule or the default mode skips the prompt.
+can_run_bash() {  # [$1 settings file]
+  python3 -c '
+import json, sys
+p = json.load(open(sys.argv[1])).get("permissions") or {}
+ok = any(a in ("Bash", "Bash(*)") for a in p.get("allow") or []) or p.get("defaultMode") == "bypassPermissions"
+sys.exit(0 if ok else 1)' "${1:-/root/.claude/settings.json}" 2>/dev/null
 }
 
 # Fix 2 (placement half): the box's own account, from the climits meter (#6359). The meter runs on the
@@ -294,6 +339,32 @@ ntfy_job() {  # $1 priority (min|low|default|high|urgent)  $2 tags  $3 title  $4
   curl -s -m 10 -H "Title: $3" -H "Priority: $1" -H "Tags: $2" -d "$4" "$NTFY_TOPIC" >/dev/null 2>&1 || true
 }
 
+# Auth preflight (#5627). On 2026-10-02 two cloudlayer jobs hit "Not logged in · Please run /login": the
+# wrapper resumed each 8 times in 4 minutes, logged GAVE UP, and nothing said so for two hours (jobs report
+# by issue comment, and these never ran). Before start/resume/sweep, one tiny `claude -p` must answer OK,
+# run from the checkout so a workspace-trust or settings failure shows here too. A usage-limit answer
+# passes: that is a wait, and the run loop handles it. Prints the failing output; returns 1 on failure.
+# Skip: JOB_SKIP_PREFLIGHT=1.
+AUTH_FAIL_RE='not logged in|please run /login|invalid api key|oauth token (has expired|revoked)|authentication_error'
+LIMIT_RE="hit your (session|usage|weekly|monthly) limit|usage limit reached|rate limit"
+preflight_auth() {
+  [ -n "${JOB_SKIP_PREFLIGHT:-}" ] && return 0
+  local out rc
+  out=$(cd "$SL" && export -f claude_capped && export CLAUDE_BIN && timeout 120 bash -c 'claude_capped -p "Reply with exactly: OK" --model sonnet' < /dev/null 2>&1); rc=$?
+  echo "$out" | grep -qE '(^|[^A-Za-z])OK([^A-Za-z]|$)' && ! echo "$out" | grep -qiE "$AUTH_FAIL_RE" && return 0
+  echo "$out" | grep -qiE "$LIMIT_RE" && return 0
+  [ $rc -eq 124 ] && out="timed out after 120 s${out:+: $out}"
+  echo "${out:-no output, exit $rc}" | tr '\n' ' ' | cut -c1-200
+  return 1
+}
+# Say an auth failure loudly: a high page, and a comment on the brief's issue when it names one.
+auth_fail_report() {  # $1 name, $2 brief file, $3 what happened
+  ntfy_job high warning "Job NOT LOGGED IN: $1 ($HOST)" "$3 — log in on $HOST (claude, then /login), then \`claude-job.sh resume $1\` or start it again (#5627)."
+  landing_contract "$1" "$2"
+  case "$LC_ISSUE" in ""|none) return 0 ;; esac
+  gh issue comment "$LC_ISSUE" --repo "$REPO" --body "claude-job: job \`$1\` on **$HOST** did not run: Claude is not logged in there ($3). Nothing was done on this issue. Fix: log in on $HOST, then \`claude-job.sh resume $1\` (or start it again). (#5627)" >/dev/null 2>&1 || true
+}
+
 # A job owns its PR until the checks are green (Derek 2026-10-08). PR #5832 sat red for four days and
 # 304 commits behind because the job that opened it had exited DONE. After DONE, from outside: find the
 # job's OPEN PR, wait for its checks in bash (never in the model), and if one failed, resume the job
@@ -336,8 +407,13 @@ Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, 
     claude_capped -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
   fi
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
-  i=0; capped=""
+  i=0; capped=""; authfail=""
   while [ ! -f "$JD/$name.done" ] && [ $i -lt $MAX_RESUMES ]; do
+    # Not logged in is not resumable (#5627): every resume fails the same way in seconds. Stop and say so.
+    authfail=$(grep -v '^\[claude-job\]' "$log" | tail -n 2 | grep -iE -m1 "$AUTH_FAIL_RE" | cut -c1-160)
+    if [ -n "$authfail" ]; then
+      echo "[claude-job] NOT LOGGED IN: not resuming ($authfail) $(date -u +%FT%TZ)" >> "$log"; break
+    fi
     # A usage/session limit is a wait, not a failure (2026-10-03: all 8 resumes burned in 3 min on
     # "You've hit your session limit", then GAVE UP for 7 h). When the last claude output is a
     # limit message, sleep 20 min and retry WITHOUT spending a resume, for up to 18 waits (6 h).
@@ -373,10 +449,12 @@ You exited before writing $JD/$name.done. Any background task or watcher you sta
       *) ntfy_job low mag "Job done, report not found: $name ($HOST)" "${land#REPORT:}" ;;
     esac
   else
-    echo "[claude-job] GAVE UP${capped:+ on the $capped cap} after $i resumes $(date -u +%FT%TZ)" >> "$log"
-    cp=$(checkpoint "$name" "${capped:+$capped cap}${capped:-gave up}")
+    echo "[claude-job] GAVE UP${capped:+ on the $capped cap}${authfail:+ (not logged in)} after $i resumes $(date -u +%FT%TZ)" >> "$log"
+    cp=$(checkpoint "$name" "${authfail:+not logged in}${authfail:-${capped:+$capped cap}${capped:-gave up}}")
     moved=""; [ -n "${capped:-}" ] && moved=$(move_job "$name" "${cp:-}")
-    if [ -n "$moved" ]; then
+    if [ -n "$authfail" ]; then
+      auth_fail_report "$name" "$JD/$name.brief.txt" "$authfail${cp:+; work checkpointed to $cp}"
+    elif [ -n "$moved" ]; then
       ntfy_job low arrow_right "Job moved on the weekly cap: $name ($HOST -> $moved)" "Continues as ${name%-mv}-mv on $moved from branch ${cp:-job-$name}."
     else
       move=""; [ -n "${capped:-}" ] && move=" No box could take it (box.sh pick). Move it by hand: job-where.sh on the laptop; branch ${cp:-job-$name} holds the work."
@@ -435,6 +513,11 @@ case "${1:-status}" in
       echo "REFUSED: this box's Claude account is at ${wk}% of its weekly limit (>= ${MAX_WEEKLY_PCT}%). Place it elsewhere (scripts/workers/job-where.sh), or JOB_IGNORE_LIMIT=1."
       exit 6
     fi
+    if ! why=$(preflight_auth); then
+      echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
+      auth_fail_report "$name" "$brief" "refused at start: $why"
+      exit 7
+    fi
     d="$(wt_dir "$name")"
     if [ ! -d "$d" ]; then
       git -C "$SL" fetch -q origin main && git -C "$SL" worktree add -q "$d" -b "job-$name" origin/main || exit 3
@@ -451,7 +534,12 @@ case "${1:-status}" in
       echo "started job-$name (tmux) → $LOGD/$name.log"
     else echo "job-$name DIED within 20 s:"; tail -5 "$LOGD/$name.log"; exit 4; fi ;;
   resume)
-    name="$2"; rm -f "$JD/$name.done"
+    name="$2"
+    if ! why=$(preflight_auth); then
+      echo "REFUSED: claude on this box did not answer a one-line preflight ($why). Log in (claude, then /login), or JOB_SKIP_PREFLIGHT=1."
+      exit 7
+    fi
+    rm -f "$JD/$name.done"
     tmux new -d -s "job-$name" "MAX_RESUMES=${MAX_RESUMES} $0 _run_resume $name"
     echo "resuming job-$name (tmux) → $LOGD/$name.log" ;;
   _run) run "$2" ;;
@@ -477,11 +565,24 @@ case "${1:-status}" in
         echo "[claude-job] sweep gave up after 2 resumes $(date -u +%FT%TZ)" >> "$LOGD/$n.log"; rm -f "$hb"
         cp=$(checkpoint "$n" "died twice")
         ntfy_job high warning "Job DIED twice, not resumed: $n" "Check dmesg/df on the box; \`claude-job.sh resume $n\` by hand.${cp:+ Work checkpointed to $cp.}"; continue; fi
+      # Not logged in: a resume would die the same way and spend one of the two (#5627). Wait for a login.
+      if [ -z "${swept_auth:-}" ]; then swept_auth=ok; why=$(preflight_auth) || swept_auth="$why"; fi
+      if [ "$swept_auth" != ok ]; then
+        grep -q '\[claude-job\] sweep held: not logged in' "$LOGD/$n.log" 2>/dev/null || {
+          echo "[claude-job] sweep held: not logged in ($swept_auth) $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
+          auth_fail_report "$n" "$JD/$n.brief.txt" "sweep could not resume it: $swept_auth"; }
+        continue
+      fi
       echo "[claude-job] sweep-resume $((k+1))/2: no tmux, no done file, heartbeat $(( ($(date +%s)-$(cat "$hb"))/60 ))m old $(date -u +%FT%TZ)" >> "$LOGD/$n.log"
       dmesg -T 2>/dev/null | grep -i 'killed process' | tail -1 >> "$LOGD/$n.log"
       tmux new -d -s "job-$n" "$0 _run_resume $n"
     done ;;
   log) tail -"${3:-40}" "$LOGD/$2.log" ;;
+  note)  # steer a running job (#6534): the job reads its inbox at each step (HEADLESS RULES)
+    [ -n "${2:-}" ] && [ -n "${3:-}" ] || { echo "usage: claude-job.sh note <name> \"<message>\""; exit 2; }
+    [ -f "$JD/$2.brief.txt" ] || { echo "no job named $2 on $HOST"; exit 1; }
+    printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$3" >> "$JD/$2.inbox"
+    if tmux has-session -t "=job-$2" 2>/dev/null; then echo "noted for job-$2 (live)"; else echo "noted for job-$2 (not running; read on resume)"; fi ;;
   stop) touch "$JD/$2.stopped"; tmux kill-session -t "=job-$2" && echo "stopped job-$2"
     cp=$(checkpoint "$2" stopped); [ -n "$cp" ] && echo "work checkpointed to $cp" ;;
   _reap) reap_if_clean "$2"; tail -1 "$LOGD/$2.log" ;;  # test/one-off: apply the reap rule to one job
@@ -509,6 +610,7 @@ case "${1:-status}" in
     gh auth status >/dev/null 2>&1 || why="$why,gh-not-logged-in"
     [ -s /root/sourcelibrary/.env.production.local ] || why="$why,no-env-file"
     [ -d "$SL/node_modules" ] || why="$why,no-node_modules"
+    can_run_bash || why="$why,no-bash-permission"
     ready=yes; [ -n "$why" ] && ready="no:${why#,}"
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
     echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;

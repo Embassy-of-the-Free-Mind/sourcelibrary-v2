@@ -339,7 +339,8 @@ const foldDiacritics = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').normalize
 export const SCRIPT_DEFS = {
   cjk: null, // handled by normalizeCJK / subsequenceCER
   latin: {
-    letters: /[a-z]/,
+    // Digits are page text (v4, #6203): a date, a folio or a table cell read wrong is an error a reader quotes.
+    letters: /[a-z0-9]/,
     // '&' is the et-ligature — early modern printing writes "et" as "&";
     // folding it prevents every printed ampersand counting as a deleted word.
     fold: s => foldDiacritics(s.toLowerCase()).replace(/&/g, ' et ')
@@ -399,15 +400,26 @@ export const SCRIPT_DEFS = {
 //   2  (#5522) also drops image/figure description blocks, strips every remaining tag (keeping its text),
 //      and decodes entities. Under v1, on 72 EEBO-TCP references, `imagedesc`, `nbsp`, `sizesmall`,
 //      `typedecoratiue`, `uuoodcut` and `langenglishlang` were among the top "OCR insertions".
-export const NORMALIZE_FOR_SCRIPT_VERSION = 2;
+//   3  (#6388) centring markers (`->line<-`) are removed BEFORE the tag strip. Under v2 the tag regex read
+//      the `<-` that closes one centred line as a tag opener and deleted everything up to the `>` of the
+//      next `->`: every line between two centred lines. On the #6388 Latin set that cut real text from
+//      13 of 450 reads and put flash-lite's CER at 5.5 where it is 3.4.
+//   4  (#6203) the Latin-script normaliser keeps ASCII digits. Through v3 it kept [a-z] only, so
+//      "p. 239 n. 25; | 2.54,3 |" scored as "p n" and a 60-row table with 22 wrong cells scored CER 0
+//      (validity audit, .claude/docs/measurement-validity.md). Digits now count in the CER, and digitChannel()
+//      below reports them on their own. scoreAgainstReference scores digits only when the reference has some
+//      (`digitsScored`). Other scripts are unchanged: their references often carry verse or
+//      line numbers the page does not print, and no audit of those has been run.
+export const NORMALIZE_FOR_SCRIPT_VERSION = 4;
 const DESCRIPTION_BLOCKS = /<(image-desc|figure|detected-images)\b[^>]*>[\s\S]*?<\/\1>/gi;   // describe the page, not its text
 const cleanMarkup = s => stripWrappers(s || '')
   .replace(DESCRIPTION_BLOCKS, ' ')
+  .replace(/->|<-/g, ' ')                    // centring markers are layout; left in, `<- … ->` reads as one tag
   .replace(/<[^>]*>/g, ' ')                  // any other tag: drop the tag (and its attributes), keep the text
   .replace(/&amp;/gi, '&')                   // the et-ligature is text; SCRIPT_DEFS.latin folds & to "et"
   .replace(/&[a-z]{2,8};|&#\d+;/gi, ' ');    // nbsp and other entities are layout
 
-export function normalizeForScript(s, script) {
+export function normalizeForScript(s, script, { digits = true } = {}) {
   const def = SCRIPT_DEFS[script];
   if (!def) throw new Error(`normalizeForScript: unknown script "${script}" (cjk uses normalizeCJK)`);
   // Rejoin words hyphenated across line breaks (early modern printing uses - or ¬)
@@ -416,18 +428,39 @@ export function normalizeForScript(s, script) {
   const folded = def.fold(dehyphenated);
   return folded
     .split(/\s+/)
-    .map(w => [...w].filter(c => def.letters.test(c)).join(''))
+    .map(w => [...w].filter(c => def.letters.test(c) && (digits || c < '0' || c > '9')).join(''))
     .filter(Boolean)
     .join(' ');
+}
+
+/**
+ * The digits of a text, in reading order: markup cleaned exactly as normalizeForScript cleans it, then every
+ * character but 0-9 dropped. One string, because a number's grouping ("1,650" / "1650" / "16 50") is layout.
+ */
+export const digitsOf = s => cleanMarkup(s).replace(/[^0-9]/g, '');
+
+/**
+ * DIGITS-ONLY ERROR CHANNEL (#6203). Edit distance between the digit strings of the reference and the reading,
+ * over the reference's digit count. Numbers are a small share of a page's characters and the costliest to get
+ * wrong, so the all-character CER hides them even with digits kept: 22 wrong cells in a table of 60 is a few
+ * points of CER and a third of this. `rate` is null when the reference has fewer than `minDigits` digits (nothing
+ * to measure); `extra` counts the reading's digits beyond the reference's length when the reference has none.
+ * Symmetric (insertions count): use it where the reference covers the whole page, not a passage of it.
+ */
+export function digitChannel(reference, ocr, { minDigits = 1 } = {}) {
+  const R = digitsOf(reference), O = digitsOf(ocr);
+  if (R.length < minDigits) return { rate: null, errors: null, refDigits: R.length, ocrDigits: O.length };
+  const errors = levenshtein(R, O);
+  return { rate: Math.min(1, errors / R.length), errors, refDigits: R.length, ocrDigits: O.length };
 }
 
 /**
  * Word-level subsequence error rate — the identity guard for alphabetic scripts.
  * Reference words matched in order; OCR-extra words (notes, marginalia) skip free.
  */
-export function subsequenceWER(reference, ocr, script) {
-  const R = normalizeForScript(reference, script).split(' ').filter(w => w.length > 1);
-  const O = normalizeForScript(ocr, script).split(' ').filter(w => w.length > 1);
+export function subsequenceWER(reference, ocr, script, opts) {
+  const R = normalizeForScript(reference, script, opts).split(' ').filter(w => w.length > 1);
+  const O = normalizeForScript(ocr, script, opts).split(' ').filter(w => w.length > 1);
   const r = subsequenceErrorRate(R, O, 3);
   return { wer: r.cer, refWords: r.refLen, matchedWords: r.matched, ...greedySpanStats(R, O) };
 }
@@ -545,7 +578,7 @@ export const GUARD_THRESHOLDS = { cjk: 0.30, word: 0.35 };
  * measuring how much non-reference material sits inside the passage span.
  * For cross-engine comparison use the windowed number, or report both.
  */
-export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds = GUARD_THRESHOLDS) {
+export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds = GUARD_THRESHOLDS, { digits = 'auto' } = {}) {
   if (script === 'cjk') {
     const r = subsequenceCER(reference, ocr);
     const Rc = [...normalizeCJK(reference)], Oc = [...normalizeCJK(ocr)];
@@ -556,14 +589,19 @@ export function scoreAgainstReference(reference, ocr, script = 'cjk', thresholds
       charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
       spanDispersion: span.spanDispersion };
   }
-  const guard = subsequenceWER(reference, ocr, script);
+  // v4 (#6203): digits are scored only against a reference that carries some. A passage keyed without its verse
+  // or page numbers says nothing about them, and the windowed score would charge every printed numeral as an
+  // insertion (Vulgate Genesis 5, served text: 1.1% → 3.7% with no misread). `digitsScored` says which it was.
+  // `{ digits: false }` reproduces a v3 score, for a re-score that must match results committed under v3.
+  const opts = { digits: digits !== false && /[0-9]/.test(normalizeForScript(reference, script)) };
+  const guard = subsequenceWER(reference, ocr, script, opts);
   const aligned = guard.wer <= thresholds.word;
   // Char-level score on space-stripped normalized text (spaces are layout, not OCR).
-  const R = [...normalizeForScript(reference, script).replace(/ /g, '')];
-  const O = [...normalizeForScript(ocr, script).replace(/ /g, '')];
+  const R = [...normalizeForScript(reference, script, opts).replace(/ /g, '')];
+  const O = [...normalizeForScript(ocr, script, opts).replace(/ /g, '')];
   const r = subsequenceErrorRate(R, O, 12);
-  const w = windowedErrorRate(normalizeForScript(reference, script), normalizeForScript(ocr, script));
-  return { aligned, guard: { type: 'word', value: guard.wer, ...guard }, ...r,
+  const w = windowedErrorRate(normalizeForScript(reference, script, opts), normalizeForScript(ocr, script, opts));
+  return { aligned, digitsScored: opts.digits, guard: { type: 'word', value: guard.wer, ...guard }, ...r,
     charAccuracy: 1 - r.cer,
     charAccuracyWindowed: w.windowedCer == null ? null : 1 - w.windowedCer, ...w,
     spanDispersion: guard.spanDispersion };

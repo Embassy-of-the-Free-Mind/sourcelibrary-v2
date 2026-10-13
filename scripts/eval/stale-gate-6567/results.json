@@ -1,0 +1,1813 @@
+{
+ "bins": {
+  "0–0.05": {
+   "pages": 8,
+   "ocr_material": 2,
+   "ocr_clean": 6,
+   "ocr_unresolved": 0,
+   "ocr_secs_per_page": 98.74549999999999,
+   "ocr_calls_per_page": 2.625,
+   "step2_pages": 6,
+   "stored": {
+    "present": 6,
+    "O": {
+     "scored": 6,
+     "material_per_page": 1.3333333333333333,
+     "style_per_page": 1
+    },
+    "P": {
+     "scored": 6,
+     "material_per_page": 3.1666666666666665,
+     "style_per_page": 0.5
+    }
+   },
+   "retranslate": {
+    "present": 6,
+    "edit_mean": 0.9667666666666667,
+    "edit_median": 0.9336,
+    "secs_per_page": 11.550000000000002,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 6,
+     "material_per_page": 0,
+     "style_per_page": 0.6666666666666666
+    },
+    "P": {
+     "scored": 6,
+     "material_per_page": 0.5,
+     "style_per_page": 0.16666666666666666
+    }
+   },
+   "diffcorrect": {
+    "present": 6,
+    "edit_mean": 0.0006833333333333334,
+    "edit_median": 0,
+    "secs_per_page": 15.333333333333334,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 6,
+     "material_per_page": 1.3333333333333333,
+     "style_per_page": 1
+    },
+    "P": {
+     "scored": 6,
+     "material_per_page": 3,
+     "style_per_page": 0.5
+    },
+    "rejected": 0
+   },
+   "paired_O": {
+    "n": 6,
+    "stored": 1.3333333333333333,
+    "retranslate": 0,
+    "diffcorrect": 1.3333333333333333
+   },
+   "paired_P": {
+    "n": 6,
+    "stored": 3.1666666666666665,
+    "retranslate": 0.5,
+    "diffcorrect": 3
+   }
+  },
+  "0.05–0.1": {
+   "pages": 8,
+   "ocr_material": 0,
+   "ocr_clean": 8,
+   "ocr_unresolved": 0,
+   "ocr_secs_per_page": 131.06425000000002,
+   "ocr_calls_per_page": 2.5,
+   "step2_pages": 8,
+   "stored": {
+    "present": 8,
+    "O": {
+     "scored": 8,
+     "material_per_page": 0.625,
+     "style_per_page": 0.875
+    },
+    "P": {
+     "scored": 8,
+     "material_per_page": 3.25,
+     "style_per_page": 0.375
+    }
+   },
+   "retranslate": {
+    "present": 8,
+    "edit_mean": 0.7942999999999999,
+    "edit_median": 0.7851,
+    "secs_per_page": 19.825,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 8,
+     "material_per_page": 0,
+     "style_per_page": 0.75
+    },
+    "P": {
+     "scored": 8,
+     "material_per_page": 1,
+     "style_per_page": 0.25
+    }
+   },
+   "diffcorrect": {
+    "present": 8,
+    "edit_mean": 0.012262499999999999,
+    "edit_median": 0.0121,
+    "secs_per_page": 38.9125,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 8,
+     "material_per_page": 0.375,
+     "style_per_page": 0.875
+    },
+    "P": {
+     "scored": 8,
+     "material_per_page": 2.5,
+     "style_per_page": 0.375
+    },
+    "rejected": 0
+   },
+   "paired_O": {
+    "n": 8,
+    "stored": 0.625,
+    "retranslate": 0,
+    "diffcorrect": 0.375
+   },
+   "paired_P": {
+    "n": 8,
+    "stored": 3.25,
+    "retranslate": 1,
+    "diffcorrect": 2.5
+   }
+  },
+  "0.1–0.2": {
+   "pages": 8,
+   "ocr_material": 7,
+   "ocr_clean": 1,
+   "ocr_unresolved": 0,
+   "ocr_secs_per_page": 154.99925000000002,
+   "ocr_calls_per_page": 2.375,
+   "step2_pages": 1,
+   "stored": {
+    "present": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 1,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 2,
+     "style_per_page": 0
+    }
+   },
+   "retranslate": {
+    "present": 1,
+    "edit_mean": 0.735,
+    "edit_median": 0.735,
+    "secs_per_page": 20.5,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    }
+   },
+   "diffcorrect": {
+    "present": 1,
+    "edit_mean": 0.0414,
+    "edit_median": 0.0414,
+    "secs_per_page": 12.4,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "rejected": 0
+   },
+   "paired_O": {
+    "n": 1,
+    "stored": 1,
+    "retranslate": 0,
+    "diffcorrect": 0
+   },
+   "paired_P": {
+    "n": 1,
+    "stored": 2,
+    "retranslate": 0,
+    "diffcorrect": 0
+   }
+  },
+  "0.2–0.5": {
+   "pages": 8,
+   "ocr_material": 7,
+   "ocr_clean": 1,
+   "ocr_unresolved": 0,
+   "ocr_secs_per_page": 170.91275000000002,
+   "ocr_calls_per_page": 2,
+   "step2_pages": 1,
+   "stored": {
+    "present": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 11,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 18,
+     "style_per_page": 0
+    }
+   },
+   "retranslate": {
+    "present": 1,
+    "edit_mean": 0.7785,
+    "edit_median": 0.7785,
+    "secs_per_page": 16.4,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 1,
+     "style_per_page": 0
+    }
+   },
+   "diffcorrect": {
+    "present": 1,
+    "edit_mean": 0.2975,
+    "edit_median": 0.2975,
+    "secs_per_page": 13.8,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 1,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "rejected": 0
+   },
+   "paired_O": {
+    "n": 1,
+    "stored": 11,
+    "retranslate": 0,
+    "diffcorrect": 0
+   },
+   "paired_P": {
+    "n": 1,
+    "stored": 18,
+    "retranslate": 1,
+    "diffcorrect": 0
+   }
+  },
+  "0.5–1": {
+   "pages": 8,
+   "ocr_material": 5,
+   "ocr_clean": 3,
+   "ocr_unresolved": 0,
+   "ocr_secs_per_page": 140.02525,
+   "ocr_calls_per_page": 2,
+   "step2_pages": 3,
+   "stored": {
+    "present": 3,
+    "O": {
+     "scored": 3,
+     "material_per_page": 2.3333333333333335,
+     "style_per_page": 0.6666666666666666
+    },
+    "P": {
+     "scored": 3,
+     "material_per_page": 4.666666666666667,
+     "style_per_page": 0.6666666666666666
+    }
+   },
+   "retranslate": {
+    "present": 3,
+    "edit_mean": 0.9465666666666667,
+    "edit_median": 0.9442,
+    "secs_per_page": 15.166666666666666,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 3,
+     "material_per_page": 0,
+     "style_per_page": 0
+    },
+    "P": {
+     "scored": 3,
+     "material_per_page": 2.6666666666666665,
+     "style_per_page": 0
+    }
+   },
+   "diffcorrect": {
+    "present": 3,
+    "edit_mean": 0.0008333333333333334,
+    "edit_median": 0,
+    "secs_per_page": 18.166666666666668,
+    "calls_per_page": 1,
+    "O": {
+     "scored": 3,
+     "material_per_page": 2.3333333333333335,
+     "style_per_page": 0.6666666666666666
+    },
+    "P": {
+     "scored": 3,
+     "material_per_page": 4.666666666666667,
+     "style_per_page": 0.6666666666666666
+    },
+    "rejected": 0
+   },
+   "paired_O": {
+    "n": 3,
+    "stored": 2.3333333333333335,
+    "retranslate": 0,
+    "diffcorrect": 2.3333333333333335
+   },
+   "paired_P": {
+    "n": 3,
+    "stored": 4.666666666666667,
+    "retranslate": 2.6666666666666665,
+    "diffcorrect": 4.666666666666667
+   }
+  }
+ },
+ "catch_rate": {
+  "O_stored": {
+   "carried": 16,
+   "caught": 16
+  },
+  "O_diffcorrect": {
+   "carried": 14,
+   "caught": 14
+  },
+  "P_stored": {
+   "carried": 16,
+   "caught": 16
+  },
+  "P_diffcorrect": {
+   "carried": 14,
+   "caught": 14
+  }
+ },
+ "judge_failed": {
+  "O": [],
+  "P": []
+ },
+ "plants_kept_by_diffcorrect": [
+  {
+   "qid": "p09",
+   "carried": 2
+  },
+  {
+   "qid": "p40",
+   "carried": 2
+  },
+  {
+   "qid": "p27",
+   "carried": 2
+  },
+  {
+   "qid": "p39",
+   "carried": 2
+  },
+  {
+   "qid": "p22",
+   "carried": 2
+  },
+  {
+   "qid": "p17",
+   "carried": 1
+  },
+  {
+   "qid": "p37",
+   "carried": 2
+  },
+  {
+   "qid": "p08",
+   "carried": 1
+  }
+ ],
+ "per_page": [
+  {
+   "qid": "p11",
+   "bin": "0–0.05",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 3,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 2,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.8598,
+     "still_planted": 0,
+     "secs": 7.2,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 11,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 3,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 2,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 20.381,
+   "judge_P_ok": true,
+   "judge_P_secs": 161.7
+  },
+  {
+   "qid": "p36",
+   "bin": "0–0.05",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 5,
+      "style": 3,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 5,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 1.1487,
+     "still_planted": 0,
+     "secs": 11.5,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 10.2,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 5,
+      "style": 3,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 5,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 22.984,
+   "judge_P_ok": true,
+   "judge_P_secs": 140.3
+  },
+  {
+   "qid": "p31",
+   "bin": "0–0.05",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 1,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 1.1982,
+     "still_planted": 0,
+     "secs": 15.4,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 10.9,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 1,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 16.769,
+   "judge_P_ok": true,
+   "judge_P_secs": 129.4
+  },
+  {
+   "qid": "p09",
+   "bin": "0–0.05",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.8588,
+     "still_planted": 0,
+     "secs": 10.8,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 2,
+     "secs": 11.4,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 18.873,
+   "judge_P_ok": true,
+   "judge_P_secs": 86.3
+  },
+  {
+   "qid": "p15",
+   "bin": "0–0.05",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.9336,
+     "still_planted": 0,
+     "secs": 14.9,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0041,
+     "still_planted": 0,
+     "secs": 27,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 25.823,
+   "judge_P_ok": true,
+   "judge_P_secs": 154
+  },
+  {
+   "qid": "p38",
+   "bin": "0–0.05",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.8015,
+     "still_planted": 0,
+     "secs": 9.5,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 21.5,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 21.314,
+   "judge_P_ok": true,
+   "judge_P_secs": 122.1
+  },
+  {
+   "qid": "p03",
+   "bin": "0.05–0.1",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 3,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.8591,
+     "still_planted": 0,
+     "secs": 10.7,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0103,
+     "still_planted": 0,
+     "secs": 11.6,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 19.597,
+   "judge_P_ok": true,
+   "judge_P_secs": 108.2
+  },
+  {
+   "qid": "p40",
+   "bin": "0.05–0.1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.7851,
+     "still_planted": 0,
+     "secs": 19.3,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0121,
+     "still_planted": 2,
+     "secs": 122.9,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 28.223,
+   "judge_P_ok": true,
+   "judge_P_secs": 183.3
+  },
+  {
+   "qid": "p30",
+   "bin": "0.05–0.1",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.7474,
+     "still_planted": 0,
+     "secs": 18.9,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 0,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 11.4,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 19.553,
+   "judge_P_ok": true,
+   "judge_P_secs": 94.8
+  },
+  {
+   "qid": "p02",
+   "bin": "0.05–0.1",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 4,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 3,
+      "style": 3,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.9336,
+     "still_planted": 0,
+     "secs": 15.5,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0041,
+     "still_planted": 0,
+     "secs": 11.4,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 4,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 3,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 20.222,
+   "judge_P_ok": true,
+   "judge_P_secs": 103.5
+  },
+  {
+   "qid": "p27",
+   "bin": "0.05–0.1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.7336,
+     "still_planted": 0,
+     "secs": 27.2,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 2,
+     "secs": 35.2,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 19.395,
+   "judge_P_ok": true,
+   "judge_P_secs": 114.4
+  },
+  {
+   "qid": "p39",
+   "bin": "0.05–0.1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.7782,
+     "still_planted": 0,
+     "secs": 21.7,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0182,
+     "still_planted": 2,
+     "secs": 31.2,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 1,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 19.558,
+   "judge_P_ok": true,
+   "judge_P_secs": 136.9
+  },
+  {
+   "qid": "p35",
+   "bin": "0.05–0.1",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 2,
+      "accuracy_minor": 4,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.6164,
+     "still_planted": 0,
+     "secs": 31.1,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0274,
+     "still_planted": 0,
+     "secs": 77,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 3,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 3,
+      "style": 1,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 3,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 23.095,
+   "judge_P_ok": true,
+   "judge_P_secs": 127.3
+  },
+  {
+   "qid": "p22",
+   "bin": "0.05–0.1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 1,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.901,
+     "still_planted": 0,
+     "secs": 14.2,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.026,
+     "still_planted": 2,
+     "secs": 10.6,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 1,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 4,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 19.608,
+   "judge_P_ok": true,
+   "judge_P_secs": 112.6
+  },
+  {
+   "qid": "p17",
+   "bin": "0.1–0.2",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 6,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.735,
+     "still_planted": 0,
+     "secs": 20.5,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0414,
+     "still_planted": 1,
+     "secs": 12.4,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 4,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 5,
+      "style": 0,
+      "planted_carried": 1,
+      "planted_caught": 1
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 1,
+      "planted_caught": 1
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 22.792,
+   "judge_P_ok": true,
+   "judge_P_secs": 126.5
+  },
+  {
+   "qid": "p24",
+   "bin": "0.2–0.5",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 11,
+      "accuracy_minor": 4,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 18,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.7785,
+     "still_planted": 0,
+     "secs": 16.4,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.2975,
+     "still_planted": 0,
+     "secs": 13.8,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 9,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 5,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 26.704,
+   "judge_P_ok": true,
+   "judge_P_secs": 147.6
+  },
+  {
+   "qid": "p18",
+   "bin": "0.5–1",
+   "planted": false,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 0,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.9747,
+     "still_planted": 0,
+     "secs": 14.3,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 0,
+     "secs": 14.2,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 1,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 2,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 16.893,
+   "judge_P_ok": true,
+   "judge_P_secs": 106.4
+  },
+  {
+   "qid": "p37",
+   "bin": "0.5–1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 10,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.9208,
+     "still_planted": 0,
+     "secs": 13.2,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 5,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0,
+     "still_planted": 2,
+     "secs": 29,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 0,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 3,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 10,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 20.642,
+   "judge_P_ok": true,
+   "judge_P_secs": 178.5
+  },
+  {
+   "qid": "p08",
+   "bin": "0.5–1",
+   "planted": true,
+   "arms": {
+    "stored": {
+     "present": true,
+     "edit": null,
+     "still_planted": 2,
+     "O": {
+      "material": 6,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 2,
+      "planted_caught": 2
+     }
+    },
+    "retranslate": {
+     "present": true,
+     "edit": 0.9442,
+     "still_planted": 0,
+     "secs": 18,
+     "calls": 1,
+     "O": {
+      "material": 0,
+      "accuracy_minor": 2,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     },
+     "P": {
+      "material": 1,
+      "accuracy_minor": 1,
+      "style": 0,
+      "planted_carried": 0,
+      "planted_caught": 0
+     }
+    },
+    "diffcorrect": {
+     "present": true,
+     "edit": 0.0025,
+     "still_planted": 1,
+     "secs": 11.3,
+     "calls": 1,
+     "rejected": null,
+     "n_edits": 1,
+     "O": {
+      "material": 6,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 1,
+      "planted_caught": 1
+     },
+     "P": {
+      "material": 2,
+      "accuracy_minor": 0,
+      "style": 0,
+      "planted_carried": 1,
+      "planted_caught": 1
+     }
+    }
+   },
+   "judge_O_ok": true,
+   "judge_O_secs": 18.633,
+   "judge_P_ok": true,
+   "judge_P_secs": 79.1
+  }
+ ]
+}

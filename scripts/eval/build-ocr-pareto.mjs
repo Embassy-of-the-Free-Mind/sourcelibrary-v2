@@ -13,8 +13,8 @@
  * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
  * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
  *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6011 / #6293 engine runs,
- *              the #6295 Syriac print panel and the Syriac ground-truth retest; the #6293 CLI reads re-scored with
- *              the CLI's preamble removed (results/ocr-pareto-6293/plan-note-rescored.json)
+ *              the #6295 Syriac print panel and the Syriac ground-truth retest; every #6293 Latin-script read re-scored with
+ *              the CLI's wrapper removed (results/ocr-pareto-6293/extract-rescored.json, #6523)
  *   works      results/pareto-works.json (build-pareto-works.mjs: book → work_id), for the intervals
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (metered Batch spend); self-hosted and
  *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
@@ -28,12 +28,15 @@
  *   node scripts/eval/build-ocr-pareto.mjs --exclude=<file> --out=<file>   # sensitivity rebuilds; never the committed file
  *
  * The rules (#6386; .claude/docs/eval-design.md §7):
- *   - ONE FAILURE RULE for every engine: a read that is missing text, refused, or could not be placed against the
- *     reference scores CER 1.0, and the page stays in for every engine. CER is capped at 1. A page drops only when
- *     an engine was never run on it, or #6304 found its reference does not fit the page;
- *   - each engine: mean accuracy (1 − mean CER, each page capped at 1) with a 95% interval that resamples WORKS, and the share of pages
- *     with CER above 0.5;
- *   - each engine against the engine in use: the mean per-page accuracy difference on the same pages, with a
+ *   - ONE FAILURE RULE for every engine (#6523, replacing #6386's "a failed read is CER 1.0"): a read that failed
+ *     (the copy filter cut or blocked it, another refusal, empty, a timeout, chat with no transcription;
+ *     scripts/lib/read-failure.mjs) is NOT SCORED and is counted per engine × panel as `did_not_read` {k, n, kinds};
+ *     above 20% unread the point is flagged `partly_measured`. A misread is scored, CER capped at 1; a read that could
+ *     not be placed against the reference stays a scored 100% error. The page stays in the panel for every engine. A
+ *     page drops only when an engine was never run on it, or #6304 found its reference does not fit the page;
+ *   - each engine: mean accuracy over the pages it read (1 − mean CER, each page capped at 1) with a 95% interval that
+ *     resamples WORKS, and the share of those pages with CER above 0.5;
+ *   - each engine against the engine in use: the mean per-page accuracy difference on the pages both read, with a
  *     work-clustered bootstrap interval; where a like-for-like second run of the engine in use covers the panel, its
  *     spread sets the noise band (lib/pareto-stats.mjs noiseOf). Verdict words only when the interval excludes 0 and clears it;
  *   - each panel gets a fitness grade (lib/pareto-stats.mjs gradePanel). Pages are split by how their reference was
@@ -49,6 +52,8 @@ import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
 import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
+import { extractTranscription } from '../lib/cli-chatter.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -57,6 +62,8 @@ const MIN_PAGES = 5;          // below this no interval at all
 const FRONTIER_MIN = 3;       // fewer priced engines than this: no frontier
 const WIDE_KEEP = 0.5;        // the primary panel keeps at least half the production engine's pages
 const MIN_WORKS_EXTRA = 10;   // a second view of the same pages is shown only on 10 or more works
+const PARTLY_MEASURED = 0.2;  // an engine that did not read more than this share of a panel is flagged (#6523)
+const KIND_WORDS = { copy_filter: 'copy filter', refusal: 'refusal', empty: 'empty', timeout: 'timeout', other: 'other' };
 
 const LABEL = {
   'gemini-3.1-flash-lite': 'Gemini 3.1 Flash-Lite', 'gemini-3-flash-preview': 'Gemini 3 Flash',
@@ -204,17 +211,38 @@ const benchRows = [];
     }
   }
 }
-// The CLI's preamble ("I have created the transcription plan…") is the route talking, not the page being read; the
-// #6293 reads that carried it are re-scored without it (rescore-plan-note.mjs, with its positive control).
-const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'plan-note-rescored.json'), 'utf8'))
-  .rows.map(r => [`${r.page}|${r.engine}`, r.stripped]));
-// ONE FAILURE RULE: a refused, unaligned or unscored read is CER 1.0, for every engine alike; CER is capped at 1.
+// The CLI's wrapper (a plan note, trailing chat after a partial read, a restarted or doubled reply, ``` fences) is the
+// route talking, not the page being read. Every engine's read in the Latin-script strata is re-scored with ONE
+// extractor (rescore-extract.mjs, cli-chatter.mjs extractTranscription, with its positive control; #6523). It
+// supersedes the #6386 plan-note re-score, which removed only the leading note.
+const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'extract-rescored.json'), 'utf8'))
+  .rows.map(r => [`${r.page}|${r.engine}`, r.extracted]));
+// The CLI arms' replies and meters are committed (outputs-*.jsonl, meter-*.jsonl), so a CLI read's failure is told
+// from its own words; every other engine's from what its scored cell recorded (finishReason, refusal, text length).
+const CLI_REPLY = new Map();
+for (const f of fs.readdirSync(path.join(__dirname, 'results', 'ocr-pareto-6293')).filter(f => /^(outputs|meter)-.*\.jsonl$/.test(f) && !f.includes('-rep'))) {
+  for (const line of fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', f), 'utf8').split('\n').filter(Boolean)) {
+    const o = JSON.parse(line), k = `${o.stratum}|${o.slug}|${o.engine}`;
+    CLI_REPLY.set(k, { ...CLI_REPLY.get(k), ...(f.startsWith('outputs') ? { text: o.text } : { finishReason: o.finishReason, error: o.error }) });
+  }
+}
+// ONE FAILURE RULE (#6523, Derek 2026-10-11: "Count them but don't score them. We only want to know quality when it
+// works."): a read that failed (copy filter, other refusal, empty, timeout, or chat with no transcription) is NOT
+// SCORED and is counted as `failure`, for every engine alike (scripts/lib/read-failure.mjs). A real misread is scored,
+// its CER capped at 1; a read the scorer could not place against the reference is text the engine produced for the
+// page, so it stays a scored 100% error (`unplaced`).
 const toRow = (r, page, extra = {}) => {
   const fixed = RESCORED.get(`${page}|${r.engine}`);
   const aligned = fixed ? fixed.aligned : r.aligned, cer0 = fixed ? fixed.cer : r.cer;
-  const failed = r.refused || !aligned || cer0 == null;
-  return { page, stratum: r.stratum, engine: r.engine, cer: failed ? 1 : Math.min(1, cer0), failed, refused: !!r.refused,
-    invented: failed ? null : r.invention_ref, date: r.date, file: r.file, row: r, ...extra };
+  const cli = CLI_6293_ENGINES.has(r.engine) ? CLI_REPLY.get(`${page}|${r.engine}`) : null;
+  const fail = readFailure({
+    text: cli?.text ?? null, extracted: cli?.text != null ? extractTranscription(cli.text).text : null,
+    finishReason: cli?.finishReason ?? r.finish_reason, cli: !!cli, error: cli?.error ?? null,
+    refused: r.refused, refusalSource: r.refusal_inferred ? 'inferred' : null, contentChars: r.content_chars,
+  });
+  const unplaced = !fail && (!aligned || cer0 == null);
+  return { page, stratum: r.stratum, engine: r.engine, cer: fail ? null : unplaced ? 1 : Math.min(1, cer0), failure: fail?.kind ?? null, failure_why: fail?.why ?? null, unplaced,
+    invented: fail ? null : r.invention_ref, date: r.date, file: r.file, row: r, ...extra };
 };
 const allRows = benchRows.filter(r => r.referenced).map(r => toRow(r, `${r.stratum}|${r.slug}`));
 const accRows = allRows.filter(r => !isRepeatArm(r.engine));
@@ -234,7 +262,7 @@ for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
     if (only && !only.has(engine)) continue;
     if (e.missing) continue;
     const failed = typeof e.cer_n2 !== 'number';
-    syriacRows.push({ page: `syriac-gt|${slug}`, stratum: 'syriac-gt', engine, cer: failed ? 1 : Math.min(1, e.cer_n2), failed, refused: false, invented: null, date, file: path.relative(REPO, file), work: `ms:${slug.split('-')[0]}` });
+    syriacRows.push({ page: `syriac-gt|${slug}`, stratum: 'syriac-gt', engine, cer: failed ? null : Math.min(1, e.cer_n2), failure: failed ? 'other' : null, failure_why: failed ? 'no score' : null, invented: null, date, file: path.relative(REPO, file), work: `ms:${slug.split('-')[0]}` });
   }
 }
 
@@ -260,7 +288,7 @@ if (syriacCliTiers.length) {
 const syriacPrintRows = [];
 if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine] of Object.entries(SYRIAC_PRINT_ARMS)) {
   if (pg.cer[arm] == null) continue;
-  syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, stratum: 'syriac-print-6295', engine, cer: Math.min(1, pg.cer[arm]), failed: false, refused: false, invented: null,
+  syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, stratum: 'syriac-print-6295', engine, cer: Math.min(1, pg.cer[arm]), failure: null, failure_why: null, invented: null,
     date: syriacPrint.date, file: path.relative(REPO, SYRIAC_PRINT_FILE), work: `edition:${pg.edition || pg.slug.split('_')[0]}` });
 }
 
@@ -270,13 +298,16 @@ const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.
 const CAP_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'capped-set.json');
 const SEL_6293 = fs.existsSync(SEL_6293_FILE) ? JSON.parse(fs.readFileSync(SEL_6293_FILE, 'utf8')) : null;
 const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSync(CAP_6293_FILE, 'utf8')).uids) : null;
+// #6523 (scripts/eval/experiments/2026-10-12-cli-ocr-route-fix-6523.md): how the Latin / Early English CLI pages were read
+const ROUTE_6523 = 'reply asked for between <<<BEGIN>>>/<<<END>>> markers; a PreToolUse hook allows view_file on the page image and refuses every other tool with a reason; plan mode; up to 2 attempts, on an empty reply only (1 of 573 reads retried); print timeout 300 s (120 s for the 3.8 low held-out pages)';
 for (const t of CLI_6293_TIERS) {
   if (!fs.existsSync(t.costFile)) continue;
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
     charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota',
-    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`,
+    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`
+      + ((cc.charts_reread_6523 || []).includes(chart) ? `; these pages re-read with the #6523 route config (${ROUTE_6523})` : ''),
     source: path.relative(REPO, t.costFile) });
 }
 const cli6293Coverage = {}, cli6293Subsample = {};
@@ -338,30 +369,42 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
   if (prodRows && repeat && ps.every(p => repeat.has(p))) {
     const like = ps.every((p, i) => repeat.get(p).file === prodRows[i].file);
     const dA = [...new Set(prodRows.map(r => r.date))].sort().join(', '), dB = [...new Set(ps.map(p => repeat.get(p).date))].sort().join(', ');
-    noise = noiseOf(ps.map((p, i) => ({ d: prodRows[i].cer - repeat.get(p).cer, cluster: work(p) })), hash(`${script.id}|${kind}|aa`),
+    // pages both runs read (#6523: a failed read is not scored, in the repeat too)
+    noise = noiseOf(ps.flatMap((p, i) => (prodRows[i].failure || repeat.get(p).failure ? [] : [{ d: prodRows[i].cer - repeat.get(p).cer, cluster: work(p) }])), hash(`${script.id}|${kind}|aa`),
       { like, why: like ? null : `it ran on ${dB}, by another route than the read it repeats (${dA})` });
   }
-  // ONE STATISTIC: accuracy is the MEAN over pages of 1 − CER (each page capped at 100% error, so failed reads count),
-  // and the paired difference below is the mean of per-page differences: the two columns measure the same thing.
+  // ONE STATISTIC: accuracy is the MEAN over the pages the engine READ of 1 − CER (each page capped at 100% error), and
+  // the paired difference below is the mean of per-page differences on the pages BOTH engines read: the two columns
+  // measure the same thing. The pages it did not read are counted beside it (`did_not_read`, #6523), not scored.
   const points = engines.map(e => {
-    const rs = ps.map(p => byEngine.get(e).get(p));
-    const items = rs.map((r, i) => ({ cer: r.cer, cluster: work(ps[i]) }));
+    const all = ps.map(p => byEngine.get(e).get(p));
+    const read = all.map((r, i) => [r, ps[i]]).filter(([r]) => !r.failure);
+    const rs = read.map(([r]) => r);
+    if (!rs.length) throw new Error(`${script.id}/${kind}: ${e} read none of the panel's ${ps.length} pages`);
+    const items = read.map(([r, p]) => ({ cer: r.cer, cluster: work(p) }));
     const mn = mean(rs.map(r => r.cer));
     const ci = clusterCI(items, x => x.cluster, xs => mean(xs.map(x => x.cer)), hash(`${script.id}|${kind}|${e}`));
+    const kinds = Object.fromEntries(READ_FAILURE_KINDS.map(k => [k, all.filter(r => r.failure === k).length]).filter(([, n]) => n));
+    const k = ps.length - rs.length;
     const inv = rs.filter(r => typeof r.invented === 'number').map(r => r.invented);
     const pt = {
       engine: e, label: LABEL[e] || e, production: e === production,
       mean_cer: r3(mn), accuracy: r3(1 - mn), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
+      // over the pages it read
       fail_share: r3(rs.filter(r => r.cer > 0.5).length / rs.length),
-      failed_reads: rs.filter(r => r.failed).length,
+      did_not_read: { k, n: ps.length, kinds },
+      unplaced: rs.filter(r => r.unplaced).length,
+      // above 20% unread, the accuracy rests on the pages the engine chose to answer
+      ...(k / ps.length > PARTLY_MEASURED ? { partly_measured: `did not read ${k} of ${ps.length} pages (${Object.entries(kinds).map(([x, n]) => `${KIND_WORDS[x]} ${n}`).join(', ')}); its accuracy rests on the ${rs.length} it read` } : {}),
       // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
       words_not_in_ref: inv.length >= Math.max(MIN_PAGES, rs.length / 2) ? r3(median(inv)) : null,
       cost: costOf(e, script.id),
     };
     if (!pt.cost) pt.no_price = NO_PRICE[e] || (/^(kraken|tesseract|omnisyr|qoruyo|sophro)/.test(e) || ['omnisyr-nosplit', 'mineru'].includes(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
     if (prodRows && e !== production) {
-      pt.vs_in_use = pairedDiff(rs.map((r, i) => ({ d: prodRows[i].cer - r.cer, cluster: work(ps[i]) })), hash(`${script.id}|${kind}|vs|${e}`));
-      pt.verdict = verdictOf(pt.vs_in_use, noise?.band ?? 0);
+      const pairs = all.flatMap((r, i) => (r.failure || prodRows[i].failure ? [] : [{ d: prodRows[i].cer - r.cer, cluster: work(ps[i]) }]));
+      pt.vs_in_use = pairs.length ? pairedDiff(pairs, hash(`${script.id}|${kind}|vs|${e}`)) : null;
+      if (pt.vs_in_use) pt.verdict = verdictOf(pt.vs_in_use, noise?.band ?? 0);
     }
     return pt;
   });
@@ -408,6 +451,9 @@ const CAPTION = {
   'syriac-print': 'Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.',
   syriac: 'Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.',
   'chinese-manuscript': 'On many pages the reference runs longer than the page, so every engine carries some unavoidable error.',
+  // #6523: the route config of the 3.7 / 3.8 command-line reads on these two charts, and the scoring change
+  latin: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
+  english: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
 };
 
 const charts = [], noChart = [], primarySets = {}, chartRows = {};
@@ -415,7 +461,7 @@ for (const script of SCRIPTS) {
   const rows0 = (script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row)))
     .filter(r => !EXCLUDE.has(r.page));
   const rows = script.source === 'syriac-print' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
-  chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, refused: r.refused }));
+  chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, failure: r.failure, failure_why: r.failure_why }));
   const byEngine = pagesOf(rows);
   const production = script.production || getOcrModelForBook({ language: script.language, visible: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
@@ -469,7 +515,7 @@ for (const script of SCRIPTS) {
 const out = {
   issue: 6386,
   generated_by: 'scripts/eval/build-ocr-pareto.mjs',
-  measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error',
+  measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read',
   production_rule: 'the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script',
   grade_rules: GRADE_RULES,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },

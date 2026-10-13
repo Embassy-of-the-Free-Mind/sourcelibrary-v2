@@ -1,0 +1,45 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>34-C</page-num>
+<page-num>77</page-num>
+<page-num>15</page-num>
+<warning>Handwritten 16th-century Spanish colonial document with indigenous pictorial ledger/codex elements (Códice Osuna / Pintura del gobernador, alcaldes y regidores de México)</warning>
+
++
+
+Como davan al bissorrey don luys de Velasco y su hijo ciento y veinte cargas de yerba cada dia para su cavalleriza y cossas y a doña ana su hija diez cargas de yerba q̃ vino a esta ciu.d la yerba <unclear>fuere cadau.º</unclear> por repartimy.º para el bissorrey y anssy por la qual les pagavan a quatro tomines por cada carga aunque a los macebales y a los p̃sente y a los xavantes los tava al dho don luys y a doña ella a medio real cada carga como valia el ordinario q̃ se vendia al dho vicerrey y a la ciubdad lo qual declararon con juram.to antemj balthasar de vilches scriva.º y lo certifican el gover.or alcaldes y regidores d'la ciubdad de mexico por lengua de Juangamez jnterp̃te de dho fisc.l y en fee de ello lo firmaron de sus nombres.
+
+Antemj Ber. de vilches
+
+ffr. jgnacio
+
+---
+
+<image-desc size="medium" type="diagram" significance="high">Pictorial record showing bundles of grass/fodder with numerical glyphs (pantli flags denoting 20, circles/dots denoting units), alongside Spanish labels and portrait heads of Don Luys de Velasco and Doña Ana de Velasco.</image-desc>
+
+<insert>vale tt</insert>
+<insert>ydem ydem yd</insert>
+<insert>Don luys de Velasco</insert>
+<insert>Doña ana de Velasco</insert>
+
+---
+
+Como davan de ordinario cada semana veinte peones dos albanies dos carpinteros y diez escaladores y veinte indios de s.u j.º para traer agua y barrer para el serui.º de dho bissorrey don luys de velasco a mug.r y cassa real y reparos della por repartimy.º d'la ciubdad de mexico sin q̃ por ellos seles pagasse cossa algu.ª lo qual ansimismo declararon con juram.to el dho governador alcaldes y regid.res por lengua de dho jnterp̃te.
+
+antemj Br. de vilches
+
+ffr. jgnacio
+
+---
+
+<image-desc size="large" type="diagram" significance="high">Compartmentalized pictorial register with columned sections illustrating indigenous labor services: 'peones q correquian lunes' with glyphs; 'alvanies' with two heads and tool; 'carpinteros' with two heads and tool; 'descaladores' with two heads; 'indios de serv.º p.a agua y barrer' with worker, jar of water, and broom. Below sits Viceroy Don Luis de Velasco in a Spanish chair before an altar or architectural structure, with speech scroll and name glyph.</image-desc>
+
+| peones · pa correquian lunes | alvanies | carpinteros | descaladores | indios de serv.º pa agua y barrer |
+|---|---|---|---|---|
+| <unclear>[pictograph: laborer with staff and banner]</unclear> | <unclear>[pictograph: two heads with trowel glyph]</unclear> | <unclear>[pictograph: two heads with adze glyph]</unclear> | <unclear>[pictograph: two heads with dish glyph]</unclear> | <unclear>[pictograph: laborer with water jar and broom]</unclear> |
+
+<insert>don luys de belasco bisorrey</insert>
+
+<vocab>bissorrey, don luys de Velasco, Doña ana de Velasco, yerba, cavalleriza, macebales, repartimiento, tributo, Códice Osuna, Baltasar de Vilches, peones, albañiles, carpinteros, escaladores</vocab>

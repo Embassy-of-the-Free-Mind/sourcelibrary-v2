@@ -1,0 +1,34 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>83, 299</page-num>
+<header>SAHAGÚN PRIMEROS MEMORIALES, CAP. II. CIELO É INFIERNO
+§ 4.° CUENTA DE LOS SIGNOS, 7.° TRECENARIO</header>
+<warning>Handwritten Nahuatl manuscript with later printed editorial additions</warning>
+
+matlactli oçe couatl. <image-desc size="small" type="symbol" significance="high">Square frame containing a snake and 11 dots</image-desc>
+
+matlactli omo<gloss>me</gloss> miquiztli <image-desc size="small" type="symbol" significance="high">Square frame containing a skull and 12 dots</image-desc>
+
+matlactli omey maçatl. <image-desc size="small" type="symbol" significance="high">Square frame containing a deer head and 13 dots</image-desc>
+
+<margin>6</margin>Jnin matlactetl omey tonalpoalli moteneuaya qualli tonalli ynaquin oncan
+tlacatia. Cenca yielcatca motlamachtiaya çacamouani çenca vnca quicuani
+Çannoiuhqui intlaçihoatl ynoncan tlacatia cenca yiel tlamachiuani yoan mochiqui
+piaya intonacaiutl ynizquicanicac yçentli. yietl. inuauhtli ynchia yoan vnca
+te ytlacalva motlamachtia. quipia quachtli.
+
+Çe tochtli. <image-desc size="small" type="symbol" significance="high">Square frame containing a rabbit head and 1 dot</image-desc>
+
+vme atl. <image-desc size="small" type="symbol" significance="high">Square frame containing a vessel of water and 2 dots</image-desc>
+
+yei izcuintli. <image-desc size="small" type="symbol" significance="high">Square frame containing a dog head and 3 dots</image-desc>
+
+navi vçomatli. <image-desc size="small" type="symbol" significance="high">Square frame containing a monkey head and 4 dots</image-desc>
+
+->HISTORIA DE LAS COSAS DE NUEVA ESPAÑA<-
+
+->(Códice matritense del Real Palacio, fol. 299 fte).<-
+
+<vocab>Nahuatl, Sahagún, Primeros Memoriales, tonalpoualli</vocab>

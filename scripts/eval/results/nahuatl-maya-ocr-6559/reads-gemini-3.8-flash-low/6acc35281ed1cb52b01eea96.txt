@@ -1,0 +1,11 @@
+<scan-quality>fair</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>COLLOQVIOS.</header>
+<meta>Catchword: polo</meta>
+<warning>Water stain and damage along the left margin and gutter with handwritten ink annotation in the stained margin.</warning>
+
+in quitoa, acaçomo quimatiz, acaçomo quicaquiz initlauelilocaio y tatzin: in momati, acaça c quelleltiz, quitlacaualtiz, inic amo tlatlacotinemiz: çan moztlacauia, motla<margin>engañar</margin>pololtia. Ca inixquich tlalticpac muchiua, àuel ixpanizinco minaya, motlàtia: muchixquich ixpantzinco neci: auh iyehuantin, amo quimotlacamachitiznequi iniuhqui in tatzin: çatepan vel quittazque, vel quimatizque, in quenin cenca temamauhticatzintli, in tetlatzontequilicatzintli. Ca nelli, inaquin amo qmimacaxilia, in amo quimomauhcaitilia Dios: muchipa çan tlanenpopoloa, tlanenquixtia: ca ini axca initlatqui ininacayo: çan quinenpopoloa, çan quinenquixtia: auh ini anima inixtplatzin Dios, mictlan quitlaça, mictlan quimaiaui. Ca noiuh quichiuh in tlanenpopoloani: ca muchi, ca ixquich, çan quinenpopolo
+
+<vocab>Colloquios, Nahuatl, tlalticpac, Dios, anima, mictlan, tlanenpopoloani, tatzin</vocab>

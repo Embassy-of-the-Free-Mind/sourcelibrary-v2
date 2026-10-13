@@ -94,9 +94,17 @@ export function pageEmbeddingInput(page) {
  * e5 signature says another model made it (#6175: 2026-04 e5-base vectors
  * labelled Gemini by a column DEFAULT, unreachable by search).
  */
+/**
+ * The source timestamp a page_translations row records as `mongo_updated_at`. A stored row whose
+ * value is at least this one already embeds the page's current text (embed-gemini skips it).
+ */
+export function pageEmbeddingRowTs(page) {
+  return page?.translation?.updated_at || page?.ocr?.updated_at || page?.updated_at || null;
+}
+
 export function buildPageEmbeddingRow({ page, book, text, hasTranslation, embedding, model }) {
   assertStoreVector(embedding, { model });
-  const mongoTs = page.translation?.updated_at || page.ocr?.updated_at || page.updated_at;
+  const mongoTs = pageEmbeddingRowTs(page);
   return {
     page_id: page.id,
     book_id: page.book_id,

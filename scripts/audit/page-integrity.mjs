@@ -4,11 +4,12 @@
 // scans are in order or whether a translation is short or echoed. The detectors live in
 // scripts/lib/page-integrity.mjs (pure, tested).
 /**
- * page-integrity — eight exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
+ * page-integrity — nine exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
  * catchword continuity, printed page-number sequence, duplicate consecutive scans, truncated
  * translations, echoed source (2026-09-24), and from the page-error taxonomy (2026-09-25):
  * <vocab> words absent from the body (O5 #5136) and a block repeated inside one page (O4 #5135);
- * and text hidden in the continuity <meta> (#5305 tq9).
+ * and text hidden in the continuity <meta> (#5305 tq9); and a STORED translation the write door
+ * would refuse today as a runaway (#4098: the door only judges what is written from now on).
  * MEASUREMENT ONLY: writes files, touches no store.
  * The new signals need a FRESH --out directory: a resumed shard skips books already scanned.
  *
@@ -39,6 +40,9 @@ import {
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
 // O11 (#5142): per page, a <page-num> off the book's own pagination line
 import { pageNumMisreads } from '../lib/page-integrity.mjs';
+// #4098: the write door's own runaway rule, asked of what is already stored
+import { isExcess, bodyLen } from '../lib/translate-core.mjs';
+import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 
 export const TRUNC_NORM_FLAG = 0.5;
 export const REPEATED_BOOK_SHARE = 0.2;
@@ -78,6 +82,31 @@ export function extremeForLanguage(ratio, lang, detail) {
   return ref ? ratio < 0.5 * ref.p05 : false;
 }
 
+export const OVERLONG_PADDING_SHARE = 0.5; // this share of the characters in filler runs = padding, not prose
+const FILLER_RUNS = /[ \t\u00a0]{3,}|-{4,}|(?:\. ?){4,}|(?:&nbsp;){2,}/g;
+
+/**
+ * A stored translation that `isExcess` (translate-core, the write door's runaway rule: body over
+ * 3x the source body, 16x on a Han source, or over 20,000 characters raw) would refuse if it were
+ * written today. One definition with the door, so the audit and the worker cannot drift. `shape`
+ * says what the excess is made of, which decides nothing about the repair (all three are
+ * re-translated from the OCR) but tells a reader of the list what they will see:
+ *   'padding'  most of the characters are runs of spaces, rules or dot leaders: a table cell
+ *              filled to the output cap. The words stop where the filler starts, so the page is
+ *              ALSO truncated (8 of the 8 measured in #4098)
+ *   'loop'     one phrase over and over (repeatedBlocks' loop, or ocr-loop-guard's refusal)
+ *   'overrun'  neither: prose that runs past the page
+ * Returns null for a page the door would accept.
+ */
+export function overlongTranslation({ ocr, tr }) {
+  if (!tr || !isExcess(ocr, tr)) return null;
+  const filler = (tr.match(FILLER_RUNS) || []).reduce((n, m) => n + m.length, 0);
+  const rb = repeatedBlocks(tr);
+  const shape = filler / tr.length >= OVERLONG_PADDING_SHARE ? 'padding'
+    : (rb.judged && rb.kind === 'loop') || loopVerdict(tr).refuse ? 'loop' : 'overrun';
+  return { shape, tr: tr.length, src: String(ocr || '').length, trBody: bodyLen(tr), srcBody: bodyLen(ocr), filler };
+}
+
 /** All six signals for one book. Returns { lines } -- flag rows then the book row. */
 export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detail = null } = {}) {
   const lines = [];
@@ -92,6 +121,7 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
     vocab: { judged: 0, flagged: 0, flagged2: 0, unjudged: {} },
     repeat: { judged: 0, block: 0, loop: 0 },
     meta: { marker: 0, shapes: {}, unjudged: 0, wholePage: 0 },
+    overlong: { judged: 0, flagged: 0, shapes: {} },
   };
   // 1. catchwords
   for (let i = 0; i < rows.length; i++) {
@@ -160,6 +190,13 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
       if (!mp.judged) bk.meta.unjudged++;
       else bk.meta.shapes[mp.shape] = (bk.meta.shapes[mp.shape] || 0) + 1;
       if (mp.shape === 'hidden-text' || mp.wholePage) lines.push({ kind: 'meta', book: id, p: A.p, lang, shape: mp.shape || 'unjudged', words: mp.words, inPrev: mp.inPrev ?? null, wholePage: mp.wholePage, text: mp.text || '' });
+    }
+    // 9. #4098 — a stored translation the write door would refuse as a runaway
+    bk.overlong.judged++;
+    const ov = overlongTranslation(A);
+    if (ov) {
+      bk.overlong.flagged++; bk.overlong.shapes[ov.shape] = (bk.overlong.shapes[ov.shape] || 0) + 1;
+      lines.push({ kind: 'overlong', book: id, p: A.p, lang, ...ov, type: A.type || null });
     }
     const t = truncationRatio(A);
     if (t.judged) {
@@ -269,6 +306,7 @@ export function summarize(out) {
     vocab: { judged: 0, flagged: 0, flagged2: 0, books: 0, unjudged: {} },
     repeat: { judged: 0, block: 0, loop: 0, books: 0 },
     meta: { marker: 0, shapes: {}, unjudged: 0, wholePage: 0, booksWithHidden: 0, booksWithWholePage: 0 },
+    overlong: { judged: 0, flagged: 0, shapes: {}, books: 0 },
   });
   const add = (o, k, v) => { o[k] = (o[k] || 0) + v; };
   const all = blank(), byLang = {};
@@ -309,6 +347,10 @@ export function summarize(out) {
           if (b.meta.shapes['hidden-text']) S.meta.booksWithHidden++;
           if (b.meta.wholePage) S.meta.booksWithWholePage++;
         }
+        if (b.overlong) { // absent on rows written before the check existed
+          S.overlong.judged += b.overlong.judged; S.overlong.flagged += b.overlong.flagged; if (b.overlong.flagged) S.overlong.books++;
+          for (const [k, v] of Object.entries(b.overlong.shapes)) add(S.overlong.shapes, k, v);
+        }
       }
     }
   }
@@ -332,6 +374,8 @@ export function summarize(out) {
  *   hidden-meta-text  words after the "continues from previous page" marker that are not the
  *                     previous page's translation: text no reader sees; `wholePage` when the
  *                     meta holds nearly all of the page
+ *   overlong-translation  a stored translation the write door would refuse today as a runaway
+ *                     (#4098); `shape` = padding | loop | overrun
  */
 export function report(out, reportDir, date) {
   const files = fs.readdirSync(out).filter(f => /^shard-\d+\.jsonl$/.test(f));
@@ -342,7 +386,7 @@ export function report(out, reportDir, date) {
     try { const b = JSON.parse(line); vis.set(b.id, { visible: !!b.visible, title: b.display_title || b.title || '' }); } catch {}
   }
   const lists = { 'duplicate-scans': [], 'repeated-page-books': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [],
-    'vocab-absent': [], 'repeated-block': [], 'hidden-meta-text': [] };
+    'vocab-absent': [], 'repeated-block': [], 'hidden-meta-text': [], 'overlong-translation': [] };
   const pagesOf = new Map();
   for (const f of files) {
     const byBook = new Map();
@@ -375,6 +419,7 @@ export function report(out, reportDir, date) {
       for (const r of rows.filter(x => x.kind === 'ocrleak')) lists['ocr-reasoning-leak'].push({ book, visible: v.visible, page: r.p });
       for (const r of rows.filter(x => x.kind === 'vocab')) lists['vocab-absent'].push({ book, visible: v.visible, page: r.p, terms: r.terms, absent: r.absent, capitalised: r.capitalised, share: r.share, type: r.type });
       for (const r of rows.filter(x => x.kind === 'repeat')) lists['repeated-block'].push({ book, visible: v.visible, page: r.p, longest: r.longest, copies: r.copies, share: r.share, ttr: r.ttr, unsegmented: r.unsegmented, sample: r.sample, type: r.type });
+      for (const r of rows.filter(x => x.kind === 'overlong')) lists['overlong-translation'].push({ book, visible: v.visible, page: r.p, lang: r.lang, shape: r.shape, tr: r.tr, src: r.src, trBody: r.trBody, srcBody: r.srcBody, type: r.type });
       for (const r of rows.filter(x => x.kind === 'meta')) lists['hidden-meta-text'].push({ book, visible: v.visible, page: r.p, lang: r.lang, shape: r.shape, words: r.words, inPrev: r.inPrev, wholePage: !!r.wholePage });
     }
   }
@@ -418,6 +463,7 @@ export function report(out, reportDir, date) {
   stats['leaf-order'].corroborated = lo.filter(r => r.corroborated).length;
   stats['leaf-order'].byShape = lo.reduce((o, r) => ((o[r.shape] = (o[r.shape] || 0) + 1), o), {});
   if (stats['page-num-misread']) stats['page-num-misread'].byCause = lists['page-num-misread'].reduce((o, r) => ((o[r.cause] = (o[r.cause] || 0) + 1), o), {});
+  stats['overlong-translation'].byShape = lists['overlong-translation'].reduce((o, r) => ((o[r.shape] = (o[r.shape] || 0) + 1), o), {});
   stats['hidden-meta-text'].wholePage = lists['hidden-meta-text'].filter(r => r.wholePage).length;
   stats.echoed.wholePage = lists.echoed.filter(r => r.wholePage).length;
   stats.echoed.wholePageBooks = new Set(lists.echoed.filter(r => r.wholePage).map(r => r.book)).size;

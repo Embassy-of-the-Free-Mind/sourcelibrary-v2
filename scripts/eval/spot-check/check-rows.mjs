@@ -8,8 +8,11 @@
  *   seriousPage / seriousClasses   overview-score.mjs's definition of a serious page, and the classes on it
  *   FIT                            shelf-overview's fit_to_show → show | caveat | fix
  *   derivedFortnightly             the fortnightly rule (scripts/eval/methods/fortnightly-spot-check.md)
+ *   TIER / notePages / curationReader / curationCheck
+ *                                  the curation check (scripts/eval/methods/curation-check.md): tier → verdict, the
+ *                                  pages a note names, who read, and one verdict as a book_checks input
  *   pageFindings                   the serious findings per page, for book_checks.page_findings: what a reader's
- *                                  page-level warning is built from (#6199)
+ *                                  page-level warning is built from (#6199); each carries its KIND (#6203)
  *   pageRecords / packetProvenance the text a run read: the packet's model ids; the packet's TEXT is compared with the
  *                                  page's text now, so a page rewritten after the draw (before or after the review) is
  *                                  changed_since_check, and only an unchanged page gets the page's *_updated_at stamps
@@ -21,6 +24,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { kindOfFinding } from '../../lib/review-vocabulary.mjs';
 
 const allErrors = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e && typeof e === 'object');
 export const seriousPage = (p) => allErrors(p).some((e) => e.severity === 'serious') || p.right_page === 'no';
@@ -41,7 +45,8 @@ export function pageFindings(pages, { withProblem = true } = {}) {
       for (const e of (p[key] || [])) {
         if (!e || typeof e !== 'object' || e.severity !== 'serious') continue;
         const problem = withProblem && typeof e.problem === 'string' && e.problem.trim() ? e.problem.trim().slice(0, PROBLEM_MAX) : null;
-        errors.push({ stage, ...(e.class ? { class: String(e.class) } : {}), ...(problem ? { problem } : {}) });
+        const kind = kindOfFinding(e);   // the reviewer's own kind, else its class's default (review-vocabulary)
+        errors.push({ stage, ...(e.class ? { class: String(e.class) } : {}), ...(kind ? { kind } : {}), ...(problem ? { problem } : {}) });
       }
     }
     const wrongPage = p.right_page === 'no';
@@ -57,6 +62,56 @@ export function derivedFortnightly(b) {
   const onSight = 'on_sight_defect' in b ? b.on_sight_defect === true
     : !['yes', 'fits'].includes(b.shelf_fit) || b.pages.some((p) => allErrors(p).some((e) => e.severity === 'moderate'));
   return onSight ? 'caveat' : 'show';
+}
+
+// ── curation check (CURATION-ADDENDUM.md verdicts: { book_id, tier, title, note, interest }) ──
+export const TIER = { 1: 'show', 2: 'caveat', 3: 'fix' };
+
+/** The page numbers a curation note names (`?page=N`, `p.N`, `pp. N`), ascending. */
+export const notePages = (note) => [...new Set([...String(note ?? '').matchAll(/\?page=(\d+)/g), ...String(note ?? '').matchAll(/\bpp?\.\s?(\d+)/g)].map((m) => Number(m[1])))].sort((x, y) => x - y);
+
+const READ_BY = {
+  'reviewer by eye': { kind: 'model', model: 'opus', image_opened: true },
+  'read from image': { kind: 'model', role: 'session', image_opened: true },
+  'earlier session': { kind: 'model', role: 'earlier session' },
+};
+// The addendum tells a reviewer who could not read the image to say so in the note. Such a read must not be recorded
+// as an image read; the sentence is free text, so the row says 'unrecorded' rather than guess false.
+const IMAGE_NOT_READ = /(?:could ?n[o']t|cannot|can't|unable to|did not|didn't|failed to) (?:\w+ ){0,3}?(?:read|open|load|fetch|view|see) (?:\w+ ){0,3}?(?:image|scan)|(?:image|scan)s? (?:\w+ ){0,3}?(?:(?:could ?n[o']t|cannot|did not|didn't|failed to) (?:be )?(?:read|open|opened|load|loaded|fetch|fetched)|unreadable|illegible|not readable|fetch failed)|(?:judged |read )?from (?:the )?text (?:alone|only)/i;
+
+/**
+ * Who read a curation verdict. `read_by` is the 2026-10-06 Eternity shelf's per-book label; a verdict without one came
+ * from a CURATION-ADDENDUM reviewer (`model` = the run's model id when run-reviewers.sh recorded it). Null for a
+ * read_by this does not know. An 'earlier session' read is an image read only when its note says so.
+ */
+export function curationReader({ read_by, note }, model = 'opus') {
+  if (read_by === undefined || read_by === null) return { kind: 'model', model, image_opened: IMAGE_NOT_READ.test(note ?? '') ? 'unrecorded' : true };
+  const r = READ_BY[read_by];
+  if (!r) return null;
+  return { ...r, image_opened: r.image_opened ?? (/image/i.test(note ?? '') ? true : 'unrecorded') };
+}
+
+/**
+ * One curation verdict as a book_checks input, minus what needs Mongo (text_provenance, exposure) and the registry
+ * (method_version). `packet` = the book's record in the run's packets (overview-draw.mjs --picked), whose pages are
+ * the two the reviewer was given; without one, the pages the note names. `cost` = runCost() of the verdict file's
+ * packet, shared equally by the `booksInFile` verdicts in it. Returns { input } or { skip: reason }.
+ * rights_note is never copied: this record is not where rights suspicions live.
+ */
+export function curationCheck({ verdict: v, file, runId, checkedAt, packet, cost, booksInFile = 1, frame = {} }) {
+  const verdict = TIER[v.tier];
+  if (!verdict) return { skip: `tier ${JSON.stringify(v.tier)} is not 1, 2 or 3` };
+  const fromPacket = (packet?.pages ?? []).map((p) => p.page_number).filter((n) => typeof n === 'number');
+  const pages = fromPacket.length ? fromPacket : notePages(v.note);
+  if (!pages.length) return { skip: 'no packet for the book and the note names no page' };
+  const reader = curationReader(v, cost?.model ?? 'opus');
+  if (!reader) return { skip: `unknown read_by ${v.read_by}` };
+  return { input: {
+    book_id: v.book_id, checked_at: checkedAt, method_id: 'curation-check', run_id: runId,
+    frame: { ...frame, pages_read_source: fromPacket.length ? 'packet' : 'note' },
+    pages_read: pages, reader, verdict, verdict_source: 'reader', note: v.note, evidence_path: file,
+    ...(cost ? { subscription_usd_eq: +(cost.usd / booksInFile).toFixed(4) } : {}),
+  } };
 }
 
 const PAGE_PROJECTION = { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1,

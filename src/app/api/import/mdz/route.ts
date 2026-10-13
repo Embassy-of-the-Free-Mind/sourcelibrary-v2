@@ -205,6 +205,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       mdz_id: normalizedId,
       bsb_id: normalizedId,
       thumbnail: getThumbnailUrl(0),
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`MDZ:${normalizedId}`, `URN:${normalizedId}`],

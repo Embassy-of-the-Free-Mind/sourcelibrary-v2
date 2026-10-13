@@ -18,11 +18,13 @@ simultaneously on 2026-08-07); #3715 collapsed it to one constant, held against
 
 The two tool lists have **diverged** and that is not (currently) a bug to fix
 blindly: the remote server carries `get_quotes` (batch), `propose_collection`,
-`list_editions` (#3676) and `get_locus` (#3703) which the package lacks, and the
-package carries `check_duplicate` — a pre-import helper that has no business on
-a public unauthenticated surface — which the remote server rightly lacks. Check
-the file you are actually changing. The gap is now four tools wide; whether to
-sync or deprecate the npm package is an open decision.
+`list_editions` (#3676) and `get_locus` (#3703) which the package lacks. Both
+now carry `check_duplicate`: it was package-only while its backend leaked hidden
+records' titles and ids, and joined the remote server (#4250) once #6035 made
+`/api/books/check-duplicate` count hidden copies without describing them. On the
+remote server it is the "do you hold X?" answer — a list_books / search_library
+miss is not evidence of absence. Check the file you are actually changing;
+whether to sync or deprecate the npm package is an open decision.
 
 ## The listing, and the thing that must not happen again
 

@@ -1,6 +1,7 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 
 export const revalidate = 3600; // 1h ISR
 
@@ -159,7 +160,9 @@ export default async function PodcastPage() {
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA. The Librarian is refused on partner hosts (#4330), and this
+            page is served there, so the link goes too. */}
+        <HideOnTenantHost>
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
           <p className="text-[#6b6560] text-sm font-body mb-3">
             Want to create your own episode?
@@ -171,6 +174,7 @@ export default async function PodcastPage() {
             Research a topic with the Librarian
           </Link>
         </div>
+        </HideOnTenantHost>
       </div>
     </div>
   );

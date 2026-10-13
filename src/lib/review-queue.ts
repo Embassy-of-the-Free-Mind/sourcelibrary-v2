@@ -80,6 +80,17 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'b', rating: 'both_off',          label: '✗✗ both wrong',          color: '#b91c1c', hint: 'Neither the transcription nor the English can be trusted here' },
     { key: 'u', rating: 'unclear',           label: '? unclear',              color: '#6b7280', hint: "Can't tell. Say why in the box if you can" },
   ],
+  // Book runs (#6418): the same verdicts, but given by a volunteer's CLAUDE
+  // checking a book page by page, not by a person who reads the language. A
+  // separate queue so these rows never count toward translation-check's human
+  // consensus (nextCandidate retires pool items on vote counts per queue).
+  'book-run': [
+    { key: 'k', rating: 'both_sound',        label: 'both sound',          color: '#10b981', hint: 'The transcription matches the page, and the English matches the original' },
+    { key: 'j', rating: 'translation_drift', label: 'translation drifts',  color: '#ef4444', hint: 'The transcription is right, but the English departs from it' },
+    { key: 'x', rating: 'transcription_off', label: 'transcription wrong', color: '#f59e0b', hint: "The text doesn't match the page" },
+    { key: 'b', rating: 'both_off',          label: 'both wrong',          color: '#b91c1c', hint: 'Neither the transcription nor the English can be trusted here' },
+    { key: 'u', rating: 'unclear',           label: 'unclear',             color: '#6b7280', hint: "Can't tell from the scan or the text" },
+  ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
@@ -118,7 +129,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'translation-check', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'translation-check', 'book-run', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

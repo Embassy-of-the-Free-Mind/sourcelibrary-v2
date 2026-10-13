@@ -5,7 +5,9 @@ import path from 'node:path';
 // @ts-expect-error — plain .mjs script, no type declarations
 import { buildReport, wilson } from '../../scripts/eval/quality-dashboard/build.mjs';
 // @ts-expect-error — plain .mjs script, no type declarations
-import { buildTrends, efficiencyPoint, billPoints } from '../../scripts/eval/quality-dashboard/trends.mjs';
+import { buildTrends, efficiencyPoint, billPoints, scorePanel } from '../../scripts/eval/quality-dashboard/trends.mjs';
+// @ts-expect-error — plain .mjs module without type declarations
+import * as panelLib from '../../scripts/eval/ocr-prereg-6388/panel-key.mjs';
 
 /**
  * scripts/eval/quality-dashboard/build.mjs (#5474) on a fixture tree. Pins the rules the page relies
@@ -106,11 +108,15 @@ describe('quality-dashboard build', () => {
 });
 
 const NOW = new Date('2099-03-20T06:30:00Z');
-const stored = (date: string, cer: [number, number, number], hashes: Record<string, string>) => ({
+const stored = (date: string, cer: [number, number, number], hashes: Record<string, string>, fails: [number, number, number] = [1, 0, 6]) => ({
   day: date,
   served_text_stored: {
     date, hashes,
-    strata: { 'latin-print': { mean_cer: cer[0], n: 30, n_scored: 30 }, 'zh-manuscript': { mean_cer: cer[1], n: 30, n_scored: 30 }, 'english-print': { mean_cer: cer[2], n: 30, n_scored: 30 } },
+    fail_cer: 0.3,
+    strata: Object.fromEntries(['latin-print', 'zh-manuscript', 'english-print'].map((st, i) => [st, {
+      mean_cer: cer[i], n: 30, n_scored: 30, failures: { k: fails[i], n: 30, kinds: {} }, median_cer_text: cer[i], n_text: 30 - fails[i],
+      digits: i === 1 ? null : { rate: 0.05, errors: 10, key_digits: 200, pages: 12 },
+    }])),
   },
 });
 const pvg = (dayStr: string, ocr: [number, number, number], bill?: unknown) => ({
@@ -134,10 +140,45 @@ describe('quality trends (#6429)', () => {
     const docs = [stored('2099-03-10', [0.04, 0.1, 0.13], { a: 'x', b: 'y', c: 'z' }), stored('2099-03-19', [0.03, 0.1, 0.13], { a: 'x2', b: 'y', c: 'z' })];
     const q = buildTrends(docs, NOW)[0];
     expect(q.newest).toBe('2099-03-19');
-    expect(q.statement).toContain('Latin 3.0%');
-    expect(q.statement).toContain('1 of 3 panel pages re-read since Mar 10: Latin better by 1.0 pts');
+    expect(q.statement).toContain('Pages that failed (empty, refused, or over 30% error): Latin 1 of 30, Chinese MS 0 of 30, English 6 of 30.');
+    expect(q.statement).toContain('Median error on the pages with text: Latin 3.0%');
+    expect(q.statement).toContain('Digits read wrong: Latin 5.0% of 200, Chinese MS too few to measure');
+    expect(q.statement).toContain('1 of 3 panel pages re-read since Mar 10: Latin median better by 1.0 pts');
+    expect(q.statement).not.toMatch(/mean/i);
     expect(q.key_type).toBe('AI-consensus key');
     expect(q.stale).toBeNull();
+  });
+
+  it('a point scored the old way (one mean, digits dropped) is not put on the same line (#6203)', () => {
+    const old = { day: '2099-03-01', served_text_stored: { date: '2099-03-01', hashes: {}, strata: { 'latin-print': { mean_cer: 0.5, n: 30, n_scored: 30 } } } };
+    const q = buildTrends([old, stored('2099-03-19', [0.03, 0.1, 0.13], {})], NOW)[0];
+    expect(q.series[0].points.map((p: { date: string }) => p.date)).toEqual(['2099-03-19']);
+    expect(q.statement).toContain('First point');
+  });
+
+  it('scores failures, the median over pages with text, and digits apart (#6203)', () => {
+    const body = 'In the yeare of our Lord God there came into this realme a great company of strangers';
+    const pages = [
+      { key: `${body} 1650 and 1651 and 1652`, served: `${body} 1650 and 1651 and 1652` },   // exact
+      { key: `${body} 1650 and 1651 and 1652`, served: `${body} 1680 and 1657 and 1652` },   // two digits wrong, letters right
+      { key: `${body} 1650 and 1651 and 1652`, served: '' },                                  // empty read of a page with text
+      { key: `${body} 1650 and 1651 and 1652`, served: 'Quite another text altogether, nothing of the leaf, in the wrong hand 99' },
+    ];
+    const sample = pages.map((_, i) => ({ uid: `u${i}`, stratum: 'english-print' }));
+    const arm = (f: (p: (typeof pages)[number]) => string) => new Map(pages.map((p, i) => [`u${i}`, { text: f(p) }]));
+    const panel = { sample, keyReads: { G: arm((p) => p.key), S: arm((p) => p.key), O: arm((p) => p.key) }, keys: new Map() };
+    const r = scorePanel(arm((p) => p.served), panel, panelLib);
+    const e = r.strata['english-print'];
+    expect(e.failures).toEqual({ k: 2, n: 4, kinds: { empty: 1, cer_over: 1 } });
+    expect(e.n_text).toBe(3);                      // the empty read is a failure, not a CER
+    expect(r.per_page.u0).toBe(0);
+    expect(r.per_page.u1).toBeGreaterThan(0);      // digits count in the CER now…
+    expect(r.per_page.u1).toBeLessThan(0.05);      // …but two wrong digits barely move it,
+    expect(e.digits.pages).toBe(3);
+    expect(e.digits.rate).toBeGreaterThan(0.3);    // which is why they have their own channel
+    expect(e.median_cer_text).toBe(r.per_page.u1); // the median of {0, small, 1}, not their mean
+    expect(e.mean_cer).toBeGreaterThan(0.4);
+    expect(r.normaliser_version).toBe(4);
   });
 
   it('flags a daily series whose newest point is old', () => {

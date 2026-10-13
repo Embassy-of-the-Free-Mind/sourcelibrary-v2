@@ -570,6 +570,16 @@ export async function getQuote(args: {
     );
   }
 
+  // Announced extract (#3689) — same wording as EMBEDDED_EXTRACT_TIP in
+  // src/lib/announced-extract.ts (the two servers do not share code).
+  if (quote?.embedded_extract) {
+    tips.push(
+      "This page is, at least in part, an EXTRACT FROM ANOTHER SOURCE that the book itself announces " +
+        "(quote.embedded_extract.announcement). The citation block names the book's author, who may " +
+        "not have written these words — follow quote.embedded_extract_note before attributing them.",
+    );
+  }
+
   return {
     ...withCitationLink(result),
     tip: tips.join("\n\n"),

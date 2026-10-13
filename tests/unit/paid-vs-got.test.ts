@@ -113,6 +113,21 @@ describe('waste', () => {
     expect(r.eval).toHaveLength(1);
   });
 
+  it('does not count a book-level enrich request as waste when its book took the output', () => {
+    expect(L.parseBookLevelId('enrich-index-muy4a57p-qf1e:6abee417a43718d234bf2288')).toEqual({ job: 'enrich-index-muy4a57p-qf1e', book: '6abee417a43718d234bf2288' });
+    expect(L.parseBookLevelId('batches/J#tbc_1')).toBeNull();
+    expect(L.bookLevelDelivered('done')).toBe(true);
+    expect(L.bookLevelDelivered('index_collected')).toBe(true);
+    for (const s of ['failed', 'dropped', 'index_submitted', undefined]) expect(L.bookLevelDelivered(s)).toBe(false);
+    const rows = [
+      { batch_job_id: 'enrich-index-a:b1', type: 'summary', status: 'success', cost_usd: 0.09 },
+      { batch_job_id: 'enrich-index-a:b2', type: 'summary', status: 'success', cost_usd: 0.09 },
+    ];
+    const r = L.paidForNothing(rows, new Set(), new Set(), new Set(['enrich-index-a:b1']));
+    expect(r.book_level.map((x: { batch_job_id: string }) => x.batch_job_id)).toEqual(['enrich-index-a:b1']);
+    expect(r.nothing.map((x: { batch_job_id: string }) => x.batch_job_id)).toEqual(['enrich-index-a:b2']);
+  });
+
   it('separates real failed spend from a phantom submit estimate', () => {
     const f = L.failedWithCost([
       { status: 'failed', cost_usd: 0.0127, output_tokens: 16380 },

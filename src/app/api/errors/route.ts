@@ -1,14 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { recurringErrors } from '@/lib/error-rollup';
 
 export const maxDuration = 10;
 
 /**
  * GET /api/errors — admin-only: list recent errors for inspection.
+ *
+ * `?rollup=<days>` (1–30) returns the recurring-error rollup instead: the window's rows
+ * grouped by normalised message, with count, distinct visitors, first/last seen and an
+ * example URL (#4057). `min` sets the per-group threshold (default 10), `limit` the
+ * number of groups (default 25). This is what the weekly digest routine reads.
  */
 export const GET = withAdminAuth(async (request) => {
   try {
+    const params = request.nextUrl.searchParams;
+    if (params.has('rollup')) {
+      const db = await getDb();
+      return NextResponse.json(await recurringErrors(db, {
+        windowDays: Number(params.get('rollup')) || 7,
+        minCount: Number(params.get('min')) || 10,
+        limit: Number(params.get('limit')) || 25,
+      }));
+    }
     const limit = Math.min(parseInt(request.nextUrl.searchParams.get('limit') || '100'), 500);
     const db = await getDb();
     const errors = await db.collection('application_errors')

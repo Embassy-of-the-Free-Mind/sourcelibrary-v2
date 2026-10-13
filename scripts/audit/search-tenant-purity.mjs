@@ -15,7 +15,12 @@
  * that can leak.
  *
  * Three arms per route:
- *   tenant   the request as the partner host sees it → ZERO foreign books
+ *   tenant   the request as the partner host sees it → ZERO foreign books,
+ *            and at least the route's floor of the tenant's OWN books. Zero
+ *            foreign is pure, but so is a reading room that shows nothing:
+ *            on 2026-10-10 BPH search answered empty for ~45 min (a closed
+ *            scope) and this audit said PASS twice (#6426). A response marked
+ *            `scope: 'closed'` on this arm fails outright.
  *   control  the same request with no tenant → must surface foreign books.
  *            Without it "0 foreign" could mean the lane was down, the query
  *            matched nothing, or this script reads the wrong field. A route
@@ -37,8 +42,9 @@
  *
  * Read-only. ~60 requests; each embeds one short query (fractions of a cent).
  *
- * Exit codes: 0 pass, 1 fail (a foreign book, or a closed scope that answered),
- * 2 unknown (a route's control arm never showed a foreign book).
+ * Exit codes: 0 pass, 1 fail (a foreign book, a closed scope that answered, or
+ * a tenant arm that came back closed or under its floor), 2 unknown (a route's
+ * control arm never showed a foreign book).
  */
 import { MongoClient, ObjectId } from 'mongodb';
 
@@ -79,7 +85,13 @@ const foreignSeed = await db.collection('gallery_images').findOne(
 );
 
 const q = (s) => encodeURIComponent(s);
-/** Every route this PR scoped. `ids` overrides the generic book_id/bookId walk. */
+/**
+ * Every route this PR scoped. `ids` overrides the generic book_id/bookId walk.
+ * `floor`: the fewest distinct tenant books the tenant arm may return over all
+ * of a route's queries (default 1). Every route returned BPH books on 2026-10-07
+ * (#4330 comment) — 25 to 71 on the text lanes — so 0 is an outage, not a
+ * result. Raise a floor only from a measured run.
+ */
 const ROUTES = [
   { name: 'semantic.book', urls: QUERIES.map((s) => `/api/search/semantic?q=${q(s)}&limit=20`) },
   { name: 'semantic.page', urls: QUERIES.map((s) => `/api/search/semantic?q=${q(s)}&level=page&limit=20`) },
@@ -130,7 +142,11 @@ async function fetchIds(route, url, arm) {
     let data;
     try { data = JSON.parse(text); } catch { return { status: res.status, ids: [], error: `non-JSON (${text.slice(0, 60).replace(/\s+/g, ' ')})` }; }
     const ids = route.ids ? route.ids(data).filter(Boolean) : collectBookIds(data);
-    return { status: res.status, ids, error: res.ok ? null : `HTTP ${res.status}` };
+    // A closed scope answers 404/503 with `scope: 'closed'` (#6426). Before
+    // that shipped it was a 200 with an empty body, indistinguishable from
+    // "no matches" — which is why the floor below exists as well.
+    const closed = data?.scope === 'closed';
+    return { status: res.status, ids, closed, reason: data?.scope_reason, error: res.ok || closed ? null : `HTTP ${res.status}` };
   } catch (e) {
     return { status: 0, ids: [], error: e.message };
   }
@@ -161,16 +177,19 @@ console.log(`  control arm: ${ARMS.control.base}\n`);
 
 let failed = false;
 const unexercised = [];
+const starved = [];
 const pad = (s, n) => String(s).padEnd(n);
 console.log(`${pad('route', 18)}${pad('tenant: books / foreign', 26)}${pad('control: books / foreign', 27)}closed: books`);
 
 for (const route of ROUTES) {
   const tally = { tenant: [], control: [], closed: [] };
   const errors = [];
+  const tenantClosed = [];
   for (const url of route.urls) {
     for (const armName of ['tenant', 'control']) {
       const r = await fetchIds(route, url, ARMS[armName]);
       if (r.error) errors.push(`${armName} ${url}: ${r.error}`);
+      if (armName === 'tenant' && r.closed) tenantClosed.push(`${url}: HTTP ${r.status} scope closed (${r.reason || 'no reason'})`);
       tally[armName].push(...r.ids);
     }
   }
@@ -184,13 +203,18 @@ for (const route of ROUTES) {
   const controlIds = uniq(tally.control);
   const leaked = tenantIds.filter(isForeign);
   const controlForeign = controlIds.filter(isForeign);
+  const own = tenantIds.length - leaked.length;
+  const floor = route.floor ?? 1;
 
   let verdict = 'ok';
   if (leaked.length > 0) { verdict = 'LEAK'; failed = true; }
   else if (tally.closed.length > 0) { verdict = 'CLOSED SCOPE ANSWERED'; failed = true; }
+  else if (tenantClosed.length > 0) { verdict = 'TENANT SCOPE CLOSED'; failed = true; starved.push(route.name); }
   else if (controlForeign.length === 0) { verdict = 'NOT EXERCISED'; unexercised.push(route.name); }
+  else if (own < floor) { verdict = `TENANT EMPTY (< ${floor})`; failed = true; starved.push(route.name); }
   console.log(`${pad(route.name, 18)}${pad(`${tenantIds.length} / ${leaked.length}`, 26)}${pad(`${controlIds.length} / ${controlForeign.length}`, 27)}${pad(uniq(tally.closed).length, 8)}${verdict}`);
   if (leaked.length) console.log(`     foreign on the tenant arm: ${leaked.slice(0, 5).join(', ')}`);
+  for (const c of tenantClosed.slice(0, 4)) console.log(`     ${c}`);
   if (errors.length && (VERBOSE || verdict !== 'ok')) for (const e of errors.slice(0, 4)) console.log(`     ${e}`);
 }
 
@@ -198,7 +222,8 @@ await m.close();
 
 console.log('');
 if (failed) {
-  console.error('FAIL: a tenant request surfaced a book outside the tenant, or an unresolvable tenant was answered.');
+  console.error('FAIL: a tenant request surfaced a book outside the tenant, an unresolvable tenant was answered, or a tenant got nothing.');
+  if (starved.length) console.error(`  Tenant arm closed or under its floor on: ${starved.join(', ')} — an outage, not purity (#6426).`);
   process.exit(1);
 }
 if (unexercised.length > 0) {
@@ -206,4 +231,4 @@ if (unexercised.length > 0) {
     'The lane may be down (CLIP), or the queries may not reach it. Re-run with --verbose.');
   process.exit(2);
 }
-console.log('PASS: every route returned only the tenant\'s books, showed foreign books without a tenant, and answered an unknown tenant with nothing.');
+console.log('PASS: every route returned the tenant\'s own books (at or above its floor) and only those, showed foreign books without a tenant, and answered an unknown tenant with nothing.');

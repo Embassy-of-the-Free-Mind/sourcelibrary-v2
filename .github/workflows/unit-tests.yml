@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10  # the job runs ~5 min (npm test ~2 min, tsc ~1.7 min); 5 cancelled green runs at the wall (#6629)
 
     steps:
       - uses: actions/checkout@v4

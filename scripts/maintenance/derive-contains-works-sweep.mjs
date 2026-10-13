@@ -6,6 +6,7 @@
  *   node scripts/maintenance/derive-contains-works-sweep.mjs            # dry run
  *   node scripts/maintenance/derive-contains-works-sweep.mjs --apply
  *   node scripts/maintenance/derive-contains-works-sweep.mjs --all      # not just containers
+ *   node scripts/maintenance/derive-contains-works-sweep.mjs --book-id <id> --apply   # one record
  *
  * ## Why
  *
@@ -45,6 +46,7 @@ const { deriveContainedWorks } = await import(
 
 const APPLY = process.argv.includes('--apply');
 const ALL = process.argv.includes('--all');
+const BOOK_ID = process.argv.includes('--book-id') ? process.argv[process.argv.indexOf('--book-id') + 1] : null;
 const LIMIT = Number((process.argv.find((a) => a.startsWith('--limit=')) || '').split('=')[1]) || 0;
 
 const CONTAINER = /\bopera\b|\bworks\b|complete|s[äa]mtliche|oeuvres|collected|\bvol\b|volume|tome|opuscula|omnia/i;
@@ -58,7 +60,9 @@ const db = c.db('bookstore');
 // pages_ocr, not pages_count: a book with page images and no OCR has no heads
 // to read, and including those made an earlier scoping run report 0% judgeable
 // when it was really measuring unprocessed books.
-const query = { visible: true, pages_ocr: { $gt: 20 }, ...(ALL ? {} : { title: CONTAINER }) };
+const query = BOOK_ID
+  ? { id: BOOK_ID }
+  : { visible: true, pages_ocr: { $gt: 20 }, ...(ALL ? {} : { title: CONTAINER }) };
 const cursor = db.collection('books').find(query, { projection: { id: 1, title: 1, author: 1, pages_count: 1 } });
 
 let seen = 0, derived = 0, insufficient = 0, multi = 0, written = 0;
@@ -107,6 +111,7 @@ for await (const b of cursor) {
     };
   }
 
+  if (BOOK_ID) console.log(`${b.id}  ${b.title}\n${JSON.stringify(doc, null, 2)}`);
   if (APPLY) {
     const r = await db.collection('books').updateOne({ id: b.id }, { $set: { contains_works: doc, updated_at: NOW } });
     written += r.modifiedCount;

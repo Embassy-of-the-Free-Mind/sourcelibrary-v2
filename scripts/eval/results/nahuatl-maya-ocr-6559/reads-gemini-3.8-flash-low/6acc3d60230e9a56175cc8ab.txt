@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Spanish colonial manuscript in humanistic cursive hand; bilingual dictionary/vocabulary containing Mayan (Yucatec) lexical entries and phrases with Spanish translations and explanations.</warning>
+
+*   **Hij.** deleitarse mucho en alguna cosa, y embevecerse e<unclear>n</unclear> <unclear>ella</unclear> sin entender a otro ¶ Vtan b hij vkay Juan, ichil vcol, ma<unclear>y</unclear> estando Juan embevecido en cantar ensu milpa paseyo l<unclear>e</unclear> vfan b hij v kanal Juan camanen, maiz yilahen. estand<unclear>o</unclear> embevecido en comer y gustando mucho dela comida pa<unclear>so</unclear> y no me vido ¶ Deaqui **Hun Hij** Juana vmanab cab qu<unclear>e</unclear> <unclear>gusto</unclear> Juana de comprar miel.
+*   **Hij.** ser demasiado en reir en contar cuentos en bocear en c<unclear>ant</unclear> cantar etc. gustando mucho dello ¶ Hij vcah v can Ju<unclear>an</unclear> cuenta Juan cuentos demasiado con mucho gusto.
+*   **Hijaan ti cal.** } deleitarse mucho en alguna cosa y preftarc<unclear>e</unclear>
+*   **Hijaan ti chij.** }
+    ¶ Hijaan veyuncil hucal. l. tuchij Juan gustajan mu<unclear>cho</unclear> estar amancebado.
+*   **Hijaan ti cheeh.** elque esta finado y muerto de risa.
+*   **Hijaan. ti okol.** elque esta de demasiado llorar medio mu<unclear>erto</unclear>
+*   **Hijaan cil vcah v can** Juan yetel Pedro. estan Juan y Ped<unclear>ro</unclear> <unclear>bur-</unclear> lando y en conversacion hastamas nopoder etc en otras <unclear>cosas</unclear>
+*   **Hijil.** gustar mucho de vna cosa ¶ Hiji Juan ti mak cab gusto Juan mucho de comer miel.
+*   **Hijil ti cheeh.** reirse demasiado finarse de risa
+*   **Hijil tical.** morir o ser Justiciado ¶ Hiji tical tumen yoc<unclear>ol</unclear> fue Justiciado por ladron.
+*   **Hijil ik.** agonizar desmaiarse y dar parasis mo
+*   **Hij pay. tah. t.** tirar dealguna cosalarga y delgada como <unclear>soga</unclear> cuerda. cordel correa. vara etc.
+*   **Hihcib. tah. t.** encerar algun hilo ocuerda pasando lo po<unclear>r</unclear> cerote oporlacera. como haze el çapatero. y assi otras cos<unclear>as</unclear> pasan por color negro colorado etc. madiendo el tal colo<unclear>r</unclear> lugre de cib.
+*   **Hih. ah. ib** anudar. atar. o fenuar; y lo assi anudado oa<unclear>tado</unclear> y lo que se trae atado o colgado alcinto ¶ balx a Hih.
+
+<vocab>Hij, Hijaan, Hijil, Hij pay, Hihcib, Hih, Yucatec Maya, colonial vocabulary, dictionary</vocab>

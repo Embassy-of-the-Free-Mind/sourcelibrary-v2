@@ -80,3 +80,30 @@ export function citationYear(published?: string | null): string | null {
 export function citationYearOrNd(published?: string | null): string {
   return citationYear(published) ?? 'n.d.';
 }
+
+/**
+ * `field_provenance.year.source` values that say the numeric `books.year` is a
+ * placeholder someone has already identified as invented, kept only so the book
+ * stays on internal year-indexed analytics until its removal is decided.
+ */
+const PLACEHOLDER_YEAR_SOURCES = new Set(['import_placeholder_cleared']);
+
+/**
+ * Numeric `books.year` safe to assert as a machine-readable date (`DC.date`),
+ * or undefined.
+ *
+ * `clear-fabricated-eap-dates.mjs --tier=citation` unset `published` on the
+ * #3307 cohort and recorded the correction in `field_provenance.year`, but left
+ * `year: 1700` in place. Any surface that reads `year` on its own therefore
+ * re-publishes the date the provenance on the same record says was invented —
+ * which is what `DC.date` did once it was wired to `year` (#4131).
+ */
+export function assertableYear(book: {
+  year?: number | null;
+  field_provenance?: Record<string, { source?: string } | undefined> | null;
+}): number | undefined {
+  if (typeof book.year !== 'number') return undefined;
+  const source = book.field_provenance?.year?.source;
+  if (source && PLACEHOLDER_YEAR_SOURCES.has(source)) return undefined;
+  return book.year;
+}

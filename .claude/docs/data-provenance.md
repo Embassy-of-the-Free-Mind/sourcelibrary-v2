@@ -29,6 +29,13 @@ and where it is thinner than that.
 
 > **Last full audit:** 2026-05-05. See `.claude/handoffs/2026-05-05-provenance-audit.md` for the audit report and the gaps closed.
 
+> **Scope: there are TWO provenance layers.** Sections 1-9 cover the **AI-output** layer: what a
+> model produced, from which prompt, when. The sibling layer is **bibliographic provenance**
+> (`books.field_provenance`): where a book's *title, author, year, publisher and holding library*
+> came from. It backs every citation the library makes and is rendered to readers; it is §10. The
+> two are independent: a page can have a complete `engine` block while the book's year is an
+> unattributed guess, and "Known Gaps" in §8 speaks for the AI-output layer only.
+
 ## The Provenance Chain
 
 ```
@@ -456,6 +463,16 @@ This is non-negotiable. It applies to placeholder writes (blank-page markers, sa
 
 For multiple fields use `createBookRevisions(bookId, fields)` to fan out in parallel.
 
+### Bibliographic fields on `books` (title, author, year, publisher, place, holding library)
+
+> Any code path that writes a bibliographic field on `books` MUST stamp it via `provenanceUpdate()`
+> (`src/lib/field-provenance.ts` / `scripts/lib/field-provenance.mjs`) in the **same** update as the
+> value. Never write a value and its provenance in two operations: the second can fail, and a stamp
+> describing a value it did not produce is worse than no stamp.
+
+This rule is younger than the ones above and is **not yet enforced**: as of 2026-10-12 no writer on
+main calls the helper, and most of the layer was written by hand-rolled stamps. See §10.
+
 ### gemini_usage
 
 > Any AI call that produces or modifies stored content MUST log a `gemini_usage` row.
@@ -603,3 +620,125 @@ truth; add the line there, then `crontab -l > scripts/workers/crontab.production
 
 To trace one recent page by hand, use §6; the assertions that used to live here (`prompt_id` /
 `prompt_hash` present) are subsumed by `missingProvenance()`.
+
+## 10. Bibliographic Provenance (`books.field_provenance`)
+
+The other layer. Where the sections above answer *"what did the model produce, from which
+prompt"*, this answers *"where did this bibliographic claim come from"*: title, author, year,
+publisher, place, holding library. It is the provenance behind every citation, and
+`BibliographicInfo.tsx` renders it to readers (the "provenance" panel keyed off
+`book.field_provenance`).
+
+It is a much younger and much less disciplined system than the AI chain (#3471).
+
+### Shape
+
+`books.field_provenance` is a map from a field key to ONE stamp object
+(`FieldProvenanceEntry` in `src/lib/types/book.ts`): `source` (mandatory), and by convention
+`date`, `script`, `method`, `model`, `confidence`, `previous_value`, `note`. The stamp key is not
+always the value's path: `image_source.contributing_library` is stamped as `contributing_library`,
+`place_published` as `place_of_publication`. `books.field_provenance_history` is a map from the
+same key to an append-only ARRAY of past stamps.
+
+Two things to know before reading it:
+
+- **`field_provenance.language` has its own typed shape** (`{ source, value, chosen_from, claims[],
+  conflict?, date }`, built by `src/lib/resolve-language.ts`). See
+  `invariants/language-fields.md`. The helper below passes extra keys through, so a language
+  writer can carry that shape and still get a history entry.
+- **A `field_provenance` COLLECTION also exists** and holds a few dozen rows. It is not this
+  layer. Measuring it and reporting on "the provenance layer" once produced an exactly-backwards
+  diagnosis (`invariants/field-sprawl.md`).
+
+### The write rule
+
+> Any code path that writes a bibliographic field on `books` MUST stamp it via
+> `provenanceUpdate()`, in the **same** update as the value.
+
+`src/lib/field-provenance.ts`, with a scripts twin at `scripts/lib/field-provenance.mjs`
+(parity pinned by `tests/unit/field-provenance.test.ts`):
+
+```javascript
+import { provenanceUpdate } from '../lib/field-provenance.mjs';
+
+const prov = provenanceUpdate('contributing_library', {
+  source: 'ia_metadata_harvest',                                    // required
+  script: 'scripts/maintenance/<this-file>.mjs',                    // so the stamp traces to code
+  method: 'archive.org/metadata contributor',
+  previous_value: book.image_source?.contributing_library ?? null,  // required; null is an answer, absence is not
+});
+await books.updateOne({ _id }, {
+  $set: { 'image_source.contributing_library': next, updated_at: new Date(), ...prov.$set },
+  $push: prov.$push,   // append-only field_provenance_history
+});
+```
+
+It throws on a missing `source`, a missing `previous_value` key, an unparseable `date`, or a
+malformed field name. It returns operators and performs no write, so the value and the stamp ride
+in one `updateOne` and cannot diverge.
+
+Three things the example carries on purpose:
+
+- **`previous_value` must be present.** `null` says "there was nothing here"; an absent key says
+  "nobody recorded what was here". Only 14.5% of existing stamps record it, so most past
+  overwrites are unrecoverable.
+- **The history `$push`.** `field_provenance.<field>` holds one object, so a second sweep over the
+  same book overwrites the first stamp's `previous_value`. The history array is what keeps the
+  chain of custody across repeat runs.
+- **`updated_at`.** The catalogue sync selects on it; a sweep that writes a synced column without
+  bumping it never reaches the public catalogue (`.claude/docs/supabase.md`, Known Sync Gaps).
+
+A sweep still writes its `sweep_log` row (`invariants/field-sprawl.md`). The two records answer
+different questions: `sweep_log` says what a run did across the corpus; the stamp says, on the
+book, where the value a reader is looking at came from.
+
+### Why a wrong stamp is worse than a missing one
+
+It reads as authority and stops anyone looking. Measured 2026-07-30: 1,124 live books asserted
+`method: 'ia_metadata'` while storing "Internet Archive" as the holding library, a value IA's
+contributor field does not return for a library-scanned book. The records looked sourced, which is
+plausibly why the placeholder survived four months. Nothing had tied the value write to the stamp
+write, so the stamp outlived the value it described.
+
+When a stamp's true provenance is **unrecoverable**, set `disputed` on it with a reason rather than
+inventing a plausible source. The audit counts disputed stamps separately from ones still
+asserting, so honest remediation moves the number. The reader-facing panel does not yet
+distinguish a disputed stamp from a live one (open on #3471).
+
+### Auditing
+
+```bash
+npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history
+npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts --strict   # exit 1 on unmarked contradictions; 2 = could not measure
+```
+
+Read-only, about 35 seconds. Run `--strict` after any sweep that touches a citation field, before
+calling the sweep done. It is a manual gate, not a PR check: a contradicted stamp is written by a
+sweep against production, so a red check would land on an unrelated PR whose author cannot act on
+it. The "contradicted" detector covers one field (`contributing_library`, using the same
+aggregator list the citation layer uses); a clean result there says nothing about the others.
+
+### Measured state (2026-10-12, live books: `visible: true && pages_count > 0`, n = 42,289)
+
+96.5% of live books carry *some* stamp, which hides the per-field picture:
+
+| value path | has value | stamped | unprovenanced |
+|---|---|---|---|
+| `title` | 42,289 | 3,973 | 90.6% |
+| `author` | 41,870 | 3,947 | 90.6% |
+| `published` | 40,761 | 2,974 | 92.7% |
+| `place_published` | 3,728 | 587 | 84.3% |
+| `image_source.contributing_library` | 41,074 | 6,621 | 83.9% |
+| `publisher` | 11,293 | 3,311 | 70.7% |
+| `display_title` | 23,148 | 6,987 | 69.8% |
+| `is_first_translation` | 15,335 | 5,292 | 65.5% |
+| `year` | 20,863 | 10,345 | 50.4% |
+| `language` | 42,288 | 24,140 | 42.9% |
+
+Of 156,446 stamps: 186 distinct key-shapes, 17.4% name the script that wrote them, 14.5% record
+`previous_value`, 1,222 have no `source`. 1,359 books (3.3%) carry `field_provenance_history`.
+Contradicted `contributing_library` stamps: 2 still asserting, 1,013 marked `disputed`.
+
+The unprovenanced share rose since the first audit (2026-07-30: `title`/`author` 74.1% of 19,420)
+because the live corpus doubled and the IA import route (`src/app/api/import/ia/route.ts`) stamps
+`language` only: title and author arrive with no claim recorded. Re-run the audit before quoting any of these.

@@ -32,7 +32,7 @@ if (LIMIT) console.log(`Limit: ${LIMIT}`);
 // Find complete books without cover_page
 const filter = { 'pipeline_auto.status': 'complete', cover_page: { $exists: false } };
 const books = await db.collection('books')
-  .find(filter, { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 } })
+  .find(filter, { projection: { id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 } })
   .limit(LIMIT || 0)
   .maxTimeMS(60000)
   .toArray();
@@ -60,7 +60,7 @@ for (let i = 0; i < books.length; i++) {
     if (!pages.length) { skipped++; continue; }
 
     // Score each page using the shared scorer (same logic as pipeline + smart-cover-selection)
-    const scored = pages.map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book.title }) }))
+    const scored = pages.map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book.title, bookAuthor: book.author }) }))
       .sort((a, b) => b.score - a.score);
 
     const best = scored[0];

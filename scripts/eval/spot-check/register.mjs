@@ -23,7 +23,7 @@
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
+import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod, pageExposure } from '../../lib/book-checks.mjs';
 import { seriousClasses, pageFindings, derivedFortnightly, pageRecords, packetProvenance, runCost, checkedAtOf } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
@@ -106,7 +106,7 @@ for (const book of results) {
     frame: { draw: round, frame, checked_at_source: 'results.json (git add or mtime)' },
     pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
     verdict: derivedFortnightly(book), verdict_source: 'derived:fortnightly-v1', classes: seriousClasses(book.pages), note: book.book_verdict,
-    page_findings: pageFindings(book.pages),
+    page_findings: pageFindings(book.pages), exposure: await pageExposure(db, book.book_id, pagesRead),
     evidence_path: join(dir, 'results.json'),
     text_provenance: packetProvenance({ pagesRead, packetPages: sampleBooks.find((b) => b.book_id === book.book_id)?.pages, now, checkedAt, provenanceFromPage }),
     ...(cost ? { subscription_usd_eq: +(cost.usd / packetSize.get(pk)).toFixed(4) } : {}),
