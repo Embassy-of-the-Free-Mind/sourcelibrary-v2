@@ -10,6 +10,9 @@ next to the inputs. Rates on the RANDOM baseline are the corpus base rates; rate
 probe-dependent and are only compared within the instrument.
 PRIOR ART: build/project-v2.py + build-deploy.py build the experience atlas from classify-v3 output; they assume
 its fields (features/trigger/aftermath) and a UMAP layout, which the July paper showed is organised by language.
+The fourth layer, the inhabited world (animism), is optional and read from its own files when present:
+classified-animism.jsonl, judged-animism.jsonl, baseline-animism.jsonl, baseline-animism-judged.jsonl,
+lexical-counts-animism.json and jev-animism.jsonl (the Jev cross-family rater, classify/jev-animism.py).
   python3 build/build-aliveness.py <dir>   (dir holds classified-aliveness.jsonl, judged-aliveness.jsonl,
                                             baseline-aliveness.jsonl, baseline-judged.jsonl)
 """
@@ -189,6 +192,91 @@ for r in hits:
                     # front matter has a negative page_number in the mirror and the reader cannot open it by ?page=:
                     # link the book and say so, rather than send the reader to a page that does not hold the quote
                     'u': f"https://sourcelibrary.org/book/{r['book_id']}" + (f"?page={r['page_number']}" if r['page_number'] > 0 else ''), 'fm': r['page_number'] <= 0, 'd': r.get('probe_dim'), 'ln': r['lane'], 'ph': r.get('probe') if r['lane'] == 'lexical' else None})
+
+# Fourth layer, the inhabited world (animism): classify/classify-animism.mjs screen + judge-animism.mjs judge, over its own
+# phrase draw (retrieve-aliveness-lexical.mjs --tag animism) and the same random baseline. Counted only when the screen's
+# evidence sentence is verbatim on the page AND the judge confirmed. Voice is the judge's when it gave one.
+def anim_confirmed(screen, judged):
+    J = {j['page_id']: j for j in judged}; out = []
+    for r in screen:
+        j = J.get(r['page_id']); row = dict(r); row['judged'] = j is not None
+        row['inh_final'] = j['inhabited'] if (r.get('inhabited') and r.get('inhabited_quote') and j and j.get('inhabited')) else None
+        row['inh_reason'] = j.get('reason') if j else None
+        row['voice_final'] = (j.get('voice') if j and j.get('voice') else r.get('voice'))
+        out.append(row)
+    return out
+if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
+    opt = lambda f: load(f) if os.path.exists(os.path.join(D, f)) else []
+    AB = anim_confirmed(opt('baseline-animism.jsonl'), opt('baseline-animism-judged.jsonl'))
+    AH = anim_confirmed(load('classified-animism.jsonl'), opt('judged-animism.jsonl'))
+    A = {}
+    A['baseline_n'] = len(AB)
+    A['baseline'] = {p: {'screened': sum(1 for r in AB if r.get('inhabited') == p), 'confirmed': sum(1 for r in AB if r['inh_final'] == p),
+                         'rate': wilson(sum(1 for r in AB if r['inh_final'] == p), len(AB))} for p in ['person', 'denied']}
+    A['baseline_world_alive'] = N['baseline']['world_alive']['rate']
+    sc = [r for r in AH if r.get('inhabited')]; jd = [r for r in sc if r['judged']]; cf = [r for r in AH if r['inh_final']]
+    A['draw'] = {'retrieved': len(AH), 'screened': len(sc), 'judged': len(jd), 'confirmed': len(cf),
+                 'confirm_of_judged': wilson(len(cf), len(jd)), 'unjudged_positive': len(sc) - len(jd)}
+    A['confirmed'] = {p: sum(1 for r in cf if r['inh_final'] == p) for p in ['person', 'denied']}
+    A['books'] = len({r['book_id'] for r in cf}); A['languages'] = len({r['book_language'] for r in cf})
+    per = [r for r in cf if r['inh_final'] == 'person']
+    A['voice'] = dict(C.Counter(r['voice_final'] or 'unknown' for r in per))
+    A['dwelling'] = counts(per, 'dwelling'); A['being'] = counts(per, 'being'); A['relation'] = counts(per, 'relation')
+    A['register'] = counts(cf, 'register')
+    tv = C.defaultdict(C.Counter)
+    for r in cf: tv[r.get('tradition') or 'other'][r['voice_final'] or 'unknown'] += 1; tv[r.get('tradition') or 'other']['denied' if r['inh_final'] == 'denied' else 'person'] += 1
+    A['traditions'] = [{'tradition': t, **dict(c), 'total': c['person'] + c['denied']} for t, c in sorted(tv.items(), key=lambda kv: -(kv[1]['person'] + kv[1]['denied']))[:14]]
+    pd = C.defaultdict(lambda: [0, 0, 0])
+    for r in AH: s = pd[r.get('probe_dim')]; s[0] += 1; s[1] += 1 if r.get('inhabited') else 0; s[2] += 1 if r['inh_final'] else 0
+    A['per_group'] = [{'id': d, 'n': v[0], 'screened': v[1], 'confirmed': v[2], 'rate': wilson(v[2], v[0])} for d, v in sorted(pd.items(), key=lambda kv: -kv[1][2] / max(1, kv[1][0]))]
+    cv = C.defaultdict(C.Counter)
+    for r in per:
+        y = r.get('book_year')
+        if isinstance(y, (int, float)): cv[int(y // 100 * 100)][r['voice_final'] or 'unknown'] += 1
+    A['centuries'] = [{'c': c, **dict(v)} for c, v in sorted(cv.items())]
+    # which books meet the other layers: of books with a confirmed inhabited passage, how many also have world_alive
+    inh_books = {r['book_id'] for r in cf}
+    A['books_also_world_alive'] = sum(1 for b in inh_books if 'world_alive' in book.get(b, set()))
+    lc = os.path.join(D, 'lexical-counts-animism.json')
+    if os.path.exists(lc):
+        LCA = json.load(open(lc))
+        A['phrases'] = sorted([{'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books'], 'langs': list(v['byLanguage'].items())[:3]} for ph, v in LCA['phrases'].items()], key=lambda x: -x['pages'])
+    # Jev (classify/jev-animism.py), a non-Gemini rater: does its score separate what the judge confirmed from what it rejected?
+    jf = os.path.join(D, 'jev-animism.jsonl')
+    if os.path.exists(jf):
+        JV = {}
+        for l in open(jf):
+            if l.strip():
+                x = json.loads(l)
+                if x.get('jev') is not None: JV[x['page_id']] = x['jev']
+        def auc(pos, neg):
+            if not pos or not neg: return None
+            s = sum((p > q) + 0.5 * (p == q) for p in pos for q in neg); return round(s / (len(pos) * len(neg)), 3)
+        jp = [JV[r['page_id']] for r in jd if r['inh_final'] and r['page_id'] in JV]
+        jn = [JV[r['page_id']] for r in jd if not r['inh_final'] and r['page_id'] in JV]
+        bp = [JV[r['page_id']] for r in AB if r['inh_final'] and r['page_id'] in JV]
+        bn = [JV[r['page_id']] for r in AB if not r['inh_final'] and r['page_id'] in JV]
+        allp = [JV[r['page_id']] for r in AH + AB if r['inh_final'] and r['page_id'] in JV]
+        alln = [JV[r['page_id']] for r in AH + AB if not r['inh_final'] and r['page_id'] in JV]
+        # at threshold 0.5: agreement with the full two-pass instrument on every scored page
+        agree = sum(1 for v in allp if v >= .5) + sum(1 for v in alln if v < .5)
+        A['jev'] = {'scored': len(JV), 'auc_judged': auc(jp, jn), 'n_judged_pos': len(jp), 'n_judged_neg': len(jn),
+                    'auc_baseline': auc(bp, bn), 'n_baseline_pos': len(bp),
+                    'auc_all': auc(allp, alln), 'n_all_pos': len(allp), 'n_all_neg': len(alln),
+                    'agree_at_half': wilson(agree, len(allp) + len(alln)),
+                    'recall_at_half': wilson(sum(1 for v in allp if v >= .5), len(allp)),
+                    'flag_rate_baseline_at_half': wilson(sum(1 for r in AB if JV.get(r['page_id'], 0) >= .5), len(AB))}
+    N['animism'] = A
+    for r in cf:
+        pts.append({'l': 'inhabited', 'p': 'alive' if r['inh_final'] == 'person' else 'dead', 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110],
+                    'a': (r.get('book_author') or '')[:60], 'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other',
+                    'c': r.get('dwelling'), 's': r.get('being'), 'v': r['voice_final'], 'rel': r.get('relation'),
+                    'q': r['inhabited_quote'], 'why': (r['inh_reason'] or '')[:220], 'fp': False,
+                    'u': f"https://sourcelibrary.org/book/{r['book_id']}" + (f"?page={r['page_number']}" if r['page_number'] > 0 else ''), 'fm': r['page_number'] <= 0,
+                    'd': r.get('probe_dim'), 'ln': 'animism', 'ph': r.get('probe')})
+    print('animism', json.dumps({k: A[k] for k in ['baseline_n', 'baseline', 'draw', 'confirmed', 'books', 'languages', 'voice']}))
+    if 'jev' in A: print('jev', json.dumps(A['jev']))
+
 N['points'] = len(pts)
 json.dump(pts, open(os.path.join(D, 'aliveness-data.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(N, open(os.path.join(D, 'aliveness-numbers.json'), 'w'), ensure_ascii=False, indent=1)
