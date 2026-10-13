@@ -128,6 +128,8 @@ export const POST = withAuth(async (request, session) => {
       place_published: place_of_publication || null,      
       ia_identifier: ia_identifier || null,
       image_source: image_source || null,      
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: 0,
       status: 'draft',
       created_at: new Date(),

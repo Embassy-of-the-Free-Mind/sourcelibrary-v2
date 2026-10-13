@@ -53,6 +53,7 @@ import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { enrolBrake } from '../lib/quality-gate.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
@@ -1304,6 +1305,9 @@ async function selfDispatch(db, limit) {
     console.log('[TRANSLATE] self-dispatch: translate step or pipeline paused — dispatching nothing.');
     return [];
   }
+  // The standing quality gate (#5826): a NO-GO pauses enrolment of new books; jobs already
+  // dispatched keep draining in main().
+  if ((await enrolBrake(db, 'translate', { control: _sdControl, log: (m) => console.log(`[TRANSLATE] self-dispatch: ${m}`) })).paused) return [];
   const _sdGate = await budgetAllowsDispatchScoped(db, 'translate-self-dispatch');
   if (!_sdGate.allowed) return [];
   if (_sdGate.envelopeIds && !SCOPE_IDS) {

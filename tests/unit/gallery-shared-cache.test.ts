@@ -36,7 +36,9 @@ const fakeDb = {
     },
     distinct: async (_field: string, q: Record<string, unknown>) => {
       distinctCalls++;
-      const scope = String(q['image_source.provider'] ?? q.collections ?? '');
+      // The library filter is `{ $in: [provider, ...aliases] }` (#5954).
+      const provider = q['image_source.provider'] as { $in?: string[] } | string | undefined;
+      const scope = String((typeof provider === 'object' ? provider.$in?.join('+') : provider) ?? q.collections ?? '');
       return [`${scope}-b0`, `${scope}-b1`];
     },
     find: () => cursor(name === 'gallery_images' ? Array.from({ length: 60 }, (_, i) => galleryDoc(i)) : []),

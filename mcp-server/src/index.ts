@@ -22,6 +22,7 @@ import {
   shareFindings,
   checkDuplicate,
   ApiError,
+  API_BASE,
 } from "./api.js";
 
 /**
@@ -157,14 +158,14 @@ const TOOLS: Tool[] = [
     name: "list_books",
     title: "List Books",
     description:
-      "Browse the catalog by metadata — filter by author/title fragment, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
+      "Browse the catalog by metadata — filter by title/author/summary words, language, category, or translation recency. Returns books with title, author, language, year, page counts, and translation progress. Use this to discover WHAT EXISTS by an author or in a tradition before searching content; for content matches (passages on a topic) use search_translations or search_concept.",
     annotations: { title: "List Books", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
         search: {
           type: "string",
-          description: "Filter by title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
+          description: "Relevance-ranked word match over title, author, original-script name forms AND the book's AI summary. A hit may name your term only in its summary, not its title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
         },
         language: {
           type: "string",
@@ -596,7 +597,7 @@ Feedback: submit_feedback. Partnerships: team@sourcelibrary.org.`;
 const server = new Server(
   {
     name: "source-library",
-    version: "4.7.0",
+    version: "4.7.1",
   },
   {
     capabilities: {
@@ -654,6 +655,38 @@ async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<
 interface ImageAttachment {
   urls: Array<string | undefined | null>;
   caption: string;
+  /** Said in place of the image when no candidate could be attached. */
+  missing?: string;
+}
+
+// The quote API returns the reader's display URL, usually a same-origin
+// `/api/image?…` path that fetch() here cannot resolve, and a pre-sized scan
+// can still exceed the 1MB cap. So: absolute first, then a smaller re-encode
+// through the image proxy. Same logic as src/lib/mcp-leaf-image.ts in the
+// in-app server — fixes do not propagate between the two copies.
+const SITE_ORIGIN = new URL(API_BASE).origin;
+
+function absoluteImageUrl(url: string): string {
+  return url.startsWith("/") && !url.startsWith("//") ? `${SITE_ORIGIN}${url}` : url;
+}
+
+function leafImageCandidates(pageImageUrl: string): string[] {
+  const primary = absoluteImageUrl(pageImageUrl);
+  let parsed: URL;
+  try {
+    parsed = new URL(primary);
+  } catch {
+    return [primary];
+  }
+  let fallback: string;
+  if (parsed.origin === SITE_ORIGIN && parsed.pathname === "/api/image") {
+    parsed.searchParams.set("w", "1000");
+    parsed.searchParams.set("q", "70");
+    fallback = parsed.toString();
+  } else {
+    fallback = `${SITE_ORIGIN}/api/image?url=${encodeURIComponent(primary)}&w=1000&q=70`;
+  }
+  return fallback === primary ? [primary] : [primary, fallback];
 }
 
 function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
@@ -673,9 +706,14 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
   if (name === "get_quote") {
     const quote = r.quote as Record<string, unknown> | undefined;
     if (typeof quote?.page_image_url === "string") {
+      const pageImageUrl = absoluteImageUrl(quote.page_image_url);
+      const caption = `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`;
+      // An MCP client is not on our origin: the JSON carries the absolute URL too.
+      quote.page_image_url = pageImageUrl;
       return [{
-        urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
+        urls: leafImageCandidates(pageImageUrl),
+        caption,
+        missing: `${caption}\nThe scan could not be attached inline (fetch failed, or over the 1 MB inline limit). View it at ${pageImageUrl}`,
       }];
     }
     return [];
@@ -762,6 +800,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         if (img) {
           content.push({ type: "image" as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
           content.push({ type: "text" as const, text: attachments[i].caption });
+        } else if (attachments[i].missing) {
+          content.push({ type: "text" as const, text: attachments[i].missing as string });
         }
       }
       return { content };
@@ -790,7 +830,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error(`Source Library MCP server v4.7.0 running (${TOOLS.length} tools)`);
+  console.error(`Source Library MCP server v4.7.1 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {

@@ -1,0 +1,23 @@
+{
+ "page_id": "6acc341b1ed1cb52b01ebf10",
+ "book_id": "6acc341a1ed1cb52b01ebede",
+ "page_number": 50,
+ "cli": "agy",
+ "cli_version": "1.3.3",
+ "model": "gemini-3.8-flash-low",
+ "started_at": "2026-10-12T02:46:13.184Z",
+ "finished_at": "2026-10-12T02:47:02.036Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 1343,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "chatter": null,
+ "image_url": "https://archive.org/download/doctrinacristian00gant/page/n49/full/full/0/default.jpg",
+ "image_bytes": 1320950,
+ "image_sha256": "ee582d81a995765fb51a5d7e9900f1522da11d2433686294bf002fad32cb7aa2",
+ "prompt_sent_chars": 12939,
+ "prompt_sent_hash": "b07cd3b993433b23",
+ "stderr_tail": ""
+}

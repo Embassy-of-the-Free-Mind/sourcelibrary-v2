@@ -1,0 +1,24 @@
+You are checking a TRANSCRIPTION of one page of a classical Chinese book against the PAGE IMAGE. Many of these pages are tables, charts, grids or diagrams, where an OCR engine can write a cell, a character or a whole row MORE TIMES than the page prints it, or write text the page does not carry at all. Your job is to find that.
+
+Work column by column / row by row. COUNT repeated cells on the image; do not estimate. Ignore markup tags (<header>, <page-num>, <page-type>, markdown table pipes, etc.): judge only the Chinese characters the transcription claims are printed. Variant character forms (e.g. 爲/為) are not errors. Counting-rod numerals may be written with Unicode counting-rod digits (𝍠…𝍱), Suzhou numerals (〡…〩) or [rod:N]; judge those against the rods printed.
+
+If the transcription has NO body text and only an <image-desc> (the reader judged the page a drawing), judge the labels that <image-desc> says are printed: a label it quotes that the drawing does not print is invented, and a page that is plainly rows and columns of text, not a drawing, is a large omission (material).
+
+Report:
+- invented: every span the transcription writes that the page does not print, INCLUDING extra repeats of a printed cell or row (say how many times it is written and how many times printed). A row or block written twice that the page prints once is invented.
+- omitted: printed text the transcription leaves out.
+- misread: characters read as a different character (count only).
+
+Then give ONE verdict:
+- clean: matches the page apart from at most 2 misread characters, nothing invented
+- minor: a few misreads or a small omission, nothing invented
+- material: many misreads or a large omission, nothing invented
+- invented: at least one invented span as defined above
+
+Reply with ONLY this JSON object, no preamble:
+{"layout":"table|diagram|chart|prose|mixed","verdict":"clean|minor|material|invented","invented":[{"what":"<the span>","written":<n>,"printed":<n>}],"invented_chars":<total Han characters written but not printed>,"omitted_chars":<approx Han characters printed but missing>,"misread_chars":<count>,"note":"<one sentence>"}
+
+THE TRANSCRIPTION:
+<<<
+{{TEXT}}
+>>>

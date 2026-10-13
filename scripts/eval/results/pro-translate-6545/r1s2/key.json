@@ -1,0 +1,1837 @@
+{
+ "round": "r1s2",
+ "langs": [
+  "Chinese",
+  "Greek",
+  "Hebrew"
+ ],
+ "arms": [
+  "FP",
+  "C38",
+  "C38S",
+  "C38S2",
+  "OPUS"
+ ],
+ "items": {
+  "r1s2-001": {
+   "kind": "ARMS",
+   "page_id": "69e7538b095c302d3fddb092_00355",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S2",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-002": {
+   "kind": "REPEAT",
+   "page_id": "69e7268ca409200ea79ef73b_00111",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "C38",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-003": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e153836_00013",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S2",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-004": {
+   "kind": "PLANT",
+   "page_id": "6a3c61b5879008ba7e15fd28_00117",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "Master Hu said: The three years of mourning was taught by the disciples of Confucius as a lasting legacy of love.",
+    "new": "Master Hu said: The five years of mourning was taught by the disciples of Confucius as a lasting legacy of love.",
+    "how": "three → five"
+   }
+  },
+  "r1s2-005": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b5879008ba7e15fd28_00117",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "C38",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-006": {
+   "kind": "REPEAT",
+   "page_id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-007": {
+   "kind": "ARMS",
+   "page_id": "69938e35d5a98fd66f430c9c_00153",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S2",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-008": {
+   "kind": "PLANT",
+   "page_id": "69c1bac18522835be845a172_00225",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "If it spilled, broke, or was left uncovered, he would refill it from the Temple basin, for uncovered water and wine are invalid for the altar.",
+    "new": "If it spilled, broke, or was left uncovered, he would refill it from the Temple basin, for uncovered water and wine are not invalid for the altar.",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "r1s2-009": {
+   "kind": "PLANT",
+   "page_id": "69e72c70a409200ea79f48f9_00078",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "If that is so, such a man would be ashamed even to hear a flatterer speak, so how much more would he refuse to meet him in person?",
+    "new": "If that is so, so how much more would he refuse to meet him in person?",
+    "how": "clause dropped",
+    "dropped": "such a man would be ashamed even to hear a flatterer speak,"
+   }
+  },
+  "r1s2-010": {
+   "kind": "ARMS",
+   "page_id": "699437c36879ff0184cb7381_00164",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "C38"
+   }
+  },
+  "r1s2-011": {
+   "kind": "PLANT",
+   "page_id": "69e72c7da409200ea79f4a01_00053",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Thus, when ordinary people cling solely to external form in order to seek supreme wisdom, they cannot come close to understanding it.",
+    "new": "Thus, they cannot come close to understanding it.",
+    "how": "clause dropped",
+    "dropped": "when ordinary people cling solely to external form in order to seek supreme wisdom,"
+   }
+  },
+  "r1s2-012": {
+   "kind": "REPEAT",
+   "page_id": "69e7538b095c302d3fddb092_00355",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-013": {
+   "kind": "REPEAT",
+   "page_id": "69c1bbd28522835be8460a78_00032",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-014": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S2",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-015": {
+   "kind": "ARMS",
+   "page_id": "69b4cd44d5b6c3815e1a52de_00215",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-016": {
+   "kind": "PLANT",
+   "page_id": "69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Viewed from this perspective, taking hold of the world is always achieved through non-action; when one resorts to purposeful contrivance, it is insufficient to win the world.",
+    "new": "Viewed from this perspective, taking hold of the world is not always achieved through non-action; when one resorts to purposeful contrivance, it is insufficient to win the world.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-017": {
+   "kind": "REPEAT",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-018": {
+   "kind": "REPEAT",
+   "page_id": "6a3c61db40c88a541d8f091d_00083",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S2",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-019": {
+   "kind": "ARMS",
+   "page_id": "69c1bbee8522835be8460bc5_00015",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-020": {
+   "kind": "REPEAT",
+   "page_id": "69e72c7da409200ea79f4a01_00053",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-021": {
+   "kind": "ARMS",
+   "page_id": "69942bfeb2f6748db4abc97f_00100",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-022": {
+   "kind": "ARMS",
+   "page_id": "69c1bc6b8522835be8463238_00270",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "FP"
+   }
+  },
+  "r1s2-023": {
+   "kind": "ARMS",
+   "page_id": "69c1bc788522835be84637be_00003",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-024": {
+   "kind": "ARMS",
+   "page_id": "69e792f880b52390feb17389_00344",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-025": {
+   "kind": "PLANT",
+   "page_id": "69b21dca94025df5d2909ff2_00123",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Furthermore, although Arius dared to claim that the Son was a creature like any of the others, listen to what Eusebius says word for word concerning this in the first book of his treatise against Marcellus:",
+    "new": "Furthermore, listen to what Eusebius says word for word concerning this in the first book of his treatise against Marcellus:",
+    "how": "clause dropped",
+    "dropped": "although Arius dared to claim that the Son was a creature like any of the others,"
+   }
+  },
+  "r1s2-026": {
+   "kind": "ARMS",
+   "page_id": "699ef9fd15618a982bb1ebd9_00790",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-027": {
+   "kind": "PLANT",
+   "page_id": "69942bfeb2f6748db4abc97f_00100",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "In doing so, you will benefit a good man and please the senate of great Alexandria.",
+    "new": "In doing so, you will not benefit a good man and please the senate of great Alexandria.",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "r1s2-028": {
+   "kind": "PLANT",
+   "page_id": "69c1bc788522835be84637be_00003",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38_PLANT",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "I would lead you, I would bring you into my mother's house,",
+    "new": "You would lead you, I would bring you into my mother's house,",
+    "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+   }
+  },
+  "r1s2-029": {
+   "kind": "PLANT",
+   "page_id": "69bfccd88ab50eb88e8c69fd_00521",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "But let this be noted: in like manner, the relationship of husband and wife is governed, yet by human statutes transgression is treated unequally.",
+    "new": "But let this be noted: in like manner, the relationship of husband and wife is not governed, yet by human statutes transgression is treated unequally.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-030": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "\"We were led into speaking at greater length on these matters; but what we wish to understand is this: that a terrible, savage, and lawless kind of desire resides in everyone, even in some of us who appear utterly moderate; and this becomes evident in our sleep.",
+    "new": "\"We were led into speaking at greater length on these matters; but what we wish to understand is not this: that a terrible, savage, and lawless kind of desire resides in everyone, even in some of us who appear utterly moderate; and this becomes evident in our sleep.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-031": {
+   "kind": "ARMS",
+   "page_id": "69e72c60a409200ea79f46f6_00141",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-032": {
+   "kind": "ARMS",
+   "page_id": "6a3c61db40c88a541d8f091d_00083",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-033": {
+   "kind": "ARMS",
+   "page_id": "69b2222608069e96e8432997_00377",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-034": {
+   "kind": "ARMS",
+   "page_id": "69e72c65a409200ea79f47bd_00106",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-035": {
+   "kind": "ARMS",
+   "page_id": "695aa97dbe4023bd34bd6715_00348",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-036": {
+   "kind": "ARMS",
+   "page_id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-037": {
+   "kind": "REPEAT",
+   "page_id": "69c1ba738522835be8458e8d_00072",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-038": {
+   "kind": "ARMS",
+   "page_id": "69b2f32121208ea9dc2779bb_00214",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "FP"
+   }
+  },
+  "r1s2-039": {
+   "kind": "PLANT",
+   "page_id": "69944b932aa4c20217a33f12_00232",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The planting of Paradise is consistent with what has been said.",
+    "new": "The planting of Paradise is not consistent with what has been said.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-040": {
+   "kind": "PLANT",
+   "page_id": "69938d895d28b693146d0231_00106",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Taking the man with him, he lodged him in a room, treated him with every courtesy, honored him at his table, let him rest comfortably, and thus detained him.",
+    "new": "Taking the man with him, he lodged him in a room, treated him with every courtesy, let him rest comfortably, and thus detained him.",
+    "how": "clause dropped",
+    "dropped": "honored him at his table,"
+   }
+  },
+  "r1s2-041": {
+   "kind": "ARMS",
+   "page_id": "69920bb1e0a548a13d884da7_00342",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S2",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-042": {
+   "kind": "REPEAT",
+   "page_id": "69d13d751c2a66dc094b168d_00129",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S2",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-043": {
+   "kind": "ARMS",
+   "page_id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38"
+   }
+  },
+  "r1s2-044": {
+   "kind": "PLANT",
+   "page_id": "69b2fedda1a4246ddb45a8df_00318",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Softened in his resolve, he feared even to write a brief letter to a certain ruler, saying: \"If Nicias does not wrong you, let him go; if he does wrong you, let him go anyway, on my account.\" ",
+    "new": "Softened in his resolve, he feared even to write a brief letter to a certain ruler, saying: \"If Nicias does wrong you, let him go; if he does wrong you, let him go anyway, on my account.\" ",
+    "how": "\\bdoes not\\b → does"
+   }
+  },
+  "r1s2-045": {
+   "kind": "ARMS",
+   "page_id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-046": {
+   "kind": "ARMS",
+   "page_id": "699243fabc722ec0ee80b251_00066",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "OPUS",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-047": {
+   "kind": "ARMS",
+   "page_id": "69e72698a409200ea79ef8c3_00129",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-048": {
+   "kind": "ARMS",
+   "page_id": "69c1bc708522835be84634e8_00067",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-049": {
+   "kind": "ARMS",
+   "page_id": "69c1bad18522835be845aabc_00251",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S2",
+    "T5": "FP"
+   }
+  },
+  "r1s2-050": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e1537d3_00017",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-051": {
+   "kind": "REPEAT",
+   "page_id": "69e72c75a409200ea79f4976_00100",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-052": {
+   "kind": "ARMS",
+   "page_id": "69c79fed92b884e4f817374f_00107",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-053": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "**Be** careful to honor your wife, according to the words of our Sages: a man should love his wife as himself and honor her more than himself, for it is enough that she raises your children and saves you from sin.",
+    "new": "**Be** careful to honor your wife, for it is enough that she raises your children and saves you from sin.",
+    "how": "clause dropped",
+    "dropped": "according to the words of our Sages: a man should love his wife as himself and honor her more than himself,"
+   }
+  },
+  "r1s2-054": {
+   "kind": "REPEAT",
+   "page_id": "69942bfeb2f6748db4abc97f_00100",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "FP"
+   }
+  },
+  "r1s2-055": {
+   "kind": "ARMS",
+   "page_id": "69942ffcbb14908bbd9a1123_00426",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-056": {
+   "kind": "PLANT",
+   "page_id": "69c1bc708522835be84634e8_00067",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "All the paths of the Lord are steadfast love and truth to those who keep",
+    "new": "All the paths of the Lord are not steadfast love and truth to those who keep",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "r1s2-057": {
+   "kind": "ARMS",
+   "page_id": "69bfccd88ab50eb88e8c69fd_00521",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-058": {
+   "kind": "ARMS",
+   "page_id": "69944b932aa4c20217a33f12_00232",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-059": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-060": {
+   "kind": "ARMS",
+   "page_id": "69c1bbd28522835be8460a78_00032",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-061": {
+   "kind": "REPEAT",
+   "page_id": "69920bb1e0a548a13d884da7_00342",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-062": {
+   "kind": "ARMS",
+   "page_id": "69b525b56be6046083030af0_00213",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-063": {
+   "kind": "ARMS",
+   "page_id": "69b2fedda1a4246ddb45a8df_00318",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-064": {
+   "kind": "ARMS",
+   "page_id": "69bd9d6a6120d54bd0376a04_00060",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38S2",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "FP"
+   }
+  },
+  "r1s2-065": {
+   "kind": "ARMS",
+   "page_id": "69c1bbc68522835be8460774_00281",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-066": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f05879008ba7e15291d_00045",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-067": {
+   "kind": "REPEAT",
+   "page_id": "69afd4147e835c55c61b4e3d_00089",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38S2",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "FP"
+   }
+  },
+  "r1s2-068": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3c879008ba7e153862_00029",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38S",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-069": {
+   "kind": "ARMS",
+   "page_id": "69c1bb998522835be8460578_00001",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "C38S2",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-070": {
+   "kind": "ARMS",
+   "page_id": "6a3c6192879008ba7e15f12e_00065",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38"
+   }
+  },
+  "r1s2-071": {
+   "kind": "REPEAT",
+   "page_id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "FP",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-072": {
+   "kind": "ARMS",
+   "page_id": "69d13d751c2a66dc094b168d_00129",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-073": {
+   "kind": "ARMS",
+   "page_id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-074": {
+   "kind": "ARMS",
+   "page_id": "6a3c61ec40c88a541d8f0f4a_00018",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-075": {
+   "kind": "ARMS",
+   "page_id": "69c1bb558522835be845f021_00073",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "FP",
+    "T4": "C38S2",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-076": {
+   "kind": "ARMS",
+   "page_id": "69c1ba738522835be8458e8d_00072",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S2",
+    "T3": "C38",
+    "T4": "C38S",
+    "T5": "FP"
+   }
+  },
+  "r1s2-077": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b3879008ba7e15fc71_00112",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "FP",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-078": {
+   "kind": "ARMS",
+   "page_id": "69e8b2642ff2a8dc09e778a1_00439",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38S2",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "FP"
+   }
+  },
+  "r1s2-079": {
+   "kind": "PLANT",
+   "page_id": "695aa97dbe4023bd34bd6715_00348",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Then again, if the oil level drops, the same must be done, until all the oil is consumed.",
+    "new": "Then again, if the oil level drops, the same must be done, until all the oil is not consumed.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-080": {
+   "kind": "ARMS",
+   "page_id": "69920befebe5b0fa6be5d569_00199",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "C38",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-081": {
+   "kind": "ARMS",
+   "page_id": "69e7494885f786e884a4e57a_00024",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-082": {
+   "kind": "ARMS",
+   "page_id": "69b2f3b821208ea9dc278c50_00277",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-083": {
+   "kind": "REPEAT",
+   "page_id": "69b2222608069e96e8432997_00377",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38"
+   }
+  },
+  "r1s2-084": {
+   "kind": "PLANT",
+   "page_id": "69e72c60a409200ea79f46f6_00141",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "If preserving the body intact is still enough to set one's",
+    "new": "If preserving the body intact is not still enough to set one's",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-085": {
+   "kind": "REPEAT",
+   "page_id": "6a3c61b3879008ba7e15fc71_00112",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "C38",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-086": {
+   "kind": "REPEAT",
+   "page_id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-087": {
+   "kind": "REPEAT",
+   "page_id": "6a3c5f05879008ba7e15291d_00045",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "FP"
+   }
+  },
+  "r1s2-088": {
+   "kind": "ARMS",
+   "page_id": "69e7268ca409200ea79ef73b_00111",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S2",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "FP"
+   }
+  },
+  "r1s2-089": {
+   "kind": "ARMS",
+   "page_id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-090": {
+   "kind": "REPEAT",
+   "page_id": "6a3c5f3c879008ba7e153862_00029",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-091": {
+   "kind": "ARMS",
+   "page_id": "69e72c75a409200ea79f4976_00100",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-092": {
+   "kind": "REPEAT",
+   "page_id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-093": {
+   "kind": "ARMS",
+   "page_id": "69e8b26b2ff2a8dc09e77afc_00118",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "FP"
+   }
+  },
+  "r1s2-094": {
+   "kind": "REPEAT",
+   "page_id": "696925034fa3b04c6de86f6b_00397",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-095": {
+   "kind": "REPEAT",
+   "page_id": "69a956dc65ddd05bbcd3d160_00285",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "FP"
+   }
+  },
+  "r1s2-096": {
+   "kind": "PLANT",
+   "page_id": "6a3c5f3b879008ba7e153836_00013",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Even the Dharma should be relinquished, how much more so that which is not Dharma!'",
+    "new": "Even the Dharma should be relinquished, how much more so that which is Dharma!'",
+    "how": "\\bis not\\b → is"
+   }
+  },
+  "r1s2-097": {
+   "kind": "REPEAT",
+   "page_id": "69c1bc708522835be84634e8_00067",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38S2",
+    "T5": "FP"
+   }
+  },
+  "r1s2-098": {
+   "kind": "PLANT",
+   "page_id": "69e7494885f786e884a4e57a_00024",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "\"Sun and Moon\" consists of four stanzas, each of six lines.",
+    "new": "\"Sun and Moon\" consists of six stanzas, each of six lines.",
+    "how": "four → six"
+   }
+  },
+  "r1s2-099": {
+   "kind": "ARMS",
+   "page_id": "696925034fa3b04c6de86f6b_00397",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-100": {
+   "kind": "ARMS",
+   "page_id": "6a3c6191879008ba7e15f0b2_00070",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38",
+    "T3": "FP",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-101": {
+   "kind": "ARMS",
+   "page_id": "69c7e216295ea01b70c8d7d2_00039",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S2",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-102": {
+   "kind": "PLANT",
+   "page_id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Therefore he said, \"but with justice,\" and immediately followed with: \"not in Your anger, lest You bring me to nothing,\" revealing the mystery of mitigating the half of justice that derives from wrath.",
+    "new": "Therefore he said, lest You bring me to nothing,\" revealing the mystery of mitigating the half of justice that derives from wrath.",
+    "how": "clause dropped",
+    "dropped": "\"but with justice,\" and immediately followed with: \"not in Your anger,"
+   }
+  },
+  "r1s2-103": {
+   "kind": "ARMS",
+   "page_id": "69e72c70a409200ea79f48f9_00078",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-104": {
+   "kind": "PLANT",
+   "page_id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "FP",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "the righteous, with abundance of peace until the moon is no more.",
+    "new": "the righteous, with abundance of peace until the moon is not no more.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-105": {
+   "kind": "ARMS",
+   "page_id": "697711607e1d5a07ae945879_00073",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S",
+    "T5": "C38"
+   }
+  },
+  "r1s2-106": {
+   "kind": "ARMS",
+   "page_id": "69a956dc65ddd05bbcd3d160_00285",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "C38S",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-107": {
+   "kind": "ARMS",
+   "page_id": "6952e4cc77f38f6761bc8c0b_00121",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-108": {
+   "kind": "PLANT",
+   "page_id": "69e72c75a409200ea79f4976_00100",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "No thief is greater than the virtue that acts with deliberate intent, where the mind relies on conscious scheming.",
+    "new": "No thief is not greater than the virtue that acts with deliberate intent, where the mind relies on conscious scheming.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-109": {
+   "kind": "REPEAT",
+   "page_id": "69e8b2642ff2a8dc09e778a1_00439",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-110": {
+   "kind": "ARMS",
+   "page_id": "69c1bb1c8522835be845cf19_00160",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38S2",
+    "T3": "C38",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-111": {
+   "kind": "PLANT",
+   "page_id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "If even birds and beasts bore him no ill will, how much less",
+    "new": "If even birds and beasts bore him no ill will not, how much less",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "r1s2-112": {
+   "kind": "PLANT",
+   "page_id": "6955747af63a757109173a5d_00381",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38_PLANT",
+    "T2": "C38S",
+    "T3": "FP"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Lines 12, 13, and 14 can be illuminated from Homer's Hymn to Demeter, line 445: \"And he granted that her daughter, as the year rolled round, should dwell for a third part beneath the misty darkness, but for two parts beside her mother and the other immortals...\" Here it is clear that a line has fallen out from line 471, which was continuous with line 465.",
+    "new": "Lines 12, 13, and 14 can be illuminated from Homer's Hymn to Demeter, line 445: \"And he granted that her daughter, as the year rolled round, should dwell for a third part beneath the misty darkness, but for two parts beside her mother and the other immortals...\" Here it is not clear that a line has fallen out from line 471, which was continuous with line 465.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-113": {
+   "kind": "PLANT",
+   "page_id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "I will cause your name to be remembered in all generations;",
+    "new": "I will not cause your name to be remembered in all generations;",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "r1s2-114": {
+   "kind": "PLANT",
+   "page_id": "69afd4147e835c55c61b4e3d_00089",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38_PLANT",
+    "T3": "C38S"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "If, therefore, it did not cease to be in the immediately following instant, but in some other subsequent one, it would exist simultaneously throughout the infinite number of present moments between them; and this is impossible.",
+    "new": "If, therefore, it did not cease to be in the immediately following instant, it would exist simultaneously throughout the infinite number of present moments between them; and this is impossible.",
+    "how": "clause dropped",
+    "dropped": "but in some other subsequent one,"
+   }
+  },
+  "r1s2-115": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "OPUS",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "C38"
+   }
+  },
+  "r1s2-116": {
+   "kind": "ARMS",
+   "page_id": "69afd4147e835c55c61b4e3d_00089",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "C38",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-117": {
+   "kind": "ARMS",
+   "page_id": "69942c54b2f6748db4abd74f_00047",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-118": {
+   "kind": "REPEAT",
+   "page_id": "69c1bac18522835be845a172_00225",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "C38S2",
+    "T3": "FP",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-119": {
+   "kind": "REPEAT",
+   "page_id": "695aa97dbe4023bd34bd6715_00348",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-120": {
+   "kind": "ARMS",
+   "page_id": "69e72c7da409200ea79f4a01_00053",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "C38S",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-121": {
+   "kind": "ARMS",
+   "page_id": "69a97a56f3f3d2fb7de27928_00144",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "FP",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-122": {
+   "kind": "REPEAT",
+   "page_id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-123": {
+   "kind": "ARMS",
+   "page_id": "69b21dca94025df5d2909ff2_00123",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-124": {
+   "kind": "ARMS",
+   "page_id": "69e41a008a8dae1074c52565_00515",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38",
+    "T4": "OPUS",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-125": {
+   "kind": "ARMS",
+   "page_id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38"
+   }
+  },
+  "r1s2-126": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b1879008ba7e15fba1_00068",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "FP",
+    "T2": "OPUS",
+    "T3": "C38",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-127": {
+   "kind": "ARMS",
+   "page_id": "69c1bae08522835be845b1f6_00067",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "OPUS",
+    "T3": "FP",
+    "T4": "C38S2",
+    "T5": "C38"
+   }
+  },
+  "r1s2-128": {
+   "kind": "ARMS",
+   "page_id": "6955747af63a757109173a5d_00381",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-129": {
+   "kind": "REPEAT",
+   "page_id": "69c1bc6b8522835be8463238_00270",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "C38"
+   }
+  },
+  "r1s2-130": {
+   "kind": "REPEAT",
+   "page_id": "69bd9d6a6120d54bd0376a04_00060",
+   "lang": "Greek",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-131": {
+   "kind": "ARMS",
+   "page_id": "69c1bac18522835be845a172_00225",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "OPUS",
+    "T4": "C38",
+    "T5": "C38S2"
+   }
+  },
+  "r1s2-132": {
+   "kind": "ARMS",
+   "page_id": "6952e4b477f38f6761bc7d4c_00296",
+   "lang": "Greek",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "C38S2",
+    "T4": "OPUS",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-133": {
+   "kind": "PLANT",
+   "page_id": "697711607e1d5a07ae945879_00073",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38S",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "And he asked Pharaoh's officers who were with him in the custody of his master's house, saying: \"Why are your faces sad today?\" And they said to him: \"We have dreamed a dream, and there is no interpreter for it.\" And Joseph said to them: \"Do not interpretations belong to God?",
+    "new": "And he asked Pharaoh's officers who were with him in the custody of his master's house, saying: \"Why are your faces sad today?\" And they said to him: \"We have dreamed a dream, and there is not no interpreter for it.\" And Joseph said to them: \"Do not interpretations belong to God?",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-134": {
+   "kind": "REPEAT",
+   "page_id": "6a3c6192879008ba7e15f12e_00065",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "C38S",
+    "T4": "C38S2",
+    "T5": "OPUS"
+   }
+  },
+  "r1s2-135": {
+   "kind": "PLANT",
+   "page_id": "699ef9fd15618a982bb1ebd9_00790",
+   "lang": "Hebrew",
+   "labels": {
+    "T1": "C38S",
+    "T2": "FP",
+    "T3": "C38_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Let us return to the subject: the root of holiness is the Chosen House and Jerusalem.",
+    "new": "Let us return to the subject: the root of holiness is not the Chosen House and Jerusalem.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "r1s2-136": {
+   "kind": "ARMS",
+   "page_id": "69938d895d28b693146d0231_00106",
+   "lang": "Greek",
+   "labels": {
+    "T1": "OPUS",
+    "T2": "FP",
+    "T3": "C38",
+    "T4": "C38S2",
+    "T5": "C38S"
+   }
+  },
+  "r1s2-137": {
+   "kind": "ARMS",
+   "page_id": "69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "labels": {
+    "T1": "C38S2",
+    "T2": "OPUS",
+    "T3": "C38S",
+    "T4": "FP",
+    "T5": "C38"
+   }
+  }
+ },
+ "fable_items": [
+  "r1s2-074",
+  "r1s2-135",
+  "r1s2-099",
+  "r1s2-123",
+  "r1s2-011",
+  "r1s2-120",
+  "r1s2-001",
+  "r1s2-045",
+  "r1s2-081",
+  "r1s2-027",
+  "r1s2-058",
+  "r1s2-010",
+  "r1s2-059",
+  "r1s2-100",
+  "r1s2-089",
+  "r1s2-063",
+  "r1s2-052",
+  "r1s2-044",
+  "r1s2-096",
+  "r1s2-127",
+  "r1s2-116",
+  "r1s2-033",
+  "r1s2-043",
+  "r1s2-040",
+  "r1s2-104",
+  "r1s2-075",
+  "r1s2-068",
+  "r1s2-079",
+  "r1s2-048",
+  "r1s2-062",
+  "r1s2-024",
+  "r1s2-126",
+  "r1s2-125",
+  "r1s2-093",
+  "r1s2-053",
+  "r1s2-091",
+  "r1s2-039",
+  "r1s2-065",
+  "r1s2-137",
+  "r1s2-110",
+  "r1s2-009",
+  "r1s2-121",
+  "r1s2-113",
+  "r1s2-028",
+  "r1s2-014",
+  "r1s2-041",
+  "r1s2-106",
+  "r1s2-115",
+  "r1s2-128",
+  "r1s2-003",
+  "r1s2-098",
+  "r1s2-022",
+  "r1s2-016",
+  "r1s2-038"
+ ],
+ "failed_reads": {}
+}

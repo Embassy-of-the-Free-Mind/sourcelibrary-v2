@@ -19,23 +19,31 @@
  *     (compare *_updated_at with the page's), so a verdict is never silently carried over onto new text.
  *   - which run: run_id, the run's own id (a results dir, a hide reason). Required, because {book_id, method_id, run_id}
  *     is the write-once key: with an optional run_id every later run-less check would collide with the first.
+ *   - who could see it: exposure, one { page_number, exposure } per page read, exposure = served | withheld |
+ *     no_english | hidden at check time (scripts/lib/review-vocabulary.mjs; pageExposure() reads it live). A rate
+ *     quoted from rows that mix hidden books with served ones is the #6203 "invented" problem; 'unrecorded' is for a
+ *     backfill of a run that kept no record. Rows written before 2026-10-12 have no exposure field.
  * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq, and page_findings (#6199): the serious
  * findings per page — [{ page_number, wrong_page?, errors: [{ stage: ocr | translation | other, class?, problem? }] }],
  * one entry per page WITH a serious finding, so `[]` says every page read was free of them and an absent field says
  * the run kept no per-page record. The reader's page-level warning is built from it (src/lib/book-warnings.ts).
+ * An error may carry `kind` (review-vocabulary KINDS: confabulation, recitation, wrong_leaf, carry_over …); without
+ * one, its class's default kind applies (kindOfClass).
  *
  * Not a field on `books` (.claude/docs/invariants/field-sprawl.md). There is no delete here and a verdict is never
  * rewritten: a correction is a new row. {book_id, method_id, run_id} is unique, so re-running a backfill or a writer
  * cannot double a run. The one addition to an existing row is attachPageFindings(), which fills page_findings from the
  * row's own evidence file when the row has none, and never replaces one.
  *
- *   import { recordBookCheck, pageProvenance, ensureBookCheckIndexes } from '../lib/book-checks.mjs';
+ *   import { recordBookCheck, pageProvenance, pageExposure, ensureBookCheckIndexes } from '../lib/book-checks.mjs';
  *   const text_provenance = await pageProvenance(db, bookId, [12, 13, 14]);   // live read, at check time
+ *   const exposure = await pageExposure(db, bookId, [12, 13, 14]);            // served | withheld | no_english | hidden
  *   await recordBookCheck(db, { book_id, checked_at, method_id: 'shelf-overview', method_version: '1', ... });
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { exposureProblems, kindProblems } from './review-vocabulary.mjs';
 
 export const COLLECTION = 'book_checks';
 export const VERDICTS = ['show', 'caveat', 'fix'];
@@ -70,7 +78,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   const p = [];
   const {
     book_id, checked_at, method_id, method_version, run_id, frame, pages_read, reader, verdict, verdict_source,
-    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq, page_findings,
+    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq, page_findings, exposure,
   } = input;
   if (!nonEmpty(book_id)) p.push('book_id');
   const at = checked_at instanceof Date ? checked_at : (nonEmpty(checked_at) ? new Date(checked_at) : null);
@@ -106,6 +114,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
       }
     }
   }
+  p.push(...exposureProblems(exposure, pages_read).map((x) => (x.startsWith('exposure') ? x : `exposure: ${x}`)));
   if (verdict_source !== undefined && !nonEmpty(verdict_source)) p.push('verdict_source, when given, is a non-empty string');
   for (const [k, v] of [['api_usd', api_usd], ['subscription_usd_eq', subscription_usd_eq]]) if (v !== undefined && v !== null && !(isNum(v) && v >= 0)) p.push(`${k} must be a number ≥ 0`);
   if (classes !== undefined && !(Array.isArray(classes) && classes.every(nonEmpty))) p.push('classes must be a list of strings');
@@ -123,6 +132,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
     ...(classes ? { classes: [...new Set(classes)] } : {}),
     ...(nonEmpty(note) ? { note } : {}),
     ...(page_findings !== undefined ? { page_findings } : {}),
+    exposure: exposure.map((e) => ({ page_number: e.page_number, exposure: e.exposure })),
     evidence_path,
     text_provenance,
     ...(isNum(api_usd) ? { api_usd } : {}),
@@ -150,6 +160,7 @@ export function pageFindingProblems(findings, pagesRead) {
     for (const e of f.errors) {
       if (!e || !FINDING_STAGES.includes(e.stage)) p.push(`${at}: errors[].stage (${FINDING_STAGES.join(' | ')})`);
       else for (const k of ['class', 'problem']) if (e[k] !== undefined && !nonEmpty(e[k])) p.push(`${at}: errors[].${k}, when given, is a non-empty string`);
+      if (e) p.push(...kindProblems(e.kind, `${at}: errors[].kind`));
     }
   }
   return p;
@@ -199,6 +210,8 @@ export async function ensureBookCheckIndexes(db) {
  * so what is recorded is what the reader saw. One indexed query ({book_id, page_number}); no page text leaves Atlas.
  * A page record that is missing yields null model ids with unknown_reason, so the row still says so explicitly.
  */
+export { pageExposure } from './review-vocabulary.mjs';
+
 export async function pageProvenance(db, bookId, pageNumbers) {
   const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $in: pageNumbers } }, {
     projection: { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1,

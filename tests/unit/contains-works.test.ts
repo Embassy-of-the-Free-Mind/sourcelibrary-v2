@@ -34,6 +34,14 @@ describe('normalizeHeader', () => {
     expect(normalizeHeader('ΠΡΟΒΛΗΜΑΤΩΝ ΚϚ')).toBe('ΠΡΟΒΛΗΜΑΤΩΝ');
   });
 
+  // #4393: OECT I and II bound in one record. The volume numeral is the
+  // evidence; stripping it made both volumes one head.
+  it('keeps a volume numeral', () => {
+    expect(normalizeHeader('WELD-BLUNDELL COLLECTION VOL. II')).toBe('WELD-BLUNDELL COLLECTION VOL II');
+    expect(normalizeHeader('WELD-BLUNDELL COLLECTION VOL. II')).not.toBe(normalizeHeader('WELD-BLUNDELL COLLECTION VOL. I'));
+    expect(normalizeHeader('OEUVRES TOME III')).toBe('OEUVRES TOME III');
+  });
+
   it('leaves an ordinary title alone', () => {
     expect(normalizeHeader('ΠΕΡΙ ΠΟΙΗΤΙΚΗΣ')).toBe('ΠΕΡΙ ΠΟΙΗΤΙΚΗΣ');
   });
@@ -110,6 +118,20 @@ describe('deriveContainedWorks', () => {
     const works = deriveContainedWorks(bekker, { author: 'Aristotle' });
     const firsts = works.map((w) => w.first_page);
     expect(firsts).toEqual([...firsts].sort((a, b) => a - b));
+  });
+
+  // Captured from 6992543c59cdabeb78f1d0cd (#4393): Vol. I heads its versos
+  // without a number, Vol. II with one. Two volumes, not one.
+  it('reports two volumes of one series as two spans', () => {
+    const oect: Array<[number, string]> = [
+      ...run('WELD-BLUNDELL COLLECTION.', 12, 66).filter(([p]) => p % 2 === 0),
+      ...run('WELD-BLUNDELL COLLECTION VOL. II', 164, 200).filter(([p]) => p % 2 === 0),
+    ];
+    const works = deriveContainedWorks(oect, { author: 'Stephen Langdon' });
+    expect(works.map((w) => [w.header, w.first_page, w.last_page])).toEqual([
+      ['WELD-BLUNDELL COLLECTION', 12, 66],
+      ['WELD-BLUNDELL COLLECTION VOL II', 164, 200],
+    ]);
   });
 
   it('survives empty and malformed input', () => {

@@ -23,7 +23,8 @@
  * - Phase 7.6: Collection Assignment (books with summary/description but no collection_scores)
  *   Classifies books into thematic collections using Gemini Flash Lite. Additive writes
  *   only — never removes existing collection assignments. Writes book.collections,
- *   book.collection_relevance, and book.collection_scores marker.
+ *   book.collection_relevance, and book.collection_scores marker (whose `added` names the
+ *   memberships it created). Skips collections with `auto_assign: false` (#4848).
  *
  * Runs standalone via cron or called from the orchestrator.
  *
@@ -58,9 +59,11 @@ import { assertStoreVector, GEMINI_TEXT_MODEL } from '../lib/vector-truth.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
+import { autoAssignTargets, addedSlugs } from '../lib/collection-auto-assign.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
+import { spreadAcrossBook } from '../lib/spread-across-book.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
 import fs from 'node:fs';
@@ -754,7 +757,7 @@ function buildBookSummaryRequest(batchExtractions, bookTitle, bookAuthor, bookLa
     .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
     .join('\n');
 
-  const quotesText = allQuotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(allQuotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 
@@ -1133,8 +1136,8 @@ async function finishEnrichBook(db, book, inputs, batchExtractions, generated, {
     updateData.reading_summary = {
       overview: bookSummary.abstract || bookSummary.brief,
       detailed: bookSummary.detailed || '',
-      themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-      quotes: groundedBatchQuotes.slice(0, 15),
+      themes: spreadAcrossBook(batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i), 20),
+      quotes: spreadAcrossBook(groundedBatchQuotes, 15),
       generated_at: new Date(),
       model: LITE_MODEL,
       source: 'ai',
@@ -1941,8 +1944,12 @@ Guidelines:
     if (collections.length === 0) {
       console.log('  No collections in DB — skipping phase 7.6');
     } else {
+      // Curated collections (`auto_assign: false`) are closed to the tagger (#4848): not
+      // offered to the model, and absent from validSlugs so a returned slug is dropped.
+      const { open, closed } = autoAssignTargets(collections);
+      if (closed.length) console.log(`  Closed to auto-assignment: ${closed.join(', ')}`);
       // Normalize collection objects to what the prompt needs
-      collections = collections
+      collections = open
         .map(c => ({
           slug: c.slug,
           name: c.name || c.slug,
@@ -2006,7 +2013,7 @@ NO explanation, just the JSON array.`;
           })
           .project({
             id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, categories: 1,
-            collection_scores: 1,
+            collections: 1, collection_scores: 1,
           })
           .limit(500)
           .maxTimeMS(15_000)
@@ -2130,6 +2137,8 @@ NO explanation, just the JSON array.`;
                       collection_scores: {
                         assigned_at: new Date(),
                         model: COLLECTION_MODEL,
+                        // Memberships this pass created — the machine's, not a curator's (#4848)
+                        added: addedSlugs(book.collections, slugs),
                       },
                       updated_at: new Date(),
                     },

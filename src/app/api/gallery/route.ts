@@ -6,8 +6,10 @@ import { resolveSearchScope, closedScopeResponse, matchClip, matchGalleryText, s
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
+import { withIiifRefs } from '@/lib/iiif-refs';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
 import { subjectStringsForTopic } from '@/lib/image-subject-map';
+import { getPartnerByProvider, getProviderKeys } from '@/lib/library-partners';
 import { queryTerms, termVariants, isNoSpaceTerm, evidenceScore, plateFields, artworkFields, EVIDENCE_WEIGHTS } from '@/lib/search-grounding';
 import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
@@ -174,14 +176,17 @@ export async function GET(request: NextRequest) {
     // 2026-10-06 — BPH has 6,814 tagged rows against ~25,000 images in its
     // books), and the keyword lane below did not filter on it at all, so
     // `?q=dragon` on bhutan.sourcelibrary.org returned 65 foreign books.
+    // Every item carries its IIIF manifest and canvas (#4289), so a client
+    // holding a gallery result can reach the canvas. Global requests only.
+    const iiifRefs = !tenantScoped && searchScope.kind === 'global';
     const tenantBooks = searchScope.kind === 'tenant' ? [{ book_id: { $in: searchScope.bookIds } }] : null;
     if (visual && searchQuery) {
-      return NextResponse.json(await clipGallerySearch(searchParams, searchQuery, searchScope), {
+      return NextResponse.json(withIiifRefs(await clipGallerySearch(searchParams, searchQuery, searchScope), iiifRefs), {
         headers: { 'Cache-Control': NO_STORE },
       });
     }
     if (semantic && searchQuery) {
-      return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery, searchScope), {
+      return NextResponse.json(withIiifRefs(await semanticGallerySearch(searchParams, searchQuery, searchScope), iiifRefs), {
         headers: { 'Cache-Control': NO_STORE },
       });
     }
@@ -227,7 +232,7 @@ export async function GET(request: NextRequest) {
     const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
     if (galleryCount === 0) {
       // Fall back to legacy pipeline
-      return NextResponse.json(await legacyGalleryQuery(db, searchParams));
+      return NextResponse.json(withIiifRefs(await legacyGalleryQuery(db, searchParams), iiifRefs));
     }
 
     // Merged plain-gallery browse (default /gallery): interleave book illustrations
@@ -244,10 +249,10 @@ export async function GET(request: NextRequest) {
         qualityExplicit: searchParams.get('minQuality') !== null,
       });
       const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
-      return NextResponse.json({
+      return NextResponse.json(withIiifRefs({
         items: merged.items, total: merged.total, hasMore: merged.hasMore, limit, offset, bookInfo: null,
         filters: { ...mergedFilters, sources: ['illustration', 'artwork'] },
-      }, {
+      }, iiifRefs), {
         headers: { 'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded: merged.degraded }) },
       });
     }
@@ -270,10 +275,13 @@ export async function GET(request: NextRequest) {
     // If filtering by library/provider, resolve to book IDs
     let libraryBookIds: string[] | null = null;
     if (libraryFilter) {
+      // A partner's books can sit under alias keys too (mdz/bsb, ndl_japan/ndl).
+      const libraryPartner = getPartnerByProvider(libraryFilter);
+      const providerKeys = libraryPartner ? getProviderKeys(libraryPartner) : [libraryFilter];
       libraryBookIds = await galleryMemo(`lib-ids:${tenantId || ''}:${libraryFilter}`, () =>
         db.collection('books').distinct('id', {
           ...(tenantId ? { tenantId } : {}),
-          'image_source.provider': libraryFilter,
+          'image_source.provider': { $in: providerKeys },
           visible: true,
           pages_count: { $gt: 0 },
         }, { maxTimeMS: 10000 }) as Promise<string[]>);
@@ -775,7 +783,7 @@ export async function GET(request: NextRequest) {
       bookInfo = await getBookInfo(db, bookId, tenantId || undefined);
     }
 
-    return NextResponse.json({
+    return NextResponse.json(withIiifRefs({
       items: outItems,
       total: displayTotal,
       hasMore: searchHasMore,
@@ -783,7 +791,7 @@ export async function GET(request: NextRequest) {
       offset,
       bookInfo,
       filters,
-    }, {
+    }, iiifRefs), {
       headers: { 'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded }) },
     });
   } catch (error) {

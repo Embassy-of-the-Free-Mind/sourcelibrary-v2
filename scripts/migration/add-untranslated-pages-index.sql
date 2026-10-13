@@ -63,7 +63,10 @@ RETURNS TABLE (
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  PERFORM set_config('hnsw.ef_search', '100', true);
+  -- 400, not 100: on the built 2.0M-row index the 40 #5729 gold queries hit
+  -- 15/40 at 100, 18 at 200, 19 at 300, 20 at 400 and 20 at 1000 (the plateau),
+  -- warm median ≈ 0.4 s at 400 (2026-10-13, job supabase-index-5729).
+  PERFORM set_config('hnsw.ef_search', '400', true);
   RETURN QUERY
   SELECT s.page_id, s.book_id, s.page_number, s.book_title, s.book_author,
          s.book_language, s.book_year, 1 - s.dist AS similarity

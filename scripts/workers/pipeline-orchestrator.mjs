@@ -54,6 +54,7 @@ import { filterCompletedCopies } from './lib/work-copy-dedup.mjs';
 import { partitionPreviewCandidates } from './lib/ocr-preview-eligibility.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
+import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
@@ -535,7 +536,7 @@ import { scorePageForCover } from '../lib/cover-scoring.mjs';
  * @param {number} maxPages - Max pages to consider (default 20)
  * @returns {Promise<{page: Object, score: number, reason: string} | null>}
  */
-async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) {
+async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null, bookAuthor = null) {
   const pages = await db.collection('pages').find(
     { book_id: bookId, page_number: { $lte: maxPages } },
     { projection: {
@@ -548,7 +549,7 @@ async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) 
   if (!pages.length) return null;
 
   const scored = pages
-    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle }) }))
+    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle, bookAuthor }) }))
     .sort((a, b) => b.score - a.score);
 
   const best = scored[0];
@@ -3361,7 +3362,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
     // while it was inline realtime, which meant the one phase that runs every
     // two minutes was the one phase the ceiling could not stop.
-    if (shouldRun(1.5) && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
+    // The standing quality gate (#5826): a NO-GO on ocr pauses ENROLMENT — no new book's pages are
+    // submitted (1.5 and 2); jobs already submitted are still collected by Phase 3 / batch-collector.
+    if (shouldRun(1.5) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
@@ -3928,7 +3931,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2) && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
+    if (shouldRun(2) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -4324,9 +4327,9 @@ Rules:
         // thumbnail_source must survive the projection: the early-cover guard
         // below reads it, and a missing field made "!== 'manual'" always true —
         // silently overwriting human-chosen covers on every run.
-        .project({ id: 1, title: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, thumbnail_source: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, author: 1, thumbnail_source: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4441,7 +4444,7 @@ Rules:
               // cover immediately instead of waiting for the full pipeline to complete.
               if (book.thumbnail_source !== 'manual') {
                 try {
-                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
                   if (coverResult) {
                     await db.collection('books').updateOne(
                       { id: book.id },
@@ -4784,7 +4787,10 @@ Rules:
           'pipeline_auto.status': 'translate_submitted',
         });
         const headroom = MAX_INFLIGHT_TRANSLATIONS - inFlight;
-        const effectiveLimit = Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        // The standing quality gate (#5826): a NO-GO on translate pauses enrolment of new books into
+        // either lane; the reapers above and jobs already dispatched carry on.
+        const translateGate = await enrolBrake(db, 'translate');
+        const effectiveLimit = translateGate.paused ? 0 : Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
         console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
 
         if (effectiveLimit === 0) {
@@ -5724,10 +5730,10 @@ Rules:
       let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(COVER_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
+      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 });
 
       console.log(`  Books needing cover selection: ${coverBooks.length}`);
       let coversSelected = 0;
@@ -5765,7 +5771,7 @@ Rules:
           }
 
           // Smart OCR-based cover selection
-          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
           if (coverResult && coverResult.url !== book.thumbnail) {
             await db.collection('books').updateOne(
               { id: book.id },

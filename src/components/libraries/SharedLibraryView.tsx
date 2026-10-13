@@ -89,6 +89,11 @@ export interface SharedLibraryViewProps {
   galleryImages: GalleryImage[];
   contributingLibraries: ContributingLibrary[];
   basePath: string;
+  /** Where the Illustrations strip links. Defaults to `${basePath}/gallery`
+   *  (reading rooms). The public /libraries/[slug] pages have no gallery route —
+   *  next.config 308s it to the unscoped /gallery — so they pass the global
+   *  gallery scoped with `?library=<provider>` (#5954). */
+  gallery?: { path: string; query?: string };
   sort: string;
   language: string;
   q?: string;
@@ -123,6 +128,7 @@ export default function SharedLibraryView({
   galleryImages,
   contributingLibraries,
   basePath,
+  gallery = { path: `${basePath}/gallery` },
   sort,
   language: languageFilter,
   q,
@@ -277,7 +283,7 @@ export default function SharedLibraryView({
                 return (
                   <Link
                     key={galleryId}
-                    href={embedHref(`${basePath}/gallery/image/${galleryId}`)}
+                    href={embedHref(`${gallery.path}/image/${galleryId}`)}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
@@ -303,13 +309,13 @@ export default function SharedLibraryView({
                 );
               })}
               <Link
-                href={embedHref(`${basePath}/gallery`)}
+                href={embedHref(gallery.query ? `${gallery.path}?${gallery.query}` : gallery.path)}
                 className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex items-center justify-center"
               >
                 <div className="text-center px-2">
                   <Images className="w-6 h-6 text-muted mx-auto mb-1.5 group-hover:text-accent-rust transition-colors" />
                   <span className="text-xs text-secondary group-hover:text-accent-rust transition-colors font-medium">
-                    See all illustrations
+                    {gallery.query ? 'Search these illustrations' : 'See all illustrations'}
                   </span>
                 </div>
               </Link>

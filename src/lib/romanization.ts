@@ -70,8 +70,31 @@ export function isRomanizationCurrent(
 type RomanizablePage = Pick<Page, 'ocr' | 'transliteration'>;
 
 /**
+ * Is the page's own text already in the Latin alphabet? Decided from the
+ * characters of the OCR, not from `books.language`: the transliteration
+ * writers pick pages by the BOOK's language, so the English facing pages of a
+ * Loeb Greek volume were "romanized" too, and what came back was the English
+ * page with its tag envelope flattened to prose — "English / printed / text /
+ * Digitized by Google watermark" (#5221). Below 15% non-Latin letters there is
+ * nothing to romanize; a Latin page quoting a Greek phrase in passing is still
+ * a Latin page. Empty OCR is not judged.
+ */
+export function isLatinScriptOriginal(ocrText: string | undefined | null): boolean {
+  if (!ocrText) return false;
+  let latin = 0;
+  let other = 0;
+  for (const ch of stripEditorialWrappers(ocrText)) {
+    if (/\p{Script=Latin}/u.test(ch)) latin++;
+    else if (/\p{L}/u.test(ch)) other++;
+  }
+  const total = latin + other;
+  return total > 0 && other / total < 0.15;
+}
+
+/**
  * The romanized text to serve alongside a quote, or `undefined` when there is
- * none worth serving (absent, blank, or stale against the current OCR).
+ * none worth serving (absent, blank, stale against the current OCR, or on a
+ * page whose original is already Latin-script).
  *
  * Stripped through the same editorial-wrapper pipeline as `original`: the
  * romanization is produced from raw `ocr.data`, wrapper blocks and all, so it
@@ -84,6 +107,7 @@ export function romanizedForQuote(page: RomanizablePage | null | undefined): str
   if (!isRomanizationCurrent(page?.transliteration?.source_ocr_hash, page?.ocr?.data)) {
     return undefined;
   }
+  if (isLatinScriptOriginal(page?.ocr?.data)) return undefined;
   const stripped = stripEditorialWrappers(data).trim();
   return stripped ? stripped : undefined;
 }

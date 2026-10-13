@@ -1,0 +1,46 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>52</page-num>
+<header>SAN LUCAS, IX.</header>
+
+câ quenami amo qui mati tlen qui chihuaz
+ipampa oquîtoayâ
+
+8 Zequintin : ca yê in Juan omoz cali in-
+tlan in mîmiquê : auh occequin : ca yê in
+Elias omo nextî : auh occequin : ca ce ach-
+topa îtoani in yê huêca o nenque omozazli in
+tlan in mîmiquê.
+
+9 Auh in Herodes oquîtoaya in Juan nê-
+huatl o nic quechtec : ¿ aqui on in ipampa ix
+quich tlamantli nic caqui ? yhuan oqui nequia
+quittaz.
+
+10 O hual mo cuep quê in Apostoles o qui
+pohuiliquê in quexquich oquichîcâ : o quin
+mo cecan xelhuili yhuan oquin mohuiquili
+ayac câ tlalpan, cayê in Bethsaida.
+
+11 Zan quenami oqui âzicamat in tlaca-
+miecayotl o quimotepotztoquili : in yêhuatzin
+o quin celî yhuan oquin machtiaya in ilhuicac
+tlâtocayotl yhuan oquin pâtiaya in cocoxquê.
+
+12 Yhuan in ye Teotlaquia o âziquê in
+Apostoles yhuan oqui ilhuîquê : xic in titlani
+tlaca olocholtin mayacan âatltepetotompan
+yhuan om pa vivillâpan in achuêca catê ma
+mocehui tî yhuan maqui temotî tlaqualli :
+canican ti catê campa amo catê tlaca ni on
+tlen moquaz.
+
+13 Auh oquim ilhui : an mehuantin xiquin
+macacan tlen qui quazquê. In yêhuantin o
+quîtô quê : amoticpiâ oc achi ipan macuili
+tlaxcali yhuan ome michimê: nozo tel têhuan-
+tin ma tiyacan ticcoatî tlaqualli.
+
+<vocab>San Lucas, Juan, Elias, Herodes, Apostoles, Bethsaida, Teotlaquia, tlâtocayotl, tlaqualli, tlaxcali</vocab>

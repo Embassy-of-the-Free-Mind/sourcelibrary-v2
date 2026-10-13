@@ -8,8 +8,8 @@
   "eebo-tcp-5488"
  ],
  "control": {
-  "checked": 769,
-  "reproduced": 769
+  "checked": 779,
+  "reproduced": 779
  },
  "rows": [
   {
@@ -49,18 +49,6 @@
    }
   },
   {
-   "page": "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.199
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.025
-   }
-  },
-  {
    "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
    "engine": "gemini-3.6-flash+antigravity-cli",
    "as_returned": {
@@ -85,35 +73,11 @@
    }
   },
   {
-   "page": "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.381
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.169
-   }
-  },
-  {
    "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
    "engine": "gemini-3.6-flash+antigravity-cli",
    "as_returned": {
     "aligned": true,
     "cer": 0.153
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.015
-   }
-  },
-  {
-   "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.224
    },
    "stripped": {
     "aligned": true,
@@ -193,18 +157,6 @@
    }
   },
   {
-   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.231
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.025
-   }
-  },
-  {
    "page": "eebo-tcp-5488|ed-6991d6508c1030b12444acd8-p26",
    "engine": "gemini-3.6-flash+antigravity-cli",
    "as_returned": {
@@ -229,18 +181,6 @@
    }
   },
   {
-   "page": "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.274
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.027
-   }
-  },
-  {
    "page": "eebo-tcp-5488|ed-6991d6778c1030b12444b4d4-p43",
    "engine": "gemini-3.6-flash+antigravity-cli",
    "as_returned": {
@@ -250,18 +190,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.046
-   }
-  },
-  {
-   "page": "eebo-tcp-5488|ed-6991e175b53cae6bb602470e-p28",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.354
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.04
    }
   },
   {
@@ -334,18 +262,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.018
-   }
-  },
-  {
-   "page": "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.152
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.015
    }
   },
   {
@@ -445,18 +361,6 @@
    }
   },
   {
-   "page": "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.155
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.053
-   }
-  },
-  {
    "page": "eebo-tcp-5488|ed-6a08fd2e25e3a402b23b3bca-p26",
    "engine": "gemini-3.6-flash+antigravity-cli",
    "as_returned": {
@@ -514,18 +418,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.279
-   }
-  },
-  {
-   "page": "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
-   "engine": "gemini-3.7-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 1.172
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 1.039
    }
   },
   {
@@ -610,18 +502,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.042
-   }
-  },
-  {
-   "page": "eebo-tcp-5488|ed-6a43851557a09c2c0fcc0005-p17",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.236
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.048
    }
   },
   {
@@ -910,18 +790,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.071
-   }
-  },
-  {
-   "page": "ref-pinned|latin-vulgate-genesis-1",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.057
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.057
    }
   },
   {
@@ -1234,18 +1102,6 @@
    "stripped": {
     "aligned": true,
     "cer": 0.006
-   }
-  },
-  {
-   "page": "ref-ws|ws-la-columellae-opera-djvu-p26",
-   "engine": "gemini-3.8-flash+antigravity-cli",
-   "as_returned": {
-    "aligned": true,
-    "cer": 0.007
-   },
-   "stripped": {
-    "aligned": true,
-    "cer": 0.007
    }
   },
   {

@@ -1,0 +1,33 @@
+<scan-quality>good</scan-quality>
+<language>Spanish</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<warning>Handwritten cursive script, Spanish and Maya</warning>
+Descaecido anssi: thonan: thoyan:
+Descalçar çapatos: choch xanab
+Descalçar calças: hos: pul:
+Descalço: ixma xanab:
+Descalabrar: paapol: chinpol
+Descalabrado: paan vpol:
+Descalabradura: cinil: cintanil:
+Descaminada cosa: mabean: vt: mabean athan:
+Descaminado que ha perdido el camino: çatanbeti:
+Descampar la lluuia: tzitzilha: haual vkaxal haa:
+Descansar y descanso: helel:
+Descanso dar a otra cosa: helecah
+Descansadero: heleb: lubay: boh cabal vlec
+Descarado sin verguença: chic vuich: coyen vpacat: ☞ Vide
+Desuergonçado: <unclear>ofi çiento</unclear>:
+Descargarse de la carga: helcah cuch:
+Descargar a otro: emcah cuch:
+Descargarse delo que le calunian: tacba: lukcahba: ☞ Vide
+Defenderse: examinar se:
+Descargar su Conciencia: emcah vcoch pixan:
+Descasarse por algun ympedimento: chachpahal tubatanba.
+Descasar anssi: luk cah tubatanba:
+Descasarse quoad torum: nach cunah tubatanba:
+Descaxcarar como Naranjas o arbles: ppoopp.
+Descaxcarar como frisoles: ppal:
+Descaxcarado anssi: ppalaan: ppalbil:
+<vocab>Descaecido, Descalçar, Descalabrar, Descaminado, Descampar, Descansar, Descarado, Descargar, Descasar, Descaxcarar, Maya</vocab>

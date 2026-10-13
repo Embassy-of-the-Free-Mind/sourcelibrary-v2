@@ -78,6 +78,14 @@ const STRIP_THUMB_SOURCE_WIDTH = 150;
 /** The phone bar's full height — title row plus the pane picker — and the
  *  lead-in the column keeps for it. */
 const PHONE_BAR_H = BAR_H + SEG_H;
+type PhonePane = 'scan' | 'ocr' | 'en' | 'translit';
+/** Each picker segment's pane in the phone column, by its data-reader-section. */
+const PHONE_SECTION: Record<PhonePane, string> = {
+  scan: 'image', ocr: 'ocr', translit: 'transliteration', en: 'translation',
+};
+const PHONE_PANE_OF: Record<string, PhonePane> = {
+  image: 'scan', ocr: 'ocr', transliteration: 'translit', translation: 'en',
+};
 /** How long a scroll up has to have been meant before the bar comes back. */
 const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
@@ -290,18 +298,20 @@ function MobileToolbar({
 
 /**
  * Phone pane picker: the second row of the phone bar. Scan | German | English
- * (Romanised when the script calls for it); one tap shows that pane alone.
- * Desktop has had these as buttons in its top bar all along; on the phone
- * they were switches inside a sheet behind a tab called Views, which a new
- * reader had no reason to open (#5062). More than one segment lights when the
- * reader has stacked panes from the sheet; tapping any makes it the only one,
- * so the row always tells the truth about what is on screen.
+ * (Romanised when the script calls for it). Desktop has had these as buttons in
+ * its top bar all along; on the phone they were switches inside a sheet behind
+ * a tab called Views, which a new reader had no reason to open (#5062).
+ * A tap is a jump, not a filter (#5219): the panes are one column in reading
+ * order, the tap scrolls to the one you asked for, and the others are still
+ * above and below it. One segment lights — the pane you are reading — so the
+ * row tells the truth about where you are as you scroll.
  */
 function PhonePanePicker({
-  views, onPick, language, hasScan, showTranslit, translationLabel, hidden, transition,
+  active, onPick, language, hasScan, showTranslit, translationLabel, hidden, transition,
 }: {
-  views: { scan: boolean; ocr: boolean; en: boolean; translit: boolean };
-  onPick: (key: 'scan' | 'ocr' | 'en' | 'translit') => void;
+  /** The pane under the bar right now; null before the column has laid out. */
+  active: PhonePane | null;
+  onPick: (key: PhonePane) => void;
   /** The book's language, as the label of the transcription segment. */
   language: string;
   /** No facsimile (a text edition): the scan segment is left out. */
@@ -316,7 +326,7 @@ function PhonePanePicker({
   // An English book's transcription and translation would both read "English"
   // (#6092) — name the transcription segment "Original" instead.
   const sameName = language.trim().toLowerCase() === translationLabel.trim().toLowerCase();
-  const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
+  const items: Array<{ key: PhonePane; label: string }> = [
     ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
     { key: 'ocr', label: sameName ? t.originalFallback : language },
     ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
@@ -333,10 +343,10 @@ function PhonePanePicker({
         <button
           key={it.key}
           type="button"
-          aria-pressed={views[it.key]}
+          aria-current={active === it.key ? 'true' : undefined}
           onClick={() => onPick(it.key)}
           className={`${BAR_CONTROL} flex-1 min-w-0 px-2 truncate`}
-          style={{ ...barControlStyle(views[it.key]), marginLeft: i === 0 ? 0 : -1 }}
+          style={{ ...barControlStyle(active === it.key), marginLeft: i === 0 ? 0 : -1 }}
         >
           {it.label}
         </button>
@@ -2805,6 +2815,32 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     return anchor;
   }, []);
 
+  /**
+   * Which pane the phone picker lights: the one under the bar. At the foot of
+   * a scrolling column it is the last pane, which on a short page never
+   * climbs that far.
+   */
+  const [phonePane, setPhonePane] = useState<PhonePane | null>(null);
+  const readPhonePane = useCallback((): PhonePane | null => {
+    const el = mobileMainRef.current;
+    if (!el) return null;
+    const sections = Array.from(el.querySelectorAll<HTMLElement>('[data-reader-section]'));
+    if (sections.length === 0) return null;
+    let current = sections[0];
+    const scrolls = el.scrollHeight - el.clientHeight > 4;
+    if (scrolls && el.scrollHeight - (el.scrollTop + el.clientHeight) < 4) {
+      current = sections[sections.length - 1];
+    } else {
+      const line = el.getBoundingClientRect().top + PHONE_BAR_H + 48;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) current = section;
+      }
+    }
+    return PHONE_PANE_OF[current.dataset.readerSection ?? ''] ?? null;
+  }, []);
+  /** A picker tap waiting for its pane to render before scrolling to it. */
+  const pendingJump = useRef<PhonePane | null>(null);
+
   // The RENDERED page, like the mobile turn below. Keyed on the id being
   // navigated to, an uncached turn threw the outgoing page back to its top
   // and replayed the arrival fade over it, and the new page then swapped in
@@ -2880,6 +2916,31 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [r.currentPage.id]);
 
+  // The picker's jump, once the tapped pane is in the column. Placed under the
+  // bar the way a swipe places its pane, and held as the swipe anchor so the
+  // next turn keeps you there.
+  useLayoutEffect(() => {
+    const el = mobileMainRef.current;
+    const key = pendingJump.current;
+    pendingJump.current = null;
+    if (el && key) {
+      const section = PHONE_SECTION[key];
+      const target = el.querySelector<HTMLElement>(`[data-reader-section="${section}"]`);
+      if (target) {
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - PHONE_BAR_H;
+        el.scrollTop = Math.max(0, el.scrollTop + delta);
+        // Read back as no movement, so the jump does not hide the bar (and
+        // the picker in it) the way a scroll down would.
+        lastScrollY.current = el.scrollTop;
+        barIntent.current = 0;
+        mobileAnchor.current = section;
+        anchorLock.current = Date.now() + 250;
+      }
+    }
+    setPhonePane(readPhonePane());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [r.views, r.currentPage.id]);
+
   /**
    * How much of the viewport the on-screen keyboard is covering. The layout
    * viewport does not shrink when the keyboard opens on iOS, so a sheet
@@ -2910,11 +2971,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
    * with no height of its own snaps between sizes, so measure what the content
    * wants — the header plus its scroller's full content — and animate to it.
    */
-  /** The phone pane picker: one pane, and the column back at the top of it. */
-  const pickPane = (key: 'scan' | 'ocr' | 'en' | 'translit') => {
-    r.showOnlyView(key);
-    const el = mobileMainRef.current;
-    if (el) el.scrollTop = 0;
+  /**
+   * The phone pane picker: the whole page in the column, scrolled to the pane
+   * you tapped (#5219). The scroll waits for the render — the pane may not be
+   * in the column until revealView has put it there.
+   */
+  const pickPane = (key: PhonePane) => {
+    pendingJump.current = key;
+    r.revealView(key, !!(scan.display || witness));
   };
   // The cookie banner is fixed to the bottom of the screen and sat on top of
   // the phone dock on a first visit — a new reader could not tap a single
@@ -3072,6 +3136,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     const delta = y - lastScrollY.current;
     lastScrollY.current = y;
     if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+    setPhonePane(readPhonePane());
     if (delta === 0) return;
     if ((delta > 0) !== (barIntent.current > 0)) barIntent.current = 0;
     barIntent.current += delta;
@@ -3084,7 +3149,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     if (y < 48) { cancelBarShow(); setBarHidden(false); barIntent.current = 0; }
     else if (barIntent.current > 16) { cancelBarShow(); setBarHidden(true); }
     else if (barIntent.current < -28 || atFoot) showBarSoon();
-  }, [readMobileAnchor, cancelBarShow, showBarSoon]);
+  }, [readMobileAnchor, readPhonePane, cancelBarShow, showBarSoon]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
@@ -3363,7 +3428,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // running: see WIDE_LEAF_PREPAINT_SCRIPT. The ratio is left off until the
   // reader has one of its own, so the script's value on <html> shows through.
   const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
-  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  // A text edition with no facsimile and no witness photo (the ETCSL corpus
+  // books, #5951) gave a full column to a page-shaped "No facsimile" block,
+  // which readers took for a scan that failed to load. With a text pane
+  // beside it, drop the column; the phone layout already shrinks it to a line.
+  const scanPaneShown = r.views.scan && (!!scan.display || !!witness || textPaneCount === 0);
+  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3390,7 +3460,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     ro.observe(el);
     panesObserver.current = ro;
   }, []);
-  const scanPaneWidth = r.views.scan && textPaneCount > 0 && !stackWideLeaf && panesBox
+  const scanPaneWidth = scanPaneShown && textPaneCount > 0 && !stackWideLeaf && panesBox
     ? Math.round(Math.min(
         panesBox.w * SCAN_PANE_MAX_SHARE,
         Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
@@ -3735,7 +3805,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {r.views.scan && (
+          {scanPaneShown && (
             <section
               data-scan-pane
               className="flex-1 min-w-0 min-h-0 flex flex-col border-r"
@@ -4096,7 +4166,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             )}
           </div>
           <PhonePanePicker
-            views={r.views}
+            active={phonePane}
             onPick={pickPane}
             // On an original-text site the stored value is an English word
             // ("Latin", "Dutch"); name the pane as the desktop toggle does (#6254).
@@ -4149,7 +4219,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
           {r.views.scan && (scan.display || witness) && (
-            <section style={{ background: SURFACE.scanBed }}>
+            <section data-reader-section="image" style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
                 <ScanControls

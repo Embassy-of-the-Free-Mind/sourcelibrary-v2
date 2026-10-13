@@ -1,0 +1,1043 @@
+[
+ {
+  "id": "69e7533669e8edc5cf05a184",
+  "title": "The Towneley Plays",
+  "provider": "internet_archive",
+  "ia_identifier": "towneleyplays00engluoft",
+  "pages_count": 1,
+  "source_pages": 465,
+  "ia_files": null,
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": null
+ },
+ {
+  "id": "69e748a385f786e884a4c8c1",
+  "title": "دیوان کبیر شمس تبریزی (Dīvān-e Kabīr)",
+  "provider": "internet_archive",
+  "ia_identifier": "vol.-7_202104",
+  "pages_count": 1,
+  "source_pages": 3489,
+  "ia_files": {
+   "jp2_zips": 9,
+   "jp2_mb": 1109,
+   "pdfs": 9,
+   "pdf_mb": 97,
+   "scandata_files": 9,
+   "scandata_leaves": 3489
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "69c1b7c28522835be8449386",
+   "title": "Diwan-e Shams-i Tabrizi (Collected Mystical Poetry)",
+   "pages": 724
+  }
+ },
+ {
+  "id": "69dea1f74d19ec2e9ba75a72",
+  "title": "Abhijñānaśākuntalam (The Recognition of Shakuntala)",
+  "provider": "internet_archive",
+  "ia_identifier": "Abhijnana_Sakuntala_with_Commentary_of_Katayavema_English_Translation_by_CSR_Sastri_1947",
+  "pages_count": 1,
+  "source_pages": 632,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 119,
+   "pdfs": 1,
+   "pdf_mb": 74,
+   "scandata_files": 1,
+   "scandata_leaves": 632
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "69dea23c4d19ec2e9ba75f5e",
+   "title": "Śakuntalā: Sanskrit Text with Notes",
+   "pages": 385,
+   "visible": true
+  }
+ },
+ {
+  "id": "69de120486e6d59321ba21fe",
+  "title": "The Yellow Book, Vol. 1",
+  "provider": "internet_archive",
+  "ia_identifier": "yellowapril189401uoft",
+  "pages_count": 1,
+  "source_pages": 301,
+  "ia_files": null,
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": null
+ },
+ {
+  "id": "69d8ca8aa09828f83ddcb70e",
+  "title": "Icones Fungorum Hucusque Cognitorum, Vol 1",
+  "provider": "internet_archive",
+  "ia_identifier": "per_cabimicrofilm_aci-corda_1837_1",
+  "pages_count": 1,
+  "source_pages": 42,
+  "ia_files": null,
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": null
+ },
+ {
+  "id": "69d005bfb2b7abac3c8397b7",
+  "title": "Ānandakanda",
+  "provider": "internet_archive",
+  "ia_identifier": "anandakandatreatiseonmercuryheavymetalstheirusesinmedicenealchemyradhakrishnasha",
+  "pages_count": 1,
+  "source_pages": 807,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 552,
+   "pdfs": 1,
+   "pdf_mb": 46,
+   "scandata_files": 1,
+   "scandata_leaves": 807
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "69d005e0b2b7abac3c8397bb",
+   "title": "Ānandakanda (critical edition, vol. 1)",
+   "pages": 785,
+   "visible": true
+  }
+ },
+ {
+  "id": "69937dc1d85e1d5bbdf32957",
+  "title": "Olympian and Pythian Odes (Loeb L056)",
+  "provider": "internet_archive",
+  "ia_identifier": "L056PindarIOlympianPythianOdes",
+  "pages_count": 1,
+  "source_pages": 700,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 254,
+   "pdfs": 1,
+   "pdf_mb": 21,
+   "scandata_files": 1,
+   "scandata_leaves": 700
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "699379c6b0a84a576396617b",
+   "title": "Olympian and Pythian Odes",
+   "pages": 524,
+   "visible": true
+  }
+ },
+ {
+  "id": "69937a3bb0a84a5763967c0f",
+  "title": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+  "provider": "internet_archive",
+  "ia_identifier": "L110ThucydidesHistoryOfThePeloponnesianWarIII56",
+  "pages_count": 1,
+  "source_pages": 403,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 292,
+   "pdfs": 1,
+   "pdf_mb": 6,
+   "scandata_files": 1,
+   "scandata_leaves": 403
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "6993897cce1538706594711f",
+   "title": "Thucydides, History of the Peloponnesian War",
+   "pages": 1036,
+   "visible": true
+  }
+ },
+ {
+  "id": "69937a31b0a84a5763967a35",
+  "title": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+  "provider": "internet_archive",
+  "ia_identifier": "L108ThucycidesHistoryOfThePeloponnesianWarI12",
+  "pages_count": 1,
+  "source_pages": 512,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 321,
+   "pdfs": 1,
+   "pdf_mb": 17,
+   "scandata_files": 1,
+   "scandata_leaves": 512
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "6993897cce1538706594711f",
+   "title": "Thucydides, History of the Peloponnesian War",
+   "pages": 1036,
+   "visible": true
+  }
+ },
+ {
+  "id": "6a08a3ba8fae3d3f19b7906d",
+  "title": "Xenophon: Anabasis (Loeb 90)",
+  "provider": "internet_archive",
+  "ia_identifier": "L090XenophonHellenicaII67Anabasis13",
+  "pages_count": 1,
+  "source_pages": 529,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 402,
+   "pdfs": 1,
+   "pdf_mb": 9,
+   "scandata_files": 1,
+   "scandata_leaves": 529
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "69937775b0a84a5763963b40",
+   "title": "Xenophons Anabasis (7 Books)",
+   "pages": 592
+  }
+ },
+ {
+  "id": "69de0cbf80210ba13d79f4a3",
+  "title": "Juvenal and Persius: Satires (Loeb)",
+  "provider": "internet_archive",
+  "ia_identifier": "L091JuvenalPersiusCollectedSatires",
+  "pages_count": 1,
+  "source_pages": 510,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 325,
+   "pdfs": 1,
+   "pdf_mb": 14,
+   "scandata_files": 1,
+   "scandata_leaves": 510
+  },
+  "class": "A",
+  "read": "hidden: truncated ingest",
+  "sibling": {
+   "id": "69af4067c1333bab2648377c",
+   "title": "D. Junii Juvenalis et A. Persii Flacci Satirae",
+   "pages": 444,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfcd9b8ab50eb88e8c8367",
+  "title": "Bodleian Library MS. Laud Gr. 11",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69b2f443f9f1ad2b3b152090",
+   "title": "Dionysii orbis descriptio (Periegetes)",
+   "pages": 211,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfcc6d355e52cf7837cbea",
+  "title": "Bodleian Library MS. Gr. liturg. g. 3",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69bfcc988ab50eb88e8c5589",
+   "title": "Bodleian Library MS. Barocci 29",
+   "pages": 698,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5fb304c1c6b3950aad2",
+  "title": "al-Qanun (Canon of Medicine)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69af0d3bca8f47eb1206b135",
+   "title": "Liber Canonis Avicennae (Complete Canon of Medicine)",
+   "pages": 1249,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5ee304c1c6b3950a8f5",
+  "title": "Suwar al-kawakib (Book of the Fixed Stars)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69c1b7a8fe4b8f25b9200a59",
+   "title": "Kitab Suwar al-Kawakib al-Thabita (Book of the Constellations)",
+   "pages": 358
+  }
+ },
+ {
+  "id": "69b3e5eb304c1c6b3950a8f1",
+  "title": "Geographia (trans. Jacobus Angeli, incunabulum)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "6a4e27bd6ddde4289d516102",
+   "title": "La geografia di Claudio Tolomeo alessandrino, nuovamente tradotta di g",
+   "pages": 781,
+   "visible": false
+  }
+ },
+ {
+  "id": "69b3e5dd304c1c6b3950a6a5",
+  "title": "Liber de causis",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69ae674a4b74f168e0c15926",
+   "title": "Sirr al-Asrar (Secret of Secrets)",
+   "pages": 265,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5db304c1c6b3950a6a1",
+  "title": "Sirr al-asrar (Secret of Secrets)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69ae674a4b74f168e0c15926",
+   "title": "Sirr al-Asrar (Secret of Secrets)",
+   "pages": 265,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5d8304c1c6b3950a69d",
+  "title": "Secreta secretorum (Latin translation by Philip of Tripoli)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69ae674a4b74f168e0c15926",
+   "title": "Sirr al-Asrar (Secret of Secrets)",
+   "pages": 265,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5d3304c1c6b3950a59a",
+  "title": "Organon and other logical treatises",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "6993838c50654cbbe29170c5",
+   "title": "Aristotle, Organon (MS, 13th c.)",
+   "pages": 1352,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5c3304c1c6b3950a1ae",
+  "title": "In Platonis theologiam; Institutio theologica",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "699389e50f04c37dcfa6246c",
+   "title": "Proclus, Theologia Platonica; Michael Psellos",
+   "pages": 898,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e593c94a4ff7cce22d4b",
+  "title": "Tabula Smaragdina",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69b51e1d768235dc6598c853",
+   "title": "Hermetis Trismegisti Tractatus vere aureus de lapidis philosophici sec",
+   "pages": 304,
+   "visible": true
+  }
+ },
+ {
+  "id": "69904dd97d19f3f2aac1d57b",
+  "title": "De Coelesti Hierarchia",
+  "provider": "internet_archive",
+  "ia_identifier": "BeineckeMS526_47",
+  "pages_count": 1,
+  "source_pages": 1,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69520de1ab34727b1f044227",
+   "title": "Pseudo-Dionysius Areopagita (Ficino translation)",
+   "pages": 142,
+   "visible": true
+  }
+ },
+ {
+  "id": "69dea5c84d19ec2e9ba7750b",
+  "title": "Manusmṛti with Meghatithi Commentary (Sanskrit)",
+  "provider": "internet_archive",
+  "ia_identifier": "ManusmritiTikaMeghaTithiAlm28Shlf663688GDevanagariDharmshastra",
+  "pages_count": 3,
+  "source_pages": 3,
+  "ia_files": {
+   "jp2_zips": 1,
+   "jp2_mb": 5,
+   "pdfs": 1,
+   "pdf_mb": 3,
+   "scandata_files": 1,
+   "scandata_leaves": 3
+  },
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "6a30845a636655bcc9e1f67c",
+   "title": "Manusmṛti — with Medhātithi’s Manubhāṣya (Sanskrit)",
+   "pages": 550,
+   "visible": false
+  }
+ },
+ {
+  "id": "69bfcf063047130b1c3be9d7",
+  "title": "Bodleian Library MS. Auct. T. inf. 2. 2",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": 3,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69bfcdbc8ab50eb88e8c8393",
+  "title": "Bodleian Library MS. Holkham gr. 115",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": 3,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69bfcd618ab50eb88e8c831b",
+  "title": "Bodleian Library MS. Canon. Gr. 85",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": 3,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69bfccc18ab50eb88e8c6317",
+   "title": "Bodleian Library MS. Cromwell 11",
+   "pages": 434,
+   "visible": true
+  }
+ },
+ {
+  "id": "69b3e5e9304c1c6b3950a8eb",
+  "title": "Geographia (MS. Arch. Selden. B. 46)",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": 3,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "6a4e27bd6ddde4289d516102",
+   "title": "La geografia di Claudio Tolomeo alessandrino, nuovamente tradotta di g",
+   "pages": 781,
+   "visible": false
+  }
+ },
+ {
+  "id": "69bfcdc48ab50eb88e8c8399",
+  "title": "Bodleian Library MS. Rawl. G. 2",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": 4,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69bfccc18ab50eb88e8c6317",
+   "title": "Bodleian Library MS. Cromwell 11",
+   "pages": 434,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfcd748ab50eb88e8c8331",
+  "title": "Bodleian Library MS. Auct. T. 5. 34",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": 4,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69bfcd578ab50eb88e8c8301",
+  "title": "Bodleian Library MS. Canon. Gr. 38",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": 4,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69bfcd508ab50eb88e8c82fa",
+  "title": "Bodleian Library MS. Canon. Gr. 36",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": 4,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69b3e5a87ab102a372212e8e",
+  "title": "Commentary on Plato, Symposium",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": 4,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69aeaddc97d553c75e9d92bc",
+   "title": "Sopra lo amore o ver Convito di Platone",
+   "pages": 355,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfcdde8ab50eb88e8c83ab",
+  "title": "Bodleian Library MS. Auct. E. 5. 11",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 5,
+  "source_pages": 5,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69bfcc868ab50eb88e8c52ce",
+  "title": "Bodleian Library MS. Barocci 31",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 5,
+  "source_pages": 5,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69b4cce0d5b6c3815e1a2892",
+  "title": "Moninckx Atlas, vol. 9",
+  "provider": "allard_pierson",
+  "ia_identifier": null,
+  "pages_count": 6,
+  "source_pages": 6,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69b4ccded5b6c3815e1a2841",
+   "title": "Moninckx Atlas, vol. 8",
+   "pages": 79,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfcd3b8ab50eb88e8c8085",
+  "title": "Bodleian Library MS. Laud Gr. 3",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 7,
+  "source_pages": 7,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "6a492390a45b99e46af94c7a",
+  "title": "Ortus & Progressus Clysmaticae Novae",
+  "provider": "mdz",
+  "ia_identifier": null,
+  "pages_count": 8,
+  "source_pages": 8,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "6a90537c039d5ac89d3ef00e",
+   "title": "Clysmatica Nova: Sive Ratio, qua in venam sectam medicamenta immitti p",
+   "pages": 90,
+   "visible": false
+  }
+ },
+ {
+  "id": "69b3e602304c1c6b3950ad03",
+  "title": "Opus maius",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 8,
+  "source_pages": 8,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69ac7f5320878c5c9ba53152",
+   "title": "Opus Majus, Vol. 1",
+   "pages": 608,
+   "visible": true
+  }
+ },
+ {
+  "id": "69bfce7f8ab50eb88e8c85e3",
+  "title": "Bodleian Library MS. E. D. Clarke 6",
+  "provider": "bodleian",
+  "ia_identifier": null,
+  "pages_count": 5,
+  "source_pages": 5,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69a5f364d4c2e3cf8ecb8477",
+   "title": "Gospels (Peshitta)",
+   "pages": 692
+  }
+ },
+ {
+  "id": "69f133f41764d779d0c7217a",
+  "title": "Miao fa lian hua jing",
+  "provider": "sat_daizokyo",
+  "ia_identifier": null,
+  "pages_count": 9,
+  "source_pages": 9,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69f1347c365e3fcae574ed1c",
+   "title": "Kumārajīva um 412: Miao fa lian hua jing",
+   "pages": 119,
+   "visible": true
+  }
+ },
+ {
+  "id": "69dbc8d21040d1d5e209cb0f",
+  "title": "De trinitate. Utrum pater et filius. Quomodo substantiae bonae sint",
+  "provider": "bsb",
+  "ia_identifier": null,
+  "pages_count": 9,
+  "source_pages": 9,
+  "ia_files": null,
+  "class": "B",
+  "read": "source publishes only these images",
+  "sibling": {
+   "id": "69b52ca68a30f8bb1366132c",
+   "title": "Severini Boethii Liber De trinitate",
+   "pages": 92,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f33a14876dd827cbc57a69",
+  "title": "Heures de Nostre Dame, Ã  l'usage de Paris",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f3333f876dd827cbc4ae39",
+   "title": "Book of hours (use of Paris)",
+   "pages": 404,
+   "visible": false
+  }
+ },
+ {
+  "id": "69f33482876dd827cbc4d05f",
+  "title": "Suetonii Tranquillini de vita et moribus duodecim principum Romanorum libri duodecim",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69b62fba1c1c21a3737f9b57",
+   "title": "C. Suvetonii Tranquilli De XII Caesaribus libri VIII. Isaacus Casaubon",
+   "pages": 695,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f3346e876dd827cbc4cec1",
+  "title": "Quaestiones super libro primo Sententiarum Petri Lombardi, cum prologo",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69afcf8e1b215b8741e34b1b",
+   "title": "Quaestiones in Quattuor Libros Sententiarum",
+   "pages": 562,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f32e8e876dd827cbc442f9",
+  "title": "Book of hours (Sarum use)",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 4,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33116876dd827cbc484cd",
+   "title": "Horae beatae Mariae virginis (use of Sarum)",
+   "pages": 154,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f3360a876dd827cbc4fc1e",
+  "title": "Comentum Macrobii Ambrosii in somnium Scipionis",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 5,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69942cb6b2f6748db4abe787",
+   "title": "Opera (Eyssenhardt critical edition)",
+   "pages": 694,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f33869876dd827cbc53ab5",
+  "title": "Book of hours, use of Rome (Houghton MS Lat 275)",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 6,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33758876dd827cbc51f7f",
+   "title": "Book of hours, use of Rome (Houghton MS Lat 249)",
+   "pages": 286,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f33853876dd827cbc538ed",
+  "title": "Book of hours",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 6,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33659876dd827cbc501eb",
+   "title": "Book of hours",
+   "pages": 814,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f33626876dd827cbc4ff52",
+  "title": "Book of hours, Use of Rome",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 6,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33758876dd827cbc51f7f",
+   "title": "Book of hours, use of Rome (Houghton MS Lat 249)",
+   "pages": 286,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f3369e876dd827cbc50c6d",
+  "title": "Book of hours, use of Rouen, in Latin and French",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 7,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33697876dd827cbc50b33",
+   "title": "Book of hours, use of Rouen",
+   "pages": 312,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f3319b876dd827cbc49274",
+  "title": "Book of hours (Sarum use)",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 7,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f33116876dd827cbc484cd",
+   "title": "Horae beatae Mariae virginis (use of Sarum)",
+   "pages": 154,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f32f05876dd827cbc44b73",
+  "title": "Ludo schacorum",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 7,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f330c1876dd827cbc47d5b",
+   "title": "Schachzabelbuch",
+   "pages": 329,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f32cd99b51c8eee5d22fc2",
+  "title": "Psalter with canticles",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 7,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69f32de0876dd827cbc434c9",
+   "title": "Psalter with canticles",
+   "pages": 82,
+   "visible": true
+  }
+ },
+ {
+  "id": "69f32d2d876dd827cbc42be7",
+  "title": "Physica",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 8,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "6a50573878825bd7fddb57c0",
+   "title": "Physica Aristotelis",
+   "pages": 816,
+   "visible": false
+  }
+ },
+ {
+  "id": "69f3358d876dd827cbc4ece3",
+  "title": "Le décameron",
+  "provider": "harvard",
+  "ia_identifier": null,
+  "pages_count": 10,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "C",
+  "read": "not confirmed (Harvard refuses this box)",
+  "sibling": {
+   "id": "69b3025b97fb03b3863b4b8f",
+   "title": "Il Decamerone (Elzevir pocket)",
+   "pages": 784,
+   "visible": true
+  }
+ },
+ {
+  "id": "6a19650ebc198340eea93117",
+  "title": "Serat Damar Wulan (missing pages)",
+  "provider": "wikimedia_commons",
+  "ia_identifier": null,
+  "pages_count": 3,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "D",
+  "read": "not confirmed (Commons, no manifest)",
+  "sibling": {
+   "id": "6a1d9a174c9c6027f5e30a39",
+   "title": "Serat Damar Wulan",
+   "pages": 440,
+   "visible": false
+  }
+ },
+ {
+  "id": "6a1967f9bc198340eea931af",
+  "title": "WM ID 001 0019 - Kakawin Baratayudha - ᬓᬓᬯᬶᬦ᭄‌ᬩᬭᬢᬬᬸᬤ᭄ᬥ᭟",
+  "provider": "wikimedia_commons",
+  "ia_identifier": null,
+  "pages_count": 8,
+  "source_pages": null,
+  "ia_files": null,
+  "class": "D",
+  "read": "not confirmed (Commons, no manifest)",
+  "sibling": {
+   "id": "6a1d83724c9c6027f5e260f9",
+   "title": "WM ID 005 0001 Kakawin Bharatayudha",
+   "pages": 80,
+   "visible": false
+  }
+ },
+ {
+  "id": "69b4c13f779e2e78e20e7566",
+  "title": "Manly Palmer Hall- Complete Collection of Alchemical Works",
+  "provider": "internet_archive",
+  "ia_identifier": "ManlyPalmerHallBox18Ms102V20",
+  "pages_count": 10,
+  "source_pages": 156,
+  "ia_files": {
+   "jp2_zips": 48,
+   "jp2_mb": 5879,
+   "pdfs": 48,
+   "pdf_mb": 727,
+   "scandata_files": 48,
+   "scandata_leaves": 1392
+  },
+  "class": "E",
+  "read": "needs a look",
+  "sibling": null
+ }
+]

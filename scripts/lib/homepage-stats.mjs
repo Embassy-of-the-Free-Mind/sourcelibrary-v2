@@ -30,6 +30,9 @@ export async function computeHomepageStats(db, { log = console } = {}) {
   const books = db.collection('books');
   const filter = { ...LIVE_BOOK_FILTER };
   const translatedFilter = { ...filter, pages_translated: { $gt: 0 } };
+  // First translations count only books a reader can read in English (#6203). On
+  // `pages_translated > 0`, 384 of 4,961 sat below the readable rung (measurement-validity.md).
+  const ftFilter = { ...filter, ...READABLE_IN_ENGLISH_FILTER, is_first_translation: true };
   // Visual artworks: single-object entries (paintings, prints, sculptures, etc.).
   // Tagged content_type:'artwork' at import. They have 0 pages (image + metadata)
   // or a few non-sequential images of the same object — not read like books.
@@ -40,7 +43,7 @@ export async function computeHomepageStats(db, { log = console } = {}) {
     translationStateStampCoverage(books, filter),
     books.countDocuments(filter),
     books.countDocuments({ ...filter, ...READABLE_IN_ENGLISH_FILTER }),
-    books.countDocuments({ ...translatedFilter, is_first_translation: true }),
+    books.countDocuments(ftFilter),
     books.distinct('author', translatedFilter).then(a => a.length),
     // Distinct SOURCE languages across the opened corpus (same `filter` as totalBooks,
     // so the two stats are consistent). countDistinctLanguages splits compound labels
@@ -66,7 +69,7 @@ export async function computeHomepageStats(db, { log = console } = {}) {
   // ft-verify'd constituents above the book floor (honest, == books until verification
   // lands), and `…Provisional` counts every chapter-derived constituent (upper bound).
   // Both are book-floored (≥ firstTranslationCount), asserted by countFirstTranslatedWorks.
-  const ftBooks = await books.find({ ...translatedFilter, is_first_translation: true })
+  const ftBooks = await books.find(ftFilter)
     .project({ _id: 0, contents_works: 1 }).toArray();
   const firstTranslatedWorks = countFirstTranslatedWorks(ftBooks, { mode: 'verified' });
   const firstTranslatedWorksProvisional = countFirstTranslatedWorks(ftBooks, { mode: 'provisional' });
@@ -80,15 +83,17 @@ export async function computeHomepageStats(db, { log = console } = {}) {
     booksSearched: (await attempts.distinct('book_id', { 'queries.0': { $exists: true } })).length,
   };
 
-  const stats = { totalBooks, firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, census_ledger, updatedAt: new Date() };
+  const stats = { totalBooks, authorCount, languageCount, artworkCount, illustrationCount, verification_coverage, census_ledger, updatedAt: new Date() };
   if (stampCoverage.ok) {
     stats.readableInEnglish = readableInEnglish;
+    // The first-translation counts read the same stamp, so they are held back with it.
+    Object.assign(stats, { firstTranslationCount, firstTranslatedWorks, firstTranslatedWorksProvisional });
     stats.translatedToEnglish = readableInEnglish; // alias for one release (#5286)
     // `updatedAt` moves on every run; this moves only when the view was published,
     // so a value held back by the stamp-coverage check is visibly stale.
     stats.readableInEnglishAt = stats.updatedAt;
   } else {
-    log.warn(`readableInEnglish NOT written: only ${stampCoverage.stamped}/${stampCoverage.total} live books carry translation_state (${(100 * stampCoverage.share).toFixed(1)}% < 99%) — sync-worker has not finished stamping; previous value kept.`);
+    log.warn(`readableInEnglish NOT written: only ${stampCoverage.stamped}/${stampCoverage.total} live books carry translation_state (${(100 * stampCoverage.share).toFixed(1)}% < 99%) — sync-worker has not finished stamping; previous readable and first-translation values kept.`);
   }
   return stats;
 }

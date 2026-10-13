@@ -18,7 +18,7 @@
  *              pages per book: the ones readers open most, filled to N with a seeded spread → DIR/NAME/pages.json
  *              (the id list for cli-ocr.mjs read) + manifest.jsonl
  *   read       (cli-ocr.mjs) node … scripts/batch/cli-ocr.mjs read --page-ids-file=DIR/NAME/pages.json
- *              --out=DIR/NAME/reads --model=gemini-3.7-flash-low --concurrency=3 --job=convergent-ocr-6420
+ *              --out=DIR/NAME/reads --model=gemini-3.8-flash-low --concurrency=3 --job=convergent-ocr-6420
  *   compare    --set=NAME   stored text vs CLI read: normalised CER, chatter flags → DIR/NAME/compare.jsonl
  *   packets    --set=NAME [--threshold=T | --all] [--per-chunk=25]   disagreements (or all pages, for calibration)
  *              → DIR/NAME/adj/chunks/*.json + images
@@ -222,6 +222,11 @@ async function packets() {
 // ── adjudicate ─────────────────────────────────────────────────────────────────────────────────────────────────────
 // Sealed like scripts/eval/second-reader/run-readers.sh: one folder per chunk holding only the brief, the items and
 // their images; `--restricted --tools Read Write` removes Bash and confines reads to the folder.
+// The adjudicator is Opus on the SUBSCRIPTION. Run under `node --env-file=.env.production.local` (for Mongo), the child
+// inherits ANTHROPIC_API_KEY, and `claude -p` prefers an API key over the subscription login: every chunk then goes to
+// the paid API, or fails 401 when the key is dead (2026-10-12, #6553). Same strip as scripts/eval/stale-gate-6567.
+function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
+
 function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md') {
   const name = path.basename(chunkFile, '.json');
   const sealed = path.join(process.env.TMPDIR || '/tmp', 'ocr-convergence-sealed', path.basename(path.dirname(path.dirname(chunkFile))) + '-' + (SET || 'x') + '-' + brief.replace(/\.md$/, ''), name);
@@ -235,7 +240,7 @@ function runSealed(chunkFile, outFile, metaDir, model, brief = 'ADJUDICATOR.md')
   return new Promise((resolve) => {
     const t0 = Date.now();
     const out = fs.openSync(path.join(metaDir, `${name}.jsonl`), 'w');
-    const child = spawn('claude', ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--output-format', 'stream-json', '--verbose'], { cwd: sealed, stdio: ['ignore', out, out] });
+    const child = spawn('claude', ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--output-format', 'stream-json', '--verbose'], { cwd: sealed, stdio: ['ignore', out, out], env: claudeEnv() });
     const timer = setTimeout(() => child.kill('SIGKILL'), 60 * 60 * 1000);
     child.on('close', (code) => {
       clearTimeout(timer); fs.closeSync(out);
@@ -300,7 +305,7 @@ async function decide() {
   const extra = new Map(fs.existsSync(extraF) ? JSON.parse(fs.readFileSync(extraF, 'utf8')).map((e) => [e.page_id, e.why]) : []);
   const out = [];
   for (const r of rows) {
-    const base = { page_id: r.page_id, book_id: r.book_id, slug: r.slug, page_number: r.page_number, group: r.group, language: r.language, cer: r.cer, chatter: r.chatter, stored_model: r.stored_model };
+    const base = { page_id: r.page_id, book_id: r.book_id, slug: r.slug, page_number: r.page_number, group: r.group, language: r.language, cer: r.cer, chatter: r.chatter, stored_model: r.stored_model, cli_model: r.cli_model ?? null };
     if (r.status !== 'compared') { out.push({ ...base, action: 'no-second-read', why: r.chatter || r.status }); continue; }
     const v = verdicts.get(r.page_id);
     const side = key.get(r.page_id);
@@ -343,7 +348,10 @@ async function apply() {
   const APPLY = flag('apply');
   const dec = readJsonl(path.join(SETDIR, 'decisions.jsonl'));
   const runId = `${LANE}-${SET}-${path.basename(RUN)}`;
-  const reason = `#6420 lane B: second read (gemini-3.7-flash-low, CLI) disagreed with the stored read; Opus picked this read from the image (run ${runId})`;
+  // The second-read model comes from each read's own meta (3.7 was withdrawn from agy on 2026-10-12; sets read
+  // since then are 3.8). Decisions written before cli_model was carried fall back to 3.7, the only model used then.
+  const readModels = [...new Set(dec.map((d) => d.cli_model || 'gemini-3.7-flash-low'))].sort().join(' + ');
+  const reason = `#6420 lane B: second read (${readModels}, CLI) disagreed with the stored read; Opus picked this read from the image (run ${runId})`;
   // 1. Writes, through cli-ocr.mjs apply and its guards. Each written page is stamped translation_stale with this
   //    lane, so lane C finds exactly these pages; no automatic lane re-translates a book outside TRANSLATING (decide).
   // --no-writes: a failed gate (or any stop) applies checks and containments only; `write` pages are reported as
@@ -358,7 +366,7 @@ async function apply() {
     console.log((r.stdout || '').split('\n').filter((l) => /written|would write|skip/.test(l)).slice(-3).join('\n'));
   }
   const { client, db } = await connect();
-  const { recordBookCheck, pageProvenance, ensureBookCheckIndexes } = await import('../../lib/book-checks.mjs');
+  const { recordBookCheck, pageProvenance, pageExposure, ensureBookCheckIndexes } = await import('../../lib/book-checks.mjs');
   if (APPLY) await ensureBookCheckIndexes(db);
   // 2. Containment (containment-on-finding.md): hold the book first, then withhold the named pages' English.
   const contain = {};
@@ -379,16 +387,16 @@ async function apply() {
   for (const [bookId, ds] of Object.entries(byBook)) {
     const pagesRead = ds.map((d) => d.page_number).sort((a, b) => a - b);
     const findings = ds.filter((d) => d.action === 'contain' || d.action === 'residual' || (NO_WRITES && d.action === 'write') || (d.action === 'defer' && d.adj?.stored_serious) || (d.action === 'keep' && d.adj?.stored_serious))
-      .map((d) => ({ page_number: d.page_number, ...(d.action === 'contain' && /another leaf/.test(d.why || '') ? { wrong_page: true } : {}), errors: [{ stage: 'ocr', class: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'ocr-wrong-leaf' : 'ocr-unsettled') : 'ocr-misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
+      .map((d) => ({ page_number: d.page_number, ...(d.action === 'contain' && /another leaf/.test(d.why || '') ? { wrong_page: true } : {}), errors: [{ stage: 'ocr', class: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'ocr-wrong-leaf' : 'ocr-unsettled') : 'ocr-misread', kind: d.action === 'contain' ? (/another leaf/.test(d.why || '') ? 'wrong_leaf' : 'other') : 'misread', problem: (d.adj?.stored_errors?.[0] || d.why || d.action).slice(0, 200) }] }));
     const verdict = ds.some((d) => d.action === 'contain') ? 'fix' : findings.length ? 'caveat' : 'show';
     const input = {
       book_id: bookId, checked_at: new Date(), method_id: METHOD.id, method_version: METHOD.version, run_id: runId,
       frame: `#6420 lane B: top books by readers (analytics_pageviews), ${SET}`, pages_read: pagesRead,
-      reader: { kind: 'model', model: 'gemini-3.7-flash-low', role: 'ocr-convergence: CLI second read vs stored; Opus (subscription) reads the image on disagreement', image_opened: true },
+      reader: { kind: 'model', model: [...new Set(ds.map((d) => d.cli_model || 'gemini-3.7-flash-low'))].sort().join(' + '), role: 'ocr-convergence: CLI second read vs stored; Opus (subscription) reads the image on disagreement', image_opened: true },
       verdict, classes: [...new Set(ds.map((d) => d.action))], page_findings: findings,
       note: `${ds.filter((d) => d.action === 'agree').length} agree, ${ds.filter((d) => d.action === 'keep').length} kept, ${ds.filter((d) => d.action === 'write').length} ${NO_WRITES ? 'staged, not written (gate)' : 'written'}, ${ds.filter((d) => d.action === 'defer').length} deferred, ${ds.filter((d) => d.action === 'residual').length} residual, ${ds.filter((d) => d.action === 'contain').length} contained`,
       evidence_path: `scripts/batch/ocr-convergence/results/${path.basename(RUN)}/${SET}/decisions.jsonl.gz`,
-      text_provenance: await pageProvenance(db, bookId, pagesRead),
+      text_provenance: await pageProvenance(db, bookId, pagesRead), exposure: await pageExposure(db, bookId, pagesRead),
       api_usd: 0,
     };
     if (APPLY) { await recordBookCheck(db, input); rows++; } else { (await import('../../lib/book-checks.mjs')).buildBookCheck(input); rows++; }

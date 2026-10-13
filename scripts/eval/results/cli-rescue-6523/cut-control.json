@@ -1,0 +1,220 @@
+{
+ "method": "cli-restructure",
+ "model": "gemini-3.8-flash-low",
+ "cli": "agy 1.3.3",
+ "prompt": "cut-6523/2",
+ "guard": "verbatim-cut/2",
+ "at": "2026-10-11T19:15:50.872Z",
+ "planted": {
+  "n": 10,
+  "accepted": 10,
+  "exact": 10
+ },
+ "natural": {
+  "n": 10,
+  "accepted": 9,
+  "exact": 9
+ },
+ "items": [
+  {
+   "uid": "planted-0",
+   "src": "latin-pilot-6375:C37-ocr|6a4579ba31e306b784334f1f-p72",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2008,
+   "span_chars": 2008
+  },
+  {
+   "uid": "planted-1",
+   "src": "latin-pilot-6375:C37-ocr|6a0c53f399c52ea845a06406-p73",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2182,
+   "span_chars": 2182
+  },
+  {
+   "uid": "planted-2",
+   "src": "latin-pilot-6375:C37-ocr|6a5149842ae5f7beb7ef3b3b-p45",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2238,
+   "span_chars": 2238
+  },
+  {
+   "uid": "planted-3",
+   "src": "latin-pilot-6375:C37-ocr|6a454ee389beae48d3af88e5-p166",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 1564,
+   "span_chars": 1564
+  },
+  {
+   "uid": "planted-4",
+   "src": "cli38-6182-6331:C38-full|6abeafd9896ea18127c821b0",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2206,
+   "span_chars": 2206
+  },
+  {
+   "uid": "planted-5",
+   "src": "cli38-6182-6331:C38-full|6abeafd9896ea18127c821d8",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2479,
+   "span_chars": 2479
+  },
+  {
+   "uid": "planted-6",
+   "src": "cli38-6182-6331:C38-full|6abeafd9896ea18127c82200",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2399,
+   "span_chars": 2399
+  },
+  {
+   "uid": "planted-7",
+   "src": "syriac-6295:C37-ocr|69920b97_271",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2350,
+   "span_chars": 2350
+  },
+  {
+   "uid": "planted-8",
+   "src": "syriac-6295:C37-ocr|69a5ea9a_391",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2039,
+   "span_chars": 2039
+  },
+  {
+   "uid": "planted-9",
+   "src": "syriac-6295:C37-ocr|69943ce1_628",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2060,
+   "span_chars": 2060
+  },
+  {
+   "uid": "natural-0",
+   "src": "pareto-6293:gemini-3.6-flash+antigravity-cli|chinese-cohort-5547|chinese-cohort-5547-11ad17-p51",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 135,
+   "span_chars": 135
+  },
+  {
+   "uid": "natural-1",
+   "src": "pareto-6293:gemini-3.7-flash+antigravity-cli|eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 335,
+   "span_chars": 335
+  },
+  {
+   "uid": "natural-2",
+   "src": "pareto-6293:gemini-3.8-flash+antigravity-cli|chinese-cohort-5547|chinese-cohort-5547-1ba9dd-p41",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 291,
+   "span_chars": 291
+  },
+  {
+   "uid": "natural-3",
+   "src": "pareto-6293:gemini-3.8-flash+antigravity-cli-rep|eebo-tcp-5488|ed-69ac7f0f20878c5c9ba524b5-p366",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2720,
+   "span_chars": 2720
+  },
+  {
+   "uid": "natural-4",
+   "src": "syriac-6295:C36-ocr|69943f85_836",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 1372,
+   "span_chars": 1372
+  },
+  {
+   "uid": "natural-5",
+   "src": "syriac-6295:C36-ocr-b|69a5eb6b_205",
+   "accepted": false,
+   "exact": false,
+   "reason": "guard: not a contiguous substring of the raw reply",
+   "cli_error": null,
+   "answer_chars": 2469,
+   "span_chars": 2468
+  },
+  {
+   "uid": "natural-6",
+   "src": "syriac-6295:C37-ocr|6994400f_296",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 397,
+   "span_chars": 397
+  },
+  {
+   "uid": "natural-7",
+   "src": "syriac-6295:C37-ocr-b|6994400f_296",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 1280,
+   "span_chars": 1280
+  },
+  {
+   "uid": "natural-8",
+   "src": "latin-pilot-6375:C37-ocr|69b645e618b87551bfc3fba3-p81",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 642,
+   "span_chars": 642
+  },
+  {
+   "uid": "natural-9",
+   "src": "ocr-prereg-6388:G|english-print|6a4a32d6b49cf960c37dddc9-p264",
+   "accepted": true,
+   "exact": true,
+   "reason": null,
+   "cli_error": null,
+   "answer_chars": 2042,
+   "span_chars": 2042
+  }
+ ]
+}

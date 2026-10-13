@@ -1,0 +1,172 @@
+{
+ "built_by": "scripts/eval/estimator/build-table.py",
+ "by_experiment": {
+  "5606-ab": 342,
+  "6182-claude-tib": 1368,
+  "6182-claude-xl": 2916,
+  "6182-tib": 3762,
+  "6182-xl": 4656,
+  "6331-canon-ref": 323,
+  "6331-cli38-tib113": 678,
+  "6331-cli38-tib58": 348,
+  "6331-cli38-xl": 2186,
+  "xlref-t1": 1070,
+  "xlref-t2": 411,
+  "xlref-t3": 748,
+  "xlref-t4": 948,
+  "xlref-t5": 1090
+ },
+ "by_experiment_language": {
+  "5606-ab": {
+   "lzh": 120,
+   "pi": 96,
+   "sa": 126
+  },
+  "6182-claude-tib": {
+   "bo": 1368
+  },
+  "6182-claude-xl": {
+   "ar": 192,
+   "arc": 40,
+   "de": 176,
+   "es": 48,
+   "fa": 184,
+   "fr": 112,
+   "grc": 548,
+   "he": 232,
+   "it": 80,
+   "la": 566,
+   "lzh": 200,
+   "nl": 56,
+   "pi": 238,
+   "sa": 240
+  },
+  "6182-tib": {
+   "bo": 3762
+  },
+  "6182-xl": {
+   "ar": 327,
+   "arc": 51,
+   "de": 268,
+   "es": 93,
+   "fa": 306,
+   "fr": 175,
+   "grc": 872,
+   "he": 355,
+   "it": 125,
+   "la": 892,
+   "lzh": 309,
+   "nl": 82,
+   "pi": 394,
+   "sa": 407
+  },
+  "6331-canon-ref": {
+   "lzh": 150,
+   "pi": 115,
+   "sa": 58
+  },
+  "6331-cli38-tib113": {
+   "bo": 678
+  },
+  "6331-cli38-tib58": {
+   "bo": 348
+  },
+  "6331-cli38-xl": {
+   "ar": 144,
+   "arc": 30,
+   "de": 132,
+   "es": 36,
+   "fa": 138,
+   "fr": 84,
+   "grc": 414,
+   "he": 174,
+   "it": 60,
+   "la": 424,
+   "lzh": 150,
+   "nl": 42,
+   "pi": 178,
+   "sa": 180
+  },
+  "xlref-t1": {
+   "la": 1070
+  },
+  "xlref-t2": {
+   "grc": 410
+  },
+  "xlref-t3": {
+   "de": 278,
+   "es": 76,
+   "fr": 178,
+   "it": 128,
+   "nl": 88
+  },
+  "xlref-t4": {
+   "ar": 360,
+   "arc": 90,
+   "fa": 238,
+   "he": 260
+  },
+  "xlref-t5": {
+   "lzh": 374,
+   "pi": 256,
+   "sa": 460
+  }
+ },
+ "by_language": {
+  "ar": 1023,
+  "arc": 211,
+  "bo": 6156,
+  "de": 854,
+  "es": 253,
+  "fa": 866,
+  "fr": 549,
+  "grc": 2244,
+  "he": 1021,
+  "it": 393,
+  "la": 2952,
+  "lzh": 1303,
+  "nl": 268,
+  "pi": 1277,
+  "sa": 1471
+ },
+ "by_model": {
+  "claude-haiku-4.5|sub": 1071,
+  "claude-opus-5.5|sub": 614,
+  "claude-sonnet-5.5|sub": 1209,
+  "gemini-3-flash-preview|api": 3905,
+  "gemini-3-flash-preview|stored": 1904,
+  "gemini-3.1-flash-lite|api": 3020,
+  "gemini-3.1-flash-lite|stored": 985,
+  "gemini-3.1-pro-t128|api": 798,
+  "gemini-3.5-flash-lite|api": 797,
+  "gemini-3.5-flash|api": 798,
+  "gemini-3.6-flash|api": 796,
+  "gemini-3.7-flash|api": 798,
+  "gemini-3.8-flash|api": 2936,
+  "gemini-3.8-flash|cli": 1210
+ },
+ "failed_reads": 5,
+ "judges": {
+  "claude-opus-5.5": 20675,
+  "claude-sonnet-5.5": 171
+ },
+ "rows": 20846,
+ "scored": 20841,
+ "scored_pages_by_experiment": {
+  "5606-ab": 57,
+  "6182-claude-tib": 171,
+  "6182-claude-xl": 365,
+  "6182-tib": 171,
+  "6182-xl": 365,
+  "6331-canon-ref": 138,
+  "6331-cli38-tib113": 113,
+  "6331-cli38-tib58": 58,
+  "6331-cli38-xl": 365,
+  "xlref-t1": 71,
+  "xlref-t2": 75,
+  "xlref-t3": 59,
+  "xlref-t4": 52,
+  "xlref-t5": 68
+ },
+ "variant_rows_not_fitted": 1570
+}

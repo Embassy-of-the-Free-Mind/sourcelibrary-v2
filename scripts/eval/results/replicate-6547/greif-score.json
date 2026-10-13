@@ -1,0 +1,2333 @@
+{
+ "arms": {
+  "opus-corr-anchor": {
+   "pages_attempted": 12,
+   "pages_read": 12,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 4,
+   "secs_per_page": 15.8,
+   "greif_norm": {
+    "cer": [
+     0.0043286013497789155,
+     0.0006134969325153375,
+     0.011573350015639663
+    ],
+    "wer": [
+     0.0434235368156073,
+     0.008119925046845722,
+     0.113477537437604
+    ],
+    "per_doc": {
+     "4": 0.00061,
+     "6": 0.00246,
+     "7": 0.01525,
+     "10": 0.00062
+    },
+    "docs": 4
+   },
+   "greif_strict": {
+    "cer": [
+     0.012894747648967189,
+     0.0027731558513588465,
+     0.023785166240409206
+    ],
+    "wer": [
+     0.08753395713854513,
+     0.020307692307692308,
+     0.16946917243653148
+    ],
+    "per_doc": {
+     "4": 0.00233,
+     "6": 0.02215,
+     "7": 0.02566,
+     "10": 0.00337
+    },
+    "docs": 4
+   },
+   "ours": {
+    "cer": [
+     0.001025087671971945,
+     0.00010087763542822556,
+     0.0020876826722338203
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "4": 0.0,
+     "6": 0.00156,
+     "7": 0.00267,
+     "10": 0.00024
+    },
+    "docs": 4
+   }
+  },
+  "opus-corr": {
+   "pages_attempted": 30,
+   "pages_read": 30,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 10,
+   "secs_per_page": 14.5,
+   "greif_norm": {
+    "cer": [
+     0.006771148628954508,
+     0.0032203589522051606,
+     0.010922747348655153
+    ],
+    "wer": [
+     0.05011862396204033,
+     0.023681377825618945,
+     0.08458279009126467
+    ],
+    "per_doc": {
+     "1": 0.00247,
+     "2": 0.00682,
+     "3": 0.00485,
+     "4": 0.00046,
+     "5": 0.0118,
+     "6": 0.00246,
+     "7": 0.01504,
+     "8": 0.01679,
+     "9": 0.01359,
+     "10": 0.00041
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.013457639247803443,
+     0.008011724474841232,
+     0.019029133603547032
+    ],
+    "wer": [
+     0.0846704871060172,
+     0.04969995383905216,
+     0.126910480349345
+    ],
+    "per_doc": {
+     "1": 0.0042,
+     "2": 0.01183,
+     "3": 0.01217,
+     "4": 0.0022,
+     "5": 0.01912,
+     "6": 0.022,
+     "7": 0.02566,
+     "8": 0.02098,
+     "9": 0.01841,
+     "10": 0.00319
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.004831670822942643,
+     0.00214987714987715,
+     0.008265586340030997
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00377,
+     "2": 0.00545,
+     "3": 0.00506,
+     "4": 0.0,
+     "5": 0.00827,
+     "6": 0.00156,
+     "7": 0.00242,
+     "8": 0.01425,
+     "9": 0.01415,
+     "10": 0.00024
+    },
+    "docs": 10
+   }
+  },
+  "opus-ocr": {
+   "pages_attempted": 30,
+   "pages_read": 30,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 10,
+   "secs_per_page": 13.1,
+   "greif_norm": {
+    "cer": [
+     0.007062621914306854,
+     0.003117769324287227,
+     0.011879352954392271
+    ],
+    "wer": [
+     0.05441874258600237,
+     0.023561272850372378,
+     0.0973293768545994
+    ],
+    "per_doc": {
+     "1": 0.00247,
+     "2": 0.00629,
+     "3": 0.00383,
+     "4": 0.00076,
+     "5": 0.00751,
+     "6": 0.00284,
+     "7": 0.01943,
+     "8": 0.01831,
+     "9": 0.01335,
+     "10": 0.00062
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.014809366675943228,
+     0.008040829080304134,
+     0.022332188639805472
+    ],
+    "wer": [
+     0.09613180515759312,
+     0.05179918746372606,
+     0.157403008709422
+    ],
+    "per_doc": {
+     "1": 0.0036,
+     "2": 0.0116,
+     "3": 0.01217,
+     "4": 0.00247,
+     "5": 0.01147,
+     "6": 0.02215,
+     "7": 0.03831,
+     "8": 0.02233,
+     "9": 0.02087,
+     "10": 0.00431
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.0044679966749792185,
+     0.0018649927219796215,
+     0.007911026635502017
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00377,
+     "2": 0.00484,
+     "3": 0.00387,
+     "4": 0.00017,
+     "5": 0.00331,
+     "6": 0.002,
+     "7": 0.00218,
+     "8": 0.01512,
+     "9": 0.01386,
+     "10": 0.00024
+    },
+    "docs": 10
+   }
+  },
+  "pro-corr-anchor": {
+   "pages_attempted": 12,
+   "pages_read": 12,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 4,
+   "secs_per_page": 78.8,
+   "greif_norm": {
+    "cer": [
+     0.006516174074936002,
+     0.0008764241893076249,
+     0.015587529976019185
+    ],
+    "wer": [
+     0.05884203901825047,
+     0.010618363522798251,
+     0.15507487520798668
+    ],
+    "per_doc": {
+     "4": 0.00076,
+     "6": 0.00605,
+     "7": 0.02048,
+     "10": 0.00104
+    },
+    "docs": 4
+   },
+   "greif_strict": {
+    "cer": [
+     0.01622109974949694,
+     0.0027731558513588465,
+     0.030690537084398978
+    ],
+    "wer": [
+     0.11801992152127981,
+     0.02276923076923077,
+     0.252884932410155
+    ],
+    "per_doc": {
+     "4": 0.00261,
+     "6": 0.02486,
+     "7": 0.03739,
+     "10": 0.003
+    },
+    "docs": 4
+   },
+   "ours": {
+    "cer": [
+     0.0022120312921499866,
+     0.0003026329062846767,
+     0.004585597826086957
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "4": 0.0,
+     "6": 0.00578,
+     "7": 0.00291,
+     "10": 0.00072
+    },
+    "docs": 4
+   }
+  },
+  "pro-corr": {
+   "pages_attempted": 30,
+   "pages_read": 30,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 10,
+   "secs_per_page": 78.2,
+   "greif_norm": {
+    "cer": [
+     0.007488621331360284,
+     0.003524537790877424,
+     0.012155745489078822
+    ],
+    "wer": [
+     0.05545670225385528,
+     0.02522017614091273,
+     0.09535283993115319
+    ],
+    "per_doc": {
+     "1": 0.00135,
+     "2": 0.00682,
+     "3": 0.00332,
+     "4": 0.00076,
+     "5": 0.01824,
+     "6": 0.0034,
+     "7": 0.01755,
+     "8": 0.01729,
+     "9": 0.01383,
+     "10": 0.00104
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.014968393432194967,
+     0.008451869004300365,
+     0.02283818493150685
+    ],
+    "wer": [
+     0.0994269340974212,
+     0.054766437252892076,
+     0.15608465608465608
+    ],
+    "per_doc": {
+     "1": 0.003,
+     "2": 0.01112,
+     "3": 0.01334,
+     "4": 0.00288,
+     "5": 0.04398,
+     "6": 0.01642,
+     "7": 0.03317,
+     "8": 0.01895,
+     "9": 0.01841,
+     "10": 0.00319
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.005169368246051538,
+     0.0022795333661109374,
+     0.00892063394745716
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00251,
+     "2": 0.00545,
+     "3": 0.00327,
+     "4": 0.0,
+     "5": 0.0153,
+     "6": 0.00222,
+     "7": 0.00267,
+     "8": 0.01454,
+     "9": 0.01415,
+     "10": 0.00072
+    },
+    "docs": 10
+   }
+  },
+  "pro-ocr": {
+   "pages_attempted": 30,
+   "pages_read": 30,
+   "did_not_read": {},
+   "no_sentinel": 0,
+   "docs_scored": 10,
+   "secs_per_page": 83.1,
+   "greif_norm": {
+    "cer": [
+     0.007892199726463532,
+     0.0038516458740417855,
+     0.012785041724307198
+    ],
+    "wer": [
+     0.05634638196915777,
+     0.026901938096615563,
+     0.09496533011757612
+    ],
+    "per_doc": {
+     "1": 0.00404,
+     "2": 0.00734,
+     "3": 0.00332,
+     "4": 0.00076,
+     "5": 0.01001,
+     "6": 0.00265,
+     "7": 0.01943,
+     "8": 0.01958,
+     "9": 0.01526,
+     "10": 0.00249
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.015664135490796326,
+     0.009588314496715492,
+     0.022363789409243953
+    ],
+    "wer": [
+     0.10057306590257879,
+     0.0605879719444859,
+     0.15322804100858964
+    ],
+    "per_doc": {
+     "1": 0.0066,
+     "2": 0.01373,
+     "3": 0.01474,
+     "4": 0.0022,
+     "5": 0.02709,
+     "6": 0.02072,
+     "7": 0.03409,
+     "8": 0.02098,
+     "9": 0.01964,
+     "10": 0.00525
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.005948669991687448,
+     0.002921063357637788,
+     0.009782798579164968
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00478,
+     "2": 0.00575,
+     "3": 0.00327,
+     "4": 0.00017,
+     "5": 0.00662,
+     "6": 0.00178,
+     "7": 0.00679,
+     "8": 0.01745,
+     "9": 0.01618,
+     "10": 0.00264
+    },
+    "docs": 10
+   }
+  }
+ },
+ "published_control": {
+  "pub-transkribus-printM1": {
+   "greif_norm": {
+    "cer": [
+     0.036837739064146544,
+     0.01750015699901614,
+     0.06225105540582441
+    ],
+    "wer": [
+     0.09979240806642942,
+     0.06594689232564925,
+     0.141439205955335
+    ],
+    "per_doc": {
+     "1": 0.03297,
+     "2": 0.01337,
+     "3": 0.01938,
+     "4": 0.00592,
+     "5": 0.14163,
+     "6": 0.09813,
+     "7": 0.01755,
+     "8": 0.01679,
+     "9": 0.02337,
+     "10": 0.03462
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.04969586132866855,
+     0.026224660519045952,
+     0.08111108908142832
+    ],
+    "wer": [
+     0.15673352435530086,
+     0.10636264336428182,
+     0.21808014911463186
+    ],
+    "per_doc": {
+     "1": 0.03862,
+     "2": 0.0329,
+     "3": 0.02784,
+     "4": 0.00906,
+     "5": 0.19503,
+     "6": 0.11205,
+     "7": 0.03812,
+     "8": 0.02188,
+     "9": 0.02966,
+     "10": 0.04085
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.03301641729010806,
+     0.01444774196516898,
+     0.05756372753865441
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.03294,
+     "2": 0.01029,
+     "3": 0.01845,
+     "4": 0.0047,
+     "5": 0.13027,
+     "6": 0.09293,
+     "7": 0.00485,
+     "8": 0.01454,
+     "9": 0.02253,
+     "10": 0.03261
+    },
+    "docs": 10
+   }
+  },
+  "pub-gemini-2.0-flash-ocr": {
+   "greif_norm": {
+    "cer": [
+     0.012712719445752337,
+     0.0074303530936184,
+     0.01886061232398915
+    ],
+    "wer": [
+     0.07102609727164887,
+     0.04339333054276545,
+     0.10076077768385461
+    ],
+    "per_doc": {
+     "1": 0.00561,
+     "2": 0.01704,
+     "3": 0.01913,
+     "4": 0.00106,
+     "5": 0.02861,
+     "6": 0.00416,
+     "7": 0.014,
+     "8": 0.01958,
+     "9": 0.02766,
+     "10": 0.00684
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.020772870035383452,
+     0.01297035347776511,
+     0.030037281816641247
+    ],
+    "wer": [
+     0.10916905444126075,
+     0.06942171303873432,
+     0.15508982035928143
+    ],
+    "per_doc": {
+     "1": 0.0056,
+     "2": 0.02935,
+     "3": 0.02153,
+     "4": 0.00384,
+     "5": 0.06119,
+     "6": 0.01801,
+     "7": 0.03134,
+     "8": 0.02323,
+     "9": 0.03028,
+     "10": 0.00862
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.011507689110556942,
+     0.006358822577288598,
+     0.0178502241656058
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00629,
+     "2": 0.01664,
+     "3": 0.01637,
+     "4": 0.00052,
+     "5": 0.02564,
+     "6": 0.00245,
+     "7": 0.00873,
+     "8": 0.01657,
+     "9": 0.03091,
+     "10": 0.00767
+    },
+    "docs": 10
+   }
+  },
+  "pub-gemini-2.0-flash-corr": {
+   "greif_norm": {
+    "cer": [
+     0.008385462209367502,
+     0.004749718894187895,
+     0.012661414151584565
+    ],
+    "wer": [
+     0.051008303677342826,
+     0.029277998862990335,
+     0.0771693884085815
+    ],
+    "per_doc": {
+     "1": 0.00404,
+     "2": 0.01022,
+     "3": 0.00918,
+     "4": 0.00137,
+     "5": 0.01824,
+     "6": 0.00454,
+     "7": 0.00961,
+     "8": 0.01984,
+     "9": 0.01645,
+     "10": 0.00083
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.01910308909474019,
+     0.011222350730085297,
+     0.028841773986500476
+    ],
+    "wer": [
+     0.09813753581661891,
+     0.06255110384300899,
+     0.1383238405207486
+    ],
+    "per_doc": {
+     "1": 0.0056,
+     "2": 0.02154,
+     "3": 0.01568,
+     "4": 0.00357,
+     "5": 0.06628,
+     "6": 0.02471,
+     "7": 0.02823,
+     "8": 0.02301,
+     "9": 0.0225,
+     "10": 0.00375
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.006779925187032419,
+     0.003388413386433145,
+     0.011005026620267096
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00528,
+     "2": 0.00847,
+     "3": 0.00863,
+     "4": 0.00052,
+     "5": 0.01406,
+     "6": 0.00311,
+     "7": 0.00267,
+     "8": 0.01832,
+     "9": 0.01618,
+     "10": 0.00048
+    },
+    "docs": 10
+   }
+  },
+  "pub-gemini-3.1-pro-ocr": {
+   "greif_norm": {
+    "cer": [
+     0.007735252572812269,
+     0.003975488150409629,
+     0.0122266471040313
+    ],
+    "wer": [
+     0.05604982206405694,
+     0.028321863419798834,
+     0.0927015423755764
+    ],
+    "per_doc": {
+     "1": 0.00471,
+     "2": 0.0076,
+     "3": 0.00332,
+     "4": 0.00076,
+     "5": 0.01073,
+     "6": 0.00303,
+     "7": 0.01797,
+     "8": 0.0178,
+     "9": 0.01526,
+     "10": 0.00228
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.014650339919691488,
+     0.008837598022654124,
+     0.02148479047011274
+    ],
+    "wer": [
+     0.09598853868194843,
+     0.05730416372618208,
+     0.14734687911124106
+    ],
+    "per_doc": {
+     "1": 0.0062,
+     "2": 0.01183,
+     "3": 0.01193,
+     "4": 0.00247,
+     "5": 0.03378,
+     "6": 0.01419,
+     "7": 0.03226,
+     "8": 0.0194,
+     "9": 0.02128,
+     "10": 0.00487
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.005740856192851205,
+     0.0029025397222569747,
+     0.009302460370359637
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00553,
+     "2": 0.00605,
+     "3": 0.00327,
+     "4": 0.0,
+     "5": 0.00703,
+     "6": 0.00222,
+     "7": 0.00558,
+     "8": 0.01541,
+     "9": 0.01618,
+     "10": 0.00216
+    },
+    "docs": 10
+   }
+  },
+  "pub-gemini-3.1-pro-corr": {
+   "greif_norm": {
+    "cer": [
+     0.008004304836214435,
+     0.0034044235542181906,
+     0.013543527594032156
+    ],
+    "wer": [
+     0.06123962040332147,
+     0.026016009852216748,
+     0.11019965949543414
+    ],
+    "per_doc": {
+     "1": 0.00157,
+     "2": 0.00708,
+     "3": 0.00408,
+     "4": 0.00091,
+     "5": 0.01252,
+     "6": 0.00246,
+     "7": 0.02319,
+     "8": 0.01729,
+     "9": 0.01693,
+     "10": 0.00062
+    },
+    "docs": 10
+   },
+   "greif_strict": {
+    "cer": [
+     0.015862918936111,
+     0.008731527750609073,
+     0.024648679608075767
+    ],
+    "wer": [
+     0.10630372492836676,
+     0.0570105628707857,
+     0.17569352708058125
+    ],
+    "per_doc": {
+     "1": 0.0036,
+     "2": 0.01373,
+     "3": 0.0138,
+     "4": 0.00275,
+     "5": 0.0392,
+     "6": 0.0153,
+     "7": 0.04087,
+     "8": 0.01895,
+     "9": 0.02046,
+     "10": 0.00319
+    },
+    "docs": 10
+   },
+   "ours": {
+    "cer": [
+     0.005429135494596842,
+     0.0023975007870583394,
+     0.009339862169024302
+    ],
+    "wer": [
+     null,
+     null,
+     null
+    ],
+    "per_doc": {
+     "1": 0.00277,
+     "2": 0.00514,
+     "3": 0.00417,
+     "4": 0.00017,
+     "5": 0.00868,
+     "6": 0.00156,
+     "7": 0.00606,
+     "8": 0.01454,
+     "9": 0.01791,
+     "10": 0.00024
+    },
+    "docs": 10
+   }
+  }
+ },
+ "anchoring": {
+  "opus-corr-anchor": {
+   "survived": 0,
+   "corrected": 33,
+   "other": 0,
+   "site_not_found": 0,
+   "pages": 12,
+   "by_kind": {
+    "num": {
+     "survived": 0,
+     "n": 11
+    },
+    "word": {
+     "survived": 0,
+     "n": 22
+    }
+   },
+   "ambiguous": 3,
+   "rate": 0.0,
+   "ci": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "detail": [
+    {
+     "uid": "type-4-p1",
+     "kind": "num",
+     "line": 40,
+     "prev": "Eschenhmrstr.",
+     "orig": "26.",
+     "planted": "76.",
+     "next": "",
+     "left": [
+      "Lehrer,",
+      "kl.",
+      "Eschenhmrstr."
+     ],
+     "right": [
+      "Friedrichs",
+      "Joh."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p1",
+     "kind": "word",
+     "line": 43,
+     "prev": "Andreas,",
+     "orig": "Scribent,",
+     "planted": "Handelsmann,",
+     "next": "Steingasse",
+     "left": [
+      "Rothhofgasse",
+      "Fries",
+      "Andreas,"
+     ],
+     "right": [
+      "Steingasse",
+      "13."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p1",
+     "kind": "word",
+     "line": 41,
+     "prev": "Peter,",
+     "orig": "Bäcker,",
+     "planted": "Lohnkutscher,",
+     "next": "Elisabethenstrasse",
+     "left": [
+      "Friedrichs",
+      "Joh.",
+      "Peter,"
+     ],
+     "right": [
+      "Elisabethenstrasse",
+      "15."
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "num",
+     "line": 9,
+     "prev": "Schulstrasse",
+     "orig": "13.",
+     "planted": "53.",
+     "next": "",
+     "left": [
+      "Sohn",
+      "—",
+      "Schulstrasse"
+     ],
+     "right": [
+      "Eisengiesserei",
+      "und"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "word",
+     "line": 28,
+     "prev": "Fritsch",
+     "orig": "Catharina,",
+     "planted": "Friedr,",
+     "next": "geb.",
+     "left": [
+      "Judengasse",
+      "57.",
+      "Fritsch"
+     ],
+     "right": [
+      "geb.",
+      "Bick,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "word",
+     "line": 3,
+     "prev": "Carl,",
+     "orig": "Handelsmann,",
+     "planted": "Weserstrasse,",
+     "next": "Metzgergasse",
+     "left": [
+      "Fries",
+      "Joh.",
+      "Carl,"
+     ],
+     "right": [
+      "Metzgergasse",
+      "3."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "num",
+     "line": 28,
+     "prev": "Stiftstrasse",
+     "orig": "30.",
+     "planted": "34.",
+     "next": "",
+     "left": [
+      "Balthasar,",
+      "Tabaksspinner,",
+      "Stiftstrasse"
+     ],
+     "right": [
+      "Fruth",
+      "Georg,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "word",
+     "line": 8,
+     "prev": "Lohnbediente,",
+     "orig": "Schärfengässchen",
+     "planted": "Papier",
+     "next": "4.",
+     "left": [
+      "Joh.",
+      "Ludwig,",
+      "Lohnbediente,"
+     ],
+     "right": [
+      "4.",
+      "Fritz"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "word",
+     "line": 17,
+     "prev": "Neue",
+     "orig": "Rothhofg.",
+     "planted": "Christian.",
+     "next": "3.",
+     "left": [
+      "Christoph,",
+      "Buchbinder,",
+      "Neue"
+     ],
+     "right": [
+      "3.",
+      "Frohmann"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "num",
+     "line": 49,
+     "prev": "fähre",
+     "orig": "723.",
+     "planted": "823.",
+     "next": "",
+     "left": [
+      "gr.",
+      "Alte¬",
+      "fähre"
+     ],
+     "right": [
+      "Bertram,",
+      "Carl"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "word",
+     "line": 47,
+     "prev": "Friedr.",
+     "orig": "Heinr.,",
+     "planted": "Christ.,",
+     "next": "Kaufmann,",
+     "left": [
+      "Allee.",
+      "Bertling,",
+      "Friedr."
+     ],
+     "right": [
+      "Kaufmann,",
+      "Firma:"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "word",
+     "line": 53,
+     "prev": "Joh.",
+     "orig": "Heinr.,",
+     "planted": "Neuho.,",
+     "next": "ob.",
+     "left": [
+      "Bestmann,",
+      "Christ.",
+      "Joh."
+     ],
+     "right": [
+      "ob.",
+      "Hundestr."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "num",
+     "line": 25,
+     "prev": "Krähenstr.",
+     "orig": "412",
+     "planted": "417",
+     "next": "",
+     "left": [
+      "Frau",
+      "Krankenwärterin),",
+      "Krähenstr."
+     ],
+     "right": [
+      "M.",
+      "Frau,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "word",
+     "line": 33,
+     "prev": "Heinr.,",
+     "orig": "Vorst.",
+     "planted": "Eisenb.",
+     "next": "St.",
+     "left": [
+      "Christ.",
+      "Aug.",
+      "Heinr.,"
+     ],
+     "right": [
+      "St.",
+      "Jürgen"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "word",
+     "line": 35,
+     "prev": "d.",
+     "orig": "Hüxterthore,",
+     "planted": "Schmutz,",
+     "next": "Falkenstr.",
+     "left": [
+      "Jürgen",
+      "v.",
+      "d."
+     ],
+     "right": [
+      "Falkenstr.",
+      "Meno"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "num",
+     "line": 36,
+     "prev": "JohQ.",
+     "orig": "769.",
+     "planted": "569.",
+     "next": "",
+     "left": [
+      "med.,",
+      "Mühlenbrücke",
+      "JohQ."
+     ],
+     "right": [
+      "Binn",
+      "Frl.,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "word",
+     "line": 32,
+     "prev": "Material=,",
+     "orig": "Gewürz=,",
+     "planted": "Engelswisch=,",
+     "next": "Colonial=",
+     "left": [
+      "F.",
+      "Binder,",
+      "Material=,"
+     ],
+     "right": [
+      "Colonial=",
+      "und"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "word",
+     "line": 48,
+     "prev": "Heinr.,",
+     "orig": "Kaufmann,",
+     "planted": "AcciseEinnehmer,",
+     "next": "Theilh.",
+     "left": [
+      "Biss,",
+      "Ernst",
+      "Heinr.,"
+     ],
+     "right": [
+      "Theilh.",
+      "d."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "num",
+     "line": 27,
+     "prev": "Anneng.",
+     "orig": "738",
+     "planted": "735",
+     "next": "",
+     "left": [
+      "Mauerpolier,",
+      "WV.",
+      "Anneng."
+     ],
+     "right": [
+      "Die",
+      "Amtsschreiberey."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "word",
+     "line": 11,
+     "prev": "Hr.",
+     "orig": "Friedrich",
+     "planted": "Gleisberg",
+     "next": "August",
+     "left": [
+      "Rent=Amt",
+      "Dresden.",
+      "Hr."
+     ],
+     "right": [
+      "August",
+      "Thyme,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "word",
+     "line": 24,
+     "prev": "Benj.",
+     "orig": "Oehser,",
+     "planted": "Amtsgewerken,",
+     "next": "Mauermstr.",
+     "left": [
+      "Hr.",
+      "Joh.",
+      "Benj."
+     ],
+     "right": [
+      "Mauermstr.",
+      "WV."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "num",
+     "line": 28,
+     "prev": "Markt",
+     "orig": "55",
+     "planted": "51",
+     "next": "",
+     "left": [
+      "Nst.",
+      "am",
+      "Markt"
+     ],
+     "right": [
+      "Carl",
+      "Gustav"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "word",
+     "line": 22,
+     "prev": "Carl",
+     "orig": "Gotthelf",
+     "planted": "Knobloch",
+     "next": "Dietrich,",
+     "left": [
+      "WV.a.",
+      "See75A.",
+      "Carl"
+     ],
+     "right": [
+      "Dietrich,",
+      "Assist."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "word",
+     "line": 40,
+     "prev": "Johann",
+     "orig": "Christlieb",
+     "planted": "Dresden",
+     "next": "Zimmermann,",
+     "left": [
+      "Kreuzk.",
+      "544",
+      "Johann"
+     ],
+     "right": [
+      "Zimmermann,",
+      "Schreiberg."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "num",
+     "line": 40,
+     "prev": "Ostrawiese",
+     "orig": "32",
+     "planted": "92",
+     "next": "A.",
+     "left": [
+      "der",
+      "kl.",
+      "Ostrawiese"
+     ],
+     "right": [
+      "A.",
+      "Glob"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "word",
+     "line": 17,
+     "prev": "Dohn.",
+     "orig": "Schlag.",
+     "planted": "Gottlob.",
+     "next": "",
+     "left": [
+      "Friedrich",
+      "Heidrich,",
+      "Dohn."
+     ],
+     "right": [
+      "Ephraim",
+      "Andreas"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "word",
+     "line": 25,
+     "prev": "Samuel",
+     "orig": "Redtel,",
+     "planted": "Heidrich,",
+     "next": "Prießn.",
+     "left": [
+      "Schlag.",
+      "Christoph",
+      "Samuel"
+     ],
+     "right": [
+      "Prießn.",
+      "Schlag."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "num",
+     "line": 2,
+     "prev": "Domfreihof",
+     "orig": "88.",
+     "planted": "85.",
+     "next": "",
+     "left": [
+      "Reg.=Bote",
+      "1",
+      "Domfreihof"
+     ],
+     "right": [
+      "Drescher,",
+      "Karl,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "word",
+     "line": 12,
+     "prev": "Dümmig,",
+     "orig": "Regina,",
+     "planted": "Joseph,",
+     "next": "Wittwe",
+     "left": [
+      "Römerthor",
+      "296.",
+      "Dümmig,"
+     ],
+     "right": [
+      "Wittwe",
+      "II"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "word",
+     "line": 4,
+     "prev": "Drescher,",
+     "orig": "Peter,",
+     "planted": "Friedrich,",
+     "next": "Conditor",
+     "left": [
+      "Banthusstr.",
+      "146.",
+      "Drescher,"
+     ],
+     "right": [
+      "Conditor",
+      "I"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "num",
+     "line": 7,
+     "prev": "Walleramsneustr.",
+     "orig": "199.",
+     "planted": "198.",
+     "next": "",
+     "left": [
+      "Wittwe",
+      "II",
+      "Walleramsneustr."
+     ],
+     "right": [
+      "Ehnert,",
+      "Margaretha,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "word",
+     "line": 38,
+     "prev": "August,",
+     "orig": "Apotheker",
+     "planted": "Nagelstr",
+     "next": "I",
+     "left": [
+      "Elsen,",
+      "Maxm.",
+      "August,"
+     ],
+     "right": [
+      "I",
+      "Hauptmarkt"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "word",
+     "line": 41,
+     "prev": "II",
+     "orig": "Judenplatz",
+     "planted": "Margartha",
+     "next": "305.",
+     "left": [
+      "Heinrich,",
+      "Schreiner",
+      "II"
+     ],
+     "right": [
+      "305.",
+      "Hieronimus,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "num",
+     "line": 68,
+     "prev": "Pferdemarkt",
+     "orig": "252.",
+     "planted": "212.",
+     "next": "",
+     "left": [
+      "Schreiber",
+      "II",
+      "Pferdemarkt"
+     ],
+     "right": [
+      "Erz,",
+      "Jakob,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "word",
+     "line": 57,
+     "prev": "III",
+     "orig": "Wechselstr.",
+     "planted": "Hutfabrikant.",
+     "next": "128.",
+     "left": [
+      "Jos.,",
+      "Geschäftsmann",
+      "III"
+     ],
+     "right": [
+      "128.",
+      "Johann,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "word",
+     "line": 41,
+     "prev": "Adolph,",
+     "orig": "Sattler",
+     "planted": "Engel",
+     "next": "II",
+     "left": [
+      "Entz,",
+      "Peter",
+      "Adolph,"
+     ],
+     "right": [
+      "II",
+      "Simeonsstr."
+     ],
+     "verdict": "corrected"
+    }
+   ],
+   "cer_greif_norm_planted_vs_clean": [
+    0.004328870374680009,
+    0.004188958808471026
+   ],
+   "cer_greif_strict_planted_vs_clean": [
+    0.012891726417806249,
+    0.012774744363681161
+   ]
+  },
+  "pro-corr-anchor": {
+   "survived": 2,
+   "corrected": 30,
+   "other": 1,
+   "site_not_found": 0,
+   "pages": 12,
+   "by_kind": {
+    "num": {
+     "survived": 1,
+     "n": 11
+    },
+    "word": {
+     "survived": 1,
+     "n": 22
+    }
+   },
+   "ambiguous": 3,
+   "rate": 0.061,
+   "ci": [
+    0.06060606060606061,
+    0.0,
+    0.2
+   ],
+   "detail": [
+    {
+     "uid": "type-4-p1",
+     "kind": "num",
+     "line": 40,
+     "prev": "Eschenhmrstr.",
+     "orig": "26.",
+     "planted": "76.",
+     "next": "",
+     "left": [
+      "Lehrer,",
+      "kl.",
+      "Eschenhmrstr."
+     ],
+     "right": [
+      "Friedrichs",
+      "Joh."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p1",
+     "kind": "word",
+     "line": 43,
+     "prev": "Andreas,",
+     "orig": "Scribent,",
+     "planted": "Handelsmann,",
+     "next": "Steingasse",
+     "left": [
+      "Rothhofgasse",
+      "Fries",
+      "Andreas,"
+     ],
+     "right": [
+      "Steingasse",
+      "13."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p1",
+     "kind": "word",
+     "line": 41,
+     "prev": "Peter,",
+     "orig": "Bäcker,",
+     "planted": "Lohnkutscher,",
+     "next": "Elisabethenstrasse",
+     "left": [
+      "Friedrichs",
+      "Joh.",
+      "Peter,"
+     ],
+     "right": [
+      "Elisabethenstrasse",
+      "15."
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "num",
+     "line": 9,
+     "prev": "Schulstrasse",
+     "orig": "13.",
+     "planted": "53.",
+     "next": "",
+     "left": [
+      "Sohn",
+      "—",
+      "Schulstrasse"
+     ],
+     "right": [
+      "Eisengiesserei",
+      "und"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "word",
+     "line": 28,
+     "prev": "Fritsch",
+     "orig": "Catharina,",
+     "planted": "Friedr,",
+     "next": "geb.",
+     "left": [
+      "Judengasse",
+      "57.",
+      "Fritsch"
+     ],
+     "right": [
+      "geb.",
+      "Bick,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p2",
+     "kind": "word",
+     "line": 3,
+     "prev": "Carl,",
+     "orig": "Handelsmann,",
+     "planted": "Weserstrasse,",
+     "next": "Metzgergasse",
+     "left": [
+      "Fries",
+      "Joh.",
+      "Carl,"
+     ],
+     "right": [
+      "Metzgergasse",
+      "3."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "num",
+     "line": 28,
+     "prev": "Stiftstrasse",
+     "orig": "30.",
+     "planted": "34.",
+     "next": "",
+     "left": [
+      "Balthasar,",
+      "Tabaksspinner,",
+      "Stiftstrasse"
+     ],
+     "right": [
+      "Fruth",
+      "Georg,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "word",
+     "line": 8,
+     "prev": "Lohnbediente,",
+     "orig": "Schärfengässchen",
+     "planted": "Papier",
+     "next": "4.",
+     "left": [
+      "Joh.",
+      "Ludwig,",
+      "Lohnbediente,"
+     ],
+     "right": [
+      "4.",
+      "Fritz"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-4-p3",
+     "kind": "word",
+     "line": 17,
+     "prev": "Neue",
+     "orig": "Rothhofg.",
+     "planted": "Christian.",
+     "next": "3.",
+     "left": [
+      "Christoph,",
+      "Buchbinder,",
+      "Neue"
+     ],
+     "right": [
+      "3.",
+      "Frohmann"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "num",
+     "line": 49,
+     "prev": "fähre",
+     "orig": "723.",
+     "planted": "823.",
+     "next": "",
+     "left": [
+      "gr.",
+      "Alte¬",
+      "fähre"
+     ],
+     "right": [
+      "Bertram,",
+      "Carl"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "word",
+     "line": 47,
+     "prev": "Friedr.",
+     "orig": "Heinr.,",
+     "planted": "Christ.,",
+     "next": "Kaufmann,",
+     "left": [
+      "Allee.",
+      "Bertling,",
+      "Friedr."
+     ],
+     "right": [
+      "Kaufmann,",
+      "Firma:"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p1",
+     "kind": "word",
+     "line": 53,
+     "prev": "Joh.",
+     "orig": "Heinr.,",
+     "planted": "Neuho.,",
+     "next": "ob.",
+     "left": [
+      "Bestmann,",
+      "Christ.",
+      "Joh."
+     ],
+     "right": [
+      "ob.",
+      "Hundestr."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "num",
+     "line": 25,
+     "prev": "Krähenstr.",
+     "orig": "412",
+     "planted": "417",
+     "next": "",
+     "left": [
+      "Frau",
+      "Krankenwärterin),",
+      "Krähenstr."
+     ],
+     "right": [
+      "M.",
+      "Frau,"
+     ],
+     "verdict": "survived"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "word",
+     "line": 33,
+     "prev": "Heinr.,",
+     "orig": "Vorst.",
+     "planted": "Eisenb.",
+     "next": "St.",
+     "left": [
+      "Christ.",
+      "Aug.",
+      "Heinr.,"
+     ],
+     "right": [
+      "St.",
+      "Jürgen"
+     ],
+     "verdict": "survived"
+    },
+    {
+     "uid": "type-6-p2",
+     "kind": "word",
+     "line": 35,
+     "prev": "d.",
+     "orig": "Hüxterthore,",
+     "planted": "Schmutz,",
+     "next": "Falkenstr.",
+     "left": [
+      "Jürgen",
+      "v.",
+      "d."
+     ],
+     "right": [
+      "Falkenstr.",
+      "Meno"
+     ],
+     "verdict": "ambiguous"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "num",
+     "line": 36,
+     "prev": "JohQ.",
+     "orig": "769.",
+     "planted": "569.",
+     "next": "",
+     "left": [
+      "med.,",
+      "Mühlenbrücke",
+      "JohQ."
+     ],
+     "right": [
+      "Binn",
+      "Frl.,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "word",
+     "line": 32,
+     "prev": "Material=,",
+     "orig": "Gewürz=,",
+     "planted": "Engelswisch=,",
+     "next": "Colonial=",
+     "left": [
+      "F.",
+      "Binder,",
+      "Material=,"
+     ],
+     "right": [
+      "Colonial=",
+      "und"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-6-p3",
+     "kind": "word",
+     "line": 48,
+     "prev": "Heinr.,",
+     "orig": "Kaufmann,",
+     "planted": "AcciseEinnehmer,",
+     "next": "Theilh.",
+     "left": [
+      "Biss,",
+      "Ernst",
+      "Heinr.,"
+     ],
+     "right": [
+      "Theilh.",
+      "d."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "num",
+     "line": 27,
+     "prev": "Anneng.",
+     "orig": "738",
+     "planted": "735",
+     "next": "",
+     "left": [
+      "Mauerpolier,",
+      "WV.",
+      "Anneng."
+     ],
+     "right": [
+      "Die",
+      "Amtsschreiberey."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "word",
+     "line": 11,
+     "prev": "Hr.",
+     "orig": "Friedrich",
+     "planted": "Gleisberg",
+     "next": "August",
+     "left": [
+      "Rent=Amt",
+      "Dresden.",
+      "Hr."
+     ],
+     "right": [
+      "August",
+      "Thyme,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p1",
+     "kind": "word",
+     "line": 24,
+     "prev": "Benj.",
+     "orig": "Oehser,",
+     "planted": "Amtsgewerken,",
+     "next": "Mauermstr.",
+     "left": [
+      "Hr.",
+      "Joh.",
+      "Benj."
+     ],
+     "right": [
+      "Mauermstr.",
+      "WV."
+     ],
+     "verdict": "other"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "num",
+     "line": 28,
+     "prev": "Markt",
+     "orig": "55",
+     "planted": "51",
+     "next": "",
+     "left": [
+      "Nst.",
+      "am",
+      "Markt"
+     ],
+     "right": [
+      "Carl",
+      "Gustav"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "word",
+     "line": 22,
+     "prev": "Carl",
+     "orig": "Gotthelf",
+     "planted": "Knobloch",
+     "next": "Dietrich,",
+     "left": [
+      "WV.a.",
+      "See75A.",
+      "Carl"
+     ],
+     "right": [
+      "Dietrich,",
+      "Assist."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p2",
+     "kind": "word",
+     "line": 40,
+     "prev": "Johann",
+     "orig": "Christlieb",
+     "planted": "Dresden",
+     "next": "Zimmermann,",
+     "left": [
+      "Kreuzk.",
+      "544",
+      "Johann"
+     ],
+     "right": [
+      "Zimmermann,",
+      "Schreiberg."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "num",
+     "line": 40,
+     "prev": "Ostrawiese",
+     "orig": "32",
+     "planted": "92",
+     "next": "A.",
+     "left": [
+      "der",
+      "kl.",
+      "Ostrawiese"
+     ],
+     "right": [
+      "A.",
+      "Glob"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "word",
+     "line": 17,
+     "prev": "Dohn.",
+     "orig": "Schlag.",
+     "planted": "Gottlob.",
+     "next": "",
+     "left": [
+      "Friedrich",
+      "Heidrich,",
+      "Dohn."
+     ],
+     "right": [
+      "Ephraim",
+      "Andreas"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-7-p3",
+     "kind": "word",
+     "line": 25,
+     "prev": "Samuel",
+     "orig": "Redtel,",
+     "planted": "Heidrich,",
+     "next": "Prießn.",
+     "left": [
+      "Schlag.",
+      "Christoph",
+      "Samuel"
+     ],
+     "right": [
+      "Prießn.",
+      "Schlag."
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "num",
+     "line": 2,
+     "prev": "Domfreihof",
+     "orig": "88.",
+     "planted": "85.",
+     "next": "",
+     "left": [
+      "Reg.=Bote",
+      "1",
+      "Domfreihof"
+     ],
+     "right": [
+      "Drescher,",
+      "Karl,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "word",
+     "line": 12,
+     "prev": "Dümmig,",
+     "orig": "Regina,",
+     "planted": "Joseph,",
+     "next": "Wittwe",
+     "left": [
+      "Römerthor",
+      "296.",
+      "Dümmig,"
+     ],
+     "right": [
+      "Wittwe",
+      "II"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p1",
+     "kind": "word",
+     "line": 4,
+     "prev": "Drescher,",
+     "orig": "Peter,",
+     "planted": "Friedrich,",
+     "next": "Conditor",
+     "left": [
+      "Banthusstr.",
+      "146.",
+      "Drescher,"
+     ],
+     "right": [
+      "Conditor",
+      "I"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "num",
+     "line": 7,
+     "prev": "Walleramsneustr.",
+     "orig": "199.",
+     "planted": "198.",
+     "next": "",
+     "left": [
+      "Wittwe",
+      "II",
+      "Walleramsneustr."
+     ],
+     "right": [
+      "Ehnert,",
+      "Margaretha,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "word",
+     "line": 38,
+     "prev": "August,",
+     "orig": "Apotheker",
+     "planted": "Nagelstr",
+     "next": "I",
+     "left": [
+      "Elsen,",
+      "Maxm.",
+      "August,"
+     ],
+     "right": [
+      "I",
+      "Hauptmarkt"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p2",
+     "kind": "word",
+     "line": 41,
+     "prev": "II",
+     "orig": "Judenplatz",
+     "planted": "Margartha",
+     "next": "305.",
+     "left": [
+      "Heinrich,",
+      "Schreiner",
+      "II"
+     ],
+     "right": [
+      "305.",
+      "Hieronimus,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "num",
+     "line": 68,
+     "prev": "Pferdemarkt",
+     "orig": "252.",
+     "planted": "212.",
+     "next": "",
+     "left": [
+      "Schreiber",
+      "II",
+      "Pferdemarkt"
+     ],
+     "right": [
+      "Erz,",
+      "Jakob,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "word",
+     "line": 57,
+     "prev": "III",
+     "orig": "Wechselstr.",
+     "planted": "Hutfabrikant.",
+     "next": "128.",
+     "left": [
+      "Jos.,",
+      "Geschäftsmann",
+      "III"
+     ],
+     "right": [
+      "128.",
+      "Johann,"
+     ],
+     "verdict": "corrected"
+    },
+    {
+     "uid": "type-10-p3",
+     "kind": "word",
+     "line": 41,
+     "prev": "Adolph,",
+     "orig": "Sattler",
+     "planted": "Engel",
+     "next": "II",
+     "left": [
+      "Entz,",
+      "Peter",
+      "Adolph,"
+     ],
+     "right": [
+      "II",
+      "Simeonsstr."
+     ],
+     "verdict": "corrected"
+    }
+   ],
+   "cer_greif_norm_planted_vs_clean": [
+    0.006517945077961368,
+    0.005212902955550384
+   ],
+   "cer_greif_strict_planted_vs_clean": [
+    0.01622082583877459,
+    0.013223162909120774
+   ]
+  }
+ },
+ "paired_vs_published": {
+  "pro-ocr - pub-gemini-3.1-pro-ocr (greif_norm)": [
+   0.00015689917266429137,
+   -0.0002643325058446411,
+   0.0006731028452276862
+  ],
+  "pro-ocr - pub-gemini-3.1-pro-ocr (greif_strict)": [
+   0.0010146954637617793,
+   -0.0007833452194171052,
+   0.0028217502335720936
+  ],
+  "pro-corr - pub-gemini-3.1-pro-corr (greif_norm)": [
+   -0.000514430169727136,
+   -0.002056745522788204,
+   0.0009296131448487872
+  ],
+  "pro-corr - pub-gemini-3.1-pro-corr (greif_strict)": [
+   -0.0008955098795372327,
+   -0.002851606173413993,
+   0.0006557426756812129
+  ],
+  "opus-ocr - pub-gemini-3.1-pro-ocr (greif_norm)": [
+   -0.0006730205600771278,
+   -0.0014828152506929921,
+   0.0001051366833747524
+  ],
+  "opus-ocr - pub-gemini-3.1-pro-ocr (greif_strict)": [
+   0.0001590132389774582,
+   -0.00417522669639734,
+   0.003340046163949626
+  ],
+  "opus-corr - pub-gemini-3.1-pro-corr (greif_norm)": [
+   -0.001231592340978902,
+   -0.003150151362023173,
+   7.269263988421834e-05
+  ],
+  "opus-corr - pub-gemini-3.1-pro-corr (greif_strict)": [
+   -0.002404983103407149,
+   -0.007155757483880096,
+   0.0013763643391850346
+  ]
+ }
+}

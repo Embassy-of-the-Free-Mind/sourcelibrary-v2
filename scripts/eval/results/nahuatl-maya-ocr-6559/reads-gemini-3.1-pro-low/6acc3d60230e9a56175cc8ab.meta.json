@@ -1,0 +1,23 @@
+{
+ "page_id": "6acc3d60230e9a56175cc8ab",
+ "book_id": "6acc3d5f230e9a56175cc731",
+ "page_number": 378,
+ "cli": "agy",
+ "cli_version": "1.3.3",
+ "model": "gemini-3.1-pro-low",
+ "started_at": "2026-10-12T03:07:18.642Z",
+ "finished_at": "2026-10-12T03:08:22.892Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 1889,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "chatter": null,
+ "image_url": "https://archive.org/download/diccionariodemot01ciud/page/n377/full/full/0/default.jpg",
+ "image_bytes": 1446708,
+ "image_sha256": "469acaa4bd3983b67f40deb1c9549421fc23e700b83915db9f9cf721b0de910d",
+ "prompt_sent_chars": 12939,
+ "prompt_sent_hash": "82a71d87e604bacb",
+ "stderr_tail": ""
+}
