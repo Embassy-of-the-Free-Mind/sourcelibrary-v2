@@ -54,3 +54,41 @@ export function iaOcrMinAgreement(language) {
   }
   return { language: canonical, cutoff: IA_OCR_DEFAULT_MIN_AGREEMENT, source: 'default' };
 }
+
+// ---------- the digits gate (#5186) ----------
+// The agreement cutoff above is about WORDS, and a book can clear it at 0.98 with 1 in 12 of its
+// years wrong. This is the second, per-book check: the share of the numbers on the model's
+// reference pages that the Archive printed identically on the same leaves
+// (`numericAgreement`, scripts/lib/ia-ocr-agreement.mjs), pooled over the reference pages.
+//
+// Calibrated 2026-10-13 on the four #5186 county histories, 2,283 Archive-vs-lite page pairs from
+// `page_revisions` (year error from the #5402 taxonomy, numeric agreement whole-book / on an evenly
+// spaced 25-page sample like the reference the ingester sees):
+//
+//   book                      | years wrong | numeric agreement | 25-page sample
+//   Deyo, Barnstable 1890     | 4.6%        | 0.950             | 0.958
+//   Wakeley, Gate City 1917   | 8.0%        | 0.925             | 0.948
+//   NH Notables 1919          | 1.0%        | 0.989             | 0.986
+//   Clevelanders 1914         | 0.7%        | 0.990             | 0.986
+//
+// The issue's proposed 0.95 would have passed Deyo (0.958 on its sample) — the book that found
+// the 3→8 swaps. 0.97 separates the two groups on every measure. Lite itself misreads ~1–2% of
+// numbers (#5224), so agreement near 0.98 is about as good as two engines get.
+// The verdict does NOT refuse a book: the prose is still good. It stamps the pages that carry
+// numbers `ocr.digits_unreliable` so a reader, a quote, or a re-read lane can find them.
+
+/** Pooled numeric agreement below this → the book's digits are unreliable. */
+export const IA_OCR_MIN_NUMERIC_AGREEMENT = 0.97;
+/** Fewer reference numbers than this → unmeasured (a discursive book; nothing to judge on). */
+export const IA_OCR_MIN_REF_NUMBERS = 30;
+
+/**
+ * Judge a book's pooled numeric agreement `{ ref, matched }`. Returns the record written into
+ * `ocr.agreement_ref.numeric`: `{ ratio, ref, matched, min, unreliable }`, where `ratio` is null
+ * and `unreliable` false when there were too few numbers to measure.
+ */
+export function iaOcrDigitsVerdict({ ref = 0, matched = 0 } = {}) {
+  const measured = ref >= IA_OCR_MIN_REF_NUMBERS;
+  const ratio = measured ? +(matched / ref).toFixed(3) : null;
+  return { ratio, ref, matched, min: IA_OCR_MIN_NUMERIC_AGREEMENT, unreliable: measured && matched / ref < IA_OCR_MIN_NUMERIC_AGREEMENT };
+}
