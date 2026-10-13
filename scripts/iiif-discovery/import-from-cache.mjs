@@ -55,6 +55,7 @@ import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { holdBook } from '../lib/pipeline-hold.mjs';
 import { appendFileSync } from 'node:fs';
+import { yearFromPublished } from '../lib/catalogue-year.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -84,7 +85,6 @@ const slugify = (t, max = 70) => (t || '').toLowerCase().normalize('NFD').replac
 const normTitle = t => (t || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
 const normAuthor = a => (a || '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
 const licenseFor = r => r === 'public-domain' ? 'publicdomain' : (r === 'cc-by' ? 'CC-BY-4.0' : (r || 'unknown'));
-const yearFrom = text => { const m = (text || '').match(/\b(1[0-9]{3}|20[0-2][0-9])\b/); return m ? parseInt(m[1]) : null; };
 
 const { client, db } = await getScriptClient({ noTimeout: true });
 async function uniqueSlug(base) { let slug = base || 'item', i = 2; while (await db.collection('books').findOne({ slug }, { projection: { _id: 1 } })) slug = `${base}-${i++}`; return slug; }
@@ -124,7 +124,7 @@ for (const c of cands) {
   const isArtwork = pages.length === 1;
   const title = (c.title || mc.label || `${c.source} item`).slice(0, 500);
   const author = c.author && c.author !== 'Unknown' ? c.author : 'Unknown';
-  const year = yearFrom(c.date_text);
+  const year = yearFromPublished(c.date_text); // Hijri-first "1303 [1885]" → the CE year (#6057)
 
   if (pagesTotal + pages.length > MAX_PAGES) { console.log(`  [budget] next book (${pages.length}pp) would take this run past --max-pages=${MAX_PAGES} — stopping at ${pagesTotal} pages`); break; }
 
