@@ -207,6 +207,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       ia_identifier,
       google_books_id,
       thumbnail: getThumbnailUrl(0),
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       pages_ocr: 0,
       pages_translated: 0,

@@ -267,6 +267,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       wellcome_id: work_id,
       wellcome_b_number: bNumber,
       thumbnail: getThumbnailUrl(0),
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       dublin_core: {
         dc_identifier: [`WELLCOME:${work_id}`],
