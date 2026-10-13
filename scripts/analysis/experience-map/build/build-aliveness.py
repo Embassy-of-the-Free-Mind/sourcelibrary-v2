@@ -157,6 +157,18 @@ if os.path.exists(lc_path):
         'phrases': sorted([{'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books']} for ph, v in LC['phrases'].items()], key=lambda x: -x['pages']),
     }
 
+# second rater (build/second-rater-sample.py): a different model family, blind to the judge, any-layer yes/no
+sk, sr = os.path.join(D, 'second-rater-key.json'), os.path.join(D, 'second-rater.json')
+if os.path.exists(sk) and os.path.exists(sr):
+    K = json.load(open(sk)); R = json.load(open(sr)); Y = set(R['yes'])
+    t = C.Counter((k['group'], any(k['judge'].values()), k['k'] in Y) for k in K)
+    agree = sum(v for (g, j, m), v in t.items() if j == m); n2 = len(K)
+    po = agree / n2; pj = sum(1 for k in K if any(k['judge'].values())) / n2; pm = len(Y) / n2
+    pe = pj * pm + (1 - pj) * (1 - pm)
+    N['second_rater'] = {'rater': R['rater'], 'n': n2, 'agree': agree, 'kappa': round((po - pe) / (1 - pe), 2),
+                         'cells': [{'group': g, 'judge': j, 'rater': m, 'n': v} for (g, j, m), v in sorted(t.items())],
+                         'disagree': [{'k': k['k'], 'group': k['group'], 'judge_yes': any(k['judge'].values()), 'rater_yes': k['k'] in Y} for k in K if any(k['judge'].values()) != (k['k'] in Y)]}
+
 # points
 pts = []
 for r in hits:

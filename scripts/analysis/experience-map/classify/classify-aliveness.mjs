@@ -44,6 +44,12 @@ const QUALITIES = new Set(['warmth','light','motion','growth','breath','freshnes
   'belonging','interiority','voice','fertility','stillness','cold','heaviness','emptiness','decay','mechanism']);
 
 const norm = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+// Markup-insensitive form for the verbatim gate: the stored translations carry inline <note>/<gloss> apparatus,
+// <term> tags and footnote marks, and the model's quotation of the same sentence often omits or flattens them.
+// Still a HARD gate (the words must be the page's words, in order); it only stops markup from vetoing a true quote.
+// A second rater found the strict form dropped 6 of 20 screen-negatives that were plain positives (#6652).
+const loose = (s) => (s || '').replace(/<(note|gloss)>[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ')
+  .normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 const pick = (v, set, dflt) => (typeof v === 'string' && set.has(v)) ? v : dflt;
 
 const PROMPT = (r) => `Analyse a passage from a historical text for a scholarly atlas of how people across cultures have described ALIVENESS.
@@ -112,8 +118,8 @@ async function worker() {
       const layer = (v) => {
         if (!v || typeof v !== 'object' || !POLES.has(v.pole)) return { pole: null, quote: null };
         const q = typeof v.evidence === 'string' ? v.evidence.trim() : '';
-        if (q && norm(r.text).includes(norm(q))) return { pole: v.pole, quote: q };
-        dropped++; return { pole: null, quote: null, unverified: v.pole };
+        if (q && (norm(r.text).includes(norm(q)) || (loose(q).length >= 20 && loose(r.text).includes(loose(q))))) return { pole: v.pole, quote: q };
+        dropped++; return { pole: null, quote: null, unverified: v.pole, evidence: q.slice(0, 300) };
       };
       const L = { felt: layer(j.felt), world: layer(j.world), made: layer(j.made) };
       const felt = L.felt.pole, world = L.world.pole, made = L.made.pole;
