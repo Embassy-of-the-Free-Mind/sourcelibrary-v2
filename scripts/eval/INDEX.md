@@ -495,7 +495,7 @@ Read these for the house conventions before designing a new study.
 | `shared-name-mislinks/score.mjs` | Score the by-eye verdicts of the shared-surname sample (#5950). |
 | `shared-name-mislinks/writer-hold-measure.mjs` | Which `entities` records does an index writer touch for a book, with and without the shared-surname hold? (#5950) READ-ONLY: no model call, no write. |
 | `spot-check/check-rows.mjs` | mjs (#6174 part 1) built these rows inline for the backfill; overview-score.mjs and register.mjs now write the same rows at the end of a run, so the mapping lives here once: a writer and the backfi… |
-| `spot-check/curation-shelf.mjs` | mjs / overview-score.mjs / .claude/skills/shelf-overview (PR #6079) are the shelf read: a random draw per stratum, scored into rates. |
+| `spot-check/curation-shelf.mjs` | — |
 | `spot-check/draw.mjs` | Fortnightly spot check (#5914), stage 1: draw 10 public books uniformly per BOOK (never `$sample`), then a random run of 3 consecutive translated pages per book, and write a review packet. |
 | `spot-check/lib.mjs` | Pure helpers for the fortnightly spot check (#5914): the seeded book draw, the page-run pick, and the book-structure counts. |
 | `spot-check/overview-draw.mjs` | mjs (the fortnightly draw: one frame, 10 books, a RUN of 3 consecutive pages per book; frozen, so it is not changed here). |
