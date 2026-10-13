@@ -1,7 +1,7 @@
 {
   "summary": {
     "stratum": "ref-pinned",
-    "date": "2026-10-09",
+    "date": "2026-10-12",
     "refusal_source": "finishReason (meter) / inferred",
     "cer_refusals": "median_cer_windowed / mean_acc_windowed are over ALIGNED pages (refusals excluded, as before #5581); *_refusals_as_1 add each refused page at CER 1.0",
     "n_pages": 55,
@@ -3274,47 +3274,47 @@
             "aligned": 6,
             "refused": 0,
             "refused_inferred": 0,
-            "median_cer_windowed": 0.023,
-            "mean_cer_windowed": 0.043,
-            "mean_acc_windowed": 0.957,
-            "mean_acc_upper": 0.989,
-            "median_cer_refusals_as_1": 0.023,
-            "mean_cer_refusals_as_1": 0.043,
+            "median_cer_windowed": 0.021,
+            "mean_cer_windowed": 0.059,
+            "mean_acc_windowed": 0.941,
+            "mean_acc_upper": 0.988,
+            "median_cer_refusals_as_1": 0.021,
+            "mean_cer_refusals_as_1": 0.059,
             "catastrophic": 0,
             "catastrophic_answered": 0,
             "paired_vs_ref": {
               "n": 6,
               "excluded_refused": 0,
-              "wins": 5,
+              "wins": 6,
               "losses": 0,
-              "ties": 1,
-              "median_delta_cer": 0.008,
-              "p_sign": 0.063,
+              "ties": 0,
+              "median_delta_cer": 0.01,
+              "p_sign": 0.031,
               "ref_engine_aligned": 6,
               "both_unaligned": 0
             }
           },
           "gemini-3.8-flash+antigravity-cli": {
             "pages_run": 6,
-            "aligned": 4,
+            "aligned": 6,
             "refused": 0,
             "refused_inferred": 0,
-            "median_cer_windowed": 0.016,
-            "mean_cer_windowed": 0.023,
-            "mean_acc_windowed": 0.978,
-            "mean_acc_upper": 0.993,
-            "median_cer_refusals_as_1": 0.016,
-            "mean_cer_refusals_as_1": 0.023,
-            "catastrophic": 2,
-            "catastrophic_answered": 2,
+            "median_cer_windowed": 0.022,
+            "mean_cer_windowed": 0.042,
+            "mean_acc_windowed": 0.958,
+            "mean_acc_upper": 0.965,
+            "median_cer_refusals_as_1": 0.022,
+            "mean_cer_refusals_as_1": 0.042,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
             "paired_vs_ref": {
-              "n": 4,
+              "n": 6,
               "excluded_refused": 0,
-              "wins": 4,
+              "wins": 6,
               "losses": 0,
               "ties": 0,
-              "median_delta_cer": 0.01,
-              "p_sign": 0.125,
+              "median_delta_cer": 0.009,
+              "p_sign": 0.031,
               "ref_engine_aligned": 6,
               "both_unaligned": 0
             }
@@ -3327,7 +3327,7 @@
             "median_cer_windowed": 0.022,
             "mean_cer_windowed": 0.042,
             "mean_acc_windowed": 0.958,
-            "mean_acc_upper": 0.989,
+            "mean_acc_upper": 0.988,
             "median_cer_refusals_as_1": 0.022,
             "mean_cer_refusals_as_1": 0.042,
             "catastrophic": 0,
@@ -3338,7 +3338,7 @@
               "wins": 6,
               "losses": 0,
               "ties": 0,
-              "median_delta_cer": 0.01,
+              "median_delta_cer": 0.009,
               "p_sign": 0.031,
               "ref_engine_aligned": 6,
               "both_unaligned": 0
@@ -7870,22 +7870,22 @@
         "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
+          "guard": 0.214,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.764,
+          "cer": 0.236,
+          "span_dispersion": 1,
+          "chars": 2661
+        },
+        "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
           "guard": 0.107,
-          "acc_upper": 0.979,
+          "acc_upper": 0.833,
           "acc_windowed": 0.868,
           "cer": 0.132,
           "span_dispersion": 1,
-          "chars": 2359
-        },
-        "gemini-3.8-flash+antigravity-cli": {
-          "aligned": false,
-          "refused": false,
-          "guard": 1,
-          "acc_upper": 0,
-          "acc_windowed": 0,
-          "cer": 1,
-          "span_dispersion": null,
-          "chars": 0
+          "chars": 2350
         },
         "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
@@ -7895,7 +7895,7 @@
           "acc_windowed": 0.868,
           "cer": 0.132,
           "span_dispersion": 1,
-          "chars": 2276
+          "chars": 2411
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -8209,32 +8209,32 @@
         "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.173,
-          "acc_upper": 0.986,
-          "acc_windowed": 0.983,
-          "cer": 0.017,
+          "guard": 0.147,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.986,
+          "cer": 0.014,
           "span_dispersion": 1,
-          "chars": 5349
+          "chars": 5368
         },
         "gemini-3.8-flash+antigravity-cli": {
-          "aligned": false,
-          "refused": false,
-          "guard": 1,
-          "acc_upper": 0.026,
-          "acc_windowed": 0.026,
-          "cer": 0.974,
-          "span_dispersion": null,
-          "chars": 31
-        },
-        "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.09,
+          "guard": 0.096,
           "acc_upper": 0.989,
           "acc_windowed": 0.985,
           "cer": 0.015,
           "span_dispersion": 1,
-          "chars": 5387
+          "chars": 5407
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.077,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 5409
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -8383,17 +8383,17 @@
           "acc_windowed": 0.997,
           "cer": 0.003,
           "span_dispersion": 1.035,
-          "chars": 1658
+          "chars": 1688
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.006,
-          "acc_upper": 0.998,
-          "acc_windowed": 0.998,
-          "cer": 0.002,
+          "guard": 0.011,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
           "span_dispersion": 1.035,
-          "chars": 1668
+          "chars": 1666
         },
         "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
@@ -8403,7 +8403,7 @@
           "acc_windowed": 0.997,
           "cer": 0.003,
           "span_dispersion": 1.035,
-          "chars": 1657
+          "chars": 1676
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -8637,7 +8637,7 @@
           "acc_windowed": 0.997,
           "cer": 0.003,
           "span_dispersion": 1,
-          "chars": 3807
+          "chars": 3749
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
@@ -8647,17 +8647,17 @@
           "acc_windowed": 0.997,
           "cer": 0.003,
           "span_dispersion": 1,
-          "chars": 3731
+          "chars": 3750
         },
         "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.013,
-          "acc_upper": 0.999,
-          "acc_windowed": 0.998,
-          "cer": 0.002,
+          "guard": 0.019,
+          "acc_upper": 0.998,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
           "span_dispersion": 1,
-          "chars": 3728
+          "chars": 3743
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -9056,22 +9056,22 @@
         "gemini-3.7-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
-          "guard": 0.123,
-          "acc_upper": 0.986,
-          "acc_windowed": 0.926,
-          "cer": 0.074,
+          "guard": 0.105,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.929,
+          "cer": 0.071,
           "span_dispersion": 5.176,
-          "chars": 2160
+          "chars": 2177
         },
         "gemini-3.8-flash+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.105,
           "acc_upper": 0.989,
-          "acc_windowed": 0.943,
-          "cer": 0.057,
-          "span_dispersion": 7.941,
-          "chars": 2463
+          "acc_windowed": 0.929,
+          "cer": 0.071,
+          "span_dispersion": 5.176,
+          "chars": 2180
         },
         "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
@@ -9080,8 +9080,8 @@
           "acc_upper": 0.989,
           "acc_windowed": 0.929,
           "cer": 0.071,
-          "span_dispersion": 5.176,
-          "chars": 2148
+          "span_dispersion": 5.118,
+          "chars": 2171
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -9230,9 +9230,19 @@
           "acc_windowed": 0.972,
           "cer": 0.028,
           "span_dispersion": 74.5,
-          "chars": 4099
+          "chars": 4074
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.064,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.972,
+          "cer": 0.028,
+          "span_dispersion": 74,
+          "chars": 4108
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "aligned": true,
           "refused": false,
           "guard": 0.07,
@@ -9240,17 +9250,7 @@
           "acc_windowed": 0.972,
           "cer": 0.028,
           "span_dispersion": 74.5,
-          "chars": 4073
-        },
-        "gemini-3.8-flash-high+antigravity-cli": {
-          "aligned": true,
-          "refused": false,
-          "guard": 0.075,
-          "acc_upper": 0.986,
-          "acc_windowed": 0.972,
-          "cer": 0.028,
-          "span_dispersion": 74,
-          "chars": 4107
+          "chars": 4097
         },
         "kraken-austriannewspapers": {
           "missing": true

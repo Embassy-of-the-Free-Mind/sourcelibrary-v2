@@ -24,6 +24,8 @@ export interface Book {
 
   // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)
   resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
+  // What kind of record this is; set at creation (#5292c). The reading rule is isArtworkRecord() in artwork-record.ts.
+  content_type?: 'book' | 'artwork' | 'text' | null;
 
   // Editor-chosen "About" side plate/page. Overrides the auto-picked
   // representative visual on the book page's About section. Stores the

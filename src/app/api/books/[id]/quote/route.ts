@@ -4,7 +4,7 @@ import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
@@ -15,6 +15,7 @@ import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
 import { languageApparatusFields } from '@/lib/edition-language';
 import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
+import { embeddedExtract, EMBEDDED_EXTRACT_NOTE, MAX_LOOKBACK, type EmbeddedExtract, type PageText } from '@/lib/announced-extract';
 
 /**
  * Projections for this route (#5184). Each is the complete field set its
@@ -141,6 +142,14 @@ interface QuoteResponse {
     translation_note?: string;
     /** Display-sized scan of the cited leaf (≤1200px, browser-safe). Only when ?include_image=true. */
     page_image_url?: string;
+    /**
+     * The book says it is quoting another source at length on this page, or an
+     * earlier page said so and the quotation is still open (#3689). Absent when
+     * there is no such evidence — which is not a claim that every word here is
+     * the author's. Set together with `embedded_extract_note`.
+     */
+    embedded_extract?: EmbeddedExtract;
+    embedded_extract_note?: string;
   };
   citation: Citation;
   license: ContentLicense;
@@ -316,6 +325,32 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       // get the source text back in Latin letters.
       const romanized = romanizedForQuote(page);
       if (romanized) response.quote.romanized = romanized;
+    }
+
+    // Is this leaf inside an extract from another author (#3689)? One bounded
+    // read by the (book_id, page_number) index. The transcription is the
+    // authority — it carries the printer's quotation marks — and the served
+    // text is the fallback, which is what reaches a translated book. Never
+    // fatal: a quote without this flag is what every quote was before it.
+    try {
+      const earlier = pageNumber > 1
+        ? await db.collection('pages').find(
+            { book_id: resolvedBookId, page_number: { $gte: pageNumber - MAX_LOOKBACK, $lt: pageNumber } },
+            { projection: QUOTE_CONTEXT_PAGE_PROJECTION },
+          ).sort({ page_number: 1 }).toArray() as unknown as Page[]
+        : [];
+      const run = [...earlier, page];
+      const layer = (text: (p: Page) => string | null | undefined): PageText[] =>
+        run.map((p) => ({ page: p.page_number, text: text(p) }));
+      const extract =
+        embeddedExtract(layer((p) => (p.ocr?.data ? stripEditorialWrapperBlocks(p.ocr.data) : null)))
+        ?? embeddedExtract(layer((p) => resolveQuoteText(p, resolvedBookId, quotable.lang, { mark: false })?.text));
+      if (extract) {
+        response.quote.embedded_extract = extract;
+        response.quote.embedded_extract_note = EMBEDDED_EXTRACT_NOTE;
+      }
+    } catch (err) {
+      console.error('embedded-extract check failed:', err);
     }
 
     // Include context (adjacent pages) if requested

@@ -22,12 +22,18 @@
  *          `ocr` with a gemini-engine/1 block (api: 'cli', the CLI's name and version, the prompt sent, the image
  *          read); leaves a sweep_log row per page and one book_events row per book.
  *
+ * THE CALL (#6523, tuned on a fixed dev set of Latin and Early English pages): the prompt asks for the transcription
+ * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them, and a PreToolUse hook in the page's workspace
+ * (scripts/lib/agy-tool-gate.py) denies every tool but view_file on the image, with a reason, so the turn goes on to
+ * the transcription instead of ending empty. The raw reply is kept as <page_id>.raw.txt; .txt holds the text between
+ * the markers. A reply with text outside the markers or cut before <<<END>>> is read once more, then never written.
+ *
  * HOW IT FAILS: a CLI that is not signed in, or a refusal, leaves an empty .txt and a non-zero `exit` in the meta;
  * `apply` skips those and says so. Nothing is retried silently.
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
@@ -37,12 +43,12 @@ import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { ocrReadProblem } from '../lib/cli-chatter.mjs';
+import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
-const CLI = 'agy';
 const STAGE = process.argv[2];
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const OUT = arg('out') && path.resolve(arg('out'));
@@ -53,42 +59,28 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
 // The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
-const imageInstruction = (imagePath) => `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`;
+// #6523: the reply is asked for between <<<BEGIN>>> / <<<END>>> markers (the dev rounds' winning config). A read made
+// before that records no `prompt_variant` and is rebuilt with the legacy sentence, so its hash still matches at apply.
+const PROMPT_VARIANT = 'sentinels-6523';
+const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === PROMPT_VARIANT
+  ? `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
+  : `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`);
+// #6523: a PreToolUse hook in the page's workspace (scripts/lib/agy-tool-gate.py) lets the model open the image with
+// view_file and denies every other tool WITH A REASON, so the turn goes on to the transcription instead of ending empty
+// on a denied shell or web request. It approves nothing plan mode would not; it never auto-approves a command (#6345).
 // The CLI is an AGENT. Plan mode stops it running tools; without it the model sometimes tries a shell command
 // (seen: cropping a Chinese page into columns in /tmp), and the auto-approve flag this script used to pass let it
 // run as root on the box. Never auto-approve; tests/unit/no-cli-auto-approve.test.ts sweeps for the flag.
-const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '120s', '--output-format', 'json'];
+// The call, the gate and the marker unwrap live in scripts/lib/agy-cli.mjs, shared with cli-translate.mjs.
 const workspaceImage = (key) => path.join(OUT, `ws-${key}`, `${key}.jpg`);
 // Even in plan mode the model sometimes asks for a shell command (to crop the image); headless mode denies it and the
 // turn ends empty with `denied_actions` set. The #6331 fix: continue THAT conversation once with this nudge
 // (scripts/eval/run-cli-arm.py, same words).
 const NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.';
-const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
 // The account's shared call meter (run-cli-arm.py writes the same rows): every job's calls, one line each.
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = arg('job') || 'cli-ocr';
 const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, kind: 'ocr', ...row }) + '\n'); } catch { /* the meter is advisory */ } };
-
-/** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, secs}. */
-function agyCall(args, cwd) {
-  return new Promise((resolve) => {
-    const t0 = Date.now();
-    const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
-    let out = '', err = '';
-    child.stdout.on('data', (d) => { out += d; });
-    child.stderr.on('data', (d) => { err += d; });
-    const timer = setTimeout(() => child.kill('SIGKILL'), 180_000);
-    child.on('close', (code) => {
-      clearTimeout(timer);
-      let j = {};
-      try { j = JSON.parse(out); } catch { /* not JSON: an error or an old CLI */ }
-      const text = String((j && j.response) ?? (Object.keys(j).length ? '' : out)).trim();
-      const denied = (j.denied_actions || []).map((d) => d.action);
-      const cls = QUOTA.test(out + err) ? 'quota' : code === null ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
-    });
-  });
-}
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -124,6 +116,7 @@ if (STAGE === 'read') {
     fs.mkdirSync(path.dirname(img), { recursive: true });
     fs.writeFileSync(img, buf);
     const sent = base + imageInstruction(img);
+    const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
     // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
@@ -139,15 +132,18 @@ if (STAGE === 'read') {
         r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++;
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       }
-      if (!r.cls && ocrReadProblem(r.text) && rereads === 0) { rereads++; continue; }
+      if (!r.cls && (unwrapRead(r.text).problem || ocrReadProblem(unwrapRead(r.text).text)) && rereads === 0) { rereads++; continue; }
       break;
     }
-    const text = r.text;
+    // The raw reply is kept beside the transcription; `.txt` holds only what was between the markers.
+    const { text, problem: wrapper } = unwrapRead(r.text);
+    fs.writeFileSync(path.join(OUT, `${key}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify({
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
       chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text) : null,
+      prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err,
     }, null, 1));
@@ -185,6 +181,9 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   if (m.exit !== 0) { skip(m, `cli exit ${m.exit}`); continue; }
+  // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
+  // written even when the text inside looks like a transcription: it is usually a partial page.
+  if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
   if (text.length < 5) { skip(m, 'empty read (refusal or blank)'); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
   if (!/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
@@ -208,7 +207,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
-  const sent = base + imageInstruction(workspaceImage(m.key));
+  const sent = base + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy');
   if (contentHash(sent) !== m.prompt_sent_hash) { skip(m, 'prompt sent cannot be reconstructed (hash mismatch)'); continue; }
   const imageUrl = m.image_url || getPageSource(page);
   const engine = geminiEngine({

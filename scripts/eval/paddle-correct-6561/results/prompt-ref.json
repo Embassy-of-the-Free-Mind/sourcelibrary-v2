@@ -1,0 +1,7 @@
+{
+ "source": "paddle-table-pilot-6388 pil-read-req.jsonl[0].prompt (OCR prompt v19.1 + pilot addendum)",
+ "redo_opus_sha": "12625e9f4dc1376c",
+ "head_sha": "440af21f2442367e",
+ "draft_block_template_sha": "e183e23964a67a12",
+ "agy_suffix_sha": "7b6c567797e49f44"
+}

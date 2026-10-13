@@ -56,6 +56,11 @@
  */
 import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'node:fs';
+import {
+  workTitleTokens as titleTokens,
+  workAuthorSurname as authorSurname,
+  workMatchStrength,
+} from '../lib/cover-scoring.mjs';
 
 const args = process.argv.slice(2);
 const argVal = (flag, dflt) => { const i = args.indexOf(flag); return i === -1 ? dflt : args[i + 1]; };
@@ -63,20 +68,13 @@ const LIMIT = parseInt(argVal('--limit', '0')) || 0;
 const OUT = argVal('--out', 'scripts/output/sammelband-cover.json');
 const CONTROL_ONLY = args.includes('--control');
 
-const MIN_TOKEN_LEN = 5;
 const MIN_COVER_CHARS = 60;   // below this the cover carries no text to disagree with
 const MAX_NONLATIN_SHARE = 0.15;
 
-// Words too common in early-modern titles to distinguish one work from another.
-// Shared vocabulary with scan-title-mismatch.mjs — keep the two lists aligned.
-const STOP = new Set([
-  'being', 'volume', 'their', 'about', 'which', 'other', 'these', 'those', 'first',
-  'second', 'third', 'fourth', 'wherein', 'whereof', 'together', 'containing',
-  'contained', 'according', 'concerning', 'translated', 'printed', 'edition',
-  'london', 'paris', 'wherewith', 'thereof', 'himself', 'unknown', 'anonymous',
-  'selected', 'collected', 'complete', 'general', 'several', 'various', 'sundry',
-  'newly', 'lately', 'divers', 'certain', 'brief', 'short', 'great', 'grand',
-]);
+// The stop list, tokeniser, surname rule and prefix matcher live in
+// scripts/lib/cover-scoring.mjs, shared with the cover SELECTOR — so what this
+// detector calls "names the work" is what the selector rewards (#3584).
+// The stop vocabulary is also mirrored in scan-title-mismatch.mjs.
 
 /** Share of CJK / Arabic / Devanagari / Hebrew / Greek / Cyrillic characters. */
 function nonLatinShare(s) {
@@ -115,25 +113,8 @@ function isDegenerate(text) {
   return new Set(words).size / words.length < 0.15;
 }
 
-/** Diacritics folded here too, or "Ikhwán" tokenises to the sub-floor "ikhw"
- *  and the record can never match its own title page. Same reason as normalise(). */
-function titleTokens(title) {
-  return [...new Set(
-    String(title || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-      .replace(/[^a-z0-9\s]/g, ' ')
-      .split(/\s+/)
-      .filter(w => w.length >= MIN_TOKEN_LEN && !STOP.has(w) && !/^\d+$/.test(w)),
-  )];
-}
-
-/** "Vaughan, Thomas" -> "vaughan"; "Thomas Vaughan" -> "vaughan". */
-function authorSurname(author) {
-  const a = String(author || '').trim();
-  if (!a) return null;
-  const surname = a.includes(',') ? a.split(',')[0] : a.split(/\s+/).pop();
-  const s = String(surname || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
-  return s.length >= 4 ? s : null;
-}
+// titleTokens() and authorSurname() fold diacritics too, or "Ikhwán" tokenises
+// to the sub-floor "ikhw" and the record can never match its own title page.
 
 /**
  * How many distinct signals (title tokens + author surname) does this text
@@ -149,12 +130,7 @@ function authorSurname(author) {
  * degraded p.1 that happened to carry it was proposed over the sound decorated
  * title page already in use.
  */
-function matchStrength(tokens, surname, text) {
-  let n = 0;
-  for (const t of tokens) if (text.includes(t.slice(0, 6))) n++;
-  if (surname && text.includes(surname.slice(0, 6))) n++;
-  return n;
-}
+const matchStrength = workMatchStrength;
 const MIN_REPLACEMENT_SIGNALS = 2;
 
 /**

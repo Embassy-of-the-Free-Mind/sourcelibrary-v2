@@ -1,0 +1,4941 @@
+{
+ "round": "r1s1",
+ "langs": [
+  "Persian",
+  "Sanskrit"
+ ],
+ "arms": [
+  "FP",
+  "C38",
+  "C38S",
+  "PRO",
+  "OPUS",
+  "CF",
+  "CO"
+ ],
+ "judged_items": {
+  "opus": 111,
+  "pro": 111,
+  "fable": 46
+ },
+ "items": {
+  "ARMS": 53,
+  "PLANT": 18,
+  "REPEAT": 40
+ },
+ "failed_reads": {},
+ "failed_reads_detail": {},
+ "panels": {
+  "Persian": {
+   "table": {
+    "pages": 23,
+    "by_judge": {
+     "opus": {
+      "FP": {
+       "n": 23,
+       "fidelity": 3.696,
+       "ci_by_work": [
+        3.391,
+        4.0
+       ],
+       "reversals_per_100": 13.0,
+       "omission_pct": 21.7,
+       "acc_spans_per_page": 2.91,
+       "style_spans_per_page": 0.09
+      },
+      "C38": {
+       "n": 23,
+       "fidelity": 3.826,
+       "ci_by_work": [
+        3.478,
+        4.174
+       ],
+       "reversals_per_100": 8.7,
+       "omission_pct": 8.7,
+       "acc_spans_per_page": 2.26,
+       "style_spans_per_page": 0.13
+      },
+      "C38S": {
+       "n": 23,
+       "fidelity": 4.0,
+       "ci_by_work": [
+        3.609,
+        4.348
+       ],
+       "reversals_per_100": 8.7,
+       "omission_pct": 4.3,
+       "acc_spans_per_page": 1.87,
+       "style_spans_per_page": 0.13
+      },
+      "PRO": {
+       "n": 23,
+       "fidelity": 3.957,
+       "ci_by_work": [
+        3.609,
+        4.304
+       ],
+       "reversals_per_100": 8.7,
+       "omission_pct": 0.0,
+       "acc_spans_per_page": 1.96,
+       "style_spans_per_page": 0.17
+      },
+      "OPUS": {
+       "n": 23,
+       "fidelity": 4.652,
+       "ci_by_work": [
+        4.435,
+        4.87
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 4.3,
+       "acc_spans_per_page": 0.48,
+       "style_spans_per_page": 0.13
+      },
+      "CF": {
+       "n": 23,
+       "fidelity": 3.957,
+       "ci_by_work": [
+        3.609,
+        4.261
+       ],
+       "reversals_per_100": 8.7,
+       "omission_pct": 21.7,
+       "acc_spans_per_page": 2.13,
+       "style_spans_per_page": 0.22
+      },
+      "CO": {
+       "n": 23,
+       "fidelity": 4.087,
+       "ci_by_work": [
+        3.783,
+        4.391
+       ],
+       "reversals_per_100": 13.0,
+       "omission_pct": 17.4,
+       "acc_spans_per_page": 1.52,
+       "style_spans_per_page": 0.09
+      }
+     },
+     "pro": {
+      "FP": {
+       "n": 23,
+       "fidelity": 3.217,
+       "ci_by_work": [
+        2.826,
+        3.609
+       ],
+       "reversals_per_100": 34.8,
+       "omission_pct": 34.8,
+       "acc_spans_per_page": 1.78,
+       "style_spans_per_page": 0.13
+      },
+      "C38": {
+       "n": 23,
+       "fidelity": 3.565,
+       "ci_by_work": [
+        3.174,
+        3.957
+       ],
+       "reversals_per_100": 34.8,
+       "omission_pct": 21.7,
+       "acc_spans_per_page": 1.35,
+       "style_spans_per_page": 0.0
+      },
+      "C38S": {
+       "n": 23,
+       "fidelity": 3.739,
+       "ci_by_work": [
+        3.348,
+        4.13
+       ],
+       "reversals_per_100": 26.1,
+       "omission_pct": 13.0,
+       "acc_spans_per_page": 1.35,
+       "style_spans_per_page": 0.04
+      },
+      "PRO": {
+       "n": 23,
+       "fidelity": 3.957,
+       "ci_by_work": [
+        3.565,
+        4.304
+       ],
+       "reversals_per_100": 13.0,
+       "omission_pct": 8.7,
+       "acc_spans_per_page": 0.96,
+       "style_spans_per_page": 0.04
+      },
+      "OPUS": {
+       "n": 23,
+       "fidelity": 4.217,
+       "ci_by_work": [
+        3.739,
+        4.652
+       ],
+       "reversals_per_100": 13.0,
+       "omission_pct": 13.0,
+       "acc_spans_per_page": 0.74,
+       "style_spans_per_page": 0.0
+      },
+      "CF": {
+       "n": 23,
+       "fidelity": 3.522,
+       "ci_by_work": [
+        3.043,
+        4.0
+       ],
+       "reversals_per_100": 26.1,
+       "omission_pct": 39.1,
+       "acc_spans_per_page": 1.43,
+       "style_spans_per_page": 0.13
+      },
+      "CO": {
+       "n": 23,
+       "fidelity": 3.565,
+       "ci_by_work": [
+        3.087,
+        4.043
+       ],
+       "reversals_per_100": 26.1,
+       "omission_pct": 26.1,
+       "acc_spans_per_page": 1.26,
+       "style_spans_per_page": 0.13
+      }
+     },
+     "fable": {
+      "FP": {
+       "n": 18,
+       "fidelity": 3.556,
+       "ci_by_work": [
+        3.167,
+        3.944
+       ],
+       "reversals_per_100": 22.2,
+       "omission_pct": 16.7,
+       "acc_spans_per_page": 3.39,
+       "style_spans_per_page": 0.44
+      },
+      "C38": {
+       "n": 18,
+       "fidelity": 3.889,
+       "ci_by_work": [
+        3.5,
+        4.222
+       ],
+       "reversals_per_100": 11.1,
+       "omission_pct": 27.8,
+       "acc_spans_per_page": 3.28,
+       "style_spans_per_page": 0.39
+      },
+      "C38S": {
+       "n": 18,
+       "fidelity": 3.833,
+       "ci_by_work": [
+        3.444,
+        4.222
+       ],
+       "reversals_per_100": 11.1,
+       "omission_pct": 5.6,
+       "acc_spans_per_page": 2.89,
+       "style_spans_per_page": 0.39
+      },
+      "PRO": {
+       "n": 18,
+       "fidelity": 4.056,
+       "ci_by_work": [
+        3.722,
+        4.389
+       ],
+       "reversals_per_100": 5.6,
+       "omission_pct": 0.0,
+       "acc_spans_per_page": 2.11,
+       "style_spans_per_page": 0.17
+      },
+      "OPUS": {
+       "n": 18,
+       "fidelity": 4.5,
+       "ci_by_work": [
+        4.222,
+        4.778
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 5.6,
+       "acc_spans_per_page": 1.11,
+       "style_spans_per_page": 0.11
+      },
+      "CF": {
+       "n": 18,
+       "fidelity": 3.889,
+       "ci_by_work": [
+        3.5,
+        4.278
+       ],
+       "reversals_per_100": 11.1,
+       "omission_pct": 16.7,
+       "acc_spans_per_page": 2.22,
+       "style_spans_per_page": 0.61
+      },
+      "CO": {
+       "n": 18,
+       "fidelity": 4.0,
+       "ci_by_work": [
+        3.611,
+        4.389
+       ],
+       "reversals_per_100": 11.1,
+       "omission_pct": 33.3,
+       "acc_spans_per_page": 2.28,
+       "style_spans_per_page": 0.33
+      }
+     }
+    },
+    "reversal_pages_either": {
+     "FP": 8,
+     "C38": 8,
+     "C38S": 6,
+     "PRO": 3,
+     "OPUS": 3,
+     "CF": 6,
+     "CO": 6
+    }
+   },
+   "pairs": {
+    "PRO-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.13,
+      "ci_by_work": [
+       -0.217,
+       0.435
+      ],
+      "wins": 9,
+      "losses": 5,
+      "ties": 9
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.391,
+      "ci_by_work": [
+       0.043,
+       0.696
+      ],
+      "wins": 11,
+      "losses": 2,
+      "ties": 10
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.167,
+      "ci_by_work": [
+       -0.056,
+       0.389
+      ],
+      "wins": 4,
+      "losses": 1,
+      "ties": 13
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-C38S": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": -0.043,
+      "ci_by_work": [
+       -0.391,
+       0.261
+      ],
+      "wins": 4,
+      "losses": 3,
+      "ties": 16
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.217,
+      "ci_by_work": [
+       -0.217,
+       0.652
+      ],
+      "wins": 10,
+      "losses": 6,
+      "ties": 7
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.222,
+      "ci_by_work": [
+       -0.056,
+       0.5
+      ],
+      "wins": 4,
+      "losses": 1,
+      "ties": 13
+     },
+     "judges_agree_on_sign": false
+    },
+    "C38S-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.174,
+      "ci_by_work": [
+       -0.174,
+       0.478
+      ],
+      "wins": 8,
+      "losses": 3,
+      "ties": 12
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.174,
+      "ci_by_work": [
+       -0.174,
+       0.522
+      ],
+      "wins": 6,
+      "losses": 3,
+      "ties": 14
+     },
+     "fable": {
+      "n": 18,
+      "mean": -0.056,
+      "ci_by_work": [
+       -0.389,
+       0.278
+      ],
+      "wins": 3,
+      "losses": 3,
+      "ties": 12
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.826,
+      "ci_by_work": [
+       0.522,
+       1.174
+      ],
+      "wins": 15,
+      "losses": 1,
+      "ties": 7
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.652,
+      "ci_by_work": [
+       0.304,
+       1.043
+      ],
+      "wins": 12,
+      "losses": 2,
+      "ties": 9
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.611,
+      "ci_by_work": [
+       0.222,
+       1.0
+      ],
+      "wins": 9,
+      "losses": 1,
+      "ties": 8
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-PRO": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.696,
+      "ci_by_work": [
+       0.391,
+       1.0
+      ],
+      "wins": 12,
+      "losses": 0,
+      "ties": 11
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.261,
+      "ci_by_work": [
+       -0.13,
+       0.609
+      ],
+      "wins": 9,
+      "losses": 4,
+      "ties": 10
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.444,
+      "ci_by_work": [
+       0.167,
+       0.778
+      ],
+      "wins": 8,
+      "losses": 1,
+      "ties": 9
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.261,
+      "ci_by_work": [
+       -0.087,
+       0.609
+      ],
+      "wins": 11,
+      "losses": 4,
+      "ties": 8
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.739,
+      "ci_by_work": [
+       0.261,
+       1.217
+      ],
+      "wins": 14,
+      "losses": 4,
+      "ties": 5
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.5,
+      "ci_by_work": [
+       0.167,
+       0.833
+      ],
+      "wins": 8,
+      "losses": 1,
+      "ties": 9
+     },
+     "judges_agree_on_sign": true
+    },
+    "C38-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.13,
+      "ci_by_work": [
+       -0.174,
+       0.478
+      ],
+      "wins": 7,
+      "losses": 5,
+      "ties": 11
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.348,
+      "ci_by_work": [
+       0.0,
+       0.696
+      ],
+      "wins": 10,
+      "losses": 4,
+      "ties": 9
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.333,
+      "ci_by_work": [
+       0.0,
+       0.667
+      ],
+      "wins": 6,
+      "losses": 1,
+      "ties": 11
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.957,
+      "ci_by_work": [
+       0.696,
+       1.217
+      ],
+      "wins": 17,
+      "losses": 0,
+      "ties": 6
+     },
+     "pro": {
+      "n": 23,
+      "mean": 1.0,
+      "ci_by_work": [
+       0.522,
+       1.478
+      ],
+      "wins": 14,
+      "losses": 2,
+      "ties": 7
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.944,
+      "ci_by_work": [
+       0.556,
+       1.333
+      ],
+      "wins": 13,
+      "losses": 0,
+      "ties": 5
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.652,
+      "ci_by_work": [
+       0.348,
+       0.957
+      ],
+      "wins": 11,
+      "losses": 0,
+      "ties": 12
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.478,
+      "ci_by_work": [
+       0.174,
+       0.783
+      ],
+      "wins": 12,
+      "losses": 2,
+      "ties": 9
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.667,
+      "ci_by_work": [
+       0.333,
+       1.0
+      ],
+      "wins": 9,
+      "losses": 0,
+      "ties": 9
+     },
+     "judges_agree_on_sign": true
+    },
+    "CF-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.261,
+      "ci_by_work": [
+       0.043,
+       0.522
+      ],
+      "wins": 6,
+      "losses": 1,
+      "ties": 16
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.304,
+      "ci_by_work": [
+       0.0,
+       0.609
+      ],
+      "wins": 7,
+      "losses": 2,
+      "ties": 14
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.333,
+      "ci_by_work": [
+       0.111,
+       0.611
+      ],
+      "wins": 5,
+      "losses": 0,
+      "ties": 13
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.391,
+      "ci_by_work": [
+       0.087,
+       0.652
+      ],
+      "wins": 10,
+      "losses": 2,
+      "ties": 11
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.348,
+      "ci_by_work": [
+       0.0,
+       0.739
+      ],
+      "wins": 7,
+      "losses": 3,
+      "ties": 13
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.444,
+      "ci_by_work": [
+       0.111,
+       0.833
+      ],
+      "wins": 7,
+      "losses": 1,
+      "ties": 10
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.087,
+      "ci_by_work": [
+       -0.304,
+       0.478
+      ],
+      "wins": 5,
+      "losses": 5,
+      "ties": 13
+     },
+     "pro": {
+      "n": 23,
+      "mean": -0.174,
+      "ci_by_work": [
+       -0.609,
+       0.261
+      ],
+      "wins": 5,
+      "losses": 6,
+      "ties": 12
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.167,
+      "ci_by_work": [
+       -0.278,
+       0.611
+      ],
+      "wins": 6,
+      "losses": 5,
+      "ties": 7
+     },
+     "judges_agree_on_sign": false
+    },
+    "CF-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 23,
+      "mean": 0.13,
+      "ci_by_work": [
+       -0.13,
+       0.391
+      ],
+      "wins": 6,
+      "losses": 3,
+      "ties": 14
+     },
+     "pro": {
+      "n": 23,
+      "mean": -0.043,
+      "ci_by_work": [
+       -0.435,
+       0.391
+      ],
+      "wins": 4,
+      "losses": 7,
+      "ties": 12
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.0,
+      "ci_by_work": [
+       -0.222,
+       0.222
+      ],
+      "wins": 2,
+      "losses": 2,
+      "ties": 14
+     },
+     "judges_agree_on_sign": false
+    },
+    "CO-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": 0.261,
+      "ci_by_work": [
+       -0.087,
+       0.652
+      ],
+      "wins": 9,
+      "losses": 5,
+      "ties": 9
+     },
+     "pro": {
+      "n": 23,
+      "mean": 0.0,
+      "ci_by_work": [
+       -0.478,
+       0.522
+      ],
+      "wins": 5,
+      "losses": 7,
+      "ties": 11
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.111,
+      "ci_by_work": [
+       -0.167,
+       0.389
+      ],
+      "wins": 4,
+      "losses": 2,
+      "ties": 12
+     },
+     "judges_agree_on_sign": false
+    },
+    "CO-OPUS": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 23,
+      "mean": -0.565,
+      "ci_by_work": [
+       -0.826,
+       -0.304
+      ],
+      "wins": 1,
+      "losses": 13,
+      "ties": 9
+     },
+     "pro": {
+      "n": 23,
+      "mean": -0.652,
+      "ci_by_work": [
+       -1.13,
+       -0.217
+      ],
+      "wins": 1,
+      "losses": 8,
+      "ties": 14
+     },
+     "fable": {
+      "n": 18,
+      "mean": -0.5,
+      "ci_by_work": [
+       -0.944,
+       -0.056
+      ],
+      "wins": 2,
+      "losses": 8,
+      "ties": 8
+     },
+     "judges_agree_on_sign": true
+    }
+   }
+  },
+  "Sanskrit": {
+   "table": {
+    "pages": 30,
+    "by_judge": {
+     "opus": {
+      "FP": {
+       "n": 30,
+       "fidelity": 3.533,
+       "ci_by_work": [
+        3.3,
+        3.767
+       ],
+       "reversals_per_100": 20.0,
+       "omission_pct": 66.7,
+       "acc_spans_per_page": 2.97,
+       "style_spans_per_page": 0.0
+      },
+      "C38": {
+       "n": 30,
+       "fidelity": 3.833,
+       "ci_by_work": [
+        3.533,
+        4.1
+       ],
+       "reversals_per_100": 16.7,
+       "omission_pct": 30.0,
+       "acc_spans_per_page": 2.1,
+       "style_spans_per_page": 0.13
+      },
+      "C38S": {
+       "n": 30,
+       "fidelity": 4.167,
+       "ci_by_work": [
+        3.9,
+        4.4
+       ],
+       "reversals_per_100": 3.3,
+       "omission_pct": 6.7,
+       "acc_spans_per_page": 1.47,
+       "style_spans_per_page": 0.13
+      },
+      "PRO": {
+       "n": 30,
+       "fidelity": 4.167,
+       "ci_by_work": [
+        3.867,
+        4.433
+       ],
+       "reversals_per_100": 6.7,
+       "omission_pct": 6.7,
+       "acc_spans_per_page": 1.33,
+       "style_spans_per_page": 0.23
+      },
+      "OPUS": {
+       "n": 30,
+       "fidelity": 4.767,
+       "ci_by_work": [
+        4.567,
+        4.933
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 6.7,
+       "acc_spans_per_page": 0.27,
+       "style_spans_per_page": 0.03
+      },
+      "CF": {
+       "n": 30,
+       "fidelity": 3.733,
+       "ci_by_work": [
+        3.5,
+        3.967
+       ],
+       "reversals_per_100": 10.0,
+       "omission_pct": 43.3,
+       "acc_spans_per_page": 2.17,
+       "style_spans_per_page": 0.13
+      },
+      "CO": {
+       "n": 30,
+       "fidelity": 4.133,
+       "ci_by_work": [
+        3.933,
+        4.333
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 43.3,
+       "acc_spans_per_page": 1.33,
+       "style_spans_per_page": 0.23
+      }
+     },
+     "pro": {
+      "FP": {
+       "n": 30,
+       "fidelity": 3.2,
+       "ci_by_work": [
+        2.933,
+        3.467
+       ],
+       "reversals_per_100": 23.3,
+       "omission_pct": 53.3,
+       "acc_spans_per_page": 1.87,
+       "style_spans_per_page": 0.0
+      },
+      "C38": {
+       "n": 30,
+       "fidelity": 3.767,
+       "ci_by_work": [
+        3.467,
+        4.1
+       ],
+       "reversals_per_100": 26.7,
+       "omission_pct": 26.7,
+       "acc_spans_per_page": 1.3,
+       "style_spans_per_page": 0.0
+      },
+      "C38S": {
+       "n": 30,
+       "fidelity": 4.2,
+       "ci_by_work": [
+        3.867,
+        4.5
+       ],
+       "reversals_per_100": 10.0,
+       "omission_pct": 20.0,
+       "acc_spans_per_page": 1.0,
+       "style_spans_per_page": 0.07
+      },
+      "PRO": {
+       "n": 30,
+       "fidelity": 4.467,
+       "ci_by_work": [
+        4.2,
+        4.7
+       ],
+       "reversals_per_100": 10.0,
+       "omission_pct": 3.3,
+       "acc_spans_per_page": 0.63,
+       "style_spans_per_page": 0.03
+      },
+      "OPUS": {
+       "n": 30,
+       "fidelity": 4.667,
+       "ci_by_work": [
+        4.433,
+        4.867
+       ],
+       "reversals_per_100": 3.3,
+       "omission_pct": 13.3,
+       "acc_spans_per_page": 0.37,
+       "style_spans_per_page": 0.0
+      },
+      "CF": {
+       "n": 30,
+       "fidelity": 3.433,
+       "ci_by_work": [
+        3.1,
+        3.767
+       ],
+       "reversals_per_100": 20.0,
+       "omission_pct": 46.7,
+       "acc_spans_per_page": 1.47,
+       "style_spans_per_page": 0.0
+      },
+      "CO": {
+       "n": 30,
+       "fidelity": 3.833,
+       "ci_by_work": [
+        3.433,
+        4.2
+       ],
+       "reversals_per_100": 6.7,
+       "omission_pct": 40.0,
+       "acc_spans_per_page": 1.07,
+       "style_spans_per_page": 0.03
+      }
+     },
+     "fable": {
+      "FP": {
+       "n": 18,
+       "fidelity": 3.778,
+       "ci_by_work": [
+        3.556,
+        4.0
+       ],
+       "reversals_per_100": 16.7,
+       "omission_pct": 55.6,
+       "acc_spans_per_page": 3.44,
+       "style_spans_per_page": 0.17
+      },
+      "C38": {
+       "n": 18,
+       "fidelity": 3.667,
+       "ci_by_work": [
+        3.333,
+        3.944
+       ],
+       "reversals_per_100": 22.2,
+       "omission_pct": 27.8,
+       "acc_spans_per_page": 3.22,
+       "style_spans_per_page": 0.22
+      },
+      "C38S": {
+       "n": 18,
+       "fidelity": 4.056,
+       "ci_by_work": [
+        3.778,
+        4.278
+       ],
+       "reversals_per_100": 5.6,
+       "omission_pct": 22.2,
+       "acc_spans_per_page": 2.44,
+       "style_spans_per_page": 0.33
+      },
+      "PRO": {
+       "n": 18,
+       "fidelity": 3.833,
+       "ci_by_work": [
+        3.5,
+        4.167
+       ],
+       "reversals_per_100": 16.7,
+       "omission_pct": 5.6,
+       "acc_spans_per_page": 2.17,
+       "style_spans_per_page": 0.33
+      },
+      "OPUS": {
+       "n": 18,
+       "fidelity": 4.556,
+       "ci_by_work": [
+        4.278,
+        4.833
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 11.1,
+       "acc_spans_per_page": 1.06,
+       "style_spans_per_page": 0.28
+      },
+      "CF": {
+       "n": 18,
+       "fidelity": 4.0,
+       "ci_by_work": [
+        3.722,
+        4.278
+       ],
+       "reversals_per_100": 5.6,
+       "omission_pct": 44.4,
+       "acc_spans_per_page": 2.33,
+       "style_spans_per_page": 0.22
+      },
+      "CO": {
+       "n": 18,
+       "fidelity": 4.278,
+       "ci_by_work": [
+        4.0,
+        4.556
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 38.9,
+       "acc_spans_per_page": 1.67,
+       "style_spans_per_page": 0.28
+      }
+     }
+    },
+    "reversal_pages_either": {
+     "FP": 9,
+     "C38": 8,
+     "C38S": 3,
+     "PRO": 3,
+     "OPUS": 1,
+     "CF": 7,
+     "CO": 2
+    }
+   },
+   "pairs": {
+    "PRO-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.333,
+      "ci_by_work": [
+       0.067,
+       0.6
+      ],
+      "wins": 11,
+      "losses": 3,
+      "ties": 16
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.7,
+      "ci_by_work": [
+       0.3,
+       1.067
+      ],
+      "wins": 14,
+      "losses": 1,
+      "ties": 15
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.167,
+      "ci_by_work": [
+       -0.111,
+       0.444
+      ],
+      "wins": 5,
+      "losses": 2,
+      "ties": 11
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-C38S": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.0,
+      "ci_by_work": [
+       -0.267,
+       0.267
+      ],
+      "wins": 6,
+      "losses": 6,
+      "ties": 18
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.267,
+      "ci_by_work": [
+       -0.133,
+       0.633
+      ],
+      "wins": 10,
+      "losses": 6,
+      "ties": 14
+     },
+     "fable": {
+      "n": 18,
+      "mean": -0.222,
+      "ci_by_work": [
+       -0.611,
+       0.167
+      ],
+      "wins": 3,
+      "losses": 6,
+      "ties": 9
+     },
+     "judges_agree_on_sign": false
+    },
+    "C38S-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.333,
+      "ci_by_work": [
+       0.067,
+       0.633
+      ],
+      "wins": 7,
+      "losses": 1,
+      "ties": 22
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.433,
+      "ci_by_work": [
+       0.1,
+       0.767
+      ],
+      "wins": 12,
+      "losses": 3,
+      "ties": 15
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.389,
+      "ci_by_work": [
+       0.0,
+       0.778
+      ],
+      "wins": 5,
+      "losses": 1,
+      "ties": 12
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 0.933,
+      "ci_by_work": [
+       0.633,
+       1.2
+      ],
+      "wins": 22,
+      "losses": 1,
+      "ties": 7
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.9,
+      "ci_by_work": [
+       0.5,
+       1.267
+      ],
+      "wins": 18,
+      "losses": 2,
+      "ties": 10
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.889,
+      "ci_by_work": [
+       0.556,
+       1.278
+      ],
+      "wins": 11,
+      "losses": 0,
+      "ties": 7
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-PRO": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 0.6,
+      "ci_by_work": [
+       0.4,
+       0.833
+      ],
+      "wins": 16,
+      "losses": 0,
+      "ties": 14
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.2,
+      "ci_by_work": [
+       -0.133,
+       0.567
+      ],
+      "wins": 11,
+      "losses": 7,
+      "ties": 12
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.722,
+      "ci_by_work": [
+       0.333,
+       1.167
+      ],
+      "wins": 11,
+      "losses": 2,
+      "ties": 5
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.633,
+      "ci_by_work": [
+       0.367,
+       0.9
+      ],
+      "wins": 16,
+      "losses": 1,
+      "ties": 13
+     },
+     "pro": {
+      "n": 30,
+      "mean": 1.267,
+      "ci_by_work": [
+       0.867,
+       1.667
+      ],
+      "wins": 23,
+      "losses": 2,
+      "ties": 5
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.056,
+      "ci_by_work": [
+       -0.333,
+       0.389
+      ],
+      "wins": 5,
+      "losses": 3,
+      "ties": 10
+     },
+     "judges_agree_on_sign": true
+    },
+    "C38-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.3,
+      "ci_by_work": [
+       0.0,
+       0.6
+      ],
+      "wins": 10,
+      "losses": 4,
+      "ties": 16
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.567,
+      "ci_by_work": [
+       0.167,
+       0.967
+      ],
+      "wins": 16,
+      "losses": 6,
+      "ties": 8
+     },
+     "fable": {
+      "n": 18,
+      "mean": -0.111,
+      "ci_by_work": [
+       -0.444,
+       0.222
+      ],
+      "wins": 3,
+      "losses": 4,
+      "ties": 11
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 1.233,
+      "ci_by_work": [
+       0.967,
+       1.5
+      ],
+      "wins": 26,
+      "losses": 0,
+      "ties": 4
+     },
+     "pro": {
+      "n": 30,
+      "mean": 1.467,
+      "ci_by_work": [
+       1.167,
+       1.767
+      ],
+      "wins": 26,
+      "losses": 0,
+      "ties": 4
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.778,
+      "ci_by_work": [
+       0.389,
+       1.167
+      ],
+      "wins": 11,
+      "losses": 1,
+      "ties": 6
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 0.6,
+      "ci_by_work": [
+       0.333,
+       0.867
+      ],
+      "wins": 16,
+      "losses": 1,
+      "ties": 13
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.467,
+      "ci_by_work": [
+       0.133,
+       0.8
+      ],
+      "wins": 13,
+      "losses": 4,
+      "ties": 13
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.5,
+      "ci_by_work": [
+       0.167,
+       0.889
+      ],
+      "wins": 8,
+      "losses": 1,
+      "ties": 9
+     },
+     "judges_agree_on_sign": true
+    },
+    "CF-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": 0.2,
+      "ci_by_work": [
+       -0.033,
+       0.4
+      ],
+      "wins": 9,
+      "losses": 3,
+      "ties": 18
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.233,
+      "ci_by_work": [
+       0.0,
+       0.467
+      ],
+      "wins": 9,
+      "losses": 3,
+      "ties": 18
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.222,
+      "ci_by_work": [
+       0.0,
+       0.444
+      ],
+      "wins": 5,
+      "losses": 1,
+      "ties": 12
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 0.6,
+      "ci_by_work": [
+       0.333,
+       0.867
+      ],
+      "wins": 14,
+      "losses": 0,
+      "ties": 16
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.633,
+      "ci_by_work": [
+       0.3,
+       0.933
+      ],
+      "wins": 17,
+      "losses": 3,
+      "ties": 10
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.5,
+      "ci_by_work": [
+       0.167,
+       0.833
+      ],
+      "wins": 9,
+      "losses": 1,
+      "ties": 8
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": -0.033,
+      "ci_by_work": [
+       -0.333,
+       0.233
+      ],
+      "wins": 8,
+      "losses": 8,
+      "ties": 14
+     },
+     "pro": {
+      "n": 30,
+      "mean": -0.367,
+      "ci_by_work": [
+       -0.733,
+       0.0
+      ],
+      "wins": 6,
+      "losses": 13,
+      "ties": 11
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.222,
+      "ci_by_work": [
+       -0.111,
+       0.611
+      ],
+      "wins": 6,
+      "losses": 3,
+      "ties": 9
+     },
+     "judges_agree_on_sign": true
+    },
+    "CF-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 30,
+      "mean": -0.1,
+      "ci_by_work": [
+       -0.4,
+       0.233
+      ],
+      "wins": 8,
+      "losses": 11,
+      "ties": 11
+     },
+     "pro": {
+      "n": 30,
+      "mean": -0.333,
+      "ci_by_work": [
+       -0.7,
+       0.033
+      ],
+      "wins": 8,
+      "losses": 13,
+      "ties": 9
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.333,
+      "ci_by_work": [
+       -0.111,
+       0.778
+      ],
+      "wins": 7,
+      "losses": 3,
+      "ties": 8
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": 0.3,
+      "ci_by_work": [
+       -0.033,
+       0.6
+      ],
+      "wins": 13,
+      "losses": 5,
+      "ties": 12
+     },
+     "pro": {
+      "n": 30,
+      "mean": 0.067,
+      "ci_by_work": [
+       -0.4,
+       0.5
+      ],
+      "wins": 9,
+      "losses": 9,
+      "ties": 12
+     },
+     "fable": {
+      "n": 18,
+      "mean": 0.611,
+      "ci_by_work": [
+       0.111,
+       1.111
+      ],
+      "wins": 8,
+      "losses": 2,
+      "ties": 8
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-OPUS": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 30,
+      "mean": -0.633,
+      "ci_by_work": [
+       -0.9,
+       -0.367
+      ],
+      "wins": 1,
+      "losses": 17,
+      "ties": 12
+     },
+     "pro": {
+      "n": 30,
+      "mean": -0.833,
+      "ci_by_work": [
+       -1.2,
+       -0.5
+      ],
+      "wins": 2,
+      "losses": 19,
+      "ties": 9
+     },
+     "fable": {
+      "n": 18,
+      "mean": -0.278,
+      "ci_by_work": [
+       -0.611,
+       0.111
+      ],
+      "wins": 1,
+      "losses": 7,
+      "ties": 10
+     },
+     "judges_agree_on_sign": true
+    }
+   }
+  },
+  "pooled": {
+   "table": {
+    "pages": 53,
+    "by_judge": {
+     "opus": {
+      "FP": {
+       "n": 53,
+       "fidelity": 3.604,
+       "ci_by_work": [
+        3.415,
+        3.792
+       ],
+       "reversals_per_100": 17.0,
+       "omission_pct": 47.2,
+       "acc_spans_per_page": 2.94,
+       "style_spans_per_page": 0.04
+      },
+      "C38": {
+       "n": 53,
+       "fidelity": 3.83,
+       "ci_by_work": [
+        3.623,
+        4.038
+       ],
+       "reversals_per_100": 13.2,
+       "omission_pct": 20.8,
+       "acc_spans_per_page": 2.17,
+       "style_spans_per_page": 0.13
+      },
+      "C38S": {
+       "n": 53,
+       "fidelity": 4.094,
+       "ci_by_work": [
+        3.887,
+        4.302
+       ],
+       "reversals_per_100": 5.7,
+       "omission_pct": 5.7,
+       "acc_spans_per_page": 1.64,
+       "style_spans_per_page": 0.13
+      },
+      "PRO": {
+       "n": 53,
+       "fidelity": 4.075,
+       "ci_by_work": [
+        3.849,
+        4.283
+       ],
+       "reversals_per_100": 7.5,
+       "omission_pct": 3.8,
+       "acc_spans_per_page": 1.6,
+       "style_spans_per_page": 0.21
+      },
+      "OPUS": {
+       "n": 53,
+       "fidelity": 4.717,
+       "ci_by_work": [
+        4.566,
+        4.849
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 5.7,
+       "acc_spans_per_page": 0.36,
+       "style_spans_per_page": 0.08
+      },
+      "CF": {
+       "n": 53,
+       "fidelity": 3.83,
+       "ci_by_work": [
+        3.623,
+        4.019
+       ],
+       "reversals_per_100": 9.4,
+       "omission_pct": 34.0,
+       "acc_spans_per_page": 2.15,
+       "style_spans_per_page": 0.17
+      },
+      "CO": {
+       "n": 53,
+       "fidelity": 4.113,
+       "ci_by_work": [
+        3.925,
+        4.302
+       ],
+       "reversals_per_100": 5.7,
+       "omission_pct": 32.1,
+       "acc_spans_per_page": 1.42,
+       "style_spans_per_page": 0.17
+      }
+     },
+     "pro": {
+      "FP": {
+       "n": 53,
+       "fidelity": 3.208,
+       "ci_by_work": [
+        2.981,
+        3.434
+       ],
+       "reversals_per_100": 28.3,
+       "omission_pct": 45.3,
+       "acc_spans_per_page": 1.83,
+       "style_spans_per_page": 0.06
+      },
+      "C38": {
+       "n": 53,
+       "fidelity": 3.679,
+       "ci_by_work": [
+        3.434,
+        3.925
+       ],
+       "reversals_per_100": 30.2,
+       "omission_pct": 24.5,
+       "acc_spans_per_page": 1.32,
+       "style_spans_per_page": 0.0
+      },
+      "C38S": {
+       "n": 53,
+       "fidelity": 4.0,
+       "ci_by_work": [
+        3.755,
+        4.245
+       ],
+       "reversals_per_100": 17.0,
+       "omission_pct": 17.0,
+       "acc_spans_per_page": 1.15,
+       "style_spans_per_page": 0.06
+      },
+      "PRO": {
+       "n": 53,
+       "fidelity": 4.245,
+       "ci_by_work": [
+        4.019,
+        4.453
+       ],
+       "reversals_per_100": 11.3,
+       "omission_pct": 5.7,
+       "acc_spans_per_page": 0.77,
+       "style_spans_per_page": 0.04
+      },
+      "OPUS": {
+       "n": 53,
+       "fidelity": 4.472,
+       "ci_by_work": [
+        4.226,
+        4.698
+       ],
+       "reversals_per_100": 7.5,
+       "omission_pct": 13.2,
+       "acc_spans_per_page": 0.53,
+       "style_spans_per_page": 0.0
+      },
+      "CF": {
+       "n": 53,
+       "fidelity": 3.472,
+       "ci_by_work": [
+        3.189,
+        3.736
+       ],
+       "reversals_per_100": 22.6,
+       "omission_pct": 43.4,
+       "acc_spans_per_page": 1.45,
+       "style_spans_per_page": 0.06
+      },
+      "CO": {
+       "n": 53,
+       "fidelity": 3.717,
+       "ci_by_work": [
+        3.415,
+        4.019
+       ],
+       "reversals_per_100": 15.1,
+       "omission_pct": 34.0,
+       "acc_spans_per_page": 1.15,
+       "style_spans_per_page": 0.08
+      }
+     },
+     "fable": {
+      "FP": {
+       "n": 36,
+       "fidelity": 3.667,
+       "ci_by_work": [
+        3.444,
+        3.889
+       ],
+       "reversals_per_100": 19.4,
+       "omission_pct": 36.1,
+       "acc_spans_per_page": 3.42,
+       "style_spans_per_page": 0.31
+      },
+      "C38": {
+       "n": 36,
+       "fidelity": 3.778,
+       "ci_by_work": [
+        3.528,
+        4.028
+       ],
+       "reversals_per_100": 16.7,
+       "omission_pct": 27.8,
+       "acc_spans_per_page": 3.25,
+       "style_spans_per_page": 0.31
+      },
+      "C38S": {
+       "n": 36,
+       "fidelity": 3.944,
+       "ci_by_work": [
+        3.722,
+        4.167
+       ],
+       "reversals_per_100": 8.3,
+       "omission_pct": 13.9,
+       "acc_spans_per_page": 2.67,
+       "style_spans_per_page": 0.36
+      },
+      "PRO": {
+       "n": 36,
+       "fidelity": 3.944,
+       "ci_by_work": [
+        3.667,
+        4.194
+       ],
+       "reversals_per_100": 11.1,
+       "omission_pct": 2.8,
+       "acc_spans_per_page": 2.14,
+       "style_spans_per_page": 0.25
+      },
+      "OPUS": {
+       "n": 36,
+       "fidelity": 4.528,
+       "ci_by_work": [
+        4.333,
+        4.694
+       ],
+       "reversals_per_100": 0.0,
+       "omission_pct": 8.3,
+       "acc_spans_per_page": 1.08,
+       "style_spans_per_page": 0.19
+      },
+      "CF": {
+       "n": 36,
+       "fidelity": 3.944,
+       "ci_by_work": [
+        3.722,
+        4.194
+       ],
+       "reversals_per_100": 8.3,
+       "omission_pct": 30.6,
+       "acc_spans_per_page": 2.28,
+       "style_spans_per_page": 0.42
+      },
+      "CO": {
+       "n": 36,
+       "fidelity": 4.139,
+       "ci_by_work": [
+        3.861,
+        4.389
+       ],
+       "reversals_per_100": 5.6,
+       "omission_pct": 36.1,
+       "acc_spans_per_page": 1.97,
+       "style_spans_per_page": 0.31
+      }
+     }
+    },
+    "reversal_pages_either": {
+     "FP": 17,
+     "C38": 16,
+     "C38S": 9,
+     "PRO": 6,
+     "OPUS": 4,
+     "CF": 13,
+     "CO": 8
+    }
+   },
+   "pairs": {
+    "PRO-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.245,
+      "ci_by_work": [
+       0.038,
+       0.453
+      ],
+      "wins": 20,
+      "losses": 8,
+      "ties": 25
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.566,
+      "ci_by_work": [
+       0.302,
+       0.811
+      ],
+      "wins": 25,
+      "losses": 3,
+      "ties": 25
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.167,
+      "ci_by_work": [
+       0.0,
+       0.333
+      ],
+      "wins": 9,
+      "losses": 3,
+      "ties": 24
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-C38S": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": -0.019,
+      "ci_by_work": [
+       -0.226,
+       0.189
+      ],
+      "wins": 10,
+      "losses": 9,
+      "ties": 34
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.245,
+      "ci_by_work": [
+       -0.038,
+       0.528
+      ],
+      "wins": 20,
+      "losses": 12,
+      "ties": 21
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.0,
+      "ci_by_work": [
+       -0.25,
+       0.222
+      ],
+      "wins": 7,
+      "losses": 7,
+      "ties": 22
+     },
+     "judges_agree_on_sign": false
+    },
+    "C38S-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.264,
+      "ci_by_work": [
+       0.057,
+       0.472
+      ],
+      "wins": 15,
+      "losses": 4,
+      "ties": 34
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.321,
+      "ci_by_work": [
+       0.094,
+       0.585
+      ],
+      "wins": 18,
+      "losses": 6,
+      "ties": 29
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.167,
+      "ci_by_work": [
+       -0.083,
+       0.417
+      ],
+      "wins": 8,
+      "losses": 4,
+      "ties": 24
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.887,
+      "ci_by_work": [
+       0.679,
+       1.094
+      ],
+      "wins": 37,
+      "losses": 2,
+      "ties": 14
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.792,
+      "ci_by_work": [
+       0.547,
+       1.057
+      ],
+      "wins": 30,
+      "losses": 4,
+      "ties": 19
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.75,
+      "ci_by_work": [
+       0.5,
+       1.028
+      ],
+      "wins": 20,
+      "losses": 1,
+      "ties": 15
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-PRO": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.642,
+      "ci_by_work": [
+       0.472,
+       0.83
+      ],
+      "wins": 28,
+      "losses": 0,
+      "ties": 25
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.226,
+      "ci_by_work": [
+       -0.019,
+       0.472
+      ],
+      "wins": 20,
+      "losses": 11,
+      "ties": 22
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.583,
+      "ci_by_work": [
+       0.333,
+       0.861
+      ],
+      "wins": 19,
+      "losses": 3,
+      "ties": 14
+     },
+     "judges_agree_on_sign": true
+    },
+    "PRO-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.472,
+      "ci_by_work": [
+       0.264,
+       0.698
+      ],
+      "wins": 27,
+      "losses": 5,
+      "ties": 21
+     },
+     "pro": {
+      "n": 53,
+      "mean": 1.038,
+      "ci_by_work": [
+       0.698,
+       1.358
+      ],
+      "wins": 37,
+      "losses": 6,
+      "ties": 10
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.278,
+      "ci_by_work": [
+       0.0,
+       0.528
+      ],
+      "wins": 13,
+      "losses": 4,
+      "ties": 19
+     },
+     "judges_agree_on_sign": true
+    },
+    "C38-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.226,
+      "ci_by_work": [
+       0.019,
+       0.434
+      ],
+      "wins": 17,
+      "losses": 9,
+      "ties": 27
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.472,
+      "ci_by_work": [
+       0.208,
+       0.736
+      ],
+      "wins": 26,
+      "losses": 10,
+      "ties": 17
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.111,
+      "ci_by_work": [
+       -0.139,
+       0.333
+      ],
+      "wins": 9,
+      "losses": 5,
+      "ties": 22
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 1.113,
+      "ci_by_work": [
+       0.925,
+       1.302
+      ],
+      "wins": 43,
+      "losses": 0,
+      "ties": 10
+     },
+     "pro": {
+      "n": 53,
+      "mean": 1.264,
+      "ci_by_work": [
+       0.981,
+       1.547
+      ],
+      "wins": 40,
+      "losses": 2,
+      "ties": 11
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.861,
+      "ci_by_work": [
+       0.583,
+       1.139
+      ],
+      "wins": 24,
+      "losses": 1,
+      "ties": 11
+     },
+     "judges_agree_on_sign": true
+    },
+    "OPUS-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.623,
+      "ci_by_work": [
+       0.415,
+       0.811
+      ],
+      "wins": 27,
+      "losses": 1,
+      "ties": 25
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.472,
+      "ci_by_work": [
+       0.245,
+       0.698
+      ],
+      "wins": 25,
+      "losses": 6,
+      "ties": 22
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.583,
+      "ci_by_work": [
+       0.333,
+       0.833
+      ],
+      "wins": 17,
+      "losses": 1,
+      "ties": 18
+     },
+     "judges_agree_on_sign": true
+    },
+    "CF-FP": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.226,
+      "ci_by_work": [
+       0.057,
+       0.377
+      ],
+      "wins": 15,
+      "losses": 4,
+      "ties": 34
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.264,
+      "ci_by_work": [
+       0.075,
+       0.453
+      ],
+      "wins": 16,
+      "losses": 5,
+      "ties": 32
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.278,
+      "ci_by_work": [
+       0.111,
+       0.472
+      ],
+      "wins": 10,
+      "losses": 1,
+      "ties": 25
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-FP": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.509,
+      "ci_by_work": [
+       0.302,
+       0.717
+      ],
+      "wins": 24,
+      "losses": 2,
+      "ties": 27
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.509,
+      "ci_by_work": [
+       0.245,
+       0.774
+      ],
+      "wins": 24,
+      "losses": 6,
+      "ties": 23
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.472,
+      "ci_by_work": [
+       0.222,
+       0.722
+      ],
+      "wins": 16,
+      "losses": 2,
+      "ties": 18
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-C38S": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.019,
+      "ci_by_work": [
+       -0.208,
+       0.264
+      ],
+      "wins": 13,
+      "losses": 13,
+      "ties": 27
+     },
+     "pro": {
+      "n": 53,
+      "mean": -0.283,
+      "ci_by_work": [
+       -0.566,
+       0.0
+      ],
+      "wins": 11,
+      "losses": 19,
+      "ties": 23
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.194,
+      "ci_by_work": [
+       -0.083,
+       0.5
+      ],
+      "wins": 12,
+      "losses": 8,
+      "ties": 16
+     },
+     "judges_agree_on_sign": false
+    },
+    "CF-C38": {
+     "headline_judge": "opus",
+     "opus": {
+      "n": 53,
+      "mean": 0.0,
+      "ci_by_work": [
+       -0.208,
+       0.208
+      ],
+      "wins": 14,
+      "losses": 14,
+      "ties": 25
+     },
+     "pro": {
+      "n": 53,
+      "mean": -0.208,
+      "ci_by_work": [
+       -0.491,
+       0.057
+      ],
+      "wins": 12,
+      "losses": 20,
+      "ties": 21
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.167,
+      "ci_by_work": [
+       -0.056,
+       0.417
+      ],
+      "wins": 9,
+      "losses": 5,
+      "ties": 22
+     },
+     "judges_agree_on_sign": false
+    },
+    "CO-C38": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": 0.283,
+      "ci_by_work": [
+       0.038,
+       0.528
+      ],
+      "wins": 22,
+      "losses": 10,
+      "ties": 21
+     },
+     "pro": {
+      "n": 53,
+      "mean": 0.038,
+      "ci_by_work": [
+       -0.264,
+       0.377
+      ],
+      "wins": 14,
+      "losses": 16,
+      "ties": 23
+     },
+     "fable": {
+      "n": 36,
+      "mean": 0.361,
+      "ci_by_work": [
+       0.083,
+       0.667
+      ],
+      "wins": 12,
+      "losses": 4,
+      "ties": 20
+     },
+     "judges_agree_on_sign": true
+    },
+    "CO-OPUS": {
+     "headline_judge": "pro",
+     "opus": {
+      "n": 53,
+      "mean": -0.604,
+      "ci_by_work": [
+       -0.792,
+       -0.415
+      ],
+      "wins": 2,
+      "losses": 30,
+      "ties": 21
+     },
+     "pro": {
+      "n": 53,
+      "mean": -0.755,
+      "ci_by_work": [
+       -1.038,
+       -0.472
+      ],
+      "wins": 3,
+      "losses": 27,
+      "ties": 23
+     },
+     "fable": {
+      "n": 36,
+      "mean": -0.389,
+      "ci_by_work": [
+       -0.667,
+       -0.111
+      ],
+      "wins": 3,
+      "losses": 15,
+      "ties": 18
+     },
+     "judges_agree_on_sign": true
+    }
+   }
+  }
+ },
+ "plant_controls": {
+  "opus": {
+   "n": 18,
+   "located": 17,
+   "lower": 8,
+   "located_by_kind": {
+    "clause": [
+     4,
+     5
+    ],
+    "name": [
+     2,
+     2
+    ],
+    "negation": [
+     7,
+     7
+    ],
+    "number": [
+     4,
+     4
+    ]
+   },
+   "rows": [
+    {
+     "item": "r1s1-008",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-010",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-013",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "five → seven",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-018",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "two → three",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-023",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": false,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-029",
+     "lang": "Persian",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-036",
+     "lang": "Persian",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-037",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 2.0,
+     "C38_fid": 2.0
+    },
+    {
+     "item": "r1s1-048",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-054",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-057",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-063",
+     "lang": "Persian",
+     "kind": "number",
+     "how": "First → Second",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-066",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-079",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-080",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "ten → twelve",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-082",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\bI am\\b → you are",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-086",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bdoes not\\b → does",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-098",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    }
+   ]
+  },
+  "pro": {
+   "n": 18,
+   "located": 12,
+   "lower": 12,
+   "located_by_kind": {
+    "clause": [
+     3,
+     5
+    ],
+    "name": [
+     1,
+     2
+    ],
+    "negation": [
+     4,
+     7
+    ],
+    "number": [
+     4,
+     4
+    ]
+   },
+   "rows": [
+    {
+     "item": "r1s1-008",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": false,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-010",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": false,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-013",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "five → seven",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-018",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "two → three",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 4.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-023",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": false,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-029",
+     "lang": "Persian",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-036",
+     "lang": "Persian",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-037",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": false,
+     "lower_than_C38": true,
+     "fid": 2.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-048",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-054",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1",
+     "located": false,
+     "lower_than_C38": true,
+     "fid": 4.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-057",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": false,
+     "lower_than_C38": false,
+     "fid": 5.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-063",
+     "lang": "Persian",
+     "kind": "number",
+     "how": "First → Second",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-066",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-079",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 2.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-080",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "ten → twelve",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-082",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\bI am\\b → you are",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 2.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-086",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bdoes not\\b → does",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-098",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 2.0,
+     "C38_fid": 2.0
+    }
+   ]
+  },
+  "fable": {
+   "n": 10,
+   "located": 10,
+   "lower": 3,
+   "located_by_kind": {
+    "clause": [
+     2,
+     2
+    ],
+    "name": [
+     1,
+     1
+    ],
+    "negation": [
+     4,
+     4
+    ],
+    "number": [
+     3,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "item": "r1s1-010",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-013",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "five → seven",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-018",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "two → three",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 4.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-029",
+     "lang": "Persian",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": null
+    },
+    {
+     "item": "r1s1-057",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": null
+    },
+    {
+     "item": "r1s1-063",
+     "lang": "Persian",
+     "kind": "number",
+     "how": "First → Second",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 4.0,
+     "C38_fid": 4.0
+    },
+    {
+     "item": "r1s1-066",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "how": "clause dropped",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": null
+    },
+    {
+     "item": "r1s1-079",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": 3.0
+    },
+    {
+     "item": "r1s1-082",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\bI am\\b → you are",
+     "located": true,
+     "lower_than_C38": true,
+     "fid": 3.0,
+     "C38_fid": 5.0
+    },
+    {
+     "item": "r1s1-086",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bdoes not\\b → does",
+     "located": true,
+     "lower_than_C38": false,
+     "fid": 3.0,
+     "C38_fid": null
+    }
+   ]
+  }
+ },
+ "agreement": {
+  "opus-pro": {
+   "Persian": {
+    "alpha": 0.584,
+    "ci_by_work": [
+     0.395,
+     0.714
+    ],
+    "units": 161,
+    "works": 23
+   },
+   "Sanskrit": {
+    "alpha": 0.673,
+    "ci_by_work": [
+     0.552,
+     0.773
+    ],
+    "units": 210,
+    "works": 30
+   },
+   "pooled": {
+    "alpha": 0.632,
+    "ci_by_work": [
+     0.532,
+     0.717
+    ],
+    "units": 371,
+    "works": 53
+   },
+   "span_f1": {
+    "spans_a": 644,
+    "spans_b": 419,
+    "precision_a_in_b": 0.329,
+    "recall": 0.511,
+    "f1": 0.4
+   },
+   "ranking": {
+    "pairs": 42,
+    "agree": 35,
+    "share": 0.833,
+    "rows": [
+     {
+      "lang": "Persian",
+      "pair": "FP-C38",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-C38S",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-PRO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CF",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-C38S",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-PRO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CF",
+      "opus": -1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CO",
+      "opus": -1,
+      "pro": 0
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-PRO",
+      "opus": 1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CO",
+      "opus": -1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CF",
+      "opus": 0,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CO",
+      "opus": -1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CO",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "CF-CO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38S",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-PRO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CF",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-C38S",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-PRO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CO",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-PRO",
+      "opus": 0,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CO",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-OPUS",
+      "opus": -1,
+      "pro": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CO",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CF",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CO",
+      "opus": 1,
+      "pro": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "CF-CO",
+      "opus": -1,
+      "pro": -1
+     }
+    ]
+   }
+  },
+  "opus-fable": {
+   "Persian": {
+    "alpha": 0.773,
+    "ci_by_work": [
+     0.618,
+     0.875
+    ],
+    "units": 126,
+    "works": 18
+   },
+   "Sanskrit": {
+    "alpha": 0.701,
+    "ci_by_work": [
+     0.611,
+     0.77
+    ],
+    "units": 126,
+    "works": 18
+   },
+   "pooled": {
+    "alpha": 0.74,
+    "ci_by_work": [
+     0.647,
+     0.809
+    ],
+    "units": 252,
+    "works": 36
+   },
+   "span_f1": {
+    "spans_a": 412,
+    "spans_b": 600,
+    "precision_a_in_b": 0.748,
+    "recall": 0.513,
+    "f1": 0.609
+   },
+   "ranking": {
+    "pairs": 42,
+    "agree": 38,
+    "share": 0.905,
+    "rows": [
+     {
+      "lang": "Persian",
+      "pair": "FP-C38",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-C38S",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-PRO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CF",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-C38S",
+      "opus": -1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-PRO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CF",
+      "opus": -1,
+      "fable": 0
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-PRO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CF",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CF",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CO",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CF",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CO",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "CF-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38",
+      "opus": 0,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38S",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-PRO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CF",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-C38S",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-PRO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CF",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-PRO",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CF",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-OPUS",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CF",
+      "opus": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CO",
+      "opus": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CF",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CO",
+      "opus": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "CF-CO",
+      "opus": -1,
+      "fable": -1
+     }
+    ]
+   }
+  },
+  "pro-fable": {
+   "Persian": {
+    "alpha": 0.696,
+    "ci_by_work": [
+     0.453,
+     0.833
+    ],
+    "units": 126,
+    "works": 18
+   },
+   "Sanskrit": {
+    "alpha": 0.531,
+    "ci_by_work": [
+     0.255,
+     0.743
+    ],
+    "units": 126,
+    "works": 18
+   },
+   "pooled": {
+    "alpha": 0.626,
+    "ci_by_work": [
+     0.446,
+     0.756
+    ],
+    "units": 252,
+    "works": 36
+   },
+   "span_f1": {
+    "spans_a": 302,
+    "spans_b": 600,
+    "precision_a_in_b": 0.586,
+    "recall": 0.295,
+    "f1": 0.392
+   },
+   "ranking": {
+    "pairs": 42,
+    "agree": 30,
+    "share": 0.714,
+    "rows": [
+     {
+      "lang": "Persian",
+      "pair": "FP-C38",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-C38S",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-PRO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CF",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "FP-CO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-C38S",
+      "pro": -1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-PRO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CF",
+      "pro": -1,
+      "fable": 0
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38-CO",
+      "pro": 0,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-PRO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CF",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "C38S-CO",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CF",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "PRO-CO",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CF",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "OPUS-CO",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Persian",
+      "pair": "CF-CO",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38",
+      "pro": -1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-C38S",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-PRO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CF",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "FP-CO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-C38S",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-PRO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CF",
+      "pro": 0,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38-CO",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-PRO",
+      "pro": 0,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CF",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "C38S-CO",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-OPUS",
+      "pro": -1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CF",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "PRO-CO",
+      "pro": 1,
+      "fable": -1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CF",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "OPUS-CO",
+      "pro": 1,
+      "fable": 1
+     },
+     {
+      "lang": "Sanskrit",
+      "pair": "CF-CO",
+      "pro": -1,
+      "fable": -1
+     }
+    ]
+   }
+  }
+ },
+ "retest": {
+  "opus": {
+   "alpha": 0.854,
+   "ci_by_work": [
+    0.788,
+    0.903
+   ],
+   "units": 280,
+   "works": 40
+  },
+  "pro": {
+   "alpha": 0.757,
+   "ci_by_work": [
+    0.647,
+    0.835
+   ],
+   "units": 280,
+   "works": 40
+  },
+  "fable": {
+   "alpha": null,
+   "ci_by_work": null,
+   "units": 0,
+   "works": 0
+  }
+ },
+ "self_preference": {
+  "Persian": {
+   "pages": 23,
+   "gap_gemini_arms": -0.287,
+   "gap_claude_arms": -0.478,
+   "did": 0.191,
+   "ci_by_work": [
+    -0.1,
+    0.539
+   ]
+  },
+  "Sanskrit": {
+   "pages": 30,
+   "gap_gemini_arms": -0.073,
+   "gap_claude_arms": -0.2,
+   "did": 0.127,
+   "ci_by_work": [
+    -0.09,
+    0.363
+   ]
+  },
+  "pooled": {
+   "pages": 53,
+   "gap_gemini_arms": -0.166,
+   "gap_claude_arms": -0.321,
+   "did": 0.155,
+   "ci_by_work": [
+    -0.026,
+    0.351
+   ]
+  }
+ },
+ "correction": {
+  "CF": {
+   "edit_share": {
+    "n": 53,
+    "median": 0.013,
+    "p90": 0.06,
+    "unchanged": 9
+   },
+   "changed_chars_inside_flagged_spans": {
+    "share": 0.276,
+    "changed_chars": 7092
+   },
+   "by_judge": {
+    "opus": {
+     "n": 53,
+     "d_accuracy_spans_per_page": -0.79,
+     "d_style_spans_per_page": 0.13,
+     "invented_edits_per_100": 7.5,
+     "introduced_accuracy_spans_per_100": 32.1
+    },
+    "pro": {
+     "n": 53,
+     "d_accuracy_spans_per_page": -0.38,
+     "d_style_spans_per_page": 0.0,
+     "invented_edits_per_100": 5.7,
+     "introduced_accuracy_spans_per_100": 37.7
+    },
+    "fable": {
+     "n": 36,
+     "d_accuracy_spans_per_page": -1.14,
+     "d_style_spans_per_page": 0.11,
+     "invented_edits_per_100": 16.7,
+     "introduced_accuracy_spans_per_100": 50.0
+    }
+   },
+   "over_correction": {
+    "clean_pages": 4,
+    "opus": {
+     "lower": 0,
+     "n": 4,
+     "mean_drop_when_lower": 0
+    },
+    "pro": {
+     "lower": 0,
+     "n": 4,
+     "mean_drop_when_lower": 0
+    },
+    "relaxed_both_judges_ge_4": {
+     "pages": 13,
+     "opus": {
+      "lower": 0,
+      "higher": 3,
+      "n": 13,
+      "mean_change": 0.23
+     },
+     "pro": {
+      "lower": 1,
+      "higher": 4,
+      "n": 13,
+      "mean_change": 0.23
+     }
+    }
+   },
+   "gain_by_draft_noise": {
+    "noisiest third": {
+     "pages": 17,
+     "fp_mean": 2.71,
+     "gain_opus": 0.35,
+     "gain_pro": 0.41
+    },
+    "middle third": {
+     "pages": 18,
+     "fp_mean": 3.39,
+     "gain_opus": 0.06,
+     "gain_pro": 0.06
+    },
+    "cleanest third": {
+     "pages": 18,
+     "fp_mean": 4.08,
+     "gain_opus": 0.28,
+     "gain_pro": 0.33
+    }
+   },
+   "planted": {
+    "plants": 35,
+    "fixed": 32,
+    "left": 3,
+    "unclear": 0,
+    "failed_reads": 0,
+    "rows": [
+     {
+      "uid": "6a21994b4b61907ea5ffb7e5_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "6a21994b4b61907ea5ffb7e5_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69d5ac2ed0bd3547a5655830_00063",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e748b385f786e884a4cbdb_00137",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e748b385f786e884a4cbdb_00137",
+      "kind": "number",
+      "how": "5 → 8",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e748bd49abba5e982816d3_00076",
+      "kind": "negation",
+      "how": "\\bdo not\\b → do",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e748bd49abba5e982816d3_00076",
+      "kind": "name",
+      "how": "\\bthe master\\b → the student",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e74eeb5cf1eaf3ad80ddc1_00237",
+      "kind": "negation",
+      "how": "\\bwill\\b → will not",
+      "status": "left (rewritten)"
+     },
+     {
+      "uid": "69e74eeb5cf1eaf3ad80ddc1_00237",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69d5ac26d0bd3547a5655542_00560",
+      "kind": "negation",
+      "how": "\\bdoes not\\b → does",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69d5ac26d0bd3547a5655542_00560",
+      "kind": "name",
+      "how": "\\bI am\\b → you are",
+      "status": "left"
+     },
+     {
+      "uid": "6992cf0970ab3737555456ae_00100",
+      "kind": "negation",
+      "how": "\\bwill\\b → will not",
+      "status": "fixed"
+     },
+     {
+      "uid": "6992cf0970ab3737555456ae_00100",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e7299ba409200ea79f0b56_00211",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e7299ba409200ea79f0b56_00211",
+      "kind": "number",
+      "how": "two → three",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e729a1a409200ea79f0ca5_00257",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e729a1a409200ea79f0ca5_00257",
+      "kind": "number",
+      "how": "seventh → ninth",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e7491f85f786e884a4dc2f_00182",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e13c79998131d6a99c0917_00310",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e13c79998131d6a99c0917_00310",
+      "kind": "name",
+      "how": "swap Nara ↔ Narayana",
+      "status": "excluded: order of a coordinated pair is not a meaning error"
+     },
+     {
+      "uid": "69ea3e63300d991d0f1d3186_00160",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69ea3e63300d991d0f1d3186_00160",
+      "kind": "number",
+      "how": "forty → twenty",
+      "status": "fixed"
+     },
+     {
+      "uid": "69ef251c85daccce30f2b1f2_00309",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69ef251c85daccce30f2b1f2_00309",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e8b27f2ff2a8dc09e77ed7_00048",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e8b27f2ff2a8dc09e77ed7_00048",
+      "kind": "negation",
+      "how": "\\bdo not\\b → do",
+      "status": "fixed"
+     },
+     {
+      "uid": "69935b4d8e28d8f4c5d3cfaa_00177",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69935b4d8e28d8f4c5d3cfaa_00177",
+      "kind": "name",
+      "how": "swap Science ↔ Yoga",
+      "status": "fixed"
+     },
+     {
+      "uid": "69906a861cf6ed5fbc8f5d21_00078",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69906a861cf6ed5fbc8f5d21_00078",
+      "kind": "number",
+      "how": "ten → twelve",
+      "status": "fixed"
+     },
+     {
+      "uid": "69b99f256ed9e0490990aa8a_00185",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69b99f256ed9e0490990aa8a_00185",
+      "kind": "name",
+      "how": "swap Manjushri ↔ Bodhisattva Mahasattva",
+      "status": "fixed"
+     },
+     {
+      "uid": "69de101d5cedf736edb85346_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69de101d5cedf736edb85346_00027",
+      "kind": "clause",
+      "how": "clause dropped",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e80662fdad300064d9ed7c_00171",
+      "kind": "negation",
+      "how": "\\bcannot\\b → can",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e80662fdad300064d9ed7c_00171",
+      "kind": "name",
+      "how": "swap Care ↔ Wounded",
+      "status": "left"
+     }
+    ]
+   }
+  },
+  "CO": {
+   "edit_share": {
+    "n": 53,
+    "median": 0.017,
+    "p90": 0.094,
+    "unchanged": 4
+   },
+   "changed_chars_inside_flagged_spans": {
+    "share": 0.412,
+    "changed_chars": 6677
+   },
+   "by_judge": {
+    "opus": {
+     "n": 53,
+     "d_accuracy_spans_per_page": -1.53,
+     "d_style_spans_per_page": 0.13,
+     "invented_edits_per_100": 11.3,
+     "introduced_accuracy_spans_per_100": 26.4
+    },
+    "pro": {
+     "n": 53,
+     "d_accuracy_spans_per_page": -0.68,
+     "d_style_spans_per_page": 0.02,
+     "invented_edits_per_100": 13.2,
+     "introduced_accuracy_spans_per_100": 56.6
+    },
+    "fable": {
+     "n": 36,
+     "d_accuracy_spans_per_page": -1.44,
+     "d_style_spans_per_page": 0.0,
+     "invented_edits_per_100": 13.9,
+     "introduced_accuracy_spans_per_100": 58.3
+    }
+   },
+   "over_correction": {
+    "clean_pages": 4,
+    "opus": {
+     "lower": 0,
+     "n": 4,
+     "mean_drop_when_lower": 0
+    },
+    "pro": {
+     "lower": 0,
+     "n": 4,
+     "mean_drop_when_lower": 0
+    },
+    "relaxed_both_judges_ge_4": {
+     "pages": 13,
+     "opus": {
+      "lower": 0,
+      "higher": 4,
+      "n": 13,
+      "mean_change": 0.31
+     },
+     "pro": {
+      "lower": 2,
+      "higher": 5,
+      "n": 13,
+      "mean_change": 0.23
+     }
+    }
+   },
+   "gain_by_draft_noise": {
+    "noisiest third": {
+     "pages": 17,
+     "fp_mean": 2.71,
+     "gain_opus": 0.88,
+     "gain_pro": 0.82
+    },
+    "middle third": {
+     "pages": 18,
+     "fp_mean": 3.39,
+     "gain_opus": 0.33,
+     "gain_pro": 0.44
+    },
+    "cleanest third": {
+     "pages": 18,
+     "fp_mean": 4.08,
+     "gain_opus": 0.33,
+     "gain_pro": 0.28
+    }
+   },
+   "planted": {
+    "plants": 35,
+    "fixed": 33,
+    "left": 1,
+    "unclear": 1,
+    "failed_reads": 0,
+    "rows": [
+     {
+      "uid": "69d5ac2ed0bd3547a5655830_00063",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "6a21994b4b61907ea5ffb7e5_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "6a21994b4b61907ea5ffb7e5_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e748b385f786e884a4cbdb_00137",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e748b385f786e884a4cbdb_00137",
+      "kind": "number",
+      "how": "5 → 8",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e748bd49abba5e982816d3_00076",
+      "kind": "negation",
+      "how": "\\bdo not\\b → do",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e748bd49abba5e982816d3_00076",
+      "kind": "name",
+      "how": "\\bthe master\\b → the student",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e74eeb5cf1eaf3ad80ddc1_00237",
+      "kind": "negation",
+      "how": "\\bwill\\b → will not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e74eeb5cf1eaf3ad80ddc1_00237",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69d5ac26d0bd3547a5655542_00560",
+      "kind": "negation",
+      "how": "\\bdoes not\\b → does",
+      "status": "fixed"
+     },
+     {
+      "uid": "69d5ac26d0bd3547a5655542_00560",
+      "kind": "name",
+      "how": "\\bI am\\b → you are",
+      "status": "left"
+     },
+     {
+      "uid": "6992cf0970ab3737555456ae_00100",
+      "kind": "negation",
+      "how": "\\bwill\\b → will not",
+      "status": "fixed"
+     },
+     {
+      "uid": "6992cf0970ab3737555456ae_00100",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e729a1a409200ea79f0ca5_00257",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e729a1a409200ea79f0ca5_00257",
+      "kind": "number",
+      "how": "seventh → ninth",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e7491f85f786e884a4dc2f_00182",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e7299ba409200ea79f0b56_00211",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e7299ba409200ea79f0b56_00211",
+      "kind": "number",
+      "how": "two → three",
+      "status": "fixed"
+     },
+     {
+      "uid": "69ea3e63300d991d0f1d3186_00160",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69ea3e63300d991d0f1d3186_00160",
+      "kind": "number",
+      "how": "forty → twenty",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e13c79998131d6a99c0917_00310",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e13c79998131d6a99c0917_00310",
+      "kind": "name",
+      "how": "swap Nara ↔ Narayana",
+      "status": "excluded: order of a coordinated pair is not a meaning error"
+     },
+     {
+      "uid": "69ef251c85daccce30f2b1f2_00309",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69ef251c85daccce30f2b1f2_00309",
+      "kind": "name",
+      "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e8b27f2ff2a8dc09e77ed7_00048",
+      "kind": "negation",
+      "how": "\\bare\\b → are not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e8b27f2ff2a8dc09e77ed7_00048",
+      "kind": "negation",
+      "how": "\\bdo not\\b → do",
+      "status": "fixed"
+     },
+     {
+      "uid": "69b99f256ed9e0490990aa8a_00185",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69b99f256ed9e0490990aa8a_00185",
+      "kind": "name",
+      "how": "swap Manjushri ↔ Bodhisattva Mahasattva",
+      "status": "fixed"
+     },
+     {
+      "uid": "69935b4d8e28d8f4c5d3cfaa_00177",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69935b4d8e28d8f4c5d3cfaa_00177",
+      "kind": "name",
+      "how": "swap Science ↔ Yoga",
+      "status": "fixed"
+     },
+     {
+      "uid": "69906a861cf6ed5fbc8f5d21_00078",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69906a861cf6ed5fbc8f5d21_00078",
+      "kind": "number",
+      "how": "ten → twelve",
+      "status": "fixed"
+     },
+     {
+      "uid": "69de101d5cedf736edb85346_00027",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "status": "fixed"
+     },
+     {
+      "uid": "69de101d5cedf736edb85346_00027",
+      "kind": "clause",
+      "how": "clause dropped",
+      "status": "fixed (rewritten)"
+     },
+     {
+      "uid": "69e80662fdad300064d9ed7c_00171",
+      "kind": "negation",
+      "how": "\\bcannot\\b → can",
+      "status": "fixed"
+     },
+     {
+      "uid": "69e80662fdad300064d9ed7c_00171",
+      "kind": "name",
+      "how": "swap Care ↔ Wounded",
+      "status": "rewritten"
+     }
+    ]
+   }
+  }
+ },
+ "run": {
+  "C38": {
+   "pages": 53,
+   "secs_per_page_median": 9.4,
+   "secs_per_page_mean": 10.9,
+   "calls_per_page": 1.0,
+   "nudged": 0
+  },
+  "C38S": {
+   "pages": 53,
+   "secs_per_page_median": 16.0,
+   "secs_per_page_mean": 16.6,
+   "calls_per_page": 1.0,
+   "nudged": 0
+  },
+  "PRO": {
+   "pages": 53,
+   "secs_per_page_median": 60.2,
+   "secs_per_page_mean": 65.9,
+   "calls_per_page": 1.0,
+   "nudged": 0
+  },
+  "OPUS": {
+   "pages": 53,
+   "secs_per_page_median": 29.6,
+   "secs_per_page_mean": 33.1,
+   "calls_per_page": 1.0,
+   "nudged": 0
+  },
+  "CF": {
+   "pages": 53,
+   "secs_per_page_median": 47.1,
+   "secs_per_page_mean": 50.6,
+   "calls_per_page": 1.47,
+   "nudged": 25
+  },
+  "CO": {
+   "pages": 53,
+   "secs_per_page_median": 25.7,
+   "secs_per_page_mean": 28.8,
+   "calls_per_page": 1.0,
+   "nudged": 0
+  }
+ },
+ "opus_outlier": {
+  "units": 252,
+  "opus_off_by_1plus": 33,
+  "opus_off_by_2plus": 0,
+  "opus_higher": 14,
+  "rows": [
+   {
+    "item": "r1s1-103",
+    "arm": "OPUS",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-040",
+    "arm": "OPUS",
+    "lang": "Sanskrit",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-065",
+    "arm": "C38S",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 3.0,
+    "pro": 3.0
+   },
+   {
+    "item": "r1s1-039",
+    "arm": "CO",
+    "lang": "Sanskrit",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-039",
+    "arm": "FP",
+    "lang": "Sanskrit",
+    "opus": 2.0,
+    "fable": 3.0,
+    "pro": 3.0
+   },
+   {
+    "item": "r1s1-109",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 3.0,
+    "pro": 3.0
+   },
+   {
+    "item": "r1s1-108",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-102",
+    "arm": "FP",
+    "lang": "Sanskrit",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-102",
+    "arm": "CO",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-104",
+    "arm": "FP",
+    "lang": "Sanskrit",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-104",
+    "arm": "OPUS",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-104",
+    "arm": "C38S",
+    "lang": "Sanskrit",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-020",
+    "arm": "C38",
+    "lang": "Sanskrit",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-026",
+    "arm": "C38S",
+    "lang": "Persian",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-026",
+    "arm": "OPUS",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-002",
+    "arm": "FP",
+    "lang": "Persian",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-002",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 3.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-002",
+    "arm": "OPUS",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-061",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-061",
+    "arm": "PRO",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-061",
+    "arm": "CF",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-089",
+    "arm": "C38",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-106",
+    "arm": "CF",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-084",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-084",
+    "arm": "C38S",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-084",
+    "arm": "PRO",
+    "lang": "Persian",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   },
+   {
+    "item": "r1s1-025",
+    "arm": "PRO",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-030",
+    "arm": "CO",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-064",
+    "arm": "FP",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 3.0,
+    "pro": 3.0
+   },
+   {
+    "item": "r1s1-064",
+    "arm": "CO",
+    "lang": "Sanskrit",
+    "opus": 4.0,
+    "fable": 3.0,
+    "pro": 3.0
+   },
+   {
+    "item": "r1s1-053",
+    "arm": "C38",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-003",
+    "arm": "CO",
+    "lang": "Persian",
+    "opus": 4.0,
+    "fable": 5.0,
+    "pro": 5.0
+   },
+   {
+    "item": "r1s1-099",
+    "arm": "PRO",
+    "lang": "Sanskrit",
+    "opus": 5.0,
+    "fable": 4.0,
+    "pro": 4.0
+   }
+  ]
+ },
+ "pro_outlier_off_by_1plus": 68,
+ "fable_outlier_off_by_1plus": 26
+}

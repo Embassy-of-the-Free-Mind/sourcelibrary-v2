@@ -234,6 +234,8 @@ export const POST = withCuratorAuth(async (request) => {
       categories,
       ...(publishedToYear(published) !== null ? { year: publishedToYear(published)! } : {}),
       thumbnail: blobUrls[0]?.photo || '',
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       pages_ocr: 0,
       pages_translated: 0,

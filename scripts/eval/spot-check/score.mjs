@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { bootstrapRatioCI, bootstrapCI, resetSeed } from '../lib/paired-stats.mjs';
+import { kindOfFinding, kOfNBooks, kOfNMarkdown } from '../../lib/review-vocabulary.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -109,9 +110,24 @@ for (const d of windowRuns) {
   windowResults.push(...v.results);
 }
 
+/**
+ * #6203: the same reviews as k of n BOOKS, one page per book, typed by kind and split by exposure, served text as
+ * the headline. A book's three consecutive pages are one observation of that book, not three. Exposure comes from
+ * each run's draw-log.json (draw.mjs); a run drawn before 2026-10-12 has none and counts as `unrecorded`.
+ */
+function typedRows(dir, results) {
+  let exposure = {};
+  try { exposure = read(join(dir, 'draw-log.json')).exposure ?? {}; } catch { /* no draw log */ }
+  return results.flatMap((r) => (r.pages ?? []).map((p) => {
+    const serious = items(p).filter((e) => e.severity === 'serious');
+    return { book_id: r.book_id, page_number: p.page_number, exposure: exposure[r.book_id]?.[p.page_number] ?? 'unrecorded',
+      serious: serious.length > 0 || p.right_page === 'no', kinds: [...new Set([...serious.map(kindOfFinding).filter(Boolean), ...(p.right_page === 'no' ? ['wrong_leaf'] : [])])] };
+  }));
+}
+const typed = kOfNBooks(typedRows(join(ROOT, DATE), run.results), { seed: DATE });
 const fortnight = summarise(units(run.results));
 const windowSum = { runs: windowRuns, ...summarise(units(windowResults)) };
-const report = { issue: 5914, date: DATE, fortnight, window: windowSum, window_days: WINDOW_DAYS, top_classes: topClasses(run.results), window_top_classes: topClasses(windowResults) };
+const report = { issue: 5914, date: DATE, typed, fortnight, window: windowSum, window_days: WINDOW_DAYS, top_classes: topClasses(run.results), window_top_classes: topClasses(windowResults) };
 writeFileSync(join(ROOT, DATE, 'report.json'), JSON.stringify(report, null, 1));
 
 const pct = (x) => (x == null ? '—' : (100 * x).toFixed(0));
@@ -120,7 +136,7 @@ const row = `| ${DATE} | ${frame} | ${fortnight.books} | ${fortnight.pages} | ${
   `${pct(windowSum.page_rate)}% (${ci(windowSum.page_rate_ci)}), ${windowSum.books} books | ${pct(windowSum.book_defect_rate)}% (${ci(windowSum.book_defect_rate_ci)}) | ` +
   `${report.top_classes.map((c) => `${c.class} ${c.pages}p`).join(', ') || '—'} |`;
 const md = [
-  `# Spot check ${DATE} (#5914)`, '',
+  `# Spot check ${DATE} (#5914)`, '', ...kOfNMarkdown(typed, { what: `${frame} frame` }), '',
   `Fortnight: ${fortnight.books} books, ${fortnight.pages} pages; ${fortnight.pages_with_serious} pages with ≥ 1 serious error (${fortnight.serious_errors} serious errors); ${fortnight.books_on_sight_defect} books with an on-sight defect.`,
   `Rolling ${WINDOW_DAYS / 7}-week window (${windowRuns.join(', ')}): pages with a serious error ${pct(windowSum.page_rate)}% (95% CI ${ci(windowSum.page_rate_ci)}, resampled by book, n=${windowSum.books} books); books with an on-sight defect ${pct(windowSum.book_defect_rate)}% (${ci(windowSum.book_defect_rate_ci)}).`,
   `Top classes this fortnight (pages × severity): ${report.top_classes.map((c) => `${c.class} (score ${c.score}, ${c.pages} pages)`).join('; ') || 'none'}.`,

@@ -31,13 +31,20 @@ English that is not a translation of the page, the wrong work under the title.
 **Verdict.** The reviewer's tier: 1 (show) → **show**, 2 (show with care) → **caveat**, 3 (fix first or do not show) →
 **fix**. Copied (`verdict_source: reader`). `note` = the reviewer's note.
 
-**Pages read.** The addendum asks for "Checked p.N" and `?page=N` in the note. The 2026-10-06 shelf stored only the
-note, so the backfill takes `pages_read` from the page numbers the note names (`pages_read_source: note`): that is the
-page(s) the verdict cites, which may be one of the two read. A book whose note names no page is not backfilled.
+**Pages read.** A run recorded by `curation-shelf.mjs` takes `pages_read` from the run's packet: the two pages the
+reviewer was given (`pages_read_source: packet`). The 2026-10-06 shelf stored only the note, so the backfill takes them
+from the page numbers the note names ("Checked p.N", `?page=N`; `pages_read_source: note`): that is the page(s) the
+verdict cites, which may be one of the two read. A book whose note names no page is not backfilled.
+
+**Image opened.** `true` for an addendum reviewer, which is told to open both images. A reviewer that could not is
+told to say so in the note; when the note says so, the row carries `image_opened: 'unrecorded'`, never `true`.
 
 **Known blind spots.** Two pages; hand-picked books (never a rate); for `earlier session` rows the reader's input is
 not recorded. Same AI-reader caveats as [shelf-overview](shelf-overview.md).
 
-**Rows written by** the backfill. Future curation runs go through `run-reviewers.sh … CURATION-ADDENDUM.md`.
+**Rows written by** the backfill and, for a run made with `overview-draw.mjs --picked` and
+`run-reviewers.sh … CURATION-ADDENDUM.md`, by `curation-shelf.mjs --verdicts <run dir>/verdicts --apply`, which merges
+the verdicts into the private shelf and records one row per verdict. There is no `page_findings` (the brief asks for
+one entry per book), so a `fix` row gives the reader a book-level warning with no page count.
 
 **Versions.** v1 — 2026-10-06: CURATION-ADDENDUM.md as written down in PR #6079 from the Eternity run.

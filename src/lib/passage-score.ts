@@ -212,3 +212,131 @@ export function scorePages<T>(
 
   return out.sort((a, b) => b.score - a.score);
 }
+
+/**
+ * ## Word order, for the corpus-wide passage search (#3700)
+ *
+ * `scorePages` above replaces a ranker that had none. This is for the opposite
+ * case: Atlas has already ranked the candidates with corpus-wide BM25, which is
+ * better than anything computable from a pool (rescoring it moved a wanted page
+ * from #1 to #366), but BM25 is a bag of words. "to educate the mind without
+ * educating the heart" came back as 27 pages that each print "educate", "mind"
+ * and "heart" somewhere, none of them together.
+ *
+ * So this measures the one thing Atlas's score does not carry: how much of the
+ * query a page prints IN ONE PLACE, IN ORDER. A run is consecutive query words
+ * found in sequence, with at most `SEQUENCE_SLOP` other words between two of
+ * them; a page is scored on its best single run. Two halves of the query in
+ * two different paragraphs are not the query, so they are not added together.
+ *
+ * A run is worth the adjacent pairs and triples of query words inside it, each
+ * weighted by how rare it is in the candidate pool. So "of the" and "what is a"
+ * are worth almost nothing and "merely a heap" is worth a great deal, again
+ * with no stopword list and in any language.
+ *
+ * The result is ABSOLUTE, not normalised to the best candidate (#3699): the
+ * denominator is every pair and triple the query has, including those no page
+ * prints. 1 means the page carries the whole query in order; 0 means its words
+ * occur only scattered. A query nothing answers scores 0 everywhere.
+ *
+ * Asking Atlas for the same thing (a `phrase` clause per triple) ranks equally
+ * well and was measured at 2x the query time on a lane with an 8s ceiling,
+ * 12-17s cold, 2026-10-12. Hence here, over text already fetched.
+ */
+
+/** Other words allowed between two consecutive words of a run. */
+const SEQUENCE_SLOP = 1;
+
+/** Query words read; a longer query is a pasted paragraph and its head is enough. */
+const MAX_SEQUENCE_WORDS = 24;
+
+export interface PhraseMatch {
+  /** 0-1: rarity-weighted share of the query printed in order at one place on the page. */
+  match: number;
+  /** Where that run sits in the text (character offsets), for the snippet. */
+  start: number;
+  end: number;
+}
+
+interface Occurrence { index: number; start: number; end: number }
+
+/** Follow `words[from..]` from `head` for as long as the next word is close by. */
+function extend(words: string[], from: number, head: Occurrence, at: Map<string, Occurrence[]>, max: number): { to: number; last: Occurrence } {
+  let cur = head;
+  let k = from + 1;
+  for (; k < words.length && k - from < max; k++) {
+    const next = at.get(words[k])?.find((o) => o.index > cur.index && o.index <= cur.index + 1 + SEQUENCE_SLOP);
+    if (!next) break;
+    cur = next;
+  }
+  return { to: k - 1, last: cur };
+}
+
+/**
+ * Score each text for how much of the query it prints in order at one place.
+ * Returns one entry per text, in the order given; an empty array when the
+ * query has fewer than two words (a single word has no order to match).
+ */
+export function phraseMatch(query: string, texts: string[]): PhraseMatch[] {
+  const words = tokenize(query).slice(0, MAX_SEQUENCE_WORDS);
+  if (words.length < 2 || texts.length === 0) return [];
+  const terms = new Set(words);
+
+  const occurrences = texts.map((text) => {
+    // Tokens are folded one at a time so the offsets stay those of `text`,
+    // which is what the snippet is cut from. \p{M} keeps a decomposed accent
+    // inside its word.
+    const at = new Map<string, Occurrence[]>();
+    const re = /[\p{L}\p{M}\p{N}]+/gu;
+    let m: RegExpExecArray | null;
+    let index = 0;
+    while ((m = re.exec(text)) !== null) {
+      const tok = fold(m[0]);
+      if (terms.has(tok)) {
+        const occ = { index, start: m.index, end: m.index + m[0].length };
+        const list = at.get(tok);
+        if (list) list.push(occ);
+        else at.set(tok, [occ]);
+      }
+      index++;
+    }
+    return at;
+  });
+
+  // Weight of the pair and of the triple starting at each query position, from
+  // how many candidate texts print it. One nobody prints gets the largest
+  // weight, which is what keeps the score absolute.
+  const N = texts.length;
+  const weightOf = (n: number) => words.map((_, i) => {
+    if (i + n > words.length) return 0;
+    let d = 0;
+    for (const at of occurrences) {
+      if (at.get(words[i])?.some((head) => extend(words, i, head, at, n).to === i + n - 1)) d++;
+    }
+    return Math.log(1 + (N - d + 0.5) / (d + 0.5));
+  });
+  const pair = weightOf(2);
+  const triple = weightOf(3);
+  const total = [...pair, ...triple].reduce((a, b) => a + b, 0);
+
+  const credit = (from: number, to: number) => {
+    let sum = 0;
+    for (let p = from; p < to; p++) sum += pair[p];
+    for (let p = from; p + 1 < to; p++) sum += triple[p];
+    return sum;
+  };
+
+  return occurrences.map((at) => {
+    let best = { match: 0, start: 0, end: 0 };
+    if (at.size === 0) return best;
+    for (let i = 0; i + 1 < words.length; i++) {
+      for (const head of at.get(words[i]) ?? []) {
+        const run = extend(words, i, head, at, words.length);
+        if (run.to === i) continue;
+        const match = credit(i, run.to) / total;
+        if (match > best.match) best = { match, start: head.start, end: run.last.end };
+      }
+    }
+    return best;
+  });
+}

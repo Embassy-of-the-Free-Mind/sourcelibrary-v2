@@ -340,6 +340,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(work_id ? { work_id } : {}),
       ia_identifier,
       thumbnail: getThumbnailUrl(0),
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       pages_ocr: 0,
       pages_translated: 0,

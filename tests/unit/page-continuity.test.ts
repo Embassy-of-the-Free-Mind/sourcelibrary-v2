@@ -303,6 +303,66 @@ describe('pageContinuity — a note at the foot is not the end of the sentence',
   });
 });
 
+/**
+ * Malformed editorial markup (#3698). The write-time repair postdates a good many
+ * served pages, so the reader has to cope with what is stored.
+ */
+describe('pageContinuity — malformed furniture tags', () => {
+  // Captured 2026-10-12, verbatim (see _split_margin_note in the fixture file).
+  // Verdicts checked against origin/main before the change: p374 and p667 both
+  // returned continues_from_previous: false.
+  const { p374, p667 } = fixtures.split_margin;
+
+  it('reads past a split marginal note at the head, to the body below it', () => {
+    // "<margin></margin>\nIt also appears\nthat the eidola … foretell\nfuture
+    // events.\n</margin>\n\n...and many connections, not a manifest sign"
+    // The note opens on a capital; the body opens on the translator's ellipsis.
+    expect(pageContinuity(p374.translation, p374.original).continues_from_previous).toBe(true);
+    // "<header>…</header>\n\n<margin></margin>\n<unclear>What matter in
+    // potentiality is.</unclear>\n</margin>\nthe spiritual receptacle and anchor"
+    expect(pageContinuity(p667.translation, p667.original).continues_from_previous).toBe(true);
+  });
+
+  // The remaining shapes are built by attaching a broken tag to a real page.
+  // What is asserted is that the verdict does not MOVE, never what it is: the
+  // page's own words are untouched, so its edges are the same edges.
+  const real = pageContinuity(p47);
+  const NOTE = 'A gloss in the margin.';
+
+  it('does not let an orphan closer at the foot take the body above it', () => {
+    // Paired with the nearest opener, the stray </margin> swallowed everything
+    // after the genuine note, and the page was judged on what stood before it.
+    const cut = p47.indexOf('\n\n', 400);
+    const page = `${p47.slice(0, cut)}\n\n<margin>${NOTE}</margin>${p47.slice(cut)}\n</margin>`;
+    expect(pageContinuity(page)).toEqual(real);
+    expect(pageContinuity(`${p47}\n</margin>`)).toEqual(real);
+  });
+
+  it('does not let an unclosed opener at the head borrow a later closer', () => {
+    // The opener never closes; the nearest </margin> is a later note's. Taken as
+    // a pair, they hid the opening words and the page was judged from mid-leaf.
+    const cut = p47.lastIndexOf('\n\n');
+    const later = `${p47.slice(0, cut)}\n\n<margin>${NOTE}</margin>${p47.slice(cut)}`;
+    expect(pageContinuity(`<margin>${later}`)).toEqual(real);
+  });
+
+  it('drops a stray closer at the head', () => {
+    expect(pageContinuity(`</margin>\n${p47}`)).toEqual(real);
+  });
+
+  it('strips a note that carries a note of its own, whole', () => {
+    // The shape of Solovyov p.67 (69ade9b4bbdf273192a474bc): a footnote with a
+    // translator's note inside it. Nearest-opener pairing cut it at the inner one.
+    const nested = `<note>A footnote, <note>original: "i.e."</note> which ends in a full stop.</note>`;
+    expect(pageContinuity(`${p47}\n\n${nested}`)).toEqual(real);
+    expect(pageContinuity(`${nested}\n\n${p47}`)).toEqual(real);
+  });
+
+  it('treats a split note at the foot as one note', () => {
+    expect(pageContinuity(`${p47}\n\n<margin></margin>\n${NOTE}\n</margin>`)).toEqual(real);
+  });
+});
+
 describe('pageContinuity — cost', () => {
   it('judges a page of short capital lines in linear time', () => {
     // Herculaneum papyrus transcription, 1,018 characters. The trailing

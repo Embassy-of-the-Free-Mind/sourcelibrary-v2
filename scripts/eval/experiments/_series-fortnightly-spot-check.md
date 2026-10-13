@@ -23,3 +23,10 @@ ends excluded). This arm counts transcription, wrong-leaf and structure errors t
 plus batch 5's 16 pages and 2 serious pages, assumed spread over two of its five books (the batch's JSON was not written). The 25 books alone give
 25% (13–39). Entry: `2026-10-06-random-book-spot-check-canon-shelves-5914.md`.
 ² Month 0 judged on-sight defects as a count (≈ 18 of 30), not per book; the CI treats it as exactly 18.
+
+**Design change before the first fortnightly draw (2026-10-19):** `draw.mjs` now draws runs only from pages with
+`page_number > 0`. Records at ≤ 0 are soft-hidden and never render (`scripts/lib/page-counts.mjs`, #3293), but they can carry
+translations, so the unfiltered draw could pick a run no reader sees. That hole was found by the #6056 shelf overview, which drew 6 of 96.
+Replayed over the eight draw dates 2026-10-19 → 2027-01-25, the old filter put 2 of 80 runs on such pages (2026-11-30, 2026-12-28).
+The new filter puts 0 there. It draws the same books, and every other book keeps the same run. Month 0's draw is in the
+ops repo and was not re-checked here.
