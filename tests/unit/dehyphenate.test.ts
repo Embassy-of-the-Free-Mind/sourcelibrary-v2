@@ -57,3 +57,68 @@ describe('countLineBreakHyphens', () => {
     expect(countLineBreakHyphens('')).toBe(0);
   });
 });
+
+// @ts-expect-error — plain .mjs helper, no types
+import { stripDigitizerWatermark, bookVocabulary, rejoinHyphenlessSplits, countHyphenlessSplits, junkTokenCount } from '../../scripts/lib/dehyphenate.mjs';
+
+describe('stripDigitizerWatermark (#4947)', () => {
+  it('drops the Google watermark line as ABBYY reads it', () => {
+    expect(stripDigitizerWatermark('the holy fire\nof the gods\n\nDigitized by VjOOQIC')).toBe('the holy fire\nof the gods');
+    expect(stripDigitizerWatermark('text\nDigitizedbyLjOOQlC\n')).toBe('text');
+    expect(stripDigitizerWatermark('text\n\nDigitized by Google')).toBe('text');
+    expect(stripDigitizerWatermark('a\nDigitized by VjOOQ IC\nb')).toBe('a\nb');
+    expect(stripDigitizerWatermark('a\nDigitized by VjOOQ I ^')).toBe('a');
+  });
+
+  it('keeps the Archive colophon and in-sentence uses', () => {
+    const colophon = 'Digitized by the Internet Archive\nin 2007 with funding from\nMicrosoft Corporation';
+    expect(stripDigitizerWatermark(colophon)).toBe(colophon);
+    const prose = 'This manuscript was digitized by the library in 1998 and later lost.';
+    expect(stripDigitizerWatermark(prose)).toBe(prose);
+  });
+});
+
+describe('rejoinHyphenlessSplits (#4947)', () => {
+  const book = [
+    'we grow vegetables in the garden and eat them',
+    'the knowledge of the ancients was great',
+    'they kept ourselves and themselves apart',
+    'the man comes home and the man goes out',
+    'an intelligent reader will see it',
+  ];
+  const vocab = bookVocabulary(book);
+
+  it('joins a split the book attests as one word and never as two', () => {
+    expect(rejoinHyphenlessSplits('he ate vege\ntables. Then', vocab)).toBe('he ate vegetables. Then');
+    expect(rejoinHyphenlessSplits('of know\nledge and', vocab)).toBe('of knowledge and');
+    expect(rejoinHyphenlessSplits('an intelli\ngent man', vocab)).toBe('an intelligent man');
+    expect(rejoinHyphenlessSplits('Our\nselves alone', vocab)).toBe('Ourselves alone');
+    expect(countHyphenlessSplits('he ate vege\ntables and know\nledge', vocab)).toBe(2);
+  });
+
+  it('leaves an ordinary line break between two words alone', () => {
+    expect(rejoinHyphenlessSplits('then the man\ncomes in', vocab)).toBe('then the man\ncomes in');
+    // joined form unattested
+    expect(rejoinHyphenlessSplits('a dark\nnight', vocab)).toBe('a dark\nnight');
+  });
+
+  it('refuses a pair the book prints as two words, short halves, and paragraph breaks', () => {
+    const v = bookVocabulary(['a sometimes b and some times c', 'go into it now', 'x vegetables y']);
+    expect(rejoinHyphenlessSplits('and some\ntimes more', v)).toBe('and some\ntimes more');
+    expect(rejoinHyphenlessSplits('go in\nto it', v)).toBe('go in\nto it');
+    expect(rejoinHyphenlessSplits('vege\n\ntables', v)).toBe('vege\n\ntables');
+    expect(rejoinHyphenlessSplits('Vege\nTables', v)).toBe('Vege\nTables');
+  });
+
+  it('is a no-op with an empty vocabulary', () => {
+    expect(rejoinHyphenlessSplits('vege\ntables', bookVocabulary([]))).toBe('vege\ntables');
+  });
+});
+
+describe('junkTokenCount (#4947)', () => {
+  it('counts tokens carrying an unread-ink character', () => {
+    expect(junkTokenCount("HmTHRiEs ^''^^r-ated the rude features")).toBe(1);
+    expect(junkTokenCount('fc^e nera^ went ^ort^ before him')).toBe(3);
+    expect(junkTokenCount('a clean line of text')).toBe(0);
+  });
+});
