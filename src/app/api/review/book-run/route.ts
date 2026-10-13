@@ -68,7 +68,8 @@ async function lastRunPosition(volunteerId: string): Promise<{ book: string; pag
  * that cannot be recorded is not served: an unscored wrong page would only mislead.
  */
 async function servedTranslation(volunteerId: string, page: Document, bookId: string, raw: string): Promise<string> {
-  const pageId = String(page.id);
+  if (typeof page.id !== 'string' || !page.id) return raw;
+  const pageId = page.id;
   if (!shouldPlant(volunteerId, pageId)) return raw;
   const plant = plantError(raw, volunteerId, pageId);
   if (!plant) return raw;
