@@ -536,7 +536,7 @@ import { scorePageForCover } from '../lib/cover-scoring.mjs';
  * @param {number} maxPages - Max pages to consider (default 20)
  * @returns {Promise<{page: Object, score: number, reason: string} | null>}
  */
-async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) {
+async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null, bookAuthor = null) {
   const pages = await db.collection('pages').find(
     { book_id: bookId, page_number: { $lte: maxPages } },
     { projection: {
@@ -549,7 +549,7 @@ async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) 
   if (!pages.length) return null;
 
   const scored = pages
-    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle }) }))
+    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle, bookAuthor }) }))
     .sort((a, b) => b.score - a.score);
 
   const best = scored[0];
@@ -4327,9 +4327,9 @@ Rules:
         // thumbnail_source must survive the projection: the early-cover guard
         // below reads it, and a missing field made "!== 'manual'" always true —
         // silently overwriting human-chosen covers on every run.
-        .project({ id: 1, title: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, thumbnail_source: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, author: 1, thumbnail_source: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4444,7 +4444,7 @@ Rules:
               // cover immediately instead of waiting for the full pipeline to complete.
               if (book.thumbnail_source !== 'manual') {
                 try {
-                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
                   if (coverResult) {
                     await db.collection('books').updateOne(
                       { id: book.id },
@@ -5730,10 +5730,10 @@ Rules:
       let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(COVER_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
+      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 });
 
       console.log(`  Books needing cover selection: ${coverBooks.length}`);
       let coversSelected = 0;
@@ -5771,7 +5771,7 @@ Rules:
           }
 
           // Smart OCR-based cover selection
-          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
           if (coverResult && coverResult.url !== book.thumbnail) {
             await db.collection('books').updateOne(
               { id: book.id },

@@ -9,7 +9,9 @@ import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
+import { EMBEDDED_EXTRACT_TIP, EXTRACT_SPAN_WARNING } from '@/lib/announced-extract';
 import { classifyApiError } from '@/lib/mcp-errors';
+import { absoluteImageUrl, leafImageCandidates } from '@/lib/mcp-leaf-image';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { getRatingOptions } from '@/lib/review-queue';
 import { stripProvenanceMarks } from '@/lib/provenance';
@@ -19,6 +21,8 @@ import { authorSlug } from '@/lib/slugify';
 import { conceptsInQuery } from '@/lib/concept-aliases';
 import { applyAuthorConstraints, hasAuthorConstraints, parseAuthorConstraints } from '@/lib/search/author-constraints';
 import { loadBookFacets } from '@/lib/search/diversity-facets';
+import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
+import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -194,6 +198,11 @@ async function searchPassages(args: Record<string, unknown>) {
       //   'translation' / 'ocr' = verbatim extract from source text (safe to quote)
       //   'summary'             = AI-generated description (do NOT quote as the author's words)
       snippet_type: snippetType,
+      // How much of the query the page prints in order at one place, 0-1, and
+      // which lane found it. Absolute, so a caller can tell a real hit from
+      // 27 pages that each print the words somewhere (#3700).
+      ...(r.phrase_match !== undefined ? { phrase_match: r.phrase_match } : {}),
+      ...(r.found_by ? { found_by: r.found_by } : {}),
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
@@ -214,7 +223,7 @@ async function searchPassages(args: Record<string, unknown>) {
     ...(result.partial ? { partial: true } : {}),
     ...conceptVocabularyBlock(args.query),
     passages,
-    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording (an absent work_language there means not recorded, and text_role "unclassified" means nobody has checked; neither says the edition is in the work\'s own language). snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". phrase_match is how much of your query the page prints in order at one place (1 = all of it, 0 = only scattered words); a snippet is a window, so call get_quote before quoting. Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -469,6 +478,12 @@ async function getBook(args: Record<string, unknown>) {
   // rather than a title anyone published. Say so in prose next to the title.
   const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
   const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
+  // #3697: stored `confidence` is the extraction model's self-report (high on
+  // 96% of entries, including the wrong ones). Re-check every list on the way
+  // out so a gap or a sink chapter is visible on books extracted before the
+  // write-side checks existed.
+  const storedChapters = Array.isArray(result.chapters) ? result.chapters as Chapter[] : null;
+  const chapterReport = storedChapters?.length ? checkChapters(storedChapters) : null;
   return {
     id: result.id, title: resolvedTitle.display, author: result.author,
     ...(resolvedTitle.isDescriptive
@@ -491,7 +506,16 @@ async function getBook(args: Record<string, unknown>) {
     // where a localized edition exists. Pass the code as `lang` to get_quote /
     // get_book_text / search_within_book to read that edition.
     editions: editionsForBook(result),
-    reading_summary: result.reading_summary, chapters: result.chapters,
+    reading_summary: result.reading_summary,
+    chapters: chapterReport ? chapterReport.chapters : result.chapters,
+    ...(chapterReport ? {
+      chapter_checks: {
+        checks_run: CHECKS_RUN,
+        flagged_entries: chapterReport.flagged,
+        ...(chapterReport.gaps.length ? { numbering_gaps: chapterReport.gaps } : {}),
+        note: 'confidence on each chapter is the extraction model\'s own estimate, lowered to "low" (original kept as model_confidence, reason in flags) where a check above fails. Unflagged entries are NOT verified, only uncontradicted. A numbering gap means a chapter heading was missed or misassigned: the entry before it probably runs over the missing chapter\'s pages.',
+      },
+    } : {}),
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
     // is the answer to "which book has the Poetics?", which the catalogue title
@@ -737,6 +761,14 @@ function sourceColumnQuote(result: Record<string, unknown>): boolean {
  * the flags would come back all-false on precisely the pages where the caller
  * has nothing but the original to quote from.
  */
+// The quote API returns the reader's display URL, which is usually a
+// same-origin `/api/image?…` path. An MCP client is not on our origin, so the
+// JSON must carry an absolute URL — a relative one is a link the model has to
+// guess the host for (#3937).
+function absolutizeQuoteImage(quote: Record<string, unknown> | undefined): void {
+  if (typeof quote?.page_image_url === 'string') quote.page_image_url = absoluteImageUrl(quote.page_image_url);
+}
+
 function quotableText(quote: Record<string, unknown> | undefined): string | null {
   if (typeof quote?.translation === 'string') return quote.translation;
   if (quote?.text_source === 'ocr_original' && typeof quote.original === 'string') return quote.original;
@@ -765,6 +797,7 @@ async function getQuote(args: Record<string, unknown>) {
   // `text` is not a field on this response and reading it silently produced
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
+  absolutizeQuoteImage(quote);
   const quoteText = quotableText(quote);
   // Hyphen splits live in the ORIGINAL, never in the translation — a translator
   // resolves them. Passing only the translation made hyphen_split_at_end
@@ -783,7 +816,12 @@ async function getQuote(args: Record<string, unknown>) {
       if (typeof ctx[k] === 'string') ctx[k] = stripProvenanceMarks(ctx[k] as string);
     }
   }
-  const hint = continuityHint(continuity, Number(args.page));
+  // A continuity hint advises fetching the neighbours and quoting them as one
+  // passage — which, across an announced extract, assembles a quotation that
+  // straddles two authors under one citation (#3689). Say so on the hint itself.
+  const inExtract = !!(quote as Record<string, unknown> | undefined)?.embedded_extract;
+  const baseHint = continuityHint(continuity, Number(args.page));
+  const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
@@ -791,6 +829,7 @@ async function getQuote(args: Record<string, unknown>) {
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
   if (printedPage(result)) tips.push(PRINTED_PAGE_TIP);
+  if (inExtract) tips.push(EMBEDDED_EXTRACT_TIP);
 
   // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
   // each read their own copy of this guidance and fixes do not propagate.
@@ -856,6 +895,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
+        absolutizeQuoteImage(q);
         const continuity = pageContinuity(
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
@@ -863,7 +903,8 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
         if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
         if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
         if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
-        const hint = continuityHint(continuity, page);
+        const baseHint = continuityHint(continuity, page);
+        const hint = baseHint && q?.embedded_extract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
         // Per-page structured failure, so one untranslated page in a range does
@@ -1363,12 +1404,12 @@ const TOOLS: Tool[] = [
   {
     name: 'search_translations',
     title: 'Search Translations',
-    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: single distinctive terms ("memory palace", "wax tablet") work best; multi-word natural-English queries ("unity of the intellect") may return fewer results because matching is term-based, not phrase-based. Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
+    description: 'RETURNS QUOTABLE PASSAGES (page-level snippets + citation URLs), matched by KEYWORD/term. PICK THIS to find a quote or textual evidence on a topic across the whole library. → If the modern word won\'t literally appear in historical texts, use search_concept (matches by meaning); to list which BOOKS cover a topic use search_library; to dig inside one known book use search_within_book; if the user named an author/work, get_book first (its AI summary is usually the right first read). Query tips: a distinctive term ("wax tablet") or the sentence you are looking for both work; matching is by word, and a page that prints your words together and in order ranks above one that scatters them. Each passage carries phrase_match (0-1, absolute, not relative to the other results): 1 means the page prints your whole query in order at one place, 0 means your words occur only apart; when every passage is under about 0.2 the library probably does not print that sentence, so try search_concept. It is absent for a one-word query and for a passage found by meaning alone. found_by says which lane found the page: "keyword", "semantic", or "both" (the strongest signal). Each snippet has a snippet_type — "translation"/"ocr" means it is a verbatim extract from the source text; "summary" means it is AI-generated description (do not quote those as the author\'s words). Response includes total_matches, returned, and offset for pagination. Cross-cultural tip: for pre-modern or non-Western topics, search source-tradition vocabulary rather than modern English terms — e.g. for seminal economy search "jing" or "bindu" or "istimnāʾ", not "semen retention"; for female homoeroticism search "tribade" or "sahq", not "lesbian". The corpus is indexed via period translations that use tradition-internal terminology.',
     annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        query: { type: 'string', description: 'Search term — prefer single distinctive concepts ("harmony of the spheres", "active intellect") over long natural-language phrases. Multi-word queries match all terms (not phrase); wrap in "double quotes" for exact phrase.' },
+        query: { type: 'string', description: 'A distinctive term ("harmony of the spheres", "active intellect") or the sentence you are looking for. A multi-word query matches pages printing ANY of its words, ranked so that pages printing them together come first (see phrase_match); wrap in "double quotes" to require the exact phrase.' },
         language: { type: 'string', description: 'Filter by a single original language' },
         languages: { type: 'array', items: { type: 'string' }, description: 'Filter to any of these languages, e.g. ["Sanskrit", "Arabic", "Chinese"]. Use instead of language when targeting multiple traditions.' },
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
@@ -1378,7 +1419,7 @@ const TOOLS: Tool[] = [
         exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
         max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
         max_per_work: { type: 'number', description: 'Hard cap on passages from one WORK (all printings and editions of it count together, via work_id), so seven printings of De occulta philosophia are one witness, not seven.' },
-        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": keyword results come in match order. Nothing is dropped; later pages hold the rest.' },
+        diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": passages come in relevance order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
@@ -1916,6 +1957,19 @@ interface ImageAttachment {
   urls: Array<string | undefined | null>;
   /** Text block rendered directly after the image — caption + link. */
   caption: string;
+  /** Said in place of the image when no candidate could be attached. Omit to skip silently. */
+  missing?: string;
+}
+
+// The caller asked for the leaf by name (include_image), so an unattached scan
+// is reported, not dropped: for a month this path attached nothing on most
+// books and nothing in the result said so (#3937).
+function leafAttachment(pageImageUrl: string, caption: string): ImageAttachment {
+  return {
+    urls: leafImageCandidates(pageImageUrl),
+    caption,
+    missing: `${caption}\nThe scan could not be attached inline (fetch failed, or over the 1 MB inline limit). View it at ${absoluteImageUrl(pageImageUrl)}`,
+  };
 }
 
 function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
@@ -1954,10 +2008,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
   if (name === 'get_quote') {
     const quote = r.quote as Record<string, unknown> | undefined;
     if (typeof quote?.page_image_url === 'string') {
-      return [{
-        urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
-      }];
+      return [leafAttachment(
+        quote.page_image_url,
+        `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
+      )];
     }
     return [];
   }
@@ -1968,10 +2022,10 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
       .slice(0, MAX_INLINE_IMAGES)
       .map((entry) => {
         const q = entry.quote as Record<string, unknown>;
-        return {
-          urls: [q.page_image_url as string | undefined],
-          caption: `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
-        };
+        return leafAttachment(
+          q.page_image_url as string,
+          `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
+        );
       });
   }
 
@@ -2242,6 +2296,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
           if (img) {
             content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
             content.push({ type: 'text' as const, text: attachments[i].caption });
+          } else if (attachments[i].missing) {
+            content.push({ type: 'text' as const, text: attachments[i].missing as string });
           }
         }
 

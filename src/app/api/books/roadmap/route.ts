@@ -1040,6 +1040,8 @@ async function handlePOST() {
           dublin_core: {
             dc_description: book.notes,
           },
+          // A book record declares its type at creation rather than landing null (#5292c).
+          content_type: 'book',
           pages_count: 0,
           created_at: now,
           updated_at: now,

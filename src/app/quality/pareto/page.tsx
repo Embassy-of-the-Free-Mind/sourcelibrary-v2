@@ -68,8 +68,10 @@ export default function ParetoPage() {
           <h2 className="font-serif text-3xl text-stone-900">How these are measured</h2>
           <p>
             <strong className="text-stone-900">Reading.</strong> Accuracy is one minus the character error rate against a
-            typed text of the page, averaged over the pages, each page&rsquo;s error capped at 100%. A refused, empty or
-            unplaceable read counts as 100% error, for every engine alike. &ldquo;Over half wrong&rdquo; counts those pages.
+            typed text of the page, averaged over the pages, each page&rsquo;s error capped at 100%. Accuracy is measured
+            only on pages an engine actually read. A page it refused, left empty, or declined to copy because it
+            recognised a published text is not scored; the table counts those pages separately as &ldquo;did not
+            read&rdquo;. &ldquo;Over half wrong&rdquo; counts the pages it read with more than half the characters wrong.
           </p>
           <p>
             <strong className="text-stone-900">Translating.</strong> Fidelity is a mean score from 1 to 5 given by blind

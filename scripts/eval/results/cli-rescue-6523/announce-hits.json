@@ -1,0 +1,216 @@
+{
+ "issue": 6523,
+ "what": "stored translations the widened write-door clause (TRANSLATION_REPLY_RULE, #6523) refuses: an announcing \"here is the … translation …:\" line that echoes the request. From the 2026-10-11 walk of scripts/audit/translation-reasoning-leak.mjs (9,382 prefilter candidates over every pages record). Ids and the matched phrase only.",
+ "repaired_in_this_job": [
+  {
+   "id": "6abed76e896ea18127c8f046",
+   "book_id": "6abed76c896ea18127c8ee40",
+   "page": 516,
+   "model": "gemini-3.8-flash-low",
+   "source": "ai",
+   "phrase": "Here is the exact translation"
+  }
+ ],
+ "not_repaired": [
+  {
+   "id": "6abeb711896ea18127c85a6d",
+   "book_id": "6abeb70e896ea18127c8590d",
+   "page": 350,
+   "model": "gemini-3-flash-preview",
+   "source": "ai",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "6abee594a43718d234bf34b1",
+   "book_id": "6abee585a43718d234bf3203",
+   "page": 684,
+   "model": "gemini-3-flash-preview",
+   "source": "ai",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "69487f16b75c15feb90b28c1",
+   "book_id": "69487f16b75c15feb90b27ef",
+   "page": 211,
+   "model": "gemini-2.0-flash-exp",
+   "source": null,
+   "phrase": "Here's a modernized and cleaned-up translation"
+  },
+  {
+   "id": "69520543ab34727b1f042b4d",
+   "book_id": "69520543ab34727b1f042975",
+   "page": 472,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "69520603ab34727b1f042f6a",
+   "book_id": "69520603ab34727b1f042f59",
+   "page": 17,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "69520c10ab34727b1f043f02",
+   "book_id": "69520c0fab34727b1f043e63",
+   "page": 159,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "69522ff3ab34727b1f044591",
+   "book_id": "69522ff2ab34727b1f044362",
+   "page": 559,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "6952949db184004c526a1f16",
+   "book_id": "6952949cb184004c526a1ea2",
+   "page": 116,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "6952949db184004c526a1fd4",
+   "book_id": "6952949cb184004c526a1ea2",
+   "page": 306,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here's the English translation"
+  },
+  {
+   "id": "6952949db184004c526a2060",
+   "book_id": "6952949cb184004c526a1ea2",
+   "page": 446,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc30b7",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 85,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Please note that the provided text is Latin, not Greek. Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc3134",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 210,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc314c",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 234,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc3258",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 502,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc3395",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 819,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc33a4",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 834,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "6952c9ca77f38f6761bc33a5",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page": 835,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "695201aaab34727b1f041887",
+   "book_id": "695201a9ab34727b1f041826",
+   "page": 97,
+   "model": "gemini-3-flash-preview",
+   "source": "batch_api",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "695203a6ab34727b1f041f2d",
+   "book_id": "695203a5ab34727b1f041c53",
+   "page": 730,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here's the English translation"
+  },
+  {
+   "id": "69520543ab34727b1f0429b7",
+   "book_id": "69520543ab34727b1f042975",
+   "page": 66,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here's the translation"
+  },
+  {
+   "id": "6952d05477f38f6761bc5390",
+   "book_id": "6952d05477f38f6761bc511e",
+   "page": 626,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here's the English translation"
+  },
+  {
+   "id": "6952d05477f38f6761bc5391",
+   "book_id": "6952d05477f38f6761bc511e",
+   "page": 627,
+   "model": "gemini-2.5-flash",
+   "source": "batch_api",
+   "phrase": "Here is the English translation"
+  },
+  {
+   "id": "69a5b99ed76b98f272fced3a",
+   "book_id": "69a5b99ed76b98f272fced25",
+   "page": 21,
+   "model": "gemini-2.0-flash",
+   "source": "manual-backfill",
+   "phrase": "Here is a translation"
+  },
+  {
+   "id": "69a5b99ed76b98f272fced3b",
+   "book_id": "69a5b99ed76b98f272fced25",
+   "page": 22,
+   "model": "gemini-2.0-flash",
+   "source": "manual-backfill",
+   "phrase": "Here is the translation"
+  },
+  {
+   "id": "6a060d36e16c60cb2a894729",
+   "book_id": "6a060d36e16c60cb2a8946c7",
+   "page": 98,
+   "model": "gemini-3-flash-preview",
+   "source": "ai",
+   "phrase": "Here is the translation"
+  }
+ ]
+}

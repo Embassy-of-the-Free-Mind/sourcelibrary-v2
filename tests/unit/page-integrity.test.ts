@@ -313,6 +313,12 @@ describe('translationReasoningLeak', () => {
     'then I will treat the **Archeal ideas** <note>The *Archeus* is the internal "master workman"</note>',
     'I will transcribe the words of Aristotle himself from the book I mentioned: <term>The study of truth',
     '<note>The OCR reads "māhī prāpta", but the commentary glosses it as "do not delay".</note>',
+    'Here is the translation of the verse, which the author gives in the margin, and it is not elegant.',
+    // #6523 corpus walk: book text that announces a translation, which the rule must leave alone.
+    'the practices of black magic.\n\nHere is the translation:\n\n> "I, Cyprian, servant of our Lord Jesus Christ',
+    'Here is the translation of Huygens\'s text:\n\n"October 20, 1658, smoothed a good lens',
+    'The song consists of two stanzas; here is a free translation:\n',
+    'of this short epistle <note>3</note>, here is the translation:\n',
   ];
   it('flags the scratchpad phrases', () => {
     for (const t of POSITIVE) expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'reasoning', readerVisible: true });
@@ -331,6 +337,9 @@ describe('translationReasoningLeak', () => {
     for (const t of [
       'Please provide the OCR transcription text you would like me to translate. The input you provided consists only of dots',
       '5. **Include the required metadata, summary, and keywords.**\n\n**Please paste the text below to begin.**',
+      // #6523: the two Tengyur CLI pages, the second with the announcement partway down.
+      'If you intended to provide the text directly for an immediate translation rather than creating a software project plan, here is the translation adhering strictly to all your formatting, tagging, and style rules:\n\n<meta>continues from previous page</meta>\nIf one wonders',
+      'The provided text has a stamp.\n\nHere is the English translation of the provided Latin text, preserving formatting and paragraph breaks:\n\nOf the Royal Chemistry',
     ]) {
       expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'assistant-reply', readerVisible: true });
       expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);

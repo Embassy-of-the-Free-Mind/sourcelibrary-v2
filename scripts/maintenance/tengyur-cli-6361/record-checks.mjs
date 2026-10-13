@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
-import { recordBookCheck, buildBookCheck, pageProvenance, ensureBookCheckIndexes } from '../../lib/book-checks.mjs';
+import { recordBookCheck, buildBookCheck, pageProvenance, pageExposure, ensureBookCheckIndexes } from '../../lib/book-checks.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3);
 const WRITE = process.argv.includes('--write');
@@ -47,7 +47,7 @@ for (const v of draw.draw) {
     reader: { kind: 'model', model: 'opus', image_opened: true }, verdict, verdict_source: 'retranslation-gate v1, derived after unblinding',
     note: `serious errors on these pages: new (stored since 2026-10-10) English ${staged}, previous English ${stored}. Per-volume stop rule waived by Derek 2026-10-10.`,
     evidence_path: `${EVIDENCE}/review-vol${v.vol}.json`,
-    text_provenance: await pageProvenance(db, v.book_id, nums),
+    text_provenance: await pageProvenance(db, v.book_id, nums), exposure: await pageExposure(db, v.book_id, nums),
     page_findings,
   };
   buildBookCheck(row);

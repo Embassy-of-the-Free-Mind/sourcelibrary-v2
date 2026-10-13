@@ -1,0 +1,5995 @@
+{
+ "issue": 6523,
+ "generated_by": "scripts/eval/cli-rescue-6523/rescore-ocr.mjs",
+ "scorer": "scripts/eval/benchmark-score.mjs (unchanged)",
+ "bench": "/mnt/HC_Volume_105839809/jobs/cli-effort-6293/bench",
+ "control": {
+  "checked": 2089,
+  "reproduced": 2089,
+  "mismatches": []
+ },
+ "arms": [
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "chinese",
+   "pages": 13,
+   "cer_stored": 0.359,
+   "cer_rescued": 0.359,
+   "n_cer": 13,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 11,
+   "deterministic": 11,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "chinese-cohort-5547",
+   "pages": 134,
+   "cer_stored": 0.351,
+   "cer_rescued": 0.34,
+   "n_cer": 134,
+   "over_half_stored": 23,
+   "over_half_rescued": 21,
+   "changed": 105,
+   "deterministic": 105,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "chinese-ext",
+   "pages": 22,
+   "cer_stored": 0.292,
+   "cer_rescued": 0.292,
+   "n_cer": 22,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 20,
+   "deterministic": 20,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "eebo-tcp-5488",
+   "pages": 58,
+   "cer_stored": 0.325,
+   "cer_rescued": 0.068,
+   "n_cer": 58,
+   "over_half_stored": 8,
+   "over_half_rescued": 0,
+   "changed": 49,
+   "deterministic": 48,
+   "cli_restructure": 1
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "greek",
+   "pages": 11,
+   "cer_stored": 0.286,
+   "cer_rescued": 0.194,
+   "n_cer": 11,
+   "over_half_stored": 2,
+   "over_half_rescued": 1,
+   "changed": 10,
+   "deterministic": 10,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "greek-ext",
+   "pages": 95,
+   "cer_stored": 0.225,
+   "cer_rescued": 0.142,
+   "n_cer": 95,
+   "over_half_stored": 10,
+   "over_half_rescued": 2,
+   "changed": 80,
+   "deterministic": 79,
+   "cli_restructure": 1
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "greek-ext2",
+   "pages": 8,
+   "cer_stored": 0.311,
+   "cer_rescued": 0.169,
+   "n_cer": 8,
+   "over_half_stored": 1,
+   "over_half_rescued": 0,
+   "changed": 7,
+   "deterministic": 7,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "latin-period-5126",
+   "pages": 82,
+   "cer_stored": 0.208,
+   "cer_rescued": 0.131,
+   "n_cer": 82,
+   "over_half_stored": 8,
+   "over_half_rescued": 4,
+   "changed": 20,
+   "deterministic": 17,
+   "cli_restructure": 3
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "ref-pinned",
+   "pages": 11,
+   "cer_stored": 0.126,
+   "cer_rescued": 0.126,
+   "n_cer": 11,
+   "over_half_stored": 1,
+   "over_half_rescued": 1,
+   "changed": 3,
+   "deterministic": 3,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "stratum": "ref-ws",
+   "pages": 81,
+   "cer_stored": 0.02,
+   "cer_rescued": 0.02,
+   "n_cer": 81,
+   "over_half_stored": 1,
+   "over_half_rescued": 1,
+   "changed": 39,
+   "deterministic": 39,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "chinese",
+   "pages": 13,
+   "cer_stored": 0.226,
+   "cer_rescued": 0.226,
+   "n_cer": 13,
+   "over_half_stored": 0,
+   "over_half_rescued": 0,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "chinese-cohort-5547",
+   "pages": 134,
+   "cer_stored": 0.247,
+   "cer_rescued": 0.247,
+   "n_cer": 134,
+   "over_half_stored": 5,
+   "over_half_rescued": 5,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "chinese-ext",
+   "pages": 22,
+   "cer_stored": 0.227,
+   "cer_rescued": 0.227,
+   "n_cer": 22,
+   "over_half_stored": 0,
+   "over_half_rescued": 0,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "eebo-tcp-5488",
+   "pages": 58,
+   "cer_stored": 0.207,
+   "cer_rescued": 0.154,
+   "n_cer": 58,
+   "over_half_stored": 12,
+   "over_half_rescued": 6,
+   "changed": 11,
+   "deterministic": 9,
+   "cli_restructure": 2
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "greek",
+   "pages": 11,
+   "cer_stored": 0.121,
+   "cer_rescued": 0.121,
+   "n_cer": 11,
+   "over_half_stored": 0,
+   "over_half_rescued": 0,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "greek-ext",
+   "pages": 95,
+   "cer_stored": 0.115,
+   "cer_rescued": 0.115,
+   "n_cer": 95,
+   "over_half_stored": 1,
+   "over_half_rescued": 1,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "greek-ext2",
+   "pages": 8,
+   "cer_stored": 0.315,
+   "cer_rescued": 0.315,
+   "n_cer": 8,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "latin-period-5126",
+   "pages": 82,
+   "cer_stored": 0.159,
+   "cer_rescued": 0.151,
+   "n_cer": 82,
+   "over_half_stored": 6,
+   "over_half_rescued": 5,
+   "changed": 5,
+   "deterministic": 5,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "ref-pinned",
+   "pages": 11,
+   "cer_stored": 0.09,
+   "cer_rescued": 0.09,
+   "n_cer": 11,
+   "over_half_stored": 1,
+   "over_half_rescued": 1,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "stratum": "ref-ws",
+   "pages": 81,
+   "cer_stored": 0.09,
+   "cer_rescued": 0.107,
+   "n_cer": 81,
+   "over_half_stored": 8,
+   "over_half_rescued": 10,
+   "changed": 9,
+   "deterministic": 8,
+   "cli_restructure": 1
+  },
+  {
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "stratum": "eebo-tcp-5488",
+   "pages": 58,
+   "cer_stored": 0.357,
+   "cer_rescued": 0.357,
+   "n_cer": 58,
+   "over_half_stored": 19,
+   "over_half_rescued": 19,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "stratum": "latin-period-5126",
+   "pages": 82,
+   "cer_stored": 0.1,
+   "cer_rescued": 0.1,
+   "n_cer": 82,
+   "over_half_stored": 1,
+   "over_half_rescued": 1,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "stratum": "ref-pinned",
+   "pages": 6,
+   "cer_stored": 0.042,
+   "cer_rescued": 0.042,
+   "n_cer": 6,
+   "over_half_stored": 0,
+   "over_half_rescued": 0,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "stratum": "ref-ws",
+   "pages": 45,
+   "cer_stored": 0.273,
+   "cer_rescued": 0.273,
+   "n_cer": 45,
+   "over_half_stored": 12,
+   "over_half_rescued": 12,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "chinese",
+   "pages": 28,
+   "cer_stored": 0.26,
+   "cer_rescued": 0.26,
+   "n_cer": 28,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "chinese-cohort-5547",
+   "pages": 432,
+   "cer_stored": 0.306,
+   "cer_rescued": 0.306,
+   "n_cer": 432,
+   "over_half_stored": 48,
+   "over_half_rescued": 48,
+   "changed": 12,
+   "deterministic": 12,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "chinese-ext",
+   "pages": 62,
+   "cer_stored": 0.321,
+   "cer_rescued": 0.321,
+   "n_cer": 62,
+   "over_half_stored": 8,
+   "over_half_rescued": 8,
+   "changed": 2,
+   "deterministic": 2,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "eebo-tcp-5488",
+   "pages": 58,
+   "cer_stored": 0.27,
+   "cer_rescued": 0.239,
+   "n_cer": 58,
+   "over_half_stored": 14,
+   "over_half_rescued": 13,
+   "changed": 18,
+   "deterministic": 17,
+   "cli_restructure": 1
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "greek",
+   "pages": 11,
+   "cer_stored": 0.121,
+   "cer_rescued": 0.121,
+   "n_cer": 11,
+   "over_half_stored": 0,
+   "over_half_rescued": 0,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "greek-ext",
+   "pages": 95,
+   "cer_stored": 0.209,
+   "cer_rescued": 0.187,
+   "n_cer": 95,
+   "over_half_stored": 9,
+   "over_half_rescued": 7,
+   "changed": 4,
+   "deterministic": 4,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "greek-ext2",
+   "pages": 8,
+   "cer_stored": 0.268,
+   "cer_rescued": 0.268,
+   "n_cer": 8,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 0,
+   "deterministic": 0,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "latin-period-5126",
+   "pages": 82,
+   "cer_stored": 0.163,
+   "cer_rescued": 0.122,
+   "n_cer": 82,
+   "over_half_stored": 5,
+   "over_half_rescued": 3,
+   "changed": 2,
+   "deterministic": 2,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "ref-pinned",
+   "pages": 11,
+   "cer_stored": 0.215,
+   "cer_rescued": 0.215,
+   "n_cer": 10,
+   "over_half_stored": 2,
+   "over_half_rescued": 2,
+   "changed": 1,
+   "deterministic": 1,
+   "cli_restructure": 0
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "stratum": "ref-ws",
+   "pages": 81,
+   "cer_stored": 0.244,
+   "cer_rescued": 0.268,
+   "n_cer": 81,
+   "over_half_stored": 22,
+   "over_half_rescued": 24,
+   "changed": 18,
+   "deterministic": 17,
+   "cli_restructure": 1
+  }
+ ],
+ "rows": [
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-11ad17-p51",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.203,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.203,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1530c9-p47",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.189,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.189,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-158d4c-p41",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.405,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.405,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15ecc4-p70",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.307,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.307,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-162a08-p78",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.369,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.369,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1636e8-p48",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.588,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.588,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-165e45-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.637,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.637,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1670d3-p111",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.287,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.287,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1af91e-p34",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.287,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.287,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b0128-p54",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.013,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 1.013,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ba9dd-p41",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.257,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.257,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bc725-p30",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.068,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 1.068,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c037f-p153",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.377,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.377,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9230-p58",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.294,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.294,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9345-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.102,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.102,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c98a7-p64",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.14,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.14,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cf530-p73",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.164,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.164,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1da8f2-p64",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.158,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.158,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1dcb3f-p44",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.125,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.125,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e30b7-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.238,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.238,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e37f3-p113",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.109,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.109,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eb63b-p113",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.195,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.195,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ed188-p29",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.133,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.133,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1edd9a-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.19,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.19,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eface-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.317,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.317,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f060d-p42",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.179,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.179,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f233d-p118",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.295,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.295,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f37f6-p60",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.093,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.093,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f58c4-p7",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.949,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.108,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f8ad7-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.504,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.504,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f9c80-p112",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.387,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.387,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fea07-p49",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.439,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.439,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1feade-p20",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.104,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.104,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-207976-p54",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.174,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.174,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-209a36-p35",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.363,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.363,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20b4a4-p24",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.42,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.42,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20d0ad-p34",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.254,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.254,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20f11b-p48",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.38,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.38,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21136b-p141",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.12,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.12,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21136b-p141",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.103,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.103,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-213ec8-p79",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.515,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.515,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21b338-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.378,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.378,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48261a-p85",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.342,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.342,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48361c-p30",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.292,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.292,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-485101-p171",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.434,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.434,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48625f-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.148,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.148,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48671c-p105",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.293,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.293,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-487174-p24",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.238,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.238,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48798e-p89",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.103,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.103,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4884f8-p75",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.411,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.411,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48860f-p67",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.326,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.326,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48d48e-p51",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.286,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.286,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e219-p74",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.154,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.154,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-493195-p54",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.115,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.115,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4933b1-p51",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.147,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.147,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49605b-p43",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.142,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.142,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4993a4-p150",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.362,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.362,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49bd9d-p134",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.867,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.205,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e094-p67",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.169,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.169,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e771-p110",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.103,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.103,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f12b-p94",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.233,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.233,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f1f1-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.967,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.967,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f2e3-p55",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.428,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.428,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f991-p114",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.394,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.394,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ca1ea-p92",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.389,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.389,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce05e-p73",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.405,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.405,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1c59-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.16,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.16,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1d7e-p55",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.13,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.13,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1ecb-p24",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.319,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.319,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d204a-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.098,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.098,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d514f-p40",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.246,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.246,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d9761-p104",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.21,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.21,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbb39-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.454,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.454,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbe2e-p116",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.117,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.117,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dfe7a-p126",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.14,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.14,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3c79-p35",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.206,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.206,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e523f-p7",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.19,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.19,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e81c4-p36",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.169,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.169,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e8f07-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.412,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.412,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e9c24-p60",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.178,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.178,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ebb9d-p126",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.502,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.502,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71e496-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.293,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.293,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e3bb5-p42",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.349,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.349,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8efc51-p69",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.346,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.346,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f36f3-p41",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.358,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.358,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f4f2c-p114",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.483,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.483,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f62fc-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.347,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.347,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9cfca4-p58",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.435,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.435,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9d00fa-p37",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.188,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.188,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08784-p43",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.893,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.893,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0b3fa-p60",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.383,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.383,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c485a7-p16",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.117,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.117,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-debd3a-p47",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.473,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.473,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-deddcc-p30",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.13,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.13,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-def1cb-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.342,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.342,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-def58c-p73",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.316,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.316,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df40ed-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.158,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.158,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfebb8-p51",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.117,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.117,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e05774-p46",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.135,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.135,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e25c68-p73",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.853,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.853,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e29319-p34",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.654,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.654,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e29319-p34",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.59,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.59,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2a41e-p50",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.317,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.317,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2ee51-p64",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.607,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.607,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e33911-p76",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.158,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.158,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3f40c-p66",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.692,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.692,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3fd86-p33",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.209,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.209,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e43b2b-p78",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.214,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.214,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44f88-p29",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.149,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.149,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44fd9-p209",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.15,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.15,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47148-p11",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.351,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.351,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47197-p50",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.124,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.124,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4bd15-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.136,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.136,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4c75a-p64",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.319,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.319,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4ef56-p45",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.92,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.92,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4f967-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.349,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.349,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e506a9-p46",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.404,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.404,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0f0237-p77",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.107,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.107,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-15e88e-p63",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.12,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.12,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bcb79-p48",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.245,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.245,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1daf5d-p62",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.273,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.273,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-214948-p48",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.369,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.369,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-350724-p66",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.394,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.394,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-490b07-p55",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.251,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.251,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-499f9f-p91",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.173,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.173,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-5d00b1-p132",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.15,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.15,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-6384a8-p75",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.433,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.433,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-8e07e9-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.372,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.372,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-8e4639-p82",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.52,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.52,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-d9f7a0-p109",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.328,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.328,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db2395-p52",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.369,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.369,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db2395-p52",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.377,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.377,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5ac3-p566",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.158,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.158,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5e4a-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.106,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.106,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db76e7-p11",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.098,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.098,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbbedb-p66",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.106,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.106,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbda81-p11",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.412,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.412,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e50556-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.18,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.18,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e6c5d5-p580",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.1,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.1,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-15291d-p29",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.476,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.476,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-153836-p35",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.382,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.382,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-15f73d-p10",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.352,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.352,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-160972-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.18,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.18,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-16099d-p117",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.287,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.287,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-1b5652-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.097,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.097,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-1ba275-p97",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.3,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.3,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-20f2c7-p71",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.202,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.202,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-5dd970-p110",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.156,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.156,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-8f0639-p59",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.995,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.995,
+    "aligned": null
+   }
+  },
+  {
+   "page": "chinese|chinese-e5addb-p100",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.146,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.146,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-0425b5da276941ae93dd76624ba8236a-p86",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.764,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.042,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69526046ab34727b1f04660c-p342",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.505,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.492,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69526046ab34727b1f04660c-p342",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.62,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.05,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.301,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.025,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-695595ec7bd6d2cd1d620aba-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.199,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.025,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.402,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.244,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.597,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.807,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905cfcaaa7f10ed4cfd289-p588",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.647,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.86,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.469,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.17,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69905e152fd6a039938a0ebe-p46",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.381,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.169,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906056ef12272ffdc8cdee-p43",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.607,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.172,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.153,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.015,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906059ef12272ffdc8cef1-p22",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.224,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.015,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990618a322e01b1349a5136-p49",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.136,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.025,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990618a322e01b1349a5136-p49",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.533,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.68,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-699061933d9181cce82fb5aa-p55",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.225,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.028,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990619d3d9181cce82fb688-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.322,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.063,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906319ef12272ffdc8f380-p107",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.266,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.03,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69906537726f64800c10a08c-p8",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.274,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.043,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.243,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.026,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.478,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.342,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6990668a2ec9f7db5717ab11-p28",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.231,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.025,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6508c1030b12444acd8-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.257,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.046,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d65e8c1030b12444ae97-p118",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.705,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.809,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.464,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.027,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6648c1030b12444b0ec-p351",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.274,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.027,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991d6778c1030b12444b4d4-p43",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.412,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.046,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991e175b53cae6bb602470e-p28",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.354,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.04,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6991e194339ebc850994a230-p98",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.316,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.027,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.241,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.03,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6992017d7c226bdd25f99444-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.725,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.646,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-699fcd429ff0f1d2c4517fff-p28",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.656,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.187,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ac7f0f20878c5c9ba524b5-p366",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.082,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.02,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebe60c0472fef6455a8f2-p14",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.538,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.5,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebe60c0472fef6455a8f2-p14",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.393,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.47,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdea41a7e10e5a71d19-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.273,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.036,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdea41a7e10e5a71d19-p27",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.676,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.819,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.132,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.018,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfdee997cc01b0cab897-p27",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.152,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.015,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69aebfeb36a4ffb2dcfb62e3-p100",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.171,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.02,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69b18619c4be2cdd0edc524e-p6",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.33,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.064,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69bf60fd065df5d87d778bb3-p153",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.365,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.043,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69cfa93f80eb0ccd3e739280-p101",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.252,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.013,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69de0cf180210ba13d79fa39-p98",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.391,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.072,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69de0cf180210ba13d79fa39-p98",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.03,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.071,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.27,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.045,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.643,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.793,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e748a685f786e884a4c8c5-p68",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.701,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.826,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69e7833a0fc6fc955e36317c-p94",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.306,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.038,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.155,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.054,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-69ee46ef6dd925d126f40e22-p581",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.155,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.053,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a08fd2e25e3a402b23b3bca-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.467,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.028,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a3d29e1af872ba37a51ab17-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.384,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.071,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a3d29e1af872ba37a51ab17-p22",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.977,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.068,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a425310343d756d34e34ea7-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.271,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.035,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a425634dfbbb4d07aa5382e-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.352,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.08,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.438,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.063,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a426869aedf4c943f91eac4-p14",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.172,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.063,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.274,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.051,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42aecb5207af7c42f5333c-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.512,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.252,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42d56d1894955eb725e97f-p22",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.575,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.082,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a42ec4006e6ead3ac544b8f-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.413,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.054,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a43001a4e06bc233ecf5ef6-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.643,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.096,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4300764e06bc233ecf660a-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.194,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.059,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a430a2a22c0c8edb0f8c8d4-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.241,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.042,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a43851557a09c2c0fcc0005-p17",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.236,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.048,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a48d985df05f7ea342b77fb-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.363,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.059,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4a26ba9dda7124b26753a5-p38",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.225,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.025,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4a26ba9dda7124b26753a5-p38",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.734,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.395,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4ad920d6371d99e766879c-p83",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.498,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.034,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a4f71ca1cba01ec54e763c3-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.516,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.125,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a506fd980b7658fae261d6e-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.285,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.09,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a58ecbfc6cd8f98710688e0-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.136,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.027,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a8f6267e408ab73f484d28b-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 2.265,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.123,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6a8f6267e408ab73f484d28b-p15",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.416,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.342,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.175,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.022,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.68,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.907,
+    "aligned": null
+   }
+  },
+  {
+   "page": "eebo-tcp-5488|ed-6ab5a4089e89e2a1f4139348-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.759,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.927,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-038d86-p345",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.031,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.046,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-413eb8-p30",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.273,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.273,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-5ea3a8-p167",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.599,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.62,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-665d2e-p83",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.18,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.18,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-6a6c6e-p127",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.113,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.113,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-8324e3-p27",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.066,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.066,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-85c00e-p285",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.239,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.172,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-862ab8-p105",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.107,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.107,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-87583c-p174",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.434,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 1.549,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-87a10a-p280",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.121,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.121,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-954cc6-p58",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.075,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.075,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-a487d4-p311",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.048,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.048,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-b166c3-p161",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.18,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.18,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-b84e84-p130",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.107,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.107,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-c52565-p253",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.249,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.249,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-c79349-p200",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.068,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.068,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-d5e5e7-p127",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.327,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.327,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-d864dc-p139",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.231,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.231,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-d864dc-p139",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.389,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.27,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-d8ca50-p62",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.038,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.038,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-d9e2d7-p186",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.099,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.099,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-da9d71-p126",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.041,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.039,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-db1b80-p411",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.133,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.133,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ddeaed-p48",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.064,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.064,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ddfe56-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.084,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.084,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-de120e-p139",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.151,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.151,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-dfd56e-p175",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.197,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.197,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e125e6-p102",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.095,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.095,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e125e6-p102",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.083,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.083,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e1abe6-p149",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.05,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.05,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e1b2cf-p14",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.135,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.135,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e25c4c-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.139,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.092,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e2aded-p207",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.1,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.1,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e3dbaa-p165",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.054,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.054,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e46b65-p387",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.054,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.054,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e46da1-p237",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 1.128,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.095,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e47977-p130",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.366,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.366,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e4881f-p230",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.052,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.052,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e499cb-p281",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.033,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.033,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e4a112-p150",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.068,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.068,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e4af6f-p196",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.15,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.15,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e4cc31-p88",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.1,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.14,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e50e71-p506",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.095,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.095,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e53254-p257",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.031,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.031,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e5597a-p204",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.037,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.037,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e56930-p24",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.06,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.06,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e575ce-p225",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.161,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.161,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e58724-p198",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.084,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.084,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e5b349-p530",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.156,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.156,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e5c2f9-p413",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.03,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.03,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e5ff80-p702",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.107,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.107,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e6097a-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.209,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.142,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e6180d-p319",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.054,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.054,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e63be5-p161",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.082,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.082,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e68709-p375",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.124,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.124,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e6c7c5-p240",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.109,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.109,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e6d5b3-p472",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.021,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.021,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e6e49d-p166",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.103,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.103,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e70244-p140",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.063,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.063,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e73e88-p77",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.042,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.042,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e788f9-p59",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.089,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.089,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e80581-p204",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.03,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.03,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e816e6-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.064,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.064,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e852df-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.093,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.093,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e85ae5-p480",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.175,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.175,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e8c7b2-p174",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.102,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.102,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e8c7b2-p174",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.102,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.102,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e92d56-p307",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.062,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.062,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e936d7-p185",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.049,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.049,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e96290-p47",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.055,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.055,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e982f4-p426",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.093,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.093,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-e98549-p84",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.088,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.088,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ea4cec-p10",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.119,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.119,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ea4cec-p10",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.105,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.107,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-eab76d-p434",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.303,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.303,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-eb0eaf-p344",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.116,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.116,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-eb49dc-p56",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.284,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.284,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-eba9ff-p123",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.344,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.344,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ec4c95-p135",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.118,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.118,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-ed2769-p159",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.258,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.258,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-edc7da-p226",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.042,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.042,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-f402a2-p253",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.172,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.381,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-f5190c-p137",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.176,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.176,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext|greek-ext-f59986-p157",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.085,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.085,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-54d559-p126",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.55,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.117,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-835422-p79",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.409,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.102,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-925253-p299",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.224,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.173,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-e0caa7-p61",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.246,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.1,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-e2bfa2-p180",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.232,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.188,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-ebeffe-p100",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.381,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.287,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek-ext2|greek-ext2-ec8fdb-p90",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.276,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.21,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-3bd843-p97",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.01,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.01,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-458842-p434",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.165,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.165,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-49b813-p569",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.065,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.065,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-4b2249-p54",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.067,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.067,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-4fd5df-p390",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.036,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.027,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-da99cc-p426",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.123,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.123,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-db6c8d-p219",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.095,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.095,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-e28801-p756",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.926,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.926,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-e75fda-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.109,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.109,
+    "aligned": null
+   }
+  },
+  {
+   "page": "greek|greek-f8ec82-p43",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.401,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.401,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6953e4fa77f38f6761bef1dc-p53",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.245,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.024,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6958e912d3a8928334814c19-p8",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.104,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.066,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6958e912d3a8928334814c19-p8",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.569,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.777,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6970e3599b09d309d780a252-p61",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.731,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.119,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-697a6e5cb981745f5fac1d7e-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.255,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.053,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-697a8014e680cef7cedae395-p31",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.295,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.125,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b63e841c1c21a3738655d6-p40",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.405,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.105,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b6542618b87551bfcc6072-p119",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.299,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.079,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69b6f32ab1a3146c05278d5a-p72",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.38,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.06,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-69c821446c6f3cc53c84aa06-p433",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.179,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.111,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26bc6cd6b178e5aad8300b-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.447,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.045,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26beae0e247ebad6de8612-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.232,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.115,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a26c136aad44c98627bfb47-p21",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.687,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.914,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a425bef744db9e3105a3b00-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.308,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.075,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a425df3dfbbb4d07aa634cb-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.195,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.063,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a42abe85207af7c42f4b6d7-p10",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.804,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.068,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a434784201f98f53c3eff29-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.035,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.092,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a43779193aef4a7d61477df-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.378,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.124,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a48d782df05f7ea342b7309-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.476,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.103,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a4e46a4dc886f1f5abb5d80-p9",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.425,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.088,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a906153ce57ddf536207e42-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.487,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.402,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a906153ce57ddf536207e42-p9",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 2.248,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.492,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a90675ceb8fb726ee3b7f5a-p9",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 1.186,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.589,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a909914b7feee6e9c427a2a-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.701,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.234,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a90991fb7feee6e9c427bf0-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.62,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.09,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a909b5ab7feee6e9c429605-p18",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.53,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.082,
+    "aligned": null
+   }
+  },
+  {
+   "page": "latin-period-5126|ed-6a94341a7680120fac24d808-p18",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.248,
+    "aligned": null
+   },
+   "rescued": {
+    "cer": 0.05,
+    "aligned": null
+   }
+  },
+  {
+   "page": "ref-pinned|armenian-eznik-elc-alandoc-109",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.049,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.049,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-1",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.071,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.071,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-1",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.057,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.057,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-pinned|latin-vulgate-genesis-5-genealogy",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.023,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.023,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.64,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.873,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.004,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.004,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ah-ca-ira-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.007,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.007,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ah-ca-ira-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.421,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.562,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.003,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.003,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.503,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.707,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.21,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.296,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.002,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.002,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-anmerkungen-bers-theater-pdf-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.008,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.008,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.002,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.002,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.144,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.194,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.557,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.742,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.047,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.047,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.517,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.703,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.538,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.728,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--1-1843-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.011,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.011,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--1-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.051,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.051,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--520-djvu-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--djvu-p19",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--djvu-p23",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.007,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.007,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el--pdf-p15",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.005,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.005,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el-athides-aurai-georgios-vizyinos-djvu-p200",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-el-platonis-opera-ed-burnet-tomus-i-djvu-p329",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.003,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.003,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-28233-pdf-pdf-p4",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.002,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.002,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-28233-pdf-pdf-p4",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.464,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.639,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-alegrii-opera-minora-castellana-et-latina-pdf-p232",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.011,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.011,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-allorquando-vi-annunziammo-djvu-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cabaret-dupaty-poetae-minores-1842-djvu-p416",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.13,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.174,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.01,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.01,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.489,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.584,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-columbus-carmen-epicum-pdf-p7",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-columellae-opera-djvu-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.007,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.007,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-coppernicus-monete-djvu-p4",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.674,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.745,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-cshb48-corpusscriptorum30niebuoft-pdf-p182",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.01,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.01,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.05,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.05,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.053,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.053,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-dimitrie-cantemir-operele-principelui-demetriu-c-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.015,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.015,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-easy-latin-stories-djvu-p16",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.802,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.911,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-ecclesiam-a-iesu-christo-djvu-p3",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.495,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.668,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.005,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.005,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.761,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.847,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.003,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.003,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.641,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.778,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.756,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.882,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-foliot-canticum-pdf-p32",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.011,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.011,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.001,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.001,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gallia-christiana-1715-t1-djvu-p29",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gallia-christiana-1720-t2-djvu-p2",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "cli-restructure",
+   "stored": {
+    "cer": 0.565,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.79,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.72,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.882,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.002,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.002,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.536,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.732,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-hortus-malabaricus-volume-1-pdf-p4",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.66,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.829,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.008,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.008,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.571,
+    "aligned": false
+   },
+   "rescued": {
+    "cer": 0.805,
+    "aligned": false
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-joseph-piechowski-de-ironia-iliadis-pdf-p16",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.006,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.006,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.005,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.005,
+    "aligned": true
+   }
+  },
+  {
+   "page": "ref-ws|ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor-p46",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "method": "deterministic",
+   "stored": {
+    "cer": 0.171,
+    "aligned": true
+   },
+   "rescued": {
+    "cer": 0.233,
+    "aligned": true
+   }
+  }
+ ]
+}

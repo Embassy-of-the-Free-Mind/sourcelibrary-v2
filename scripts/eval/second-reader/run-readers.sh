@@ -12,6 +12,8 @@
 #   read:       packets  = <run>/packets/*.json          → <run>/readers/<name>/reviews/<packet>.json
 #   adjudicate: chunks   = <run>/adjudication/chunks/*.json → <run>/adjudication/<name>/reviews/<chunk>.json
 #   parallel:   claude calls at once (default 4).
+#   EXTRA_BRIEFS="/abs/path/KIND-ADDENDUM.md …" (read role): further brief files, sealed in and read after the two
+#                frozen ones. The #6203 cross-family run asks for a `kind` per error this way; #6338 runs set nothing.
 # A call that ends without writing its file is retried once. Then run:
 #   node scripts/eval/second-reader/second-reader.mjs collect --run <run_dir> --reader <name> [--role adjudicate]
 set -u
@@ -19,7 +21,8 @@ RUN="$(cd "$1" && pwd)"; NAME="$2"; ENGINE="$3"; MODEL="$4"; ROLE="${5:-read}"; 
 HERE="$(cd "$(dirname "$0")" && pwd)"; REPO="$(cd "$HERE/../../.." && pwd)"
 SEALROOT="${SEALROOT:-${TMPDIR:-/tmp}/second-reader-sealed}/$(basename "$RUN")/$NAME"
 if [ "$ROLE" = adjudicate ]; then SRC="$RUN/adjudication/chunks"; OUT="$RUN/adjudication/$NAME"; BRIEFS="ADJUDICATOR.md"; KEYWORD=ITEMS_FILE
-else SRC="$RUN/packets"; OUT="$RUN/readers/$NAME"; BRIEFS="REVIEWER.md CALIBRATION-ADDENDUM.md"; KEYWORD=PACKET_FILE; fi
+else SRC="$RUN/packets"; OUT="$RUN/readers/$NAME"; BRIEFS="REVIEWER.md CALIBRATION-ADDENDUM.md"; KEYWORD=PACKET_FILE
+  for b in ${EXTRA_BRIEFS:-}; do BRIEFS="$BRIEFS $(basename "$b")"; done; fi
 mkdir -p "$OUT/reviews" "$OUT/meta"
 case "$ENGINE" in
   claude) VERSION="$(claude --version 2>/dev/null)"
@@ -37,6 +40,7 @@ seal() {  # $1 packet → prints the sealed folder
   rm -rf "$d"; mkdir -p "$d/images"
   cp "$HERE/../spot-check/REVIEWER.md" "$HERE/CALIBRATION-ADDENDUM.md" "$HERE/ADJUDICATOR.md" "$d/"
   cp "$REPO/.claude/docs/page-error-taxonomy.md" "$d/"
+  [ "$ROLE" = adjudicate ] || for b in ${EXTRA_BRIEFS:-}; do cp "$b" "$d/"; done
   cp "$p" "$d/packet.json"
   # Only this packet's images.
   node -e 'const x=require(process.argv[1]);const fs=require("fs");const s=new Set();const walk=(o)=>{if(o&&typeof o==="object"){for(const[k,v]of Object.entries(o)){if(k==="image_file"&&typeof v==="string")s.add(v);else walk(v)}}};walk(x);for(const f of s)process.stdout.write(f+"\n")' "$d/packet.json" \

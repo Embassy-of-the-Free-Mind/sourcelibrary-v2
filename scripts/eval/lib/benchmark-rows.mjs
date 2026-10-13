@@ -99,6 +99,10 @@ export function readBenchmarkRows(DIR = BENCHMARK_DIR) {
           // answered-only median below drops it either way.
           cer: aligned && typeof e.cer === 'number' ? e.cer : null,
           refused: !!refusal, refusal_inferred: refusal === 'inferred',
+          // #6523: what read-failure.mjs needs to tell a copy-filter cut from another failure: the finishReason
+          // (the result file's, else the refusal record's) and how much text came back
+          finish_reason: e.finish_reason ?? (refusal === 'finishReason' ? refusalRecord?.strata?.[stratum]?.[engine]?.refused?.[p.slug] ?? null : null),
+          content_chars: isTier ? (typeof e.chars === 'number' ? e.chars : null) : (typeof e.n_content === 'number' ? e.n_content : null),
           loop: e.loop === true, empty: e.empty === true,
           invention: typeof e.invention_ref === 'number' ? e.invention_ref : (typeof e.invention === 'number' ? e.invention : null),
           // against the REFERENCE alone (null where no reference, or a reference tier, which does not score it)
