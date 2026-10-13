@@ -278,6 +278,10 @@ Three things in that table are load-bearing:
   `ia-ocr-repair`, `reocr-contamination-repair-3362` (the #3362 shared-key
   contamination), `spread-split`, `ai-repair-sync`. Text carrying one of these
   was *relocated or rewritten*, not read from the page in front of it.
+- **`leaf-shift-repair-6672`** (1 translation, 2026-10-13) is model English moved to the leaf it
+  translates: the old block translator wrote Śakuntalā p.293's English onto p.292 (#6672, #5021).
+  The model is the original translator's; `translation.relocated` names the source page and the
+  `page_revisions` snapshot it came from. Relocated, not read from the page in front of it.
 - **`volunteer-correction`** (new 2026-10-10, #6418) is a volunteer's span correction from a
   review shift, applied by a second reader with `scripts/maintenance/apply-page-correction.mjs`.
   NOT model output. The field carries `model: 'human'`, `edited_by` (the volunteer, which also
