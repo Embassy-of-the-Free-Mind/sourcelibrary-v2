@@ -1,0 +1,5077 @@
+{
+ "measured": "2026-10-13",
+ "issue": 5021,
+ "detector": "scripts/audit/translation-leaf-shift.mjs",
+ "frames": {
+  "caseless": {
+   "books": 5903,
+   "translated_pages": 1032812,
+   "signal_pages": 160866,
+   "books_no_testable_pair": 3862,
+   "books_10_pairs": 909,
+   "flagged": 80,
+   "tierA": 18
+  },
+  "rest": {
+   "books": 300,
+   "translated_pages": 70720,
+   "signal_pages": 27440,
+   "books_no_testable_pair": 64,
+   "books_10_pairs": 150,
+   "flagged": 19,
+   "tierA": 8
+  }
+ },
+ "eye": [
+  {
+   "id": "01",
+   "tier": "A",
+   "frame": "rest",
+   "book_id": "6a2441500f0e4f405e6389db",
+   "title": "Exercitium Iuridicum De Occultis, Consensu, in alma Viadrina, Magnifici Iure Consultorum O",
+   "language": "Latin",
+   "script": "Latin",
+   "page": 12,
+   "flagged_dir": "next",
+   "run": "12-13",
+   "votes": [
+    43,
+    44,
+    22,
+    24,
+    23,
+    12
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "02",
+   "tier": "A",
+   "frame": "rest",
+   "book_id": "6a43a5f0c3ccb765a98447bc",
+   "title": "De Fato Declinando disputationem solennem In Alma Viadrina Dirigente Dn. Godofredo von Ien",
+   "language": "Latin",
+   "script": "Latin",
+   "page": 30,
+   "flagged_dir": "next",
+   "run": "29-30",
+   "votes": [
+    12,
+    96,
+    26,
+    14
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "03",
+   "tier": "A",
+   "frame": "rest",
+   "book_id": "69a5f046b29703bc86eb5323",
+   "title": "Chronicon Syriacum (Bruns & Kirsch ed.)",
+   "language": "Latin",
+   "script": "Latin",
+   "page": 136,
+   "flagged_dir": "next",
+   "run": "135-136",
+   "votes": [
+    25,
+    958,
+    960,
+    649
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "04",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69ee9196b713c277fb8211d3",
+   "title": "Konjaku Monogatarishū, Vol. 3",
+   "language": "Japanese",
+   "script": "Japanese",
+   "page": 109,
+   "flagged_dir": "next",
+   "run": "108-109",
+   "votes": [
+    36
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "05",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69afd049ae982b9d51d6dd32",
+   "title": "Selected Poems from the Divani Shamsi Tabriz",
+   "language": "Persian",
+   "script": "Latin",
+   "page": 351,
+   "flagged_dir": "next",
+   "run": "350-352",
+   "votes": [
+    370,
+    440,
+    10,
+    331,
+    53
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "06",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69f328b3aeeee0fa38c64fab",
+   "title": "Rājamārtaṇḍa",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 51,
+   "flagged_dir": "prev",
+   "run": "47-51",
+   "votes": [
+    50
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "07",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69d7e0bce9e5e67989c3600d",
+   "title": "Tantraloka of Sri Abhinavagupta",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 2443,
+   "flagged_dir": "next",
+   "run": "2441-2443",
+   "votes": [
+    71,
+    72
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "08",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69af120ff78a272df25b55d3",
+   "title": "渾蓋通憲圖說 (Illustrated Explanation of the Armillary Sphere)",
+   "language": "Chinese",
+   "script": "Han",
+   "page": 93,
+   "flagged_dir": "next",
+   "run": "93-94",
+   "votes": [
+    230
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "09",
+   "tier": "A",
+   "frame": "rest",
+   "book_id": "69c8a2e26c6f3cc53c85e51f",
+   "title": "Hussiten Krieg",
+   "language": "German",
+   "script": "Latin",
+   "page": 314,
+   "flagged_dir": "next",
+   "run": "313-314",
+   "votes": [
+    44
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "10",
+   "tier": "A",
+   "frame": "caseless",
+   "book_id": "69b2f4a2f9f1ad2b3b1548b3",
+   "title": "Thesaurus linguae sanctae (Pagnini Hebrew dictionary)",
+   "language": "Hebrew",
+   "script": "Latin",
+   "page": 1423,
+   "flagged_dir": "next",
+   "run": "1422-1423",
+   "votes": [
+    119,
+    166,
+    145,
+    146
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "11",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "6a410c29d95727ee3e0ee8ae",
+   "title": "The Rasārṇava, or The Ocean of Mercury and Other Metals",
+   "language": "Hindi",
+   "script": "Devanagari",
+   "page": 207,
+   "flagged_dir": "next",
+   "run": "207-208",
+   "votes": [
+    10,
+    11,
+    12,
+    13
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "12",
+   "tier": "B",
+   "frame": "rest",
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "title": "Die Metaphysic in Connexion mit der Chemie",
+   "language": "German",
+   "script": "Latin",
+   "page": 630,
+   "flagged_dir": "next",
+   "run": "629-630",
+   "votes": [
+    88
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "13",
+   "tier": "B",
+   "frame": "rest",
+   "book_id": "69c815276c6f3cc53c8484be",
+   "title": "Veritas sui vindex seu solennis fidei declaratio",
+   "language": "Latin",
+   "script": "Latin",
+   "page": 129,
+   "flagged_dir": "next",
+   "run": "129-130",
+   "votes": [
+    10
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "14",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "6a2199594b61907ea5ffb864",
+   "title": "Yoga Vasistha",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 110,
+   "flagged_dir": "next",
+   "run": "108-111",
+   "votes": [
+    40,
+    41,
+    42,
+    43
+   ],
+   "by_eye": "next",
+   "real": true
+  },
+  {
+   "id": "15",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "69906d7364d44bd0a0ef534f",
+   "title": "Muhurta Chintamani of Ram Daivagya",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 49,
+   "flagged_dir": "next",
+   "run": "48-49",
+   "votes": [
+    14
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "16",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "699066c0249ce014347d18f1",
+   "title": "Brihat Muhurta Sindhu",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 54,
+   "flagged_dir": "next",
+   "run": "53-54",
+   "votes": [
+    14
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "17",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "6992cff5f5b4f75c1a4c9c50",
+   "title": "搜神記",
+   "language": "Chinese",
+   "script": "Han",
+   "page": 142,
+   "flagged_dir": "prev",
+   "run": "141-142",
+   "votes": [
+    16
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "18",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "69907f32afd715da775bc36e",
+   "title": "Tajika Nilakanthi (1888 Venkateshwara)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 193,
+   "flagged_dir": "next",
+   "run": "192-193",
+   "votes": [
+    11
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "19",
+   "tier": "B",
+   "frame": "caseless",
+   "book_id": "69905f4440bc3a0478efb9b2",
+   "title": "Brihat Jataka with Bhattotpala Commentary",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "page": 237,
+   "flagged_dir": "next",
+   "run": "236-237",
+   "votes": [
+    11
+   ],
+   "by_eye": "own",
+   "real": false
+  },
+  {
+   "id": "20",
+   "tier": "B",
+   "frame": "rest",
+   "book_id": "6a0853d249638a50931bded0",
+   "title": "Viaggi fatti da Vinetia, alla Tana, in Persia, in India, et in Costantinopoli: con la desc",
+   "language": "Italian",
+   "script": "Latin",
+   "page": 26,
+   "flagged_dir": "next",
+   "run": "26-27",
+   "votes": [
+    22
+   ],
+   "by_eye": "next",
+   "real": true
+  }
+ ],
+ "flagged": [
+  {
+   "frame": "rest",
+   "book_id": "69b51ea09a81ef7feb3d846c",
+   "title": "Disquisitio de Helia Artista",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 108,
+   "signal": 30,
+   "pairs": 14,
+   "pv": {
+    "13": 108
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 6,
+     "end": 7,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       20
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "6a2198f9f012c50712d331fd",
+   "title": "De veneficis quos olim sortilegos, nunc autem vulgo sortiarios vocant dialogus",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 121,
+   "signal": 53,
+   "pairs": 24,
+   "pv": {
+    "11": 121
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 70,
+     "end": 71,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       18
+      ],
+      [
+       11,
+       72,
+       101
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69c815276c6f3cc53c8484be",
+   "title": "Veritas sui vindex seu solennis fidei declaratio",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 423,
+   "signal": 104,
+   "pairs": 35,
+   "pv": {
+    "10": 417,
+    "none": 6
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 129,
+     "end": 130,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       18,
+       16
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69a5e483006a40984221751a",
+   "title": "Vat.gr.573",
+   "language": "Greek",
+   "script": "Greek",
+   "visible": true,
+   "translated": 391,
+   "signal": 20,
+   "pairs": 5,
+   "pv": {
+    "2": 389,
+    "5.1.2026-03b": 1,
+    "none": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 18,
+     "end": 19,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       12,
+       14,
+       15,
+       16,
+       19,
+       10
+      ],
+      [
+       29,
+       11,
+       13,
+       25
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "6a08f8976cb7694da81f62fe",
+   "title": "The Babur-nama in English (Memoirs of Babur), Vol. I: Annette S. Beveridge tr., 1922",
+   "language": "English",
+   "script": "Latin",
+   "visible": true,
+   "translated": 482,
+   "signal": 326,
+   "pairs": 232,
+   "pv": {
+    "1": 482
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 29,
+     "end": 31,
+     "strong": false,
+     "pv": [
+      "1"
+     ],
+     "votes": [
+      [
+       686,
+       605,
+       689,
+       936,
+       25,
+       1530
+      ],
+      [
+       702,
+       708,
+       705,
+       691,
+       716,
+       190
+      ],
+      [
+       717,
+       157,
+       445,
+       710
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69c84c2e6c6f3cc53c852356",
+   "title": "Tomus I. Annalium Hirsaugiensium",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 1671,
+   "signal": 888,
+   "pairs": 534,
+   "pv": {
+    "10": 1670,
+    "none": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 220,
+     "end": 221,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11,
+       12,
+       13,
+       14,
+       15
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 838,
+     "end": 840,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       1322
+      ],
+      [
+       1323,
+       20
+      ],
+      [
+       22
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69af135e46ef029572e034fe",
+   "title": "Pliny Natural History, Vol. II (Loeb Latin-English)",
+   "language": "English",
+   "script": "Latin",
+   "visible": false,
+   "translated": 648,
+   "signal": 474,
+   "pairs": 372,
+   "pv": {
+    "10": 640,
+    "none": 8
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 484,
+     "end": 485,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       225,
+       150
+      ],
+      [
+       35
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 624,
+     "end": 625,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       150,
+       200,
+       157,
+       300
+      ],
+      [
+       800
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "699379c6b0a84a576396617b",
+   "title": "Olympian and Pythian Odes",
+   "language": "Greek",
+   "script": "Latin",
+   "visible": true,
+   "translated": 501,
+   "signal": 429,
+   "pairs": 370,
+   "pv": {
+    "2": 2,
+    "10": 487,
+    "13": 1,
+    "none": 11
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 493,
+     "end": 494,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       254,
+       85,
+       268,
+       18,
+       208,
+       247
+      ],
+      [
+       41,
+       76,
+       107,
+       79,
+       92,
+       111
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "title": "Die Metaphysic in Connexion mit der Chemie",
+   "language": "German",
+   "script": "Latin",
+   "visible": true,
+   "translated": 992,
+   "signal": 380,
+   "pairs": 202,
+   "pv": {
+    "10": 988,
+    "none": 4
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 629,
+     "end": 630,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       84
+      ],
+      [
+       88
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69a5f046b29703bc86eb5323",
+   "title": "Chronicon Syriacum (Bruns & Kirsch ed.)",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 643,
+   "signal": 531,
+   "pairs": 451,
+   "pv": {
+    "10": 639,
+    "none": 4
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 135,
+     "end": 136,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       12,
+       72
+      ],
+      [
+       25,
+       958,
+       960,
+       649
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "6a0853d249638a50931bded0",
+   "title": "Viaggi fatti da Vinetia, alla Tana, in Persia, in India, et in Costantinopoli: con la desc",
+   "language": "Italian",
+   "script": "Latin",
+   "visible": true,
+   "translated": 340,
+   "signal": 55,
+   "pairs": 30,
+   "pv": {
+    "11": 340
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 26,
+     "end": 27,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       22
+      ],
+      [
+       60,
+       100,
+       200
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69bda15df6d63c919748fa18",
+   "title": "Gallerie der neuen Propheten, apokalyptischen Träumer, Geisterseher und Revolutionspredige",
+   "language": "German",
+   "script": "Latin",
+   "visible": true,
+   "translated": 498,
+   "signal": 344,
+   "pairs": 243,
+   "pv": {
+    "11": 498
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 86,
+     "end": 87,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       1524
+      ],
+      [
+       1523
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69b51e2b768235dc6598d256",
+   "title": "Friderici Boerneri Lipsiensis Medicinae Doctoris Academiae Caesariae Naturae Curiosorum ..",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 44,
+   "signal": 31,
+   "pairs": 25,
+   "pv": {
+    "10": 44
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 42,
+     "end": 43,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       1635,
+       1685
+      ],
+      [
+       198
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69b525ac95677df8153c6c28",
+   "title": "Tšašoc girkh gegheckatip eû vajelouč gaghaphareceal 'i matenic hnoc thagaûoracn Hajoc.",
+   "language": "Armenian",
+   "script": "Latin",
+   "visible": true,
+   "translated": 616,
+   "signal": 466,
+   "pairs": 378,
+   "pv": {
+    "10": 611,
+    "none": 5
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 13,
+     "end": 14,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       29
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69b3046f1d880408995e0291",
+   "title": "Beschrijvinghe van West-Indien",
+   "language": "Dutch",
+   "script": "Latin",
+   "visible": true,
+   "translated": 693,
+   "signal": 431,
+   "pairs": 300,
+   "pv": {
+    "10": 679,
+    "none": 14
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 115,
+     "end": 116,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       20
+      ],
+      [
+       1535,
+       35,
+       40,
+       200
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "6a43a5f0c3ccb765a98447bc",
+   "title": "De Fato Declinando disputationem solennem In Alma Viadrina Dirigente Dn. Godofredo von Ien",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 39,
+   "signal": 37,
+   "pairs": 35,
+   "pv": {
+    "13": 39
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 29,
+     "end": 30,
+     "strong": true,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       19,
+       22,
+       275,
+       1594,
+       42
+      ],
+      [
+       12,
+       96,
+       26,
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69c8a2e26c6f3cc53c85e51f",
+   "title": "Hussiten Krieg",
+   "language": "German",
+   "script": "Latin",
+   "visible": true,
+   "translated": 689,
+   "signal": 442,
+   "pairs": 313,
+   "pv": {
+    "10": 686,
+    "none": 3
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 313,
+     "end": 314,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       28,
+       53
+      ],
+      [
+       44
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 412,
+     "end": 414,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       1431,
+       45,
+       11,
+       21
+      ],
+      [
+       1439,
+       78
+      ],
+      [
+       1432,
+       212
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "6a2441500f0e4f405e6389db",
+   "title": "Exercitium Iuridicum De Occultis, Consensu, in alma Viadrina, Magnifici Iure Consultorum O",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 38,
+   "signal": 37,
+   "pairs": 35,
+   "pv": {
+    "11": 25,
+    "13": 13
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 12,
+     "end": 13,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       43,
+       44,
+       22,
+       24,
+       23,
+       12
+      ],
+      [
+       15,
+       18,
+       19,
+       39,
+       31,
+       48
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "rest",
+   "book_id": "69c891596c6f3cc53c85b967",
+   "title": "De Zoroastre bactriano, Hermete Trismegisto, Sanchoniatone phoenicio, eorumque scriptis. S",
+   "language": "Latin",
+   "script": "Latin",
+   "visible": true,
+   "translated": 501,
+   "signal": 274,
+   "pairs": 193,
+   "pv": {
+    "10": 495,
+    "none": 6
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 275,
+     "end": 280,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       2207,
+       4000,
+       1893
+      ],
+      [
+       43
+      ],
+      [
+       51,
+       41,
+       42,
+       10,
+       11,
+       12
+      ],
+      [
+       81,
+       13,
+       206
+      ],
+      [
+       148,
+       367,
+       39
+      ],
+      [
+       37,
+       41,
+       29,
+       30,
+       48,
+       49
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 284,
+     "end": 285,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       31,
+       39
+      ],
+      [
+       41
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6953dd3e77f38f6761be722c",
+   "title": "Awrad Ibn Arabi (Daily Prayers)",
+   "language": "Arabic",
+   "script": "Arabic",
+   "visible": true,
+   "translated": 365,
+   "signal": 84,
+   "pairs": 36,
+   "pv": {
+    "2": 28,
+    "10": 1,
+    "none": 1,
+    "5.2026-02": 81,
+    "5.1.2026-03b": 254
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 67,
+     "end": 68,
+     "strong": false,
+     "pv": [
+      "5.2026-02"
+     ],
+     "votes": [
+      [
+       101
+      ],
+      [
+       21
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "695924fe1cac2ce31a4a8b6b",
+   "title": "道藏精华 (Daozang Jinghua - Essence of Taoist Canon)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 463,
+   "signal": 81,
+   "pairs": 29,
+   "pv": {
+    "2": 2,
+    "none": 461
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 317,
+     "end": 318,
+     "strong": false,
+     "pv": [
+      null
+     ],
+     "votes": [
+      [
+       11
+      ],
+      [
+       13
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990601c8cbcc9a4dba2c47a",
+   "title": "Muhurta Chintamani",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 424,
+   "signal": 133,
+   "pairs": 112,
+   "pv": {
+    "2": 422,
+    "none": 2
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 75,
+     "end": 76,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       14
+      ],
+      [
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69905f4440bc3a0478efb9b2",
+   "title": "Brihat Jataka with Bhattotpala Commentary",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 722,
+   "signal": 474,
+   "pairs": 364,
+   "pv": {
+    "2": 722
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 119,
+     "end": 120,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       12
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 236,
+     "end": 237,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 286,
+     "end": 287,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       31,
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "699060238cbcc9a4dba2cef9",
+   "title": "Laghu Parashari",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 226,
+   "signal": 86,
+   "pairs": 59,
+   "pv": {
+    "2": 112,
+    "13": 114
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": -6,
+     "end": -5,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       120
+      ],
+      [
+       10
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990601f8cbcc9a4dba2c624",
+   "title": "Jataka Parijata",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 701,
+   "signal": 510,
+   "pairs": 465,
+   "pv": {
+    "2": 701
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 225,
+     "end": 226,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11,
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990630be7b7642c081de08b",
+   "title": "Sefer ha-Zohar (Cremona 1558)",
+   "language": "Hebrew",
+   "script": "Hebrew",
+   "visible": true,
+   "translated": 548,
+   "signal": 262,
+   "pairs": 171,
+   "pv": {
+    "2": 535,
+    "10": 2,
+    "none": 9,
+    "5.1.2026-03b": 2
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 481,
+     "end": 482,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       40
+      ],
+      [
+       25
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990653d726f64800c10a557",
+   "title": "Natya Shastra of Bharata",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 422,
+   "signal": 193,
+   "pairs": 163,
+   "pv": {
+    "2": 4,
+    "10": 412,
+    "none": 6
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 341,
+     "end": 342,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       100,
+       101
+      ],
+      [
+       113,
+       114,
+       115
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69906550726f64800c10b7a9",
+   "title": "Brahma Sphuta Siddhanta (Vol 2)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 553,
+   "signal": 254,
+   "pairs": 157,
+   "pv": {
+    "2": 553
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 310,
+     "end": 311,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       1800
+      ],
+      [
+       24
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69906555726f64800c10bd15",
+   "title": "Jyotirvidabharanam with Sukhabodhini",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 352,
+   "signal": 307,
+   "pairs": 277,
+   "pv": {
+    "2": 59,
+    "10": 1,
+    "none": 2,
+    "5.2026-02": 290
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 30,
+     "end": 31,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       13
+      ],
+      [
+       12,
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "699066c0249ce014347d18f1",
+   "title": "Brihat Muhurta Sindhu",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 297,
+   "signal": 158,
+   "pairs": 90,
+   "pv": {
+    "2": 297
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 53,
+     "end": 54,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       12
+      ],
+      [
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990647eef12272ffdc92999",
+   "title": "Siddhanta Shiromani with Surya Siddhanta Tika (Gudarth Prakashaka)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 3937,
+   "signal": 1209,
+   "pairs": 918,
+   "pv": {
+    "2": 3937
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 1131,
+     "end": 1132,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       11,
+       10
+      ],
+      [
+       3438
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "699068ea2e4efe9106769e41",
+   "title": "Brihat Parashara Hora Shastram Uttara Khanda",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 2142,
+   "signal": 638,
+   "pairs": 538,
+   "pv": {
+    "2": 2142
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 675,
+     "end": 676,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       12
+      ],
+      [
+       24
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 527,
+     "end": 528,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990795bb621b177c1af684d",
+   "title": "Jataka Alankara with Tika",
+   "language": "Sanskrit",
+   "script": "Latin",
+   "visible": true,
+   "translated": 137,
+   "signal": 46,
+   "pairs": 37,
+   "pv": {
+    "2": 137
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 54,
+     "end": 55,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11,
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6990796fb621b177c1af7208",
+   "title": "Lagna Chandrika with Subodhini Commentary",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 199,
+   "signal": 122,
+   "pairs": 92,
+   "pv": {
+    "2": 199
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 107,
+     "end": 108,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       11
+      ],
+      [
+       28
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69906d8764d44bd0a0ef5b19",
+   "title": "Muhurta Chintamani Tika (Vaidyanath 1871)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 310,
+   "signal": 185,
+   "pairs": 127,
+   "pv": {
+    "2": 182,
+    "5.2026-02": 125,
+    "5.1.2026-03b": 3
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 117,
+     "end": 118,
+     "strong": false,
+     "pv": [
+      "5.2026-02"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69906d7364d44bd0a0ef534f",
+   "title": "Muhurta Chintamani of Ram Daivagya",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 495,
+   "signal": 266,
+   "pairs": 185,
+   "pv": {
+    "2": 418,
+    "5.2026-02": 77
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 48,
+     "end": 49,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       12,
+       11
+      ],
+      [
+       14
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 126,
+     "end": 127,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10,
+       12
+      ],
+      [
+       60
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69907cfe5f855ec553e78562",
+   "title": "Bha Vigyanam",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 400,
+   "signal": 137,
+   "pairs": 63,
+   "pv": {
+    "2": 59,
+    "5.2026-02": 341
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 12,
+     "end": 13,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       20
+      ],
+      [
+       10
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69907f32afd715da775bc36e",
+   "title": "Tajika Nilakanthi (1888 Venkateshwara)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 225,
+   "signal": 154,
+   "pairs": 130,
+   "pv": {
+    "2": 224,
+    "10": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 192,
+     "end": 193,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "699246babc722ec0ee8120e8",
+   "title": "The Holy Bible (Wycliffe), Vol. 2",
+   "language": "Hebrew-Greek",
+   "script": "Latin",
+   "visible": true,
+   "translated": 906,
+   "signal": 376,
+   "pairs": 210,
+   "pv": {
+    "10": 890,
+    "none": 16
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 759,
+     "end": 761,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       11
+      ],
+      [
+       18,
+       19
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992ca98d4d545ae73fee720",
+   "title": "針灸大成 (Zhenjiu Dacheng: Great Compendium of Acupuncture) Vol 6",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 154,
+   "signal": 26,
+   "pairs": 9,
+   "pv": {
+    "2": 2,
+    "10": 1,
+    "13": 74,
+    "5.1.2026-03b": 12,
+    "5.2026-02": 65
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 114,
+     "end": 115,
+     "strong": false,
+     "pv": [
+      "13",
+      "5.2026-02"
+     ],
+     "votes": [
+      [
+       58
+      ],
+      [
+       15
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992cddf81c9d7efb84d0873",
+   "title": "本草綱目·卷三十九~卷四十",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 170,
+   "signal": 18,
+   "pairs": 4,
+   "pv": {
+    "2": 2,
+    "10": 167,
+    "13": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 52,
+     "end": 53,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       23
+      ],
+      [
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992ce053ea667fbac827a00",
+   "title": "本草綱目拾遺(三)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 97,
+   "signal": 9,
+   "pairs": 4,
+   "pv": {
+    "2": 97
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 11,
+     "end": 12,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       37
+      ],
+      [
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992ced8673ee1e40e321a8b",
+   "title": "武備志(八十四)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 74,
+   "signal": 44,
+   "pairs": 36,
+   "pv": {
+    "2": 74
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 64,
+     "end": 65,
+     "strong": true,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       120
+      ],
+      [
+       500
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992cff1f5b4f75c1a4c9bc9",
+   "title": "海國圖志(42)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 133,
+   "signal": 55,
+   "pairs": 30,
+   "pv": {
+    "10": 132,
+    "13": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 20,
+     "end": 21,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       100
+      ],
+      [
+       16
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992cff5f5b4f75c1a4c9c50",
+   "title": "搜神記",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 203,
+   "signal": 12,
+   "pairs": 5,
+   "pv": {
+    "2": 203
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 141,
+     "end": 142,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       210
+      ],
+      [
+       16
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6992d66546b85e738a0c3d03",
+   "title": "Garuda Purana",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 436,
+   "signal": 359,
+   "pairs": 301,
+   "pv": {
+    "2": 32,
+    "10": 404
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 154,
+     "end": 155,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       54,
+       55,
+       56,
+       57,
+       58,
+       59
+      ],
+      [
+       11,
+       12,
+       13,
+       14,
+       15,
+       16
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 158,
+     "end": 159,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       36,
+       37,
+       38,
+       39,
+       40,
+       41
+      ],
+      [
+       57,
+       58,
+       59,
+       60,
+       61,
+       62
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 324,
+     "end": 328,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       203
+      ],
+      [
+       204
+      ],
+      [
+       10,
+       11,
+       12,
+       13,
+       14,
+       15
+      ],
+      [
+       30,
+       31,
+       32,
+       33,
+       34,
+       35
+      ],
+      [
+       57,
+       58,
+       59,
+       62,
+       63,
+       64
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "699443fa12a63b0c95d4d7dd",
+   "title": "Carmina Nisibena",
+   "language": "Syriac",
+   "script": "Latin",
+   "visible": true,
+   "translated": 253,
+   "signal": 168,
+   "pairs": 119,
+   "pv": {
+    "10": 241,
+    "none": 12
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 90,
+     "end": 91,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       180
+      ],
+      [
+       17
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69a55394ff280c3113d0ab0f",
+   "title": "Samayasara, or The Nature of the Self",
+   "language": "Hindi",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 414,
+   "signal": 209,
+   "pairs": 127,
+   "pv": {
+    "2": 410,
+    "none": 4
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 198,
+     "end": 199,
+     "strong": false,
+     "pv": [
+      "2"
+     ],
+     "votes": [
+      [
+       189
+      ],
+      [
+       191
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69a5f469d4c2e3cf8ecb9324",
+   "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+   "language": "Syriac",
+   "script": "Latin",
+   "visible": true,
+   "translated": 603,
+   "signal": 485,
+   "pairs": 414,
+   "pv": {
+    "10": 573,
+    "none": 30
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 671,
+     "end": 674,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       636,
+       132,
+       117,
+       100,
+       79,
+       77
+      ],
+      [
+       70,
+       360,
+       225,
+       20,
+       507,
+       10
+      ],
+      [
+       250,
+       88
+      ],
+      [
+       226
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69af120ff78a272df25b55d3",
+   "title": "渾蓋通憲圖說 (Illustrated Explanation of the Armillary Sphere)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 115,
+   "signal": 47,
+   "pairs": 31,
+   "pv": {
+    "10": 107,
+    "none": 8
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 93,
+     "end": 94,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       230
+      ],
+      [
+       37,
+       31,
+       46,
+       35,
+       58
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69afd049ae982b9d51d6dd32",
+   "title": "Selected Poems from the Divani Shamsi Tabriz",
+   "language": "Persian",
+   "script": "Latin",
+   "visible": true,
+   "translated": 493,
+   "signal": 256,
+   "pairs": 196,
+   "pv": {
+    "10": 425,
+    "none": 68
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 350,
+     "end": 352,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       16,
+       91,
+       678,
+       218
+      ],
+      [
+       370,
+       440,
+       10,
+       331,
+       53
+      ],
+      [
+       188,
+       12,
+       177
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69b2f4a2f9f1ad2b3b1548b3",
+   "title": "Thesaurus linguae sanctae (Pagnini Hebrew dictionary)",
+   "language": "Hebrew",
+   "script": "Latin",
+   "visible": true,
+   "translated": 1634,
+   "signal": 1596,
+   "pairs": 1578,
+   "pv": {
+    "10": 1622,
+    "none": 12
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 589,
+     "end": 591,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       28,
+       54,
+       17,
+       18,
+       10,
+       49
+      ],
+      [
+       69,
+       22,
+       65,
+       32,
+       53,
+       31
+      ],
+      [
+       48,
+       66,
+       25,
+       43,
+       24
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 684,
+     "end": 686,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       49,
+       20,
+       13,
+       41,
+       12,
+       42
+      ],
+      [
+       10,
+       58,
+       26
+      ],
+      [
+       52,
+       33,
+       14
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 819,
+     "end": 821,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       26,
+       77,
+       16,
+       23,
+       73,
+       66
+      ],
+      [
+       125,
+       17,
+       30,
+       27
+      ],
+      [
+       14,
+       31,
+       22,
+       28,
+       105,
+       40
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 844,
+     "end": 846,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       32,
+       30,
+       21,
+       20,
+       26,
+       39
+      ],
+      [
+       12,
+       10,
+       17,
+       45
+      ],
+      [
+       38,
+       106
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 924,
+     "end": 926,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       41,
+       22,
+       10,
+       33,
+       20,
+       55
+      ],
+      [
+       113
+      ],
+      [
+       18,
+       21,
+       17,
+       83,
+       32,
+       27
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 1215,
+     "end": 1217,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       28,
+       68,
+       26,
+       23,
+       24,
+       31
+      ],
+      [
+       22,
+       15,
+       27,
+       34,
+       33,
+       19
+      ],
+      [
+       25,
+       56,
+       51,
+       44,
+       39
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 1422,
+     "end": 1423,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       16,
+       61,
+       56,
+       17,
+       25,
+       23
+      ],
+      [
+       119,
+       166,
+       145,
+       146
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 1492,
+     "end": 1493,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       65,
+       31,
+       34,
+       91,
+       15,
+       24
+      ],
+      [
+       109,
+       41,
+       129,
+       17,
+       51,
+       13
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69b4cd36d5b6c3815e1a4e66",
+   "title": "Sefer Elim",
+   "language": "Hebrew",
+   "script": "Hebrew",
+   "visible": true,
+   "translated": 86,
+   "signal": 37,
+   "pairs": 21,
+   "pv": {
+    "10": 84,
+    "none": 2
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 49,
+     "end": 50,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       30
+      ],
+      [
+       16,
+       90,
+       60
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69bd95726a23f5594be16fc8",
+   "title": "Avesta: The Sacred Books of the Parsis",
+   "language": "Avestan",
+   "script": "Cyrillic",
+   "visible": true,
+   "translated": 654,
+   "signal": 307,
+   "pairs": 172,
+   "pv": {
+    "10": 637,
+    "12": 1,
+    "none": 16
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 307,
+     "end": 308,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       1813,
+       22,
+       1832,
+       1809
+      ],
+      [
+       26,
+       1810,
+       1814
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69c1bad58522835be845ae24",
+   "title": "Composite manuscript: three texts on the story of the First Book of Maccabees",
+   "language": "Hebrew",
+   "script": "Hebrew",
+   "visible": true,
+   "translated": 54,
+   "signal": 21,
+   "pairs": 11,
+   "pv": {
+    "10": 31,
+    "13": 5,
+    "none": 18
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 9,
+     "end": 10,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       10,
+       11,
+       12,
+       13,
+       14
+      ],
+      [
+       22
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69d007050d5fb0766d60c532",
+   "title": "Rasasāra",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 143,
+   "signal": 34,
+   "pairs": 21,
+   "pv": {
+    "10": 138,
+    "none": 5
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 23,
+     "end": 24,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       12
+      ],
+      [
+       24
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69d7e0dbe9e5e67989c37135",
+   "title": "Rudrayamala Tantram",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 306,
+   "signal": 148,
+   "pairs": 91,
+   "pv": {
+    "10": 45,
+    "11": 261
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 296,
+     "end": 297,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       10,
+       11,
+       12,
+       13,
+       14,
+       15
+      ],
+      [
+       16,
+       17,
+       18,
+       19,
+       20,
+       21
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69d7e0bce9e5e67989c3600d",
+   "title": "Tantraloka of Sri Abhinavagupta",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 3892,
+   "signal": 2241,
+   "pairs": 1621,
+   "pv": {
+    "10": 47,
+    "11": 3842,
+    "none": 3
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 834,
+     "end": 836,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       133
+      ],
+      [
+       134
+      ],
+      [
+       135
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 2441,
+     "end": 2443,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       68,
+       69
+      ],
+      [
+       70
+      ],
+      [
+       71,
+       72
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 2797,
+     "end": 2799,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       309
+      ],
+      [
+       310
+      ],
+      [
+       312
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69b99d043a4a443c39c00775",
+   "title": "The Samyutta-Nikaya of the Sutta-Pitaka, Part I",
+   "language": "Pali",
+   "script": "Latin",
+   "visible": true,
+   "translated": 258,
+   "signal": 88,
+   "pairs": 36,
+   "pv": {
+    "13": 258
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 118,
+     "end": 119,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       11,
+       12,
+       13,
+       14,
+       15
+      ],
+      [
+       16,
+       17
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69b99e9576b9bab2de21a0bc",
+   "title": "The Jātaka Together With Its Commentary, Vol. II (Pali Text)",
+   "language": "Pali",
+   "script": "Latin",
+   "visible": true,
+   "translated": 454,
+   "signal": 160,
+   "pairs": 63,
+   "pv": {
+    "13": 454
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 401,
+     "end": 402,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       85,
+       86
+      ],
+      [
+       87,
+       10
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69b99f786ed9e0490990abcf",
+   "title": "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 903,
+   "signal": 217,
+   "pairs": 64,
+   "pv": {
+    "13": 902,
+    "none": 1
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 468,
+     "end": 469,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       12
+      ],
+      [
+       13
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69bf69f5dd5a136c308e2b58",
+   "title": "كتاب ألف ليلة وليلة (المجلدات ٣-٤)",
+   "language": "Arabic",
+   "script": "Arabic",
+   "visible": false,
+   "translated": 238,
+   "signal": 180,
+   "pairs": 125,
+   "pv": {
+    "13": 238
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 220,
+     "end": 222,
+     "strong": true,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       642
+      ],
+      [
+       643
+      ],
+      [
+       644
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 251,
+     "end": 253,
+     "strong": true,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       681
+      ],
+      [
+       682
+      ],
+      [
+       683
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69de10185cedf736edb851e4",
+   "title": "Kamasutram (Sanskrit)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 352,
+   "signal": 286,
+   "pairs": 245,
+   "pv": {
+    "11": 352
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 64,
+     "end": 65,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       10,
+       11
+      ],
+      [
+       12,
+       13,
+       14,
+       15,
+       16
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 98,
+     "end": 99,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       26,
+       27,
+       28,
+       29,
+       30
+      ],
+      [
+       31,
+       32
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 149,
+     "end": 155,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       10,
+       11,
+       12
+      ],
+      [
+       13,
+       14,
+       15,
+       16,
+       17
+      ],
+      [
+       18,
+       20,
+       21,
+       22
+      ],
+      [
+       23,
+       24,
+       25,
+       26,
+       27,
+       28
+      ],
+      [
+       29,
+       30
+      ],
+      [
+       31,
+       32,
+       33
+      ],
+      [
+       34,
+       35,
+       36
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69dea1f04d19ec2e9ba757c7",
+   "title": "Natyashastram (Sanskrit Text)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 664,
+   "signal": 380,
+   "pairs": 328,
+   "pv": {
+    "10": 664
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 387,
+     "end": 392,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       229,
+       230,
+       231,
+       232,
+       233,
+       234
+      ],
+      [
+       241,
+       242,
+       243,
+       244,
+       245,
+       246
+      ],
+      [
+       254,
+       255,
+       256,
+       257,
+       258,
+       259
+      ],
+      [
+       266,
+       267,
+       268,
+       269,
+       270,
+       271
+      ],
+      [
+       277,
+       278,
+       279,
+       280,
+       281,
+       282
+      ],
+      [
+       286,
+       287,
+       288,
+       289,
+       290,
+       291
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69dea5ae4d19ec2e9ba76e48",
+   "title": "The Aitareya Aranyaka",
+   "language": "Sanskrit",
+   "script": "Latin",
+   "visible": true,
+   "translated": 378,
+   "signal": 227,
+   "pairs": 182,
+   "pv": {
+    "10": 25,
+    "11": 353
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 209,
+     "end": 210,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       115
+      ],
+      [
+       10
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69dea5da4d19ec2e9ba77511",
+   "title": "Charaka Saṃhitā (Complete Sanskrit Edition)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 1163,
+   "signal": 787,
+   "pairs": 685,
+   "pv": {
+    "10": 24,
+    "11": 1139
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 830,
+     "end": 834,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       22,
+       23
+      ],
+      [
+       24,
+       25,
+       26
+      ],
+      [
+       27,
+       28
+      ],
+      [
+       29,
+       30,
+       31
+      ],
+      [
+       32,
+       33,
+       34
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e0107bc47b5c9f882132ec",
+   "title": "Visuddhimagga (วิสุทธิมรรค, Path of Purification) in Thai",
+   "language": "Thai",
+   "script": "Latin",
+   "visible": true,
+   "translated": 1278,
+   "signal": 782,
+   "pairs": 566,
+   "pv": {
+    "10": 1278
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 1185,
+     "end": 1187,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       24,
+       10,
+       21,
+       122,
+       227
+      ],
+      [
+       412,
+       16
+      ],
+      [
+       19,
+       813,
+       12,
+       175,
+       177
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e13ce7998131d6a99c0f2f",
+   "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part II",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 442,
+   "signal": 45,
+   "pairs": 8,
+   "pv": {
+    "11": 442
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 222,
+     "end": 223,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       18,
+       19
+      ],
+      [
+       174
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e167363615607a59942032",
+   "title": "Kāmasūtra of Vātsyāyana with Yaśodhara's Jayamaṅgalā Commentary",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 361,
+   "signal": 288,
+   "pairs": 245,
+   "pv": {
+    "11": 361
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 90,
+     "end": 91,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       68
+      ],
+      [
+       69,
+       70,
+       71
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e72674a409200ea79ef3ae",
+   "title": "Panchatantra (Purnabhadra Recension)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 356,
+   "signal": 232,
+   "pairs": 192,
+   "pv": {
+    "10": 18,
+    "11": 338
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 166,
+     "end": 168,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       24
+      ],
+      [
+       381,
+       382
+      ],
+      [
+       383,
+       25,
+       384,
+       385,
+       386
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e7491f85f786e884a4dc2f",
+   "title": "महाभारत (Mahābhārata): BORI Critical Edition",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 323,
+   "signal": 262,
+   "pairs": 231,
+   "pv": {
+    "10": 22,
+    "11": 301
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 296,
+     "end": 298,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       56,
+       57,
+       58,
+       59,
+       60,
+       61
+      ],
+      [
+       64,
+       65,
+       68,
+       69
+      ],
+      [
+       70,
+       72,
+       73,
+       74
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e7491a85f786e884a4d6f9",
+   "title": "श्रीमद्वाल्मीकिरामायण (Rāmāyaṇa)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 1153,
+   "signal": 801,
+   "pairs": 629,
+   "pv": {
+    "10": 17,
+    "11": 1136
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 101,
+     "end": 102,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       27
+      ],
+      [
+       26,
+       25
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e75a99095c302d3fddee8c",
+   "title": "मुद्राराक्षस (Mudrārākṣasa)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 223,
+   "signal": 60,
+   "pairs": 40,
+   "pv": {
+    "10": 25,
+    "11": 198
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 6,
+     "end": 7,
+     "strong": true,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       20,
+       21,
+       30,
+       40,
+       50,
+       60
+      ],
+      [
+       69,
+       108,
+       132,
+       134,
+       135,
+       155
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e80662fdad300064d9ed7c",
+   "title": "सुश्रुतसंहिता (Suśruta Saṃhitā)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 542,
+   "signal": 316,
+   "pairs": 251,
+   "pv": {
+    "10": 49,
+    "11": 493
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 396,
+     "end": 398,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       13
+      ],
+      [
+       18
+      ],
+      [
+       21
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e8b28a2ff2a8dc09e77ff4",
+   "title": "मूलमध्यमककारिका (Mūlamadhyamakakārikā)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 517,
+   "signal": 258,
+   "pairs": 172,
+   "pv": {
+    "10": 46,
+    "11": 129,
+    "13": 342
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": -162,
+     "end": -161,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       54,
+       55,
+       56,
+       57,
+       58,
+       59
+      ],
+      [
+       47,
+       48,
+       49,
+       50,
+       51,
+       52
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": -144,
+     "end": -143,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       13
+      ],
+      [
+       10
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": -133,
+     "end": -132,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       11,
+       12
+      ],
+      [
+       166,
+       453
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": -75,
+     "end": -74,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       22
+      ],
+      [
+       51,
+       79,
+       48
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": -54,
+     "end": -53,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       37,
+       27
+      ],
+      [
+       25
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 291,
+     "end": 292,
+     "strong": true,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       31,
+       39
+      ],
+      [
+       30
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e961542beefe2f6f72b0a2",
+   "title": "رسالة ابن فضلان (Risāla of Ibn Fadlan)",
+   "language": "Arabic",
+   "script": "Latin",
+   "visible": true,
+   "translated": 364,
+   "signal": 287,
+   "pairs": 241,
+   "pv": {
+    "10": 9,
+    "11": 355
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 153,
+     "end": 154,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       968,
+       969,
+       53,
+       205,
+       210
+      ],
+      [
+       40
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69e8b2962ff2a8dc09e780a7",
+   "title": "ब्रह्मसूत्रभाष्य (Brahma Sūtra Bhāṣya)",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 934,
+   "signal": 259,
+   "pairs": 117,
+   "pv": {
+    "10": 47,
+    "11": 887
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 675,
+     "end": 676,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       19
+      ],
+      [
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69ea3eac300d991d0f1d3d7e",
+   "title": "معجم البلدان (Muʿjam al-Buldān), Vol. I",
+   "language": "Arabic",
+   "script": "Arabic",
+   "visible": true,
+   "translated": 968,
+   "signal": 363,
+   "pairs": 194,
+   "pv": {
+    "10": 21,
+    "11": 947
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 97,
+     "end": 100,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       370
+      ],
+      [
+       553,
+       310
+      ],
+      [
+       617
+      ],
+      [
+       349,
+       338
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69ea6ec4d81c1e8a069c439d",
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "language": "Japanese",
+   "script": "Japanese",
+   "visible": true,
+   "translated": 920,
+   "signal": 295,
+   "pairs": 152,
+   "pv": {
+    "10": 920
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 488,
+     "end": 489,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       12,
+       19
+      ],
+      [
+       13
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 580,
+     "end": 581,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       13
+      ],
+      [
+       14,
+       15
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 903,
+     "end": 905,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       25,
+       22
+      ],
+      [
+       21
+      ],
+      [
+       24
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 57,
+     "end": 59,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       16
+      ],
+      [
+       18
+      ],
+      [
+       23
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 148,
+     "end": 149,
+     "strong": false,
+     "pv": [
+      "10"
+     ],
+     "votes": [
+      [
+       15
+      ],
+      [
+       200,
+       22,
+       500,
+       300
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69ee9196b713c277fb8211d3",
+   "title": "Konjaku Monogatarishū, Vol. 3",
+   "language": "Japanese",
+   "script": "Japanese",
+   "visible": true,
+   "translated": 514,
+   "signal": 179,
+   "pairs": 89,
+   "pv": {
+    "11": 514
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 108,
+     "end": 109,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       35
+      ],
+      [
+       36
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f3259f52a77bb28fdb55c5",
+   "title": "Ilbonguk Oemusong samu, 8-kwŏn",
+   "language": "Korean",
+   "script": "Han",
+   "visible": true,
+   "translated": 725,
+   "signal": 279,
+   "pairs": 179,
+   "pv": {
+    "11": 725
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 535,
+     "end": 540,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       16
+      ],
+      [
+       18,
+       19
+      ],
+      [
+       20,
+       21,
+       1872
+      ],
+      [
+       22
+      ],
+      [
+       24,
+       14,
+       18,
+       1869
+      ],
+      [
+       1871
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f328b3aeeee0fa38c64fab",
+   "title": "Rājamārtaṇḍa",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 76,
+   "signal": 29,
+   "pairs": 23,
+   "pv": {
+    "11": 76
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 47,
+     "end": 51,
+     "strong": true,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       38,
+       39
+      ],
+      [
+       41
+      ],
+      [
+       44,
+       45
+      ],
+      [
+       46,
+       47
+      ],
+      [
+       50
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33b96876dd827cbc58f61",
+   "title": "Harak isu",
+   "language": "Korean",
+   "script": "Han",
+   "visible": true,
+   "translated": 171,
+   "signal": 28,
+   "pairs": 7,
+   "pv": {
+    "11": 171
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 18,
+     "end": 19,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       17
+      ],
+      [
+       38
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33beb876dd827cbc5965c",
+   "title": "Settsu no Kuni Kawabe-gun Shimizu-mura kenchichō",
+   "language": "Japanese",
+   "script": "Han",
+   "visible": true,
+   "translated": 60,
+   "signal": 7,
+   "pairs": 2,
+   "pv": {
+    "11": 60
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 55,
+     "end": 56,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       16
+      ],
+      [
+       20
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33c6b876dd827cbc5a49d",
+   "title": "Hādhihi Natījat al-afkār fī aʻmāl al-layl wa-al-nahār / taʼlīf al-Imām al-mudaqqiq al-ḥāsi",
+   "language": "Arabic",
+   "script": "Arabic",
+   "visible": true,
+   "translated": 104,
+   "signal": 54,
+   "pairs": 37,
+   "pv": {
+    "11": 104
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 57,
+     "end": 58,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       50,
+       37
+      ],
+      [
+       20,
+       10,
+       11,
+       12,
+       13,
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33cd3876dd827cbc5aeae",
+   "title": "Hwangdan sasil, [Kapsin (1704) chŏngwŏl sibir-il -- Ŭryu (1705) sam-wŏl sibir-il]",
+   "language": "Korean",
+   "script": "Han",
+   "visible": true,
+   "translated": 248,
+   "signal": 20,
+   "pairs": 4,
+   "pv": {
+    "11": 248
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 110,
+     "end": 111,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       25
+      ],
+      [
+       21
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33cf7876dd827cbc5b485",
+   "title": "Zokugo yakugi",
+   "language": "Japanese",
+   "script": "Japanese",
+   "visible": true,
+   "translated": 189,
+   "signal": 15,
+   "pairs": 2,
+   "pv": {
+    "11": 189
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 76,
+     "end": 77,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       11
+      ],
+      [
+       32
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33dc6876dd827cbc5c6ad",
+   "title": "Kinyŏn aram",
+   "language": "Korean",
+   "script": "Han",
+   "visible": true,
+   "translated": 649,
+   "signal": 340,
+   "pairs": 267,
+   "pv": {
+    "11": 649
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 93,
+     "end": 94,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       36,
+       50,
+       15
+      ],
+      [
+       23
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "69f33ebc876dd827cbc60699",
+   "title": "Kwihu yegang",
+   "language": "Korean",
+   "script": "Han",
+   "visible": true,
+   "translated": 169,
+   "signal": 4,
+   "pairs": 2,
+   "pv": {
+    "11": 169
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 91,
+     "end": 92,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       15
+      ],
+      [
+       11
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a08550c0ce3b2271052a93c",
+   "title": "Ashtāṅgahṛdayam of Vāgbhaṭa",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 1020,
+   "signal": 700,
+   "pairs": 578,
+   "pv": {
+    "11": 1020
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 920,
+     "end": 921,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       18
+      ],
+      [
+       12
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a09ff65fa20006dbaba93c1",
+   "title": "Aṅguttara Nikāya, Vol. VI: Indexes, PTS Pali",
+   "language": "Pali",
+   "script": "Latin",
+   "visible": true,
+   "translated": 192,
+   "signal": 187,
+   "pairs": 177,
+   "pv": {
+    "11": 14,
+    "13": 178
+   },
+   "tier": "A",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 179,
+     "end": 181,
+     "strong": true,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       25,
+       340,
+       43,
+       51,
+       238,
+       152
+      ],
+      [
+       14,
+       38,
+       266,
+       269,
+       205,
+       196
+      ],
+      [
+       18,
+       26,
+       17,
+       74,
+       172,
+       199
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a2199164b61907ea5ffb056",
+   "title": "Saddharma Puṇḍarīka Sūtra",
+   "language": "Hindi",
+   "script": "Latin",
+   "visible": true,
+   "translated": 299,
+   "signal": 159,
+   "pairs": 107,
+   "pv": {
+    "11": 299
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 78,
+     "end": 82,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       10,
+       11,
+       12,
+       13,
+       14,
+       15
+      ],
+      [
+       16,
+       17,
+       18,
+       19,
+       20,
+       21
+      ],
+      [
+       22,
+       23
+      ],
+      [
+       24,
+       25,
+       26,
+       27,
+       28,
+       29
+      ],
+      [
+       32,
+       33
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a2199594b61907ea5ffb864",
+   "title": "Yoga Vasistha",
+   "language": "Sanskrit",
+   "script": "Devanagari",
+   "visible": false,
+   "translated": 614,
+   "signal": 453,
+   "pairs": 323,
+   "pv": {
+    "11": 614
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 108,
+     "end": 111,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       29,
+       30
+      ],
+      [
+       34,
+       35,
+       36,
+       37
+      ],
+      [
+       40,
+       41,
+       42,
+       43
+      ],
+      [
+       46,
+       47,
+       48
+      ]
+     ]
+    },
+    {
+     "dir": "next",
+     "start": 278,
+     "end": 279,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       21
+      ],
+      [
+       26,
+       63
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a31b2d38f67820f4a11d190",
+   "title": "The Ethiopic version of the book of Enoch",
+   "language": "Ge'ez",
+   "script": "Latin",
+   "visible": false,
+   "translated": 274,
+   "signal": 179,
+   "pairs": 119,
+   "pv": {
+    "11": 274
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 87,
+     "end": 88,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       11,
+       13,
+       14,
+       15,
+       16
+      ],
+      [
+       21,
+       29,
+       39,
+       47
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 180,
+     "end": 181,
+     "strong": false,
+     "pv": [
+      "11"
+     ],
+     "votes": [
+      [
+       10,
+       18,
+       30
+      ],
+      [
+       16,
+       17
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a3c5fb0879008ba7e156e94",
+   "title": "圖書編·卷九十 (vol 73)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 114,
+   "signal": 16,
+   "pairs": 11,
+   "pv": {
+    "13": 114
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "prev",
+     "start": 34,
+     "end": 35,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       10
+      ],
+      [
+       13
+      ]
+     ]
+    },
+    {
+     "dir": "prev",
+     "start": 42,
+     "end": 43,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       200
+      ],
+      [
+       18
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a3c6185879008ba7e15ecc4",
+   "title": "御定駢字類編·卷二百三十六: Imperial Parallel Characters (vol 408)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 150,
+   "signal": 10,
+   "pairs": 3,
+   "pv": {
+    "13": 150
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 90,
+     "end": 91,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       15,
+       20
+      ],
+      [
+       40
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a3ceb1195fcd455630531f9",
+   "title": "法書要錄·卷一~卷二 (vol 1)",
+   "language": "Chinese",
+   "script": "Han",
+   "visible": true,
+   "translated": 240,
+   "signal": 17,
+   "pairs": 13,
+   "pv": {
+    "13": 240
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 156,
+     "end": 157,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       44,
+       60,
+       11,
+       14
+      ],
+      [
+       28,
+       20
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a410c29d95727ee3e0ee8ae",
+   "title": "The Rasārṇava, or The Ocean of Mercury and Other Metals",
+   "language": "Hindi",
+   "script": "Devanagari",
+   "visible": true,
+   "translated": 491,
+   "signal": 392,
+   "pairs": 364,
+   "pv": {
+    "13": 491
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 207,
+     "end": 208,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       10,
+       11,
+       12,
+       13
+      ],
+      [
+       14
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "caseless",
+   "book_id": "6a9fb1ff732b9e75e96ba39d",
+   "title": "El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āthār, Vol. I (MIFAO 30)",
+   "language": "Arabic",
+   "script": "Arabic",
+   "visible": true,
+   "translated": 392,
+   "signal": 153,
+   "pairs": 112,
+   "pv": {
+    "13": 392
+   },
+   "tier": "B",
+   "runs": [
+    {
+     "dir": "next",
+     "start": 75,
+     "end": 76,
+     "strong": false,
+     "pv": [
+      "13"
+     ],
+     "votes": [
+      [
+       12
+      ],
+      [
+       11
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
