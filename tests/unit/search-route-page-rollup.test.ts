@@ -75,10 +75,12 @@ vi.mock('@/lib/search-log', () => ({ logSearchQuery: (x: any) => { state.logged.
 vi.mock('@/lib/search-event-log', () => ({ logSearchEvent: () => {} }));
 vi.mock('@/lib/search/canon-texts', () => ({ searchCanonTexts: async () => [] }));
 
-async function search(params: string) {
+async function searchResponse(params: string): Promise<Response> {
   const { GET } = await import('@/app/api/search/route');
-  const res = await (GET as any)(new NextRequest(`http://localhost/api/search?${params}`), { params: Promise.resolve({}) });
-  return res.json();
+  return (GET as any)(new NextRequest(`http://localhost/api/search?${params}`), { params: Promise.resolve({}) });
+}
+async function search(params: string) {
+  return (await searchResponse(params)).json();
 }
 const rollupQueries = () => state.aggregates.filter(p => p[0].$searchMeta).length;
 
@@ -150,6 +152,22 @@ describe('/api/search page-lane roll-up (#5905)', () => {
     expect(body.partial).toBe(true);
     expect(body.degraded_lanes).toEqual(['page_rollup']);
     expect(state.logged.at(-1).degraded_lanes).toEqual(['page_rollup']);
+  });
+
+  it('does not let the edge cache a degraded answer (#6613)', async () => {
+    state.facetHangs = true;
+    vi.useFakeTimers();
+    const pending = searchResponse('q=Drebbel');
+    await vi.advanceTimersByTimeAsync(4100);
+    const res = await pending;
+    expect((await res.json()).partial).toBe(true);
+    expect(res.headers.get('Cache-Control')).toBe('no-store');
+  });
+
+  it('caches a complete answer at the edge', async () => {
+    const res = await searchResponse('q=Drebbel');
+    expect((await res.json()).partial).toBeUndefined();
+    expect(res.headers.get('Cache-Control')).toContain('s-maxage=60');
   });
 
   it('logs which lanes degraded, so the rate can be counted', async () => {

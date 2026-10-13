@@ -1339,7 +1339,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       },
     }, {
       headers: {
-        'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
+        // A lane that timed out is a cold-cache accident, not the answer: caching it
+        // served the same partial result for minutes after a deploy (#6613).
+        'Cache-Control': lanesDegraded
+          ? 'no-store'
+          : 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
       },
     });
   } catch (error) {
