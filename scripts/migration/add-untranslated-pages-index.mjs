@@ -108,13 +108,15 @@ try {
     need_gb: Number((needBytes / GiB).toFixed(1)),
     room: disk.avail >= needBytes,
   });
-  console.log(`[index] lane ≈ ${laneRowsEst.toLocaleString()} rows → ≈ ${summary.est_index_gb} GB; disk ${summary.disk_avail_gb} GB free of ${summary.disk_size_gb} GB; need ${summary.need_gb} GB → ${summary.room ? 'ROOM' : 'NOT ENOUGH DISK'}`);
-  if (!summary.room) done(3);
+  const { rows: existing } = await c.query(
+    `SELECT i.indisvalid FROM pg_class r JOIN pg_index i ON i.indexrelid = r.oid WHERE r.relname = $1`, [INDEX]);
+  // A valid index already occupies its disk: the headroom rule is for a build, not for re-creating the RPC.
+  summary.index_exists_valid = Boolean(existing.length && existing[0].indisvalid);
+  console.log(`[index] lane ≈ ${laneRowsEst.toLocaleString()} rows → ≈ ${summary.est_index_gb} GB; disk ${summary.disk_avail_gb} GB free of ${summary.disk_size_gb} GB; need ${summary.need_gb} GB → ${summary.room ? 'ROOM' : 'NOT ENOUGH DISK'}${summary.index_exists_valid ? ' (index already built and valid; no build needed)' : ''}`);
+  if (!summary.room && !summary.index_exists_valid) done(3);
   if (!APPLY) done(0);
 
   // ── Build ─────────────────────────────────────────────────────────────
-  const { rows: existing } = await c.query(
-    `SELECT i.indisvalid FROM pg_class r JOIN pg_index i ON i.indexrelid = r.oid WHERE r.relname = $1`, [INDEX]);
   if (existing.length && !existing[0].indisvalid) {
     // A failed CONCURRENTLY build leaves an INVALID index that IF NOT EXISTS would keep forever.
     console.log(`[index] ${INDEX} exists but is INVALID (an interrupted build) — dropping it and rebuilding.`);
@@ -147,7 +149,9 @@ try {
     summary.build_minutes = Math.round((Date.now() - t0) / 60000);
   }
   const { rows: [after] } = await c.query(
-    `SELECT pg_relation_size($1::regclass) AS bytes, i.indisvalid FROM pg_class r JOIN pg_index i ON i.indexrelid = r.oid WHERE r.relname = $1`, [INDEX]);
+    // pg_relation_size(r.oid), not ($1::regclass): one $1 used as both regclass and name
+    // fails "operator does not exist: name = regclass" — after an 18 h build (#5729).
+    `SELECT pg_relation_size(r.oid) AS bytes, i.indisvalid FROM pg_class r JOIN pg_index i ON i.indexrelid = r.oid WHERE r.relname = $1`, [INDEX]);
   summary.index_gb = Number((Number(after.bytes) / GiB).toFixed(2));
   summary.index_valid = after.indisvalid;
   if (!after.indisvalid) throw new Error(`${INDEX} is INVALID after the build`);
