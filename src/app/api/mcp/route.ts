@@ -52,7 +52,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.11.0';
+const SERVER_VERSION = '4.12.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1270,7 +1270,9 @@ async function startReviewShift(args: Record<string, unknown>) {
       'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
       'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
-      'nothing changes on a page until a second reader agrees. Ask once whether that is OK and how many pages ' +
+      'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
+      'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
+      'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
       'to do. Give them volunteer_code so a later chat can pick up where this one stops.',
   };
 }

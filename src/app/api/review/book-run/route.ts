@@ -1,7 +1,8 @@
 import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import type { Document } from 'mongodb';
-import { getReadDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
+import { plantError, shouldPlant } from '@/lib/review-plants';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { nextCandidate } from '@/lib/review-candidates';
 import { isValidVolunteerId } from '@/lib/review-queue';
@@ -59,6 +60,41 @@ async function lastRunPosition(volunteerId: string): Promise<{ book: string; pag
   if (error || !data?.length) return null;
   const d = data[0].detail as { book_id?: string; page_number?: number } | null;
   return d?.book_id && typeof d.page_number === 'number' ? { book: d.book_id, page: d.page_number } : null;
+}
+
+/**
+ * The English to serve: the stored text, or on a test page (#6682) the stored text with one
+ * planted error, recorded in `review_plants` so the review and any fix can be scored. A plant
+ * that cannot be recorded is not served: an unscored wrong page would only mislead.
+ */
+async function servedTranslation(volunteerId: string, page: Document, bookId: string, raw: string): Promise<string> {
+  if (typeof page.id !== 'string' || !page.id) return raw;
+  const pageId = page.id;
+  if (!shouldPlant(volunteerId, pageId)) return raw;
+  const plant = plantError(raw, volunteerId, pageId);
+  if (!plant) return raw;
+  const plantedHash = contentHash(plant.planted_text);
+  try {
+    const db = await getDb();
+    const now = new Date();
+    await db.collection('review_plants').updateOne(
+      { volunteer_id: volunteerId, page_id: pageId, planted_hash: plantedHash },
+      {
+        $setOnInsert: {
+          id: plantedHash, version: 'plant-v1', book_id: bookId, page_number: page.page_number ?? null,
+          field: 'translation', kind: plant.kind, original: plant.original, planted: plant.planted, at: plant.at,
+          base_hash: contentHash(raw), planted_text: plant.planted_text, created_at: now,
+        },
+        $set: { last_served_at: now },
+        $inc: { served: 1 },
+      },
+      { upsert: true },
+    );
+  } catch (err) {
+    console.error('[book-run] plant not recorded, serving the real page:', err);
+    return raw;
+  }
+  return plant.planted_text;
 }
 
 /**
@@ -183,7 +219,7 @@ export async function GET(request: NextRequest) {
     return t ? t.slice(-TAIL) : null;
   };
   const ocrRaw = page.ocr.data as string;
-  const trRaw = page.translation.data as string;
+  const trRaw = await servedTranslation(volunteerId, page, run.book_id, page.translation.data as string);
   const transcription = clip(stripEditorialWrappers(ocrRaw).trim());
   const translation = clip(stripEditorialWrappers(trRaw).trim());
   const itemLanguage = (typeof book.language === 'string' && book.language) || language || 'unknown';

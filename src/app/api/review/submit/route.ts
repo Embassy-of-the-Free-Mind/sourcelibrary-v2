@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getReadDb } from '@/lib/mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
 import { isValidRating, isValidVolunteerId, QUEUE_KEYS } from '@/lib/review-queue';
 
@@ -6,6 +7,29 @@ export const maxDuration = 5;
 
 const ALLOWED_QUEUES = new Set<string>(QUEUE_KEYS);
 const MAX_NOTE_LENGTH = 4000;
+
+/**
+ * A book-run review of a test page (#6682) judged the planted English, not the page: the row
+ * says so (`control_plant_id`), so nothing reads it as evidence about the real page. The lookup
+ * failing leaves the row untagged; book-run-plant-catch.mjs re-joins by hash, so it can be
+ * recovered.
+ */
+async function tagTestPage(detail: unknown, itemId: string, volunteerId: string): Promise<unknown> {
+  const d = detail && typeof detail === 'object' ? (detail as Record<string, unknown>) : null;
+  const tv = d?.text_version as { translation?: unknown } | undefined;
+  if (!d || typeof tv?.translation !== 'string') return detail;
+  try {
+    const db = await getReadDb();
+    const plant = await db.collection('review_plants').findOne(
+      { page_id: itemId.split(':').slice(2).join(':'), volunteer_id: volunteerId, planted_hash: tv.translation },
+      { projection: { id: 1 } },
+    );
+    return plant ? { ...d, control_plant_id: plant.id } : detail;
+  } catch (err) {
+    console.error('[review/submit] plant lookup failed:', err);
+    return detail;
+  }
+}
 
 /**
  * POST /api/review/submit
@@ -68,7 +92,7 @@ export async function POST(request: NextRequest) {
     item_id: itemId,
     rating,
     note,
-    detail,
+    detail: queue === 'book-run' ? await tagTestPage(detail, itemId, volunteerId) : detail,
     volunteer_id: volunteerId,
     volunteer_label: volunteerLabel,
     user_agent: ua,
