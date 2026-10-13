@@ -171,7 +171,9 @@ async function compare() {
     const cli = fs.readFileSync(path.join(reads, `${m.page_id}.txt`), 'utf8');
     // The stored text as it was compared, so adjudication and audit see exactly this text even if the page changes.
     fs.writeFileSync(path.join(SETDIR, 'stored', `${m.page_id}.txt`), s?.ocr?.data || '');
-    const chatter = meta.error_class ? `cli ${meta.error_class}` : ocrReadProblem(cli);
+    // A reply with no <<<BEGIN>>> marker or cut before <<<END>>> (#6523) is a partial page; cli-ocr.mjs apply refuses
+    // it, so it is no second read here either, never a disagreement for Opus to settle.
+    const chatter = meta.error_class ? `cli ${meta.error_class}` : meta.wrapper ? `cli wrapper: ${meta.wrapper}` : ocrReadProblem(cli);
     const c = chatter ? { cer: null } : pairCer(s?.ocr?.data, cli);
     rows.push({ ...m, status: chatter ? 'cli-failed' : 'compared', chatter, ...c, cer: c.cer == null ? null : Math.round(c.cer * 10000) / 10000, stored_model: s?.ocr?.model ?? null, stored_updated_at: s?.ocr?.updated_at ?? null, cli_model: meta.model, nudged: !!meta.nudged, rereads: meta.rereads || 0 });
   }
