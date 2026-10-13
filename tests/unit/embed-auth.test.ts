@@ -4,7 +4,7 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error plain .mjs worker module, no type declarations
-import { checkEmbedAuth, embedAuthHeaders } from '../../scripts/workers/lib/embed-auth.mjs';
+import { checkEmbedAuth, createDenialLog, embedAuthHeaders } from '../../scripts/workers/lib/embed-auth.mjs';
 
 const KEY = 'correct-horse-battery-staple';
 
@@ -46,5 +46,21 @@ describe('embedAuthHeaders', () => {
   it('adds x-embed-key only when the key is set', () => {
     expect(embedAuthHeaders({})['x-embed-key']).toBeUndefined();
     expect(embedAuthHeaders({ EMBED_SERVER_KEY: KEY })['x-embed-key']).toBe(KEY);
+  });
+});
+
+describe('createDenialLog', () => {
+  it('logs the first denial in a window, then counts the rest into the next line', () => {
+    const lines: string[] = [];
+    let t = 0;
+    const deny = createDenialLog({ log: (l: string) => lines.push(l), now: () => t, windowMs: 1000 });
+    deny({ path: '/clip/embed-text?x=1', remote: '3.126.250.163', userAgent: 'node' });
+    t = 10; deny({ path: '/embed' });
+    t = 20; deny({ path: '/embed' });
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toBe('embed-auth: 401 /clip/embed-text from 3.126.250.163 ua="node"');
+    t = 1500; deny({ path: '/embed', remote: '1.2.3.4' });
+    expect(lines).toHaveLength(2);
+    expect(lines[1]).toContain('(+2 more denied in the previous window)');
   });
 });
