@@ -1221,9 +1221,11 @@ const BOOK_RUN_STEPS =
   'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
   '(3) call submit_page_review with mode "book-run" and YOUR verdict and findings; (4) for each error you ' +
   'can see on the scan or in the original, call propose_correction with drafted_by "assistant" ' +
-  '(transcription before translation); (5) write ONE line for the user: the page number, what the page ' +
-  'says in a few words, and what you found and sent (quote only the words at issue; never paste the full ' +
-  'texts unless asked; they need not read the language); (6) KEEP GOING: call continue_review_shift with ' +
+  '(transcription before translation); (5) write a short paragraph for the user, so the stretch reads ' +
+  'as a guided reading of the book: the page number, then three or four plain sentences on what happens ' +
+  'or is argued on this page, in your own words, then one sentence on what you found and sent (quote ' +
+  'only the words at issue; never paste the full texts unless asked; they need not read the language); ' +
+  '(6) KEEP GOING: call continue_review_shift with ' +
   'next.book and next.after straight away, without asking, until you have done the number of pages the ' +
   'user chose (10 if they did not say), the book ends, or the user interrupts. Then give a short tally ' +
   '(pages, fixes sent, anything serious such as English that belongs to another page) and ask whether ' +
@@ -1259,7 +1261,7 @@ async function startReviewShift(args: Record<string, unknown>) {
   return {
     ...result,
     first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
-      'against the scans, about 10 pages at a stretch (they can choose more or fewer), with one line per page, ' +
+      'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
       'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
       'nothing changes on a page until a second reader agrees. Ask once whether that is OK and how many pages ' +

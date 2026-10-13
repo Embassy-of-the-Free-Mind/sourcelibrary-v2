@@ -34,7 +34,7 @@
     },
     {
       "id": "judge-family",
-      "rule": "A judge may favour translations made by its own model family. We measured this in October 2026: compared with an Opus judge, a Gemini Pro judge rated Gemini's translations 0.16 points higher (on a 1 to 5 scale) in one round and 0.06 lower in a second, and neither differs from zero beyond chance. The bias is small next to the differences between models, so we use a judge from another family where it costs nothing and account for the effect in our estimates, rather than refusing a judge for its family.",
+      "rule": "We test whether an AI judge favours translations made by its own model family. In October 2026 we found no measurable bias: compared with an Opus judge, a Gemini Pro judge rated Gemini's translations 0.16 points higher (on a 1 to 5 scale) in one round and 0.06 lower in a second, and neither differs from zero beyond chance. We still use a judge from another family where it costs nothing, and keep measuring, but we do not refuse a judge for its family.",
       "source": "scripts/eval/experiments/2026-10-12-pro-opus-correction-hardest-languages-6545.md"
     },
     {

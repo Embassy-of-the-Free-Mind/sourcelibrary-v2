@@ -33,7 +33,7 @@ otherwise buy with our own subscription time.
 |---|---|---|
 | Who judges | the person (needs the language) / the volunteer's Claude, person optional | **Claude.** Fits the 95%; the person's own judgement stays as the blind lane. |
 | Unit | random pages across books / 2 pages × 3 books / **one book walked in order** | **Book run.** The model and the person keep the book's context (abbreviations, hand, argument); page-join defects (text carried across a page boundary, the commonest "invention" flag) are visible only across two pages; it reads as a book, which is what brings people back. Cost: pages of one book are one observation for corpus estimates, which the blind lane and our own audits supply. |
-| Pacing | five pages in one result / one page, then "continue" / **one page per call, a stretch of pages per turn** | One page per tool call keeps every scan under the inline cap. Stopping after every page was tried first (2026-10-11) and was wrong: the first real run took 12 hours for 6 pages, and Derek: "only let me read one page at a time. That doesn't seem right at all." Since 2026-10-13 Claude works through a stretch (10 pages unless the user says otherwise) with one line per page, then pauses with a tally. |
+| Pacing | five pages in one result / one page, then "continue" / **one page per call, a stretch of pages per turn** | One page per tool call keeps every scan under the inline cap. Stopping after every page was tried first (2026-10-11) and was wrong: the first real run took 12 hours for 6 pages, and Derek: "only let me read one page at a time. That doesn't seem right at all." Since 2026-10-13 Claude works through a stretch (10 pages unless the user says otherwise), retelling each page in a short paragraph and naming what it found, then pauses with a tally. One line per page was tried first and read as a log, not a reading. |
 | Selection | random pool / volunteer's choice / most-read / detector-flagged | Volunteer's choice if they name a book; else resume their last run; else start at a page the translation-check pool is waiting on (`nextCandidate`), so runs spread over the books the pool samples. Most-read and detector-flagged starts are next. |
 | Output | rating / correction | Both, per page: a `volunteer_ratings` row in its own queue `book-run` (never counted toward the human `translation-check` consensus) and span-edit proposals (`drafted_by:'assistant'`). |
 | Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Not yet built:** apply a correction when two independent runs propose the same edit, or our own adjudicator confirms one; planted-error pages to weight each volunteer's setup by measured accuracy rather than claimed model. Until then corrections wait for a second reader as before. |
@@ -60,8 +60,9 @@ cannot answer, when nothing seems to happen, when it feels like busywork, or whe
    code. Claude offers a book as a story, not a task: "Beroaldus, Paris 1500, 16 pages: three
    brothers argue which art earns their father's inheritance." They can ask for another book, a
    language or a subject instead. *(book offer by subject not built)*
-3. **Each page.** The scan, then one line: the page, what it says, what Claude found and sent
-   ("p.15: the orator wins; six long-s misreadings, a margin note in the text; 1 review, 2 fixes").
+3. **Each page.** The scan, then a short paragraph: three or four plain sentences on what happens
+   on the page, so the stretch reads as a guided reading of the book, then one sentence on what Claude
+   found and sent ("six long-s misreadings and a margin note in the text; 1 review, 2 fixes").
    Claude moves straight on to the next page. It does **not** paste the full
    transcription and translation: in the first live shift claude.ai shortened them with "…" when
    displaying them, which read as omissions in our English that the stored text does not have
