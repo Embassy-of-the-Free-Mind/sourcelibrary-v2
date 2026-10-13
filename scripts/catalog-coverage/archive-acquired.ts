@@ -36,6 +36,7 @@ import {
   fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
+import { recountBook } from '../../src/lib/page-counts';
 const execFileP = promisify(execFile);
 /**
  * Read `--name <int>`, falling back to `dflt` when it is absent or unusable.
@@ -432,14 +433,15 @@ async function main() {
       else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
+    // The counters go through recountBook() (#5327), complete or partial, so
+    // provider-mode runs are resumable and a later run can see how far it got.
+    // `r2` stays the queue's own measure: it excludes `failed:` markers.
+    await recountBook(db, w.book_id, { reason: 'archive-acquired' });
     if (r2 >= (b.pages_count || 0) * 0.99 && r2 > 0) {
-      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', pages_archived: r2, updated_at: new Date() } });
+      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', updated_at: new Date() } });
       await markQueue(w, { archived: true });
       ok++;
     } else {
-      // Record partial progress on the book too, so provider-mode runs are
-      // resumable and a later run can see how far it got.
-      await books.updateOne({ id: w.book_id }, { $set: { pages_archived: r2, updated_at: new Date() } });
       // A book that archived NOTHING was being marked `archived: true` and
       // dropped from the queue for good, with the truth demoted to a note
       // ("partial:0/424") that nothing reads. That is the shape CLAUDE.md's

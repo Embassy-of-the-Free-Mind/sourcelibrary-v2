@@ -57,6 +57,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { makePageDoc } from '../lib/book-docs.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
@@ -429,8 +430,8 @@ async function archiveBook(db, book) {
   // Status value hoisted out of the $set literal: the field-write lint reads a
   // quoted value on the same line as a field name (#4896 CI run).
   const archiveStatus = complete ? 'archive_complete' : 'archive_partial';
+  await recountBook(db, book.id, { reason: 'claremont-nag-hammadi:archive' });
   await db.collection('books').updateOne({ id: book.id }, { $set: {
-    pages_archived: onR2,
     archive_status: archiveStatus,
     ...(complete ? { archive_completed_at: new Date() } : {}),
     updated_at: new Date(),

@@ -29,6 +29,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
@@ -601,14 +602,12 @@ async function processBook(book, db) {
       }
     }
 
-    // Sync pages_archived counter on this book (#497)
+    // Sync the page counters on this book (#497). recountBook() writes all six from
+    // the book's visible pages (#5327); the status reads the recount, not a private one.
     if (archived > 0) {
-      const archivedCount = await db.collection(pagesCol).countDocuments(
-        { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
-        { maxTimeMS: 10000 }
-      );
-      const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
-      const update = { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() };
+      const { after } = await recountBook(db, book.id, { reason: 'archive-bulk' });
+      const archiveStatus = after.pages_count > 0 && after.pages_archived >= after.pages_count ? 'archive_complete' : 'archive_partial';
+      const update = { archive_status: archiveStatus, updated_at: new Date() };
       // Stamp completion time when a book reaches archive_complete. Lets
       // downstream queries bucket archival throughput by day/week without
       // scanning the pages collection (which is too large for ad-hoc aggregates).

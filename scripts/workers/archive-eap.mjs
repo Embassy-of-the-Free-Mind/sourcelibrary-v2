@@ -34,6 +34,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -262,16 +263,9 @@ async function main() {
   // Run workers
   await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
 
-  // Update pages_archived on touched books
+  // Recount the page counters on touched books (#5327)
   for (const bookId of touchedBookIds) {
-    const archivedCount = await db.collection('pages').countDocuments({
-      book_id: bookId,
-      archived_photo: { $exists: true, $ne: null, $ne: '' },
-    });
-    await db.collection('books').updateOne(
-      { id: bookId },
-      { $set: { pages_archived: archivedCount, updated_at: new Date() } }
-    );
+    await recountBook(db, bookId, { reason: 'archive-eap' });
   }
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(0);
