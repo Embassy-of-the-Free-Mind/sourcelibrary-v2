@@ -36,7 +36,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { buildBookCheck, recordBookCheck, attachPageFindings, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../lib/book-checks.mjs';
-import { seriousPage, seriousClasses, pageFindings, FIT, derivedFortnightly, pageRecords, packetProvenance } from '../eval/spot-check/check-rows.mjs';
+import { seriousPage, seriousClasses, pageFindings, FIT, derivedFortnightly, curationCheck, pageRecords, packetProvenance } from '../eval/spot-check/check-rows.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -99,21 +99,10 @@ for (const dir of readdirSync(ROOT).filter((d) => d.startsWith('overview-2026-10
 {
   const file = join(ROOT, 'curation-2026-10-06-eternity', 'shelf.json');
   const at = addedAt(file);
-  const READER = {
-    'reviewer by eye': OPUS,
-    'read from image': { kind: 'model', role: 'session', image_opened: true },
-    'earlier session': { kind: 'model', role: 'earlier session' },
-  };
   for (const b of json(file)) {
-    const pages = [...new Set([...b.note.matchAll(/\?page=(\d+)/g), ...b.note.matchAll(/\bpp?\.\s?(\d+)/g)].map((m) => Number(m[1])))].sort((x, y) => x - y);
-    if (!pages.length) { skipped.push(`curation ${b.book_id}: note names no page`); continue; }
-    const r = READER[b.read_by];
-    if (!r) { skipped.push(`curation ${b.book_id}: unknown read_by ${b.read_by}`); continue; }
-    const reader = { ...r, image_opened: r.image_opened ?? (/image/i.test(b.note) ? true : 'unrecorded') };
-    cands.push({ source: 'curation', book_id: b.book_id, checked_at: at, method_id: 'curation-check', run_id: 'curation-2026-10-06-eternity',
-      frame: { tradition: b.tradition, rank: b.rank, pages_read_source: 'note', checked_at_source: 'commit' },
-      pages_read: pages, reader, verdict: { 1: 'show', 2: 'caveat', 3: 'fix' }[b.tier], verdict_source: 'reader',
-      note: b.note, evidence_path: file, serious: b.tier === 3 });
+    const c = curationCheck({ verdict: b, file, runId: 'curation-2026-10-06-eternity', checkedAt: at, frame: { tradition: b.tradition, rank: b.rank, checked_at_source: 'commit' } });
+    if (c.skip) { skipped.push(`curation ${b.book_id}: ${c.skip}`); continue; }
+    cands.push({ source: 'curation', ...c.input, serious: b.tier === 3 });
   }
 }
 
