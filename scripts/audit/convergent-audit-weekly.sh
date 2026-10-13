@@ -19,7 +19,9 @@ REPO="${REPO:-/root/sourcelibrary}"
 BASE="${AUDIT_BASE:-/mnt/HC_Volume_105839809/jobs/convergent-audit-6420}"
 RUN="$BASE/${1:-$(date -u +%F)}"
 ENV="${AUDIT_ENV:-$REPO/.env.production.local}"
-GEM_MODELS="${AUDIT_GEMINI_MODELS:-gemini-3.7-flash-low gemini-3.8-flash-low}"
+# 3.7 was withdrawn from agy on 2026-10-12 and now fails with exit 1, not the quota exit 3, so listing it first
+# would end the pass before 3.8 is tried.
+GEM_MODELS="${AUDIT_GEMINI_MODELS:-gemini-3.8-flash-low}"
 QUOTA_WAIT="${AUDIT_QUOTA_WAIT:-1800}"
 QUOTA_RETRIES="${AUDIT_QUOTA_RETRIES:-8}"
 # Appended, not prepended: cron's PATH is /usr/bin:/bin either way, and the test puts its stubs first.

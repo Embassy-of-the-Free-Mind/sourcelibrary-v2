@@ -5,7 +5,7 @@
 // lane changed, nor posts a two-reader rate with agreement each week. This is #6420 lane D.
 /**
  * The weekly convergent audit (#6420 lane D). Every Monday: one page per book from 60 random visible non-English books,
- * plus 20 pages lane B (scripts/batch/ocr-convergence) wrote. Opus (subscription, sealed `claude -p`) and Gemini 3.7
+ * plus 20 pages lane B (scripts/batch/ocr-convergence) wrote. Opus (subscription, sealed `claude -p`) and Gemini 3.8 (3.7 until 2026-10-12)
  * Flash (agy CLI, plan mode) each read every page against its image with the frozen #6338 brief. Posts serious-error
  * rates with Wilson 95% CIs, inter-reader agreement and the top findings as a comment on #6420. A reader that read
  * under 80% of the pages is named with the reason (quota, no reply, unparsable; convergent-audit-lib.mjs readerStatus)
@@ -15,7 +15,7 @@
  *   scripts/eval/second-reader/run-readers.sh R opus claude opus read 4
  *   node scripts/eval/second-reader/second-reader.mjs cli-requests --run R --reader gemini37
  *   python3 scripts/eval/run-cli-arm.py --requests R/readers/gemini37/requests.jsonl --out R/readers/gemini37/cli-out.jsonl \
- *     --arm audit6420-gemini37 --model gemini-3.7-flash-low --job convergent-audit-6420 --kind review --parallel 2 --attempts 4
+ *     --arm audit6420-gemini37 --model gemini-3.8-flash-low --job convergent-audit-6420 --kind review --parallel 2 --attempts 4
  *   node scripts/eval/second-reader/second-reader.mjs cli-assemble --run R --reader gemini37
  *   node scripts/audit/convergent-audit-weekly.mjs score --run R [--post]
  *
@@ -42,6 +42,8 @@ if (!R) { console.error('--run DIR required (see the header)'); process.exit(2);
 const J = (...p) => path.join(R, ...p);
 const read = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const write = (f, x) => { fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, JSON.stringify(x, null, 1) + '\n'); };
+// `gemini37` is the reader's folder/key name, kept so weekly runs stay comparable on disk; it has run
+// gemini-3.8-flash-low since 2026-10-12, when agy withdrew 3.6, 3.7 and 3.1 Pro.
 const READERS = ['opus', 'gemini37'];
 const ENGLISH = /^(english|middle english|old english|early modern english|en)$/i;
 const EXCLUDED_TYPES = new Set(['archived-spread', 'blank', 'title-page', 'toc', 'index', 'illustration', 'digitizer-insert', 'colophon', 'errata', 'cover', 'map', 'plate']);
