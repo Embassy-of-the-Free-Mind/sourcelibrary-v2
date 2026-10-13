@@ -1,0 +1,193 @@
+{
+ "issue": 6667,
+ "account": "derek@playpowerlabs.com (cloudlayer)",
+ "source": "/root/.claude-limits/latest.json, polled every 5 min; integer percent",
+ "weekly_all_models_pct": {
+  "before_pilot_2026-10-13T11:50Z": 25,
+  "full_runs_start_12:10Z": 26,
+  "sonnet_done_13:00Z": 29,
+  "end_14:15Z": 34
+ },
+ "readings": [
+  {
+   "meter_checked_at": "2026-10-13T12:10:01.920189+00:00",
+   "weekly": 26,
+   "session_5h": 59
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:20:02.544672+00:00",
+   "weekly": 26,
+   "session_5h": 63
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:25:01.838717+00:00",
+   "weekly": 27,
+   "session_5h": 65
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:30:02.457234+00:00",
+   "weekly": 27,
+   "session_5h": 67
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:35:02.430095+00:00",
+   "weekly": 27,
+   "session_5h": 70
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:40:02.388760+00:00",
+   "weekly": 28,
+   "session_5h": 72
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:45:01.947503+00:00",
+   "weekly": 28,
+   "session_5h": 75
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:50:02.221690+00:00",
+   "weekly": 28,
+   "session_5h": 77
+  },
+  {
+   "meter_checked_at": "2026-10-13T12:55:02.497664+00:00",
+   "weekly": 28,
+   "session_5h": 80
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:00:02.585584+00:00",
+   "weekly": 29,
+   "session_5h": 0
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:05:02.095473+00:00",
+   "weekly": 29,
+   "session_5h": 3
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:10:02.518459+00:00",
+   "weekly": 29,
+   "session_5h": 5
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:15:02.270166+00:00",
+   "weekly": 30,
+   "session_5h": 7
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:20:02.126092+00:00",
+   "weekly": 30,
+   "session_5h": 10
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:25:01.900372+00:00",
+   "weekly": 30,
+   "session_5h": 12
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:30:02.233158+00:00",
+   "weekly": 30,
+   "session_5h": 14
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:35:02.765394+00:00",
+   "weekly": 31,
+   "session_5h": 16
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:40:02.804368+00:00",
+   "weekly": 31,
+   "session_5h": 24
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:45:02.482735+00:00",
+   "weekly": 33,
+   "session_5h": 34
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:50:02.425245+00:00",
+   "weekly": 33,
+   "session_5h": 39
+  },
+  {
+   "meter_checked_at": "2026-10-13T13:55:02.062449+00:00",
+   "weekly": 33,
+   "session_5h": 41
+  },
+  {
+   "meter_checked_at": "2026-10-13T14:00:02.433916+00:00",
+   "weekly": 34,
+   "session_5h": 43
+  },
+  {
+   "meter_checked_at": "2026-10-13T14:05:01.665182+00:00",
+   "weekly": 34,
+   "session_5h": 45
+  },
+  {
+   "meter_checked_at": "2026-10-13T14:10:02.879816+00:00",
+   "weekly": 34,
+   "session_5h": 47
+  },
+  {
+   "meter_checked_at": "2026-10-13T14:15:03.060614+00:00",
+   "weekly": 34,
+   "session_5h": 49
+  }
+ ],
+ "known_api_equiv_usd_12:10_to_14:15": {
+  "opus-batch": 109.46,
+  "sonnet": 12.34,
+  "haiku": 7.79
+ },
+ "window_12:10_to_13:00_before_another_job_started": {
+  "weekly_delta": 3,
+  "known_api_equiv_usd": {
+   "opus-batch table-correct-6561": 44.8,
+   "sonnet": 11.95,
+   "haiku": 1.33
+  },
+  "usd_per_weekly_point": 19.4,
+  "range_for_integer_meter": [
+   14.5,
+   29.0
+  ]
+ },
+ "session_meter_check": {
+  "12:20-12:55 Sonnet running": {
+   "session_delta": 17,
+   "known_usd": 42.5,
+   "usd_per_point": 2.5
+  },
+  "13:05-13:35 no Sonnet": {
+   "session_delta": 13,
+   "known_usd": 28.5,
+   "usd_per_point": 2.2
+  }
+ },
+ "api_equiv_usd_per_call_mean": {
+  "zh": {
+   "opus-correct (#6561 rows)": 0.173,
+   "sonnet-correct": 0.0972,
+   "haiku-correct": 0.0552
+  },
+  "tibetan": {
+   "opus-corr (#6560 rows)": 0.144,
+   "sonnet-corr": 0.066,
+   "haiku-corr": 0.0674
+  }
+ },
+ "weekly_pct_per_100_pages_at_19.4_usd_per_point": {
+  "zh": {
+   "opus": 0.9,
+   "sonnet": 0.5,
+   "haiku": 0.3
+  },
+  "tibetan": {
+   "opus": 0.75,
+   "sonnet": 0.35,
+   "haiku": 0.35
+  }
+ },
+ "note": "Not separable by arm from the meter alone: the same account ran the Opus batch (job table-correct-6561, 2 calls in flight), this job's own orchestrating session and, from 13:04 UTC, another job. Per-arm figures are each arm's API-equivalent cost (the CLI's total_cost_usd) converted at the dollars-per-point the meter showed; unmetered spend by the other sessions makes the true dollars-per-point higher, so these are upper bounds."
+}

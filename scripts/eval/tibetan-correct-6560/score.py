@@ -29,8 +29,8 @@ from alignpairs import syllables, align, matches  # noqa: E402
 REPO = os.path.abspath(os.path.join(HERE, '../../..'))
 RES = os.path.join(REPO, 'scripts/eval/results/tibetan-correct-6560')
 MANIFEST = os.path.join(REPO, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl')
-ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo']
-ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor']
+ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo', 'sonnet-corr', 'haiku-corr']  # #6667 added the last two
+ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor', 'sonnet-corr-anchor', 'haiku-corr-anchor']
 FAMILY = {'opus': 'claude', 'pro': 'gemini'}
 TIB = re.compile('[ཀ-ྼ]')
 REFUSAL = re.compile(r"\bI (?:cannot|can't|am unable to)|content (?:safety )?filter|blocked by Gemini", re.I)
@@ -386,11 +386,29 @@ def score(a):
         summary[k] = {'n': len(its), 'right': sum(it['verdict'] == 'base' for it in its), 'wrong': sum(it['verdict'] == 'arm' for it in its),
                       'other_unclear': sum(it['verdict'] not in ('base', 'arm') for it in its)}
     # Pro-correct against Opus-correct, paired on the same folios
-    both = [p for p in ids if pages[p].get('pro-corr', {}).get('status') == 'read' and pages[p].get('opus-corr', {}).get('status') == 'read']
-    if both:
-        fp, fo = pooled('pro-corr', both), pooled('opus-corr', both)
-        fd = lambda S: fp(S) - fo(S)
-        summary['_pro_corr_minus_opus_corr'] = {'n': len(both), 'delta': round(fd(both), 4), 'ci': boot(both, fd)}
+    # (#6667: the same for Sonnet and Haiku, on all 30 folios and on the 10 planted ones, with folios better / worse)
+    for arm, ref in [('pro-corr', 'opus-corr'), ('sonnet-corr', 'opus-corr'), ('haiku-corr', 'opus-corr'), ('sonnet-corr', 'haiku-corr'),
+                     ('sonnet-corr-anchor', 'opus-corr-anchor'), ('haiku-corr-anchor', 'opus-corr-anchor')]:
+        both = [p for p in ids if pages[p].get(arm, {}).get('status') == 'read' and pages[p].get(ref, {}).get('status') == 'read']
+        if both:
+            fp, fo = pooled(arm, both), pooled(ref, both)
+            fd = lambda S: fp(S) - fo(S)
+            summary[f"_{arm.replace('-', '_')}_minus_{ref.replace('-', '_')}"] = {
+                'n': len(both), 'delta': round(fd(both), 4), 'ci': boot(both, fd),
+                'better': sum(pages[p][arm]['identity'] > pages[p][ref]['identity'] for p in both),
+                'worse': sum(pages[p][arm]['identity'] < pages[p][ref]['identity'] for p in both)}
+    # toward-Derge spans of an arm that had no image read-off (#6667 ran none: the settler would be Gemini or Opus)
+    for arm in ARMS:
+        if arm in recitation or not summary[arm].get('read'):
+            continue
+        rows, n, unchanged = load_arm(a.root, arm), 0, 0
+        for pid in ids:
+            text, _ = extract((rows.get(pid) or {}).get('text', ''))
+            if text:
+                n += len(toward_derge(syllables(manuscript_text(man[pid]['served_text'])), syllables(manuscript_text(text)), win[pid]['syllables']))
+                unchanged += syllables(manuscript_text(text)) == syllables(manuscript_text(man[pid]['served_text']))
+        summary[arm]['toward_derge_spans_no_readoff'] = n
+        summary[arm]['folios_returned_unchanged'] = unchanged
     # what the toward-Derge spans are: a restored tsheg (Yigdzin joined two syllables or wrote ':' for a tsheg), a
     # ya-btags spelling (mi/myi, med/myed: the reference e-text's archaic spelling), or anything else
     def span_type(it):
