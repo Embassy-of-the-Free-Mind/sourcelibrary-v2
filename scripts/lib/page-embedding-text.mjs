@@ -85,6 +85,22 @@ export function pageEmbeddingInput(page) {
 }
 
 /**
+ * The text the embed worker (`scripts/workers/embed-gemini.mjs`) writes for a page, or null when the
+ * page has none worth embedding. `pageEmbeddingInput` plus the worker's 20-character floor: a stub
+ * translation falls back to the OCR (with an EMPTY translation column), and a page whose OCR is a
+ * stub too gets no row at all. Anything that predicts what the worker would write for a page — the
+ * #6221 enumerator, a "should this row exist?" audit — asks this, never `translation.data` non-empty:
+ * 9.4K rows were listed for a re-embed the worker then declined (#6221, 2026-10-11).
+ */
+export const MIN_EMBED_CHARS = 20;
+export function workerEmbeddingInput(page) {
+  const input = pageEmbeddingInput(page);
+  if (input && input.text.length >= MIN_EMBED_CHARS) return input;
+  const ocr = cleanPageText(page?.ocr?.data);
+  return ocr.length >= MIN_EMBED_CHARS ? { text: ocr, hasTranslation: false } : null;
+}
+
+/**
  * Build the `page_translations` row. Every column the table has, in one place,
  * so the two writers cannot disagree about the shape.
  *

@@ -89,7 +89,7 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, pageEmbeddingRowTs, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
+import { workerEmbeddingInput, buildPageEmbeddingRow, pageEmbeddingRowTs, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
@@ -317,15 +317,6 @@ async function embedBatch(items) {
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
-/**
- * Delegates to the shared composer so this worker and the pipeline-side writer
- * embed byte-identical text. The rationale for dropping editorial wrappers
- * content-and-all lives there.
- */
-function cleanText(text) {
-  return cleanPageText(text);
-}
-
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /** Fields every mode reads from a page — the stream and the batch collector alike. */
@@ -351,13 +342,12 @@ const PAGE_PROJECTION = {
  * composed text, the AI's description of the page was stored as its quotable
  * snippet — the #2232 misquote class, alive in one writer (#6175: 58 of 148
  * summary-bearing pages sampled). The 20-character floor is this worker's own
- * and is kept: a stub translation falls back to the OCR, as before.
+ * and is kept: a stub translation falls back to the OCR, as before. The floor
+ * lives in `workerEmbeddingInput` (page-embedding-text.mjs) so a script that
+ * predicts what this worker would write asks the same function (#6221).
  */
 function composeEmbedText(page) {
-  const input = pageEmbeddingInput(page);
-  if (input && input.text.length >= 20) return input;
-  const ocrText = cleanText(page.ocr?.data);
-  return ocrText.length >= 20 ? { text: ocrText, hasTranslation: false } : null;
+  return workerEmbeddingInput(page);
 }
 
 // Book metadata cache
