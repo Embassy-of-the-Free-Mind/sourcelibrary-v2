@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { findRightsNotices, foldDigits } from '../../scripts/lib/rights-notice.mjs';
+import { findRightsNotices, foldDigits, screenStrength } from '../../scripts/lib/rights-notice.mjs';
 
 /**
  * The rights-notice screen (#4809) reads the book's OWN imprint, because the date fields
@@ -35,6 +35,7 @@ describe('findRightsNotices — does not fire on', () => {
     ["Google's front matter", 'public domain book whose copyright term has expired'],
     ["EEB's scan notice", 'Early European Books, Copyright © 2011 ProQuest LLC.'],
     ['the digitizer watermark', 'Digitized by eGangotri — all rights reserved'],
+    ['an image description of a stamp', '{"description": "A circular stamp reading संवत् २०३०", "type": "stamp"}'],
     ['a stray © from OCR noise', 'predetermined limits. ©'],
     ['© mid-sentence', 'grace only here and there. ©The buttercup'],
     ["the OCR's own vocab tag", '<vocab>copyright, 2004</vocab>'],
@@ -47,5 +48,18 @@ describe('findRightsNotices — does not fire on', () => {
 describe('foldDigits', () => {
   it('folds Devanagari, Arabic-Indic and Persian digits', () => {
     expect(foldDigits('१९६६ ٢٠١٥ ۱۳۹۹')).toBe('1966 2015 1399');
+  });
+});
+
+describe('screenStrength', () => {
+  it('an undated Victorian notice is weak; a dated or ISBN one is strong', () => {
+    const f = (t: string) => screenStrength(findRightsNotices(t));
+    expect(f('[*All rights reserved*]')).toBe('weak');
+    expect(f('ISBN 3-519-01443-2')).toBe('strong');
+    expect(f('All rights reserved. 1987')).toBe('strong');
+  });
+  it('scan watermarks are not notices', () => {
+    expect(findRightsNotices('->© SUB GÖTTINGEN / GDZ | 2012/2013<-')).toEqual([]);
+    expect(findRightsNotices('->© Biblioteca Apostolica Vaticana ALL RIGHTS RESERVED<-')).toEqual([]);
   });
 });

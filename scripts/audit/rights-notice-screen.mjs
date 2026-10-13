@@ -28,13 +28,14 @@
  *
  *   node --env-file=.env.production.local scripts/audit/rights-notice-screen.mjs
  *   node --env-file=.env.production.local scripts/audit/rights-notice-screen.mjs --all --out /data/scratch/rights.jsonl
+ * Rows are written strong-first (scripts/lib/rights-notice.mjs STRONG_KINDS).
  * Exit 0 always on a completed run (a hit is a finding, not an error); 1 on a failure.
  */
 import { MongoClient } from 'mongodb';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { findRightsNotices, MIN_YEAR } from '../lib/rights-notice.mjs';
+import { findRightsNotices, screenStrength, MIN_YEAR } from '../lib/rights-notice.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : d; };
@@ -87,15 +88,17 @@ for await (const b of cursor) {
   if (!withText) noText++;
   if (!hits.length) continue;
   for (const k of new Set(hits.map((h) => h.kind))) byKind[k] = (byKind[k] || 0) + 1;
-  rows.push({ id: b.id, title: String(b.title || '').slice(0, 120), year: b.year ?? null, language: b.language ?? null, provider: b.image_source?.provider ?? null, hits });
+  rows.push({ strength: screenStrength(hits), id: b.id, title: String(b.title || '').slice(0, 120), year: b.year ?? null, language: b.language ?? null, provider: b.image_source?.provider ?? null, hits });
   if (screened % 500 === 0) console.error(`… ${screened} screened, ${rows.length} candidates`);
 }
 await client.close();
 
+rows.sort((a, b) => (a.strength === b.strength ? 0 : a.strength === 'strong' ? -1 : 1));
 writeFileSync(OUT, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
 const scope = IDS ? `ids from ${IDS}` : ALL ? 'all visible paged books' : `visible books created in the last ${SINCE_DAYS} days`;
 console.log(`rights-notice screen (#4809) — ${scope}`);
 console.log(`screened ${screened} books (pages ≤${HEAD} + last ${TAIL}; notices dated before ${MIN} dropped); ${noText} had no OCR text on those pages; ${skippedRights} already hidden for rights`);
-console.log(`candidates: ${rows.length}`);
+const strong = rows.filter((r) => r.strength === 'strong').length;
+console.log(`candidates: ${rows.length} — strong ${strong} (dated modern by the notice itself; read first), weak ${rows.length - strong}`);
 for (const [k, n] of Object.entries(byKind).sort((a, b) => b[1] - a[1])) console.log(`  ${k.padEnd(22)} ${n}`);
 console.log(`list (private — do not paste into the public tracker): ${OUT}`);

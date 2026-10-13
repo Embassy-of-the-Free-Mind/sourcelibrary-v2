@@ -67,7 +67,24 @@ export const BOILERPLATE = Object.freeze([
   /digiti[sz]ed\s+by/i,
   /internet\s+archive/i,
   /proquest|early\s+european\s+books/i, // EEB's scan notice, on every EEB leaf
+  /SUB\s*G[ÖO]TTINGEN|\bGDZ\b/i,          // Göttingen's scan colophon
+  /biblioteca\s+apostolica\s+vaticana/i,  // the Vatican's scan watermark
+  /digitalfoto-trainer/i,
+  /watermark/i,                            // the OCR describing a scan watermark
 ]);
+
+// A hit of these kinds dates the edition as modern by itself; the rest (an undated
+// "All rights reserved", "Alle Rechte vorbehalten" …) were printed on Victorian
+// imprints too, and on the 2026-10-13 full pass were mostly that. Read STRONG first.
+export const STRONG_KINDS = Object.freeze(new Set([
+  'copyright-year', 'isbn', 'no-reproduction', 'imprint-year', 'vikram-samvat',
+  'hi-sarvadhikar', 'ar-huquq', 'zh-banquan', 'ja-chosaku',
+]));
+
+/** 'strong' if any hit dates the edition as modern by itself, else 'weak'. */
+export function screenStrength(hits) {
+  return hits.some((h) => STRONG_KINDS.has(h.kind) || (h.years && h.years.length)) ? 'strong' : 'weak';
+}
 
 const YEAR = /\b(1[5-9]\d\d|20\d\d)\b/g;
 
@@ -102,6 +119,7 @@ export function findRightsNotices(text, { minYear = MIN_YEAR, now = new Date() }
   for (const raw of stripOcrTags(text).split('\n')) {
     const line = foldDigits(raw.trim());
     if (line.length < 4 || line.length > 400) continue;
+    if (/^\[?\{\s*"(?:description|type)"/.test(line)) continue; // OCR image-description JSON (a stamp's text)
     if (BOILERPLATE.some((re) => re.test(line))) continue;
     for (const { kind, re, year, undated } of NOTICE_PATTERNS) {
       const m = line.match(re);
