@@ -1,0 +1,12 @@
+{
+ "set": "q300b",
+ "arm": "B: Opus corrects the stored text (correct.mjs)",
+ "pages": 976,
+ "books": 99,
+ "actions": {
+  "keep": 167,
+  "write": 689,
+  "defer": 120
+ },
+ "decided_at": "2026-10-13T21:20:48.406Z"
+}
