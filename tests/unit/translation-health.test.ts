@@ -16,6 +16,8 @@ import {
   bodyLen,
   isCollapsed,
   isExcess,
+  isRecited,
+  sourceWeight,
   COLLAPSE_ABS_CAP,
   BLOCK_TAGS,
   writePageTranslation,
@@ -112,8 +114,11 @@ describe('runaway page', () => {
     expect(isExcess(tagged, 'x'.repeat(360 * 7))).toBe(false);
   });
 
-  it('low-OCR pages (headers, image-only) are exempt from the ratio', () => {
-    expect(assessTranslationHealth('x'.repeat(299), 'x'.repeat(5000)).healthy).toBe(true);
+  it('low-OCR pages (headers, image-only) are exempt from the RATIO; a 299-character source with 5,000 of English is `recited` (#6297)', () => {
+    expect(isExcess('x'.repeat(299), 'x'.repeat(5000))).toBe(false);
+    // Until #6297 this page was healthy: the exemption was the hole a title leaf's chapter came through.
+    expect(assessTranslationHealth('x'.repeat(299), 'x'.repeat(5000))).toEqual({ healthy: false, reason: 'recited' });
+    expect(assessTranslationHealth('x'.repeat(299), 'x'.repeat(897)).healthy).toBe(true);
   });
 });
 
@@ -258,5 +263,61 @@ describe('echo tier (#5103): the source handed back as the translation', () => {
       expect(assessTranslationHealth(`<language>Latin</language>\n<page-type>${t}</page-type>\n\n${OATH_LATIN}`, echoed, { lang: 'Latin' })).toEqual({ healthy: true, reason: null });
     }
     expect(assessTranslationHealth(`<language>Latin</language>\n<page-type>text</page-type>\n\n${OATH_LATIN}`, echoed, { lang: 'Latin' }).reason).toBe('echo');
+  });
+});
+
+describe('recited page: a short source with a long English body (#6297)', () => {
+  // Derge Tengyur vol 134 p86, read from image 2026-10-13: one framed title line.
+  const titleLeaf = '{D4049}༄༅། །ཆོས་མངོན་པ་ཀུན་ལས་བཏུས་པ་བཞུགས་སོ། །#';
+  const chapter = '# The Compendium of Abhidharma\n\n## Chapter One\n\n' + 'What is the aggregate of form? It consists of whatever is physical in nature. '.repeat(20);
+
+  it('a title line given a chapter is refused as recited', () => {
+    expect(isRecited(titleLeaf, chapter)).toBe(true);
+    expect(assessTranslationHealth(titleLeaf, chapter, { lang: 'Tibetan' })).toEqual({ healthy: false, reason: 'recited' });
+  });
+
+  it('a title with a paragraph of apparatus is not: notes, summary and keywords are not body', () => {
+    const tr = '# The Compendium of Abhidharma is contained herein.\n\n<note>' + 'This is the title page. '.repeat(20) + '</note>\n<summary>'
+      + 'This title page marks the beginning of the work. '.repeat(12) + '</summary>\n<keywords>Abhidharma, Asanga, Derge Tengyur</keywords>';
+    expect(tr.length).toBeGreaterThan(600);
+    expect(assessTranslationHealth(titleLeaf, tr, { lang: 'Tibetan' }).healthy).toBe(true);
+  });
+
+  it('the floor is 600 characters of English body, strictly', () => {
+    expect(isRecited(titleLeaf, 'x'.repeat(600))).toBe(false);
+    expect(isRecited(titleLeaf, 'x'.repeat(601))).toBe(true);
+  });
+
+  it('above 200 characters of source the bar is three times the source', () => {
+    const src = 'a'.repeat(250);
+    expect(isRecited(src, 'x'.repeat(750))).toBe(false);
+    expect(isRecited(src, 'x'.repeat(751))).toBe(true);
+  });
+
+  it('a source of 300 or more is left to the runaway tier', () => {
+    expect(isRecited('a'.repeat(300), 'x'.repeat(5000))).toBe(false);
+  });
+
+  it('a Han character weighs 16: forty characters of classical Chinese may run to English', () => {
+    const han = '師云大眾且置作麼生是法身僧無對'.repeat(3);   // 45 Han characters, weight 720
+    expect(sourceWeight(han)).toBe(45 * 16);
+    expect(isRecited(han, 'x'.repeat(2000))).toBe(false);
+    expect(isRecited('師云大眾', 'x'.repeat(601))).toBe(true);     // 4 characters do not make a chapter
+  });
+
+  it('a described picture is source: its description counts, though bodyLen strips it', () => {
+    const ocr = '<image-desc>' + 'An engraving within a rectangular border depicts two men wrestling. '.repeat(6) + '</image-desc>';
+    expect(bodyLen(ocr)).toBe(0);
+    expect(isRecited(ocr, 'x'.repeat(900))).toBe(false);
+  });
+
+  it('a mis-closed tag that empties bodyLen does not make a full page look short', () => {
+    const ocr = '<page-type>text</script>' + 'pig.ob.pos.l.qui filios liberum hominem non posse obligari pignori. '.repeat(10);
+    expect(isRecited(ocr, 'x'.repeat(2000))).toBe(false);
+  });
+
+  it('no source in hand is not judged', () => {
+    expect(isRecited('', 'x'.repeat(5000))).toBe(false);
+    expect(isRecited(undefined, 'x'.repeat(5000))).toBe(false);
   });
 });
